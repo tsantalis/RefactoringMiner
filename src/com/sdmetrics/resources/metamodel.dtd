@@ -1,0 +1,15 @@
+<!ELEMENT sdmetricsmetamodel ( modelelement+ ) >
+<!ATTLIST sdmetricsmetamodel
+	 version CDATA #REQUIRED>
+
+<!ELEMENT modelelement (#PCDATA|attribute)*>
+<!ATTLIST modelelement
+	 name CDATA #REQUIRED
+	 parent CDATA "sdmetricsbase">
+
+<!ELEMENT attribute (#PCDATA)>
+<!ATTLIST attribute
+	 name CDATA #REQUIRED
+	 type (ref|data) "data"
+	 multiplicity (one|many) "one">
+

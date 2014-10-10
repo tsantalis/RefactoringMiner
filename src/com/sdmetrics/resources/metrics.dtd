@@ -1,0 +1,210 @@
+<!ELEMENT sdmetrics (metric|set|matrix|rule|wordlist|reference|term|
+                     metricprocedure|setprocedure|ruleprocedure)+ >
+<!ATTLIST sdmetrics
+	 version CDATA #REQUIRED
+	 ruleexemption CDATA #IMPLIED
+	 exemptiontag CDATA #IMPLIED
+	 exemptionvalue CDATA #IMPLIED>
+
+<!ELEMENT metric (description?,(projection|setoperation|compoundmetric|
+	attributevalue|nesting|signature|connectedcomponents|count|compare|
+	subelements|filtervalue)) >
+<!ATTLIST metric
+	name CDATA #REQUIRED
+	domain CDATA #REQUIRED
+	category CDATA #IMPLIED
+	internal (true|false) "false">
+
+<!ELEMENT set (description?,(projection|compoundset|subelements|compare))>
+<!ATTLIST set
+	name CDATA #REQUIRED
+	domain CDATA #REQUIRED
+	multiset (true|false) "false">
+
+
+<!ELEMENT matrix (description?,(projection|setoperation|compoundset))>
+<!ATTLIST matrix
+	name CDATA #REQUIRED
+	from_row_type CDATA #REQUIRED
+	to_col_type CDATA #REQUIRED
+	row_condition CDATA #IMPLIED
+	col_condition CDATA #IMPLIED>
+
+<!ELEMENT rule (description?,(violation|cycle|projection|compoundset|
+	valueset|compare))>
+<!ATTLIST rule
+	name CDATA #REQUIRED
+	domain CDATA #REQUIRED
+	category CDATA #IMPLIED
+	severity CDATA #IMPLIED
+	applies_to CDATA #IMPLIED
+	disabled (true|false) "false">
+
+<!ELEMENT wordlist (entry*)>
+<!ATTLIST wordlist
+	name CDATA #REQUIRED
+	ignorecase (true|false) "false">
+
+<!ELEMENT entry EMPTY>
+<!ATTLIST entry
+	word CDATA #REQUIRED>
+
+<!ELEMENT description (#PCDATA)>
+
+<!ENTITY % scopes "same|other|higher|lower|sameorhigher|sameorlower|samebranch|
+	notsamebranch|containedin|notcontainedin|idem|notidem" >
+
+<!ENTITY % filteratts
+	'target CDATA #IMPLIED
+	targetcondition CDATA #IMPLIED
+	element CDATA #IMPLIED
+	eltype CDATA #IMPLIED
+	scope (%scopes;) #IMPLIED
+	condition CDATA #IMPLIED'
+>
+
+<!ENTITY % sumatts
+ 'sum CDATA #IMPLIED
+	stat (sum|min|max) "sum"'
+>
+
+<!ENTITY % ruleatts
+ 'precondition CDATA #IMPLIED
+	mincnt CDATA #IMPLIED
+	value CDATA #IMPLIED'
+>
+
+<!ELEMENT projection EMPTY>
+<!ATTLIST projection
+	relation CDATA #IMPLIED
+	relset CDATA #IMPLIED
+	%sumatts;
+	set CDATA #IMPLIED
+	valueset CDATA #IMPLIED
+	exclude_self (true|false) "false"
+	recurse (true|false) "false"
+	nesting (true|false) "false"
+	%ruleatts;
+	%filteratts;>
+
+<!ELEMENT compoundmetric EMPTY>
+<!ATTLIST compoundmetric
+	term CDATA #IMPLIED
+	condition CDATA #IMPLIED
+	alt CDATA #IMPLIED
+	fallback CDATA #IMPLIED>
+
+<!ELEMENT attributevalue EMPTY>
+<!ATTLIST attributevalue
+	attr CDATA #REQUIRED
+	element CDATA #IMPLIED>
+
+<!ELEMENT signature EMPTY>
+<!ATTLIST signature
+	set CDATA #REQUIRED
+	name CDATA #IMPLIED
+	prologue CDATA #IMPLIED
+	value CDATA #IMPLIED
+	separator CDATA #IMPLIED
+	epilogue CDATA #IMPLIED
+	%filteratts;>
+
+<!ELEMENT connectedcomponents EMPTY>
+<!ATTLIST connectedcomponents
+	set CDATA #REQUIRED
+	nodes CDATA #REQUIRED>
+
+<!ELEMENT valuesetcount EMPTY>
+<!ATTLIST valuesetcount
+	set CDATA #REQUIRED>
+
+<!ELEMENT count EMPTY>
+<!ATTLIST count
+	term CDATA #REQUIRED
+	set CDATA #REQUIRED
+	relset CDATA #REQUIRED
+	%filteratts;>
+
+<!ELEMENT compare EMPTY>
+<!ATTLIST compare
+	term CDATA #IMPLIED
+	set CDATA #IMPLIED
+	with CDATA #IMPLIED
+	comp CDATA #IMPLIED
+	return_element (true|false) "false"
+	exclude_self (true|false) "true"
+	%ruleatts;
+	%filteratts;>
+
+<!ELEMENT setoperation EMPTY>
+<!ATTLIST setoperation
+	set CDATA #REQUIRED
+	%sumatts;
+	%filteratts;>
+
+<!ELEMENT nesting EMPTY>
+<!ATTLIST nesting
+	relation CDATA #REQUIRED>
+
+<!ELEMENT subelements EMPTY>
+<!ATTLIST subelements
+	set CDATA #IMPLIED
+	exclude_self (true|false) "true"
+	valueset CDATA #IMPLIED
+	%filteratts;
+	%sumatts;>
+
+<!ELEMENT filtervalue EMPTY>
+<!ATTLIST filtervalue
+	relation CDATA #IMPLIED
+	relset CDATA #IMPLIED
+	value CDATA #REQUIRED
+	%filteratts;>
+
+<!ELEMENT compoundset EMPTY>
+<!ATTLIST compoundset
+	set CDATA #REQUIRED
+	cum CDATA #IMPLIED
+	valueset CDATA #IMPLIED
+	exclude_self (true|false) "false"
+	%ruleatts;
+	%filteratts;>
+
+<!ELEMENT violation EMPTY>
+<!ATTLIST violation
+	condition CDATA #REQUIRED
+	value CDATA #IMPLIED>
+
+<!ELEMENT valueset EMPTY>
+<!ATTLIST valueset
+	set CDATA #REQUIRED
+	precondition CDATA #IMPLIED
+	mincnt CDATA #IMPLIED>
+
+<!ELEMENT cycle EMPTY>
+<!ATTLIST cycle
+	nodes CDATA #REQUIRED
+	minnodes CDATA #IMPLIED>
+
+<!ELEMENT reference (#PCDATA|description)*>
+<!ATTLIST reference
+	tag CDATA #REQUIRED>
+
+<!ELEMENT term (#PCDATA|description)*>
+<!ATTLIST term
+	name CDATA #REQUIRED>
+
+<!ELEMENT metricprocedure EMPTY>
+<!ATTLIST metricprocedure
+        name CDATA #REQUIRED
+        class CDATA #REQUIRED>
+<!ELEMENT setprocedure EMPTY>
+<!ATTLIST setprocedure
+        name CDATA #REQUIRED
+        class CDATA #REQUIRED>
+
+<!ELEMENT ruleprocedure EMPTY>
+<!ATTLIST ruleprocedure
+        name CDATA #REQUIRED
+        class CDATA #REQUIRED>
+        

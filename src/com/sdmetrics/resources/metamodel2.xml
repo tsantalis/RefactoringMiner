@@ -1,0 +1,360 @@
+<?xml version="1.0"?>
+<!DOCTYPE sdmetricsmetamodel SYSTEM 'metamodel.dtd'>
+
+<!-- metamodel.xml
+
+SDMetrics V2.13 default metamodel definition file for UML2.x
+Copyright (c) 2002-2011 Juergen Wuest
+
+The MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this SDMetrics project file (the "Project File"), to deal in the Project File 
+without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Project File, and to permit persons to whom the Project File is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Project File.
+
+THE PROJECT FILE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE PROJECT FILE.
+
+Note: this license grant only applies to this Project File, and not to any
+other part of SDMetrics.
+
+-->
+
+<sdmetricsmetamodel version="2.0">
+
+
+<modelelement name="sdmetricsbase">
+  <attribute name="context" type="ref">Owner of the element in the UML model.</attribute>
+  <attribute name="id">Unique identifier of the model element.</attribute>
+  <attribute name="name">Name of the element in UML model.</attribute>
+  <attribute name="comments" type="ref" multiplicity="many">The comments for the model element.</attribute>
+</modelelement>
+
+<!-- classes, interfaces, attributes, operations -->
+<modelelement name="class">
+	<attribute name="visibility">Visibility of the element (public, protected, package, private).</attribute>
+	<attribute name="abstract">Boolean indicating if the element is abstract.</attribute>
+	<attribute name="leaf">Boolean indicating if the element can have specializations.</attribute>
+	<attribute name="ownedattributes" type="ref" multiplicity="many">The attributes of the element.</attribute>
+	<attribute name="ownedoperations" type="ref" multiplicity="many">The operations of the element.</attribute>
+	<attribute name="nestedclassifiers" type="ref" multiplicity="many">The nested classifiers of the element.</attribute>
+	<attribute name="generalizations" type="ref" multiplicity="many">The generalizations owned by the element.</attribute>
+	<attribute name="interfacerealizations" type="ref" multiplicity="many">The interface realizations owned by the element.</attribute>
+  <attribute name="connectors" type="ref" multiplicity="many">The connectors owned by the element.</attribute>
+</modelelement>
+<modelelement name="interface">
+	<attribute name="ownedattributes" type="ref" multiplicity="many">The attributes of the interface.</attribute>
+	<attribute name="ownedoperations" type="ref" multiplicity="many">The operations of the interface.</attribute>
+	<attribute name="nestedclassifiers" type="ref" multiplicity="many">The nested classifiers of the interface.</attribute>
+	<attribute name="generalizations" type="ref" multiplicity="many">The generalizations owned by the interface.</attribute>
+</modelelement>
+
+<modelelement name="datatype">
+	<attribute name="ownedattributes" type="ref" multiplicity="many">The attributes of the element.</attribute>
+	<attribute name="ownedoperations" type="ref" multiplicity="many">The operations of the element.</attribute>
+	<attribute name="generalizations" type="ref" multiplicity="many">The generalizations owned by the element.</attribute>
+</modelelement>
+<modelelement name="enumeration" parent="datatype">
+  <attribute name="ownedliterals" type="ref" multiplicity="many">The literals of the enumeration.</attribute>
+</modelelement>
+<modelelement name="enumerationliteral" />
+<modelelement name="primitivetype" parent="datatype" />
+
+<modelelement name="connector">
+	<attribute name="ends" type="ref" multiplicity="many">The connector ends of the connector.</attribute>
+</modelelement>
+<modelelement name="connectorend">
+  <attribute name="role" type="ref">The element that is attached at this connector end.</attribute>
+</modelelement>
+
+<modelelement name="property">
+	<attribute name="visibility">Visibility of the feature (public, private, protected, package).</attribute>
+	<attribute name="propertytype" type="ref">Reference to the feature type (class, data type etc).</attribute>
+	<attribute name="isreadonly">Changeability of the feature. Values: true, false (default if not specified).</attribute>
+  <attribute name="association" type="ref">Reference to association if this is an association end.</attribute>
+	<attribute name="aggregation">The aggregation kind of the property: shared, composite, or none (default).</attribute>
+	<attribute name="qualifiers" type="ref" multiplicity="many">The qualifier attributes of the property.</attribute>
+</modelelement>
+
+<modelelement name="port" parent="property" />
+
+<modelelement name="operation">
+	<attribute name="visibility">Visibility of the operation (public, private, protected, package).</attribute>
+	<attribute name="abstract">Boolean indicating if operation is abstract.</attribute>
+	<attribute name="isquery">Boolean indicating if operation is a query that does not change the classifier's state.</attribute>
+	<attribute name="ownedparameters" type="ref" multiplicity="many">The parameters of the operation.</attribute>
+</modelelement>
+<modelelement name="parameter">
+	<attribute name="kind">The direction of the parameter: in (default), out, inout, return.</attribute>
+	<attribute name="parametertype" type="ref">Reference to the parameter type (class, data type etc).</attribute>
+</modelelement>
+<modelelement name="method"/>
+
+<!-- models, packages -->
+
+<modelelement name="package">
+  <attribute name="ownedmembers" type="ref" multiplicity="many">The owned member elements.</attribute>
+</modelelement>
+<modelelement name="model" parent="package" />
+
+<!-- relationships: association, generalization, ... -->
+<modelelement name="association">
+ <attribute name="memberends" type="ref" multiplicity="many">The member ends of the association.</attribute>
+ <attribute name="ownedends" type="ref" multiplicity="many">The owned ends of the association (not navigable association ends).</attribute>
+	<attribute name="generalizations" type="ref" multiplicity="many">The generalizations owned by the association.</attribute>
+</modelelement>
+
+<modelelement name="associationclass" parent="association" />
+ 
+<modelelement name="generalization">
+	<attribute name="general" type="ref">Link to the parent in the generalization.</attribute>
+</modelelement>
+
+<modelelement name="interfacerealization">
+	<attribute name="contract" type="ref">Link to the realized interface.</attribute>
+</modelelement>
+
+<modelelement name="sdmetricsabstractrelation">
+  <!-- Abstract base class to simplify the definition of dependency, abstraction, etc relationships -->
+	<attribute name="supplier" type="ref" multiplicity="many">Links to the supplier elements of the relationship.</attribute>
+	<attribute name="client" type="ref" multiplicity="many">Links to the client elements of the relationship.</attribute>
+</modelelement>
+
+<modelelement name="dependency" parent="sdmetricsabstractrelation" />
+<modelelement name="abstraction" parent="sdmetricsabstractrelation" />
+<modelelement name="realization" parent="sdmetricsabstractrelation" />
+<modelelement name="substitution" parent="sdmetricsabstractrelation" />
+<modelelement name="usage" parent="sdmetricsabstractrelation" />
+
+
+
+<!-- instance specifications, connectors. -->
+ 
+<modelelement name="collaboration" parent="class">
+	<attribute name="ownedbehaviors" type="ref" multiplicity="many">Behavior specifications owned by the collaboration.</attribute>
+</modelelement>
+
+<modelelement name="interaction" parent="class">
+  <attribute name="lifelines" type="ref" multiplicity="many">The lifelines involved in the interaction.</attribute>
+  <attribute name="messages" type="ref" multiplicity="many">The messages sent within the interaction.</attribute>
+	<attribute name="fragments" type="ref" multiplicity="many">The message occurrence specifications and combined fragments of the interaction.</attribute>
+</modelelement>
+
+<modelelement name="instancespecification">
+	<attribute name="classifier" type="ref" multiplicity="many">Links to the classifiers that this entity is an instance of.</attribute>
+  <attribute name="deployments" type="ref" multiplicity="many">The deployments where this instance specification is the target.</attribute>
+</modelelement>
+
+<modelelement name="lifeline">
+	<attribute name="represents" type="ref">The interaction participant that this lifeline represents.</attribute>
+</modelelement>
+
+<modelelement name="message">
+	<attribute name="receiveevent" type="ref">Occurrence specification for the message reception.</attribute>
+	<attribute name="sendevent" type="ref">Occurrence specification for the message sending.</attribute>
+  <attribute name="sort">The sort of communication (synchCall, asynchCall, asynchSignal).</attribute>
+</modelelement>
+
+<modelelement name="occurrencespec">
+  <attribute name="covered" type="ref">The lifeline on which this occurrence specification appears.</attribute>
+	<attribute name="event" type="ref">The occurring event.</attribute>
+</modelelement>
+
+<modelelement name="combinedfragment">
+  <attribute name="operator">The interaction operator (alt, loop, break, opt, par, ref, etc.)</attribute>
+  <attribute name="covered" type="ref" multiplicity="many">The lifelines covered by this combined fragment.</attribute>
+	<attribute name="operands" type="ref" multiplicity="many">The interaction operands of this combined fragment.</attribute>
+</modelelement>
+
+<modelelement name="interactionoperand">
+	<attribute name="fragments" type="ref" multiplicity="many">The message occurrence specifications and combined fragments of the interaction operand.</attribute>
+</modelelement>
+
+
+<!-- use case model -->
+<modelelement name="actor" parent="class" />
+<modelelement name="usecase" parent="class">
+  <attribute name="includes" type="ref" multiplicity="many">The include relationships owned by the use case.</attribute>
+  <attribute name="extends" type="ref" multiplicity="many">The extend relationships owned by the use case.</attribute>
+  <attribute name="extensionpoints" type="ref" multiplicity="many">The extension points owned by the use case.</attribute>
+</modelelement>
+<modelelement name="extensionpoint"/>
+<modelelement name="usecaseextend">
+	<attribute name="extendedcase" type="ref">The use case that is extended.</attribute>
+	<attribute name="usecaseextensionpoint" type="ref">The extension point in the extended use case.</attribute>
+</modelelement>
+<modelelement name="usecaseinclude">
+	<attribute name="usecaseaddition" type="ref">The included use case.</attribute>
+</modelelement>
+
+
+
+<!-- state machines -->
+<modelelement name="statemachine">
+  <attribute name="regions" type="ref" multiplicity="many">The top-level regions owned by the state machine.</attribute>
+	<attribute name="isprotocol">Boolean indicating if this is a protocol state machine</attribute>
+  <attribute name="connectionpoints" type="ref" multiplicity="many">The connection points of the state machine.</attribute>
+
+</modelelement>
+<modelelement name="region">
+  <attribute name="subvertices" type="ref" multiplicity="many">The states contained in the region.</attribute>
+  <attribute name="transitions" type="ref" multiplicity="many">The transitions contained in the region.</attribute>
+</modelelement>
+<modelelement name="state">
+	<attribute name="kind">The kind of state: '' (empty), final, initial, deepHistory, shallowHistory, join, fork, choice, junction, entryPoint, exitPoint, terminate.</attribute>
+  <attribute name="regions" type="ref" multiplicity="many">The regions of the composite or concurrent state.</attribute>
+  <attribute name="entry" type="ref" multiplicity="many">The entry activities of the state.</attribute>
+  <attribute name="exit" type="ref" multiplicity="many">The exit activities of the state.</attribute>
+  <attribute name="doactivity" type="ref" multiplicity="many">The do-activities of the state.</attribute>
+  <attribute name="connectionpoints" type="ref" multiplicity="many">The connection points of the state.</attribute>
+</modelelement>
+<modelelement name="transition">
+  <attribute name="kind" type="data">The kind of transition: external, internal, or local.</attribute>
+	<attribute name="isprotocol">Boolean indicating if this is a protocol transition.</attribute>
+	<attribute name="transsource" type="ref">The source state of the transition.</attribute>
+	<attribute name="transtarget" type="ref">The target state of the transition.</attribute>
+  <attribute name="triggers" type="ref" multiplicity="many">The triggers that may fire the transition.</attribute>
+	<attribute name="guard" type="ref">The guard of the transition.</attribute>
+	<attribute name="effect" type="ref">The activity to be performed when the transition fires.</attribute>
+</modelelement>
+<modelelement name="constraint"/>
+<modelelement name="trigger">
+
+  <attribute name="event" type="ref">The event causing the trigger.</attribute>
+</modelelement>
+<modelelement name="event">
+	<attribute name="kind" type="data">The kind of event (signal, call, change, time, anyreceive).</attribute>
+	<attribute name="linkedeventelement" type="ref">The element (signal, operation, boolean expression, or deadline) that raised the event, if any.</attribute>
+</modelelement>
+
+
+<!-- activities -->
+
+<modelelement name="activity">
+  <attribute name="nodes"  type="ref" multiplicity="many">The action, control, and object nodes of the activity.</attribute>
+  <attribute name="edges"  type="ref" multiplicity="many">The control and object flows of the activity.</attribute>
+	<attribute name="groups" type="ref" multiplicity="many">The groups of the activity.</attribute>
+</modelelement>
+
+<modelelement name="sdmetricsabstractactivitygroup">
+	<attribute name="edges"  type="ref" multiplicity="many">The contained edges of the group.</attribute>
+	<attribute name="nodes"  type="ref" multiplicity="many">The contained nodes of the group.</attribute>
+	<attribute name="groups" type="ref" multiplicity="many">The subgroups of the group.</attribute>
+  <attribute name="handlers" type="ref" multiplicity="many">The exception handlers of the structured node group.</attribute>
+	<attribute name="pins" type="ref" multiplicity="many">Pins owned by the activity group.</attribute>
+</modelelement>
+
+<modelelement name="activitygroup" parent="sdmetricsabstractactivitygroup">
+  <attribute name="kind">The kind of group: partition, interruptible, expansion, structured, conditional, loop, sequence.</attribute>
+</modelelement>
+
+<modelelement name="sdmetricsabstractaction">
+	<attribute name="kind" type="data">The kind of action: send, return, create, etc (there are many).</attribute>
+  <attribute name="inputs" type="ref" multiplicity="many">The input pins of the action.</attribute>
+  <attribute name="outputs" type="ref" multiplicity="many">The output pins of the action.</attribute>
+  <attribute name="handlers" type="ref" multiplicity="many">The exception handlers owned by the action.</attribute>
+</modelelement>
+
+<modelelement name="action" parent="sdmetricsabstractaction" />
+
+<modelelement name="controlnode">
+  <attribute name="kind">The kind of control node: initial, activityfinal, flowfinal, fork, join, merge, or decision.</attribute>
+</modelelement>
+
+<modelelement name="objectnode">
+  <attribute name="kind">The kind of object node: centralbuffer, datastore, activityparameter, or expansion.</attribute>
+</modelelement>
+
+<modelelement name="pin">
+  <attribute name="kind">The kind of pin (input, output, value, actioninput).</attribute>
+  <attribute name="type" type="ref">The type of the pin.</attribute>
+</modelelement>
+
+
+<modelelement name="controlflow">
+  <attribute name="source" type="ref">Source of the control flow.</attribute>
+	<attribute name="target" type="ref">Target of the control flow.</attribute>
+	<attribute name="guard" type="ref">Guard of the control flow.</attribute>
+</modelelement>
+<modelelement name="objectflow" >
+  <attribute name="source" type="ref">Source of the object flow.</attribute>
+	<attribute name="target" type="ref">Target of the object flow.</attribute>
+	<attribute name="guard" type="ref">Guard of the control flow.</attribute>
+</modelelement>
+
+
+<modelelement name="signal"/>
+<modelelement name="exceptionhandler">
+  <attribute name="handlerbody" type="ref">The node that handles the exception.</attribute>
+  <attribute name="exceptioninput" type="ref">The input node of the handler body that received the exception token.</attribute>
+</modelelement>
+
+<!-- Value specifications  -->
+<modelelement name="expression"/>
+<modelelement name="opaqueexpression"/>
+<modelelement name="instancevalue"/>
+<modelelement name="literalboolean"/>
+<modelelement name="literalinteger"/>
+<modelelement name="literalstring"/>
+<modelelement name="literalunlimitednatural"/>
+<modelelement name="literalnull"/>
+
+
+<!-- components, nodes -->
+<modelelement name="component" parent="class">
+	<attribute name="realizations" type="ref" multiplicity="many">The realizations owned by the component.</attribute>
+	<attribute name="members" type="ref" multiplicity="many">Other members owned by the component.</attribute>
+</modelelement>
+
+<modelelement name="node" parent="class">
+  <attribute name="nestednodes" type="ref" multiplicity="many">The subnodes located on the node.</attribute>
+  <attribute name="deployments" type="ref" multiplicity="many">The deployment links owned by the node (=deployment location).</attribute>
+  <attribute name="kind">The type of node (regular, executionenvironment, device)</attribute>
+</modelelement>
+
+<modelelement name="artifact" parent="class">
+  <attribute name="nestedartifacts" type="ref" multiplicity="many">The artifacts that are defined (nested) within the artifact.</attribute>
+  <attribute name="manifestations" type="ref" multiplicity="many">The manifestation links to the model elements that are manifested in the artifact.</attribute>
+</modelelement>
+<modelelement name="deploymentspec" parent="artifact"/>
+<modelelement name="deployment" parent="sdmetricsabstractrelation">
+  <attribute name="configurations" type="ref" multiplicity="many">The deployment specifications that parameterize the deployment.</attribute>
+</modelelement>
+<modelelement name="manifestation" parent="abstraction" />
+
+
+<!-- comments, stereotypes  -->
+<modelelement name="stereotype" />
+<modelelement name="comment">
+  <attribute name="body">The comment text.</attribute>
+</modelelement>
+
+
+<!-- UML diagram information -->
+<modelelement name="diagram" >
+	 <attribute name="type" type="data">The type of diagram (class diagram, sequence diagram, etc).</attribute>
+</modelelement>
+
+<modelelement name="diagramelement" >
+	 <attribute name="element" type="ref">The element that is shown on the diagram.</attribute>
+</modelelement>
+
+
+
+
+
+
+
+</sdmetricsmetamodel>
+

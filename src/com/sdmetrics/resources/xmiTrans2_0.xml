@@ -1,0 +1,801 @@
+<?xml version="1.0"?>
+<!DOCTYPE xmitransformations SYSTEM 'xmitrans.dtd'>
+
+<!-- xmiTrans2_0.xml
+
+XMI transformations for the SDMetrics V2.13 default metamodel
+for UML2.x and XMI 2.0/2.1 source files.
+
+Copyright (c) 2002-2011 Juergen Wuest
+
+The MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this SDMetrics project file (the "Project File"), to deal in the Project File 
+without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Project File, and to permit persons to whom the Project File is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Project File.
+
+THE PROJECT FILE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE PROJECT FILE.
+
+Note: this license grant only applies to this Project File, and not to any
+other part of SDMetrics.
+
+-->
+
+<xmitransformations version="2.0">
+
+
+<!-- base element -->
+<xmitransformation modelelement="sdmetricsbase" xmipattern="sdmetricsbase" recurse="true">
+<trigger name="id" type="attrval" attr="xmi:id" />
+<trigger name="name" type="attrval" attr="name" />
+<trigger name="comments" type="xmi2assoc" attr="ownedComment" src="uml:Comment" />
+</xmitransformation>
+
+<!-- classes, interfaces, attributes, operations -->
+<xmitransformation modelelement="class" xmipattern="uml:Class" recurse="true">
+<trigger name="visibility" type="attrval" attr="visibility" />
+<trigger name="abstract" type="attrval" attr="isAbstract"/>
+<trigger name="leaf" type="attrval" attr="isLeaf"/>
+<trigger name="ownedattributes" type="xmi2assoc" src="uml:Property" attr="ownedAttribute" />
+<trigger name="ownedoperations" type="xmi2assoc" src="uml:Operation" attr="ownedOperation" />
+<trigger name="ownedattributes" type="xmi2assoc" src="uml:Port" attr="ownedPort" />
+<trigger name="nestedclassifiers" type="xmi2assoc" attr="nestedClassifier" />
+<trigger name="generalizations" type="xmi2assoc" src="uml:Generalization" attr="generalization" />
+<trigger name="interfacerealizations" type="xmi2assoc" src="uml:InterfaceRealization" attr="interfaceRealization" />
+
+<trigger name="connectors" type="xmi2assoc" src="uml:Connector" attr="ownedConnector" />
+</xmitransformation>
+
+<xmitransformation modelelement="interface" xmipattern="uml:Interface" recurse="true">
+<trigger name="ownedattributes" type="xmi2assoc" src="uml:Property" attr="ownedAttribute" />
+<trigger name="ownedoperations" type="xmi2assoc" src="uml:Operation" attr="ownedOperation" />
+<trigger name="nestedclassifiers" type="xmi2assoc" attr="nestedClassifier" />
+<trigger name="generalizations" type="xmi2assoc" src="uml:Generalization" attr="generalization" />
+</xmitransformation>
+
+<xmitransformation modelelement="datatype" xmipattern="uml:DataType" recurse="true">
+<trigger name="ownedattributes" type="xmi2assoc" src="uml:Property" attr="ownedAttribute" />
+<trigger name="ownedoperations" type="xmi2assoc" src="uml:Operation" attr="ownedOperation" />
+<trigger name="generalizations" type="xmi2assoc" src="uml:Generalization" attr="generalization" />
+</xmitransformation>
+
+<xmitransformation modelelement="enumeration" xmipattern="uml:Enumeration" recurse="true">
+<trigger name="ownedliterals" type="xmi2assoc" src="uml:EnumerationLiteral" attr="ownedLiteral" />
+</xmitransformation>
+<xmitransformation modelelement="enumerationliteral" xmipattern="uml:EnumerationLiteral" />
+<xmitransformation modelelement="primitivetype" xmipattern="uml:PrimitiveType" />
+
+<xmitransformation modelelement="connector" xmipattern="uml:Connector" recurse="true">
+<trigger name="ends" type="xmi2assoc" attr="end" src="uml:ConnectorEnd" />
+</xmitransformation>
+<xmitransformation modelelement="connectorend" xmipattern="uml:ConnectorEnd">
+<trigger name="role" type="xmi2assoc" attr="role" />
+</xmitransformation>
+
+<xmitransformation modelelement="property" xmipattern="uml:Property" recurse="true">
+<trigger name="visibility" type="attrval" attr="visibility" />
+<trigger name="propertytype" type="xmi2assoc" attr="type" />
+<trigger name="isreadonly" type="attrval" attr="isReadOnly" />
+<trigger name="association" type="xmi2assoc" src="uml:Association" attr="association" />
+<trigger name="aggregation" type="attrval" attr="aggregation"/>
+<trigger name="qualifiers" type="xmi2assoc" src="uml:Property" attr="qualifier" />
+</xmitransformation>
+
+<xmitransformation modelelement="port" xmipattern="uml:Port" recurse="true" />
+
+<xmitransformation modelelement="operation" xmipattern="uml:Operation" recurse="true">
+<trigger name="visibility" type="attrval" attr="visibility"/>
+<trigger name="abstract" type="attrval" attr="isAbstract"/>
+<trigger name="isquery" type="attrval" attr="isQuery"/>
+<trigger name="ownedparameters" type="xmi2assoc" src="uml:Parameter" attr="ownedParameter" />
+</xmitransformation>
+
+<xmitransformation modelelement="parameter" xmipattern="uml:Parameter">
+<trigger name="kind" type="attrval" attr="direction"/>
+<trigger name="parametertype" type="xmi2assoc" attr="type"/>
+</xmitransformation>
+
+<xmitransformation modelelement="method" xmipattern="uml:Method" recurse="true">
+</xmitransformation>
+
+<!-- models, packages -->
+<xmitransformation modelelement="package" xmipattern="uml:Package" recurse="true">
+<trigger name="ownedmembers" type="xmi2assoc" attr="packagedElement" /><!-- UML 2.1 -->
+<trigger name="ownedmembers" type="xmi2assoc" attr="ownedMember" /><!-- UML 2.0 -->
+<trigger name="ownedmembers" type="xmi2assoc" attr="ownedPackageMember" />
+<trigger name="ownedmembers" type="xmi2assoc" attr="ownedType" />
+<trigger name="ownedmembers" type="xmi2assoc" attr="nestedPackage" src="uml:Package" />
+</xmitransformation>
+<xmitransformation modelelement="model" xmipattern="uml:Model" recurse="true" requirexmiid="false"/>
+
+<!-- relationships: association, generalization, ... -->
+<xmitransformation modelelement="association" xmipattern="uml:Association" recurse="true">
+<trigger name="memberends" type="xmi2assoc" attr="memberEnd" src="uml:Property"/>
+<trigger name="ownedends" type="xmi2assoc" attr="ownedEnd" src="uml:Property" />
+<trigger name="generalizations" type="xmi2assoc" src="uml:Generalization" attr="generalization" />
+</xmitransformation>
+
+<xmitransformation modelelement="associationclass" xmipattern="uml:AssociationClass" recurse="true" />
+
+<xmitransformation modelelement="generalization" xmipattern="uml:Generalization" >
+<trigger name="general" type="xmi2assoc" attr="general" />
+</xmitransformation>
+<xmitransformation modelelement="interfacerealization" xmipattern="uml:InterfaceRealization">
+<trigger name="contract" type="xmi2assoc" attr="contract" />
+<trigger name="contract" type="xmi2assoc" attr="supplier" />
+</xmitransformation>
+<!-- also allow uml:Implementation from earlier versions of the UML2 metamodel. -->
+<xmitransformation modelelement="interfacerealization" xmipattern="uml:Implementation">
+
+<trigger name="contract" type="xmi2assoc" attr="contract" />
+
+<trigger name="contract" type="xmi2assoc" attr="supplier" />
+</xmitransformation>
+
+<xmitransformation modelelement="sdmetricsabstractrelation" xmipattern="sdmetricsabstractrelation" >
+<trigger name="supplier" type="xmi2assoc" attr="supplier"/>
+<trigger name="client" type="xmi2assoc" attr="client"/>
+</xmitransformation>
+
+<xmitransformation modelelement="dependency" xmipattern="uml:Dependency" />
+<xmitransformation modelelement="abstraction" xmipattern="uml:Abstraction" />
+<xmitransformation modelelement="realization" xmipattern="uml:Realization">
+<trigger name="supplier" type="xmi2assoc" attr="realizingClassifier" />
+<trigger name="client" type="xmi2assoc" attr="abstraction" />
+<trigger name="client" type="xmi2assoc" attr="client"/>
+</xmitransformation>
+<xmitransformation modelelement="substitution" xmipattern="uml:Substitution">
+<trigger name="supplier" type="xmi2assoc" attr="contract" />
+<trigger name="client" type="xmi2assoc" attr="substitutingClassifier" />
+<trigger name="client" type="xmi2assoc" attr="client"/>
+</xmitransformation>
+<xmitransformation modelelement="usage" xmipattern="uml:Usage" />
+
+
+
+
+<!-- objects, connectors -->
+
+<xmitransformation modelelement="collaboration" xmipattern="uml:Collaboration" recurse="true" >
+	<trigger name="ownedbehaviors" type="xmi2assoc" attr="ownedBehavior" />
+</xmitransformation>
+
+<xmitransformation modelelement="interaction" xmipattern="uml:Interaction" recurse="true">
+  <trigger name="lifelines" type="xmi2assoc" src="uml:Lifeline" attr="lifeline" />
+  <trigger name="messages" type="xmi2assoc" src="uml:Message" attr="message" />
+	<trigger name="fragments" type="xmi2assoc" attr="fragment" />
+</xmitransformation>
+
+<xmitransformation modelelement="instancespecification" xmipattern="uml:InstanceSpecification" recurse="true">
+<trigger name="classifier" type="xmi2assoc" attr="classifier" />
+<trigger name="deployments" type="xmi2assoc" attr="deployment" src="uml:Deployment" />
+</xmitransformation>
+
+<xmitransformation modelelement="lifeline" xmipattern="uml:Lifeline">
+<trigger name="represents" type="xmi2assoc" attr="represents" />
+</xmitransformation>
+
+<xmitransformation modelelement="message" xmipattern="uml:Message" recurse="true">
+<trigger name="sendevent" type="xmi2assoc" attr="sendEvent" />
+<trigger name="receiveevent" type="xmi2assoc" attr="receiveEvent" />
+<trigger name="sort" type="attrval" attr="messageSort" />
+</xmitransformation>
+
+
+<xmitransformation modelelement="occurrencespec" xmipattern="uml:MessageOccurrenceSpecification">
+<trigger name="covered" type="xmi2assoc" attr="covered" src="uml:Lifeline" />
+<trigger name="covered" type="xmi2assoc" attr="coveredLifeLine" src="uml:Lifeline" />
+<trigger name="event" type="xmi2assoc" attr="event" />
+</xmitransformation>
+
+
+<xmitransformation modelelement="occurrencespec" xmipattern="uml:OccurrenceSpecification">
+<trigger name="covered" type="xmi2assoc" attr="covered" src="uml:Lifeline" />
+<trigger name="event" type="xmi2assoc" attr="event" />
+</xmitransformation>
+
+
+<xmitransformation modelelement="combinedfragment" xmipattern="uml:CombinedFragment" recurse="true">
+<trigger name="operator" type="attrval" attr="interactionOperator" />
+<trigger name="covered" type="xmi2assoc" attr="covered" src="uml:Lifeline" />
+<trigger name="covered" type="xmi2assoc" attr="coveredLifeLine" src="uml:Lifeline" />
+<trigger name="operands" type="xmi2assoc" attr="operand" src="uml:InteractionOperand" />
+</xmitransformation>
+
+<xmitransformation modelelement="interactionoperand" xmipattern="uml:InteractionOperand" recurse="true">
+	<trigger name="fragments" type="xmi2assoc" attr="fragment" />
+</xmitransformation>
+
+<xmitransformation modelelement="event" xmipattern="uml:ExecutionEvent" recurse="true">
+<trigger name="kind" type="constant" attr="execution"/>
+</xmitransformation>
+<xmitransformation modelelement="event" xmipattern="uml:CreationEvent" recurse="true">
+<trigger name="kind" type="constant" attr="creation"/>
+</xmitransformation>
+<xmitransformation modelelement="event" xmipattern="uml:DestructionEvent" recurse="true">
+<trigger name="kind" type="constant" attr="destruction"/>
+</xmitransformation>
+<xmitransformation modelelement="event" xmipattern="uml:SendOperationEvent" recurse="true">
+<trigger name="linkedeventelement" type="xmi2assoc" attr="operation" src="uml:Operation" />
+<trigger name="kind" type="constant" attr="sendoperation"/>
+</xmitransformation>
+<xmitransformation modelelement="event" xmipattern="uml:SendSignalEvent" recurse="true">
+<trigger name="linkedeventelement" type="xmi2assoc" attr="signal" src="uml:Signal" />
+<trigger name="kind" type="constant" attr="sendsignal"/>
+</xmitransformation>
+
+
+
+<!-- components, deployments -->
+<xmitransformation modelelement="component" xmipattern="uml:Component" recurse="true">
+<trigger name="realizations" type="xmi2assoc" attr="realization" src="uml:Realization"  />
+<trigger name="members" type="xmi2assoc" attr="ownedMember" />
+</xmitransformation>
+
+<xmitransformation modelelement="realization" xmipattern="uml:ComponentRealization"><!-- new in UML 2.1 -->
+<trigger name="supplier" type="xmi2assoc" attr="realizingClassifier" />
+<trigger name="client" type="xmi2assoc" attr="abstraction" />
+</xmitransformation>
+
+<xmitransformation modelelement="node" xmipattern="uml:Node" recurse="true" >
+<trigger name="kind" type="constant" attr="regular" />
+<trigger name="nestednodes" type="xmi2assoc" attr="nestedNode" src="uml:Node" />
+<trigger name="deployments" type="xmi2assoc" attr="deployment" src="uml:Deployment" />
+</xmitransformation>
+<xmitransformation modelelement="node" xmipattern="uml:ExecutionEnvironment" recurse="true">
+<trigger name="kind" type="constant" attr="executionenvironment" />
+</xmitransformation>
+<xmitransformation modelelement="node" xmipattern="uml:Device" recurse="true" >
+<trigger name="kind" type="constant" attr="device" />
+</xmitransformation>
+
+<xmitransformation modelelement="artifact" xmipattern="uml:Artifact" recurse="true">
+<trigger name="nestedartifacts" type="xmi2assoc" attr="nestedArtifact" src="uml:Artifact" />
+<trigger name="manifestations" type="xmi2assoc" attr="manifestation" src="uml:Manifestation" />
+</xmitransformation>
+<xmitransformation modelelement="deploymentspec" xmipattern="uml:DeploymentSpecification" recurse="true" />
+<xmitransformation modelelement="deployment" xmipattern="uml:Deployment" recurse="true">
+<trigger name="supplier" type="xmi2assoc" attr="deployedArtifact" />
+<trigger name="supplier" type="xmi2assoc" attr="supplier" />
+<trigger name="client" type="xmi2assoc" attr="location"/>
+<trigger name="client" type="xmi2assoc" attr="client" />
+<trigger name="configurations" type="xmi2assoc" attr="configuration" src="uml:DeploymentSpecification" />
+</xmitransformation>
+<xmitransformation modelelement="manifestation" xmipattern="uml:Manifestation" recurse="true">
+<trigger name="supplier" type="xmi2assoc" attr="utilizedElement" />
+</xmitransformation>
+
+<xmitransformation modelelement="association" xmipattern="uml:CommunicationPath" recurse="true">
+<trigger name="memberends" type="xmi2assoc" attr="memberEnd" src="uml:Property"/>
+<trigger name="ownedends" type="xmi2assoc" attr="ownedEnd" src="uml:Property" />
+<trigger name="generalizations" type="xmi2assoc" src="uml:Generalization" attr="generalization" />
+</xmitransformation>
+
+
+
+<!-- use case model -->
+<xmitransformation modelelement="usecase" xmipattern="uml:UseCase" recurse="true">
+<trigger name="extends" type="xmi2assoc" attr="extend" src="uml:Extend" />
+<trigger name="includes" type="xmi2assoc" attr="include" src="uml:Include" />
+<trigger name="extensionpoints" type="xmi2assoc" attr="extensionPoint" src="uml:ExtensionPoint" />
+</xmitransformation>
+
+<xmitransformation modelelement="actor" xmipattern="uml:Actor" recurse="true" />
+
+<xmitransformation modelelement="usecaseextend" xmipattern="uml:Extend" >
+<trigger name="extendedcase" type="xmi2assoc" attr="extendedCase" />
+<trigger name="usecaseextensionpoint" type="xmi2assoc" attr="extensionLocation" />
+</xmitransformation>
+
+<xmitransformation modelelement="usecaseinclude" xmipattern="uml:Include">
+<trigger name="usecaseaddition" type="xmi2assoc" attr="addition" />
+</xmitransformation>
+
+<xmitransformation modelelement="extensionpoint" xmipattern="uml:ExtensionPoint" recurse="true" />
+
+
+
+
+<!-- state machines -->
+
+<xmitransformation modelelement="statemachine" xmipattern="uml:StateMachine" recurse="true">
+<trigger name="regions" type="xmi2assoc" attr="region" src="uml:Region" />
+<trigger name="isprotocol" type="constant" attr="false" />
+
+<trigger name="connectionpoints" type="xmi2assoc" attr="connectionPoint" src="uml:Pseudostate" />
+</xmitransformation>
+<xmitransformation modelelement="statemachine" xmipattern="uml:ProtocolStateMachine" recurse="true">
+<trigger name="regions" type="xmi2assoc" attr="region" src="uml:Region" />
+<trigger name="isprotocol" type="constant" attr="true" />
+
+<trigger name="connectionpoints" type="xmi2assoc" attr="connectionPoint" src="uml:Pseudostate" />
+</xmitransformation>
+
+<xmitransformation modelelement="region" xmipattern="uml:Region" recurse="true">
+<trigger name="subvertices" type="xmi2assoc" attr="subvertex" />
+<trigger name="transitions" type="xmi2assoc" attr="transition" src="uml:Transition" />
+</xmitransformation>
+
+<xmitransformation modelelement="state" xmipattern="uml:State" recurse="true">
+<trigger name="kind" type="constant" attr=""/>
+
+<trigger name="entry" type="xmi2assoc" attr="entry"/>
+<trigger name="exit" type="xmi2assoc" attr="exit"/>
+<trigger name="doactivity" type="xmi2assoc" attr="doActivity"/>
+
+<trigger name="regions" type="xmi2assoc" attr="region" src="uml:Region" />
+<trigger name="connectionpoints" type="xmi2assoc" attr="connectionPoint" src="uml:Pseudostate" />
+</xmitransformation>
+
+<xmitransformation modelelement="state" xmipattern="uml:FinalState">
+<trigger name="kind" type="constant" attr="final"/>
+</xmitransformation>
+
+
+<xmitransformation modelelement="state" xmipattern="uml:Pseudostate">
+<trigger name="kind" type="attrval" attr="kind" />
+</xmitransformation>
+
+
+<xmitransformation modelelement="transition" xmipattern="uml:Transition" recurse="true">
+<trigger name="kind" type="attrval" attr="kind" />
+<trigger name="transsource" type="xmi2assoc" attr="source" />
+<trigger name="transtarget" type="xmi2assoc" attr="target" />
+<trigger name="triggers" type="xmi2assoc" attr="trigger" src="uml:Trigger" />
+<trigger name="guard" type="xmi2assoc" attr="guard" src="uml:Constraint" />
+
+<trigger name="effect" type="xmi2assoc" attr="effect" />
+
+<trigger name="isprotocol" type="constant" attr="false" />
+</xmitransformation>
+
+<xmitransformation modelelement="transition" xmipattern="uml:ProtocolTransition" recurse="true">
+<trigger name="kind" type="attrval" attr="kind" />
+<trigger name="transsource" type="xmi2assoc" attr="source" />
+<trigger name="transtarget" type="xmi2assoc" attr="target" />
+<trigger name="triggers" type="xmi2assoc" attr="trigger" src="uml:Trigger" />
+<trigger name="guard" type="xmi2assoc" attr="guard" src="uml:Constraint" />
+
+<trigger name="effect" type="xmi2assoc" attr="effect" />
+
+<trigger name="isprotocol" type="constant" attr="true" />
+</xmitransformation>
+
+
+<xmitransformation modelelement="trigger" xmipattern="uml:Trigger" recurse="true">
+<trigger name="event" type="xmi2assoc" attr="event" />
+</xmitransformation>
+
+
+<xmitransformation modelelement="event" xmipattern="uml:CallEvent" recurse="true">
+<trigger name="linkedeventelement" type="xmi2assoc" attr="operation" src="uml:Operation" />
+<trigger name="kind" type="constant" attr="call"/>
+</xmitransformation>
+
+<xmitransformation modelelement="event" xmipattern="uml:TimeEvent" recurse="true">
+<trigger name="linkedeventelement" type="xmi2assoc" attr="when"/>
+<trigger name="kind" type="constant" attr="time"/>
+</xmitransformation>
+
+<xmitransformation modelelement="event" xmipattern="uml:SignalEvent" recurse="true">
+<trigger name="linkedeventelement" type="xmi2assoc" attr="signal" src="uml:Signal"/>
+<trigger name="kind" type="constant" attr="signal"/>
+</xmitransformation>
+
+<xmitransformation modelelement="event" xmipattern="uml:ChangeEvent" recurse="true">
+<trigger name="linkedeventelement" type="xmi2assoc" attr="changeExpression"/>
+<trigger name="kind" type="constant" attr="change"/>
+</xmitransformation>
+
+<xmitransformation modelelement="event" xmipattern="uml:AnyReceiveEvent" recurse="true">
+<trigger name="kind" type="constant" attr="anyreceive"/>
+</xmitransformation>
+
+<xmitransformation modelelement="event" xmipattern="uml:ReceiveSignalEvent" recurse="true"><!-- new in UML2.1 -->
+<trigger name="kind" type="constant" attr="receivesignal"/>
+</xmitransformation>
+
+<xmitransformation modelelement="event" xmipattern="uml:ReceiveOperationEvent" recurse="true"><!-- new in UML2.1 -->
+<trigger name="kind" type="constant" attr="receiveoperation"/>
+</xmitransformation>
+
+<xmitransformation modelelement="constraint" xmipattern="uml:Constraint" />
+
+
+
+<!-- activities -->
+
+<xmitransformation modelelement="activity" xmipattern="uml:Activity" recurse="true">
+<trigger name="nodes" type="xmi2assoc" attr="node" />
+<trigger name="edges" type="xmi2assoc" attr="edge" />
+<trigger name="groups" type="xmi2assoc" attr="group" />
+</xmitransformation>
+
+<xmitransformation modelelement="sdmetricsabstractactivitygroup" xmipattern="sdmetricsabstractactivitygroup" recurse="true">
+<trigger name="nodes" type="xmi2assoc" attr="containedNode" /><!-- UML 2.0 -->
+<trigger name="edges" type="xmi2assoc" attr="containedEdge" />
+<trigger name="nodes" type="xmi2assoc" attr="node" /><!-- UML 2.1 -->
+<trigger name="edges" type="xmi2assoc" attr="edge" />
+<trigger name="groups" type="xmi2assoc" attr="subgroup" /><!-- UML 2.0 -->
+<trigger name="groups" type="xmi2assoc" attr="subpartition" /><!-- UML 2.1 -->
+<trigger name="groups" type="xmi2assoc" attr="subPartition" /><!-- Altova UModel 2007 -->
+<trigger name="handlers" type="xmi2assoc" attr="handler"  src="uml:ExceptionHandler"/>
+<trigger name="pins" type="xmi2assoc" attr="input" src="uml:InputPin" />
+<trigger name="pins" type="xmi2assoc" attr="output" src="uml:OutputPin" />
+</xmitransformation>
+
+<xmitransformation modelelement="activitygroup" xmipattern="uml:ActivityPartition" recurse="true">
+<trigger name="groups" type="xmi2assoc" attr="subgroup" src="uml:ActivityPartition" />
+<trigger name="kind" type="constant" attr="partition" />
+</xmitransformation>
+<xmitransformation modelelement="activitygroup" xmipattern="uml:StructuredActivityNode" recurse="true">
+<trigger name="kind" type="constant" attr="structured" />
+</xmitransformation>
+<xmitransformation modelelement="activitygroup" xmipattern="uml:ConditionalNode" recurse="true">
+<trigger name="kind" type="constant" attr="conditional" />
+<trigger name="pins" type="xmi2assoc" attr="result" />
+</xmitransformation>
+<xmitransformation modelelement="activitygroup" xmipattern="uml:LoopNode" recurse="true">
+<trigger name="kind" type="constant" attr="loop" />
+<trigger name="pins" type="xmi2assoc" attr="result" />
+<trigger name="pins" type="xmi2assoc" attr="loopVariableInput" />
+<trigger name="pins" type="xmi2assoc" attr="loopVariable" />
+</xmitransformation>
+<xmitransformation modelelement="activitygroup" xmipattern="uml:SequenceNode" recurse="true">
+<trigger name="kind" type="constant" attr="sequence" />
+</xmitransformation>
+<xmitransformation modelelement="activitygroup" xmipattern="uml:InterruptibleActivityRegion" recurse="true">
+<trigger name="kind" type="constant" attr="interruptible" />
+</xmitransformation>
+<xmitransformation modelelement="activitygroup" xmipattern="uml:ExpansionRegion" recurse="true">
+<trigger name="kind" type="constant" attr="expansion" />
+<trigger name="nodes" type="xmi2assoc" attr="inputElement" />
+<trigger name="nodes" type="xmi2assoc" attr="outputElement" />
+</xmitransformation>
+
+<xmitransformation modelelement="controlflow" xmipattern="uml:ControlFlow" recurse="true">
+<trigger name="source" type="xmi2assoc" attr="source" />
+<trigger name="target" type="xmi2assoc" attr="target" />
+<trigger name="guard" type="xmi2assoc" attr="guard" />
+</xmitransformation>
+
+<xmitransformation modelelement="objectflow" xmipattern="uml:ObjectFlow" recurse="true">
+<trigger name="source" type="xmi2assoc" attr="source" />
+<trigger name="target" type="xmi2assoc" attr="target" />
+<trigger name="guard" type="xmi2assoc" attr="guard" />
+</xmitransformation>
+
+<xmitransformation modelelement="controlnode" xmipattern="uml:InitialNode" recurse="true">
+<trigger name="kind" type="constant" attr="initial" />
+</xmitransformation>
+<xmitransformation modelelement="controlnode" xmipattern="uml:ActivityFinalNode" recurse="true">
+<trigger name="kind" type="constant" attr="activityfinal" />
+</xmitransformation>
+<xmitransformation modelelement="controlnode" xmipattern="uml:FlowFinalNode" recurse="true">
+<trigger name="kind" type="constant" attr="flowfinal" />
+</xmitransformation>
+<xmitransformation modelelement="controlnode" xmipattern="uml:JoinNode" recurse="true">
+<trigger name="kind" type="constant" attr="join" />
+</xmitransformation>
+<xmitransformation modelelement="controlnode" xmipattern="uml:ForkNode" recurse="true">
+<trigger name="kind" type="constant" attr="fork" />
+</xmitransformation>
+<xmitransformation modelelement="controlnode" xmipattern="uml:DecisionNode" recurse="true">
+<trigger name="kind" type="constant" attr="decision" />
+</xmitransformation>
+<xmitransformation modelelement="controlnode" xmipattern="uml:MergeNode" recurse="true">
+<trigger name="kind" type="constant" attr="merge" />
+</xmitransformation>
+
+<xmitransformation modelelement="objectnode" xmipattern="uml:CentralBufferNode" recurse="true">
+<trigger name="kind" type="constant" attr="centralbuffer" />
+</xmitransformation>
+<xmitransformation modelelement="objectnode" xmipattern="uml:DataStoreNode" recurse="true">
+<trigger name="kind" type="constant" attr="datastore" />
+</xmitransformation>
+<xmitransformation modelelement="objectnode" xmipattern="uml:ActivityParameterNode" recurse="true">
+<trigger name="kind" type="constant" attr="activityparameter" />
+</xmitransformation>
+<xmitransformation modelelement="objectnode" xmipattern="uml:ExpansionNode" recurse="true">
+<trigger name="kind" type="constant" attr="expansion" />
+</xmitransformation>
+
+<xmitransformation modelelement="pin" xmipattern="uml:InputPin" recurse="true">
+<trigger name="kind" type="constant" attr="input" />
+<trigger name="type" type="xmi2assoc" attr="type" />
+</xmitransformation>
+<xmitransformation modelelement="pin" xmipattern="uml:OutputPin" recurse="true">
+<trigger name="kind" type="constant" attr="output" />
+<trigger name="type" type="xmi2assoc" attr="type" />
+</xmitransformation>
+<xmitransformation modelelement="pin" xmipattern="uml:ValuePin" recurse="true">
+<trigger name="kind" type="constant" attr="value" />
+<trigger name="type" type="xmi2assoc" attr="type" />
+</xmitransformation>
+<xmitransformation modelelement="pin" xmipattern="uml:ActionInputPin" recurse="true">
+<trigger name="kind" type="constant" attr="actioninput" />
+<trigger name="type" type="xmi2assoc" attr="type" />
+</xmitransformation>
+
+<xmitransformation modelelement="signal" xmipattern="uml:Signal" recurse="true" />
+
+<xmitransformation modelelement="exceptionhandler" xmipattern="uml:ExceptionHandler" recurse="true">
+<trigger name="handlerbody" type="xmi2assoc" attr="handlerBody" />
+<trigger name="exceptioninput" type="xmi2assoc" attr="exceptionInput" />
+</xmitransformation>
+
+<!-- abstract action, covers frequently used types of input and output pins -->
+<xmitransformation modelelement="sdmetricsabstractaction" xmipattern="sdmetricsabstractaction">
+<trigger name="inputs" type="xmi2assoc" attr="input" src="uml:InputPin" />
+<trigger name="outputs" type="xmi2assoc" attr="output" src="uml:OutputPin" />
+<trigger name="inputs" type="xmi2assoc" attr="inputValue" src="uml:InputPin" /><!-- UML 2.1 -->
+<trigger name="outputs" type="xmi2assoc" attr="outputValue" src="uml:OutputPin" /><!-- UML 2.1 -->
+<trigger name="inputs" type="xmi2assoc" attr="argument" src="uml:InputPin" />
+<trigger name="inputs" type="xmi2assoc" attr="target" src="uml:InputPin" />
+<trigger name="inputs" type="xmi2assoc" attr="object" src="uml:InputPin" />
+<trigger name="outputs" type="xmi2assoc" attr="result" src="uml:OutputPin" />
+<trigger name="handlers" type="xmi2assoc" attr="handler" src="uml:ExceptionHandler"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="uml:OpaqueAction" recurse="true">
+<trigger name="kind" type="constant" attr="opaque"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="uml:CallOperationAction" recurse="true">
+<trigger name="kind" type="constant" attr="calloperation"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:CallBehaviorAction" recurse="true">
+<trigger name="kind" type="constant" attr="callbehavior"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:SendSignalAction" recurse="true">
+<trigger name="kind" type="constant" attr="sendsignal"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="uml:BroadcastSignalAction" recurse="true">
+<trigger name="kind" type="constant" attr="broadcastsignal"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:SendObjectAction" recurse="true">
+<trigger name="inputs" type="xmi2assoc" attr="request" src="uml:InputPin" />
+<trigger name="kind" type="constant" attr="sendobject"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="uml:CreateObjectAction" recurse="true">
+<trigger name="kind" type="constant" attr="createobject"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:DestroyObjectAction" recurse="true">
+<trigger name="kind" type="constant" attr="destroyobject"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:TestIdentityAction" recurse="true">
+<trigger name="inputs" type="xmi2assoc" attr="first" src="uml:InputPin" />
+<trigger name="inputs" type="xmi2assoc" attr="second" src="uml:InputPin" />
+<trigger name="kind" type="constant" attr="testidentity"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:ReadSelfAction" recurse="true">
+<trigger name="kind" type="constant" attr="readself"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="uml:ReadStructuralFeatureAction" recurse="true">
+<trigger name="kind" type="constant" attr="readstructuralfeature"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:AddStructuralFeatureValueAction" recurse="true">
+<trigger name="inputs" type="xmi2assoc" attr="insertAt" src="uml:InputPin" />
+<trigger name="inputs" type="xmi2assoc" attr="value" src="uml:InputPin" />
+<trigger name="kind" type="constant" attr="addstructuralfeaturevalue"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:RemoveStructuralFeatureValueAction" recurse="true">
+<trigger name="inputs" type="xmi2assoc" attr="removeAt" src="uml:InputPin" />
+<trigger name="inputs" type="xmi2assoc" attr="value" src="uml:InputPin" />
+<trigger name="kind" type="constant" attr="removestructuralfeaturevalue"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:ClearStructuralFeatureAction" recurse="true">
+<trigger name="kind" type="constant" attr="clearstructuralfeature"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="uml:ReadLinkAction" recurse="true">
+<trigger name="kind" type="constant" attr="readlink"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:CreateLinkAction" recurse="true">
+<trigger name="kind" type="constant" attr="createlink"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:DestroyLinkAction" recurse="true">
+<trigger name="kind" type="constant" attr="destroylink"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:ClearAssociationAction" recurse="true">
+<trigger name="kind" type="constant" attr="clearassociation"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="uml:ValueSpecificationAction" recurse="true">
+<trigger name="kind" type="constant" attr="valuespecification"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="uml:AcceptEventAction" recurse="true">
+<trigger name="kind" type="constant" attr="acceptevent"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:AcceptCallAction" recurse="true">
+<trigger name="outputs" type="xmi2assoc" attr="returnInformation" src="uml:OutputPin" />
+<trigger name="kind" type="constant" attr="acceptcall"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:ReplyAction" recurse="true">
+<trigger name="inputs" type="xmi2assoc" attr="returnInformation" src="uml:InputPin" />
+<trigger name="inputs" type="xmi2assoc" attr="replyValue" src="uml:InputPin" />
+<trigger name="kind" type="constant" attr="replay"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:UnmarshallAction" recurse="true">
+<trigger name="inputs" type="xmi2assoc" attr="returnInformation" src="uml:InputPin" />
+<trigger name="kind" type="constant" attr="unmarshall"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="uml:ReadExtentAction" recurse="true">
+<trigger name="kind" type="constant" attr="readextent"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:ReclassifyObjectAction" recurse="true">
+<trigger name="kind" type="constant" attr="reclassifyobject"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:ReadIsClassifiedObjectAction" recurse="true">
+<trigger name="kind" type="constant" attr="readisclassifiedobject"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:StartClassifierBehaviorAction" recurse="true">
+<trigger name="kind" type="constant" attr="startclassifierbehavior"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="uml:StartObjectBehaviorAction" recurse="true"><!-- new in UML 2.2 -->
+<trigger name="kind" type="constant" attr="startobjectbehavior"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="uml:ReadLinkObjectEndAction" recurse="true">
+<trigger name="kind" type="constant" attr="readlinkobjectend"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:ReadLinkObjectEndQualifierAction" recurse="true">
+<trigger name="kind" type="constant" attr="readlinkobjectendqualifier"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:CreateLinkObjectAction" recurse="true">
+<trigger name="kind" type="constant" attr="createlinkobject"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="uml:ReadVariableAction" recurse="true">
+<trigger name="kind" type="constant" attr="readvariable"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:AddVariableValueAction" recurse="true">
+<trigger name="inputs" type="xmi2assoc" attr="value" src="uml:InputPin" />
+<trigger name="inputs" type="xmi2assoc" attr="insertAt" src="uml:InputPin" />
+<trigger name="kind" type="constant" attr="addvariablevalue"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:RemoveVariableValueAction" recurse="true">
+<trigger name="inputs" type="xmi2assoc" attr="value" src="uml:InputPin" />
+<trigger name="inputs" type="xmi2assoc" attr="removeAt" src="uml:InputPin" />
+<trigger name="kind" type="constant" attr="removevariablevalue"/>
+</xmitransformation>
+<xmitransformation modelelement="action" xmipattern="uml:ClearVariableAction" recurse="true">
+<trigger name="kind" type="constant" attr="clearvariable"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="uml:RaiseExceptionAction" recurse="true">
+<trigger name="inputs" type="xmi2assoc" attr="exception" src="uml:InputPin" />
+<trigger name="kind" type="constant" attr="raiseexception"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="uml:ReduceAction" recurse="true"><!-- new in UML 2.1 -->
+<trigger name="kind" type="constant" attr="reduce"/>
+<trigger name="inputs" type="xmi2assoc" attr="collection" src="uml:InputPin" />
+</xmitransformation>
+
+<!-- value specifications, we count them, but we are not interested in their contents -->
+<xmitransformation modelelement="expression" xmipattern="uml:Expression" />
+<xmitransformation modelelement="opaqueexpression" xmipattern="uml:OpaqueExpression" />
+<xmitransformation modelelement="instancevalue" xmipattern="uml:InstanceValue" />
+<xmitransformation modelelement="literalboolean" xmipattern="uml:LiteralBoolean" />
+<xmitransformation modelelement="literalinteger" xmipattern="uml:LiteralInteger" />
+<xmitransformation modelelement="literalstring" xmipattern="uml:LiteralString" />
+<xmitransformation modelelement="literalunlimitednatural" xmipattern="uml:LiteralUnlimitedNatural" />
+<xmitransformation modelelement="literalnull" xmipattern="uml:LiteralNull" />
+
+
+<!-- stereotypes, comments -->
+<xmitransformation modelelement="stereotype" xmipattern="uml:Stereotype" />
+
+<xmitransformation modelelement="comment" xmipattern="uml:Comment">
+<trigger name="body" type="attrval" attr="body" />
+<trigger name="body" type="ctext" src="body" />
+</xmitransformation>
+
+<!-- UML Diagram Information as saved by older versions of Rose, Together, Enterprise Architect,
+	   Ideogramic UML, and possibly some more -->
+
+<xmitransformation modelelement="diagram" xmipattern="Diagramming.Diagram" recurse="true">
+	<trigger name="name" type="ctext" src="Diagramming.Diagram.name" />
+	<trigger name="type" type="ctext" src="Diagramming.Diagram.diagramType" />
+	<trigger name="context" type="gcattrval" src="Diagramming.Diagram.owner" attr="xmi.idref" />
+</xmitransformation>
+
+<xmitransformation modelelement="diagramelement" xmipattern="Diagramming.DiagramElement" recurse="false">
+	<trigger name="element" type="gcattrval" src="Foundation.Core.PresentationElement.subject" attr="xmi.idref" />
+</xmitransformation>
+
+
+<!-- UML Diagram Information as saved by more current versions of 
+     Rose, Together, Enterprise Architect -->
+
+<xmitransformation modelelement="diagram" xmipattern="UML:Diagram" recurse="true">
+	<trigger name="name" type="attrval" attr="name" />
+	<trigger name="name" type="ctext" src="UML:Diagram.name" />
+	<trigger name="type" type="attrval" attr="type" />
+	<trigger name="type" type="attrval" attr="diagramType" />
+	<trigger name="type" type="ctext" src="UML:Diagram.diagramType" />
+	<trigger name="context" type="attrval" attr="owner" />
+	<trigger name="context" type="gcattrval" src="UML:Diagram.owner" attr="xmi.idref" />
+</xmitransformation>
+
+<xmitransformation modelelement="diagramelement" xmipattern="UML:DiagramElement" recurse="false">
+	<trigger name="element" type="attrval" attr="subject" />
+	<trigger name="element" type="gcattrval" src="UML:DiagramElement.subject" attr="xmi.idref" />
+</xmitransformation>
+
+
+
+<!-- UML Diagram Information as saved by earlier versions of the 
+     UIS Integrate Plus XMI exporter -->
+
+<xmitransformation modelelement="diagram" xmipattern="UISDiagram" recurse="true">
+	<trigger name="name" type="ctext" src="uisDiagramName" />
+	<trigger name="type" type="ctext" src="uisDiagramStyle" />
+</xmitransformation>
+
+<xmitransformation modelelement="diagramelement" xmipattern="Foundation.Auxiliary_Elements.Presentation" recurse="false">
+	<trigger name="element" type="gcattrval" src="Foundation.Auxiliary_Elements.Presentation.model" attr="xmi.idref" />
+</xmitransformation>
+
+
+<!-- UML Diagram Information as saved by NoMagic's MagicDraw XMI exporter -->
+
+<xmitransformation modelelement="diagram" xmipattern="mdElement" condition="elementClass='DiagramData'" recurse="true">
+	<trigger name="name" type="ctext" src="Foundation.Core.ModelElement.name" />
+	<trigger name="name" type="attrval" attr="name" />
+	<trigger name="type" type="ctext" src="type" />
+	<trigger name="context" type="cattrval" src="parentID" attr="xmi.idref" />
+</xmitransformation>
+
+<xmitransformation modelelement="diagram" xmipattern="mdElement" condition="elementClass='DiagramPresentationElement'" recurse="true">
+	<trigger name="name" type="attrval" attr="name" />
+	<trigger name="type" type="ctext" src="type" />
+	<trigger name="context" type="attrval" attr="ownerOfDiagram" />
+</xmitransformation>
+
+
+<xmitransformation modelelement="diagramelement" xmipattern="mdElement" condition="!(elementClass='DiagramView'|elementClass='DiagramPresentationElement'|elementClass='DiagramData'|elementClass='TextBoxView')" recurse="true">
+	<trigger name="element" type="cattrval" src="elementID" attr="xmi.idref" />
+	<trigger name="element" type="cattrval" src="elementID" attr="xmi:idref" />
+</xmitransformation>
+
+<!-- UML Diagram Information as saved by Embarcadero Describe (pre 6.0) -->
+
+<xmitransformation modelelement="diagram" xmipattern="Diagram" recurse="true">
+	<trigger name="name" type="attrval" attr="name" />
+	<trigger name="type" type="attrval" attr="type" />
+	<trigger name="context" type="attrval" attr="parent" />
+</xmitransformation>
+
+
+<xmitransformation modelelement="diagramelement" xmipattern="DrawObject">
+	<trigger name="element" type="attrval" attr="reference" />
+</xmitransformation>
+
+<xmitransformation modelelement="diagramelement" xmipattern="DrawLine">
+	<trigger name="element" type="attrval" attr="reference" />
+</xmitransformation>
+
+
+
+
+</xmitransformations>

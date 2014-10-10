@@ -1,0 +1,574 @@
+<?xml version="1.0"?>
+<!DOCTYPE xmitransformations SYSTEM 'xmitrans.dtd'>
+
+<!-- xmiTrans1_1.xml
+XMI transformations for the SDMetrics V2.1 default metamodel 
+for UML1.x models and XMI 1.1 and XMI 1.2 source files.
+
+Copyright (c) 2002-2011 Juergen Wuest
+
+The MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this SDMetrics project file (the "Project File"), to deal in the Project File 
+without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Project File, and to permit persons to whom the Project File is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Project File.
+
+THE PROJECT FILE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE PROJECT FILE.
+
+Note: this license grant only applies to this Project File, and not to any
+other part of SDMetrics.
+
+-->
+
+<xmitransformations version="2.0">
+
+
+<!-- base element -->
+<xmitransformation modelelement="sdmetricsbase" xmipattern="sdmetricsbase" recurse="true">
+<trigger name="id" type="attrval" attr="xmi.id" />
+<trigger name="name" type="attrval" attr="name" />
+<trigger name="name" type="ctext" src="UML:ModelElement.name" />
+<trigger name="context" type="attrval" attr="namespace"/>
+<trigger name="context" type="gcattrval" src="UML:ModelElement.namespace" attr="xmi.idref"/>
+<trigger name="stereotypes" type="gcattrval" src="UML:ModelElement.stereotype"
+				 attr="xmi.idref" linkbackattr="extendedelements" />
+</xmitransformation>
+
+<!-- classes, interfaces, attributes, operations -->
+<xmitransformation modelelement="class" xmipattern="UML:Class" recurse="true">
+<trigger name="visibility" type="attrval" attr="visibility" />
+<trigger name="visibility" type="cattrval" src="UML:ModelElement.visibility" attr="xmi.value"/>
+<trigger name="abstract" type="attrval" attr="isAbstract"/>
+<trigger name="abstract" type="cattrval" src="UML:GeneralizableElement.isAbstract" attr="xmi.value"/>
+<trigger name="leaf" type="attrval" attr="isLeaf"/>
+<trigger name="leaf" type="cattrval" src="UML:GeneralizableElement.isLeaf" attr="xmi.value"/>
+</xmitransformation>
+
+<xmitransformation modelelement="interface" xmipattern="UML:Interface" recurse="true" />
+
+<xmitransformation modelelement="datatype" xmipattern="UML:DataType" recurse="true"/>
+
+<xmitransformation modelelement="attribute" xmipattern="UML:Attribute" recurse="true">
+<trigger name="visibility" type="attrval" attr="visibility" />
+<trigger name="visibility" type="cattrval" src="UML:ModelElement.visibility" attr="xmi.value"/>
+<trigger name="attributetype" type="attrval" attr="type" />
+<trigger name="attributetype" type="gcattrval" src="UML:StructuralFeature.type" attr="xmi.idref"/>
+<trigger name="changeability" type="attrval" attr="changeability" />
+<trigger name="changeability" type="attrval" attr="changeable" />
+<trigger name="changeability" type="cattrval" src="UML:StructuralFeature.changeability" attr="xmi.value"/>
+<trigger name="changeability" type="cattrval" src="UML:StructuralFeature.changeable" attr="xmi.value"/>
+<trigger name="context" type="attrval" attr="owner"/>
+<trigger name="context" type="gcattrval" src="UML:Feature.owner" attr="xmi.idref"/>
+
+</xmitransformation>
+
+<xmitransformation modelelement="operation" xmipattern="UML:Operation" recurse="true">
+<trigger name="visibility" type="attrval" attr="visibility"/>
+<trigger name="visibility" type="cattrval" src="UML:ModelElement.visibility" attr="xmi.value"/>
+<trigger name="abstract" type="attrval" attr="isAbstract"/>
+<trigger name="abstract" type="cattrval" src="UML:Operation.isAbstract" attr="xmi.value"/>
+<trigger name="isquery" type="attrval" attr="isQuery"/>
+<trigger name="isquery" type="cattrval" src="UML:BehavioralFeature.isQuery" attr="xmi.value"/>
+<trigger name="context" type="attrval" attr="owner"/>
+<trigger name="context" type="gcattrval" src="UML:ModelElement.namespace" attr="xmi.idref"/>
+</xmitransformation>
+
+<xmitransformation modelelement="parameter" xmipattern="UML:Parameter">
+<trigger name="kind" type="attrval" attr="kind"/>
+<trigger name="kind" type="cattrval" src="UML:Parameter.kind" attr="xmi.value"/>
+<trigger name="parametertype" type="attrval" attr="type"/>
+<trigger name="parametertype" type="gcattrval" src="UML:Parameter.type" attr="xmi.idref"/>
+<trigger name="context" type="attrval" attr="behavioralFeature"/>
+<trigger name="context" type="gcattrval" src="UML:Parameter.behavioralFeature" attr="xmi.idref"/>
+
+</xmitransformation>
+
+<xmitransformation modelelement="method" xmipattern="UML:Method" recurse="true">
+<trigger name="context" type="attrval" attr="owner"/>
+<trigger name="context" type="gcattrval" src="UML:ModelElement.namespace" attr="xmi.idref"/>
+</xmitransformation>
+
+
+<!-- models, packages, subsystems -->
+<xmitransformation modelelement="model" xmipattern="UML:Model" recurse="true">
+<trigger name="context" type="ignore"/>  <!-- leaves context empty - models have no owner -->
+</xmitransformation>
+
+<xmitransformation modelelement="package" xmipattern="UML:Package" recurse="true" />
+
+<xmitransformation modelelement="subsystem" xmipattern="UML:Subsystem" recurse="true" />
+
+
+<!-- relationships: association, generalization, ... -->
+<xmitransformation modelelement="association" xmipattern="UML:Association" recurse="true" />
+<xmitransformation modelelement="associationclass" xmipattern="UML:AssociationClass" recurse="true" />
+
+<xmitransformation modelelement="associationend" xmipattern="UML:AssociationEnd" >
+<trigger name="navigable" type="attrval" attr="isNavigable" />
+<trigger name="navigable" type="cattrval" src="UML:AssociationEnd.isNavigable" attr="xmi.value"/>
+<trigger name="aggregation" type="attrval" attr="aggregation"/>
+<trigger name="aggregation" type="cattrval" src="UML:AssociationEnd.aggregation" attr="xmi.value"/>
+<trigger name="associationendtype" type="attrval" attr="type"/>
+<trigger name="associationendtype" type="gcattrval" src="UML:AssociationEnd.type" attr="xmi.idref"/>
+<!-- many exporters use .participant instead of .type -->
+<trigger name="associationendtype" type="attrval" attr="participant"/>
+<trigger name="associationendtype" type="gcattrval" src="UML:AssociationEnd.participant" attr="xmi.idref"/>
+<trigger name="context" type="attrval" attr="association"/>
+<trigger name="context" type="gcattrval" src="UML:AssociationEnd.association" attr="xmi.idref"/>
+</xmitransformation>
+
+<xmitransformation modelelement="generalization" xmipattern="UML:Generalization" >
+<trigger name="genchild" type="attrval" attr="child" />
+<trigger name="genchild" type="attrval" attr="subtype" />
+<trigger name="genchild" type="gcattrval" src="UML:Generalization.child" attr="xmi.idref"/>
+<trigger name="genparent" type="attrval" attr="parent" />
+<trigger name="genparent" type="attrval" attr="supertype" />
+<trigger name="genparent" type="gcattrval" src="UML:Generalization.parent" attr="xmi.idref"/>
+</xmitransformation>
+
+<xmitransformation modelelement="abstraction" xmipattern="UML:Abstraction" >
+<trigger name="abssupplier" type="attrval" attr="supplier"/>
+<trigger name="abssupplier" type="gcattrval" src="UML:Dependency.supplier" attr="xmi.idref"/>
+<trigger name="absclient" type="attrval" attr="client"/>
+<trigger name="absclient" type="gcattrval" src="UML:Dependency.client" attr="xmi.idref"/>
+</xmitransformation>
+
+<xmitransformation modelelement="dependency" xmipattern="UML:Dependency" >
+<trigger name="depsupplier" type="attrval" attr="supplier"/>
+<trigger name="depsupplier" type="gcattrval" src="UML:Dependency.supplier" attr="xmi.idref"/>
+<trigger name="depclient" type="attrval" attr="client"/>
+<trigger name="depclient" type="gcattrval" src="UML:Dependency.client" attr="xmi.idref"/>
+</xmitransformation>
+
+<xmitransformation modelelement="usage" xmipattern="UML:Dependency" >
+<trigger name="depsupplier" type="attrval" attr="supplier"/>
+<trigger name="depsupplier" type="gcattrval" src="UML:Dependency.supplier" attr="xmi.idref"/>
+<trigger name="depclient" type="attrval" attr="client"/>
+<trigger name="depclient" type="gcattrval" src="UML:Dependency.client" attr="xmi.idref"/>
+</xmitransformation>
+
+
+
+<!-- objects, stimuli, links-->
+<xmitransformation modelelement="object" xmipattern="UML:Object">
+<trigger name="objtype" type="attrval" attr="classifier" />
+<trigger name="objtype" type="gcattrval" src="UML:Instance.classifier" attr="xmi.idref"/>
+</xmitransformation>
+
+<xmitransformation modelelement="stimulus" xmipattern="UML:Stimulus">
+<trigger name="stimsender" type="attrval" attr="sender"/>
+<trigger name="stimsender" type="gcattrval" src="UML:Stimulus.sender" attr="xmi.idref"/>
+<trigger name="stimreceiver" type="attrval" attr="receiver"/>
+<trigger name="stimreceiver" type="gcattrval" src="UML:Stimulus.receiver" attr="xmi.idref"/>
+<trigger name="stimaction" type="attrval" attr="dispatchAction"/>
+<trigger name="stimaction" type="gcattrval" src="UML:Stimulus.dispatchAction" attr="xmi.idref"/>
+</xmitransformation>
+
+<xmitransformation modelelement="link" xmipattern="UML:Link" recurse="true" />
+
+<xmitransformation modelelement="linkend" xmipattern="UML:LinkEnd">
+<trigger name="context" type="gcattrval" src="UML:LinkEnd.link" attr="xmi.idref"/>
+<trigger name="linkendtype" type="gcattrval" src="UML:LinkEnd.instance" attr="xmi.idref"/>
+</xmitransformation>
+
+
+<!-- classifierroles, messages -->
+<xmitransformation modelelement="collaboration" xmipattern="UML:Collaboration" recurse="true" />
+
+<xmitransformation modelelement="classifierrole" xmipattern="UML:ClassifierRole">
+<trigger name="context" type="ignore"/>  <!-- pick parent element as context -->
+<trigger name="classifierbase" type="attrval" attr="base" />
+<trigger name="classifierbase" type="gcattrval" src="UML:ClassifierRole.base" attr="xmi.idref"/>
+</xmitransformation>
+
+
+<xmitransformation modelelement="interaction" xmipattern="UML:Interaction" recurse="true">
+<trigger name="context" type="attrval" attr="context" />
+<trigger name="context" type="gcattrval" src="UML:Interaction.context" attr="xmi.idref"/>
+</xmitransformation>
+
+<xmitransformation modelelement="message" xmipattern="UML:Message">
+<trigger name="context" type="attrval" attr="interaction" />
+<trigger name="context" type="gcattrval" src="UML:Message.interaction" attr="xmi.idref"/>
+<trigger name="messagesender" type="attrval" attr="sender" />
+<trigger name="messagesender" type="gcattrval" src="UML:Message.sender" attr="xmi.idref"/>
+<trigger name="messagereceiver" type="attrval" attr="receiver" />
+<trigger name="messagereceiver" type="gcattrval" src="UML:Message.receiver" attr="xmi.idref"/>
+<trigger name="messageaction" type="attrval" attr="action" />
+<trigger name="messageaction" type="gcattrval" src="UML:Message.action" attr="xmi.idref"/>
+</xmitransformation>
+
+
+
+
+
+
+<!-- components, nodes -->
+<xmitransformation modelelement="component" xmipattern="UML:Component" recurse="true">
+<trigger name="deploymentlocation" type="attrval" attr="deploymentLocation"/>
+<trigger name="deploymentlocation" type="gcattrval" src="UML:Component.deploymentLocation" attr="xmi.idref"/>
+</xmitransformation>
+
+<xmitransformation modelelement="componentinstance" xmipattern="UML:ComponentInstance" recurse="true">
+<trigger name="componenttype" type="attrval" attr="classifier"/>
+<trigger name="componenttype" type="gcattrval" src="UML:Instance.classifier" attr="xmi.idref"/>
+</xmitransformation>
+
+<xmitransformation modelelement="node" xmipattern="UML:Node" recurse="true" />
+
+<xmitransformation modelelement="nodeinstance" xmipattern="UML:NodeInstance" recurse="true">
+<trigger name="nodetype" type="attrval" attr="classifier"/>
+<trigger name="nodetype" type="gcattrval" src="UML:Instance.classifier" attr="xmi.idref"/>
+</xmitransformation>
+
+
+<!-- use case model -->
+<xmitransformation modelelement="usecase" xmipattern="UML:UseCase" recurse="true" />
+
+<xmitransformation modelelement="actor" xmipattern="UML:Actor" recurse="true" />
+
+<xmitransformation modelelement="usecaseextend" xmipattern="UML:Extend" >
+<trigger name="usecaseextbase" type="attrval" attr="base" />
+<trigger name="usecaseextbase" type="gcattrval" src="UML:Extend.base" attr="xmi.idref"/>
+<trigger name="usecaseextension" type="attrval" attr="extension" />
+<trigger name="usecaseextension" type="gcattrval" src="UML:Extend.extension" attr="xmi.idref"/>
+<trigger name="usecaseextensionpoint" type="attrval" attr="extensionPoint" />
+<trigger name="usecaseextensionpoint" type="gcattrval" src="UML:Extend.extensionPoint" attr="xmi.idref"/>
+</xmitransformation>
+
+<xmitransformation modelelement="usecaseinclude" xmipattern="UML:Include">
+<trigger name="usecaseincbase" type="attrval" attr="base" />
+<trigger name="usecaseincbase" type="gcattrval" src="UML:Include.base" attr="xmi.idref"/>
+<trigger name="usecaseaddition" type="attrval" attr="addition" />
+<trigger name="usecaseaddition" type="gcattrval" src="UML:Include.addition" attr="xmi.idref"/>
+</xmitransformation>
+
+<xmitransformation modelelement="extensionpoint" xmipattern="UML:ExtensionPoint" recurse="true">
+<trigger name="context" type="ignore" />  <!-- parent is containing use case -->
+</xmitransformation>
+
+
+
+
+<!-- state machines -->
+<xmitransformation modelelement="statemachine" xmipattern="UML:StateMachine" recurse="true">
+<trigger name="context" type="attrval" attr="context" />
+<trigger name="context" type="gcattrval" src="UML:StateMachine.context" attr="xmi.idref"/>
+</xmitransformation>
+
+<xmitransformation modelelement="sdmetricsabstractstate" xmipattern="sdmetricsabstractstate" recurse="true">
+<trigger name="context" type="attrval" attr="container"/>
+<trigger name="context" type="gcattrval" src="UML:StateVertex.container" attr="xmi.idref"/>
+<trigger name="entryaction" type="gcattrval" src="UML:State.entry" attr="xmi.idref"/>
+<trigger name="exitaction" type="gcattrval" src="UML:State.exit" attr="xmi.idref"/>
+<trigger name="doactivity" type="gcattrval" src="UML:State.doActivity" attr="xmi.idref"/>
+<trigger name="internaltrans" type="gcattrval"  src="UML:State.internalTransition" attr="xmi.idref"/>
+</xmitransformation>
+
+<xmitransformation modelelement="state" xmipattern="UML:SimpleState" recurse="true">
+<trigger name="kind" type="constant" attr="simple"/>
+</xmitransformation>
+
+<xmitransformation modelelement="state" xmipattern="UML:State" recurse="true">
+<trigger name="kind" type="constant" attr=""/>
+</xmitransformation>
+
+<xmitransformation modelelement="state" xmipattern="UML:CompositeState" recurse="true">
+<trigger name="isconcurrent" type="attrval" attr="isConcurrent" />
+<trigger name="isconcurrent" type="cattrval" src="UML:CompositeState.isConcurrent" attr="xmi.value" />
+<trigger name="kind" type="constant" attr="composite"/>
+</xmitransformation>
+
+<xmitransformation modelelement="state" xmipattern="UML:SynchState" recurse="true">
+<trigger name="kind" type="constant" attr="synch"/>
+</xmitransformation>
+
+<xmitransformation modelelement="state" xmipattern="UML:StubState" recurse="true">
+<trigger name="kind" type="constant" attr="stub"/>
+</xmitransformation>
+
+<xmitransformation modelelement="state" xmipattern="UML:SubmachineState" recurse="true">
+<trigger name="kind" type="constant" attr="submachine"/>
+</xmitransformation>
+
+<xmitransformation modelelement="state" xmipattern="UML:FinalState" recurse="true" >
+<trigger name="kind" type="constant" attr="final"/>
+</xmitransformation>
+
+<!-- Pseudo states -->
+<xmitransformation modelelement="state" xmipattern="UML:Pseudostate" recurse="true">
+<trigger name="kind" type="attrval" attr="kind" />
+<trigger name="kind" type="cattrval" src="UML:Pseudostate.kind" attr="xmi.value"/>
+</xmitransformation>
+
+<!-- Some XMI exporters think it's PseudoState, so we cut them some slack -->
+<xmitransformation modelelement="state" xmipattern="UML:PseudoState" recurse="true">
+<trigger name="kind" type="attrval" attr="kind" />
+<trigger name="kind" type="cattrval" src="UML:PseudoState.kind" attr="xmi.value"/>
+</xmitransformation>
+
+<xmitransformation modelelement="transition" xmipattern="UML:Transition" recurse="true">
+<trigger name="context" type="attrval" attr="stateMachine" />
+<trigger name="context" type="gcattrval" src="UML:Transition.stateMachine" attr="xmi.idref"/>
+<trigger name="transsource" type="attrval" attr="source" />
+<trigger name="transsource" type="gcattrval" src="UML:Transition.source" attr="xmi.idref"/>
+<trigger name="transtarget" type="attrval" attr="target" />
+<trigger name="transtarget" type="gcattrval" src="UML:Transition.target" attr="xmi.idref"/>
+<trigger name="trigger" type="attrval" attr="trigger" />
+<trigger name="trigger" type="gcattrval" src="UML:Transition.trigger" attr="xmi.idref"/>
+</xmitransformation>
+
+<xmitransformation modelelement="event" xmipattern="UML:CallEvent" recurse="true">
+<trigger name="context" type="gcattrval" src="UML:Transition.stateMachine" attr="xmi.idref"/>
+<trigger name="linkedeventelement" type="attrval" attr="operation"/>
+<trigger name="linkedeventelement" type="gcattrval" src="UML:CallEvent.operation" attr="xmi.idref"/>
+<trigger name="kind" type="constant" attr="call"/>
+</xmitransformation>
+
+<xmitransformation modelelement="event" xmipattern="UML:TimeEvent" recurse="true">
+<trigger name="context" type="gcattrval" src="UML:Transition.stateMachine" attr="xmi.idref"/>
+<trigger name="linkedeventelement" type="attrval" attr="when"/>
+<trigger name="linkedeventelement" type="gcattrval" src="UML:TimeEvent.when" attr="xmi.idref"/>
+<trigger name="kind" type="constant" attr="time"/>
+</xmitransformation>
+
+<xmitransformation modelelement="event" xmipattern="UML:SignalEvent" recurse="true">
+<trigger name="context" type="gcattrval" src="UML:Transition.stateMachine" attr="xmi.idref"/>
+<trigger name="linkedeventelement" type="attrval" attr="signal"/>
+<trigger name="linkedeventelement" type="gcattrval" src="UML:SignalEvent.signal" attr="xmi.idref"/>
+<trigger name="kind" type="constant" attr="signal"/>
+</xmitransformation>
+
+<xmitransformation modelelement="event" xmipattern="UML:ChangeEvent" recurse="true">
+<trigger name="context" type="gcattrval" src="UML:Transition.stateMachine" attr="xmi.idref"/>
+<trigger name="linkedeventelement" type="attrval" attr="changeExpression"/>
+<trigger name="linkedeventelement" type="gcattrval" src="UML:ChangeEvent.changeExpression" attr="xmi.idref"/>
+<trigger name="kind" type="constant" attr="change"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="UML:SendAction">
+<trigger name="context" type="gcattrval" src="UML:Transition.stateMachine" attr="xmi.idref"/>
+<trigger name="linkedactionelement" type="attrval" attr="signal"/>
+<trigger name="linkedactionelement" type="gcattrval" src="UML:SendAction.signal" attr="xmi" />
+<trigger name="kind" type="constant" attr="send"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="UML:ReturnAction">
+<trigger name="context" type="gcattrval" src="UML:Transition.stateMachine" attr="xmi.idref"/>
+<trigger name="linkedactionelement" type="ignore" />
+<trigger name="kind" type="constant" attr="return"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="UML:CreateAction">
+<trigger name="context" type="gcattrval" src="UML:Transition.stateMachine" attr="xmi.idref"/>
+<trigger name="linkedactionelement" type="attrval" attr="instantiation"/>
+<trigger name="linkedactionelement" type="gcattrval" src="UML:CreateAction.instantiation" attr="xmi" />
+<trigger name="kind" type="constant" attr="create"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="UML:DestroyAction">
+<trigger name="context" type="gcattrval" src="UML:Transition.stateMachine" attr="xmi.idref"/>
+<trigger name="linkedactionelement" type="ignore" />
+<trigger name="kind" type="constant" attr="destroy"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="UML:TerminateAction">
+<trigger name="context" type="gcattrval" src="UML:Transition.stateMachine" attr="xmi.idref"/>
+<trigger name="linkedactionelement" type="ignore" />
+<trigger name="kind" type="constant" attr="terminate"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="UML:CallAction">
+<trigger name="context" type="gcattrval" src="UML:Transition.stateMachine" attr="xmi.idref"/>
+<trigger name="linkedactionelement" type="attrval" attr="operation"/>
+<trigger name="linkedactionelement" type="gcattrval" src="UML:CallAction.operation" attr="xmi.idref"/>
+<trigger name="kind" type="constant" attr="call"/>
+</xmitransformation>
+
+<xmitransformation modelelement="action" xmipattern="UML:UninterpretedAction">
+<trigger name="context" type="attrval" attr="transition"/>
+<trigger name="context" type="gcattrval" src="UML:Transition.stateMachine" attr="xmi.idref"/>
+<trigger name="linkedactionelement" type="ignore" />
+<trigger name="kind" type="constant" attr="uninterpreted"/>
+</xmitransformation>
+
+<xmitransformation modelelement="guard" xmipattern="UML:Guard" >
+<trigger name="context" type="attrval" attr="transition" />
+<trigger name="context" type="gcattrval" src="UML:Guard.transition" attr="xmi.idref"/>
+</xmitransformation>
+
+
+
+
+
+<!-- activity graphs -->
+<xmitransformation modelelement="activitygraph" xmipattern="UML:ActivityGraph" recurse="true">
+<trigger name="context" type="attrval" attr="context" />
+<trigger name="context" type="gcattrval" src="UML:StateMachine.context" attr="xmi.idref"/>
+</xmitransformation>
+
+<!-- some XMI exporters use ActivityModel instead of ActivityGraph -->
+<xmitransformation modelelement="activitygraph" xmipattern="UML:ActivityModel" recurse="true">
+<trigger name="context" type="attrval" attr="context" />
+<trigger name="context" type="gcattrval" src="UML:StateMachine.context" attr="xmi.idref"/>
+</xmitransformation>
+
+<xmitransformation modelelement="state" xmipattern="UML:ActionState" recurse="true">
+<trigger name="kind" type="constant" attr="action"/>
+</xmitransformation>
+
+<xmitransformation modelelement="state" xmipattern="UML:ObjectFlowState" recurse="true">
+<trigger name="kind" type="constant" attr="objectflow"/>
+</xmitransformation>
+
+<xmitransformation modelelement="state" xmipattern="UML:CallState" recurse="true">
+<trigger name="kind" type="constant" attr="call"/>
+</xmitransformation>
+
+<xmitransformation modelelement="state" xmipattern="UML:SubactivityState" recurse="true">
+<trigger name="kind" type="constant" attr="subactivity"/>
+</xmitransformation>
+
+<xmitransformation modelelement="partition" xmipattern="UML:Partition" recurse="true">
+<trigger name="contents" type="attrval" attr="contents" />
+<trigger name="contents" type="gcattrval" src="UML:Partition.contents" attr="xmi.idref" />
+</xmitransformation>
+
+<!-- signals -->
+<xmitransformation modelelement="signal" xmipattern="UML:Signal" recurse="true">
+<trigger name="context" type="attrval" attr="context" />
+<trigger name="context" type="gcattrval" src="UML:Signal.context" attr="xmi.idref"/>
+</xmitransformation>
+
+
+
+
+<!-- stereotypes -->
+<xmitransformation modelelement="stereotype" xmipattern="UML:Stereotype">
+<trigger name="extendedelements" type="gcattrval" src="UML:Stereotype.extendedElement"
+				 attr="xmi.idref" linkbackattr="stereotypes" />
+</xmitransformation>
+
+
+<!-- tagged values -->
+<xmitransformation modelelement="taggedvalue" xmipattern="UML:TaggedValue" requirexmiid="false">
+<!-- tag and value up to UML 1.3  -->
+<trigger name="tag" type="attrval" attr="tag" />
+<trigger name="tag" type="ctext" src="UML:TaggedValue.tag" />
+<trigger name="value" type="attrval" attr="value" />
+<trigger name="value" type="ctext" src="UML:TaggedValue.value" />
+<!-- tag definition and value since UML 1.4  -->
+<trigger name="value" type="attrval" attr="dataValue" />
+<trigger name="value" type="ctext" src="UML:TaggedValue.dataValue" />
+<trigger name="definition" type="attrval" attr="type" />
+<trigger name="definition" type="gcattrval" src="UML:TaggedValue.type" attr="xmi.idref" />
+<trigger name="context" type="attrval" attr="modelElement" />
+<trigger name="context" type="gcattrval" src="UML:TaggedValue.modelElement" attr="xmi.idref" />
+</xmitransformation>
+
+<xmitransformation modelelement="tagdefinition" xmipattern="UML:TagDefinition">
+<trigger name="tagtype" type="attrval" attr="tagType" />
+<trigger name="tagtype" type="ctext" src="UML:TagDefinition.tagType" />
+</xmitransformation>
+
+<!-- UML Diagram Information as saved by older versions of Rose, Together, Enterprise Architect,
+	   Ideogramic UML, and possibly some more -->
+
+<xmitransformation modelelement="diagram" xmipattern="Diagramming.Diagram" recurse="true">
+	<trigger name="name" type="ctext" src="Diagramming.Diagram.name" />
+	<trigger name="type" type="ctext" src="Diagramming.Diagram.diagramType" />
+	<trigger name="context" type="gcattrval" src="Diagramming.Diagram.owner" attr="xmi.idref" />
+</xmitransformation>
+
+<xmitransformation modelelement="diagramelement" xmipattern="Diagramming.DiagramElement" recurse="false">
+	<trigger name="element" type="gcattrval" src="Foundation.Core.PresentationElement.subject" attr="xmi.idref" />
+</xmitransformation>
+
+
+<!-- UML Diagram Information as saved by more current versions of 
+     Rose, Together, Enterprise Architect -->
+
+<xmitransformation modelelement="diagram" xmipattern="UML:Diagram" recurse="true">
+	<trigger name="name" type="attrval" attr="name" />
+	<trigger name="name" type="ctext" src="UML:Diagram.name" />
+	<trigger name="type" type="attrval" attr="type" />
+	<trigger name="type" type="attrval" attr="diagramType" />
+	<trigger name="type" type="ctext" src="UML:Diagram.diagramType" />
+	<trigger name="context" type="attrval" attr="owner" />
+	<trigger name="context" type="gcattrval" src="UML:Diagram.owner" attr="xmi.idref" />
+</xmitransformation>
+
+<xmitransformation modelelement="diagramelement" xmipattern="UML:DiagramElement" recurse="false">
+	<trigger name="element" type="attrval" attr="subject" />
+	<trigger name="element" type="gcattrval" src="UML:DiagramElement.subject" attr="xmi.idref" />
+</xmitransformation>
+
+
+
+<!-- UML Diagram Information as saved by earlier versions of the 
+     UIS Integrate Plus XMI exporter -->
+
+<xmitransformation modelelement="diagram" xmipattern="UISDiagram" recurse="true">
+	<trigger name="name" type="ctext" src="uisDiagramName" />
+	<trigger name="type" type="ctext" src="uisDiagramStyle" />
+</xmitransformation>
+
+<xmitransformation modelelement="diagramelement" xmipattern="Foundation.Auxiliary_Elements.Presentation" recurse="false">
+	<trigger name="element" type="gcattrval" src="Foundation.Auxiliary_Elements.Presentation.model" attr="xmi.idref" />
+</xmitransformation>
+
+
+<!-- UML Diagram Information as saved by NoMagic's MagicDraw XMI exporter -->
+
+<xmitransformation modelelement="diagram" xmipattern="mdElement" condition="elementClass='DiagramData'" recurse="true">
+	<trigger name="name" type="ctext" src="Foundation.Core.ModelElement.name" />
+	<trigger name="name" type="attrval" attr="name" />
+	<trigger name="type" type="ctext" src="type" />
+	<trigger name="context" type="cattrval" src="parentID" attr="xmi.idref" />
+</xmitransformation>
+
+<xmitransformation modelelement="diagram" xmipattern="mdElement" condition="elementClass='DiagramPresentationElement'" recurse="true">
+	<trigger name="name" type="attrval" attr="name" />
+	<trigger name="type" type="ctext" src="type" />
+	<trigger name="context" type="attrval" attr="ownerOfDiagram" />
+</xmitransformation>
+
+
+<xmitransformation modelelement="diagramelement" xmipattern="mdElement" condition="!(elementClass='DiagramView'|elementClass='DiagramPresentationElement'|elementClass='DiagramData'|elementClass='TextBoxView')" recurse="true">
+	<trigger name="element" type="cattrval" src="elementID" attr="xmi.idref" />
+	<trigger name="element" type="cattrval" src="elementID" attr="xmi:idref" />
+</xmitransformation>
+
+<!-- UML Diagram Information as saved by Embarcadero Describe (pre 6.0) -->
+
+<xmitransformation modelelement="diagram" xmipattern="Diagram" recurse="true">
+	<trigger name="name" type="attrval" attr="name" />
+	<trigger name="type" type="attrval" attr="type" />
+	<trigger name="context" type="attrval" attr="parent" />
+</xmitransformation>
+
+
+<xmitransformation modelelement="diagramelement" xmipattern="DrawObject">
+	<trigger name="element" type="attrval" attr="reference" />
+</xmitransformation>
+
+<xmitransformation modelelement="diagramelement" xmipattern="DrawLine">
+	<trigger name="element" type="attrval" attr="reference" />
+</xmitransformation>
+
+
+
+
+</xmitransformations>

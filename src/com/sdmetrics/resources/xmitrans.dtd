@@ -1,0 +1,21 @@
+<!ELEMENT xmitransformations ( xmitransformation+ ) >
+<!ATTLIST xmitransformations
+	 version CDATA #REQUIRED
+	 requirexmiid (true|false) "true">
+
+<!ELEMENT xmitransformation (trigger*) >
+<!ATTLIST xmitransformation
+	 modelelement CDATA #REQUIRED
+	 xmipattern CDATA #REQUIRED
+	 recurse (true|false) "false"
+	 requirexmiid (true|false) #IMPLIED
+	 condition CDATA #IMPLIED>
+
+<!ELEMENT trigger EMPTY>
+<!ATTLIST trigger
+	 name CDATA #REQUIRED
+	 type (attrval|cattrval|gcattrval|ctext|reflist|constant|ignore|xmi2assoc) #REQUIRED
+	 attr CDATA #IMPLIED
+	 src CDATA #IMPLIED
+	 linkbackattr CDATA #IMPLIED>
+

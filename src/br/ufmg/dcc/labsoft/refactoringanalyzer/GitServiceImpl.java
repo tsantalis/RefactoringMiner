@@ -13,7 +13,7 @@ public class GitServiceImpl implements GitService {
 			Git.cloneRepository()
 			.setDirectory(f)
 			.setURI(cloneUrl)
-			.setCloneAllBranches(false)
+			.setCloneAllBranches(true)
 			.call();	
 		}
 	}

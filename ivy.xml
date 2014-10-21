@@ -22,6 +22,8 @@
     <dependency org="org.eclipse.mylyn.github" name="org.eclipse.egit.github.core" rev="2.1.5"/>
     <dependency org="com.jcabi" name="jcabi-github" rev="0.14" conf="default->default" />
     
+    <dependency org="junit" name="junit" rev="4.11" conf="default->default" />
+
   </dependencies>
 
 </ivy-module>

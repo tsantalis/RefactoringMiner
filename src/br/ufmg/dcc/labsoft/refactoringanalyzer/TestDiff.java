@@ -20,8 +20,8 @@ public class TestDiff {
 
 //		String version0SrcFolder = "test/diffs/test3/egrefctfowlerV1";
 //		String version1SrcFolder = "test/diffs/test3/egrefctfowlerV2";
-		String version0SrcFolder = "test/v0";
-		String version1SrcFolder = "test/v1";
+		String version0SrcFolder = "test/v1";
+		String version1SrcFolder = "test/v2";
 //		String version0SrcFolder = args[0];
 //		String version1SrcFolder = args[1];
 		UMLModel model0 = new ASTReader(new File(version0SrcFolder)).getUmlModel();

@@ -244,7 +244,7 @@ public class ASTReader2 {
 		
 		Type returnType = methodDeclaration.getReturnType2();
 		if(returnType != null) {
-			UMLType type = UMLType.extractTypeObject(returnType.toString());
+			UMLType type = UMLType.extractTypeObject(getTypeName(returnType));
 			UMLParameter returnParameter = new UMLParameter("return", type, "return");
 			umlOperation.addParameter(returnParameter);
 		}
@@ -252,7 +252,7 @@ public class ASTReader2 {
 		for(SingleVariableDeclaration parameter : parameters) {
 			Type parameterType = parameter.getType();
 			String parameterName = parameter.getName().getFullyQualifiedName();
-			UMLType type = UMLType.extractTypeObject(parameterType.toString());
+			UMLType type = UMLType.extractTypeObject(getTypeName(parameterType));
 			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in");
 			umlOperation.addParameter(umlParameter);
 		}
@@ -275,7 +275,7 @@ public class ASTReader2 {
 	private List<UMLAttribute> processFieldDeclaration(FieldDeclaration fieldDeclaration/*, UMLClass bytecodeClass*/) {
 		List<UMLAttribute> attributes = new ArrayList<UMLAttribute>();
 		Type fieldType = fieldDeclaration.getType();
-		UMLType type = UMLType.extractTypeObject(fieldType.toString());
+		UMLType type = UMLType.extractTypeObject(getTypeName(fieldType));
 		List<VariableDeclarationFragment> fragments = fieldDeclaration.fragments();
 		for(VariableDeclarationFragment fragment : fragments) {
 			String fieldName = fragment.getName().getFullyQualifiedName();

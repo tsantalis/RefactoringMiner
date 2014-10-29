@@ -1,5 +1,5 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer;
-import gr.uom.java.xmi.ASTReader;
+import gr.uom.java.xmi.ASTReader2;
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.diff.Refactoring;
 import gr.uom.java.xmi.diff.UMLModelDiff;
@@ -20,12 +20,12 @@ public class TestDiff {
 
 //		String version0SrcFolder = "test/diffs/test3/egrefctfowlerV1";
 //		String version1SrcFolder = "test/diffs/test3/egrefctfowlerV2";
-		String version0SrcFolder = "test/v1";
-		String version1SrcFolder = "test/v2";
+		String version0SrcFolder = "test/v0";
+		String version1SrcFolder = "test/v1";
 //		String version0SrcFolder = args[0];
 //		String version1SrcFolder = args[1];
-		UMLModel model0 = new ASTReader(new File(version0SrcFolder)).getUmlModel();
-		UMLModel model1 = new ASTReader(new File(version1SrcFolder)).getUmlModel();
+		UMLModel model0 = new ASTReader2(new File(version0SrcFolder)).getUmlModel();
+		UMLModel model1 = new ASTReader2(new File(version1SrcFolder)).getUmlModel();
 		
 		UMLModelDiff modelDiff = model0.diff(model1);
 		List<Refactoring> refactorings = modelDiff.getRefactorings();

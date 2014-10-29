@@ -1,6 +1,6 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer;
 
-import gr.uom.java.xmi.ASTReader;
+import gr.uom.java.xmi.ASTReader2;
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.diff.Refactoring;
 import gr.uom.java.xmi.diff.UMLModelDiff;
@@ -74,15 +74,15 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 					} else {
 						// Faz checkout e gera UML model da revisao current
 						checkoutCommand(git, currentCommit);
-						currentUMLModel = new ASTReader(new File(this.projectFolder)).getUmlModel();
-					}				
+						currentUMLModel = new ASTReader2(new File(this.projectFolder)).getUmlModel();
+					}
 
 					// Recupera o parent commit
 					parentCommit = walk.parseCommit(currentCommit.getParent(0));
 
 					// Faz checkout e gera UML model da revisao parent
 					checkoutCommand(git, parentCommit);
-					parentUMLModel = new ASTReader(new File(this.projectFolder)).getUmlModel();
+					parentUMLModel = new ASTReader2(new File(this.projectFolder)).getUmlModel();
 
 					// Diff entre currentModel e parentModel
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
@@ -97,10 +97,10 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 					numberOfMergeRevisions++;
 				}
 
-				System.out.println("|-------------------------------------------------|");
-				System.out.println("    Revisoes Verificadas: " + numberOfOkRevisions);
-				System.out.println("    Revisoes Ignoradas (Merge): " + numberOfMergeRevisions);
-				System.out.println("    Refactorings: " + refactorings.size());
+//				System.out.println("|-------------------------------------------------|");
+//				System.out.println("    Revisoes Verificadas: " + numberOfOkRevisions);
+//				System.out.println("    Revisoes Ignoradas (Merge): " + numberOfMergeRevisions);
+//				System.out.println("    Refactorings: " + refactorings.size());
 			}
 
 		} catch (Exception e) {
@@ -109,9 +109,9 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 
 		endTime = Calendar.getInstance();
 
-		System.out.println("|-------------------------------------------------|");
-		System.out.println("Inicio do Processo:  " + startTime.get(Calendar.HOUR) + ":" + startTime.get(Calendar.MINUTE));
-		System.out.println("Fim do Processo:  " + endTime.get(Calendar.HOUR) + ":" + endTime.get(Calendar.MINUTE));	
+//		System.out.println("|-------------------------------------------------|");
+//		System.out.println("Inicio do Processo:  " + startTime.get(Calendar.HOUR) + ":" + startTime.get(Calendar.MINUTE));
+//		System.out.println("Fim do Processo:  " + endTime.get(Calendar.HOUR) + ":" + endTime.get(Calendar.MINUTE));	
 	}
 
 	private void checkoutCommand(Git git, RevCommit commit) throws Exception {

@@ -1,0 +1,48 @@
+package br.ufmg.dcc.labsoft.refactoringanalyzer;
+
+import gr.uom.java.xmi.diff.Refactoring;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import org.junit.Assert;
+
+public class RefactoringMatcher implements RefactoringHandler {
+
+	Map<String, Set<String>> expected = new HashMap<>();
+
+	@Override
+	public void handleRefactoring(Revision revision, Refactoring refactoring) {
+		String commitId = revision.getId();
+		String refFound = refactoring.toString();
+		if (expected.containsKey(commitId)) {
+			Set<String> refs = expected.get(commitId);
+			if (refs.contains(refFound)) {
+				refs.remove(refFound);
+			} else {
+				Assert.fail(String.format("Refactoring was not expected at revision %s: %s", commitId, refFound));
+			}
+		} else {
+			Assert.fail(String.format("No refactoring was expected at revision %s, but found: %s", commitId, refFound));
+		}
+	}
+
+	public RefactoringMatcher expectAtCommit(String commitId, String ... refactorings) {
+		Set<String> set = new HashSet<>();
+		for (String refactoring : refactorings) {
+			set.add(refactoring);
+		}
+		expected.put(commitId, set);
+		return this;
+	}
+
+	public void checkFalseNegatives() {
+		for (Map.Entry<String, Set<String>> entry : expected.entrySet()) {
+			for (String ref : entry.getValue()) {
+				Assert.fail(String.format("Refactoring was expected at revision %s: %s", entry.getKey(), ref));
+			}
+		}
+	}
+}

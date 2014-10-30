@@ -21,6 +21,7 @@ import javax.swing.tree.TreeNode;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.Block;
@@ -30,6 +31,7 @@ import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.FileASTRequestor;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
@@ -40,7 +42,8 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 public class ASTReader2 {
 	private UMLModel umlModel;
 	private String srcFolder;
-	ASTParser parser;
+	private ASTParser parser;
+	private MethodInvocationInfo methodInvocationInfo = new MethodInvocationInfo();
 
 	public ASTReader2(File rootFile) {
 		this.umlModel = new UMLModel();
@@ -49,9 +52,9 @@ public class ASTReader2 {
 		this.parser = ASTParser.newParser(AST.JLS3);
 		this.parser.setKind(ASTParser.K_COMPILATION_UNIT);
 		this.parser.setResolveBindings(true);
-		this.parser.setBindingsRecovery(false);
+		this.parser.setBindingsRecovery(true);
 		final String[] emptyArray = new String[0];
-		this.parser.setEnvironment(emptyArray, new String[]{this.srcFolder}, null, false);
+		this.parser.setEnvironment(emptyArray, new String[]{this.srcFolder}, null, true);
 		
 //		System.out.println(rootFile);
 		try {
@@ -86,6 +89,10 @@ public class ASTReader2 {
 
 	public UMLModel getUmlModel() {
 		return umlModel;
+	}
+
+	public MethodInvocationInfo getMethodInvocationInfo() {
+		return this.methodInvocationInfo;
 	}
 
 	protected void processCompilationUnit(String sourceFilePath, CompilationUnit compilationUnit) {
@@ -233,6 +240,7 @@ public class ASTReader2 {
 		Block block = methodDeclaration.getBody();
 		if(block != null) {
 			OperationBody body = new OperationBody(block);
+//			this.processMethodInvocations(methodDeclaration, block);
 			umlOperation.setBody(body);
 			if(block.statements().size() == 0) {
 				umlOperation.setEmptyBody(true);
@@ -270,6 +278,16 @@ public class ASTReader2 {
 		}*/
 		
 		return umlOperation;
+	}
+
+	private void processMethodInvocations(final MethodDeclaration methodDeclaration, Block block) {
+		this.methodInvocationInfo.handleMethodDeclaration(methodDeclaration);
+		block.accept(new ASTVisitor() {
+			public boolean visit(MethodInvocation methodInvocation) {
+				methodInvocationInfo.handleMethodInvocation(methodDeclaration, methodInvocation);
+				return true;
+			}
+		});
 	}
 
 	private List<UMLAttribute> processFieldDeclaration(FieldDeclaration fieldDeclaration/*, UMLClass bytecodeClass*/) {

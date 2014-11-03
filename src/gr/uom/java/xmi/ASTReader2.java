@@ -29,6 +29,7 @@ import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.FileASTRequestor;
+import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
@@ -43,7 +44,6 @@ public class ASTReader2 {
 	private UMLModel umlModel;
 	private String srcFolder;
 	private ASTParser parser;
-	private MethodInvocationInfo methodInvocationInfo = new MethodInvocationInfo();
 
 	public ASTReader2(File rootFile) {
 		this.umlModel = new UMLModel();
@@ -89,10 +89,6 @@ public class ASTReader2 {
 
 	public UMLModel getUmlModel() {
 		return umlModel;
-	}
-
-	public MethodInvocationInfo getMethodInvocationInfo() {
-		return this.methodInvocationInfo;
 	}
 
 	protected void processCompilationUnit(String sourceFilePath, CompilationUnit compilationUnit) {
@@ -213,7 +209,15 @@ public class ASTReader2 {
 
 	private UMLOperation processMethodDeclaration(MethodDeclaration methodDeclaration/*, UMLClass bytecodeClass*/) {
 		String methodName = methodDeclaration.getName().getFullyQualifiedName();
-		UMLOperation umlOperation = new UMLOperation(methodName, null);
+		final IMethodBinding binding = methodDeclaration.resolveBinding();
+		UMLOperation umlOperation;
+		if (binding == null) {
+			System.out.println("NULL BINDING");
+			System.out.println(methodDeclaration);
+			umlOperation = new UMLOperation(methodName, null);
+		} else {
+			umlOperation = new UMLOperation(methodName, ASTUtils.getKey(binding));
+		}
 		//umlOperation.setClassName(umlClass.getName());
 		if(methodDeclaration.isConstructor())
 			umlOperation.setConstructor(true);
@@ -240,7 +244,7 @@ public class ASTReader2 {
 		Block block = methodDeclaration.getBody();
 		if(block != null) {
 			OperationBody body = new OperationBody(block);
-//			this.processMethodInvocations(methodDeclaration, block);
+			this.processMethodInvocations(methodDeclaration, block);
 			umlOperation.setBody(body);
 			if(block.statements().size() == 0) {
 				umlOperation.setEmptyBody(true);
@@ -281,7 +285,8 @@ public class ASTReader2 {
 	}
 
 	private void processMethodInvocations(final MethodDeclaration methodDeclaration, Block block) {
-		this.methodInvocationInfo.handleMethodDeclaration(methodDeclaration);
+		final MethodInvocationInfo methodInvocationInfo = this.umlModel.getMethodInvocationInfo();
+		methodInvocationInfo.handleMethodDeclaration(methodDeclaration);
 		block.accept(new ASTVisitor() {
 			public boolean visit(MethodInvocation methodInvocation) {
 				methodInvocationInfo.handleMethodInvocation(methodDeclaration, methodInvocation);

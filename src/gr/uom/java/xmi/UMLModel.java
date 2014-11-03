@@ -24,6 +24,7 @@ public class UMLModel {
     private List<UMLExtend> extendList;
     private Map<String, String> xmiIdTypeMap;
     private List<UMLAnonymousClass> anonymousClassList;
+    private MethodInvocationInfo methodInvocationInfo;
 
     public UMLModel() {
         classList = new ArrayList<UMLClass>();
@@ -39,9 +40,14 @@ public class UMLModel {
         extendList = new ArrayList<UMLExtend>();
         xmiIdTypeMap = new LinkedHashMap<String, String>();
         anonymousClassList = new ArrayList<UMLAnonymousClass>();
+        methodInvocationInfo = new MethodInvocationInfo();
     }
 
-    public void addClass(UMLClass umlClass) {
+    public MethodInvocationInfo getMethodInvocationInfo() {
+		return methodInvocationInfo;
+	}
+
+	public void addClass(UMLClass umlClass) {
     	if(umlClass.getXmiID() != null)
     		xmiIdTypeMap.put(umlClass.getXmiID(), umlClass.getName());
         classList.add(umlClass);

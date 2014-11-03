@@ -14,6 +14,7 @@ import java.util.List;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RepositoryBuilder;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -57,6 +58,11 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 			// Inicializa repositorio
 			Git git = new Git(repository);
 			checkoutHead(git);
+			currentUMLModel = new ASTReader2(new File(this.projectFolder)).getUmlModel();
+			this.handler.handleCurrent(currentUMLModel);
+			
+			Ref head = repository.getRef(Constants.MASTER);
+			String headId = head.getObjectId().getName();
 			
 			RevWalk walk = new RevWalk(repository);
 			Iterable<RevCommit> logs = git.log().call();
@@ -68,28 +74,38 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 
 				if (currentCommit.getParentCount() == 1) {
 
-					// Ganho de performance - Aproveita a UML Model que ja se encontra em memorioa da comparacao anterior
-					if (parentCommit != null && currentCommit.getId().equals(parentCommit.getId())) {
-						currentUMLModel = parentUMLModel;
-					} else {
-						// Faz checkout e gera UML model da revisao current
-						checkoutCommand(git, currentCommit);
-						currentUMLModel = new ASTReader2(new File(this.projectFolder)).getUmlModel();
-					}
-
-					// Recupera o parent commit
-					parentCommit = walk.parseCommit(currentCommit.getParent(0));
-
-					// Faz checkout e gera UML model da revisao parent
-					checkoutCommand(git, parentCommit);
-					parentUMLModel = new ASTReader2(new File(this.projectFolder)).getUmlModel();
-
-					// Diff entre currentModel e parentModel
-					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-					List<Refactoring> refactoringsAtRevision = modelDiff.getRefactorings();
-					refactorings.addAll(refactoringsAtRevision);
-					for (Refactoring ref : refactoringsAtRevision) {
-						this.handler.handleRefactoring(new Revision(currentCommit.getId().getName()), ref);
+					try {
+						// Ganho de performance - Aproveita a UML Model que ja se encontra em memorioa da comparacao anterior
+						if (parentCommit != null && currentCommit.getId().equals(parentCommit.getId())) {
+							currentUMLModel = parentUMLModel;
+						} else {
+							// Faz checkout e gera UML model da revisao current
+							checkoutCommand(git, currentCommit);
+							currentUMLModel = new ASTReader2(new File(this.projectFolder)).getUmlModel();
+						}
+						
+						// Recupera o parent commit
+						parentCommit = walk.parseCommit(currentCommit.getParent(0));
+						
+						Revision prevRevision = new Revision(parentCommit, headId == parentCommit.getId().getName());
+						Revision curRevision = new Revision(currentCommit, headId == currentCommit.getId().getName());
+						System.out.println(String.format("Comparando %s e %s", prevRevision.getId(), curRevision.getId()));
+						
+						// Faz checkout e gera UML model da revisao parent
+						checkoutCommand(git, parentCommit);
+						parentUMLModel = new ASTReader2(new File(this.projectFolder)).getUmlModel();
+						
+						// Diff entre currentModel e parentModel
+						UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+						List<Refactoring> refactoringsAtRevision = modelDiff.getRefactorings();
+						refactorings.addAll(refactoringsAtRevision);
+						this.handler.handleDiff(prevRevision, parentUMLModel, curRevision, currentUMLModel);
+						
+						for (Refactoring ref : refactoringsAtRevision) {
+							this.handler.handleRefactoring(curRevision, ref);
+						}
+					} catch (Exception e) {
+						System.out.println("ERRO, revisão ignorada: " + currentCommit.getId().getName());
 					}
 
 					numberOfOkRevisions++;
@@ -104,14 +120,14 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 
 		endTime = Calendar.getInstance();
 
-//		System.out.println("|-------------------------------------------------|");
-//		System.out.println("Inicio do Processo:  " + startTime.get(Calendar.HOUR) + ":" + startTime.get(Calendar.MINUTE));
-//		System.out.println("Fim do Processo:  " + endTime.get(Calendar.HOUR) + ":" + endTime.get(Calendar.MINUTE));	
+		System.out.println("|-------------------------------------------------|");
+		System.out.println("Inicio do Processo:  " + startTime.get(Calendar.HOUR) + ":" + startTime.get(Calendar.MINUTE));
+		System.out.println("Fim do Processo:  " + endTime.get(Calendar.HOUR) + ":" + endTime.get(Calendar.MINUTE));	
 	}
 
 	private void checkoutCommand(Git git, RevCommit commit) throws Exception {

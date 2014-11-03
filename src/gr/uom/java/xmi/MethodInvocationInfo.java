@@ -38,22 +38,23 @@ public class MethodInvocationInfo {
 		if (binding.isConstructor()) {
 			return;
 		}
-		String bindingKey = binding.getKey();
+		String bindingKey = ASTUtils.getKey(binding);
+		MethodInfo methodInfo;
 		if (!map.containsKey(bindingKey)) {
-			MethodInfo methodInfo = new MethodInfo(bindingKey);
-			methodInfo.external = false;
+			methodInfo = new MethodInfo(bindingKey);
 			map.put(bindingKey, methodInfo);
 		} else {
-			MethodInfo info = map.get(bindingKey);
-			this.externalInvocations -= info.count;
-			this.internalInvocations += info.count;
+			methodInfo = map.get(bindingKey);
+			this.externalInvocations -= methodInfo.count;
+			this.internalInvocations += methodInfo.count;
 		}
+		methodInfo.external = false;
 	}
 
 	public void handleMethodInvocation(MethodDeclaration invoker, MethodInvocation invocation) {
 		IMethodBinding invoked = invocation.resolveMethodBinding();
 		if (invoked != null) {
-			String bindingKey = invoked.getKey();
+			String bindingKey = ASTUtils.getKey(invoked);
 			if (!map.containsKey(bindingKey)) {
 				MethodInfo methodInfo = new MethodInfo(bindingKey);
 				methodInfo.count = 1;

@@ -24,6 +24,14 @@ public class ExtractOperationRefactoring implements Refactoring {
 		return sb.toString();
 	}
 
+	public UMLOperation getExtractedOperation() {
+		return extractedOperation;
+	}
+
+	public UMLOperation getExtractedFromOperation() {
+		return extractedFromOperation;
+	}
+
 	@Override
 	public String getName() {
 		return "Extract Operation";

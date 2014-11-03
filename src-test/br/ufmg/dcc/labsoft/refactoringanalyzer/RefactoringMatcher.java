@@ -9,7 +9,7 @@ import java.util.Set;
 
 import org.junit.Assert;
 
-public class RefactoringMatcher implements RefactoringHandler {
+public class RefactoringMatcher extends RefactoringHandler {
 
 	Map<String, Set<String>> expected = new HashMap<>();
 

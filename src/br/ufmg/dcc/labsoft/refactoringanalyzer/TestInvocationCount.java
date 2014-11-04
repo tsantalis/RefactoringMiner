@@ -14,7 +14,7 @@ public class TestInvocationCount {
 	public static void main(String[] args) throws FileNotFoundException {
 		//runProject("tmp/refactoring-toy-example", "https://github.com/danilofes/refactoring-toy-example.git");
 		runProject("tmp/junit", "https://github.com/junit-team/junit.git");
-		runProject("tmp/elasticsearch", "https://github.com/elasticsearch/elasticsearch.git");
+		//runProject("tmp/elasticsearch", "https://github.com/elasticsearch/elasticsearch.git");
 		//runProject("tmp/guava", "https://github.com/google/guava.git");
 	}
 

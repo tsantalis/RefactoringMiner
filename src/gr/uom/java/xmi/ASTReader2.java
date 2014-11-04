@@ -175,7 +175,7 @@ public class ASTReader2 {
     	
     	MethodDeclaration[] methodDeclarations = typeDeclaration.getMethods();
     	for(MethodDeclaration methodDeclaration : methodDeclarations) {
-    		UMLOperation operation = processMethodDeclaration(methodDeclaration/*, bytecodeClass*/);
+    		UMLOperation operation = processMethodDeclaration(methodDeclaration, packageName, className/*, bytecodeClass*/);
     		operation.setClassName(umlClass.getName());
     		umlClass.addOperation(operation);
     	}
@@ -207,13 +207,13 @@ public class ASTReader2 {
 		}
 	}
 
-	private UMLOperation processMethodDeclaration(MethodDeclaration methodDeclaration/*, UMLClass bytecodeClass*/) {
+	private UMLOperation processMethodDeclaration(MethodDeclaration methodDeclaration, String packageName, String className/*, UMLClass bytecodeClass*/) {
 		String methodName = methodDeclaration.getName().getFullyQualifiedName();
 		final IMethodBinding binding = methodDeclaration.resolveBinding();
 		UMLOperation umlOperation;
 		if (binding == null) {
-			System.out.println("NULL BINDING");
-			System.out.println(methodDeclaration);
+			String dcl = methodDeclaration.toString();
+			System.out.println(String.format("NULL BINDING at %s.%s:  %s", packageName, className, dcl.substring(0, dcl.indexOf('{'))));
 			umlOperation = new UMLOperation(methodName, null);
 		} else {
 			umlOperation = new UMLOperation(methodName, ASTUtils.getKey(binding));
@@ -349,7 +349,7 @@ public class ASTReader2 {
 			}
 			else if(bodyDeclaration instanceof MethodDeclaration) {
 				MethodDeclaration methodDeclaration = (MethodDeclaration)bodyDeclaration;
-				UMLOperation operation = processMethodDeclaration(methodDeclaration/*, bytecodeClass*/);
+				UMLOperation operation = processMethodDeclaration(methodDeclaration, packageName, className/*, bytecodeClass*/);
 				operation.setClassName(anonymousClass.getName());
 				anonymousClass.addOperation(operation);
 			}

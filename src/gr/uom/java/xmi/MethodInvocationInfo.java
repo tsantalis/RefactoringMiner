@@ -35,7 +35,7 @@ public class MethodInvocationInfo {
 	
 	public void handleMethodDeclaration(MethodDeclaration declaration) {
 		IMethodBinding binding = declaration.resolveBinding();
-		if (binding.isConstructor()) {
+		if (binding == null || binding.isConstructor() || binding.getDeclaringClass().isAnonymous()) {
 			return;
 		}
 		String bindingKey = ASTUtils.getKey(binding);

@@ -67,6 +67,9 @@ public class MethodInvocationInfoSummary {
 			}
 			MethodInfoSummary info = this.getOrCreate(bindingKey);
 			info.extracted = true;
+			if (info.countInit == 0) {
+				System.out.println(String.format("Refactoring sem count: %s %s", rev.getId(), refactoring));
+			}
 		}
 	}
 

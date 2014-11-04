@@ -39,8 +39,9 @@ public class TestInvocationCount {
 			}
 		}).detectAll();
 		
-		s.print(new PrintStream(new File(folder + ".csv")));
-		System.out.println("Terminou.");
+		File outputFile = new File(folder + ".csv");
+		s.print(new PrintStream(outputFile));
+		System.out.println("Arquivo escrito em: " + outputFile.toString());
     }
 
 }

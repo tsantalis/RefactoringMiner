@@ -31,7 +31,8 @@ public class TestExtractMethod {
 	@Test
 	public void testInlineDuplication() throws Exception {
 		this.assertExpected("test/extract/duplication1", "test/extract/duplication0",
-			"Inline Operation	public getSum(l java.util.List<java.lang.Integer>) : int inlined to public method1(l java.util.List<java.lang.Integer>) : java.lang.String in class foo.A"
+			"Inline Operation	public getSum(l java.util.List<java.lang.Integer>) : int inlined to public method1(l java.util.List<java.lang.Integer>) : java.lang.String in class foo.A",
+			"Inline Operation	public getSum(l java.util.List<java.lang.Integer>) : int inlined to public method2(l java.util.List<java.lang.Integer>) : java.lang.String in class foo.A"
 		);
 	}
 
@@ -46,6 +47,7 @@ public class TestExtractMethod {
 	public void testExtractMove() throws Exception {
 		this.assertExpected("test/extract/move0", "test/extract/move1",
 			"Extract & Move Operation	public getSum(l java.util.List<java.lang.Integer>) : int extracted from public method1(l java.util.List<java.lang.Integer>) : java.lang.String in class foo.A & moved to class foo.B",
+			"Extract & Move Operation	public getSum(l java.util.List<java.lang.Integer>) : int extracted from public method1B(l java.util.List<java.lang.Integer>) : java.lang.String in class foo.A & moved to class foo.B",
 			"Extract & Move Operation	public getSumSquared(l java.util.List<java.lang.Integer>) : int extracted from public method2(l java.util.List<java.lang.Integer>, c foo.C) : java.lang.String in class foo.A & moved to class foo.C"
 		);
 	}

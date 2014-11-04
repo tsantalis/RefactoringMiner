@@ -30,4 +30,12 @@ public class ExtractAndMoveOperationRefactoring implements Refactoring {
 		return "Extract & Move Operation";
 	}
 
+	public UMLOperation getExtractedOperation() {
+		return extractedOperation;
+	}
+
+	public UMLOperation getExtractedFromOperation() {
+		return extractedFromOperation;
+	}
+	
 }

@@ -89,7 +89,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 						
 						Revision prevRevision = new Revision(parentCommit, headId == parentCommit.getId().getName());
 						Revision curRevision = new Revision(currentCommit, headId == currentCommit.getId().getName());
-						System.out.println(String.format("Comparando %s e %s", prevRevision.getId(), curRevision.getId()));
+						//System.out.println(String.format("Comparando %s e %s", prevRevision.getId(), curRevision.getId()));
 						
 						// Faz checkout e gera UML model da revisao parent
 						checkoutCommand(git, parentCommit);
@@ -105,7 +105,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 							this.handler.handleRefactoring(curRevision, ref);
 						}
 					} catch (Exception e) {
-						System.out.println("ERRO, revisão ignorada: " + currentCommit.getId().getName());
+						System.out.println("ERRO, revisão ignorada: " + currentCommit.getId().getName() + "\n");
 					}
 
 					numberOfOkRevisions++;
@@ -113,10 +113,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 					numberOfMergeRevisions++;
 				}
 
-//				System.out.println("|-------------------------------------------------|");
-//				System.out.println("    Revisoes Verificadas: " + numberOfOkRevisions);
-//				System.out.println("    Revisoes Ignoradas (Merge): " + numberOfMergeRevisions);
-//				System.out.println("    Refactorings: " + refactorings.size());
+				//System.out.println(String.format("Revisões: %5d Ignoradas: %5d Refactorings: %4d ", numberOfOkRevisions, numberOfMergeRevisions, refactorings.size()));
 			}
 
 		} catch (Exception e) {
@@ -125,9 +122,11 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 
 		endTime = Calendar.getInstance();
 
-		System.out.println("|-------------------------------------------------|");
-		System.out.println("Inicio do Processo:  " + startTime.get(Calendar.HOUR) + ":" + startTime.get(Calendar.MINUTE));
-		System.out.println("Fim do Processo:  " + endTime.get(Calendar.HOUR) + ":" + endTime.get(Calendar.MINUTE));	
+		System.out.println("=====================================================");
+		System.out.println(this.projectFolder);
+		System.out.println(String.format("Revisões: %5d  Merge: %5d  Refactorings: %4d ", numberOfOkRevisions, numberOfMergeRevisions, refactorings.size()));
+		System.out.println("Início: " + startTime.get(Calendar.HOUR) + ":" + startTime.get(Calendar.MINUTE));
+		System.out.println("Fim:    " + endTime.get(Calendar.HOUR) + ":" + endTime.get(Calendar.MINUTE));	
 	}
 
 	private void checkoutCommand(Git git, RevCommit commit) throws Exception {

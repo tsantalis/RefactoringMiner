@@ -776,7 +776,7 @@ public class UMLModelDiff {
 									new ExtractAndMoveOperationRefactoring(addedOperation, operationBodyMapper.getOperation1());
 							refactorings.add(extractOperationRefactoring);
 							deleteAddedOperation(addedOperation);
-							addedOperationIterator.remove();
+							//addedOperationIterator.remove();
 						}
 					}
 				}

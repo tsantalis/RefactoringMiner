@@ -17,6 +17,17 @@ public class A {
 		return "sum : " + sum;
 	}
 
+	public String method1B(List<Integer> l) {
+		int sum = 0;
+		for (Integer i : l) {
+			sum += i;
+		}
+		System.out.println("method1B");
+		System.out.println("method1B");
+		System.out.println("method1B");
+		return "sum : " + sum;
+	}
+
 	public String method2(List<Integer> l, C c) {
 		int sumSquared = 0;
 		for (Integer i : l) {

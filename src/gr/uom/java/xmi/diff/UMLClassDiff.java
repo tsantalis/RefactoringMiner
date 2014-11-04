@@ -296,6 +296,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	}
 	
 	public void checkForInlinedOperations() {
+		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
 		List<UMLOperationBodyMapper> mappersToBeAdded = new ArrayList<UMLOperationBodyMapper>();
 		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
 			if(!mapper.getNonMappedLeavesT2().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty() ||
@@ -321,12 +322,14 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 							InlineOperationRefactoring inlineOperationRefactoring =
 									new InlineOperationRefactoring(removedOperation, operationBodyMapper.getOperation2(), operationBodyMapper.getOperation2().getClassName());
 							refactorings.add(inlineOperationRefactoring);
-							removedOperationIterator.remove();
+							operationsToBeRemoved.add(removedOperation);
+							// removedOperationIterator.remove();
 						}
 					}
 				}
 			}
 		}
+		removedOperations.removeAll(operationsToBeRemoved);
 		//operationBodyMapperList.addAll(mappersToBeAdded);
 	}
 	

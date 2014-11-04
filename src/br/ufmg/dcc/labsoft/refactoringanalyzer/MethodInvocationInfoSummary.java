@@ -3,6 +3,7 @@ package br.ufmg.dcc.labsoft.refactoringanalyzer;
 import gr.uom.java.xmi.MethodInvocationInfo;
 import gr.uom.java.xmi.MethodInvocationInfo.MethodInfo;
 import gr.uom.java.xmi.UMLModel;
+import gr.uom.java.xmi.diff.ExtractAndMoveOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.Refactoring;
 
@@ -16,12 +17,14 @@ public class MethodInvocationInfoSummary {
 	private Map<String, MethodInfoSummary> map = new HashMap<>();
 	
 	public static class MethodInfoSummary {
+		private int countDup = 0;
 		private int countInit = 0;
 		private int countCurrent = 0;
 		private int countMax = 0;
 		private int timeInit = Integer.MAX_VALUE;
 		private boolean dead = true;
 		private boolean extracted = false;
+		private boolean moved = false;
 	}
 
 	public void analyzeCurrent(UMLModel model) {
@@ -58,18 +61,27 @@ public class MethodInvocationInfoSummary {
 	}
 
 	public void analyzeRefactoring(Revision rev, Refactoring refactoring) {
+		String bindingKey;
 		if (refactoring instanceof ExtractOperationRefactoring) {
 			ExtractOperationRefactoring emr = (ExtractOperationRefactoring) refactoring;
-			String bindingKey = emr.getExtractedOperation().getXmiID();
-			if (bindingKey == null) {
-				System.out.println("ERRO refactoring sem binding: " + refactoring);
-				return;
-			}
-			MethodInfoSummary info = this.getOrCreate(bindingKey);
-			info.extracted = true;
-			if (info.countInit == 0) {
-				System.out.println(String.format("Refactoring sem count: %s %s", rev.getId(), refactoring));
-			}
+			bindingKey = emr.getExtractedOperation().getXmiID();
+		}
+		else if (refactoring instanceof ExtractAndMoveOperationRefactoring) {
+			ExtractAndMoveOperationRefactoring emr = (ExtractAndMoveOperationRefactoring) refactoring;
+			bindingKey = emr.getExtractedOperation().getXmiID();
+		} else {
+			return;
+		}
+		if (bindingKey == null) {
+			System.out.println("ERRO refactoring sem binding: " + refactoring);
+			return;
+		}
+		MethodInfoSummary info = this.getOrCreate(bindingKey);
+		info.extracted = true;
+		info.moved = refactoring instanceof ExtractAndMoveOperationRefactoring;
+		info.countDup += 1;
+		if (info.countInit == 0) {
+			System.out.println(String.format("Refactoring sem count: %s %s", rev.getId(), refactoring));
 		}
 	}
 
@@ -87,7 +99,9 @@ public class MethodInvocationInfoSummary {
 	    for (Entry<String, MethodInfoSummary> e : this.map.entrySet()) {
 	    	String key = e.getKey();
 	    	MethodInfoSummary info = e.getValue();
-    		out.println(String.format("%s\t%b\t%b\t%d\t%d\t%d", key, info.extracted, info.dead, info.countInit, info.countCurrent, info.countMax));
+	    	if (info.extracted) {
+	    		out.println(String.format("%s\t%b\t%b\t%b\t%d\t%d\t%d\t%d", key, info.extracted, info.moved, info.dead, info.countDup, info.countInit, info.countCurrent, info.countMax));
+	    	}
 	    }
     }
 

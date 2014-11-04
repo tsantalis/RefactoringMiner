@@ -14,6 +14,14 @@ public class A {
 		return "sum : " + sum;
 	}
 
+	public String method1B(List<Integer> l) {
+		int sum = b.getSum(l);
+		System.out.println("method1B");
+		System.out.println("method1B");
+		System.out.println("method1B");
+		return "sum : " + sum;
+	}
+
 	public String method2(List<Integer> l, C c) {
 		int sumSquared = c.getSumSquared(l);
 		System.out.println("method2");

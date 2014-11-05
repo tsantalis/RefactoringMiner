@@ -5,6 +5,7 @@ import gr.uom.java.xmi.diff.Refactoring;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.List;
 
 /**
  * Receives two source folders as arguments and detects refactoring operations performed between the given versions of the code.
@@ -12,8 +13,8 @@ import java.io.PrintStream;
 public class TestInvocationCount {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		//runProject("tmp/refactoring-toy-example", "https://github.com/danilofes/refactoring-toy-example.git");
-		runProject("tmp/junit", "https://github.com/junit-team/junit.git");
+		runProject("tmp/refactoring-toy-example", "https://github.com/danilofes/refactoring-toy-example.git");
+//		runProject("tmp/junit", "https://github.com/junit-team/junit.git");
 		//runProject("tmp/elasticsearch", "https://github.com/elasticsearch/elasticsearch.git");
 		//runProject("tmp/guava", "https://github.com/google/guava.git");
 	}
@@ -29,13 +30,8 @@ public class TestInvocationCount {
 				s.analyzeCurrent(model);
 			}
 			@Override
-			public void handleDiff(Revision prevRevision, UMLModel prevModel, Revision curRevision, UMLModel curModel) {
-			    s.analyzeRevision(prevRevision, prevModel);
-			    s.analyzeRevision(curRevision, curModel);
-			}
-			@Override
-			public void handleRefactoring(Revision revision, Refactoring refactoring) {
-			    s.analyzeRefactoring(revision, refactoring);
+			public void handleDiff(Revision prevRevision, UMLModel prevModel, Revision curRevision, UMLModel curModel, List<Refactoring> refactorings) {
+			    s.analyzeRevision(curRevision, curModel, refactorings);
 			}
 		}).detectAll();
 		

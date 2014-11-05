@@ -1,5 +1,5 @@
 import org.junit.internal.matchers.IsCollectionContaining;
-
+import org.hamcrest.Matcher;
 
 public class A<T> {
 	
@@ -12,7 +12,7 @@ public class A<T> {
 		return IsCollectionContaining.hasItem(element);
 	}
 
-	public void a() {
+	public void a(org.hamcrest.Matcher m) {
 		b();
 	}
 	

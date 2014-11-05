@@ -1,5 +1,6 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer;
 
+import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.diff.Refactoring;
 
 import java.util.HashMap;
@@ -14,7 +15,7 @@ public class RefactoringMatcher extends RefactoringHandler {
 	Map<String, Set<String>> expected = new HashMap<>();
 
 	@Override
-	public void handleRefactoring(Revision revision, Refactoring refactoring) {
+	public void handleRefactoring(Revision revision, UMLModel model, Refactoring refactoring) {
 		String commitId = revision.getId();
 		String refFound = refactoring.toString();
 		if (expected.containsKey(commitId)) {

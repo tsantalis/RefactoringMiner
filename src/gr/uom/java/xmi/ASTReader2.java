@@ -13,11 +13,13 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
@@ -49,11 +51,14 @@ public class ASTReader2 {
 		this.umlModel = new UMLModel();
 		this.srcFolder = rootFile.getPath();
 		
-		this.parser = ASTParser.newParser(AST.JLS3);
+		this.parser = ASTParser.newParser(AST.JLS4);
 		this.parser.setKind(ASTParser.K_COMPILATION_UNIT);
 		this.parser.setResolveBindings(true);
 		this.parser.setBindingsRecovery(true);
 		final String[] emptyArray = new String[0];
+		Map options = JavaCore.getOptions();
+		JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
+		parser.setCompilerOptions(options);
 		this.parser.setEnvironment(emptyArray, new String[]{this.srcFolder}, null, true);
 		
 //		System.out.println(rootFile);
@@ -212,9 +217,8 @@ public class ASTReader2 {
 		final IMethodBinding binding = methodDeclaration.resolveBinding();
 		UMLOperation umlOperation;
 		if (binding == null) {
-			String dcl = methodDeclaration.toString();
-			System.out.println(String.format("NULL BINDING at %s.%s:  %s", packageName, className, dcl.substring(0, dcl.indexOf('{'))));
 			umlOperation = new UMLOperation(methodName, null);
+			System.out.println(String.format("WARN null binding: %s", ASTUtils.getKey(packageName, className, methodDeclaration)));
 		} else {
 			umlOperation = new UMLOperation(methodName, ASTUtils.getKey(binding));
 		}

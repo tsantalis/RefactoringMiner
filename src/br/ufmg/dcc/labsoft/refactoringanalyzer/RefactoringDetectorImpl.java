@@ -99,13 +99,14 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 						UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 						List<Refactoring> refactoringsAtRevision = modelDiff.getRefactorings();
 						refactorings.addAll(refactoringsAtRevision);
-						this.handler.handleDiff(prevRevision, parentUMLModel, curRevision, currentUMLModel);
+						this.handler.handleDiff(prevRevision, parentUMLModel, curRevision, currentUMLModel, refactoringsAtRevision);
 						
 						for (Refactoring ref : refactoringsAtRevision) {
-							this.handler.handleRefactoring(curRevision, ref);
+							this.handler.handleRefactoring(curRevision, currentUMLModel, ref);
 						}
 					} catch (Exception e) {
 						System.out.println("ERRO, revisão ignorada: " + currentCommit.getId().getName() + "\n");
+						e.printStackTrace();
 					}
 
 					numberOfOkRevisions++;

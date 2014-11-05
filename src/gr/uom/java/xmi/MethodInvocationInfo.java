@@ -87,4 +87,8 @@ public class MethodInvocationInfo {
 	public Collection<MethodInfo> getMethodInfoCollection() {
 		return this.map.values();
 	}
+	
+	public MethodInfo getMethodInfo(String bindingKey) {
+		return this.map.get(bindingKey);
+	}
 }

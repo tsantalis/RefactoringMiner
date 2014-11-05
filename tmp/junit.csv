@@ -5,7 +5,7 @@ org.junit.internal.TextListener.printExceptions(String,String,List)	true	false	t
 org.junit.runners.BlockJUnit4ClassRunner.runNotIgnored(FrameworkMethod,EachTestNotifier)	true	false	true	1	1	0	1
 org.junit.internal.runners.TestClassMethodsRunner.testAborted(RunNotifier,Method,Throwable)	true	false	true	1	3	0	3
 org.junit.internal.requests.ClassRequest.buildRunner(Class)	true	false	true	1	1	0	1
-org.junit.experimental.results.PrintableResult.testResult(Request)	true	false	false	1	1	1	1
+org.junit.experimental.results.PrintableResult.testResult(Request)	true	false	false	1	2	2	2
 org.junit.internal.runners.model.EachTestNotifier.addMultipleFailureException(MultipleFailureException)	true	false	false	1	1	1	1
 org.junit.runners.ParentRunner.withAfterClasses(Statement)	true	false	false	1	1	1	1
 org.junit.internal.runners.TestMethod.invoke(Object)	true	true	false	2	1	1	1
@@ -21,7 +21,7 @@ org.junit.runners.ParentRunner.getFilteredChildrenWithoutIgnores(RunNotifier)	tr
 org.junit.runners.model.TestClass.scanAnnotatedMembers(Map,Map)	true	false	false	1	1	1	1
 junit.tests.runner.ResultTest.assertSerializedCorrectly(Result,Result)	true	false	false	1	2	2	2
 junit.framework.TestCase.getDisplayName()	true	false	true	1	2	0	2
-org.junit.Assert.assertEquals(float,float,float)	true	true	false	2	0	0	0
+org.junit.Assert.assertEquals(float,float,float)	true	true	false	2	2	2	2
 junit.framework.JUnit4TestAdapterCache.asTestCase(Description)	true	false	true	1	8	0	8
 junit.framework.TestSuite.createTest(Class,String)	true	false	false	1	1	2	4
 org.junit.experimental.theories.Theories.validateDataPointFields(List)	true	false	false	1	1	1	1
@@ -35,7 +35,7 @@ org.junit.experimental.theories.internal.AllMembersSupplier.addSinglePointMethod
 junit.runner.ReloadingTestSuiteLoader.createLoader()	true	false	true	2	2	0	2
 org.junit.runner.Description.getClassName()	true	false	false	1	1	7	7
 org.junit.internal.runners.model.MultipleFailureException.assertEmpty(List)	true	true	true	2	2	0	3
-org.junit.runner.Description.createTestDescription(String,String,Annotation[])	true	false	false	1	26	4	26
+org.junit.runner.Description.createTestDescription(String,String,Annotation[])	true	false	false	1	1	1	2
 org.junit.tests.experimental.max.MaxCore.createFresh()	true	true	true	5	5	0	5
 org.junit.internal.runners.ParentRunner.computeFilteredChildren()	true	false	true	1	1	0	1
 org.junit.runners.ParentRunner.withBeforeClasses(Statement)	true	false	false	1	1	1	1
@@ -62,7 +62,7 @@ junit.textui.ResultPrinter.printWaitPrompt()	true	true	false	1	1	1	1
 org.junit.runner.manipulation.Filter.apply(Filter,Runner)	true	true	true	2	1	0	1
 org.junit.runners.BlockJUnit4ClassRunner.getTestRules(Object)	true	false	false	2	2	1	2
 org.junit.rules.ExpectedException.isAnyExceptionExpected()	true	false	false	1	2	2	2
-org.junit.runner.Description.createTestDescription(String,String,Object)	true	false	true	1	0	0	0
+org.junit.runner.Description.createTestDescription(String,String,Object)	true	false	true	1	3	0	3
 org.junit.experimental.results.PrintableResult.testResult(Class,Computer)	true	false	true	2	1	0	1
 org.junit.internal.runners.model.TestClass.computeAnnotations(FrameworkMethod)	true	false	true	1	1	0	1
 org.junit.runners.BlockJUnit4ClassRunner.getMethodRules(Object)	true	false	false	1	1	1	1
@@ -97,7 +97,7 @@ junit.framework.JUnit4TestAdapterCache.createTestSuite(Plan)	true	false	true	1	1
 org.junit.Assert.assertArraysAreSameLength(Object,Object,String)	true	false	true	1	2	0	2
 org.junit.tests.validation.BadlyFormedClassesTest.exceptionMessageFrom(Class)	true	false	false	2	3	3	3
 org.junit.runner.Description.methodStringMatcher()	true	false	true	4	2	0	2
-org.junit.tests.experimental.theories.TheoryTestUtils.runTheoryClass(Class)	true	true	false	2	0	0	0
+org.junit.tests.experimental.theories.TheoryTestUtils.runTheoryClass(Class)	true	true	false	2	1	1	1
 junit.swingui.ProgressBar.updateBarColor()	true	false	true	2	2	0	2
 junit.runner.BaseTestRunner.processArguments(String[])	true	true	false	2	2	0	2
 junit.framework.JUnit4TestAdapterCache.createTest(Description)	true	false	false	2	2	2	2

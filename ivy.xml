@@ -9,8 +9,9 @@
     <dependency org="de.regnis.q.sequence" name="sequence-library" rev="1.0.2" />
     <dependency org="org.codehaus.plexus" name="plexus" rev="1.0.13" conf="default->default" />
     <dependency org="org.eclipse.jgit" name="org.eclipse.jgit" rev="2.2.0.201212191850-r"/>
-    -->
+    <dependency org="org.eclipse.tycho" name="org.eclipse.jdt.core" rev="3.9.1.v20130905-0837" conf="default->default"/>
     <dependency org="org.eclipse.jdt" name="org.eclipse.jdt.core" rev="3.7.1" conf="default->default"/>
+    -->
     <dependency org="asm" name="asm" rev="3.3.1" conf="default->default"/>
     <dependency org="asm" name="asm-tree" rev="3.3.1" conf="default->default" />
     <dependency org="asm" name="asm-util" rev="3.3.1" conf="default->default" />

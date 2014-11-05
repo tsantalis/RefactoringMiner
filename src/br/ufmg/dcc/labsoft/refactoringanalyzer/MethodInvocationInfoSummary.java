@@ -8,7 +8,10 @@ import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.Refactoring;
 
 import java.io.PrintStream;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -21,7 +24,7 @@ public class MethodInvocationInfoSummary {
 		private int countInit = 0;
 		private int countCurrent = 0;
 		private int countMax = 0;
-		private int timeInit = Integer.MAX_VALUE;
+		private List<String> revExtracted = Collections.<String>emptyList();
 		private boolean dead = true;
 		private boolean extracted = false;
 		private boolean moved = false;
@@ -40,27 +43,22 @@ public class MethodInvocationInfoSummary {
 		}
 	}
 	
-	public void analyzeRevision(Revision rev, UMLModel model) {
+	public void analyzeRevision(Revision rev, UMLModel model, List<Refactoring> refactorings) {
 		MethodInvocationInfo mii = model.getMethodInvocationInfo();
 		for (MethodInfo methodInfo : mii.getMethodInfoCollection()) {
 			if (!methodInfo.isExternal()) {
 				MethodInfoSummary info = this.getOrCreate(methodInfo.getBindingKey());
 				final int count = methodInfo.getCount();
-				final int revTime = rev.getTime();
-				if (rev.isCurrent()) {
-					info.dead = false;
-					info.countCurrent = count;
-				}
 				info.countMax = Math.max(info.countMax, count);
-				if (revTime < info.timeInit) {
-					info.countInit = count;
-					info.timeInit = revTime;
-				}
 			}
+		}
+		for (Refactoring ref : refactorings) {
+			this.analyzeRefactoring(rev, model, ref);
 		}
 	}
 
-	public void analyzeRefactoring(Revision rev, Refactoring refactoring) {
+	private void analyzeRefactoring(Revision rev, UMLModel model, Refactoring refactoring) {
+		MethodInvocationInfo mii = model.getMethodInvocationInfo();
 		String bindingKey;
 		if (refactoring instanceof ExtractOperationRefactoring) {
 			ExtractOperationRefactoring emr = (ExtractOperationRefactoring) refactoring;
@@ -73,15 +71,22 @@ public class MethodInvocationInfoSummary {
 			return;
 		}
 		if (bindingKey == null) {
-			System.out.println("ERRO refactoring sem binding: " + refactoring);
+			System.out.println(String.format("WARN refactoring sem binding: %s %s", rev.getId(), refactoring));
 			return;
 		}
 		MethodInfoSummary info = this.getOrCreate(bindingKey);
 		info.extracted = true;
 		info.moved = refactoring instanceof ExtractAndMoveOperationRefactoring;
 		info.countDup += 1;
-		if (info.countInit == 0) {
-			System.out.println(String.format("Refactoring sem count: %s %s", rev.getId(), refactoring));
+		if (info.revExtracted.isEmpty()) {
+			info.revExtracted = new LinkedList<>();
+		}
+		info.revExtracted.add(rev.getId());
+		MethodInfo methodInfo = mii.getMethodInfo(bindingKey);
+		if (methodInfo != null) {
+			info.countInit = methodInfo.getCount();
+		} else {
+			System.out.println(String.format("WARN refactoring com countInit=0: %s %s", rev.getId(), refactoring));
 		}
 	}
 
@@ -100,7 +105,7 @@ public class MethodInvocationInfoSummary {
 	    	String key = e.getKey();
 	    	MethodInfoSummary info = e.getValue();
 	    	if (info.extracted) {
-	    		out.println(String.format("%s\t%b\t%b\t%b\t%d\t%d\t%d\t%d", key, info.extracted, info.moved, info.dead, info.countDup, info.countInit, info.countCurrent, info.countMax));
+	    		out.println(String.format("%s\t%b\t%b\t%b\t%d\t%d\t%d\t%d\t%s", key, info.extracted, info.moved, info.dead, info.countDup, info.countInit, info.countCurrent, info.countMax, info.revExtracted.toString()));
 	    	}
 	    }
     }

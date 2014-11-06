@@ -218,7 +218,7 @@ public class ASTReader2 {
 		UMLOperation umlOperation;
 		if (binding == null) {
 			umlOperation = new UMLOperation(methodName, null);
-			System.out.println(String.format("WARN null binding: %s", ASTUtils.getKey(packageName, className, methodDeclaration)));
+			//System.out.println(String.format("WARN null binding: %s", ASTUtils.getKey(packageName, className, methodDeclaration)));
 		} else {
 			umlOperation = new UMLOperation(methodName, ASTUtils.getKey(binding));
 		}

@@ -11,8 +11,8 @@ import java.io.FileNotFoundException;
 public class TestInvocationCountOneRevision {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		//runProject("../junit");
-		runProject("test/bindings");
+		runProject("../junit");
+		//runProject("test/bindings");
 	}
 
 	private static void runProject(String folder) throws FileNotFoundException {

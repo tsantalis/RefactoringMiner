@@ -8,7 +8,6 @@ import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.Refactoring;
 
 import java.io.PrintStream;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,7 +23,7 @@ public class MethodInvocationInfoSummary {
 		private int countInit = 0;
 		private int countCurrent = 0;
 		private int countMax = 0;
-		private List<String> revExtracted = Collections.<String>emptyList();
+		private LinkedList<String> revExtracted = null;
 		private boolean dead = true;
 		private boolean extracted = false;
 		private boolean moved = false;
@@ -58,7 +57,6 @@ public class MethodInvocationInfoSummary {
 	}
 
 	private void analyzeRefactoring(Revision rev, UMLModel model, Refactoring refactoring) {
-		MethodInvocationInfo mii = model.getMethodInvocationInfo();
 		String bindingKey;
 		if (refactoring instanceof ExtractOperationRefactoring) {
 			ExtractOperationRefactoring emr = (ExtractOperationRefactoring) refactoring;
@@ -75,19 +73,24 @@ public class MethodInvocationInfoSummary {
 			return;
 		}
 		MethodInfoSummary info = this.getOrCreate(bindingKey);
-		info.extracted = true;
-		info.moved = refactoring instanceof ExtractAndMoveOperationRefactoring;
-		info.countDup += 1;
-		if (info.revExtracted.isEmpty()) {
+		if (info.revExtracted != null && !info.revExtracted.getLast().equals(rev.getId())) {
+			info.revExtracted.add(rev.getId());
+			return;
+		}
+		if (info.revExtracted == null) {
 			info.revExtracted = new LinkedList<>();
+			info.revExtracted.add(rev.getId());
+			info.extracted = true;
+			info.moved = refactoring instanceof ExtractAndMoveOperationRefactoring;
+			MethodInvocationInfo mii = model.getMethodInvocationInfo();
+			MethodInfo methodInfo = mii.getMethodInfo(bindingKey);
+			if (methodInfo != null) {
+				info.countInit = methodInfo.getCount();
+			} else {
+				System.out.println(String.format("WARN refactoring com countInit=0: %s %s", rev.getId(), refactoring));
+			}
 		}
-		info.revExtracted.add(rev.getId());
-		MethodInfo methodInfo = mii.getMethodInfo(bindingKey);
-		if (methodInfo != null) {
-			info.countInit = methodInfo.getCount();
-		} else {
-			System.out.println(String.format("WARN refactoring com countInit=0: %s %s", rev.getId(), refactoring));
-		}
+		info.countDup += 1;
 	}
 
 	private MethodInfoSummary getOrCreate(String bindingKey) {
@@ -105,7 +108,7 @@ public class MethodInvocationInfoSummary {
 	    	String key = e.getKey();
 	    	MethodInfoSummary info = e.getValue();
 	    	if (info.extracted) {
-	    		out.println(String.format("%s\t%b\t%b\t%b\t%d\t%d\t%d\t%d\t%s", key, info.extracted, info.moved, info.dead, info.countDup, info.countInit, info.countCurrent, info.countMax, info.revExtracted.toString()));
+	    		out.println(String.format("%s\t%b\t%b\t%b\t%d\t%d\t%d\t%d\t%s", key, info.extracted, info.moved, info.dead, info.countDup, info.countInit, info.countCurrent, info.countMax, info.revExtracted));
 	    	}
 	    }
     }

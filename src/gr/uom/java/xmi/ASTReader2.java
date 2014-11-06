@@ -248,7 +248,7 @@ public class ASTReader2 {
 		Block block = methodDeclaration.getBody();
 		if(block != null) {
 			OperationBody body = new OperationBody(block);
-			this.processMethodInvocations(methodDeclaration, block);
+//			this.processMethodInvocations(methodDeclaration, block);
 			umlOperation.setBody(body);
 			if(block.statements().size() == 0) {
 				umlOperation.setEmptyBody(true);

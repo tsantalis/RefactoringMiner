@@ -64,7 +64,7 @@ public class UMLType implements Serializable {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(classType);
+        sb.append(simpleNameOf(classType));
         if(genericType != null)
             sb.append(genericType);
         for(int i=0; i<arrayDimension; i++)
@@ -72,7 +72,15 @@ public class UMLType implements Serializable {
         return sb.toString();
     }
 
-    public static UMLType extractTypeObject(String qualifiedName) {
+    private String simpleNameOf(String name) {
+		int dotPosition = name.lastIndexOf('.');
+		if (dotPosition < 0) {
+			return name;
+		}
+		return name.substring(dotPosition + 1);
+	}
+
+	public static UMLType extractTypeObject(String qualifiedName) {
 		int arrayDimension = 0;
 		String generic = null;
 		if(qualifiedName.contains("[") && qualifiedName.contains("]")) {

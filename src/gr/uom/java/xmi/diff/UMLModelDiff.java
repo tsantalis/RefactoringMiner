@@ -161,7 +161,7 @@ public class UMLModelDiff {
 		if(subclassDiff != null) {
 			UMLType superclass = subclassDiff.getSuperclass();
 			if(superclass != null) {
-				if(finalSuperclass.equals(superclass.getClassType()))
+				if(this.looksLikeSameType(superclass.getClassType(), finalSuperclass))
 					return true;
 				else
 					return isSubclassOf(superclass.getClassType(), finalSuperclass);
@@ -174,7 +174,7 @@ public class UMLModelDiff {
 			if(umlClass != null) {
 				UMLType superclass = umlClass.getSuperclass();
 				if(superclass != null) {
-					if(finalSuperclass.equals(superclass.getClassType()))
+					if(this.looksLikeSameType(superclass.getClassType(), finalSuperclass))
 						return true;
 					else
 						return isSubclassOf(superclass.getClassType(), finalSuperclass);
@@ -662,7 +662,7 @@ public class UMLModelDiff {
 				}
 			}
 			for(UMLRealization addedRealization : addedRealizations) {
-				if(addedRealization.getSupplier().equals(addedClassName) && !isAddedClass(addedRealization.getClient())) {
+				if(this.looksLikeSameType(addedRealization.getSupplier(), addedClassName) && !isAddedClass(addedRealization.getClient())) {
 					UMLClassDiff clientClassDiff = getUMLClassDiff(addedRealization.getClient());
 					boolean implementedInterfaceOperations = true;
 					if(clientClassDiff != null) {
@@ -697,6 +697,9 @@ public class UMLModelDiff {
 	private boolean looksLikeSameType(String parent, String addedClassName) {
 		if (addedClassName.contains(".") && !parent.contains(".")) {
 			return parent.equals(addedClassName.substring(addedClassName.lastIndexOf(".") + 1));
+		}
+		if (parent.contains(".") && !addedClassName.contains(".")) {
+			return addedClassName.equals(parent.substring(parent.lastIndexOf(".") + 1));
 		}
 		return parent.equals(addedClassName);
 	}

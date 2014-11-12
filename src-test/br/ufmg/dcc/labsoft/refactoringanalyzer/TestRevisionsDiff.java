@@ -37,24 +37,24 @@ public class TestRevisionsDiff {
 		    "Push Down Operation	public getName() : int from class org.reptile.AnimalMarilho to public getName() : int from class org.reptile.Reptile",
 		    "Push Down Operation	public setName(name int) : void from class org.reptile.AnimalMarilho to public setName(name int) : void from class org.reptile.Reptile");
 		matcher.expectAtCommit("638f37ca6b4dcdbb6a4735f93e37445aeef79749",
-		    "Push Down Operation	public equals(obj java.lang.Object) : boolean from class org.reptile.Reptile to public equals(obj java.lang.Object) : boolean from class org.reptile.TurtleMarinha");
+		    "Push Down Operation	public equals(obj Object) : boolean from class org.reptile.Reptile to public equals(obj Object) : boolean from class org.reptile.TurtleMarinha");
 		matcher.expectAtCommit("0e193b7d02902c6f2abf7c88eebe937d1ac5fc51",
 		    "Push Down Operation	public hashCode() : int from class org.reptile.AnimalMarilho to public hashCode() : int from class org.reptile.Reptile");
 		matcher.expectAtCommit("b61e75b773f48e680f5bb7362445ba0642c2ee91",
-		    "Push Down Operation	public equals(obj java.lang.Object) : boolean from class org.reptile.AnimalMarilho to public equals(obj java.lang.Object) : boolean from class org.reptile.Reptile");
+		    "Push Down Operation	public equals(obj Object) : boolean from class org.reptile.AnimalMarilho to public equals(obj Object) : boolean from class org.reptile.Reptile");
 		matcher.expectAtCommit("6bbfab9e7051362aad9d993f5f6a013b73e75117",
 		    "Pull Up Attribute	protected age : int from class org.reptile.Reptile to class org.reptile.AnimalMarilho",
 		    "Pull Up Attribute	protected name : int from class org.reptile.Reptile to class org.reptile.AnimalMarilho",
 		    "Pull Up Attribute	protected spead : int from class org.reptile.Reptile to class org.reptile.AnimalMarilho",
-		    "Pull Up Attribute	protected action : java.lang.String from class org.reptile.Reptile to class org.reptile.AnimalMarilho",
+		    "Pull Up Attribute	protected action : String from class org.reptile.Reptile to class org.reptile.AnimalMarilho",
 		    "Pull Up Operation	public getName() : int from class org.reptile.Reptile to public getName() : int from class org.reptile.AnimalMarilho",
 		    "Pull Up Operation	public setName(name int) : void from class org.reptile.Reptile to public setName(name int) : void from class org.reptile.AnimalMarilho",
 		    "Pull Up Operation	public getSpead() : int from class org.reptile.Reptile to public getSpead() : int from class org.reptile.AnimalMarilho",
 		    "Pull Up Operation	public setSpead(spead int) : void from class org.reptile.Reptile to public setSpead(spead int) : void from class org.reptile.AnimalMarilho",
-		    "Pull Up Operation	public getAction() : java.lang.String from class org.reptile.Reptile to public getAction() : java.lang.String from class org.reptile.AnimalMarilho",
-		    "Pull Up Operation	public setAction(action java.lang.String) : void from class org.reptile.Reptile to public setAction(action java.lang.String) : void from class org.reptile.AnimalMarilho",
+		    "Pull Up Operation	public getAction() : String from class org.reptile.Reptile to public getAction() : String from class org.reptile.AnimalMarilho",
+		    "Pull Up Operation	public setAction(action String) : void from class org.reptile.Reptile to public setAction(action String) : void from class org.reptile.AnimalMarilho",
 		    "Pull Up Operation	public hashCode() : int from class org.reptile.Reptile to public hashCode() : int from class org.reptile.AnimalMarilho",
-		    "Pull Up Operation	public equals(obj java.lang.Object) : boolean from class org.reptile.Reptile to public equals(obj java.lang.Object) : boolean from class org.reptile.AnimalMarilho");
+		    "Pull Up Operation	public equals(obj Object) : boolean from class org.reptile.Reptile to public equals(obj Object) : boolean from class org.reptile.AnimalMarilho");
 		matcher.expectAtCommit("bbd8dc082406a950adf73b7211c887bfab6480f1",
 		    "Extract Superclass	org.reptile.AnimalMarilho from classes [org.reptile.Reptile]");
 		matcher.expectAtCommit("9803046111744317efaa65a83e65ce8ceb0c15c2",

@@ -53,13 +53,15 @@ public class ASTReader2 {
 		
 		this.parser = ASTParser.newParser(AST.JLS4);
 		this.parser.setKind(ASTParser.K_COMPILATION_UNIT);
-		this.parser.setResolveBindings(true);
-		this.parser.setBindingsRecovery(true);
+		this.parser.setResolveBindings(false);
+//		this.parser.setResolveBindings(true);
+//		this.parser.setBindingsRecovery(true);
 		final String[] emptyArray = new String[0];
 		Map options = JavaCore.getOptions();
 		JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
 		parser.setCompilerOptions(options);
-		this.parser.setEnvironment(emptyArray, new String[]{this.srcFolder}, null, true);
+//		this.parser.setEnvironment(emptyArray, new String[]{this.srcFolder}, null, true);
+		this.parser.setEnvironment(emptyArray, new String[]{this.srcFolder}, null, false);
 		
 //		System.out.println(rootFile);
 		try {

@@ -81,6 +81,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 						} else {
 							// Faz checkout e gera UML model da revisao current
 							checkoutCommand(git, currentCommit);
+							currentUMLModel = null;
 							currentUMLModel = new ASTReader2(new File(this.projectFolder)).getUmlModel();
 						}
 						
@@ -93,6 +94,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 						
 						// Faz checkout e gera UML model da revisao parent
 						checkoutCommand(git, parentCommit);
+						parentUMLModel = null;
 						parentUMLModel = new ASTReader2(new File(this.projectFolder)).getUmlModel();
 						
 						// Diff entre currentModel e parentModel

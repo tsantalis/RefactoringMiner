@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class TestInvocationCount {
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws Exception {
 //		runProject("tmp/refactoring-toy-example", "https://github.com/danilofes/refactoring-toy-example.git");
 		runProject("tmp/junit", "https://github.com/junit-team/junit.git");
 		//runProject("tmp/elasticsearch", "https://github.com/elasticsearch/elasticsearch.git");

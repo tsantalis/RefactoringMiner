@@ -12,6 +12,7 @@ import java.util.ListIterator;
 public class UMLClass implements Comparable<UMLClass>, Serializable {
 	private String packageName;
     private String name;
+    private String qualifiedName;
     private String xmiID;
     private String visibility;
 	private boolean isAbstract;
@@ -23,6 +24,10 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     public UMLClass(String packageName, String name, String xmiID) {
     	this.packageName = packageName;
         this.name = name;
+        if(packageName.equals(""))
+        	this.qualifiedName = name;
+    	else
+    		this.qualifiedName = packageName + "." + name;
         this.xmiID = xmiID;
         this.isAbstract = false;
         this.isInterface = false;
@@ -32,10 +37,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     }
 
     public String getName() {
-    	if(packageName.equals(""))
-    		return name;
-    	else
-    		return packageName + "." + name;
+    	return this.qualifiedName;
     }
 
     //returns true if the "innerClass" parameter is inner class of this

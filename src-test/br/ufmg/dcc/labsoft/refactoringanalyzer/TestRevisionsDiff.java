@@ -92,7 +92,7 @@ public class TestRevisionsDiff {
 		    "Move Class	org.animals.Chicken moved to org.birds.Chicken",
 		    "Move Class	org.animals.Duck moved to org.birds.Duck");
 
-		new RefactoringDetectorImpl("tmp/refactoring-toy-example", matcher).detectAll();
+		new RefactoringDetectorImpl().detectAll("tmp/refactoring-toy-example", matcher);
 
 		matcher.checkFalseNegatives();
 	}

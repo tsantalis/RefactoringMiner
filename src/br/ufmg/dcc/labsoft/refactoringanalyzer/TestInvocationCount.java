@@ -24,7 +24,7 @@ public class TestInvocationCount {
 		gitService.cloneIfNotExists(folder, cloneUrl);
 		
 		final MethodInvocationInfoSummary s = new MethodInvocationInfoSummary();
-		new RefactoringDetectorImpl(folder, new RefactoringHandler() {
+		new RefactoringDetectorImpl().detectAll(folder, new RefactoringHandler() {
 			@Override
 			public void handleCurrent(UMLModel model) {
 				s.analyzeCurrent(model);
@@ -33,7 +33,7 @@ public class TestInvocationCount {
 			public void handleDiff(Revision prevRevision, UMLModel prevModel, Revision curRevision, UMLModel curModel, List<Refactoring> refactorings) {
 			    s.analyzeRevision(curRevision, curModel, refactorings);
 			}
-		}).detectAll();
+		});
 		
 		File outputFile = new File(folder + ".csv");
 		s.print(new PrintStream(outputFile));

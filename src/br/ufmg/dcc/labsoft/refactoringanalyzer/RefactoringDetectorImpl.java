@@ -21,36 +21,21 @@ import org.eclipse.jgit.revwalk.RevWalk;
 
 public class RefactoringDetectorImpl implements RefactoringDetector {
 
-	private final String projectFolder;
-	private final RefactoringHandler handler;
-
-	private RevCommit currentCommit;
-	private RevCommit parentCommit;
-	private UMLModel currentUMLModel;
-	private UMLModel parentUMLModel;
-
-	private Calendar startTime;
-	private Calendar endTime;
-
-	private long numberOfOkRevisions = 0;
-	private long numberOfMergeRevisions = 0;
-
-	List<Refactoring> refactorings = new ArrayList<Refactoring> ();
-
-
-	public RefactoringDetectorImpl(String projectFolder, RefactoringHandler handler) {
-		this.projectFolder = projectFolder;
-		this.handler = handler;
-	}
-
 	@Override
-	public void detectAll() {
-		startTime = Calendar.getInstance();
+	public void detectAll(String projectFolder, RefactoringHandler handler) {
+		long numberOfOkRevisions = 0;
+		long numberOfMergeRevisions = 0;
+		RevCommit currentCommit = null;
+		RevCommit parentCommit = null;
+		UMLModel currentUMLModel = null;
+		UMLModel parentUMLModel = null;
+		List<Refactoring> refactorings = new ArrayList<Refactoring>();
+		Calendar startTime = Calendar.getInstance();
 
 		try {
 			RepositoryBuilder builder = new RepositoryBuilder();
 			org.eclipse.jgit.lib.Repository repository = builder
-					.setGitDir(new File(this.projectFolder + File.separator + ".git"))
+					.setGitDir(new File(projectFolder + File.separator + ".git"))
 					.readEnvironment() // scan environment GIT_* variables
 					.findGitDir() // scan up the file system tree
 					.build();
@@ -58,8 +43,8 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 			// Inicializa repositorio
 			Git git = new Git(repository);
 			checkoutHead(git);
-			currentUMLModel = new ASTReader2(new File(this.projectFolder)).getUmlModel();
-			this.handler.handleCurrent(currentUMLModel);
+			currentUMLModel = new ASTReader2(new File(projectFolder)).getUmlModel();
+			handler.handleCurrent(currentUMLModel);
 			
 			Ref head = repository.getRef(Constants.MASTER);
 			String headId = head.getObjectId().getName();
@@ -82,7 +67,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 							// Faz checkout e gera UML model da revisao current
 							checkoutCommand(git, currentCommit);
 							currentUMLModel = null;
-							currentUMLModel = new ASTReader2(new File(this.projectFolder)).getUmlModel();
+							currentUMLModel = new ASTReader2(new File(projectFolder)).getUmlModel();
 						}
 						
 						// Recupera o parent commit
@@ -95,16 +80,16 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 						// Faz checkout e gera UML model da revisao parent
 						checkoutCommand(git, parentCommit);
 						parentUMLModel = null;
-						parentUMLModel = new ASTReader2(new File(this.projectFolder)).getUmlModel();
+						parentUMLModel = new ASTReader2(new File(projectFolder)).getUmlModel();
 						
 						// Diff entre currentModel e parentModel
 						UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 						List<Refactoring> refactoringsAtRevision = modelDiff.getRefactorings();
 						refactorings.addAll(refactoringsAtRevision);
-						this.handler.handleDiff(prevRevision, parentUMLModel, curRevision, currentUMLModel, refactoringsAtRevision);
+						handler.handleDiff(prevRevision, parentUMLModel, curRevision, currentUMLModel, refactoringsAtRevision);
 						
 						for (Refactoring ref : refactoringsAtRevision) {
-							this.handler.handleRefactoring(curRevision, currentUMLModel, ref);
+							handler.handleRefactoring(curRevision, currentUMLModel, ref);
 						}
 					} catch (Exception e) {
 						System.out.println("ERRO, revisão ignorada: " + currentCommit.getId().getName() + "\n");
@@ -123,10 +108,10 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 			throw new RuntimeException(e);
 		}
 
-		endTime = Calendar.getInstance();
+		Calendar endTime = Calendar.getInstance();
 
 		System.out.println("=====================================================");
-		System.out.println(this.projectFolder);
+		System.out.println(projectFolder);
 		System.out.println(String.format("Revisões: %5d  Merge: %5d  Refactorings: %4d ", numberOfOkRevisions, numberOfMergeRevisions, refactorings.size()));
 		System.out.println("Início: " + startTime.get(Calendar.HOUR) + ":" + startTime.get(Calendar.MINUTE));
 		System.out.println("Fim:    " + endTime.get(Calendar.HOUR) + ":" + endTime.get(Calendar.MINUTE));	

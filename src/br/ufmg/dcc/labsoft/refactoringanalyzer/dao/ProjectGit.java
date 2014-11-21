@@ -1,9 +1,9 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer.dao;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,13 +15,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
-@NamedQueries({ @NamedQuery(name = "projectGit.findAll", query = "SELECT i FROM ProjectGit i") })
-public class ProjectGit extends Entidade implements Serializable {
+@NamedQueries({
+	@NamedQuery(name = "projectGit.findAll", query = "SELECT i FROM ProjectGit i"),
+	@NamedQuery(name = "projectGit.findByCloneUrl", query = "SELECT i FROM ProjectGit i where i.cloneUrl = :cloneUrl")
+})
+public class ProjectGit extends AbstractEntity {
 
 	private String name;
 	@Column(unique = true)
 	private String cloneUrl;
 	private int size;
+	private boolean fork;
 	private int stargazers_count;
 	private int watchers_count;
 	private int forks_count;
@@ -34,9 +38,9 @@ public class ProjectGit extends Entidade implements Serializable {
 	private String description;
 	private String language;
 
-	private int countCommits;
-	private int countCommitsNotParents;
-	private boolean finalizado;
+	private int commit_count;
+	private int non_merge_commit_count;
+	private boolean analyzed;
 
 	@OneToMany(mappedBy = "projectGit", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<RevisionGit> revisionGitList = new ArrayList<RevisionGit>();
@@ -75,6 +79,14 @@ public class ProjectGit extends Entidade implements Serializable {
 
 	public void setSize(int size) {
 		this.size = size;
+	}
+
+	public boolean isFork() {
+		return fork;
+	}
+
+	public void setFork(boolean fork) {
+		this.fork = fork;
 	}
 
 	public int getStargazers_count() {
@@ -157,12 +169,12 @@ public class ProjectGit extends Entidade implements Serializable {
 		this.language = language;
 	}
 
-	public boolean isFinalizado() {
-		return finalizado;
+	public boolean isAnalyzed() {
+		return analyzed;
 	}
 
-	public void setFinalizado(boolean finalizado) {
-		this.finalizado = finalizado;
+	public void setAnalyzed(boolean finalizado) {
+		this.analyzed = finalizado;
 	}
 
 	public List<RevisionGit> getRevisionGitList() {
@@ -174,19 +186,24 @@ public class ProjectGit extends Entidade implements Serializable {
 	}
 
 	public int getCountCommits() {
-		return countCommits;
+		return commit_count;
 	}
 
 	public void setCountCommits(int countCommits) {
-		this.countCommits = countCommits;
+		this.commit_count = countCommits;
 	}
 
 	public int getCountCommitsNotParents() {
-		return countCommitsNotParents;
+		return non_merge_commit_count;
 	}
 
 	public void setCountCommitsNotParents(int countCommitsNotParents) {
-		this.countCommitsNotParents = countCommitsNotParents;
+		this.non_merge_commit_count = countCommitsNotParents;
 	}
 
+	@Override
+	public String toString() {
+		return this.cloneUrl;
+	}
+	
 }

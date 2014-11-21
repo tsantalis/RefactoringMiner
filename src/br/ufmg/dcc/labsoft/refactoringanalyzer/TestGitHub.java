@@ -11,6 +11,7 @@ import org.eclipse.jgit.api.Git;
 import com.jcabi.github.Github;
 import com.jcabi.github.Repo;
 import com.jcabi.github.RtGithub;
+import com.jcabi.github.Search.Order;
 
 
 
@@ -24,7 +25,7 @@ public class TestGitHub {
 			
 			// Busca projetos Java de tamanho menor que 5MB ordenados por stars decrescente.
 			// https://developer.github.com/v3/search/#search-repositories
-			Iterator<Repo> repos = github.search().repos("language:Java", "stars", "desc").iterator();
+			Iterator<Repo> repos = github.search().repos("language:Java", "stars", Order.DESC).iterator();
 			
 			while(repos.hasNext()) {
 				Repo repo = repos.next();

@@ -6,59 +6,44 @@ import gr.uom.java.xmi.diff.Refactoring;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.RepositoryBuilder;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 
 public class RefactoringDetectorImpl implements RefactoringDetector {
 
 	@Override
-	public void detectAll(String projectFolder, RefactoringHandler handler) {
-		long numberOfOkRevisions = 0;
-		long numberOfMergeRevisions = 0;
+	public void detectAll(Repository repository, RefactoringHandler handler) {
+		long commitsCount = 0;
+		long mergeCommitsCount = 0;
+		long skippedCommitsCount = 0;
+		long refactoringsCount = 0;
 		RevCommit currentCommit = null;
 		RevCommit parentCommit = null;
 		UMLModel currentUMLModel = null;
 		UMLModel parentUMLModel = null;
-		List<Refactoring> refactorings = new ArrayList<Refactoring>();
 		Calendar startTime = Calendar.getInstance();
 
+		File metadataFolder = repository.getDirectory();
+		Git git = new Git(repository);
+		File projectFolder = metadataFolder.getParentFile();
 		try {
-			RepositoryBuilder builder = new RepositoryBuilder();
-			org.eclipse.jgit.lib.Repository repository = builder
-					.setGitDir(new File(projectFolder + File.separator + ".git"))
-					.readEnvironment() // scan environment GIT_* variables
-					.findGitDir() // scan up the file system tree
-					.build();
-
-			// Inicializa repositorio
-			Git git = new Git(repository);
-			checkoutHead(git);
-			currentUMLModel = new ASTReader2(new File(projectFolder)).getUmlModel();
+			
+			currentUMLModel = new ASTReader2(projectFolder).getUmlModel();
 			handler.handleCurrent(currentUMLModel);
 			
-			Ref head = repository.getRef(Constants.MASTER);
-			String headId = head.getObjectId().getName();
-			
 			RevWalk walk = new RevWalk(repository);
-			Iterable<RevCommit> logs = git.log().call();
-			Iterator<RevCommit> i = logs.iterator();		
-
-			//Itera em todas as revisoes do projeto
+			walk.markStart(walk.parseCommit(repository.resolve("HEAD")));
+			Iterator<RevCommit> i = walk.iterator();
 			while (i.hasNext()) {				
-				currentCommit = walk.parseCommit(i.next());		
-
+				currentCommit = i.next();
 				if (currentCommit.getParentCount() == 1) {
-
 					try {
 						// Ganho de performance - Aproveita a UML Model que ja se encontra em memorioa da comparacao anterior
 						if (parentCommit != null && currentCommit.getId().equals(parentCommit.getId())) {
@@ -67,25 +52,25 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 							// Faz checkout e gera UML model da revisao current
 							checkoutCommand(git, currentCommit);
 							currentUMLModel = null;
-							currentUMLModel = new ASTReader2(new File(projectFolder)).getUmlModel();
+							currentUMLModel = new ASTReader2(projectFolder).getUmlModel();
 						}
 						
 						// Recupera o parent commit
 						parentCommit = walk.parseCommit(currentCommit.getParent(0));
 						
-						Revision prevRevision = new Revision(parentCommit, headId == parentCommit.getId().getName());
-						Revision curRevision = new Revision(currentCommit, headId == currentCommit.getId().getName());
+						Revision prevRevision = new Revision(parentCommit);
+						Revision curRevision = new Revision(currentCommit);
 						//System.out.println(String.format("Comparando %s e %s", prevRevision.getId(), curRevision.getId()));
 						
 						// Faz checkout e gera UML model da revisao parent
 						checkoutCommand(git, parentCommit);
 						parentUMLModel = null;
-						parentUMLModel = new ASTReader2(new File(projectFolder)).getUmlModel();
+						parentUMLModel = new ASTReader2(projectFolder).getUmlModel();
 						
 						// Diff entre currentModel e parentModel
 						UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 						List<Refactoring> refactoringsAtRevision = modelDiff.getRefactorings();
-						refactorings.addAll(refactoringsAtRevision);
+						refactoringsCount += refactoringsAtRevision.size();
 						handler.handleDiff(prevRevision, parentUMLModel, curRevision, currentUMLModel, refactoringsAtRevision);
 						
 						for (Refactoring ref : refactoringsAtRevision) {
@@ -94,13 +79,13 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 					} catch (Exception e) {
 						System.out.println("ERRO, revisão ignorada: " + currentCommit.getId().getName() + "\n");
 						e.printStackTrace();
+						skippedCommitsCount++;
 					}
 
-					numberOfOkRevisions++;
 				} else {
-					numberOfMergeRevisions++;
+					mergeCommitsCount++;
 				}
-
+				commitsCount++;
 				//System.out.println(String.format("Revisões: %5d Ignoradas: %5d Refactorings: %4d ", numberOfOkRevisions, numberOfMergeRevisions, refactorings.size()));
 			}
 
@@ -111,20 +96,15 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		Calendar endTime = Calendar.getInstance();
 
 		System.out.println("=====================================================");
-		System.out.println(projectFolder);
-		System.out.println(String.format("Revisões: %5d  Merge: %5d  Refactorings: %4d ", numberOfOkRevisions, numberOfMergeRevisions, refactorings.size()));
+		System.out.println(projectFolder.toString());
+		System.out.println(String.format("Commits: %5d  Merge: %5d  Skipped: %d  Refactorings: %4d ", commitsCount, mergeCommitsCount, skippedCommitsCount, refactoringsCount));
 		System.out.println("Início: " + startTime.get(Calendar.HOUR) + ":" + startTime.get(Calendar.MINUTE));
-		System.out.println("Fim:    " + endTime.get(Calendar.HOUR) + ":" + endTime.get(Calendar.MINUTE));	
+		System.out.println("Fim:    " + endTime.get(Calendar.HOUR) + ":" + endTime.get(Calendar.MINUTE));
 	}
 
 	private void checkoutCommand(Git git, RevCommit commit) throws Exception {
 		CheckoutCommand checkout = git.checkout().setStartPoint(commit).setName(commit.getId().getName());
 		checkout.call();		
-	}
-
-	private void checkoutHead(Git git) throws Exception {
-		CheckoutCommand checkout = git.checkout().setStartPoint(Constants.HEAD).setName(Constants.MASTER);
-		checkout.call();
 	}
 
 }

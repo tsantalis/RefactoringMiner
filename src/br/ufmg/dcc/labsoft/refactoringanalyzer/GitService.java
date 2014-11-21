@@ -1,7 +1,9 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer;
 
+import org.eclipse.jgit.lib.Repository;
+
 public interface GitService {
 
-	void cloneIfNotExists(String folder, String cloneUrl);
+	Repository cloneIfNotExists(String folder, String cloneUrl, String branch) throws Exception;
 
 }

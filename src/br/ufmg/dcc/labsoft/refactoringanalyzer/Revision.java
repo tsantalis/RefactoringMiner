@@ -6,13 +6,11 @@ public final class Revision {
 
 	private final String id;
 	private int time;
-	private boolean current = false;
 
-	public Revision(RevCommit commit, boolean current) {
+	public Revision(RevCommit commit) {
 		super();
 		this.id = commit.getId().getName();
 		this.time = commit.getCommitTime();
-		this.current = current;
 	}
 
 	public String getId() {
@@ -21,10 +19,6 @@ public final class Revision {
 
 	public int getTime() {
 		return time;
-	}
-
-	public boolean isCurrent() {
-		return current;
 	}
 
 }

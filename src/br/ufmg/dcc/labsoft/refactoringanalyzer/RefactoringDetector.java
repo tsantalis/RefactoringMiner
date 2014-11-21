@@ -1,7 +1,9 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer;
 
+import org.eclipse.jgit.lib.Repository;
+
 public interface RefactoringDetector {
 
-	void detectAll(String projectFolder, RefactoringHandler handler);
+	void detectAll(Repository repository, RefactoringHandler handler);
 
 }

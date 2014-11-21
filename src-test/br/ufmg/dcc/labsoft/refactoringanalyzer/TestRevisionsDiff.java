@@ -1,5 +1,6 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer;
 
+import org.eclipse.jgit.lib.Repository;
 import org.junit.Test;
 
 public class TestRevisionsDiff {
@@ -7,7 +8,7 @@ public class TestRevisionsDiff {
 	@Test
 	public void testRevisionsDiff() throws Exception {
 		GitService gitService = new GitServiceImpl();
-		gitService.cloneIfNotExists("tmp/refactoring-toy-example", "https://github.com/danilofes/refactoring-toy-example.git");
+		Repository rep = gitService.cloneIfNotExists("tmp/refactoring-toy-example", "https://github.com/danilofes/refactoring-toy-example.git", "master");
 		
 		RefactoringMatcher matcher = new RefactoringMatcher();
 		
@@ -92,7 +93,7 @@ public class TestRevisionsDiff {
 		    "Move Class	org.animals.Chicken moved to org.birds.Chicken",
 		    "Move Class	org.animals.Duck moved to org.birds.Duck");
 
-		new RefactoringDetectorImpl().detectAll("tmp/refactoring-toy-example", matcher);
+		new RefactoringDetectorImpl().detectAll(rep, matcher);
 
 		matcher.checkFalseNegatives();
 	}

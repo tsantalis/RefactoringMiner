@@ -1,9 +1,8 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer.dao;
 
-import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,164 +12,128 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-
-
-
 
 @Entity
 @NamedQueries({
-     @NamedQuery(name = "revisionGit.findByProject", query = "SELECT i FROM RevisionGit i "),
-     //@NamedQuery(name = "revisionGit.findByProjectByCommits", query = "SELECT i FROM RevisionGit i where i.top_k = 0 and i.project = :projeto"),
- })
-public class RevisionGit extends Entidade implements Serializable {
+	@NamedQuery(name = "revisionGit.findByProject", query = "SELECT i FROM RevisionGit i "),
+	//@NamedQuery(name = "revisionGit.findByProjectByCommits", query = "SELECT i FROM RevisionGit i where i.top_k = 0 and i.project = :projeto"),
+})
+public class RevisionGit extends AbstractEntity {
 
-    @Column (unique=true)
-    private String idCommit;
-    private String idCommitParent;
-    private String authorName;
-    private String authorIdent;               
-    private String encoding;                
-    private Date commitTime;
-        
-    @Column(columnDefinition="TEXT")
-    private String FullMessage;
-    
-    @Column(length = 5000)
-    private String shortMessage;
-    
-    private Boolean finalizado;
-     
-    private Boolean comparacao;
-        
-    @ManyToOne(cascade = CascadeType.PERSIST) 
-    @JoinColumn(name="projectGit_id")
-    private ProjectGit projectGit; 
-    
-    @OneToMany(mappedBy = "revisiongit", targetEntity = RefactoringGit.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<RefactoringGit> refactorygit;
+	@Column (unique=true)
+	private String idCommit;
+	private String idCommitParent;
+	private String authorName;
+	private String authorIdent;               
+	private String encoding;                
+	private Date commitTime;
 
-    
-    
-    public RevisionGit() {
-    }
+	@Column(columnDefinition="TEXT")
+	private String FullMessage;
 
-   @Override
-   public Long getId() {
-        return id;
-    }
+	@Column(length = 5000)
+	private String shortMessage;
 
-    @Override
-    public void setId(final Long id) {
-        this.id = id;
-    }
-    
-    
-    public ProjectGit getProjectGit() {
-        return projectGit;
-    }
+	@ManyToOne(cascade = CascadeType.PERSIST) 
+	@JoinColumn(name="projectGit_id")
+	private ProjectGit projectGit; 
 
-    public void setProjectGit(ProjectGit projectGit) {
-        this.projectGit = projectGit;
-    }
+	@OneToMany(mappedBy = "revisiongit", targetEntity = RefactoringGit.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<RefactoringGit> refactorygit;
 
-       
-    public String getIdCommit() {
-        return idCommit;
-    }
+	public RevisionGit() {
+	}
 
-    public void setIdCommit(String idCommit) {
-        this.idCommit = idCommit;
-    }
+	@Override
+	public Long getId() {
+		return id;
+	}
 
-    public String getIdCommitParent() {
-        return idCommitParent;
-    }
+	@Override
+	public void setId(final Long id) {
+		this.id = id;
+	}
 
-    public void setIdCommitParent(String idCommitPai) {
-        this.idCommitParent = idCommitPai;
-    }
 
-    
+	public ProjectGit getProjectGit() {
+		return projectGit;
+	}
 
-    public String getAuthorIdent() {
-        return authorIdent;
-    }
+	public void setProjectGit(ProjectGit projectGit) {
+		this.projectGit = projectGit;
+	}
 
-    public void setAuthorIdent(String authorIdent) {
-        this.authorIdent = authorIdent;
-    }
 
-    public String getEncoding() {
-        return encoding;
-    }
+	public String getIdCommit() {
+		return idCommit;
+	}
 
-    public void setEncoding(String encoding) {
-        this.encoding = encoding;
-    }
+	public void setIdCommit(String idCommit) {
+		this.idCommit = idCommit;
+	}
 
-    public Date getCommitTime() {
-        return commitTime;
-    }
+	public String getIdCommitParent() {
+		return idCommitParent;
+	}
 
-    public void setCommitTime(Date commitTime) {
-        this.commitTime = commitTime;
-    }
+	public void setIdCommitParent(String idCommitPai) {
+		this.idCommitParent = idCommitPai;
+	}
 
-   
+	public String getAuthorIdent() {
+		return authorIdent;
+	}
 
-    public String getFullMessage() {
-        return FullMessage;
-    }
+	public void setAuthorIdent(String authorIdent) {
+		this.authorIdent = authorIdent;
+	}
 
-    public void setFullMessage(String FullMessage) {
-        this.FullMessage = FullMessage;
-    }
+	public String getEncoding() {
+		return encoding;
+	}
 
-    public String getShortMessage() {
-        return shortMessage;
-    }
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
 
-    public void setShortMessage(String shortMessage) {
-        this.shortMessage = shortMessage;
-    }
+	public Date getCommitTime() {
+		return commitTime;
+	}
 
-    public Boolean isFinalizado() {
-        return finalizado;
-    }
+	public void setCommitTime(Date commitTime) {
+		this.commitTime = commitTime;
+	}
 
-    public void setFinalizado(Boolean finalizado) {
-        this.finalizado = finalizado;
-    }
+	public String getFullMessage() {
+		return FullMessage;
+	}
 
-    public Boolean isComparacao() {
-        return comparacao;
-    }
+	public void setFullMessage(String FullMessage) {
+		this.FullMessage = FullMessage;
+	}
 
-    public void setComparacao(Boolean comparacao) {
-        this.comparacao = comparacao;
-    }
+	public String getShortMessage() {
+		return shortMessage;
+	}
 
-    public Set<RefactoringGit> getRefactorygit() {
-        return refactorygit;
-    }
+	public void setShortMessage(String shortMessage) {
+		this.shortMessage = shortMessage;
+	}
 
-    public void setRefactorygit(Set<RefactoringGit> refactorygit) {
-        this.refactorygit = refactorygit;
-    }
+	public Set<RefactoringGit> getRefactorygit() {
+		return refactorygit;
+	}
 
-    public String getAuthorName() {
-        return authorName;
-    }
+	public void setRefactorygit(Set<RefactoringGit> refactorygit) {
+		this.refactorygit = refactorygit;
+	}
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
-    }
-    
-    
-    
+	public String getAuthorName() {
+		return authorName;
+	}
 
-   
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
+	}
 
 }

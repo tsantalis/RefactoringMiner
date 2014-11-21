@@ -21,7 +21,9 @@
     <dependency org="org.tmatesoft.svnkit" name="svnkit" rev="1.3.5" />
     <dependency org="org.jdom" name="jdom" rev="1.1.3" conf="default->default" />
     <dependency org="org.eclipse.mylyn.github" name="org.eclipse.egit.github.core" rev="2.1.5"/>
-    <dependency org="com.jcabi" name="jcabi-github" rev="0.14" conf="default->default" />
+    <dependency org="com.jcabi" name="jcabi-github" rev="0.17" conf="default->default" />
+    <dependency org="org.hibernate" name="hibernate-entitymanager" rev="4.2.6.Final" conf="default->default" />
+    <dependency org="mysql" name="mysql-connector-java" rev="5.1.34" />
     
     <dependency org="junit" name="junit" rev="4.11" conf="default->default" />
 

@@ -5,6 +5,7 @@ import gr.uom.java.xmi.diff.Refactoring;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,21 +16,27 @@ public class RefactoringMatcher extends RefactoringHandler {
 	Map<String, Set<String>> expected = new HashMap<>();
 
 	@Override
-	public void handleRefactoring(Revision revision, UMLModel model, Refactoring refactoring) {
-		String commitId = revision.getId();
-		String refFound = refactoring.toString();
+	public void handleDiff(Revision prevRevision, UMLModel prevModel, Revision curRevision, UMLModel curModel, List<Refactoring> refactorings) {
+		String commitId = curRevision.getId();
 		if (expected.containsKey(commitId)) {
 			Set<String> refs = expected.get(commitId);
-			if (refs.contains(refFound)) {
-				refs.remove(refFound);
-			} else {
-				Assert.fail(String.format("Refactoring was not expected at revision %s: %s", commitId, refFound));
+			for (Refactoring refactoring : refactorings) {
+				String refFound = refactoring.toString();
+				if (refs.contains(refFound)) {
+					refs.remove(refFound);
+				} else {
+					Assert.fail(String.format("Refactoring was not expected at revision %s: %s", commitId, refFound));
+				}
 			}
 		} else {
-			Assert.fail(String.format("No refactoring was expected at revision %s, but found: %s", commitId, refFound));
+			for (Refactoring refactoring : refactorings) {
+				String refFound = refactoring.toString();
+				Assert.fail(String.format("No refactoring was expected at revision %s, but found: %s", commitId, refFound));
+			}
 		}
+		super.handleDiff(prevRevision, prevModel, curRevision, curModel, refactorings);
 	}
-
+	
 	public RefactoringMatcher expectAtCommit(String commitId, String ... refactorings) {
 		Set<String> set = new HashSet<>();
 		for (String refactoring : refactorings) {

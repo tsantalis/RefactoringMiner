@@ -35,9 +35,6 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		File projectFolder = metadataFolder.getParentFile();
 		try {
 			
-			currentUMLModel = new ASTReader2(projectFolder).getUmlModel();
-			handler.handleCurrent(currentUMLModel);
-			
 			RevWalk walk = new RevWalk(repository);
 			walk.markStart(walk.parseCommit(repository.resolve("HEAD")));
 			Iterator<RevCommit> i = walk.iterator();
@@ -73,9 +70,9 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 						refactoringsCount += refactoringsAtRevision.size();
 						handler.handleDiff(prevRevision, parentUMLModel, curRevision, currentUMLModel, refactoringsAtRevision);
 						
-						for (Refactoring ref : refactoringsAtRevision) {
-							handler.handleRefactoring(curRevision, currentUMLModel, ref);
-						}
+//						for (Refactoring ref : refactoringsAtRevision) {
+//							handler.handleRefactoring(curRevision, currentUMLModel, ref);
+//						}
 					} catch (Exception e) {
 						System.out.println("ERRO, revisão ignorada: " + currentCommit.getId().getName() + "\n");
 						e.printStackTrace();

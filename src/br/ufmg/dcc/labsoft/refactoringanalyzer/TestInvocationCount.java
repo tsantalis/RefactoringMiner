@@ -1,4 +1,5 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer;
+import gr.uom.java.xmi.ASTReader2;
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.diff.Refactoring;
 
@@ -24,13 +25,12 @@ public class TestInvocationCount {
 	private static void runProject(String folder, String cloneUrl) throws Exception {
 	    final GitService gitService = new GitServiceImpl();
 		Repository rep = gitService.cloneIfNotExists(folder, cloneUrl, Constants.MASTER);
-		
+		File projectFolder = rep.getDirectory().getParentFile();
+		UMLModel currentUMLModel = new ASTReader2(projectFolder).getUmlModel();
 		final MethodInvocationInfoSummary s = new MethodInvocationInfoSummary();
+		s.analyzeCurrent(currentUMLModel);
+		
 		new RefactoringDetectorImpl().detectAll(rep, new RefactoringHandler() {
-			@Override
-			public void handleCurrent(UMLModel model) {
-				s.analyzeCurrent(model);
-			}
 			@Override
 			public void handleDiff(Revision prevRevision, UMLModel prevModel, Revision curRevision, UMLModel curModel, List<Refactoring> refactorings) {
 			    s.analyzeRevision(curRevision, curModel, refactorings);

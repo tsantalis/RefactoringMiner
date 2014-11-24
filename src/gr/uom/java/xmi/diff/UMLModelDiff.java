@@ -272,6 +272,9 @@ public class UMLModelDiff {
 				UMLClass addedClass = addedClassIterator.next();
 				if(removedClass.isMoved(addedClass)) {
 					UMLClassMoveDiff classMoveDiff = new UMLClassMoveDiff(removedClass, addedClass);
+					// Add diff for moved classes?
+					// this.addUMLClassDiff(addedClass.diff(removedClass));
+					//
 					addedClassIterator.remove();
 					removedClassIterator.remove();
 					classMoveDiffList.add(classMoveDiff);
@@ -303,6 +306,9 @@ public class UMLModelDiff {
 				UMLClass addedClass = addedClassIterator.next();
 				if(removedClass.isRenamed(addedClass)) {
 					UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass);
+					// Add diff for renamed classes?
+					// this.addUMLClassDiff(addedClass.diff(removedClass));
+					//
 					diffSet.add(classRenameDiff);
 				}
 			}
@@ -675,14 +681,15 @@ public class UMLModelDiff {
 					}
 					else {
 						UMLClass clientClass = getUnchangedClass(addedRealization.getClient());
-//						if (clientClass == null) {
-//							int x = 1 + 2;
-//							clientClass = getUnchangedClass(addedRealization.getClient());
-//						}
-						for(UMLOperation interfaceOperation : addedClass.getOperations()) {
-							if(!clientClass.containsOperationWithTheSameSignature(interfaceOperation)) {
-								implementedInterfaceOperations = false;
-								break;
+						if (clientClass == null) {
+							// FIXME [danilofes]: This may happen with moves / renames but I'm not sure what to do
+							implementedInterfaceOperations = false;
+						} else {
+							for(UMLOperation interfaceOperation : addedClass.getOperations()) {
+								if(!clientClass.containsOperationWithTheSameSignature(interfaceOperation)) {
+									implementedInterfaceOperations = false;
+									break;
+								}
 							}
 						}
 					}

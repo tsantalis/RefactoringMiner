@@ -48,12 +48,13 @@ public class ASTReader2 {
 	private ASTParser parser;
 
 	public ASTReader2(File rootFile) {
-		this.umlModel = new UMLModel();
-		this.srcFolder = rootFile.getPath();
-		
-		this.parser = ASTParser.newParser(AST.JLS4);
-		this.parser.setKind(ASTParser.K_COMPILATION_UNIT);
-		this.parser.setResolveBindings(false);
+		this(rootFile, buildDefaultAstParser(rootFile));
+	}
+	
+	private static ASTParser buildDefaultAstParser(File srcFolder) {
+		ASTParser parser = ASTParser.newParser(AST.JLS4);
+		parser.setKind(ASTParser.K_COMPILATION_UNIT);
+		parser.setResolveBindings(false);
 //		this.parser.setResolveBindings(true);
 //		this.parser.setBindingsRecovery(true);
 		final String[] emptyArray = new String[0];
@@ -61,9 +62,16 @@ public class ASTReader2 {
 		JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
 		parser.setCompilerOptions(options);
 //		this.parser.setEnvironment(emptyArray, new String[]{this.srcFolder}, null, true);
-		this.parser.setEnvironment(emptyArray, new String[]{this.srcFolder}, null, false);
-		
-//		System.out.println(rootFile);
+		parser.setEnvironment(emptyArray, new String[]{srcFolder.getPath()}, null, false);
+		return parser;
+	}
+	
+	public ASTReader2(File rootFile, ASTParser parser) {
+		this.umlModel = new UMLModel();
+		this.srcFolder = rootFile.getPath();
+		this.parser = parser;
+		final String[] emptyArray = new String[0];
+
 		try {
 			final ArrayList<String> javaFiles = new ArrayList<String>();
 			Files.walkFileTree(Paths.get(this.srcFolder), new SimpleFileVisitor<Path>() {

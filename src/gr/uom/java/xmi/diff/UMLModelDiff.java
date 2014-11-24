@@ -675,6 +675,10 @@ public class UMLModelDiff {
 					}
 					else {
 						UMLClass clientClass = getUnchangedClass(addedRealization.getClient());
+//						if (clientClass == null) {
+//							int x = 1 + 2;
+//							clientClass = getUnchangedClass(addedRealization.getClient());
+//						}
 						for(UMLOperation interfaceOperation : addedClass.getOperations()) {
 							if(!clientClass.containsOperationWithTheSameSignature(interfaceOperation)) {
 								implementedInterfaceOperations = false;

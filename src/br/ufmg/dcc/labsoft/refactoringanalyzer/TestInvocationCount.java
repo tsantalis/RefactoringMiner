@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 
 /**
  * Receives two source folders as arguments and detects refactoring operations performed between the given versions of the code.
@@ -32,7 +33,7 @@ public class TestInvocationCount {
 		
 		new RefactoringDetectorImpl().detectAll(rep, new RefactoringHandler() {
 			@Override
-			public void handleDiff(Revision prevRevision, UMLModel prevModel, Revision curRevision, UMLModel curModel, List<Refactoring> refactorings) {
+			public void handleDiff(RevCommit prevRevision, UMLModel prevModel, RevCommit curRevision, UMLModel curModel, List<Refactoring> refactorings) {
 			    s.analyzeRevision(curRevision, curModel, refactorings);
 			}
 		});

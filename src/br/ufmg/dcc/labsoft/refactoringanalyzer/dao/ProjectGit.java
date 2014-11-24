@@ -38,11 +38,12 @@ public class ProjectGit extends AbstractEntity {
 	private String description;
 	private String language;
 
-	private int commit_count;
-	private int non_merge_commit_count;
+	private int commits_count;
+	private int merge_commits_count;
+	private int error_commits_count;
 	private boolean analyzed;
 
-	@OneToMany(mappedBy = "projectGit", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<RevisionGit> revisionGitList = new ArrayList<RevisionGit>();
 
 	@Override
@@ -185,25 +186,33 @@ public class ProjectGit extends AbstractEntity {
 		this.revisionGitList = revisionGitList;
 	}
 
-	public int getCountCommits() {
-		return commit_count;
+	public int getCommits_count() {
+		return commits_count;
 	}
 
-	public void setCountCommits(int countCommits) {
-		this.commit_count = countCommits;
+	public void setCommits_count(int commits_count) {
+		this.commits_count = commits_count;
 	}
 
-	public int getCountCommitsNotParents() {
-		return non_merge_commit_count;
+	public int getError_commits_count() {
+		return error_commits_count;
 	}
 
-	public void setCountCommitsNotParents(int countCommitsNotParents) {
-		this.non_merge_commit_count = countCommitsNotParents;
+	public void setError_commits_count(int count) {
+		this.error_commits_count = count;
+	}
+
+	public int getMerge_commits_count() {
+		return merge_commits_count;
+	}
+
+	public void setMerge_commits_count(int count) {
+		this.merge_commits_count = count;
 	}
 
 	@Override
 	public String toString() {
 		return this.cloneUrl;
 	}
-	
+
 }

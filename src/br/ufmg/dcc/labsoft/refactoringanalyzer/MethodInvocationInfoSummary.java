@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.eclipse.jgit.revwalk.RevCommit;
+
 public class MethodInvocationInfoSummary {
 
 	private Map<String, MethodInfoSummary> map = new HashMap<>();
@@ -42,7 +44,7 @@ public class MethodInvocationInfoSummary {
 		}
 	}
 	
-	public void analyzeRevision(Revision rev, UMLModel model, List<Refactoring> refactorings) {
+	public void analyzeRevision(RevCommit rev, UMLModel model, List<Refactoring> refactorings) {
 		MethodInvocationInfo mii = model.getMethodInvocationInfo();
 		for (MethodInfo methodInfo : mii.getMethodInfoCollection()) {
 			if (!methodInfo.isExternal()) {
@@ -56,7 +58,7 @@ public class MethodInvocationInfoSummary {
 		}
 	}
 
-	private void analyzeRefactoring(Revision rev, UMLModel model, Refactoring refactoring) {
+	private void analyzeRefactoring(RevCommit rev, UMLModel model, Refactoring refactoring) {
 		String bindingKey;
 		if (refactoring instanceof ExtractOperationRefactoring) {
 			ExtractOperationRefactoring emr = (ExtractOperationRefactoring) refactoring;
@@ -74,12 +76,12 @@ public class MethodInvocationInfoSummary {
 		}
 		MethodInfoSummary info = this.getOrCreate(bindingKey);
 		if (info.revExtracted != null && !info.revExtracted.getLast().equals(rev.getId())) {
-			info.revExtracted.add(rev.getId());
+			info.revExtracted.add(rev.getId().getName());
 			return;
 		}
 		if (info.revExtracted == null) {
 			info.revExtracted = new LinkedList<>();
-			info.revExtracted.add(rev.getId());
+			info.revExtracted.add(rev.getId().getName());
 			info.extracted = true;
 			info.moved = refactoring instanceof ExtractAndMoveOperationRefactoring;
 			MethodInvocationInfo mii = model.getMethodInvocationInfo();

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.Assert;
 
 public class RefactoringMatcher extends RefactoringHandler {
@@ -16,8 +17,8 @@ public class RefactoringMatcher extends RefactoringHandler {
 	Map<String, Set<String>> expected = new HashMap<>();
 
 	@Override
-	public void handleDiff(Revision prevRevision, UMLModel prevModel, Revision curRevision, UMLModel curModel, List<Refactoring> refactorings) {
-		String commitId = curRevision.getId();
+	public void handleDiff(RevCommit prevRevision, UMLModel prevModel, RevCommit curRevision, UMLModel curModel, List<Refactoring> refactorings) {
+		String commitId = curRevision.getId().getName();
 		if (expected.containsKey(commitId)) {
 			Set<String> refs = expected.get(commitId);
 			for (Refactoring refactoring : refactorings) {

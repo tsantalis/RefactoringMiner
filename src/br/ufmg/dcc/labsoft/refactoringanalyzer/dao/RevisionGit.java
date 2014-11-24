@@ -12,19 +12,23 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "revisionGit.findByProject", query = "SELECT i FROM RevisionGit i "),
-	//@NamedQuery(name = "revisionGit.findByProjectByCommits", query = "SELECT i FROM RevisionGit i where i.top_k = 0 and i.project = :projeto"),
+	@NamedQuery(name = "revisionGit.findByProjectAndCommit", query = "SELECT i FROM RevisionGit i where i.project = :project and i.commitId = :commitId"),
 })
+@Table(
+	name = "revisionGit",
+	uniqueConstraints = {@UniqueConstraint(columnNames = {"project", "commitId"})}
+)
 public class RevisionGit extends AbstractEntity {
 
-	@Column (unique=true)
-	private String idCommit;
-	private String idCommitParent;
+	private String commitId;
+	private String commitIdParent;
 	private String authorName;
-	private String authorIdent;               
+	private String authorEmail;               
 	private String encoding;                
 	private Date commitTime;
 
@@ -35,11 +39,11 @@ public class RevisionGit extends AbstractEntity {
 	private String shortMessage;
 
 	@ManyToOne(cascade = CascadeType.PERSIST) 
-	@JoinColumn(name="projectGit_id")
-	private ProjectGit projectGit; 
+	@JoinColumn(name="project")
+	private ProjectGit project; 
 
-	@OneToMany(mappedBy = "revisiongit", targetEntity = RefactoringGit.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<RefactoringGit> refactorygit;
+	@OneToMany(mappedBy = "revision", targetEntity = RefactoringGit.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<RefactoringGit> refactorings;
 
 	public RevisionGit() {
 	}
@@ -56,36 +60,36 @@ public class RevisionGit extends AbstractEntity {
 
 
 	public ProjectGit getProjectGit() {
-		return projectGit;
+		return project;
 	}
 
 	public void setProjectGit(ProjectGit projectGit) {
-		this.projectGit = projectGit;
+		this.project = projectGit;
 	}
 
 
 	public String getIdCommit() {
-		return idCommit;
+		return commitId;
 	}
 
 	public void setIdCommit(String idCommit) {
-		this.idCommit = idCommit;
+		this.commitId = idCommit;
 	}
 
 	public String getIdCommitParent() {
-		return idCommitParent;
+		return commitIdParent;
 	}
 
 	public void setIdCommitParent(String idCommitPai) {
-		this.idCommitParent = idCommitPai;
+		this.commitIdParent = idCommitPai;
 	}
 
-	public String getAuthorIdent() {
-		return authorIdent;
+	public String getAuthorEmail() {
+		return authorEmail;
 	}
 
-	public void setAuthorIdent(String authorIdent) {
-		this.authorIdent = authorIdent;
+	public void setAuthorEmail(String authorIdent) {
+		this.authorEmail = authorIdent;
 	}
 
 	public String getEncoding() {
@@ -120,12 +124,12 @@ public class RevisionGit extends AbstractEntity {
 		this.shortMessage = shortMessage;
 	}
 
-	public Set<RefactoringGit> getRefactorygit() {
-		return refactorygit;
+	public Set<RefactoringGit> getRefactorings() {
+		return refactorings;
 	}
 
-	public void setRefactorygit(Set<RefactoringGit> refactorygit) {
-		this.refactorygit = refactorygit;
+	public void setRefactorings(Set<RefactoringGit> refactorygit) {
+		this.refactorings = refactorygit;
 	}
 
 	public String getAuthorName() {

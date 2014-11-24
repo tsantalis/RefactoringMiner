@@ -24,7 +24,7 @@ public class Database {
 		}
 		return null;
 	}
-	
+
 	public void insertIfNotExists(ProjectGit project) {
 		try {
 			em.getTransaction().begin();
@@ -36,6 +36,29 @@ public class Database {
 			em.getTransaction().rollback();
 			throw e;
 		}
+	}
+
+	public RevisionGit getRevisionById(ProjectGit project, String id) {
+		@SuppressWarnings("unchecked")
+		List<RevisionGit> revisions = em.createNamedQuery("revisionGit.findByProjectAndCommit")
+			.setParameter("project", project)
+			.setParameter("commitId", id).getResultList();
+		if (revisions.size() > 0) {
+			return revisions.get(0);
+		}
+		return null;
+	}
+
+	public void insert(RevisionGit revision) {
+		em.getTransaction().begin();
+		em.persist(revision);
+		em.getTransaction().commit();
+	}
+
+	public void update(ProjectGit project) {
+		em.getTransaction().begin();
+		em.merge(project);
+		em.getTransaction().commit();
 	}
 
 }

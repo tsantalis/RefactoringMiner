@@ -6,41 +6,50 @@ import gr.uom.java.xmi.diff.Refactoring;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.io.File;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RefactoringDetectorImpl implements RefactoringDetector {
 
+	Logger logger = LoggerFactory.getLogger(RefactoringDetectorImpl.class);
+
 	@Override
 	public void detectAll(Repository repository, RefactoringHandler handler) {
-		long commitsCount = 0;
-		long mergeCommitsCount = 0;
-		long skippedCommitsCount = 0;
-		long refactoringsCount = 0;
+		int commitsCount = 0;
+		int mergeCommitsCount = 0;
+		int errorCommitsCount = 0;
+		int refactoringsCount = 0;
 		RevCommit currentCommit = null;
 		RevCommit parentCommit = null;
 		UMLModel currentUMLModel = null;
 		UMLModel parentUMLModel = null;
-		Calendar startTime = Calendar.getInstance();
 
 		File metadataFolder = repository.getDirectory();
 		Git git = new Git(repository);
 		File projectFolder = metadataFolder.getParentFile();
+		String projectName = projectFolder.getName();
+		ASTParser parser = this.buildAstParser(projectFolder.getPath());
+		
 		try {
 			
 			RevWalk walk = new RevWalk(repository);
 			walk.markStart(walk.parseCommit(repository.resolve("HEAD")));
 			Iterator<RevCommit> i = walk.iterator();
-			while (i.hasNext()) {				
+			while (i.hasNext()) {
 				currentCommit = i.next();
-				if (currentCommit.getParentCount() == 1) {
+				if (currentCommit.getParentCount() == 1 && !handler.skipRevision(currentCommit)) {
 					try {
 						// Ganho de performance - Aproveita a UML Model que ja se encontra em memorioa da comparacao anterior
 						if (parentCommit != null && currentCommit.getId().equals(parentCommit.getId())) {
@@ -49,54 +58,43 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 							// Faz checkout e gera UML model da revisao current
 							checkoutCommand(git, currentCommit);
 							currentUMLModel = null;
-							currentUMLModel = new ASTReader2(projectFolder).getUmlModel();
+							currentUMLModel = new ASTReader2(projectFolder, parser).getUmlModel();
 						}
 						
 						// Recupera o parent commit
 						parentCommit = walk.parseCommit(currentCommit.getParent(0));
 						
-						Revision prevRevision = new Revision(parentCommit);
-						Revision curRevision = new Revision(currentCommit);
-						//System.out.println(String.format("Comparando %s e %s", prevRevision.getId(), curRevision.getId()));
-						
 						// Faz checkout e gera UML model da revisao parent
 						checkoutCommand(git, parentCommit);
 						parentUMLModel = null;
-						parentUMLModel = new ASTReader2(projectFolder).getUmlModel();
+						parentUMLModel = new ASTReader2(projectFolder, parser).getUmlModel();
 						
 						// Diff entre currentModel e parentModel
 						UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 						List<Refactoring> refactoringsAtRevision = modelDiff.getRefactorings();
 						refactoringsCount += refactoringsAtRevision.size();
-						handler.handleDiff(prevRevision, parentUMLModel, curRevision, currentUMLModel, refactoringsAtRevision);
+						handler.handleDiff(parentCommit, parentUMLModel, currentCommit, currentUMLModel, refactoringsAtRevision);
 						
-//						for (Refactoring ref : refactoringsAtRevision) {
-//							handler.handleRefactoring(curRevision, currentUMLModel, ref);
-//						}
 					} catch (Exception e) {
-						System.out.println("ERRO, revisão ignorada: " + currentCommit.getId().getName() + "\n");
-						e.printStackTrace();
-						skippedCommitsCount++;
+						logger.warn(String.format("Ignored revision %s due to error", currentCommit.getId().getName()), e);
+						errorCommitsCount++;
 					}
 
 				} else {
 					mergeCommitsCount++;
 				}
 				commitsCount++;
-				//System.out.println(String.format("Revisões: %5d Ignoradas: %5d Refactorings: %4d ", numberOfOkRevisions, numberOfMergeRevisions, refactorings.size()));
+				if (commitsCount % 100 == 0) {
+					logger.info(String.format("Processing %s [Commits: %d, Merge: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, mergeCommitsCount, errorCommitsCount, refactoringsCount));
+				}
 			}
 
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 
-		Calendar endTime = Calendar.getInstance();
-
-		System.out.println("=====================================================");
-		System.out.println(projectFolder.toString());
-		System.out.println(String.format("Commits: %5d  Merge: %5d  Skipped: %d  Refactorings: %4d ", commitsCount, mergeCommitsCount, skippedCommitsCount, refactoringsCount));
-		System.out.println("Início: " + startTime.get(Calendar.HOUR) + ":" + startTime.get(Calendar.MINUTE));
-		System.out.println("Fim:    " + endTime.get(Calendar.HOUR) + ":" + endTime.get(Calendar.MINUTE));
+		handler.onFinish(refactoringsCount, commitsCount, mergeCommitsCount, errorCommitsCount);
+		logger.info(String.format("Analyzed %s [Commits: %d, Merge: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, mergeCommitsCount, errorCommitsCount, refactoringsCount));
 	}
 
 	private void checkoutCommand(Git git, RevCommit commit) throws Exception {
@@ -104,4 +102,18 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		checkout.call();		
 	}
 
+	private ASTParser buildAstParser(String srcFolder) {
+		ASTParser parser = ASTParser.newParser(AST.JLS4);
+		parser.setKind(ASTParser.K_COMPILATION_UNIT);
+		parser.setResolveBindings(false);
+//		this.parser.setResolveBindings(true);
+//		this.parser.setBindingsRecovery(true);
+		final String[] emptyArray = new String[0];
+		Map options = JavaCore.getOptions();
+		JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
+		parser.setCompilerOptions(options);
+//		this.parser.setEnvironment(emptyArray, new String[]{this.srcFolder}, null, true);
+		parser.setEnvironment(emptyArray, new String[]{srcFolder}, null, false);
+		return parser;
+	}
 }

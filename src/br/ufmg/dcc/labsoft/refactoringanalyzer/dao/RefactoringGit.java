@@ -8,7 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+
+import org.hibernate.annotations.Index;
 
 @Entity
 @NamedQueries({
@@ -22,8 +23,9 @@ public class RefactoringGit extends AbstractEntity {
 	private String description;
 
 	@ManyToOne
-	@JoinColumn(name = "revisiongit_id")
-	private RevisionGit revisiongit;
+	@JoinColumn(name = "revision")
+	@Index(name="index_refactoringgit_revision")
+	private RevisionGit revision;
 
 
 	@Override
@@ -52,19 +54,19 @@ public class RefactoringGit extends AbstractEntity {
 		this.description = operacaoCompleta;
 	}
 
-	public RevisionGit getRevisiongit() {
-		return revisiongit;
+	public RevisionGit getRevision() {
+		return revision;
 	}
 
-	public void setRevisiongit(RevisionGit revisiongit) {
-		this.revisiongit = revisiongit;
+	public void setRevision(RevisionGit revisiongit) {
+		this.revision = revisiongit;
 	}
 
 	@Override
 	public int hashCode() {
 		int hash = 5;
 		hash = 89 * hash + Objects.hashCode(this.refactoringType);
-		hash = 89 * hash + Objects.hashCode(this.revisiongit);
+		hash = 89 * hash + Objects.hashCode(this.revision);
 		return hash;
 	}
 
@@ -80,7 +82,7 @@ public class RefactoringGit extends AbstractEntity {
 		if (!Objects.equals(this.description, other.description)) {
 			return false;
 		}
-		if (!Objects.equals(this.revisiongit, other.revisiongit)) {
+		if (!Objects.equals(this.revision, other.revision)) {
 			return false;
 		}
 		return true;

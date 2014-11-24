@@ -6,6 +6,9 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.Database;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.ProjectGit;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.util.StringToDate;
@@ -17,6 +20,8 @@ import com.jcabi.http.response.JsonResponse;
 
 public class GitProjectFinder {
 
+	Logger logger = LoggerFactory.getLogger(GitProjectFinder.class);
+	
 	private Database db = new Database();
 
 	public static void main(String[] args) throws IOException {
@@ -57,6 +62,7 @@ public class GitProjectFinder {
 			p.setAnalyzed(false);
 
 			db.insertIfNotExists(p);
+			this.logger.info("Project {}", p.getCloneUrl());
 		}
 	}
 

@@ -31,8 +31,13 @@ public class GitProjectAnalyzer {
 	private Database db = new Database();
 
 	public static void main(String[] args) throws Exception {
-		//new GitProjectAnalyzer().analyzeProject(args[0]);
-		new GitProjectAnalyzer().analyzeProject("https://github.com/perwendel/spark.git");
+		GitProjectAnalyzer analyzer = new GitProjectAnalyzer();
+		//analyzer.analyzeProject(args[0]);
+		analyzer.analyzeProject("https://github.com/perwendel/spark.git");
+		analyzer.analyzeProject("https://github.com/junit-team/junit.git");
+		analyzer.analyzeProject("https://github.com/clojure/clojure.git");
+		analyzer.analyzeProject("https://github.com/clojure/clojure.git");
+		analyzer.analyzeProject("https://github.com/elasticsearch/elasticsearch.git");
 	}
 
 	public void analyzeProject(String cloneUrl) throws Exception {
@@ -42,7 +47,7 @@ public class GitProjectAnalyzer {
 		}
 		if (project.isAnalyzed()) {
 			logger.info("Project already analyzed: {}", cloneUrl);
-			//return;
+			return;
 		}
 
 		GitService gitService = new GitServiceImpl();

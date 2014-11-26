@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -19,6 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 	@NamedQuery(name = "projectGit.findAll", query = "SELECT i FROM ProjectGit i"),
 	@NamedQuery(name = "projectGit.findByCloneUrl", query = "SELECT i FROM ProjectGit i where i.cloneUrl = :cloneUrl")
 })
+@Table(name = "projectgit")
 public class ProjectGit extends AbstractEntity {
 
 	private String name;

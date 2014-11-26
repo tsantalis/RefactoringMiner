@@ -20,7 +20,7 @@ import javax.persistence.UniqueConstraint;
 	@NamedQuery(name = "revisionGit.findByProjectAndCommit", query = "SELECT i FROM RevisionGit i where i.project = :project and i.commitId = :commitId"),
 })
 @Table(
-	name = "revisionGit",
+	name = "revisiongit",
 	uniqueConstraints = {@UniqueConstraint(columnNames = {"project", "commitId"})}
 )
 public class RevisionGit extends AbstractEntity {

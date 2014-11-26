@@ -24,6 +24,15 @@ import org.slf4j.LoggerFactory;
 public class RefactoringDetectorImpl implements RefactoringDetector {
 
 	Logger logger = LoggerFactory.getLogger(RefactoringDetectorImpl.class);
+	private boolean analyzeMethodInvocations;
+	
+	public RefactoringDetectorImpl() {
+		this(false);
+	}
+
+	public RefactoringDetectorImpl(boolean analyzeMethodInvocations) {
+		this.analyzeMethodInvocations = analyzeMethodInvocations;
+	}
 
 	@Override
 	public void detectAll(Repository repository, RefactoringHandler handler) {
@@ -40,7 +49,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		Git git = new Git(repository);
 		File projectFolder = metadataFolder.getParentFile();
 		String projectName = projectFolder.getName();
-		ASTParser parser = this.buildAstParser(projectFolder.getPath());
+		ASTParser parser = this.buildAstParser(projectFolder, analyzeMethodInvocations);
 		
 		try {
 			
@@ -58,7 +67,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 							// Faz checkout e gera UML model da revisao current
 							checkoutCommand(git, currentCommit);
 							currentUMLModel = null;
-							currentUMLModel = new ASTReader2(projectFolder, parser).getUmlModel();
+							currentUMLModel = new ASTReader2(projectFolder, parser, analyzeMethodInvocations).getUmlModel();
 						}
 						
 						// Recupera o parent commit
@@ -67,7 +76,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 						// Faz checkout e gera UML model da revisao parent
 						checkoutCommand(git, parentCommit);
 						parentUMLModel = null;
-						parentUMLModel = new ASTReader2(projectFolder, parser).getUmlModel();
+						parentUMLModel = new ASTReader2(projectFolder, parser, analyzeMethodInvocations).getUmlModel();
 						
 						// Diff entre currentModel e parentModel
 						UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
@@ -102,18 +111,20 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		checkout.call();		
 	}
 
-	private ASTParser buildAstParser(String srcFolder) {
+	private static ASTParser buildAstParser(File srcFolder, boolean resolveBindings) {
 		ASTParser parser = ASTParser.newParser(AST.JLS4);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
-		parser.setResolveBindings(false);
-//		this.parser.setResolveBindings(true);
-//		this.parser.setBindingsRecovery(true);
-		final String[] emptyArray = new String[0];
 		Map options = JavaCore.getOptions();
 		JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
 		parser.setCompilerOptions(options);
-//		this.parser.setEnvironment(emptyArray, new String[]{this.srcFolder}, null, true);
-		parser.setEnvironment(emptyArray, new String[]{srcFolder}, null, false);
+		if (resolveBindings) {
+			parser.setResolveBindings(true);
+			parser.setBindingsRecovery(true);
+			parser.setEnvironment(new String[0], new String[]{srcFolder.getPath()}, null, true);
+		} else {
+			parser.setResolveBindings(false);
+			parser.setEnvironment(new String[0], new String[]{srcFolder.getPath()}, null, false);
+		}
 		return parser;
 	}
 }

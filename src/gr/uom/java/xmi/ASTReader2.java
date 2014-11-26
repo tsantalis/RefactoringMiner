@@ -46,9 +46,10 @@ public class ASTReader2 {
 	private UMLModel umlModel;
 	private String srcFolder;
 	private ASTParser parser;
+	private boolean analyzeMethodInvocations;
 
 	public ASTReader2(File rootFile) {
-		this(rootFile, buildDefaultAstParser(rootFile));
+		this(rootFile, buildDefaultAstParser(rootFile), false);
 	}
 	
 	private static ASTParser buildDefaultAstParser(File srcFolder) {
@@ -66,10 +67,11 @@ public class ASTReader2 {
 		return parser;
 	}
 	
-	public ASTReader2(File rootFile, ASTParser parser) {
+	public ASTReader2(File rootFile, ASTParser parser, boolean analyzeMethodInvocations) {
 		this.umlModel = new UMLModel();
 		this.srcFolder = rootFile.getPath();
 		this.parser = parser;
+		this.analyzeMethodInvocations = analyzeMethodInvocations;
 		final String[] emptyArray = new String[0];
 
 		try {
@@ -258,7 +260,9 @@ public class ASTReader2 {
 		Block block = methodDeclaration.getBody();
 		if(block != null) {
 			OperationBody body = new OperationBody(block);
-//			this.processMethodInvocations(methodDeclaration, block);
+			if (analyzeMethodInvocations) {
+				this.processMethodInvocations(methodDeclaration, block);
+			}
 			umlOperation.setBody(body);
 			if(block.statements().size() == 0) {
 				umlOperation.setEmptyBody(true);

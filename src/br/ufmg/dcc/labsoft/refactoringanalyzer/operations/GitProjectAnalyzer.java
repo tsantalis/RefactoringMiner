@@ -32,12 +32,9 @@ public class GitProjectAnalyzer {
 
 	public static void main(String[] args) throws Exception {
 		GitProjectAnalyzer analyzer = new GitProjectAnalyzer();
-		//analyzer.analyzeProject(args[0]);
-		analyzer.analyzeProject("https://github.com/perwendel/spark.git");
-		analyzer.analyzeProject("https://github.com/junit-team/junit.git");
-		analyzer.analyzeProject("https://github.com/clojure/clojure.git");
-		analyzer.analyzeProject("https://github.com/clojure/clojure.git");
-		analyzer.analyzeProject("https://github.com/elasticsearch/elasticsearch.git");
+		for (String cloneUrl : args) {
+			analyzer.analyzeProject(cloneUrl);
+		}
 	}
 
 	public void analyzeProject(String cloneUrl) throws Exception {

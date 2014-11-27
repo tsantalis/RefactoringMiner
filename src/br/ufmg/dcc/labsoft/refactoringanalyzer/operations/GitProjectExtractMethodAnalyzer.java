@@ -79,11 +79,14 @@ public class GitProjectExtractMethodAnalyzer {
 		}
 		repo.close();
 
-		File outputFile = new File(projectFolder.getName() + ".csv");
-		PrintStream out = new PrintStream(outputFile);
-		s.print(out);
-		out.close();
-		logger.info("Output file written at {}", outputFile.toString());
+//		File outputFile = new File(projectFolder.getName() + ".csv");
+//		PrintStream out = new PrintStream(outputFile);
+//		s.print(out);
+//		out.close();
+//		logger.info("Output file written at {}", outputFile.toString());
+		
+		s.insertAtDb(db, project);
+		logger.info("Data saved at db");
 	}
 
 }

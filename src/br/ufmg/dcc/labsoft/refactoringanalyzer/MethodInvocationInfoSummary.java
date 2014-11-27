@@ -18,6 +18,10 @@ import java.util.Map.Entry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.Database;
+import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.ExtractMethodInfo;
+import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.ProjectGit;
+
 public class MethodInvocationInfoSummary {
 
 	Logger logger = LoggerFactory.getLogger(MethodInvocationInfoSummary.class);
@@ -124,5 +128,30 @@ public class MethodInvocationInfoSummary {
 	    	//}
 	    }
     }
+
+	public void insertAtDb(Database db, ProjectGit project) {
+		for (Entry<String, MethodInfoSummary> e : this.map.entrySet()) {
+			String key = e.getKey();
+			MethodInfoSummary info = e.getValue();
+			//if (info.extracted) {
+			//out.println(String.format("%s\t%b\t%b\t%b\t%d\t%d\t%d\t%d\t%s\t%s", key, info.extracted, info.moved, info.dead, info.countDup, info.countInit, info.countCurrent, info.countMax, info.revExtracted, info.visibility));
+			//}
+			
+			ExtractMethodInfo emi = new ExtractMethodInfo();
+			emi.setProject(project);
+			emi.setMethod(key);
+			emi.setCountDup(info.countDup);
+			emi.setCountInit(info.countInit);
+			emi.setCountCurrent(info.countCurrent);
+			emi.setCountMax(info.countMax);
+			emi.setRevExtracted(info.revExtracted == null ? null : info.revExtracted.getFirst());
+			emi.setDead(info.dead);
+			emi.setExtracted(info.extracted);
+			emi.setMoved(info.moved);
+			emi.setVisibility(info.visibility);
+			
+			db.insert(emi);
+		}
+	}
 
 }

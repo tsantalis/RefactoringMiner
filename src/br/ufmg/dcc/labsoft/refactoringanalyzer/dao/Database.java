@@ -70,6 +70,12 @@ public class Database {
 		em.getTransaction().commit();
 	}
 
+	public void insert(ExtractMethodInfo emi) {
+		em.getTransaction().begin();
+		em.persist(emi);
+		em.getTransaction().commit();
+	}
+
 	public void update(ProjectGit project) {
 		em.getTransaction().begin();
 		em.merge(project);

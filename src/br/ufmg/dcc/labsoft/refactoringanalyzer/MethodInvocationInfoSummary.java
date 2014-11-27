@@ -3,6 +3,7 @@ package br.ufmg.dcc.labsoft.refactoringanalyzer;
 import gr.uom.java.xmi.MethodInvocationInfo;
 import gr.uom.java.xmi.MethodInvocationInfo.MethodInfo;
 import gr.uom.java.xmi.UMLModel;
+import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.diff.ExtractAndMoveOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.Refactoring;
@@ -14,10 +15,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.eclipse.jgit.revwalk.RevCommit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MethodInvocationInfoSummary {
 
+	Logger logger = LoggerFactory.getLogger(MethodInvocationInfoSummary.class);
+	
 	private Map<String, MethodInfoSummary> map = new HashMap<>();
 	
 	public static class MethodInfoSummary {
@@ -29,6 +33,7 @@ public class MethodInvocationInfoSummary {
 		private boolean dead = true;
 		private boolean extracted = false;
 		private boolean moved = false;
+		public String visibility;
 	}
 
 	public void analyzeCurrent(UMLModel model) {
@@ -44,7 +49,7 @@ public class MethodInvocationInfoSummary {
 		}
 	}
 	
-	public void analyzeRevision(RevCommit rev, UMLModel model, List<Refactoring> refactorings) {
+	public void analyzeRevision(String commitId, UMLModel model, List<Refactoring> refactorings) {
 		MethodInvocationInfo mii = model.getMethodInvocationInfo();
 		for (MethodInfo methodInfo : mii.getMethodInfoCollection()) {
 			if (!methodInfo.isExternal()) {
@@ -54,42 +59,47 @@ public class MethodInvocationInfoSummary {
 			}
 		}
 		for (Refactoring ref : refactorings) {
-			this.analyzeRefactoring(rev, model, ref);
+			this.analyzeRefactoring(commitId, model, ref);
 		}
 	}
 
-	private void analyzeRefactoring(RevCommit rev, UMLModel model, Refactoring refactoring) {
-		String bindingKey;
+	private void analyzeRefactoring(String commitId, UMLModel model, Refactoring refactoring) {
+		UMLOperation op;
 		if (refactoring instanceof ExtractOperationRefactoring) {
 			ExtractOperationRefactoring emr = (ExtractOperationRefactoring) refactoring;
-			bindingKey = emr.getExtractedOperation().getXmiID();
+			op = emr.getExtractedFromOperation();
 		}
 		else if (refactoring instanceof ExtractAndMoveOperationRefactoring) {
 			ExtractAndMoveOperationRefactoring emr = (ExtractAndMoveOperationRefactoring) refactoring;
-			bindingKey = emr.getExtractedOperation().getXmiID();
+			op = emr.getExtractedOperation();
 		} else {
 			return;
 		}
+		String bindingKey = op.getXmiID();
 		if (bindingKey == null) {
-			System.out.println(String.format("WARN refactoring sem binding: %s %s", rev.getId(), refactoring));
+			this.logger.warn(String.format("WARN refactoring SEM binding: %s", refactoring));
 			return;
+		} else {
+			//this.logger.warn(String.format("WARN refactoring COM binding: %s", refactoring));
 		}
 		MethodInfoSummary info = this.getOrCreate(bindingKey);
-		if (info.revExtracted != null && !info.revExtracted.getLast().equals(rev.getId())) {
-			info.revExtracted.add(rev.getId().getName());
+		if (info.revExtracted != null && !info.revExtracted.getLast().equals(commitId)) {
+			info.revExtracted.add(commitId);
 			return;
 		}
 		if (info.revExtracted == null) {
 			info.revExtracted = new LinkedList<>();
-			info.revExtracted.add(rev.getId().getName());
+			info.revExtracted.add(commitId);
 			info.extracted = true;
+			info.visibility = op.getVisibility();
+			
 			info.moved = refactoring instanceof ExtractAndMoveOperationRefactoring;
 			MethodInvocationInfo mii = model.getMethodInvocationInfo();
 			MethodInfo methodInfo = mii.getMethodInfo(bindingKey);
 			if (methodInfo != null) {
 				info.countInit = methodInfo.getCount();
 			} else {
-				System.out.println(String.format("WARN refactoring com countInit=0: %s %s", rev.getId(), refactoring));
+				this.logger.warn(String.format("WARN refactoring com countInit=0: %s %s", commitId, refactoring));
 			}
 		}
 		info.countDup += 1;
@@ -109,9 +119,9 @@ public class MethodInvocationInfoSummary {
 	    for (Entry<String, MethodInfoSummary> e : this.map.entrySet()) {
 	    	String key = e.getKey();
 	    	MethodInfoSummary info = e.getValue();
-	    	if (info.extracted) {
-	    		out.println(String.format("%s\t%b\t%b\t%b\t%d\t%d\t%d\t%d\t%s", key, info.extracted, info.moved, info.dead, info.countDup, info.countInit, info.countCurrent, info.countMax, info.revExtracted));
-	    	}
+	    	//if (info.extracted) {
+	    		out.println(String.format("%s\t%b\t%b\t%b\t%d\t%d\t%d\t%d\t%s\t%s", key, info.extracted, info.moved, info.dead, info.countDup, info.countInit, info.countCurrent, info.countMax, info.revExtracted, info.visibility));
+	    	//}
 	    }
     }
 

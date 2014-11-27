@@ -51,9 +51,9 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		String projectName = projectFolder.getName();
 		ASTParser parser = this.buildAstParser(projectFolder, analyzeMethodInvocations);
 		
+		RevWalk walk = new RevWalk(repository);
 		try {
 			
-			RevWalk walk = new RevWalk(repository);
 			walk.markStart(walk.parseCommit(repository.resolve("HEAD")));
 			Iterator<RevCommit> i = walk.iterator();
 			while (i.hasNext()) {
@@ -89,7 +89,8 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 						errorCommitsCount++;
 					}
 
-				} else {
+				}
+				if (currentCommit.getParentCount() != 1) {
 					mergeCommitsCount++;
 				}
 				commitsCount++;
@@ -100,10 +101,34 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 
 		} catch (Exception e) {
 			throw new RuntimeException(e);
+		} finally {
+			walk.dispose();
 		}
 
 		handler.onFinish(refactoringsCount, commitsCount, mergeCommitsCount, errorCommitsCount);
 		logger.info(String.format("Analyzed %s [Commits: %d, Merge: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, mergeCommitsCount, errorCommitsCount, refactoringsCount));
+	}
+
+	public void detectOne(ASTParser parser, Repository repository, String commitId, String parentCommitId, RefactoringHandler handler) {
+		File metadataFolder = repository.getDirectory();
+		Git git = new Git(repository);
+		File projectFolder = metadataFolder.getParentFile();
+		try {
+			checkoutCommand(git, commitId);
+			ASTParser parser1 = RefactoringDetectorImpl.buildAstParser(projectFolder, true);
+			UMLModel currentUMLModel = new ASTReader2(projectFolder, parser1, analyzeMethodInvocations).getUmlModel();
+			
+			checkoutCommand(git, parentCommitId);
+			ASTParser parser2 = RefactoringDetectorImpl.buildAstParser(projectFolder, true);
+			UMLModel parentUMLModel = new ASTReader2(projectFolder, parser2, analyzeMethodInvocations).getUmlModel();
+			
+			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+			List<Refactoring> refactoringsAtRevision = modelDiff.getRefactorings();
+			handler.handleDiff(null, parentUMLModel, null, currentUMLModel, refactoringsAtRevision);
+
+		} catch (Exception e) {
+			logger.warn(String.format("Ignored revision %s due to error", commitId), e);
+		}
 	}
 
 	private void checkoutCommand(Git git, RevCommit commit) throws Exception {
@@ -111,7 +136,12 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		checkout.call();		
 	}
 
-	private static ASTParser buildAstParser(File srcFolder, boolean resolveBindings) {
+	private void checkoutCommand(Git git, String commitId) throws Exception {
+		CheckoutCommand checkout = git.checkout().setName(commitId);
+		checkout.call();		
+	}
+
+	public static ASTParser buildAstParser(File srcFolder, boolean resolveBindings) {
 		ASTParser parser = ASTParser.newParser(AST.JLS4);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
 		Map options = JavaCore.getOptions();

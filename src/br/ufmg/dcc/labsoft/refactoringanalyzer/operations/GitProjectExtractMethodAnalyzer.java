@@ -1,13 +1,14 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer.operations;
 
+import gr.uom.java.xmi.ASTReader2;
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.diff.Refactoring;
 
 import java.io.File;
-import java.util.HashSet;
+import java.io.PrintStream;
 import java.util.List;
-import java.util.Set;
 
+import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.slf4j.Logger;
@@ -15,12 +16,11 @@ import org.slf4j.LoggerFactory;
 
 import br.ufmg.dcc.labsoft.refactoringanalyzer.GitService;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.GitServiceImpl;
-import br.ufmg.dcc.labsoft.refactoringanalyzer.RefactoringDetector;
+import br.ufmg.dcc.labsoft.refactoringanalyzer.MethodInvocationInfoSummary;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.RefactoringDetectorImpl;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.RefactoringHandler;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.Database;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.ProjectGit;
-import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.RefactoringGit;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.RevisionGit;
 
 public class GitProjectExtractMethodAnalyzer {
@@ -31,8 +31,20 @@ public class GitProjectExtractMethodAnalyzer {
 	private Database db = new Database();
 
 	public static void main(String[] args) throws Exception {
+		String[] projects = new String[] {
+			"https://github.com/nathanmarz/storm.git",
+			"https://github.com/github/android.git",
+			"https://github.com/loopj/android-async-http.git",
+			"https://github.com/square/picasso.git",
+			"https://github.com/clojure/clojure.git",
+			"https://github.com/facebook/facebook-android-sdk.git",
+			"https://github.com/junit-team/junit.git",
+			"https://github.com/perwendel/spark.git",
+			"https://github.com/yui/yuicompressor.git",
+			"https://github.com/jhy/jsoup.git"
+		};
 		GitProjectExtractMethodAnalyzer analyzer = new GitProjectExtractMethodAnalyzer();
-		for (String cloneUrl : args) {
+		for (String cloneUrl : projects) {
 			analyzer.analyzeProject(cloneUrl);
 		}
 	}
@@ -47,50 +59,31 @@ public class GitProjectExtractMethodAnalyzer {
 		File projectFile = new File(workingDir, project.getName());
 		Repository repo = gitService.cloneIfNotExists(projectFile.getPath(), cloneUrl, project.getDefault_branch());
 
-		RefactoringDetector detector = new RefactoringDetectorImpl();
-		detector.detectAll(repo, new RefactoringHandler() {
-			@Override
-			public boolean skipRevision(RevCommit curRevision) {
-				return db.getRevisionById(project, curRevision.getId().getName()) != null;
-			}
-			@Override
-			public void handleDiff(RevCommit prevRevision, UMLModel prevModel, RevCommit curRevision, UMLModel curModel, List<Refactoring> refactorings) {
-				RevisionGit revision = new RevisionGit();
-				revision.setProjectGit(project);
-				revision.setIdCommit(curRevision.getId().getName());
-				revision.setAuthorName(curRevision.getAuthorIdent().getName());
-				revision.setAuthorEmail(curRevision.getAuthorIdent().getEmailAddress());
-				revision.setEncoding(curRevision.getEncoding().name());
-				revision.setIdCommitParent(curRevision.getParent(0).getId().getName());
-				if (curRevision.getShortMessage().length() >= 4999) {
-					revision.setShortMessage(curRevision.getShortMessage().substring(0, 4999));
-				} else {
-					revision.setShortMessage(curRevision.getShortMessage());
-				}
-				revision.setFullMessage(curRevision.getFullMessage());
-				revision.setCommitTime(new java.util.Date((long) curRevision.getCommitTime() * 1000));
+		File projectFolder = repo.getDirectory().getParentFile();
+		ASTParser parser = RefactoringDetectorImpl.buildAstParser(projectFolder, true);
+		UMLModel currentUMLModel = new ASTReader2(projectFolder, parser, true).getUmlModel();
+		final MethodInvocationInfoSummary s = new MethodInvocationInfoSummary();
+		s.analyzeCurrent(currentUMLModel);
 
-				Set<RefactoringGit> refactoringSet = new HashSet<RefactoringGit>();
-				for (Refactoring refactoring : refactorings) {
-					RefactoringGit refact = new RefactoringGit();
-					refact.setRefactoringType(refactoring.getName());
-					refact.setDescription(refactoring.toString());
-					refact.setRevision(revision);
-					refactoringSet.add(refact);
+		logger.info("Project {}", cloneUrl);
+		RefactoringDetectorImpl detector = new RefactoringDetectorImpl(true);
+		List<RevisionGit> revisions = db.findRevisionsByProjectAndExtractMethod(project);
+		for (final RevisionGit rev : revisions) {
+			detector.detectOne(parser, repo, rev.getIdCommit(), rev.getIdCommitParent(), new RefactoringHandler() {
+				@Override
+				public void handleDiff(RevCommit prevRevision, UMLModel prevModel, RevCommit curRevision, UMLModel curModel, List<Refactoring> refactorings) {
+					s.analyzeRevision(rev.getIdCommit(), curModel, refactorings);
+					logger.info("Revision {} analyzed", rev.getIdCommit());
 				}
-				revision.setRefactorings(refactoringSet);
-				db.insert(revision);
-			}
-			@Override
-			public void onFinish(int refactoringsCount, int commitsCount, int mergeCommitsCount, int errorCommitsCount) {
-				project.setAnalyzed(true);
-				project.setCommits_count(commitsCount);
-				project.setMerge_commits_count(mergeCommitsCount);
-				project.setError_commits_count(errorCommitsCount);
-				db.update(project);
-			}
-		});
+			});
+		}
+		repo.close();
 
+		File outputFile = new File(projectFolder.getName() + ".csv");
+		PrintStream out = new PrintStream(outputFile);
+		s.print(out);
+		out.close();
+		logger.info("Output file written at {}", outputFile.toString());
 	}
 
 }

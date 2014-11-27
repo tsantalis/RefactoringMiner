@@ -8,13 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
 @Entity
 @NamedQueries({
-	//@NamedQuery(name = "refactoringGit.findRefactoringDuplicado", query = "SELECT i FROM RefactoringGit i where i.hashOperacao = :hashOperacao")
+	@NamedQuery(name = "refactoringGit.extractMethods", query = "select ref from RefactoringGit ref join ref.revision as rev join rev.project as p where refactoringType in ('Extract Operation', 'Extract & Move Operation') and rev.commitId = :commitId and p.cloneUrl = :cloneUrl")
 })
 @Table(name = "refactoringgit")
 public class RefactoringGit extends AbstractEntity {

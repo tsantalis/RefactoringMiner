@@ -18,6 +18,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @NamedQueries({
 	@NamedQuery(name = "revisionGit.findByProjectAndCommit", query = "SELECT i FROM RevisionGit i where i.project = :project and i.commitId = :commitId"),
+	@NamedQuery(name = "revisionGit.findByProjectAndExtractMethod", query = "select distinct rev from RefactoringGit ref join ref.revision as rev join rev.project as p where refactoringType in ('Extract Operation', 'Extract & Move Operation') and p.cloneUrl = :cloneUrl")
 })
 @Table(
 	name = "revisiongit",

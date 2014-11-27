@@ -49,6 +49,21 @@ public class Database {
 		return null;
 	}
 
+	public List<RefactoringGit> findExtractMethodRefactoringsByProjectAndCommit(ProjectGit project, String commit) {
+		@SuppressWarnings("unchecked")
+		List<RefactoringGit> refactorings = em.createNamedQuery("refactoringGit.extractMethods")
+			.setParameter("cloneUrl", project.getCloneUrl())
+			.setParameter("commitId", commit).getResultList();
+		return refactorings;
+	}
+
+	public List<RevisionGit> findRevisionsByProjectAndExtractMethod(ProjectGit project) {
+		@SuppressWarnings("unchecked")
+		List<RevisionGit> revisions = em.createNamedQuery("revisionGit.findByProjectAndExtractMethod")
+		.setParameter("cloneUrl", project.getCloneUrl()).getResultList();
+		return revisions;
+	}
+
 	public void insert(RevisionGit revision) {
 		em.getTransaction().begin();
 		em.persist(revision);

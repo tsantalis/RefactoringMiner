@@ -34,7 +34,7 @@ public class TestInvocationCount {
 		new RefactoringDetectorImpl().detectAll(rep, new RefactoringHandler() {
 			@Override
 			public void handleDiff(RevCommit prevRevision, UMLModel prevModel, RevCommit curRevision, UMLModel curModel, List<Refactoring> refactorings) {
-			    s.analyzeRevision(curRevision, curModel, refactorings);
+			    s.analyzeRevision(curRevision.getId().getName(), curModel, refactorings);
 			}
 		});
 		

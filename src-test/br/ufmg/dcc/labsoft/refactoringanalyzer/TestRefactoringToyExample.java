@@ -11,6 +11,7 @@ public class TestRefactoringToyExample {
 	public void test() throws Exception {
 		assertThat(
 			project("https://github.com/danilofes/refactoring-toy-example.git", "master").containsOnly()
+			// Danilo's refactorings
 			.atCommit("36287f7c3b09eff78395267a3ac0d7da067863fd",
 				"Pull Up Attribute	private age : int from class org.animals.Labrador to class org.animals.Dog",
 				"Pull Up Attribute	private age : int from class org.animals.Poodle to class org.animals.Dog",
@@ -27,7 +28,7 @@ public class TestRefactoringToyExample {
 			.atCommit("05c1e773878bbacae64112f70964f4f2f7944398",
 				"Extract Superclass	org.felines.Feline from classes [org.felines.Cat]")
 			
-			// Refactorings do Thiago
+			// Thiago's refactorings
 			.atCommit("1328d7873efe6caaffaf635424e19a4bb5e786a8",
 			    "Extract Interface	org.felines.AnimalSuper from classes [org.felines.Animal]")
 			.atCommit("0a46ed5c56c8b1576dfc92f3ec5bc2f0ea68aafe",

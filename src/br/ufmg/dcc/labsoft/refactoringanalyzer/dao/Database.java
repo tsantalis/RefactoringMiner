@@ -82,4 +82,24 @@ public class Database {
 		em.getTransaction().commit();
 	}
 
+	public void releaseLocks(String pid) {
+		em.getTransaction().begin();
+		em.createNamedQuery("projectGit.releaseLocks").setParameter("pid", pid).executeUpdate();
+		em.getTransaction().commit();
+	}
+
+	public ProjectGit findAndLockProject(String pid) {
+		ProjectGit project = null;
+		em.getTransaction().begin();
+		@SuppressWarnings("unchecked")
+		List<ProjectGit> projects = em.createNamedQuery("projectGit.findNonAnalyzed").getResultList();
+		if (projects.size() > 0) {
+			project = projects.get(0);
+			project.setRunning_pid(pid);
+			em.merge(project);
+		}
+		em.getTransaction().commit();
+		return project;
+	}
+
 }

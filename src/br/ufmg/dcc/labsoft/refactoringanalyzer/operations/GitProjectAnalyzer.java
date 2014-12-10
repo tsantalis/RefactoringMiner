@@ -25,10 +25,18 @@ import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.RevisionGit;
 
 public class GitProjectAnalyzer {
 
-	Logger logger = LoggerFactory.getLogger(GitProjectAnalyzer.class);
-	
-	private File workingDir = new File("tmp");
-	private Database db = new Database();
+	private Logger logger = LoggerFactory.getLogger(GitProjectAnalyzer.class);
+	private File workingDir;
+	private Database db;
+
+	public GitProjectAnalyzer(File workingDir, Database db) {
+		this.workingDir = workingDir;
+		this.db = db;
+	}
+
+	public GitProjectAnalyzer() {
+		this(new File("tmp"), new Database());
+	}
 
 	public static void main(String[] args) throws Exception {
 		GitProjectAnalyzer analyzer = new GitProjectAnalyzer();
@@ -42,14 +50,19 @@ public class GitProjectAnalyzer {
 		if (project == null) {
 			throw new IllegalArgumentException("Project not found in database: " + cloneUrl);
 		}
+		this.analyzedProject(project);
+	}
+
+	public void analyzedProject(final ProjectGit project)
+			throws Exception {
 		if (project.isAnalyzed()) {
-			logger.info("Project already analyzed: {}", cloneUrl);
+			logger.info("Project already analyzed: {}", project.getCloneUrl());
 			return;
 		}
 
 		GitService gitService = new GitServiceImpl();
 		File projectFile = new File(workingDir, project.getName());
-		Repository repo = gitService.cloneIfNotExists(projectFile.getPath(), cloneUrl, project.getDefault_branch());
+		Repository repo = gitService.cloneIfNotExists(projectFile.getPath(), project.getCloneUrl(), project.getDefault_branch());
 
 		RefactoringDetector detector = new RefactoringDetectorImpl();
 		detector.detectAll(repo, new RefactoringHandler() {
@@ -91,10 +104,10 @@ public class GitProjectAnalyzer {
 				project.setCommits_count(commitsCount);
 				project.setMerge_commits_count(mergeCommitsCount);
 				project.setError_commits_count(errorCommitsCount);
+				project.setRunning_pid(null);
 				db.update(project);
 			}
 		});
-
 	}
 
 }

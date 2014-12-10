@@ -1,6 +1,6 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer;
 
-import gr.uom.java.xmi.UMLModel;
+import gr.uom.java.xmi.UMLModelSet;
 import gr.uom.java.xmi.diff.Refactoring;
 
 import java.util.Collections;
@@ -60,7 +60,7 @@ public class RefactoringMatcher extends RefactoringHandler {
 	}
 
 	@Override
-	public void handleDiff(RevCommit prevRevision, UMLModel prevModel, RevCommit curRevision, UMLModel curModel, List<Refactoring> refactorings) {
+	public void handleDiff(RevCommit prevRevision, UMLModelSet prevModel, RevCommit curRevision, UMLModelSet curModel, List<Refactoring> refactorings) {
 		String commitId = curRevision.getId().getName();
 		Set<String> expectedRefs;
 		if (expected.containsKey(commitId)) {

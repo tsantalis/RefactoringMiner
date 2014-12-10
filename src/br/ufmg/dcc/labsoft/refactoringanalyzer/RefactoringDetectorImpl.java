@@ -1,9 +1,8 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer;
 
 import gr.uom.java.xmi.ASTReader2;
-import gr.uom.java.xmi.UMLModel;
+import gr.uom.java.xmi.UMLModelSet;
 import gr.uom.java.xmi.diff.Refactoring;
-import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.io.File;
 import java.util.Iterator;
@@ -42,8 +41,8 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		int refactoringsCount = 0;
 		RevCommit currentCommit = null;
 		RevCommit parentCommit = null;
-		UMLModel currentUMLModel = null;
-		UMLModel parentUMLModel = null;
+		UMLModelSet currentUMLModel = null;
+		UMLModelSet parentUMLModel = null;
 
 		File metadataFolder = repository.getDirectory();
 		Git git = new Git(repository);
@@ -67,7 +66,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 							// Faz checkout e gera UML model da revisao current
 							checkoutCommand(git, currentCommit);
 							currentUMLModel = null;
-							currentUMLModel = new ASTReader2(projectFolder, parser, analyzeMethodInvocations).getUmlModel();
+							currentUMLModel = new ASTReader2(projectFolder, parser, analyzeMethodInvocations).getUmlModelSet();
 						}
 						
 						// Recupera o parent commit
@@ -76,11 +75,10 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 						// Faz checkout e gera UML model da revisao parent
 						checkoutCommand(git, parentCommit);
 						parentUMLModel = null;
-						parentUMLModel = new ASTReader2(projectFolder, parser, analyzeMethodInvocations).getUmlModel();
+						parentUMLModel = new ASTReader2(projectFolder, parser, analyzeMethodInvocations).getUmlModelSet();
 						
 						// Diff entre currentModel e parentModel
-						UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-						List<Refactoring> refactoringsAtRevision = modelDiff.getRefactorings();
+						List<Refactoring> refactoringsAtRevision = parentUMLModel.detectRefactorings(currentUMLModel);
 						refactoringsCount += refactoringsAtRevision.size();
 						handler.handleDiff(parentCommit, parentUMLModel, currentCommit, currentUMLModel, refactoringsAtRevision);
 						
@@ -94,7 +92,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 					mergeCommitsCount++;
 				}
 				commitsCount++;
-				if (commitsCount % 100 == 0) {
+				if (commitsCount % 5 == 0) {
 					logger.info(String.format("Processing %s [Commits: %d, Merge: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, mergeCommitsCount, errorCommitsCount, refactoringsCount));
 				}
 			}
@@ -116,14 +114,13 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		try {
 			checkoutCommand(git, commitId);
 			ASTParser parser1 = RefactoringDetectorImpl.buildAstParser(projectFolder, true);
-			UMLModel currentUMLModel = new ASTReader2(projectFolder, parser1, analyzeMethodInvocations).getUmlModel();
+			UMLModelSet currentUMLModel = new ASTReader2(projectFolder, parser1, analyzeMethodInvocations).getUmlModelSet();
 			
 			checkoutCommand(git, parentCommitId);
 			ASTParser parser2 = RefactoringDetectorImpl.buildAstParser(projectFolder, true);
-			UMLModel parentUMLModel = new ASTReader2(projectFolder, parser2, analyzeMethodInvocations).getUmlModel();
+			UMLModelSet parentUMLModel = new ASTReader2(projectFolder, parser2, analyzeMethodInvocations).getUmlModelSet();
 			
-			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-			List<Refactoring> refactoringsAtRevision = modelDiff.getRefactorings();
+			List<Refactoring> refactoringsAtRevision = parentUMLModel.detectRefactorings(currentUMLModel);
 			handler.handleDiff(null, parentUMLModel, null, currentUMLModel, refactoringsAtRevision);
 
 		} catch (Exception e) {

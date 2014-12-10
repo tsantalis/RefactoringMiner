@@ -1,6 +1,6 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer.operations;
 
-import gr.uom.java.xmi.UMLModel;
+import gr.uom.java.xmi.UMLModelSet;
 import gr.uom.java.xmi.diff.Refactoring;
 
 import java.io.File;
@@ -58,7 +58,7 @@ public class GitProjectAnalyzer {
 				return db.getRevisionById(project, curRevision.getId().getName()) != null;
 			}
 			@Override
-			public void handleDiff(RevCommit prevRevision, UMLModel prevModel, RevCommit curRevision, UMLModel curModel, List<Refactoring> refactorings) {
+			public void handleDiff(RevCommit prevRevision, UMLModelSet prevModel, RevCommit curRevision, UMLModelSet curModel, List<Refactoring> refactorings) {
 				RevisionGit revision = new RevisionGit();
 				revision.setProjectGit(project);
 				revision.setIdCommit(curRevision.getId().getName());

@@ -3,6 +3,7 @@ package br.ufmg.dcc.labsoft.refactoringanalyzer;
 import gr.uom.java.xmi.MethodInvocationInfo;
 import gr.uom.java.xmi.MethodInvocationInfo.MethodInfo;
 import gr.uom.java.xmi.UMLModel;
+import gr.uom.java.xmi.UMLModelSet;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.diff.ExtractAndMoveOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
@@ -40,7 +41,8 @@ public class MethodInvocationInfoSummary {
 		public String visibility;
 	}
 
-	public void analyzeCurrent(UMLModel model) {
+	public void analyzeCurrent(UMLModelSet modelSet) {
+		UMLModel model = modelSet.getFirst();
 		MethodInvocationInfo mii = model.getMethodInvocationInfo();
 		for (MethodInfo methodInfo : mii.getMethodInfoCollection()) {
 			if (!methodInfo.isExternal()) {
@@ -53,7 +55,8 @@ public class MethodInvocationInfoSummary {
 		}
 	}
 	
-	public void analyzeRevision(String commitId, UMLModel model, List<Refactoring> refactorings) {
+	public void analyzeRevision(String commitId, UMLModelSet modelSet, List<Refactoring> refactorings) {
+		UMLModel model = modelSet.getFirst();
 		MethodInvocationInfo mii = model.getMethodInvocationInfo();
 		for (MethodInfo methodInfo : mii.getMethodInfoCollection()) {
 			if (!methodInfo.isExternal()) {

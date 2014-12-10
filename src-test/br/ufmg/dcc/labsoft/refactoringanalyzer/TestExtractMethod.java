@@ -1,9 +1,8 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer;
 
 import gr.uom.java.xmi.ASTReader2;
-import gr.uom.java.xmi.UMLModel;
+import gr.uom.java.xmi.UMLModelSet;
 import gr.uom.java.xmi.diff.Refactoring;
-import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.io.File;
 import java.util.HashSet;
@@ -60,11 +59,10 @@ public class TestExtractMethod {
 	}
 
 	private void assertExpected(String version0SrcFolder, String version1SrcFolder, String ... expectedRefactorings) throws Exception {
-		UMLModel model0 = new ASTReader2(new File(version0SrcFolder)).getUmlModel();
-		UMLModel model1 = new ASTReader2(new File(version1SrcFolder)).getUmlModel();
+		UMLModelSet model0 = new ASTReader2(new File(version0SrcFolder)).getUmlModelSet();
+		UMLModelSet model1 = new ASTReader2(new File(version1SrcFolder)).getUmlModelSet();
 		
-		UMLModelDiff modelDiff = model0.diff(model1);
-		List<Refactoring> actual = modelDiff.getRefactorings();
+		List<Refactoring> actual = model0.detectRefactorings(model1);
 		Set<String> expected = new HashSet<>();
 		for (String ref : expectedRefactorings) {
 			expected.add(ref);

@@ -1,11 +1,10 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer.operations;
 
 import gr.uom.java.xmi.ASTReader2;
-import gr.uom.java.xmi.UMLModel;
+import gr.uom.java.xmi.UMLModelSet;
 import gr.uom.java.xmi.diff.Refactoring;
 
 import java.io.File;
-import java.io.PrintStream;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTParser;
@@ -61,7 +60,7 @@ public class GitProjectExtractMethodAnalyzer {
 
 		File projectFolder = repo.getDirectory().getParentFile();
 		ASTParser parser = RefactoringDetectorImpl.buildAstParser(projectFolder, true);
-		UMLModel currentUMLModel = new ASTReader2(projectFolder, parser, true).getUmlModel();
+		UMLModelSet currentUMLModel = new ASTReader2(projectFolder, parser, true).getUmlModelSet();
 		final MethodInvocationInfoSummary s = new MethodInvocationInfoSummary();
 		s.analyzeCurrent(currentUMLModel);
 
@@ -71,7 +70,7 @@ public class GitProjectExtractMethodAnalyzer {
 		for (final RevisionGit rev : revisions) {
 			detector.detectOne(parser, repo, rev.getIdCommit(), rev.getIdCommitParent(), new RefactoringHandler() {
 				@Override
-				public void handleDiff(RevCommit prevRevision, UMLModel prevModel, RevCommit curRevision, UMLModel curModel, List<Refactoring> refactorings) {
+				public void handleDiff(RevCommit prevRevision, UMLModelSet prevModel, RevCommit curRevision, UMLModelSet curModel, List<Refactoring> refactorings) {
 					s.analyzeRevision(rev.getIdCommit(), curModel, refactorings);
 					logger.info("Revision {} analyzed", rev.getIdCommit());
 				}

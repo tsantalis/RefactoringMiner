@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 	@NamedQuery(name = "projectGit.findAll", query = "SELECT i FROM ProjectGit i"),
 	@NamedQuery(name = "projectGit.findByCloneUrl", query = "SELECT i FROM ProjectGit i where i.cloneUrl = :cloneUrl"),
 	@NamedQuery(name = "projectGit.releaseLocks", query = "update ProjectGit i set i.running_pid = NULL where i.running_pid = :pid"),
-	@NamedQuery(name = "projectGit.findNonAnalyzed", query = "SELECT i FROM ProjectGit i where i.analyzed = 0 and i.running_pid is null order by i.size asc")
+	@NamedQuery(name = "projectGit.findNonAnalyzed", query = "SELECT i FROM ProjectGit i where i.analyzed = false and i.running_pid is null order by i.size asc")
 })
 @Table(name = "projectgit")
 public class ProjectGit extends AbstractEntity {

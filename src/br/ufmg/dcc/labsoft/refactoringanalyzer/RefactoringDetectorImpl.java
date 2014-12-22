@@ -70,7 +70,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 							// Faz checkout e gera UML model da revisao current
 							checkoutCommand(git, currentCommit);
 							currentUMLModel = null;
-							currentUMLModel = new ASTReader2(projectFolder, parser, analyzeMethodInvocations).getUmlModelSet();
+							currentUMLModel = createModel(projectFolder, parser);
 						}
 						
 						// Recupera o parent commit
@@ -79,7 +79,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 						// Faz checkout e gera UML model da revisao parent
 						checkoutCommand(git, parentCommit);
 						parentUMLModel = null;
-						parentUMLModel = new ASTReader2(projectFolder, parser, analyzeMethodInvocations).getUmlModelSet();
+						parentUMLModel = createModel(projectFolder, parser);
 						
 						// Diff entre currentModel e parentModel
 						List<Refactoring> refactoringsAtRevision = parentUMLModel.detectRefactorings(currentUMLModel);
@@ -113,6 +113,11 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		logger.info(String.format("Analyzed %s [Commits: %d, Merge: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, mergeCommitsCount, errorCommitsCount, refactoringsCount));
 	}
 
+	private UMLModelSet createModel(File projectFolder, ASTParser parser) throws Exception {
+		return new ASTReader2(projectFolder, parser, analyzeMethodInvocations).getUmlModelSet();
+//		return new ASTReader3(projectFolder).getUmlModelSet();
+	}
+
 	public void detectOne(ASTParser parser, Repository repository, String commitId, String parentCommitId, RefactoringHandler handler) {
 		File metadataFolder = repository.getDirectory();
 		Git git = new Git(repository);
@@ -120,11 +125,11 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		try {
 			checkoutCommand(git, commitId);
 			ASTParser parser1 = RefactoringDetectorImpl.buildAstParser(projectFolder, true);
-			UMLModelSet currentUMLModel = new ASTReader2(projectFolder, parser1, analyzeMethodInvocations).getUmlModelSet();
+			UMLModelSet currentUMLModel = createModel(projectFolder, parser1);
 			
 			checkoutCommand(git, parentCommitId);
 			ASTParser parser2 = RefactoringDetectorImpl.buildAstParser(projectFolder, true);
-			UMLModelSet parentUMLModel = new ASTReader2(projectFolder, parser2, analyzeMethodInvocations).getUmlModelSet();
+			UMLModelSet parentUMLModel = createModel(projectFolder, parser2);
 			
 			List<Refactoring> refactoringsAtRevision = parentUMLModel.detectRefactorings(currentUMLModel);
 			handler.handleDiff(null, parentUMLModel, null, currentUMLModel, refactoringsAtRevision);

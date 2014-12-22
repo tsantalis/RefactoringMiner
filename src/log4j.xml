@@ -23,7 +23,7 @@
  
 	<root>
 		<level value="INFO" />
-		<appender-ref ref="file" />
+		<appender-ref ref="console" />
 	</root>
  
 </log4j:configuration>

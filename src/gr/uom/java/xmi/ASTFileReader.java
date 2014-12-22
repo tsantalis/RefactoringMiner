@@ -2,6 +2,7 @@ package gr.uom.java.xmi;
 
 import gr.uom.java.xmi.decomposition.OperationBody;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -13,7 +14,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
 import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.Block;
@@ -25,7 +25,6 @@ import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
@@ -37,14 +36,18 @@ public class ASTFileReader extends FileASTRequestor {
 	private final IBinding[] bindings = new IBinding[1];
 	//private final CompilationUnit[] units = new CompilationUnit[1];
 
-	private UMLModel umlModel;
-	private boolean analyzeMethodInvocations;
+	private UMLModelSet umlModelSet;
+	private String projectRoot;
 	
-	public ASTFileReader(UMLModel model, boolean analyzeMethodInvocations) {
-		this.umlModel = model;
-		this.analyzeMethodInvocations = analyzeMethodInvocations;
+	public ASTFileReader(UMLModelSet model, boolean analyzeMethodInvocations, File projectRoot) {
+		this.umlModelSet = model;
+		this.projectRoot = projectRoot.getPath();
 	}
-	
+
+	public UMLModel getUmlModel(String packageRoot) {
+		return umlModelSet.get(packageRoot);
+	}
+
 	public void acceptBinding(String bindingKey, IBinding binding) {
 		bindings[0] = binding;
 	}
@@ -66,15 +69,32 @@ public class ASTFileReader extends FileASTRequestor {
 			packageName = packageDeclaration.getName().getFullyQualifiedName();
 		else
 			packageName = "";
+		
+		String packageRoot = getPackageRoot(sourceFilePath, packageName);
+		
 		List<AbstractTypeDeclaration> topLevelTypeDeclarations = compilationUnit.types();
         for(AbstractTypeDeclaration abstractTypeDeclaration : topLevelTypeDeclarations) {
         	if(abstractTypeDeclaration instanceof TypeDeclaration) {
         		TypeDeclaration topLevelTypeDeclaration = (TypeDeclaration)abstractTypeDeclaration;
-        		processTypeDeclaration(topLevelTypeDeclaration, packageName);
+        		processTypeDeclaration(topLevelTypeDeclaration, packageName, packageRoot);
         	}
         }
 	}
 
+	private String getPackageRoot(String sourceFilePath, String packageName) {
+		String packagePath = packageName.replace('.', File.separator.charAt(0));
+		String packageRoot = "";
+		int indexOfPackagePath = sourceFilePath.lastIndexOf(packagePath + File.separator);
+		if (indexOfPackagePath > 0) {
+			packageRoot = sourceFilePath.substring(0, indexOfPackagePath);
+		}
+		if (packageRoot.startsWith(this.projectRoot)) {
+			packageRoot = packageRoot.substring(this.projectRoot.length());
+		}
+		return packageRoot.replace(File.separator.charAt(0), '/');
+	}
+
+	
 	private String getTypeName(Type type) {
 		ITypeBinding binding = type.resolveBinding();
 		if (binding != null) {
@@ -85,7 +105,7 @@ public class ASTFileReader extends FileASTRequestor {
 	
 	/////////////////
 
-	private void processTypeDeclaration(TypeDeclaration typeDeclaration, String packageName) {
+	private void processTypeDeclaration(TypeDeclaration typeDeclaration, String packageName, String packageRoot) {
 		String className = typeDeclaration.getName().getFullyQualifiedName();
 		UMLClass umlClass = new UMLClass(packageName, className, null);
 		//UMLClass bytecodeClass = bytecodeModel.getClass(umlClass.getName());
@@ -119,7 +139,7 @@ public class ASTFileReader extends FileASTRequestor {
     		if(bytecodeClass != null) {
     			umlClass.setSuperclass(bytecodeClass.getSuperclass());
     		}*/
-    		umlModel.addGeneralization(umlGeneralization);
+    		this.getUmlModel(packageRoot).addGeneralization(umlGeneralization);
     	}
     	
     	List<Type> superInterfaceTypes = typeDeclaration.superInterfaceTypes();
@@ -129,7 +149,7 @@ public class ASTFileReader extends FileASTRequestor {
     		if(bytecodeRealization != null) {
     			umlRealization.setSupplier(bytecodeRealization.getSupplier());
     		}*/
-    		umlModel.addRealization(umlRealization);
+    		this.getUmlModel(packageRoot).addRealization(umlRealization);
     	}
     	
     	FieldDeclaration[] fieldDeclarations = typeDeclaration.getFields();
@@ -163,15 +183,15 @@ public class ASTFileReader extends FileASTRequestor {
     		if(node.getUserObject() != null) {
     			AnonymousClassDeclaration anonymous = (AnonymousClassDeclaration)node.getUserObject();
     			String anonymousName = getAnonymousName(node);
-    			processAnonymousClassDeclaration(anonymous, packageName + "." + className, anonymousName);
+    			processAnonymousClassDeclaration(anonymous, packageName + "." + className, anonymousName, packageRoot);
     		}
     	}
     	
-    	umlModel.addClass(umlClass);
+    	this.getUmlModel(packageRoot).addClass(umlClass);
 		
 		TypeDeclaration[] types = typeDeclaration.getTypes();
 		for(TypeDeclaration type : types) {
-			processTypeDeclaration(type, packageName + "." + className);
+			processTypeDeclaration(type, packageName + "." + className, packageRoot);
 		}
 	}
 
@@ -211,9 +231,6 @@ public class ASTFileReader extends FileASTRequestor {
 		Block block = methodDeclaration.getBody();
 		if(block != null) {
 			OperationBody body = new OperationBody(block);
-			if (analyzeMethodInvocations) {
-				this.processMethodInvocations(methodDeclaration, block);
-			}
 			umlOperation.setBody(body);
 			if(block.statements().size() == 0) {
 				umlOperation.setEmptyBody(true);
@@ -253,17 +270,6 @@ public class ASTFileReader extends FileASTRequestor {
 		return umlOperation;
 	}
 
-	private void processMethodInvocations(final MethodDeclaration methodDeclaration, Block block) {
-		final MethodInvocationInfo methodInvocationInfo = this.umlModel.getMethodInvocationInfo();
-		methodInvocationInfo.handleMethodDeclaration(methodDeclaration);
-		block.accept(new ASTVisitor() {
-			public boolean visit(MethodInvocation methodInvocation) {
-				methodInvocationInfo.handleMethodInvocation(methodDeclaration, methodInvocation);
-				return true;
-			}
-		});
-	}
-
 	private List<UMLAttribute> processFieldDeclaration(FieldDeclaration fieldDeclaration/*, UMLClass bytecodeClass*/) {
 		List<UMLAttribute> attributes = new ArrayList<UMLAttribute>();
 		Type fieldType = fieldDeclaration.getType();
@@ -301,7 +307,7 @@ public class ASTFileReader extends FileASTRequestor {
 		return attributes;
 	}
 	
-	private void processAnonymousClassDeclaration(AnonymousClassDeclaration anonymous, String packageName, String className) {
+	private void processAnonymousClassDeclaration(AnonymousClassDeclaration anonymous, String packageName, String className, String packageRoot) {
 		List<BodyDeclaration> bodyDeclarations = anonymous.bodyDeclarations();
 		
 		UMLAnonymousClass anonymousClass = new UMLAnonymousClass(packageName, className);
@@ -324,7 +330,7 @@ public class ASTFileReader extends FileASTRequestor {
 			}
 		}
 		
-		umlModel.addAnonymousClass(anonymousClass);
+		this.getUmlModel(packageRoot).addAnonymousClass(anonymousClass);
 	}
 	
 	private void insertNode(AnonymousClassDeclaration childAnonymous, DefaultMutableTreeNode root) {

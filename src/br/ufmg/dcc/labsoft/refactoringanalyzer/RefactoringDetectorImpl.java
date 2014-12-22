@@ -14,6 +14,7 @@ import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -53,8 +54,11 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		RevWalk walk = new RevWalk(repository);
 		try {
 			
-			walk.markStart(walk.parseCommit(repository.resolve("HEAD")));
+			//ObjectId startPoint = repository.resolve("FETCH_HEAD");
+			//logger.info("Project: {}, start: {}", projectName, startPoint.getName());
+			walk.markStart(walk.parseCommit(repository.resolve(Constants.HEAD)));
 			Iterator<RevCommit> i = walk.iterator();
+			long time = System.currentTimeMillis();
 			while (i.hasNext()) {
 				currentCommit = i.next();
 				if (currentCommit.getParentCount() == 1 && !handler.skipRevision(currentCommit)) {
@@ -92,7 +96,9 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 					mergeCommitsCount++;
 				}
 				commitsCount++;
-				if (commitsCount % 5 == 0) {
+				long time2 = System.currentTimeMillis();
+				if ((time2 - time) > 20000) {
+					time = time2;
 					logger.info(String.format("Processing %s [Commits: %d, Merge: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, mergeCommitsCount, errorCommitsCount, refactoringsCount));
 				}
 			}

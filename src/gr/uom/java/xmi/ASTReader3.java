@@ -18,10 +18,10 @@ import org.eclipse.jdt.core.dom.ASTParser;
 
 public class ASTReader3 {
 	private final static Logger logger = Logger.getLogger(ASTReader3.class.getName());
-	private UMLModel umlModel;
+	private UMLModelSet umlModelSet;
 
 	public ASTReader3(File srcFolder) throws Exception {
-		this.umlModel = new UMLModel();
+		this.umlModelSet = new UMLModelSet();
 		
 		ASTParser parser = ASTParser.newParser(AST.JLS4);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
@@ -54,7 +54,7 @@ public class ASTReader3 {
 			i++;
 		}
 
-		ASTFileReader myASTFileReader = new ASTFileReader(umlModel, true);
+		ASTFileReader myASTFileReader = new ASTFileReader(umlModelSet, true, srcFolder);
 		try {
 			parser.createASTs(canonicalPaths, null, bindingKeys, myASTFileReader, null);
 		} catch (Exception e) {
@@ -62,8 +62,8 @@ public class ASTReader3 {
 		}
 	}
 
-	public UMLModel getUmlModel() {
-		return umlModel;
+	public UMLModelSet getUmlModelSet() {
+		return umlModelSet;
 	}
 
 	private static String createBindingKeyFromClassFile(File file) throws IOException {

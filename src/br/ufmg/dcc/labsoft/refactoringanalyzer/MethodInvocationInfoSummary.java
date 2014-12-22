@@ -74,7 +74,7 @@ public class MethodInvocationInfoSummary {
 		UMLOperation op;
 		if (refactoring instanceof ExtractOperationRefactoring) {
 			ExtractOperationRefactoring emr = (ExtractOperationRefactoring) refactoring;
-			op = emr.getExtractedFromOperation();
+			op = emr.getExtractedOperation();
 		}
 		else if (refactoring instanceof ExtractAndMoveOperationRefactoring) {
 			ExtractAndMoveOperationRefactoring emr = (ExtractAndMoveOperationRefactoring) refactoring;

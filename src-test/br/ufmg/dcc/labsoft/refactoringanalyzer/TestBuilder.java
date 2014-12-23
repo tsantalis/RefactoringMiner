@@ -120,6 +120,7 @@ public class TestBuilder {
 				matcher = null;
 			}
 			if (matcher != null) {
+				matcher.analyzed = true;
 				Set<String> refactoringsFound = new HashSet<String>();
 				for (Refactoring refactoring : refactorings) {
 					refactoringsFound.add(normalize(refactoring.toString()));
@@ -161,7 +162,11 @@ public class TestBuilder {
 			for (Map.Entry<String, CommitMatcher> entry : this.expected.entrySet()) {
 				CommitMatcher matcher = entry.getValue();
 				if (!matcher.expected.isEmpty() || !matcher.notExpected.isEmpty()) {
-					System.out.println(" at commit " + entry.getKey());
+					if (!matcher.analyzed) {
+						System.out.println(" at not analyzed commit " + entry.getKey());
+					} else {
+						System.out.println(" at commit " + entry.getKey());
+					}
 				}
 				if (!matcher.notExpected.isEmpty()) {
 					System.out.println("  false positives");
@@ -189,6 +194,7 @@ public class TestBuilder {
 			private Set<String> expected = new HashSet<String>();
 			private Set<String> notExpected = new HashSet<String>();
 			private boolean ignoreNonSpecified = true;
+			private boolean analyzed = false;
 			private CommitMatcher() {
 			}
 			public ProjectMatcher contains(String ... refactorings) {

@@ -51,33 +51,32 @@ public class Main {
 		//29416b4ee89314119fb0f2d8011d63ac36531388 8817825612894d11856312a777281b6c7cf81672
 		//1e752dcb0a967bcb47fae4b12fb8765e79571e69 bfc94ee739d62127c7477300b26127bd560765a1
 		//String CHECKOUT_DIR = Constants.getValue("GIT_CHECKOUT_DIR");
-		UMLModel model1 = new ASTReader(new File("C:/Users/danilofs/git/mestrado/Refactoring1")).getUmlModel();
-		UMLModel model2 = new ASTReader(new File("C:/Users/danilofs/git/mestrado/Refactoring2")).getUmlModel();
+		//UMLModel model1 = new ASTReader(new File("C:/Users/danilofs/git/mestrado/Refactoring1")).getUmlModel();
+		//UMLModel model2 = new ASTReader(new File("C:/Users/danilofs/git/mestrado/Refactoring2")).getUmlModel();
 		//UMLModel model1 = new ASTReader(new File("C:/Users/danilofs/git/mestrado/MyWebMarket Original")).getUmlModel();
 		//UMLModel model2 = new ASTReader(new File("C:/Users/danilofs/Workspaces/mestrado/RefactoringA")).getUmlModel();
-		UMLModelDiff modelDiff = model1.diff(model2);
+		//UMLModelDiff modelDiff = model1.diff(model2);
 		//modelDiff.postProcessing();
 		//System.out.println(modelDiff);
-		List<Refactoring> refactorings = modelDiff.getRefactorings();
+		/*List<Refactoring> refactorings = modelDiff.getRefactorings();
 		for(Refactoring refactoring : refactorings) {
 			System.out.println(refactoring.toString());
-		}
+		}*/
 		
-		/*String prefix = "VideoStore_Class_Sequence_diagrams\\";
+		String prefix = "VideoStore_Class_Sequence_diagrams\\";
 		//String prefix = "C:\\Users\\tsantalis\\runtime-EclipseApplication\\jfreechart-1.0.";
 		//String prefix = "test\\";
-		for(int i=0; i<2; i++) {
+		for(int i=0; i<14; i++) {
 			UMLModel model1 = new ASTReader(new File(prefix + String.valueOf(i))).getUmlModel();
 			UMLModel model2 = new ASTReader(new File(prefix + String.valueOf(i+1))).getUmlModel();
 			System.out.println("model diff " + String.valueOf(i) + "->" + String.valueOf(i+1));
 			UMLModelDiff modelDiff = model1.diff(model2);
-			modelDiff.postProcessing();
 			System.out.println(modelDiff);
 			List<Refactoring> refactorings = modelDiff.getRefactorings();
-			//for(Refactoring refactoring : refactorings) {
-			//	System.out.println(refactoring.toString());
-			//}
-		}*/
+			for(Refactoring refactoring : refactorings) {
+				System.out.println(refactoring.toString());
+			}
+		}
 		/*try {
 			String prefix = "VideoStore_Class_Sequence_diagrams\\";
 			for(int i=13; i<14; i++) {

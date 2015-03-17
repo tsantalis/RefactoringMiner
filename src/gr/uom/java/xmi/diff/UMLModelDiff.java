@@ -752,7 +752,7 @@ public class UMLModelDiff {
 		
 		//refactorings.addAll(identifyExtractOperationRefactoringsWithoutSequenceDiagramInformation());
 		//refactorings.addAll(identifyMoveOperationRefactoringsWithoutSequenceDiagramInformation());
-		//refactorings.addAll(identifyMoveAttributeRefactoringsWithoutSequenceDiagramInformation());
+		refactorings.addAll(identifyMoveAttributeRefactoringsWithoutSequenceDiagramInformation());
 		//refactorings.addAll(identifyIntroducePolymorphismRefactoringsWithoutSequenceDiagramInformation());
 		refactorings.addAll(identifyExtractSuperclassRefactorings());
 		refactorings.addAll(getMoveClassRefactorings());

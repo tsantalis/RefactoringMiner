@@ -1,0 +1,172 @@
+model diff 0->1
+--edits between common classes--
+Customer:
+operation private amountFor(aRental Rental) : double added
+operation public getCharge(aRental Rental) : double added
+	operation public statement() : java.lang.String
+		method call Customer.amountFor(Rental) : double added
+
+model diff 1->2
+--edits between common classes--
+Customer:
+operation public getCharge(aRental Rental) : double removed
+	operation private amountFor(aRental Rental) : double
+		method call Customer.getCharge(Rental) : double removed
+		method call Rental.getCharge() : double added
+Rental:
+operation public getCharge() : double added
+
+model diff 2->3
+--edits between common classes--
+Customer:
+operation private amountFor(aRental Rental) : double removed
+operation public getFrequentRenterPoints(each Rental) : int added
+	operation public statement() : java.lang.String
+		method call Customer.amountFor(Rental) : double removed
+		method call Movie.getPriceCode() : int removed
+		method call Rental.getDaysRented() : int removed
+		method call Customer.getFrequentRenterPoints(Rental) : int added
+		method call Rental.getCharge() : double added
+
+model diff 3->4
+--edits between common classes--
+Customer:
+operation public getFrequentRenterPoints(each Rental) : int removed
+	operation public statement() : java.lang.String
+		method call Customer.getFrequentRenterPoints(Rental) : int removed
+		method call Rental.getFrequentRenterPoints() : int added
+Rental:
+operation public getFrequentRenterPoints() : int added
+
+model diff 4->5
+--edits between common classes--
+Customer:
+operation private getTotalCharge() : double added
+operation private getTotalFrequentRenterPoints() : int added
+	operation public statement() : java.lang.String
+		method call Rental.getFrequentRenterPoints() : int removed
+		method call Customer.getTotalCharge() : double added
+		method call Customer.getTotalFrequentRenterPoints() : int added
+
+model diff 5->6
+--edits between common classes--
+Customer:
+operation public htmlStatement() : java.lang.String added
+Rental:
+operation public getCharge(aMovie Movie, _daysRented int) : double added
+operation public getFrequentRenterPoints(aMovie Movie, _daysRented int) : int added
+	operation public getCharge() : double
+		method call Movie.getPriceCode() : int removed
+		method call Rental.getCharge(Movie, int) : double added
+	operation public getFrequentRenterPoints() : int
+		method call Movie.getPriceCode() : int removed
+		method call Rental.getFrequentRenterPoints(Movie, int) : int added
+
+model diff 6->7
+--edits between common classes--
+Movie:
+operation public getCharge(_daysRented int) : double added
+operation public getFrequentRenterPoints(_daysRented int) : int added
+Rental:
+operation public getCharge(aMovie Movie, _daysRented int) : double removed
+operation public getFrequentRenterPoints(aMovie Movie, _daysRented int) : int removed
+	operation public getCharge() : double
+		method call Rental.getMovie() : Movie removed
+		method call Rental.getDaysRented() : int removed
+		method call Rental.getCharge(Movie, int) : double removed
+		field access Rental._movie : Movie added
+		field access Rental._daysRented : int added
+		method call Movie.getCharge(int) : double added
+	operation public getFrequentRenterPoints() : int
+		method call Rental.getMovie() : Movie removed
+		method call Rental.getDaysRented() : int removed
+		method call Rental.getFrequentRenterPoints(Movie, int) : int removed
+		field access Rental._movie : Movie added
+		field access Rental._daysRented : int added
+		method call Movie.getFrequentRenterPoints(int) : int added
+
+model diff 7->8
+--class level edits--
+class ChildrensPrice added
+class NewReleasePrice added
+class Price added
+class RegularPrice added
+--generalization edits--
+generalization ChildrensPrice->Price added
+generalization NewReleasePrice->Price added
+generalization RegularPrice->Price added
+--edits between common classes--
+Movie:
+attribute private _priceCode : int removed
+attribute private _price : Price added
+	operation public Movie(title java.lang.String, priceCode int)
+		field access Movie._priceCode : int removed
+		method call Movie.setPriceCode(int) : void added
+	operation public getPriceCode() : int
+		field access Movie._priceCode : int removed
+		field access Movie._price : Price added
+		method call Price.getPriceCode() : int added
+	operation public setPriceCode(arg int) : void
+		field access Movie._priceCode : int removed
+		method call RegularPrice.RegularPrice() added
+		field access Movie._price : Price added
+		method call NewReleasePrice.NewReleasePrice() added
+		method call ChildrensPrice.ChildrensPrice() added
+
+model diff 8->9
+--edits between common classes--
+Movie:
+operation public getCharge(aPrice Price, _daysRented int) : double added
+	operation public getCharge(_daysRented int) : double
+		method call Movie.getPriceCode() : int removed
+		field access Movie._price : Price added
+		method call Movie.getCharge(Price, int) : double added
+
+model diff 9->10
+--edits between common classes--
+Movie:
+operation public getCharge(aPrice Price, _daysRented int) : double removed
+	operation public getCharge(_daysRented int) : double
+		method call Movie.getCharge(Price, int) : double removed
+		method call Price.getCharge(int) : double added
+Price:
+operation public getCharge(_daysRented int) : double added
+
+model diff 10->11
+--edits between common classes--
+ChildrensPrice:
+operation public getCharge(_daysRented int) : double added
+NewReleasePrice:
+operation public getCharge(_daysRented int) : double added
+Price:
+	public getCharge(_daysRented int) : double
+	abstraction changed from concrete to abstract
+RegularPrice:
+operation public getCharge(_daysRented int) : double added
+
+model diff 11->12
+--edits between common classes--
+Movie:
+operation public getFrequentRenterPoints(aPrice Price, _daysRented int) : int added
+	operation public getFrequentRenterPoints(_daysRented int) : int
+		method call Movie.getPriceCode() : int removed
+		field access Movie._price : Price added
+		method call Movie.getFrequentRenterPoints(Price, int) : int added
+
+model diff 12->13
+--edits between common classes--
+Movie:
+operation public getFrequentRenterPoints(aPrice Price, _daysRented int) : int removed
+	operation public getFrequentRenterPoints(_daysRented int) : int
+		method call Movie.getFrequentRenterPoints(Price, int) : int removed
+		method call Price.getFrequentRenterPoints(int) : int added
+Price:
+operation public getFrequentRenterPoints(_daysRented int) : int added
+
+model diff 13->14
+--edits between common classes--
+NewReleasePrice:
+operation public getFrequentRenterPoints(_daysRented int) : int added
+Price:
+	operation public getFrequentRenterPoints(_daysRented int) : int
+		method call Price.getPriceCode() : int removed

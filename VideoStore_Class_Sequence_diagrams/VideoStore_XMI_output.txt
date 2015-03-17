@@ -1,0 +1,212 @@
+model diff 0->1
+--class level edits--
+class double added
+--edits between common classes--
+Customer:
+operation public getCharge(each Rental) : double added
+--edits between collaborations--
+unattachedCollaboration:
+message customer:Customer--public getCharge(each Rental) : double->customer:Customer added
+message customer:Customer--return of public getCharge(each Rental) : double->customer:Customer added
+--identified refactorings--
+Extract Operation Refactoring: public getCharge(each Rental) : double in class Customer
+
+model diff 1->2
+--edits between common classes--
+Customer:
+operation public getCharge(each Rental) : double removed
+Rental:
+operation public getCharge() : double added
+--edits between collaborations--
+unattachedCollaboration:
+message customer:Customer--public getCharge(each Rental) : double->customer:Customer removed
+message customer:Customer--return of public getCharge(each Rental) : double->customer:Customer removed
+message customer:Customer--public getCharge() : double->rental:Rental added
+message rental:Rental--return of public getCharge() : double->customer:Customer added
+message rental:Rental--public getMovie() : Movie->rental:Rental added
+message rental:Rental--return of public getMovie() : Movie->rental:Rental added
+message rental:Rental--public getPriceCode() : Integer->movie:Movie added
+message movie:Movie--return of public getPriceCode() : Integer->rental:Rental added
+message rental:Rental--public getDaysRented() : Integer->rental:Rental added
+message rental:Rental--return of public getDaysRented() : Integer->rental:Rental added
+--identified refactorings--
+Move Operation Refactoring: public getCharge() : double from class Customer to class Rental
+
+model diff 2->3
+--edits between common classes--
+Customer:
+operation public getFrequentRenterPoints(each Rental) : Integer added
+--edits between collaborations--
+unattachedCollaboration:
+message customer:Customer--public getPriceCode() : Integer->movie:Movie removed
+message movie:Movie--return of public getPriceCode() : Integer->customer:Customer removed
+message customer:Customer--public getDaysRented() : Integer->rental:Rental removed
+message rental:Rental--return of public getDaysRented() : Integer->customer:Customer removed
+message customer:Customer--public getFrequentRenterPoints(each Rental) : Integer->customer:Customer added
+message customer:Customer--return of public getFrequentRenterPoints(each Rental) : Integer->customer:Customer added
+--identified refactorings--
+Extract Operation Refactoring: public getFrequentRenterPoints(each Rental) : Integer in class Customer
+
+model diff 3->4
+--edits between common classes--
+Customer:
+operation public getFrequentRenterPoints(each Rental) : Integer removed
+Rental:
+operation public getFrequentRenterPoints() : Integer added
+--edits between collaborations--
+unattachedCollaboration:
+message customer:Customer--public getFrequentRenterPoints(each Rental) : Integer->customer:Customer removed
+message customer:Customer--return of public getFrequentRenterPoints(each Rental) : Integer->customer:Customer removed
+message customer:Customer--public getFrequentRenterPoints() : Integer->rental:Rental added
+message rental:Rental--return of public getFrequentRenterPoints() : Integer->customer:Customer added
+--identified refactorings--
+Move Operation Refactoring: public getFrequentRenterPoints() : Integer from class Customer to class Rental
+
+model diff 4->5
+--edits between common classes--
+Customer:
+operation public getTotalCharge() : double added
+operation public getTotalFrequentRenterPoints() : Integer added
+--edits between collaborations--
+unattachedCollaboration:
+message customer:Customer--public getFrequentRenterPoints() : Integer->rental:Rental removed
+message rental:Rental--return of public getFrequentRenterPoints() : Integer->customer:Customer removed
+message customer:Customer--public getTotalCharge() : double->customer:Customer added
+message customer:Customer--return of public getTotalCharge() : double->customer:Customer added
+message customer:Customer--public getTotalFrequentRenterPoints() : Integer->customer:Customer added
+message customer:Customer--return of public getTotalFrequentRenterPoints() : Integer->customer:Customer added
+--identified refactorings--
+Extract Operation Refactoring: public getTotalCharge() : double in class Customer
+Extract Operation Refactoring: public getTotalFrequentRenterPoints() : Integer in class Customer
+
+model diff 5->6
+--edits between common classes--
+Rental:
+operation public getCharge(aMovie Movie, _daysRented Integer) : double added
+operation public getFrequentRenterPoints(aMovie Movie, _daysRented Integer) : Integer added
+--edits between collaborations--
+unattachedCollaboration:
+message rental:Rental--public getMovie() : Movie->rental:Rental removed
+message rental:Rental--return of public getMovie() : Movie->rental:Rental removed
+message rental:Rental--public getPriceCode() : Integer->movie:Movie removed
+message movie:Movie--return of public getPriceCode() : Integer->rental:Rental removed
+message rental:Rental--public getDaysRented() : Integer->rental:Rental removed
+message rental:Rental--return of public getDaysRented() : Integer->rental:Rental removed
+message rental:Rental--public getCharge(aMovie Movie, _daysRented Integer) : double->rental:Rental added
+message rental:Rental--return of public getCharge(aMovie Movie, _daysRented Integer) : double->rental:Rental added
+--identified refactorings--
+Extract Operation Refactoring: public getCharge(aMovie Movie, _daysRented Integer) : double in class Rental
+
+model diff 6->7
+--edits between common classes--
+Movie:
+operation public getCharge(_daysRented Integer) : double added
+operation public getFrequentRenterPoints(_daysRented Integer) : Integer added
+Rental:
+operation public getCharge(aMovie Movie, _daysRented Integer) : double removed
+operation public getFrequentRenterPoints(aMovie Movie, _daysRented Integer) : Integer removed
+--edits between collaborations--
+unattachedCollaboration:
+message rental:Rental--public getCharge(aMovie Movie, _daysRented Integer) : double->rental:Rental removed
+message rental:Rental--return of public getCharge(aMovie Movie, _daysRented Integer) : double->rental:Rental removed
+message rental:Rental--public getCharge(_daysRented Integer) : double->movie:Movie added
+message movie:Movie--return of public getCharge(_daysRented Integer) : double->rental:Rental added
+message movie:Movie--public getPriceCode() : Integer->movie:Movie added
+message movie:Movie--return of public getPriceCode() : Integer->movie:Movie added
+--identified refactorings--
+Move Operation Refactoring: public getCharge(_daysRented Integer) : double from class Rental to class Movie
+Move Operation Refactoring: public getFrequentRenterPoints(_daysRented Integer) : Integer from class Rental to class Movie
+
+model diff 7->8
+--class level edits--
+class ChildrensPrice added
+class NewReleasePrice added
+class Price added
+class RegularPrice added
+--generalization edits--
+generalization ChildrensPrice->Price added
+generalization NewReleasePrice->Price added
+generalization RegularPrice->Price added
+--association edits--
+association Movie-->(1)Price added
+--edits between common classes--
+Movie:
+attribute private _priceCode : Integer removed
+--edits between collaborations--
+unattachedCollaboration:
+classifierRole price:Price added
+message movie:Movie--public getPriceCode() : Integer->movie:Movie removed
+message movie:Movie--return of public getPriceCode() : Integer->movie:Movie removed
+message movie:Movie--public abstract getPriceCode() : Integer->price:Price added
+message price:Price--return of public abstract getPriceCode() : Integer->movie:Movie added
+--identified refactorings--
+Introduce Polymorphism Refactoring: class Movie employs the Price hierarchy through operation public abstract getPriceCode() : Integer
+
+model diff 8->9
+--edits between common classes--
+Movie:
+operation public getCharge(aPrice Price, _daysRented Integer) : double added
+--edits between collaborations--
+unattachedCollaboration:
+message movie:Movie--public abstract getPriceCode() : Integer->price:Price removed
+message price:Price--return of public abstract getPriceCode() : Integer->movie:Movie removed
+message movie:Movie--public getCharge(aPrice Price, _daysRented Integer) : double->movie:Movie added
+message movie:Movie--return of public getCharge(aPrice Price, _daysRented Integer) : double->movie:Movie added
+--identified refactorings--
+Extract Operation Refactoring: public getCharge(aPrice Price, _daysRented Integer) : double in class Movie
+
+model diff 9->10
+--edits between common classes--
+Movie:
+operation public getCharge(aPrice Price, _daysRented Integer) : double removed
+Price:
+operation public getCharge(_daysRented Integer) : double added
+--edits between collaborations--
+unattachedCollaboration:
+message movie:Movie--public getCharge(aPrice Price, _daysRented Integer) : double->movie:Movie removed
+message movie:Movie--return of public getCharge(aPrice Price, _daysRented Integer) : double->movie:Movie removed
+message movie:Movie--public getCharge(_daysRented Integer) : double->price:Price added
+message price:Price--return of public getCharge(_daysRented Integer) : double->movie:Movie added
+message price:Price--public abstract getPriceCode() : Integer->price:Price added
+message price:Price--return of public abstract getPriceCode() : Integer->price:Price added
+--identified refactorings--
+Move Operation Refactoring: public getCharge(_daysRented Integer) : double from class Movie to class Price
+
+model diff 10->11
+--edits between common classes--
+ChildrensPrice:
+operation public getCharge(_daysRented Integer) : double added
+NewReleasePrice:
+operation public getCharge(_daysRented Integer) : double added
+Price:
+	public getCharge(_daysRented Integer) : double
+	abstraction changed from concrete to abstract
+RegularPrice:
+operation public getCharge(_daysRented Integer) : double added
+--edits between collaborations--
+unattachedCollaboration:
+message movie:Movie--public getCharge(_daysRented Integer) : double->price:Price removed
+message price:Price--return of public getCharge(_daysRented Integer) : double->movie:Movie removed
+message price:Price--public abstract getPriceCode() : Integer->price:Price removed
+message price:Price--return of public abstract getPriceCode() : Integer->price:Price removed
+message movie:Movie--public abstract getCharge(_daysRented Integer) : double->price:Price added
+message price:Price--return of public abstract getCharge(_daysRented Integer) : double->movie:Movie added
+
+model diff 11->12
+--edits between common classes--
+Movie:
+operation public getFrequentRenterPoints(aPrice Price, _daysRented Integer) : Integer added
+
+model diff 12->13
+--edits between common classes--
+Movie:
+operation public getFrequentRenterPoints(aPrice Price, _daysRented Integer) : Integer removed
+Price:
+operation public getFrequentRenterPoints(_daysRented Integer) : Integer added
+--identified refactorings--
+Move Operation Refactoring: public getFrequentRenterPoints(_daysRented Integer) : Integer from class Movie to class Price
+
+model diff 13->14
+--edits between common classes--
+NewReleasePrice:
+operation public getFrequentRenterPoints(_daysRented Integer) : Integer added

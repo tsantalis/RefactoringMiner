@@ -1,0 +1,8 @@
+encapsulate field _priceCode with setPriceCode(int arg) in class Movie
+
+add abstract class Price with abstract method getPriceCode()
+add classes ChildrensPrice, NewReleasePrice, RegularPrice extending class Price
+
+replace field "int _priceCode" with "Price _price" in class Movie
+in method getPriceCode() change access to _priceCode with _price.getPriceCode() in class Movie
+in method setPriceCode(int arg) create object of Price based on arg value

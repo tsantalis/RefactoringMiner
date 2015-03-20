@@ -70,7 +70,7 @@ public class GitProjectExtractMethodAnalyzer {
 		for (final RevisionGit rev : revisions) {
 			detector.detectOne(parser, repo, rev.getIdCommit(), rev.getIdCommitParent(), new RefactoringHandler() {
 				@Override
-				public void handleDiff(RevCommit prevRevision, UMLModelSet prevModel, RevCommit curRevision, UMLModelSet curModel, List<Refactoring> refactorings) {
+				public void handleDiff(UMLModelSet prevModel, String commitId, RevCommit curRevision, UMLModelSet curModel, List<Refactoring> refactorings) {
 					s.analyzeRevision(rev.getIdCommit(), curModel, refactorings);
 					logger.info("Revision {} analyzed", rev.getIdCommit());
 				}

@@ -84,7 +84,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 						// Diff entre currentModel e parentModel
 						List<Refactoring> refactoringsAtRevision = parentUMLModel.detectRefactorings(currentUMLModel);
 						refactoringsCount += refactoringsAtRevision.size();
-						handler.handleDiff(parentCommit, parentUMLModel, currentCommit, currentUMLModel, refactoringsAtRevision);
+						handler.handleDiff(parentUMLModel, currentCommit.getId().getName(), currentCommit, currentUMLModel, refactoringsAtRevision);
 						
 					} catch (Exception e) {
 						logger.warn(String.format("Ignored revision %s due to error", currentCommit.getId().getName()), e);
@@ -127,12 +127,15 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 			ASTParser parser1 = RefactoringDetectorImpl.buildAstParser(projectFolder, true);
 			UMLModelSet currentUMLModel = createModel(projectFolder, parser1);
 			
+			if (parentCommitId == null) {
+				parentCommitId = repository.resolve(commitId + "^1").getName();
+			}
 			checkoutCommand(git, parentCommitId);
 			ASTParser parser2 = RefactoringDetectorImpl.buildAstParser(projectFolder, true);
 			UMLModelSet parentUMLModel = createModel(projectFolder, parser2);
 			
 			List<Refactoring> refactoringsAtRevision = parentUMLModel.detectRefactorings(currentUMLModel);
-			handler.handleDiff(null, parentUMLModel, null, currentUMLModel, refactoringsAtRevision);
+			handler.handleDiff(parentUMLModel, commitId, null, currentUMLModel, refactoringsAtRevision);
 
 		} catch (Exception e) {
 			logger.warn(String.format("Ignored revision %s due to error", commitId), e);
@@ -147,6 +150,12 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 	private void checkoutCommand(Git git, String commitId) throws Exception {
 		CheckoutCommand checkout = git.checkout().setName(commitId);
 		checkout.call();		
+	}
+
+	public ASTParser buildAstParser(Repository repository) {
+		File metadataFolder = repository.getDirectory();
+		File projectFolder = metadataFolder.getParentFile();
+		return this.buildAstParser(projectFolder, analyzeMethodInvocations);
 	}
 
 	public static ASTParser buildAstParser(File srcFolder, boolean resolveBindings) {

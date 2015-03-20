@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.Assert;
@@ -42,8 +43,18 @@ public class TestBuilder {
 		RefactoringDetectorImpl refactoringDetector = new RefactoringDetectorImpl();
 		for (ProjectMatcher m : map.values()) {
 			String folder = TMP_DIR + "/" + m.cloneUrl.substring(m.cloneUrl.lastIndexOf('/') + 1, m.cloneUrl.lastIndexOf('.'));
-			Repository rep = gitService.cloneIfNotExists(folder, m.cloneUrl, m.branch);
-			refactoringDetector.detectAll(rep, m);
+			if (m.ignoreNonSpecifiedCommits) {
+				Repository rep = gitService.cloneIfNotExists(folder, m.cloneUrl, null);
+				// It is faster to only look at particular commits
+				ASTParser parser = refactoringDetector.buildAstParser(rep);
+				for (String commitId : m.getCommits()) {
+					refactoringDetector.detectOne(parser, rep, commitId, null, m);
+				}
+			} else {
+				Repository rep = gitService.cloneIfNotExists(folder, m.cloneUrl, m.branch);
+				// Iterate over each commit
+				refactoringDetector.detectAll(rep, m);
+			}
 			m.countFalseNegatives();
 			tp += m.truePositiveCount;
 			fp += m.falsePositiveCount;
@@ -96,6 +107,10 @@ public class TestBuilder {
 			return m;
 		}
 
+		public Set<String> getCommits() {
+			return expected.keySet();
+		}
+
 		@Override
 		public boolean skipRevision(RevCommit curRevision) {
 			if (this.ignoreNonSpecifiedCommits) {
@@ -106,8 +121,7 @@ public class TestBuilder {
 		}
 
 		@Override
-		public void handleDiff(RevCommit prevRevision, UMLModelSet prevModel, RevCommit curRevision, UMLModelSet curModel, List<Refactoring> refactorings) {
-			String commitId = curRevision.getId().getName();
+		public void handleDiff(UMLModelSet prevModel, String commitId, RevCommit curRevision, UMLModelSet curModel, List<Refactoring> refactorings) {
 			CommitMatcher matcher;
 			if (expected.containsKey(commitId)) {
 				matcher = expected.get(commitId);

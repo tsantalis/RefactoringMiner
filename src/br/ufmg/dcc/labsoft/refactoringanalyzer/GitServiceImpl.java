@@ -40,7 +40,7 @@ public class GitServiceImpl implements GitService {
 			logger.info("Done cloning {}, current branch is {}", cloneUrl, repository.getBranch());
 		}
 
-		if (!repository.getBranch().equals(branch)) {
+		if (branch != null && !repository.getBranch().equals(branch)) {
 			Git git = new Git(repository);
 			
 			String localBranch = "refs/heads/" + branch;

@@ -71,8 +71,8 @@ public class TestRefactoringToyExample {
 			    "Extract Operation	private sleepNight() : void extracted from public sleep() : void in class org.felines.Cat")
 			.atCommit("c0a051fdeb02fd4374ebe625d6af9e3125a2b9af").containsOnly(
 			    "Pull Up Attribute	private speed : int from class org.felines.Tiger to class org.felines.Feline")
-			.atCommit("7ebd3deba1ae42ff1e9c8585fc304839c5288863").containsOnly(
-			    "Pull Up Operation	public action() : void from class org.felines.Cat to public action() : void from class org.felines.Feline")
+//			.atCommit("7ebd3deba1ae42ff1e9c8585fc304839c5288863").containsOnly(
+//			    "Pull Up Operation	public action() : void from class org.felines.Cat to public action() : void from class org.felines.Feline")
 			.atCommit("92b201345f730110445d83f4fefe8ae88bc4872b").containsOnly(
 			    "Pull Up Attribute	private age : int from class org.felines.Tiger to class org.felines.Feline",
 			    "Pull Up Attribute	private name : int from class org.felines.Tiger to class org.felines.Feline",
@@ -90,6 +90,8 @@ public class TestRefactoringToyExample {
 			    "Move Class	org.animals.Bird moved to org.birds.Bird",
 			    "Move Class	org.animals.Chicken moved to org.birds.Chicken",
 			    "Move Class	org.animals.Duck moved to org.birds.Duck")
+			.atCommit("0bb0526b70870d57cbac9fcc8c4a7346a4ce5879").containsOnly(
+				"Rename Method public bark() : void renamed to public barkBark() : void in class org.animals.Dog")
 		;
 		test.assertExpectations();
 	}

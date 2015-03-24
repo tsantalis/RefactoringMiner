@@ -213,7 +213,9 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 				
 				UMLOperationDiff operationDiff = new UMLOperationDiff(removedOperation, addedOperation);
 				operationDiffList.add(operationDiff);
-				if(!removedOperation.getName().equals(addedOperation.getName())) {
+				if(!removedOperation.getName().equals(addedOperation.getName()) &&
+					addedOperation.equalReturnParameter(removedOperation) &&
+					addedOperation.getParameters().equals(removedOperation.getParameters())) {
 					RenameOperationRefactoring rename = new RenameOperationRefactoring(removedOperation, addedOperation);
 					refactorings.add(rename);
 				}

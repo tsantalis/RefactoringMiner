@@ -5,9 +5,14 @@ import java.util.List;
 
 import org.eclipse.jgit.api.CreateBranchCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryBuilder;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.revwalk.RevWalkUtils;
+import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,6 +73,25 @@ public class GitServiceImpl implements GitService {
 			logger.info("Project {} switched to {}", cloneUrl, repository.getBranch());
 		}
 		return repository;
+	}
+
+	@Override
+	public int countCommits(Repository repository, String branch) throws Exception {
+		RevWalk walk = new RevWalk(repository);
+		try {
+			Ref ref = repository.getRef(branch);
+			ObjectId objectId = ref.getObjectId();
+			RevCommit start = walk.parseCommit(objectId);
+			walk.setRevFilter(RevFilter.NO_MERGES);
+			//	      walk.markStart( localCommit );
+			//	      walk.markStart( trackingCommit );
+			//	      RevCommit mergeBase = walk.next();
+			//	      walk.reset();
+			//	      walk.setRevFilter( RevFilter.ALL );
+			return RevWalkUtils.count( walk, start, null);
+		} finally {
+			walk.dispose();
+		}
 	}
 
 }

@@ -99,10 +99,12 @@ public class GitProjectAnalyzer {
 				db.insert(revision);
 			}
 			@Override
-			public void onFinish(int refactoringsCount, int commitsCount, int mergeCommitsCount, int errorCommitsCount) {
+			public void onFinish(int refactoringsCount, int commitsCount, int errorCommitsCount) {
 				project.setAnalyzed(true);
-				project.setCommits_count(commitsCount);
-				project.setMerge_commits_count(mergeCommitsCount);
+				if (project.getCommits_count() <= 0) {
+					project.setCommits_count(commitsCount);
+				}
+				//project.setMerge_commits_count(mergeCommitsCount);
 				project.setError_commits_count(errorCommitsCount);
 				project.setRunning_pid(null);
 				db.update(project);

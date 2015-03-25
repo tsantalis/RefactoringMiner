@@ -88,11 +88,25 @@ public class Database {
 		em.getTransaction().commit();
 	}
 
-	public ProjectGit findAndLockProject(String pid) {
+	public ProjectGit findNonAnalyzedProjectAndLock(String pid) {
 		ProjectGit project = null;
 		em.getTransaction().begin();
 		@SuppressWarnings("unchecked")
 		List<ProjectGit> projects = em.createNamedQuery("projectGit.findNonAnalyzed").getResultList();
+		if (projects.size() > 0) {
+			project = projects.get(0);
+			project.setRunning_pid(pid);
+			em.merge(project);
+		}
+		em.getTransaction().commit();
+		return project;
+	}
+	
+	public ProjectGit findNonCountedProjectAndLock(String pid) {
+		ProjectGit project = null;
+		em.getTransaction().begin();
+		@SuppressWarnings("unchecked")
+		List<ProjectGit> projects = em.createNamedQuery("projectGit.findNonCounted").getResultList();
 		if (projects.size() > 0) {
 			project = projects.get(0);
 			project.setRunning_pid(pid);

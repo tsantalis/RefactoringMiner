@@ -15,5 +15,5 @@ public abstract class RefactoringHandler {
 
 	public void handleDiff(UMLModelSet prevModel, String commitId, RevCommit commitData, UMLModelSet curModel, List<Refactoring> refactorings) {}
 
-	public void onFinish(int refactoringsCount, int commitsCount, int mergeCommitsCount, int errorCommitsCount) {}
+	public void onFinish(int refactoringsCount, int commitsCount, int errorCommitsCount) {}
 }

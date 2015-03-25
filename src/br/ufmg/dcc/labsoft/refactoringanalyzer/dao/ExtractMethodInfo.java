@@ -9,8 +9,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-
-@Entity
+//DISABLED
+//@Entity
 @NamedQueries({
 })
 @Table(

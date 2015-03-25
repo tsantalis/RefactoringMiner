@@ -18,6 +18,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +38,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 	@Override
 	public void detectAll(Repository repository, RefactoringHandler handler) {
 		int commitsCount = 0;
-		int mergeCommitsCount = 0;
+		//int mergeCommitsCount = 0;
 		int errorCommitsCount = 0;
 		int refactoringsCount = 0;
 		RevCommit currentCommit = null;
@@ -57,6 +58,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 			//ObjectId startPoint = repository.resolve("FETCH_HEAD");
 			//logger.info("Project: {}, start: {}", projectName, startPoint.getName());
 			walk.markStart(walk.parseCommit(repository.resolve(Constants.HEAD)));
+			walk.setRevFilter(RevFilter.NO_MERGES);
 			Iterator<RevCommit> i = walk.iterator();
 			long time = System.currentTimeMillis();
 			while (i.hasNext()) {
@@ -92,14 +94,14 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 					}
 
 				}
-				if (currentCommit.getParentCount() != 1) {
-					mergeCommitsCount++;
-				}
+//				if (currentCommit.getParentCount() != 1) {
+//					mergeCommitsCount++;
+//				}
 				commitsCount++;
 				long time2 = System.currentTimeMillis();
 				if ((time2 - time) > 20000) {
 					time = time2;
-					logger.info(String.format("Processing %s [Commits: %d, Merge: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, mergeCommitsCount, errorCommitsCount, refactoringsCount));
+					logger.info(String.format("Processing %s [Commits: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, errorCommitsCount, refactoringsCount));
 				}
 			}
 
@@ -109,8 +111,8 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 			walk.dispose();
 		}
 
-		handler.onFinish(refactoringsCount, commitsCount, mergeCommitsCount, errorCommitsCount);
-		logger.info(String.format("Analyzed %s [Commits: %d, Merge: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, mergeCommitsCount, errorCommitsCount, refactoringsCount));
+		handler.onFinish(refactoringsCount, commitsCount, errorCommitsCount);
+		logger.info(String.format("Analyzed %s [Commits: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, errorCommitsCount, refactoringsCount));
 	}
 
 	private UMLModelSet createModel(File projectFolder, ASTParser parser) throws Exception {

@@ -25,17 +25,21 @@ public class GitProjectFinder {
 	private Database db = new Database();
 
 	public static void main(String[] args) throws IOException {
-		new GitProjectFinder().findRepos();
+		GitProjectFinder gitProjectFinder = new GitProjectFinder();
+		for (int i = 1; i <= 10; i++) {
+			gitProjectFinder.findRepos(i);
+		}
 	}
 
-	private void findRepos() throws IOException {
+	private void findRepos(int page) throws IOException {
 		Github github = new RtGithub("asergufmg", "aserg.ufmg2009");
 		Request request = github.entry()
 				.uri().path("/search/repositories")
 				.queryParam("q", "language:Java created:<=2014-06-01")
 				.queryParam("sort", "stars")
 				.queryParam("order", "desc")
-				.queryParam("per_page", "100").back()
+				.queryParam("per_page", "100")
+				.queryParam("page", "" + page).back()
 				.method(Request.GET);
 
 		JsonArray items = request.fetch().as(JsonResponse.class).json().readObject().getJsonArray("items");

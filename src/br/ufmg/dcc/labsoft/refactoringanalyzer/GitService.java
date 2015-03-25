@@ -6,4 +6,6 @@ public interface GitService {
 
 	Repository cloneIfNotExists(String folder, String cloneUrl, String branch) throws Exception;
 
+	int countCommits(Repository repository, String branch) throws Exception;
+
 }

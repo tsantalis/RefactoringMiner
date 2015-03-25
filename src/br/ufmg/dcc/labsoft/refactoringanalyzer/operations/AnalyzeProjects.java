@@ -26,7 +26,7 @@ public class AnalyzeProjects {
 		
 		GitProjectAnalyzer analyzer = new GitProjectAnalyzer(new File("tmp"), db);
 		ProjectGit project = null;
-		while ((project = db.findAndLockProject(pid)) != null) {
+		while ((project = db.findNonAnalyzedProjectAndLock(pid)) != null) {
 			analyzer.analyzedProject(project);
 		}
 		logger.info("No more projects to analyze");

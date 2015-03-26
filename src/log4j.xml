@@ -12,6 +12,7 @@
 	    </layout>
 	</appender>
  
+		<!--
     <appender name="file" class="org.apache.log4j.FileAppender">
         <param name="file" value="rd.log" />
         <param name="append" value="false" />
@@ -20,10 +21,11 @@
             <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n" />
         </layout>
     </appender>
+		-->
  
 	<root>
 		<level value="INFO" />
-		<appender-ref ref="file" />
+		<appender-ref ref="console" />
 	</root>
  
 </log4j:configuration>

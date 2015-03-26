@@ -13,7 +13,7 @@
 	</appender>
  
     <appender name="file" class="org.apache.log4j.FileAppender">
-        <param name="file" value="refs.log" />
+        <param name="file" value="rd.log" />
         <param name="append" value="false" />
         <param name="threshold" value="debug" />
         <layout class="org.apache.log4j.PatternLayout">

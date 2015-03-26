@@ -106,7 +106,7 @@ public class GitProjectAnalyzer {
 				}
 				//project.setMerge_commits_count(mergeCommitsCount);
 				project.setError_commits_count(errorCommitsCount);
-				project.setRunning_pid(null);
+				//project.setRunning_pid(null);
 				db.update(project);
 			}
 		});

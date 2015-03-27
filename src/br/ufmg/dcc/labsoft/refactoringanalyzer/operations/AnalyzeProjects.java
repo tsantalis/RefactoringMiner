@@ -35,7 +35,7 @@ public class AnalyzeProjects {
 				workingDir.mkdir();
 			}
 			// setting up a FileAppender dynamically...
-			String logFilePath = workingDir.getPath() + "/rd.log";
+			String logFilePath = workingDir.getPath() + "/rd." + pid + ".log";
 			logger.info("Log file: " + logFilePath);
 			
 			PatternLayout layout = new PatternLayout("%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n");

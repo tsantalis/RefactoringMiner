@@ -45,12 +45,20 @@ public class AnalyzeProjects {
 			GitProjectAnalyzer analyzer = new GitProjectAnalyzer(workingDir, db);
 			ProjectGit project = null;
 			while ((project = db.findNonAnalyzedProjectAndLock(pid)) != null) {
-				analyzer.analyzedProject(project);
+				try {
+					analyzer.analyzedProject(project);
+				} catch (Exception e) {
+					// This may be a temporary connection problem with github, so log the erro and move on ...
+					logger.warn("Skiping project due to error", e);
+				}
+				finally {
+					db.releaseLocks(pid);
+				}
 			}
 			logger.info("No more projects to analyze");
 			
 		} catch (Exception e) {
-			logger.error("Error", e);
+			logger.error("Fatal error", e);
 		}
 	}
 

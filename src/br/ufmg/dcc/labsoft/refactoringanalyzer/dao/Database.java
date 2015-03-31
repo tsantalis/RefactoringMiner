@@ -8,35 +8,45 @@ import javax.persistence.Persistence;
 
 public class Database {
 
-	private static EntityManager em;
+	EntityManager em;
 
 	public Database() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("refactoringDB");
 		em = factory.createEntityManager();
 	}
 
+	interface Transaction {
+		void run(EntityManager em);
+	}
+	
+	private void perform(Transaction transaction) {
+		//EntityManager em = createEm();
+		em.getTransaction().begin();
+		try {
+			transaction.run(em);
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+			throw e;
+		} finally {
+			em.clear();
+		}
+	}
+	
+	public ProjectGit getProjectById(Long id) {
+		return em.find(ProjectGit.class, id);
+	}
+	
 	public ProjectGit getProjectByCloneUrl(String cloneUrl) {
 		@SuppressWarnings("unchecked")
 		List<ProjectGit> projects = em.createNamedQuery("projectGit.findByCloneUrl")
-			.setParameter("cloneUrl", cloneUrl).getResultList();
+		.setParameter("cloneUrl", cloneUrl).getResultList();
 		if (projects.size() > 0) {
 			return projects.get(0);
 		}
 		return null;
 	}
-
-	public void insertIfNotExists(ProjectGit project) {
-		try {
-			em.getTransaction().begin();
-			if (this.getProjectByCloneUrl(project.getCloneUrl()) == null) {
-				em.persist(project);
-			}
-			em.getTransaction().commit();
-		} catch (Exception e) {
-			em.getTransaction().rollback();
-			throw e;
-		}
-	}
+	
 
 	public RevisionGit getRevisionById(ProjectGit project, String id) {
 		@SuppressWarnings("unchecked")
@@ -64,56 +74,86 @@ public class Database {
 		return revisions;
 	}
 
-	public void insert(RevisionGit revision) {
-		em.getTransaction().begin();
-		em.persist(revision);
-		em.getTransaction().commit();
+	public void insertIfNotExists(final ProjectGit project) {
+		perform(new Transaction(){
+			public void run(EntityManager em) {
+				em.persist(project);
+			}
+		});
 	}
 
-	public void insert(ExtractMethodInfo emi) {
-		em.getTransaction().begin();
-		em.persist(emi);
-		em.getTransaction().commit();
+	public void insert(final RevisionGit revision) {
+		perform(new Transaction(){
+			public void run(EntityManager em) {
+				em.persist(revision);
+			}
+		});
 	}
 
-	public void update(ProjectGit project) {
-		em.getTransaction().begin();
-		em.merge(project);
-		em.getTransaction().commit();
+	public void insert(final ExtractMethodInfo emi) {
+		perform(new Transaction(){
+			public void run(EntityManager em) {
+				em.persist(emi);
+			}
+		});
 	}
 
-	public void releaseLocks(String pid) {
-		em.getTransaction().begin();
-		em.createNamedQuery("projectGit.releaseLocks").setParameter("pid", pid).executeUpdate();
-		em.getTransaction().commit();
+	public void update(final ProjectGit project) {
+		perform(new Transaction(){
+			public void run(EntityManager em) {
+				em.merge(project);
+			}
+		});
+	}
+
+	public void releaseLocks(final String pid) {
+		perform(new Transaction(){
+			public void run(EntityManager em) {
+				em.createNamedQuery("projectGit.releaseLocks").setParameter("pid", pid).executeUpdate();
+			}
+		});
 	}
 
 	public ProjectGit findNonAnalyzedProjectAndLock(String pid) {
 		ProjectGit project = null;
 		em.getTransaction().begin();
-		@SuppressWarnings("unchecked")
-		List<ProjectGit> projects = em.createNamedQuery("projectGit.findNonAnalyzed").getResultList();
-		if (projects.size() > 0) {
-			project = projects.get(0);
-			project.setRunning_pid(pid);
-			em.merge(project);
+		try {
+			@SuppressWarnings("unchecked")
+			List<ProjectGit> projects = em.createNamedQuery("projectGit.findNonAnalyzed").getResultList();
+			if (projects.size() > 0) {
+				project = projects.get(0);
+				project.setRunning_pid(pid);
+				em.merge(project);
+			}
+			em.getTransaction().commit();
+			return project;
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+			throw e;
+		} finally {
+			em.clear();
 		}
-		em.getTransaction().commit();
-		return project;
 	}
 	
 	public ProjectGit findNonCountedProjectAndLock(String pid) {
 		ProjectGit project = null;
 		em.getTransaction().begin();
-		@SuppressWarnings("unchecked")
-		List<ProjectGit> projects = em.createNamedQuery("projectGit.findNonCounted").getResultList();
-		if (projects.size() > 0) {
-			project = projects.get(0);
-			project.setRunning_pid(pid);
-			em.merge(project);
+		try {
+			@SuppressWarnings("unchecked")
+			List<ProjectGit> projects = em.createNamedQuery("projectGit.findNonCounted").getResultList();
+			if (projects.size() > 0) {
+				project = projects.get(0);
+				project.setRunning_pid(pid);
+				em.merge(project);
+			}
+			em.getTransaction().commit();
+			return project;
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+			throw e;
+		} finally {
+			em.clear();
 		}
-		em.getTransaction().commit();
-		return project;
 	}
 
 }

@@ -73,7 +73,7 @@ public class GitProjectAnalyzer {
 			@Override
 			public void handleDiff(UMLModelSet prevModel, String commitId, RevCommit curRevision, UMLModelSet curModel, List<Refactoring> refactorings) {
 				RevisionGit revision = new RevisionGit();
-				revision.setProjectGit(project);
+				revision.setProjectGit(db.getProjectById(project.getId()));
 				revision.setIdCommit(curRevision.getId().getName());
 				revision.setAuthorName(curRevision.getAuthorIdent().getName());
 				revision.setAuthorEmail(curRevision.getAuthorIdent().getEmailAddress());
@@ -84,7 +84,12 @@ public class GitProjectAnalyzer {
 				} else {
 					revision.setShortMessage(curRevision.getShortMessage());
 				}
-				revision.setFullMessage(curRevision.getFullMessage());
+				String fullMessage = curRevision.getFullMessage();
+				if (fullMessage.length() > 10000) {
+					revision.setFullMessage(fullMessage.substring(0, 10000));
+				} else {
+					revision.setFullMessage(fullMessage);
+				}
 				revision.setCommitTime(new java.util.Date((long) curRevision.getCommitTime() * 1000));
 
 				Set<RefactoringGit> refactoringSet = new HashSet<RefactoringGit>();

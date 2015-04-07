@@ -3,10 +3,77 @@ create table weeks (
   start date
 );
 
-insert into weeks (start)
-values
-('2015-03-22'),
-(DATE_SUB('2015-03-22',INTERVAL 7 DAY)),
-(DATE_SUB('2015-03-22',INTERVAL 14 DAY)),
-(DATE_SUB('2015-03-22',INTERVAL 21 DAY)),
-(DATE_SUB('2015-03-22',INTERVAL 28 DAY));
+insert into weeks (start) values ('2015-03-22');
+
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+insert into weeks (start) select DATE_SUB(min(start), INTERVAL 7 DAY) from weeks;
+
+select * from weeks;

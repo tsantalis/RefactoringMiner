@@ -1,10 +1,8 @@
-library(RMySQL)
+library(DBI)
 
-con <- dbConnect(MySQL(),
-                 user = 'danilofs',
-                 password = 'oefudfs2#',
-                 host = 'icse.labsoft.dcc.ufmg.br',
-                 dbname='danilofs-refactoring')
+con <- dbConnect(RMySQL::MySQL(),
+                 default.file = 'c:/.danilofs-refactoring.cnf',
+                 groups = 'refactoring')
 on.exit(dbDisconnect(con))
 
 data <- dbReadTable(conn = con, name = 'refactoringtype')

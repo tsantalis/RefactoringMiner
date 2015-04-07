@@ -1,10 +1,6 @@
 library(RMySQL)
 
-con <- dbConnect(MySQL(),
-                 user = 'danilofs',
-                 password = 'oefudfs2#',
-                 host = 'icse.labsoft.dcc.ufmg.br',
-                 dbname='danilofs-refactoring')
+con <- dbConnect(MySQL())
 on.exit(dbDisconnect(con))
 
 data <- dbReadTable(conn = con, name = 'refactoringtypeproj')

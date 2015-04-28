@@ -29,7 +29,7 @@ order by p.id asc, w.start desc", sep = '')
   #pdf(file=paste("weeks-", title, ".pdf", sep=''), height=6, width=12, family="sans")
   time <- as.POSIXct(data$time, origin="1970-01-01", tz="GMT")
   
-  plot(range(time), range(c(0, 150)), type="n", xlab="Time", ylab="", main=title)
+  plot(range(time), range(c(0, 200)), type="n", xlab="Time", ylab="", main=title)
   lines(data$commits ~ time, type="l",col="black")
   lines(data$refactorings ~ time, type="l",col="blue")
   #lines((data$refactorings/data$commits) ~ time, type="l",col="red")
@@ -42,8 +42,8 @@ order by p.id asc, w.start desc", sep = '')
   #dev.off()
 }
 
-pdf(file="weeks.pdf", height=12, width=12, family="sans")
-par(mfcol=c(4,2))
+pdf(file="weeks.pdf", height=24, width=12, family="sans")
+par(mfrow=c(7,3))
 refactoringActivityPerWeek(con, 'https://github.com/spring-projects/spring-framework.git', 'spring-framework')
 refactoringActivityPerWeek(con, 'https://github.com/apache/cassandra.git', 'apache cassandra')
 refactoringActivityPerWeek(con, 'https://github.com/hibernate/hibernate-orm.git', 'hibernate-orm')
@@ -53,6 +53,21 @@ refactoringActivityPerWeek(con, 'https://github.com/apache/camel.git', 'apache c
 refactoringActivityPerWeek(con, 'https://github.com/k9mail/k-9.git', 'k-9 mail')
 refactoringActivityPerWeek(con, 'https://github.com/orientechnologies/orientdb.git', 'orientdb')
 refactoringActivityPerWeek(con, 'https://github.com/junit-team/junit.git', 'junit')
+
+refactoringActivityPerWeek(con, 'https://github.com/apache/tomcat.git', 'tomcat')
+refactoringActivityPerWeek(con, 'https://github.com/languagetool-org/languagetool.git', 'languagetool')
+refactoringActivityPerWeek(con, 'https://github.com/vaadin/vaadin.git', 'vaadin')
+refactoringActivityPerWeek(con, 'https://github.com/grails/grails-core.git', 'grails-core')
+
+refactoringActivityPerWeek(con, 'https://github.com/VoltDB/voltdb.git', 'voltdb')
+refactoringActivityPerWeek(con, 'https://github.com/k9mail/k-9.git', 'k-9')
+refactoringActivityPerWeek(con, 'https://github.com/hazelcast/hazelcast.git', 'hazelcast')
+refactoringActivityPerWeek(con, 'https://github.com/rstudio/rstudio.git', 'rstudio')
+
+refactoringActivityPerWeek(con, 'https://github.com/M66B/XPrivacy.git', 'XPrivacy')
+refactoringActivityPerWeek(con, 'https://github.com/netty/netty.git', 'netty')
+refactoringActivityPerWeek(con, 'https://github.com/igniterealtime/Openfire.git', 'Openfire')
+refactoringActivityPerWeek(con, 'https://github.com/cgeo/cgeo.git', 'cgeo')
 
 
 dev.off()

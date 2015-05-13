@@ -70,7 +70,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 							currentUMLModel = parentUMLModel;
 						} else {
 							// Faz checkout e gera UML model da revisao current
-							checkoutCommand(git, currentCommit);
+							checkoutCommand(git, currentCommit.getId().getName());
 							currentUMLModel = null;
 							currentUMLModel = createModel(projectFolder, parser);
 						}
@@ -79,7 +79,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 						parentCommit = walk.parseCommit(currentCommit.getParent(0));
 						
 						// Faz checkout e gera UML model da revisao parent
-						checkoutCommand(git, parentCommit);
+						checkoutCommand(git, parentCommit.getId().getName());
 						parentUMLModel = null;
 						parentUMLModel = createModel(projectFolder, parser);
 						
@@ -142,11 +142,6 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		} catch (Exception e) {
 			logger.warn(String.format("Ignored revision %s due to error", commitId), e);
 		}
-	}
-
-	private void checkoutCommand(Git git, RevCommit commit) throws Exception {
-		CheckoutCommand checkout = git.checkout().setStartPoint(commit).setName(commit.getId().getName());
-		checkout.call();		
 	}
 
 	private void checkoutCommand(Git git, String commitId) throws Exception {

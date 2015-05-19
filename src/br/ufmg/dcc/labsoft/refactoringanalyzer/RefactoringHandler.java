@@ -9,7 +9,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 
 public abstract class RefactoringHandler {
 
-	public boolean skipRevision(RevCommit curRevision) {
+	public boolean skipRevision(String curRevision) {
 		return false;
 	}
 

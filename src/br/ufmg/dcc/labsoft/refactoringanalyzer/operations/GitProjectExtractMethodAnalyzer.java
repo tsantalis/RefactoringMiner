@@ -56,7 +56,7 @@ public class GitProjectExtractMethodAnalyzer {
 
 		GitService gitService = new GitServiceImpl();
 		File projectFile = new File(workingDir, project.getName());
-		Repository repo = gitService.cloneIfNotExists(projectFile.getPath(), cloneUrl, project.getDefault_branch());
+		Repository repo = gitService.cloneIfNotExists(projectFile.getPath(), cloneUrl/*, project.getDefault_branch()*/);
 
 		File projectFolder = repo.getDirectory().getParentFile();
 		ASTParser parser = RefactoringDetectorImpl.buildAstParser(projectFolder, true);

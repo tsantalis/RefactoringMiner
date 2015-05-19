@@ -62,13 +62,13 @@ public class GitProjectAnalyzer {
 
 		GitService gitService = new GitServiceImpl();
 		File projectFile = new File(workingDir, project.getName());
-		Repository repo = gitService.cloneIfNotExists(projectFile.getPath(), project.getCloneUrl(), project.getDefault_branch());
+		Repository repo = gitService.cloneIfNotExists(projectFile.getPath(), project.getCloneUrl()/*, project.getDefault_branch()*/);
 
 		RefactoringDetector detector = new RefactoringDetectorImpl();
-		detector.detectAll(repo, new RefactoringHandler() {
+		detector.detectAll(repo, project.getDefault_branch(), new RefactoringHandler() {
 			@Override
-			public boolean skipRevision(RevCommit curRevision) {
-				return db.getRevisionById(project, curRevision.getId().getName()) != null;
+			public boolean skipRevision(String curRevision) {
+				return db.getRevisionById(project, curRevision) != null;
 			}
 			@Override
 			public void handleDiff(UMLModelSet prevModel, String commitId, RevCommit curRevision, UMLModelSet curModel, List<Refactoring> refactorings) {

@@ -50,7 +50,7 @@ public class ProjectCommitCounter {
 		}
 		GitService gitService = new GitServiceImpl();
 		File projectFile = new File(workingDir, project.getName());
-		Repository repo = gitService.cloneIfNotExists(projectFile.getPath(), project.getCloneUrl(), project.getDefault_branch());
+		Repository repo = gitService.cloneIfNotExists(projectFile.getPath(), project.getCloneUrl()/*, project.getDefault_branch()*/);
 		int count = gitService.countCommits(repo, project.getDefault_branch());
 		
 		project.setCommits_count(count);

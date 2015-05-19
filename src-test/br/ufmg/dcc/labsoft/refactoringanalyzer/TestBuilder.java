@@ -44,16 +44,16 @@ public class TestBuilder {
 		for (ProjectMatcher m : map.values()) {
 			String folder = TMP_DIR + "/" + m.cloneUrl.substring(m.cloneUrl.lastIndexOf('/') + 1, m.cloneUrl.lastIndexOf('.'));
 			if (m.ignoreNonSpecifiedCommits) {
-				Repository rep = gitService.cloneIfNotExists(folder, m.cloneUrl, null);
+				Repository rep = gitService.cloneIfNotExists(folder, m.cloneUrl/*, m.branch*/);
 				// It is faster to only look at particular commits
 				ASTParser parser = refactoringDetector.buildAstParser(rep);
 				for (String commitId : m.getCommits()) {
 					refactoringDetector.detectOne(parser, rep, commitId, null, m);
 				}
 			} else {
-				Repository rep = gitService.cloneIfNotExists(folder, m.cloneUrl, m.branch);
+				Repository rep = gitService.cloneIfNotExists(folder, m.cloneUrl/*, m.branch*/);
 				// Iterate over each commit
-				refactoringDetector.detectAll(rep, m);
+				refactoringDetector.detectAll(rep, m.branch, m);
 			}
 			m.countFalseNegatives();
 			tp += m.truePositiveCount;
@@ -112,9 +112,8 @@ public class TestBuilder {
 		}
 
 		@Override
-		public boolean skipRevision(RevCommit curRevision) {
+		public boolean skipRevision(String commitId) {
 			if (this.ignoreNonSpecifiedCommits) {
-				String commitId = curRevision.getId().getName();
 				return !this.expected.containsKey(commitId);
 			}
 			return false;

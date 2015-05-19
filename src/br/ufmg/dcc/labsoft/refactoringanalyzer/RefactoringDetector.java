@@ -4,6 +4,6 @@ import org.eclipse.jgit.lib.Repository;
 
 public interface RefactoringDetector {
 
-	void detectAll(Repository repository, RefactoringHandler handler);
+	void detectAll(Repository repository, String branch, RefactoringHandler handler) throws Exception;
 
 }

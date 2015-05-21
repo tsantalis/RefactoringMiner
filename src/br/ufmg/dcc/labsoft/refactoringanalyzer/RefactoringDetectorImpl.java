@@ -31,10 +31,8 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		this.analyzeMethodInvocations = analyzeMethodInvocations;
 	}
 
-	@Override
-	public void detectAll(Repository repository, String branch, final RefactoringHandler handler) throws Exception {
+	private void detect(GitService gitService, Repository repository, final RefactoringHandler handler, Iterator<RevCommit> i) {
 		int commitsCount = 0;
-		//int mergeCommitsCount = 0;
 		int errorCommitsCount = 0;
 		int refactoringsCount = 0;
 		String parentCommit = null;
@@ -42,68 +40,85 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		UMLModelSet parentUMLModel = null;
 
 		File metadataFolder = repository.getDirectory();
+		File projectFolder = metadataFolder.getParentFile();
+		String projectName = projectFolder.getName();
+		ASTParser parser = buildAstParser(projectFolder, analyzeMethodInvocations);
+		
+		long time = System.currentTimeMillis();
+		while (i.hasNext()) {
+			RevCommit currentCommit = i.next();
+			String commitId = currentCommit.getId().getName();
+			try {
+				// Ganho de performance - Aproveita a UML Model que ja se encontra em memorioa da comparacao anterior
+				if (parentCommit != null && commitId.equals(parentCommit)) {
+					currentUMLModel = parentUMLModel;
+				} else {
+					// Faz checkout e gera UML model da revisao current
+					gitService.checkout(repository, commitId);
+					currentUMLModel = null;
+					currentUMLModel = createModel(projectFolder, parser);
+				}
+				
+				// Recupera o parent commit
+				parentCommit = currentCommit.getParent(0).getName();
+				
+				// Faz checkout e gera UML model da revisao parent
+				gitService.checkout(repository, parentCommit);
+				parentUMLModel = null;
+				parentUMLModel = createModel(projectFolder, parser);
+				
+				// Diff entre currentModel e parentModel
+				List<Refactoring> refactoringsAtRevision = parentUMLModel.detectRefactorings(currentUMLModel);
+				refactoringsCount += refactoringsAtRevision.size();
+				handler.handleDiff(parentUMLModel, commitId, currentCommit, currentUMLModel, refactoringsAtRevision);
+				
+			} catch (Exception e) {
+				logger.warn(String.format("Ignored revision %s due to error", commitId), e);
+				errorCommitsCount++;
+			}
+
+			commitsCount++;
+			long time2 = System.currentTimeMillis();
+			if ((time2 - time) > 20000) {
+				time = time2;
+				logger.info(String.format("Processing %s [Commits: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, errorCommitsCount, refactoringsCount));
+			}
+		}
+
+		handler.onFinish(refactoringsCount, commitsCount, errorCommitsCount);
+		logger.info(String.format("Analyzed %s [Commits: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, errorCommitsCount, refactoringsCount));
+	}
+	
+	@Override
+	public void detectAll(Repository repository, String branch, final RefactoringHandler handler) throws Exception {
 		GitService gitService = new GitServiceImpl() {
 			@Override
 			public boolean isCommitAnalyzed(String sha1) {
 				return handler.skipRevision(sha1);
 			}
 		};
-		File projectFolder = metadataFolder.getParentFile();
-		String projectName = projectFolder.getName();
-		ASTParser parser = this.buildAstParser(projectFolder, analyzeMethodInvocations);
-		
 		RevWalk walk = gitService.createAllRevsWalk(repository, branch);
 		try {
-			Iterator<RevCommit> i = walk.iterator();
-			long time = System.currentTimeMillis();
-			while (i.hasNext()) {
-				RevCommit currentCommit = i.next();
-				String commitId = currentCommit.getId().getName();
-				try {
-					// Ganho de performance - Aproveita a UML Model que ja se encontra em memorioa da comparacao anterior
-					if (parentCommit != null && commitId.equals(parentCommit)) {
-						currentUMLModel = parentUMLModel;
-					} else {
-						// Faz checkout e gera UML model da revisao current
-						gitService.checkout(repository, commitId);
-						currentUMLModel = null;
-						currentUMLModel = createModel(projectFolder, parser);
-					}
-					
-					// Recupera o parent commit
-					parentCommit = currentCommit.getParent(0).getName();
-					
-					// Faz checkout e gera UML model da revisao parent
-					gitService.checkout(repository, parentCommit);
-					parentUMLModel = null;
-					parentUMLModel = createModel(projectFolder, parser);
-					
-					// Diff entre currentModel e parentModel
-					List<Refactoring> refactoringsAtRevision = parentUMLModel.detectRefactorings(currentUMLModel);
-					refactoringsCount += refactoringsAtRevision.size();
-					handler.handleDiff(parentUMLModel, commitId, currentCommit, currentUMLModel, refactoringsAtRevision);
-					
-				} catch (Exception e) {
-					logger.warn(String.format("Ignored revision %s due to error", commitId), e);
-					errorCommitsCount++;
-				}
-
-				commitsCount++;
-				long time2 = System.currentTimeMillis();
-				if ((time2 - time) > 20000) {
-					time = time2;
-					logger.info(String.format("Processing %s [Commits: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, errorCommitsCount, refactoringsCount));
-				}
-			}
-
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+			detect(gitService, repository, handler, walk.iterator());
 		} finally {
 			walk.dispose();
 		}
+	}
 
-		handler.onFinish(refactoringsCount, commitsCount, errorCommitsCount);
-		logger.info(String.format("Analyzed %s [Commits: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, errorCommitsCount, refactoringsCount));
+	@Override
+	public void fetchAndDetectNew(Repository repository, final RefactoringHandler handler) throws Exception {
+		GitService gitService = new GitServiceImpl() {
+			@Override
+			public boolean isCommitAnalyzed(String sha1) {
+				return handler.skipRevision(sha1);
+			}
+		};
+		RevWalk walk = gitService.fetchAndCreateNewRevsWalk(repository);
+		try {
+			detect(gitService, repository, handler, walk.iterator());
+		} finally {
+			walk.dispose();
+		}
 	}
 
 	private UMLModelSet createModel(File projectFolder, ASTParser parser) throws Exception {

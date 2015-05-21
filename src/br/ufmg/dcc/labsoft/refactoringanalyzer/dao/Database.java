@@ -1,5 +1,6 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer.dao;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -119,7 +120,33 @@ public class Database {
 		em.getTransaction().begin();
 		try {
 			@SuppressWarnings("unchecked")
-			List<ProjectGit> projects = em.createNamedQuery("projectGit.findNonAnalyzed").getResultList();
+			List<ProjectGit> projects = em.createNamedQuery("projectGit.findNonAnalyzed").setMaxResults(1).getResultList();
+			if (projects.size() > 0) {
+				project = projects.get(0);
+				project.setRunning_pid(pid);
+				em.merge(project);
+			}
+			em.getTransaction().commit();
+			return project;
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+			throw e;
+		} finally {
+			em.clear();
+		}
+	}
+	
+	public ProjectGit findProjectToMonitorAndLock(String pid) {
+		ProjectGit project = null;
+		em.getTransaction().begin();
+		try {
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DAY_OF_MONTH, -1);
+			@SuppressWarnings("unchecked")
+			List<ProjectGit> projects = em.createNamedQuery("projectGit.findToMonitor")
+					.setParameter("date", cal.getTime())
+					.setMaxResults(1)
+					.getResultList();
 			if (projects.size() > 0) {
 				project = projects.get(0);
 				project.setRunning_pid(pid);
@@ -140,7 +167,7 @@ public class Database {
 		em.getTransaction().begin();
 		try {
 			@SuppressWarnings("unchecked")
-			List<ProjectGit> projects = em.createNamedQuery("projectGit.findNonCounted").getResultList();
+			List<ProjectGit> projects = em.createNamedQuery("projectGit.findNonCounted").setMaxResults(1).getResultList();
 			if (projects.size() > 0) {
 				project = projects.get(0);
 				project.setRunning_pid(pid);

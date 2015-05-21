@@ -6,4 +6,6 @@ public interface RefactoringDetector {
 
 	void detectAll(Repository repository, String branch, RefactoringHandler handler) throws Exception;
 
+	void fetchAndDetectNew(Repository repository, RefactoringHandler handler) throws Exception;
+
 }

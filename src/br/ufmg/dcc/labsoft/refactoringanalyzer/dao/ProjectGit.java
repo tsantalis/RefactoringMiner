@@ -19,8 +19,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
 	@NamedQuery(name = "projectGit.findAll", query = "SELECT i FROM ProjectGit i"),
 	@NamedQuery(name = "projectGit.findByCloneUrl", query = "SELECT i FROM ProjectGit i where i.cloneUrl = :cloneUrl"),
-	@NamedQuery(name = "projectGit.releaseLocks", query = "update ProjectGit i set i.running_pid = NULL where i.running_pid = :pid and i.analyzed = 0"),
-	@NamedQuery(name = "projectGit.findNonAnalyzed", query = "SELECT i FROM ProjectGit i where i.analyzed = false and i.running_pid is null order by rand() asc"),
+	@NamedQuery(name = "projectGit.releaseLocks", query = "update ProjectGit i set i.running_pid = NULL where i.running_pid = :pid"),
+	@NamedQuery(name = "projectGit.findNonAnalyzed", query = "SELECT i FROM ProjectGit i where i.analyzed = false and i.running_pid is null and i.status = 'pending' order by rand() asc"),
+	@NamedQuery(name = "projectGit.findToMonitor", query = "SELECT i FROM ProjectGit i where i.monitoring_enabled = true and i.running_pid is null and i.last_update < :date order by i.last_update asc"),
 	@NamedQuery(name = "projectGit.findNonCounted", query = "SELECT i FROM ProjectGit i where i.analyzed = false and commits_count = 0 and i.running_pid is null order by i.size asc")
 })
 @Table(name = "projectgit")
@@ -43,7 +44,11 @@ public class ProjectGit extends AbstractEntity {
 	private String description;
 	private String language;
 	private String running_pid;
-
+	private String machine;
+	private String status;
+	private Date last_update;
+	private boolean monitoring_enabled;
+	
 	private int commits_count;
 //	private int merge_commits_count;
 	private int error_commits_count;
@@ -227,6 +232,38 @@ public class ProjectGit extends AbstractEntity {
 	@Override
 	public String toString() {
 		return this.cloneUrl;
+	}
+
+	public Date getLast_update() {
+		return last_update;
+	}
+
+	public void setLast_update(Date last_update) {
+		this.last_update = last_update;
+	}
+
+	public boolean isMonitoring_enabled() {
+		return monitoring_enabled;
+	}
+
+	public void setMonitoring_enabled(boolean monitoring_enabled) {
+		this.monitoring_enabled = monitoring_enabled;
+	}
+
+	public String getMachine() {
+		return machine;
+	}
+
+	public void setMachine(String machine) {
+		this.machine = machine;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

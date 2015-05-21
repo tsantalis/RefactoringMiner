@@ -13,41 +13,39 @@ import br.ufmg.dcc.labsoft.refactoringanalyzer.RefactoringDetectorImpl;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.Database;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.ProjectGit;
 
-public class AnalyzeProjects extends TaskWithProjectLock {
+public class AnalyzeNewCommits extends TaskWithProjectLock {
 
-	private static Logger logger = LoggerFactory.getLogger(AnalyzeProjects.class);
+	private static Logger logger = LoggerFactory.getLogger(AnalyzeNewCommits.class);
 	static Pid pid = new Pid();
 	
 	public static void main(String[] args) {
 		try {
-			AnalyzeProjects task = new AnalyzeProjects(args);
+			AnalyzeNewCommits task = new AnalyzeNewCommits(args);
 			task.doTask(pid);
 		} catch (Exception e) {
 			logger.error("Fatal error", e);
 		}
 	}
 
-	public AnalyzeProjects(String[] args) throws Exception {
+	public AnalyzeNewCommits(String[] args) throws Exception {
 		super(new Database());
 		initWorkingDir(args, pid);
 	}
 
 	@Override
 	protected ProjectGit findNextProject(Database db, Pid pid) throws Exception {
-		return db.findNonAnalyzedProjectAndLock(pid.toString());
+		return db.findProjectToMonitorAndLock(pid.toString());
 	}
 
 	@Override
 	protected void doTask(Database db, Pid pid, ProjectGit project) throws Exception {
-		this.analyzeProject(db, project);
-	}
-
-	public void analyzeProject(final Database db, final ProjectGit project) throws Exception {
+		final Database db1 = db;
 		GitService gitService = new GitServiceImpl();
-		File projectFile = new File(workingDir, project.getName());
-		Repository repo = gitService.cloneIfNotExists(projectFile.getPath(), project.getCloneUrl()/*, project.getDefault_branch()*/);
-
+		File projectFile = new File(this.workingDir, project.getName());
+		Repository repo = gitService.cloneIfNotExists(projectFile.getPath(), project.getCloneUrl());
+		
 		RefactoringDetector detector = new RefactoringDetectorImpl();
-		detector.detectAll(repo, project.getDefault_branch(), new AnalyzeProjectsHandler(db, project));
+		detector.fetchAndDetectNew(repo, new AnalyzeNewCommitsHandler(db1, project));
 	}
+
 }

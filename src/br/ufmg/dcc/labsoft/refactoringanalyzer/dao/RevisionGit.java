@@ -28,6 +28,8 @@ public class RevisionGit extends AbstractEntity {
 
 	private String commitId;
 	private String commitIdParent;
+	private String committerName;
+	private String committerEmail;               
 	private String authorName;
 	private String authorEmail;               
 	private String encoding;                
@@ -93,6 +95,14 @@ public class RevisionGit extends AbstractEntity {
 		this.authorEmail = authorIdent;
 	}
 
+	public String getCommiterEmail() {
+		return committerEmail;
+	}
+	
+	public void setCommitterEmail(String authorIdent) {
+		this.committerEmail = authorIdent;
+	}
+
 	public String getEncoding() {
 		return encoding;
 	}
@@ -139,6 +149,14 @@ public class RevisionGit extends AbstractEntity {
 
 	public void setAuthorName(String authorName) {
 		this.authorName = authorName;
+	}
+
+	public String getCommiterName() {
+		return committerName;
+	}
+	
+	public void setCommitterName(String authorName) {
+		this.committerName = authorName;
 	}
 
 }

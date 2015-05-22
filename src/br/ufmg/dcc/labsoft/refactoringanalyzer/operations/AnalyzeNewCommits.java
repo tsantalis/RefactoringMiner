@@ -46,6 +46,7 @@ public class AnalyzeNewCommits extends TaskWithProjectLock {
 		
 		RefactoringDetector detector = new RefactoringDetectorImpl();
 		detector.fetchAndDetectNew(repo, new AnalyzeNewCommitsHandler(db1, project));
+		repo.close();
 	}
 
 }

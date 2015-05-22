@@ -49,5 +49,6 @@ public class AnalyzeProjects extends TaskWithProjectLock {
 
 		RefactoringDetector detector = new RefactoringDetectorImpl();
 		detector.detectAll(repo, project.getDefault_branch(), new AnalyzeProjectsHandler(db, project));
+		repo.close();
 	}
 }

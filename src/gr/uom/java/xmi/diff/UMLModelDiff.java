@@ -36,13 +36,13 @@ public class UMLModelDiff {
    private List<UMLRealizationDiff> realizationDiffList;
    
    private List<UMLClassDiff> commonClassDiffList;
-   private List<UMLClass> commonUnchangedClasses;
+//   private List<UMLClass> commonUnchangedClasses;
 // private List<UMLCollaborationDiff> collaborationDiffList;
    private List<UMLClassMoveDiff> classMoveDiffList;
    private List<UMLClassMoveDiff> innerClassMoveDiffList;
    private List<UMLClassRenameDiff> classRenameDiffList;
    
-   private List<UMLAnonymousClass> addedAnonymousClasses;
+//   private List<UMLAnonymousClass> addedAnonymousClasses;
    private List<UMLAnonymousClass> removedAnonymousClasses;
    private List<Refactoring> refactorings;
    
@@ -60,13 +60,13 @@ public class UMLModelDiff {
       this.addedRealizations = new ArrayList<UMLRealization>();
       this.removedRealizations = new ArrayList<UMLRealization>();
       this.commonClassDiffList = new ArrayList<UMLClassDiff>();
-      this.commonUnchangedClasses = new ArrayList<UMLClass>();
+//      this.commonUnchangedClasses = new ArrayList<UMLClass>();
 //    this.collaborationDiffList = new ArrayList<UMLCollaborationDiff>();
       this.classMoveDiffList = new ArrayList<UMLClassMoveDiff>();
       this.innerClassMoveDiffList = new ArrayList<UMLClassMoveDiff>();
       this.classRenameDiffList = new ArrayList<UMLClassRenameDiff>();
       
-      this.addedAnonymousClasses = new ArrayList<UMLAnonymousClass>();
+//      this.addedAnonymousClasses = new ArrayList<UMLAnonymousClass>();
       this.removedAnonymousClasses = new ArrayList<UMLAnonymousClass>();
       this.refactorings = new ArrayList<Refactoring>();
    }
@@ -79,9 +79,9 @@ public class UMLModelDiff {
       this.removedClasses.add(umlClass);
    }
 
-   public void reportAddedAnonymousClass(UMLAnonymousClass umlClass) {
-      this.addedAnonymousClasses.add(umlClass);
-   }
+//   public void reportAddedAnonymousClass(UMLAnonymousClass umlClass) {
+//      this.addedAnonymousClasses.add(umlClass);
+//   }
 
    public void reportRemovedAnonymousClass(UMLAnonymousClass umlClass) {
       this.removedAnonymousClasses.add(umlClass);
@@ -123,9 +123,9 @@ public class UMLModelDiff {
       this.commonClassDiffList.add(classDiff);
    }
 
-   public void addUnchangedClass(UMLClass umlClass) {
-      this.commonUnchangedClasses.add(umlClass);
-   }
+//   public void addUnchangedClass(UMLClass umlClass) {
+//      this.commonUnchangedClasses.add(umlClass);
+//   }
 
 // public void addUMLCollaborationDiff(UMLCollaborationDiff collaborationDiff) {
 //    this.collaborationDiffList.add(collaborationDiff);
@@ -147,15 +147,15 @@ public class UMLModelDiff {
 //    return null;
 // }
 
-   private UMLClass getUnchangedClass(String className) {
-      for(UMLClass umlClass : commonUnchangedClasses) {
-         if(umlClass.getName().equals(className)) {
-            System.out.println("XXXX getUnchangedClass");
-            return umlClass;
-         }
-      }
-      return null;
-   }
+//   private UMLClass getUnchangedClass(String className) {
+//      for(UMLClass umlClass : commonUnchangedClasses) {
+//         if(umlClass.getName().equals(className)) {
+//            System.out.println("XXXX getUnchangedClass");
+//            return umlClass;
+//         }
+//      }
+//      return null;
+//   }
 
    private boolean isSubclassOf(String subclass, String finalSuperclass) {
       UMLClassDiff subclassDiff = getUMLClassDiff(subclass);
@@ -170,21 +170,21 @@ public class UMLModelDiff {
          else
             return false;
       }
-      else {
-         UMLClass umlClass = getUnchangedClass(subclass);
-         if(umlClass != null) {
-            System.out.println("XXXX isSubclassOf");
-            UMLType superclass = umlClass.getSuperclass();
-            if(superclass != null) {
-               if(this.looksLikeSameType(superclass.getClassType(), finalSuperclass))
-                  return true;
-               else
-                  return isSubclassOf(superclass.getClassType(), finalSuperclass);
-            }
-            else
-               return false;
-         }
-      }
+//      else {
+//         UMLClass umlClass = getUnchangedClass(subclass);
+//         if(umlClass != null) {
+//            System.out.println("XXXX isSubclassOf");
+//            UMLType superclass = umlClass.getSuperclass();
+//            if(superclass != null) {
+//               if(this.looksLikeSameType(superclass.getClassType(), finalSuperclass))
+//                  return true;
+//               else
+//                  return isSubclassOf(superclass.getClassType(), finalSuperclass);
+//            }
+//            else
+//               return false;
+//         }
+//      }
       return false;
    }
 
@@ -682,18 +682,18 @@ public class UMLModelDiff {
                   }
                }
                else {
-                  UMLClass clientClass = getUnchangedClass(addedRealization.getClient());
-                  if (clientClass == null) {
-                     // FIXME [danilofes]: This may happen with moves / renames but I'm not sure what to do
-                     implementedInterfaceOperations = false;
-                  } else {
-                     for(UMLOperation interfaceOperation : addedClass.getOperations()) {
-                        if(!clientClass.containsOperationWithTheSameSignature(interfaceOperation)) {
-                           implementedInterfaceOperations = false;
-                           break;
-                        }
-                     }
-                  }
+//                  UMLClass clientClass = getUnchangedClass(addedRealization.getClient());
+//                  if (clientClass == null) {
+//                     // FIXME [danilofes]: This may happen with moves / renames but I'm not sure what to do
+//                     implementedInterfaceOperations = false;
+//                  } else {
+//                     for(UMLOperation interfaceOperation : addedClass.getOperations()) {
+//                        if(!clientClass.containsOperationWithTheSameSignature(interfaceOperation)) {
+//                           implementedInterfaceOperations = false;
+//                           break;
+//                        }
+//                     }
+//                  }
                }
                if(implementedInterfaceOperations)
                   subclassSet.add(addedRealization.getClient());

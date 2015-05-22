@@ -12,9 +12,14 @@ import java.util.Map;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +54,8 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 			RevCommit currentCommit = i.next();
 			String commitId = currentCommit.getId().getName();
 			try {
+//				fileTreeDiff(repository, currentCommit, currentCommit.getParent(0));
+				
 				// Ganho de performance - Aproveita a UML Model que ja se encontra em memorioa da comparacao anterior
 				if (parentCommit != null && commitId.equals(parentCommit)) {
 					currentUMLModel = parentUMLModel;
@@ -87,6 +94,40 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 
 		handler.onFinish(refactoringsCount, commitsCount, errorCommitsCount);
 		logger.info(String.format("Analyzed %s [Commits: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, errorCommitsCount, refactoringsCount));
+	}
+	
+	private void fileTreeDiff(Repository repository, RevCommit current, RevCommit parent) throws Exception {
+        // The {tree} will return the underlying tree-id instead of the commit-id itself!
+        // For a description of what the carets do see e.g. http://www.paulboxley.com/blog/2011/06/git-caret-and-tilde
+        // This means we are selecting the parent of the parent of the parent of the parent of current HEAD and
+        // take the tree-ish of it
+//        ObjectId oldHead = repository.resolve("HEAD^^{tree}");
+        ObjectId oldHead = parent.getTree();
+        ObjectId head = current.getTree(); 
+//        ObjectId head = repository.resolve("HEAD^{tree}");
+
+        System.out.println("Printing diff between tree: " + parent + " and " + current);
+
+        // prepare the two iterators to compute the diff between
+		ObjectReader reader = repository.newObjectReader();
+		CanonicalTreeParser oldTreeIter = new CanonicalTreeParser();
+		oldTreeIter.reset(reader, oldHead);
+		CanonicalTreeParser newTreeIter = new CanonicalTreeParser();
+		newTreeIter.reset(reader, head);
+
+		// finally get the list of changed files
+		List<DiffEntry> diffs= new Git(repository).diff()
+		                    .setNewTree(newTreeIter)
+		                    .setOldTree(oldTreeIter)
+		                    .setShowNameAndStatusOnly(true)
+		                    .call();
+        for (DiffEntry entry : diffs) {
+            System.out.println("Entry: " + entry);
+        }
+        System.out.println("Done");
+
+        //repository.close();
+		
 	}
 	
 	@Override

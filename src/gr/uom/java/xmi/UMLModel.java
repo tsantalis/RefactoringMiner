@@ -320,7 +320,7 @@ public class UMLModel {
     			if(!classDiff.isEmpty())
     				modelDiff.addUMLClassDiff(classDiff);
     			else {
-    				modelDiff.addUnchangedClass(umlClass);
+//    				modelDiff.addUnchangedClass(umlClass);
     			}
     		}
     	}
@@ -336,10 +336,10 @@ public class UMLModel {
     		if(!umlModel.anonymousClassList.contains(umlClass))
     			modelDiff.reportRemovedAnonymousClass(umlClass);
     	}
-    	for(UMLAnonymousClass umlClass : umlModel.anonymousClassList) {
-    		if(!this.anonymousClassList.contains(umlClass))
-    			modelDiff.reportAddedAnonymousClass(umlClass);
-    	}
+//    	for(UMLAnonymousClass umlClass : umlModel.anonymousClassList) {
+//    		if(!this.anonymousClassList.contains(umlClass))
+//    			modelDiff.reportAddedAnonymousClass(umlClass);
+//    	}
     	modelDiff.checkForOperationMoves();
     	modelDiff.checkForExtractedAndMovedOperations();
     	return modelDiff;

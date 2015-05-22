@@ -13,32 +13,34 @@ import java.util.Map;
 public class UMLModel {
     private List<UMLClass> classList;
     private List<UMLDataType> dataTypeList;
-    private List<UMLAssociation> associationList;
-    private List<UMLDependency> dependencyList;
+//    private List<UMLAssociation> associationList;
+//    private List<UMLDependency> dependencyList;
     private List<UMLGeneralization> generalizationList;
     private List<UMLRealization> realizationList;
-    private List<UMLCollaboration> collaborationList;
-    private List<UMLActor> actorList;
-    private List<UMLUseCase> useCaseList;
-    private List<UMLInclude> includeList;
-    private List<UMLExtend> extendList;
-    private Map<String, String> xmiIdTypeMap;
+//    private List<UMLCollaboration> collaborationList;
+//    private List<UMLActor> actorList;
+//    private List<UMLUseCase> useCaseList;
+//    private List<UMLInclude> includeList;
+//    private List<UMLExtend> extendList;
+//    private Map<String, String> xmiIdTypeMap;
     private List<UMLAnonymousClass> anonymousClassList;
+    
+    
     private MethodInvocationInfo methodInvocationInfo;
 
     public UMLModel() {
         classList = new ArrayList<UMLClass>();
         dataTypeList = new ArrayList<UMLDataType>();
-        associationList = new ArrayList<UMLAssociation>();
-        dependencyList = new ArrayList<UMLDependency>();
+//        associationList = new ArrayList<UMLAssociation>();
+//        dependencyList = new ArrayList<UMLDependency>();
         generalizationList = new ArrayList<UMLGeneralization>();
         realizationList = new ArrayList<UMLRealization>();
-        collaborationList = new ArrayList<UMLCollaboration>();
-        actorList = new ArrayList<UMLActor>();
-        useCaseList = new ArrayList<UMLUseCase>();
-        includeList = new ArrayList<UMLInclude>();
-        extendList = new ArrayList<UMLExtend>();
-        xmiIdTypeMap = new LinkedHashMap<String, String>();
+//        collaborationList = new ArrayList<UMLCollaboration>();
+//        actorList = new ArrayList<UMLActor>();
+//        useCaseList = new ArrayList<UMLUseCase>();
+//        includeList = new ArrayList<UMLInclude>();
+//        extendList = new ArrayList<UMLExtend>();
+//        xmiIdTypeMap = new LinkedHashMap<String, String>();
         anonymousClassList = new ArrayList<UMLAnonymousClass>();
         methodInvocationInfo = new MethodInvocationInfo();
     }
@@ -48,36 +50,36 @@ public class UMLModel {
 	}
 
 	public void addClass(UMLClass umlClass) {
-    	if(umlClass.getXmiID() != null)
-    		xmiIdTypeMap.put(umlClass.getXmiID(), umlClass.getName());
+//    	if(umlClass.getXmiID() != null)
+//    		xmiIdTypeMap.put(umlClass.getXmiID(), umlClass.getName());
         classList.add(umlClass);
     }
 
     public void addDataType(UMLDataType umlDataType) {
-    	if(umlDataType.getXmiID() != null)
-    		xmiIdTypeMap.put(umlDataType.getXmiID(), umlDataType.getName());
+//    	if(umlDataType.getXmiID() != null)
+//    		xmiIdTypeMap.put(umlDataType.getXmiID(), umlDataType.getName());
     	dataTypeList.add(umlDataType);
     }
 
-    public void addActor(UMLActor umlActor) {
-    	if(umlActor.getXmiID() != null)
-    		xmiIdTypeMap.put(umlActor.getXmiID(), umlActor.getName());
-        actorList.add(umlActor);
-    }
+//    public void addActor(UMLActor umlActor) {
+//    	if(umlActor.getXmiID() != null)
+//    		xmiIdTypeMap.put(umlActor.getXmiID(), umlActor.getName());
+//        actorList.add(umlActor);
+//    }
+//
+//    public void addUseCase(UMLUseCase umlUseCase) {
+//    	if(umlUseCase.getXmiID() != null)
+//    		xmiIdTypeMap.put(umlUseCase.getXmiID(), umlUseCase.getName());
+//    	useCaseList.add(umlUseCase);
+//    }
 
-    public void addUseCase(UMLUseCase umlUseCase) {
-    	if(umlUseCase.getXmiID() != null)
-    		xmiIdTypeMap.put(umlUseCase.getXmiID(), umlUseCase.getName());
-    	useCaseList.add(umlUseCase);
-    }
-
-    public void addAssociation(UMLAssociation umlAssociation) {
-        associationList.add(umlAssociation);
-    }
-
-    public void addDependency(UMLDependency umlDependency) {
-        dependencyList.add(umlDependency);
-    }
+//    public void addAssociation(UMLAssociation umlAssociation) {
+//        associationList.add(umlAssociation);
+//    }
+//
+//    public void addDependency(UMLDependency umlDependency) {
+//        dependencyList.add(umlDependency);
+//    }
 
     public void addGeneralization(UMLGeneralization umlGeneralization) {
         generalizationList.add(umlGeneralization);
@@ -87,25 +89,25 @@ public class UMLModel {
     	realizationList.add(umlRealization);
     }
 
-    public void addCollaboration(UMLCollaboration umlCollaboration) {
-    	collaborationList.add(umlCollaboration);
-    }
+//    public void addCollaboration(UMLCollaboration umlCollaboration) {
+//    	collaborationList.add(umlCollaboration);
+//    }
 
-    public void addInclude(UMLInclude umlInclude) {
-    	includeList.add(umlInclude);
-    }
+//    public void addInclude(UMLInclude umlInclude) {
+//    	includeList.add(umlInclude);
+//    }
 
-    public void addExtend(UMLExtend umlExtend) {
-    	extendList.add(umlExtend);
-    }
+//    public void addExtend(UMLExtend umlExtend) {
+//    	extendList.add(umlExtend);
+//    }
 
     public void addAnonymousClass(UMLAnonymousClass anonymousClass) {
     	anonymousClassList.add(anonymousClass);
     }
 
-    public String getElementName(String xmiID) {
-        return xmiIdTypeMap.get(xmiID);
-    }
+//    public String getElementName(String xmiID) {
+//        return xmiIdTypeMap.get(xmiID);
+//    }
 
     public UMLGeneralization getGeneralization(String xmiID) {
     	ListIterator<UMLGeneralization> it = generalizationList.listIterator();
@@ -117,35 +119,35 @@ public class UMLModel {
     	return null;
     }
 
-    public UMLInclude getInclude(String xmiID) {
-    	ListIterator<UMLInclude> it = includeList.listIterator();
-    	while(it.hasNext()) {
-    		UMLInclude include = it.next();
-    		if(include.getXmiID() != null && include.getXmiID().equals(xmiID))
-    			return include;
-    	}
-    	return null;
-    }
+//    public UMLInclude getInclude(String xmiID) {
+//    	ListIterator<UMLInclude> it = includeList.listIterator();
+//    	while(it.hasNext()) {
+//    		UMLInclude include = it.next();
+//    		if(include.getXmiID() != null && include.getXmiID().equals(xmiID))
+//    			return include;
+//    	}
+//    	return null;
+//    }
 
-    public UMLExtend getExtend(String xmiID) {
-    	ListIterator<UMLExtend> it = extendList.listIterator();
-    	while(it.hasNext()) {
-    		UMLExtend extend = it.next();
-    		if(extend.getXmiID() != null && extend.getXmiID().equals(xmiID))
-    			return extend;
-    	}
-    	return null;
-    }
+//    public UMLExtend getExtend(String xmiID) {
+//    	ListIterator<UMLExtend> it = extendList.listIterator();
+//    	while(it.hasNext()) {
+//    		UMLExtend extend = it.next();
+//    		if(extend.getXmiID() != null && extend.getXmiID().equals(xmiID))
+//    			return extend;
+//    	}
+//    	return null;
+//    }
 
-    public UMLDependency getDependency(String xmiID) {
-    	ListIterator<UMLDependency> it = dependencyList.listIterator();
-    	while(it.hasNext()) {
-    		UMLDependency dependency = it.next();
-    		if(dependency.getXmiID() != null && dependency.getXmiID().equals(xmiID))
-    			return dependency;
-    	}
-    	return null;
-    }
+//    public UMLDependency getDependency(String xmiID) {
+//    	ListIterator<UMLDependency> it = dependencyList.listIterator();
+//    	while(it.hasNext()) {
+//    		UMLDependency dependency = it.next();
+//    		if(dependency.getXmiID() != null && dependency.getXmiID().equals(xmiID))
+//    			return dependency;
+//    	}
+//    	return null;
+//    }
 
     public UMLOperation getOperation(String xmiID) {
     	ListIterator<UMLClass> it = classList.listIterator();
@@ -168,15 +170,15 @@ public class UMLModel {
         return null;
     }
 
-    public UMLCollaboration getCollaboration(String name) {
-    	ListIterator<UMLCollaboration> it = collaborationList.listIterator();
-    	while(it.hasNext()) {
-    		UMLCollaboration umlCollaboration = it.next();
-    		if(umlCollaboration.getName().equals(name))
-    			return umlCollaboration;
-    	}
-    	return null;
-    }
+//    public UMLCollaboration getCollaboration(String name) {
+//    	ListIterator<UMLCollaboration> it = collaborationList.listIterator();
+//    	while(it.hasNext()) {
+//    		UMLCollaboration umlCollaboration = it.next();
+//    		if(umlCollaboration.getName().equals(name))
+//    			return umlCollaboration;
+//    	}
+//    	return null;
+//    }
 
     public List<UMLClass> getClassList() {
         return this.classList;
@@ -186,13 +188,13 @@ public class UMLModel {
     	return this.dataTypeList;
     }
 
-    public List<UMLAssociation> getAssociationList() {
-        return this.associationList;
-    }
-
-    public List<UMLDependency> getDependencyList() {
-        return this.dependencyList;
-    }
+//    public List<UMLAssociation> getAssociationList() {
+//        return this.associationList;
+//    }
+//
+//    public List<UMLDependency> getDependencyList() {
+//        return this.dependencyList;
+//    }
 
     public List<UMLGeneralization> getGeneralizationList() {
         return this.generalizationList;
@@ -202,21 +204,21 @@ public class UMLModel {
 		return realizationList;
 	}
 
-    public List<UMLActor> getActorList() {
-		return actorList;
-	}
+//    public List<UMLActor> getActorList() {
+//		return actorList;
+//	}
+//
+//	public List<UMLUseCase> getUseCaseList() {
+//		return useCaseList;
+//	}
 
-	public List<UMLUseCase> getUseCaseList() {
-		return useCaseList;
-	}
+//	public List<UMLInclude> getIncludeList() {
+//		return includeList;
+//	}
 
-	public List<UMLInclude> getIncludeList() {
-		return includeList;
-	}
-
-	public List<UMLExtend> getExtendList() {
-		return extendList;
-	}
+//	public List<UMLExtend> getExtendList() {
+//		return extendList;
+//	}
 
 	public UMLGeneralization matchGeneralization(UMLGeneralization otherGeneralization) {
     	ListIterator<UMLGeneralization> generalizationIt = generalizationList.listIterator();
@@ -287,22 +289,22 @@ public class UMLModel {
     			modelDiff.reportAddedGeneralization(umlGeneralization);
     	}
     	modelDiff.checkForGeneralizationChanges();
-    	for(UMLAssociation umlAssociation : associationList) {
-    		if(!umlModel.associationList.contains(umlAssociation))
-    			modelDiff.reportRemovedAssociation(umlAssociation);
-    	}
-    	for(UMLAssociation umlAssociation : umlModel.associationList) {
-    		if(!this.associationList.contains(umlAssociation))
-    			modelDiff.reportAddedAssociation(umlAssociation);
-    	}
-    	for(UMLDependency umlDependency : dependencyList) {
-    		if(!umlModel.dependencyList.contains(umlDependency))
-    			modelDiff.reportRemovedDependency(umlDependency);
-    	}
-    	for(UMLDependency umlDependency : umlModel.dependencyList) {
-    		if(!this.dependencyList.contains(umlDependency))
-    			modelDiff.reportAddedDependency(umlDependency);
-    	}
+//    	for(UMLAssociation umlAssociation : associationList) {
+//    		if(!umlModel.associationList.contains(umlAssociation))
+//    			modelDiff.reportRemovedAssociation(umlAssociation);
+//    	}
+//    	for(UMLAssociation umlAssociation : umlModel.associationList) {
+//    		if(!this.associationList.contains(umlAssociation))
+//    			modelDiff.reportAddedAssociation(umlAssociation);
+//    	}
+//    	for(UMLDependency umlDependency : dependencyList) {
+//    		if(!umlModel.dependencyList.contains(umlDependency))
+//    			modelDiff.reportRemovedDependency(umlDependency);
+//    	}
+//    	for(UMLDependency umlDependency : umlModel.dependencyList) {
+//    		if(!this.dependencyList.contains(umlDependency))
+//    			modelDiff.reportAddedDependency(umlDependency);
+//    	}
     	for(UMLRealization umlRealization : realizationList) {
     		if(!umlModel.realizationList.contains(umlRealization))
     			modelDiff.reportRemovedRealization(umlRealization);
@@ -322,13 +324,13 @@ public class UMLModel {
     			}
     		}
     	}
-    	for(UMLCollaboration umlCollaboration : collaborationList) {
-    		if(umlModel.collaborationList.contains(umlCollaboration)) {
-    			UMLCollaborationDiff collaborationDiff = umlCollaboration.diff(umlModel.getCollaboration(umlCollaboration.getName()));
-    			if(!collaborationDiff.isEmpty())
-    				modelDiff.addUMLCollaborationDiff(collaborationDiff);
-    		}
-    	}
+//    	for(UMLCollaboration umlCollaboration : collaborationList) {
+//    		if(umlModel.collaborationList.contains(umlCollaboration)) {
+//    			UMLCollaborationDiff collaborationDiff = umlCollaboration.diff(umlModel.getCollaboration(umlCollaboration.getName()));
+//    			if(!collaborationDiff.isEmpty())
+//    				modelDiff.addUMLCollaborationDiff(collaborationDiff);
+//    		}
+//    	}
     	
     	for(UMLAnonymousClass umlClass : anonymousClassList) {
     		if(!umlModel.anonymousClassList.contains(umlClass))

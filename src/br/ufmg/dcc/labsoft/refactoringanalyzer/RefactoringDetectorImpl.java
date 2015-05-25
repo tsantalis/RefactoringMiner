@@ -95,7 +95,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 			refactoringsAtRevision = parentUMLModel.detectRefactorings(currentUMLModel);
 			
 		} else {
-			logger.info(String.format("Ignored revision %s with no changes in java files", commitId));
+			//logger.info(String.format("Ignored revision %s with no changes in java files", commitId));
 			refactoringsAtRevision = Collections.emptyList();
 		}
 		handler.handleDiff(currentCommit, refactoringsAtRevision);
@@ -183,6 +183,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		RevWalk walk = new RevWalk(repository);
 		try {
 			RevCommit commit = walk.parseCommit(repository.resolve(commitId));
+			walk.parseCommit(commit.getParent(0));
 			this.detectRefactorings(gitService, repository, handler, projectFolder, parser, commit);
 		} catch (Exception e) {
 			logger.warn(String.format("Ignored revision %s due to error", commitId), e);

@@ -1,6 +1,5 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer.operations;
 
-import gr.uom.java.xmi.UMLModelSet;
 import gr.uom.java.xmi.diff.Refactoring;
 
 import java.util.HashSet;
@@ -30,7 +29,7 @@ class AnalyzeProjectsHandler extends RefactoringHandler {
 	}
 
 	@Override
-	public void handleDiff(UMLModelSet prevModel, String commitId, RevCommit curRevision, UMLModelSet curModel, List<Refactoring> refactorings) {
+	public void handleDiff(RevCommit curRevision, List<Refactoring> refactorings) {
 		RevisionGit revision = new RevisionGit();
 		revision.setProjectGit(db.getProjectById(project.getId()));
 		revision.setIdCommit(curRevision.getId().getName());

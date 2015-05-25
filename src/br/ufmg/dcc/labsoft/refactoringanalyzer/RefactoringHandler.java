@@ -1,6 +1,5 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer;
 
-import gr.uom.java.xmi.UMLModelSet;
 import gr.uom.java.xmi.diff.Refactoring;
 
 import java.util.List;
@@ -13,7 +12,7 @@ public abstract class RefactoringHandler {
 		return false;
 	}
 
-	public void handleDiff(UMLModelSet prevModel, String commitId, RevCommit commitData, UMLModelSet curModel, List<Refactoring> refactorings) {}
+	public void handleDiff(RevCommit commitData, List<Refactoring> refactorings) {}
 
 	public void onFinish(int refactoringsCount, int commitsCount, int errorCommitsCount) {}
 }

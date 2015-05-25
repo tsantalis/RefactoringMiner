@@ -1,6 +1,5 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer;
 
-import gr.uom.java.xmi.UMLModelSet;
 import gr.uom.java.xmi.diff.Refactoring;
 
 import java.util.HashMap;
@@ -120,8 +119,9 @@ public class TestBuilder {
 		}
 
 		@Override
-		public void handleDiff(UMLModelSet prevModel, String commitId, RevCommit curRevision, UMLModelSet curModel, List<Refactoring> refactorings) {
+		public void handleDiff(RevCommit curRevision, List<Refactoring> refactorings) {
 			CommitMatcher matcher;
+			String commitId = curRevision.getId().getName();
 			if (expected.containsKey(commitId)) {
 				matcher = expected.get(commitId);
 			}

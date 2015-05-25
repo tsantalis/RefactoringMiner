@@ -1,10 +1,12 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer;
 
-import gr.uom.java.xmi.ASTReader2;
+import gr.uom.java.xmi.UMLModelASTReader;
 import gr.uom.java.xmi.UMLModelSet;
 import gr.uom.java.xmi.diff.Refactoring;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
@@ -40,9 +43,6 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		int commitsCount = 0;
 		int errorCommitsCount = 0;
 		int refactoringsCount = 0;
-		String parentCommit = null;
-		UMLModelSet currentUMLModel = null;
-		UMLModelSet parentUMLModel = null;
 
 		File metadataFolder = repository.getDirectory();
 		File projectFolder = metadataFolder.getParentFile();
@@ -52,35 +52,12 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		long time = System.currentTimeMillis();
 		while (i.hasNext()) {
 			RevCommit currentCommit = i.next();
-			String commitId = currentCommit.getId().getName();
 			try {
-//				fileTreeDiff(repository, currentCommit, currentCommit.getParent(0));
-				
-				// Ganho de performance - Aproveita a UML Model que ja se encontra em memorioa da comparacao anterior
-				if (parentCommit != null && commitId.equals(parentCommit)) {
-					currentUMLModel = parentUMLModel;
-				} else {
-					// Faz checkout e gera UML model da revisao current
-					gitService.checkout(repository, commitId);
-					currentUMLModel = null;
-					currentUMLModel = createModel(projectFolder, parser);
-				}
-				
-				// Recupera o parent commit
-				parentCommit = currentCommit.getParent(0).getName();
-				
-				// Faz checkout e gera UML model da revisao parent
-				gitService.checkout(repository, parentCommit);
-				parentUMLModel = null;
-				parentUMLModel = createModel(projectFolder, parser);
-				
-				// Diff entre currentModel e parentModel
-				List<Refactoring> refactoringsAtRevision = parentUMLModel.detectRefactorings(currentUMLModel);
+				List<Refactoring> refactoringsAtRevision = detectRefactorings(gitService, repository, handler, projectFolder, parser, currentCommit);
 				refactoringsCount += refactoringsAtRevision.size();
-				handler.handleDiff(parentUMLModel, commitId, currentCommit, currentUMLModel, refactoringsAtRevision);
 				
 			} catch (Exception e) {
-				logger.warn(String.format("Ignored revision %s due to error", commitId), e);
+				logger.warn(String.format("Ignored revision %s due to error", currentCommit.getId().getName()), e);
 				errorCommitsCount++;
 			}
 
@@ -95,18 +72,39 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		handler.onFinish(refactoringsCount, commitsCount, errorCommitsCount);
 		logger.info(String.format("Analyzed %s [Commits: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, errorCommitsCount, refactoringsCount));
 	}
-	
-	private void fileTreeDiff(Repository repository, RevCommit current, RevCommit parent) throws Exception {
-        // The {tree} will return the underlying tree-id instead of the commit-id itself!
-        // For a description of what the carets do see e.g. http://www.paulboxley.com/blog/2011/06/git-caret-and-tilde
-        // This means we are selecting the parent of the parent of the parent of the parent of current HEAD and
-        // take the tree-ish of it
-//        ObjectId oldHead = repository.resolve("HEAD^^{tree}");
-        ObjectId oldHead = parent.getTree();
-        ObjectId head = current.getTree(); 
-//        ObjectId head = repository.resolve("HEAD^{tree}");
 
-        System.out.println("Printing diff between tree: " + parent + " and " + current);
+	private List<Refactoring> detectRefactorings(GitService gitService, Repository repository, final RefactoringHandler handler, File projectFolder, ASTParser parser, RevCommit currentCommit) throws Exception {
+		List<Refactoring> refactoringsAtRevision;
+		String commitId = currentCommit.getId().getName();
+		List<String> filesBefore = new ArrayList<String>();
+		List<String> filesCurrent = new ArrayList<String>();
+		fileTreeDiff(repository, currentCommit, filesBefore, filesCurrent);
+		// If no java files changed, there is no refactoring. Also, if there are
+		// only ADD's or only REMOVE's there is no refactoring
+		if (!filesBefore.isEmpty() && !filesCurrent.isEmpty()) {
+			// Checkout and build model for current commit
+			gitService.checkout(repository, commitId);
+			UMLModelSet currentUMLModel = createModel(projectFolder, parser, filesCurrent);
+			
+			// Checkout and build model for parent commit
+			String parentCommit = currentCommit.getParent(0).getName();
+			gitService.checkout(repository, parentCommit);
+			UMLModelSet parentUMLModel = createModel(projectFolder, parser, filesBefore);
+			
+			// Diff between currentModel e parentModel
+			refactoringsAtRevision = parentUMLModel.detectRefactorings(currentUMLModel);
+			
+		} else {
+			logger.info(String.format("Ignored revision %s with no changes in java files", commitId));
+			refactoringsAtRevision = Collections.emptyList();
+		}
+		handler.handleDiff(currentCommit, refactoringsAtRevision);
+		return refactoringsAtRevision;
+	}
+	
+	private void fileTreeDiff(Repository repository, RevCommit current, List<String> javaFilesBefore, List<String> javaFilesCurrent) throws Exception {
+        ObjectId oldHead = current.getParent(0).getTree();
+        ObjectId head = current.getTree();
 
         // prepare the two iterators to compute the diff between
 		ObjectReader reader = repository.newObjectReader();
@@ -116,20 +114,32 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		newTreeIter.reset(reader, head);
 
 		// finally get the list of changed files
-		List<DiffEntry> diffs= new Git(repository).diff()
+		List<DiffEntry> diffs = new Git(repository).diff()
 		                    .setNewTree(newTreeIter)
 		                    .setOldTree(oldTreeIter)
 		                    .setShowNameAndStatusOnly(true)
 		                    .call();
         for (DiffEntry entry : diffs) {
-            System.out.println("Entry: " + entry);
+        	ChangeType changeType = entry.getChangeType();
+        	if (changeType != ChangeType.ADD) {
+        		String oldPath = entry.getOldPath();
+        		if (isJavafile(oldPath)) {
+        			javaFilesBefore.add(oldPath);
+        		}
+        	}
+    		if (changeType != ChangeType.DELETE) {
+        		String newPath = entry.getNewPath();
+        		if (isJavafile(newPath)) {
+        			javaFilesCurrent.add(newPath);
+        		}
+    		}
         }
-        System.out.println("Done");
-
-        //repository.close();
-		
 	}
 	
+	private boolean isJavafile(String path) {
+		return path.endsWith(".java");
+	}
+
 	@Override
 	public void detectAll(Repository repository, String branch, final RefactoringHandler handler) throws Exception {
 		GitService gitService = new GitServiceImpl() {
@@ -162,32 +172,22 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		}
 	}
 
-	private UMLModelSet createModel(File projectFolder, ASTParser parser) throws Exception {
-		return new ASTReader2(projectFolder, parser, analyzeMethodInvocations).getUmlModelSet();
-//		return new ASTReader3(projectFolder).getUmlModelSet();
+	private UMLModelSet createModel(File projectFolder, ASTParser parser, List<String> files) throws Exception {
+		return new UMLModelASTReader(projectFolder, parser, files).getUmlModelSet();
 	}
 
 	public void detectOne(ASTParser parser, Repository repository, String commitId, String parentCommitId, RefactoringHandler handler) {
 		File metadataFolder = repository.getDirectory();
 		File projectFolder = metadataFolder.getParentFile();
+		GitService gitService = new GitServiceImpl();
+		RevWalk walk = new RevWalk(repository);
 		try {
-			GitService gitService = new GitServiceImpl();
-			gitService.checkout(repository, commitId);
-			ASTParser parser1 = RefactoringDetectorImpl.buildAstParser(projectFolder, true);
-			UMLModelSet currentUMLModel = createModel(projectFolder, parser1);
-			
-			if (parentCommitId == null) {
-				parentCommitId = repository.resolve(commitId + "^1").getName();
-			}
-			gitService.checkout(repository, parentCommitId);
-			ASTParser parser2 = RefactoringDetectorImpl.buildAstParser(projectFolder, true);
-			UMLModelSet parentUMLModel = createModel(projectFolder, parser2);
-			
-			List<Refactoring> refactoringsAtRevision = parentUMLModel.detectRefactorings(currentUMLModel);
-			handler.handleDiff(parentUMLModel, commitId, null, currentUMLModel, refactoringsAtRevision);
-
+			RevCommit commit = walk.parseCommit(repository.resolve(commitId));
+			this.detectRefactorings(gitService, repository, handler, projectFolder, parser, commit);
 		} catch (Exception e) {
 			logger.warn(String.format("Ignored revision %s due to error", commitId), e);
+		} finally {
+			walk.dispose();
 		}
 	}
 

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
@@ -31,6 +32,8 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
 public class UMLModelASTReader {
+	private static final String systemNewLine = Matcher.quoteReplacement(File.separator);
+	
 	private UMLModelSet umlModelSet;
 	private String projectRoot;
 	private ASTParser parser;
@@ -40,6 +43,11 @@ public class UMLModelASTReader {
 		this.projectRoot = rootFolder.getPath();
 		this.parser = parser;
 		final String[] emptyArray = new String[0];
+		
+		String[] filesArray = new String[javaFiles.size()];
+		for (int i = 0; i < filesArray.length; i++) {
+			filesArray[i] = rootFolder + File.separator + javaFiles.get(i).replaceAll("/", systemNewLine);
+		}
 
 		FileASTRequestor fileASTRequestor = new FileASTRequestor() { 
 			@Override
@@ -47,7 +55,7 @@ public class UMLModelASTReader {
 				processCompilationUnit(sourceFilePath, ast);
 			}
 		};
-		this.parser.createASTs((String[]) javaFiles.toArray(emptyArray), null, emptyArray, fileASTRequestor, null);
+		this.parser.createASTs((String[]) filesArray, null, emptyArray, fileASTRequestor, null);
 	}
 
 	public UMLModel getUmlModel(String packageRoot) {

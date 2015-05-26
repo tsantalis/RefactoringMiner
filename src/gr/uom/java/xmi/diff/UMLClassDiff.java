@@ -300,11 +300,11 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	public void checkForInlinedOperations() {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
 		List<UMLOperationBodyMapper> mappersToBeAdded = new ArrayList<UMLOperationBodyMapper>();
-		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-			if(!mapper.getNonMappedLeavesT2().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty() ||
+		for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
+			UMLOperation removedOperation = removedOperationIterator.next();
+			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+				if(!mapper.getNonMappedLeavesT2().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty() ||
 					!mapper.getVariableReplacementsWithMethodInvocation().isEmpty() || !mapper.getMethodInvocationReplacements().isEmpty()) {
-				for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
-					UMLOperation removedOperation = removedOperationIterator.next();
 					Set<OperationInvocation> operationInvocations = mapper.getOperation1().getBody().getAllOperationInvocations();
 					boolean removedOperationIsInvoked = false;
 					for(OperationInvocation invocation : operationInvocations) {
@@ -337,11 +337,11 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	
 	public void checkForExtractedOperations() {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
-		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-			if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
+		for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
+			UMLOperation addedOperation = addedOperationIterator.next();
+			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+				if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
 					!mapper.getVariableReplacementsWithMethodInvocation().isEmpty() || !mapper.getMethodInvocationReplacements().isEmpty()) {
-				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
-					UMLOperation addedOperation = addedOperationIterator.next();
 					Set<OperationInvocation> operationInvocations = mapper.getOperation2().getBody().getAllOperationInvocations();
 					boolean addedOperationIsInvoked = false;
 					for(OperationInvocation invocation : operationInvocations) {

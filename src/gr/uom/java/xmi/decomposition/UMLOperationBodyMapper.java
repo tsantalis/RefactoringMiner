@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper> {
 	private UMLOperation operation1;
 	private UMLOperation operation2;
+	private boolean isInitialized = true;
 	private List<AbstractCodeMapping> mappings;
 	private List<StatementObject> nonMappedLeavesT1;
 	private List<StatementObject> nonMappedLeavesT2;
@@ -30,7 +31,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.nonMappedLeavesT2 = new ArrayList<StatementObject>();
 		this.nonMappedInnerNodesT1 = new ArrayList<CompositeStatementObject>();
 		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
-		
+		this.isInitialized = false;
+	}
+
+	private void initialize() {
+		if (this.isInitialized) {
+			return;
+		}
+		this.isInitialized = true;
 		OperationBody body1 = operation1.getBody();
 		OperationBody body2 = operation2.getBody();
 		if(body1 != null && body2 != null) {
@@ -38,16 +46,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			CompositeStatementObject composite2 = body2.getCompositeStatement();
 			List<StatementObject> leaves1 = composite1.getLeaves();
 			List<StatementObject> leaves2 = composite2.getLeaves();
-
+			
 			processLeaves(leaves1, leaves2);
-
+			
 			List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
 			innerNodes1.remove(composite1);
 			List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
 			innerNodes2.remove(composite2);
-
+			
 			processInnerNodes(innerNodes1, innerNodes2);
-
+			
 			nonMappedLeavesT1.addAll(leaves1);
 			nonMappedLeavesT2.addAll(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
@@ -70,7 +78,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<StatementObject> leaves1 = operationBodyMapper.getNonMappedLeavesT1();
 			//adding leaves that were mapped with replacements
 			Set<StatementObject> addedLeaves1 = new LinkedHashSet<StatementObject>();
-			for(AbstractCodeMapping mapping : operationBodyMapper.mappings) {
+			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
 				if(!mapping.getReplacements().isEmpty()) {
 					AbstractCodeFragment fragment = mapping.getFragment1();
 					if(fragment instanceof StatementObject) {
@@ -154,36 +162,41 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public List<AbstractCodeMapping> getMappings() {
+		initialize();
 		return mappings;
 	}
 
 	public List<StatementObject> getNonMappedLeavesT1() {
+		initialize();
 		return nonMappedLeavesT1;
 	}
 
 	public List<StatementObject> getNonMappedLeavesT2() {
+		initialize();
 		return nonMappedLeavesT2;
 	}
 
 	public List<CompositeStatementObject> getNonMappedInnerNodesT1() {
+		initialize();
 		return nonMappedInnerNodesT1;
 	}
 
 	public List<CompositeStatementObject> getNonMappedInnerNodesT2() {
+		initialize();
 		return nonMappedInnerNodesT2;
 	}
 
 	public int nonMappedElementsT1() {
-		return nonMappedLeavesT1.size() + nonMappedInnerNodesT1.size();
+		return getNonMappedLeavesT1().size() + getNonMappedInnerNodesT1().size();
 	}
 
 	public int nonMappedElementsT2() {
-		return nonMappedLeavesT2.size() + nonMappedInnerNodesT2.size();
+		return getNonMappedLeavesT2().size() + getNonMappedInnerNodesT2().size();
 	}
 
 	public int exactMatches() {
 		int count = 0;
-		for(AbstractCodeMapping mapping : mappings) {
+		for(AbstractCodeMapping mapping : getMappings()) {
 			if(mapping.isExact())
 				count++;
 		}
@@ -192,7 +205,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public Set<Replacement> getReplacements() {
 		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
-		for(AbstractCodeMapping mapping : mappings) {
+		for(AbstractCodeMapping mapping : getMappings()) {
 			replacements.addAll(mapping.getReplacements());
 		}
 		return replacements;
@@ -200,7 +213,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public Set<VariableReplacementWithMethodInvocation> getVariableReplacementsWithMethodInvocation() {
 		Set<VariableReplacementWithMethodInvocation> replacements = new LinkedHashSet<VariableReplacementWithMethodInvocation>();
-		for(AbstractCodeMapping mapping : mappings) {
+		for(AbstractCodeMapping mapping : getMappings()) {
 			for(Replacement replacement : mapping.getReplacements()) {
 				if(replacement instanceof VariableReplacementWithMethodInvocation) {
 					replacements.add((VariableReplacementWithMethodInvocation)replacement);
@@ -212,7 +225,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public Set<MethodInvocationReplacement> getMethodInvocationReplacements() {
 		Set<MethodInvocationReplacement> replacements = new LinkedHashSet<MethodInvocationReplacement>();
-		for(AbstractCodeMapping mapping : mappings) {
+		for(AbstractCodeMapping mapping : getMappings()) {
 			for(Replacement replacement : mapping.getReplacements()) {
 				if(replacement instanceof MethodInvocationReplacement) {
 					replacements.add((MethodInvocationReplacement)replacement);
@@ -563,34 +576,34 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 	
 	public boolean isEmpty() {
-		return nonMappedLeavesT1.isEmpty() && nonMappedInnerNodesT1.isEmpty() &&
-				nonMappedLeavesT2.isEmpty() && nonMappedInnerNodesT2.isEmpty();
+		return getNonMappedLeavesT1().isEmpty() && getNonMappedInnerNodesT1().isEmpty() &&
+				getNonMappedLeavesT2().isEmpty() && getNonMappedInnerNodesT2().isEmpty();
 	}
 	
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		if(!isEmpty()) {
-			sb.append("operation ").append(operation1.toString()).append("\n");
-		}
-		if(!nonMappedLeavesT1.isEmpty()) {
-			sb.append("non mapped leaves T1\n");
-			sb.append(nonMappedLeavesT1).append("\n");
-		}
-		if(!nonMappedInnerNodesT1.isEmpty()) {
-			sb.append("non mapped inner nodes T1\n");
-			sb.append(nonMappedInnerNodesT1).append("\n");
-		}
-		
-		if(!nonMappedLeavesT2.isEmpty()) {
-			sb.append("non mapped leaves T2\n");
-			sb.append(nonMappedLeavesT2).append("\n");
-		}
-		if(!nonMappedInnerNodesT2.isEmpty()) {
-			sb.append("non mapped inner nodes T2\n");
-			sb.append(nonMappedInnerNodesT2).append("\n");
-		}
-		return sb.toString();
-	}
+//	public String toString() {
+//		StringBuilder sb = new StringBuilder();
+//		if(!isEmpty()) {
+//			sb.append("operation ").append(operation1.toString()).append("\n");
+//		}
+//		if(!nonMappedLeavesT1.isEmpty()) {
+//			sb.append("non mapped leaves T1\n");
+//			sb.append(nonMappedLeavesT1).append("\n");
+//		}
+//		if(!nonMappedInnerNodesT1.isEmpty()) {
+//			sb.append("non mapped inner nodes T1\n");
+//			sb.append(nonMappedInnerNodesT1).append("\n");
+//		}
+//		
+//		if(!nonMappedLeavesT2.isEmpty()) {
+//			sb.append("non mapped leaves T2\n");
+//			sb.append(nonMappedLeavesT2).append("\n");
+//		}
+//		if(!nonMappedInnerNodesT2.isEmpty()) {
+//			sb.append("non mapped inner nodes T2\n");
+//			sb.append(nonMappedInnerNodesT2).append("\n");
+//		}
+//		return sb.toString();
+//	}
 
 	@Override
 	public int compareTo(UMLOperationBodyMapper operationBodyMapper) {

@@ -770,11 +770,11 @@ public class UMLModelDiff {
 
    public void checkForExtractedAndMovedOperations() {
       List<UMLOperation> addedOperations = getAddedOperationsInCommonClasses();
-      for(UMLOperationBodyMapper mapper : getOperationBodyMappersInCommonClasses()) {
-         if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
-               !mapper.getVariableReplacementsWithMethodInvocation().isEmpty() || !mapper.getMethodInvocationReplacements().isEmpty()) {
-            for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
-               UMLOperation addedOperation = addedOperationIterator.next();
+      for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
+    	  UMLOperation addedOperation = addedOperationIterator.next();
+    	  for(UMLOperationBodyMapper mapper : getOperationBodyMappersInCommonClasses()) {
+    		  if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
+                 !mapper.getVariableReplacementsWithMethodInvocation().isEmpty() || !mapper.getMethodInvocationReplacements().isEmpty()) {
                Set<OperationInvocation> operationInvocations = mapper.getOperation2().getBody().getAllOperationInvocations();
                boolean addedOperationIsInvoked = false;
                for(OperationInvocation invocation : operationInvocations) {

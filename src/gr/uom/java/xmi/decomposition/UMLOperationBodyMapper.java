@@ -272,15 +272,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			TreeSet<CompositeStatementObjectMapping> mappingSet = new TreeSet<CompositeStatementObjectMapping>();
 			for(ListIterator<CompositeStatementObject> innerNodeIterator2 = innerNodes2.listIterator(); innerNodeIterator2.hasNext();) {
 				CompositeStatementObject statement2 = innerNodeIterator2.next();
-				Set<Replacement> replacements = findReplacements(statement1, statement2);
-				
-				String s = statement1.getString();
-				for(Replacement replacement : replacements) {
-					s = s.replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter()));
-				}
+				Set<Replacement> replacements = findReplacementsWithExactMatching(statement1, statement2);
 				
 				double score = compositeChildMatchingScore(statement1, statement2);
-				if(s.equals(statement2.getString()) &&
+				if(replacements != null &&
 						(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
 					CompositeStatementObjectMapping mapping = new CompositeStatementObjectMapping(statement1, statement2, operation1, operation2, score);
 					mapping.addReplacements(replacements);
@@ -390,13 +385,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
 			for(ListIterator<StatementObject> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 				StatementObject leaf2 = leafIterator2.next();
-				Set<Replacement> replacements = findReplacements(leaf1, leaf2);
 				
-				String s = leaf1.getString();
-				for(Replacement replacement : replacements) {
-					s = s.replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter()));
-				}
-				if(s.equals(leaf2.getString())) {
+				Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf2);
+				if (replacements != null) {
 					LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1, operation2);
 					mapping.addReplacements(replacements);
 					mappingSet.add(mapping);
@@ -456,17 +447,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	private Set<Replacement> findReplacements(AbstractCodeFragment leaf1, AbstractCodeFragment leaf2) {
-		Set<String> variables1 = new LinkedHashSet<String>(leaf1.getVariables());
-		Set<String> variables2 = new LinkedHashSet<String>(leaf2.getVariables());
+	private Set<Replacement> findReplacementsWithExactMatching(AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
+		Set<String> variables1 = new LinkedHashSet<String>(statement1.getVariables());
+		Set<String> variables2 = new LinkedHashSet<String>(statement2.getVariables());
 		Set<String> variableIntersection = new LinkedHashSet<String>(variables1);
 		variableIntersection.retainAll(variables2);
 		// remove common variables from the two sets
 		variables1.removeAll(variableIntersection);
 		variables2.removeAll(variableIntersection);
 		
-		Set<String> methodInvocations1 = new LinkedHashSet<String>(leaf1.getMethodInvocationMap().keySet());
-		Set<String> methodInvocations2 = new LinkedHashSet<String>(leaf2.getMethodInvocationMap().keySet());
+		Set<String> methodInvocations1 = new LinkedHashSet<String>(statement1.getMethodInvocationMap().keySet());
+		Set<String> methodInvocations2 = new LinkedHashSet<String>(statement2.getMethodInvocationMap().keySet());
 		Set<String> methodInvocationIntersection = new LinkedHashSet<String>(methodInvocations1);
 		methodInvocationIntersection.retainAll(methodInvocations2);
 		// remove common methodInvocations from the two sets
@@ -474,49 +465,68 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		methodInvocations2.removeAll(methodInvocationIntersection);
 		
 		Set<String> variablesAndMethodInvocations1 = new LinkedHashSet<String>();
-		variablesAndMethodInvocations1.addAll(variables1);
 		variablesAndMethodInvocations1.addAll(methodInvocations1);
+		variablesAndMethodInvocations1.addAll(variables1);
 		
 		Set<String> variablesAndMethodInvocations2 = new LinkedHashSet<String>();
-		variablesAndMethodInvocations2.addAll(variables2);
 		variablesAndMethodInvocations2.addAll(methodInvocations2);
+		variablesAndMethodInvocations2.addAll(variables2);
 		
-		double initialDistance = (double)StringDistance.editDistance(leaf1.getString(), leaf2.getString())/(double)Math.max(leaf1.getString().length(), leaf2.getString().length());
+		int initialDistanceRaw = StringDistance.editDistance(statement1.getString(), statement2.getString());
+		//double initialDistance = (double)StringDistance.editDistance(statement1.getString(), statement2.getString())/(double)Math.max(statement1.getString().length(), statement2.getString().length());
 		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
-		for(String s1 : variablesAndMethodInvocations1) {
-			TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
-			String original = leaf1.getString();
-			for(String s2 : variablesAndMethodInvocations2) {
-				String temp = original.replaceAll(Pattern.quote(s1), Matcher.quoteReplacement(s2));
-				double distance = (double)StringDistance.editDistance(temp, leaf2.getString())/(double)Math.max(temp.length(), leaf2.getString().length());
-				if(distance < initialDistance) {
-					Replacement replacement = null;
-					if(variables1.contains(s1) && variables2.contains(s2)) {
-						replacement = new VariableRename(s1, s2);
-					}
-					else if(variables1.contains(s1) && methodInvocations2.contains(s2)) {
-						replacement = new VariableReplacementWithMethodInvocation(s1, s2, leaf2.getMethodInvocationMap().get(s2));
-					}
-					else if(methodInvocations1.contains(s1) && methodInvocations2.contains(s2)) {
-						double methodInvocationDistance = (double)StringDistance.editDistance(s1, s2)/(double)Math.max(s1.length(), s2.length());
-						if(methodInvocationDistance < 0.4)
-							replacement = new MethodInvocationReplacement(s1, s2, leaf1.getMethodInvocationMap().get(s1), leaf2.getMethodInvocationMap().get(s2));
-					}
-					if(replacement != null) {
-						replacementMap.put(distance, replacement);
-					}
-					if(distance == 0) {
-						break;
+		if (initialDistanceRaw > 0) {
+			for(String s11 : variablesAndMethodInvocations1) {
+				TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
+				String original = statement1.getString();
+				int minDistance = initialDistanceRaw;
+				for(String s21 : variablesAndMethodInvocations2) {
+					String temp = original.replaceAll(Pattern.quote(s11), Matcher.quoteReplacement(s21));
+					int distanceRaw = StringDistance.editDistance(temp, statement2.getString(), minDistance);
+					//double distance = (double)StringDistance.editDistance(temp, statement2.getString())/(double)Math.max(temp.length(), statement2.getString().length());
+					if(distanceRaw >= 0 && distanceRaw < initialDistanceRaw) {
+						minDistance = distanceRaw;
+						Replacement replacement1 = null;
+						if(variables1.contains(s11) && variables2.contains(s21)) {
+							replacement1 = new VariableRename(s11, s21);
+						}
+						else if(variables1.contains(s11) && methodInvocations2.contains(s21)) {
+							replacement1 = new VariableReplacementWithMethodInvocation(s11, s21, statement2.getMethodInvocationMap().get(s21));
+						}
+						else if(methodInvocations1.contains(s11) && methodInvocations2.contains(s21)) {
+							double threshold = (double)Math.max(s11.length(), s21.length()) * 0.4;
+							int methodInvocationDistanceRaw = StringDistance.editDistance(s11, s21, (int)Math.ceil(threshold));
+							//double methodInvocationDistance = (double)StringDistance.editDistance(s11, s21)/(double)Math.max(s11.length(), s21.length());
+							if(methodInvocationDistanceRaw >= 0 && methodInvocationDistanceRaw < threshold)
+								replacement1 = new MethodInvocationReplacement(s11, s21, statement1.getMethodInvocationMap().get(s11), statement2.getMethodInvocationMap().get(s21));
+						}
+						if(replacement1 != null) {
+							double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), statement2.getString().length());
+							replacementMap.put(distancenormalized, replacement1);
+						}
+						if(distanceRaw == 0) {
+							break;
+						}
 					}
 				}
-			}
-			if(!replacementMap.isEmpty()) {
-				replacements.add(replacementMap.firstEntry().getValue());
+				if(!replacementMap.isEmpty()) {
+					replacements.add(replacementMap.firstEntry().getValue());
+				}
 			}
 		}
-		return replacements;
+		
+		String s1 = statement1.getString();
+		String s2 = statement2.getString();
+		for(Replacement replacement : replacements) {
+			s1 = s1.replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter()));
+		}
+		boolean isEqualWithReplacement = s1.equals(s2);
+		if(isEqualWithReplacement) {
+			return replacements;
+		}
+		return null;
 	}
-	
+
 	private double compositeChildMatchingScore(CompositeStatementObject composite1, CompositeStatementObject composite2) {
 		int childrenSize1 = composite1.getStatements().size();
 		int childrenSize2 = composite2.getStatements().size();

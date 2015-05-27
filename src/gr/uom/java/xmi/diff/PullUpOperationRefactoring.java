@@ -8,8 +8,8 @@ public class PullUpOperationRefactoring extends MoveOperationRefactoring {
 		super(originalOperation, movedOperation);
 	}
 
-	@Override
-	public String getName() {
-		return "Pull Up Operation";
+	public RefactoringType getRefactoringType() {
+		return RefactoringType.PULL_UP_OPERATION;
 	}
+	
 }

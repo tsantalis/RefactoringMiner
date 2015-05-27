@@ -32,8 +32,12 @@ public class ExtractOperationRefactoring implements Refactoring {
 		return extractedFromOperation;
 	}
 
-	@Override
 	public String getName() {
-		return "Extract Operation";
+		return this.getRefactoringType().getDisplayName();
 	}
+
+	public RefactoringType getRefactoringType() {
+		return RefactoringType.EXTRACT_OPERATION;
+	}
+	
 }

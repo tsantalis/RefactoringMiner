@@ -17,7 +17,7 @@ from projectgit p
   left join revisiongit rev on rev.project = p.id and rev.commitTime between w.start and date_add(w.start, interval 7 day)
   left join refactoringgit ref on ref.revision = rev.id
 where p.analyzed = 1 and p.running_pid not in ('filtered') and ratio > 0.8
-and (ref.refactoringType is null or ref.refactoringType not in ('Merge Operation', 'Extract & Move Operation', 'Extract Interface', 'Extract Superclass', 'Convert Anonymous Class to Type'))
+and (ref.refactoringType is null or ref.refactoringType not in ('Merge Method', 'Extract And Move Method', 'Extract Interface', 'Extract Superclass', 'Convert Anonymous Class to Type'))
 and p.cloneUrl = '", cloneUrl, "'
 and w.start between '2013-01-01' and '2015-01-01'
 group by p.id, p.cloneUrl, w.start

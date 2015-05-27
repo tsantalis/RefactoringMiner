@@ -25,9 +25,11 @@ public class InlineOperationRefactoring implements Refactoring {
 		return sb.toString();
 	}
 
-	@Override
 	public String getName() {
-		return "Inline Operation";
+		return this.getRefactoringType().getDisplayName();
 	}
 
+	public RefactoringType getRefactoringType() {
+		return RefactoringType.INLINE_OPERATION;
+	}
 }

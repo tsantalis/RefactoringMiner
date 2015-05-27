@@ -20,8 +20,7 @@ public class PullUpAttributeRefactoring extends MoveAttributeRefactoring {
 		return sb.toString();
 	}
 
-	@Override
-	public String getName() {
-		return "Pull Up Attribute";
+	public RefactoringType getRefactoringType() {
+		return RefactoringType.PULL_UP_ATTRIBUTE;
 	}
 }

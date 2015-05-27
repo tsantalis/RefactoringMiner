@@ -3,13 +3,16 @@ package br.ufmg.dcc.labsoft.refactoringanalyzer;
 import gr.uom.java.xmi.UMLModelASTReader;
 import gr.uom.java.xmi.UMLModelSet;
 import gr.uom.java.xmi.diff.Refactoring;
+import gr.uom.java.xmi.diff.RefactoringType;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
@@ -30,15 +33,38 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 
 	Logger logger = LoggerFactory.getLogger(RefactoringDetectorImpl.class);
 	private boolean analyzeMethodInvocations;
+	private Set<RefactoringType> refactoringTypesToConsider = null;
 	
 	public RefactoringDetectorImpl() {
 		this(false);
 	}
 
-	public RefactoringDetectorImpl(boolean analyzeMethodInvocations) {
+	private RefactoringDetectorImpl(boolean analyzeMethodInvocations) {
 		this.analyzeMethodInvocations = analyzeMethodInvocations;
+		this.setRefactoringTypesToConsider(
+			RefactoringType.RENAME_CLASS,
+			RefactoringType.MOVE_CLASS,
+			RefactoringType.RENAME_METHOD,
+			RefactoringType.EXTRACT_OPERATION,
+			RefactoringType.INLINE_OPERATION,
+			RefactoringType.MOVE_OPERATION,
+			RefactoringType.PULL_UP_OPERATION,
+			RefactoringType.PUSH_DOWN_OPERATION,
+			RefactoringType.MOVE_ATTRIBUTE,
+			RefactoringType.PULL_UP_ATTRIBUTE,
+			RefactoringType.PUSH_DOWN_ATTRIBUTE,
+			RefactoringType.EXTRACT_INTERFACE,
+			RefactoringType.EXTRACT_SUPERCLASS
+		);
 	}
 
+	public void setRefactoringTypesToConsider(RefactoringType ... types) {
+		this.refactoringTypesToConsider = new HashSet<RefactoringType>();
+		for (RefactoringType type : types) {
+			this.refactoringTypesToConsider.add(type);
+		}
+	}
+	
 	private void detect(GitService gitService, Repository repository, final RefactoringHandler handler, Iterator<RevCommit> i) {
 		int commitsCount = 0;
 		int errorCommitsCount = 0;
@@ -93,6 +119,14 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 			
 			// Diff between currentModel e parentModel
 			refactoringsAtRevision = parentUMLModel.detectRefactorings(currentUMLModel);
+			if (this.refactoringTypesToConsider != null) {
+				List<Refactoring> filteredList = new ArrayList<Refactoring>();
+				for (Refactoring ref : refactoringsAtRevision) {
+					if (this.refactoringTypesToConsider.contains(ref.getRefactoringType())) {
+						filteredList.add(ref);
+					}
+				}
+			}
 			
 		} else {
 			//logger.info(String.format("Ignored revision %s with no changes in java files", commitId));

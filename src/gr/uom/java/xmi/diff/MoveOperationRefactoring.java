@@ -24,8 +24,12 @@ public class MoveOperationRefactoring implements Refactoring {
 		return sb.toString();
 	}
 
-	@Override
 	public String getName() {
-		return "Move Operation";
+		return this.getRefactoringType().getDisplayName();
 	}
+
+	public RefactoringType getRefactoringType() {
+		return RefactoringType.MOVE_OPERATION;
+	}
+	
 }

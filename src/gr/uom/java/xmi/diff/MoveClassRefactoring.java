@@ -18,8 +18,11 @@ public class MoveClassRefactoring implements Refactoring {
 		return sb.toString();
 	}
 
-	@Override
 	public String getName() {
-		return "Move Class";
+		return this.getRefactoringType().getDisplayName();
+	}
+
+	public RefactoringType getRefactoringType() {
+		return RefactoringType.MOVE_CLASS;
 	}
 }

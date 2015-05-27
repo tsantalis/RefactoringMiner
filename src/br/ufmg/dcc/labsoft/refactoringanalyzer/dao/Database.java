@@ -1,6 +1,7 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer.dao;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -136,15 +137,13 @@ public class Database {
 		}
 	}
 	
-	public ProjectGit findProjectToMonitorAndLock(String pid) {
+	public ProjectGit findProjectToMonitorAndLock(String pid, Date beforeDate) {
 		ProjectGit project = null;
 		em.getTransaction().begin();
 		try {
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DAY_OF_MONTH, -1);
 			@SuppressWarnings("unchecked")
 			List<ProjectGit> projects = em.createNamedQuery("projectGit.findToMonitor")
-					.setParameter("date", cal.getTime())
+					.setParameter("date", beforeDate)
 					.setMaxResults(1)
 					.getResultList();
 			if (projects.size() > 0) {

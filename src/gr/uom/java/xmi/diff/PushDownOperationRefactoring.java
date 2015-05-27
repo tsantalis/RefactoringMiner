@@ -9,8 +9,7 @@ public class PushDownOperationRefactoring extends MoveOperationRefactoring {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public String getName() {
-		return "Push Down Operation";
+	public RefactoringType getRefactoringType() {
+		return RefactoringType.PUSH_DOWN_OPERATION;
 	}
 }

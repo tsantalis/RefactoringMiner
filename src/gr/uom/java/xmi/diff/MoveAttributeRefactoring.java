@@ -25,8 +25,12 @@ public class MoveAttributeRefactoring implements Refactoring {
 		return sb.toString();
 	}
 
-	@Override
 	public String getName() {
-		return "Move Attribute";
+		return this.getRefactoringType().getDisplayName();
 	}
+
+	public RefactoringType getRefactoringType() {
+		return RefactoringType.MOVE_ATTRIBUTE;
+	}
+
 }

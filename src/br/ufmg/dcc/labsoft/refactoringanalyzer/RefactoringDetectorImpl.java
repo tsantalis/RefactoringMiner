@@ -126,6 +126,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 						filteredList.add(ref);
 					}
 				}
+				refactoringsAtRevision = filteredList;
 			}
 			
 		} else {

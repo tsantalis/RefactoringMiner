@@ -27,11 +27,6 @@ public class SurveyMail extends AbstractEntity {
 	@Index(name="index_surveymail_revision")
 	private RevisionGit revision;
 	
-	@ManyToOne
-	@JoinColumn(name = "refactoring")
-	@Index(name="index_surveymail_refactoring")
-	private RefactoringGit refactoring;
-	
 	@Override
 	public Long getId() {
 		return id;
@@ -74,12 +69,4 @@ public class SurveyMail extends AbstractEntity {
 		this.revision = revision;
 	}
 
-	public RefactoringGit getRefactoring() {
-		return refactoring;
-	}
-
-	public void setRefactoring(RefactoringGit refactoring) {
-		this.refactoring = refactoring;
-	}
-	
 }

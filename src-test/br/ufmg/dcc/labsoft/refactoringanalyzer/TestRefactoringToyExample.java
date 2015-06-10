@@ -92,6 +92,12 @@ public class TestRefactoringToyExample {
 			    "Move Class	org.animals.Duck moved to org.birds.Duck")
 			.atCommit("0bb0526b70870d57cbac9fcc8c4a7346a4ce5879").containsOnly(
 				"Rename Method public bark() : void renamed to public barkBark() : void in class org.animals.Dog")
+				
+			// More refactorings
+			.atCommit("9a5c33b16d07d62651ea80552e8782974c96bb8a").containsOnly(
+				"Move Attribute public magicNumber : int from class org.DogManager to class org.animals.Dog")
+			.atCommit("d4bce13a443cf12da40a77c16c1e591f4f985b47").containsOnly(
+				"Move Method barkBark from Dog to DogManager")
 		;
 		test.assertExpectations();
 	}

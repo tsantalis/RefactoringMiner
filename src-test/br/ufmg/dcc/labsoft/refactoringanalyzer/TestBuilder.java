@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.Assert;
@@ -45,9 +44,8 @@ public class TestBuilder {
 			if (m.ignoreNonSpecifiedCommits) {
 				Repository rep = gitService.cloneIfNotExists(folder, m.cloneUrl/*, m.branch*/);
 				// It is faster to only look at particular commits
-				ASTParser parser = refactoringDetector.buildAstParser(rep);
 				for (String commitId : m.getCommits()) {
-					refactoringDetector.detectOne(parser, rep, commitId, null, m);
+					refactoringDetector.detectOne(rep, commitId, null, m);
 				}
 			} else {
 				Repository rep = gitService.cloneIfNotExists(folder, m.cloneUrl/*, m.branch*/);

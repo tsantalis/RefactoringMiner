@@ -6,12 +6,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
@@ -38,6 +41,10 @@ public class UMLModelASTReader {
 	private String projectRoot;
 	private ASTParser parser;
 
+	public UMLModelASTReader(File rootFolder, List<String> javaFiles2) {
+		this(rootFolder, buildAstParser(rootFolder), javaFiles2);
+	}
+
 	public UMLModelASTReader(File rootFolder, ASTParser parser, List<String> javaFiles) {
 		this.umlModelSet = new UMLModelSet();
 		this.projectRoot = rootFolder.getPath();
@@ -56,6 +63,17 @@ public class UMLModelASTReader {
 			}
 		};
 		this.parser.createASTs((String[]) filesArray, null, emptyArray, fileASTRequestor, null);
+	}
+
+	private static ASTParser buildAstParser(File srcFolder) {
+		ASTParser parser = ASTParser.newParser(AST.JLS4);
+		parser.setKind(ASTParser.K_COMPILATION_UNIT);
+		Map options = JavaCore.getOptions();
+		JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
+		parser.setCompilerOptions(options);
+		parser.setResolveBindings(false);
+		parser.setEnvironment(new String[0], new String[]{srcFolder.getPath()}, null, false);
+		return parser;
 	}
 
 	public UMLModel getUmlModel(String packageRoot) {

@@ -11,12 +11,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
@@ -73,13 +69,12 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		File metadataFolder = repository.getDirectory();
 		File projectFolder = metadataFolder.getParentFile();
 		String projectName = projectFolder.getName();
-		ASTParser parser = buildAstParser(projectFolder, analyzeMethodInvocations);
 		
 		long time = System.currentTimeMillis();
 		while (i.hasNext()) {
 			RevCommit currentCommit = i.next();
 			try {
-				List<Refactoring> refactoringsAtRevision = detectRefactorings(gitService, repository, handler, projectFolder, parser, currentCommit);
+				List<Refactoring> refactoringsAtRevision = detectRefactorings(gitService, repository, handler, projectFolder, currentCommit);
 				refactoringsCount += refactoringsAtRevision.size();
 				
 			} catch (Exception e) {
@@ -99,7 +94,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		logger.info(String.format("Analyzed %s [Commits: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, errorCommitsCount, refactoringsCount));
 	}
 
-	private List<Refactoring> detectRefactorings(GitService gitService, Repository repository, final RefactoringHandler handler, File projectFolder, ASTParser parser, RevCommit currentCommit) throws Exception {
+	private List<Refactoring> detectRefactorings(GitService gitService, Repository repository, final RefactoringHandler handler, File projectFolder, RevCommit currentCommit) throws Exception {
 		List<Refactoring> refactoringsAtRevision;
 		String commitId = currentCommit.getId().getName();
 		List<String> filesBefore = new ArrayList<String>();
@@ -110,12 +105,12 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		if (!filesBefore.isEmpty() && !filesCurrent.isEmpty()) {
 			// Checkout and build model for current commit
 			gitService.checkout(repository, commitId);
-			UMLModelSet currentUMLModel = createModel(projectFolder, parser, filesCurrent);
+			UMLModelSet currentUMLModel = createModel(projectFolder, filesCurrent);
 			
 			// Checkout and build model for parent commit
 			String parentCommit = currentCommit.getParent(0).getName();
 			gitService.checkout(repository, parentCommit);
-			UMLModelSet parentUMLModel = createModel(projectFolder, parser, filesBefore);
+			UMLModelSet parentUMLModel = createModel(projectFolder, filesBefore);
 			
 			// Diff between currentModel e parentModel
 			refactoringsAtRevision = parentUMLModel.detectRefactorings(currentUMLModel);
@@ -207,11 +202,11 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		}
 	}
 
-	private UMLModelSet createModel(File projectFolder, ASTParser parser, List<String> files) throws Exception {
-		return new UMLModelASTReader(projectFolder, parser, files).getUmlModelSet();
+	private UMLModelSet createModel(File projectFolder, List<String> files) throws Exception {
+		return new UMLModelASTReader(projectFolder, files).getUmlModelSet();
 	}
 
-	public void detectOne(ASTParser parser, Repository repository, String commitId, String parentCommitId, RefactoringHandler handler) {
+	public void detectOne(Repository repository, String commitId, String parentCommitId, RefactoringHandler handler) {
 		File metadataFolder = repository.getDirectory();
 		File projectFolder = metadataFolder.getParentFile();
 		GitService gitService = new GitServiceImpl();
@@ -219,34 +214,11 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		try {
 			RevCommit commit = walk.parseCommit(repository.resolve(commitId));
 			walk.parseCommit(commit.getParent(0));
-			this.detectRefactorings(gitService, repository, handler, projectFolder, parser, commit);
+			this.detectRefactorings(gitService, repository, handler, projectFolder, commit);
 		} catch (Exception e) {
 			logger.warn(String.format("Ignored revision %s due to error", commitId), e);
 		} finally {
 			walk.dispose();
 		}
-	}
-
-	public ASTParser buildAstParser(Repository repository) {
-		File metadataFolder = repository.getDirectory();
-		File projectFolder = metadataFolder.getParentFile();
-		return this.buildAstParser(projectFolder, analyzeMethodInvocations);
-	}
-
-	public static ASTParser buildAstParser(File srcFolder, boolean resolveBindings) {
-		ASTParser parser = ASTParser.newParser(AST.JLS4);
-		parser.setKind(ASTParser.K_COMPILATION_UNIT);
-		Map options = JavaCore.getOptions();
-		JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
-		parser.setCompilerOptions(options);
-		if (resolveBindings) {
-			parser.setResolveBindings(true);
-			parser.setBindingsRecovery(true);
-			parser.setEnvironment(new String[0], new String[]{srcFolder.getPath()}, null, true);
-		} else {
-			parser.setResolveBindings(false);
-			parser.setEnvironment(new String[0], new String[]{srcFolder.getPath()}, null, false);
-		}
-		return parser;
 	}
 }

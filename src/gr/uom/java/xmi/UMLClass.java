@@ -13,6 +13,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
 	private String packageName;
     private String name;
     private String qualifiedName;
+    private String sourceFile;
     private String xmiID;
     private String visibility;
 	private boolean isAbstract;
@@ -22,12 +23,18 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     private UMLType superclass;
 
     public UMLClass(String packageName, String name, String xmiID) {
+    	this(packageName, name, xmiID, packageName.replace('.', '/') + '/' + name + ".java");
+    }
+    
+    public UMLClass(String packageName, String name, String xmiID, String sourceFile) {
     	this.packageName = packageName;
         this.name = name;
         if(packageName.equals(""))
         	this.qualifiedName = name;
     	else
     		this.qualifiedName = packageName + "." + name;
+        
+        this.sourceFile = sourceFile;
         this.xmiID = xmiID;
         this.isAbstract = false;
         this.isInterface = false;
@@ -339,7 +346,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     	
     	if(o instanceof UMLClass) {
     		UMLClass umlClass = (UMLClass)o;
-    		return this.packageName.equals(umlClass.packageName) && this.name.equals(umlClass.name);
+    		return this.packageName.equals(umlClass.packageName) && this.name.equals(umlClass.name) && this.sourceFile.equals(umlClass.sourceFile);
     	}
     	return false;
     }

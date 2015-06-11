@@ -1,7 +1,7 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer;
 
+import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLModelASTReader;
-import gr.uom.java.xmi.UMLModelSet;
 import gr.uom.java.xmi.diff.Refactoring;
 import gr.uom.java.xmi.diff.RefactoringType;
 
@@ -105,15 +105,15 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		if (!filesBefore.isEmpty() && !filesCurrent.isEmpty()) {
 			// Checkout and build model for current commit
 			gitService.checkout(repository, commitId);
-			UMLModelSet currentUMLModel = createModel(projectFolder, filesCurrent);
+			UMLModel currentUMLModel = createModel(projectFolder, filesCurrent);
 			
 			// Checkout and build model for parent commit
 			String parentCommit = currentCommit.getParent(0).getName();
 			gitService.checkout(repository, parentCommit);
-			UMLModelSet parentUMLModel = createModel(projectFolder, filesBefore);
+			UMLModel parentUMLModel = createModel(projectFolder, filesBefore);
 			
 			// Diff between currentModel e parentModel
-			refactoringsAtRevision = parentUMLModel.detectRefactorings(currentUMLModel);
+			refactoringsAtRevision = parentUMLModel.diff(currentUMLModel).getRefactorings();
 			if (this.refactoringTypesToConsider != null) {
 				List<Refactoring> filteredList = new ArrayList<Refactoring>();
 				for (Refactoring ref : refactoringsAtRevision) {
@@ -202,8 +202,8 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		}
 	}
 
-	private UMLModelSet createModel(File projectFolder, List<String> files) throws Exception {
-		return new UMLModelASTReader(projectFolder, files).getUmlModelSet();
+	private UMLModel createModel(File projectFolder, List<String> files) throws Exception {
+		return new UMLModelASTReader(projectFolder, files).getUmlModel();
 	}
 
 	public void detectOne(Repository repository, String commitId, String parentCommitId, RefactoringHandler handler) {

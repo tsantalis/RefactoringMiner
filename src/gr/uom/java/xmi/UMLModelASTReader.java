@@ -37,7 +37,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 public class UMLModelASTReader {
 	private static final String systemNewLine = Matcher.quoteReplacement(File.separator);
 	
-	private UMLModelSet umlModelSet;
+	private UMLModel umlModel;
 	private String projectRoot;
 	private ASTParser parser;
 
@@ -46,7 +46,7 @@ public class UMLModelASTReader {
 	}
 
 	public UMLModelASTReader(File rootFolder, ASTParser parser, List<String> javaFiles) {
-		this.umlModelSet = new UMLModelSet();
+		this.umlModel = new UMLModel();
 		this.projectRoot = rootFolder.getPath();
 		this.parser = parser;
 		final String[] emptyArray = new String[0];
@@ -76,12 +76,8 @@ public class UMLModelASTReader {
 		return parser;
 	}
 
-	public UMLModel getUmlModel(String packageRoot) {
-		return umlModelSet.get(packageRoot);
-	}
-
-	public UMLModelSet getUmlModelSet() {
-		return umlModelSet;
+	public UMLModel getUmlModel() {
+		return this.umlModel;
 	}
 
 	protected void processCompilationUnit(String sourceFilePath, CompilationUnit compilationUnit) {
@@ -92,29 +88,29 @@ public class UMLModelASTReader {
 		else
 			packageName = "";
 		
-		String packageRoot = getPackageRoot(sourceFilePath, packageName);
+//		String packageRoot = getPackageRoot(sourceFilePath, packageName);
 		
 		List<AbstractTypeDeclaration> topLevelTypeDeclarations = compilationUnit.types();
         for(AbstractTypeDeclaration abstractTypeDeclaration : topLevelTypeDeclarations) {
         	if(abstractTypeDeclaration instanceof TypeDeclaration) {
         		TypeDeclaration topLevelTypeDeclaration = (TypeDeclaration)abstractTypeDeclaration;
-        		processTypeDeclaration(topLevelTypeDeclaration, packageName, packageRoot);
+        		processTypeDeclaration(topLevelTypeDeclaration, packageName, sourceFilePath);
         	}
         }
 	}
 
-	private String getPackageRoot(String sourceFilePath, String packageName) {
-		String packagePath = packageName.replace('.', File.separator.charAt(0));
-		String packageRoot = "";
-		int indexOfPackagePath = sourceFilePath.lastIndexOf(packagePath + File.separator);
-		if (indexOfPackagePath > 0) {
-			packageRoot = sourceFilePath.substring(0, indexOfPackagePath);
-		}
-		if (packageRoot.startsWith(this.projectRoot)) {
-			packageRoot = packageRoot.substring(this.projectRoot.length());
-		}
-		return packageRoot.replace(File.separator.charAt(0), '/');
-	}
+//	private String getPackageRoot(String sourceFilePath, String packageName) {
+//		String packagePath = packageName.replace('.', File.separator.charAt(0));
+//		String packageRoot = "";
+//		int indexOfPackagePath = sourceFilePath.lastIndexOf(packagePath + File.separator);
+//		if (indexOfPackagePath > 0) {
+//			packageRoot = sourceFilePath.substring(0, indexOfPackagePath);
+//		}
+//		if (packageRoot.startsWith(this.projectRoot)) {
+//			packageRoot = packageRoot.substring(this.projectRoot.length());
+//		}
+//		return packageRoot.replace(File.separator.charAt(0), '/');
+//	}
 
 	private String getTypeName(Type type) {
 		ITypeBinding binding = type.resolveBinding();
@@ -126,9 +122,9 @@ public class UMLModelASTReader {
 	
 	/////////////////
 
-	private void processTypeDeclaration(TypeDeclaration typeDeclaration, String packageName, String packageRoot) {
+	private void processTypeDeclaration(TypeDeclaration typeDeclaration, String packageName, String sourceFile) {
 		String className = typeDeclaration.getName().getFullyQualifiedName();
-		UMLClass umlClass = new UMLClass(packageName, className, null);
+		UMLClass umlClass = new UMLClass(packageName, className, null, sourceFile);
 		//UMLClass bytecodeClass = bytecodeModel.getClass(umlClass.getName());
 		
 		if(typeDeclaration.isInterface()) {
@@ -160,7 +156,7 @@ public class UMLModelASTReader {
     		if(bytecodeClass != null) {
     			umlClass.setSuperclass(bytecodeClass.getSuperclass());
     		}*/
-    		getUmlModel(packageRoot).addGeneralization(umlGeneralization);
+    		getUmlModel().addGeneralization(umlGeneralization);
     	}
     	
     	List<Type> superInterfaceTypes = typeDeclaration.superInterfaceTypes();
@@ -170,7 +166,7 @@ public class UMLModelASTReader {
     		if(bytecodeRealization != null) {
     			umlRealization.setSupplier(bytecodeRealization.getSupplier());
     		}*/
-    		getUmlModel(packageRoot).addRealization(umlRealization);
+    		getUmlModel().addRealization(umlRealization);
     	}
     	
     	FieldDeclaration[] fieldDeclarations = typeDeclaration.getFields();
@@ -184,7 +180,7 @@ public class UMLModelASTReader {
     	
     	MethodDeclaration[] methodDeclarations = typeDeclaration.getMethods();
     	for(MethodDeclaration methodDeclaration : methodDeclarations) {
-    		UMLOperation operation = processMethodDeclaration(methodDeclaration, packageName, className/*, bytecodeClass*/, packageRoot);
+    		UMLOperation operation = processMethodDeclaration(methodDeclaration, packageName, className/*, bytecodeClass*/);
     		operation.setClassName(umlClass.getName());
     		umlClass.addOperation(operation);
     	}
@@ -204,19 +200,19 @@ public class UMLModelASTReader {
     		if(node.getUserObject() != null) {
     			AnonymousClassDeclaration anonymous = (AnonymousClassDeclaration)node.getUserObject();
     			String anonymousName = getAnonymousName(node);
-    			processAnonymousClassDeclaration(anonymous, packageName + "." + className, anonymousName, packageRoot);
+    			processAnonymousClassDeclaration(anonymous, packageName + "." + className, anonymousName, sourceFile);
     		}
     	}
     	
-    	this.getUmlModel(packageRoot).addClass(umlClass);
+    	this.getUmlModel().addClass(umlClass);
 		
 		TypeDeclaration[] types = typeDeclaration.getTypes();
 		for(TypeDeclaration type : types) {
-			processTypeDeclaration(type, packageName + "." + className, packageRoot);
+			processTypeDeclaration(type, packageName + "." + className, sourceFile);
 		}
 	}
 
-	private UMLOperation processMethodDeclaration(MethodDeclaration methodDeclaration, String packageName, String className/*, UMLClass bytecodeClass*/, String packageRoot) {
+	private UMLOperation processMethodDeclaration(MethodDeclaration methodDeclaration, String packageName, String className/*, UMLClass bytecodeClass*/) {
 		String methodName = methodDeclaration.getName().getFullyQualifiedName();
 		final IMethodBinding binding = methodDeclaration.resolveBinding();
 		UMLOperation umlOperation;
@@ -329,10 +325,10 @@ public class UMLModelASTReader {
 		return attributes;
 	}
 	
-	private void processAnonymousClassDeclaration(AnonymousClassDeclaration anonymous, String packageName, String className, String packageRoot) {
+	private void processAnonymousClassDeclaration(AnonymousClassDeclaration anonymous, String packageName, String className, String sourceFile) {
 		List<BodyDeclaration> bodyDeclarations = anonymous.bodyDeclarations();
 		
-		UMLAnonymousClass anonymousClass = new UMLAnonymousClass(packageName, className);
+		UMLAnonymousClass anonymousClass = new UMLAnonymousClass(packageName, className, sourceFile);
 		//UMLClass bytecodeClass = bytecodeModel.getClass(anonymousClass.getName());
 		
 		for(BodyDeclaration bodyDeclaration : bodyDeclarations) {
@@ -346,13 +342,13 @@ public class UMLModelASTReader {
 			}
 			else if(bodyDeclaration instanceof MethodDeclaration) {
 				MethodDeclaration methodDeclaration = (MethodDeclaration)bodyDeclaration;
-				UMLOperation operation = processMethodDeclaration(methodDeclaration, packageName, className/*, bytecodeClass*/, packageRoot);
+				UMLOperation operation = processMethodDeclaration(methodDeclaration, packageName, className/*, bytecodeClass*/);
 				operation.setClassName(anonymousClass.getName());
 				anonymousClass.addOperation(operation);
 			}
 		}
 		
-		this.getUmlModel(packageRoot).addAnonymousClass(anonymousClass);
+		this.getUmlModel().addAnonymousClass(anonymousClass);
 	}
 	
 	private void insertNode(AnonymousClassDeclaration childAnonymous, DefaultMutableTreeNode root) {

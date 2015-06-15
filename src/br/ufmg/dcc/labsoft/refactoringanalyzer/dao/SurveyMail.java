@@ -16,6 +16,9 @@ public class SurveyMail extends AbstractEntity {
 
 	@Index(name="index_surveymail_recipient")
 	private String recipient;
+	
+	@Index(name="index_surveymail_alternative")
+	private String alternativeAddress;
 
 	private Date sentDate;
 	
@@ -67,6 +70,14 @@ public class SurveyMail extends AbstractEntity {
 
 	public void setRevision(RevisionGit revision) {
 		this.revision = revision;
+	}
+
+	public String getAlternativeAddress() {
+		return alternativeAddress;
+	}
+
+	public void setAlternativeAddress(String alternativeAddress) {
+		this.alternativeAddress = alternativeAddress;
 	}
 
 }

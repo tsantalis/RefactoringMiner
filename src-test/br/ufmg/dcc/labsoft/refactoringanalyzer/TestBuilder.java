@@ -16,7 +16,7 @@ import org.junit.Assert;
 
 public class TestBuilder {
 
-	private static final String TMP_DIR = "tmp";
+	private static final String TMP_DIR = "C:/tmp";
 	
 	private Map<String, ProjectMatcher> map = new HashMap<String, ProjectMatcher>();
 	

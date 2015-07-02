@@ -47,7 +47,11 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     	return this.qualifiedName;
     }
 
-    //returns true if the "innerClass" parameter is inner class of this
+    public String getSourceFile() {
+		return sourceFile;
+	}
+
+	//returns true if the "innerClass" parameter is inner class of this
     public boolean isInnerClass(UMLClass innerClass) {
     	if(this.getName().equals(innerClass.packageName))
     		return true;

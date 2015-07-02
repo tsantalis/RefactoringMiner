@@ -40,6 +40,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		this.setRefactoringTypesToConsider(
 			RefactoringType.RENAME_CLASS,
 			RefactoringType.MOVE_CLASS,
+			RefactoringType.MOVE_CLASS_FOLDER,
 			RefactoringType.RENAME_METHOD,
 			RefactoringType.EXTRACT_OPERATION,
 			RefactoringType.INLINE_OPERATION,

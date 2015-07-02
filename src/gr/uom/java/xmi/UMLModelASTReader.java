@@ -35,7 +35,7 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
 public class UMLModelASTReader {
-	private static final String systemNewLine = Matcher.quoteReplacement(File.separator);
+	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
 	
 	private UMLModel umlModel;
 	private String projectRoot;
@@ -53,13 +53,14 @@ public class UMLModelASTReader {
 		
 		String[] filesArray = new String[javaFiles.size()];
 		for (int i = 0; i < filesArray.length; i++) {
-			filesArray[i] = rootFolder + File.separator + javaFiles.get(i).replaceAll("/", systemNewLine);
+			filesArray[i] = rootFolder + File.separator + javaFiles.get(i).replaceAll("/", systemFileSeparator);
 		}
 
 		FileASTRequestor fileASTRequestor = new FileASTRequestor() { 
 			@Override
 			public void acceptAST(String sourceFilePath, CompilationUnit ast) {
-				processCompilationUnit(sourceFilePath, ast);
+				String relativePath = sourceFilePath.substring(projectRoot.length() + 1).replaceAll(systemFileSeparator, "/");
+				processCompilationUnit(relativePath, ast);
 			}
 		};
 		this.parser.createASTs((String[]) filesArray, null, emptyArray, fileASTRequestor, null);
@@ -208,7 +209,7 @@ public class UMLModelASTReader {
 		
 		TypeDeclaration[] types = typeDeclaration.getTypes();
 		for(TypeDeclaration type : types) {
-			processTypeDeclaration(type, packageName + "." + className, sourceFile);
+			processTypeDeclaration(type, umlClass.getName(), sourceFile);
 		}
 	}
 

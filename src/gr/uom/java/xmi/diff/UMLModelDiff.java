@@ -731,13 +731,26 @@ public class UMLModelDiff {
       return refactorings;
    }
 
-   private List<MoveClassRefactoring> getMoveClassRefactorings() {
-      List<MoveClassRefactoring> refactorings = new ArrayList<MoveClassRefactoring>();
-      for(UMLClassMoveDiff classMoveDiff : classMoveDiffList) {
-         MoveClassRefactoring refactoring = new MoveClassRefactoring(classMoveDiff.getOriginalClass().getName(), classMoveDiff.getMovedClass().getName());
-         refactorings.add(refactoring);
-      }
-      return refactorings;
+   private List<Refactoring> getMoveClassRefactorings() {
+	   List<Refactoring> refactorings = new ArrayList<Refactoring>();
+	   for(UMLClassMoveDiff classMoveDiff : classMoveDiffList) {
+		   UMLClass originalClass = classMoveDiff.getOriginalClass();
+		   String originalName = originalClass.getName();
+		   UMLClass movedClass = classMoveDiff.getMovedClass();
+		   String movedName = movedClass.getName();
+		   if (!originalName.equals(movedName)) {
+			   MoveClassRefactoring refactoring = new MoveClassRefactoring(originalName, movedName);
+			   refactorings.add(refactoring);
+		   } else {
+			   String originalPath = originalClass.getSourceFile();
+			   String movedPath = movedClass.getSourceFile();
+			   if (!originalPath.equals(movedPath)) {
+				   MoveClassFolderRefactoring refactoring = new MoveClassFolderRefactoring(originalName, originalPath, movedPath);
+				   refactorings.add(refactoring);
+			   }
+		   }
+	   }
+	   return refactorings;
    }
 
    private List<RenameClassRefactoring> getRenameClassRefactorings() {

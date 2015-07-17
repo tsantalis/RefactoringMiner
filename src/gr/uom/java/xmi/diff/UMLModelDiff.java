@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -267,46 +268,50 @@ public class UMLModelDiff {
       }
    }
 
-   public void checkForMovedClasses() {
-      for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
-         UMLClass removedClass = removedClassIterator.next();
-         for(Iterator<UMLClass> addedClassIterator = addedClasses.iterator(); addedClassIterator.hasNext();) {
-            UMLClass addedClass = addedClassIterator.next();
-            if(removedClass.isMoved(addedClass)) {
-               UMLClassMoveDiff classMoveDiff = new UMLClassMoveDiff(removedClass, addedClass);
-               // Add diff for moved classes?
-               // this.addUMLClassDiff(addedClass.diff(removedClass));
-               //
-               addedClassIterator.remove();
-               removedClassIterator.remove();
-               classMoveDiffList.add(classMoveDiff);
-               break;
-            }
-         }
-      }
-      
-      List<UMLClassMoveDiff> allClassMoves = new ArrayList<UMLClassMoveDiff>(this.classMoveDiffList);
-      Collections.sort(allClassMoves);
-      
-      for(int i=0; i<allClassMoves.size(); i++) {
-         UMLClassMoveDiff classMoveI = allClassMoves.get(i);
-         for(int j=i+1; j<allClassMoves.size(); j++) {
-            UMLClassMoveDiff classMoveJ = allClassMoves.get(j);
-            if(classMoveI.isInnerClassMove(classMoveJ)) {
-               innerClassMoveDiffList.add(classMoveJ);
-            }
-         }
-      }
-      this.classMoveDiffList.removeAll(innerClassMoveDiffList);
+   public void checkForMovedClasses(Map<String, String> renamedFileHints) {
+	   for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
+		   UMLClass removedClass = removedClassIterator.next();
+		   for(Iterator<UMLClass> addedClassIterator = addedClasses.iterator(); addedClassIterator.hasNext();) {
+			   UMLClass addedClass = addedClassIterator.next();
+			   String renamedFile =  renamedFileHints.get(removedClass.getSourceFile());
+			   if(removedClass.hasSameNameAndKind(addedClass) 
+					   && (removedClass.hasSameAttributesAndOperations(addedClass) || addedClass.getSourceFile().equals(renamedFile) )) {
+				   UMLClassMoveDiff classMoveDiff = new UMLClassMoveDiff(removedClass, addedClass);
+				   // Add diff for moved classes?
+				   // this.addUMLClassDiff(addedClass.diff(removedClass));
+				   //
+				   addedClassIterator.remove();
+				   removedClassIterator.remove();
+				   classMoveDiffList.add(classMoveDiff);
+				   break;
+			   }
+		   }
+	   }
+
+	   List<UMLClassMoveDiff> allClassMoves = new ArrayList<UMLClassMoveDiff>(this.classMoveDiffList);
+	   Collections.sort(allClassMoves);
+
+	   for(int i=0; i<allClassMoves.size(); i++) {
+		   UMLClassMoveDiff classMoveI = allClassMoves.get(i);
+		   for(int j=i+1; j<allClassMoves.size(); j++) {
+			   UMLClassMoveDiff classMoveJ = allClassMoves.get(j);
+			   if(classMoveI.isInnerClassMove(classMoveJ)) {
+				   innerClassMoveDiffList.add(classMoveJ);
+			   }
+		   }
+	   }
+	   this.classMoveDiffList.removeAll(innerClassMoveDiffList);
    }
 
-   public void checkForRenamedClasses() {
+   public void checkForRenamedClasses(Map<String, String> renamedFileHints) {
       for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
          UMLClass removedClass = removedClassIterator.next();
          TreeSet<UMLClassRenameDiff> diffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
          for(Iterator<UMLClass> addedClassIterator = addedClasses.iterator(); addedClassIterator.hasNext();) {
             UMLClass addedClass = addedClassIterator.next();
-            if(removedClass.isRenamed(addedClass)) {
+            String renamedFile =  renamedFileHints.get(removedClass.getSourceFile());
+            if(removedClass.hasSameKind(addedClass) 
+            		&& (removedClass.hasSameAttributesAndOperations(addedClass) || addedClass.getSourceFile().equals(renamedFile))) {
                UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass);
                // Add diff for renamed classes?
                // this.addUMLClassDiff(addedClass.diff(removedClass));
@@ -874,37 +879,39 @@ public class UMLModelDiff {
    }
    
    private boolean movedMethodSignature(UMLOperation removedOperation, UMLOperation addedOperation) {
-      if(addedOperation.getName().equals(removedOperation.getName()) &&
-            addedOperation.equalReturnParameter(removedOperation) &&
-            addedOperation.isAbstract() == removedOperation.isAbstract()) {
-         if(addedOperation.getParameters().equals(removedOperation.getParameters())) {
-            return true;
-         }
-         else {
-            //a parameter corresponding to the source class may have been removed from the added operation
-            if(removedOperation.getParameters().size() == addedOperation.getParameters().size() + 1) {
-               int numberOfMappedParameters = 0;
-               boolean originClassFound = false;
-               for(UMLParameter oldParameter : removedOperation.getParameters()) {
-                  boolean found = false;
-                  for(UMLParameter newParameter : addedOperation.getParameters()) {
-                     if(newParameter.equalsIncludingName(oldParameter)) {
-                        numberOfMappedParameters++;
-                        found = true;
-                     }
-                  }
-                  if(!found) {
-                     if(oldParameter.getType().getClassType().equals(addedOperation.getClassName()))
-                        originClassFound = true;
-                  }
-               }
-               if(numberOfMappedParameters == addedOperation.getParameters().size() && originClassFound) {
-                  return true;
-               }
-            }
-         }
-      }
-      return false;
+//	   if (addedOperation.getName().equals("barkBark")) {
+//		   System.out.print("");
+//	   }
+	   if(!addedOperation.isConstructor() &&
+	      !removedOperation.isConstructor() &&
+			   addedOperation.getName().equals(removedOperation.getName()) &&
+			   addedOperation.equalReturnParameter(removedOperation) &&
+			   addedOperation.isAbstract() == removedOperation.isAbstract()) {
+		   if(addedOperation.getParameters().equals(removedOperation.getParameters())) {
+			   return true;
+		   }
+		   else {
+			   // ignore parameters of types sourceClass and targetClass
+			   List<UMLParameter> oldParameters = new ArrayList<UMLParameter>();
+			   for (UMLParameter oldParameter : removedOperation.getParameters()) {
+				   if (!oldParameter.getKind().equals("return")
+						   && !oldParameter.getType().getClassType().equals(addedOperation.getClassName())
+						   && !oldParameter.getType().getClassType().equals(removedOperation.getClassName())) {
+					   oldParameters.add(oldParameter);
+				   }
+			   }
+			   List<UMLParameter> newParameters = new ArrayList<UMLParameter>();
+			   for (UMLParameter newParameter : removedOperation.getParameters()) {
+				   if (!newParameter.getKind().equals("return") &&
+						   !newParameter.getType().getClassType().equals(addedOperation.getClassName()) &&
+						   !newParameter.getType().getClassType().equals(removedOperation.getClassName())) {
+					   newParameters.add(newParameter);
+				   }
+			   }
+			   return oldParameters.equals(newParameters);
+		   }
+	   }
+	   return false;
    }
 
    private void deleteRemovedOperation(UMLOperation operation) {

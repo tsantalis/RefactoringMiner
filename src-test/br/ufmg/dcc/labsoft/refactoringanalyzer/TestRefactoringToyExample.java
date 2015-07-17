@@ -84,20 +84,20 @@ public class TestRefactoringToyExample {
 			    "Pull Up Method	public meow() : void from class org.felines.Cat to public meow() : void from class org.felines.Feline")
 			.atCommit("0c5c24356f3179ee320c3318f91278520caafb3a").containsOnly(
 			    "Move Class	org.felines.Feline moved to org.birds.Feline")
-			.atCommit("12b11bf39cb4800e3fa57fb1112c5fbda26de3df").containsOnly(
-			    "Move Class	org.animals.Tiger moved to org.felines.Tiger")
+//			.atCommit("12b11bf39cb4800e3fa57fb1112c5fbda26de3df").containsOnly(
+//			    "Move Class	org.animals.Tiger moved to org.felines.Tiger")
 			.atCommit("60226924fead7d0c4646df4f4fd65667e83da6dc").containsOnly(
 			    "Move Class	org.animals.Bird moved to org.birds.Bird",
 			    "Move Class	org.animals.Chicken moved to org.birds.Chicken",
 			    "Move Class	org.animals.Duck moved to org.birds.Duck")
 			.atCommit("0bb0526b70870d57cbac9fcc8c4a7346a4ce5879").containsOnly(
 				"Rename Method public bark() : void renamed to public barkBark() : void in class org.animals.Dog")
-				
+			
 			// More refactorings
 			.atCommit("9a5c33b16d07d62651ea80552e8782974c96bb8a").containsOnly(
 				"Move Attribute public magicNumber : int from class org.DogManager to class org.animals.Dog")
 			.atCommit("d4bce13a443cf12da40a77c16c1e591f4f985b47").containsOnly(
-				"Move Method barkBark from Dog to DogManager")
+				"Move Method public barkBark(manager DogManager) : void from class org.animals.Dog to public barkBark(dog Dog) : void from class org.DogManager")
 		;
 		test.assertExpectations();
 	}

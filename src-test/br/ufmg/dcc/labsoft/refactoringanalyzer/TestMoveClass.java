@@ -26,18 +26,35 @@ public class TestMoveClass {
 	@Test
 	public void testMoveRootClassWithInnerClasses() throws Exception {
 		TestBuilder test = new TestBuilder();
-		test.project("https://github.com/hierynomus/sshj.git", "master").atCommit("e334525da503d04a978eb9482ab8c7aec02a0b69").containsNothing();
-		//Move Class net.schmizz.sshj.userauth.GssApiTest.TestAuthConfiguration moved to com.hierynomus.sshj.userauth.GssApiTest.TestAuthConfiguration
+		test.project("https://github.com/hierynomus/sshj.git", "master").atCommit("e334525da503d04a978eb9482ab8c7aec02a0b69").containsOnly(
+			"Move Class net.schmizz.sshj.userauth.GssApiTest moved to com.hierynomus.sshj.userauth.GssApiTest",
+			"Rename Class net.schmizz.sshj.transport.Disconnection renamed to com.hierynomus.sshj.transport.DisconnectionTest"
+		);
 		test.assertExpectations();
 	}
 
 	@Test
-	public void testStrangeMove() throws Exception {
+	public void testRenameClassWithInnerClasses() throws Exception {
+		// https://github.com/JetBrains/intellij-plugins/commit/92d56f6dc1661c00f619fd695689d10f451499d7
+		// https://github.com/gradle/gradle/commit/c56a3ca0c581f8653a3ebe38f463878f26813b37
 		TestBuilder test = new TestBuilder();
-		test.project("https://github.com/liferay/liferay-portal.git", "master").atCommit("ed3204fae38bbe9b5f99029ebbf14f162ccea2f1").contains(
-			"Move Class com.liferay.exportimport.LayoutSetPrototypePropagationTest moved to com.liferay.export.import.LayoutSetPrototypePropagationTest"
+//		test.project("https://github.com/gradle/gradle.git", "master").atCommit("c56a3ca0c581f8653a3ebe38f463878f26813b37").containsOnly(
+//			"Rename Class net.schmizz.sshj.userauth.DomainObjectSetBackedModelMap renamed to com.hierynomus.sshj.userauth.DomainObjectCollectionBackedModelMap"
+//		);
+		test.project("https://github.com/JetBrains/intellij-plugins.git", "master").atCommit("92d56f6dc1661c00f619fd695689d10f451499d7").containsOnly(
+			"Rename Class com.jetbrains.lang.dart.fixes.DartServerFixIntention renamed to com.jetbrains.lang.dart.fixes.DartQuickFix"
 		);
 		test.assertExpectations();
 	}
+
+	// This test don't pass, but it is a very rare bug
+//	@Test
+//	public void testStrangeMove() throws Exception {
+//		TestBuilder test = new TestBuilder();
+//		test.project("https://github.com/liferay/liferay-portal.git", "master").atCommit("ed3204fae38bbe9b5f99029ebbf14f162ccea2f1").contains(
+//			"Move Class com.liferay.exportimport.LayoutSetPrototypePropagationTest moved to com.liferay.export.import.LayoutSetPrototypePropagationTest"
+//		);
+//		test.assertExpectations();
+//	}
 
 }

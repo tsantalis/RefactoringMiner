@@ -208,16 +208,22 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     	return null;
     }
 
-    public boolean isMoved(UMLClass umlClass) {
+    public boolean hasSameNameAndKind(UMLClass umlClass) {
     	if(!this.name.equals(umlClass.name))
     		return false;
     	if(this.isAbstract != umlClass.isAbstract)
     		return false;
     	if(this.isInterface != umlClass.isInterface)
     		return false;
+    	return true;
+    }
+
+    public boolean hasSameAttributesAndOperations(UMLClass umlClass) {
     	if(this.attributes.size() != umlClass.attributes.size())
     		return false;
     	if(this.operations.size() != umlClass.operations.size())
+    		return false;
+    	if(this.operations.size() == 0 && this.attributes.size() == 0)
     		return false;
     	for(UMLOperation operation : operations) {
     		if(!umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
@@ -242,37 +248,11 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     	return true;
     }
 
-    public boolean isRenamed(UMLClass umlClass) {
+    public boolean hasSameKind(UMLClass umlClass) {
     	if(this.isAbstract != umlClass.isAbstract)
     		return false;
     	if(this.isInterface != umlClass.isInterface)
     		return false;
-    	if(this.attributes.size() != umlClass.attributes.size())
-    		return false;
-    	if(this.operations.size() != umlClass.operations.size())
-    		return false;
-    	if(this.operations.size() == 0 && this.attributes.size() == 0)
-    		return false;
-    	for(UMLOperation operation : operations) {
-    		if(!operation.isConstructor() && !umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
-    			return false;
-    		}
-    	}
-    	for(UMLOperation operation : umlClass.operations) {
-    		if(!operation.isConstructor() && !this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
-    			return false;
-    		}
-    	}
-    	for(UMLAttribute attribute : attributes) {
-    		if(!umlClass.containsAttributeIgnoringChangedType(attribute)) {
-    			return false;
-    		}
-    	}
-    	for(UMLAttribute attribute : umlClass.attributes) {
-    		if(!this.containsAttributeIgnoringChangedType(attribute)) {
-    			return false;
-    		}
-    	}
     	return true;
     }
 

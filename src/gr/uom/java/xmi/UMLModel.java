@@ -1,12 +1,11 @@
 package gr.uom.java.xmi;
 
 import gr.uom.java.xmi.diff.UMLClassDiff;
-import gr.uom.java.xmi.diff.UMLCollaborationDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
@@ -268,7 +267,11 @@ public class UMLModel {
     	return null;
     }
 
-	public UMLModelDiff diff(UMLModel umlModel) {
+    public UMLModelDiff diff(UMLModel umlModel) {
+    	return this.diff(umlModel, Collections.<String, String>emptyMap());
+    }
+
+	public UMLModelDiff diff(UMLModel umlModel, Map<String, String> renamedFileHints) {
     	UMLModelDiff modelDiff = new UMLModelDiff();
     	for(UMLClass umlClass : classList) {
     		if(!umlModel.classList.contains(umlClass))
@@ -278,8 +281,8 @@ public class UMLModel {
     		if(!this.classList.contains(umlClass))
     			modelDiff.reportAddedClass(umlClass);
     	}
-    	modelDiff.checkForMovedClasses();
-    	modelDiff.checkForRenamedClasses();
+    	modelDiff.checkForMovedClasses(renamedFileHints);
+    	modelDiff.checkForRenamedClasses(renamedFileHints);
     	for(UMLGeneralization umlGeneralization : generalizationList) {
     		if(!umlModel.generalizationList.contains(umlGeneralization))
     			modelDiff.reportRemovedGeneralization(umlGeneralization);

@@ -4,10 +4,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.diff.DiffEntry.ChangeType;
+import org.eclipse.jgit.diff.RenameDetector;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryBuilder;
@@ -17,8 +22,11 @@ import org.eclipse.jgit.revwalk.RevWalkUtils;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.TrackingRefUpdate;
+import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import br.ufmg.dcc.labsoft.refactoringanalyzer.util.ExternalProcess;
 
 public class GitServiceImpl implements GitService {
 
@@ -85,7 +93,10 @@ public class GitServiceImpl implements GitService {
 	public void checkout(Repository repository, String commitId) throws Exception {
 		Git git = new Git(repository);
 		CheckoutCommand checkout = git.checkout().setName(commitId);
-		checkout.call();		
+		checkout.call();
+		
+//		File workingDir = repository.getDirectory().getParentFile();
+//		ExternalProcess.execute(workingDir, "git", "checkout", commitId);
 	}
 
 	@Override
@@ -201,4 +212,76 @@ public class GitServiceImpl implements GitService {
 		}
 	}
 
+	@Override
+	public void fileTreeDiff(Repository repository, RevCommit current, List<String> javaFilesBefore, List<String> javaFilesCurrent, Map<String, String> renamedFilesHint) throws Exception {
+        File workingDir = repository.getDirectory().getParentFile();
+        String sha = current.getId().getName();
+        String output = ExternalProcess.execute(workingDir, "git", "diff", "--name-status", "--find-renames", sha + "^.." + sha);
+        for (String line : output.split("\n")) {
+        	String[] fields = line.split("\t");
+        	char changeType = fields[0].charAt(0);
+        	String path = fields[1];
+        	if (isJavafile(path)) {
+        		if (changeType != 'A') {
+        			javaFilesBefore.add(path);
+        		}
+        		if (changeType != 'D') {
+        			if (changeType == 'R') {
+        				String newPath = fields[2];
+        				javaFilesCurrent.add(newPath);
+        				renamedFilesHint.put(path, newPath);
+        			} else {
+        				javaFilesCurrent.add(path);
+        			}
+        		}
+        	}
+        }
+	}
+	
+//	@Override
+	public void fileTreeDiff2(Repository repository, RevCommit current, List<String> javaFilesBefore, List<String> javaFilesCurrent, Map<String, String> renamedFilesHint) throws Exception {
+        ObjectId oldHead = current.getParent(0).getTree();
+        ObjectId head = current.getTree();
+
+        // prepare the two iterators to compute the diff between
+		ObjectReader reader = repository.newObjectReader();
+		CanonicalTreeParser oldTreeIter = new CanonicalTreeParser();
+		oldTreeIter.reset(reader, oldHead);
+		CanonicalTreeParser newTreeIter = new CanonicalTreeParser();
+		newTreeIter.reset(reader, head);
+		// finally get the list of changed files
+		List<DiffEntry> diffs = new Git(repository).diff()
+		                    .setNewTree(newTreeIter)
+		                    .setOldTree(oldTreeIter)
+		                    .setShowNameAndStatusOnly(true)
+		                    .call();
+		
+		RenameDetector rd = new RenameDetector(repository);
+		rd.addAll(diffs);
+		diffs = rd.compute();
+		
+        for (DiffEntry entry : diffs) {
+        	ChangeType changeType = entry.getChangeType();
+        	if (changeType != ChangeType.ADD) {
+        		String oldPath = entry.getOldPath();
+        		if (isJavafile(oldPath)) {
+        			javaFilesBefore.add(oldPath);
+        		}
+        	}
+    		if (changeType != ChangeType.DELETE) {
+        		String newPath = entry.getNewPath();
+        		if (isJavafile(newPath)) {
+        			javaFilesCurrent.add(newPath);
+        			if (changeType == ChangeType.RENAME) {
+        				String oldPath = entry.getOldPath();
+        				renamedFilesHint.put(oldPath, newPath);
+        			}
+        		}
+    		}
+        }
+	}
+	
+	private boolean isJavafile(String path) {
+		return path.endsWith(".java");
+	}
 }

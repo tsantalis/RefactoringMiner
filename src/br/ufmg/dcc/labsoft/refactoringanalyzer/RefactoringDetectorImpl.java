@@ -6,22 +6,20 @@ import gr.uom.java.xmi.diff.Refactoring;
 import gr.uom.java.xmi.diff.RefactoringType;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.diff.DiffEntry;
-import org.eclipse.jgit.diff.DiffEntry.ChangeType;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +28,12 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 	Logger logger = LoggerFactory.getLogger(RefactoringDetectorImpl.class);
 	private boolean analyzeMethodInvocations;
 	private Set<RefactoringType> refactoringTypesToConsider = null;
+	
+	private static final OutputStream NULL_OUTPUT_STREAM = new OutputStream() {
+		@Override
+		public void write(int b) throws IOException {
+		}
+	};
 	
 	public RefactoringDetectorImpl() {
 		this(false);
@@ -100,7 +104,8 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		String commitId = currentCommit.getId().getName();
 		List<String> filesBefore = new ArrayList<String>();
 		List<String> filesCurrent = new ArrayList<String>();
-		fileTreeDiff(repository, currentCommit, filesBefore, filesCurrent);
+		Map<String, String> renamedFilesHint = new HashMap<String, String>();
+		gitService.fileTreeDiff(repository, currentCommit, filesBefore, filesCurrent, renamedFilesHint);
 		// If no java files changed, there is no refactoring. Also, if there are
 		// only ADD's or only REMOVE's there is no refactoring
 		if (!filesBefore.isEmpty() && !filesCurrent.isEmpty()) {
@@ -114,7 +119,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 			UMLModel parentUMLModel = createModel(projectFolder, filesBefore);
 			
 			// Diff between currentModel e parentModel
-			refactoringsAtRevision = parentUMLModel.diff(currentUMLModel).getRefactorings();
+			refactoringsAtRevision = parentUMLModel.diff(currentUMLModel, renamedFilesHint).getRefactorings();
 			if (this.refactoringTypesToConsider != null) {
 				List<Refactoring> filteredList = new ArrayList<Refactoring>();
 				for (Refactoring ref : refactoringsAtRevision) {
@@ -133,44 +138,6 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		return refactoringsAtRevision;
 	}
 	
-	private void fileTreeDiff(Repository repository, RevCommit current, List<String> javaFilesBefore, List<String> javaFilesCurrent) throws Exception {
-        ObjectId oldHead = current.getParent(0).getTree();
-        ObjectId head = current.getTree();
-
-        // prepare the two iterators to compute the diff between
-		ObjectReader reader = repository.newObjectReader();
-		CanonicalTreeParser oldTreeIter = new CanonicalTreeParser();
-		oldTreeIter.reset(reader, oldHead);
-		CanonicalTreeParser newTreeIter = new CanonicalTreeParser();
-		newTreeIter.reset(reader, head);
-
-		// finally get the list of changed files
-		List<DiffEntry> diffs = new Git(repository).diff()
-		                    .setNewTree(newTreeIter)
-		                    .setOldTree(oldTreeIter)
-		                    .setShowNameAndStatusOnly(true)
-		                    .call();
-        for (DiffEntry entry : diffs) {
-        	ChangeType changeType = entry.getChangeType();
-        	if (changeType != ChangeType.ADD) {
-        		String oldPath = entry.getOldPath();
-        		if (isJavafile(oldPath)) {
-        			javaFilesBefore.add(oldPath);
-        		}
-        	}
-    		if (changeType != ChangeType.DELETE) {
-        		String newPath = entry.getNewPath();
-        		if (isJavafile(newPath)) {
-        			javaFilesCurrent.add(newPath);
-        		}
-    		}
-        }
-	}
-	
-	private boolean isJavafile(String path) {
-		return path.endsWith(".java");
-	}
-
 	@Override
 	public void detectAll(Repository repository, String branch, final RefactoringHandler handler) throws Exception {
 		GitService gitService = new GitServiceImpl() {

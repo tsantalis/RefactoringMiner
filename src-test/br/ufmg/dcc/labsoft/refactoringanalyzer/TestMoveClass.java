@@ -24,6 +24,14 @@ public class TestMoveClass {
 	}
 
 	@Test
+	public void testMovePackageButKeepSamePath() throws Exception {
+		TestBuilder test = new TestBuilder();
+		// https://github.com/dropwizard/metrics/commit/7ba7631d5f1e473aad1063499492008369663869
+		test.project("https://github.com/dropwizard/metrics.git", "master").atCommit("7ba7631d5f1e473aad1063499492008369663869").containsNothing();
+		test.assertExpectations();
+	}
+
+	@Test
 	public void testMoveRootClassWithInnerClasses() throws Exception {
 		TestBuilder test = new TestBuilder();
 		test.project("https://github.com/hierynomus/sshj.git", "master").atCommit("e334525da503d04a978eb9482ab8c7aec02a0b69").containsOnly(

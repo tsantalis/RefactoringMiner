@@ -743,13 +743,18 @@ public class UMLModelDiff {
 		   String originalName = originalClass.getName();
 		   UMLClass movedClass = classMoveDiff.getMovedClass();
 		   String movedName = movedClass.getName();
+		   
+		   String originalPath = originalClass.getSourceFile();
+		   String movedPath = movedClass.getSourceFile();
+		   boolean pathIsUnchanged = originalPath.equals(movedPath);
+		   
 		   if (!originalName.equals(movedName)) {
-			   MoveClassRefactoring refactoring = new MoveClassRefactoring(originalName, movedName);
-			   refactorings.add(refactoring);
+			   if (!pathIsUnchanged || !movedClass.isTopLevel()) {
+				   MoveClassRefactoring refactoring = new MoveClassRefactoring(originalName, movedName);
+				   refactorings.add(refactoring);
+			   }
 		   } else {
-			   String originalPath = originalClass.getSourceFile();
-			   String movedPath = movedClass.getSourceFile();
-			   if (!originalPath.equals(movedPath)) {
+			   if (!pathIsUnchanged) {
 				   MoveClassFolderRefactoring refactoring = new MoveClassFolderRefactoring(originalName, originalPath, movedPath);
 				   refactorings.add(refactoring);
 			   }

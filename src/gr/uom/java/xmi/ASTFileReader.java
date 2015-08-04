@@ -107,7 +107,7 @@ public class ASTFileReader extends FileASTRequestor {
 
 	private void processTypeDeclaration(TypeDeclaration typeDeclaration, String packageName, String packageRoot) {
 		String className = typeDeclaration.getName().getFullyQualifiedName();
-		UMLClass umlClass = new UMLClass(packageName, className, null);
+		UMLClass umlClass = new UMLClass(packageName, className, null, typeDeclaration.isPackageMemberTypeDeclaration());
 		//UMLClass bytecodeClass = bytecodeModel.getClass(umlClass.getName());
 		
 		if(typeDeclaration.isInterface()) {

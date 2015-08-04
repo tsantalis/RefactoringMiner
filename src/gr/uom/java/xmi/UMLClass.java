@@ -18,15 +18,16 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     private String visibility;
 	private boolean isAbstract;
 	private boolean isInterface;
+	private boolean topLevel;
     private List<UMLOperation> operations;
     private List<UMLAttribute> attributes;
     private UMLType superclass;
 
-    public UMLClass(String packageName, String name, String xmiID) {
-    	this(packageName, name, xmiID, packageName.replace('.', '/') + '/' + name + ".java");
+    public UMLClass(String packageName, String name, String xmiID, boolean topLevel) {
+    	this(packageName, name, xmiID, packageName.replace('.', '/') + '/' + name + ".java", topLevel);
     }
     
-    public UMLClass(String packageName, String name, String xmiID, String sourceFile) {
+    public UMLClass(String packageName, String name, String xmiID, String sourceFile, boolean topLevel) {
     	this.packageName = packageName;
         this.name = name;
         if(packageName.equals(""))
@@ -38,6 +39,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
         this.xmiID = xmiID;
         this.isAbstract = false;
         this.isInterface = false;
+        this.topLevel = topLevel;
         this.operations = new ArrayList<UMLOperation>();
         this.attributes = new ArrayList<UMLAttribute>();
         this.superclass = null;
@@ -58,7 +60,15 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     	return false;
     }
 
-    public String getXmiID() {
+    public boolean isTopLevel() {
+		return topLevel;
+	}
+
+	public void setTopLevel(boolean topLevel) {
+		this.topLevel = topLevel;
+	}
+
+	public String getXmiID() {
         return xmiID;
     }
 

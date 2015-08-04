@@ -125,7 +125,7 @@ public class UMLModelASTReader {
 
 	private void processTypeDeclaration(TypeDeclaration typeDeclaration, String packageName, String sourceFile) {
 		String className = typeDeclaration.getName().getFullyQualifiedName();
-		UMLClass umlClass = new UMLClass(packageName, className, null, sourceFile);
+		UMLClass umlClass = new UMLClass(packageName, className, null, sourceFile, typeDeclaration.isPackageMemberTypeDeclaration());
 		//UMLClass bytecodeClass = bytecodeModel.getClass(umlClass.getName());
 		
 		if(typeDeclaration.isInterface()) {

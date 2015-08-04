@@ -69,7 +69,8 @@ public class BytecodeReader {
 			ClassReader cr = new ClassReader(new DataInputStream(fin));
 			ClassNode cn = new ClassNode();
 			cr.accept(cn, ClassReader.SKIP_DEBUG);
-
+			boolean isTopLevel = cn.name.indexOf('$') == -1;
+			
 			String qualifiedClassName = cn.name.replaceAll("/", ".").replaceAll("\\$", ".");
 			String packageName = null;
 			String className = null;
@@ -82,7 +83,7 @@ public class BytecodeReader {
 				className = qualifiedClassName;
 			}
 
-			UMLClass umlClass = new UMLClass(packageName, className, null);
+			UMLClass umlClass = new UMLClass(packageName, className, null, isTopLevel);
 			if((cn.access & Opcodes.ACC_INTERFACE) != 0)
 				umlClass.setInterface(true);
 			else if((cn.access & Opcodes.ACC_ABSTRACT) != 0)

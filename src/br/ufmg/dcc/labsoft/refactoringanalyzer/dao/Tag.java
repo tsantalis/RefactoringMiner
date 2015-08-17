@@ -13,6 +13,8 @@ public class Tag extends AbstractEntity {
 	@Column(unique = true, length = 100)
 	private String label;
 
+	private String type;
+	
 	@Override
 	public Long getId() {
 		return id;
@@ -29,6 +31,14 @@ public class Tag extends AbstractEntity {
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

@@ -14,6 +14,8 @@ public class Tag extends AbstractEntity {
 	private String label;
 
 	private String type;
+
+	private String description;
 	
 	@Override
 	public Long getId() {
@@ -41,4 +43,12 @@ public class Tag extends AbstractEntity {
 		this.type = type;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 }

@@ -38,6 +38,7 @@ public class RevisionGit extends AbstractEntity {
 	private Boolean mentionsRefactoring;
 	private Boolean describesRefactoring;
 	private Boolean describesFeatureOrBug;
+	private Boolean ok;
 	
 	@Column(columnDefinition="TEXT")
 	private String FullMessage;
@@ -187,6 +188,12 @@ public class RevisionGit extends AbstractEntity {
 		this.describesFeatureOrBug = describesFeatureOrBug;
 	}
 
-	
-	
+	public Boolean getOk() {
+		return ok;
+	}
+
+	public void setOk(Boolean ok) {
+		this.ok = ok;
+	}
+
 }

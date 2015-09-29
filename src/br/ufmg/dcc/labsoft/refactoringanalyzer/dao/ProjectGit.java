@@ -50,6 +50,8 @@ public class ProjectGit extends AbstractEntity {
 	private boolean monitoring_enabled;
 	
 	private int commits_count;
+	private int contributors;
+	private int java_files;
 //	private int merge_commits_count;
 	private int error_commits_count;
 	private boolean analyzed;
@@ -211,6 +213,22 @@ public class ProjectGit extends AbstractEntity {
 
 	public void setCommits_count(int commits_count) {
 		this.commits_count = commits_count;
+	}
+
+	public int getContributors() {
+		return contributors;
+	}
+
+	public void setContributors(int contributors) {
+		this.contributors = contributors;
+	}
+
+	public int getJava_files() {
+		return java_files;
+	}
+
+	public void setJava_files(int java_files) {
+		this.java_files = java_files;
 	}
 
 	public int getError_commits_count() {

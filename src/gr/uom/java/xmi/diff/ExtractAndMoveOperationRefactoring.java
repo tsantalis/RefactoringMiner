@@ -25,11 +25,14 @@ public class ExtractAndMoveOperationRefactoring implements Refactoring {
 		return sb.toString();
 	}
 	
-	@Override
 	public String getName() {
-		return "Extract & Move Operation";
+		return this.getRefactoringType().getDisplayName();
 	}
 
+	public RefactoringType getRefactoringType() {
+		return RefactoringType.EXTRACT_AND_MOVE_OPERATION;
+	}
+	
 	public UMLOperation getExtractedOperation() {
 		return extractedOperation;
 	}

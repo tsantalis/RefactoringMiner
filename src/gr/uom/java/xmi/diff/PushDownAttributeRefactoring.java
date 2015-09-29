@@ -20,8 +20,7 @@ public class PushDownAttributeRefactoring extends MoveAttributeRefactoring {
 		return sb.toString();
 	}
 
-	@Override
-	public String getName() {
-		return "Push Down Attribute";
+	public RefactoringType getRefactoringType() {
+		return RefactoringType.PUSH_DOWN_ATTRIBUTE;
 	}
 }

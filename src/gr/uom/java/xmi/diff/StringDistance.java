@@ -3,35 +3,16 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class StringDistance {
 	
+	public static int editDistance(String a, String b, int threshold) {
+		return StringUtils.getLevenshteinDistance(a, b, threshold);
+	}
+
 	public static int editDistance(String a, String b) {
-		int[][] d = new int[a.length()+1][b.length()+1];
-		
-		for(int i=0; i<=a.length(); i++)
-			d[i][0] = i;
-		for(int j=0; j<=b.length(); j++)
-			d[0][j] = j;
-		
-		int j=1;
-		for(char c1 : b.toCharArray()) {
-			int i = 1;
-			for(char c2 : a.toCharArray()) {
-				if(c1 == c2)
-					d[i][j] = d[i-1][j-1];
-				else {
-					int deletion = d[i-1][j] + 1;
-					int insertion = d[i][j-1] + 1;
-					int substitution = d[i-1][j-1] + 1;
-					int min = Math.min(deletion, insertion);
-					min = Math.min(min, substitution);
-					d[i][j] = min;
-				}
-				i++;
-			}
-			j++;
-		}
-		return d[a.length()][b.length()];
+		return StringUtils.getLevenshteinDistance(a, b);
 	}
 	
 	public static List<String> commonSubstrings(String s1, String s2) {

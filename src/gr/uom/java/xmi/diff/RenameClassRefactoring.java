@@ -18,8 +18,11 @@ public class RenameClassRefactoring implements Refactoring {
 		return sb.toString();
 	}
 
-	@Override
 	public String getName() {
-		return "Rename Class";
+		return this.getRefactoringType().getDisplayName();
+	}
+
+	public RefactoringType getRefactoringType() {
+		return RefactoringType.RENAME_CLASS;
 	}
 }

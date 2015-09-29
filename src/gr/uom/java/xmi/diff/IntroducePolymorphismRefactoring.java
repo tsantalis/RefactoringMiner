@@ -27,8 +27,11 @@ public class IntroducePolymorphismRefactoring implements Refactoring {
 		return sb.toString();
 	}
 
-	@Override
 	public String getName() {
-		return "Introduce Polymorphism";
+		return this.getRefactoringType().getDisplayName();
+	}
+
+	public RefactoringType getRefactoringType() {
+		return RefactoringType.INTRODUCE_POLYMORPHISM;
 	}
 }

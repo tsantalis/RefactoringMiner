@@ -156,7 +156,7 @@ public class ASTReader2 {
 
 	private void processTypeDeclaration(TypeDeclaration typeDeclaration, String packageName, String packageRoot) {
 		String className = typeDeclaration.getName().getFullyQualifiedName();
-		UMLClass umlClass = new UMLClass(packageName, className, null);
+		UMLClass umlClass = new UMLClass(packageName, className, null, typeDeclaration.isPackageMemberTypeDeclaration());
 		//UMLClass bytecodeClass = bytecodeModel.getClass(umlClass.getName());
 		
 		if(typeDeclaration.isInterface()) {
@@ -281,7 +281,7 @@ public class ASTReader2 {
 		if(block != null) {
 			OperationBody body = new OperationBody(block);
 			if (analyzeMethodInvocations) {
-				this.processMethodInvocations(methodDeclaration, block, packageRoot);
+//				this.processMethodInvocations(methodDeclaration, block, packageRoot);
 			}
 			umlOperation.setBody(body);
 			if(block.statements().size() == 0) {
@@ -322,16 +322,16 @@ public class ASTReader2 {
 		return umlOperation;
 	}
 
-	private void processMethodInvocations(final MethodDeclaration methodDeclaration, Block block, String packageRoot) {
-		final MethodInvocationInfo methodInvocationInfo = this.getUmlModel(packageRoot).getMethodInvocationInfo();
-		methodInvocationInfo.handleMethodDeclaration(methodDeclaration);
-		block.accept(new ASTVisitor() {
-			public boolean visit(MethodInvocation methodInvocation) {
-				methodInvocationInfo.handleMethodInvocation(methodDeclaration, methodInvocation);
-				return true;
-			}
-		});
-	}
+//	private void processMethodInvocations(final MethodDeclaration methodDeclaration, Block block, String packageRoot) {
+//		final MethodInvocationInfo methodInvocationInfo = this.getUmlModel(packageRoot).getMethodInvocationInfo();
+//		methodInvocationInfo.handleMethodDeclaration(methodDeclaration);
+//		block.accept(new ASTVisitor() {
+//			public boolean visit(MethodInvocation methodInvocation) {
+//				methodInvocationInfo.handleMethodInvocation(methodDeclaration, methodInvocation);
+//				return true;
+//			}
+//		});
+//	}
 
 	private List<UMLAttribute> processFieldDeclaration(FieldDeclaration fieldDeclaration/*, UMLClass bytecodeClass*/) {
 		List<UMLAttribute> attributes = new ArrayList<UMLAttribute>();

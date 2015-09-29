@@ -20,9 +20,12 @@ public class MergeOperation implements Refactoring {
 		return sb.toString();
 	}
 
-	@Override
 	public String getName() {
-		return "Merge Operation";
+		return this.getRefactoringType().getDisplayName();
 	}
 
+	public RefactoringType getRefactoringType() {
+		return RefactoringType.MERGE_OPERATION;
+	}
+	
 }

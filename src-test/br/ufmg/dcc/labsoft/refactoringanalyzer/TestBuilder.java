@@ -1,6 +1,5 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer;
 
-import gr.uom.java.xmi.UMLModelSet;
 import gr.uom.java.xmi.diff.Refactoring;
 
 import java.util.HashMap;
@@ -10,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.Assert;
@@ -18,7 +16,7 @@ import org.junit.Assert;
 
 public class TestBuilder {
 
-	private static final String TMP_DIR = "tmp";
+	private static final String TMP_DIR = "C:/tmp";
 	
 	private Map<String, ProjectMatcher> map = new HashMap<String, ProjectMatcher>();
 	
@@ -46,9 +44,8 @@ public class TestBuilder {
 			if (m.ignoreNonSpecifiedCommits) {
 				Repository rep = gitService.cloneIfNotExists(folder, m.cloneUrl/*, m.branch*/);
 				// It is faster to only look at particular commits
-				ASTParser parser = refactoringDetector.buildAstParser(rep);
 				for (String commitId : m.getCommits()) {
-					refactoringDetector.detectOne(parser, rep, commitId, null, m);
+					refactoringDetector.detectOne(rep, commitId, null, m);
 				}
 			} else {
 				Repository rep = gitService.cloneIfNotExists(folder, m.cloneUrl/*, m.branch*/);
@@ -120,8 +117,9 @@ public class TestBuilder {
 		}
 
 		@Override
-		public void handleDiff(UMLModelSet prevModel, String commitId, RevCommit curRevision, UMLModelSet curModel, List<Refactoring> refactorings) {
+		public void handleDiff(RevCommit curRevision, List<Refactoring> refactorings) {
 			CommitMatcher matcher;
+			String commitId = curRevision.getId().getName();
 			if (expected.containsKey(commitId)) {
 				matcher = expected.get(commitId);
 			}

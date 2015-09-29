@@ -13,24 +13,33 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
 	private String packageName;
     private String name;
     private String qualifiedName;
+    private String sourceFile;
     private String xmiID;
     private String visibility;
 	private boolean isAbstract;
 	private boolean isInterface;
+	private boolean topLevel;
     private List<UMLOperation> operations;
     private List<UMLAttribute> attributes;
     private UMLType superclass;
 
-    public UMLClass(String packageName, String name, String xmiID) {
+    public UMLClass(String packageName, String name, String xmiID, boolean topLevel) {
+    	this(packageName, name, xmiID, packageName.replace('.', '/') + '/' + name + ".java", topLevel);
+    }
+    
+    public UMLClass(String packageName, String name, String xmiID, String sourceFile, boolean topLevel) {
     	this.packageName = packageName;
         this.name = name;
         if(packageName.equals(""))
         	this.qualifiedName = name;
     	else
     		this.qualifiedName = packageName + "." + name;
+        
+        this.sourceFile = sourceFile;
         this.xmiID = xmiID;
         this.isAbstract = false;
         this.isInterface = false;
+        this.topLevel = topLevel;
         this.operations = new ArrayList<UMLOperation>();
         this.attributes = new ArrayList<UMLAttribute>();
         this.superclass = null;
@@ -40,14 +49,26 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     	return this.qualifiedName;
     }
 
-    //returns true if the "innerClass" parameter is inner class of this
+    public String getSourceFile() {
+		return sourceFile;
+	}
+
+	//returns true if the "innerClass" parameter is inner class of this
     public boolean isInnerClass(UMLClass innerClass) {
     	if(this.getName().equals(innerClass.packageName))
     		return true;
     	return false;
     }
 
-    public String getXmiID() {
+    public boolean isTopLevel() {
+		return topLevel;
+	}
+
+	public void setTopLevel(boolean topLevel) {
+		this.topLevel = topLevel;
+	}
+
+	public String getXmiID() {
         return xmiID;
     }
 
@@ -197,16 +218,22 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     	return null;
     }
 
-    public boolean isMoved(UMLClass umlClass) {
+    public boolean hasSameNameAndKind(UMLClass umlClass) {
     	if(!this.name.equals(umlClass.name))
     		return false;
     	if(this.isAbstract != umlClass.isAbstract)
     		return false;
     	if(this.isInterface != umlClass.isInterface)
     		return false;
+    	return true;
+    }
+
+    public boolean hasSameAttributesAndOperations(UMLClass umlClass) {
     	if(this.attributes.size() != umlClass.attributes.size())
     		return false;
     	if(this.operations.size() != umlClass.operations.size())
+    		return false;
+    	if(this.operations.size() == 0 && this.attributes.size() == 0)
     		return false;
     	for(UMLOperation operation : operations) {
     		if(!umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
@@ -231,37 +258,11 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     	return true;
     }
 
-    public boolean isRenamed(UMLClass umlClass) {
+    public boolean hasSameKind(UMLClass umlClass) {
     	if(this.isAbstract != umlClass.isAbstract)
     		return false;
     	if(this.isInterface != umlClass.isInterface)
     		return false;
-    	if(this.attributes.size() != umlClass.attributes.size())
-    		return false;
-    	if(this.operations.size() != umlClass.operations.size())
-    		return false;
-    	if(this.operations.size() == 0 && this.attributes.size() == 0)
-    		return false;
-    	for(UMLOperation operation : operations) {
-    		if(!operation.isConstructor() && !umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
-    			return false;
-    		}
-    	}
-    	for(UMLOperation operation : umlClass.operations) {
-    		if(!operation.isConstructor() && !this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
-    			return false;
-    		}
-    	}
-    	for(UMLAttribute attribute : attributes) {
-    		if(!umlClass.containsAttributeIgnoringChangedType(attribute)) {
-    			return false;
-    		}
-    	}
-    	for(UMLAttribute attribute : umlClass.attributes) {
-    		if(!this.containsAttributeIgnoringChangedType(attribute)) {
-    			return false;
-    		}
-    	}
     	return true;
     }
 
@@ -339,7 +340,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     	
     	if(o instanceof UMLClass) {
     		UMLClass umlClass = (UMLClass)o;
-    		return this.packageName.equals(umlClass.packageName) && this.name.equals(umlClass.name);
+    		return this.packageName.equals(umlClass.packageName) && this.name.equals(umlClass.name) && this.sourceFile.equals(umlClass.sourceFile);
     	}
     	return false;
     }

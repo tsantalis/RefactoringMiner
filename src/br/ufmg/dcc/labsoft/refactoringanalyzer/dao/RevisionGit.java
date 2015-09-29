@@ -35,6 +35,11 @@ public class RevisionGit extends AbstractEntity {
 	private String encoding;                
 	private Date commitTime;
 
+	private Boolean mentionsRefactoring;
+	private Boolean describesRefactoring;
+	private Boolean describesFeatureOrBug;
+	private Boolean ok;
+	
 	@Column(columnDefinition="TEXT")
 	private String FullMessage;
 
@@ -157,6 +162,38 @@ public class RevisionGit extends AbstractEntity {
 	
 	public void setCommitterName(String authorName) {
 		this.committerName = authorName;
+	}
+
+	public Boolean getMentionsRefactoring() {
+		return mentionsRefactoring;
+	}
+
+	public void setMentionsRefactoring(Boolean mentionsRefactoring) {
+		this.mentionsRefactoring = mentionsRefactoring;
+	}
+
+	public Boolean getDescribesRefactoring() {
+		return describesRefactoring;
+	}
+
+	public void setDescribesRefactoring(Boolean describesRefactoring) {
+		this.describesRefactoring = describesRefactoring;
+	}
+
+	public Boolean getDescribesFeatureOrBug() {
+		return describesFeatureOrBug;
+	}
+
+	public void setDescribesFeatureOrBug(Boolean describesFeatureOrBug) {
+		this.describesFeatureOrBug = describesFeatureOrBug;
+	}
+
+	public Boolean getOk() {
+		return ok;
+	}
+
+	public void setOk(Boolean ok) {
+		this.ok = ok;
 	}
 
 }

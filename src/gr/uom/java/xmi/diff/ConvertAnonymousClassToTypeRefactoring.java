@@ -22,7 +22,11 @@ public class ConvertAnonymousClassToTypeRefactoring implements Refactoring {
 	}
 
 	public String getName() {
-		return "Convert Anonymous Class to Type";
+		return this.getRefactoringType().getDisplayName();
+	}
+
+	public RefactoringType getRefactoringType() {
+		return RefactoringType.CONVERT_ANONYMOUS_CLASS_TO_TYPE;
 	}
 
 }

@@ -21,9 +21,12 @@ public class RenameOperationRefactoring implements Refactoring {
 		return sb.toString();
 	}
 
-	@Override
 	public String getName() {
-		return "Rename Method";
+		return this.getRefactoringType().getDisplayName();
+	}
+
+	public RefactoringType getRefactoringType() {
+		return RefactoringType.RENAME_METHOD;
 	}
 
 }

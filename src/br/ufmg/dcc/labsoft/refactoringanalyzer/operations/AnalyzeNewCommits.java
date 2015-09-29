@@ -1,6 +1,7 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer.operations;
 
 import java.io.File;
+import java.util.Date;
 
 import org.eclipse.jgit.lib.Repository;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ public class AnalyzeNewCommits extends TaskWithProjectLock {
 
 	private static Logger logger = LoggerFactory.getLogger(AnalyzeNewCommits.class);
 	static Pid pid = new Pid();
+	private Date startTime = new Date();
 	
 	public static void main(String[] args) {
 		try {
@@ -34,7 +36,7 @@ public class AnalyzeNewCommits extends TaskWithProjectLock {
 
 	@Override
 	protected ProjectGit findNextProject(Database db, Pid pid) throws Exception {
-		return db.findProjectToMonitorAndLock(pid.toString());
+		return db.findProjectToMonitorAndLock(pid.toString(), startTime);
 	}
 
 	@Override

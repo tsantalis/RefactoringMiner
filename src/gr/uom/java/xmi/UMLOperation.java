@@ -154,7 +154,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 	}
 
 	public boolean equalSignatureIgnoringChangedTypes(UMLOperation operation) {
-		if(!this.name.equals(operation.name))
+		if(!(this.isConstructor && operation.isConstructor || this.name.equals(operation.name)))
 			return false;
 		if(this.isAbstract != operation.isAbstract)
 			return false;

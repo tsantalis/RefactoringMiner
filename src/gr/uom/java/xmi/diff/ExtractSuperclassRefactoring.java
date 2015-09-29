@@ -1,8 +1,8 @@
 package gr.uom.java.xmi.diff;
 
-import java.util.Set;
-
 import gr.uom.java.xmi.UMLClass;
+
+import java.util.Set;
 
 public class ExtractSuperclassRefactoring implements Refactoring {
 	private UMLClass extractedClass;
@@ -22,11 +22,15 @@ public class ExtractSuperclassRefactoring implements Refactoring {
 		return sb.toString();
 	}
 
-	@Override
 	public String getName() {
-		if(extractedClass.isInterface())
-			return "Extract Interface";
-		else
-			return "Extract Superclass";
+		return this.getRefactoringType().getDisplayName();
 	}
+
+	public RefactoringType getRefactoringType() {
+		if(extractedClass.isInterface())
+			return RefactoringType.EXTRACT_INTERFACE;
+		else
+			return RefactoringType.EXTRACT_SUPERCLASS;
+	}
+	
 }

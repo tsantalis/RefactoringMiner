@@ -7,12 +7,12 @@ import org.eclipse.jgit.lib.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.ufmg.dcc.labsoft.refactoringanalyzer.GitService;
-import br.ufmg.dcc.labsoft.refactoringanalyzer.GitServiceImpl;
-import br.ufmg.dcc.labsoft.refactoringanalyzer.RefactoringDetector;
-import br.ufmg.dcc.labsoft.refactoringanalyzer.RefactoringDetectorImpl;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.Database;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.ProjectGit;
+import br.ufmg.dcc.labsoft.refdetector.GitHistoryRefactoringDetector;
+import br.ufmg.dcc.labsoft.refdetector.GitService;
+import br.ufmg.dcc.labsoft.refdetector.GitServiceImpl;
+import br.ufmg.dcc.labsoft.refdetector.GitHistoryRefactoringDetectorImpl;
 
 public class AnalyzeNewCommits extends TaskWithProjectLock {
 
@@ -46,7 +46,7 @@ public class AnalyzeNewCommits extends TaskWithProjectLock {
 		File projectFile = new File(this.workingDir, project.getName());
 		Repository repo = gitService.cloneIfNotExists(projectFile.getPath(), project.getCloneUrl());
 		
-		RefactoringDetector detector = new RefactoringDetectorImpl();
+		GitHistoryRefactoringDetector detector = new GitHistoryRefactoringDetectorImpl();
 		detector.fetchAndDetectNew(repo, new AnalyzeNewCommitsHandler(db1, project));
 		repo.close();
 	}

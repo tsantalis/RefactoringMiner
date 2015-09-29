@@ -1,4 +1,4 @@
-package br.ufmg.dcc.labsoft.refactoringanalyzer;
+package br.ufmg.dcc.labsoft.refdetector;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,8 +25,6 @@ import org.eclipse.jgit.transport.TrackingRefUpdate;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import br.ufmg.dcc.labsoft.refactoringanalyzer.util.ExternalProcess;
 
 public class GitServiceImpl implements GitService {
 

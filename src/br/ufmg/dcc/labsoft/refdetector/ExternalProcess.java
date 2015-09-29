@@ -1,4 +1,4 @@
-package br.ufmg.dcc.labsoft.refactoringanalyzer.util;
+package br.ufmg.dcc.labsoft.refdetector;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class ExternalProcess {
+class ExternalProcess {
 
 	public static String execute(File workingDir, String ... commandAndArgs) {
 		try {

@@ -13,10 +13,15 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.Assert;
 
+import br.ufmg.dcc.labsoft.refdetector.GitService;
+import br.ufmg.dcc.labsoft.refdetector.GitServiceImpl;
+import br.ufmg.dcc.labsoft.refdetector.GitHistoryRefactoringDetectorImpl;
+import br.ufmg.dcc.labsoft.refdetector.RefactoringHandler;
+
 
 public class TestBuilder {
 
-	private static final String TMP_DIR = "C:/tmp";
+	private static final String TMP_DIR = "tmp";
 	
 	private Map<String, ProjectMatcher> map = new HashMap<String, ProjectMatcher>();
 	
@@ -38,14 +43,14 @@ public class TestBuilder {
 		int fp = 0;
 		int fn = 0;
 		GitService gitService = new GitServiceImpl();
-		RefactoringDetectorImpl refactoringDetector = new RefactoringDetectorImpl();
+		GitHistoryRefactoringDetectorImpl refactoringDetector = new GitHistoryRefactoringDetectorImpl();
 		for (ProjectMatcher m : map.values()) {
 			String folder = TMP_DIR + "/" + m.cloneUrl.substring(m.cloneUrl.lastIndexOf('/') + 1, m.cloneUrl.lastIndexOf('.'));
 			if (m.ignoreNonSpecifiedCommits) {
 				Repository rep = gitService.cloneIfNotExists(folder, m.cloneUrl/*, m.branch*/);
 				// It is faster to only look at particular commits
 				for (String commitId : m.getCommits()) {
-					refactoringDetector.detectOne(rep, commitId, null, m);
+					refactoringDetector.detectAtCommit(rep, commitId, m);
 				}
 			} else {
 				Repository rep = gitService.cloneIfNotExists(folder, m.cloneUrl/*, m.branch*/);
@@ -109,7 +114,7 @@ public class TestBuilder {
 		}
 
 		@Override
-		public boolean skipRevision(String commitId) {
+		public boolean skipCommit(String commitId) {
 			if (this.ignoreNonSpecifiedCommits) {
 				return !this.expected.containsKey(commitId);
 			}
@@ -117,7 +122,7 @@ public class TestBuilder {
 		}
 
 		@Override
-		public void handleDiff(RevCommit curRevision, List<Refactoring> refactorings) {
+		public void handle(RevCommit curRevision, List<Refactoring> refactorings) {
 			CommitMatcher matcher;
 			String commitId = curRevision.getId().getName();
 			if (expected.containsKey(commitId)) {

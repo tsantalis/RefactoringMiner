@@ -5,6 +5,8 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.junit.Test;
 
+import br.ufmg.dcc.labsoft.refdetector.GitServiceImpl;
+
 public class TestFetch {
 
 	@Test

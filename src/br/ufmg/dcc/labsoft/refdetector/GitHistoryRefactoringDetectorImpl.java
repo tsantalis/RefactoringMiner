@@ -1,4 +1,4 @@
-package br.ufmg.dcc.labsoft.refactoringanalyzer;
+package br.ufmg.dcc.labsoft.refdetector;
 
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLModelASTReader;
@@ -23,9 +23,9 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class RefactoringDetectorImpl implements RefactoringDetector {
+public class GitHistoryRefactoringDetectorImpl implements GitHistoryRefactoringDetector {
 
-	Logger logger = LoggerFactory.getLogger(RefactoringDetectorImpl.class);
+	Logger logger = LoggerFactory.getLogger(GitHistoryRefactoringDetectorImpl.class);
 	private boolean analyzeMethodInvocations;
 	private Set<RefactoringType> refactoringTypesToConsider = null;
 	
@@ -35,11 +35,11 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		}
 	};
 	
-	public RefactoringDetectorImpl() {
+	public GitHistoryRefactoringDetectorImpl() {
 		this(false);
 	}
 
-	private RefactoringDetectorImpl(boolean analyzeMethodInvocations) {
+	private GitHistoryRefactoringDetectorImpl(boolean analyzeMethodInvocations) {
 		this.analyzeMethodInvocations = analyzeMethodInvocations;
 		this.setRefactoringTypesToConsider(
 			RefactoringType.RENAME_CLASS,
@@ -134,7 +134,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 			//logger.info(String.format("Ignored revision %s with no changes in java files", commitId));
 			refactoringsAtRevision = Collections.emptyList();
 		}
-		handler.handleDiff(currentCommit, refactoringsAtRevision);
+		handler.handle(currentCommit, refactoringsAtRevision);
 		return refactoringsAtRevision;
 	}
 	
@@ -143,7 +143,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		GitService gitService = new GitServiceImpl() {
 			@Override
 			public boolean isCommitAnalyzed(String sha1) {
-				return handler.skipRevision(sha1);
+				return handler.skipCommit(sha1);
 			}
 		};
 		RevWalk walk = gitService.createAllRevsWalk(repository, branch);
@@ -159,7 +159,7 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		GitService gitService = new GitServiceImpl() {
 			@Override
 			public boolean isCommitAnalyzed(String sha1) {
-				return handler.skipRevision(sha1);
+				return handler.skipCommit(sha1);
 			}
 		};
 		RevWalk walk = gitService.fetchAndCreateNewRevsWalk(repository);
@@ -174,7 +174,8 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 		return new UMLModelASTReader(projectFolder, files).getUmlModel();
 	}
 
-	public void detectOne(Repository repository, String commitId, String parentCommitId, RefactoringHandler handler) {
+	@Override
+	public void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler) {
 		File metadataFolder = repository.getDirectory();
 		File projectFolder = metadataFolder.getParentFile();
 		GitService gitService = new GitServiceImpl();
@@ -189,4 +190,5 @@ public class RefactoringDetectorImpl implements RefactoringDetector {
 			walk.dispose();
 		}
 	}
+
 }

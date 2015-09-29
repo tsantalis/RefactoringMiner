@@ -8,11 +8,11 @@ import java.util.Set;
 
 import org.eclipse.jgit.revwalk.RevCommit;
 
-import br.ufmg.dcc.labsoft.refactoringanalyzer.RefactoringHandler;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.Database;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.ProjectGit;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.RefactoringGit;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.RevisionGit;
+import br.ufmg.dcc.labsoft.refdetector.RefactoringHandler;
 
 class AnalyzeProjectsHandler extends RefactoringHandler {
 	protected final Database db;
@@ -24,12 +24,12 @@ class AnalyzeProjectsHandler extends RefactoringHandler {
 	}
 
 	@Override
-	public boolean skipRevision(String curRevision) {
+	public boolean skipCommit(String curRevision) {
 		return db.getRevisionById(project, curRevision) != null;
 	}
 
 	@Override
-	public void handleDiff(RevCommit curRevision, List<Refactoring> refactorings) {
+	public void handle(RevCommit curRevision, List<Refactoring> refactorings) {
 		RevisionGit revision = new RevisionGit();
 		revision.setProjectGit(db.getProjectById(project.getId()));
 		revision.setIdCommit(curRevision.getId().getName());

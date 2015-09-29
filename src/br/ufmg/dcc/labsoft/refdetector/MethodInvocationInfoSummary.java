@@ -1,4 +1,4 @@
-package br.ufmg.dcc.labsoft.refactoringanalyzer;
+package br.ufmg.dcc.labsoft.refdetector;
 
 import gr.uom.java.xmi.MethodInvocationInfo;
 import gr.uom.java.xmi.MethodInvocationInfo.MethodInfo;

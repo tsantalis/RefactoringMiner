@@ -7,10 +7,10 @@ import org.eclipse.jgit.lib.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.ufmg.dcc.labsoft.refactoringanalyzer.GitService;
-import br.ufmg.dcc.labsoft.refactoringanalyzer.GitServiceImpl;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.Database;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.ProjectGit;
+import br.ufmg.dcc.labsoft.refdetector.GitService;
+import br.ufmg.dcc.labsoft.refdetector.GitServiceImpl;
 
 public class ProjectCommitCounter {
 

@@ -14,11 +14,11 @@ Currently, it supports the detection of the following refactorings:
 In order to build the project, import it to Eclipse IDE as a Java project, and install the Apache IvyDE plug-in.
 
 ## Contributors ##
-The code in package **gr.uom.java.xmi** has been developed by **Nikolaos Tsantalis**.
+The code in package **gr.uom.java.xmi** has been developed by [Nikolaos Tsantalis](https://github.com/tsantalis).
 
-The code in package **ca.ualberta.cs.data** has been developed by **Nikolaos Tsantalis** and **Fabio Rocha**.
+The code in package **ca.ualberta.cs.data** has been developed by [Nikolaos Tsantalis](https://github.com/tsantalis) and **Fabio Rocha**.
 
-The code in package **br.ufmg.dcc.labsoft.refactoringanalyzer** has been developed by **Danilo Ferreira e Silva**.
+The code in package **br.ufmg.dcc.labsoft.refactoringanalyzer** has been developed by [Danilo Ferreira e Silva](https://github.com/danilofes).
 
 ## API usage guidelines ##
 

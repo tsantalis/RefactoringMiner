@@ -32,8 +32,9 @@ GitService gitService = new GitServiceImpl();
 GitHistoryRefactoringDetector detector = new GitHistoryRefactoringDetectorImpl();
 
 Repository repo = gitService.cloneIfNotExists(
-    "refactoring-toy-example", 
+    "tmp/refactoring-toy-example",
     "https://github.com/danilofes/refactoring-toy-example.git");
+
 detector.detectAll(repo, "master", new RefactoringHandler() {
   @Override
   public void handle(RevCommit commitData, List<Refactoring> refactorings) {
@@ -45,6 +46,20 @@ detector.detectAll(repo, "master", new RefactoringHandler() {
 });
 ```
 
+It is possible to analyze a specifc commit using `detectAtCommit` instead of `detectAll`. The commit
+is identified by its SHA key, such as in the example below:
+
+```java
+detector.detectAtCommit(repo, "05c1e773878bbacae64112f70964f4f2f7944398", new RefactoringHandler() {
+  @Override
+  public void handle(RevCommit commitData, List<Refactoring> refactorings) {
+    System.out.println("Refactorings at " + commitData.getId().getName());
+    for (Refactoring ref : refactorings) {
+      System.out.println(ref.toString());
+    }
+  }
+});
+```
 
 There is also a lower level API that works comparing the source code from two
 folders that contain the code before and after the code changes:  

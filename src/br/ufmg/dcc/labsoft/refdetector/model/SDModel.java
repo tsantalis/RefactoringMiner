@@ -7,7 +7,7 @@ public class SDModel {
 
 	enum Mode {
 		BEFORE,
-		AFTER	
+		AFTER
 	}
 	
 	private int size = 0;
@@ -25,7 +25,7 @@ public class SDModel {
 	}
 
 	public void setBefore() {
-		this.mode = Mode.AFTER;
+		this.mode = Mode.BEFORE;
 	}
 	
 	private int getId(String key) {
@@ -63,6 +63,13 @@ public class SDModel {
 		SDMethod sdMethod = new SDMethod(getId(fullName), fullName);
 		getMap().put(fullName, sdMethod);
 		return sdMethod;
+	}
+	
+	public SDAttribute createAttribute(String attributeName, SDContainerEntity container) {
+		String fullName = container.getFullName() + "#" + attributeName;
+		SDAttribute sdAttribute = new SDAttribute(getId(fullName), fullName);
+		getMap().put(fullName, sdAttribute);
+		return sdAttribute;
 	}
 
 	public <T extends SDEntity> T find(Class<T> entityType, String key) {

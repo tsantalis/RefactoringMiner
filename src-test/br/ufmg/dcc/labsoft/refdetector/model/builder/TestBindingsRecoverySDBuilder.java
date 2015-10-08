@@ -20,16 +20,15 @@ public class TestBindingsRecoverySDBuilder {
 	@Test
 	public void test() throws Exception {
 		GitService gitService = new GitServiceImpl();
-		BindingsRecoverySDBuilder builder = new BindingsRecoverySDBuilder();
 		
 		Repository repo = gitService.cloneIfNotExists(
 			    "tmp/refactoring-toy-example",
 			    "https://github.com/danilofes/refactoring-toy-example.git");
 		
-		detectAtCommit(repo, "b2c7be7001d4833d14d7fee8c7c989279b4ad039", builder);
+		detectAtCommit(repo, "05c1e773878bbacae64112f70964f4f2f7944398");
 	}
 
-	public void detectAtCommit(Repository repository, String commitId, BindingsRecoverySDBuilder builder) throws Exception {
+	public void detectAtCommit(Repository repository, String commitId) throws Exception {
 		File metadataFolder = repository.getDirectory();
 		File projectFolder = metadataFolder.getParentFile();
 		GitService gitService = new GitServiceImpl();
@@ -45,6 +44,7 @@ public class TestBindingsRecoverySDBuilder {
 			// only ADD's or only REMOVE's there is no refactoring
 			//if (!filesBefore.isEmpty() && !filesCurrent.isEmpty()) {
 				// Checkout and build model for current commit
+			BindingsRecoverySDBuilder builder = new BindingsRecoverySDBuilder();
 			final SDModel model = new SDModel();
 			
 			model.setAfter();

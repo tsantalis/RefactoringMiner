@@ -102,7 +102,7 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 	public boolean visit(MethodDeclaration methodDeclaration) {
 		String methodSignature = getSignatureFromMethodDeclaration(methodDeclaration);
 		SDMethod method = model.createMethod(methodSignature, containerStack.peek());
-		System.out.println("Method: " + method);
+		System.out.println("Method: " + methodSignature);
 		
 		postProcessMap.put(method, methodDeclaration);
 		return false;

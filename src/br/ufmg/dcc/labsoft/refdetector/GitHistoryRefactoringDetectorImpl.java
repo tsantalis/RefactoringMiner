@@ -99,7 +99,7 @@ public class GitHistoryRefactoringDetectorImpl implements GitHistoryRefactoringD
 		logger.info(String.format("Analyzed %s [Commits: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, errorCommitsCount, refactoringsCount));
 	}
 
-	private List<Refactoring> detectRefactorings(GitService gitService, Repository repository, final RefactoringHandler handler, File projectFolder, RevCommit currentCommit) throws Exception {
+	protected List<Refactoring> detectRefactorings(GitService gitService, Repository repository, final RefactoringHandler handler, File projectFolder, RevCommit currentCommit) throws Exception {
 		List<Refactoring> refactoringsAtRevision;
 		String commitId = currentCommit.getId().getName();
 		List<String> filesBefore = new ArrayList<String>();
@@ -120,15 +120,7 @@ public class GitHistoryRefactoringDetectorImpl implements GitHistoryRefactoringD
 			
 			// Diff between currentModel e parentModel
 			refactoringsAtRevision = parentUMLModel.diff(currentUMLModel, renamedFilesHint).getRefactorings();
-			if (this.refactoringTypesToConsider != null) {
-				List<Refactoring> filteredList = new ArrayList<Refactoring>();
-				for (Refactoring ref : refactoringsAtRevision) {
-					if (this.refactoringTypesToConsider.contains(ref.getRefactoringType())) {
-						filteredList.add(ref);
-					}
-				}
-				refactoringsAtRevision = filteredList;
-			}
+			refactoringsAtRevision = filter(refactoringsAtRevision);
 			
 		} else {
 			//logger.info(String.format("Ignored revision %s with no changes in java files", commitId));
@@ -136,6 +128,19 @@ public class GitHistoryRefactoringDetectorImpl implements GitHistoryRefactoringD
 		}
 		handler.handle(currentCommit, refactoringsAtRevision);
 		return refactoringsAtRevision;
+	}
+
+	protected List<Refactoring> filter(List<Refactoring> refactoringsAtRevision) {
+		if (this.refactoringTypesToConsider == null) {
+			return refactoringsAtRevision;
+		}
+		List<Refactoring> filteredList = new ArrayList<Refactoring>();
+		for (Refactoring ref : refactoringsAtRevision) {
+			if (this.refactoringTypesToConsider.contains(ref.getRefactoringType())) {
+				filteredList.add(ref);
+			}
+		}
+		return filteredList;
 	}
 	
 	@Override
@@ -170,7 +175,7 @@ public class GitHistoryRefactoringDetectorImpl implements GitHistoryRefactoringD
 		}
 	}
 
-	private UMLModel createModel(File projectFolder, List<String> files) throws Exception {
+	protected UMLModel createModel(File projectFolder, List<String> files) throws Exception {
 		return new UMLModelASTReader(projectFolder, files).getUmlModel();
 	}
 

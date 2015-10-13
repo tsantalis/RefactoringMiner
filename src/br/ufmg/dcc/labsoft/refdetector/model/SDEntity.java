@@ -1,13 +1,15 @@
 package br.ufmg.dcc.labsoft.refdetector.model;
 
-public class SDEntity {
+public abstract class SDEntity {
 
 	private int id;
-	private String fullName;
+	protected String fullName;
+	protected SDContainerEntity container;
 	
-	public SDEntity(int id, String fullName) {
+	public SDEntity(int id, String fullName, SDContainerEntity container) {
 		this.id = id;
 		this.fullName = fullName;
+		this.container = container;
 	}
 	
 	public int getId() {
@@ -17,6 +19,8 @@ public class SDEntity {
 	public String getFullName() {
 		return fullName;
 	}
+	
+	public abstract boolean isTestCode();
 	
 	@Override
 	public int hashCode() {
@@ -32,4 +36,8 @@ public class SDEntity {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return fullName;
+	}
 }

@@ -1,16 +1,21 @@
 package br.ufmg.dcc.labsoft.refdetector.model.builder;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Annotation;
+import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.IMethodBinding;
+import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
@@ -25,45 +30,19 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 	private final SDModel model;
 	private final String sourceFilePath;
 	private final LinkedList<SDContainerEntity> containerStack;
-	private final Map<SDMethod, MethodDeclaration> postProcessMap;
+	private final Map<SDMethod, List<String>> postProcessMap;
 	
-	public BindingsRecoveryAstVisitor(SDModel model, String sourceFilePath, SDPackage sdPackage) {
+	public BindingsRecoveryAstVisitor(SDModel model, String sourceFilePath, SDPackage sdPackage, Map<SDMethod, List<String>> postProcessMap) {
 		this.model = model;
 		this.sourceFilePath = sourceFilePath;
 		this.containerStack = new LinkedList<SDContainerEntity>();
-		this.postProcessMap = new HashMap<SDMethod, MethodDeclaration>();
 		this.containerStack.push(sdPackage);
-	}
-
-	@Override
-	public void endVisit(CompilationUnit node) {
-		for (Map.Entry<SDMethod, MethodDeclaration> entry : postProcessMap.entrySet()) {
-			final SDMethod method = entry.getKey();
-			MethodDeclaration decl = entry.getValue();
-			decl.accept(new ASTVisitor() {
-				public boolean visit(MethodInvocation node) {
-					IMethodBinding binding = node.resolveMethodBinding();
-					if (binding != null) {
-						String methodKey = getKeyFromMethodBinding(binding);
-						SDMethod invoked = model.find(SDMethod.class, methodKey);
-						if (invoked != null) {
-							invoked.addCaller(method);
-						}
-					}
-					return true;
-				}
-			});
-		}
+		this.postProcessMap = postProcessMap;
 	}
 	
-	private String getKeyFromMethodBinding(IMethodBinding binding) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public boolean visit(TypeDeclaration typeDeclaration) {
 		String typeName = typeDeclaration.getName().getIdentifier();
-		SDType type = model.createType(typeName, containerStack.peek());
+		SDType type = model.createType(typeName, containerStack.peek(), sourceFilePath);
 		containerStack.push(type);
 		
 		System.out.println("Type: " + typeName);
@@ -104,10 +83,67 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 		SDMethod method = model.createMethod(methodSignature, containerStack.peek());
 		System.out.println("Method: " + methodSignature);
 		
-		postProcessMap.put(method, methodDeclaration);
-		return false;
+		boolean testAnnotation = false;
+		boolean deprecatedAnnotation = false;
+		List<?> modifiers = methodDeclaration.modifiers();
+		for (Object modifier : modifiers) {
+			if (modifier instanceof Annotation) {
+				Annotation a = (Annotation) modifier;
+				testAnnotation = testAnnotation || a.getTypeName().toString().equals("Test");
+				deprecatedAnnotation = deprecatedAnnotation || a.getTypeName().toString().equals("Deprecated");
+			}
+		}
+		method.setTestAnnotation(testAnnotation);
+		method.setDeprecatedAnnotation(deprecatedAnnotation);
+		
+		method.setNumberOfStatements(countNumberOfStatements(methodDeclaration));
+		
+		final List<String> invocations = new ArrayList<String>();
+//		if (method.toString().endsWith("testFixedMembershipTokenIPv4()")) {
+//			System.out.print(' ');
+//		}
+		methodDeclaration.accept(new ASTVisitor() {
+			public boolean visit(MethodInvocation node) {
+				IMethodBinding binding = node.resolveMethodBinding();
+				if (binding != null && binding.getDeclaringClass().isFromSource()) {
+					String methodKey = getKeyFromMethodBinding(binding);
+					invocations.add(methodKey);
+				}
+				return true;
+			}
+		});
+		
+		postProcessMap.put(method, invocations);
+		return true;
 	}
 
+//	@Override
+//	public void endVisit(MethodDeclaration methodDeclaration) {
+//		if (methodDeclaration.getName().toString().endsWith("testFixedMembershipTokenIPv4")) {
+//			System.out.print(' ');
+//		}
+//	}
+	
+	private String getKeyFromMethodBinding(IMethodBinding binding) {
+		StringBuilder sb = new StringBuilder();
+		String className = binding.getDeclaringClass().getQualifiedName();
+		sb.append(className);
+		sb.append('#');
+		String methodName = binding.getName();
+		sb.append(methodName);
+		sb.append('(');
+		ITypeBinding[] parameters = binding.getParameterTypes();
+		for (int i = 0; i < parameters.length; i++) {
+			if (i > 0) {
+				sb.append(", ");
+			}
+			ITypeBinding type = parameters[i];
+			sb.append(type.getName());
+		}
+		sb.append(')');
+		return sb.toString();
+	}
+	
 	private String getSignatureFromMethodDeclaration(MethodDeclaration methodDeclaration) {
 		String methodName = methodDeclaration.getName().getIdentifier();
 		StringBuilder sb = new StringBuilder();
@@ -140,4 +176,23 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 //		}
 //		return type.toString();
 //	}
+	
+	public static int countNumberOfStatements(MethodDeclaration decl) {
+		return new StatementCounter().countStatements(decl);
+	}
+	
+	private static class StatementCounter extends ASTVisitor {
+		private int counter;
+		public int countStatements(MethodDeclaration methodDeclaration) {
+			counter = 0;
+			methodDeclaration.accept(this);
+			return counter;
+		}
+		@Override
+		public void preVisit(ASTNode node) {
+			if (node instanceof Statement && !(node instanceof Block)) {
+				counter++;
+			}
+		}
+	}
 }

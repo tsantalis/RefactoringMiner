@@ -1,4 +1,4 @@
-package br.ufmg.dcc.labsoft.refdetector;
+package br.ufmg.dcc.labsoft.refdetector.model.builder;
 
 import java.util.EnumSet;
 import java.util.Set;
@@ -22,8 +22,9 @@ public class RefactoringMotivationClassifier {
 		EM_ENABLE_RECURSION;
 	}
 
-	public Set<Motivation> classifyExtractMethod(SDMethod extractedMethod, EntitySet<SDMethod> from) {
+	public Set<Motivation> classifyExtractMethod(SDMethod extractedMethod) {
 		Set<Motivation> tags = EnumSet.noneOf(Motivation.class);
+		EntitySet<SDMethod> from = extractedMethod.origins();
 		
 		if (from.size() == 1) {
 			SDMethod fromMethod = from.getFirst();

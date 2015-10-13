@@ -232,6 +232,27 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 		return sb.toString();
 	}
 
+	public String getKey() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(className);
+		sb.append('#');
+		sb.append(name);
+		UMLParameter returnParameter = getReturnParameter();
+		List<UMLParameter> parameters = new ArrayList<UMLParameter>(this.parameters);
+		parameters.remove(returnParameter);
+		sb.append("(");
+		for (int i = 0; i < parameters.size(); i++) {
+			UMLParameter parameter = parameters.get(i);
+			if(parameter.getKind().equals("in")) {
+				sb.append(parameter.getType().toString());
+				if(i < parameters.size() - 1)
+					sb.append(", ");
+			}
+		}
+		sb.append(")");
+		return sb.toString();
+	}
+	
 	public int compareTo(UMLOperation operation) {
 		return this.toString().compareTo(operation.toString());
 	}

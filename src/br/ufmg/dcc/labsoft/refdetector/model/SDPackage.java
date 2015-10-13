@@ -6,4 +6,14 @@ public class SDPackage extends SDContainerEntity {
 		super(id, fullName);
 	}
 
+	@Override
+	public boolean isTestCode() {
+		boolean test = false;
+		String[] parts = fullName.split("\\.");
+		for (String part : parts) {
+			test = test || part.equals("test");
+		}
+		return test;
+	}
+
 }

@@ -4,11 +4,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -18,14 +22,34 @@ import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
+import br.ufmg.dcc.labsoft.refdetector.model.SDMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
 import br.ufmg.dcc.labsoft.refdetector.model.SDPackage;
 
 public class BindingsRecoverySDBuilder {
 	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
 	
+	private Map<SDMethod, List<String>> postProcessMap;
+
+	private void postProcessMethodInvocations(final SDModel model) {
+		for (Map.Entry<SDMethod, List<String>> entry : postProcessMap.entrySet()) {
+			final SDMethod method = entry.getKey();
+			List<String> invocations = entry.getValue();
+//			if (method.toString().endsWith("testFixedMembershipTokenIPv4()")) {
+//				System.out.print(' ');
+//			}
+			for (String invokedKey : invocations) {
+				SDMethod invoked = model.find(SDMethod.class, invokedKey);
+				if (invoked != null) {
+					invoked.addCaller(method);
+				}
+			}
+		}
+	}
+	
 
 	public void analyze(File rootFolder, List<String> javaFiles, final SDModel model) {
+		postProcessMap = new HashMap<SDMethod, List<String>>();
 		final String projectRoot = rootFolder.getPath();
 		final String[] emptyArray = new String[0];
 		
@@ -40,18 +64,25 @@ public class BindingsRecoverySDBuilder {
 			@Override
 			public void acceptAST(String sourceFilePath, CompilationUnit ast) {
 				String relativePath = sourceFilePath.substring(projectRoot.length() + 1).replaceAll(systemFileSeparator, "/");
+//				IProblem[] problems = ast.getProblems();
+//				if (problems.length > 0) {
+//					System.out.println("problems");
+//				}
 				processCompilationUnit(relativePath, ast, model);
 			}
 		};
 		parser.createASTs((String[]) filesArray, null, emptyArray, fileASTRequestor, null);
+		
+		postProcessMethodInvocations(model);
+		postProcessMap = null;
 	}
 
 	private static ASTParser buildAstParser(String[] sourceFolders) {
-		ASTParser parser = ASTParser.newParser(AST.JLS4);
+		ASTParser parser = ASTParser.newParser(AST.JLS8);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
-//		Map options = JavaCore.getOptions();
-//		JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
-//		parser.setCompilerOptions(options);
+		Map options = JavaCore.getOptions();
+		JavaCore.setComplianceOptions(JavaCore.VERSION_1_8, options);
+		parser.setCompilerOptions(options);
 		parser.setResolveBindings(true);
 		parser.setBindingsRecovery(true);
 		parser.setEnvironment(new String[0], sourceFolders, null, true);
@@ -67,7 +98,7 @@ public class BindingsRecoverySDBuilder {
 		}
 		SDPackage sdPackage = model.getOrCreatePackage(packageName);
 		
-		BindingsRecoveryAstVisitor visitor = new BindingsRecoveryAstVisitor(model, sourceFilePath, sdPackage);
+		BindingsRecoveryAstVisitor visitor = new BindingsRecoveryAstVisitor(model, sourceFilePath, sdPackage, postProcessMap);
 		compilationUnit.accept(visitor);
 		
 //		List<AbstractTypeDeclaration> topLevelTypeDeclarations = compilationUnit.types();

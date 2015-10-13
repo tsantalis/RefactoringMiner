@@ -13,6 +13,8 @@ public class SDModel {
 	private int size = 0;
 	private final Map<String, SDEntity> before = new HashMap<String, SDEntity>();
 	private final Map<String, SDEntity> after = new HashMap<String, SDEntity>();
+
+	EntitySet<SDMethod> extractedMethods = new EntitySet<SDMethod>();
 	
 	private Mode mode = Mode.AFTER;
 	
@@ -20,12 +22,14 @@ public class SDModel {
 		return (mode == Mode.AFTER) ? after : before;
 	}
 	
-	public void setAfter() {
+	public SDModel setAfter() {
 		this.mode = Mode.AFTER;
+		return this;
 	}
 
-	public void setBefore() {
+	public SDModel setBefore() {
 		this.mode = Mode.BEFORE;
+		return this;
 	}
 	
 	private int getId(String key) {
@@ -51,23 +55,23 @@ public class SDModel {
 		return p;
 	}
 
-	public SDType createType(String typeName, SDContainerEntity container) {
+	public SDType createType(String typeName, SDContainerEntity container, String sourceFilePath) {
 		String fullName = container.getFullName() + "." + typeName;
-		SDType sdType = new SDType(getId(fullName), fullName);
+		SDType sdType = new SDType(getId(fullName), typeName, container, sourceFilePath);
 		getMap().put(fullName, sdType);
 		return sdType;
 	}
 
 	public SDMethod createMethod(String methodSignature, SDContainerEntity container) {
 		String fullName = container.getFullName() + "#" + methodSignature;
-		SDMethod sdMethod = new SDMethod(getId(fullName), fullName);
+		SDMethod sdMethod = new SDMethod(getId(fullName), fullName, container);
 		getMap().put(fullName, sdMethod);
 		return sdMethod;
 	}
 	
 	public SDAttribute createAttribute(String attributeName, SDContainerEntity container) {
 		String fullName = container.getFullName() + "#" + attributeName;
-		SDAttribute sdAttribute = new SDAttribute(getId(fullName), fullName);
+		SDAttribute sdAttribute = new SDAttribute(getId(fullName), fullName, container);
 		getMap().put(fullName, sdAttribute);
 		return sdAttribute;
 	}
@@ -80,4 +84,8 @@ public class SDModel {
 		return null;
 	}
 	
+	public void reportExtractedMethod(SDMethod extracted, SDMethod from) {
+		extracted.addOrigin(from);
+		extractedMethods.add(extracted);
+	}
 }

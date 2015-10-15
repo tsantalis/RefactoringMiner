@@ -28,14 +28,27 @@ public class EntitySet<E> implements Set<E> {
 		return result;
 	}
 
-	public EntitySet<E> minus(EntitySet<E> from) {
+	public EntitySet<E> minus(EntitySet<E> other) {
 		EntitySet<E> result = new EntitySet<E>(); 
 		for (E e : set) {
-			if (!from.contains(e)) {
+			if (!other.contains(e)) {
 				result.add(e);
 			}
 		}
 		return result;
+	}
+
+	public EntitySet<E> minus(E entity) {
+		if (set.contains(entity)) {
+			EntitySet<E> result = new EntitySet<E>();
+			for (E e : set) {
+				if (!e.equals(entity)) {
+					result.add(e);
+				}
+			}
+			return result;
+		}
+		return this;
 	}
 	
 	public int size() {

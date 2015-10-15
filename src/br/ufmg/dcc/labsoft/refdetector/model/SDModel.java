@@ -35,6 +35,10 @@ public class SDModel {
 		
 		<T extends SDEntity> T find(Class<T> entityType, String key);
 		
+		boolean exists(String key);
+		
+		boolean exists(SDEntity entity);
+		
 		Collection<SDEntity> getAllEntities();
 		
 		SDPackage getOrCreatePackage(String fullName);
@@ -61,6 +65,14 @@ public class SDModel {
 			return null;
 		}
 		
+		public boolean exists(String key) {
+			return map.containsKey(key);
+		}
+		
+		public boolean exists(SDEntity entity) {
+			return get(entity.getId()) != null;
+		}
+		
 		public <T extends SDEntity> T get(int id) {
 			if (id >= entities.size()) {
 				return null;
@@ -76,13 +88,25 @@ public class SDModel {
 		private void addEntity(SDEntity entity) {
 			map.put(entity.fullName, entity);
 			int index = entity.getId();
-			while (index > entities.size()) {
-				entities.add(null);
+			if (index < entities.size()) {
+				entities.set(index, entity);
+			} else {
+				while (index > entities.size()) {
+					entities.add(null);
+				}
+				entities.add(entity);
 			}
-			entities.add(index, entity);
 //			if (entity.fullName.startsWith("org.bitcoinj.core.BitcoinSerializer")) {
 //				System.out.println("Entity: " + entity.fullName);
 //			}
+		}
+		
+		private void changeEntityId(SDEntity entity, int newId) {
+			int oldId = entity.getId();
+			assert newId < oldId;
+			entity.setId(newId);
+			entities.set(oldId, null);
+			entities.set(newId, entity);
 		}
 
 		public SDPackage getOrCreatePackage(String fullName) {
@@ -95,7 +119,7 @@ public class SDModel {
 		}
 
 		public SDType createType(String typeName, SDContainerEntity container, String sourceFilePath) {
-			String fullName = container.getFullName() + "." + typeName;
+			String fullName = container.fullName() + "." + typeName;
 			SDType sdType = new SDType(this, getId(fullName, this), typeName, container, sourceFilePath);
 			addEntity(sdType);
 			return sdType;
@@ -104,20 +128,20 @@ public class SDModel {
 		public SDType createAnonymousType(SDContainerEntity container, String sourceFilePath) {
 			SDType parent = (SDType) container;
 			int anonId = parent.anonymousClasses().size() + 1;
-			String fullName = container.getFullName() + "$" + anonId;
+			String fullName = container.fullName() + "$" + anonId;
 			SDType sdType = parent.addAnonymousClass(getId(fullName, this), anonId);
 			return sdType;
 		}
 
 		public SDMethod createMethod(String methodSignature, SDContainerEntity container) {
-			String fullName = container.getFullName() + "#" + methodSignature;
+			String fullName = container.fullName() + "#" + methodSignature;
 			SDMethod sdMethod = new SDMethod(this, getId(fullName, this), methodSignature, container);
 			addEntity(sdMethod);
 			return sdMethod;
 		}
 		
 		public SDAttribute createAttribute(String attributeName, SDContainerEntity container) {
-			String fullName = container.getFullName() + "#" + attributeName;
+			String fullName = container.fullName() + "#" + attributeName;
 			SDAttribute sdAttribute = new SDAttribute(this, getId(fullName, this), fullName, container);
 			addEntity(sdAttribute);
 			return sdAttribute;
@@ -148,5 +172,16 @@ public class SDModel {
 	public void reportExtractedMethod(SDMethod extracted, SDMethod from) {
 		extracted.addOrigin(from);
 		extractedMethods.add(extracted);
+	}
+
+	public void reportMovedClass(SDType original, SDType moved) {
+		if (original.getId() == moved.getId()) {
+			return;
+		}
+		createLinkBetween(original, moved);
+	}
+
+	private void createLinkBetween(SDType entityBefore, SDType sameEntityAfter) {
+		BEFORE.changeEntityId(entityBefore, sameEntityAfter.getId());
 	}
 }

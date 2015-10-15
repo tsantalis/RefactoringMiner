@@ -10,4 +10,14 @@ public abstract class SDContainerEntity extends SDEntity {
 		super(snapshot, id, fullName, container);
 	}
 
+	public abstract boolean isPackage();
+
+	public boolean isNestedIn(SDContainerEntity other) {
+		if (this.fullName.length() > other.fullName.length() && this.fullName.startsWith(other.fullName)) {
+			char sep = this.fullName.charAt(other.fullName.length());
+			return sep == '.' || sep == '$';
+		}
+		return false;
+	}
+
 }

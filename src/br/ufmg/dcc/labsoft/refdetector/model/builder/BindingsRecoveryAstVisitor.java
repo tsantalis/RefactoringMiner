@@ -1,9 +1,11 @@
 package br.ufmg.dcc.labsoft.refdetector.model.builder;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.Annotation;
@@ -76,7 +78,7 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(EnumDeclaration node) {
 		String typeName = node.getName().getIdentifier();
-		containerStack.push(visitTypeDeclaration(typeName, null));
+		containerStack.push(visitTypeDeclaration(typeName, null, node.modifiers()));
 		return true;
 	}
 	public void endVisit(EnumDeclaration node) {
@@ -86,15 +88,19 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 	public boolean visit(TypeDeclaration typeDeclaration) {
 		String typeName = typeDeclaration.getName().getIdentifier();
 		Type superType = typeDeclaration.getSuperclassType();
-		containerStack.push(visitTypeDeclaration(typeName, superType));
+		containerStack.push(visitTypeDeclaration(typeName, superType, typeDeclaration.modifiers()));
 		return true;
 	}
 	public void endVisit(TypeDeclaration node) {
 		containerStack.pop();
 	}
 
-	private SDType visitTypeDeclaration(String typeName, Type superType) {
+	private SDType visitTypeDeclaration(String typeName, Type superType, List<?> modifiers) {
 		SDType type = model.createType(typeName, containerStack.peek(), sourceFilePath);
+		
+		Set<String> annotations = extractAnnotationTypes(modifiers);
+		type.setDeprecatedAnnotation(annotations.contains("Deprecated"));
+		
     	if (superType != null) {
     		ITypeBinding superTypeBinding = superType.resolveBinding();
     		extractSupertypesForPostProcessing(type, superTypeBinding);
@@ -124,18 +130,12 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 		SDMethod method = model.createMethod(methodSignature, containerStack.peek());
 //		System.out.println("Method: " + methodSignature);
 		
-		boolean testAnnotation = false;
-		boolean deprecatedAnnotation = false;
+	//	boolean testAnnotation = false;
+//		boolean deprecatedAnnotation = false;
 		List<?> modifiers = methodDeclaration.modifiers();
-		for (Object modifier : modifiers) {
-			if (modifier instanceof Annotation) {
-				Annotation a = (Annotation) modifier;
-				testAnnotation = testAnnotation || a.getTypeName().toString().equals("Test");
-				deprecatedAnnotation = deprecatedAnnotation || a.getTypeName().toString().equals("Deprecated");
-			}
-		}
-		method.setTestAnnotation(testAnnotation);
-		method.setDeprecatedAnnotation(deprecatedAnnotation);
+		Set<String> annotations = extractAnnotationTypes(modifiers);
+		method.setTestAnnotation(annotations.contains("Test"));
+		method.setDeprecatedAnnotation(annotations.contains("Deprecated"));
 		
 		method.setNumberOfStatements(AstUtils.countNumberOfStatements(methodDeclaration));
 		
@@ -156,6 +156,17 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 		
 		postProcessInvocations.put(method, invocations);
 		return true;
+	}
+
+	private static Set<String> extractAnnotationTypes(List<?> modifiers) {
+		Set<String> annotations = new HashSet<String>();
+		for (Object modifier : modifiers) {
+			if (modifier instanceof Annotation) {
+				Annotation a = (Annotation) modifier;
+				annotations.add(a.getTypeName().toString());
+			}
+		}
+		return annotations;
 	}
 
 //	@Override

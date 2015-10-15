@@ -16,4 +16,9 @@ public class SDPackage extends SDContainerEntity {
 		return test;
 	}
 
+	@Override
+	public boolean isPackage() {
+		return true;
+	}
+
 }

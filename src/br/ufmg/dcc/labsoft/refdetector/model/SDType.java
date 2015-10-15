@@ -8,18 +8,19 @@ public class SDType extends SDContainerEntity {
 	private String simpleName;
 	private String sourceFilePath;
 	private boolean isAnonymous;
+	private boolean deprecatedAnnotation;
 	private EntitySet<SDType> subtypes = new EntitySet<SDType>();
 	private List<SDType> anonymousClasses = new ArrayList<SDType>();
 	
 	public SDType(SDModel.Snapshot snapshot, int id, String simpleName, SDContainerEntity container, String sourceFilePath) {
-		super(snapshot, id, container.getFullName() + "." + simpleName, container);
+		super(snapshot, id, container.fullName() + "." + simpleName, container);
 		this.simpleName = simpleName;
 		this.sourceFilePath = sourceFilePath;
 		this.isAnonymous = false;
 	}
 
 	private SDType(SDModel.Snapshot snapshot, int id, int anonymousId, SDType container, String sourceFilePath) {
-		super(snapshot, id, container.getFullName() + "$" + anonymousId, container);
+		super(snapshot, id, container.fullName() + "$" + anonymousId, container);
 		this.simpleName = "" + anonymousId;
 		this.sourceFilePath = sourceFilePath;
 		this.isAnonymous = true;
@@ -31,6 +32,11 @@ public class SDType extends SDContainerEntity {
 
 	public boolean isAnonymous() {
 		return isAnonymous;
+	}
+	
+	@Override
+	public boolean isPackage() {
+		return false;
 	}
 	
 	public List<SDType> anonymousClasses() {
@@ -51,6 +57,10 @@ public class SDType extends SDContainerEntity {
 		return test;
 	}
 
+	public boolean isDeprecated() {
+		return deprecatedAnnotation;
+	}
+
 	public EntitySet<SDType> subtypes() {
 		return subtypes;
 	}
@@ -63,6 +73,10 @@ public class SDType extends SDContainerEntity {
 		SDType anon = new SDType(snapshot, id, anonId, this, sourceFilePath);
 		anonymousClasses.add(anon);
 		return anon;
+	}
+
+	public void setDeprecatedAnnotation(boolean deprecatedAnnotation) {
+		this.deprecatedAnnotation = deprecatedAnnotation;
 	}
 
 }

@@ -10,7 +10,7 @@ public class SDMethod extends SDEntity {
 	private EntitySet<SDMethod> origins;
 
 	public SDMethod(SDModel.Snapshot snapshot, int id, String signature, SDContainerEntity container) {
-		super(snapshot, id, container.getFullName() + "#" + signature, container);
+		super(snapshot, id, container.fullName() + "#" + signature, container);
 		this.signature = signature;
 		this.callers = new EntitySet<SDMethod>();
 		this.origins = new EntitySet<SDMethod>();
@@ -40,7 +40,7 @@ public class SDMethod extends SDEntity {
 	public boolean isOverriden() {
 		SDType parent = (SDType) this.container;
 		for (SDType subtype : parent.subtypes()) {
-			String overridenMethodKey = subtype.getFullName() + "#" + signature;
+			String overridenMethodKey = subtype.fullName() + "#" + signature;
 			if (snapshot.find(SDMethod.class, overridenMethodKey) != null) {
 				return true;
 			}

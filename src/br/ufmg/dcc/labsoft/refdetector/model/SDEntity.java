@@ -18,8 +18,16 @@ public abstract class SDEntity {
 		return id;
 	}
 	
-	public String getFullName() {
+	int setId(int id) {
+		return this.id = id;
+	}
+	
+	public String fullName() {
 		return fullName;
+	}
+	
+	public SDContainerEntity container() {
+		return container;
 	}
 	
 	public abstract boolean isTestCode();

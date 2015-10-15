@@ -20,10 +20,13 @@ public class RefactoringsSDBuilder {
 
 	private void onExtractMethod(SDModel model, ExtractOperationRefactoring ref) {
 		String keyExtracted = ref.getExtractedOperation().getKey();
-		SDMethod extracted = model.setAfter().find(SDMethod.class, keyExtracted);
+		SDMethod extracted = model.after().find(SDMethod.class, keyExtracted);
+		if (extracted == null) {
+			throw new RuntimeException("Method not found: " + keyExtracted);
+		}
 		
 		String keyFrom = ref.getExtractedFromOperation().getKey();
-		SDMethod from = model.setBefore().find(SDMethod.class, keyFrom);
+		SDMethod from = model.before().find(SDMethod.class, keyFrom);
 		
 		model.reportExtractedMethod(extracted, from);
 	}

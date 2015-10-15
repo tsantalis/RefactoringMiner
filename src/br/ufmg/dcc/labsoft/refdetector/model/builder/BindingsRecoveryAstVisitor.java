@@ -1,24 +1,24 @@
 package br.ufmg.dcc.labsoft.refdetector.model.builder;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.Annotation;
-import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
+import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
+import br.ufmg.dcc.labsoft.refactoringanalyzer.util.AstUtils;
 import br.ufmg.dcc.labsoft.refdetector.model.SDContainerEntity;
 import br.ufmg.dcc.labsoft.refdetector.model.SDMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
@@ -27,61 +27,102 @@ import br.ufmg.dcc.labsoft.refdetector.model.SDType;
 
 public class BindingsRecoveryAstVisitor extends ASTVisitor {
 
-	private final SDModel model;
+	private final SDModel.Snapshot model;
 	private final String sourceFilePath;
 	private final LinkedList<SDContainerEntity> containerStack;
-	private final Map<SDMethod, List<String>> postProcessMap;
+	private final Map<SDMethod, List<String>> postProcessInvocations;
+	private final Map<SDType, List<String>> postProcessSupertypes;
 	
-	public BindingsRecoveryAstVisitor(SDModel model, String sourceFilePath, SDPackage sdPackage, Map<SDMethod, List<String>> postProcessMap) {
+	public BindingsRecoveryAstVisitor(SDModel.Snapshot model, String sourceFilePath, SDPackage sdPackage, Map<SDMethod, List<String>> postProcessMap, Map<SDType, List<String>> postProcessSupertypes) {
 		this.model = model;
 		this.sourceFilePath = sourceFilePath;
 		this.containerStack = new LinkedList<SDContainerEntity>();
 		this.containerStack.push(sdPackage);
-		this.postProcessMap = postProcessMap;
+		this.postProcessInvocations = postProcessMap;
+		this.postProcessSupertypes = postProcessSupertypes;
+	}
+	
+	@Override
+	public boolean visit(AnonymousClassDeclaration node) {
+		if (node.getParent() instanceof ClassInstanceCreation) {
+			ClassInstanceCreation parent = (ClassInstanceCreation) node.getParent();
+			ITypeBinding typeBinding = parent.getType().resolveBinding();
+			if (typeBinding != null && typeBinding.isFromSource()) {
+				SDType type = model.createAnonymousType(containerStack.peek(), sourceFilePath);
+				containerStack.push(type);
+				extractSupertypesForPostProcessing(type, typeBinding);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public void endVisit(AnonymousClassDeclaration node) {
+		if (node.getParent() instanceof ClassInstanceCreation) {
+			ClassInstanceCreation parent = (ClassInstanceCreation) node.getParent();
+			ITypeBinding typeBinding = parent.getType().resolveBinding();
+			if (typeBinding != null && typeBinding.isFromSource()) {
+				containerStack.pop();
+			}
+		}
+	}
+	
+	@Override
+	public boolean visit(AnnotationTypeDeclaration node) {
+		return false;
+	}
+	
+	@Override
+	public boolean visit(EnumDeclaration node) {
+		String typeName = node.getName().getIdentifier();
+		containerStack.push(visitTypeDeclaration(typeName, null));
+		return true;
+	}
+	public void endVisit(EnumDeclaration node) {
+		containerStack.pop();
 	}
 	
 	public boolean visit(TypeDeclaration typeDeclaration) {
 		String typeName = typeDeclaration.getName().getIdentifier();
-		SDType type = model.createType(typeName, containerStack.peek(), sourceFilePath);
-		containerStack.push(type);
-		
-		System.out.println("Type: " + typeName);
-//		UMLClass umlClass = new UMLClass(packageName, className, null, sourceFile, typeDeclaration.isPackageMemberTypeDeclaration());
-//		
-//		if(typeDeclaration.isInterface()) {
-//			umlClass.setInterface(true);
-//    	}
-//    	
-//    	int modifiers = typeDeclaration.getModifiers();
-//    	if((modifiers & Modifier.ABSTRACT) != 0)
-//    		umlClass.setAbstract(true);
-//    	
-//    	if((modifiers & Modifier.PUBLIC) != 0)
-//    		umlClass.setVisibility("public");
-//    	else if((modifiers & Modifier.PROTECTED) != 0)
-//    		umlClass.setVisibility("protected");
-//    	else if((modifiers & Modifier.PRIVATE) != 0)
-//    		umlClass.setVisibility("private");
-//    	else
-//    		umlClass.setVisibility("package");
-//		
-//    	Type superclassType = typeDeclaration.getSuperclassType();
-//    	if (superclassType != null) {
-//    		String typeName = this.getTypeName(superclassType);
-//    		System.out.println("Superclass: " + typeName);
-//    	}
-		
+		Type superType = typeDeclaration.getSuperclassType();
+		containerStack.push(visitTypeDeclaration(typeName, superType));
 		return true;
-	};
-	
+	}
 	public void endVisit(TypeDeclaration node) {
 		containerStack.pop();
 	}
+
+	private SDType visitTypeDeclaration(String typeName, Type superType) {
+		SDType type = model.createType(typeName, containerStack.peek(), sourceFilePath);
+    	if (superType != null) {
+    		ITypeBinding superTypeBinding = superType.resolveBinding();
+    		extractSupertypesForPostProcessing(type, superTypeBinding);
+    	}
+    	return type;
+	}
+
+	private void extractSupertypesForPostProcessing(SDType type, ITypeBinding superTypeBinding) {
+		List<String> supertypes = new ArrayList<String>();
+		while (superTypeBinding != null && superTypeBinding.isFromSource()) {
+			String superTypeName = superTypeBinding.getErasure().getQualifiedName();
+			supertypes.add(superTypeName);
+			superTypeBinding = superTypeBinding.getSuperclass();
+		}
+		if (!supertypes.isEmpty()) {
+			postProcessSupertypes.put(type, supertypes);
+		}
+	}
 	
 	public boolean visit(MethodDeclaration methodDeclaration) {
-		String methodSignature = getSignatureFromMethodDeclaration(methodDeclaration);
+//		ASTNode parentNode = methodDeclaration.getParent();
+//		if (!(parentNode instanceof TypeDeclaration)) {
+//			// ignore methods from anonymous classes
+//			return false;
+//		}
+		String methodSignature = AstUtils.getSignatureFromMethodDeclaration(methodDeclaration);
 		SDMethod method = model.createMethod(methodSignature, containerStack.peek());
-		System.out.println("Method: " + methodSignature);
+//		System.out.println("Method: " + methodSignature);
 		
 		boolean testAnnotation = false;
 		boolean deprecatedAnnotation = false;
@@ -96,24 +137,24 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 		method.setTestAnnotation(testAnnotation);
 		method.setDeprecatedAnnotation(deprecatedAnnotation);
 		
-		method.setNumberOfStatements(countNumberOfStatements(methodDeclaration));
+		method.setNumberOfStatements(AstUtils.countNumberOfStatements(methodDeclaration));
 		
 		final List<String> invocations = new ArrayList<String>();
-//		if (method.toString().endsWith("testFixedMembershipTokenIPv4()")) {
+//		if (method.toString().endsWith("IterableSubject#isPartiallyOrdered()")) {
 //			System.out.print(' ');
 //		}
 		methodDeclaration.accept(new ASTVisitor() {
 			public boolean visit(MethodInvocation node) {
 				IMethodBinding binding = node.resolveMethodBinding();
 				if (binding != null && binding.getDeclaringClass().isFromSource()) {
-					String methodKey = getKeyFromMethodBinding(binding);
+					String methodKey = AstUtils.getKeyFromMethodBinding(binding);
 					invocations.add(methodKey);
 				}
 				return true;
 			}
 		});
 		
-		postProcessMap.put(method, invocations);
+		postProcessInvocations.put(method, invocations);
 		return true;
 	}
 
@@ -124,44 +165,6 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 //		}
 //	}
 	
-	private String getKeyFromMethodBinding(IMethodBinding binding) {
-		StringBuilder sb = new StringBuilder();
-		String className = binding.getDeclaringClass().getQualifiedName();
-		sb.append(className);
-		sb.append('#');
-		String methodName = binding.getName();
-		sb.append(methodName);
-		sb.append('(');
-		ITypeBinding[] parameters = binding.getParameterTypes();
-		for (int i = 0; i < parameters.length; i++) {
-			if (i > 0) {
-				sb.append(", ");
-			}
-			ITypeBinding type = parameters[i];
-			sb.append(type.getName());
-		}
-		sb.append(')');
-		return sb.toString();
-	}
-	
-	private String getSignatureFromMethodDeclaration(MethodDeclaration methodDeclaration) {
-		String methodName = methodDeclaration.getName().getIdentifier();
-		StringBuilder sb = new StringBuilder();
-		sb.append(methodName);
-		sb.append('(');
-		Iterator<SingleVariableDeclaration> parameters = methodDeclaration.parameters().iterator();
-		while (parameters.hasNext()) {
-			SingleVariableDeclaration parameter = parameters.next();
-			Type parameterType = parameter.getType();
-			sb.append(parameterType.toString());
-			if (parameters.hasNext()) {
-				sb.append(", ");
-			}
-		}
-		sb.append(')');
-		String methodSignature = sb.toString();
-		return methodSignature;
-	}
 	
 //	private String getTypeName(Type type) {
 //		ITypeBinding binding = type.resolveBinding();
@@ -177,22 +180,4 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 //		return type.toString();
 //	}
 	
-	public static int countNumberOfStatements(MethodDeclaration decl) {
-		return new StatementCounter().countStatements(decl);
-	}
-	
-	private static class StatementCounter extends ASTVisitor {
-		private int counter;
-		public int countStatements(MethodDeclaration methodDeclaration) {
-			counter = 0;
-			methodDeclaration.accept(this);
-			return counter;
-		}
-		@Override
-		public void preVisit(ASTNode node) {
-			if (node instanceof Statement && !(node instanceof Block)) {
-				counter++;
-			}
-		}
-	}
 }

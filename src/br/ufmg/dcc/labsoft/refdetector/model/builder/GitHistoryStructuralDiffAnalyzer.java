@@ -170,15 +170,13 @@ public class GitHistoryStructuralDiffAnalyzer {
 			// Checkout and build model for current commit
 			gitService.checkout(repository, commitId);
 			UMLModel currentUMLModel = createModel(projectFolder, filesCurrent);
-			model.setAfter();
-			builder.analyze(projectFolder, filesCurrent, model);
+			builder.analyze(projectFolder, filesCurrent, model.after());
 			
 			// Checkout and build model for parent commit
 			String parentCommit = currentCommit.getParent(0).getName();
 			gitService.checkout(repository, parentCommit);
 			UMLModel parentUMLModel = createModel(projectFolder, filesBefore);
-			model.setBefore();
-			builder.analyze(projectFolder, filesBefore, model);
+			builder.analyze(projectFolder, filesBefore, model.before());
 			
 			// Diff between currentModel e parentModel
 			List<Refactoring> refactoringsAtRevision = parentUMLModel.diff(currentUMLModel, renamedFilesHint).getRefactorings();

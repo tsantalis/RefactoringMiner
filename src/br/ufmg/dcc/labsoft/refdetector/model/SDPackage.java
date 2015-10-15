@@ -2,8 +2,8 @@ package br.ufmg.dcc.labsoft.refdetector.model;
 
 public class SDPackage extends SDContainerEntity {
 
-	public SDPackage(int id, String fullName) {
-		super(id, fullName);
+	public SDPackage(SDModel.Snapshot snapshot, int id, String fullName) {
+		super(snapshot, id, fullName);
 	}
 
 	@Override

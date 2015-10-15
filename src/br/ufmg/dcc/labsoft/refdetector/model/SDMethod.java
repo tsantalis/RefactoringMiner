@@ -2,15 +2,16 @@ package br.ufmg.dcc.labsoft.refdetector.model;
 
 public class SDMethod extends SDEntity {
 
-	private EntitySet<SDMethod> callers;
-	private EntitySet<SDMethod> origins;
-	
+	private String signature;
 	private boolean testAnnotation;
 	private boolean deprecatedAnnotation;
 	private int numberOfStatements;
+	private EntitySet<SDMethod> callers;
+	private EntitySet<SDMethod> origins;
 
-	public SDMethod(int id, String fullName, SDContainerEntity container) {
-		super(id, fullName, container);
+	public SDMethod(SDModel.Snapshot snapshot, int id, String signature, SDContainerEntity container) {
+		super(snapshot, id, container.getFullName() + "#" + signature, container);
+		this.signature = signature;
 		this.callers = new EntitySet<SDMethod>();
 		this.origins = new EntitySet<SDMethod>();
 	}
@@ -37,7 +38,13 @@ public class SDMethod extends SDEntity {
 	}
 
 	public boolean isOverriden() {
-		// TODO Auto-generated method stub
+		SDType parent = (SDType) this.container;
+		for (SDType subtype : parent.subtypes()) {
+			String overridenMethodKey = subtype.getFullName() + "#" + signature;
+			if (snapshot.find(SDMethod.class, overridenMethodKey) != null) {
+				return true;
+			}
+		}
 		return false;
 	}
 

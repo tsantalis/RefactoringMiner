@@ -12,7 +12,6 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -25,14 +24,16 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
 import br.ufmg.dcc.labsoft.refdetector.model.SDMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
 import br.ufmg.dcc.labsoft.refdetector.model.SDPackage;
+import br.ufmg.dcc.labsoft.refdetector.model.SDType;
 
 public class BindingsRecoverySDBuilder {
 	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
 	
-	private Map<SDMethod, List<String>> postProcessMap;
+	private Map<SDMethod, List<String>> postProcessInvocations;
+	private Map<SDType, List<String>> postProcessSupertypes;
 
-	private void postProcessMethodInvocations(final SDModel model) {
-		for (Map.Entry<SDMethod, List<String>> entry : postProcessMap.entrySet()) {
+	private void postProcessMethodInvocations(final SDModel.Snapshot model) {
+		for (Map.Entry<SDMethod, List<String>> entry : postProcessInvocations.entrySet()) {
 			final SDMethod method = entry.getKey();
 			List<String> invocations = entry.getValue();
 //			if (method.toString().endsWith("testFixedMembershipTokenIPv4()")) {
@@ -46,10 +47,23 @@ public class BindingsRecoverySDBuilder {
 			}
 		}
 	}
+	private void postProcessSupertypes(final SDModel.Snapshot model) {
+		for (Map.Entry<SDType, List<String>> entry : postProcessSupertypes.entrySet()) {
+			final SDType type = entry.getKey();
+			List<String> supertypes = entry.getValue();
+			for (String supertypeKey : supertypes) {
+				SDType supertype = model.find(SDType.class, supertypeKey);
+				if (supertype != null) {
+					supertype.addSubtype(type);
+				}
+			}
+		}
+	}
 	
 
-	public void analyze(File rootFolder, List<String> javaFiles, final SDModel model) {
-		postProcessMap = new HashMap<SDMethod, List<String>>();
+	public void analyze(File rootFolder, List<String> javaFiles, final SDModel.Snapshot model) {
+		postProcessInvocations = new HashMap<SDMethod, List<String>>();
+		postProcessSupertypes = new HashMap<SDType, List<String>>();
 		final String projectRoot = rootFolder.getPath();
 		final String[] emptyArray = new String[0];
 		
@@ -74,7 +88,9 @@ public class BindingsRecoverySDBuilder {
 		parser.createASTs((String[]) filesArray, null, emptyArray, fileASTRequestor, null);
 		
 		postProcessMethodInvocations(model);
-		postProcessMap = null;
+		postProcessInvocations = null;
+		postProcessSupertypes(model);
+		postProcessSupertypes = null;
 	}
 
 	private static ASTParser buildAstParser(String[] sourceFolders) {
@@ -90,7 +106,7 @@ public class BindingsRecoverySDBuilder {
 		return parser;
 	}
 
-	protected void processCompilationUnit(String sourceFilePath, CompilationUnit compilationUnit, SDModel model) {
+	protected void processCompilationUnit(String sourceFilePath, CompilationUnit compilationUnit, SDModel.Snapshot model) {
 		PackageDeclaration packageDeclaration = compilationUnit.getPackage();
 		String packageName = "";
 		if (packageDeclaration != null) {
@@ -98,7 +114,7 @@ public class BindingsRecoverySDBuilder {
 		}
 		SDPackage sdPackage = model.getOrCreatePackage(packageName);
 		
-		BindingsRecoveryAstVisitor visitor = new BindingsRecoveryAstVisitor(model, sourceFilePath, sdPackage, postProcessMap);
+		BindingsRecoveryAstVisitor visitor = new BindingsRecoveryAstVisitor(model, sourceFilePath, sdPackage, postProcessInvocations, postProcessSupertypes);
 		compilationUnit.accept(visitor);
 		
 //		List<AbstractTypeDeclaration> topLevelTypeDeclarations = compilationUnit.types();
@@ -164,7 +180,7 @@ public class BindingsRecoverySDBuilder {
 
 	private void processTypeDeclaration(TypeDeclaration typeDeclaration, String packageName, String sourceFile) {
 		String className = typeDeclaration.getName().getFullyQualifiedName();
-		System.out.println("Type: " + className);
+//		System.out.println("Type: " + className);
 //		UMLClass umlClass = new UMLClass(packageName, className, null, sourceFile, typeDeclaration.isPackageMemberTypeDeclaration());
 //		//UMLClass bytecodeClass = bytecodeModel.getClass(umlClass.getName());
 //		
@@ -188,7 +204,7 @@ public class BindingsRecoverySDBuilder {
     	Type superclassType = typeDeclaration.getSuperclassType();
     	if (superclassType != null) {
     		String typeName = this.getTypeName(superclassType);
-    		System.out.println("Superclass: " + typeName);
+//    		System.out.println("Superclass: " + typeName);
     	}
 //    	
 //    	List<Type> superInterfaceTypes = typeDeclaration.superInterfaceTypes();

@@ -12,6 +12,10 @@ public class RefactoringMotivationClassifier {
 
 	SDModel sdModel;
 	
+	public RefactoringMotivationClassifier(SDModel sdModel) {
+		this.sdModel = sdModel;
+	}
+
 	public enum Motivation {
 		EM_REUSE,
 		EM_INTRODUCE_ALTERNATIVE_SIGNATURE,
@@ -27,7 +31,8 @@ public class RefactoringMotivationClassifier {
 		EntitySet<SDMethod> from = extractedMethod.origins();
 		
 		if (from.size() == 1) {
-			SDMethod fromMethod = from.getFirst();
+			SDMethod fromMethodBefore = from.getFirst();
+			SDMethod fromMethod = sdModel.after(fromMethodBefore);
 			if (fromMethod.delegatesTo(extractedMethod)) {
 				if (fromMethod.isDeprecated()) {
 					tags.add(Motivation.EM_PRESERVE_BACKWARD_COMPATIBILITY);
@@ -41,15 +46,17 @@ public class RefactoringMotivationClassifier {
 			tags.add(Motivation.EM_REMOVE_DUPLICATION);
 		}
 		
-		if (!tags.contains(Motivation.EM_PRESERVE_BACKWARD_COMPATIBILITY) && !tags.contains(Motivation.EM_PRESERVE_BACKWARD_COMPATIBILITY)) {
+		if (!tags.contains(Motivation.EM_PRESERVE_BACKWARD_COMPATIBILITY) && !tags.contains(Motivation.EM_INTRODUCE_ALTERNATIVE_SIGNATURE)) {
 			final boolean isTest = extractedMethod.isTestCode();
 			if (extractedMethod.callers().suchThat(testCodeEquals(isTest)).minus(from).size() > 0) {
 				tags.add(Motivation.EM_REUSE);
-			} 
+			}
 		}
-		
-		if (!extractedMethod.isTestCode() && extractedMethod.callers().suchThat(testCodeEquals(true)).minus(from).size() > 0) {
-			tags.add(Motivation.EM_IMPROVE_TESTABILITY);
+
+		if (!tags.contains(Motivation.EM_PRESERVE_BACKWARD_COMPATIBILITY)) {
+			if (!extractedMethod.isTestCode() && extractedMethod.callers().suchThat(testCodeEquals(true)).minus(from).size() > 0) {
+				tags.add(Motivation.EM_IMPROVE_TESTABILITY);
+			}
 		}
 
 		if (extractedMethod.isOverriden()) {

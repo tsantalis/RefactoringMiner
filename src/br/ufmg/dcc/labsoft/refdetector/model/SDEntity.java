@@ -3,10 +3,12 @@ package br.ufmg.dcc.labsoft.refdetector.model;
 public abstract class SDEntity {
 
 	private int id;
+	protected final SDModel.Snapshot snapshot;
 	protected String fullName;
 	protected SDContainerEntity container;
 	
-	public SDEntity(int id, String fullName, SDContainerEntity container) {
+	public SDEntity(SDModel.Snapshot snapshot, int id, String fullName, SDContainerEntity container) {
+		this.snapshot = snapshot;
 		this.id = id;
 		this.fullName = fullName;
 		this.container = container;

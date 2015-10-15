@@ -9,6 +9,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import br.ufmg.dcc.labsoft.refactoringanalyzer.util.AstUtils;
+
 public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 	private String name;
 	private String xmiID;
@@ -244,7 +246,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 		for (int i = 0; i < parameters.size(); i++) {
 			UMLParameter parameter = parameters.get(i);
 			if(parameter.getKind().equals("in")) {
-				sb.append(parameter.getType().toString());
+				sb.append(AstUtils.stripTypeParamsFromTypeName(parameter.getType().toString()));
 				if(i < parameters.size() - 1)
 					sb.append(", ");
 			}

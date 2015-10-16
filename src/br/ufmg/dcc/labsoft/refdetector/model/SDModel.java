@@ -150,7 +150,7 @@ public class SDModel {
 	}
 	
 	private int size = 0;
-	EntitySet<SDMethod> extractedMethods = new EntitySet<SDMethod>();
+//	EntitySet<SDMethod> extractedMethods = new EntitySet<SDMethod>();
 	
 	private int getId(String key, Snapshot snapshot) {
 //		if (key.equals("io.realm.Realm#allObjectsSorted(Class, String, boolean)")) {
@@ -171,17 +171,26 @@ public class SDModel {
 	
 	public void reportExtractedMethod(SDMethod extracted, SDMethod from) {
 		extracted.addOrigin(from);
-		extractedMethods.add(extracted);
+//		extractedMethods.add(extracted);
 	}
 
-	public void reportMovedClass(SDType original, SDType moved) {
-		if (original.getId() == moved.getId()) {
-			return;
-		}
+	public void reportRenamedOrMovedClass(SDType original, SDType moved) {
 		createLinkBetween(original, moved);
 	}
 
-	private void createLinkBetween(SDType entityBefore, SDType sameEntityAfter) {
+	public void reportRenamedMethod(SDMethod original, SDMethod renamed) {
+		createLinkBetween(original, renamed);
+	}
+
+	public void reportMovedMethod(SDMethod original, SDMethod moved) {
+		moved.addOrigin(original);
+	}
+
+	private void createLinkBetween(SDEntity entityBefore, SDEntity sameEntityAfter) {
+		if (entityBefore.getId() == sameEntityAfter.getId()) {
+			return;
+		}
 		BEFORE.changeEntityId(entityBefore, sameEntityAfter.getId());
 	}
+
 }

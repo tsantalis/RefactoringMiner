@@ -31,5 +31,13 @@ public class MoveOperationRefactoring implements Refactoring {
 	public RefactoringType getRefactoringType() {
 		return RefactoringType.MOVE_OPERATION;
 	}
-	
+
+	public UMLOperation getOriginalOperation() {
+		return originalOperation;
+	}
+
+	public UMLOperation getMovedOperation() {
+		return movedOperation;
+	}
+
 }

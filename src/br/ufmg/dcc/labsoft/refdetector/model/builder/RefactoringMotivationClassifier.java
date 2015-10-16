@@ -31,7 +31,12 @@ public class RefactoringMotivationClassifier {
 		MC_INTRODUCE_SUBPACKAGE,
 		MC_CONVERT_TO_TOP_LEVEL,
 		MC_CONVERT_TO_INNER,
-		MC_REMOVE_FROM_DEPRECATED_CONTAINER;
+		MC_REMOVE_FROM_DEPRECATED_CONTAINER,
+
+		MM_REUSE,
+		MM_REMOVE_DUPLICATION,
+		MM_ENABLE_OVERRIDING
+		;
 	}
 
 	public Set<Motivation> classifyExtractMethod(SDMethod extractedMethod) {
@@ -107,6 +112,31 @@ public class RefactoringMotivationClassifier {
 		return tags;
 	}
 	
+	public Set<Motivation> classifyMoveMethod(SDMethod movedMethod) {
+		Set<Motivation> tags = EnumSet.noneOf(Motivation.class);
+		
+		EntitySet<SDMethod> origins = movedMethod.origins();
+		
+		if (origins.size() > 1) {
+			tags.add(Motivation.MM_REMOVE_DUPLICATION);
+		}
+		
+		if (movedMethod.isOverriden()) {
+			tags.add(Motivation.MM_ENABLE_OVERRIDING);
+		}
+		
+		if (origins.size() == 1) {
+			SDMethod origin = origins.getFirst();
+			final boolean isTest = movedMethod.isTestCode();
+			EntitySet<SDMethod> newCallers = movedMethod.callers().suchThat(testCodeEquals(isTest));
+			EntitySet<SDMethod> originalCallers = origin.callers().suchThat(testCodeEquals(isTest));
+			if (newCallers.size() > originalCallers.size()) {
+				tags.add(Motivation.MM_REUSE);
+			}
+		}
+		return tags;
+	}
+
 	private Filter<SDMethod> testCodeEquals(final boolean value) {
 		return new Filter<SDMethod>() {
 			@Override

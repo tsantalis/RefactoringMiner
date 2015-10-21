@@ -8,6 +8,7 @@ public class SDMethod extends SDEntity {
 	private int numberOfStatements;
 	private EntitySet<SDMethod> callers;
 	private EntitySet<SDMethod> origins;
+	private SourceCode body;
 
 	public SDMethod(SDModel.Snapshot snapshot, int id, String signature, SDContainerEntity container) {
 		super(snapshot, id, container.fullName() + "#" + signature, container);
@@ -72,6 +73,14 @@ public class SDMethod extends SDEntity {
 
 	public void setNumberOfStatements(int numberOfStatements) {
 		this.numberOfStatements = numberOfStatements;
+	}
+
+	public SourceCode body() {
+		return this.body;
+	}
+
+	public void setBody(SourceCode body) {
+		this.body = body;
 	}
 
 }

@@ -9,6 +9,7 @@ import br.ufmg.dcc.labsoft.refdetector.model.SDContainerEntity;
 import br.ufmg.dcc.labsoft.refdetector.model.SDMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
 import br.ufmg.dcc.labsoft.refdetector.model.SDType;
+import br.ufmg.dcc.labsoft.refdetector.model.SourceCode;
 
 public class RefactoringMotivationClassifier {
 
@@ -21,6 +22,8 @@ public class RefactoringMotivationClassifier {
 	public enum Motivation {
 		EM_REUSE,
 		EM_INTRODUCE_ALTERNATIVE_SIGNATURE,
+		EM_FACILITATE_EXTENSION,
+		EM_DECOMPOSE,
 		EM_REMOVE_DUPLICATION,
 		EM_PRESERVE_BACKWARD_COMPATIBILITY,
 		EM_IMPROVE_TESTABILITY,
@@ -42,17 +45,18 @@ public class RefactoringMotivationClassifier {
 	public Set<Motivation> classifyExtractMethod(SDMethod extractedMethod) {
 		Set<Motivation> tags = EnumSet.noneOf(Motivation.class);
 		EntitySet<SDMethod> from = extractedMethod.origins();
+		SDMethod fromMethodBefore = from.getFirst();
+		SDMethod fromMethodAfter = sd.after(fromMethodBefore);
 		
 		if (from.size() == 1) {
-			SDMethod fromMethodBefore = from.getFirst();
-			SDMethod fromMethod = sd.after(fromMethodBefore);
-			if (fromMethod.delegatesTo(extractedMethod)) {
-				if (fromMethod.isDeprecated()) {
+			if (fromMethodAfter.delegatesTo(extractedMethod)) {
+				if (fromMethodAfter.isDeprecated()) {
 					tags.add(Motivation.EM_PRESERVE_BACKWARD_COMPATIBILITY);
 				} else {
 					tags.add(Motivation.EM_INTRODUCE_ALTERNATIVE_SIGNATURE);
 				}
 			}
+			
 		}
 
 		if (from.size() > 1) {
@@ -78,6 +82,18 @@ public class RefactoringMotivationClassifier {
 
 		if (extractedMethod.isRecursive()) {
 			tags.add(Motivation.EM_ENABLE_RECURSION);
+		}
+		
+		if (from.size() == 1 && tags.isEmpty()) {
+			SourceCode codeExtractedFromMethod = fromMethodBefore.body().diff(fromMethodAfter.body()).deletedLines(0.4);
+			int insertedLinesCount = codeExtractedFromMethod.diff(extractedMethod.body()).insertedLines(0.8).linesCount();
+			if (insertedLinesCount >= 1) {
+				tags.add(Motivation.EM_FACILITATE_EXTENSION);
+			}
+			
+			if (insertedLinesCount == 0) {
+				tags.add(Motivation.EM_DECOMPOSE);
+			}
 		}
 		
 		return tags;

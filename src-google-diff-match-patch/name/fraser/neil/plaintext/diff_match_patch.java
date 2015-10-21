@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package gr.uom.java.xmi.diff;
+package name.fraser.neil.plaintext;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -233,28 +233,25 @@ public class diff_match_patch {
       return diffs;
     }
 
-    {
-      // New scope so as to garbage collect longtext and shorttext.
-      String longtext = text1.length() > text2.length() ? text1 : text2;
-      String shorttext = text1.length() > text2.length() ? text2 : text1;
-      int i = longtext.indexOf(shorttext);
-      if (i != -1) {
-        // Shorter text is inside the longer text (speedup).
-        Operation op = (text1.length() > text2.length()) ?
-                       Operation.DELETE : Operation.INSERT;
-        diffs.add(new Diff(op, longtext.substring(0, i)));
-        diffs.add(new Diff(Operation.EQUAL, shorttext));
-        diffs.add(new Diff(op, longtext.substring(i + shorttext.length())));
-        return diffs;
-      }
-  
-      if (shorttext.length() == 1) {
-        // Single character string.
-        // After the previous speedup, the character can't be an equality.
-        diffs.add(new Diff(Operation.DELETE, text1));
-        diffs.add(new Diff(Operation.INSERT, text2));
-        return diffs;
-      }
+    String longtext = text1.length() > text2.length() ? text1 : text2;
+    String shorttext = text1.length() > text2.length() ? text2 : text1;
+    int i = longtext.indexOf(shorttext);
+    if (i != -1) {
+      // Shorter text is inside the longer text (speedup).
+      Operation op = (text1.length() > text2.length()) ?
+                     Operation.DELETE : Operation.INSERT;
+      diffs.add(new Diff(op, longtext.substring(0, i)));
+      diffs.add(new Diff(Operation.EQUAL, shorttext));
+      diffs.add(new Diff(op, longtext.substring(i + shorttext.length())));
+      return diffs;
+    }
+
+    if (shorttext.length() == 1) {
+      // Single character string.
+      // After the previous speedup, the character can't be an equality.
+      diffs.add(new Diff(Operation.DELETE, text1));
+      diffs.add(new Diff(Operation.INSERT, text2));
+      return diffs;
     }
 
     // Check to see if the problem can be split in two.
@@ -863,7 +860,7 @@ public class diff_match_patch {
         if (overlap_length1 >= overlap_length2) {
           if (overlap_length1 >= deletion.length() / 2.0 ||
               overlap_length1 >= insertion.length() / 2.0) {
-            // Overlap found.  Insert an equality and trim the surrounding edits.
+            // Overlap found. Insert an equality and trim the surrounding edits.
             pointer.previous();
             pointer.add(new Diff(Operation.EQUAL,
                                  insertion.substring(0, overlap_length1)));

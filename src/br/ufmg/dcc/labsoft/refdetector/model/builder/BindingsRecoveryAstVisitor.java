@@ -26,6 +26,7 @@ import br.ufmg.dcc.labsoft.refdetector.model.SDMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
 import br.ufmg.dcc.labsoft.refdetector.model.SDPackage;
 import br.ufmg.dcc.labsoft.refdetector.model.SDType;
+import br.ufmg.dcc.labsoft.refdetector.model.SourceCode;
 
 public class BindingsRecoveryAstVisitor extends ASTVisitor {
 
@@ -138,6 +139,7 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 		method.setDeprecatedAnnotation(annotations.contains("Deprecated"));
 		
 		method.setNumberOfStatements(AstUtils.countNumberOfStatements(methodDeclaration));
+		method.setBody(new SourceCode(methodDeclaration.getBody().toString()));
 		
 		final List<String> invocations = new ArrayList<String>();
 //		if (method.toString().endsWith("IterableSubject#isPartiallyOrdered()")) {

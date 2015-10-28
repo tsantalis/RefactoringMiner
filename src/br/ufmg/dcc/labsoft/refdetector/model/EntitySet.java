@@ -10,10 +10,6 @@ public class EntitySet<E> implements Set<E> {
 
 	Set<E> set = new HashSet<E>();
 	
-	public abstract static class Filter<T> {
-		public abstract boolean accept(T element);
-	}
-
 	public E getFirst() {
 		return set.iterator().next();
 	}

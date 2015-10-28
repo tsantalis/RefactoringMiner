@@ -4,7 +4,7 @@ import java.util.EnumSet;
 import java.util.Set;
 
 import br.ufmg.dcc.labsoft.refdetector.model.EntitySet;
-import br.ufmg.dcc.labsoft.refdetector.model.EntitySet.Filter;
+import br.ufmg.dcc.labsoft.refdetector.model.Filter;
 import br.ufmg.dcc.labsoft.refdetector.model.SDContainerEntity;
 import br.ufmg.dcc.labsoft.refdetector.model.SDMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
@@ -20,15 +20,15 @@ public class RefactoringMotivationClassifier {
 	}
 
 	public enum Motivation {
-		EM_REUSE,
-		EM_INTRODUCE_ALTERNATIVE_SIGNATURE,
-		EM_FACILITATE_EXTENSION,
-		EM_DECOMPOSE,
-		EM_REMOVE_DUPLICATION,
-		EM_PRESERVE_BACKWARD_COMPATIBILITY,
-		EM_IMPROVE_TESTABILITY,
-		EM_ENABLE_OVERRIDING,
-		EM_ENABLE_RECURSION,
+		EM_REUSE("EM: Extract reusable method"),
+		EM_INTRODUCE_ALTERNATIVE_SIGNATURE("EM: Introduce alternative method signature"),
+		EM_FACILITATE_EXTENSION("EM: Facilitate extension"),
+		EM_DECOMPOSE("EM: Decompose method to improve readability"),
+		EM_REMOVE_DUPLICATION("EM: Remove duplication"),
+		EM_PRESERVE_BACKWARD_COMPATIBILITY("EM: Replace method keeping backward compatibility"),
+		EM_IMPROVE_TESTABILITY("EM: Improve testability"),
+		EM_ENABLE_OVERRIDING("EM: Enable overriding"),
+		EM_ENABLE_RECURSION("EM: Enable recursion"),
 		
 		MC_RENAME_PACKAGE,
 		MC_INTRODUCE_SUBPACKAGE,
@@ -40,13 +40,38 @@ public class RefactoringMotivationClassifier {
 		MM_REMOVE_DUPLICATION,
 		MM_ENABLE_OVERRIDING
 		;
+		
+		private String displayName;
+		private Motivation(String name) {
+			this.displayName = name;
+		}
+		private Motivation() {
+			this.displayName = this.toString();
+		}
+		public static Motivation fromName(String name) {
+			for (Motivation m : Motivation.values()) {
+				if (m.displayName.equals(name)) {
+					return m;
+				}
+			}
+			throw new RuntimeException("Not found: " + name);
+		}
+		public String getDisplayName() {
+			return displayName;
+		}
 	}
 
 	public Set<Motivation> classifyExtractMethod(SDMethod extractedMethod) {
 		Set<Motivation> tags = EnumSet.noneOf(Motivation.class);
+		if (extractedMethod == null) {
+			throw new IllegalArgumentException("Extracted method is null");
+		}
 		EntitySet<SDMethod> from = extractedMethod.origins();
 		SDMethod fromMethodBefore = from.getFirst();
 		SDMethod fromMethodAfter = sd.after(fromMethodBefore);
+		if (fromMethodAfter == null) {
+			throw new IllegalArgumentException("fromMethodAfter is null");
+		}
 		
 		if (from.size() == 1) {
 			if (fromMethodAfter.delegatesTo(extractedMethod)) {
@@ -68,6 +93,9 @@ public class RefactoringMotivationClassifier {
 			if (extractedMethod.callers().suchThat(testCodeEquals(isTest)).minus(from).minus(extractedMethod).size() > 0) {
 				tags.add(Motivation.EM_REUSE);
 			}
+//			if (extractedMethod.invocations().suchThat(testCodeEquals(isTest).and(isNotEquals(extractedMethod)))  ) {
+//				tags.add(Motivation.EM_REUSE);
+//			}
 		}
 
 		if (!tags.contains(Motivation.EM_PRESERVE_BACKWARD_COMPATIBILITY)) {
@@ -85,9 +113,9 @@ public class RefactoringMotivationClassifier {
 		}
 		
 		if (from.size() == 1 && tags.isEmpty()) {
-			SourceCode codeExtractedFromMethod = fromMethodBefore.body().diff(fromMethodAfter.body()).deletedLines(0.4);
+			SourceCode codeExtractedFromMethod = fromMethodBefore.body().diff(fromMethodAfter.body()).deletedLines(0.2);
 			int insertedLinesCount = codeExtractedFromMethod.diff(extractedMethod.body()).insertedLines(0.8).linesCount();
-			if (insertedLinesCount >= 1) {
+			if (insertedLinesCount >= 3) {
 				tags.add(Motivation.EM_FACILITATE_EXTENSION);
 			}
 			

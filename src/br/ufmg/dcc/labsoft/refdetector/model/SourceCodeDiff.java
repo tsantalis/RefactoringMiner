@@ -23,4 +23,8 @@ public class SourceCodeDiff {
 		return new SourceCode(lines);
 	}
 
+	public String toString() {
+		return DiffUtils.toHtml(diffs);
+	}
+
 }

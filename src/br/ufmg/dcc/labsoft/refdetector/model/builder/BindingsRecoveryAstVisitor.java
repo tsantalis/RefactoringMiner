@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
+import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.IMethodBinding;
@@ -128,7 +129,12 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 //			return false;
 //		}
 		String methodSignature = AstUtils.getSignatureFromMethodDeclaration(methodDeclaration);
-		SDMethod method = model.createMethod(methodSignature, containerStack.peek());
+//		if (methodDeclaration.getName().getIdentifier().equals("execMultiLineCommands")) {
+//			System.out.println("x");
+//			
+//		}
+		
+		final SDMethod method = model.createMethod(methodSignature, containerStack.peek());
 //		System.out.println("Method: " + methodSignature);
 		
 	//	boolean testAnnotation = false;
@@ -139,12 +145,15 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 		method.setDeprecatedAnnotation(annotations.contains("Deprecated"));
 		
 		method.setNumberOfStatements(AstUtils.countNumberOfStatements(methodDeclaration));
-		method.setBody(new SourceCode(methodDeclaration.getBody().toString()));
+		Block body = methodDeclaration.getBody();
+		if (body == null) {
+			method.setBody(new SourceCode(""));
+		} else {
+			method.setBody(new SourceCode(body.toString()));
+		}
 		
 		final List<String> invocations = new ArrayList<String>();
-//		if (method.toString().endsWith("IterableSubject#isPartiallyOrdered()")) {
-//			System.out.print(' ');
-//		}
+		
 		methodDeclaration.accept(new ASTVisitor() {
 			public boolean visit(MethodInvocation node) {
 				IMethodBinding binding = node.resolveMethodBinding();

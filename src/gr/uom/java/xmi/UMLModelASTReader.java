@@ -268,7 +268,11 @@ public class UMLModelASTReader {
 		for(SingleVariableDeclaration parameter : parameters) {
 			Type parameterType = parameter.getType();
 			String parameterName = parameter.getName().getFullyQualifiedName();
-			UMLType type = UMLType.extractTypeObject(getTypeName(parameterType));
+			String typeName = getTypeName(parameterType);
+			if (parameter.isVarargs()) {
+				typeName = typeName + "[]";
+			}
+			UMLType type = UMLType.extractTypeObject(typeName);
 			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in");
 			umlOperation.addParameter(umlParameter);
 		}

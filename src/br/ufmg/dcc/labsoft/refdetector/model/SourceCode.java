@@ -23,7 +23,22 @@ public class SourceCode {
 		return new SourceCodeDiff(diffs);
 	}
 
+	public SourceCodeDiff lineDiff(SourceCode other) {
+		LinkedList<Diff> diffs = DiffUtils.lineBasedDiff(DiffUtils.joinLines(this.lines), DiffUtils.joinLines(other.lines));
+		return new SourceCodeDiff(diffs);
+	}
+
 	public int linesCount() {
 		return this.lines.size();
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (String line : lines) {
+			sb.append(line);
+			sb.append('\n');
+		}
+		return sb.toString();
 	}
 }

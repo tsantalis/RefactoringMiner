@@ -7,6 +7,7 @@ public class SDMethod extends SDEntity {
 	private boolean deprecatedAnnotation;
 	private int numberOfStatements;
 	private EntitySet<SDMethod> callers;
+	private EntityList<SDMethod> invocations;
 	private EntitySet<SDMethod> origins;
 	private SourceCode body;
 
@@ -19,6 +20,10 @@ public class SDMethod extends SDEntity {
 
 	public EntitySet<SDMethod> callers() {
 		return this.callers;
+	}
+	
+	public EntityList<SDMethod> invocations() {
+		return this.invocations;
 	}
 
 	public EntitySet<SDMethod> origins() {
@@ -57,6 +62,10 @@ public class SDMethod extends SDEntity {
 	
 	public void addCaller(SDMethod method) {
 		this.callers.add(method);
+	}
+
+	public void addInvocation(SDMethod method) {
+		this.invocations.add(method);
 	}
 
 	public void addOrigin(SDMethod method) {

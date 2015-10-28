@@ -54,9 +54,12 @@ public class AstUtils {
 		while (parameters.hasNext()) {
 			SingleVariableDeclaration parameter = parameters.next();
 			Type parameterType = parameter.getType();
-			String rawTypeName = stripTypeParamsFromTypeName(parameterType.toString());
+			String rawTypeName = stripQualifiedTypeName(stripTypeParamsFromTypeName(parameterType.toString()));
 			sb.append(rawTypeName);
 			for (int i = parameter.getExtraDimensions(); i > 0; i--) {
+				sb.append("[]");
+			}
+			if (parameter.isVarargs()) {
 				sb.append("[]");
 			}
 			if (parameters.hasNext()) {
@@ -79,6 +82,14 @@ public class AstUtils {
 			}
 		}
 		return rawTypeName;
+	}
+	
+	public static String stripQualifiedTypeName(String qualifiedTypeName) {
+		int dotPos = qualifiedTypeName.lastIndexOf('.');
+		if (dotPos >= 0) {
+			return qualifiedTypeName.substring(dotPos + 1);
+		}
+		return qualifiedTypeName;
 	}
 	
 	public void x(List<String>[] lists) {

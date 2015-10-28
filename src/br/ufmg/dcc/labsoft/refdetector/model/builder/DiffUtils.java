@@ -9,6 +9,7 @@ import java.util.Map;
 
 import name.fraser.neil.plaintext.diff_match_patch;
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
+import name.fraser.neil.plaintext.diff_match_patch.LinesToCharsResult;
 import name.fraser.neil.plaintext.diff_match_patch.Operation;
 
 import org.eclipse.jdt.core.ToolFactory;
@@ -28,6 +29,14 @@ public class DiffUtils {
 		String sb2 = tokensToChars(s2, tokenArray, tokenHash);
 		LinkedList<Diff> diffs = dmp.diff_main(sb1, sb2, true);
 		charsToTokens(tokenArray, diffs);
+		return diffs;
+	}
+
+	public static LinkedList<Diff> lineBasedDiff(String s1, String s2) {
+		diff_match_patch dmp = new diff_match_patch();
+		LinesToCharsResult r = dmp.diff_linesToChars(s1, s2);
+		LinkedList<Diff> diffs = dmp.diff_main(r.chars1, r.chars2);
+		dmp.diff_charsToLines(diffs, r.lineArray);
 		return diffs;
 	}
 
@@ -164,5 +173,10 @@ public class DiffUtils {
 			lines.add(sb.toString());
 		}
 		return lines;
+	}
+	
+	public static String toHtml(LinkedList<Diff> diffs) {
+		diff_match_patch dmp = new diff_match_patch();
+		return "<code>" + dmp.diff_prettyHtml(diffs) + "</code>";
 	}
 }

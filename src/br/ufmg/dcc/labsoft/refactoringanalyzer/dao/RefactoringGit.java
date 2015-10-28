@@ -31,6 +31,10 @@ public class RefactoringGit extends AbstractEntity {
 	private RevisionGit revision;
 
 	private Boolean truePositive;
+
+	@Column(length = 255)
+	@Index(name="index_refactoringgit_entity")
+	private String entity;
 	
 	@Override
 	public Long getId() {
@@ -98,6 +102,14 @@ public class RefactoringGit extends AbstractEntity {
 
 	public void setTruePositive(Boolean truePositive) {
 		this.truePositive = truePositive;
+	}
+
+	public String getEntity() {
+		return entity;
+	}
+
+	public void setEntity(String entity) {
+		this.entity = entity;
 	}
 
 }

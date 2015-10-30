@@ -108,7 +108,7 @@ public class RefactoringMotivationClassifier {
 			tags.add(Motivation.EM_ENABLE_OVERRIDING);
 		}
 
-		if (extractedMethod.isRecursive()) {
+		if (extractedMethod.isRecursive() && !fromMethodBefore.isRecursive()) {
 			tags.add(Motivation.EM_ENABLE_RECURSION);
 		}
 		

@@ -135,14 +135,11 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 //		}
 		
 		final SDMethod method = model.createMethod(methodSignature, containerStack.peek());
-//		System.out.println("Method: " + methodSignature);
 		
-	//	boolean testAnnotation = false;
-//		boolean deprecatedAnnotation = false;
 		List<?> modifiers = methodDeclaration.modifiers();
 		Set<String> annotations = extractAnnotationTypes(modifiers);
 		method.setTestAnnotation(annotations.contains("Test"));
-		method.setDeprecatedAnnotation(annotations.contains("Deprecated"));
+		method.setDeprecatedAnnotation(annotations.contains("Deprecated") || AstUtils.containsDeprecatedTag(methodDeclaration.getJavadoc()));
 		
 		method.setNumberOfStatements(AstUtils.countNumberOfStatements(methodDeclaration));
 		Block body = methodDeclaration.getBody();

@@ -11,7 +11,9 @@ Currently, it supports the detection of the following refactorings:
 6. Extract Superclass/Interface
 7. Move Class
 
-In order to build the project, import it to Eclipse IDE as a Java project, and install the Apache IvyDE plug-in.
+In order to build the project with Eclipse IDE, import it into Eclipse as a Java project, and install the Apache IvyDE plug-in.
+
+Alternatively, you can also use gradle to build the project without using Eclipse. For instance, to create a jar file, you just run `./gradlew jar` in the project's root directory.
 
 ## Contributors ##
 The code in package **gr.uom.java.xmi** has been developed by [Nikolaos Tsantalis](https://github.com/tsantalis).

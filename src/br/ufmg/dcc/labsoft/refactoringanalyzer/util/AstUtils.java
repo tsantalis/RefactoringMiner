@@ -8,9 +8,11 @@ import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
+import org.eclipse.jdt.core.dom.Javadoc;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.TagElement;
 import org.eclipse.jdt.core.dom.Type;
 
 public class AstUtils {
@@ -91,11 +93,20 @@ public class AstUtils {
 		}
 		return qualifiedTypeName;
 	}
-	
-	public void x(List<String>[] lists) {
-		
+
+	public static boolean containsDeprecatedTag(Javadoc javadoc) {
+		if (javadoc == null) {
+			return false;
+		}
+		List<TagElement> javadocTags = (List<TagElement>) javadoc.tags();
+		for (TagElement tag : javadocTags) {
+			if ("@deprecated".equals(tag.getTagName())) {
+				return true;
+			}
+		}
+		return false;
 	}
-	
+
 	public static int countNumberOfStatements(MethodDeclaration decl) {
 		return new StatementCounter().countStatements(decl);
 	}
@@ -114,4 +125,5 @@ public class AstUtils {
 			}
 		}
 	}
+	
 }

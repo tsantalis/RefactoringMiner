@@ -1,6 +1,7 @@
 package br.ufmg.dcc.labsoft.refdetector.model.builder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -19,8 +20,100 @@ import org.eclipse.jdt.core.compiler.InvalidInputException;
 
 public class DiffUtils {
 
+  public void x() {
+    String s1 = "danilo";
+    s1.hashCode();
+  }
+  
+  public static List<Integer> computeHashes(String text) {
+    try {
+      IScanner scanner = ToolFactory.createScanner(true, true, false, "1.8");
+      char[] charArray = text.toCharArray();
+      scanner.setSource(charArray);
+      
+      List<Integer> hashes = new ArrayList<Integer>();
+      int token;
+      while ((token = scanner.getNextToken()) != ITerminalSymbols.TokenNameEOF) {
+        if (token != ITerminalSymbols.TokenNameWHITESPACE) {
+//          String tokenString = text.substring(scanner.getCurrentTokenStartPosition(), scanner.getCurrentTokenEndPosition() + 1);
+          int h = hash(charArray, scanner.getCurrentTokenStartPosition(), scanner.getCurrentTokenEndPosition());
+          hashes.add(h);
+        }
+      }
+      return hashes;
+    } catch (InvalidInputException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
-	public static LinkedList<Diff> tokenBasedDiff(String s1, String s2) {
+  public static double similarity(String s1, String s2) {
+    if (s1 == null || s2 == null) {
+      return 0.0;
+    }
+    if (s1 == s2) {
+      return 1.0;
+    }
+    List<Integer> hashesS1 = computeHashes(s1);
+    List<Integer> hashesS2 = computeHashes(s2);
+    int l1 = hashesS1.size();
+    int l2 = hashesS2.size();
+    if (l1 == 1 && l2 == 1) {
+      return hashesS1.get(0) == hashesS2.get(0) ? 1.0 : 0.0;
+    }
+    if (l1 < 2 || l2 < 2) {
+      return 0.0;
+    }
+    long[] sPairs = computeBigrams(hashesS1);
+    long[] tPairs = computeBigrams(hashesS2);
+    return computeSimilarity(sPairs, tPairs);
+  }
+
+  private static double computeSimilarity(long[] sPairs, long[] tPairs) {
+    int n = sPairs.length;
+    int m = tPairs.length;
+    
+    int matches = 0, i = 0, j = 0;
+    while (i < n && j < m) {
+      if (sPairs[i] == tPairs[j]) {
+        matches += 2;
+        i++;
+        j++;
+      }
+      else if (sPairs[i] < tPairs[j])
+        i++;
+      else
+        j++;
+    }
+    return (double)matches/(n+m);
+  }
+  
+  public static long[] computeBigrams(List<Integer> hashes) {
+    int tokens = hashes.size();
+    if (tokens < 2) {
+      throw new IllegalArgumentException("one or less tokens");
+    }
+    long[] bigrams = new long[tokens - 1];
+    for (int i = 1; i < tokens; i++) {
+      int h1 = hashes.get(i-1);
+      int h2 = hashes.get(i);
+      long bh = (long)h1 << 32 | h2 & 0xFFFFFFFFL;
+      bigrams[i-1] = bh;
+    }
+    Arrays.sort(bigrams);
+    return bigrams;
+  }
+  
+	public static int hash(char[] charArray, int tokenStart, int tokenEnd) {
+	  int h = 0;
+    if (tokenEnd >= tokenStart) {
+        for (int i = tokenStart; i <= tokenEnd; i++) {
+            h = 31 * h + charArray[i];
+        }
+    }
+    return h;
+  }
+
+  public static LinkedList<Diff> tokenBasedDiff(String s1, String s2) {
 		diff_match_patch dmp = new diff_match_patch();
 		List<String> tokenArray = new ArrayList<String>();
 		tokenArray.add("");

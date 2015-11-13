@@ -26,6 +26,16 @@ public class SDType extends SDContainerEntity {
 		this.isAnonymous = true;
 	}
 	
+	@Override
+	protected final String getNameSeparator() {
+		return isAnonymous ? "$" : ".";
+	}
+	
+	@Override
+	public String simpleName() {
+		return simpleName;
+	}
+	
 	public boolean isSubtypeOf(SDType supertype) {
 		return supertype.subtypes.contains(this);
 	}

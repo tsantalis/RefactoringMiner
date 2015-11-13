@@ -15,12 +15,12 @@ public class SourceCodeDiff {
 
 	public SourceCode deletedLines(double threshold) {
 		LinkedList<String> lines = DiffUtils.getDeletedXorInsertedLines(diffs, true, threshold);
-		return new SourceCode(lines);
+		return new SourceCode(DiffUtils.joinLines(lines));
 	}
 
 	public SourceCode insertedLines(double threshold) {
 		LinkedList<String> lines = DiffUtils.getDeletedXorInsertedLines(diffs, false, threshold);
-		return new SourceCode(lines);
+		return new SourceCode(DiffUtils.joinLines(lines));
 	}
 
 	public String toString() {

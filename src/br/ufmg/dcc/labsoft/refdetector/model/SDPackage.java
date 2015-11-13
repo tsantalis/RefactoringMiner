@@ -17,8 +17,17 @@ public class SDPackage extends SDContainerEntity {
 	}
 
 	@Override
+	public String simpleName() {
+		return fullName;
+	}
+	
+	@Override
 	public boolean isPackage() {
 		return true;
 	}
 
+	@Override
+	protected final String getNameSeparator() {
+		return ".";
+	}
 }

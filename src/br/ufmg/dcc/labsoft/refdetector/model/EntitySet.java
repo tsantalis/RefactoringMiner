@@ -8,7 +8,15 @@ import java.util.Set;
 
 public class EntitySet<E> implements Set<E> {
 
-	Set<E> set = new HashSet<E>();
+	private Set<E> set;
+	
+	public EntitySet() {
+		this(new HashSet<E>());
+	}
+	
+	public EntitySet(Set<E> set) {
+		this.set = set;
+	}
 	
 	public E getFirst() {
 		return set.iterator().next();

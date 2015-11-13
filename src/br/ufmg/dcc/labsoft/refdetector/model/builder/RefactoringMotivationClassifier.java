@@ -3,8 +3,8 @@ package br.ufmg.dcc.labsoft.refdetector.model.builder;
 import java.util.EnumSet;
 import java.util.Set;
 
-import br.ufmg.dcc.labsoft.refdetector.model.EntitySet;
 import br.ufmg.dcc.labsoft.refdetector.model.Filter;
+import br.ufmg.dcc.labsoft.refdetector.model.Multiset;
 import br.ufmg.dcc.labsoft.refdetector.model.SDContainerEntity;
 import br.ufmg.dcc.labsoft.refdetector.model.SDMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
@@ -66,7 +66,7 @@ public class RefactoringMotivationClassifier {
 		if (extractedMethod == null) {
 			throw new IllegalArgumentException("Extracted method is null");
 		}
-		EntitySet<SDMethod> from = extractedMethod.origins();
+		Multiset<SDMethod> from = extractedMethod.origins();
 		SDMethod fromMethodBefore = from.getFirst();
 		SDMethod fromMethodAfter = sd.after(fromMethodBefore);
 		if (fromMethodAfter == null) {
@@ -159,7 +159,7 @@ public class RefactoringMotivationClassifier {
 	public Set<Motivation> classifyMoveMethod(SDMethod movedMethod) {
 		Set<Motivation> tags = EnumSet.noneOf(Motivation.class);
 		
-		EntitySet<SDMethod> origins = movedMethod.origins();
+		Multiset<SDMethod> origins = movedMethod.origins();
 		
 		if (origins.size() > 1) {
 			tags.add(Motivation.MM_REMOVE_DUPLICATION);
@@ -172,8 +172,8 @@ public class RefactoringMotivationClassifier {
 		if (origins.size() == 1) {
 			SDMethod origin = origins.getFirst();
 			final boolean isTest = movedMethod.isTestCode();
-			EntitySet<SDMethod> newCallers = movedMethod.callers().suchThat(testCodeEquals(isTest));
-			EntitySet<SDMethod> originalCallers = origin.callers().suchThat(testCodeEquals(isTest));
+			Multiset<SDMethod> newCallers = movedMethod.callers().suchThat(testCodeEquals(isTest));
+			Multiset<SDMethod> originalCallers = origin.callers().suchThat(testCodeEquals(isTest));
 			if (newCallers.size() > originalCallers.size()) {
 				tags.add(Motivation.MM_REUSE);
 			}

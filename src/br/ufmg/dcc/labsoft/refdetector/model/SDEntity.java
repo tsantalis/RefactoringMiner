@@ -1,11 +1,13 @@
 package br.ufmg.dcc.labsoft.refdetector.model;
 
-public abstract class SDEntity {
+import java.util.Collections;
+
+public abstract class SDEntity implements Comparable<SDEntity> {
 
 	private int id;
 	protected final SDModel.Snapshot snapshot;
-	protected String fullName;
-	protected SDContainerEntity container;
+	protected final String fullName;
+	protected final SDContainerEntity container;
 	
 	public SDEntity(SDModel.Snapshot snapshot, int id, String fullName, SDContainerEntity container) {
 		this.snapshot = snapshot;
@@ -25,6 +27,14 @@ public abstract class SDEntity {
 	public String fullName() {
 		return fullName;
 	}
+
+	public String fullName(SDEntity parent) {
+		return parent.fullName() + getNameSeparator() + simpleName();
+	}
+	
+	protected abstract String getNameSeparator();
+
+	public abstract String simpleName();
 	
 	public SDContainerEntity container() {
 		return container;
@@ -34,14 +44,14 @@ public abstract class SDEntity {
 	
 	@Override
 	public int hashCode() {
-		return id;
+		return fullName.hashCode();
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof SDEntity) {
 			SDEntity e = (SDEntity) obj;
-			return e.id == id;
+			return e.fullName.equals(fullName);
 		}
 		return false;
 	}
@@ -50,4 +60,14 @@ public abstract class SDEntity {
 	public String toString() {
 		return fullName;
 	}
+
+	public Iterable<SDEntity> children() {
+		return Collections.emptyList();
+	}
+	
+	@Override
+	public int compareTo(SDEntity o) {
+		return fullName.compareTo(o.fullName);
+	}
+
 }

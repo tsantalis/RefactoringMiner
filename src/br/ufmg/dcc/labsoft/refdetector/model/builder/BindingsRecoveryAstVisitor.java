@@ -134,7 +134,7 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 //			
 //		}
 		
-		final SDMethod method = model.createMethod(methodSignature, containerStack.peek());
+		final SDMethod method = model.createMethod(methodSignature, containerStack.peek(), methodDeclaration.isConstructor());
 		
 		List<?> modifiers = methodDeclaration.modifiers();
 		Set<String> annotations = extractAnnotationTypes(modifiers);

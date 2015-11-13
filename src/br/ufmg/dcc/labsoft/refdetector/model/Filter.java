@@ -1,5 +1,7 @@
 package br.ufmg.dcc.labsoft.refdetector.model;
 
+import java.util.Collection;
+
 public abstract class Filter<T> {
 	
 	public abstract boolean accept(T element);
@@ -12,7 +14,7 @@ public abstract class Filter<T> {
 		return new OrFilter<T>(this, f);
 	}
 	
-	public static <T> Filter<T> notIn(EntitySet<T> set) {
+	public static <T> Filter<T> notIn(Collection<T> set) {
 		return new NotFilter<T>(new InFilter<T>(set));
 	}
 
@@ -24,7 +26,7 @@ public abstract class Filter<T> {
 		return new EqualFilter<T>(entity);
 	}
 
-	public static <T> Filter<T> in(EntitySet<T> set) {
+	public static <T> Filter<T> in(Collection<T> set) {
 		return new InFilter<T>(set);
 	}
 }
@@ -73,16 +75,16 @@ class OrFilter<T> extends Filter<T> {
 }
 
 class InFilter<T> extends Filter<T> {
-	private final EntitySet<T> set;
+	private final Collection<T> elements;
 	
-	public InFilter(EntitySet<T> set) {
+	public InFilter(Collection<T> elements) {
 		super();
-		this.set = set;
+		this.elements = elements;
 	}
 
 	@Override
 	public boolean accept(T element) {
-		return set.contains(element);
+		return elements.contains(element);
 	}
 }
 

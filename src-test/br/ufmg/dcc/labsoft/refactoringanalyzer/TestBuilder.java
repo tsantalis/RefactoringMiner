@@ -13,9 +13,10 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.Assert;
 
+import br.ufmg.dcc.labsoft.refdetector.GitHistoryRefactoringDetector;
+import br.ufmg.dcc.labsoft.refdetector.GitHistoryRefactoringDetectorImpl;
 import br.ufmg.dcc.labsoft.refdetector.GitService;
 import br.ufmg.dcc.labsoft.refdetector.GitServiceImpl;
-import br.ufmg.dcc.labsoft.refdetector.GitHistoryRefactoringDetectorImpl;
 import br.ufmg.dcc.labsoft.refdetector.RefactoringHandler;
 
 
@@ -23,10 +24,16 @@ public class TestBuilder {
 
 	private static final String TMP_DIR = "tmp";
 	
-	private Map<String, ProjectMatcher> map = new HashMap<String, ProjectMatcher>();
+	private Map<String, ProjectMatcher> map;
+	GitHistoryRefactoringDetector refactoringDetector;
 	
+	public TestBuilder(GitHistoryRefactoringDetector detector) {
+		this.map = new HashMap<String, ProjectMatcher>();
+		this.refactoringDetector = detector;
+	}
+
 	public TestBuilder() {
-		map = new HashMap<>();
+		this(new GitHistoryRefactoringDetectorImpl());
 	}
 	
 	public final ProjectMatcher project(String cloneUrl, String branch) {
@@ -43,7 +50,7 @@ public class TestBuilder {
 		int fp = 0;
 		int fn = 0;
 		GitService gitService = new GitServiceImpl();
-		GitHistoryRefactoringDetectorImpl refactoringDetector = new GitHistoryRefactoringDetectorImpl();
+		
 		for (ProjectMatcher m : map.values()) {
 			String folder = TMP_DIR + "/" + m.cloneUrl.substring(m.cloneUrl.lastIndexOf('/') + 1, m.cloneUrl.lastIndexOf('.'));
 			if (m.ignoreNonSpecifiedCommits) {

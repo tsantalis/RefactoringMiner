@@ -8,37 +8,71 @@ import br.ufmg.dcc.labsoft.refdetector.model.builder.DiffUtils;
 
 public class SourceCode {
 
-	private List<String> lines;
+	private final String source;
+	private final boolean empty;
+	private final int linesCount;
+	private final long[] bigramHashes;
 	
+	public SourceCode() {
+		this("", true);
+	}
+
 	public SourceCode(String source) {
-		this.lines = DiffUtils.splitLines(source);
+		this(source, false);
 	}
 
-	public SourceCode(List<String> lines) {
-		this.lines = lines;
+	public SourceCode(String source, boolean empty) {
+		this.source = source;
+		this.empty = empty;
+		if (empty) {
+			linesCount = 0;
+			this.bigramHashes = new long[0];
+		} else {
+			List<String> lines = DiffUtils.splitLines(source);
+			linesCount = lines.size();
+			this.bigramHashes = DiffUtils.computeBigrams(DiffUtils.computeHashes(source));
+		}
 	}
 
+	public double similarity(SourceCode other) {
+		return similarity(other, 1);
+	}
+	
+	public double similarity(SourceCode other, int factor) {
+		if (empty || other.empty) {
+			return 0.0;
+		}
+		return DiffUtils.computeSimilarity(this.bigramHashes, factor, other.bigramHashes, false);
+	}
+
+	public double partialSimilarity(SourceCode other) {
+		if (empty || other.empty) {
+			return 0.0;
+		}
+		return DiffUtils.computeSimilarity(this.bigramHashes, other.bigramHashes, true);
+	}
+	
 	public SourceCodeDiff diff(SourceCode other) {
-		LinkedList<Diff> diffs = DiffUtils.tokenBasedDiff(DiffUtils.joinLines(this.lines), DiffUtils.joinLines(other.lines));
+		LinkedList<Diff> diffs = DiffUtils.tokenBasedDiff(this.source, other.source);
 		return new SourceCodeDiff(diffs);
 	}
 
 	public SourceCodeDiff lineDiff(SourceCode other) {
-		LinkedList<Diff> diffs = DiffUtils.lineBasedDiff(DiffUtils.joinLines(this.lines), DiffUtils.joinLines(other.lines));
+		LinkedList<Diff> diffs = DiffUtils.lineBasedDiff(this.source, other.source);
 		return new SourceCodeDiff(diffs);
 	}
 
 	public int linesCount() {
-		return this.lines.size();
+		return linesCount;
 	}
 	
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		for (String line : lines) {
-			sb.append(line);
-			sb.append('\n');
-		}
-		return sb.toString();
+		return source;
 	}
+
+	public boolean isEmpty() {
+		return empty;
+	}
+	
 }

@@ -1,32 +1,35 @@
 package br.ufmg.dcc.labsoft.refdetector.model;
 
+
 public class SDMethod extends SDEntity {
 
 	private String signature;
+	private final boolean constructor;
 	private boolean testAnnotation;
 	private boolean deprecatedAnnotation;
 	private int numberOfStatements;
-	private EntitySet<SDMethod> callers;
-	private EntityList<SDMethod> invocations;
-	private EntitySet<SDMethod> origins;
+	private Multiset<SDMethod> callers;
+	private Multiset<SDMethod> origins;
 	private SourceCode body;
 
-	public SDMethod(SDModel.Snapshot snapshot, int id, String signature, SDContainerEntity container) {
+	public SDMethod(SDModel.Snapshot snapshot, int id, String signature, SDContainerEntity container, boolean constructor) {
 		super(snapshot, id, container.fullName() + "#" + signature, container);
 		this.signature = signature;
-		this.callers = new EntitySet<SDMethod>();
-		this.origins = new EntitySet<SDMethod>();
+		this.callers = new Multiset<SDMethod>();
+		this.origins = new Multiset<SDMethod>();
+		this.constructor = constructor;
 	}
 
-	public EntitySet<SDMethod> callers() {
+	public Multiset<SDMethod> callers() {
 		return this.callers;
 	}
 	
-	public EntityList<SDMethod> invocations() {
-		return this.invocations;
+	@Override
+	public String simpleName() {
+		return signature;
 	}
-
-	public EntitySet<SDMethod> origins() {
+	
+	public Multiset<SDMethod> origins() {
 		return this.origins;
 	}
 
@@ -58,18 +61,31 @@ public class SDMethod extends SDEntity {
 		return this.callers().contains(this);
 	}
 
+	public SourceCode body() {
+		return this.body;
+	}
+	
+	@Override
+	protected final String getNameSeparator() {
+		return "#";
+	}
+
+	public int invocationsCount(SDMethod caller) {
+		return callers.getMultiplicity(caller);
+	}
+	
+	public boolean isConstructor() {
+		return constructor;
+	}
+
 	// Builder methods
 	
 	public void addCaller(SDMethod method) {
 		this.callers.add(method);
 	}
 
-	public void addInvocation(SDMethod method) {
-		this.invocations.add(method);
-	}
-
-	public void addOrigin(SDMethod method) {
-		this.origins.add(method);
+	public void addOrigin(SDMethod method, int multiplicity) {
+		this.origins.add(method, multiplicity);
 	}
 
 	public void setTestAnnotation(boolean testAnnotation) {
@@ -84,12 +100,9 @@ public class SDMethod extends SDEntity {
 		this.numberOfStatements = numberOfStatements;
 	}
 
-	public SourceCode body() {
-		return this.body;
-	}
-
 	public void setBody(SourceCode body) {
 		this.body = body;
 	}
+
 
 }

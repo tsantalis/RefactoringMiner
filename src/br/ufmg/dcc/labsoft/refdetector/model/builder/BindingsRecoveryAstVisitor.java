@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
@@ -27,23 +28,26 @@ import br.ufmg.dcc.labsoft.refdetector.model.SDMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
 import br.ufmg.dcc.labsoft.refdetector.model.SDPackage;
 import br.ufmg.dcc.labsoft.refdetector.model.SDType;
-import br.ufmg.dcc.labsoft.refdetector.model.SourceCode;
 
 public class BindingsRecoveryAstVisitor extends ASTVisitor {
 
 	private final SDModel.Snapshot model;
 	private final String sourceFilePath;
+	private final char[] fileContent;
 	private final LinkedList<SDContainerEntity> containerStack;
 	private final Map<SDMethod, List<String>> postProcessInvocations;
 	private final Map<SDType, List<String>> postProcessSupertypes;
+	private final SourceScanner scanner;
 	
-	public BindingsRecoveryAstVisitor(SDModel.Snapshot model, String sourceFilePath, SDPackage sdPackage, Map<SDMethod, List<String>> postProcessMap, Map<SDType, List<String>> postProcessSupertypes) {
+	public BindingsRecoveryAstVisitor(SDModel.Snapshot model, String sourceFilePath, char[] fileContent, SDPackage sdPackage, Map<SDMethod, List<String>> postProcessMap, Map<SDType, List<String>> postProcessSupertypes) {
 		this.model = model;
 		this.sourceFilePath = sourceFilePath;
+		this.fileContent = fileContent;
 		this.containerStack = new LinkedList<SDContainerEntity>();
 		this.containerStack.push(sdPackage);
 		this.postProcessInvocations = postProcessMap;
 		this.postProcessSupertypes = postProcessSupertypes;
+		this.scanner = new SourceScanner();
 	}
 	
 	@Override
@@ -79,8 +83,7 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 	
 	@Override
 	public boolean visit(EnumDeclaration node) {
-		String typeName = node.getName().getIdentifier();
-		containerStack.push(visitTypeDeclaration(typeName, null, node.modifiers()));
+		containerStack.push(visitTypeDeclaration(node, null));
 		return true;
 	}
 	public void endVisit(EnumDeclaration node) {
@@ -88,19 +91,20 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 	}
 	
 	public boolean visit(TypeDeclaration typeDeclaration) {
-		String typeName = typeDeclaration.getName().getIdentifier();
 		Type superType = typeDeclaration.getSuperclassType();
-		containerStack.push(visitTypeDeclaration(typeName, superType, typeDeclaration.modifiers()));
+		containerStack.push(visitTypeDeclaration(typeDeclaration, superType));
 		return true;
 	}
 	public void endVisit(TypeDeclaration node) {
 		containerStack.pop();
 	}
 
-	private SDType visitTypeDeclaration(String typeName, Type superType, List<?> modifiers) {
+	private SDType visitTypeDeclaration(AbstractTypeDeclaration node, Type superType) {
+	    String typeName = node.getName().getIdentifier();
 		SDType type = model.createType(typeName, containerStack.peek(), sourceFilePath);
+		type.setSourceCode(scanner.getLineBasedSourceRepresentation(fileContent, node.getStartPosition(), node.getLength()));
 		
-		Set<String> annotations = extractAnnotationTypes(modifiers);
+		Set<String> annotations = extractAnnotationTypes(node.modifiers());
 		type.setDeprecatedAnnotation(annotations.contains("Deprecated"));
 		
     	if (superType != null) {
@@ -144,9 +148,9 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 		method.setNumberOfStatements(AstUtils.countNumberOfStatements(methodDeclaration));
 		Block body = methodDeclaration.getBody();
 		if (body == null) {
-			method.setBody(new SourceCode(""));
+			method.setSourceCode(new SourceRepresentation(0, new long[0]));
 		} else {
-			method.setBody(new SourceCode(body.toString()));
+			method.setSourceCode(scanner.getTokenBasedSourceRepresentation(this.fileContent, body.getStartPosition(), body.getLength()));
 		}
 		
 		final List<String> invocations = new ArrayList<String>();

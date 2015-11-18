@@ -1,5 +1,7 @@
 package br.ufmg.dcc.labsoft.refdetector.model;
 
+import br.ufmg.dcc.labsoft.refdetector.model.builder.SourceRepresentation;
+
 
 public class SDMethod extends SDEntity {
 
@@ -10,7 +12,7 @@ public class SDMethod extends SDEntity {
 	private int numberOfStatements;
 	private Multiset<SDMethod> callers;
 	private Multiset<SDMethod> origins;
-	private SourceCode body;
+	private SourceRepresentation body;
 
 	public SDMethod(SDModel.Snapshot snapshot, int id, String signature, SDContainerEntity container, boolean constructor) {
 		super(snapshot, id, container.fullName() + "#" + signature, container);
@@ -27,6 +29,14 @@ public class SDMethod extends SDEntity {
 	@Override
 	public String simpleName() {
 		return signature;
+	}
+
+	public String identifier() {
+	    return signature.substring(0, signature.indexOf('('));
+	}
+
+	public String parameters() {
+	    return signature.substring(signature.indexOf('('));
 	}
 	
 	public Multiset<SDMethod> origins() {
@@ -61,7 +71,7 @@ public class SDMethod extends SDEntity {
 		return this.callers().contains(this);
 	}
 
-	public SourceCode body() {
+	public SourceRepresentation sourceCode() {
 		return this.body;
 	}
 	
@@ -100,7 +110,7 @@ public class SDMethod extends SDEntity {
 		this.numberOfStatements = numberOfStatements;
 	}
 
-	public void setBody(SourceCode body) {
+	public void setSourceCode(SourceRepresentation body) {
 		this.body = body;
 	}
 

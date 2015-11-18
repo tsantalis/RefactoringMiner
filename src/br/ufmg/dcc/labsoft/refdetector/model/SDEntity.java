@@ -2,6 +2,8 @@ package br.ufmg.dcc.labsoft.refdetector.model;
 
 import java.util.Collections;
 
+import br.ufmg.dcc.labsoft.refdetector.model.builder.SourceRepresentation;
+
 public abstract class SDEntity implements Comparable<SDEntity> {
 
 	private int id;
@@ -70,4 +72,11 @@ public abstract class SDEntity implements Comparable<SDEntity> {
 		return fullName.compareTo(o.fullName);
 	}
 
+	public boolean matches(SDEntity other) {
+	    return this.id == other.id;
+	}
+
+	public SourceRepresentation sourceCode() {
+	    throw new UnsupportedOperationException();
+	}
 }

@@ -234,7 +234,7 @@ public class SDModel {
 		}
 	}
 	
-	private boolean isMatched(SDEntity entity) {
+	public boolean isMatched(SDEntity entity) {
 		int id = entity.getId();
 		return id >= 0;
 	}

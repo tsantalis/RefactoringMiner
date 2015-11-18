@@ -20,6 +20,7 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.internal.compiler.util.Util;
 
 import br.ufmg.dcc.labsoft.refdetector.model.SDMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
@@ -82,7 +83,12 @@ public class BindingsRecoverySDBuilder {
 //				if (problems.length > 0) {
 //					System.out.println("problems");
 //				}
-				processCompilationUnit(relativePath, ast, model);
+				try {
+					char[] charArray = Util.getFileCharContent(new File(sourceFilePath), null);
+					processCompilationUnit(relativePath, charArray, ast, model);
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
 			}
 		};
 		parser.createASTs((String[]) filesArray, null, emptyArray, fileASTRequestor, null);
@@ -106,7 +112,7 @@ public class BindingsRecoverySDBuilder {
 		return parser;
 	}
 
-	protected void processCompilationUnit(String sourceFilePath, CompilationUnit compilationUnit, SDModel.Snapshot model) {
+	protected void processCompilationUnit(String sourceFilePath, char[] fileContent, CompilationUnit compilationUnit, SDModel.Snapshot model) {
 		PackageDeclaration packageDeclaration = compilationUnit.getPackage();
 		String packageName = "";
 		if (packageDeclaration != null) {
@@ -114,7 +120,7 @@ public class BindingsRecoverySDBuilder {
 		}
 		SDPackage sdPackage = model.getOrCreatePackage(packageName);
 		
-		BindingsRecoveryAstVisitor visitor = new BindingsRecoveryAstVisitor(model, sourceFilePath, sdPackage, postProcessInvocations, postProcessSupertypes);
+		BindingsRecoveryAstVisitor visitor = new BindingsRecoveryAstVisitor(model, sourceFilePath, fileContent, sdPackage, postProcessInvocations, postProcessSupertypes);
 		compilationUnit.accept(visitor);
 		
 //		List<AbstractTypeDeclaration> topLevelTypeDeclarations = compilationUnit.types();

@@ -113,15 +113,15 @@ public class RefactoringMotivationClassifier {
 		}
 		
 		if (from.size() == 1 && tags.isEmpty()) {
-			SourceCode codeExtractedFromMethod = fromMethodBefore.body().diff(fromMethodAfter.body()).deletedLines(0.2);
-			int insertedLinesCount = codeExtractedFromMethod.diff(extractedMethod.body()).insertedLines(0.8).linesCount();
-			if (insertedLinesCount >= 3) {
-				tags.add(Motivation.EM_FACILITATE_EXTENSION);
-			}
-			
-			if (insertedLinesCount == 0) {
-				tags.add(Motivation.EM_DECOMPOSE);
-			}
+//			SourceCode codeExtractedFromMethod = fromMethodBefore.body().diff(fromMethodAfter.body()).deletedLines(0.2);
+//			int insertedLinesCount = codeExtractedFromMethod.diff(extractedMethod.body()).insertedLines(0.8).linesCount();
+//			if (insertedLinesCount >= 3) {
+//				tags.add(Motivation.EM_FACILITATE_EXTENSION);
+//			}
+//			
+//			if (insertedLinesCount == 0) {
+//				tags.add(Motivation.EM_DECOMPOSE);
+//			}
 		}
 		
 		return tags;

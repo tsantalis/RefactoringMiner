@@ -3,6 +3,8 @@ package br.ufmg.dcc.labsoft.refdetector.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufmg.dcc.labsoft.refdetector.model.builder.SourceRepresentation;
+
 public class SDType extends SDContainerEntity {
 
 	private String simpleName;
@@ -11,6 +13,7 @@ public class SDType extends SDContainerEntity {
 	private boolean deprecatedAnnotation;
 	private EntitySet<SDType> subtypes = new EntitySet<SDType>();
 	private List<SDType> anonymousClasses = new ArrayList<SDType>();
+	private SourceRepresentation source;
 	
 	public SDType(SDModel.Snapshot snapshot, int id, String simpleName, SDContainerEntity container, String sourceFilePath) {
 		super(snapshot, id, container.fullName() + "." + simpleName, container);
@@ -53,6 +56,10 @@ public class SDType extends SDContainerEntity {
 		return anonymousClasses;
 	}
 	
+	public SourceRepresentation sourceCode() {
+        return this.source;
+    }
+	
 	@Override
 	public boolean isTestCode() {
 		if (simpleName.endsWith("Test") || simpleName.startsWith("Test")) {
@@ -89,4 +96,7 @@ public class SDType extends SDContainerEntity {
 		this.deprecatedAnnotation = deprecatedAnnotation;
 	}
 
+	public void setSourceCode(SourceRepresentation source) {
+        this.source = source;
+    }
 }

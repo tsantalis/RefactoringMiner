@@ -22,22 +22,27 @@ public class DiffUtils {
 
 	public static List<Integer> computeHashes(String text) {
 		try {
-			IScanner scanner = ToolFactory.createScanner(true, true, false,
-					"1.8");
+			IScanner scanner = ToolFactory.createScanner(true, true, false, "1.8");
 			char[] charArray = text.toCharArray();
 			scanner.setSource(charArray);
+			scanner.resetTo(0, text.length() - 1);
 
 			List<Integer> hashes = new ArrayList<Integer>();
 			int token;
 			while ((token = scanner.getNextToken()) != ITerminalSymbols.TokenNameEOF) {
+				int tokenStart = scanner.getCurrentTokenStartPosition();
+				int tokenEnd = scanner.getCurrentTokenEndPosition();
 				if (token != ITerminalSymbols.TokenNameWHITESPACE) {
 					// String tokenString =
 					// text.substring(scanner.getCurrentTokenStartPosition(),
 					// scanner.getCurrentTokenEndPosition() + 1);
-					int h = hash(charArray,
-							scanner.getCurrentTokenStartPosition(),
-							scanner.getCurrentTokenEndPosition());
+					int h = hash(charArray, tokenStart, tokenEnd);
 					hashes.add(h);
+				} else {
+					if (indexOf(charArray, tokenStart, tokenEnd, '\n') != -1) {
+						// new line
+						
+					}
 				}
 			}
 			return hashes;

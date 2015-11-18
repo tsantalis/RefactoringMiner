@@ -21,8 +21,10 @@ public class TestRefDetector2 {
 		test
 		.project("https://github.com/jMonkeyEngine/jmonkeyengine.git", "master")
 		.atCommit("5989711f7315abe4c3da0f1516a3eb3a81da6716").containsOnly(
-			"Extract Method protected movePanel(xoffset int, yoffset int) : void extracted from public mouseDragged(e MouseEvent) : void in class com.jme3.gde.materialdefinition.editor.DraggablePanel",
-			"Extract Method protected saveLocation() : void extracted from public mousePressed(e MouseEvent) : void in class com.jme3.gde.materialdefinition.editor.DraggablePanel"
+//			"Extract Method protected movePanel(xoffset int, yoffset int) : void extracted from public mouseDragged(e MouseEvent) : void in class com.jme3.gde.materialdefinition.editor.DraggablePanel",
+//			"Extract Method protected saveLocation() : void extracted from public mousePressed(e MouseEvent) : void in class com.jme3.gde.materialdefinition.editor.DraggablePanel"
+			"Extract Method com.jme3.gde.materialdefinition.editor.DraggablePanel#saveLocation() from {com.jme3.gde.materialdefinition.editor.DraggablePanel#mousePressed(MouseEvent)=1}",
+			"Extract Method com.jme3.gde.materialdefinition.editor.DraggablePanel#movePanel(int, int) from {com.jme3.gde.materialdefinition.editor.DraggablePanel#mouseDragged(MouseEvent)=1}"
 			//"Extract Method protected removeSelectedConnection(selectedItem Selectable) : void extracted from protected removeSelectedConnection() : void in class com.jme3.gde.materialdefinition.editor.Diagram"
 		);
 		

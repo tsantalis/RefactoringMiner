@@ -1,0 +1,41 @@
+package br.ufmg.dcc.labsoft.refdetector.model.refactoring;
+
+import gr.uom.java.xmi.diff.RefactoringType;
+import br.ufmg.dcc.labsoft.refdetector.model.Filter;
+import br.ufmg.dcc.labsoft.refdetector.model.Multiset;
+import br.ufmg.dcc.labsoft.refdetector.model.SDMethod;
+
+public class SDInlineMethod extends SDRefactoring {
+
+    private final SDMethod inlinedMethod;
+    
+    public SDInlineMethod(SDMethod inlinedMethod) {
+        super(RefactoringType.INLINE_OPERATION, inlinedMethod);
+        this.inlinedMethod = inlinedMethod;
+    }
+
+    //Inline Method private getModuleFileName() : String inlined to public resolve() : PsiElement in class org.intellij.erlang.psi.impl.ErlangFunctionReferenceImpl
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.getName());
+        sb.append(' ');
+        sb.append(this.inlinedMethod.getVerboseSimpleName());
+        sb.append(" inlined to ");
+        Multiset<SDMethod> sameClassDestinations = inlinedMethod.inlinedTo().suchThat(new Filter<SDMethod>(){
+            public boolean accept(SDMethod m) {
+                return m.container().equals(inlinedMethod.container());
+            }
+        });
+        SDMethod dest;
+        if (sameClassDestinations.size() > 0) {
+            dest = sameClassDestinations.getFirst();
+        } else {
+            dest = inlinedMethod.inlinedTo().getFirst();
+        }
+        sb.append(dest.getVerboseSimpleName());
+        sb.append(" in class ");
+        sb.append(dest.container().fullName());
+        return sb.toString();
+    }
+}

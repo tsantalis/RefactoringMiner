@@ -105,7 +105,7 @@ public class GitHistoryRefactoringDetectorImpl implements GitHistoryRefactoringD
 		List<String> filesBefore = new ArrayList<String>();
 		List<String> filesCurrent = new ArrayList<String>();
 		Map<String, String> renamedFilesHint = new HashMap<String, String>();
-		gitService.fileTreeDiff(repository, currentCommit, filesBefore, filesCurrent, renamedFilesHint);
+		gitService.fileTreeDiff(repository, currentCommit, filesBefore, filesCurrent, renamedFilesHint, true);
 		// If no java files changed, there is no refactoring. Also, if there are
 		// only ADD's or only REMOVE's there is no refactoring
 		if (!filesBefore.isEmpty() && !filesCurrent.isEmpty()) {

@@ -1,6 +1,7 @@
 package br.ufmg.dcc.labsoft.refdetector.model;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.ufmg.dcc.labsoft.refdetector.model.builder.SourceRepresentation;
 
@@ -10,12 +11,17 @@ public abstract class SDEntity implements Comparable<SDEntity> {
 	protected final SDModel.Snapshot snapshot;
 	protected final String fullName;
 	protected final SDContainerEntity container;
+	protected final List<SDEntity> children;
 	
 	public SDEntity(SDModel.Snapshot snapshot, int id, String fullName, SDContainerEntity container) {
 		this.snapshot = snapshot;
 		this.id = id;
 		this.fullName = fullName;
 		this.container = container;
+		this.children = new ArrayList<SDEntity>();
+		if (container != null) {
+		    this.container.children.add(this);
+		}
 	}
 	
 	public int getId() {
@@ -64,7 +70,7 @@ public abstract class SDEntity implements Comparable<SDEntity> {
 	}
 
 	public Iterable<SDEntity> children() {
-		return Collections.emptyList();
+		return children;
 	}
 	
 	@Override

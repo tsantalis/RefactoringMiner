@@ -2,7 +2,9 @@ package br.ufmg.dcc.labsoft.refdetector.model.builder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.compiler.IScanner;
@@ -17,17 +19,19 @@ public class SourceScanner {
     private static final int LINES = 1;
 
     public SourceRepresentation getLineBasedSourceRepresentation(char[] charArray, int start, int length) {
-        List<Integer> lines = computeHashes(charArray, start, length, LINES);
-        return new SourceRepresentation(lines.size(), computeBigrams(lines));
+        Map<Integer, String> debug = new HashMap<Integer, String>();
+        List<Integer> lines = computeHashes(charArray, start, length, LINES, debug);
+        return new SourceRepresentation(lines.size(), computeBigrams(lines), debug);
     }
 
     public SourceRepresentation getTokenBasedSourceRepresentation(char[] charArray, int start, int length) {
-        List<Integer> lines = computeHashes(charArray, start, length, LINES);
-        List<Integer> tokens = computeHashes(charArray, start, length, TOKENS);
-        return new SourceRepresentation(lines.size(), computeBigrams(tokens));
+        Map<Integer, String> debug = new HashMap<Integer, String>();
+        List<Integer> lines = computeHashes(charArray, start, length, LINES, null);
+        List<Integer> tokens = computeHashes(charArray, start, length, TOKENS, debug);
+        return new SourceRepresentation(lines.size(), computeBigrams(tokens), debug);
     }
     
-    private List<Integer> computeHashes(char[] charArray, int start, int length, int granularity) {
+    private List<Integer> computeHashes(char[] charArray, int start, int length, int granularity, Map<Integer, String> debug) {
         try {
             scanner.setSource(charArray);
             scanner.resetTo(start, start + length - 1);
@@ -35,24 +39,34 @@ public class SourceScanner {
             List<Integer> hashes = new ArrayList<Integer>();
             int token;
             int h = 0;
+            int currentStart = start;
+            int currentEnd = start - 1;
             while ((token = scanner.getNextToken()) != ITerminalSymbols.TokenNameEOF) {
                 int tokenStart = scanner.getCurrentTokenStartPosition();
                 int tokenEnd = scanner.getCurrentTokenEndPosition();
+                if (h == 0) {
+                    currentStart = tokenStart;
+                }
                 if (token != ITerminalSymbols.TokenNameWHITESPACE) {
                     h = hash(h, charArray, tokenStart, tokenEnd);
+                    currentEnd = tokenEnd;
                     if (granularity == TOKENS) {
                         hashes.add(h);
+                        if (debug != null) debug.put(h, new String(charArray, currentStart, currentEnd - currentStart + 1));
                         h = 0;
                     }
                 } else {
                     if (granularity == LINES && indexOf(charArray, tokenStart, tokenEnd, '\n') != -1 && h != 0) {
                         hashes.add(h);
+                        if (debug != null) debug.put(h, new String(charArray, currentStart, currentEnd - currentStart + 1));
                         h = 0;
                     }
                 }
             }
             if (granularity == LINES && h != 0) {
                 hashes.add(h);
+                if (debug != null) debug.put(h, new String(charArray, currentStart, currentEnd - currentStart + 1));
+                h = 0;
             }
 
             return hashes;

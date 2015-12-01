@@ -27,6 +27,11 @@ public class GitHistoryRefactoringDetector2 implements GitHistoryRefactoringDete
 		}
 
 		@Override
+		public void handleException(String commitId, Exception e) {
+		    handler.handleException(commitId, e);
+		}
+		
+		@Override
 		public void onFinish(int commitsCount, int errorCommitsCount) {
 			handler.onFinish(0, commitsCount, errorCommitsCount);
 		}

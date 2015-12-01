@@ -1,18 +1,17 @@
-package br.ufmg.dcc.labsoft.refdetector.model;
+package br.ufmg.dcc.labsoft.refdetector.model.refactoring;
 
+import br.ufmg.dcc.labsoft.refdetector.model.SDEntity;
 import gr.uom.java.xmi.diff.Refactoring;
 import gr.uom.java.xmi.diff.RefactoringType;
 
 public class SDRefactoring implements Refactoring {
 
-	private RefactoringType type;
-	private SDEntity mainEntity;
-	private String details;
+	protected RefactoringType type;
+	protected SDEntity mainEntity;
 
-	public SDRefactoring(RefactoringType type, SDEntity mainEntity, String details) {
+	public SDRefactoring(RefactoringType type, SDEntity mainEntity) {
 		this.type = type;
 		this.mainEntity = mainEntity;
-		this.details = details;
 	}
 
 	@Override
@@ -31,10 +30,10 @@ public class SDRefactoring implements Refactoring {
 		sb.append(this.getName());
 		sb.append(' ');
 		sb.append(this.mainEntity);
-		if (this.details != null && !this.details.isEmpty()) {
-			sb.append(' ');
-			sb.append(this.details);
-		}
+//		if (this.details != null && !this.details.isEmpty()) {
+//			sb.append(' ');
+//			sb.append(this.details);
+//		}
 		return sb.toString();
 	}
 }

@@ -27,6 +27,17 @@ public abstract class StructuralDiffHandler {
 	public void handle(RevCommit commitData, SDModel sdModel) {}
 
 	/**
+     * This method is called whenever an exception is thrown during the analysis of the given commit.
+     * You should override this method to do your custom logic in the case of exceptions (e.g. skip or rethrow).
+     * 
+     * @param commitId The SHA key that identifies the commit.
+     * @param e The exception thrown.
+     */
+    public void handleException(String commitId, Exception e) {
+        throw new RuntimeException(e);
+    }
+	
+	/**
 	 * This method is called after all commits are analyzed.
 	 * You may override this method to implement custom logic.
 	 * 

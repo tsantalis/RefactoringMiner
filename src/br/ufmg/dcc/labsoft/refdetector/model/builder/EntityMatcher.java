@@ -8,41 +8,93 @@ import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
 
 public class EntityMatcher<T extends SDEntity> {
 
-    private final SDModel m;
+    private final ArrayList<Criterion<T>> criteria = new ArrayList<Criterion<T>>();
     
-    public EntityMatcher(SDModel m) {
-        this.m = m;
+    public EntityMatcher<T> addCriterion(Criterion<T> criterion) {
+        this.criteria.add(criterion);
+        return this;
     }
-
-    public final void match(Iterable<T> unmatchedBefore, Iterable<T> unmatchedAfter, double threshold) {
+    
+    public int getPriority(SDModel m, T entityBefore, T entityAfter) {
+        return 0;
+    }
+    
+    public void match(SDModel m, Iterable<T> unmatchedBefore, Iterable<T> unmatchedAfter) {
         ArrayList<MatchCandidate<T>> candidates = new ArrayList<MatchCandidate<T>>(); 
         for (T eBefore : unmatchedBefore) {
             for (T eAfter : unmatchedAfter) {
-                if (canMatch(m, eBefore, eAfter)) {
-                    double sim = eBefore.sourceCode().similarity(eAfter.sourceCode());
-                    if (sim >= threshold) {
-                        candidates.add(new MatchCandidate<T>(eBefore, eAfter, sim));
+                for (int i = 0; i < criteria.size(); i++) {
+                    Criterion<T> matcher = criteria.get(i);
+                    if (matcher.canMatch(m, eBefore, eAfter)) {
+                        double sim = eBefore.sourceCode().similarity(eAfter.sourceCode());
+                        if (sim >= matcher.threshold) {
+                            candidates.add(new MatchCandidate<T>(eBefore, eAfter, matcher, getPriority(m, eBefore, eAfter), i, sim));
+                        }
+                        break;
                     }
                 }
+                
             }
         }
         Collections.sort(candidates);
         for (MatchCandidate<T> candidate : candidates) {
-            T typeBefore = candidate.getBefore();
-            T typeAfter = candidate.getAfter();
-            if (!m.isMatched(typeBefore) || !m.isMatched(typeAfter)) {
+            T typeBefore = candidate.before;
+            T typeAfter = candidate.after;
+            if (!m.isMatched(typeBefore) && !m.isMatched(typeAfter)) {
                 m.matchEntities(typeBefore, typeAfter);
-                onMatch(m, typeBefore, typeAfter);
+                candidate.criterion.onMatch(m, typeBefore, typeAfter);
             }
         }
     }
 
-    protected void onMatch(SDModel m, T entityBefore, T entityAfter) {
-        // override
-    }
-
-    protected boolean canMatch(SDModel m, T entityBefore, T entityAfter) {
-        return true;
+    public static class Criterion<T extends SDEntity> {
+        private final double threshold;
+        
+        public Criterion(double threshold) {
+            this.threshold = threshold;
+        }
+    
+        protected boolean canMatch(SDModel m, T entityBefore, T entityAfter) {
+            return true;
+        }
+        
+        protected void onMatch(SDModel m, T entityBefore, T entityAfter) {
+            // override
+        }
     }
     
+    private static class MatchCandidate<T extends SDEntity> implements Comparable<MatchCandidate<T>> {
+        
+        private final T before;
+        private final T after;
+        private final Criterion<T> criterion;
+        private final int mainPriority;
+        private final int matcherPriority;
+        private final double contentSimilarity;
+        
+        public MatchCandidate(T before, T after, Criterion<T> criterion, int mainPriority, int matcherPriority, double similarity) {
+            this.before = before;
+            this.after = after;
+            this.criterion = criterion;
+            this.mainPriority = mainPriority;
+            this.matcherPriority = matcherPriority;
+            this.contentSimilarity = similarity;
+        }
+        
+        @Override
+        public int compareTo(MatchCandidate<T> o) {
+            int c = Integer.compare(mainPriority, o.mainPriority);
+            if (c != 0) return c;
+            
+            c = Integer.compare(matcherPriority, o.matcherPriority);
+            if (c != 0) return c;
+            
+            return -Double.compare(contentSimilarity, o.contentSimilarity);
+        }
+        
+        @Override
+        public String toString() {
+            return "b: " + before + ", a:" + after + ", sim:" + contentSimilarity;
+        }
+    }
 }

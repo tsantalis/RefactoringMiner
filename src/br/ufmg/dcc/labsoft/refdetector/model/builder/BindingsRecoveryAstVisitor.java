@@ -2,6 +2,7 @@ package br.ufmg.dcc.labsoft.refdetector.model.builder;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,8 @@ import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
@@ -28,6 +31,7 @@ import br.ufmg.dcc.labsoft.refdetector.model.SDMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
 import br.ufmg.dcc.labsoft.refdetector.model.SDPackage;
 import br.ufmg.dcc.labsoft.refdetector.model.SDType;
+import br.ufmg.dcc.labsoft.refdetector.model.Visibility;
 
 public class BindingsRecoveryAstVisitor extends ASTVisitor {
 
@@ -145,12 +149,25 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 		method.setTestAnnotation(annotations.contains("Test"));
 		method.setDeprecatedAnnotation(annotations.contains("Deprecated") || AstUtils.containsDeprecatedTag(methodDeclaration.getJavadoc()));
 		
+		int methodModifiers = methodDeclaration.getModifiers();
+        if((methodModifiers & Modifier.PUBLIC) != 0)
+            method.setVisibility(Visibility.PUBLIC);
+        else if((methodModifiers & Modifier.PROTECTED) != 0)
+            method.setVisibility(Visibility.PROTECTED);
+        else if((methodModifiers & Modifier.PRIVATE) != 0)
+            method.setVisibility(Visibility.PRIVATE);
+        else
+            method.setVisibility(Visibility.PACKAGE);
+		
+        extractParametersAndReturnType(methodDeclaration, method);
+		
 		method.setNumberOfStatements(AstUtils.countNumberOfStatements(methodDeclaration));
 		Block body = methodDeclaration.getBody();
 		if (body == null) {
 			method.setSourceCode(new SourceRepresentation(0, new long[0]));
+			method.setAbstract(true);
 		} else {
-			method.setSourceCode(scanner.getTokenBasedSourceRepresentation(this.fileContent, body.getStartPosition(), body.getLength()));
+			method.setSourceCode(scanner.getTokenBasedSourceRepresentation(this.fileContent, body.getStartPosition() + 1, body.getLength() - 2));
 		}
 		
 		final List<String> invocations = new ArrayList<String>();
@@ -181,6 +198,23 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 		return annotations;
 	}
 
+	
+	public static void extractParametersAndReturnType(MethodDeclaration methodDeclaration, SDMethod method) {
+	    Type returnType = methodDeclaration.getReturnType2();
+	    if (returnType != null) {
+	        method.setReturnType(AstUtils.normalizeTypeName(returnType, methodDeclaration.getExtraDimensions(), false));
+	    } else {
+	        method.setReturnType(null);
+	    }
+        Iterator<SingleVariableDeclaration> parameters = methodDeclaration.parameters().iterator();
+        while (parameters.hasNext()) {
+            SingleVariableDeclaration parameter = parameters.next();
+            Type parameterType = parameter.getType();
+            String typeName = AstUtils.normalizeTypeName(parameterType, parameter.getExtraDimensions(), parameter.isVarargs());
+            method.addParameter(parameter.getName().getIdentifier(), typeName);
+        }
+    }
+	
 //	@Override
 //	public void endVisit(MethodDeclaration methodDeclaration) {
 //		if (methodDeclaration.getName().toString().endsWith("testFixedMembershipTokenIPv4")) {

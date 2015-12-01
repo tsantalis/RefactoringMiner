@@ -38,6 +38,7 @@ public class GitHistoryStructuralDiffAnalyzer {
 				
 			} catch (Exception e) {
 				logger.warn(String.format("Ignored revision %s due to error", currentCommit.getId().getName()), e);
+				handler.handleException(currentCommit.getId().getName(), e);
 				errorCommitsCount++;
 			}
 
@@ -93,17 +94,17 @@ public class GitHistoryStructuralDiffAnalyzer {
 			walk.parseCommit(commit.getParent(0));
 			this.detectRefactorings(gitService, repository, handler, projectFolder, commit);
 		} catch (Exception e) {
-			//logger.warn(String.format("Ignored revision %s due to error", commitId), e);
-			throw new RuntimeException(e);
-		}
+		    logger.warn(String.format("Ignored revision %s due to error", commitId), e);
+		    handler.handleException(commitId, e);
+        }
 	}
 	
 	protected void detectRefactorings(GitService gitService, Repository repository, final StructuralDiffHandler handler, File projectFolder, RevCommit currentCommit) throws Exception {
-		String commitId = currentCommit.getId().getName();
+	    String commitId = currentCommit.getId().getName();
 		List<String> filesBefore = new ArrayList<String>();
 		List<String> filesCurrent = new ArrayList<String>();
 		Map<String, String> renamedFilesHint = new HashMap<String, String>();
-		gitService.fileTreeDiff(repository, currentCommit, filesBefore, filesCurrent, renamedFilesHint);
+		gitService.fileTreeDiff(repository, currentCommit, filesBefore, filesCurrent, renamedFilesHint, false);
 		// If no java files changed, there is no refactoring. Also, if there are
 		// only ADD's or only REMOVE's there is no refactoring
 		final SDModel model = new SDModel();
@@ -112,11 +113,13 @@ public class GitHistoryStructuralDiffAnalyzer {
 			BindingsRecoverySDBuilder builder = new BindingsRecoverySDBuilder();
 			// Checkout and build model for current commit
 			gitService.checkout(repository, commitId);
+			logger.info(String.format("Analyzing code after (%s) ...", commitId));
 			builder.analyze(projectFolder, filesCurrent, model.after());
 			
 			// Checkout and build model for parent commit
 			String parentCommit = currentCommit.getParent(0).getName();
 			gitService.checkout(repository, parentCommit);
+			logger.info(String.format("Analyzing code before (%s) ...", parentCommit));
 			builder.analyze(projectFolder, filesBefore, model.before());
 			
 			// Diff between currentModel e parentModel

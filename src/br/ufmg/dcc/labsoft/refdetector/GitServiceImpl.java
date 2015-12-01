@@ -45,7 +45,7 @@ public class GitServiceImpl implements GitService {
 					.findGitDir()
 					.build();
 			
-			logger.info("Project {} is already cloned, current branch is {}", cloneUrl, repository.getBranch());
+			//logger.info("Project {} is already cloned, current branch is {}", cloneUrl, repository.getBranch());
 			
 		} else {
 			logger.info("Cloning {} ...", cloneUrl);
@@ -55,7 +55,7 @@ public class GitServiceImpl implements GitService {
 					.setCloneAllBranches(true)
 					.call();
 			repository = git.getRepository();
-			logger.info("Done cloning {}, current branch is {}", cloneUrl, repository.getBranch());
+			//logger.info("Done cloning {}, current branch is {}", cloneUrl, repository.getBranch());
 		}
 
 //		if (branch != null && !repository.getBranch().equals(branch)) {
@@ -88,13 +88,23 @@ public class GitServiceImpl implements GitService {
 		return repository;
 	}
 
-	public void checkout(Repository repository, String commitId) throws Exception {
-		Git git = new Git(repository);
-		CheckoutCommand checkout = git.checkout().setName(commitId);
-		checkout.call();
-		
+	public void checkout2(Repository repository, String commitId) throws Exception {
+	    logger.info("Checking out {} {} ...", repository.getDirectory().getParent().toString(), commitId);
+	    try (Git git = new Git(repository)) {
+	        CheckoutCommand checkout = git.checkout().setName(commitId);
+	        checkout.call();
+	    }
 //		File workingDir = repository.getDirectory().getParentFile();
 //		ExternalProcess.execute(workingDir, "git", "checkout", commitId);
+	}
+
+	public void checkout(Repository repository, String commitId) throws Exception {
+	    logger.info("Checking out {} {} ...", repository.getDirectory().getParent().toString(), commitId);
+		File workingDir = repository.getDirectory().getParentFile();
+		String output = ExternalProcess.execute(workingDir, "git", "checkout", commitId);
+		if (output.startsWith("fatal")) {
+		    throw new RuntimeException("git error " + output);
+		}
 	}
 
 	@Override
@@ -113,24 +123,24 @@ public class GitServiceImpl implements GitService {
 
 	private List<TrackingRefUpdate> fetch(Repository repository) throws Exception {
         logger.info("Fetching changes of repository {}", repository.getDirectory().toString());
-        
-        Git git = new Git(repository);
-		FetchResult result = git.fetch().call();
-		
-		Collection<TrackingRefUpdate> updates = result.getTrackingRefUpdates();
-		List<TrackingRefUpdate> remoteRefsChanges = new ArrayList<TrackingRefUpdate>();
-		for (TrackingRefUpdate update : updates) {
-			String refName = update.getLocalName();
-			if (refName.startsWith(REMOTE_REFS_PREFIX)) {
-				ObjectId newObjectId = update.getNewObjectId();
-				logger.info("{} is now at {}", refName, newObjectId.getName());
-				remoteRefsChanges.add(update);
-			}
-		}
-		if (updates.isEmpty()) {
-			logger.info("Nothing changed");
-		}
-		return remoteRefsChanges;
+        try (Git git = new Git(repository)) {
+    		FetchResult result = git.fetch().call();
+    		
+    		Collection<TrackingRefUpdate> updates = result.getTrackingRefUpdates();
+    		List<TrackingRefUpdate> remoteRefsChanges = new ArrayList<TrackingRefUpdate>();
+    		for (TrackingRefUpdate update : updates) {
+    			String refName = update.getLocalName();
+    			if (refName.startsWith(REMOTE_REFS_PREFIX)) {
+    				ObjectId newObjectId = update.getNewObjectId();
+    				logger.info("{} is now at {}", refName, newObjectId.getName());
+    				remoteRefsChanges.add(update);
+    			}
+    		}
+    		if (updates.isEmpty()) {
+    			logger.info("Nothing changed");
+    		}
+    		return remoteRefsChanges;
+        }
 	}
 
 	public RevWalk fetchAndCreateNewRevsWalk(Repository repository) throws Exception {
@@ -210,11 +220,19 @@ public class GitServiceImpl implements GitService {
 		}
 	}
 
-	@Override
-	public void fileTreeDiff(Repository repository, RevCommit current, List<String> javaFilesBefore, List<String> javaFilesCurrent, Map<String, String> renamedFilesHint) throws Exception {
+//	@Override
+	public void fileTreeDiff(Repository repository, RevCommit current, List<String> javaFilesBefore, List<String> javaFilesCurrent, Map<String, String> renamedFilesHint, boolean detectRenames) throws Exception {
         File workingDir = repository.getDirectory().getParentFile();
         String sha = current.getId().getName();
-        String output = ExternalProcess.execute(workingDir, "git", "diff", "--name-status", "--find-renames", sha + "^.." + sha);
+        String output;
+        if (detectRenames) {
+            output = ExternalProcess.execute(workingDir, "git", "diff", "--name-status", "--find-renames", sha + "^.." + sha);
+        } else {
+            output = ExternalProcess.execute(workingDir, "git", "diff", "--name-status", sha + "^.." + sha);
+        }
+        if (output.startsWith("fatal")) {
+            throw new RuntimeException("git error " + output);
+        }
         for (String line : output.split("\n")) {
         	String[] fields = line.split("\t");
         	char changeType = fields[0].charAt(0);
@@ -237,7 +255,7 @@ public class GitServiceImpl implements GitService {
 	}
 	
 //	@Override
-	public void fileTreeDiff2(Repository repository, RevCommit current, List<String> javaFilesBefore, List<String> javaFilesCurrent, Map<String, String> renamedFilesHint) throws Exception {
+	public void fileTreeDiff2(Repository repository, RevCommit current, List<String> javaFilesBefore, List<String> javaFilesCurrent, Map<String, String> renamedFilesHint, boolean detectRenames) throws Exception {
         ObjectId oldHead = current.getParent(0).getTree();
         ObjectId head = current.getTree();
 
@@ -253,10 +271,11 @@ public class GitServiceImpl implements GitService {
 		                    .setOldTree(oldTreeIter)
 		                    .setShowNameAndStatusOnly(true)
 		                    .call();
-		
-		RenameDetector rd = new RenameDetector(repository);
-		rd.addAll(diffs);
-		diffs = rd.compute();
+		if (detectRenames) {
+		    RenameDetector rd = new RenameDetector(repository);
+		    rd.addAll(diffs);
+		    diffs = rd.compute();
+		}
 		
         for (DiffEntry entry : diffs) {
         	ChangeType changeType = entry.getChangeType();

@@ -14,20 +14,29 @@ public class SDType extends SDContainerEntity {
 	private EntitySet<SDType> subtypes = new EntitySet<SDType>();
 	private List<SDType> anonymousClasses = new ArrayList<SDType>();
 	private SourceRepresentation source;
+	private int nestingLevel;
 	
 	public SDType(SDModel.Snapshot snapshot, int id, String simpleName, SDContainerEntity container, String sourceFilePath) {
-		super(snapshot, id, container.fullName() + "." + simpleName, container);
-		this.simpleName = simpleName;
-		this.sourceFilePath = sourceFilePath;
-		this.isAnonymous = false;
+		this(snapshot, id, simpleName, container.fullName() + "." + simpleName, container, sourceFilePath, false);
 	}
 
 	private SDType(SDModel.Snapshot snapshot, int id, int anonymousId, SDType container, String sourceFilePath) {
-		super(snapshot, id, container.fullName() + "$" + anonymousId, container);
-		this.simpleName = "" + anonymousId;
-		this.sourceFilePath = sourceFilePath;
-		this.isAnonymous = true;
+	    this(snapshot, id, "" + anonymousId, container.fullName() + "$" + anonymousId, container, sourceFilePath, true);
 	}
+
+	private SDType(SDModel.Snapshot snapshot, int id, String simpleName, String fullName, SDContainerEntity container, String sourceFilePath, boolean isAnonymous) {
+	    super(snapshot, id, fullName, container);
+	    this.simpleName = simpleName;
+	    this.sourceFilePath = sourceFilePath;
+	    this.isAnonymous = isAnonymous;
+	    if (container instanceof SDType) {
+	        SDType parentType = (SDType) container;
+	        this.nestingLevel = parentType.nestingLevel + 1;
+	    } else {
+	        this.nestingLevel = 0;
+	    }
+	}
+
 	
 	@Override
 	protected final String getNameSeparator() {
@@ -82,7 +91,11 @@ public class SDType extends SDContainerEntity {
 		return subtypes;
 	}
 	
-	public void addSubtype(SDType type) {
+	public int nestingLevel() {
+        return nestingLevel;
+    }
+
+    public void addSubtype(SDType type) {
 		subtypes.add(type);
 	}
 

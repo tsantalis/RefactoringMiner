@@ -1,9 +1,9 @@
 package br.ufmg.dcc.labsoft.refdetector.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import br.ufmg.dcc.labsoft.refdetector.model.builder.SourceRepresentation;
+import java.util.Map;
 
 public abstract class SDEntity implements Comparable<SDEntity> {
 
@@ -12,6 +12,7 @@ public abstract class SDEntity implements Comparable<SDEntity> {
 	protected final String fullName;
 	protected final SDContainerEntity container;
 	protected final List<SDEntity> children;
+	private MembersRepresentation members = null;
 	
 	public SDEntity(SDModel.Snapshot snapshot, int id, String fullName, SDContainerEntity container) {
 		this.snapshot = snapshot;
@@ -85,4 +86,27 @@ public abstract class SDEntity implements Comparable<SDEntity> {
 	public SourceRepresentation sourceCode() {
 	    throw new UnsupportedOperationException();
 	}
+
+	public long simpleNameHash() {
+	    long h = 0;
+	    String simpleName = this.simpleName();
+        for (int i = 0; i < simpleName.length(); i++) {
+            h = 31 * h + simpleName.charAt(i);
+        }
+        return h;
+	}
+	
+	public MembersRepresentation membersRepresentation() {
+	    if (this.members == null) {
+	        Map<Long, String> debug = new HashMap<Long, String>();
+	        long[] hashes = new long[this.children.size()];
+	        for (int i = 0; i < hashes.length; i++) {
+	            hashes[i] = this.children.get(i).simpleNameHash();
+	            debug.put(hashes[i], this.children.get(i).simpleName());
+	        }
+	        this.members = new MembersRepresentation(hashes, null);
+	    }
+	    return this.members;
+	}
+
 }

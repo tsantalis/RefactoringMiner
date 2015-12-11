@@ -46,6 +46,8 @@ public class SDModel {
 		
 		Collection<SDEntity> getAllEntities();
 		
+		Iterable<SDAttribute> getUnmatchedAttributes();
+		
 		Iterable<SDMethod> getUnmatchedMethods();
 		
 		Iterable<SDType> getUnmatchedTypes();
@@ -104,6 +106,11 @@ public class SDModel {
 			return map.values();
 		}
 		
+		@Override
+		public Iterable<SDAttribute> getUnmatchedAttributes() {
+		    return unmatchedAttributes;
+		}
+
 		@Override
 		public Iterable<SDMethod> getUnmatchedMethods() {
 			return unmatchedMethods;

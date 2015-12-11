@@ -26,9 +26,7 @@ public class TestRefDetector2 {
 
 		test.project("https://github.com/aws/aws-sdk-java.git", "master")
 		.atCommit("4baf0a4de8d03022df48d696d210cc8b3117d38a").contains(
-		  "Extract Method private pause(delay long) : void extracted from private pauseExponentially(retries int) : void in class com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper",
-		  "Inline Method private killServer() : void inlined to public cleanUp() : void in class com.amazonaws.util.EC2MetadataUtilsTest")
-		.atCommit("4baf0a4de8d03022df48d696d210cc8b3117d38a").notContains();
+		  "Extract Method private pause(delay long) : void extracted from private pauseExponentially(retries int) : void in class com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper");
 
 		test.project("https://github.com/grails/grails-core.git", "master")
 		.atCommit("480537e0f8aaf50a7648bf445b33230aa32a9b44").contains(
@@ -134,6 +132,15 @@ public class TestRefDetector2 {
 	    .atCommit("8a49fd50ee5dbadc22b7d557b9ef8a6e212b0f78").notContains(
 	      "Move Class InputRedundantImportCheck_UnnamedPackage moved to InputRedundantImportCheck_UnnamedPackage");
 	    
+	    test.project("https://github.com/mockito/mockito.git", "master") 
+        .atCommit("7f20e63a7252f33c888085134d16ee8bf45f183f").containsOnly(
+          "Move Class org.mockito.internal.util.text.ValuePrinter moved to org.mockito.internal.matchers.text.ValuePrinter",
+          "Move Class org.mockito.internal.util.text.HamcrestPrinter moved to org.mockito.internal.matchers.text.HamcrestPrinter",
+          "Move Class org.mockito.internal.util.text.ArrayIterator moved to org.mockito.internal.matchers.text.ArrayIterator",
+          // sim = 0.48
+          "Move Class org.mockito.internal.matchers.MatchersPrinter moved to org.mockito.internal.matchers.text.MatchersPrinter",
+          "Extract Superclass org.mockito.MockitoMatcher from classes [org.mockito.internal.matchers.LocalizedMatcher]");
+	    
 	    test.assertExpectations();
 	}
 	
@@ -204,13 +211,8 @@ public class TestRefDetector2 {
         TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
         
         test.project("https://github.com/droolsjbpm/jbpm.git", "master") 
-        .atCommit("3815f293ba9338f423315d93a373608c95002b15").contains(
-          "Extract Superclass org.jbpm.process.audit.JPAService from classes [org.jbpm.process.audit.JPAAuditLogService]")
         .atCommit("3815f293ba9338f423315d93a373608c95002b15").notContains(
-          "Extract Method private getOrderByListId(field OrderBy) : String extracted from public language(language String) : TaskQueryBuilder in class org.jbpm.services.task.impl.TaskQueryBuilderImpl",
-          "Inline Method private resetGroup() : void inlined to public clear() : void in class org.jbpm.query.jpa.data.QueryWhere",
-          "Move Method private joinTransaction(em EntityManager) : Object from class org.jbpm.process.audit.JPAAuditLogService to protected joinTransaction(em EntityManager) : Object from class org.jbpm.executor.impl.jpa.ExecutorJPAAuditService",
-          "Move Method private getEntityManager() : EntityManager from class org.jbpm.process.audit.JPAAuditLogService to protected getEntityManager() : EntityManager from class org.jbpm.executor.impl.jpa.ExecutorJPAAuditService");
+          "Inline Method private resetGroup() : void inlined to public clear() : void in class org.jbpm.query.jpa.data.QueryWhere");
 
         test.project("https://github.com/HubSpot/Singularity.git", "master") 
         .atCommit("f06f7ab4b898a97e8af8a47c0164205c96992d05").notContains(
@@ -383,23 +385,34 @@ public class TestRefDetector2 {
 	}
 
 	@Test
-    public void testTemp() throws Exception {
+    public void testPullUpAttribute() throws Exception {
         TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
         
-        
-        // push down implementation and set method to abstract
-        test.project("https://github.com/gradle/gradle.git", "master") 
-        .atCommit("b1fb1192daa1647b0bd525600dd41063765eca70").containsOnly(
-          "Push Down Method public setTasks(taskNames List<String>) : void from class org.gradle.testkit.functional.GradleRunner to public setTasks(taskNames List<String>) : void from class org.gradle.testkit.functional.internal.DefaultGradleRunner",
-          "Push Down Method public getTasks() : List<String> from class org.gradle.testkit.functional.GradleRunner to public getTasks() : List<String> from class org.gradle.testkit.functional.internal.DefaultGradleRunner",
-          "Push Down Method public setArguments(arguments List<String>) : void from class org.gradle.testkit.functional.GradleRunner to public setArguments(arguments List<String>) : void from class org.gradle.testkit.functional.internal.DefaultGradleRunner",
-          "Push Down Method public getArguments() : List<String> from class org.gradle.testkit.functional.GradleRunner to public getArguments() : List<String> from class org.gradle.testkit.functional.internal.DefaultGradleRunner",
-          "Push Down Method public setWorkingDir(workingDirectory File) : void from class org.gradle.testkit.functional.GradleRunner to public setWorkingDir(workingDirectory File) : void from class org.gradle.testkit.functional.internal.DefaultGradleRunner",
-          "Push Down Method public getWorkingDir() : File from class org.gradle.testkit.functional.GradleRunner to public getWorkingDir() : File from class org.gradle.testkit.functional.internal.DefaultGradleRunner",
-          "Push Down Method public setGradleUserHomeDir(gradleUserHomeDir File) : void from class org.gradle.testkit.functional.GradleRunner to public setGradleUserHomeDir(gradleUserHomeDir File) : void from class org.gradle.testkit.functional.internal.DefaultGradleRunner",
-          "Push Down Method public getGradleUserHomeDir() : File from class org.gradle.testkit.functional.GradleRunner to public getGradleUserHomeDir() : File from class org.gradle.testkit.functional.internal.DefaultGradleRunner");
+        test.project("https://github.com/kuujo/copycat.git", "master") 
+        .atCommit("19a49f8f36b2f6d82534dc13504d672e41a3a8d1").containsOnly(
+          "Pull Up Attribute protected transition : boolean from class net.kuujo.copycat.raft.state.ActiveState to class net.kuujo.copycat.raft.state.PassiveState",
+          "Pull Up Method private applyIndex(globalIndex long) : void from class net.kuujo.copycat.raft.state.ActiveState to private applyIndex(globalIndex long) : void from class net.kuujo.copycat.raft.state.PassiveState",
+          "Pull Up Method private applyCommits(commitIndex long) : CompletableFuture<Void> from class net.kuujo.copycat.raft.state.ActiveState to private applyCommits(commitIndex long) : CompletableFuture<Void> from class net.kuujo.copycat.raft.state.PassiveState",
+          "Pull Up Method private doAppendEntries(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.ActiveState to private doAppendEntries(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.PassiveState",
+          "Pull Up Method private doCheckPreviousEntry(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.ActiveState to private doCheckPreviousEntry(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.PassiveState",
+          "Pull Up Method private handleAppend(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.ActiveState to private handleAppend(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.PassiveState");
 
         test.assertExpectations();
     }
+
+	@Test
+	public void testTemp() throws Exception {
+	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+	    
+	    test.project("https://github.com/mockito/mockito.git", "master") 
+	    .atCommit("7f20e63a7252f33c888085134d16ee8bf45f183f").contains(
+	      "Move Class org.mockito.internal.util.text.ValuePrinter moved to org.mockito.internal.matchers.text.ValuePrinter",
+	      "Move Class org.mockito.internal.util.text.HamcrestPrinter moved to org.mockito.internal.matchers.text.HamcrestPrinter",
+	      "Move Class org.mockito.internal.util.text.ArrayIterator moved to org.mockito.internal.matchers.text.ArrayIterator",
+	      "Move Class org.mockito.internal.matchers.MatchersPrinter moved to org.mockito.internal.matchers.text.MatchersPrinter",
+	      "Extract Superclass org.mockito.MockitoMatcher from classes [org.mockito.internal.matchers.LocalizedMatcher]");
+	    
+	    test.assertExpectations();
+	}
 
 }

@@ -3,18 +3,18 @@ package br.ufmg.dcc.labsoft.refdetector.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufmg.dcc.labsoft.refdetector.model.builder.SourceRepresentation;
-
 public class SDType extends SDContainerEntity {
 
 	private String simpleName;
 	private String sourceFilePath;
+	private boolean isInterface;
 	private boolean isAnonymous;
 	private boolean deprecatedAnnotation;
 	private EntitySet<SDType> subtypes = new EntitySet<SDType>();
 	private List<SDType> anonymousClasses = new ArrayList<SDType>();
 	private SourceRepresentation source;
 	private int nestingLevel;
+	private Multiset<SDType> origins;
 	
 	public SDType(SDModel.Snapshot snapshot, int id, String simpleName, SDContainerEntity container, String sourceFilePath) {
 		this(snapshot, id, simpleName, container.fullName() + "." + simpleName, container, sourceFilePath, false);
@@ -35,6 +35,7 @@ public class SDType extends SDContainerEntity {
 	    } else {
 	        this.nestingLevel = 0;
 	    }
+	    this.origins = new Multiset<SDType>();
 	}
 
 	
@@ -52,8 +53,12 @@ public class SDType extends SDContainerEntity {
 		return supertype.subtypes.contains(this);
 	}
 
+	public boolean isInterface() {
+		return isInterface;
+	}
+
 	public boolean isAnonymous() {
-		return isAnonymous;
+	    return isAnonymous;
 	}
 	
 	@Override
@@ -95,6 +100,10 @@ public class SDType extends SDContainerEntity {
         return nestingLevel;
     }
 
+	public Multiset<SDType> origins() {
+        return this.origins;
+    }
+	
     public void addSubtype(SDType type) {
 		subtypes.add(type);
 	}
@@ -109,7 +118,15 @@ public class SDType extends SDContainerEntity {
 		this.deprecatedAnnotation = deprecatedAnnotation;
 	}
 
+	public void setIsInterface(boolean isInterface) {
+	    this.isInterface = isInterface;
+	}
+
 	public void setSourceCode(SourceRepresentation source) {
         this.source = source;
+    }
+	
+	public void addOrigin(SDType type, int multiplicity) {
+        this.origins.add(type, multiplicity);
     }
 }

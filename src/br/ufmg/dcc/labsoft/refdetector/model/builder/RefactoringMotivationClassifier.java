@@ -9,7 +9,6 @@ import br.ufmg.dcc.labsoft.refdetector.model.SDContainerEntity;
 import br.ufmg.dcc.labsoft.refdetector.model.SDMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
 import br.ufmg.dcc.labsoft.refdetector.model.SDType;
-import br.ufmg.dcc.labsoft.refdetector.model.SourceCode;
 
 public class RefactoringMotivationClassifier {
 

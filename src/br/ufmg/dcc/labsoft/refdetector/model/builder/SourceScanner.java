@@ -11,6 +11,8 @@ import org.eclipse.jdt.core.compiler.IScanner;
 import org.eclipse.jdt.core.compiler.ITerminalSymbols;
 import org.eclipse.jdt.core.compiler.InvalidInputException;
 
+import br.ufmg.dcc.labsoft.refdetector.model.SourceRepresentation;
+
 public class SourceScanner {
 
     IScanner scanner = ToolFactory.createScanner(true, true, false, "1.8");
@@ -21,14 +23,14 @@ public class SourceScanner {
     public SourceRepresentation getLineBasedSourceRepresentation(char[] charArray, int start, int length) {
         Map<Integer, String> debug = new HashMap<Integer, String>();
         List<Integer> lines = computeHashes(charArray, start, length, LINES, debug);
-        return new SourceRepresentation(lines.size(), computeBigrams(lines), debug);
+        return new SourceRepresentation(computeBigrams(lines), debug);
     }
 
     public SourceRepresentation getTokenBasedSourceRepresentation(char[] charArray, int start, int length) {
         Map<Integer, String> debug = new HashMap<Integer, String>();
-        List<Integer> lines = computeHashes(charArray, start, length, LINES, null);
+        //List<Integer> lines = computeHashes(charArray, start, length, LINES, null);
         List<Integer> tokens = computeHashes(charArray, start, length, TOKENS, debug);
-        return new SourceRepresentation(lines.size(), computeBigrams(tokens), debug);
+        return new SourceRepresentation(computeBigrams(tokens), debug);
     }
     
     private List<Integer> computeHashes(char[] charArray, int start, int length, int granularity, Map<Integer, String> debug) {

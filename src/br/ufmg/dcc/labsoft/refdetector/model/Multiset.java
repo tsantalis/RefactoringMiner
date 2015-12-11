@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.Set;
 
 
 public class Multiset<E> implements Collection<E> {
@@ -136,5 +137,9 @@ public class Multiset<E> implements Collection<E> {
 
 	public String toString() {
 		return map.toString();
+	}
+	
+	public Set<E> asSet() {
+	    return map.keySet();
 	}
 }

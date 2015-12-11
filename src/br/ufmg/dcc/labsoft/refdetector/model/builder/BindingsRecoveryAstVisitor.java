@@ -16,6 +16,7 @@ import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
@@ -24,13 +25,16 @@ import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
 import br.ufmg.dcc.labsoft.refactoringanalyzer.util.AstUtils;
+import br.ufmg.dcc.labsoft.refdetector.model.SDAttribute;
 import br.ufmg.dcc.labsoft.refdetector.model.SDContainerEntity;
 import br.ufmg.dcc.labsoft.refdetector.model.SDMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
 import br.ufmg.dcc.labsoft.refdetector.model.SDPackage;
 import br.ufmg.dcc.labsoft.refdetector.model.SDType;
+import br.ufmg.dcc.labsoft.refdetector.model.SourceRepresentation;
 import br.ufmg.dcc.labsoft.refdetector.model.Visibility;
 
 public class BindingsRecoveryAstVisitor extends ASTVisitor {
@@ -150,21 +154,15 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 		method.setDeprecatedAnnotation(annotations.contains("Deprecated") || AstUtils.containsDeprecatedTag(methodDeclaration.getJavadoc()));
 		
 		int methodModifiers = methodDeclaration.getModifiers();
-        if((methodModifiers & Modifier.PUBLIC) != 0)
-            method.setVisibility(Visibility.PUBLIC);
-        else if((methodModifiers & Modifier.PROTECTED) != 0)
-            method.setVisibility(Visibility.PROTECTED);
-        else if((methodModifiers & Modifier.PRIVATE) != 0)
-            method.setVisibility(Visibility.PRIVATE);
-        else
-            method.setVisibility(Visibility.PACKAGE);
+		Visibility visibility = getVisibility(methodModifiers);
 		
+        method.setVisibility(visibility);
         extractParametersAndReturnType(methodDeclaration, method);
 		
 		method.setNumberOfStatements(AstUtils.countNumberOfStatements(methodDeclaration));
 		Block body = methodDeclaration.getBody();
 		if (body == null) {
-			method.setSourceCode(new SourceRepresentation(0, new long[0]));
+			method.setSourceCode(new SourceRepresentation(new long[0]));
 			method.setAbstract(true);
 		} else {
 			method.setSourceCode(scanner.getTokenBasedSourceRepresentation(this.fileContent, body.getStartPosition() + 1, body.getLength() - 2));
@@ -186,6 +184,37 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 		postProcessInvocations.put(method, invocations);
 		return true;
 	}
+
+    private Visibility getVisibility(int methodModifiers) {
+        Visibility visibility;
+        if((methodModifiers & Modifier.PUBLIC) != 0)
+            visibility = Visibility.PUBLIC;
+        else if((methodModifiers & Modifier.PROTECTED) != 0)
+            visibility = Visibility.PROTECTED;
+        else if((methodModifiers & Modifier.PRIVATE) != 0)
+            visibility = Visibility.PRIVATE;
+        else
+            visibility = Visibility.PACKAGE;
+        return visibility;
+    }
+
+    @Override
+    public boolean visit(FieldDeclaration fieldDeclaration) {
+        Type fieldType = fieldDeclaration.getType();
+        int fieldModifiers = fieldDeclaration.getModifiers();
+        Visibility visibility = getVisibility(fieldModifiers);
+//        boolean isFinal = (fieldModifiers & Modifier.FINAL) != 0;
+        boolean isStatic = (fieldModifiers & Modifier.STATIC) != 0;
+        List<VariableDeclarationFragment> fragments = fieldDeclaration.fragments();
+        for (VariableDeclarationFragment fragment : fragments) {
+            String fieldName = fragment.getName().getIdentifier();
+            final SDAttribute attribute = model.createAttribute(fieldName, containerStack.peek());
+            attribute.setStatic(isStatic);
+            attribute.setVisibility(visibility);
+            attribute.setType(AstUtils.normalizeTypeName(fieldType, fragment.getExtraDimensions(), false));
+        }
+        return true;
+    }
 
 	private static Set<String> extractAnnotationTypes(List<?> modifiers) {
 		Set<String> annotations = new HashSet<String>();

@@ -2,15 +2,21 @@ package br.ufmg.dcc.labsoft.refdetector.model.builder;
 
 import gr.uom.java.xmi.diff.RefactoringType;
 import br.ufmg.dcc.labsoft.refdetector.model.Filter;
+import br.ufmg.dcc.labsoft.refdetector.model.MembersRepresentation;
+import br.ufmg.dcc.labsoft.refdetector.model.SDAttribute;
 import br.ufmg.dcc.labsoft.refdetector.model.SDMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
 import br.ufmg.dcc.labsoft.refdetector.model.SDType;
+import br.ufmg.dcc.labsoft.refdetector.model.SourceRepresentation;
 import br.ufmg.dcc.labsoft.refdetector.model.builder.EntityMatcher.Criterion;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDExtractMethod;
+import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDExtractSupertype;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDInlineMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDMoveClass;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDMoveMethod;
+import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDPullUpAttribute;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDPullUpMethod;
+import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDPushDownAttribute;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDPushDownMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDRefactoring;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDRenameClass;
@@ -21,6 +27,7 @@ public class RefactoringsSDBuilder {
 	private double moveTypeThreshold = 0.5;
 	private double renameTypeThreshold = 0.5;
 	private double moveAndRenameTypeThreshold = 0.5;
+	private double extractSupertypeThreshold = 0.5;
 	
 	private double renameMethodThreshold = 0.5;
 	private double moveMethodThreshold = 0.5;
@@ -31,17 +38,15 @@ public class RefactoringsSDBuilder {
 
 	public void analyze(SDModel model) {
 	    identifyMatchingTypes(model);
+	    identifyExtractTypes(model);
 	    identifyMatchingMethods(model);
-		identifyExtractMethod(model);
-		identifyInlineMethod(model);
+	    identifyExtractMethod(model);
+	    identifyInlineMethod(model);
+		identifyMatchingAttributes(model);
 	}
 
 	private void identifyMatchingTypes(SDModel m) {
-	    new EntityMatcher<SDType>() {
-	        public int getPriority(SDModel m, SDType entityBefore, SDType entityAfter) {
-	            return Math.max(entityBefore.nestingLevel(), entityAfter.nestingLevel());
-	        }
-	    }
+	    new TypeMatcher()
 	    .addCriterion(new Criterion<SDType>(moveTypeThreshold) {
             protected boolean canMatch(SDModel m, SDType entityBefore, SDType entityAfter) {
                 return entityBefore.simpleName().equals(entityAfter.simpleName());
@@ -70,6 +75,23 @@ public class RefactoringsSDBuilder {
         .match(m, m.before().getUnmatchedTypes(), m.after().getUnmatchedTypes());
 	}
 
+	private void identifyExtractTypes(SDModel m) {
+        for (SDType typeAfter : m.after().getUnmatchedTypes()) {
+            MembersRepresentation supertypeMembers = typeAfter.membersRepresentation();
+            for (SDType subtype : typeAfter.subtypes().suchThat(m.<SDType>isMatched())) {
+                MembersRepresentation subtypeMembersBefore = m.before(subtype).membersRepresentation();
+                double sim = supertypeMembers.partialSimilarity(subtypeMembersBefore);
+                if (sim >= extractSupertypeThreshold) {
+                    // found an extracted supertype
+                    typeAfter.addOrigin(m.before(subtype), 1);
+                }
+            }
+            if (typeAfter.origins().size() > 0) {
+                m.addRefactoring(new SDExtractSupertype(typeAfter));
+            }
+        }
+    }
+	
 	private void identifyMatchingMethods(SDModel m) {
         new EntityMatcher<SDMethod>()
         .addCriterion(new Criterion<SDMethod>(renameMethodThreshold){
@@ -125,6 +147,31 @@ public class RefactoringsSDBuilder {
             }
         })
         .match(m, m.before().getUnmatchedMethods(), m.after().getUnmatchedMethods());
+    }
+
+	private void identifyMatchingAttributes(SDModel m) {
+        new AttributeMatcher()
+        .addCriterion(new Criterion<SDAttribute>(1.0){
+            protected boolean canMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
+                return attributeBefore.simpleName().equals(attributeAfter.simpleName()) &&
+                    m.after().exists(attributeBefore.container()) &&
+                    m.after(attributeBefore.container()).isSubtypeOf(attributeAfter.container());
+            }
+            protected void onMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
+                m.addRefactoring(new SDPullUpAttribute(attributeBefore, attributeAfter));
+            }
+        })
+        .addCriterion(new Criterion<SDAttribute>(1.0){
+            protected boolean canMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
+                return attributeBefore.simpleName().equals(attributeAfter.simpleName()) &&
+                    m.after().exists(attributeBefore.container()) &&
+                    attributeAfter.container().isSubtypeOf(m.after(attributeBefore.container()));
+            }
+            protected void onMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
+                m.addRefactoring(new SDPushDownAttribute(attributeBefore, attributeAfter));
+            }
+        })
+        .match(m, m.before().getUnmatchedAttributes(), m.after().getUnmatchedAttributes());
     }
 
 	private void identifyExtractMethod(SDModel m) {

@@ -3,8 +3,6 @@ package br.ufmg.dcc.labsoft.refdetector.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufmg.dcc.labsoft.refdetector.model.builder.SourceRepresentation;
-
 
 public class SDMethod extends SDEntity {
 

@@ -8,10 +8,12 @@ public class SDAttribute extends SDEntity {
 	private Visibility visibility;
     private String type;
     private boolean isStatic;
+    private Multiset<SDMethod> referencedBy;
 	
 	public SDAttribute(SDModel.Snapshot snapshot, int id, String name, SDContainerEntity container) {
 		super(snapshot, id, container.fullName() + "#" + name, container);
 		this.name = name;
+		this.referencedBy = new Multiset<SDMethod>();
 	}
 
 	@Override
@@ -43,6 +45,15 @@ public class SDAttribute extends SDEntity {
 
     public SDType container() {
         return (SDType) this.container;
+    }
+    
+    public Multiset<SDMethod> referencedBy() {
+        return referencedBy;
+    }
+
+    @Override
+    public void addReferencedBy(SDMethod method) {
+        this.referencedBy.add(method);
     }
     
     public void setType(String type) {

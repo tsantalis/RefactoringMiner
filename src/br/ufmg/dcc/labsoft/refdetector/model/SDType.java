@@ -15,6 +15,7 @@ public class SDType extends SDContainerEntity {
 	private SourceRepresentation source;
 	private int nestingLevel;
 	private Multiset<SDType> origins;
+	private Multiset<SDType> referencedBy;
 	
 	public SDType(SDModel.Snapshot snapshot, int id, String simpleName, SDContainerEntity container, String sourceFilePath) {
 		this(snapshot, id, simpleName, container.fullName() + "." + simpleName, container, sourceFilePath, false);
@@ -36,8 +37,8 @@ public class SDType extends SDContainerEntity {
 	        this.nestingLevel = 0;
 	    }
 	    this.origins = new Multiset<SDType>();
+	    this.referencedBy = new Multiset<SDType>();
 	}
-
 	
 	@Override
 	protected final String getNameSeparator() {
@@ -102,6 +103,20 @@ public class SDType extends SDContainerEntity {
 
 	public Multiset<SDType> origins() {
         return this.origins;
+    }
+	
+	public Multiset<SDType> referencedBy() {
+        return referencedBy;
+    }
+
+    @Override
+    public void addReference(SDEntity entity) {
+        entity.addReferencedBy(this);
+    }
+    
+    @Override
+    public void addReferencedBy(SDType type) {
+        this.referencedBy.add(type);
     }
 	
     public void addSubtype(SDType type) {

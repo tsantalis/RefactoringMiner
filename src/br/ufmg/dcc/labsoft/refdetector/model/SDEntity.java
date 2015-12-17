@@ -109,4 +109,15 @@ public abstract class SDEntity implements Comparable<SDEntity> {
 	    return this.members;
 	}
 
+	public void addReferencedBy(SDMethod method) {
+	    throw new UnsupportedOperationException();
+	}
+
+	public void addReferencedBy(SDType type) {
+	    throw new UnsupportedOperationException();
+	}
+	
+	public void addReference(SDEntity entity) {
+	    throw new UnsupportedOperationException();
+	}
 }

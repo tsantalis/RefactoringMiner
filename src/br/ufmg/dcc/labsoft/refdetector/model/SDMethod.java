@@ -112,10 +112,16 @@ public class SDMethod extends SDEntity {
 
 	// Builder methods
 	
-	public void addCaller(SDMethod method) {
-		this.callers.add(method);
+	@Override
+	public void addReference(SDEntity entity) {
+	    entity.addReferencedBy(this);
 	}
-
+	
+	@Override
+	public void addReferencedBy(SDMethod method) {
+	    this.callers.add(method);
+	}
+	
 	public void addOrigin(SDMethod method, int multiplicity) {
 		this.origins.add(method, multiplicity);
 	}

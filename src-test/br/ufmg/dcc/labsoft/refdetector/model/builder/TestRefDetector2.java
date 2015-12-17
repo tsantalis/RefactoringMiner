@@ -401,7 +401,7 @@ public class TestRefDetector2 {
     }
 
 	@Test
-	public void testTemp() throws Exception {
+	public void testExtractSuperclass() throws Exception {
 	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
 	    
 	    test.project("https://github.com/mockito/mockito.git", "master") 
@@ -411,6 +411,23 @@ public class TestRefDetector2 {
 	      "Move Class org.mockito.internal.util.text.ArrayIterator moved to org.mockito.internal.matchers.text.ArrayIterator",
 	      "Move Class org.mockito.internal.matchers.MatchersPrinter moved to org.mockito.internal.matchers.text.MatchersPrinter",
 	      "Extract Superclass org.mockito.MockitoMatcher from classes [org.mockito.internal.matchers.LocalizedMatcher]");
+	    
+	    test.assertExpectations();
+	}
+
+	@Test
+	public void testMoveAttribute() throws Exception {
+	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+	    
+	    test.project("https://github.com/eclipse/jetty.project.git", "master") 
+	    .atCommit("13b63c194b010201c439932ece2f1bc628ebf287").containsOnly(
+	      "Move Attribute private __propertyPattern : Pattern from class org.eclipse.jetty.xml.XmlConfiguration to class org.eclipse.jetty.start.Props");
+	    
+	    test.project("https://github.com/SonarSource/sonarqube.git", "master") 
+	    .atCommit("0eaa5217883cfeca688aad1d462192c194741827").contains(
+	      "Move Attribute private userWriter : UserJsonWriter from class org.sonar.server.issue.ws.IssueJsonWriter to class org.sonar.server.issue.InternalRubyIssueService")
+	    .atCommit("0eaa5217883cfeca688aad1d462192c194741827").notContains(
+	      "Move Attribute package userWriter : UserJsonWriter from class org.sonar.server.issue.ws.IssueJsonWriter to class org.sonar.server.issue.InternalRubyIssueServiceTest");
 	    
 	    test.assertExpectations();
 	}

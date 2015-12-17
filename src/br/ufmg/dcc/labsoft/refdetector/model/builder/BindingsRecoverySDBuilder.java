@@ -22,7 +22,7 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.internal.compiler.util.Util;
 
-import br.ufmg.dcc.labsoft.refdetector.model.SDMethod;
+import br.ufmg.dcc.labsoft.refdetector.model.SDEntity;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
 import br.ufmg.dcc.labsoft.refdetector.model.SDPackage;
 import br.ufmg.dcc.labsoft.refdetector.model.SDType;
@@ -30,23 +30,20 @@ import br.ufmg.dcc.labsoft.refdetector.model.SDType;
 public class BindingsRecoverySDBuilder {
 	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
 	
-	private Map<SDMethod, List<String>> postProcessInvocations;
+	private Map<SDEntity, List<String>> postProcessReferences;
 	private Map<SDType, List<String>> postProcessSupertypes;
 
-	private void postProcessMethodInvocations(final SDModel.Snapshot model) {
-		for (Map.Entry<SDMethod, List<String>> entry : postProcessInvocations.entrySet()) {
-			final SDMethod method = entry.getKey();
-			List<String> invocations = entry.getValue();
-//			if (method.toString().endsWith("testFixedMembershipTokenIPv4()")) {
-//				System.out.print(' ');
-//			}
-			for (String invokedKey : invocations) {
-				SDMethod invoked = model.find(SDMethod.class, invokedKey);
-				if (invoked != null) {
-					invoked.addCaller(method);
-				}
-			}
-		}
+	private void postProcessReferences(final SDModel.Snapshot model, Map<? extends SDEntity, List<String>> referencesMap) {
+	    for (Map.Entry<? extends SDEntity, List<String>> entry : referencesMap.entrySet()) {
+	        final SDEntity entity = entry.getKey();
+	        List<String> references = entry.getValue();
+	        for (String referencedKey : references) {
+	            SDEntity referenced = model.find(SDEntity.class, referencedKey);
+	            if (referenced != null) {
+	                entity.addReference(referenced);
+	            }
+	        }
+	    }
 	}
 	private void postProcessSupertypes(final SDModel.Snapshot model) {
 		for (Map.Entry<SDType, List<String>> entry : postProcessSupertypes.entrySet()) {
@@ -63,7 +60,7 @@ public class BindingsRecoverySDBuilder {
 	
 
 	public void analyze(File rootFolder, List<String> javaFiles, final SDModel.Snapshot model) {
-		postProcessInvocations = new HashMap<SDMethod, List<String>>();
+	    postProcessReferences = new HashMap<SDEntity, List<String>>();
 		postProcessSupertypes = new HashMap<SDType, List<String>>();
 		final String projectRoot = rootFolder.getPath();
 		final String[] emptyArray = new String[0];
@@ -93,8 +90,8 @@ public class BindingsRecoverySDBuilder {
 		};
 		parser.createASTs((String[]) filesArray, null, emptyArray, fileASTRequestor, null);
 		
-		postProcessMethodInvocations(model);
-		postProcessInvocations = null;
+		postProcessReferences(model, postProcessReferences);
+		postProcessReferences = null;
 		postProcessSupertypes(model);
 		postProcessSupertypes = null;
 	}
@@ -120,7 +117,7 @@ public class BindingsRecoverySDBuilder {
 		}
 		SDPackage sdPackage = model.getOrCreatePackage(packageName);
 		
-		BindingsRecoveryAstVisitor visitor = new BindingsRecoveryAstVisitor(model, sourceFilePath, fileContent, sdPackage, postProcessInvocations, postProcessSupertypes);
+		BindingsRecoveryAstVisitor visitor = new BindingsRecoveryAstVisitor(model, sourceFilePath, fileContent, sdPackage, postProcessReferences, postProcessSupertypes);
 		compilationUnit.accept(visitor);
 		
 //		List<AbstractTypeDeclaration> topLevelTypeDeclarations = compilationUnit.types();

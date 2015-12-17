@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
+import org.eclipse.jdt.core.dom.IVariableBinding;
 import org.eclipse.jdt.core.dom.Javadoc;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
@@ -19,6 +20,10 @@ public class AstUtils {
 
 	private AstUtils() {
 		//
+	}
+	
+	public static String getKeyFromTypeBinding(ITypeBinding binding) {
+	    return binding.getErasure().getQualifiedName();
 	}
 	
 	public static String getKeyFromMethodBinding(IMethodBinding binding) {
@@ -42,6 +47,15 @@ public class AstUtils {
 		}
 		sb.append(')');
 		return sb.toString();
+	}
+
+	public static String getKeyFromFieldBinding(IVariableBinding binding) {
+	    StringBuilder sb = new StringBuilder();
+	    String className = binding.getDeclaringClass().getErasure().getQualifiedName();
+	    sb.append(className);
+	    sb.append('#');
+	    sb.append(binding.getName());
+	    return sb.toString();
 	}
 	
 	public static String getSignatureFromMethodDeclaration(MethodDeclaration methodDeclaration) {

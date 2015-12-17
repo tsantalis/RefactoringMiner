@@ -12,6 +12,7 @@ import br.ufmg.dcc.labsoft.refdetector.model.builder.EntityMatcher.Criterion;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDExtractMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDExtractSupertype;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDInlineMethod;
+import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDMoveAttribute;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDMoveClass;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDMoveMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDPullUpAttribute;
@@ -169,6 +170,14 @@ public class RefactoringsSDBuilder {
             }
             protected void onMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
                 m.addRefactoring(new SDPushDownAttribute(attributeBefore, attributeAfter));
+            }
+        })
+        .addCriterion(new Criterion<SDAttribute>(1.0){
+            protected boolean canMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
+                return attributeBefore.simpleName().equals(attributeAfter.simpleName());
+            }
+            protected void onMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
+                m.addRefactoring(new SDMoveAttribute(attributeBefore, attributeAfter));
             }
         })
         .match(m, m.before().getUnmatchedAttributes(), m.after().getUnmatchedAttributes());

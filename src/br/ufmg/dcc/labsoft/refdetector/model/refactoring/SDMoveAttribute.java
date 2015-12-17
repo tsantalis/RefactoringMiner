@@ -23,12 +23,10 @@ public class SDMoveAttribute extends SDRefactoring {
         StringBuilder sb = new StringBuilder();
         sb.append(this.getName());
         sb.append(' ');
-        sb.append(attributeBefore.getVerboseSimpleName());
-        sb.append(" from class ");
-        sb.append(attributeBefore.container().fullName());
-        sb.append(" to ");
         sb.append(attributeAfter.getVerboseSimpleName());
         sb.append(" from class ");
+        sb.append(attributeBefore.container().fullName());
+        sb.append(" to class ");
         sb.append(attributeAfter.container().fullName());
         return sb.toString();
     }

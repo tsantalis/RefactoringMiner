@@ -7,6 +7,11 @@ public class AttributeMatcher extends EntityMatcher<SDAttribute> {
 
     @Override
     protected double similarity(SDModel m, SDAttribute before, SDAttribute after) {
-        return before.type().equals(after.type()) ? 1.0 : 0.0;
+//        double simAssignment = before.assignment().similarity(after.assignment());
+        double simClient = before.clientCode().similarity(after.clientCode());
+//        if (before.fullName().endsWith("edgeStore") && after.fullName().endsWith("edgeStore")) {
+//            System.out.println();
+//        }
+        return simClient;
     }
 }

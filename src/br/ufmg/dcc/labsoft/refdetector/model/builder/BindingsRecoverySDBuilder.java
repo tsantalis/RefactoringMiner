@@ -22,16 +22,19 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.internal.compiler.util.Util;
 
+import br.ufmg.dcc.labsoft.refdetector.model.SDAttribute;
 import br.ufmg.dcc.labsoft.refdetector.model.SDEntity;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
 import br.ufmg.dcc.labsoft.refdetector.model.SDPackage;
 import br.ufmg.dcc.labsoft.refdetector.model.SDType;
+import br.ufmg.dcc.labsoft.refdetector.model.SourceRepresentation;
 
 public class BindingsRecoverySDBuilder {
 	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
 	
 	private Map<SDEntity, List<String>> postProcessReferences;
 	private Map<SDType, List<String>> postProcessSupertypes;
+	private Map<String, List<SourceRepresentation>> postProcessClientCode;
 
 	private void postProcessReferences(final SDModel.Snapshot model, Map<? extends SDEntity, List<String>> referencesMap) {
 	    for (Map.Entry<? extends SDEntity, List<String>> entry : referencesMap.entrySet()) {
@@ -57,11 +60,21 @@ public class BindingsRecoverySDBuilder {
 			}
 		}
 	}
-	
+	private void postProcessClientCode(final SDModel.Snapshot model) {
+	    for (Map.Entry<String, List<SourceRepresentation>> entry : postProcessClientCode.entrySet()) {
+	        final String entityId = entry.getKey();
+	        SDAttribute entity = model.find(SDAttribute.class, entityId);
+	        if (entity != null) {
+	            List<SourceRepresentation> sourceSnippets = entry.getValue();
+	            entity.setClientCode(entity.assignment().combine(sourceSnippets));
+	        }
+	    }
+	}
 
 	public void analyze(File rootFolder, List<String> javaFiles, final SDModel.Snapshot model) {
 	    postProcessReferences = new HashMap<SDEntity, List<String>>();
 		postProcessSupertypes = new HashMap<SDType, List<String>>();
+		postProcessClientCode = new HashMap<String, List<SourceRepresentation>>();
 		final String projectRoot = rootFolder.getPath();
 		final String[] emptyArray = new String[0];
 		
@@ -94,6 +107,8 @@ public class BindingsRecoverySDBuilder {
 		postProcessReferences = null;
 		postProcessSupertypes(model);
 		postProcessSupertypes = null;
+		postProcessClientCode(model);
+		postProcessClientCode = null;
 	}
 
 	private static ASTParser buildAstParser(String[] sourceFolders) {
@@ -117,7 +132,7 @@ public class BindingsRecoverySDBuilder {
 		}
 		SDPackage sdPackage = model.getOrCreatePackage(packageName);
 		
-		BindingsRecoveryAstVisitor visitor = new BindingsRecoveryAstVisitor(model, sourceFilePath, fileContent, sdPackage, postProcessReferences, postProcessSupertypes);
+		BindingsRecoveryAstVisitor visitor = new BindingsRecoveryAstVisitor(model, sourceFilePath, fileContent, sdPackage, postProcessReferences, postProcessSupertypes, postProcessClientCode);
 		compilationUnit.accept(visitor);
 		
 //		List<AbstractTypeDeclaration> topLevelTypeDeclarations = compilationUnit.types();

@@ -9,11 +9,14 @@ public class SDAttribute extends SDEntity {
     private String type;
     private boolean isStatic;
     private Multiset<SDMethod> referencedBy;
+    private SourceRepresentation assignment;
+    private SourceRepresentation clientCode;
 	
 	public SDAttribute(SDModel.Snapshot snapshot, int id, String name, SDContainerEntity container) {
 		super(snapshot, id, container.fullName() + "#" + name, container);
 		this.name = name;
 		this.referencedBy = new Multiset<SDMethod>();
+		this.clientCode = new SourceRepresentation(new long[0]);
 	}
 
 	@Override
@@ -47,6 +50,10 @@ public class SDAttribute extends SDEntity {
         return (SDType) this.container;
     }
     
+    public SourceRepresentation clientCode() {
+        return clientCode;
+    }
+
     public Multiset<SDMethod> referencedBy() {
         return referencedBy;
     }
@@ -66,6 +73,18 @@ public class SDAttribute extends SDEntity {
 
     public void setStatic(boolean isStatic) {
         this.isStatic = isStatic;
+    }
+
+    public void setClientCode(SourceRepresentation clientCode) {
+        this.clientCode = clientCode;
+    }
+
+    public SourceRepresentation assignment() {
+        return assignment;
+    }
+
+    public void setAssignment(SourceRepresentation assignment) {
+        this.assignment = assignment;
     }
 
     public String getVerboseSimpleName() {

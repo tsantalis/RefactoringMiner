@@ -147,4 +147,14 @@ public class AstUtils {
 		}
 	}
 	
+	public static Statement getEnclosingStatement(ASTNode node) {
+	    do {
+	        if (node instanceof Statement) {
+	            return (Statement) node;
+	        } else {
+	            node = node.getParent();
+	        }
+	    } while (node != null);
+	    return null;
+	}
 }

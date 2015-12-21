@@ -419,15 +419,85 @@ public class TestRefDetector2 {
 	public void testMoveAttribute() throws Exception {
 	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
 	    
+	    test.project("https://github.com/realm/realm-java.git", "master") 
+	    .atCommit("9b5b10a0c254017a48651771029f4dfc0a61bcfa").contains(
+	      "Move Attribute package CASTING_TYPES : Map<String,String> from class io.realm.processor.RealmProxyClassGenerator to class io.realm.processor.Constants",
+	      "Move Attribute package JAVA_TO_COLUMN_TYPES : Map<String,String> from class io.realm.processor.RealmProxyClassGenerator to class io.realm.processor.Constants",
+	      "Move Attribute package NULLABLE_JAVA_TYPES : Map<String,String> from class io.realm.processor.RealmProxyClassGenerator to class io.realm.processor.Constants",
+	      "Move Attribute package JAVA_TO_REALM_TYPES : Map<String,String> from class io.realm.processor.RealmProxyClassGenerator to class io.realm.processor.Constants");
+
+	    test.project("https://github.com/apache/giraph.git", "master") 
+	    .atCommit("03ade425dd5a65d3a713d5e7d85aa7605956fbd2").contains(
+	      "Move Attribute private edgeStore : EdgeStore<I,V,E> from class org.apache.giraph.comm.ServerData to class org.apache.giraph.partition.SimplePartitionStore");
+
 	    test.project("https://github.com/eclipse/jetty.project.git", "master") 
-	    .atCommit("13b63c194b010201c439932ece2f1bc628ebf287").containsOnly(
+	    .atCommit("13b63c194b010201c439932ece2f1bc628ebf287").contains(
 	      "Move Attribute private __propertyPattern : Pattern from class org.eclipse.jetty.xml.XmlConfiguration to class org.eclipse.jetty.start.Props");
+
+	    test.project("https://github.com/MovingBlocks/Terasology.git", "master") 
+	    .atCommit("543a9808a85619dbe5acc2373cb4fe5344442de7").contains(
+	      "Move Method public isFullscreen() : boolean from class org.terasology.engine.TerasologyEngine to public isFullscreen() : boolean from class org.terasology.engine.subsystem.lwjgl.LwjglDisplayDevice",
+	      "Inline Method private initTimer(context Context) : void inlined to public preInitialise(context Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglTimer",
+	      "Inline Method private initOpenAL(context Context) : void inlined to public initialise(rootContext Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglAudio",
+	      "Move Class org.terasology.engine.subsystem.ThreadManagerSubsystem moved to org.terasology.engine.subsystem.common.ThreadManagerSubsystem",
+	      "Move Class org.terasology.engine.subsystem.ThreadManager moved to org.terasology.engine.subsystem.common.ThreadManager",
+	      "Move Attribute private time : EngineTime from class org.terasology.engine.TerasologyEngine to class org.terasology.engine.subsystem.lwjgl.LwjglTimer",
+	      "Move Attribute private time : EngineTime from class org.terasology.engine.TerasologyEngine to class org.terasology.engine.subsystem.headless.HeadlessTimer");
+
+	    test.project("https://github.com/rackerlabs/blueflood.git", "master") 
+	    .atCommit("fce2d1f07c14bbac286e16ec666fd4bf26abd43d").contains(
+	      "Move Method public sendResponse(channel ChannelHandlerContext, request HttpRequest, messageBody String, status HttpResponseStatus) : void from class com.rackspacecloud.blueflood.inputs.handlers.HttpMetricsIngestionHandler to public sendResponse(channel ChannelHandlerContext, request HttpRequest, messageBody String, status HttpResponseStatus) : void from class com.rackspacecloud.blueflood.http.DefaultHandler",
+	      "Move Attribute private sendResponseTimer : Timer from class com.rackspacecloud.blueflood.inputs.handlers.HttpMetricsIngestionHandler to class com.rackspacecloud.blueflood.http.DefaultHandler");
+
+	    test.project("https://github.com/infinispan/infinispan.git", "master") 
+	    .atCommit("4184c577f4bbc57f3ac13639557cfd99cdaca3e7").contains(
+	      "Move Attribute private stopped : boolean from class org.infinispan.persistence.async.State to class org.infinispan.persistence.async.AsyncCacheWriter");
+
+	    test.project("https://github.com/apache/hive.git", "master") 
+	    .atCommit("d69e5cb21c04d9eede314aaa9ad059fc603fb025").contains(
+	      "Move Method public setTag(tag byte) : void from class org.apache.hadoop.hive.ql.exec.SparkHashTableSinkOperator to public setTag(tag byte) : void from class org.apache.hadoop.hive.ql.plan.SparkHashTableSinkDesc",
+	      "Move Attribute private tag : byte from class org.apache.hadoop.hive.ql.exec.SparkHashTableSinkOperator to class org.apache.hadoop.hive.ql.plan.SparkHashTableSinkDesc");
+
+	    // Duplicate entity key: de.appplant.cordova.plugin.localnotification.LocalNotification
+//	    test.project("https://github.com/katzer/cordova-plugin-local-notifications.git", "master") 
+//	    .atCommit("51f498a96b2fa1822e392027982c20e950535fd1").contains(
+//	      "Extract Method public handleEndTag(xml XmlPullParser) : void extracted from public parse(xml XmlResourceParser) : void in class org.apache.cordova.ConfigXmlParser",
+//	      "Extract Method public handleStartTag(xml XmlPullParser) : void extracted from public parse(xml XmlResourceParser) : void in class org.apache.cordova.ConfigXmlParser")
+//	    .atCommit("51f498a96b2fa1822e392027982c20e950535fd1").notContains(
+//	      "Move Attribute private cordova : CordovaInterface from class org.apache.cordova.NativeToJsMessageQueue to class org.apache.cordova.NativeToJsMessageQueue.LoadUrlBridgeMode",
+//	      "Move Attribute private cordova : CordovaInterface from class org.apache.cordova.CordovaWebView to class org.apache.cordova.NativeToJsMessageQueue.LoadUrlBridgeMode");
 	    
-	    test.project("https://github.com/SonarSource/sonarqube.git", "master") 
-	    .atCommit("0eaa5217883cfeca688aad1d462192c194741827").contains(
-	      "Move Attribute private userWriter : UserJsonWriter from class org.sonar.server.issue.ws.IssueJsonWriter to class org.sonar.server.issue.InternalRubyIssueService")
-	    .atCommit("0eaa5217883cfeca688aad1d462192c194741827").notContains(
-	      "Move Attribute package userWriter : UserJsonWriter from class org.sonar.server.issue.ws.IssueJsonWriter to class org.sonar.server.issue.InternalRubyIssueServiceTest");
+	    test.project("https://github.com/MovingBlocks/Terasology.git", "master") 
+	    .atCommit("dbd2d5048ae5e30fec98ddd969b6c1e91183fb65").contains(
+	      "Move Attribute private localPlayer : LocalPlayer from class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider.ReadyChunkRelevanceComparator to class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider",
+	      "Move Attribute private localPlayer : LocalPlayer from class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider.ChunkTaskRelevanceComparator to class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider");
+
+	    
+	    test.assertExpectations();
+	}
+	
+	@Test
+	public void testTemp() throws Exception {
+	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+	    
+	    test.project("https://github.com/apache/giraph.git", "master") 
+	    .atCommit("03ade425dd5a65d3a713d5e7d85aa7605956fbd2").containsOnly(
+	        "Move Attribute private edgeStore : EdgeStore<I,V,E> from class org.apache.giraph.comm.ServerData to class org.apache.giraph.partition.SimplePartitionStore");
+	    
+//	    test.project("https://github.com/MovingBlocks/Terasology.git", "master") 
+//	    .atCommit("543a9808a85619dbe5acc2373cb4fe5344442de7").containsOnly(
+//	        "Move Method public isFullscreen() : boolean from class org.terasology.engine.TerasologyEngine to public isFullscreen() : boolean from class org.terasology.engine.subsystem.lwjgl.LwjglDisplayDevice",
+//	        "Inline Method private initTimer(context Context) : void inlined to public preInitialise(context Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglTimer",
+//	        "Inline Method private initOpenAL(context Context) : void inlined to public initialise(rootContext Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglAudio",
+//	        "Move Class org.terasology.engine.subsystem.ThreadManagerSubsystem moved to org.terasology.engine.subsystem.common.ThreadManagerSubsystem",
+//	        "Move Class org.terasology.engine.subsystem.ThreadManager moved to org.terasology.engine.subsystem.common.ThreadManager",
+//	        "Move Attribute private time : EngineTime from class org.terasology.engine.TerasologyEngine to class org.terasology.engine.subsystem.lwjgl.LwjglTimer",
+//	        "Move Attribute private time : EngineTime from class org.terasology.engine.TerasologyEngine to class org.terasology.engine.subsystem.headless.HeadlessTimer");
+//	    
+//	    test.project("https://github.com/MovingBlocks/Terasology.git", "master") 
+//	    .atCommit("dbd2d5048ae5e30fec98ddd969b6c1e91183fb65").containsOnly(
+//	        "Move Attribute private localPlayer : LocalPlayer from class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider.ReadyChunkRelevanceComparator to class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider",
+//	        "Move Attribute private localPlayer : LocalPlayer from class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider.ChunkTaskRelevanceComparator to class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider");
 	    
 	    test.assertExpectations();
 	}

@@ -38,4 +38,23 @@ public class SourceRepresentation extends HashArray {
             return sb.toString();
         }
     }
+    
+    public SourceRepresentation combine(Iterable<SourceRepresentation> others) {
+        int totalLength = this.hashes.length;
+        for (SourceRepresentation sr : others) {
+            totalLength += sr.hashes.length;
+        }
+        long[] hs = new long[totalLength];
+        int j = 0;
+        for (int i = 0; i < this.hashes.length; i++) {
+            hs[j++] = this.hashes[i];
+        }
+        for (SourceRepresentation sr : others) {
+            for (int i = 0; i < sr.hashes.length; i++) {
+                hs[j++] = sr.hashes[i];
+            }
+        }
+        Arrays.sort(hs);
+        return new SourceRepresentation(hs);
+    }
 }

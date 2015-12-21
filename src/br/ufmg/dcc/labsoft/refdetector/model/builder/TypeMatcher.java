@@ -12,6 +12,10 @@ public class TypeMatcher extends EntityMatcher<SDType> {
  
     @Override
     protected double similarity(SDModel m, SDType before, SDType after) {
-        return 0.5 * (before.sourceCode().similarity(after.sourceCode()) + before.membersRepresentation().similarity(after.membersRepresentation()));
+        double sim = 0.5 * (before.sourceCode().similarity(after.sourceCode()) + before.membersRepresentation().similarity(after.membersRepresentation()));
+//        if (before.fullName().endsWith("DiskBackedPartitionStore") && after.fullName().endsWith("DiskBackedPartitionStore")) {
+//            sim = sim + 0.0;
+//        }
+        return sim;
     }
 }

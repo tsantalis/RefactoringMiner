@@ -152,9 +152,10 @@ public class RefactoringsSDBuilder {
 
 	private void identifyMatchingAttributes(SDModel m) {
         new AttributeMatcher()
-        .addCriterion(new Criterion<SDAttribute>(1.0){
+        .addCriterion(new Criterion<SDAttribute>(0.0){
             protected boolean canMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
                 return attributeBefore.simpleName().equals(attributeAfter.simpleName()) &&
+                    attributeBefore.type().equals(attributeAfter.type()) && 
                     m.after().exists(attributeBefore.container()) &&
                     m.after(attributeBefore.container()).isSubtypeOf(attributeAfter.container());
             }
@@ -162,9 +163,10 @@ public class RefactoringsSDBuilder {
                 m.addRefactoring(new SDPullUpAttribute(attributeBefore, attributeAfter));
             }
         })
-        .addCriterion(new Criterion<SDAttribute>(1.0){
+        .addCriterion(new Criterion<SDAttribute>(0.0){
             protected boolean canMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
                 return attributeBefore.simpleName().equals(attributeAfter.simpleName()) &&
+                    attributeBefore.type().equals(attributeAfter.type()) &&
                     m.after().exists(attributeBefore.container()) &&
                     attributeAfter.container().isSubtypeOf(m.after(attributeBefore.container()));
             }
@@ -172,9 +174,10 @@ public class RefactoringsSDBuilder {
                 m.addRefactoring(new SDPushDownAttribute(attributeBefore, attributeAfter));
             }
         })
-        .addCriterion(new Criterion<SDAttribute>(1.0){
+        .addCriterion(new Criterion<SDAttribute>(0.0){
             protected boolean canMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
-                return attributeBefore.simpleName().equals(attributeAfter.simpleName());
+                return attributeBefore.simpleName().equals(attributeAfter.simpleName()) &&
+                    attributeBefore.type().equals(attributeAfter.type());
             }
             protected void onMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
                 m.addRefactoring(new SDMoveAttribute(attributeBefore, attributeAfter));

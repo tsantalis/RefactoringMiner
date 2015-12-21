@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
+import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
@@ -24,6 +25,7 @@ import org.eclipse.jdt.core.dom.IVariableBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
@@ -47,16 +49,18 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 	private final LinkedList<SDContainerEntity> containerStack;
 	private final Map<SDEntity, List<String>> postProcessReferences;
 	private final Map<SDType, List<String>> postProcessSupertypes;
+	private final Map<String, List<SourceRepresentation>> postProcessClientCode;
 	private final SourceScanner scanner;
 	
-	public BindingsRecoveryAstVisitor(SDModel.Snapshot model, String sourceFilePath, char[] fileContent, SDPackage sdPackage, Map<SDEntity, List<String>> postProcessMap, Map<SDType, List<String>> postProcessSupertypes) {
+	public BindingsRecoveryAstVisitor(SDModel.Snapshot model, String sourceFilePath, char[] fileContent, SDPackage sdPackage, Map<SDEntity, List<String>> postProcessReferences, Map<SDType, List<String>> postProcessSupertypes, Map<String, List<SourceRepresentation>> postProcessClientCode) {
 		this.model = model;
 		this.sourceFilePath = sourceFilePath;
 		this.fileContent = fileContent;
 		this.containerStack = new LinkedList<SDContainerEntity>();
 		this.containerStack.push(sdPackage);
-		this.postProcessReferences = postProcessMap;
+		this.postProcessReferences = postProcessReferences;
 		this.postProcessSupertypes = postProcessSupertypes;
+		this.postProcessClientCode = postProcessClientCode;
 		this.scanner = new SourceScanner();
 	}
 	
@@ -179,22 +183,34 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 			method.setAbstract(true);
 		} else {
 			method.setSourceCode(scanner.getTokenBasedSourceRepresentation(this.fileContent, body.getStartPosition() + 1, body.getLength() - 2));
+			final List<String> references = new ArrayList<String>();
+			body.accept(new DependenciesAstVisitor(true) {
+			    @Override
+			    protected void onMethodAccess(ASTNode node, IMethodBinding binding) {
+			        String methodKey = AstUtils.getKeyFromMethodBinding(binding);
+			        references.add(methodKey);
+			    }
+			    @Override
+			    protected void onFieldAccess(ASTNode node, IVariableBinding binding) {
+			        String attributeKey = AstUtils.getKeyFromFieldBinding(binding);
+			        references.add(attributeKey);
+			        
+			        Statement stm = AstUtils.getEnclosingStatement(node);
+//			        if (stm == null) {
+//			            System.out.println("null");
+//			        }
+			        SourceRepresentation code = scanner.getTokenBasedSourceRepresentation(fileContent, stm.getStartPosition(), stm.getLength());
+			        List<SourceRepresentation> codeFragments = postProcessClientCode.get(attributeKey);
+			        if (codeFragments == null) {
+			            codeFragments = new ArrayList<SourceRepresentation>();
+			        }
+			        codeFragments.add(code);
+			        postProcessClientCode.put(attributeKey, codeFragments);
+			    }
+			});
+			postProcessReferences.put(method, references);
 		}
 		
-		final List<String> references = new ArrayList<String>();
-		methodDeclaration.accept(new DependenciesAstVisitor(true) {
-		    @Override
-		    protected void onMethodAccess(ASTNode node, IMethodBinding binding) {
-		        String methodKey = AstUtils.getKeyFromMethodBinding(binding);
-                references.add(methodKey);
-		    }
-		    @Override
-		    protected void onFieldAccess(ASTNode node, IVariableBinding binding) {
-		        String attributeKey = AstUtils.getKeyFromFieldBinding(binding);
-                references.add(attributeKey);
-		    }
-		});
-		postProcessReferences.put(method, references);
 		return true;
 	}
 
@@ -225,6 +241,13 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
             attribute.setStatic(isStatic);
             attribute.setVisibility(visibility);
             attribute.setType(AstUtils.normalizeTypeName(fieldType, fragment.getExtraDimensions(), false));
+            
+            Expression expression = fragment.getInitializer();
+            if (expression != null) {
+                attribute.setAssignment(scanner.getTokenBasedSourceRepresentation(fileContent, expression.getStartPosition(), expression.getLength()));
+            } else {
+                attribute.setAssignment(new SourceRepresentation(new long[0]));
+            }
         }
         return true;
     }

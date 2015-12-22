@@ -22,6 +22,7 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.internal.compiler.util.Util;
 
+import br.ufmg.dcc.labsoft.refdetector.exception.DuplicateEntityException;
 import br.ufmg.dcc.labsoft.refdetector.model.SDAttribute;
 import br.ufmg.dcc.labsoft.refdetector.model.SDEntity;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
@@ -98,7 +99,9 @@ public class BindingsRecoverySDBuilder {
 					processCompilationUnit(relativePath, charArray, ast, model);
 				} catch (IOException e) {
 					throw new RuntimeException(e);
-				}
+				} catch (DuplicateEntityException e) {
+		            // debug e;
+		        }
 			}
 		};
 		parser.createASTs((String[]) filesArray, null, emptyArray, fileASTRequestor, null);
@@ -134,14 +137,6 @@ public class BindingsRecoverySDBuilder {
 		
 		BindingsRecoveryAstVisitor visitor = new BindingsRecoveryAstVisitor(model, sourceFilePath, fileContent, sdPackage, postProcessReferences, postProcessSupertypes, postProcessClientCode);
 		compilationUnit.accept(visitor);
-		
-//		List<AbstractTypeDeclaration> topLevelTypeDeclarations = compilationUnit.types();
-//        for(AbstractTypeDeclaration abstractTypeDeclaration : topLevelTypeDeclarations) {
-//        	if(abstractTypeDeclaration instanceof TypeDeclaration) {
-//        		TypeDeclaration topLevelTypeDeclaration = (TypeDeclaration)abstractTypeDeclaration;
-//        		processTypeDeclaration(topLevelTypeDeclaration, packageName, sourceFilePath);
-//        	}
-//        }
 	}
 
 	private String[] inferSourceFolders(String[] filesArray) {

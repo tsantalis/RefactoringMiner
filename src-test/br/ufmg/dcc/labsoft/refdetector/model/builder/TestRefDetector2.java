@@ -480,25 +480,11 @@ public class TestRefDetector2 {
 	public void testTemp() throws Exception {
 	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
 	    
-	    test.project("https://github.com/apache/giraph.git", "master") 
-	    .atCommit("03ade425dd5a65d3a713d5e7d85aa7605956fbd2").containsOnly(
-	        "Move Attribute private edgeStore : EdgeStore<I,V,E> from class org.apache.giraph.comm.ServerData to class org.apache.giraph.partition.SimplePartitionStore");
-	    
-//	    test.project("https://github.com/MovingBlocks/Terasology.git", "master") 
-//	    .atCommit("543a9808a85619dbe5acc2373cb4fe5344442de7").containsOnly(
-//	        "Move Method public isFullscreen() : boolean from class org.terasology.engine.TerasologyEngine to public isFullscreen() : boolean from class org.terasology.engine.subsystem.lwjgl.LwjglDisplayDevice",
-//	        "Inline Method private initTimer(context Context) : void inlined to public preInitialise(context Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglTimer",
-//	        "Inline Method private initOpenAL(context Context) : void inlined to public initialise(rootContext Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglAudio",
-//	        "Move Class org.terasology.engine.subsystem.ThreadManagerSubsystem moved to org.terasology.engine.subsystem.common.ThreadManagerSubsystem",
-//	        "Move Class org.terasology.engine.subsystem.ThreadManager moved to org.terasology.engine.subsystem.common.ThreadManager",
-//	        "Move Attribute private time : EngineTime from class org.terasology.engine.TerasologyEngine to class org.terasology.engine.subsystem.lwjgl.LwjglTimer",
-//	        "Move Attribute private time : EngineTime from class org.terasology.engine.TerasologyEngine to class org.terasology.engine.subsystem.headless.HeadlessTimer");
-//	    
-//	    test.project("https://github.com/MovingBlocks/Terasology.git", "master") 
-//	    .atCommit("dbd2d5048ae5e30fec98ddd969b6c1e91183fb65").containsOnly(
-//	        "Move Attribute private localPlayer : LocalPlayer from class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider.ReadyChunkRelevanceComparator to class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider",
-//	        "Move Attribute private localPlayer : LocalPlayer from class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider.ChunkTaskRelevanceComparator to class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider");
-	    
+	    test.project("https://github.com/MovingBlocks/Terasology.git", "master") 
+        .atCommit("dbd2d5048ae5e30fec98ddd969b6c1e91183fb65").contains(
+          "Move Attribute private localPlayer : LocalPlayer from class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider.ReadyChunkRelevanceComparator to class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider",
+          "Move Attribute private localPlayer : LocalPlayer from class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider.ChunkTaskRelevanceComparator to class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider");
+
 	    test.assertExpectations();
 	}
 

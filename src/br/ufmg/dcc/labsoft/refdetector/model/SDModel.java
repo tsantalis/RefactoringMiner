@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import br.ufmg.dcc.labsoft.refdetector.exception.DuplicateEntityException;
+
 public class SDModel {
 
 	final SnapshotImpl BEFORE;
@@ -203,7 +205,7 @@ public class SDModel {
 		SDEntity b = BEFORE.map.get(key);
 		
 		if (a != null && snapshot == AFTER || b != null && snapshot == BEFORE) {
-			throw new RuntimeException("Duplicate entity key: " + key);
+			throw new DuplicateEntityException(key);
 		}
 		if (a != null && snapshot == BEFORE) {
 			matchEntities(entity, a);

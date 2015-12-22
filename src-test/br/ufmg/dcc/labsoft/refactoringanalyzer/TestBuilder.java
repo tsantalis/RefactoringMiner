@@ -25,11 +25,13 @@ public class TestBuilder {
 	private final String tempDir;
 	private final Map<String, ProjectMatcher> map;
 	private final GitHistoryRefactoringDetector refactoringDetector;
+	private final boolean verbose;
 	
 	public TestBuilder(GitHistoryRefactoringDetector detector, String tempDir) {
 		this.map = new HashMap<String, ProjectMatcher>();
 		this.refactoringDetector = detector;
 		this.tempDir = tempDir;
+		this.verbose = true;
 	}
 
 	public TestBuilder() {
@@ -173,6 +175,7 @@ public class TestBuilder {
 						iter.remove();
 						refactoringsFound.remove(expectedRefactoring);
 						this.truePositiveCount++;
+						matcher.truePositive.add(expectedRefactoring);
 					}
 				}
 				
@@ -187,7 +190,13 @@ public class TestBuilder {
 					}
 				}
 				// count false positives when using containsOnly
-				if (!matcher.ignoreNonSpecified) {
+				if (matcher.ignoreNonSpecified) {
+				    for (String refactoring : refactoringsFound) {
+                        matcher.unknown.add(refactoring);
+                        //this.falsePositiveCount++;
+                    }
+				}
+				else {
 					for (String refactoring : refactoringsFound) {
 						matcher.notExpected.add(refactoring);
 						this.falsePositiveCount++;
@@ -207,7 +216,7 @@ public class TestBuilder {
 		}
 
 		private void printResults() {
-			if (this.falsePositiveCount > 0 || this.falseNegativeCount > 0 || this.errorsCount > 0) {
+			if (verbose || this.falsePositiveCount > 0 || this.falseNegativeCount > 0 || this.errorsCount > 0) {
 				System.out.println(this.cloneUrl);
 			}
 			for (Map.Entry<String, CommitMatcher> entry : this.expected.entrySet()) {
@@ -215,11 +224,17 @@ public class TestBuilder {
 				if (matcher.error != null) {
 				    System.out.println(" error at commit " + entry.getKey() + ": " + matcher.error);
 				} else {
-				    if (!matcher.expected.isEmpty() || !matcher.notExpected.isEmpty()) {
+				    if (verbose || !matcher.expected.isEmpty() || !matcher.notExpected.isEmpty()) {
 				        if (!matcher.analyzed) {
 				            System.out.println(" at not analyzed commit " + entry.getKey());
 				        } else {
 				            System.out.println(" at commit " + entry.getKey());
+				        }
+				    }
+				    if (verbose && !matcher.truePositive.isEmpty()) {
+				        System.out.println("  true positives");
+				        for (String ref : matcher.truePositive) {
+				            System.out.println("   " + ref);
 				        }
 				    }
 				    if (!matcher.notExpected.isEmpty()) {
@@ -234,6 +249,12 @@ public class TestBuilder {
 				            System.out.println("   " + ref);
 				        }
 				    }
+				    if (verbose && !matcher.unknown.isEmpty()) {
+                        System.out.println("  unknown");
+                        for (String ref : matcher.unknown) {
+                            System.out.println("   " + ref);
+                        }
+                    }
 				}
 			}
 		}
@@ -250,6 +271,8 @@ public class TestBuilder {
 		public class CommitMatcher {
 			private Set<String> expected = new HashSet<String>();
 			private Set<String> notExpected = new HashSet<String>();
+			private Set<String> truePositive = new HashSet<String>();
+			private Set<String> unknown = new HashSet<String>();
 			private boolean ignoreNonSpecified = true;
 			private boolean analyzed = false;
 			private String error = null;

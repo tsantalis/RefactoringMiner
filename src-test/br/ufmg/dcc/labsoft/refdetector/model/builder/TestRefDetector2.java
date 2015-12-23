@@ -480,10 +480,17 @@ public class TestRefDetector2 {
 	public void testTemp() throws Exception {
 	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
 	    
-	    test.project("https://github.com/MovingBlocks/Terasology.git", "master") 
-        .atCommit("dbd2d5048ae5e30fec98ddd969b6c1e91183fb65").contains(
-          "Move Attribute private localPlayer : LocalPlayer from class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider.ReadyChunkRelevanceComparator to class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider",
-          "Move Attribute private localPlayer : LocalPlayer from class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider.ChunkTaskRelevanceComparator to class org.terasology.world.chunks.remoteChunkProvider.RemoteChunkProvider");
+	    test.project("https://github.com/neo4j/neo4j.git", "master") 
+        .atCommit("5fa74fbb4a307571e3807c1201b8b05d3d60a99b").contains(
+          "Extract Method private createCountsTracker(pageCache PageCache) : CountsTracker extracted from public shouldRotateCountsStoreWhenRotatingLog() : void in class org.neo4j.kernel.impl.store.counts.CountsRotationTest",
+          "Extract Method private createCountsTracker(pageCache PageCache) : CountsTracker extracted from public shouldRotateCountsStoreWhenClosingTheDatabase() : void in class org.neo4j.kernel.impl.store.counts.CountsRotationTest",
+          "Extract Method private createCountsTracker(pageCache PageCache) : CountsTracker extracted from public shouldCreateEmptyCountsTrackerStoreWhenCreatingDatabase() : void in class org.neo4j.kernel.impl.store.counts.CountsRotationTest",
+          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountStoreWhenDBContainsDenseNodes() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest",
+          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountsStoreWhenThereAreNodesAndRelationshipsInTheDB() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest",
+          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountsStoreWhenThereAreUnusedRelationshipRecordsInTheDB() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest",
+          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountsStoreWhenThereAreUnusedNodeRecordsInTheDB() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest",
+          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountsStoreWhenThereAreNodesInTheDB() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest",
+          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateAnEmptyCountsStoreFromAnEmptyDatabase() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest");
 
 	    test.assertExpectations();
 	}

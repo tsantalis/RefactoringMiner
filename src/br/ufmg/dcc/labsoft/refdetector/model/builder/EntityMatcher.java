@@ -9,19 +9,25 @@ import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
 public class EntityMatcher<T extends SDEntity> {
 
     private final ArrayList<Criterion<T>> criteria = new ArrayList<Criterion<T>>();
-    
+    private final ArrayList<SimilarityIndex<? super T>> similarityIndexes = new ArrayList<SimilarityIndex<? super T>>();
+
     public EntityMatcher<T> addCriterion(Criterion<T> criterion) {
         this.criteria.add(criterion);
         return this;
     }
-    
+
+    public EntityMatcher<T> using(SimilarityIndex<? super T> similarity) {
+        this.similarityIndexes.add(similarity);
+        return this;
+    }
+
     protected int getPriority(SDModel m, T entityBefore, T entityAfter) {
         return 0;
     }
     
-    protected double similarity(SDModel m, T entityBefore, T entityAfter) {
-        return entityBefore.sourceCode().similarity(entityAfter.sourceCode());
-    }
+//    protected double similarity(SDModel m, T entityBefore, T entityAfter) {
+//        return entityBefore.sourceCode().similarity(entityAfter.sourceCode());
+//    }
     
     public void match(SDModel m, Iterable<T> unmatchedBefore, Iterable<T> unmatchedAfter) {
         ArrayList<MatchCandidate<T>> candidates = new ArrayList<MatchCandidate<T>>(); 
@@ -30,9 +36,16 @@ public class EntityMatcher<T extends SDEntity> {
                 for (int i = 0; i < criteria.size(); i++) {
                     Criterion<T> matcher = criteria.get(i);
                     if (matcher.canMatch(m, eBefore, eAfter)) {
-                        double sim = similarity(m, eBefore, eAfter);
-                        if (sim >= matcher.threshold) {
-                            candidates.add(new MatchCandidate<T>(eBefore, eAfter, matcher, getPriority(m, eBefore, eAfter), i, sim));
+                        double maxSim = 0.0;
+                        double averageSim = 0.0;
+                        for (SimilarityIndex<? super T> index : similarityIndexes) {
+                            double sim = index.similarity(eBefore, eAfter);
+                            averageSim += sim;
+                            maxSim = Math.max(sim, maxSim);
+                        }
+                        averageSim = averageSim / similarityIndexes.size();
+                        if (maxSim >= matcher.threshold) {
+                            candidates.add(new MatchCandidate<T>(eBefore, eAfter, matcher, getPriority(m, eBefore, eAfter), i, averageSim));
                         }
                         break;
                     }

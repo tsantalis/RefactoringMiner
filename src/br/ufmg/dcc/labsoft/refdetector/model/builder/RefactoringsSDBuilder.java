@@ -94,7 +94,7 @@ public class RefactoringsSDBuilder {
     }
 	
 	private void identifyMatchingMethods(SDModel m) {
-        new EntityMatcher<SDMethod>()
+        new MethodMatcher()
         .addCriterion(new Criterion<SDMethod>(renameMethodThreshold){
             protected boolean canMatch(SDModel m, SDMethod methodBefore, SDMethod methodAfter) {
                 return !methodBefore.isAbstract() && !methodAfter.isAbstract() && 

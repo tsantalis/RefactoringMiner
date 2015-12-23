@@ -51,6 +51,7 @@ public class TestBuilder {
 		int tp = 0;
 		int fp = 0;
 		int fn = 0;
+		int unknown = 0;
 		GitService gitService = new GitServiceImpl();
 		
 		for (ProjectMatcher m : map.values()) {
@@ -70,10 +71,12 @@ public class TestBuilder {
 			tp += m.truePositiveCount;
 			fp += m.falsePositiveCount;
 			fn += m.falseNegativeCount;
+			unknown += m.unknownCount;
 		}
 		boolean success = fp == 0 && fn == 0 && tp > 0;
 		double precision = ((double) tp) / (tp + fp);
 		double recall = ((double) tp) / (tp + fn);
+		System.out.println(String.format("TP: %d  FP: %d  FN: %d  ??: %d", tp, fp, fn, unknown));
 		String mainResultMessage = String.format("Precision: %.3f  Recall: %.3f", precision, recall);
 		
 		System.out.println(mainResultMessage);
@@ -115,6 +118,7 @@ public class TestBuilder {
 		private int truePositiveCount = 0;
 		private int falsePositiveCount = 0;
 		private int falseNegativeCount = 0;
+		private int unknownCount = 0;
 		private int errorsCount = 0;
 
 		private ProjectMatcher(String cloneUrl, String branch) {
@@ -193,7 +197,7 @@ public class TestBuilder {
 				if (matcher.ignoreNonSpecified) {
 				    for (String refactoring : refactoringsFound) {
                         matcher.unknown.add(refactoring);
-                        //this.falsePositiveCount++;
+                        this.unknownCount++;
                     }
 				}
 				else {

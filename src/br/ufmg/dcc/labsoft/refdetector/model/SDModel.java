@@ -136,10 +136,10 @@ public class SDModel {
 			if (p == null) {
 				p = new SDPackage(this, getId(), fullName);
 				matchByFullName(p, this);
-				map.put(fullName, p);
 				if (!isMatched(p)) {
 					unmatchedPackages.add(p);
 				}
+				map.put(fullName, p);
 			}
 			return p;
 		}
@@ -148,10 +148,10 @@ public class SDModel {
 			String fullName = container.fullName() + "." + typeName;
 			SDType sdType = new SDType(this, getId(), typeName, container, sourceFilePath);
 			matchByFullName(sdType, this);
-			map.put(fullName, sdType);
 			if (!isMatched(sdType)) {
 				unmatchedTypes.add(sdType);
 			}
+			map.put(fullName, sdType);
 			return sdType;
 		}
 
@@ -168,22 +168,26 @@ public class SDModel {
 		public SDMethod createMethod(String methodSignature, SDContainerEntity container, boolean isConstructor) {
 			String fullName = container.fullName() + "#" + methodSignature;
 			SDMethod sdMethod = new SDMethod(this, getId(), methodSignature, container, isConstructor);
-			matchByFullName(sdMethod, this);
-			map.put(fullName, sdMethod);
-			if (!isMatched(sdMethod)) {
-				unmatchedMethods.add(sdMethod);
+			if (!sdMethod.container().isAnonymous()) {
+			    matchByFullName(sdMethod, this);
+			    if (!isMatched(sdMethod)) {
+			        unmatchedMethods.add(sdMethod);
+			    }
 			}
+			map.put(fullName, sdMethod);
 			return sdMethod;
 		}
 		
 		public SDAttribute createAttribute(String attributeName, SDContainerEntity container) {
 			String fullName = container.fullName() + "#" + attributeName;
 			SDAttribute sdAttribute = new SDAttribute(this, getId(), attributeName, container);
-			matchByFullName(sdAttribute, this);
-			map.put(fullName, sdAttribute);
-			if (!isMatched(sdAttribute)) {
-				unmatchedAttributes.add(sdAttribute);
+			if (!sdAttribute.container().isAnonymous()) {
+			    matchByFullName(sdAttribute, this);
+			    if (!isMatched(sdAttribute)) {
+			        unmatchedAttributes.add(sdAttribute);
+			    }
 			}
+			map.put(fullName, sdAttribute);
 			return sdAttribute;
 		}
 

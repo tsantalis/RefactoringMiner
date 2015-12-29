@@ -26,6 +26,7 @@ public class TestBuilder {
 	private final Map<String, ProjectMatcher> map;
 	private final GitHistoryRefactoringDetector refactoringDetector;
 	private final boolean verbose;
+	private int commitsCount;
 	
 	public TestBuilder(GitHistoryRefactoringDetector detector, String tempDir) {
 		this.map = new HashMap<String, ProjectMatcher>();
@@ -52,6 +53,7 @@ public class TestBuilder {
 		int fp = 0;
 		int fn = 0;
 		int unknown = 0;
+		commitsCount = 0;
 		GitService gitService = new GitServiceImpl();
 		
 		for (ProjectMatcher m : map.values()) {
@@ -76,11 +78,11 @@ public class TestBuilder {
 		boolean success = fp == 0 && fn == 0 && tp > 0;
 		double precision = ((double) tp) / (tp + fp);
 		double recall = ((double) tp) / (tp + fn);
-		System.out.println(String.format("TP: %d  FP: %d  FN: %d  ??: %d", tp, fp, fn, unknown));
+		System.out.println(String.format("Commits: %d, TP: %d  FP: %d  FN: %d  Unknown: %d", commitsCount, tp, fp, fn, unknown));
 		String mainResultMessage = String.format("Precision: %.3f  Recall: %.3f", precision, recall);
 		
 		System.out.println(mainResultMessage);
-		if (!success) {
+		if (!success || verbose) {
 			for (ProjectMatcher m : map.values()) {
 				m.printResults();
 			}
@@ -155,6 +157,7 @@ public class TestBuilder {
 		@Override
 		public void handle(RevCommit curRevision, List<Refactoring> refactorings) {
 			CommitMatcher matcher;
+			commitsCount++;
 			String commitId = curRevision.getId().getName();
 			if (expected.containsKey(commitId)) {
 				matcher = expected.get(commitId);
@@ -215,48 +218,50 @@ public class TestBuilder {
 		        CommitMatcher matcher = expected.get(commitId);
 		        matcher.error = e.toString();
             }
-		    errorsCount += 1;
+		    errorsCount++;
 		    //System.err.println(" error at commit " + commitId + ": " + e.getMessage());
 		}
 
 		private void printResults() {
-			if (verbose || this.falsePositiveCount > 0 || this.falseNegativeCount > 0 || this.errorsCount > 0) {
-				System.out.println(this.cloneUrl);
-			}
+//			if (verbose || this.falsePositiveCount > 0 || this.falseNegativeCount > 0 || this.errorsCount > 0) {
+//				System.out.println(this.cloneUrl);
+//			}
+			String baseUrl = this.cloneUrl.substring(0, this.cloneUrl.length() - 4) + "/commit/";
 			for (Map.Entry<String, CommitMatcher> entry : this.expected.entrySet()) {
+			    String commitUrl = baseUrl + entry.getKey();
 				CommitMatcher matcher = entry.getValue();
 				if (matcher.error != null) {
-				    System.out.println(" error at commit " + entry.getKey() + ": " + matcher.error);
+				    System.out.println("error at " + commitUrl + ": " + matcher.error);
 				} else {
 				    if (verbose || !matcher.expected.isEmpty() || !matcher.notExpected.isEmpty()) {
 				        if (!matcher.analyzed) {
-				            System.out.println(" at not analyzed commit " + entry.getKey());
+				            System.out.println("at not analyzed " + commitUrl);
 				        } else {
-				            System.out.println(" at commit " + entry.getKey());
+				            System.out.println("at " + commitUrl);
 				        }
 				    }
 				    if (verbose && !matcher.truePositive.isEmpty()) {
-				        System.out.println("  true positives");
+				        System.out.println(" true positives");
 				        for (String ref : matcher.truePositive) {
-				            System.out.println("   " + ref);
+				            System.out.println("  " + ref);
 				        }
 				    }
 				    if (!matcher.notExpected.isEmpty()) {
-				        System.out.println("  false positives");
+				        System.out.println(" false positives");
 				        for (String ref : matcher.notExpected) {
-				            System.out.println("   " + ref);
+				            System.out.println("  " + ref);
 				        }
 				    }
 				    if (!matcher.expected.isEmpty()) {
-				        System.out.println("  false negatives");
+				        System.out.println(" false negatives");
 				        for (String ref : matcher.expected) {
-				            System.out.println("   " + ref);
+				            System.out.println("  " + ref);
 				        }
 				    }
 				    if (verbose && !matcher.unknown.isEmpty()) {
-                        System.out.println("  unknown");
+                        System.out.println(" unknown");
                         for (String ref : matcher.unknown) {
-                            System.out.println("   " + ref);
+                            System.out.println("  " + ref);
                         }
                     }
 				}

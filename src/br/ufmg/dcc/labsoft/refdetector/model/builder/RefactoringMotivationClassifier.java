@@ -148,7 +148,7 @@ public class RefactoringMotivationClassifier {
 			tags.add(Motivation.MC_CONVERT_TO_INNER);
 		}
 		
-		if (!oldContainer.isPackage() && (!sd.after().exists(oldContainer) || ((SDType) sd.after(oldContainer)).isDeprecated())) {
+		if (!oldContainer.isPackage() && (!sd.existsAfter(oldContainer) || ((SDType) sd.after(oldContainer)).isDeprecated())) {
 			tags.add(Motivation.MC_REMOVE_FROM_DEPRECATED_CONTAINER);
 		}
 		

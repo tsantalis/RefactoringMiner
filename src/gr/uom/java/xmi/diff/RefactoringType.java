@@ -10,6 +10,7 @@ public enum RefactoringType {
 	MOVE_OPERATION("Move Method"),
 	PULL_UP_OPERATION("Pull Up Method"),
 	MOVE_CLASS("Move Class"),
+	MOVE_RENAME_CLASS("Move And Rename Class"),
 	MOVE_CLASS_FOLDER("Move Class Folder"),
 	PULL_UP_ATTRIBUTE("Pull Up Attribute"),
 	PUSH_DOWN_ATTRIBUTE("Push Down Attribute"),

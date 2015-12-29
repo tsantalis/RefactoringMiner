@@ -7,7 +7,7 @@ public class TypeMatcher extends EntityMatcher<SDType> {
 
     public TypeMatcher() {
         using(SimilarityIndex.SOURCE_CODE);
-        using(SimilarityIndex.MEMBERS);
+        //using(SimilarityIndex.MEMBERS);
     }
     
     @Override

@@ -133,7 +133,7 @@ public class TestRefDetector2 {
 	      "Move Class InputRedundantImportCheck_UnnamedPackage moved to InputRedundantImportCheck_UnnamedPackage");
 	    
 	    test.project("https://github.com/mockito/mockito.git", "master") 
-        .atCommit("7f20e63a7252f33c888085134d16ee8bf45f183f").containsOnly(
+        .atCommit("7f20e63a7252f33c888085134d16ee8bf45f183f").contains(
           "Move Class org.mockito.internal.util.text.ValuePrinter moved to org.mockito.internal.matchers.text.ValuePrinter",
           "Move Class org.mockito.internal.util.text.HamcrestPrinter moved to org.mockito.internal.matchers.text.HamcrestPrinter",
           "Move Class org.mockito.internal.util.text.ArrayIterator moved to org.mockito.internal.matchers.text.ArrayIterator",
@@ -480,17 +480,36 @@ public class TestRefDetector2 {
 	public void testTemp() throws Exception {
 	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
 	    
-	    test.project("https://github.com/neo4j/neo4j.git", "master") 
-        .atCommit("5fa74fbb4a307571e3807c1201b8b05d3d60a99b").contains(
-          "Extract Method private createCountsTracker(pageCache PageCache) : CountsTracker extracted from public shouldRotateCountsStoreWhenRotatingLog() : void in class org.neo4j.kernel.impl.store.counts.CountsRotationTest",
-          "Extract Method private createCountsTracker(pageCache PageCache) : CountsTracker extracted from public shouldRotateCountsStoreWhenClosingTheDatabase() : void in class org.neo4j.kernel.impl.store.counts.CountsRotationTest",
-          "Extract Method private createCountsTracker(pageCache PageCache) : CountsTracker extracted from public shouldCreateEmptyCountsTrackerStoreWhenCreatingDatabase() : void in class org.neo4j.kernel.impl.store.counts.CountsRotationTest",
-          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountStoreWhenDBContainsDenseNodes() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest",
-          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountsStoreWhenThereAreNodesAndRelationshipsInTheDB() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest",
-          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountsStoreWhenThereAreUnusedRelationshipRecordsInTheDB() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest",
-          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountsStoreWhenThereAreUnusedNodeRecordsInTheDB() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest",
-          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountsStoreWhenThereAreNodesInTheDB() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest",
-          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateAnEmptyCountsStoreFromAnEmptyDatabase() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest");
+//	    test.project("https://github.com/VoltDB/voltdb.git", "master") 
+//        .atCommit("669e0722324965e3c99f29685517ac24d4ff2848").contains(
+//          "Extract Method public getClient(timeout long, scheme ClientAuthHashScheme, useAdmin boolean) : Client extracted from public getClient(timeout long, scheme ClientAuthHashScheme) : Client in class org.voltdb.regressionsuites.RegressionSuite",
+//          "Extract Method private getListenerAddress(hostId int, useAdmin boolean) : String extracted from public getListenerAddress(hostId int) : String in class org.voltdb.regressionsuites.LocalCluster",
+//          "Extract Method private runPausedMode(isAdmin boolean) : void extracted from public testPausedMode() : void in class org.voltdb.TestClientInterface",
+//          "Extract Method public makeStoredProcAdHocPlannerWork(replySiteId long, sql String, userParams Object[], singlePartition boolean, context CatalogContext, completionHandler AsyncCompilerWorkCompletionHandler, isAdmin boolean) : AdHocPlannerWork extracted from public makeStoredProcAdHocPlannerWork(replySiteId long, sql String, userParams Object[], singlePartition boolean, context CatalogContext, completionHandler AsyncCompilerWorkCompletionHandler) : AdHocPlannerWork in class org.voltdb.compiler.AdHocPlannerWork",
+//          "Extract Method public mockStatementBatch(replySiteId long, sql String, extractedValues Object[], paramTypes VoltType[], userParams Object[], partitionParamIndex int, catalogHash byte[], readOnly boolean, isAdmin boolean) : AdHocPlannedStmtBatch extracted from public mockStatementBatch(replySiteId long, sql String, extractedValues Object[], paramTypes VoltType[], userParams Object[], partitionParamIndex int, catalogHash byte[]) : AdHocPlannedStmtBatch in class org.voltdb.compiler.AdHocPlannedStmtBatch");
+
+	    test.project("https://github.com/MovingBlocks/Terasology.git", "master") 
+        .atCommit("543a9808a85619dbe5acc2373cb4fe5344442de7").contains(
+          "Move Method public isFullscreen() : boolean from class org.terasology.engine.TerasologyEngine to public isFullscreen() : boolean from class org.terasology.engine.subsystem.lwjgl.LwjglDisplayDevice",
+          "Inline Method private initTimer(context Context) : void inlined to public preInitialise(context Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglTimer",
+          "Inline Method private initOpenAL(context Context) : void inlined to public initialise(rootContext Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglAudio",
+          "Move Class org.terasology.engine.subsystem.ThreadManagerSubsystem moved to org.terasology.engine.subsystem.common.ThreadManagerSubsystem",
+          "Move Class org.terasology.engine.subsystem.ThreadManager moved to org.terasology.engine.subsystem.common.ThreadManager",
+          "Move Attribute private time : EngineTime from class org.terasology.engine.TerasologyEngine to class org.terasology.engine.subsystem.lwjgl.LwjglTimer",
+          "Move Attribute private time : EngineTime from class org.terasology.engine.TerasologyEngine to class org.terasology.engine.subsystem.headless.HeadlessTimer");
+
+	    
+//	    test.project("https://github.com/neo4j/neo4j.git", "master") 
+//        .atCommit("5fa74fbb4a307571e3807c1201b8b05d3d60a99b").contains(
+//          "Extract Method private createCountsTracker(pageCache PageCache) : CountsTracker extracted from public shouldRotateCountsStoreWhenRotatingLog() : void in class org.neo4j.kernel.impl.store.counts.CountsRotationTest",
+//          "Extract Method private createCountsTracker(pageCache PageCache) : CountsTracker extracted from public shouldRotateCountsStoreWhenClosingTheDatabase() : void in class org.neo4j.kernel.impl.store.counts.CountsRotationTest",
+//          "Extract Method private createCountsTracker(pageCache PageCache) : CountsTracker extracted from public shouldCreateEmptyCountsTrackerStoreWhenCreatingDatabase() : void in class org.neo4j.kernel.impl.store.counts.CountsRotationTest",
+//          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountStoreWhenDBContainsDenseNodes() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest",
+//          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountsStoreWhenThereAreNodesAndRelationshipsInTheDB() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest",
+//          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountsStoreWhenThereAreUnusedRelationshipRecordsInTheDB() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest",
+//          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountsStoreWhenThereAreUnusedNodeRecordsInTheDB() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest",
+//          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountsStoreWhenThereAreNodesInTheDB() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest",
+//          "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateAnEmptyCountsStoreFromAnEmptyDatabase() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest");
 
 	    test.assertExpectations();
 	}

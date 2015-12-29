@@ -209,4 +209,8 @@ public class SDMethod extends SDEntity {
         return sb.toString();
     }
 
+	@Override
+	public boolean isAnonymous() {
+	    return container().isAnonymous();
+	}
 }

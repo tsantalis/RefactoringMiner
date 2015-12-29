@@ -1,8 +1,8 @@
 package br.ufmg.dcc.labsoft.refdetector.model.builder;
 
-import gr.uom.java.xmi.diff.RefactoringType;
 import br.ufmg.dcc.labsoft.refdetector.model.Filter;
 import br.ufmg.dcc.labsoft.refdetector.model.MembersRepresentation;
+import br.ufmg.dcc.labsoft.refdetector.model.RelationshipType;
 import br.ufmg.dcc.labsoft.refdetector.model.SDAttribute;
 import br.ufmg.dcc.labsoft.refdetector.model.SDMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
@@ -12,6 +12,7 @@ import br.ufmg.dcc.labsoft.refdetector.model.builder.EntityMatcher.Criterion;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDExtractMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDExtractSupertype;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDInlineMethod;
+import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDMoveAndRenameClass;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDMoveAttribute;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDMoveClass;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDMoveMethod;
@@ -19,14 +20,13 @@ import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDPullUpAttribute;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDPullUpMethod;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDPushDownAttribute;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDPushDownMethod;
-import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDRefactoring;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDRenameClass;
 import br.ufmg.dcc.labsoft.refdetector.model.refactoring.SDRenameMethod;
 
 public class RefactoringsSDBuilder {
 	
-	private double moveTypeThreshold = 0.5;
-	private double renameTypeThreshold = 0.5;
+	private double moveTypeThreshold = 0.4;
+	private double renameTypeThreshold = 0.4;
 	private double moveAndRenameTypeThreshold = 0.5;
 	private double extractSupertypeThreshold = 0.5;
 	
@@ -36,6 +36,10 @@ public class RefactoringsSDBuilder {
 	private double pushDownMethodThreshold = 0.5;
 	private double extractMethodThreshold = 0.5;
 	private double inlineMethodThreshold = 0.5;
+	
+	private double moveAttributeThreshold = 0.2;
+	private double pullUpAttributeThreshold = 0.2;
+	private double pushDownAttributeThreshold = 0.2;
 
 	public void analyze(SDModel model) {
 	    identifyMatchingTypes(model);
@@ -48,7 +52,7 @@ public class RefactoringsSDBuilder {
 
 	private void identifyMatchingTypes(SDModel m) {
 	    new TypeMatcher()
-	    .addCriterion(new Criterion<SDType>(moveTypeThreshold) {
+	    .addCriterion(new Criterion<SDType>(RelationshipType.MOVE_TYPE, moveTypeThreshold) {
             protected boolean canMatch(SDModel m, SDType entityBefore, SDType entityAfter) {
                 return entityBefore.simpleName().equals(entityAfter.simpleName());
             }
@@ -56,21 +60,21 @@ public class RefactoringsSDBuilder {
                 m.addRefactoring(new SDMoveClass(entityBefore, entityAfter));
             }
         })
-        .addCriterion(new Criterion<SDType>(renameTypeThreshold) {
+        .addCriterion(new Criterion<SDType>(RelationshipType.RENAME_TYPE, renameTypeThreshold) {
             protected boolean canMatch(SDModel m, SDType entityBefore, SDType entityAfter) {
-                return entityBefore.container().matches(entityAfter.container());
+                return m.entitiesMatch(entityBefore.container(), entityAfter.container());
             }
             protected void onMatch(SDModel m, SDType entityBefore, SDType entityAfter) {
                 m.addRefactoring(new SDRenameClass(entityBefore, entityAfter));
             }
         })
-        .addCriterion(new Criterion<SDType>(moveAndRenameTypeThreshold){
+        .addCriterion(new Criterion<SDType>(RelationshipType.MOVE_AND_RENAME_TYPE, moveAndRenameTypeThreshold){
             protected boolean canMatch(SDModel m, SDType entityBefore, SDType entityAfter) {
                 return !entityBefore.simpleName().equals(entityAfter.simpleName()) &&
-                    !entityBefore.container().matches(entityAfter.container());
+                    !m.entitiesMatch(entityBefore.container(), entityAfter.container());
             }
             protected void onMatch(SDModel m, SDType entityBefore, SDType entityAfter) {
-                m.addRefactoring(new SDRefactoring(RefactoringType.MOVE_CLASS, entityBefore));
+                m.addRefactoring(new SDMoveAndRenameClass(entityBefore, entityAfter));
             }
         })
         .match(m, m.before().getUnmatchedTypes(), m.after().getUnmatchedTypes());
@@ -85,6 +89,7 @@ public class RefactoringsSDBuilder {
                 if (sim >= extractSupertypeThreshold) {
                     // found an extracted supertype
                     typeAfter.addOrigin(m.before(subtype), 1);
+                    m.addRelationship(RelationshipType.EXTRACT, m.before(subtype), typeAfter, 1);
                 }
             }
             if (typeAfter.origins().size() > 0) {
@@ -95,26 +100,32 @@ public class RefactoringsSDBuilder {
 	
 	private void identifyMatchingMethods(SDModel m) {
         new MethodMatcher()
-        .addCriterion(new Criterion<SDMethod>(renameMethodThreshold){
+        .addCriterion(new Criterion<SDMethod>(RelationshipType.CHANGE_METHOD_SIGNATURE, renameMethodThreshold){
             protected boolean canMatch(SDModel m, SDMethod methodBefore, SDMethod methodAfter) {
-                return !methodBefore.isAbstract() && !methodAfter.isAbstract() && 
-                    methodBefore.container().matches(methodAfter.container());
+                return methodBefore.identifier().equals(methodAfter.identifier()) && 
+                    !methodBefore.isAbstract() && !methodAfter.isAbstract() &&
+                    m.entitiesMatch(methodBefore.container(), methodAfter.container());
             }
             protected void onMatch(SDModel m, SDMethod methodBefore, SDMethod methodAfter) {
-                if (methodBefore.identifier().equals(methodAfter.identifier())) {
-                    // signature change
-                } else {
-                    // rename method
-                    m.addRefactoring(new SDRenameMethod(methodBefore, methodAfter));
-                }
+                // change signature
             }
         })
-        .addCriterion(new Criterion<SDMethod>(pullUpMethodThreshold){
+        .addCriterion(new Criterion<SDMethod>(RelationshipType.RENAME_MEMBER, renameMethodThreshold){
+            protected boolean canMatch(SDModel m, SDMethod methodBefore, SDMethod methodAfter) {
+                return !methodBefore.identifier().equals(methodAfter.identifier()) && 
+                    !methodBefore.isAbstract() && !methodAfter.isAbstract() && 
+                    m.entitiesMatch(methodBefore.container(), methodAfter.container());
+            }
+            protected void onMatch(SDModel m, SDMethod methodBefore, SDMethod methodAfter) {
+                m.addRefactoring(new SDRenameMethod(methodBefore, methodAfter));
+            }
+        })
+        .addCriterion(new Criterion<SDMethod>(RelationshipType.PULL_UP_MEMBER, pullUpMethodThreshold){
             protected boolean canMatch(SDModel m, SDMethod methodBefore, SDMethod methodAfter) {
                 return methodBefore.identifier().equals(methodAfter.identifier()) &&
                     !methodBefore.isAbstract() && !methodAfter.isAbstract() &&
                     !methodBefore.isConstructor() && !methodAfter.isConstructor() &&
-                    m.after().exists(methodBefore.container()) &&
+                    m.existsAfter(methodBefore.container()) &&
                     m.after(methodBefore.container()).isSubtypeOf(methodAfter.container());
             }
             protected void onMatch(SDModel m, SDMethod methodBefore, SDMethod methodAfter) {
@@ -122,12 +133,12 @@ public class RefactoringsSDBuilder {
                 m.addRefactoring(new SDPullUpMethod(methodBefore, methodAfter));
             }
         })
-        .addCriterion(new Criterion<SDMethod>(pushDownMethodThreshold){
+        .addCriterion(new Criterion<SDMethod>(RelationshipType.PUSH_DOWN_MEMBER, pushDownMethodThreshold){
             protected boolean canMatch(SDModel m, SDMethod methodBefore, SDMethod methodAfter) {
                 return methodBefore.identifier().equals(methodAfter.identifier()) &&
                     !methodBefore.isAbstract() && !methodAfter.isAbstract() &&
                     !methodBefore.isConstructor() && !methodAfter.isConstructor() &&
-                    m.after().exists(methodBefore.container()) &&
+                    m.existsAfter(methodBefore.container()) &&
                     methodAfter.container().isSubtypeOf(m.after(methodBefore.container()));
             }
             protected void onMatch(SDModel m, SDMethod methodBefore, SDMethod methodAfter) {
@@ -135,12 +146,12 @@ public class RefactoringsSDBuilder {
                 m.addRefactoring(new SDPushDownMethod(methodBefore, methodAfter));
             }
         })
-        .addCriterion(new Criterion<SDMethod>(moveMethodThreshold){
+        .addCriterion(new Criterion<SDMethod>(RelationshipType.MOVE_MEMBER, moveMethodThreshold){
             protected boolean canMatch(SDModel m, SDMethod methodBefore, SDMethod methodAfter) {
                 return methodBefore.identifier().equals(methodAfter.identifier()) && 
                     !methodBefore.isAbstract() && !methodAfter.isAbstract() &&
                     !methodBefore.isConstructor() && !methodAfter.isConstructor() &&
-                    !methodBefore.container().matches(methodAfter.container());
+                    !m.entitiesMatch(methodBefore.container(), methodAfter.container());
             }
             protected void onMatch(SDModel m, SDMethod methodBefore, SDMethod methodAfter) {
                 // move method, possibly with a new signature
@@ -152,29 +163,29 @@ public class RefactoringsSDBuilder {
 
 	private void identifyMatchingAttributes(SDModel m) {
         new AttributeMatcher()
-        .addCriterion(new Criterion<SDAttribute>(0.0){
+        .addCriterion(new Criterion<SDAttribute>(RelationshipType.PULL_UP_MEMBER, pullUpAttributeThreshold){
             protected boolean canMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
                 return attributeBefore.simpleName().equals(attributeAfter.simpleName()) &&
                     attributeBefore.type().equals(attributeAfter.type()) && 
-                    m.after().exists(attributeBefore.container()) &&
+                    m.existsAfter(attributeBefore.container()) &&
                     m.after(attributeBefore.container()).isSubtypeOf(attributeAfter.container());
             }
             protected void onMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
                 m.addRefactoring(new SDPullUpAttribute(attributeBefore, attributeAfter));
             }
         })
-        .addCriterion(new Criterion<SDAttribute>(0.0){
+        .addCriterion(new Criterion<SDAttribute>(RelationshipType.PUSH_DOWN_MEMBER, pushDownAttributeThreshold){
             protected boolean canMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
                 return attributeBefore.simpleName().equals(attributeAfter.simpleName()) &&
                     attributeBefore.type().equals(attributeAfter.type()) &&
-                    m.after().exists(attributeBefore.container()) &&
+                    m.existsAfter(attributeBefore.container()) &&
                     attributeAfter.container().isSubtypeOf(m.after(attributeBefore.container()));
             }
             protected void onMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
                 m.addRefactoring(new SDPushDownAttribute(attributeBefore, attributeAfter));
             }
         })
-        .addCriterion(new Criterion<SDAttribute>(0.0){
+        .addCriterion(new Criterion<SDAttribute>(RelationshipType.MOVE_MEMBER, moveAttributeThreshold){
             protected boolean canMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
                 return attributeBefore.simpleName().equals(attributeAfter.simpleName()) &&
                     attributeBefore.type().equals(attributeAfter.type());
@@ -189,7 +200,8 @@ public class RefactoringsSDBuilder {
 	private void identifyExtractMethod(SDModel m) {
 		for (SDMethod method : m.after().getUnmatchedMethods()) {
 			for (SDMethod caller : method.callers().suchThat(Filter.isNotEqual(method).and(m.<SDMethod>isMatched()))) {
-				SourceRepresentation callerBodyBefore = m.before(caller).sourceCode();
+				SDMethod origin = m.before(caller);
+                SourceRepresentation callerBodyBefore = origin.sourceCode();
 				SourceRepresentation callerBodyAfter = caller.sourceCode();
 				SourceRepresentation removedCode = callerBodyBefore.minus(callerBodyAfter);
 				SourceRepresentation methodBody = method.sourceCode();
@@ -209,12 +221,14 @@ public class RefactoringsSDBuilder {
 							break;
 						}
 					}
-					method.addOrigin(m.before(caller), copies);
+					method.addOrigin(origin, copies);
+					m.addRelationship(RelationshipType.EXTRACT, origin, method, copies);
+					m.addRefactoring(new SDExtractMethod(method, origin));
 				}
 			}
-			if (method.origins().size() > 0) {
-				m.addRefactoring(new SDExtractMethod(method));
-			}
+//			if (method.origins().size() > 0) {
+//				m.addRefactoring(new SDExtractMethod(method));
+//			}
 		}
 	}
 
@@ -222,18 +236,22 @@ public class RefactoringsSDBuilder {
 	    for (SDMethod method : m.before().getUnmatchedMethods()) {
 	        for (SDMethod caller : method.callers().suchThat(Filter.isNotEqual(method).and(m.<SDMethod>isMatched()))) {
 	            SourceRepresentation callerBodyBefore = caller.sourceCode();
-	            SourceRepresentation callerBodyAfter = m.after(caller).sourceCode();
+	            SDMethod dest = m.after(caller);
+                SourceRepresentation callerBodyAfter = dest.sourceCode();
 	            SourceRepresentation addedCode = callerBodyAfter.minus(callerBodyBefore);
 	            SourceRepresentation methodBody = method.sourceCode();
 	            double sim = methodBody.partialSimilarity(addedCode);
                 if (sim >= inlineMethodThreshold) {
 	                // found an inline method
-                    method.addInlinedTo(m.after(caller), 1);
+                    method.addInlinedTo(dest, 1);
+                    
+                    m.addRelationship(RelationshipType.INLINE, method, dest, 1);
+                    m.addRefactoring(new SDInlineMethod(method, dest));
 	            }
 	        }
-	        if (method.inlinedTo().size() > 0) {
-                m.addRefactoring(new SDInlineMethod(method));
-            }
+//	        if (method.inlinedTo().size() > 0) {
+//                m.addRefactoring(new SDInlineMethod(method));
+//            }
 	    }
 	}
 

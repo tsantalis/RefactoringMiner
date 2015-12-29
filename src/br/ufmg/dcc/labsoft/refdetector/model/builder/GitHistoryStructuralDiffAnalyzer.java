@@ -107,25 +107,21 @@ public class GitHistoryStructuralDiffAnalyzer {
 		gitService.fileTreeDiff(repository, currentCommit, filesBefore, filesCurrent, renamedFilesHint, false);
 		// If no java files changed, there is no refactoring. Also, if there are
 		// only ADD's or only REMOVE's there is no refactoring
-		final SDModel model = new SDModel();
 		
-		if (!filesBefore.isEmpty() && !filesCurrent.isEmpty()) {
-			BindingsRecoverySDBuilder builder = new BindingsRecoverySDBuilder();
+		SDModelBuilder builder = new SDModelBuilder();
+//		if (!filesBefore.isEmpty() && !filesCurrent.isEmpty()) {
 			// Checkout and build model for current commit
 			gitService.checkout(repository, commitId);
 			logger.info(String.format("Analyzing code after (%s) ...", commitId));
-			builder.analyze(projectFolder, filesCurrent, model.after());
+			builder.analyzeAfter(projectFolder, filesCurrent);
 			
 			// Checkout and build model for parent commit
 			String parentCommit = currentCommit.getParent(0).getName();
 			gitService.checkout(repository, parentCommit);
 			logger.info(String.format("Analyzing code before (%s) ...", parentCommit));
-			builder.analyze(projectFolder, filesBefore, model.before());
-			
-			// Diff between currentModel e parentModel
-			RefactoringsSDBuilder rbuilder = new RefactoringsSDBuilder();
-			rbuilder.analyze(model);
-		}
+			builder.analyzeBefore(projectFolder, filesBefore);
+//		}
+		final SDModel model = builder.buildModel();
 		handler.handle(currentCommit, model);
 	}
 

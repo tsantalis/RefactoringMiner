@@ -3,6 +3,7 @@ package br.ufmg.dcc.labsoft.refdetector.model.builder;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import br.ufmg.dcc.labsoft.refdetector.model.RelationshipType;
 import br.ufmg.dcc.labsoft.refdetector.model.SDEntity;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
 
@@ -55,22 +56,41 @@ public class EntityMatcher<T extends SDEntity> {
         }
         Collections.sort(candidates);
         for (MatchCandidate<T> candidate : candidates) {
-            T typeBefore = candidate.before;
-            T typeAfter = candidate.after;
-            if (!m.isMatched(typeBefore) && !m.isMatched(typeAfter)) {
-                m.matchEntities(typeBefore, typeAfter);
-                candidate.criterion.onMatch(m, typeBefore, typeAfter);
+            T entityBefore = candidate.before;
+            T entityAfter = candidate.after;
+            RelationshipType relationshipType = candidate.criterion.relationshipType;
+            if (m.addRelationship(relationshipType, entityBefore, entityAfter, 1)) {
+                candidate.criterion.onMatch(m, entityBefore, entityAfter);
             }
+//          if (beforeMatch == null && afterMatch == null) {
+//            } else {
+//                if (beforeMatch == null && relationshipType.isMultisource() && afterMatch.getType() == relationshipType) {
+//                    m.addRelationship(relationshipType, true, typeBefore, typeAfter, 1);
+//                }
+//                if (afterMatch == null && relationshipType.isMultitarget() && beforeMatch.getType() == relationshipType) {
+//                    m.addRelationship(relationshipType, true, typeBefore, typeAfter, 1);
+//                }
+//            }
+//            if (!m.isMatched(typeBefore) && !m.isMatched(typeAfter)) {
+//                m.matchEntities(typeBefore, typeAfter);
+//                
+//          }
         }
     }
 
     public static class Criterion<T extends SDEntity> {
         private final double threshold;
+        private final RelationshipType relationshipType;
         
-        public Criterion(double threshold) {
+        public Criterion(RelationshipType relType, double threshold) {
+            this.relationshipType = relType;
             this.threshold = threshold;
         }
-    
+        
+        public RelationshipType getRelationshipType() {
+            return relationshipType;
+        }
+
         protected boolean canMatch(SDModel m, T entityBefore, T entityAfter) {
             return true;
         }

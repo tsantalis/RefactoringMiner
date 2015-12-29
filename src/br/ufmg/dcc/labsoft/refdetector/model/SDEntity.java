@@ -1,6 +1,7 @@
 package br.ufmg.dcc.labsoft.refdetector.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,14 +54,16 @@ public abstract class SDEntity implements Comparable<SDEntity> {
 	
 	@Override
 	public int hashCode() {
-		return fullName.hashCode();
+//		return fullName.hashCode();
+		return id;
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof SDEntity) {
-			SDEntity e = (SDEntity) obj;
-			return e.fullName.equals(fullName);
+		    SDEntity e = (SDEntity) obj;
+			return id == e.id;
+			//return e.fullName.equals(fullName);
 		}
 		return false;
 	}
@@ -77,10 +80,6 @@ public abstract class SDEntity implements Comparable<SDEntity> {
 	@Override
 	public int compareTo(SDEntity o) {
 		return fullName.compareTo(o.fullName);
-	}
-
-	public boolean matches(SDEntity other) {
-	    return this.id == other.id;
 	}
 
 	public SourceRepresentation sourceCode() {
@@ -104,7 +103,8 @@ public abstract class SDEntity implements Comparable<SDEntity> {
 	            hashes[i] = this.children.get(i).simpleNameHash();
 	            debug.put(hashes[i], this.children.get(i).simpleName());
 	        }
-	        this.members = new MembersRepresentation(hashes, null);
+	        Arrays.sort(hashes);
+	        this.members = new MembersRepresentation(hashes, debug);
 	    }
 	    return this.members;
 	}
@@ -120,4 +120,8 @@ public abstract class SDEntity implements Comparable<SDEntity> {
 	public void addReference(SDEntity entity) {
 	    throw new UnsupportedOperationException();
 	}
+	
+	public boolean isAnonymous() {
+        return false;
+    }
 }

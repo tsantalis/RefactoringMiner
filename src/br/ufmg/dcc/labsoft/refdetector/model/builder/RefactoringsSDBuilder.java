@@ -90,10 +90,11 @@ public class RefactoringsSDBuilder {
                     // found an extracted supertype
                     typeAfter.addOrigin(m.before(subtype), 1);
                     m.addRelationship(RelationshipType.EXTRACT, m.before(subtype), typeAfter, 1);
+                    m.addRefactoring(new SDExtractSupertype(typeAfter, subtype));
                 }
             }
             if (typeAfter.origins().size() > 0) {
-                m.addRefactoring(new SDExtractSupertype(typeAfter));
+//                m.addRefactoring(new SDExtractSupertype(typeAfter));
             }
         }
     }

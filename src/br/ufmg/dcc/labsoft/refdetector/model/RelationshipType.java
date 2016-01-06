@@ -4,6 +4,8 @@ public enum RelationshipType {
 
     SAME                    (true,  false, false),
     MOVE_TYPE               (true,  false, false),
+    CONVERT_TO_INTERFACE    (true,  false, false),
+    CONVERT_TO_CLASS        (true,  false, false),
     RENAME_TYPE             (true,  false, false),
     MOVE_AND_RENAME_TYPE    (true,  false, false),
     MOVE_MEMBER             (true,  true,  true ),

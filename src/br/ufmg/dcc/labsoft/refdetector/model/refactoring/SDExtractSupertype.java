@@ -5,11 +5,13 @@ import br.ufmg.dcc.labsoft.refdetector.model.SDType;
 
 public class SDExtractSupertype extends SDRefactoring {
 
-    private final SDType extractedMethod;
+    private final SDType extractedType;
+    private final SDType typeOriginAfter;
     
-    public SDExtractSupertype(SDType extractedType) {
+    public SDExtractSupertype(SDType extractedType, SDType typeOriginAfter) {
         super(extractedType.isInterface() ? RefactoringType.EXTRACT_INTERFACE : RefactoringType.EXTRACT_SUPERCLASS, extractedType);
-        this.extractedMethod = extractedType;
+        this.extractedType = extractedType;
+        this.typeOriginAfter = typeOriginAfter;
     }
 
     @Override
@@ -17,9 +19,9 @@ public class SDExtractSupertype extends SDRefactoring {
         StringBuilder sb = new StringBuilder();
         sb.append(this.getName());
         sb.append(' ');
-        sb.append(this.extractedMethod.fullName());
-        sb.append(" from classes ");
-        sb.append(extractedMethod.origins().asSet().toString());
+        sb.append(this.extractedType.fullName());
+        sb.append(" from class ");
+        sb.append(typeOriginAfter.fullName());
         return sb.toString();
     }
 }

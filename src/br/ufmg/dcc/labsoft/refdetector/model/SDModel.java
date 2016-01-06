@@ -184,7 +184,7 @@ public class SDModel {
 	        if (!entityBefore.isAnonymous()) {
 	            SDEntity entityAfter = AFTER.find(SDEntity.class, entityBefore.fullName());
 	            if (entityAfter != null) {
-	                addRelationship(RelationshipType.SAME, entityBefore, entityAfter, 1);
+	                addSameNameRelationship(entityBefore, entityAfter);
 	            }
 	        }
 	    }
@@ -219,6 +219,20 @@ public class SDModel {
 
 	public <T extends SDEntity> Filter<T> isUnmatched() {
 		return new NotFilter<T>(this.<T>isMatched());
+	}
+
+	public <T extends SDEntity> boolean addSameNameRelationship(T entityBefore, T entityAfter) {
+	    if (entityBefore instanceof SDType && entityAfter instanceof SDType) {
+	        SDType typeBefore = (SDType) entityBefore; 
+	        SDType typeAfter = (SDType) entityAfter;
+	        if (typeBefore.isInterface() && !typeAfter.isInterface()) {
+	            return this.addRelationship(RelationshipType.CONVERT_TO_CLASS, entityBefore, entityAfter, 1);
+	        }
+	        if (!typeBefore.isInterface() && typeAfter.isInterface()) {
+	            return this.addRelationship(RelationshipType.CONVERT_TO_INTERFACE, entityBefore, entityAfter, 1);
+	        }
+	    }
+        return this.addRelationship(RelationshipType.SAME, entityBefore, entityAfter, 1);
 	}
 
     public <T extends SDEntity> boolean addRelationship(RelationshipType type, T entityBefore, T entityAfter, int multiplicity) {
@@ -257,7 +271,7 @@ public class SDModel {
                 String newKey = childEntity.fullName(entityAfter);
                 SDEntity childEntityAfter = after().find(SDEntity.class, newKey);
                 if (childEntityAfter != null) {
-                    addRelationship(RelationshipType.SAME, childEntity, childEntityAfter, 1);
+                    addSameNameRelationship(childEntity, childEntityAfter);
                 }
             }
         }

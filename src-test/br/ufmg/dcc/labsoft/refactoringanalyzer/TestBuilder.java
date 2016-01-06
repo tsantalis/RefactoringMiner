@@ -2,6 +2,8 @@ package br.ufmg.dcc.labsoft.refactoringanalyzer;
 
 import gr.uom.java.xmi.diff.Refactoring;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -90,7 +92,26 @@ public class TestBuilder {
 		Assert.assertTrue(mainResultMessage, success);
 	}
 
-	private static String normalize(String refactoring) {
+	private static List<String> normalize(String refactoring) {
+	    // Decompose Extract Superclass/Interface 
+	    int begin = refactoring.indexOf("from classes [");
+	    if (begin != -1) {
+	        int end = refactoring.lastIndexOf(']');
+            String types = refactoring.substring(begin + "from classes [".length(), end);
+            String[] typesArray = types.split(", ");
+            List<String> refactorings = new ArrayList<String>();
+            for (String type : typesArray) {
+                refactorings.add(refactoring.substring(0, begin) + "from class " + type);
+            }
+            return refactorings;
+	    }
+	    return Collections.singletonList(normalizeSingle(refactoring));
+	}
+	
+	/**
+	 * Remove generics type information.
+	 */
+	private static String normalizeSingle(String refactoring) {
 	    StringBuilder sb = new StringBuilder();
 	    int openGenerics = 0;
 	    for (int i = 0; i < refactoring.length(); i++) {
@@ -173,7 +194,7 @@ public class TestBuilder {
 				matcher.analyzed = true;
 				Set<String> refactoringsFound = new HashSet<String>();
 				for (Refactoring refactoring : refactorings) {
-					refactoringsFound.add(normalize(refactoring.toString()));
+					refactoringsFound.addAll(normalize(refactoring.toString()));
 				}
 				// count true positives
 				for (Iterator<String> iter = matcher.expected.iterator(); iter.hasNext();) {
@@ -289,7 +310,7 @@ public class TestBuilder {
 			}
 			public ProjectMatcher contains(String ... refactorings) {
 				for (String refactoring : refactorings) {
-					expected.add(normalize(refactoring));
+					expected.addAll(normalize(refactoring));
 				}
 				return ProjectMatcher.this;
 			}
@@ -298,7 +319,7 @@ public class TestBuilder {
 				this.expected = new HashSet<String>();
 				this.notExpected = new HashSet<String>();
 				for (String refactoring : refactorings) {
-					expected.add(normalize(refactoring));
+					expected.addAll(normalize(refactoring));
 				}
 				return ProjectMatcher.this;
 			}
@@ -307,7 +328,7 @@ public class TestBuilder {
 			}
 			public ProjectMatcher notContains(String ... refactorings) {
 				for (String refactoring : refactorings) {
-					notExpected.add(normalize(refactoring));
+					notExpected.addAll(normalize(refactoring));
 				}
 				return ProjectMatcher.this;
 			}

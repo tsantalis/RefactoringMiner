@@ -97,7 +97,7 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 	
 	@Override
 	public boolean visit(EnumDeclaration node) {
-		containerStack.push(visitTypeDeclaration(node, null));
+		containerStack.push(visitTypeDeclaration(node, node.superInterfaceTypes()));
 		return true;
 	}
 	public void endVisit(EnumDeclaration node) {
@@ -105,15 +105,22 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 	}
 	
 	public boolean visit(TypeDeclaration typeDeclaration) {
-		Type superType = typeDeclaration.getSuperclassType();
-		containerStack.push(visitTypeDeclaration(typeDeclaration, superType));
+	    List<Type> supertypes = new ArrayList<Type>();
+	    Type superclass = typeDeclaration.getSuperclassType();
+	    if (superclass != null) {
+	        supertypes.add(superclass);
+	    }
+	    supertypes.addAll(typeDeclaration.superInterfaceTypes());
+		SDType sdType = visitTypeDeclaration(typeDeclaration, supertypes);
+        containerStack.push(sdType);
+        sdType.setIsInterface(typeDeclaration.isInterface());
 		return true;
 	}
 	public void endVisit(TypeDeclaration node) {
 		containerStack.pop();
 	}
 
-	private SDType visitTypeDeclaration(AbstractTypeDeclaration node, Type superType) {
+	private SDType visitTypeDeclaration(AbstractTypeDeclaration node, List<Type> supertypes) {
 	    String typeName = node.getName().getIdentifier();
 		SDType type = model.createType(typeName, containerStack.peek(), sourceFilePath);
 		type.setSourceCode(scanner.getLineBasedSourceRepresentation(fileContent, node.getStartPosition(), node.getLength()));
@@ -121,7 +128,7 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 		Set<String> annotations = extractAnnotationTypes(node.modifiers());
 		type.setDeprecatedAnnotation(annotations.contains("Deprecated"));
 		
-    	if (superType != null) {
+    	for (Type superType : supertypes) {
     		ITypeBinding superTypeBinding = superType.resolveBinding();
     		extractSupertypesForPostProcessing(type, superTypeBinding);
     	}
@@ -140,14 +147,15 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 	}
 
 	private void extractSupertypesForPostProcessing(SDType type, ITypeBinding superTypeBinding) {
-		List<String> supertypes = new ArrayList<String>();
+	    List<String> supertypes = postProcessSupertypes.get(type);
+	    if (supertypes == null) {
+	        supertypes = new ArrayList<String>();
+	        postProcessSupertypes.put(type, supertypes);
+	    }
 		while (superTypeBinding != null && superTypeBinding.isFromSource()) {
 			String superTypeName = superTypeBinding.getErasure().getQualifiedName();
 			supertypes.add(superTypeName);
 			superTypeBinding = superTypeBinding.getSuperclass();
-		}
-		if (!supertypes.isEmpty()) {
-			postProcessSupertypes.put(type, supertypes);
 		}
 	}
 	

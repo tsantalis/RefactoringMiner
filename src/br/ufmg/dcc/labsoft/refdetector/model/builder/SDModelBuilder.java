@@ -19,7 +19,6 @@ import org.eclipse.jdt.core.dom.FileASTRequestor;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.eclipse.jdt.internal.compiler.util.Util;
 
-import br.ufmg.dcc.labsoft.refdetector.exception.DuplicateEntityException;
 import br.ufmg.dcc.labsoft.refdetector.model.SDAttribute;
 import br.ufmg.dcc.labsoft.refdetector.model.SDEntity;
 import br.ufmg.dcc.labsoft.refdetector.model.SDModel;
@@ -102,14 +101,16 @@ public class SDModelBuilder {
 //				if (problems.length > 0) {
 //					System.out.println("problems");
 //				}
+				//
 				try {
 					char[] charArray = Util.getFileCharContent(new File(sourceFilePath), null);
 					processCompilationUnit(relativePath, charArray, ast, model);
 				} catch (IOException e) {
 					throw new RuntimeException(e);
-				} catch (DuplicateEntityException e) {
+				}
+//				catch (DuplicateEntityException e) {
 		            // debug e;
-		        }
+//		        }
 			}
 		};
 		parser.createASTs((String[]) filesArray, null, emptyArray, fileASTRequestor, null);

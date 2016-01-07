@@ -91,7 +91,7 @@ public abstract class DependenciesAstVisitor extends ASTVisitor {
 
 	@Override
 	public final boolean visit(ClassInstanceCreation node) {
-		ITypeBinding typeBinding = node.resolveTypeBinding();
+		ITypeBinding typeBinding = node.getType().resolveBinding();
 		handleTypeBinding(node, typeBinding, true);
 		return true;
 	}

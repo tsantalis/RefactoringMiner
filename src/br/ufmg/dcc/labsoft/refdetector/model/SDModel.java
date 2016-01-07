@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import br.ufmg.dcc.labsoft.refdetector.exception.DuplicateEntityException;
+
 public class SDModel {
 
 	private final SnapshotImpl BEFORE;
@@ -95,6 +97,13 @@ public class SDModel {
 			return null;
 		}
 		
+		private void putAtMap(String key, SDEntity entity) {
+		    if (map.containsKey(key)) {
+		        throw new DuplicateEntityException(key);
+		    }
+		    map.put(key, entity);
+		}
+		
 		public boolean exists(String key) {
 			return map.containsKey(key);
 		}
@@ -119,7 +128,7 @@ public class SDModel {
 			SDPackage p = find(SDPackage.class, fullName);
 			if (p == null) {
 				p = new SDPackage(this, getId(), fullName);
-				map.put(fullName, p);
+				putAtMap(fullName, p);
 			}
 			return p;
 		}
@@ -127,7 +136,7 @@ public class SDModel {
 		public SDType createType(String typeName, SDContainerEntity container, String sourceFilePath) {
 			String fullName = container.fullName() + "." + typeName;
 			SDType sdType = new SDType(this, getId(), typeName, container, sourceFilePath);
-			map.put(fullName, sdType);
+			putAtMap(fullName, sdType);
 			if (!sdType.isAnonymous()) {
 			    unmatchedTypes.add(sdType);
 			}
@@ -139,14 +148,14 @@ public class SDModel {
 			int anonId = parent.anonymousClasses().size() + 1;
 			String fullName = container.fullName() + "$" + anonId;
 			SDType sdType = parent.addAnonymousClass(getId(), anonId);
-			map.put(fullName, sdType);
+			putAtMap(fullName, sdType);
 			return sdType;
 		}
 
 		public SDMethod createMethod(String methodSignature, SDContainerEntity container, boolean isConstructor) {
 			String fullName = container.fullName() + "#" + methodSignature;
 			SDMethod sdMethod = new SDMethod(this, getId(), methodSignature, container, isConstructor);
-			map.put(fullName, sdMethod);
+			putAtMap(fullName, sdMethod);
 			if (!sdMethod.isAnonymous()) {
                 unmatchedMethods.add(sdMethod);
             }
@@ -156,7 +165,7 @@ public class SDModel {
 		public SDAttribute createAttribute(String attributeName, SDContainerEntity container) {
 			String fullName = container.fullName() + "#" + attributeName;
 			SDAttribute sdAttribute = new SDAttribute(this, getId(), attributeName, container);
-			map.put(fullName, sdAttribute);
+			putAtMap(fullName, sdAttribute);
 			if (!sdAttribute.isAnonymous()) {
                 unmatchedAttributes.add(sdAttribute);
             }

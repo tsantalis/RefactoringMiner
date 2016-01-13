@@ -2843,7 +2843,7 @@ public class TestRefDetector2Full {
 
 		test.project("https://github.com/baasbox/baasbox.git", "master") 
 		.atCommit("d949fe9079a82ee31aa91244aa67baaf56b7e28f").contains(
-		  "Extract Method public execMultiLineCommands(db ODatabaseRecordTx, log boolean, stopOnException boolean, commands String) : void extracted from public execMultiLineCommands(db ODatabaseRecordTx, log boolean, commands String) : void in class com.baasbox.db.DbHelper");
+		  "Extract Method public execMultiLineCommands(db ODatabaseRecordTx, log boolean, stopOnException boolean, commands String[]) : void extracted from public execMultiLineCommands(db ODatabaseRecordTx, log boolean, commands String) : void in class com.baasbox.db.DbHelper"); // bug varargs
 
 		test.project("https://github.com/BroadleafCommerce/BroadleafCommerce.git", "master") 
 		.atCommit("02833b8110cd8c8704194ed765ab243cf65ede42").notContains(

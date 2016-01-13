@@ -38,8 +38,8 @@ public class RefactoringsSDBuilder {
 	private double inlineMethodThreshold = 0.5;
 	
 	private double moveAttributeThreshold = 0.2;
-	private double pullUpAttributeThreshold = 0.2;
-	private double pushDownAttributeThreshold = 0.2;
+	private double pullUpAttributeThreshold = 0.1;
+	private double pushDownAttributeThreshold = 0.1;
 
 	public void analyze(SDModel model) {
 	    identifyMatchingTypes(model);

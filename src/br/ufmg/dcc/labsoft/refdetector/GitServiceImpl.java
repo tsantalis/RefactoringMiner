@@ -88,7 +88,7 @@ public class GitServiceImpl implements GitService {
 		return repository;
 	}
 
-	public void checkout2(Repository repository, String commitId) throws Exception {
+	public void checkout(Repository repository, String commitId) throws Exception {
 	    logger.info("Checking out {} {} ...", repository.getDirectory().getParent().toString(), commitId);
 	    try (Git git = new Git(repository)) {
 	        CheckoutCommand checkout = git.checkout().setName(commitId);
@@ -98,7 +98,7 @@ public class GitServiceImpl implements GitService {
 //		ExternalProcess.execute(workingDir, "git", "checkout", commitId);
 	}
 
-	public void checkout(Repository repository, String commitId) throws Exception {
+	public void checkout2(Repository repository, String commitId) throws Exception {
 	    logger.info("Checking out {} {} ...", repository.getDirectory().getParent().toString(), commitId);
 		File workingDir = repository.getDirectory().getParentFile();
 		String output = ExternalProcess.execute(workingDir, "git", "checkout", commitId);

@@ -1,6 +1,7 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer;
 
 import gr.uom.java.xmi.diff.Refactoring;
+import gr.uom.java.xmi.diff.RefactoringType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,14 +29,59 @@ public class TestBuilder {
 	private final Map<String, ProjectMatcher> map;
 	private final GitHistoryRefactoringDetector refactoringDetector;
 	private final boolean verbose;
+	private boolean aggregate;
 	private int commitsCount;
+	private int errorCommitsCount;
+	private Counter c;// = new Counter();
+	private Map<RefactoringType, Counter> cMap;
+	private static final int TP = 0;
+	private static final int FP = 1;
+	private static final int FN = 2;
+	private static final int TN = 3;
+	private static final int UNK = 4;
 	
 	public TestBuilder(GitHistoryRefactoringDetector detector, String tempDir) {
-		this.map = new HashMap<String, ProjectMatcher>();
-		this.refactoringDetector = detector;
-		this.tempDir = tempDir;
-		this.verbose = true;
+	    this.map = new HashMap<String, ProjectMatcher>();
+	    this.refactoringDetector = detector;
+	    this.tempDir = tempDir;
+	    this.verbose = true;
+	    this.aggregate = false;
 	}
+	
+	public TestBuilder withAggregation() {
+	    this.aggregate = true;
+	    return this;
+	}
+	
+	private static class Counter {
+	    int[] c = new int[5];
+	}
+	
+	private void count(int type, String refactoring) {
+	    c.c[type]++;
+	    RefactoringType refType = extractRefactoringType(refactoring);
+	    Counter refTypeCounter = cMap.get(refType);
+	    if (refTypeCounter == null) {
+	        refTypeCounter = new Counter();
+	        cMap.put(refType, refTypeCounter);
+	    }
+	    refTypeCounter.c[type]++;
+	}
+	private RefactoringType extractRefactoringType(String refactoring) {
+	    for (RefactoringType refType : RefactoringType.values()) {
+	        if (refactoring.startsWith(refType.getDisplayName())) {
+	            return refType;
+	        }
+	    }
+        throw new RuntimeException("Unknown refactoring type: " + refactoring);
+    }
+	private int get(int type) {
+	    return c.c[type];
+	}
+	private int get(int type, Counter counter) {
+	    return counter.c[type];
+	}
+	
 
 	public TestBuilder() {
 		this(new GitHistoryRefactoringDetectorImpl(), "tmp");
@@ -51,11 +97,10 @@ public class TestBuilder {
 	}
 
 	public void assertExpectations() throws Exception {
-		int tp = 0;
-		int fp = 0;
-		int fn = 0;
-		int unknown = 0;
+		c = new Counter();
+		cMap = new HashMap<RefactoringType, Counter>();
 		commitsCount = 0;
+		errorCommitsCount = 0;
 		GitService gitService = new GitServiceImpl();
 		
 		for (ProjectMatcher m : map.values()) {
@@ -71,19 +116,19 @@ public class TestBuilder {
     				refactoringDetector.detectAll(rep, m.branch, m);
     			}
 			}
-			m.countFalseNegatives();
-			tp += m.truePositiveCount;
-			fp += m.falsePositiveCount;
-			fn += m.falseNegativeCount;
-			unknown += m.unknownCount;
 		}
-		boolean success = fp == 0 && fn == 0 && tp > 0;
-		double precision = ((double) tp) / (tp + fp);
-		double recall = ((double) tp) / (tp + fn);
-		System.out.println(String.format("Commits: %d, TP: %d  FP: %d  FN: %d  Unknown: %d", commitsCount, tp, fp, fn, unknown));
-		String mainResultMessage = String.format("Precision: %.3f  Recall: %.3f", precision, recall);
+		System.out.println(String.format("Commits: %d  Errors: %d", commitsCount, errorCommitsCount));
 		
-		System.out.println(mainResultMessage);
+		String mainResultMessage = buildResultMessage(c);
+		System.out.println("Total  " + mainResultMessage);
+		for (RefactoringType refType : RefactoringType.values()) {
+		    Counter refTypeCounter = cMap.get(refType);
+		    if (refTypeCounter != null) {
+		        System.out.println(refType.abbreviation() + "  " + buildResultMessage(refTypeCounter));
+		    }
+		}
+		
+		boolean success = get(FP) == 0 && get(FN) == 0 && get(TP) > 0;
 		if (!success || verbose) {
 			for (ProjectMatcher m : map.values()) {
 				m.printResults();
@@ -91,21 +136,32 @@ public class TestBuilder {
 		}
 		Assert.assertTrue(mainResultMessage, success);
 	}
+    private String buildResultMessage(Counter c) {
+        double precision = ((double) get(TP, c) / (get(TP, c) + get(FP, c)));
+		double recall = ((double) get(TP, c)) / (get(TP, c) + get(FN, c));
+		String mainResultMessage = String.format("TP: %d  FP: %d  FN: %d  TN: %d  Unk.: %d  Prec.: %.3f  Recall: %.3f", get(TP, c), get(FP, c), get(FN, c), get(TN, c), get(UNK, c), precision, recall);
+        return mainResultMessage;
+    }
 
-	private static List<String> normalize(String refactoring) {
-	    // Decompose Extract Superclass/Interface 
-	    int begin = refactoring.indexOf("from classes [");
-	    if (begin != -1) {
-	        int end = refactoring.lastIndexOf(']');
-            String types = refactoring.substring(begin + "from classes [".length(), end);
-            String[] typesArray = types.split(", ");
-            List<String> refactorings = new ArrayList<String>();
-            for (String type : typesArray) {
-                refactorings.add(refactoring.substring(0, begin) + "from class " + type);
-            }
-            return refactorings;
+	private List<String> normalize(String refactoring) {
+	    RefactoringType refType = extractRefactoringType(refactoring);    
+	    refactoring = normalizeSingle(refactoring);
+	    if (aggregate) {
+	        refactoring = refType.aggregate(refactoring);
+	    } else {
+	        int begin = refactoring.indexOf("from classes [");
+	        if (begin != -1) {
+	            int end = refactoring.lastIndexOf(']');
+	            String types = refactoring.substring(begin + "from classes [".length(), end);
+	            String[] typesArray = types.split(", ");
+	            List<String> refactorings = new ArrayList<String>();
+	            for (String type : typesArray) {
+	                refactorings.add(refactoring.substring(0, begin) + "from class " + type);
+	            }
+	            return refactorings;
+	        }
 	    }
-	    return Collections.singletonList(normalizeSingle(refactoring));
+	    return Collections.singletonList(refactoring);
 	}
 	
 	/**
@@ -141,8 +197,9 @@ public class TestBuilder {
 		private int truePositiveCount = 0;
 		private int falsePositiveCount = 0;
 		private int falseNegativeCount = 0;
+		private int trueNegativeCount = 0;
 		private int unknownCount = 0;
-		private int errorsCount = 0;
+//		private int errorsCount = 0;
 
 		private ProjectMatcher(String cloneUrl, String branch) {
 			this.cloneUrl = cloneUrl;
@@ -203,6 +260,7 @@ public class TestBuilder {
 						iter.remove();
 						refactoringsFound.remove(expectedRefactoring);
 						this.truePositiveCount++;
+						count(TP, expectedRefactoring);
 						matcher.truePositive.add(expectedRefactoring);
 					}
 				}
@@ -213,7 +271,10 @@ public class TestBuilder {
 					if (refactoringsFound.contains(notExpectedRefactoring)) {
 						refactoringsFound.remove(notExpectedRefactoring);
 						this.falsePositiveCount++;
+						count(FP, notExpectedRefactoring);
 					} else {
+					    this.trueNegativeCount++;
+					    count(TN, notExpectedRefactoring);
 						iter.remove();
 					}
 				}
@@ -222,13 +283,20 @@ public class TestBuilder {
 				    for (String refactoring : refactoringsFound) {
                         matcher.unknown.add(refactoring);
                         this.unknownCount++;
+                        count(UNK, refactoring);
                     }
-				}
-				else {
+				} else {
 					for (String refactoring : refactoringsFound) {
 						matcher.notExpected.add(refactoring);
 						this.falsePositiveCount++;
+						count(FP, refactoring);
 					}
+				}
+				
+				// count false negatives
+				for (String expectedButNotFound : matcher.expected) {
+				    this.falseNegativeCount++;
+				    count(FN, expectedButNotFound);
 				}
 			}
 		}
@@ -239,7 +307,7 @@ public class TestBuilder {
 		        CommitMatcher matcher = expected.get(commitId);
 		        matcher.error = e.toString();
             }
-		    errorsCount++;
+		    errorCommitsCount++;
 		    //System.err.println(" error at commit " + commitId + ": " + e.getMessage());
 		}
 
@@ -289,14 +357,14 @@ public class TestBuilder {
 			}
 		}
 
-		private void countFalseNegatives() {
-			for (Map.Entry<String, CommitMatcher> entry : this.expected.entrySet()) {
-				CommitMatcher matcher = entry.getValue();
-				if (matcher.error == null) {
-                    this.falseNegativeCount += matcher.expected.size();
-                }
-			}
-		}
+//		private void countFalseNegatives() {
+//			for (Map.Entry<String, CommitMatcher> entry : this.expected.entrySet()) {
+//				CommitMatcher matcher = entry.getValue();
+//				if (matcher.error == null) {
+//                    this.falseNegativeCount += matcher.expected.size();
+//                }
+//			}
+//		}
 
 		public class CommitMatcher {
 			private Set<String> expected = new HashSet<String>();

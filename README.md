@@ -1,5 +1,5 @@
-# RefDetector
-RefDetector is a library/API written in Java that can detect refactorings applied in the history of a Java project.
+# RefactoringMiner
+RefactoringMiner is a library/API written in Java that can detect refactorings applied in the history of a Java project.
 
 Currently, it supports the detection of the following refactorings:
 
@@ -24,7 +24,7 @@ The code in package **br.ufmg.dcc.labsoft.refactoringanalyzer** has been develop
 
 ## API usage guidelines ##
 
-RefDetector can automatically detect refactorings in the entire history of 
+RefactoringMiner can automatically detect refactorings in the entire history of 
 git repositories, or at specified commits.
 In the code snippet below we demonstrate how to print all refactorings performed
 in the toy project https://github.com/danilofes/refactoring-toy-example.git.

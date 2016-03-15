@@ -191,6 +191,7 @@ public class GitHistoryRefactoringDetectorImpl implements GitHistoryRefactoringD
 			this.detectRefactorings(gitService, repository, handler, projectFolder, commit);
 		} catch (Exception e) {
 			logger.warn(String.format("Ignored revision %s due to error", commitId), e);
+			handler.handleException(commitId, e);
 		} finally {
 			walk.dispose();
 		}

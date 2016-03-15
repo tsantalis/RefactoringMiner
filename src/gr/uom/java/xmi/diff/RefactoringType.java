@@ -23,7 +23,8 @@ public enum RefactoringType {
 	MERGE_OPERATION("Merge Method", ".+"),
 	EXTRACT_AND_MOVE_OPERATION("Extract And Move Method", ".+"),
 	CONVERT_ANONYMOUS_CLASS_TO_TYPE("Convert Anonymous Class to Type", ".+"),
-	INTRODUCE_POLYMORPHISM("Introduce Polymorphism", ".+");
+	INTRODUCE_POLYMORPHISM("Introduce Polymorphism", ".+"),
+	RENAME_PACKAGE("Rename Package", "Rename Package (.+) to (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -73,4 +74,12 @@ public enum RefactoringType {
         }
     }
 
+    public String getGroup(String refactoringDescription, int group) {
+        Matcher m = regex.matcher(refactoringDescription);
+        if (m.matches()) {
+            return m.group(group);
+        } else {
+            throw new RuntimeException("Pattern not matched: " + refactoringDescription);
+        }
+    }
 }

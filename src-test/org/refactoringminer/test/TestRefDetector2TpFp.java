@@ -1,13 +1,13 @@
 package org.refactoringminer.test;
 
 import org.junit.Test;
-import org.refactoringminer.model.builder.GitHistoryRefactoringDetector2;
+import org.refactoringminer.rm2.analysis.GitHistoryRefactoringMiner2;
 
 public class TestRefDetector2TpFp {
 
 	@Test
 	public void testFalsePositives() throws Exception {
-		TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+		TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "c:/Users/danilofs/tmp");
 
 		test.project("https://github.com/liferay/liferay-portal.git", "master") 
 		.atCommit("ba749a31ef4781a4d4176d2528bf8879c11b8720").notContains(
@@ -1613,7 +1613,7 @@ public class TestRefDetector2TpFp {
 
 	@Test
     public void testTruePositives() throws Exception {
-	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "c:/Users/danilofs/tmp");
 
 	    test.project("https://github.com/geoserver/geoserver.git", "master") 
 	    .atCommit("182f4d1174036417aad9d6db908ceaf64234fd5f").contains(

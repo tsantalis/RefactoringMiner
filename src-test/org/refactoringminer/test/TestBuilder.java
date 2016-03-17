@@ -1,8 +1,5 @@
 package org.refactoringminer.test;
 
-import gr.uom.java.xmi.diff.Refactoring;
-import gr.uom.java.xmi.diff.RefactoringType;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,20 +12,21 @@ import java.util.Set;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.Assert;
-
-import br.ufmg.dcc.labsoft.refdetector.GitHistoryRefactoringDetector;
-import br.ufmg.dcc.labsoft.refdetector.GitHistoryRefactoringDetectorImpl;
-import br.ufmg.dcc.labsoft.refdetector.GitService;
-import br.ufmg.dcc.labsoft.refdetector.GitServiceImpl;
-import br.ufmg.dcc.labsoft.refdetector.RefactoringHandler;
+import org.refactoringminer.api.GitHistoryRefactoringMiner;
+import org.refactoringminer.api.GitService;
+import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringHandler;
+import org.refactoringminer.api.RefactoringType;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
+import org.refactoringminer.util.GitServiceImpl;
 
 
 public class TestBuilder {
 
 	private final String tempDir;
 	private final Map<String, ProjectMatcher> map;
-	private final GitHistoryRefactoringDetector refactoringDetector;
-	private final boolean verbose;
+	private final GitHistoryRefactoringMiner refactoringDetector;
+	private boolean verbose;
 	private boolean aggregate;
 	private int commitsCount;
 	private int errorCommitsCount;
@@ -40,12 +38,17 @@ public class TestBuilder {
 	private static final int TN = 3;
 	private static final int UNK = 4;
 	
-	public TestBuilder(GitHistoryRefactoringDetector detector, String tempDir) {
+	public TestBuilder(GitHistoryRefactoringMiner detector, String tempDir) {
 	    this.map = new HashMap<String, ProjectMatcher>();
 	    this.refactoringDetector = detector;
 	    this.tempDir = tempDir;
-	    this.verbose = true;
+	    this.verbose = false;
 	    this.aggregate = false;
+	}
+	
+	public TestBuilder verbose() {
+	    this.verbose = true;
+	    return this;
 	}
 	
 	public TestBuilder withAggregation() {
@@ -84,7 +87,7 @@ public class TestBuilder {
 	
 
 	public TestBuilder() {
-		this(new GitHistoryRefactoringDetectorImpl(), "tmp");
+		this(new GitHistoryRefactoringMinerImpl(), "tmp");
 	}
 	
 	public final ProjectMatcher project(String cloneUrl, String branch) {
@@ -124,7 +127,7 @@ public class TestBuilder {
 		for (RefactoringType refType : RefactoringType.values()) {
 		    Counter refTypeCounter = cMap.get(refType);
 		    if (refTypeCounter != null) {
-		        System.out.println(refType.abbreviation() + "  " + buildResultMessage(refTypeCounter));
+		        System.out.println(refType.getAbbreviation() + "  " + buildResultMessage(refTypeCounter));
 		    }
 		}
 		

@@ -1,8 +1,8 @@
 package ca.ualberta.cs.data;
 
-import gr.uom.java.xmi.diff.Refactoring;
-
 import java.util.List;
+
+import org.refactoringminer.api.Refactoring;
 
 public class CommitRefactoring extends Commit {
 	

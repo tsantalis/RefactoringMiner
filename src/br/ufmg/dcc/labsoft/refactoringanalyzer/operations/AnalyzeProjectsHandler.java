@@ -1,18 +1,17 @@
 package br.ufmg.dcc.labsoft.refactoringanalyzer.operations;
 
-import gr.uom.java.xmi.diff.Refactoring;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringHandler;
 
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.Database;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.ProjectGit;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.RefactoringGit;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.RevisionGit;
-import br.ufmg.dcc.labsoft.refdetector.RefactoringHandler;
 
 class AnalyzeProjectsHandler extends RefactoringHandler {
 	protected final Database db;

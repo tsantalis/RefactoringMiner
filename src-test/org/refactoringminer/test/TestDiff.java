@@ -12,7 +12,7 @@ import org.eclipse.jgit.diff.EditList;
 import org.eclipse.jgit.diff.RawText;
 import org.eclipse.jgit.diff.RawTextComparator;
 import org.junit.Test;
-import org.refactoringminer.model.builder.DiffUtils;
+import org.refactoringminer.rm2.analysis.DiffUtils;
 
 public class TestDiff {
 

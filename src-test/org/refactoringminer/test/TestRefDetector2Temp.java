@@ -1,13 +1,13 @@
 package org.refactoringminer.test;
 
 import org.junit.Test;
-import org.refactoringminer.model.builder.GitHistoryRefactoringDetector2;
+import org.refactoringminer.rm2.analysis.GitHistoryRefactoringMiner2;
 
 public class TestRefDetector2Temp {
 
     @Test
 	public void testInvalidInput() throws Exception {
-	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "c:/Users/danilofs/tmp");
 	    
 //	    error at https://github.com/neo4j/neo4j/commit/7973485502c707739756a9e712b655f84cb6b492: java.lang.RuntimeException: org.eclipse.jdt.core.compiler.InvalidInputException: Invalid_Character_Constant
 //        error at https://github.com/languagetool-org/languagetool/commit/bec15926deb49d2b3f7b979d4cfc819947a434ec: java.lang.RuntimeException: org.eclipse.jdt.core.compiler.InvalidInputException: Invalid_Character_Constant
@@ -24,7 +24,7 @@ public class TestRefDetector2Temp {
 
     @Test
     public void testNullPointer() throws Exception {
-        TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+        TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "c:/Users/danilofs/tmp");
         
 //        error at https://github.com/google/guava/commit/31fc19200207ccadc45328037d8a2a62b617c029: java.lang.NullPointerException
         test.project("https://github.com/google/guava.git", "master") 
@@ -57,7 +57,7 @@ public class TestRefDetector2Temp {
 
     @Test
     public void testUnsupportedOperation() throws Exception {
-        TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+        TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "c:/Users/danilofs/tmp");
         
 //        error at https://github.com/JetBrains/intellij-community/commit/3b1c3bad64e0e7cfabb5ca5d2be7b3aca0b7c197: java.lang.UnsupportedOperationException
         test.project("https://github.com/JetBrains/intellij-community.git", "master") 
@@ -108,7 +108,7 @@ public class TestRefDetector2Temp {
     
     @Test
     public void test() throws Exception {
-        TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+        TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "c:/Users/danilofs/tmp");
         
 //        error at https://github.com/JetBrains/intellij-community/commit/3b1c3bad64e0e7cfabb5ca5d2be7b3aca0b7c197: java.lang.UnsupportedOperationException
         test.project("https://github.com/danilofes/argouml-refactorings.git", "master") 

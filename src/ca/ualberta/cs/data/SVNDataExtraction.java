@@ -2,7 +2,6 @@ package ca.ualberta.cs.data;
 
 import gr.uom.java.xmi.ASTReader;
 import gr.uom.java.xmi.UMLModel;
-import gr.uom.java.xmi.diff.Refactoring;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.io.File;
@@ -15,6 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.joda.time.DateTime;
+import org.refactoringminer.api.Refactoring;
 import org.tmatesoft.svn.core.SVNDepth;
 import org.tmatesoft.svn.core.SVNLogEntry;
 import org.tmatesoft.svn.core.SVNLogEntryPath;

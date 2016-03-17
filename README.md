@@ -31,13 +31,13 @@ in the toy project https://github.com/danilofes/refactoring-toy-example.git.
 
 ```java
 GitService gitService = new GitServiceImpl();
-GitHistoryRefactoringDetector detector = new GitHistoryRefactoringDetectorImpl();
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 
 Repository repo = gitService.cloneIfNotExists(
     "tmp/refactoring-toy-example",
     "https://github.com/danilofes/refactoring-toy-example.git");
 
-detector.detectAll(repo, "master", new RefactoringHandler() {
+miner.detectAll(repo, "master", new RefactoringHandler() {
   @Override
   public void handle(RevCommit commitData, List<Refactoring> refactorings) {
     System.out.println("Refactorings at " + commitData.getId().getName());
@@ -52,7 +52,7 @@ It is possible to analyze a specifc commit using `detectAtCommit` instead of `de
 is identified by its SHA key, such as in the example below:
 
 ```java
-detector.detectAtCommit(repo, "05c1e773878bbacae64112f70964f4f2f7944398", new RefactoringHandler() {
+miner.detectAtCommit(repo, "05c1e773878bbacae64112f70964f4f2f7944398", new RefactoringHandler() {
   @Override
   public void handle(RevCommit commitData, List<Refactoring> refactorings) {
     System.out.println("Refactorings at " + commitData.getId().getName());

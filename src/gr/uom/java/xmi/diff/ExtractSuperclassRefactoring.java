@@ -4,6 +4,9 @@ import gr.uom.java.xmi.UMLClass;
 
 import java.util.Set;
 
+import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringType;
+
 public class ExtractSuperclassRefactoring implements Refactoring {
 	private UMLClass extractedClass;
 	private Set<String> subclassSet;

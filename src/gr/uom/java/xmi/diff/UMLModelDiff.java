@@ -21,6 +21,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.refactoringminer.api.Refactoring;
+
 public class UMLModelDiff {
    private List<UMLClass> addedClasses;
    private List<UMLClass> removedClasses;

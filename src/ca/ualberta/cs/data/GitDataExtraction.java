@@ -2,7 +2,6 @@ package ca.ualberta.cs.data;
 
 import gr.uom.java.xmi.ASTReader;
 import gr.uom.java.xmi.UMLModel;
-import gr.uom.java.xmi.diff.Refactoring;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.io.File;
@@ -25,6 +24,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.joda.time.DateTime;
+import org.refactoringminer.api.Refactoring;
 
 public class GitDataExtraction extends AbstractDataExtraction {
 

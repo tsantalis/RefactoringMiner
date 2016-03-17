@@ -1,7 +1,5 @@
 package org.refactoringminer.test;
 
-import gr.uom.java.xmi.diff.RefactoringType;
-
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -16,9 +14,9 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.PathSuffixFilter;
 import org.junit.Test;
-
-import br.ufmg.dcc.labsoft.refdetector.GitService;
-import br.ufmg.dcc.labsoft.refdetector.GitServiceImpl;
+import org.refactoringminer.api.GitService;
+import org.refactoringminer.api.RefactoringType;
+import org.refactoringminer.util.GitServiceImpl;
 
 public class ProcessMoveClass2 {
 

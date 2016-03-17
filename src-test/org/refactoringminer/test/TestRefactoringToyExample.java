@@ -1,12 +1,13 @@
 package org.refactoringminer.test;
 
 import org.junit.Test;
+import org.refactoringminer.rm2.analysis.GitHistoryRefactoringMiner2;
 
 public class TestRefactoringToyExample {
 
 	@Test
 	public void test() throws Exception {
-		TestBuilder test = new TestBuilder();
+		TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "tmp");
 		test
 			.project("https://github.com/danilofes/refactoring-toy-example.git", "master")
 			.atNonSpecifiedCommitsContainsNothing()

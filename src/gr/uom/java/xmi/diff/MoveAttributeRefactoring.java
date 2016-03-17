@@ -1,5 +1,8 @@
 package gr.uom.java.xmi.diff;
 
+import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringType;
+
 import gr.uom.java.xmi.UMLAttribute;
 
 public class MoveAttributeRefactoring implements Refactoring {

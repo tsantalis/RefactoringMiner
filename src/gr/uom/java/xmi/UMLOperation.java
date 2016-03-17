@@ -9,7 +9,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import br.ufmg.dcc.labsoft.refactoringanalyzer.util.AstUtils;
+import org.refactoringminer.util.AstUtils;
 
 public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 	private String name;

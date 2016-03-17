@@ -1,15 +1,14 @@
 package org.refactoringminer.test;
 
 import org.junit.Test;
-
-import br.ufmg.dcc.labsoft.refdetector.GitHistoryRefactoringDetectorImpl;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 public class TestRefDetector2Full {
 
 	@Test
 	public void testAll() throws Exception {
 //	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
-		TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetectorImpl(), "c:/Users/danilofs/tmp");
+		TestBuilder test = new TestBuilder(new GitHistoryRefactoringMinerImpl(), "c:/Users/danilofs/tmp");
 
 	    test.project("https://github.com/gradle/gradle.git", "master") 
 	    .atCommit("36e73a93fcf2ed285721c88117c176d4a90e0327").notContains(

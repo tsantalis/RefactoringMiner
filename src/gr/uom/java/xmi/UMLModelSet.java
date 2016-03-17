@@ -1,6 +1,5 @@
 package gr.uom.java.xmi;
 
-import gr.uom.java.xmi.diff.Refactoring;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.util.ArrayList;
@@ -8,6 +7,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.refactoringminer.api.Refactoring;
 
 public class UMLModelSet {
 

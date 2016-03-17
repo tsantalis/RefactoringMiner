@@ -1,10 +1,11 @@
 import gr.uom.java.xmi.ASTReader;
 import gr.uom.java.xmi.UMLModel;
-import gr.uom.java.xmi.diff.Refactoring;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.io.File;
 import java.util.List;
+
+import org.refactoringminer.api.Refactoring;
 
 
 public class Main {

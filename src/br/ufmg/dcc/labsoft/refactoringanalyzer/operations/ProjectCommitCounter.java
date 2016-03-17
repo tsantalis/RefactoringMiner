@@ -4,13 +4,13 @@ import java.io.File;
 import java.lang.management.ManagementFactory;
 
 import org.eclipse.jgit.lib.Repository;
+import org.refactoringminer.api.GitService;
+import org.refactoringminer.util.GitServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.Database;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.ProjectGit;
-import br.ufmg.dcc.labsoft.refdetector.GitService;
-import br.ufmg.dcc.labsoft.refdetector.GitServiceImpl;
 
 public class ProjectCommitCounter {
 

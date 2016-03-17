@@ -1,5 +1,3 @@
-import gr.uom.java.xmi.diff.Refactoring;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.joda.time.DateTime;
+import org.refactoringminer.api.Refactoring;
 
 import ca.ualberta.cs.data.CommitRefactoring;
 

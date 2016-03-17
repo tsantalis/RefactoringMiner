@@ -6,12 +6,12 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 
+import org.refactoringminer.util.StringToDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.Database;
 import br.ufmg.dcc.labsoft.refactoringanalyzer.dao.ProjectGit;
-import br.ufmg.dcc.labsoft.refactoringanalyzer.util.StringToDate;
 
 import com.jcabi.github.Github;
 import com.jcabi.github.RtGithub;

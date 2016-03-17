@@ -11,15 +11,14 @@ import java.util.Set;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.Test;
-import org.refactoringminer.model.SDMethod;
-import org.refactoringminer.model.SDModel;
-import org.refactoringminer.model.builder.GitHistoryStructuralDiffAnalyzer;
-import org.refactoringminer.model.builder.RefactoringMotivationClassifier;
-import org.refactoringminer.model.builder.StructuralDiffHandler;
-import org.refactoringminer.model.builder.RefactoringMotivationClassifier.Motivation;
-
-import br.ufmg.dcc.labsoft.refdetector.GitService;
-import br.ufmg.dcc.labsoft.refdetector.GitServiceImpl;
+import org.refactoringminer.api.GitService;
+import org.refactoringminer.rm2.analysis.GitHistoryStructuralDiffAnalyzer;
+import org.refactoringminer.rm2.analysis.RefactoringMotivationClassifier;
+import org.refactoringminer.rm2.analysis.StructuralDiffHandler;
+import org.refactoringminer.rm2.analysis.RefactoringMotivationClassifier.Motivation;
+import org.refactoringminer.rm2.model.SDMethod;
+import org.refactoringminer.rm2.model.SDModel;
+import org.refactoringminer.util.GitServiceImpl;
 
 public class TestExtractMethodMotivationFull2 {
 

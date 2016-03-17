@@ -1,15 +1,14 @@
 package org.refactoringminer.test;
 
 import org.junit.Test;
-
-import br.ufmg.dcc.labsoft.refdetector.GitHistoryRefactoringDetectorImpl;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 public class TestRecall {
 
     @Test
     public void test() throws Exception {
 //    	 RefactoringMiner 
-    	TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetectorImpl(), "tmp").withAggregation();
+    	TestBuilder test = new TestBuilder(new GitHistoryRefactoringMinerImpl(), "tmp").withAggregation();
         
     	// RefactoringMiner2 
     	//TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "tmp").withAggregation();

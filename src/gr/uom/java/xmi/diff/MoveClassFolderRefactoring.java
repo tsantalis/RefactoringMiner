@@ -1,5 +1,8 @@
 package gr.uom.java.xmi.diff;
 
+import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringType;
+
 public class MoveClassFolderRefactoring implements Refactoring {
 	private String className;
 	private String originalPath;

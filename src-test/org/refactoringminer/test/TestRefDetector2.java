@@ -1,13 +1,13 @@
 package org.refactoringminer.test;
 
 import org.junit.Test;
-import org.refactoringminer.model.builder.GitHistoryRefactoringDetector2;
+import org.refactoringminer.rm2.analysis.GitHistoryRefactoringMiner2;
 
 public class TestRefDetector2 {
 
 	@Test
 	public void testExtractMethod() throws Exception {
-		TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+		TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "c:/Users/danilofs/tmp");
 
 		test.project("https://github.com/jMonkeyEngine/jmonkeyengine.git", "master")
 		.atCommit("5989711f7315abe4c3da0f1516a3eb3a81da6716").contains(
@@ -101,7 +101,7 @@ public class TestRefDetector2 {
 	
 	@Test
 	public void testMoveClass() throws Exception {
-	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "c:/Users/danilofs/tmp");
 	    
 	    test.project("https://github.com/ignatov/intellij-erlang.git", "master")
 	    .atCommit("c0ceabc5e9e47c628f041b72c1ca3dafb876f3b4").contains()
@@ -145,7 +145,7 @@ public class TestRefDetector2 {
 	
 	@Test
 	public void testMoveMethod() throws Exception {
-	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "c:/Users/danilofs/tmp");
 	    
 	    test.project("https://github.com/apache/hive.git", "master") 
 	    .atCommit("0dece6f37d43ae6ecbd0ad496ab18bcdd505a395").notContains(
@@ -207,7 +207,7 @@ public class TestRefDetector2 {
 	
 	@Test
     public void testInlineMethod() throws Exception {
-        TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+        TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "c:/Users/danilofs/tmp");
         
         test.project("https://github.com/droolsjbpm/jbpm.git", "master") 
         .atCommit("3815f293ba9338f423315d93a373608c95002b15").notContains(
@@ -267,7 +267,7 @@ public class TestRefDetector2 {
 	// -XX:+UnlockCommercialFeatures -XX:+FlightRecorder -XX:FlightRecorderOptions=defaultrecording=true,dumponexit=true,dumponexitpath=myrecording.jfr
 	@Test
 	public void testPullUpMethod() throws Exception {
-	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "c:/Users/danilofs/tmp");
 	    
 	    // org.eclipse.jgit.errors.MissingObjectException: Missing unknown 4ef35268bb96bb78b2dc698fa68e7ce763cde32e
 //	    test.project("https://github.com/BroadleafCommerce/BroadleafCommerce.git", "master") 
@@ -338,7 +338,7 @@ public class TestRefDetector2 {
 	
 	@Test
 	public void testPushDownMethod() throws Exception {
-	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "c:/Users/danilofs/tmp");
 	    
 	    test.project("https://github.com/hazelcast/hazelcast.git", "master") 
 	    .atCommit("c00275e7f85c8a9af5785f66cc0f75dc027b6cb6").contains(
@@ -385,7 +385,7 @@ public class TestRefDetector2 {
 
 	@Test
     public void testPullUpAttribute() throws Exception {
-        TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+        TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "c:/Users/danilofs/tmp");
         
         test.project("https://github.com/kuujo/copycat.git", "master") 
         .atCommit("19a49f8f36b2f6d82534dc13504d672e41a3a8d1").containsOnly(
@@ -401,7 +401,7 @@ public class TestRefDetector2 {
 
 	@Test
 	public void testExtractSuperclass() throws Exception {
-	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "c:/Users/danilofs/tmp");
 	    
 	    test.project("https://github.com/mockito/mockito.git", "master") 
 	    .atCommit("7f20e63a7252f33c888085134d16ee8bf45f183f").contains(
@@ -416,7 +416,7 @@ public class TestRefDetector2 {
 
 	@Test
 	public void testMoveAttribute() throws Exception {
-	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringDetector2(), "c:/Users/danilofs/tmp");
+	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "c:/Users/danilofs/tmp");
 	    
 	    test.project("https://github.com/realm/realm-java.git", "master") 
 	    .atCommit("9b5b10a0c254017a48651771029f4dfc0a61bcfa").contains(

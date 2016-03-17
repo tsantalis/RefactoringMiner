@@ -1,5 +1,8 @@
 package gr.uom.java.xmi.diff;
 
+import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringType;
+
 public class RenameClassRefactoring implements Refactoring {
 	private String originalClassName;
 	private String renamedClassName;

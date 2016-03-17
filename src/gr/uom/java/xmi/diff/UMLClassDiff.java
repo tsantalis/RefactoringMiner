@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.refactoringminer.api.Refactoring;
+
 public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	private UMLClass originalClass;
 	private String className;

@@ -131,7 +131,9 @@ public class RefactoringsSDBuilder {
             }
             protected void onMatch(SDModel m, SDMethod methodBefore, SDMethod methodAfter) {
                 // pull up method
-                m.addRefactoring(new SDPullUpMethod(methodBefore, methodAfter));
+                if (!m.hasRelationship(RelationshipType.EXTRACT, methodBefore.container(), methodAfter.container())) {
+                    m.addRefactoring(new SDPullUpMethod(methodBefore, methodAfter));
+                }
             }
         })
         .addCriterion(new Criterion<SDMethod>(RelationshipType.PUSH_DOWN_MEMBER, pushDownMethodThreshold){
@@ -172,7 +174,9 @@ public class RefactoringsSDBuilder {
                     m.after(attributeBefore.container()).isSubtypeOf(attributeAfter.container());
             }
             protected void onMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
-                m.addRefactoring(new SDPullUpAttribute(attributeBefore, attributeAfter));
+                if (!m.hasRelationship(RelationshipType.EXTRACT, attributeBefore.container(), attributeAfter.container())) {
+                    m.addRefactoring(new SDPullUpAttribute(attributeBefore, attributeAfter));
+                }
             }
         })
         .addCriterion(new Criterion<SDAttribute>(RelationshipType.PUSH_DOWN_MEMBER, pushDownAttributeThreshold){
@@ -224,7 +228,9 @@ public class RefactoringsSDBuilder {
 					}
 					method.addOrigin(origin, copies);
 					m.addRelationship(RelationshipType.EXTRACT, origin, method, copies);
-					m.addRefactoring(new SDExtractMethod(method, origin));
+					if (!method.isSetter() && !method.isGetter()) {
+					  m.addRefactoring(new SDExtractMethod(method, origin));
+					}
 				}
 			}
 //			if (method.origins().size() > 0) {

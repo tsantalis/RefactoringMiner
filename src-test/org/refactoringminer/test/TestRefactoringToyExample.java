@@ -37,7 +37,8 @@ public class TestRefactoringToyExample {
 			    "Push Down Method	public getName() : int from class org.reptile.AnimalMarilho to public getName() : int from class org.reptile.Reptile",
 			    "Push Down Method	public setName(name int) : void from class org.reptile.AnimalMarilho to public setName(name int) : void from class org.reptile.Reptile")
 			.atCommit("638f37ca6b4dcdbb6a4735f93e37445aeef79749").containsOnly(
-			    "Push Down Method	public equals(obj Object) : boolean from class org.reptile.Reptile to public equals(obj Object) : boolean from class org.reptile.TurtleMarinha")
+			    "Push Down Method	public equals(obj Object) : boolean from class org.reptile.Reptile to public equals(obj Object) : boolean from class org.reptile.TurtleMarinha",
+			    "Push Down Method public equals(obj Object) : boolean from class org.reptile.Reptile to public equals(obj Object) : boolean from class org.reptile.TurtleTerrarium")
 			.atCommit("0e193b7d02902c6f2abf7c88eebe937d1ac5fc51").containsOnly(
 			    "Push Down Method	public hashCode() : int from class org.reptile.AnimalMarilho to public hashCode() : int from class org.reptile.Reptile")
 			.atCommit("b61e75b773f48e680f5bb7362445ba0642c2ee91").containsOnly(
@@ -59,7 +60,9 @@ public class TestRefactoringToyExample {
 			    "Extract Superclass	org.reptile.AnimalMarilho from classes [org.reptile.Reptile]")
 			.atCommit("9803046111744317efaa65a83e65ce8ceb0c15c2").containsOnly(
 			    "Push Down Method	public getAge() : int from class org.reptile.Reptile to public getAge() : int from class org.reptile.TurtleMarinha",
-			    "Push Down Method	public setAge(age int) : void from class org.reptile.Reptile to public setAge(age int) : void from class org.reptile.TurtleMarinha")
+			    "Push Down Method public getAge() : int from class org.reptile.Reptile to public getAge() : int from class org.reptile.TurtleTerrarium",
+			    "Push Down Method	public setAge(age int) : void from class org.reptile.Reptile to public setAge(age int) : void from class org.reptile.TurtleMarinha",
+			    "Push Down Method public setAge(age int) : void from class org.reptile.Reptile to public setAge(age int) : void from class org.reptile.TurtleTerrarium")
 			.atCommit("a1b3a91d1a423f2b7360e009e47f30aedb663b6f").containsOnly(
 			    "Rename Class	org.reptile.Turtle renamed to org.reptile.TurtleMarinha")
 			.atCommit("802e21bffe95f0740f44d1a45e3c22adae0ba48c").containsOnly(
@@ -85,8 +88,8 @@ public class TestRefactoringToyExample {
 			    "Pull Up Method	public meow() : void from class org.felines.Cat to public meow() : void from class org.felines.Feline")
 			.atCommit("0c5c24356f3179ee320c3318f91278520caafb3a").containsOnly(
 			    "Move Class	org.felines.Feline moved to org.birds.Feline")
-//			.atCommit("12b11bf39cb4800e3fa57fb1112c5fbda26de3df").containsOnly(
-//			    "Move Class	org.animals.Tiger moved to org.felines.Tiger")
+			.atCommit("12b11bf39cb4800e3fa57fb1112c5fbda26de3df").containsOnly(
+			    "Move Class	org.animals.Tiger moved to org.felines.Tiger")
 			.atCommit("60226924fead7d0c4646df4f4fd65667e83da6dc").containsOnly(
 			    "Move Class	org.animals.Bird moved to org.birds.Bird",
 			    "Move Class	org.animals.Chicken moved to org.birds.Chicken",

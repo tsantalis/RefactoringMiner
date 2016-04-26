@@ -295,4 +295,13 @@ public class SDModel {
         }
         return null;
     }
+
+    public boolean hasRelationship(RelationshipType relationshipType, SDEntity entityBefore, SDEntity entityAfter) {
+        for (Relationship r : relationships.get(entityBefore.getId())) {
+            if (r.getType() == relationshipType && r.getEntityAfter().equals(entityAfter)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

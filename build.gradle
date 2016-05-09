@@ -5,6 +5,7 @@ sourceSets {
     main {
         java {
             srcDir 'src'
+            srcDir 'src-google-diff-match-patch'
         }
         resources  {
             srcDir 'res'

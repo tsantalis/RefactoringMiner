@@ -325,7 +325,7 @@ public class TestBuilder {
 				if (matcher.error != null) {
 				    System.out.println("error at " + commitUrl + ": " + matcher.error);
 				} else {
-				    if (verbose || !matcher.expected.isEmpty() || !matcher.notExpected.isEmpty()) {
+				    if (verbose || !matcher.expected.isEmpty() || !matcher.notExpected.isEmpty() || !matcher.unknown.isEmpty()) {
 				        if (!matcher.analyzed) {
 				            System.out.println("at not analyzed " + commitUrl);
 				        } else {
@@ -350,12 +350,12 @@ public class TestBuilder {
 				            System.out.println("  " + ref);
 				        }
 				    }
-				    if (verbose && !matcher.unknown.isEmpty()) {
-                        System.out.println(" unknown");
-                        for (String ref : matcher.unknown) {
-                            System.out.println("  " + ref);
-                        }
-                    }
+				    if (!matcher.unknown.isEmpty()) {
+                System.out.println(" unknown");
+                for (String ref : matcher.unknown) {
+                    System.out.println("  " + ref);
+                }
+            }
 				}
 			}
 		}

@@ -10,10 +10,13 @@ Currently, it supports the detection of the following refactorings:
 5. Push Down Method/Attribute
 6. Extract Superclass/Interface
 7. Move Class
+8. Rename Class
+9. Rename Method
 
-In order to build the project with Eclipse IDE, import it into Eclipse as a Java project, and install the Apache IvyDE plug-in.
+In order to build the project, run `./gradlew jar` (or `gradlew jar`, in Windows) in the project's root directory.
+Alternatively, you can generate a complete distribution zip including all runtime dependencies running `./gradlew distZip`.
 
-Alternatively, you can also use gradle to build the project without using Eclipse. For instance, to create a jar file, you just run `./gradlew jar` in the project's root directory.
+You can also work with the project with Eclipse IDE. First, run `./gradlew eclipse` to generate Eclipse project metadata files. Then, import it into Eclipse using the *Import Existing Project* feature.
 
 ## Contributors ##
 The code in package **gr.uom.java.xmi** has been developed by [Nikolaos Tsantalis](https://github.com/tsantalis).

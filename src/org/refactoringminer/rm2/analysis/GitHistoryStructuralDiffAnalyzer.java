@@ -20,8 +20,17 @@ import org.slf4j.LoggerFactory;
 public class GitHistoryStructuralDiffAnalyzer {
 
 	Logger logger = LoggerFactory.getLogger(GitHistoryRefactoringMinerImpl.class);
+	private RefactoringDetectorConfig config;
 	
-	private void detect(GitService gitService, Repository repository, final StructuralDiffHandler handler, Iterator<RevCommit> i) {
+	public GitHistoryStructuralDiffAnalyzer() {
+        this(new RefactoringDetectorConfig());
+    }
+	
+	public GitHistoryStructuralDiffAnalyzer(RefactoringDetectorConfig config) {
+        this.config = config;
+    }
+
+    private void detect(GitService gitService, Repository repository, final StructuralDiffHandler handler, Iterator<RevCommit> i) {
 		int commitsCount = 0;
 		int errorCommitsCount = 0;
 
@@ -107,7 +116,7 @@ public class GitHistoryStructuralDiffAnalyzer {
 		// If no java files changed, there is no refactoring. Also, if there are
 		// only ADD's or only REMOVE's there is no refactoring
 		
-		SDModelBuilder builder = new SDModelBuilder();
+		SDModelBuilder builder = new SDModelBuilder(config);
 //		if (!filesBefore.isEmpty() && !filesCurrent.isEmpty()) {
 			// Checkout and build model for current commit
 			gitService.checkout(repository, commitId);

@@ -27,6 +27,12 @@ import org.refactoringminer.rm2.model.SourceRepresentation;
 
 public class SDModelBuilder {
     
+    private RefactoringDetectorConfig config;
+    
+    public SDModelBuilder(RefactoringDetectorConfig config) {
+        this.config = config;
+    }
+
     private SDModel model = new SDModel();
     
 	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
@@ -193,7 +199,7 @@ public class SDModelBuilder {
 	
     public SDModel buildModel() {
         model.initRelationships();
-        RefactoringsSDBuilder rbuilder = new RefactoringsSDBuilder();
+        RefactoringDetector rbuilder = new RefactoringDetector(config);
         rbuilder.analyze(model);
         return model;
     }

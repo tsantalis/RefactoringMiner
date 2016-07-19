@@ -8,7 +8,17 @@ import org.refactoringminer.rm2.model.SDModel;
 
 public class GitHistoryRefactoringMiner2 implements GitHistoryRefactoringMiner {
 
-	private final class HandlerAdpater extends StructuralDiffHandler {
+    private RefactoringDetectorConfig config;
+    
+    public GitHistoryRefactoringMiner2() {
+        this(new RefactoringDetectorConfig());
+    }
+    
+	public GitHistoryRefactoringMiner2(RefactoringDetectorConfig config) {
+        this.config = config;
+    }
+
+    private final class HandlerAdpater extends StructuralDiffHandler {
 		private final RefactoringHandler handler;
 
 		private HandlerAdpater(RefactoringHandler handler) {
@@ -36,7 +46,7 @@ public class GitHistoryRefactoringMiner2 implements GitHistoryRefactoringMiner {
 		}
 	}
 
-	private final GitHistoryStructuralDiffAnalyzer sda = new GitHistoryStructuralDiffAnalyzer();
+	private final GitHistoryStructuralDiffAnalyzer sda = new GitHistoryStructuralDiffAnalyzer(config);
 	
 	@Override
 	public void detectAll(Repository repository, String branch, final RefactoringHandler handler) throws Exception {

@@ -27,7 +27,7 @@ import org.refactoringminer.rm2.model.SourceRepresentation;
 
 public class SDModelBuilder {
     
-    private RefactoringDetectorConfig config;
+    private final RefactoringDetectorConfig config;
     
     public SDModelBuilder(RefactoringDetectorConfig config) {
         this.config = config;

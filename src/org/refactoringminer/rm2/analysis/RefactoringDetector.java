@@ -25,7 +25,7 @@ import org.refactoringminer.rm2.model.refactoring.SDRenameMethod;
 
 public class RefactoringDetector {
 	
-	private RefactoringDetectorConfig config;
+	private final RefactoringDetectorConfig config;
 	
 	public RefactoringDetector(RefactoringDetectorConfig config) {
 	    this.config = config;

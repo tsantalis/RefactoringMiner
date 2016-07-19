@@ -46,21 +46,22 @@ public class GitHistoryRefactoringMiner2 implements GitHistoryRefactoringMiner {
 		}
 	}
 
-	private final GitHistoryStructuralDiffAnalyzer sda = new GitHistoryStructuralDiffAnalyzer(config);
-	
 	@Override
 	public void detectAll(Repository repository, String branch, final RefactoringHandler handler) throws Exception {
-		sda.detectAll(repository, branch, new HandlerAdpater(handler));
+	    GitHistoryStructuralDiffAnalyzer sda = new GitHistoryStructuralDiffAnalyzer(config);
+	    sda.detectAll(repository, branch, new HandlerAdpater(handler));
 	}
 
 	@Override
 	public void fetchAndDetectNew(Repository repository, RefactoringHandler handler) throws Exception {
-		sda.fetchAndDetectNew(repository, new HandlerAdpater(handler));
+	    GitHistoryStructuralDiffAnalyzer sda = new GitHistoryStructuralDiffAnalyzer(config);
+	    sda.fetchAndDetectNew(repository, new HandlerAdpater(handler));
 	}
 
 	@Override
 	public void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler) {
-		sda.detectAtCommit(repository, commitId, new HandlerAdpater(handler));
+	    GitHistoryStructuralDiffAnalyzer sda = new GitHistoryStructuralDiffAnalyzer(config);
+	    sda.detectAtCommit(repository, commitId, new HandlerAdpater(handler));
 	}
 
 }

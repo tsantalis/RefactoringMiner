@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 public class GitHistoryStructuralDiffAnalyzer {
 
 	Logger logger = LoggerFactory.getLogger(GitHistoryRefactoringMinerImpl.class);
-	private RefactoringDetectorConfig config;
+	private final RefactoringDetectorConfig config;
 	
 	public GitHistoryStructuralDiffAnalyzer() {
         this(new RefactoringDetectorConfig());

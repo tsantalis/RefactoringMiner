@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-    compile 'asm:asm:3.3.1'
+  compile 'asm:asm:3.3.1'
 	compile 'asm:asm-tree:3.3.1'
 	compile 'asm:asm-util:3.3.1'
 	compile 'commons-io:commons-io:2.0.1'
@@ -60,4 +60,4 @@ dependencies {
 }
 
 applicationName = rootProject.name
-mainClassName = "Main"
+mainClassName = "org.refactoringminer.RefactoringMiner"

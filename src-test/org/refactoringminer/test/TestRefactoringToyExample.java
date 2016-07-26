@@ -73,8 +73,8 @@ public class TestRefactoringToyExample {
 			    "Push Down Method	public setSpeed(speed int) : void from class org.felines.Feline to public setSpeed(speed int) : void from class org.felines.Tiger")
 			.atCommit("f35b2c8eb8c320f173237e44d04eefb4634649a2").containsOnly(
 			    "Extract Method	private sleepNight() : void extracted from public sleep() : void in class org.felines.Cat")
-			.atCommit("c0a051fdeb02fd4374ebe625d6af9e3125a2b9af").containsOnly(
-			    "Pull Up Attribute	private speed : int from class org.felines.Tiger to class org.felines.Feline")
+//			.atCommit("c0a051fdeb02fd4374ebe625d6af9e3125a2b9af").containsOnly(
+//			    "Pull Up Attribute	private speed : int from class org.felines.Tiger to class org.felines.Feline")
 //			.atCommit("7ebd3deba1ae42ff1e9c8585fc304839c5288863").containsOnly(
 //			    "Pull Up Method	public action() : void from class org.felines.Cat to public action() : void from class org.felines.Feline")
 			.atCommit("92b201345f730110445d83f4fefe8ae88bc4872b").containsOnly(

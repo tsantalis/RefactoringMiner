@@ -145,6 +145,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			//compare inner nodes from T1 with inner nodes from T2
 			processInnerNodes(innerNodes1, innerNodes2);
 			
+			//match expressions in inner nodes from T2 with leaves from T1
+			List<AbstractExpression> expressionsT2 = new ArrayList<AbstractExpression>();
+			for(CompositeStatementObject composite : operationBodyMapper.getNonMappedInnerNodesT2()) {
+				for(AbstractExpression expression : composite.getExpressions()) {
+					expressionsT2.add(expression);
+				}
+			}
+			processLeaves(leaves1, expressionsT2);
+			
 			operationBodyMapper.mappings.addAll(this.mappings);
 			nonMappedLeavesT1.addAll(leaves1);
 			nonMappedLeavesT2.addAll(leaves2);
@@ -353,13 +362,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	public void processLeaves(List<? extends AbstractCodeFragment> leaves1, List<StatementObject> leaves2) {
+	public void processLeaves(List<? extends AbstractCodeFragment> leaves1, List<? extends AbstractCodeFragment> leaves2) {
 		//exact string+depth matching - leaf nodes
 		for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 			AbstractCodeFragment leaf1 = leafIterator1.next();
 			TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
-			for(ListIterator<StatementObject> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
-				StatementObject leaf2 = leafIterator2.next();
+			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
+				AbstractCodeFragment leaf2 = leafIterator2.next();
 				if(leaf1.getString().equals(leaf2.getString()) && leaf1.getDepth() == leaf2.getDepth()) {
 					LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1, operation2);
 					mappingSet.add(mapping);
@@ -377,8 +386,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 			AbstractCodeFragment leaf1 = leafIterator1.next();
 			TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
-			for(ListIterator<StatementObject> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
-				StatementObject leaf2 = leafIterator2.next();
+			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
+				AbstractCodeFragment leaf2 = leafIterator2.next();
 				if(leaf1.getString().equals(leaf2.getString())) {
 					LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1, operation2);
 					mappingSet.add(mapping);
@@ -396,8 +405,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 			AbstractCodeFragment leaf1 = leafIterator1.next();
 			TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
-			for(ListIterator<StatementObject> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
-				StatementObject leaf2 = leafIterator2.next();
+			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
+				AbstractCodeFragment leaf2 = leafIterator2.next();
 				
 				Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf2);
 				if (replacements != null) {
@@ -418,8 +427,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 			AbstractCodeFragment leaf1 = leafIterator1.next();
 			TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
-			for(ListIterator<StatementObject> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
-				StatementObject leaf2 = leafIterator2.next();
+			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
+				AbstractCodeFragment leaf2 = leafIterator2.next();
 				List<String> lcs = StringDistance.commonSubstrings(leaf1.getString(), leaf2.getString());
 				if(lcs.size() == 1) {
 					double similarity = (double)lcs.get(0).length()/(double)Math.max(leaf1.getString().length(), leaf2.getString().length());
@@ -441,8 +450,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 			AbstractCodeFragment leaf1 = leafIterator1.next();
 			TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
-			for(ListIterator<StatementObject> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
-				StatementObject leaf2 = leafIterator2.next();
+			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
+				AbstractCodeFragment leaf2 = leafIterator2.next();
 				String s1 = leaf1.getString().toLowerCase();
 				String s2 = leaf2.getString().toLowerCase();
 				double distance = (double)StringDistance.editDistance(s1, s2)/(double)Math.max(s1.length(), s2.length());

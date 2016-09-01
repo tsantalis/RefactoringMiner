@@ -12,7 +12,7 @@ public class TestTempPushDown {
 	@Test
 	public void test() throws Exception {
 
-		TestBuilder test = new TestBuilder(new GitHistoryRefactoringMinerImpl(), "tmp").withAggregation();
+		TestBuilder test = new TestBuilder(new GitHistoryRefactoringMinerImpl(), "tmp");
 
 		test.project("https://github.com/danilofes/atunes-refactorings.git", "master")
 

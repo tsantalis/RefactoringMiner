@@ -1,6 +1,8 @@
 package org.refactoringminer.test;
 
 import static org.junit.Assert.*;
+
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.rm2.analysis.GitHistoryRefactoringMiner2;
 
 import org.junit.Test;
@@ -10,7 +12,7 @@ public class TestTempPushDown {
 	@Test
 	public void test() throws Exception {
 
-		TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "tmp");
+		TestBuilder test = new TestBuilder(new GitHistoryRefactoringMinerImpl(), "tmp").withAggregation();
 
 		test.project("https://github.com/danilofes/atunes-refactorings.git", "master")
 
@@ -87,7 +89,6 @@ public class TestTempPushDown {
 						"Push Down Method public propertyChange(evt PropertyChangeEvent) : void from class org.argouml.notation.NotationProvider to public propertyChange(evt PropertyChangeEvent) : void from class org.argouml.notation.providers.OperationNotation",
 						"Push Down Method public propertyChange(evt PropertyChangeEvent) : void from class org.argouml.notation.NotationProvider to public propertyChange(evt PropertyChangeEvent) : void from class org.argouml.notation.providers.StateBodyNotation",
 						"Push Down Method public propertyChange(evt PropertyChangeEvent) : void from class org.argouml.notation.NotationProvider to public propertyChange(evt PropertyChangeEvent) : void from class org.argouml.notation.providers.TestNotationProviderFactory2.MyNP",
-						"Push Down Method public propertyChange(evt PropertyChangeEvent) : void from class org.argouml.notation.NotationProvider to public propertyChange(evt PropertyChangeEvent) : void from class org.argouml.notation.providers.TransitionNotation.NPImpl",
 						"Push Down Method public propertyChange(evt PropertyChangeEvent) : void from class org.argouml.notation.NotationProvider to public propertyChange(evt PropertyChangeEvent) : void from class org.argouml.notation.providers.TransitionNotation",
 						"Push Down Method public propertyChange(evt PropertyChangeEvent) : void from class org.argouml.notation.NotationProvider to public propertyChange(evt PropertyChangeEvent) : void from class org.argouml.notation.TestNotationProvider.NPImpl",
 						"Push Down Method public setFlat(b boolean) : void from class org.argouml.cognitive.ui.ToDoPerspective to public setFlat(b boolean) : void from class org.argouml.cognitive.ui.ToDoByGoal",

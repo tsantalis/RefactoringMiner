@@ -16,7 +16,8 @@ public class TestTempPushDown {
 
 		test.project("https://github.com/danilofes/atunes-refactorings.git", "master")
 
-				.atCommit("8ecd468c8cb6ff85be55249a82497f7c3dcc46e1").containsOnly(
+				.atCommit("8ecd468c8cb6ff85be55249a82497f7c3dcc46e1")
+				.containsOnly(
 						"Push Down Method protected before() : void from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to protected before() : void from class net.sourceforge.atunes.kernel.modules.playlist.UpdateDynamicPlayListBackgroundWorker",
 						"Push Down Method protected before() : void from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to protected before() : void from class net.sourceforge.atunes.kernel.modules.radio.RetrieveRadioBrowserDataBackgroundWorker",
 						"Push Down Method protected before() : void from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to protected before() : void from class net.sourceforge.atunes.kernel.modules.repository.CalculateSynchronizationBetweenDeviceAndPlayListBackgroundWorker",
@@ -46,7 +47,84 @@ public class TestTempPushDown {
 						"Push Down Method public sort(column IColumn) : void from class net.sourceforge.atunes.gui.AbstractColumnSetTableModel to public sort(column IColumn) : void from class net.sourceforge.atunes.kernel.modules.playlist.PlayListTableModel",
 						"Push Down Method public sort(column IColumn) : void from class net.sourceforge.atunes.gui.AbstractColumnSetTableModel to public sort(column IColumn) : void from class net.sourceforge.atunes.kernel.modules.search.SearchResultTableModel")
 
-		;
+				.atCommit("ca59aa0f0ad21a3b4a31b8f172dc941c59207c63")
+				.containsOnly(
+
+						"Push Down Attribute private columnSet : IColumnSet from class net.sourceforge.atunes.gui.AbstractColumnSetTableModel to class net.sourceforge.atunes.gui.AlbumTableModel",
+						"Push Down Attribute private columnSet : IColumnSet from class net.sourceforge.atunes.gui.AbstractColumnSetTableModel to class net.sourceforge.atunes.gui.NavigationTableModel",
+						"Push Down Attribute private columnSet : IColumnSet from class net.sourceforge.atunes.gui.AbstractColumnSetTableModel to class net.sourceforge.atunes.kernel.modules.search.SearchResultTableModel",
+						"Push Down Attribute private columnSet : IColumnSet from class net.sourceforge.atunes.gui.AbstractColumnSetTableModel to class net.sourceforge.atunes.kernel.modules.playlist.PlayListTableModel",
+						"Push Down Attribute private dialogFactory : IDialogFactory from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to class net.sourceforge.atunes.kernel.modules.playlist.UpdateDynamicPlayListBackgroundWorker",
+						"Push Down Attribute private dialogFactory : IDialogFactory from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to class net.sourceforge.atunes.kernel.modules.radio.RetrieveRadioBrowserDataBackgroundWorker",
+						"Push Down Attribute private dialogFactory : IDialogFactory from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to class net.sourceforge.atunes.kernel.modules.repository.CalculateSynchronizationBetweenDeviceAndPlayListBackgroundWorker",
+						"Push Down Attribute private dialogFactory : IDialogFactory from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to class net.sourceforge.atunes.kernel.modules.repository.DeleteFilesTask",
+						"Push Down Attribute private dialogFactory : IDialogFactory from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to class net.sourceforge.atunes.kernel.modules.state.ValidateAndProcessPreferencesBackgroundWorker",
+						"Push Down Attribute private dialogFactory : IDialogFactory from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to class net.sourceforge.atunes.kernel.modules.repository.RemoveFoldersFromDiskBackgroundWorker",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.command.CommandHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.context.ContextHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.favorites.FavoritesHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.filter.FilterHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.fullscreen.FullScreenHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.hotkeys.HotkeyHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.instances.MultipleInstancesHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.navigator.NavigationHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.network.NetworkHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.notify.NotificationsHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.player.AdvancedPlayingModeHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.player.PlayerHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.playlist.PlayListHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.playlist.SmartPlayListHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.podcast.PodcastFeedHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.radio.RadioHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.repository.DeviceHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.repository.RepositoryHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.search.SearchHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.statistics.StatisticsHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.tags.TagHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.tray.SystemTrayHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.ui.UIHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.updates.UpdateHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.webservices.WebServicesHandler",
+						"Push Down Attribute private frame : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to class net.sourceforge.atunes.kernel.modules.cdripper.RipperHandler",
+						"Push Down Attribute private networkHandler : INetworkHandler from class net.sourceforge.atunes.kernel.modules.webservices.lyrics.AbstractLyricsEngine to class net.sourceforge.atunes.kernel.modules.webservices.lyrics.LyrcEngine",
+						"Push Down Attribute private networkHandler : INetworkHandler from class net.sourceforge.atunes.kernel.modules.webservices.lyrics.AbstractLyricsEngine to class net.sourceforge.atunes.kernel.modules.webservices.lyrics.LyrDBEngine",
+						"Push Down Attribute private networkHandler : INetworkHandler from class net.sourceforge.atunes.kernel.modules.webservices.lyrics.AbstractLyricsEngine to class net.sourceforge.atunes.kernel.modules.webservices.lyrics.LyricWikiEngine",
+						"Push Down Attribute private networkHandler : INetworkHandler from class net.sourceforge.atunes.kernel.modules.webservices.lyrics.AbstractLyricsEngine to class net.sourceforge.atunes.kernel.modules.webservices.lyrics.WinampcnEngine",
+						"Push Down Attribute private networkHandler : INetworkHandler from class net.sourceforge.atunes.kernel.modules.webservices.lyrics.AbstractLyricsEngine to class net.sourceforge.atunes.kernel.modules.webservices.lyrics.LyricsDirectoryEngine",
+						"Push Down Attribute private cancelButton : JButton from class net.sourceforge.atunes.gui.views.dialogs.ProgressDialog to class net.sourceforge.atunes.gui.views.dialogs.TransferProgressDialog",
+						"Push Down Method public setColumnSet(columnSet IColumnSet) : void from class net.sourceforge.atunes.gui.AbstractColumnSetTableModel to public setColumnSet(columnSet IColumnSet) : void from class net.sourceforge.atunes.gui.AlbumTableModel"
+						
+						
+)
+				.atCommit("ca59aa0f0ad21a3b4a31b8f172dc941c59207c63")
+				.notContains(
+						"Push Down Method protected getDialogFactory() : IDialogFactory from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to public getDialogFactory() : IDialogFactory from class net.sourceforge.atunes.kernel.modules.playlist.UpdateDynamicPlayListBackgroundWorker",
+						"Push Down Method protected getDialogFactory() : IDialogFactory from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to public getDialogFactory() : IDialogFactory from class net.sourceforge.atunes.kernel.modules.radio.RetrieveRadioBrowserDataBackgroundWorker",
+						"Push Down Method protected getDialogFactory() : IDialogFactory from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to public getDialogFactory() : IDialogFactory from class net.sourceforge.atunes.kernel.modules.repository.CalculateSynchronizationBetweenDeviceAndPlayListBackgroundWorker",
+						"Push Down Method protected getDialogFactory() : IDialogFactory from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to public getDialogFactory() : IDialogFactory from class net.sourceforge.atunes.kernel.modules.repository.DeleteFilesTask",
+						"Push Down Method protected getDialogFactory() : IDialogFactory from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to public getDialogFactory() : IDialogFactory from class net.sourceforge.atunes.kernel.modules.repository.RemoveFoldersFromDiskBackgroundWorker",
+						"Push Down Method protected getDialogFactory() : IDialogFactory from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to public getDialogFactory() : IDialogFactory from class net.sourceforge.atunes.kernel.modules.state.ValidateAndProcessPreferencesBackgroundWorker",
+						"Push Down Method public setDialogFactory(dialogFactory IDialogFactory) : void from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to public setDialogFactory(dialogFactory IDialogFactory) : void from class net.sourceforge.atunes.kernel.modules.radio.RetrieveRadioBrowserDataBackgroundWorker",
+						"Push Down Method public setDialogFactory(dialogFactory IDialogFactory) : void from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to public setDialogFactory(dialogFactory IDialogFactory) : void from class net.sourceforge.atunes.kernel.modules.repository.CalculateSynchronizationBetweenDeviceAndPlayListBackgroundWorker",
+						"Push Down Method public setDialogFactory(dialogFactory IDialogFactory) : void from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to public setDialogFactory(dialogFactory IDialogFactory) : void from class net.sourceforge.atunes.kernel.modules.repository.DeleteFilesTask",
+						"Push Down Method public setDialogFactory(dialogFactory IDialogFactory) : void from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to public setDialogFactory(dialogFactory IDialogFactory) : void from class net.sourceforge.atunes.kernel.modules.repository.RemoveFoldersFromDiskBackgroundWorker",
+						"Push Down Method public setDialogFactory(dialogFactory IDialogFactory) : void from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to public setDialogFactory(dialogFactory IDialogFactory) : void from class net.sourceforge.atunes.kernel.modules.state.ValidateAndProcessPreferencesBackgroundWorker",
+						"Push Down Method public setFrame(frame IFrame) : void from class net.sourceforge.atunes.kernel.AbstractHandler to public setFrame(frame IFrame) : void from class net.sourceforge.atunes.kernel.modules.favorites.FavoritesHandler",
+						"Push Down Method public setNetworkHandler(networkHandler INetworkHandler) : void from class net.sourceforge.atunes.kernel.modules.webservices.lyrics.AbstractLyricsEngine to public setNetworkHandler(networkHandler INetworkHandler) : void from class net.sourceforge.atunes.kernel.modules.webservices.lyrics.LyrcEngine",
+						"Push Down Method public setNetworkHandler(networkHandler INetworkHandler) : void from class net.sourceforge.atunes.kernel.modules.webservices.lyrics.AbstractLyricsEngine to public setNetworkHandler(networkHandler INetworkHandler) : void from class net.sourceforge.atunes.kernel.modules.webservices.lyrics.LyrDBEngine",
+						"Push Down Method public setNetworkHandler(networkHandler INetworkHandler) : void from class net.sourceforge.atunes.kernel.modules.webservices.lyrics.AbstractLyricsEngine to public setNetworkHandler(networkHandler INetworkHandler) : void from class net.sourceforge.atunes.kernel.modules.webservices.lyrics.LyricsDirectoryEngine",
+						"Push Down Method public setNetworkHandler(networkHandler INetworkHandler) : void from class net.sourceforge.atunes.kernel.modules.webservices.lyrics.AbstractLyricsEngine to public setNetworkHandler(networkHandler INetworkHandler) : void from class net.sourceforge.atunes.kernel.modules.webservices.lyrics.LyricWikiEngine",
+						"Push Down Method public setNetworkHandler(networkHandler INetworkHandler) : void from class net.sourceforge.atunes.kernel.modules.webservices.lyrics.AbstractLyricsEngine to public setNetworkHandler(networkHandler INetworkHandler) : void from class net.sourceforge.atunes.kernel.modules.webservices.lyrics.WinampcnEngine",
+						"Push Down Method public setColumnSet(columnSet IColumnSet) : void from class net.sourceforge.atunes.gui.AbstractColumnSetTableModel to public setColumnSet(columnSet IColumnSet) : void from class net.sourceforge.atunes.gui.NavigationTableModel",
+						"Push Down Method public setColumnSet(columnSet IColumnSet) : void from class net.sourceforge.atunes.gui.AbstractColumnSetTableModel to public setColumnSet(columnSet IColumnSet) : void from class net.sourceforge.atunes.kernel.modules.playlist.PlayListTableModel",
+						"Push Down Method public setColumnSet(columnSet IColumnSet) : void from class net.sourceforge.atunes.gui.AbstractColumnSetTableModel to public setColumnSet(columnSet IColumnSet) : void from class net.sourceforge.atunes.kernel.modules.search.SearchResultTableModel",
+						"Push Down Method protected getFrame() : IFrame from class net.sourceforge.atunes.kernel.AbstractHandler to protected getFrame() : IFrame from class net.sourceforge.atunes.kernel.modules.favorites.FavoritesHandler",
+						"Push Down Method public setDialogFactory(dialogFactory IDialogFactory) : void from class net.sourceforge.atunes.kernel.BackgroundWorkerWithIndeterminateProgress to public setDialogFactory(dialogFactory IDialogFactory) : void from class net.sourceforge.atunes.kernel.modules.playlist.UpdateDynamicPlayListBackgroundWorker"
+						)
+				
+
+
+						;
 
 		test.project("https://github.com/danilofes/argouml-refactorings.git", "master")
 				.atCommit("26b089d0c3f74abadcf8645f4f7618bdc0c3738f").containsOnly(

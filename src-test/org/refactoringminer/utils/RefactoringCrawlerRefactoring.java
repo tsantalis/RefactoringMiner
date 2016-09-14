@@ -13,9 +13,10 @@ public class RefactoringCrawlerRefactoring {
     TYPE_MAP.put("RenamedClasses", RefactoringType.RENAME_CLASS);
     TYPE_MAP.put("RenamedMethods", RefactoringType.RENAME_METHOD);
     TYPE_MAP.put("PulledUpMethods", RefactoringType.PULL_UP_OPERATION);
+    TYPE_MAP.put("PushedDownMethods", RefactoringType.PUSH_DOWN_OPERATION);
     TYPE_MAP.put("MovedMethods", RefactoringType.MOVE_OPERATION);
-    TYPE_MAP.put("RenamedClasses", RefactoringType.RENAME_CLASS);
     TYPE_MAP.put("ChangedMethodSignatures", RefactoringType.CHANGE_METHOD_SIGNATURE);
+    TYPE_MAP.put("RenamedPackages", RefactoringType.RENAME_PACKAGE);
   }
 
   private String type;
@@ -47,6 +48,9 @@ public class RefactoringCrawlerRefactoring {
 
   RefactoringRelationship toRefactoringRelationship() {
     RefactoringType refType = TYPE_MAP.get(type);
+    if (refType == null) {
+      throw new RuntimeException("unkown refactoring type " + type);
+    }
     return new RefactoringRelationship(refType, oldElement, newElement);
   }
 }

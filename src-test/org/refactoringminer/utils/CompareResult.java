@@ -49,10 +49,10 @@ public class CompareResult {
     
     double precision = ((double) tp / (tp + fp));
     double recall = ((double) tp) / (tp + fn);
+    out.println("at " + commitUrl);
     out.println(String.format("TP: %d  FP: %d  FN: %d  Prec.: %.3f  Recall: %.3f", tp, fp, fn, precision, recall));
     
     if (verbose && (falsePositives.size() + falseNegatives.size()) > 0) {
-      out.println("at " + commitUrl);
       if (!falsePositives.isEmpty()) {
         out.println(" false positives");
         falsePositives.stream().sorted().forEach(r ->

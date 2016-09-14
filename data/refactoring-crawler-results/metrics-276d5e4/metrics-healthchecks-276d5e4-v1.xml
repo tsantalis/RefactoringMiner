@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<refactoringsession>
+<refactoring name="RenamedPackages"> 
+<parameter name= "new element">io.dropwizard.metrics.health.jvm</parameter><parameter name= "old element">io.dropwizard.metrics.health</parameter></refactoring><refactoring name="RenamedMethods"> 
+<parameter name= "new element">io.dropwizard.metrics.health.jvm.HealthCheck.executeCheck()</parameter><parameter name= "old element">io.dropwizard.metrics.health.HealthCheck.execute()</parameter></refactoring></refactoringsession>

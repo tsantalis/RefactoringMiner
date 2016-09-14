@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<refactoringsession>
+<refactoring name="ChangedMethodSignatures"> 
+<parameter name= "new element">io.dropwizard.metrics.influxdb.InfluxDbReporter.report(SortedMap<MetricName,Gauge>, SortedMap<MetricName,CounterMetric>, SortedMap<MetricName,Histogram>, SortedMap<MetricName,Meter>, SortedMap<MetricName,Timer>)</parameter><parameter name= "old element">io.dropwizard.metrics.influxdb.InfluxDbReporter.report(SortedMap<MetricName,Gauge>, SortedMap<MetricName,Counter>, SortedMap<MetricName,Histogram>, SortedMap<MetricName,Meter>, SortedMap<MetricName,Timer>)</parameter></refactoring></refactoringsession>

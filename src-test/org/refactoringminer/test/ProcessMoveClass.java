@@ -5629,21 +5629,26 @@ public class ProcessMoveClass {
         Set<String> result = new HashSet<String>();
         for (String refactoring : refactorings) {
             RefactoringType refType = extractRefactoringType(refactoring);
+            String originalRef = refType.getDisplayName() + '\t' + refactoring.substring(refType.getDisplayName().length() + 1);
+            String normalizedRef = normalize(refactoring);
+            
             if (refType == RefactoringType.MOVE_CLASS/* && tp*/) {
                 String from = getParent(RefactoringType.MOVE_CLASS.getGroup(refactoring, 1));
                 String to = getParent(RefactoringType.MOVE_CLASS.getGroup(refactoring, 2));
                 boolean fromIsPackage = isPackageName(from);
                 boolean toIsPackage = isPackageName(to);
                 if (fromIsPackage && toIsPackage && !from.equals(to)) {
-                    mcrs.add(normalize(refactoring));
+                    mcrs.add(normalizedRef);
                 } else {
-                    result.add(normalize(refactoring));
+                    result.add(normalizedRef);
+                    System.out.println(String.format("update refactoringgit r join revisiongit c on c.id = r.revision join nrefactoring r2 on r2.revision = r.revision set r.nrefactoring = r2.id where c.commitId = '%s' and r.description = '%s' and r2.description = '%s';", commitId, originalRef, normalizedRef));
                 }
             } else {
-                result.add(normalize(refactoring));
+                result.add(normalizedRef);
+                System.out.println(String.format("update refactoringgit r join revisiongit c on c.id = r.revision join nrefactoring r2 on r2.revision = r.revision set r.nrefactoring = r2.id where c.commitId = '%s' and r.description = '%s' and r2.description = '%s';", commitId, originalRef, normalizedRef));
             }
         }
-        
+        /*
         if (!mcrs.isEmpty()) {
             try (Repository rep = gitService.cloneIfNotExists(folder, cloneUrl); RevWalk walk = new RevWalk(rep)) {
                 RevCommit commit = walk.parseCommit(rep.resolve(commitId));
@@ -5672,14 +5677,14 @@ public class ProcessMoveClass {
                 throw new RuntimeException(e);
             }
         }
-        System.out.println(String.format("insert into nrefactoring(cloneUrl, commit, refactoringType, description, truePositive) values "));
+        */
+//        System.out.println(String.format("insert into nrefactoring(cloneUrl, commit, refactoringType, description, truePositive) values "));
         for (Iterator<String> iter = result.iterator(); iter.hasNext();) {
             String refactoring = iter.next();
             //                System.out.println(refactoring);
             RefactoringType refType = extractRefactoringType(refactoring);
-//            System.out.println(String.format("insert into nrefactoring(project, commit, refType, description, tp) values ('%s', '%s', '%s', '%s', '%d');", cloneUrl, commitId, refType.getDisplayName(), refactoring, tp ? 1 : 0));
-            System.out.print(String.format("  ('%s', '%s', '%s', '%s', '%d')", cloneUrl, commitId, refType.getDisplayName(), refactoring, tp ? 1 : 0));
-            System.out.println(iter.hasNext() ? "," : ";");
+//            System.out.print(String.format("  ('%s', '%s', '%s', '%s', '%d')", cloneUrl, commitId, refType.getDisplayName(), refactoring, tp ? 1 : 0));
+//            System.out.println(iter.hasNext() ? "," : ";");
         }
     }
 

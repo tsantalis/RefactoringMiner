@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-    compile 'asm:asm:3.3.1'
+  compile 'asm:asm:3.3.1'
 	compile 'asm:asm-tree:3.3.1'
 	compile 'asm:asm-util:3.3.1'
 	compile 'commons-io:commons-io:2.0.1'
@@ -39,25 +39,25 @@ dependencies {
 	compile 'mysql:mysql-connector-java:5.1.34'
 	compile 'org.slf4j:slf4j-log4j12:1.7.7'
 	
-	compile files('/lib/plexus-0.16.jar')
-	compile files('/lib/org.eclipse.core.commands_3.7.0.v20150422-0725.jar')
-	compile files('/lib/org.eclipse.core.contenttype_3.5.0.v20150421-2214.jar')
-	compile files('/lib/org.eclipse.core.expressions_3.5.0.v20150421-2214.jar')
-	compile files('/lib/org.eclipse.core.filesystem_1.5.0.v20150725-1910.jar')
-	compile files('/lib/org.eclipse.core.jobs_3.7.0.v20150330-2103.jar')
-	compile files('/lib/org.eclipse.core.resources_3.10.1.v20150725-1910.jar')
-	compile files('/lib/org.eclipse.core.runtime_3.11.1.v20150903-1804.jar')
-	compile files('/lib/org.eclipse.equinox.app_1.3.300.v20150423-1356.jar')
-	compile files('/lib/org.eclipse.equinox.common_3.7.0.v20150402-1709.jar')
-	compile files('/lib/org.eclipse.equinox.preferences_3.5.300.v20150408-1437.jar')
-	compile files('/lib/org.eclipse.equinox.registry_3.6.0.v20150318-1503.jar')
-	compile files('/lib/org.eclipse.jdt.core_3.11.1.v20150902-1521.jar')
-	compile files('/lib/org.eclipse.jdt.core.source_3.11.1.v20150902-1521.jar')
-	compile files('/lib/org.eclipse.osgi_3.10.101.v20150820-1432.jar')
-	compile files('/lib/org.eclipse.text_3.5.400.v20150505-1044.jar')
+	compile files('lib/plexus-0.16.jar')
+	compile files('lib/org.eclipse.core.commands_3.7.0.v20150422-0725.jar')
+	compile files('lib/org.eclipse.core.contenttype_3.5.0.v20150421-2214.jar')
+	compile files('lib/org.eclipse.core.expressions_3.5.0.v20150421-2214.jar')
+	compile files('lib/org.eclipse.core.filesystem_1.5.0.v20150725-1910.jar')
+	compile files('lib/org.eclipse.core.jobs_3.7.0.v20150330-2103.jar')
+	compile files('lib/org.eclipse.core.resources_3.10.1.v20150725-1910.jar')
+	compile files('lib/org.eclipse.core.runtime_3.11.1.v20150903-1804.jar')
+	compile files('lib/org.eclipse.equinox.app_1.3.300.v20150423-1356.jar')
+	compile files('lib/org.eclipse.equinox.common_3.7.0.v20150402-1709.jar')
+	compile files('lib/org.eclipse.equinox.preferences_3.5.300.v20150408-1437.jar')
+	compile files('lib/org.eclipse.equinox.registry_3.6.0.v20150318-1503.jar')
+	compile files('lib/org.eclipse.jdt.core_3.11.1.v20150902-1521.jar')
+	compile files('lib/org.eclipse.jdt.core.source_3.11.1.v20150902-1521.jar')
+	compile files('lib/org.eclipse.osgi_3.10.101.v20150820-1432.jar')
+	compile files('lib/org.eclipse.text_3.5.400.v20150505-1044.jar')
 	
 	testCompile 'junit:junit:4.11'
 }
 
 applicationName = rootProject.name
-mainClassName = "Main"
+mainClassName = "org.refactoringminer.RefactoringMiner"

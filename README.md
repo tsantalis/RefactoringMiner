@@ -78,3 +78,29 @@ List<Refactoring> refactorings = modelDiff.getRefactorings();
 
 Note that by doing this you may get different results from the git history analysis, because
 it uses information from git to better identify moves and renames.
+
+
+## Running from the command line ##
+
+When you build a distributable application with `./gradlew distZip`, you can run Refactoring Miner as a command line application. Extract the file under `build/distribution/RefactoringMiner.zip` in the desired location, and cd into the `bin` folder (or include it in your path). Them, run RefactoringMiner using the following syntax:
+
+    > RefactoringMiner <path-to-git-repo> <commit-sha1>
+
+For example, supose that you run:
+
+    > git clone https://github.com/danilofes/refactoring-toy-example.git refactoring-toy-example
+    > RefactoringMiner refactoring-toy-example 36287f7c3b09eff78395267a3ac0d7da067863fd
+
+The output would be:
+
+    4 refactorings found in commit 36287f7c3b09eff78395267a3ac0d7da067863fd:
+      Pull Up Attribute     private age : int from class org.animals.Labrador to class org.animals.Dog
+      Pull Up Attribute     private age : int from class org.animals.Poodle to class org.animals.Dog
+      Pull Up Method        public getAge() : int from class org.animals.Labrador to public getAge() : int from class org.animals.Dog
+      Pull Up Method        public getAge() : int from class org.animals.Poodle to public getAge() : int from class org.animals.Dog
+
+
+## Research ##
+
+RefactoringMiner has been used in the following papers:
+* Danilo Silva, Nikolaos Tsantalis, and Marco Tulio Valente, "[Why We Refactor? Confessions of GitHub Contributors](http://arxiv.org/pdf/1607.02459v1)," *24th ACM SIGSOFT International Symposium on the Foundations of Software Engineering* (FSE'2016), Seattle, WA, USA, November 13-18, 2016.

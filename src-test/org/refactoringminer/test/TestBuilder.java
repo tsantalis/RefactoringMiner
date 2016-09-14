@@ -127,7 +127,7 @@ public class TestBuilder {
 		for (RefactoringType refType : RefactoringType.values()) {
 		    Counter refTypeCounter = cMap.get(refType);
 		    if (refTypeCounter != null) {
-		        System.out.println(refType.getAbbreviation() + "  " + buildResultMessage(refTypeCounter));
+		        System.out.println(String.format("%-7s", refType.getAbbreviation()) + buildResultMessage(refTypeCounter));
 		    }
 		}
 		
@@ -142,7 +142,7 @@ public class TestBuilder {
     private String buildResultMessage(Counter c) {
         double precision = ((double) get(TP, c) / (get(TP, c) + get(FP, c)));
 		double recall = ((double) get(TP, c)) / (get(TP, c) + get(FN, c));
-		String mainResultMessage = String.format("TP: %d  FP: %d  FN: %d  TN: %d  Unk.: %d  Prec.: %.3f  Recall: %.3f", get(TP, c), get(FP, c), get(FN, c), get(TN, c), get(UNK, c), precision, recall);
+		String mainResultMessage = String.format("TP: %2d  FP: %2d  FN: %2d  TN: %2d  Unk.: %2d  Prec.: %.3f  Recall: %.3f", get(TP, c), get(FP, c), get(FN, c), get(TN, c), get(UNK, c), precision, recall);
         return mainResultMessage;
     }
 

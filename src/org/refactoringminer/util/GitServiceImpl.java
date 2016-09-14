@@ -1,6 +1,7 @@
 package org.refactoringminer.util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -87,6 +88,23 @@ public class GitServiceImpl implements GitService {
 //			logger.info("Project {} switched to {}", cloneUrl, repository.getBranch());
 //		}
 		return repository;
+	}
+
+	@Override
+	public Repository openRepository(String repositoryPath) throws Exception {
+	    File folder = new File(repositoryPath);
+	    Repository repository;
+	    if (folder.exists()) {
+	        RepositoryBuilder builder = new RepositoryBuilder();
+	        repository = builder
+	            .setGitDir(new File(folder, ".git"))
+	            .readEnvironment()
+	            .findGitDir()
+	            .build();
+	    } else {
+	        throw new FileNotFoundException(repositoryPath);
+	    }
+	    return repository;
 	}
 
 	public void checkout(Repository repository, String commitId) throws Exception {

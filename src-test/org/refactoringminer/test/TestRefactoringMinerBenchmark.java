@@ -1,15 +1,14 @@
 package org.refactoringminer.test;
 
 import org.junit.Test;
-import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.rm2.analysis.GitHistoryRefactoringMiner2;
 
-public class TestRefDetectorBenchmark {
+public class TestRefactoringMinerBenchmark {
 
 	@Test
 	public void test() throws Exception {
-	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "c:/Users/danilofs/tmp");
-//		  TestBuilder test = new TestBuilder(new GitHistoryRefactoringMinerImpl(), "c:/Users/danilofs/tmp");
+	    TestBuilder test = new TestBuilder(new GitHistoryRefactoringMiner2(), "tmp");
+//		  TestBuilder test = new TestBuilder(new GitHistoryRefactoringMinerImpl(), "tmp");
 
 		  test.project("https://github.com/linkedin/rest.li.git", "master") 
       .atCommit("54fa890a6af4ccf564fb481d3e1b6ad4d084de9e").contains(

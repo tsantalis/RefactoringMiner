@@ -8,36 +8,41 @@ public class CompareResult {
 
   private final String project;
   private final String revision;
-  private final Set<RefactoringRelationship> truePositives;
-  private final Set<RefactoringRelationship> falsePositives;
-  private final Set<RefactoringRelationship> falseNegatives;
+  private final Set<String> truePositives;
+  private final Set<String> falsePositives;
+  private final Set<String> falseNegatives;
   
-  public CompareResult(String project, String revision) {
+  public CompareResult(String project, String revision, Set<?> expectedRefactorings, Set<?> actualRefactorings) {
     this.project = project;
     this.revision = revision;
     this.truePositives = new HashSet<>();
     this.falsePositives = new HashSet<>();
     this.falseNegatives = new HashSet<>();
-  }
-  
-  public Set<RefactoringRelationship> getFalsePositives() {
-    return falsePositives;
+    
+    for (Object r : actualRefactorings) {
+      if (expectedRefactorings.contains(r)) {
+        addTruePositive(r);
+      } else {
+        addFalsePositive(r);
+      }
+    }
+    for (Object r : expectedRefactorings) {
+      if (!actualRefactorings.contains(r)) {
+        addFalseNegative(r);
+      }
+    }
   }
 
-  public Set<RefactoringRelationship> getFalseNegatives() {
-    return falseNegatives;
+  private void addTruePositive(Object r) {
+    this.truePositives.add(r.toString());
   }
 
-  public void addTruePositive(RefactoringRelationship r) {
-    this.truePositives.add(r);
+  private void addFalsePositive(Object r) {
+    this.falsePositives.add(r.toString());
   }
-  
-  public void addFalsePositive(RefactoringRelationship r) {
-    this.falsePositives.add(r);
-  }
-  
-  public void addFalseNegative(RefactoringRelationship r) {
-    this.falseNegatives.add(r);
+
+  private void addFalseNegative(Object r) {
+    this.falseNegatives.add(r.toString());
   }
 
   public void printReport(PrintStream out, boolean verbose) {
@@ -53,6 +58,12 @@ public class CompareResult {
     out.println(String.format("TP: %d  FP: %d  FN: %d  Prec.: %.3f  Recall: %.3f", tp, fp, fn, precision, recall));
     
     if (verbose && (falsePositives.size() + falseNegatives.size()) > 0) {
+      if (!truePositives.isEmpty()) {
+        out.println(" true positives");
+        truePositives.stream().sorted().forEach(r ->
+          out.println("  " + r)
+        );
+      }
       if (!falsePositives.isEmpty()) {
         out.println(" false positives");
         falsePositives.stream().sorted().forEach(r ->

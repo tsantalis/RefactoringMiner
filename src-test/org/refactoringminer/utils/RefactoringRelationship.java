@@ -1,9 +1,20 @@
 package org.refactoringminer.utils;
 
+import java.util.EnumSet;
+
 import org.refactoringminer.api.RefactoringType;
 
 public class RefactoringRelationship implements Comparable<RefactoringRelationship> {
 
+  private static final EnumSet<RefactoringType> typesWithMainEntityAfter = EnumSet.of(
+    RefactoringType.EXTRACT_AND_MOVE_OPERATION,
+    RefactoringType.EXTRACT_INTERFACE,
+    RefactoringType.EXTRACT_OPERATION,
+    RefactoringType.EXTRACT_SUPERCLASS,
+    RefactoringType.PULL_UP_ATTRIBUTE,
+    RefactoringType.PULL_UP_OPERATION
+  );
+  
   private final RefactoringType refactoringType;
   private final String entityBefore;
   private final String entityAfter;
@@ -54,15 +65,26 @@ public class RefactoringRelationship implements Comparable<RefactoringRelationsh
   }
 
   public static String normalize(String entity) {
-    return stripQualifiedNamesFromParamTypes(stripTypeArguments(entity).replace('#', '.').replace(" ", ""));
+    return normalizeParameters(stripTypeArguments(entity).replace('#', '.')).replace(" ", "");
   }
 
-  private static String stripQualifiedNamesFromParamTypes(String r) {
+  private static String normalizeParameters(String r) {
     int indexOfPar = r.indexOf('(');
-    if (indexOfPar != -1 && r.lastIndexOf('.') > indexOfPar) {
+    if (indexOfPar != -1) {
       String paramsS = r.substring(indexOfPar + 1, r.indexOf(')'));
-      String[] paramsA = paramsS.split(",");
+      String[] paramsA = paramsS.split("\\s*,\\s*");
+      if (paramsA.length == 0 || paramsA[0].isEmpty()) {
+        return r;
+      }
       for (int i = 0; i < paramsA.length; i++) {
+        if (paramsA[i].indexOf(' ') != -1) {
+          // strip parameter name
+          paramsA[i] = paramsA[i].substring(0, paramsA[i].indexOf(' '));
+        }
+        if (paramsA[i].lastIndexOf('.') != -1) {
+          // strip qualified type name
+          paramsA[i] = paramsA[i].substring(paramsA[i].lastIndexOf('.') + 1);
+        }
         paramsA[i] = paramsA[i].substring(Math.max(paramsA[i].lastIndexOf('.') + 1, 0));
       }
       r = r.substring(0, indexOfPar) + "(" + String.join(",", paramsA) + ")";
@@ -88,12 +110,69 @@ public class RefactoringRelationship implements Comparable<RefactoringRelationsh
     return sb.toString();
   }
 
-  @Override
-  public int compareTo(RefactoringRelationship o) {
-    int cb = entityBefore.compareTo(o.entityBefore);
-    int ca = entityAfter.compareTo(o.entityAfter);
-    int ct = refactoringType.compareTo(o.refactoringType);
-    return cb != 0 ? cb : ca != 0 ? ca : ct;
+  public String getMainEntity() {
+    if (typesWithMainEntityAfter.contains(refactoringType)) {
+      return entityAfter;
+    }
+    return entityBefore;
   }
 
+  public String getSecondaryEntity() {
+    if (typesWithMainEntityAfter.contains(refactoringType)) {
+      return entityBefore;
+    }
+    return entityAfter;
+  }
+  
+  @Override
+  public int compareTo(RefactoringRelationship o) {
+    int cm = getMainEntity().compareTo(o.getMainEntity());
+    int cs = getSecondaryEntity().compareTo(o.getSecondaryEntity());
+    int ct = refactoringType.compareTo(o.refactoringType);
+    return cm != 0 ? cm : cs != 0 ? cs : ct;
+  }
+
+  public GroupKey getGroupKey() {
+    return new GroupKey(refactoringType, getMainEntity());
+  }
+
+  public static class GroupKey implements Comparable<GroupKey>{
+    private final RefactoringType refactoringType;
+    private final String mainEntity;
+
+    public GroupKey(RefactoringType refactoringType, String mainEntity) {
+      this.refactoringType = refactoringType;
+      this.mainEntity = mainEntity;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (obj instanceof GroupKey) {
+        GroupKey other = (GroupKey) obj;
+        return other.refactoringType.equals(this.refactoringType) && other.mainEntity.equals(this.mainEntity);
+      }
+      return false;
+    }
+
+    @Override
+    public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + mainEntity.hashCode();
+      result = prime * result + refactoringType.hashCode();
+      return result;
+    }
+
+    @Override
+    public int compareTo(GroupKey o) {
+      int cm = mainEntity.compareTo(o.mainEntity);
+      int ct = refactoringType.compareTo(o.refactoringType);
+      return cm != 0 ? cm : ct;
+    }
+    
+    @Override
+    public String toString() {
+      return String.format("%s : %s", refactoringType.getDisplayName(), mainEntity);
+    }
+  }
 }

@@ -45,6 +45,18 @@ public class CompareResult {
     this.falseNegatives.add(r.toString());
   }
 
+  public int getTPCount() {
+    return this.truePositives.size();
+  }
+
+  public int getFPCount() {
+    return this.falsePositives.size();
+  }
+
+  public int getFNCount() {
+    return this.falseNegatives.size();
+  }
+
   public void printReport(PrintStream out, boolean verbose) {
     String baseUrl = project.substring(0, project.length() - 4) + "/commit/";
     String commitUrl = baseUrl + revision;
@@ -55,7 +67,7 @@ public class CompareResult {
     double precision = ((double) tp / (tp + fp));
     double recall = ((double) tp) / (tp + fn);
     out.println("at " + commitUrl);
-    out.println(String.format("TP: %d  FP: %d  FN: %d  Prec.: %.3f  Recall: %.3f", tp, fp, fn, precision, recall));
+    out.println(String.format("  TP: %d  FP: %d  FN: %d  Prec.: %.3f  Recall: %.3f", tp, fp, fn, precision, recall));
     
     if (verbose && (falsePositives.size() + falseNegatives.size()) > 0) {
       if (!truePositives.isEmpty()) {

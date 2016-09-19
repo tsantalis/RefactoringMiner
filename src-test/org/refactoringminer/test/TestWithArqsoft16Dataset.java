@@ -4,6 +4,7 @@ import java.util.EnumSet;
 
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.utils.Arqsoft16Dataset;
+import org.refactoringminer.utils.CombinedCompareResult;
 import org.refactoringminer.utils.RefactoringCrawlerResultReader;
 import org.refactoringminer.utils.RefactoringSet;
 
@@ -30,16 +31,19 @@ public class TestWithArqsoft16Dataset {
     RefactoringSet retrofit_f13f317 = RefactoringCrawlerResultReader.read("https://github.com/aserg-ufmg/retrofit.git", "f13f317", basePath + "retrofit-f13f317");
     RefactoringSet springBoot_48e893a = RefactoringCrawlerResultReader.read("https://github.com/aserg-ufmg/spring-boot.git", "48e893a", basePath + "spring-boot-48e893a");
     
-    boolean grouped = false;
-    boolean verbose = true;
-    oracle.atmosphere_cc2b3f1.ignoring(refTypesToIgnore).compareTo(atmosphere_cc2b3f1, grouped).printReport(System.out, verbose);
-    oracle.clojure_17217a1.ignoring(refTypesToIgnore).compareTo(clojure_17217a1, grouped).printReport(System.out, verbose);
-    oracle.guava_79767ec.ignoring(refTypesToIgnore).compareTo(guava_79767ec, grouped).printReport(System.out, verbose);
-    oracle.metrics_276d5e4.ignoring(refTypesToIgnore).compareTo(metrics_276d5e4, grouped).printReport(System.out, verbose);
-    oracle.orientdb_b213aaf.ignoring(refTypesToIgnore).compareTo(orientdb_b213aaf, grouped).printReport(System.out, verbose);
-    oracle.retrofit_f13f317.ignoring(refTypesToIgnore).compareTo(retrofit_f13f317, grouped).printReport(System.out, verbose);
-    oracle.springBoot_48e893a.ignoring(refTypesToIgnore).compareTo(springBoot_48e893a, grouped).printReport(System.out, verbose);
-
+    boolean grouped = true;
+    boolean verbose = false;
+    CombinedCompareResult cr = new CombinedCompareResult(
+        oracle.atmosphere_cc2b3f1.ignoring(refTypesToIgnore).compareTo(atmosphere_cc2b3f1, grouped),
+        oracle.clojure_17217a1.ignoring(refTypesToIgnore).compareTo(clojure_17217a1, grouped),
+        oracle.guava_79767ec.ignoring(refTypesToIgnore).compareTo(guava_79767ec, grouped),
+        oracle.metrics_276d5e4.ignoring(refTypesToIgnore).compareTo(metrics_276d5e4, grouped),
+        oracle.orientdb_b213aaf.ignoring(refTypesToIgnore).compareTo(orientdb_b213aaf, grouped),
+        oracle.retrofit_f13f317.ignoring(refTypesToIgnore).compareTo(retrofit_f13f317, grouped),
+        oracle.springBoot_48e893a.ignoring(refTypesToIgnore).compareTo(springBoot_48e893a, grouped)
+    );
+    cr.printReport(System.out, verbose);
+    
   }
 
 }

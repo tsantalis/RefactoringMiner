@@ -312,11 +312,11 @@ public class Arqsoft16Dataset {
     springBoot_48e893a.add(item("Push Down Field", "org.springframework.boot.actuate.cache.AbstractJmxCacheStatisticsProvider#mBeanServer", "org.springframework.boot.actuate.cache.InfinispanCacheStatisticsProvider#mBeanServer\norg.springframework.boot.actuate.cache.JCacheCacheStatisticsProvider#mBeanServer"));
     springBoot_48e893a.add(item("Push Down Field", "org.springframework.boot.context.embedded.AbstractConfigurableEmbeddedServletContainer#displayName", "org.springframework.boot.context.embedded.AbstractEmbeddedServletContainerFactory#displayName\norg.springframework.boot.context.web.ErrorPageFilter#displayName"));
     
-    orientdb_b213aaf.add(item("Rename Class", "com.orientechnologies.orient.client.remote.OSBTreeColletionManageRemote", "com.orientechnologies.orient.client.remote.OSBTreeColletionAdim"));
+    orientdb_b213aaf.add(item("Rename Class", "com.orientechnologies.orient.client.remote.OSBTreeCollectionManagerRemote", "com.orientechnologies.orient.client.remote.OSBTreeCollectionManagerAdim"));
     orientdb_b213aaf.add(item("Rename Class", "com.orientechnologies.orient.client.remote.OSBTreeBonsaiRemote", "com.orientechnologies.orient.client.remote.OSBTreeRemote"));
-    orientdb_b213aaf.add(item("Rename Class", "com.orientechnologies.orient.client.remote.OstorageRemote", "com.orientechnologies.orient.client.remote.OstorageRemote"));
-    orientdb_b213aaf.add(item("Rename Class", "com.orientechnologies.orient.client.remote.OstorageRemoteAsynchEventListener", "com.orientechnologies.orient.client.remote.OstorageRemEventLis"));
-    orientdb_b213aaf.add(item("Rename Class", "com.orientechnologies.orient.client.remote.OstorageRemoteConfiguration", "com.orientechnologies.orient.client.remote.OstorageConfigRem"));
+//    orientdb_b213aaf.add(item("Rename Class", "com.orientechnologies.orient.client.remote.OstorageRemote", "com.orientechnologies.orient.client.remote.OstorageRemote")); // errado
+    orientdb_b213aaf.add(item("Rename Class", "com.orientechnologies.orient.client.remote.OStorageRemoteAsynchEventListener", "com.orientechnologies.orient.client.remote.OStorageRemEventLis"));
+    orientdb_b213aaf.add(item("Rename Class", "com.orientechnologies.orient.client.remote.OStorageRemoteConfiguration", "com.orientechnologies.orient.client.remote.OStorageConfingRem"));
 //    orientdb_b213aaf.add(item("Extract Class", "com.orientechnologies.orient.server.Oserver", "com.orientechnologies.orient.server.OserverConfigData"));
 //    orientdb_b213aaf.add(item("Extract Class", "com.orientechnologies.orient.server.network.protocol.http.OhttpResponse", "com.orientechnologies.orient.server.network.protocol.http.OhttpResponseData"));
 //    orientdb_b213aaf.add(item("Extract Class", "com.orientechnologies.orient.server.network.protocol.http.command.post.OserverCommandPostUploadSingleFile", "com.orientechnologies.orient.server.network.protocol.http.command.post.OserverCommandData"));
@@ -324,16 +324,18 @@ public class Arqsoft16Dataset {
 //    orientdb_b213aaf.add(item("Extract Class", "com.orientechnologies.orient.server.plugin.mail.OmailPlugin", "com.orientechnologies.orient.server.plugin.mail.OmailPluginData"));
     orientdb_b213aaf.add(item("Extract Superclass", "com.orientechnologies.orient.etl.extractor.OJDBCExtractor\ncom.orientechno.OETLStubRandomExtractor", "com.orientechnologies.orient.etl.extractor.OextractorSuper"));
     orientdb_b213aaf.add(item("Extract Interface", "com.orientechnologies.orient.jdbc.OrientBlob", "com.orientechnologies.orient.jdbc.OrientBlobInterface"));
-    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.jdbc.OrientDataCode#orientDataSource", "com.orientechnologies.orient.jdbc.OrientDataCode#orientDataCode"));
-    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.OrientDataCode#releaseDataBase", "Módulo: Orientdb-client/com.orientechnologies.orient.client.db.OrientDataCodeMetodo: releaseDb"));
-    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.OrientDataCode#freezeDatabase", "com.orientechnologies.orient.client.db.OrientDataCode#freezeDB"));
-    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.OrientDataCode#existsDatabase", "com.orientechnologies.orient.client.db.OrientDataCode#existsDB"));
-    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.OrientDataCode#dropDatabase", "com.orientechnologies.orient.client.db.OrientDataCode#dropDB"));
-    orientdb_b213aaf.add(item("Pull Up Method", "com.orientechnologies.orient.client.remote.OstorageRemEventLis#getStorage", "com.orientechonologies.orient.enterprise.chamennel.binary.OremoteServerEventListener#getStorage"));
-    orientdb_b213aaf.add(item("Pull Up Method", "com.orientechnologies.orient.graph.handler.OgraphServerHandler#getname()", "com.orientechonologies.orient.core.command.script.Oscriptlnjection#getName()"));
-    orientdb_b213aaf.add(item("Pull Up Method", "com.orientechnologies.orient.client.remote.OengineRemote#NAME", "com.orientechnologies.orient.core.engine.OengineAbstract#NAME"));
-    orientdb_b213aaf.add(item("Pull Up Field", "com.orientechnologies.orient.client.remote.OstorageConfigRem#networkRecordSerializer", "com.orientechnologies.orient.core.config.OstorageConfiguration#networkRecordSerializer"));
-    orientdb_b213aaf.add(item("Pull Up Field", "com.orientechnologies.orient.etl.source.OfileSource#input", "com.orientechnologies.orient.etl.source.OabstractSouce#input"));
+//    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.jdbc.OrientDataCode#orientDataSource", "com.orientechnologies.orient.jdbc.OrientDataCode#orientDataCode")); // errado
+    orientdb_b213aaf.add(item("Rename Class", "com.orientechnologies.orient.jdbc.OrientDataSource", "com.orientechnologies.orient.jdbc.OrientDataCoude")); // certo
+    
+    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.ODatabaseHelper#releaseDataBase(ODatabase)", "com.orientechnologies.orient.client.db.ODatabaseHelper#releaseDb(ODatabase)"));
+    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.ODatabaseHelper#freezeDatabase(ODatabase)", "com.orientechnologies.orient.client.db.ODatabaseHelper#freezeDB(ODatabase)"));     orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.ODatabaseHelper#existsDatabase(String)", "com.orientechnologies.orient.client.db.ODatabaseHelper#existsDB(String)"));
+    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.ODatabaseHelper#dropDatabase(ODatabase, String, String)", "com.orientechnologies.orient.client.db.ODatabaseHelper#dropDB(ODatabase, String, String)"));
+    orientdb_b213aaf.add(item("Pull Up Method", "com.orientechnologies.orient.client.remote.OStorageRemoteAsynchEventListener#getStorage()", "com.orientechonologies.orient.enterprise.chamennel.binary.ORemoteServerEventListener#getStorage()"));
+//    orientdb_b213aaf.add(item("Pull Up Method", "com.orientechnologies.orient.graph.handler.OgraphServerHandler#getname()", "com.orientechonologies.orient.core.command.script.Oscriptlnjection#getName()")); ??
+//    orientdb_b213aaf.add(item("Pull Up Method", "com.orientechnologies.orient.client.remote.OengineRemote#NAME", "com.orientechnologies.orient.core.engine.OengineAbstract#NAME")); // errado
+    orientdb_b213aaf.add(item("Pull Up Field", "com.orientechnologies.orient.client.remote.OengineRemote#NAME", "com.orientechnologies.orient.core.engine.OengineAbstract#NAME")); // certo
+    orientdb_b213aaf.add(item("Pull Up Field", "com.orientechnologies.orient.client.remote.OStorageRemoteConfiguration#networkRecordSerializer", "com.orientechnologies.orient.core.config.OstorageConfiguration#networkRecordSerializer"));
+//    orientdb_b213aaf.add(item("Pull Up Field", "com.orientechnologies.orient.etl.source.OfileSource#input", "com.orientechnologies.orient.etl.source.OabstractSouce#input")); ??
     
   }
 

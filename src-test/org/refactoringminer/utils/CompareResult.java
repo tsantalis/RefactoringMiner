@@ -4,6 +4,8 @@ import java.io.PrintStream;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.refactoringminer.api.RefactoringType;
+
 public class CompareResult {
 
   private final String project;
@@ -55,6 +57,18 @@ public class CompareResult {
 
   public int getFNCount() {
     return this.falseNegatives.size();
+  }
+
+  public int getTPCount(RefactoringType rt) {
+      return (int) this.truePositives.stream().filter(r -> r.startsWith(rt.getDisplayName())).count();
+  }
+
+  public int getFPCount(RefactoringType rt) {
+      return (int) this.falsePositives.stream().filter(r -> r.startsWith(rt.getDisplayName())).count();
+  }
+
+  public int getFNCount(RefactoringType rt) {
+      return (int) this.falseNegatives.stream().filter(r -> r.startsWith(rt.getDisplayName())).count();
   }
 
   public void printReport(PrintStream out, boolean verbose) {

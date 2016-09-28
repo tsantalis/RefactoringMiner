@@ -10,7 +10,9 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -266,7 +268,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 				UMLOperationBodyMapper operationBodyMapper = null;
 				boolean newMapper = false;
 				if(mapperForAddedOperation != null) {
-					operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapperForAddedOperation);
+					operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapperForAddedOperation, new LinkedHashMap<String, String>());
 				}
 				else {
 					operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
@@ -308,15 +310,21 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 				if(!mapper.getNonMappedLeavesT2().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty() ||
 					!mapper.getVariableReplacementsWithMethodInvocation().isEmpty() || !mapper.getMethodInvocationReplacements().isEmpty()) {
 					Set<OperationInvocation> operationInvocations = mapper.getOperation1().getBody().getAllOperationInvocations();
-					boolean removedOperationIsInvoked = false;
+					OperationInvocation removedOperationInvocation = null;
 					for(OperationInvocation invocation : operationInvocations) {
 						if(invocation.matchesOperation(removedOperation)) {
-							removedOperationIsInvoked = true;
+							removedOperationInvocation = invocation;
 							break;
 						}
 					}
-					if(removedOperationIsInvoked) {
-						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper);
+					if(removedOperationInvocation != null) {
+						List<String> arguments = removedOperationInvocation.getArguments();
+						List<String> parameters = removedOperation.getParameterNameList();
+						Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
+						for(int i=0; i<parameters.size(); i++) {
+							parameterToArgumentMap.put(parameters.get(i), arguments.get(i));
+						}
+						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap);
 						if(!operationBodyMapper.getMappings().isEmpty() &&
 								(operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT1()
 										|| operationBodyMapper.exactMatches() > 0) ) {

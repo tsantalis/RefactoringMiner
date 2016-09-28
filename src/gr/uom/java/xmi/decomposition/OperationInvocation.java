@@ -2,22 +2,41 @@ package gr.uom.java.xmi.decomposition;
 
 import gr.uom.java.xmi.UMLOperation;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 
 public class OperationInvocation {
 	private String methodName;
 	private int typeArguments;
+	private List<String> arguments;
 	private volatile int hashCode = 0;
 	
 	public OperationInvocation(MethodInvocation invocation) {
 		this.methodName = invocation.getName().getIdentifier();
 		this.typeArguments = invocation.arguments().size();
+		this.arguments = new ArrayList<String>();
+		List<Expression> args = invocation.arguments();
+		for(Expression argument : args) {
+			this.arguments.add(argument.toString());
+		}
 	}
 	
 	public OperationInvocation(SuperMethodInvocation invocation) {
 		this.methodName = invocation.getName().getIdentifier();
 		this.typeArguments = invocation.arguments().size();
+		this.arguments = new ArrayList<String>();
+		List<Expression> args = invocation.arguments();
+		for(Expression argument : args) {
+			this.arguments.add(argument.toString());
+		}
+	}
+
+    public List<String> getArguments() {
+		return arguments;
 	}
 
     public boolean matchesOperation(UMLOperation operation) {

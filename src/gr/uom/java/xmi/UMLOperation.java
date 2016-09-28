@@ -189,6 +189,15 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 		return parameterTypeList;
 	}
 
+	public List<String> getParameterNameList() {
+		List<String> parameterNameList = new ArrayList<String>();
+		for(UMLParameter parameter : parameters) {
+			if(!parameter.getKind().equals("return"))
+				parameterNameList.add(parameter.getName());
+		}
+		return parameterNameList;
+	}
+
 	public boolean equals(Object o) {
 		if(this == o) {
             return true;

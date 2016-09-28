@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -120,7 +121,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	public UMLOperationBodyMapper(UMLOperation removedOperation, UMLOperationBodyMapper operationBodyMapper) {
+	public UMLOperationBodyMapper(UMLOperation removedOperation, UMLOperationBodyMapper operationBodyMapper, Map<String, String> parameterToArgumentMap) {
 		this.operation1 = removedOperation;
 		this.operation2 = operationBodyMapper.operation2;
 		this.mappings = new ArrayList<AbstractCodeMapping>();
@@ -134,7 +135,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			CompositeStatementObject composite1 = removedOperationBody.getCompositeStatement();
 			List<StatementObject> leaves1 = composite1.getLeaves();
 			List<StatementObject> leaves2 = operationBodyMapper.getNonMappedLeavesT2();
-			
+			if(!parameterToArgumentMap.isEmpty()) {
+				for(StatementObject leave1 : leaves1) {
+					leave1.replaceParametersWithArguments(parameterToArgumentMap);
+				}
+			}
 			//compare leaves from T1 with leaves from T2
 			processLeaves(leaves1, leaves2);
 			
@@ -369,7 +374,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 				AbstractCodeFragment leaf2 = leafIterator2.next();
-				if(leaf1.getString().equals(leaf2.getString()) && leaf1.getDepth() == leaf2.getDepth()) {
+				if(leaf1.equalFragment(leaf2) && leaf1.getDepth() == leaf2.getDepth()) {
 					LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1, operation2);
 					mappingSet.add(mapping);
 				}
@@ -388,7 +393,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 				AbstractCodeFragment leaf2 = leafIterator2.next();
-				if(leaf1.getString().equals(leaf2.getString())) {
+				if(leaf1.equalFragment(leaf2)) {
 					LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1, operation2);
 					mappingSet.add(mapping);
 				}

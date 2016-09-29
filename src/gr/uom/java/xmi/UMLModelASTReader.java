@@ -113,12 +113,16 @@ public class UMLModelASTReader {
 //		return packageRoot.replace(File.separator.charAt(0), '/');
 //	}
 
-	private String getTypeName(Type type) {
+	private String getTypeName(Type type, int extraDimensions) {
 		ITypeBinding binding = type.resolveBinding();
 		if (binding != null) {
 			return binding.getQualifiedName();
 		}
-		return type.toString();
+		String typeToString = type.toString();
+		for(int i=0; i<extraDimensions; i++) {
+			typeToString += "[]";
+		}
+		return typeToString;
 	}
 	
 	/////////////////
@@ -147,7 +151,7 @@ public class UMLModelASTReader {
 		
     	Type superclassType = typeDeclaration.getSuperclassType();
     	if(superclassType != null) {
-    		UMLType umlType = UMLType.extractTypeObject(this.getTypeName(superclassType));
+    		UMLType umlType = UMLType.extractTypeObject(this.getTypeName(superclassType, 0));
     		UMLGeneralization umlGeneralization = new UMLGeneralization(umlClass.getName(), umlType.getClassType());
     		umlClass.setSuperclass(umlType);
     		/*UMLGeneralization bytecodeGeneralization = bytecodeModel.matchGeneralization(umlGeneralization);
@@ -162,7 +166,7 @@ public class UMLModelASTReader {
     	
     	List<Type> superInterfaceTypes = typeDeclaration.superInterfaceTypes();
     	for(Type interfaceType : superInterfaceTypes) {
-    		UMLRealization umlRealization = new UMLRealization(umlClass.getName(), this.getTypeName(interfaceType));
+    		UMLRealization umlRealization = new UMLRealization(umlClass.getName(), this.getTypeName(interfaceType, 0));
     		/*UMLRealization bytecodeRealization = bytecodeModel.matchRealization(umlRealization);
     		if(bytecodeRealization != null) {
     			umlRealization.setSupplier(bytecodeRealization.getSupplier());
@@ -260,7 +264,7 @@ public class UMLModelASTReader {
 		
 		Type returnType = methodDeclaration.getReturnType2();
 		if(returnType != null) {
-			UMLType type = UMLType.extractTypeObject(getTypeName(returnType));
+			UMLType type = UMLType.extractTypeObject(getTypeName(returnType, 0));
 			UMLParameter returnParameter = new UMLParameter("return", type, "return");
 			umlOperation.addParameter(returnParameter);
 		}
@@ -268,7 +272,7 @@ public class UMLModelASTReader {
 		for(SingleVariableDeclaration parameter : parameters) {
 			Type parameterType = parameter.getType();
 			String parameterName = parameter.getName().getFullyQualifiedName();
-			String typeName = getTypeName(parameterType);
+			String typeName = getTypeName(parameterType, parameter.getExtraDimensions());
 			if (parameter.isVarargs()) {
 				typeName = typeName + "[]";
 			}
@@ -296,9 +300,9 @@ public class UMLModelASTReader {
 	private List<UMLAttribute> processFieldDeclaration(FieldDeclaration fieldDeclaration/*, UMLClass bytecodeClass*/) {
 		List<UMLAttribute> attributes = new ArrayList<UMLAttribute>();
 		Type fieldType = fieldDeclaration.getType();
-		UMLType type = UMLType.extractTypeObject(getTypeName(fieldType));
 		List<VariableDeclarationFragment> fragments = fieldDeclaration.fragments();
 		for(VariableDeclarationFragment fragment : fragments) {
+			UMLType type = UMLType.extractTypeObject(getTypeName(fieldType, fragment.getExtraDimensions()));
 			String fieldName = fragment.getName().getFullyQualifiedName();
 			UMLAttribute umlAttribute = new UMLAttribute(fieldName, type);
 			//umlAttribute.setClassName(umlClass.getName());

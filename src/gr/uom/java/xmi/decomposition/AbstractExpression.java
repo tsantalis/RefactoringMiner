@@ -10,12 +10,14 @@ public class AbstractExpression extends AbstractCodeFragment {
 	private String expression;
 	private CompositeStatementObject owner;
 	private List<String> variables;
+	private List<VariableDeclaration> variableDeclarations;
 	private Map<String, OperationInvocation> methodInvocationMap;
     
     public AbstractExpression(Expression expression) {
     	SimpleNameVisitor visitor = new SimpleNameVisitor();
     	expression.accept(visitor);
 		this.variables = visitor.getVariables();
+		this.variableDeclarations = visitor.getVariableDeclarations();
 		this.methodInvocationMap = visitor.getMethodInvocationMap();
     	this.expression = expression.toString();
     	this.owner = null;
@@ -44,6 +46,11 @@ public class AbstractExpression extends AbstractCodeFragment {
 	@Override
 	public List<String> getVariables() {
 		return variables;
+	}
+
+	@Override
+	public List<VariableDeclaration> getVariableDeclarations() {
+		return variableDeclarations;
 	}
 
 	@Override

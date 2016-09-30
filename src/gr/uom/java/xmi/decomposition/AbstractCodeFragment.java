@@ -10,6 +10,10 @@ public abstract class AbstractCodeFragment {
 	private int index;
 	private String codeFragmentAfterReplacingParametersWithArguments;
 
+	public String getArgumentizedString() {
+		return codeFragmentAfterReplacingParametersWithArguments != null ? codeFragmentAfterReplacingParametersWithArguments : getString();
+	}
+
     public int getDepth() {
 		return depth;
 	}
@@ -28,6 +32,7 @@ public abstract class AbstractCodeFragment {
 	
 	public abstract String getString();
 	public abstract List<String> getVariables();
+	public abstract List<VariableDeclaration> getVariableDeclarations();
 	public abstract Map<String, OperationInvocation> getMethodInvocationMap();
 	
 	public void replaceParametersWithArguments(Map<String, String> parameterToArgumentMap) {

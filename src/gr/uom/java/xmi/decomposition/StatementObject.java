@@ -18,6 +18,7 @@ public class StatementObject extends AbstractStatement {
 	
 	private String statement;
 	private List<String> variables;
+	private List<VariableDeclaration> variableDeclarations;
 	private Map<String, OperationInvocation> methodInvocationMap;
 	
 	public StatementObject(Statement statement, int depth) {
@@ -25,6 +26,7 @@ public class StatementObject extends AbstractStatement {
 		SimpleNameVisitor visitor = new SimpleNameVisitor();
 		statement.accept(visitor);
 		this.variables = visitor.getVariables();
+		this.variableDeclarations = visitor.getVariableDeclarations();
 		this.methodInvocationMap = visitor.getMethodInvocationMap();
 		setDepth(depth);
 		if(statement.toString().matches("!(\\w|\\.)*@\\w*")) {
@@ -112,6 +114,11 @@ public class StatementObject extends AbstractStatement {
 	@Override
 	public List<String> getVariables() {
 		return variables;
+	}
+
+	@Override
+	public List<VariableDeclaration> getVariableDeclarations() {
+		return variableDeclarations;
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.WildcardType;
 
 public class SimpleNameVisitor extends ASTVisitor {
@@ -23,7 +24,13 @@ public class SimpleNameVisitor extends ASTVisitor {
 	private List<String> invokedMethodNames = new ArrayList<String>();
 	private List<String> types = new ArrayList<String>();
 	private Map<String, OperationInvocation> methodInvocationMap = new LinkedHashMap<String, OperationInvocation>();
+	private List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
 	
+	public boolean visit(VariableDeclarationFragment node) {
+		variableDeclarations.add(new VariableDeclaration(node));
+		return super.visit(node);
+	}
+
 	public boolean visit(SimpleName node) {
 		allIdentifiers.add(node.getIdentifier());
 		return super.visit(node);
@@ -113,6 +120,10 @@ public class SimpleNameVisitor extends ASTVisitor {
 
 	public Map<String, OperationInvocation> getMethodInvocationMap() {
 		return this.methodInvocationMap;
+	}
+
+	public List<VariableDeclaration> getVariableDeclarations() {
+		return variableDeclarations;
 	}
 
 	public List<String> getVariables() {

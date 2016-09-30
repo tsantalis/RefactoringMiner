@@ -151,6 +151,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			//replace parameters with arguments in leaves1
 			if(!parameterToArgumentMap.isEmpty()) {
+				//check for temporary variables that the argument might be assigned to
+				for(StatementObject leave2 : leaves2) {
+					List<VariableDeclaration> variableDeclarations = leave2.getVariableDeclarations();
+					for(VariableDeclaration variableDeclaration : variableDeclarations) {
+						for(String parameter : parameterToArgumentMap.keySet()) {
+							String argument = parameterToArgumentMap.get(parameter);
+							if(argument.equals(variableDeclaration.getInitializer())) {
+								parameterToArgumentMap.put(parameter, variableDeclaration.getVariableName());
+							}
+						}
+					}
+				}
 				for(StatementObject leave1 : leaves1) {
 					leave1.replaceParametersWithArguments(parameterToArgumentMap);
 				}
@@ -391,7 +403,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 				AbstractCodeFragment leaf2 = leafIterator2.next();
-				if(leaf1.equalFragment(leaf2) && leaf1.getDepth() == leaf2.getDepth()) {
+				if(leaf1.getArgumentizedString().equals(leaf2.getArgumentizedString()) && leaf1.getDepth() == leaf2.getDepth()) {
 					LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1, operation2);
 					mappingSet.add(mapping);
 				}
@@ -410,7 +422,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 				AbstractCodeFragment leaf2 = leafIterator2.next();
-				if(leaf1.equalFragment(leaf2)) {
+				if(leaf1.getArgumentizedString().equals(leaf2.getArgumentizedString())) {
 					LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1, operation2);
 					mappingSet.add(mapping);
 				}
@@ -451,9 +463,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 				AbstractCodeFragment leaf2 = leafIterator2.next();
-				List<String> lcs = StringDistance.commonSubstrings(leaf1.getString(), leaf2.getString());
+				List<String> lcs = StringDistance.commonSubstrings(leaf1.getArgumentizedString(), leaf2.getArgumentizedString());
 				if(lcs.size() == 1) {
-					double similarity = (double)lcs.get(0).length()/(double)Math.max(leaf1.getString().length(), leaf2.getString().length());
+					double similarity = (double)lcs.get(0).length()/(double)Math.max(leaf1.getArgumentizedString().length(), leaf2.getArgumentizedString().length());
 					if(similarity > 0.5) {
 						LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1, operation2);
 						mappingSet.add(mapping);
@@ -474,8 +486,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 				AbstractCodeFragment leaf2 = leafIterator2.next();
-				String s1 = leaf1.getString().toLowerCase();
-				String s2 = leaf2.getString().toLowerCase();
+				String s1 = leaf1.getArgumentizedString().toLowerCase();
+				String s2 = leaf2.getArgumentizedString().toLowerCase();
 				double distance = (double)StringDistance.editDistance(s1, s2)/(double)Math.max(s1.length(), s2.length());
 				if(distance < 0.4) {
 					LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1, operation2);
@@ -516,17 +528,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		variablesAndMethodInvocations2.addAll(methodInvocations2);
 		variablesAndMethodInvocations2.addAll(variables2);
 		
-		int initialDistanceRaw = StringDistance.editDistance(statement1.getString(), statement2.getString());
+		int initialDistanceRaw = StringDistance.editDistance(statement1.getArgumentizedString(), statement2.getArgumentizedString());
 		//double initialDistance = (double)StringDistance.editDistance(statement1.getString(), statement2.getString())/(double)Math.max(statement1.getString().length(), statement2.getString().length());
 		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 		if (initialDistanceRaw > 0) {
 			for(String s11 : variablesAndMethodInvocations1) {
 				TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
-				String original = statement1.getString();
+				String original = statement1.getArgumentizedString();
 				int minDistance = initialDistanceRaw;
 				for(String s21 : variablesAndMethodInvocations2) {
 					String temp = original.replaceAll(Pattern.quote(s11), Matcher.quoteReplacement(s21));
-					int distanceRaw = StringDistance.editDistance(temp, statement2.getString(), minDistance);
+					int distanceRaw = StringDistance.editDistance(temp, statement2.getArgumentizedString(), minDistance);
 					//double distance = (double)StringDistance.editDistance(temp, statement2.getString())/(double)Math.max(temp.length(), statement2.getString().length());
 					if(distanceRaw >= 0 && distanceRaw < initialDistanceRaw) {
 						minDistance = distanceRaw;
@@ -545,7 +557,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								replacement1 = new MethodInvocationReplacement(s11, s21, statement1.getMethodInvocationMap().get(s11), statement2.getMethodInvocationMap().get(s21));
 						}
 						if(replacement1 != null) {
-							double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), statement2.getString().length());
+							double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), statement2.getArgumentizedString().length());
 							replacementMap.put(distancenormalized, replacement1);
 						}
 						if(distanceRaw == 0) {
@@ -559,8 +571,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		
-		String s1 = statement1.getString();
-		String s2 = statement2.getString();
+		String s1 = statement1.getArgumentizedString();
+		String s2 = statement2.getArgumentizedString();
 		for(Replacement replacement : replacements) {
 			s1 = s1.replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter()));
 		}

@@ -2,10 +2,8 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.jdt.core.dom.Statement;
 
@@ -85,6 +83,15 @@ public class CompositeStatementObject extends AbstractStatement {
 			variables.addAll(expression.getVariables());
 		}
 		return variables;
+	}
+
+	@Override
+	public List<VariableDeclaration> getVariableDeclarations() {
+		List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
+		for(AbstractExpression expression : expressionList) {
+			variableDeclarations.addAll(expression.getVariableDeclarations());
+		}
+		return variableDeclarations;
 	}
 
 	@Override

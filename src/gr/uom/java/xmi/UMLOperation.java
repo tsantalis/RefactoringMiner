@@ -13,7 +13,6 @@ import org.refactoringminer.util.AstUtils;
 
 public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 	private String name;
-	private String xmiID;
 	private String visibility;
 	private boolean isAbstract;
 	private List<UMLParameter> parameters;
@@ -25,19 +24,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 	private boolean emptyBody;
 	private OperationBody operationBody;
 	
-	public UMLOperation(String name, String xmiID) {
+	public UMLOperation(String name) {
         this.name = name;
-        this.xmiID = xmiID;
         this.parameters = new ArrayList<UMLParameter>();
         this.accessedMembers = new LinkedHashSet<AccessedMember>();
     }
 
 	public String getName() {
 		return name;
-	}
-
-	public String getXmiID() {
-		return xmiID;
 	}
 
 	public String getVisibility() {

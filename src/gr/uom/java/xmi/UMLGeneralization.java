@@ -3,7 +3,6 @@ package gr.uom.java.xmi;
 public class UMLGeneralization implements Comparable<UMLGeneralization> {
     private String child;
     private String parent;
-    private String xmiID;
 
     public UMLGeneralization(String child, String parent) {
         this.child = child;
@@ -24,14 +23,6 @@ public class UMLGeneralization implements Comparable<UMLGeneralization> {
 
     public void setParent(String parent) {
 		this.parent = parent;
-	}
-
-	public String getXmiID() {
-		return xmiID;
-	}
-
-	public void setXmiID(String xmiID) {
-		this.xmiID = xmiID;
 	}
 
 	public boolean equals(Object o) {

@@ -14,7 +14,6 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     private String name;
     private String qualifiedName;
     private String sourceFile;
-    private String xmiID;
     private String visibility;
 	private boolean isAbstract;
 	private boolean isInterface;
@@ -23,11 +22,11 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     private List<UMLAttribute> attributes;
     private UMLType superclass;
 
-    public UMLClass(String packageName, String name, String xmiID, boolean topLevel) {
-    	this(packageName, name, xmiID, packageName.replace('.', '/') + '/' + name + ".java", topLevel);
+    public UMLClass(String packageName, String name, boolean topLevel) {
+    	this(packageName, name, packageName.replace('.', '/') + '/' + name + ".java", topLevel);
     }
     
-    public UMLClass(String packageName, String name, String xmiID, String sourceFile, boolean topLevel) {
+    public UMLClass(String packageName, String name, String sourceFile, boolean topLevel) {
     	this.packageName = packageName;
         this.name = name;
         if(packageName.equals(""))
@@ -36,7 +35,6 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     		this.qualifiedName = packageName + "." + name;
         
         this.sourceFile = sourceFile;
-        this.xmiID = xmiID;
         this.isAbstract = false;
         this.isInterface = false;
         this.topLevel = topLevel;
@@ -67,10 +65,6 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
 	public void setTopLevel(boolean topLevel) {
 		this.topLevel = topLevel;
 	}
-
-	public String getXmiID() {
-        return xmiID;
-    }
 
 	public String getVisibility() {
 		return visibility;
@@ -119,16 +113,6 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
 	public List<UMLAttribute> getAttributes() {
 		return attributes;
 	}
-
-	public UMLOperation getOperation(String xmiID) {
-    	ListIterator<UMLOperation> operationIt = operations.listIterator();
-    	while(operationIt.hasNext()) {
-    		UMLOperation operation = operationIt.next();
-    		if(operation.getXmiID().equals(xmiID))
-    			return operation;
-    	}
-    	return null;
-    }
 
 	public boolean containsOperationWithTheSameSignature(UMLOperation operation) {
 		for(UMLOperation originalOperation : operations) {

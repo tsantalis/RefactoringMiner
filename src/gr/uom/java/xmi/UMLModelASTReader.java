@@ -24,7 +24,6 @@ import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.FileASTRequestor;
-import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Modifier;
@@ -89,8 +88,6 @@ public class UMLModelASTReader {
 		else
 			packageName = "";
 		
-//		String packageRoot = getPackageRoot(sourceFilePath, packageName);
-		
 		List<AbstractTypeDeclaration> topLevelTypeDeclarations = compilationUnit.types();
         for(AbstractTypeDeclaration abstractTypeDeclaration : topLevelTypeDeclarations) {
         	if(abstractTypeDeclaration instanceof TypeDeclaration) {
@@ -99,19 +96,6 @@ public class UMLModelASTReader {
         	}
         }
 	}
-
-//	private String getPackageRoot(String sourceFilePath, String packageName) {
-//		String packagePath = packageName.replace('.', File.separator.charAt(0));
-//		String packageRoot = "";
-//		int indexOfPackagePath = sourceFilePath.lastIndexOf(packagePath + File.separator);
-//		if (indexOfPackagePath > 0) {
-//			packageRoot = sourceFilePath.substring(0, indexOfPackagePath);
-//		}
-//		if (packageRoot.startsWith(this.projectRoot)) {
-//			packageRoot = packageRoot.substring(this.projectRoot.length());
-//		}
-//		return packageRoot.replace(File.separator.charAt(0), '/');
-//	}
 
 	private String getTypeName(Type type, int extraDimensions) {
 		ITypeBinding binding = type.resolveBinding();
@@ -124,13 +108,10 @@ public class UMLModelASTReader {
 		}
 		return typeToString;
 	}
-	
-	/////////////////
 
 	private void processTypeDeclaration(TypeDeclaration typeDeclaration, String packageName, String sourceFile) {
 		String className = typeDeclaration.getName().getFullyQualifiedName();
-		UMLClass umlClass = new UMLClass(packageName, className, null, sourceFile, typeDeclaration.isPackageMemberTypeDeclaration());
-		//UMLClass bytecodeClass = bytecodeModel.getClass(umlClass.getName());
+		UMLClass umlClass = new UMLClass(packageName, className, sourceFile, typeDeclaration.isPackageMemberTypeDeclaration());
 		
 		if(typeDeclaration.isInterface()) {
 			umlClass.setInterface(true);
@@ -154,23 +135,12 @@ public class UMLModelASTReader {
     		UMLType umlType = UMLType.extractTypeObject(this.getTypeName(superclassType, 0));
     		UMLGeneralization umlGeneralization = new UMLGeneralization(umlClass.getName(), umlType.getClassType());
     		umlClass.setSuperclass(umlType);
-    		/*UMLGeneralization bytecodeGeneralization = bytecodeModel.matchGeneralization(umlGeneralization);
-    		if(bytecodeGeneralization != null) {
-    			umlGeneralization.setParent(bytecodeGeneralization.getParent());
-    		}
-    		if(bytecodeClass != null) {
-    			umlClass.setSuperclass(bytecodeClass.getSuperclass());
-    		}*/
     		getUmlModel().addGeneralization(umlGeneralization);
     	}
     	
     	List<Type> superInterfaceTypes = typeDeclaration.superInterfaceTypes();
     	for(Type interfaceType : superInterfaceTypes) {
     		UMLRealization umlRealization = new UMLRealization(umlClass.getName(), this.getTypeName(interfaceType, 0));
-    		/*UMLRealization bytecodeRealization = bytecodeModel.matchRealization(umlRealization);
-    		if(bytecodeRealization != null) {
-    			umlRealization.setSupplier(bytecodeRealization.getSupplier());
-    		}*/
     		getUmlModel().addRealization(umlRealization);
     	}
     	
@@ -217,16 +187,9 @@ public class UMLModelASTReader {
 		}
 	}
 
-	private UMLOperation processMethodDeclaration(MethodDeclaration methodDeclaration, String packageName, String className/*, UMLClass bytecodeClass*/) {
+	private UMLOperation processMethodDeclaration(MethodDeclaration methodDeclaration, String packageName, String className) {
 		String methodName = methodDeclaration.getName().getFullyQualifiedName();
-		final IMethodBinding binding = methodDeclaration.resolveBinding();
-		UMLOperation umlOperation;
-		if (binding == null) {
-			umlOperation = new UMLOperation(methodName, null);
-			//System.out.println(String.format("WARN null binding: %s", ASTUtils.getKey(packageName, className, methodDeclaration)));
-		} else {
-			umlOperation = new UMLOperation(methodName, ASTUtils.getKey(binding));
-		}
+		UMLOperation umlOperation = new UMLOperation(methodName);
 		//umlOperation.setClassName(umlClass.getName());
 		if(methodDeclaration.isConstructor())
 			umlOperation.setConstructor(true);
@@ -280,19 +243,6 @@ public class UMLModelASTReader {
 			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in");
 			umlOperation.addParameter(umlParameter);
 		}
-		
-		/*if(bytecodeClass != null) {
-			UMLOperation bytecodeOperation = bytecodeClass.matchOperation(umlOperation);
-			if(bytecodeOperation != null) {
-				int i = 0;
-				for(UMLParameter bytecodeParameter : bytecodeOperation.getParameters()) {
-					umlOperation.getParameters().get(i).setType(bytecodeParameter.getType());
-					i++;
-				}
-				umlOperation.setAccessedMembers(new LinkedHashSet<AccessedMember>(bytecodeOperation.getAccessedMembers()));
-			}
-		}*/
-		
 		return umlOperation;
 	}
 
@@ -323,12 +273,6 @@ public class UMLModelASTReader {
 			if((fieldModifiers & Modifier.STATIC) != 0)
 				umlAttribute.setStatic(true);
 			
-			/*if(bytecodeClass != null) {
-				UMLAttribute bytecodeAttribute = bytecodeClass.matchAttribute(umlAttribute);
-				if(bytecodeAttribute != null)
-					umlAttribute.setType(bytecodeAttribute.getType());
-			}*/
-			
 			attributes.add(umlAttribute);
 		}
 		return attributes;
@@ -338,7 +282,6 @@ public class UMLModelASTReader {
 		List<BodyDeclaration> bodyDeclarations = anonymous.bodyDeclarations();
 		
 		UMLAnonymousClass anonymousClass = new UMLAnonymousClass(packageName, className, sourceFile);
-		//UMLClass bytecodeClass = bytecodeModel.getClass(anonymousClass.getName());
 		
 		for(BodyDeclaration bodyDeclaration : bodyDeclarations) {
 			if(bodyDeclaration instanceof FieldDeclaration) {
@@ -401,6 +344,4 @@ public class UMLModelASTReader {
 		}
 		return false;
 	}
-	
-	
 }

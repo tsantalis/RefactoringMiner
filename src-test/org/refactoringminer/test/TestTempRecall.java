@@ -200,7 +200,7 @@ public class TestTempRecall {
 						"Inline Method private setTodoList(member AbstractProjectMember) : void inlined to public add(member ProjectMember) : boolean in class org.argouml.kernel.MemberList",
 						"Inline Method private setTodoList(member AbstractProjectMember) : void inlined to public remove(member Object) : boolean in class org.argouml.kernel.MemberList",
 						"Inline Method protected removeAllElementListeners(listener PropertyChangeListener) : void inlined to public removeAllElementListeners() : void in class org.argouml.notation.NotationProvider",
-						"Inline Method appendArrays() inlined to public void loadRules() in class org.argouml.ui.explorer.PerspectiveManager");
+						"Inline Method private appendArrays(first T[], second T[]) : T[] inlined to public loadRules() : void in class org.argouml.ui.explorer.PerspectiveManager");
 
 		test.project("https://github.com/MatinMan/RefactoringDatasets.git", "junit")
 				.atCommit("00e584db35fdb44b58eccaff7dc5ec6b0da7547a").containsOnly(

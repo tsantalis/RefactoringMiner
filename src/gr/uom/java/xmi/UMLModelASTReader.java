@@ -1,7 +1,5 @@
 package gr.uom.java.xmi;
 
-import gr.uom.java.xmi.decomposition.OperationBody;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -32,6 +30,8 @@ import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+
+import gr.uom.java.xmi.decomposition.OperationBody;
 
 public class UMLModelASTReader {
 	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
@@ -66,10 +66,10 @@ public class UMLModelASTReader {
 	}
 
 	private static ASTParser buildAstParser(File srcFolder) {
-		ASTParser parser = ASTParser.newParser(AST.JLS4);
+		ASTParser parser = ASTParser.newParser(AST.JLS8);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
 		Map options = JavaCore.getOptions();
-		JavaCore.setComplianceOptions(JavaCore.VERSION_1_7, options);
+		JavaCore.setComplianceOptions(JavaCore.VERSION_1_8, options);
 		parser.setCompilerOptions(options);
 		parser.setResolveBindings(false);
 		parser.setEnvironment(new String[0], new String[]{srcFolder.getPath()}, null, false);

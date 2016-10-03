@@ -44,11 +44,19 @@ public class UMLType implements Serializable {
                 if(this.genericType == null && typeObject.genericType == null)
                     return this.arrayDimension == typeObject.arrayDimension;
                 else if(this.genericType != null && typeObject.genericType != null)
-                    return this.genericType.equals(typeObject.genericType) && this.arrayDimension == typeObject.arrayDimension;
+                    return equalGenericType(typeObject) && this.arrayDimension == typeObject.arrayDimension;
             }
         }
         return false;
     }
+
+	private boolean equalGenericType(UMLType typeObject) {
+		if((this.genericType.equals("<?>") && typeObject.genericType.startsWith("<? ")) || 
+				(this.genericType.startsWith("<? ") && typeObject.genericType.equals("<?>"))) {
+			return true;
+		}
+		return this.genericType.equals(typeObject.genericType);
+	}
 
     public int hashCode() {
     	if(hashCode == 0) {

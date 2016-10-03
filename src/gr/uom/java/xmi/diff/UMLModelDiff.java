@@ -30,17 +30,12 @@ public class UMLModelDiff {
    private List<UMLGeneralization> addedGeneralizations;
    private List<UMLGeneralization> removedGeneralizations;
    private List<UMLGeneralizationDiff> generalizationDiffList;
-   //private List<UMLAssociation> addedAssociations;
-   //private List<UMLAssociation> removedAssociations;
-// private List<UMLDependency> addedDependencies;
-// private List<UMLDependency> removedDependencies;
    private List<UMLRealization> addedRealizations;
    private List<UMLRealization> removedRealizations;
    private List<UMLRealizationDiff> realizationDiffList;
    
    private List<UMLClassDiff> commonClassDiffList;
 //   private List<UMLClass> commonUnchangedClasses;
-// private List<UMLCollaborationDiff> collaborationDiffList;
    private List<UMLClassMoveDiff> classMoveDiffList;
    private List<UMLClassMoveDiff> innerClassMoveDiffList;
    private List<UMLClassRenameDiff> classRenameDiffList;
@@ -56,15 +51,10 @@ public class UMLModelDiff {
       this.removedGeneralizations = new ArrayList<UMLGeneralization>();
       this.generalizationDiffList = new ArrayList<UMLGeneralizationDiff>();
       this.realizationDiffList = new ArrayList<UMLRealizationDiff>();
-//    this.addedAssociations = new ArrayList<UMLAssociation>();
-//    this.removedAssociations = new ArrayList<UMLAssociation>();
-//    this.addedDependencies = new ArrayList<UMLDependency>();
-//    this.removedDependencies = new ArrayList<UMLDependency>();
       this.addedRealizations = new ArrayList<UMLRealization>();
       this.removedRealizations = new ArrayList<UMLRealization>();
       this.commonClassDiffList = new ArrayList<UMLClassDiff>();
 //      this.commonUnchangedClasses = new ArrayList<UMLClass>();
-//    this.collaborationDiffList = new ArrayList<UMLCollaborationDiff>();
       this.classMoveDiffList = new ArrayList<UMLClassMoveDiff>();
       this.innerClassMoveDiffList = new ArrayList<UMLClassMoveDiff>();
       this.classRenameDiffList = new ArrayList<UMLClassRenameDiff>();
@@ -98,22 +88,6 @@ public class UMLModelDiff {
       this.removedGeneralizations.add(umlGeneralization);
    }
 
-// public void reportAddedAssociation(UMLAssociation umlAssociation) {
-//    this.addedAssociations.add(umlAssociation);
-// }
-//
-// public void reportRemovedAssociation(UMLAssociation umlAssociation) {
-//    this.removedAssociations.add(umlAssociation);
-// }
-
-// public void reportAddedDependency(UMLDependency umlDependency) {
-//    this.addedDependencies.add(umlDependency);
-// }
-//
-// public void reportRemovedDependency(UMLDependency umlDependency) {
-//    this.removedDependencies.add(umlDependency);
-// }
-
    public void reportAddedRealization(UMLRealization umlRealization) {
       this.addedRealizations.add(umlRealization);
    }
@@ -129,10 +103,6 @@ public class UMLModelDiff {
 //   public void addUnchangedClass(UMLClass umlClass) {
 //      this.commonUnchangedClasses.add(umlClass);
 //   }
-
-// public void addUMLCollaborationDiff(UMLCollaborationDiff collaborationDiff) {
-//    this.collaborationDiffList.add(collaborationDiff);
-// }
 
    private UMLClassDiff getUMLClassDiff(String className) {
       for(UMLClassDiff classDiff : commonClassDiffList) {
@@ -358,22 +328,6 @@ public class UMLModelDiff {
 //    return removedGeneralizations;
 // }
 
-// public List<UMLAssociation> getAddedAssociations() {
-//    return addedAssociations;
-// }
-//
-// public List<UMLAssociation> getRemovedAssociations() {
-//    return removedAssociations;
-// }
-
-// public List<UMLDependency> getAddedDependencies() {
-//    return addedDependencies;
-// }
-//
-// public List<UMLDependency> getRemovedDependencies() {
-//    return removedDependencies;
-// }
-
    public List<UMLRealization> getAddedRealizations() {
       return addedRealizations;
    }
@@ -381,29 +335,6 @@ public class UMLModelDiff {
 // public List<UMLRealization> getRemovedRealizations() {
 //    return removedRealizations;
 // }
-/*
-   private List<ExtractOperationRefactoring> identifyExtractOperationRefactoringsWithSequenceDiagramInformation() {
-      List<ExtractOperationRefactoring> refactorings = new ArrayList<ExtractOperationRefactoring>();
-      for(UMLClassDiff classDiff : commonClassDiffList) {
-         for(UMLOperation operation : classDiff.getAddedOperations()) {
-            for(UMLMessage message : getAddedMessages()) {
-               UMLAction action = message.getAction();
-               if(action instanceof UMLCallAction) {
-                  UMLCallAction callAction = (UMLCallAction)action;
-                  UMLOperation callActionOperation = callAction.getOperation();
-                  if(callActionOperation != null && callActionOperation.equals(operation) &&
-                        message.isSelfMessage()) {
-                     ExtractOperationRefactoring extractOperationRefactoring =
-                        new ExtractOperationRefactoring(operation, message.getSender().getBase());
-                     refactorings.add(extractOperationRefactoring);
-                  }
-               }
-            }
-         }
-      }
-      return refactorings;
-   }
-*/
 /*
    private List<ExtractOperationRefactoring> identifyExtractOperationRefactoringsWithoutSequenceDiagramInformation() {
       List<ExtractOperationRefactoring> refactorings = new ArrayList<ExtractOperationRefactoring>();
@@ -532,44 +463,6 @@ public class UMLModelDiff {
 //    }
 //    return refactorings;
 // }
-/*
-   private List<MoveOperationRefactoring> identifyMoveOperationRefactoringsWithSequenceDiagramInformation() {
-      List<MoveOperationRefactoring> refactorings = new ArrayList<MoveOperationRefactoring>();
-      List<UMLOperation> addedOperations = getAddedOperationsInCommonClasses();
-      List<UMLOperation> removedOperations = getRemovedOperationsInCommonClasses();
-      
-      List<UMLOperation> addedOperationsWithIdenticalNameInRemovedOperations = new ArrayList<UMLOperation>();
-      for(UMLOperation addedOperation : addedOperations) {
-         for(UMLOperation removedOperation : removedOperations) {
-            if(addedOperation.getName().equals(removedOperation.getName()) &&
-                  addedOperation.equalReturnParameter(removedOperation) &&
-                  addedOperation.isAbstract() == removedOperation.isAbstract())
-               addedOperationsWithIdenticalNameInRemovedOperations.add(addedOperation);
-         }
-      }
-      for(UMLMessage message : getAddedMessages()) {
-         UMLAction action = message.getAction();
-         if(action instanceof UMLCallAction) {
-            UMLCallAction callAction = (UMLCallAction)action;
-            UMLOperation callActionOperation = callAction.getOperation();
-            if(callActionOperation != null &&
-                  addedOperationsWithIdenticalNameInRemovedOperations.contains(callActionOperation)) {
-               MoveOperationRefactoring moveOperation = new MoveOperationRefactoring(callActionOperation,
-                     message.getSender().getBase(), message.getReceiver().getBase());
-               refactorings.add(moveOperation);
-            }
-         }
-      }
-      return refactorings;
-   }
-*/
-// private List<UMLMessage> getAddedMessages() {
-//    List<UMLMessage> addedMessages = new ArrayList<UMLMessage>();
-//    for(UMLCollaborationDiff collaborationDiff : collaborationDiffList) {
-//       addedMessages.addAll(collaborationDiff.getAddedMessages());
-//    }
-//    return addedMessages;
-// }
 
    private List<UMLAttribute> getAddedAttributesInCommonClasses() {
       List<UMLAttribute> addedAttributes = new ArrayList<UMLAttribute>();
@@ -610,30 +503,6 @@ public class UMLModelDiff {
       }
       return mappers;
    }
-/*
-   private List<IntroducePolymorphismRefactoring> identifyIntroducePolymorphismRefactoringsWithSequenceDiagramInformation() {
-      List<IntroducePolymorphismRefactoring> refactorings = new ArrayList<IntroducePolymorphismRefactoring>();
-      InheritanceDetection inheritanceDetection = new InheritanceDetection(this);
-      for(String superclassName : inheritanceDetection.getRoots()) {
-         for(UMLMessage message : getAddedMessages()) {
-            if(message.getReceiver().getBase().equals(superclassName)) {
-               UMLAction action = message.getAction();
-               if(action instanceof UMLCallAction) {
-                  UMLCallAction callAction = (UMLCallAction)action;
-                  UMLOperation callActionOperation = callAction.getOperation();
-                  if(callActionOperation != null) {
-                     IntroducePolymorphismRefactoring introducePolymorphism =
-                        new IntroducePolymorphismRefactoring(message.getSender().getBase(),
-                              message.getReceiver().getBase(), callActionOperation);
-                     refactorings.add(introducePolymorphism);
-                  }
-               }
-            }
-         }
-      }
-      return refactorings;
-   }
-*/
 /*
    private List<IntroducePolymorphismRefactoring> identifyIntroducePolymorphismRefactoringsWithoutSequenceDiagramInformation() {
       List<IntroducePolymorphismRefactoring> refactorings = new ArrayList<IntroducePolymorphismRefactoring>();

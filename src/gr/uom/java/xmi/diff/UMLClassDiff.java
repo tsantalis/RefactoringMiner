@@ -27,7 +27,6 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	private List<UMLAttribute> removedAttributes;
 	private List<UMLAttributeDiff> attributeDiffList;
 	private List<UMLOperationDiff> operationDiffList;
-	//private List<UMLOperationBodyDiff> operationBodyDiffList;
 	private List<UMLOperationBodyMapper> operationBodyMapperList;
 	private List<Refactoring> refactorings;
 	private boolean visibilityChanged;
@@ -49,7 +48,6 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		this.removedAttributes = new ArrayList<UMLAttribute>();
 		this.attributeDiffList = new ArrayList<UMLAttributeDiff>();
 		this.operationDiffList = new ArrayList<UMLOperationDiff>();
-		//this.operationBodyDiffList = new ArrayList<UMLOperationBodyDiff>();
 		this.operationBodyMapperList = new ArrayList<UMLOperationBodyMapper>();
 		this.refactorings = new ArrayList<Refactoring>();
 		this.visibilityChanged = false;
@@ -77,21 +75,9 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		this.removedAttributes.add(umlAttribute);
 	}
 
-	/*public void addOperationBodyDiff(UMLOperationBodyDiff operationBodyDiff) {
-		this.operationBodyDiffList.add(operationBodyDiff);
-	}*/
-
 	public void addOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper) {
 		this.operationBodyMapperList.add(operationBodyMapper);
 	}
-
-	/*public List<MethodCall> getAddedMethodCalls() {
-		List<MethodCall> addedMethodCalls = new ArrayList<MethodCall>();
-		for(UMLOperationBodyDiff operationBodyDiff : operationBodyDiffList) {
-			addedMethodCalls.addAll(operationBodyDiff.getAddedMethodCalls());
-		}
-		return addedMethodCalls;
-	}*/
 
 	public void setVisibilityChanged(boolean visibilityChanged) {
 		this.visibilityChanged = visibilityChanged;
@@ -148,7 +134,6 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 			addedAttributes.isEmpty() && removedAttributes.isEmpty() &&
 			operationDiffList.isEmpty() && attributeDiffList.isEmpty() &&
 			operationBodyMapperList.isEmpty() &&
-			//operationBodyDiffList.isEmpty() &&
 			!visibilityChanged && !abstractionChanged;
 	}
 
@@ -167,10 +152,6 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	public List<UMLAttribute> getRemovedAttributes() {
 		return removedAttributes;
 	}
-
-	/*public List<UMLOperationBodyDiff> getOperationBodyDiffList() {
-		return operationBodyDiffList;
-	}*/
 
 	public List<UMLOperationBodyMapper> getOperationBodyMapperList() {
 		return operationBodyMapperList;
@@ -335,14 +316,12 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 									new InlineOperationRefactoring(removedOperation, operationBodyMapper.getOperation2(), operationBodyMapper.getOperation2().getClassName());
 							refactorings.add(inlineOperationRefactoring);
 							operationsToBeRemoved.add(removedOperation);
-							// removedOperationIterator.remove();
 						}
 					}
 				}
 			}
 		}
 		removedOperations.removeAll(operationsToBeRemoved);
-		//operationBodyMapperList.addAll(mappersToBeAdded);
 	}
 	
 	public void checkForExtractedOperations() {
@@ -368,7 +347,6 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 							ExtractOperationRefactoring extractOperationRefactoring =
 									new ExtractOperationRefactoring(addedOperation, operationBodyMapper.getOperation1(), operationBodyMapper.getOperation1().getClassName());
 							refactorings.add(extractOperationRefactoring);
-							//addedOperationIterator.remove();
 							operationsToBeRemoved.add(addedOperation);
 						}
 					}

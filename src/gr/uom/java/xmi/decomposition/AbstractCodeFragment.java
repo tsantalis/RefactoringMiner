@@ -39,7 +39,27 @@ public abstract class AbstractCodeFragment {
 		String afterReplacements = getString();
 		for(String parameter : parameterToArgumentMap.keySet()) {
 			String argument = parameterToArgumentMap.get(parameter);
-			afterReplacements = afterReplacements.replaceAll(Pattern.quote(parameter), Matcher.quoteReplacement(argument));
+			if(!parameter.equals(argument)) {
+				StringBuffer sb = new StringBuffer();
+				Pattern p = Pattern.compile(Pattern.quote(parameter));
+				Matcher m = p.matcher(afterReplacements);
+				while(m.find()) {
+					//avoid replacing the parameter if it has "this." as a prefix
+					int start = m.start();
+					boolean thisPrefixFound = false;
+					if(start >= 5) {
+						String prefix = afterReplacements.substring(start-5, start);
+						if(prefix.equals("this.")) {
+							thisPrefixFound = true;
+						}
+					}
+					if(!thisPrefixFound) {
+						m.appendReplacement(sb, Matcher.quoteReplacement(argument));
+					}
+				}
+				m.appendTail(sb);
+				afterReplacements = sb.toString();
+			}
 		}
 		this.codeFragmentAfterReplacingParametersWithArguments = afterReplacements;
 	}

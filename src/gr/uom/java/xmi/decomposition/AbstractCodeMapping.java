@@ -31,7 +31,11 @@ public abstract class AbstractCodeMapping {
 	}
 
 	public boolean isExact() {
-		return fragment1.getString().equals(fragment2.getString()) && !isKeyword();
+		return fragment1.getArgumentizedString().equals(fragment2.getArgumentizedString()) && !isKeyword();
+	}
+
+	public boolean isInExact() {
+		return !fragment1.getArgumentizedString().equals(fragment2.getArgumentizedString());
 	}
 
 	private boolean isKeyword() {

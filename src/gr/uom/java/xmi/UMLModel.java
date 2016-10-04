@@ -162,7 +162,7 @@ public class UMLModel {
 //    			modelDiff.reportAddedAnonymousClass(umlClass);
 //    	}
     	modelDiff.checkForOperationMoves();
-//    	modelDiff.checkForExtractedAndMovedOperations();
+    	modelDiff.checkForExtractedAndMovedOperations();
     	return modelDiff;
     }
 }

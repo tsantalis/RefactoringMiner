@@ -64,7 +64,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 	
-	public UMLOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper, UMLOperation addedOperation) {
+	public UMLOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper, UMLOperation addedOperation, Map<String, String> parameterToArgumentMap) {
 		this.operation1 = operationBodyMapper.operation1;
 		this.operation2 = addedOperation;
 		this.mappings = new ArrayList<AbstractCodeMapping>();
@@ -80,7 +80,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			//adding leaves that were mapped with replacements
 			Set<StatementObject> addedLeaves1 = new LinkedHashSet<StatementObject>();
 			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-				if(!mapping.getReplacements().isEmpty()) {
+				if(!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2())) {
 					AbstractCodeFragment fragment = mapping.getFragment1();
 					if(fragment instanceof StatementObject) {
 						StatementObject statement = (StatementObject)fragment;
@@ -92,6 +92,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			List<StatementObject> leaves2 = composite2.getLeaves();
+			//replace parameters with arguments in leaves2
+			if(!parameterToArgumentMap.isEmpty()) {
+				for(StatementObject leave2 : leaves2) {
+					leave2.replaceParametersWithArguments(parameterToArgumentMap);
+				}
+			}
 			//compare leaves from T1 with leaves from T2
 			processLeaves(leaves1, leaves2);
 
@@ -241,6 +247,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		int count = 0;
 		for(AbstractCodeMapping mapping : getMappings()) {
 			if(mapping.isExact())
+				count++;
+		}
+		return count;
+	}
+
+	public int inExactMatches() {
+		int count = 0;
+		for(AbstractCodeMapping mapping : getMappings()) {
+			if(mapping.isInExact())
 				count++;
 		}
 		return count;

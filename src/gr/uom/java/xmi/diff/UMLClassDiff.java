@@ -28,6 +28,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	private List<UMLAttributeDiff> attributeDiffList;
 	private List<UMLOperationDiff> operationDiffList;
 	private List<UMLOperationBodyMapper> operationBodyMapperList;
+	private Map<UMLOperation, OperationInvocation> extractedDelegateOperations;
 	private List<Refactoring> refactorings;
 	private boolean visibilityChanged;
 	private String oldVisibility;
@@ -49,6 +50,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		this.attributeDiffList = new ArrayList<UMLAttributeDiff>();
 		this.operationDiffList = new ArrayList<UMLOperationDiff>();
 		this.operationBodyMapperList = new ArrayList<UMLOperationBodyMapper>();
+		this.extractedDelegateOperations = new LinkedHashMap<UMLOperation, OperationInvocation>();
 		this.refactorings = new ArrayList<Refactoring>();
 		this.visibilityChanged = false;
 		this.abstractionChanged = false;
@@ -155,6 +157,10 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 
 	public List<UMLOperationBodyMapper> getOperationBodyMapperList() {
 		return operationBodyMapperList;
+	}
+
+	public Map<UMLOperation, OperationInvocation> getExtractedDelegateOperations() {
+		return extractedDelegateOperations;
 	}
 
 	public List<Refactoring> getRefactorings() {
@@ -332,21 +338,31 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 				if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
 					!mapper.getVariableReplacementsWithMethodInvocation().isEmpty() || !mapper.getMethodInvocationReplacements().isEmpty()) {
 					Set<OperationInvocation> operationInvocations = mapper.getOperation2().getBody().getAllOperationInvocations();
-					boolean addedOperationIsInvoked = false;
+					OperationInvocation addedOperationInvocation = null;
 					for(OperationInvocation invocation : operationInvocations) {
 						if(invocation.matchesOperation(addedOperation)) {
-							addedOperationIsInvoked = true;
+							addedOperationInvocation = invocation;
 							break;
 						}
 					}
-					if(addedOperationIsInvoked) {
-						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation);
+					if(addedOperationInvocation != null) {
+						//List<String> arguments = addedOperationInvocation.getArguments();
+						//List<String> parameters = addedOperation.getParameterNameList();
+						Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
+						/*for(int i=0; i<parameters.size(); i++) {
+							parameterToArgumentMap.put(parameters.get(i), arguments.get(i));
+						}*/
+						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap);
 						if(!operationBodyMapper.getMappings().isEmpty() &&
 								(operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT2()
 										|| operationBodyMapper.exactMatches() > 0) ) {
 							ExtractOperationRefactoring extractOperationRefactoring =
 									new ExtractOperationRefactoring(addedOperation, operationBodyMapper.getOperation1(), operationBodyMapper.getOperation1().getClassName());
 							refactorings.add(extractOperationRefactoring);
+							operationsToBeRemoved.add(addedOperation);
+						}
+						else if(addedOperation.isDelegate() != null) {
+							extractedDelegateOperations.put(addedOperation, addedOperation.isDelegate());
 							operationsToBeRemoved.add(addedOperation);
 						}
 					}

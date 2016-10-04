@@ -1,8 +1,5 @@
 package org.refactoringminer.test;
 
-import java.util.Iterator;
-
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.test.TestBuilder.ProjectMatcher.CommitMatcher;
 
 public class RefactoringPopulator {
@@ -190,34 +187,70 @@ public class RefactoringPopulator {
 						// org.argouml.uml.diagram.static_structure.ui.StylePanelFigInterface",
 						"Move Attribute private refreshTransaction : boolean from class org.argouml.uml.diagram.static_structure.ui.StylePanelFigInterface to class org.argouml.uml.diagram.static_structure.ui.SelectionComment",
 						"Move Attribute private upperRect : FigRect from class org.argouml.uml.diagram.deployment.ui.AbstractFigComponent to class org.argouml.uml.diagram.deployment.ui.UMLDeploymentDiagram",
-						"Extract Method public setCover(FigRect cover) : void extracted from private initClassifierRoleFigs() : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
-						"Extract Method public setCover(FigRect cover) : void extracted from public clone() : Object in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
-						"Extract Method public getCover() : FigRect extracted from public setLineColor(col Color) : void in org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
-						"Extract Method public getCover() : FigRect extracted from public getLineColor() : Color in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
-						"Extract Method public getCover() : FigRect extracted from public setFillColor(col Color) : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
-						"Extract Method public getCover() : FigRect extracted from public getFillColor() : Color in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
-						"Extract Method public getCover() : FigRect extracted from public setFilled(f boolean) : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
-						"Extract Method public getCover() : FigRect extracted from public isFilled() : boolean in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
-						"Extract Method public getCover() : FigRect extracted from public setLineWidth(w int) : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
-						"Extract Method public getCover() : FigRect extracted from public getLineWidth() : int in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
-						"Extract Method public getUpperRect() : FigRect extracted from private initFigs() : void in class org.argouml.uml.diagram.deployment.ui.AbstractFigComponent",
-						"Extract Method public getUpperRect() : FigRect extracted from public setLineColor(Color c) : void in class org.argouml.uml.diagram.deployment.ui.AbstractFigComponent",
-						"Extract Method public getUpperRect() : FigRect extracted from protected setStandardBounds(x int,y int, w int, h int) : void in org.argouml.uml.diagram.deployment.ui.AbstractFigComponent",
-						"Extract Method public setUpperRect(FigRect upperRect) : void extracted from private initFigs() : void in class org.argouml.uml.diagram.deployment.ui.AbstractFigComponent",
-						"Extract Method public setUpperRect(FigRect upperRect) : void extracted from public clone() : Object in class org.argouml.uml.diagram.deployment.ui.AbstractFigComponent",
-						"Extract Method public getFlatChildren() : List<ToDoItem> extracted from public getChild(parent Object, index int) : Object in class org.argouml.cognitive.ui.ToDoPerspective",
-						"Extract Method public getFlatChildren() : List<ToDoItem> extracted from public getChildCount(parent Object) : int in class org.argouml.cognitive.ui.ToDoPerspective",
-						"Extract Method public getFlatChildren() : List<ToDoItem> extracted from public getIndexOfChild(parent Object, child Object) : int in class org.argouml.cognitive.ui.ToDoPerspective",
-						"Extract Method public getFlatChildren() : List<ToDoItem> extracted from public calcFlatChildren() : void in class org.argouml.cognitive.ui.ToDoPerspective",
-						"Extract Method public getFlatChildren() : List<ToDoItem> extracted from public addFlatChildren(node Object) : void in class org.argouml.cognitive.ui.ToDoPerspective",
+						"Extract And Move Method public setCover(cover FigRect) : void extracted from public clone() : Object in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole & moved to class org.argouml.uml.diagram.collaboration.ui.ActionAddClassifierRole",
+						"Extract And Move Method public setCover(cover FigRect) : void extracted from private initClassifierRoleFigs() : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole & moved to class org.argouml.uml.diagram.collaboration.ui.ActionAddClassifierRole",
+						"Extract And Move Method public getSlidersToGoals() : Hashtable<JSlider, Goal> extracted from private initMainPanel() : void in class org.argouml.cognitive.ui.GoalsDialog & moved to class org.argouml.cognitive.ui.InitCognitiveUI",
+						"Extract And Move Method public getSlidersToGoals() : Hashtable<JSlider, Goal> extracted from public stateChanged(ce ChangeEvent) : void in class org.argouml.cognitive.ui.GoalsDialog & moved to class org.argouml.cognitive.ui.InitCognitiveUI",
+						"Extract And Move Method public getDescription() : WizDescription extracted from public showStep(ws JPanel) : void in class org.argouml.cognitive.ui.TabToDo & moved to class org.argouml.cognitive.ui.GoListToGoalsToItems",
+						"Extract And Move Method public getDescription() : WizDescription extracted from public showDescription() : void in class org.argouml.cognitive.ui.TabToDo & moved to class org.argouml.cognitive.ui.GoListToGoalsToItems",
+						"Extract And Move Method public getDescription() : WizDescription extracted from private setTargetInternal(item Object) : void in class org.argouml.cognitive.ui.TabToDo & moved to class org.argouml.cognitive.ui.GoListToGoalsToItems",
+						"Extract And Move Method public getFlatChildren() : List<ToDoItem> extracted from public getChildCount(parent Object) : int in class org.argouml.cognitive.ui.ToDoPerspective & moved to class org.argouml.cognitive.ui.GoListToDecisionsToItems",
+						"Extract And Move Method public getFlatChildren() : List<ToDoItem> extracted from public getChild(parent Object, index int) : Object in class org.argouml.cognitive.ui.ToDoPerspective & moved to class org.argouml.cognitive.ui.GoListToDecisionsToItems",
+						"Extract And Move Method public getFlatChildren() : List<ToDoItem> extracted from public getIndexOfChild(parent Object, child Object) : int in class org.argouml.cognitive.ui.ToDoPerspective & moved to class org.argouml.cognitive.ui.GoListToDecisionsToItems",
+						"Extract And Move Method public getFlatChildren() : List<ToDoItem> extracted from public addFlatChildren(node Object) : void in class org.argouml.cognitive.ui.ToDoPerspective & moved to class org.argouml.cognitive.ui.GoListToDecisionsToItems",
+						"Extract And Move Method public getFlatChildren() : List<ToDoItem> extracted from public calcFlatChildren() : void in class org.argouml.cognitive.ui.ToDoPerspective & moved to class org.argouml.cognitive.ui.GoListToDecisionsToItems",
+						"Extract And Move Method public getChoices() : List<String> extracted from public actionPerformed(e ActionEvent) : void in class org.argouml.cognitive.ui.WizStepChoice & moved to class org.argouml.cognitive.ui.ActionOpenDecisions",
+						"Extract And Move Method public setUpperRect(upperRect FigRect) : void extracted from public clone() : Object in class org.argouml.uml.diagram.deployment.ui.AbstractFigComponent & moved to class org.argouml.uml.diagram.deployment.ui.UMLDeploymentDiagram",
+						"Extract And Move Method public setUpperRect(upperRect FigRect) : void extracted from private initFigs() : void in class org.argouml.uml.diagram.deployment.ui.AbstractFigComponent & moved to class org.argouml.uml.diagram.deployment.ui.UMLDeploymentDiagram",
+						"Extract And Move Method public getUpperRect() : FigRect extracted from private initFigs() : void in class org.argouml.uml.diagram.deployment.ui.AbstractFigComponent & moved to class org.argouml.uml.diagram.deployment.ui.UMLDeploymentDiagram",
+						"Extract And Move Method public getUpperRect() : FigRect extracted from protected setStandardBounds(x int, y int, w int, h int) : void in class org.argouml.uml.diagram.deployment.ui.AbstractFigComponent & moved to class org.argouml.uml.diagram.deployment.ui.UMLDeploymentDiagram",
+						"Extract And Move Method public getUpperRect() : FigRect extracted from public setLineColor(c Color) : void in class org.argouml.uml.diagram.deployment.ui.AbstractFigComponent & moved to class org.argouml.uml.diagram.deployment.ui.UMLDeploymentDiagram",
+						"Extract And Move Method public getCover() : FigRect extracted from public setLineColor(col Color) : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole & moved to class org.argouml.uml.diagram.collaboration.ui.ActionAddClassifierRole",
+						"Extract And Move Method public getCover() : FigRect extracted from public setFillColor(col Color) : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole & moved to class org.argouml.uml.diagram.collaboration.ui.ActionAddClassifierRole",
+						"Extract And Move Method public getCover() : FigRect extracted from public setFilled(f boolean) : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole & moved to class org.argouml.uml.diagram.collaboration.ui.ActionAddClassifierRole",
+						"Extract And Move Method public getCover() : FigRect extracted from public getFillColor() : Color in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole & moved to class org.argouml.uml.diagram.collaboration.ui.ActionAddClassifierRole",
+						"Extract And Move Method public getCover() : FigRect extracted from public getLineColor() : Color in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole & moved to class org.argouml.uml.diagram.collaboration.ui.ActionAddClassifierRole",
+						"Extract And Move Method public getCover() : FigRect extracted from public getLineWidth() : int in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole & moved to class org.argouml.uml.diagram.collaboration.ui.ActionAddClassifierRole",
+						"Extract And Move Method public getCover() : FigRect extracted from public setLineWidth(w int) : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole & moved to class org.argouml.uml.diagram.collaboration.ui.ActionAddClassifierRole",
+						"Extract And Move Method public getCover() : FigRect extracted from public isFilled() : boolean in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole & moved to class org.argouml.uml.diagram.collaboration.ui.ActionAddClassifierRole",
+						//EXTRA
+						"Extract And Move Method public getCover() : FigRect extracted from private initClassifierRoleFigs() : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole & moved to class org.argouml.uml.diagram.collaboration.ui.ActionAddClassifierRole",
+						"Extract And Move Method public getCover() : FigRect extracted from protected setStandardBounds(x int, y int, w int, h int) : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole & moved to class org.argouml.uml.diagram.collaboration.ui.ActionAddClassifierRole",
+						//TBD  
+						"Extract And Move Method public getWeight() : float extracted from public getWeight() : float in class org.argouml.uml.diagram.static_structure.layout.ClassdiagramNode & moved to class org.argouml.uml.diagram.static_structure.layout.ClassdiagramModelElementFactory",
+						"Extract And Move Method public setWeight(weight float) : void extracted from public setWeight(w float) : void in class org.argouml.uml.diagram.static_structure.layout.ClassdiagramNode & moved to class org.argouml.uml.diagram.static_structure.layout.ClassdiagramModelElementFactory",
+						"Extract And Move Method public isRefreshTransaction() : boolean extracted from public itemStateChanged(e ItemEvent) : void in class org.argouml.uml.diagram.static_structure.ui.StylePanelFigInterface & moved to class org.argouml.uml.diagram.static_structure.ui.SelectionComment",
+						"Extract And Move Method public getIcon() : Icon extracted from public getIcon() : Icon in class org.argouml.notation.NotationNameImpl & moved to class org.argouml.notation.InitNotation",
+						
+						
+						//"Extract Method public setCover(FigRect cover) : void extracted from private initClassifierRoleFigs() : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
+						//"Extract Method public setCover(FigRect cover) : void extracted from public clone() : Object in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
+						//"Extract Method public getCover() : FigRect extracted from public setLineColor(col Color) : void in org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
+						//"Extract Method public getCover() : FigRect extracted from public getLineColor() : Color in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
+						//"Extract Method public getCover() : FigRect extracted from public setFillColor(col Color) : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
+						//"Extract Method public getCover() : FigRect extracted from public getFillColor() : Color in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
+						//"Extract Method public getCover() : FigRect extracted from public setFilled(f boolean) : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
+						//"Extract Method public getCover() : FigRect extracted from public isFilled() : boolean in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
+						//"Extract Method public getCover() : FigRect extracted from public setLineWidth(w int) : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
+						//"Extract Method public getCover() : FigRect extracted from public getLineWidth() : int in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
+						//"Extract Method public getUpperRect() : FigRect extracted from private initFigs() : void in class org.argouml.uml.diagram.deployment.ui.AbstractFigComponent",
+						//"Extract Method public getUpperRect() : FigRect extracted from public setLineColor(Color c) : void in class org.argouml.uml.diagram.deployment.ui.AbstractFigComponent",
+						//"Extract Method public getUpperRect() : FigRect extracted from protected setStandardBounds(x int,y int, w int, h int) : void in org.argouml.uml.diagram.deployment.ui.AbstractFigComponent",
+						//"Extract Method public setUpperRect(FigRect upperRect) : void extracted from private initFigs() : void in class org.argouml.uml.diagram.deployment.ui.AbstractFigComponent",
+						//"Extract Method public setUpperRect(FigRect upperRect) : void extracted from public clone() : Object in class org.argouml.uml.diagram.deployment.ui.AbstractFigComponent",
+						//"Extract Method public getFlatChildren() : List<ToDoItem> extracted from public getChild(parent Object, index int) : Object in class org.argouml.cognitive.ui.ToDoPerspective",
+						//"Extract Method public getFlatChildren() : List<ToDoItem> extracted from public getChildCount(parent Object) : int in class org.argouml.cognitive.ui.ToDoPerspective",
+						//"Extract Method public getFlatChildren() : List<ToDoItem> extracted from public getIndexOfChild(parent Object, child Object) : int in class org.argouml.cognitive.ui.ToDoPerspective",
+						//"Extract Method public getFlatChildren() : List<ToDoItem> extracted from public calcFlatChildren() : void in class org.argouml.cognitive.ui.ToDoPerspective",
+						//"Extract Method public getFlatChildren() : List<ToDoItem> extracted from public addFlatChildren(node Object) : void in class org.argouml.cognitive.ui.ToDoPerspective",
 						"Extract Method public setFlatChildren(List<ToDoItem> flatChildren) : void extracted from public addFlatChildren(node Object) : void in class org.argouml.cognitive.ui.ToDoPerspective",
-						"Extract Method public getChoices() : List<String> extracted from public actionPerformed(e ActionEvent) : void in class org.argouml.cognitive.ui.ActionOpenDecisions",
-						"Extract Method public setChoices(choices List<String>) : void extracted from public WizStepChoice(w Wizard, instr String, ch List<String>) : void in class org.argouml.cognitive.ui.ActionOpenDecisions",
-						"Extract Method public getSlidersToGoals() : Hashtable<JSlider, Goal> extracted from private initMainPanel() : void in class org.argouml.cognitive.ui.GoalsDialog",
-						"Extract Method public getSlidersToGoals() : Hashtable<JSlider, Goal> extracted from public stateChanged(ChangeEvent ce) : void in class org.argouml.cognitive.ui.GoalsDialog",
-						"Extract Method public getDescription() : WizDescription extracted from public showDescription() : void in class org.argouml.cognitive.ui.TabToDo",
-						"Extract Method public getDescription() : WizDescription extracted from public showStep(ws JPanel) : void in class org.argouml.cognitive.ui.TabToDo",
-						"Extract Method public getDescription() : WizDescription extracted from private setTargetInternal(item Object) : void in class org.argouml.cognitive.ui.TabToDo"
+						//"Extract Method public getChoices() : List<String> extracted from public actionPerformed(e ActionEvent) : void in class org.argouml.cognitive.ui.ActionOpenDecisions",
+						"Extract Method public setChoices(choices List<String>) : void extracted from public WizStepChoice(w Wizard, instr String, ch List<String>) : void in class org.argouml.cognitive.ui.ActionOpenDecisions"
+						//"Extract Method public getSlidersToGoals() : Hashtable<JSlider, Goal> extracted from private initMainPanel() : void in class org.argouml.cognitive.ui.GoalsDialog",
+						//"Extract Method public getSlidersToGoals() : Hashtable<JSlider, Goal> extracted from public stateChanged(ChangeEvent ce) : void in class org.argouml.cognitive.ui.GoalsDialog",
+						//"Extract Method public getDescription() : WizDescription extracted from public showDescription() : void in class org.argouml.cognitive.ui.TabToDo",
+						//"Extract Method public getDescription() : WizDescription extracted from public showStep(ws JPanel) : void in class org.argouml.cognitive.ui.TabToDo",
+						//"Extract Method public getDescription() : WizDescription extracted from private setTargetInternal(item Object) : void in class org.argouml.cognitive.ui.TabToDo"
 
 				).atCommit("4ba691a56b441f0ce9d1683a8ad3ed5b82d52268")
 				// FP** one-liner, more like encapsulate field
@@ -418,7 +451,7 @@ public class RefactoringPopulator {
 							// isSongFavorite method in FavoritesSongsManager,
 							// but it only delegates to
 							// FavoritesObjectDataStore#isSongFavorite
-							"Move Method isSongFavorite from class net.sourceforge.atunes.kernel.modules.favorites.FavoritesSongsManager to isSongFavorite from class net.sourceforge.atunes.kernel.modules.favorites.FavoritesObjectDataStore",
+							"Extract And Move Method public isSongFavorite(favorites IFavorites, artist String, title String) : boolean extracted from public isSongFavorite(favorites IFavorites, artist String, title String) : boolean in class net.sourceforge.atunes.kernel.modules.favorites.FavoritesSongsManager & moved to class net.sourceforge.atunes.kernel.modules.favorites.FavoritesObjectDataStore",
 							"Move Method private isFadeAwayInProgress() : boolean from class net.sourceforge.atunes.kernel.modules.player.mplayer.MPlayerEngine to package isFadeAwayInProgress(mPlayerEngine MPlayerEngine) : boolean from class net.sourceforge.atunes.kernel.modules.player.mplayer.MPlayerCommandWriter",
 							"Move Method package addToHistory(audioObject IAudioObject) : void from class net.sourceforge.atunes.kernel.modules.playlist.PlaybackHistory to package addToHistory(playbackHistory PlaybackHistory, audioObject IAudioObject) : void from class net.sourceforge.atunes.kernel.modules.playlist.PlaybackHistory.Heap",
 							"Move Method public readObjectFromFile(inputStream InputStream) : Object from class net.sourceforge.atunes.utils.XMLSerializerService to public readObjectFromFile(xmlSerializerService XMLSerializerService, inputStream InputStream) : Object from class net.sourceforge.atunes.utils.XStreamFactory",
@@ -430,7 +463,7 @@ public class RefactoringPopulator {
 			CommitMatcher matcher = test.project("https://github.com/danilofes/atunes-refactorings.git", "master")
 					.atCommit("fec9b7bbc31a04c6f15137679faeb7fcfd6cd97d");
 
-			getaTunesMoveAttributes(matcher);
+			getaTunesMoveAttribute(matcher);
 
 		}
 
@@ -464,7 +497,7 @@ public class RefactoringPopulator {
 					.atCommit("8dbd39562602c1112e7f73b2a1825c78a70ac5c7");
 			getaTunesExtractMethod(matcher);
 			if ((Refactorings.MoveAttribute.getValue() & flag) == 0) {
-				getaTunesMoveAttributes(matcher);
+				getaTunesMoveAttribute(matcher);
 			}
 		}
 
@@ -490,11 +523,11 @@ public class RefactoringPopulator {
 			CommitMatcher matcher = test.project("https://github.com/danilofes/atunes-refactorings.git", "master")
 					.atCommit("f061c05f845933f3e9ca8dba2b37c24b2ff164f2");
 
-			getaTunesPullUpAttrinute(matcher);
+			getaTunesPullUpAttribute(matcher);
 		}
 	}
 
-	private static void getaTunesPullUpAttrinute(CommitMatcher matcher) {
+	private static void getaTunesPullUpAttribute(CommitMatcher matcher) {
 		matcher.containsOnly(
 				"Pull Up Attribute protected desktop : IDesktop from class net.sourceforge.atunes.gui.views.dialogs.MakeDonationDialog to class net.sourceforge.atunes.gui.views.controls.AbstractCustomDialog",
 				"Pull Up Attribute protected albumColumnSet : IColumnSet from class net.sourceforge.atunes.gui.AlbumTableColumnModel to class net.sourceforge.atunes.gui.AbstractCommonColumnModel",
@@ -528,7 +561,7 @@ public class RefactoringPopulator {
 
 	}
 
-	private static void getaTunesMoveAttributes(CommitMatcher matcher) {
+	private static void getaTunesMoveAttribute(CommitMatcher matcher) {
 		matcher.containsOnly(
 				"Move Attribute private imageSize : int from class net.sourceforge.atunes.kernel.modules.fullscreen.Cover to class net.sourceforge.atunes.kernel.modules.fullscreen.CoverFlow",
 				"Move Attribute private versionProperty : String from class net.sourceforge.atunes.kernel.modules.updates.UpdateHandler to class net.sourceforge.atunes.kernel.modules.updates.VersionXmlParser",
@@ -536,11 +569,17 @@ public class RefactoringPopulator {
 				"Move Attribute private albumFavoriteSearchOperator : ISearchUnaryOperator<IAlbum> from class net.sourceforge.atunes.kernel.modules.search.AlbumSearchField to class net.sourceforge.atunes.kernel.modules.search.AlbumArtistSearchField",
 				"Move Attribute private old : boolean from class net.sourceforge.atunes.kernel.modules.podcast.PodcastFeedEntry to class net.sourceforge.atunes.kernel.modules.podcast.PodcastFeed",
 //				"Extract Method private getAlbumFavoriteSearchOperator() : ISearchUnaryOperator extracted from * in class net.sourceforge.atunes.kernel.modules.search.AlbumSearchField",
-				"Extract Method private getVersionProperty() : String extracted from public setVersionProperty(versionProperty String) : void in class net.sourceforge.atunes.kernel.modules.updates.UpdateHandler",
-				"Extract Method private getProcess() : Process extracted from public stop() : void in class net.sourceforge.atunes.kernel.modules.cdripper.NeroAacEncoder",
-				"Extract Method private setProcess(process Process) : void extracted from public stop() : void in class net.sourceforge.atunes.kernel.modules.cdripper.NeroAacEncoder",
-				"Extract Method private getProcess() : Process extracted from public testEncoder() : boolean in class net.sourceforge.atunes.kernel.modules.cdripper.NeroAacEncoder",
-				"Extract Method private getAlbumFavoriteSearchOperator() : ISearchUnaryOperator extracted from public getOperators() : List in class net.sourceforge.atunes.kernel.modules.search.AlbumSearchField"
+				"Extract Method private getAlbumFavoriteSearchOperator() : ISearchUnaryOperator extracted from public getOperators() : List in class net.sourceforge.atunes.kernel.modules.search.AlbumSearchField",
+				"Extract And Move Method public getProcess() : Process extracted from public encode(wavFile File, mp4File File) : boolean in class net.sourceforge.atunes.kernel.modules.cdripper.NeroAacEncoder & moved to class net.sourceforge.atunes.kernel.modules.cdripper.CdRipper",
+				"Extract And Move Method public setProcess(process Process) : void extracted from public encode(wavFile File, mp4File File) : boolean in class net.sourceforge.atunes.kernel.modules.cdripper.NeroAacEncoder & moved to class net.sourceforge.atunes.kernel.modules.cdripper.CdRipper",
+				"Extract And Move Method public getProcess() : Process extracted from public stop() : void in class net.sourceforge.atunes.kernel.modules.cdripper.NeroAacEncoder & moved to class net.sourceforge.atunes.kernel.modules.cdripper.CdRipper",
+				"Extract And Move Method public getVersionProperty() : String extracted from private checkIfVersionChanged() : void in class net.sourceforge.atunes.kernel.modules.updates.UpdateHandler & moved to class net.sourceforge.atunes.kernel.modules.updates.VersionXmlParser",
+				//TBD
+				"Extract And Move Method public getImageSize() : int extracted from public getImageSize() : int in class net.sourceforge.atunes.kernel.modules.fullscreen.Cover & moved to class net.sourceforge.atunes.kernel.modules.fullscreen.CoverFlow",
+				"Extract And Move Method public setAlbumFavoriteSearchOperator(albumFavoriteSearchOperator ISearchUnaryOperator) : void extracted from public setAlbumFavoriteSearchOperator(albumFavoriteSearchOperator ISearchUnaryOperator) : void in class net.sourceforge.atunes.kernel.modules.search.AlbumSearchField & moved to class net.sourceforge.atunes.kernel.modules.search.AlbumArtistSearchField",
+				"Extract And Move Method public isOld() : boolean extracted from public isOld() : boolean in class net.sourceforge.atunes.kernel.modules.podcast.PodcastFeedEntry & moved to class net.sourceforge.atunes.kernel.modules.podcast.PodcastFeed",
+				"Extract And Move Method public setOld(old boolean) : void extracted from public setOld(old boolean) : void in class net.sourceforge.atunes.kernel.modules.podcast.PodcastFeedEntry & moved to class net.sourceforge.atunes.kernel.modules.podcast.PodcastFeed",
+				"Extract And Move Method public setVersionProperty(versionProperty String) : void extracted from public setVersionProperty(versionProperty String) : void in class net.sourceforge.atunes.kernel.modules.updates.UpdateHandler & moved to class net.sourceforge.atunes.kernel.modules.updates.VersionXmlParser"
 
 		);
 		// .atCommit("fec9b7bbc31a04c6f15137679faeb7fcfd6cd97d")

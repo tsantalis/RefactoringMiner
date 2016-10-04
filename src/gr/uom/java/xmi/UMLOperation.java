@@ -1,12 +1,16 @@
 package gr.uom.java.xmi;
 
+import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.OperationBody;
+import gr.uom.java.xmi.decomposition.OperationInvocation;
+import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.diff.StringDistance;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.refactoringminer.util.AstUtils;
@@ -192,6 +196,23 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 		return parameterNameList;
 	}
 
+	public OperationInvocation isDelegate() {
+		if(getBody() != null) {
+			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
+			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
+				StatementObject statement = (StatementObject)statements.get(0);
+				Map<String, OperationInvocation> operationInvocationMap = statement.getMethodInvocationMap();
+				for(String key : operationInvocationMap.keySet()) {
+					OperationInvocation operationInvocation = operationInvocationMap.get(key);
+					if(operationInvocation.matchesOperation(this)) {
+						return operationInvocation;
+					}
+				}
+			}
+		}
+		return null;
+	}
+
 	public boolean equals(Object o) {
 		if(this == o) {
             return true;
@@ -206,6 +227,17 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 				this.parameters.equals(operation.parameters);
 		}
 		return false;
+	}
+
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((className == null) ? 0 : className.hashCode());
+		result = prime * result + (isAbstract ? 1231 : 1237);
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((parameters == null) ? 0 : parameters.hashCode());
+		result = prime * result + ((visibility == null) ? 0 : visibility.hashCode());
+		return result;
 	}
 
 	public String toString() {

@@ -14,6 +14,7 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -668,25 +669,46 @@ public class UMLModelDiff {
     	  UMLOperation addedOperation = addedOperationIterator.next();
     	  for(UMLOperationBodyMapper mapper : getOperationBodyMappersInCommonClasses()) {
     		  if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
-                 !mapper.getVariableReplacementsWithMethodInvocation().isEmpty() || !mapper.getMethodInvocationReplacements().isEmpty()) {
+                 !mapper.getVariableReplacementsWithMethodInvocation().isEmpty() || !mapper.getMethodInvocationReplacements().isEmpty() || mapper.inExactMatches() > 0) {
                Set<OperationInvocation> operationInvocations = mapper.getOperation2().getBody().getAllOperationInvocations();
-               boolean addedOperationIsInvoked = false;
+               OperationInvocation addedOperationInvocation = null;
                for(OperationInvocation invocation : operationInvocations) {
                   if(invocation.matchesOperation(addedOperation)) {
-                     addedOperationIsInvoked = true;
+                     addedOperationInvocation = invocation;
                      break;
                   }
                }
-               if(addedOperationIsInvoked) {
-                  UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation);
+               if(addedOperationInvocation != null) {
+            	  List<String> arguments = addedOperationInvocation.getArguments();
+            	  List<String> parameters = addedOperation.getParameterNameList();
+            	  Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
+            	  for(int i=0; i<parameters.size(); i++) {
+            		  parameterToArgumentMap.put(parameters.get(i), arguments.get(i));
+            	  }
+                  UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap);
                   if(!operationBodyMapper.getMappings().isEmpty() &&
                         (operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT2()
-                              || operationBodyMapper.exactMatches() > 0) ) {
+                              || operationBodyMapper.exactMatches() > 0) &&
+                        mapper.getOperation1().isDelegate() == null && mapper.getOperation2().isDelegate() != null) {
                      ExtractAndMoveOperationRefactoring extractOperationRefactoring =
                            new ExtractAndMoveOperationRefactoring(addedOperation, operationBodyMapper.getOperation1());
                      refactorings.add(extractOperationRefactoring);
                      deleteAddedOperation(addedOperation);
-                     //addedOperationIterator.remove();
+                  }
+                  else if(addedOperation.getBody() != null && addedOperation.getBody().getCompositeStatement().getLeaves().size() == 1 &&
+                          !addedOperation.getClassName().equals(operationBodyMapper.getOperation1().getClassName())) {
+                	  UMLClassDiff classDiff = getUMLClassDiff(operationBodyMapper.getOperation1().getClassName());
+                	  if(classDiff != null && !classDiff.getExtractedDelegateOperations().isEmpty()) {
+                		  for(OperationInvocation operationInvocation : classDiff.getExtractedDelegateOperations().values()) {
+                			  if(operationInvocation.matchesOperation(addedOperation)) {
+                    			  ExtractAndMoveOperationRefactoring extractOperationRefactoring =
+                                        new ExtractAndMoveOperationRefactoring(addedOperation, operationBodyMapper.getOperation1());
+                                  refactorings.add(extractOperationRefactoring);
+                                  deleteAddedOperation(addedOperation);
+                    			  break;
+                    		  }
+                		  }
+                	  }
                   }
                }
             }

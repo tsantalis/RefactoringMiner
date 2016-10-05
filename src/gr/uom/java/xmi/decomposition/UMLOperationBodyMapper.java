@@ -252,15 +252,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return count;
 	}
 
-	public int inExactMatches() {
-		int count = 0;
-		for(AbstractCodeMapping mapping : getMappings()) {
-			if(mapping.isInExact())
-				count++;
-		}
-		return count;
-	}
-
 	public Set<Replacement> getReplacements() {
 		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 		for(AbstractCodeMapping mapping : getMappings()) {
@@ -360,55 +351,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				innerNodeIterator1.remove();
 			}
 		}
-		
-		//Lcs matching - inner nodes
-		for(ListIterator<CompositeStatementObject> innerNodeIterator1 = innerNodes1.listIterator(); innerNodeIterator1.hasNext();) {
-			CompositeStatementObject statement1 = innerNodeIterator1.next();
-			TreeSet<CompositeStatementObjectMapping> mappingSet = new TreeSet<CompositeStatementObjectMapping>();
-			for(ListIterator<CompositeStatementObject> innerNodeIterator2 = innerNodes2.listIterator(); innerNodeIterator2.hasNext();) {
-				CompositeStatementObject statement2 = innerNodeIterator2.next();
-				List<String> lcs = StringDistance.commonSubstrings(statement1.getString(), statement2.getString());
-				double score = compositeChildMatchingScore(statement1, statement2);
-				if(lcs.size() == 1 &&
-						(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
-					double similarity = (double)lcs.get(0).length()/(double)Math.max(statement1.getString().length(), statement2.getString().length());
-					if(similarity > 0.5) {
-						CompositeStatementObjectMapping mapping = new CompositeStatementObjectMapping(statement1, statement2, operation1, operation2, score);
-						mappingSet.add(mapping);
-					}
-				}
-			}
-			if(!mappingSet.isEmpty()) {
-				CompositeStatementObjectMapping minStatementMapping = mappingSet.first();
-				mappings.add(minStatementMapping);
-				innerNodes2.remove(minStatementMapping.getFragment2());
-				innerNodeIterator1.remove();
-			}
-		}
-		
-		//string distance matching - inner nodes
-		for(ListIterator<CompositeStatementObject> innerNodeIterator1 = innerNodes1.listIterator(); innerNodeIterator1.hasNext();) {
-			CompositeStatementObject statement1 = innerNodeIterator1.next();
-			TreeSet<CompositeStatementObjectMapping> mappingSet = new TreeSet<CompositeStatementObjectMapping>();
-			for(ListIterator<CompositeStatementObject> innerNodeIterator2 = innerNodes2.listIterator(); innerNodeIterator2.hasNext();) {
-				CompositeStatementObject statement2 = innerNodeIterator2.next();
-				double score = compositeChildMatchingScore(statement1, statement2);
-				String s1 = statement1.getString().toLowerCase();
-				String s2 = statement2.getString().toLowerCase();
-				double distance = (double)StringDistance.editDistance(s1, s2)/(double)Math.max(s1.length(), s2.length());
-				if(distance < 0.4 &&
-						(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
-					CompositeStatementObjectMapping mapping = new CompositeStatementObjectMapping(statement1, statement2, operation1, operation2, score);
-					mappingSet.add(mapping);
-				}
-			}
-			if(!mappingSet.isEmpty()) {
-				CompositeStatementObjectMapping minStatementMapping = mappingSet.first();
-				mappings.add(minStatementMapping);
-				innerNodes2.remove(minStatementMapping.getFragment2());
-				innerNodeIterator1.remove();
-			}
-		}
 	}
 
 	public void processLeaves(List<? extends AbstractCodeFragment> leaves1, List<? extends AbstractCodeFragment> leaves2) {
@@ -418,7 +360,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 				AbstractCodeFragment leaf2 = leafIterator2.next();
-				if(leaf1.getArgumentizedString().equals(leaf2.getArgumentizedString()) && leaf1.getDepth() == leaf2.getDepth()) {
+				String argumentizedString1 = preprocessInput1(leaf1, leaf2);
+				String argumentizedString2 = preprocessInput2(leaf1, leaf2);
+				if(argumentizedString1.equals(argumentizedString2) && leaf1.getDepth() == leaf2.getDepth()) {
 					LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1, operation2);
 					mappingSet.add(mapping);
 				}
@@ -437,7 +381,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 				AbstractCodeFragment leaf2 = leafIterator2.next();
-				if(leaf1.getArgumentizedString().equals(leaf2.getArgumentizedString())) {
+				String argumentizedString1 = preprocessInput1(leaf1, leaf2);
+				String argumentizedString2 = preprocessInput2(leaf1, leaf2);
+				if(argumentizedString1.equals(argumentizedString2)) {
 					LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1, operation2);
 					mappingSet.add(mapping);
 				}
@@ -471,51 +417,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				leafIterator1.remove();
 			}
 		}
-		
-		//Lcs matching - leaf nodes
-		for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
-			AbstractCodeFragment leaf1 = leafIterator1.next();
-			TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
-			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
-				AbstractCodeFragment leaf2 = leafIterator2.next();
-				List<String> lcs = StringDistance.commonSubstrings(leaf1.getArgumentizedString(), leaf2.getArgumentizedString());
-				if(lcs.size() == 1) {
-					double similarity = (double)lcs.get(0).length()/(double)Math.max(leaf1.getArgumentizedString().length(), leaf2.getArgumentizedString().length());
-					if(similarity > 0.5) {
-						LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1, operation2);
-						mappingSet.add(mapping);
-					}
-				}
-			}
-			if(!mappingSet.isEmpty()) {
-				LeafMapping minStatementMapping = mappingSet.first();
-				mappings.add(minStatementMapping);
-				leaves2.remove(minStatementMapping.getFragment2());
-				leafIterator1.remove();
+	}
+
+	private String preprocessInput1(AbstractCodeFragment leaf1, AbstractCodeFragment leaf2) {
+		return preprocessInput(leaf1, leaf2);
+	}
+
+	private String preprocessInput2(AbstractCodeFragment leaf1, AbstractCodeFragment leaf2) {
+		return preprocessInput(leaf2, leaf1);
+	}
+
+	private String preprocessInput(AbstractCodeFragment leaf1, AbstractCodeFragment leaf2) {
+		String argumentizedString = leaf1.getArgumentizedString();
+		if (leaf1 instanceof StatementObject && leaf2 instanceof AbstractExpression) {
+			if (argumentizedString.startsWith("return ") && argumentizedString.endsWith(";\n")) {
+				argumentizedString = argumentizedString.substring("return ".length(),
+						argumentizedString.lastIndexOf(";\n"));
 			}
 		}
-		
-		//string distance matching - leaf nodes
-		for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
-			AbstractCodeFragment leaf1 = leafIterator1.next();
-			TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
-			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
-				AbstractCodeFragment leaf2 = leafIterator2.next();
-				String s1 = leaf1.getArgumentizedString().toLowerCase();
-				String s2 = leaf2.getArgumentizedString().toLowerCase();
-				double distance = (double)StringDistance.editDistance(s1, s2)/(double)Math.max(s1.length(), s2.length());
-				if(distance < 0.4) {
-					LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1, operation2);
-					mappingSet.add(mapping);
-				}
-			}
-			if(!mappingSet.isEmpty()) {
-				LeafMapping minStatementMapping = mappingSet.first();
-				mappings.add(minStatementMapping);
-				leaves2.remove(minStatementMapping.getFragment2());
-				leafIterator1.remove();
-			}
-		}
+		return argumentizedString;
 	}
 
 	private Set<Replacement> findReplacementsWithExactMatching(AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
@@ -529,6 +449,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		
 		Set<String> methodInvocations1 = new LinkedHashSet<String>(statement1.getMethodInvocationMap().keySet());
 		Set<String> methodInvocations2 = new LinkedHashSet<String>(statement2.getMethodInvocationMap().keySet());
+		//remove methodInvocation covering the entire statement
+		for(String methodInvocation1 : statement1.getMethodInvocationMap().keySet()) {
+			if((methodInvocation1 + ";\n").equals(statement1.getString())) {
+				methodInvocations1.remove(methodInvocation1);
+			}
+		}
+		for(String methodInvocation2 : statement2.getMethodInvocationMap().keySet()) {
+			if((methodInvocation2 + ";\n").equals(statement2.getString())) {
+				methodInvocations2.remove(methodInvocation2);
+			}
+		}
 		Set<String> methodInvocationIntersection = new LinkedHashSet<String>(methodInvocations1);
 		methodInvocationIntersection.retainAll(methodInvocations2);
 		// remove common methodInvocations from the two sets

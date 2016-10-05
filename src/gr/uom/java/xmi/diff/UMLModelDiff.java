@@ -669,7 +669,7 @@ public class UMLModelDiff {
     	  UMLOperation addedOperation = addedOperationIterator.next();
     	  for(UMLOperationBodyMapper mapper : getOperationBodyMappersInCommonClasses()) {
     		  if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
-                 !mapper.getVariableReplacementsWithMethodInvocation().isEmpty() || !mapper.getMethodInvocationReplacements().isEmpty() || mapper.inExactMatches() > 0) {
+                 !mapper.getVariableReplacementsWithMethodInvocation().isEmpty() || !mapper.getMethodInvocationReplacements().isEmpty()) {
                Set<OperationInvocation> operationInvocations = mapper.getOperation2().getBody().getAllOperationInvocations();
                OperationInvocation addedOperationInvocation = null;
                for(OperationInvocation invocation : operationInvocations) {

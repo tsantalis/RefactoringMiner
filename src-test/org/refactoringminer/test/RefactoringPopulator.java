@@ -216,11 +216,15 @@ public class RefactoringPopulator {
 						//EXTRA
 						"Extract And Move Method public getCover() : FigRect extracted from private initClassifierRoleFigs() : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole & moved to class org.argouml.uml.diagram.collaboration.ui.ActionAddClassifierRole",
 						"Extract And Move Method public getCover() : FigRect extracted from protected setStandardBounds(x int, y int, w int, h int) : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole & moved to class org.argouml.uml.diagram.collaboration.ui.ActionAddClassifierRole",
+						"Extract And Move Method public setIcon(icon Icon) : void extracted from protected NotationNameImpl(myName String, myVersion String, myIcon Icon) in class org.argouml.notation.NotationNameImpl & moved to class org.argouml.notation.InitNotation",
+						"Extract And Move Method public setChoices(choices List) : void extracted from public WizStepChoice(w Wizard, instr String, ch List) in class org.argouml.cognitive.ui.WizStepChoice & moved to class org.argouml.cognitive.ui.ActionOpenDecisions",
+						"Extract And Move Method public setFlatChildren(flatChildren List) : void extracted from public ToDoPerspective(name String) in class org.argouml.cognitive.ui.ToDoPerspective & moved to class org.argouml.cognitive.ui.GoListToDecisionsToItems",
+						"Extract And Move Method public setRefreshTransaction(refreshTransaction boolean) : void extracted from public refresh() : void in class org.argouml.uml.diagram.static_structure.ui.StylePanelFigInterface & moved to class org.argouml.uml.diagram.static_structure.ui.SelectionComment",
+						"Extract And Move Method public isRefreshTransaction() : boolean extracted from public itemStateChanged(e ItemEvent) : void in class org.argouml.uml.diagram.static_structure.ui.StylePanelFigInterface & moved to class org.argouml.uml.diagram.static_structure.ui.SelectionComment",
 						//TBD  
 						"Extract And Move Method public getWeight() : float extracted from public getWeight() : float in class org.argouml.uml.diagram.static_structure.layout.ClassdiagramNode & moved to class org.argouml.uml.diagram.static_structure.layout.ClassdiagramModelElementFactory",
 						"Extract And Move Method public setWeight(weight float) : void extracted from public setWeight(w float) : void in class org.argouml.uml.diagram.static_structure.layout.ClassdiagramNode & moved to class org.argouml.uml.diagram.static_structure.layout.ClassdiagramModelElementFactory",
-						"Extract And Move Method public isRefreshTransaction() : boolean extracted from public itemStateChanged(e ItemEvent) : void in class org.argouml.uml.diagram.static_structure.ui.StylePanelFigInterface & moved to class org.argouml.uml.diagram.static_structure.ui.SelectionComment",
-						"Extract And Move Method public getIcon() : Icon extracted from public getIcon() : Icon in class org.argouml.notation.NotationNameImpl & moved to class org.argouml.notation.InitNotation",
+						"Extract And Move Method public getIcon() : Icon extracted from public getIcon() : Icon in class org.argouml.notation.NotationNameImpl & moved to class org.argouml.notation.InitNotation"
 						
 						
 						//"Extract Method public setCover(FigRect cover) : void extracted from private initClassifierRoleFigs() : void in class org.argouml.uml.diagram.collaboration.ui.FigClassifierRole",
@@ -243,9 +247,9 @@ public class RefactoringPopulator {
 						//"Extract Method public getFlatChildren() : List<ToDoItem> extracted from public getIndexOfChild(parent Object, child Object) : int in class org.argouml.cognitive.ui.ToDoPerspective",
 						//"Extract Method public getFlatChildren() : List<ToDoItem> extracted from public calcFlatChildren() : void in class org.argouml.cognitive.ui.ToDoPerspective",
 						//"Extract Method public getFlatChildren() : List<ToDoItem> extracted from public addFlatChildren(node Object) : void in class org.argouml.cognitive.ui.ToDoPerspective",
-						"Extract Method public setFlatChildren(List<ToDoItem> flatChildren) : void extracted from public addFlatChildren(node Object) : void in class org.argouml.cognitive.ui.ToDoPerspective",
+						//"Extract Method public setFlatChildren(List<ToDoItem> flatChildren) : void extracted from public addFlatChildren(node Object) : void in class org.argouml.cognitive.ui.ToDoPerspective",
 						//"Extract Method public getChoices() : List<String> extracted from public actionPerformed(e ActionEvent) : void in class org.argouml.cognitive.ui.ActionOpenDecisions",
-						"Extract Method public setChoices(choices List<String>) : void extracted from public WizStepChoice(w Wizard, instr String, ch List<String>) : void in class org.argouml.cognitive.ui.ActionOpenDecisions"
+						//"Extract Method public setChoices(choices List<String>) : void extracted from public WizStepChoice(w Wizard, instr String, ch List<String>) : void in class org.argouml.cognitive.ui.ActionOpenDecisions"
 						//"Extract Method public getSlidersToGoals() : Hashtable<JSlider, Goal> extracted from private initMainPanel() : void in class org.argouml.cognitive.ui.GoalsDialog",
 						//"Extract Method public getSlidersToGoals() : Hashtable<JSlider, Goal> extracted from public stateChanged(ChangeEvent ce) : void in class org.argouml.cognitive.ui.GoalsDialog",
 						//"Extract Method public getDescription() : WizDescription extracted from public showDescription() : void in class org.argouml.cognitive.ui.TabToDo",
@@ -569,11 +573,13 @@ public class RefactoringPopulator {
 				"Move Attribute private albumFavoriteSearchOperator : ISearchUnaryOperator<IAlbum> from class net.sourceforge.atunes.kernel.modules.search.AlbumSearchField to class net.sourceforge.atunes.kernel.modules.search.AlbumArtistSearchField",
 				"Move Attribute private old : boolean from class net.sourceforge.atunes.kernel.modules.podcast.PodcastFeedEntry to class net.sourceforge.atunes.kernel.modules.podcast.PodcastFeed",
 //				"Extract Method private getAlbumFavoriteSearchOperator() : ISearchUnaryOperator extracted from * in class net.sourceforge.atunes.kernel.modules.search.AlbumSearchField",
-				"Extract Method private getAlbumFavoriteSearchOperator() : ISearchUnaryOperator extracted from public getOperators() : List in class net.sourceforge.atunes.kernel.modules.search.AlbumSearchField",
+//				"Extract Method private getAlbumFavoriteSearchOperator() : ISearchUnaryOperator extracted from public getOperators() : List in class net.sourceforge.atunes.kernel.modules.search.AlbumSearchField",
 				"Extract And Move Method public getProcess() : Process extracted from public encode(wavFile File, mp4File File) : boolean in class net.sourceforge.atunes.kernel.modules.cdripper.NeroAacEncoder & moved to class net.sourceforge.atunes.kernel.modules.cdripper.CdRipper",
 				"Extract And Move Method public setProcess(process Process) : void extracted from public encode(wavFile File, mp4File File) : boolean in class net.sourceforge.atunes.kernel.modules.cdripper.NeroAacEncoder & moved to class net.sourceforge.atunes.kernel.modules.cdripper.CdRipper",
 				"Extract And Move Method public getProcess() : Process extracted from public stop() : void in class net.sourceforge.atunes.kernel.modules.cdripper.NeroAacEncoder & moved to class net.sourceforge.atunes.kernel.modules.cdripper.CdRipper",
 				"Extract And Move Method public getVersionProperty() : String extracted from private checkIfVersionChanged() : void in class net.sourceforge.atunes.kernel.modules.updates.UpdateHandler & moved to class net.sourceforge.atunes.kernel.modules.updates.VersionXmlParser",
+				"Extract And Move Method public getAlbumFavoriteSearchOperator() : ISearchUnaryOperator extracted from public getOperators() : List in class net.sourceforge.atunes.kernel.modules.search.AlbumSearchField & moved to class net.sourceforge.atunes.kernel.modules.search.AlbumArtistSearchField",
+				"Extract And Move Method public setImageSize(imageSize int) : void extracted from public Cover(imageSize int) in class net.sourceforge.atunes.kernel.modules.fullscreen.Cover & moved to class net.sourceforge.atunes.kernel.modules.fullscreen.CoverFlow",
 				//TBD
 				"Extract And Move Method public getImageSize() : int extracted from public getImageSize() : int in class net.sourceforge.atunes.kernel.modules.fullscreen.Cover & moved to class net.sourceforge.atunes.kernel.modules.fullscreen.CoverFlow",
 				"Extract And Move Method public setAlbumFavoriteSearchOperator(albumFavoriteSearchOperator ISearchUnaryOperator) : void extracted from public setAlbumFavoriteSearchOperator(albumFavoriteSearchOperator ISearchUnaryOperator) : void in class net.sourceforge.atunes.kernel.modules.search.AlbumSearchField & moved to class net.sourceforge.atunes.kernel.modules.search.AlbumArtistSearchField",

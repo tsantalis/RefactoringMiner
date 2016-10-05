@@ -34,10 +34,6 @@ public abstract class AbstractCodeMapping {
 		return fragment1.getArgumentizedString().equals(fragment2.getArgumentizedString()) && !isKeyword();
 	}
 
-	public boolean isInExact() {
-		return !fragment1.getArgumentizedString().equals(fragment2.getArgumentizedString());
-	}
-
 	private boolean isKeyword() {
 		return fragment1.getString().startsWith("return;") ||
 				fragment1.getString().startsWith("break;") ||

@@ -346,12 +346,12 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 						}
 					}
 					if(addedOperationInvocation != null) {
-						//List<String> arguments = addedOperationInvocation.getArguments();
-						//List<String> parameters = addedOperation.getParameterNameList();
+						List<String> arguments = addedOperationInvocation.getArguments();
+						List<String> parameters = addedOperation.getParameterNameList();
 						Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
-						/*for(int i=0; i<parameters.size(); i++) {
+						for(int i=0; i<parameters.size(); i++) {
 							parameterToArgumentMap.put(parameters.get(i), arguments.get(i));
-						}*/
+						}
 						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap);
 						if(!operationBodyMapper.getMappings().isEmpty() &&
 								(operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT2()

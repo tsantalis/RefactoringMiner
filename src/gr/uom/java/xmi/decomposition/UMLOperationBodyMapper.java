@@ -1,9 +1,13 @@
 package gr.uom.java.xmi.decomposition;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.diff.StringDistance;
+import gr.uom.java.xmi.diff.UMLModelDiff;
+import gr.uom.java.xmi.diff.UMLOperationDiff;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
@@ -48,6 +52,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<StatementObject> leaves1 = composite1.getLeaves();
 			List<StatementObject> leaves2 = composite2.getLeaves();
 			
+			UMLOperationDiff operationDiff = new UMLOperationDiff(operation1, operation2);
+			Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
+			Map<String, String> parameterToArgumentMap2 = new LinkedHashMap<String, String>();
+			List<UMLParameter> addedParameters = operationDiff.getAddedParameters();
+			if(addedParameters.size() == 1) {
+				UMLParameter addedParameter = addedParameters.get(0);
+				if(UMLModelDiff.looksLikeSameType(addedParameter.getType().getClassType(), operation1.getClassName())) {
+					parameterToArgumentMap1.put("this.", "");
+					//replace "parameterName." with ""
+					parameterToArgumentMap2.put(addedParameter.getName() + ".", "");
+				}
+			}
+			//replace parameters with arguments in leaves1
+			if(!parameterToArgumentMap1.isEmpty()) {
+				for(StatementObject leave1 : leaves1) {
+					leave1.replaceParametersWithArguments(parameterToArgumentMap1);
+				}
+			}
+			//replace parameters with arguments in leaves2
+			if(!parameterToArgumentMap2.isEmpty()) {
+				for(StatementObject leave2 : leaves2) {
+					leave2.replaceParametersWithArguments(parameterToArgumentMap2);
+				}
+			}
 			processLeaves(leaves1, leaves2);
 			
 			List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
@@ -55,6 +83,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
 			innerNodes2.remove(composite2);
 			
+			//replace parameters with arguments in innerNodes1
+			if(!parameterToArgumentMap1.isEmpty()) {
+				for(CompositeStatementObject innerNode1 : innerNodes1) {
+					innerNode1.replaceParametersWithArguments(parameterToArgumentMap1);
+				}
+			}
+			//replace parameters with arguments in innerNodes2
+			if(!parameterToArgumentMap2.isEmpty()) {
+				for(CompositeStatementObject innerNode2 : innerNodes2) {
+					innerNode2.replaceParametersWithArguments(parameterToArgumentMap2);
+				}
+			}
 			processInnerNodes(innerNodes1, innerNodes2);
 			
 			nonMappedLeavesT1.addAll(leaves1);
@@ -474,17 +514,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		variablesAndMethodInvocations2.addAll(methodInvocations2);
 		variablesAndMethodInvocations2.addAll(variables2);
 		
-		int initialDistanceRaw = StringDistance.editDistance(statement1.getArgumentizedString(), statement2.getArgumentizedString());
+		String argumentizedString1 = preprocessInput1(statement1, statement2);
+		String argumentizedString2 = preprocessInput2(statement1, statement2);
+		int initialDistanceRaw = StringDistance.editDistance(argumentizedString1, argumentizedString2);
 		//double initialDistance = (double)StringDistance.editDistance(statement1.getString(), statement2.getString())/(double)Math.max(statement1.getString().length(), statement2.getString().length());
 		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 		if (initialDistanceRaw > 0) {
 			for(String s11 : variablesAndMethodInvocations1) {
 				TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
-				String original = statement1.getArgumentizedString();
+				String original = argumentizedString1;
 				int minDistance = initialDistanceRaw;
 				for(String s21 : variablesAndMethodInvocations2) {
 					String temp = original.replaceAll(Pattern.quote(s11), Matcher.quoteReplacement(s21));
-					int distanceRaw = StringDistance.editDistance(temp, statement2.getArgumentizedString(), minDistance);
+					int distanceRaw = StringDistance.editDistance(temp, argumentizedString2, minDistance);
 					//double distance = (double)StringDistance.editDistance(temp, statement2.getString())/(double)Math.max(temp.length(), statement2.getString().length());
 					if(distanceRaw >= 0 && distanceRaw < initialDistanceRaw) {
 						minDistance = distanceRaw;
@@ -503,7 +545,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								replacement1 = new MethodInvocationReplacement(s11, s21, statement1.getMethodInvocationMap().get(s11), statement2.getMethodInvocationMap().get(s21));
 						}
 						if(replacement1 != null) {
-							double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), statement2.getArgumentizedString().length());
+							double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), argumentizedString2.length());
 							replacementMap.put(distancenormalized, replacement1);
 						}
 						if(distanceRaw == 0) {
@@ -517,8 +559,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		
-		String s1 = statement1.getArgumentizedString();
-		String s2 = statement2.getArgumentizedString();
+		String s1 = argumentizedString1;
+		String s2 = argumentizedString2;
 		for(Replacement replacement : replacements) {
 			s1 = s1.replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter()));
 		}

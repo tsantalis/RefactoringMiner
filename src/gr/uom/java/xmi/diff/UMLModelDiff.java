@@ -584,7 +584,7 @@ public class UMLModelDiff {
       return refactorings;
    }
 
-   private boolean looksLikeSameType(String parent, String addedClassName) {
+   public static boolean looksLikeSameType(String parent, String addedClassName) {
       if (addedClassName.contains(".") && !parent.contains(".")) {
          return parent.equals(addedClassName.substring(addedClassName.lastIndexOf(".") + 1));
       }

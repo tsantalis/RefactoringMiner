@@ -91,6 +91,14 @@ public class UMLOperationDiff {
 		return addedOperation;
 	}
 
+	public List<UMLParameter> getAddedParameters() {
+		return addedParameters;
+	}
+
+	public List<UMLParameter> getRemovedParameters() {
+		return removedParameters;
+	}
+
 	public boolean isEmpty() {
 		return addedParameters.isEmpty() && removedParameters.isEmpty() && parameterDiffList.isEmpty() &&
 		!visibilityChanged && !abstractionChanged && !returnTypeChanged && !operationRenamed;

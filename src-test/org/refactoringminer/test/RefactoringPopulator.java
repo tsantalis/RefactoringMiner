@@ -391,7 +391,7 @@ public class RefactoringPopulator {
 						// FN** getMechList remains in CompositeCM, but it is
 						// also added as abstract in ControlMech and implemented
 						// in other subclasses
-						"Pull Up Method getMechList from class org.argouml.cognitive.CompositeCM to getMechList from class org.argouml.cognitive.ControlMech",
+						//"Pull Up Method getMechList from class org.argouml.cognitive.CompositeCM to getMechList from class org.argouml.cognitive.ControlMech",
 						"Pull Up Method public parse(modelElement Object, text String) : void from class org.argouml.notation.providers.uml.AttributeNotationUml to public parse(modelElement Object, text String) : void from class org.argouml.notation.providers.AttributeNotation",
 						"Pull Up Method public transform(file File, version int) : File from class org.argouml.persistence.UmlFilePersister to public transform(file File, version int) : File from class org.argouml.persistence.AbstractFilePersister",
 						"Pull Up Method private colToString(set Collection) : String from class org.argouml.profile.internal.ui.PropPanelCritic to protected colToString(set Collection) : String from class org.argouml.uml.ui.PropPanel",

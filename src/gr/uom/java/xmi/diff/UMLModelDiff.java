@@ -136,7 +136,7 @@ public class UMLModelDiff {
       if(subclassDiff != null) {
          UMLType superclass = subclassDiff.getSuperclass();
          if(superclass != null) {
-            if(this.looksLikeSameType(superclass.getClassType(), finalSuperclass))
+            if(looksLikeSameType(superclass.getClassType(), finalSuperclass))
                return true;
             else
                return isSubclassOf(superclass.getClassType(), finalSuperclass);
@@ -542,12 +542,12 @@ public class UMLModelDiff {
          String addedClassName = addedClass.getName();
          for(UMLGeneralization addedGeneralization : addedGeneralizations) {
             String parent = addedGeneralization.getParent();
-            if(this.looksLikeSameType(parent, addedClassName) && !isAddedClass(addedGeneralization.getChild())) {
+            if(looksLikeSameType(parent, addedClassName) && !isAddedClass(addedGeneralization.getChild())) {
                subclassSet.add(addedGeneralization.getChild());
             }
          }
          for(UMLRealization addedRealization : addedRealizations) {
-            if(this.looksLikeSameType(addedRealization.getSupplier(), addedClassName) && !isAddedClass(addedRealization.getClient())) {
+            if(looksLikeSameType(addedRealization.getSupplier(), addedClassName) && !isAddedClass(addedRealization.getClient())) {
                UMLClassDiff clientClassDiff = getUMLClassDiff(addedRealization.getClient());
                boolean implementedInterfaceOperations = true;
                if(clientClassDiff != null) {
@@ -839,9 +839,6 @@ public class UMLModelDiff {
    }
    
    private boolean movedMethodSignature(UMLOperation removedOperation, UMLOperation addedOperation) {
-//	   if (addedOperation.getName().equals("barkBark")) {
-//		   System.out.print("");
-//	   }
 	   if(!addedOperation.isConstructor() &&
 	      !removedOperation.isConstructor() &&
 			   addedOperation.getName().equals(removedOperation.getName()) &&

@@ -213,79 +213,6 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 				this.addOperationBodyMapper(firstMapper);
 			}
 		}
-		
-		/*for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-			if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
-					!mapper.getVariableReplacementsWithMethodInvocation().isEmpty() || !mapper.getMethodInvocationReplacements().isEmpty()) {
-				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
-				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
-					UMLOperation addedOperation = addedOperationIterator.next();
-					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation);
-					if(!operationBodyMapper.getMappings().isEmpty() && operationBodyMapper.exactMatches() > 0) {
-						mapperSet.add(operationBodyMapper);
-					}
-				}
-				if(!mapperSet.isEmpty()) {
-					UMLOperationBodyMapper firstMapper = mapperSet.first();
-					UMLOperation removedOperation = firstMapper.getOperation1();
-					UMLOperation addedOperation = firstMapper.getOperation2();
-					MergeOperation merge = new MergeOperation(firstMapper);
-					refactorings.add(merge);
-					addedOperations.remove(addedOperation);
-					
-					UMLOperationDiff operationDiff = new UMLOperationDiff(removedOperation, addedOperation);
-					operationDiffList.add(operationDiff);
-					if(!removedOperation.getName().equals(addedOperation.getName())) {
-						RenameOperationRefactoring rename = new RenameOperationRefactoring(removedOperation, addedOperation);
-						refactorings.add(rename);
-					}
-				}
-			}
-		}*/
-	}
-	
-	public void checkForStatementsMovedFromRemovedToAddedOperations() {
-		for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
-			UMLOperation removedOperation = removedOperationIterator.next();
-			TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
-			for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
-				UMLOperation addedOperation = addedOperationIterator.next();
-				
-				UMLOperationBodyMapper mapperForAddedOperation = findMapperForAddedOperation(addedOperation);
-				UMLOperationBodyMapper operationBodyMapper = null;
-				boolean newMapper = false;
-				if(mapperForAddedOperation != null) {
-					operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapperForAddedOperation, new LinkedHashMap<String, String>());
-				}
-				else {
-					operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
-					newMapper = true;
-				}
-				
-				if(!operationBodyMapper.getMappings().isEmpty() && operationBodyMapper.exactMatches() > 0) {
-						/*(operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT1()
-								|| operationBodyMapper.exactMatches() > 0) ) {*/
-					mapperSet.add(operationBodyMapper);
-					if(newMapper) {
-						this.addOperationBodyMapper(operationBodyMapper);
-					}
-				}
-			}
-			if(!mapperSet.isEmpty()) {
-				UMLOperationBodyMapper firstMapper = mapperSet.first();
-				MergeOperation merge = new MergeOperation(firstMapper);
-				refactorings.add(merge);
-				removedOperationIterator.remove();
-			}
-		}
-	}
-	
-	private UMLOperationBodyMapper findMapperForAddedOperation(UMLOperation addedOperation) {
-		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-			if(mapper.getOperation2().equals(addedOperation))
-				return mapper;
-		}
-		return null;
 	}
 	
 	public void checkForInlinedOperations() {
@@ -548,10 +475,6 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		for(UMLAttributeDiff attributeDiff : attributeDiffList) {
 			sb.append(attributeDiff);
 		}
-		/*Collections.sort(operationBodyDiffList);
-		for(UMLOperationBodyDiff operationBodyDiff : operationBodyDiffList) {
-			sb.append(operationBodyDiff);
-		}*/
 		Collections.sort(operationBodyMapperList);
 		for(UMLOperationBodyMapper operationBodyMapper : operationBodyMapperList) {
 			sb.append(operationBodyMapper);

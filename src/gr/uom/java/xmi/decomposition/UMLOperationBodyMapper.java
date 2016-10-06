@@ -344,7 +344,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(ListIterator<CompositeStatementObject> innerNodeIterator2 = innerNodes2.listIterator(); innerNodeIterator2.hasNext();) {
 				CompositeStatementObject statement2 = innerNodeIterator2.next();
 				double score = compositeChildMatchingScore(statement1, statement2);
-				if(statement1.getString().equals(statement2.getString()) && statement1.getDepth() == statement2.getDepth() &&
+				if((statement1.getString().equals(statement2.getString()) || statement1.getArgumentizedString().equals(statement2.getArgumentizedString())) &&
+						statement1.getDepth() == statement2.getDepth() &&
 						(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
 					CompositeStatementObjectMapping mapping = new CompositeStatementObjectMapping(statement1, statement2, operation1, operation2, score);
 					mappingSet.add(mapping);
@@ -365,7 +366,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(ListIterator<CompositeStatementObject> innerNodeIterator2 = innerNodes2.listIterator(); innerNodeIterator2.hasNext();) {
 				CompositeStatementObject statement2 = innerNodeIterator2.next();
 				double score = compositeChildMatchingScore(statement1, statement2);
-				if(statement1.getString().equals(statement2.getString()) &&
+				if((statement1.getString().equals(statement2.getString()) || statement1.getArgumentizedString().equals(statement2.getArgumentizedString())) &&
 						(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
 					CompositeStatementObjectMapping mapping = new CompositeStatementObjectMapping(statement1, statement2, operation1, operation2, score);
 					mappingSet.add(mapping);
@@ -413,7 +414,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				AbstractCodeFragment leaf2 = leafIterator2.next();
 				String argumentizedString1 = preprocessInput1(leaf1, leaf2);
 				String argumentizedString2 = preprocessInput2(leaf1, leaf2);
-				if(argumentizedString1.equals(argumentizedString2) && leaf1.getDepth() == leaf2.getDepth()) {
+				if((leaf1.getString().equals(leaf2.getString()) || argumentizedString1.equals(argumentizedString2)) && leaf1.getDepth() == leaf2.getDepth()) {
 					LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1, operation2);
 					mappingSet.add(mapping);
 				}
@@ -434,7 +435,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				AbstractCodeFragment leaf2 = leafIterator2.next();
 				String argumentizedString1 = preprocessInput1(leaf1, leaf2);
 				String argumentizedString2 = preprocessInput2(leaf1, leaf2);
-				if(argumentizedString1.equals(argumentizedString2)) {
+				if((leaf1.getString().equals(leaf2.getString()) || argumentizedString1.equals(argumentizedString2))) {
 					LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1, operation2);
 					mappingSet.add(mapping);
 				}

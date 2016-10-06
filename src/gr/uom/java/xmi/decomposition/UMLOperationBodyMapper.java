@@ -144,6 +144,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<CompositeStatementObject> innerNodes1 = operationBodyMapper.getNonMappedInnerNodesT1();
 			List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
 			innerNodes2.remove(composite2);
+			//replace parameters with arguments in innerNode2
+			if(!parameterToArgumentMap.isEmpty()) {
+				for(CompositeStatementObject innerNode2 : innerNodes2) {
+					innerNode2.replaceParametersWithArguments(parameterToArgumentMap);
+				}
+			}
 			//compare inner nodes from T1 with inner nodes from T2
 			processInnerNodes(innerNodes1, innerNodes2);
 			
@@ -219,7 +225,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
 			innerNodes1.remove(composite1);
 			List<CompositeStatementObject> innerNodes2 = operationBodyMapper.getNonMappedInnerNodesT2();
-			
+			//replace parameters with arguments in innerNodes1
+			if(!parameterToArgumentMap.isEmpty()) {
+				for(CompositeStatementObject innerNode1 : innerNodes1) {
+					innerNode1.replaceParametersWithArguments(parameterToArgumentMap);
+				}
+			}
 			//compare inner nodes from T1 with inner nodes from T2
 			processInnerNodes(innerNodes1, innerNodes2);
 			

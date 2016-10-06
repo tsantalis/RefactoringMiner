@@ -8,6 +8,7 @@ import java.util.Map;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.ParameterizedType;
@@ -15,6 +16,7 @@ import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
+import org.eclipse.jdt.core.dom.ThisExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.WildcardType;
 
@@ -32,7 +34,13 @@ public class SimpleNameVisitor extends ASTVisitor {
 	}
 
 	public boolean visit(SimpleName node) {
-		allIdentifiers.add(node.getIdentifier());
+		if(node.getParent() instanceof FieldAccess && ((FieldAccess)node.getParent()).getExpression() instanceof ThisExpression) {
+			FieldAccess fieldAccess = (FieldAccess)node.getParent();
+			allIdentifiers.add(fieldAccess.toString());
+		}
+		else {
+			allIdentifiers.add(node.getIdentifier());
+		}
 		return super.visit(node);
 	}
 	

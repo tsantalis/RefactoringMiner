@@ -1,6 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
-public abstract class Replacement {
+public class Replacement {
 	private String before;
 	private String after;
 	

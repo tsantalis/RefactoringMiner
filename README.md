@@ -19,11 +19,9 @@ Alternatively, you can generate a complete distribution zip including all runtim
 You can also work with the project with Eclipse IDE. First, run `./gradlew eclipse` to generate Eclipse project metadata files. Then, import it into Eclipse using the *Import Existing Project* feature.
 
 ## Contributors ##
-The code in package **gr.uom.java.xmi** has been developed by [Nikolaos Tsantalis](https://github.com/tsantalis).
+The code in package **gr.uom.java.xmi.*** has been developed by [Nikolaos Tsantalis](https://github.com/tsantalis).
 
-The code in package **ca.ualberta.cs.data** has been developed by [Nikolaos Tsantalis](https://github.com/tsantalis) and **Fabio Rocha**.
-
-The code in package **br.ufmg.dcc.labsoft.refactoringanalyzer** has been developed by [Danilo Ferreira e Silva](https://github.com/danilofes).
+The code in package **br.ufmg.dcc.labsoft.refactoringanalyzer.*** and **org.refactoringminer.*** has been developed by [Danilo Ferreira e Silva](https://github.com/danilofes).
 
 ## API usage guidelines ##
 

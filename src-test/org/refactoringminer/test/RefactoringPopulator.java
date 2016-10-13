@@ -1176,6 +1176,9 @@ public class RefactoringPopulator {
 		test.project("https://github.com/CyanogenMod/android_frameworks_base.git","master")
 		.atCommit("5d1a70a4d32ac4c96a32535c68c69b20288d8968")
 		.containsOnly(
+		"Extract Method public killProcessGroup(uid int, pid int) : void extracted from package removeLruProcessLocked(app ProcessRecord) : void in class com.android.server.am.ActivityManagerService",
+		"Extract Method public killProcessGroup(uid int, pid int) : void extracted from package appDiedLocked(app ProcessRecord, pid int, thread IApplicationThread, fromBinderDied boolean) : void in class com.android.server.am.ActivityManagerService",
+		"Extract Method public killProcessGroup(uid int, pid int) : void extracted from package startProcessLocked(processName String, info ApplicationInfo, knownToBeDead boolean, intentFlags int, hostingType String, hostingName ComponentName, allowWhileBooting boolean, isolated boolean, isolatedUid int, keepIfLarge boolean, abiOverride String, entryPoint String, entryPointArgs String[], crashHandler Runnable) : ProcessRecord in class com.android.server.am.ActivityManagerService",
 		"Extract Method public killProcessGroup(uid int, pid int) : void extracted from private crashApplication(r ProcessRecord, crashInfo CrashInfo) : void in class com.android.server.am.ActivityManagerService");
 
 		test.project("https://github.com/codefollower/Lealone.git","master")

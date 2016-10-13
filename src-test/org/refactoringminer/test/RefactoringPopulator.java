@@ -1347,7 +1347,7 @@ public class RefactoringPopulator {
 		test.project("https://github.com/structr/structr.git","master")
 		.atCommit("6c59050b8b03adf6d8043f3fb7add0496f447edf")
 		.containsOnly(
-		"Extract Method private getSchemaProperties(schemaNode SchemaNode) : List<SchemaProperty> extracted from private getPropertiesForView(type Class, view String, schemaNode SchemaNode) : Map<String,Object> in class org.structr.rest.resource.SchemaTypeResource");
+		"Extract Method private getSchemaProperties(schemaNode SchemaNode) : List extracted from private getPropertiesForView(type Class, view String, schemaNode SchemaNode) : Map in class org.structr.rest.resource.SchemaTypeResource");
 
 		test.project("https://github.com/facebook/buck.git","master")
 		.atCommit("cfea606b129dbfc5703eb279d4803185afc99c58")
@@ -1378,7 +1378,8 @@ public class RefactoringPopulator {
 		test.project("https://github.com/phishman3579/java-algorithms-implementation.git","master")
 		.atCommit("ab98bcacf6e5bf1c3a06f6bcca68f178f880ffc9")
 		.containsOnly(
-		"Extract Method private runTest(testable Testable, unsorted Integer[], sorted Integer[], results double[], count int) : int extracted from public main(args String[]) : void in class com.jwetherell.algorithms.sorts.timing.SortsTiming");
+		"Extract Method private runTest(testable Testable, unsorted Integer[], sorted Integer[], results double[], count int) : int extracted from public main(args String[]) : void in class com.jwetherell.algorithms.sorts.timing.SortsTiming",
+		"Extract Method private runTests(testable Testable, tests int, unsorteds Integer[][], sorteds Integer[][], strings String[]) : boolean extracted from private runTests() : boolean in class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming");
 
 		test.project("https://github.com/gwtproject/gwt.git","master")
 		.atCommit("22fb2c9c6974bd1fe0f6ff684f52e6cfbed1a387")
@@ -1664,7 +1665,10 @@ public class RefactoringPopulator {
 		.containsOnly(
 		"Extract Method private queryProperty(id int, fromDock boolean) : long extracted from private queryProperty(id int) : long in class android.os.BatteryManager",
 		"Extract Method protected getBoltPointsArrayResource() : int extracted from private loadBoltPoints(res Resources) : float[] in class com.android.systemui.BatteryMeterView.NormalBatteryMeterDrawable",
-		"Extract Method public internalStoreStatsHistoryInFile(stats BatteryStats, fname String) : void extracted from public storeStatsHistoryInFile(fname String) : void in class com.android.internal.os.BatteryStatsHelper");
+		"Extract Method public internalStoreStatsHistoryInFile(stats BatteryStats, fname String) : void extracted from public storeStatsHistoryInFile(fname String) : void in class com.android.internal.os.BatteryStatsHelper",
+		"Extract Method protected setCpuSpeedSteps(numSpeedSteps int) : void extracted from public readSummaryFromParcel(in Parcel) : void in class com.android.internal.os.BatteryStatsImpl",
+		"Extract Method protected setCpuSpeedSteps(numSpeedSteps int) : void extracted from public setNumSpeedSteps(steps int) : void in class com.android.internal.os.BatteryStatsImpl",
+		"Extract Method protected setCpuSpeedSteps(numSpeedSteps int) : void extracted from package readFromParcelLocked(in Parcel) : void in class com.android.internal.os.BatteryStatsImpl");
 
 		test.project("https://github.com/thymeleaf/thymeleaf.git","master")
 		.atCommit("aed371dac5e1248880e869930c636994c3d0f8dc")
@@ -1962,7 +1966,8 @@ public class RefactoringPopulator {
 		test.project("https://github.com/BuildCraft/BuildCraft.git","master")
 		.atCommit("a5cdd8c4b10a738cb44819d7cc2fee5f5965d4a0")
 		.containsOnly(
-		"Extract Method private getAvailableRequests(station DockingStation) : Collection<StackRequest> extracted from private getOrderFromRequestingStation(station DockingStation, take boolean) : StackRequest in class buildcraft.robotics.ai.AIRobotSearchStackRequest");
+		"Extract Method private getAvailableRequests(station DockingStation) : Collection<StackRequest> extracted from private getOrderFromRequestingStation(station DockingStation, take boolean) : StackRequest in class buildcraft.robotics.ai.AIRobotSearchStackRequest",
+		"Extract Method private releaseCurrentRequest() : void extracted from public delegateAIEnded(ai AIRobot) : void in class buildcraft.robotics.boards.BoardRobotDelivery");
 
 		test.project("https://github.com/apache/camel.git","master")
 		.atCommit("ab1d1dd78fe53edb50c4ede447e4ac5a55ee2ac9")
@@ -1980,6 +1985,8 @@ public class RefactoringPopulator {
 		.atCommit("dc199688d69416da58b370ca2aa728e935fc8e0d")
 		.containsOnly(
 		"Extract Method private getSortedIndexUpdates(descriptor IndexDescriptor) : TreeMap<DefinedProperty,DiffSets<Long>> extracted from private getIndexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets<Long> in class org.neo4j.kernel.impl.api.state.TxState");
+		// TBD
+		//  Extract Method private filterIndexStateChangesForRangeSeekByNumber(state KernelStatement, index IndexDescriptor, lower Number, includeLower boolean, upper Number, includeUpper boolean, nodeIds PrimitiveLongIterator) : PrimitiveLongIterator extracted from public nodesGetFromIndexRangeSeekByNumber(state KernelStatement, index IndexDescriptor, lower Number, includeLower boolean, upper Number, includeUpper boolean) : PrimitiveLongIterator in class org.neo4j.kernel.impl.api.StateHandlingStatementOperations
 
 		test.project("https://github.com/apache/camel.git","master")
 		.atCommit("14a7dd79148f9306dcd2f748b56fd6550e9406ab")
@@ -2129,6 +2136,16 @@ public class RefactoringPopulator {
 		test.project("https://github.com/eclipse/vert.x.git","master")
 		.atCommit("0ef66582ffaba9a8df1cad846880df2074d34505")
 		.containsOnly(
+		"Extract Method private init() : void extracted from public ClientOptionsBase(json JsonObject) in class io.vertx.core.net.ClientOptionsBase",
+		"Extract Method private init() : void extracted from public TCPSSLOptions(json JsonObject) in class io.vertx.core.net.TCPSSLOptions",
+		"Extract Method private init() : void extracted from public NetClientOptions(json JsonObject) in class io.vertx.core.net.NetClientOptions",
+		"Extract Method private init() : void extracted from public NetClientOptions() in class io.vertx.core.net.NetClientOptions",
+		"Extract Method private init() : void extracted from public NetServerOptions(json JsonObject) in class io.vertx.core.net.NetServerOptions",
+		"Extract Method private init() : void extracted from public NetServerOptions() in class io.vertx.core.net.NetServerOptions",
+		"Extract Method private init() : void extracted from public HttpClientOptions(json JsonObject) in class io.vertx.core.http.HttpClientOptions",
+		"Extract Method private init() : void extracted from public HttpClientOptions() in class io.vertx.core.http.HttpClientOptions",
+		"Extract Method private init() : void extracted from public HttpServerOptions(json JsonObject) in class io.vertx.core.http.HttpServerOptions",
+		"Extract Method private init() : void extracted from public HttpServerOptions() in class io.vertx.core.http.HttpServerOptions",
 		"Extract Method private init() : void extracted from public TCPSSLOptions() in class io.vertx.core.net.TCPSSLOptions",
 		"Extract Method private init() : void extracted from public NetClientOptions() in class io.vertx.core.net.NetClientOptions",
 		"Extract Method private init() : void extracted from public HttpClientOptions() in class io.vertx.core.http.HttpClientOptions",
@@ -2326,7 +2343,12 @@ public class RefactoringPopulator {
 		test.project("https://github.com/linkedin/rest.li.git","master")
 		.atCommit("54fa890a6af4ccf564fb481d3e1b6ad4d084de9e")
 		.containsOnly(
-		"Extract Method public addResponseCompressionHeaders(responseCompressionOverride CompressionOption, req RestRequest) : RestRequest extracted from public onRestRequest(req RestRequest, requestContext RequestContext, wireAttrs Map<String,String>, nextFilter NextFilter<RestRequest,RestResponse>) : void in class com.linkedin.r2.filter.compression.ClientCompressionFilter");
+		"Extract Method public addResponseCompressionHeaders(responseCompressionOverride CompressionOption, req RestRequest) : RestRequest extracted from public onRestRequest(req RestRequest, requestContext RequestContext, wireAttrs Map<String,String>, nextFilter NextFilter<RestRequest,RestResponse>) : void in class com.linkedin.r2.filter.compression.ClientCompressionFilter",
+		"Extract Method public addCompressionHeaders(getMessage HttpGet, acceptEncoding String) : void extracted from public testCompressionBetter(compressor Compressor) : void in class com.linkedin.restli.examples.TestCompressionServer",
+		"Extract Method public addCompressionHeaders(getMessage HttpGet, acceptEncoding String) : void extracted from public testAcceptEncoding(acceptedEncoding String, contentEncoding String) : void in class com.linkedin.restli.examples.TestCompressionServer",
+		"Extract Method public addCompressionHeaders(getMessage HttpGet, acceptEncoding String) : void extracted from public testCompressionWorse(compressor Compressor) : void in class com.linkedin.restli.examples.TestCompressionServer",
+		"Extract Method public addCompressionHeaders(getMessage HttpGet, acceptEncoding String) : void extracted from public testCompatibleDefault(acceptEncoding String, contentEncoding String) : void in class com.linkedin.restli.examples.TestCompressionServer",
+		"Extract Method public addCompressionHeaders(getMessage HttpGet, acceptEncoding String) : void extracted from public test406Error(acceptContent String) : void in class com.linkedin.restli.examples.TestCompressionServer");
 
 		test.project("https://github.com/apache/cassandra.git","master")
 		.atCommit("1a2c1bcdc7267abec9b19d77726aedbb045d79a8")

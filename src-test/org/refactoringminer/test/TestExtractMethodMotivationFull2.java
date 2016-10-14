@@ -266,7 +266,7 @@ public class TestExtractMethodMotivationFull2 {
 	
 	private void assertExtractMethodMotivation(SDModel sdModel, String method, Iterable<String> motivations) {
 		final RefactoringMotivationClassifier classifier = new RefactoringMotivationClassifier(sdModel);
-		SDMethod extractedMethod = sdModel.after().find(SDMethod.class, method);
+		SDMethod extractedMethod = sdModel.after().findByName(SDMethod.class, method);
 		Set<Motivation> tags = classifier.classifyExtractMethod(extractedMethod);
 		EnumSet<Motivation> expectedMotivations = EnumSet.noneOf(Motivation.class);
 		for (String m : motivations) {

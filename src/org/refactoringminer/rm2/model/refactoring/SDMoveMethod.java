@@ -9,7 +9,7 @@ public class SDMoveMethod extends SDRefactoring {
     private final SDMethod methodAfter;
     
     protected SDMoveMethod(RefactoringType refType, SDMethod methodBefore, SDMethod methodAfter) {
-        super(refType, methodAfter);
+        super(refType, methodBefore, methodBefore, methodAfter);
         this.methodBefore = methodBefore;
         this.methodAfter = methodAfter;
     }

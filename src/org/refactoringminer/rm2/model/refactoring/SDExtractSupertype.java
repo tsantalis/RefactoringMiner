@@ -9,7 +9,7 @@ public class SDExtractSupertype extends SDRefactoring {
     private final SDType typeOriginAfter;
     
     public SDExtractSupertype(SDType extractedType, SDType typeOriginAfter) {
-        super(extractedType.isInterface() ? RefactoringType.EXTRACT_INTERFACE : RefactoringType.EXTRACT_SUPERCLASS, extractedType);
+        super(extractedType.isInterface() ? RefactoringType.EXTRACT_INTERFACE : RefactoringType.EXTRACT_SUPERCLASS, extractedType, typeOriginAfter, extractedType);
         this.extractedType = extractedType;
         this.typeOriginAfter = typeOriginAfter;
     }

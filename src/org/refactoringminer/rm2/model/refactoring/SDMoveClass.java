@@ -13,7 +13,7 @@ public class SDMoveClass extends SDRefactoring {
     }
 
     protected SDMoveClass(RefactoringType type, SDType typeBefore, SDType typeAfter) {
-        super(type, typeAfter);
+        super(type, typeBefore, typeBefore, typeAfter);
         this.typeBefore = typeBefore;
         this.typeAfter = typeAfter;
     }

@@ -18,15 +18,15 @@ public class SDType extends SDContainerEntity {
 	private Multiset<SDType> referencedBy;
 	
 	public SDType(SDModel.Snapshot snapshot, int id, String simpleName, SDContainerEntity container, String sourceFilePath) {
-		this(snapshot, id, simpleName, container.fullName() + "." + simpleName, container, sourceFilePath, false);
+		this(snapshot, id, simpleName, container.fullName() + "." + simpleName, new EntityKey(container.key() + "." + simpleName), container, sourceFilePath, false);
 	}
 
 	private SDType(SDModel.Snapshot snapshot, int id, int anonymousId, SDType container, String sourceFilePath) {
-	    this(snapshot, id, "" + anonymousId, container.fullName() + "$" + anonymousId, container, sourceFilePath, true);
+	    this(snapshot, id, "" + anonymousId, container.fullName() + "$" + anonymousId, new EntityKey(container.key() + "$" + anonymousId), container, sourceFilePath, true);
 	}
 
-	private SDType(SDModel.Snapshot snapshot, int id, String simpleName, String fullName, SDContainerEntity container, String sourceFilePath, boolean isAnonymous) {
-	    super(snapshot, id, fullName, container);
+	private SDType(SDModel.Snapshot snapshot, int id, String simpleName, String fullName, EntityKey key, SDContainerEntity container, String sourceFilePath, boolean isAnonymous) {
+	    super(snapshot, id, fullName, key, container);
 	    this.simpleName = simpleName;
 	    this.sourceFilePath = sourceFilePath;
 	    this.isAnonymous = isAnonymous;

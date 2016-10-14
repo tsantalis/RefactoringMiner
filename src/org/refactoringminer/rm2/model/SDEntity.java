@@ -11,14 +11,16 @@ public abstract class SDEntity implements Comparable<SDEntity> {
 	private int id;
 	protected final SDModel.Snapshot snapshot;
 	protected final String fullName;
+	protected final EntityKey key;
 	protected final SDContainerEntity container;
 	protected final List<SDEntity> children;
 	private MembersRepresentation members = null;
 	
-	public SDEntity(SDModel.Snapshot snapshot, int id, String fullName, SDContainerEntity container) {
+	public SDEntity(SDModel.Snapshot snapshot, int id, String fullName, EntityKey key, SDContainerEntity container) {
 		this.snapshot = snapshot;
 		this.id = id;
 		this.fullName = fullName;
+		this.key = key;
 		this.container = container;
 		this.children = new ArrayList<SDEntity>();
 		if (container != null) {
@@ -38,9 +40,17 @@ public abstract class SDEntity implements Comparable<SDEntity> {
 		return fullName;
 	}
 
-	public String fullName(SDEntity parent) {
-		return parent.fullName() + getNameSeparator() + simpleName();
+	public EntityKey key() {
+	  return key;
 	}
+	
+	public EntityKey key(SDEntity parent) {
+	  return new EntityKey(parent.key() + getNameSeparator() + simpleName());
+	}
+
+//	public String fullName(SDEntity parent) {
+//		return parent.fullName() + getNameSeparator() + simpleName();
+//	}
 	
 	protected abstract String getNameSeparator();
 
@@ -70,6 +80,9 @@ public abstract class SDEntity implements Comparable<SDEntity> {
 
 	@Override
 	public String toString() {
+	  if (fullName.lastIndexOf('/') != -1) {
+	    return fullName.substring(fullName.lastIndexOf('/') + 1);
+	  }
 		return fullName;
 	}
 

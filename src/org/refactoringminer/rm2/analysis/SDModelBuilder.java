@@ -46,7 +46,7 @@ public class SDModelBuilder {
 	        final SDEntity entity = entry.getKey();
 	        List<String> references = entry.getValue();
 	        for (String referencedKey : references) {
-	            SDEntity referenced = model.find(SDEntity.class, referencedKey);
+	            SDEntity referenced = model.findByName(SDEntity.class, referencedKey);
 	            if (referenced != null) {
 	                entity.addReference(referenced);
 	            }
@@ -58,7 +58,7 @@ public class SDModelBuilder {
 			final SDType type = entry.getKey();
 			List<String> supertypes = entry.getValue();
 			for (String supertypeKey : supertypes) {
-				SDType supertype = model.find(SDType.class, supertypeKey);
+				SDType supertype = model.findByName(SDType.class, supertypeKey);
 				if (supertype != null) {
 					supertype.addSubtype(type);
 				}
@@ -68,7 +68,7 @@ public class SDModelBuilder {
 	private void postProcessClientCode(final SDModel.Snapshot model) {
 	    for (Map.Entry<String, List<SourceRepresentation>> entry : postProcessClientCode.entrySet()) {
 	        final String entityId = entry.getKey();
-	        SDAttribute entity = model.find(SDAttribute.class, entityId);
+	        SDAttribute entity = model.findByName(SDAttribute.class, entityId);
 	        if (entity != null) {
 	            List<SourceRepresentation> sourceSnippets = entry.getValue();
 	            entity.setClientCode(entity.assignment().combine(sourceSnippets));
@@ -147,8 +147,12 @@ public class SDModelBuilder {
 		if (packageDeclaration != null) {
 			packageName = packageDeclaration.getName().getFullyQualifiedName();
 		}
-		SDPackage sdPackage = model.getOrCreatePackage(packageName);
-		
+		String packagePath = packageName.replace('.', '/');
+		String sourceFolder = "/";
+		if (sourceFilePath.contains(packagePath)) {
+		  sourceFolder = sourceFilePath.substring(0, sourceFilePath.indexOf(packagePath));
+		}
+		SDPackage sdPackage = model.getOrCreatePackage(packageName, sourceFolder);
 		BindingsRecoveryAstVisitor visitor = new BindingsRecoveryAstVisitor(model, sourceFilePath, fileContent, sdPackage, postProcessReferences, postProcessSupertypes, postProcessClientCode);
 		compilationUnit.accept(visitor);
 	}

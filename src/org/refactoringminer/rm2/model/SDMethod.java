@@ -22,7 +22,7 @@ public class SDMethod extends SDEntity {
 	private String returnType;
 
 	public SDMethod(SDModel.Snapshot snapshot, int id, String signature, SDContainerEntity container, boolean constructor) {
-		super(snapshot, id, container.fullName() + "#" + signature, container);
+		super(snapshot, id, container.fullName() + "#" + signature, new EntityKey(container.key() + "#" + signature), container);
 		this.signature = signature;
 		this.identifier = signature.substring(0, signature.indexOf('('));
 		this.callers = new Multiset<SDMethod>();
@@ -69,7 +69,7 @@ public class SDMethod extends SDEntity {
 	public boolean isOverriden() {
 		SDType parent = (SDType) this.container;
 		for (SDType subtype : parent.subtypes()) {
-			String overridenMethodKey = subtype.fullName() + "#" + signature;
+		  EntityKey overridenMethodKey = new EntityKey(subtype.key() + "#" + signature);
 			if (snapshot.find(SDMethod.class, overridenMethodKey) != null) {
 				return true;
 			}

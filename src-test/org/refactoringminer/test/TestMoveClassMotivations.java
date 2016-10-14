@@ -99,7 +99,7 @@ public class TestMoveClassMotivations {
 	
 	private void assertMoveClassMotivation(SDModel sdModel, String movedClass, Motivation ... motivations) {
 		final RefactoringMotivationClassifier classifier = new RefactoringMotivationClassifier(sdModel);
-		SDType movedType = sdModel.after().find(SDType.class, movedClass);
+		SDType movedType = sdModel.after().findByName(SDType.class, movedClass);
 		Set<Motivation> tags = classifier.classifyMoveClass(movedType);
 		Motivation[] actual = tags.toArray(new Motivation[tags.size()]);
 		Arrays.sort(motivations);

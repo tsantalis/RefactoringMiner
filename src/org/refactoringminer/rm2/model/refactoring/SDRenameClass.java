@@ -9,7 +9,7 @@ public class SDRenameClass extends SDRefactoring {
     private final SDType typeAfter;
     
     public SDRenameClass(SDType typeBefore, SDType typeAfter) {
-        super(RefactoringType.RENAME_CLASS, typeAfter);
+        super(RefactoringType.RENAME_CLASS, typeBefore, typeBefore, typeAfter);
         this.typeBefore = typeBefore;
         this.typeAfter = typeAfter;
     }

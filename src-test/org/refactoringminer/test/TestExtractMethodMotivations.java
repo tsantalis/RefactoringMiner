@@ -143,7 +143,7 @@ public class TestExtractMethodMotivations {
 	
 	private void assertExtractMethodMotivation(SDModel sdModel, String method, Motivation ... motivations) {
 		final RefactoringMotivationClassifier classifier = new RefactoringMotivationClassifier(sdModel);
-		SDMethod extractedMethod = sdModel.after().find(SDMethod.class, method);
+		SDMethod extractedMethod = sdModel.after().findByName(SDMethod.class, method);
 		Set<Motivation> tags = classifier.classifyExtractMethod(extractedMethod);
 		Motivation[] actual = tags.toArray(new Motivation[tags.size()]);
 		Arrays.sort(motivations);

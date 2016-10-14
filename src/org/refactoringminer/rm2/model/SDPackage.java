@@ -2,8 +2,8 @@ package org.refactoringminer.rm2.model;
 
 public class SDPackage extends SDContainerEntity {
 
-	public SDPackage(SDModel.Snapshot snapshot, int id, String fullName) {
-		super(snapshot, id, fullName);
+	public SDPackage(SDModel.Snapshot snapshot, int id, String fullName, String sourceFolder) {
+		super(snapshot, id, fullName, new EntityKey(sourceFolder + fullName));
 	}
 
 	@Override
@@ -11,7 +11,7 @@ public class SDPackage extends SDContainerEntity {
 		boolean test = false;
 		String[] parts = fullName.split("\\.");
 		for (String part : parts) {
-			test = test || part.equals("test");
+			test = test || part.endsWith("test");
 		}
 		return test;
 	}
@@ -30,4 +30,5 @@ public class SDPackage extends SDContainerEntity {
 	protected final String getNameSeparator() {
 		return ".";
 	}
+	
 }

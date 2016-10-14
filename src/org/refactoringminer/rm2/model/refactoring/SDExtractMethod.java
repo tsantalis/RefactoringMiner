@@ -9,7 +9,7 @@ public class SDExtractMethod extends SDRefactoring {
     private final SDMethod origin;
     
     public SDExtractMethod(SDMethod extractedMethod, SDMethod origin) {
-        super(RefactoringType.EXTRACT_OPERATION, extractedMethod);
+        super(RefactoringType.EXTRACT_OPERATION, extractedMethod, origin, extractedMethod);
         this.extractedMethod = extractedMethod;
         this.origin = origin;
     }

@@ -9,7 +9,7 @@ public class SDRenameMethod extends SDRefactoring {
     private final SDMethod methodAfter;
     
     public SDRenameMethod(SDMethod methodBefore, SDMethod methodAfter) {
-        super(RefactoringType.RENAME_METHOD, methodAfter);
+        super(RefactoringType.RENAME_METHOD, methodBefore, methodBefore, methodAfter);
         this.methodBefore = methodBefore;
         this.methodAfter = methodAfter;
     }

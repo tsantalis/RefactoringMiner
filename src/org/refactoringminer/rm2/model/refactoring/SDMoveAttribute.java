@@ -9,7 +9,7 @@ public class SDMoveAttribute extends SDRefactoring {
     protected final SDAttribute attributeAfter;
     
     protected SDMoveAttribute(RefactoringType refType, SDAttribute attributeBefore, SDAttribute attributeAfter) {
-        super(refType, attributeAfter);
+        super(refType, attributeBefore, attributeBefore, attributeAfter);
         this.attributeBefore = attributeBefore;
         this.attributeAfter = attributeAfter;
     }

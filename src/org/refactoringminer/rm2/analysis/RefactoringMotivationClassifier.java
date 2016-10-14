@@ -133,10 +133,10 @@ public class RefactoringMotivationClassifier {
 		SDContainerEntity oldContainer = sd.before(movedType).container();
 		
 		if (newContainer.isPackage() && oldContainer.isPackage()) {
-            if (!sd.before().exists(newContainer.fullName()) && newContainer.isNestedIn(oldContainer)) {
+            if (!sd.before().exists(newContainer.key()) && newContainer.isNestedIn(oldContainer)) {
             	tags.add(Motivation.MC_INTRODUCE_SUBPACKAGE);
 			}
-			if (!sd.after().exists(oldContainer.fullName()) && !sd.before().exists(newContainer.fullName()) && !newContainer.isNestedIn(oldContainer)) {
+			if (!sd.after().exists(oldContainer.key()) && !sd.before().exists(newContainer.key()) && !newContainer.isNestedIn(oldContainer)) {
 				tags.add(Motivation.MC_RENAME_PACKAGE);
 			}
 		}

@@ -44,7 +44,7 @@ public class SDModel {
 	    if (isMatched(entity)) {
             return true;
         } else {
-            return BEFORE.exists(entity.fullName());
+            return BEFORE.exists(entity.key());
         }
 	}
 	
@@ -52,19 +52,21 @@ public class SDModel {
         if (isMatched(entity)) {
             return true;
         } else {
-            return AFTER.exists(entity.fullName());
+            return AFTER.exists(entity.key());
         }
     }
 	
 	public interface Snapshot {
 		
-		<T extends SDEntity> T find(Class<T> entityType, String key);
+		<T extends SDEntity> T find(Class<T> entityType, EntityKey key);
+
+		<T extends SDEntity> T findByName(Class<T> entityType, String fullName);
 		
-		boolean exists(String key);
+		boolean exists(EntityKey key);
 		
 		Collection<SDEntity> getAllEntities();
 		
-		SDPackage getOrCreatePackage(String fullName);
+		SDPackage getOrCreatePackage(String fullName, String sourceFolder);
 			
 		SDType createType(String typeName, SDContainerEntity container, String sourceFilePath);
 		
@@ -82,28 +84,38 @@ public class SDModel {
 	}
 	
 	private class SnapshotImpl implements Snapshot {
-		private final Map<String, SDEntity> map = new HashMap<String, SDEntity>();
+		private final Map<EntityKey, SDEntity> map = new HashMap<EntityKey, SDEntity>();
+		private final Map<String, EntityKey> nameToKey = new HashMap<String, EntityKey>();
 
 		private final Set<SDType> unmatchedTypes = new TreeSet<SDType>();
 	    private final Set<SDMethod> unmatchedMethods = new TreeSet<SDMethod>();
 	    private final Set<SDAttribute> unmatchedAttributes = new TreeSet<SDAttribute>();
 		
-		public <T extends SDEntity> T find(Class<T> entityType, String key) {
+		public <T extends SDEntity> T find(Class<T> entityType, EntityKey key) {
 			SDEntity sdEntity = map.get(key);
 			if (entityType.isInstance(sdEntity)) {
 				return entityType.cast(sdEntity);
 			}
 			return null;
 		}
-		
-		private void putAtMap(String key, SDEntity entity) {
-		    if (map.containsKey(key)) {
-		        throw new DuplicateEntityException(key);
-		    }
-		    map.put(key, entity);
+
+		public <T extends SDEntity> T findByName(Class<T> entityType, String fullName) {
+		  SDEntity sdEntity = map.get(nameToKey.get(fullName));
+		  if (entityType.isInstance(sdEntity)) {
+		    return entityType.cast(sdEntity);
+		  }
+		  return null;
 		}
 		
-		public boolean exists(String key) {
+		private void putAtMap(EntityKey key, SDEntity entity) {
+		    if (map.containsKey(key)) {
+		        throw new DuplicateEntityException(key.toString());
+		    }
+		    map.put(key, entity);
+		    nameToKey.put(key.toName(), key);
+		}
+		
+		public boolean exists(EntityKey key) {
 			return map.containsKey(key);
 		}
 		
@@ -123,19 +135,20 @@ public class SDModel {
             return unmatchedAttributes;
         }
 
-        public SDPackage getOrCreatePackage(String fullName) {
-			SDPackage p = find(SDPackage.class, fullName);
+        public SDPackage getOrCreatePackage(String fullName, String sourceFolder) {
+			EntityKey key = new EntityKey(sourceFolder + fullName);
+      SDPackage p = find(SDPackage.class, key);
 			if (p == null) {
-				p = new SDPackage(this, getId(), fullName);
-				putAtMap(fullName, p);
+				p = new SDPackage(this, getId(), fullName, sourceFolder);
+				putAtMap(key, p);
 			}
 			return p;
 		}
 
 		public SDType createType(String typeName, SDContainerEntity container, String sourceFilePath) {
-			String fullName = container.fullName() + "." + typeName;
+		  EntityKey key = new EntityKey(container.key() + "." + typeName);
 			SDType sdType = new SDType(this, getId(), typeName, container, sourceFilePath);
-			putAtMap(fullName, sdType);
+			putAtMap(key, sdType);
 			if (!sdType.isAnonymous()) {
 			    unmatchedTypes.add(sdType);
 			}
@@ -145,16 +158,16 @@ public class SDModel {
 		public SDType createAnonymousType(SDContainerEntity container, String sourceFilePath) {
 			SDType parent = (SDType) container;
 			int anonId = parent.anonymousClasses().size() + 1;
-			String fullName = container.fullName() + "$" + anonId;
+			EntityKey key = new EntityKey(container.key() + "$" + anonId);
 			SDType sdType = parent.addAnonymousClass(getId(), anonId);
-			putAtMap(fullName, sdType);
+			putAtMap(key, sdType);
 			return sdType;
 		}
 
 		public SDMethod createMethod(String methodSignature, SDContainerEntity container, boolean isConstructor) {
-			String fullName = container.fullName() + "#" + methodSignature;
+		  EntityKey key = new EntityKey(container.key() + "#" + methodSignature);
 			SDMethod sdMethod = new SDMethod(this, getId(), methodSignature, container, isConstructor);
-			putAtMap(fullName, sdMethod);
+			putAtMap(key, sdMethod);
 			if (!sdMethod.isAnonymous()) {
                 unmatchedMethods.add(sdMethod);
             }
@@ -162,9 +175,9 @@ public class SDModel {
 		}
 		
 		public SDAttribute createAttribute(String attributeName, SDContainerEntity container) {
-			String fullName = container.fullName() + "#" + attributeName;
+		  EntityKey key = new EntityKey(container.key() + "#" + attributeName);
 			SDAttribute sdAttribute = new SDAttribute(this, getId(), attributeName, container);
-			putAtMap(fullName, sdAttribute);
+			putAtMap(key, sdAttribute);
 			if (!sdAttribute.isAnonymous()) {
                 unmatchedAttributes.add(sdAttribute);
             }
@@ -190,7 +203,7 @@ public class SDModel {
 	    }
 	    for (SDEntity entityBefore : BEFORE.getAllEntities()) {
 	        if (!entityBefore.isAnonymous()) {
-	            SDEntity entityAfter = AFTER.find(SDEntity.class, entityBefore.fullName());
+	            SDEntity entityAfter = AFTER.find(SDEntity.class, entityBefore.key());
 	            if (entityAfter != null) {
 	                addSameNameRelationship(entityBefore, entityAfter);
 	            }
@@ -276,7 +289,7 @@ public class SDModel {
             AFTER.unmatchedAttributes.remove(entityAfter);
             
             for (SDEntity childEntity : entityBefore.children()) {
-                String newKey = childEntity.fullName(entityAfter);
+                EntityKey newKey = childEntity.key(entityAfter);
                 SDEntity childEntityAfter = after().find(SDEntity.class, newKey);
                 if (childEntityAfter != null) {
                     addSameNameRelationship(childEntity, childEntityAfter);

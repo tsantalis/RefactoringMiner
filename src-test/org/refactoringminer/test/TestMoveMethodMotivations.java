@@ -65,7 +65,7 @@ public class TestMoveMethodMotivations {
 
 	private void assertMoveMethodMotivation(SDModel sdModel, String movedMethodKey, Motivation ... motivations) {
 		final RefactoringMotivationClassifier classifier = new RefactoringMotivationClassifier(sdModel);
-		SDMethod moved = sdModel.after().find(SDMethod.class, movedMethodKey);
+		SDMethod moved = sdModel.after().findByName(SDMethod.class, movedMethodKey);
 		assert moved != null;
 		Set<Motivation> tags = classifier.classifyMoveMethod(moved);
 		Motivation[] actual = tags.toArray(new Motivation[tags.size()]);

@@ -2,12 +2,12 @@ package org.refactoringminer.rm2.model;
 
 public abstract class SDContainerEntity extends SDEntity {
 
-	public SDContainerEntity(SDModel.Snapshot snapshot, int id, String fullName) {
-		super(snapshot, id, fullName, null);
+	public SDContainerEntity(SDModel.Snapshot snapshot, int id, String fullName, EntityKey key) {
+		super(snapshot, id, fullName, key, null);
 	}
 
-	public SDContainerEntity(SDModel.Snapshot snapshot, int id, String fullName, SDContainerEntity container) {
-		super(snapshot, id, fullName, container);
+	public SDContainerEntity(SDModel.Snapshot snapshot, int id, String fullName, EntityKey key, SDContainerEntity container) {
+		super(snapshot, id, fullName, key, container);
 	}
 
 	public abstract boolean isPackage();

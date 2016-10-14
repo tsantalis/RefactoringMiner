@@ -13,7 +13,7 @@ public class SDAttribute extends SDEntity {
     private SourceRepresentation clientCode;
 	
 	public SDAttribute(SDModel.Snapshot snapshot, int id, String name, SDContainerEntity container) {
-		super(snapshot, id, container.fullName() + "#" + name, container);
+		super(snapshot, id, container.fullName() + "#" + name, new EntityKey(container.key() + "#" + name), container);
 		this.name = name;
 		this.referencedBy = new Multiset<SDMethod>();
 		this.clientCode = new SourceRepresentation(new long[0]);

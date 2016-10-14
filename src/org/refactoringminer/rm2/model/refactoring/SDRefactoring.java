@@ -8,10 +8,14 @@ public class SDRefactoring implements Refactoring {
 
 	protected RefactoringType type;
 	protected SDEntity mainEntity;
+	protected SDEntity entityBefore;
+	protected SDEntity entityAfter;
 
-	public SDRefactoring(RefactoringType type, SDEntity mainEntity) {
+	public SDRefactoring(RefactoringType type, SDEntity mainEntity, SDEntity entityBefore, SDEntity entityAfter) {
 		this.type = type;
 		this.mainEntity = mainEntity;
+		this.entityBefore = entityBefore;
+		this.entityAfter = entityAfter;
 	}
 
 	@Override
@@ -24,7 +28,15 @@ public class SDRefactoring implements Refactoring {
 		return type.getDisplayName();
 	}
 	
-	@Override
+	public SDEntity getEntityBefore() {
+    return entityBefore;
+  }
+
+  public SDEntity getEntityAfter() {
+    return entityAfter;
+  }
+
+  @Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(this.getName());

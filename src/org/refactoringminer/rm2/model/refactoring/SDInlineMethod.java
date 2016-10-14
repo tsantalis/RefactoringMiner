@@ -9,7 +9,7 @@ public class SDInlineMethod extends SDRefactoring {
     private final SDMethod dest;
     
     public SDInlineMethod(SDMethod inlinedMethod, SDMethod dest) {
-        super(RefactoringType.INLINE_OPERATION, inlinedMethod);
+        super(RefactoringType.INLINE_OPERATION, inlinedMethod, inlinedMethod, dest);
         this.inlinedMethod = inlinedMethod;
         this.dest = dest;
     }

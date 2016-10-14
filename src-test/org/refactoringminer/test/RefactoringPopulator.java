@@ -50,6 +50,7 @@ public class RefactoringPopulator {
 		
 		if ((systemsFlag & Systems.FSE.getValue())>0) {
 			FSE_ExtractMethodRefactorings(test, systemsFlag);
+			FSE_PullUpMethodRefactorings(test, systemsFlag);
 		}
 	}
 
@@ -2446,5 +2447,126 @@ public class RefactoringPopulator {
 		.atCommit("cfc54e8afa7ee7d5376525a84559e90b21487ccf")
 		.containsOnly(
 		"Extract Method private resetLeader() : void extracted from public getLastOffset(whichTime long) : long and public run() : void in class org.voltdb.importclient.kafka.KafkaStreamImporter.TopicPartitionFetcher");
+	}
+
+	private static void FSE_PullUpMethodRefactorings(TestBuilder test, int flag) {
+		test.project("https://github.com/BroadleafCommerce/BroadleafCommerce.git","master")
+		.atCommit("4ef35268bb96bb78b2dc698fa68e7ce763cde32e")
+		.containsOnly(
+		"Pull Up Method public setColumn(column Integer) : void from class org.broadleafcommerce.openadmin.dto.BasicFieldMetadata to class org.broadleafcommerce.openadmin.dto.FieldMetadata",
+		"Pull Up Method public getColumn() : Integer from class org.broadleafcommerce.openadmin.dto.BasicFieldMetadata to class org.broadleafcommerce.openadmin.dto.FieldMetadata");
+
+		test.project("https://github.com/dreamhead/moco.git","master")
+		.atCommit("55ffa2f3353c5dc77fe6b790e5e045b76a07a772")
+		.containsOnly(
+		"Pull Up Method protected onRequestAttached(matcher RequestMatcher) : HttpResponseSetting from class com.github.dreamhead.moco.internal.ActualHttpServer to protected onRequestAttached(matcher RequestMatcher) : HttpResponseSetting from class com.github.dreamhead.moco.internal.HttpConfiguration",
+		"Pull Up Method public redirectTo(url String) : HttpResponseSetting from class com.github.dreamhead.moco.internal.ActualHttpServer to public redirectTo(url String) : HttpResponseSetting from class com.github.dreamhead.moco.internal.HttpConfiguration");
+
+		test.project("https://github.com/raphw/byte-buddy.git","master")
+		.atCommit("f1dfb66a368760e77094ac1e3860b332cf0e4eb5")
+		.containsOnly(
+		"Pull Up Method protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.Explicit to protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.AbstractBase",
+		"Pull Up Method protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.ForLoadedExecutable to protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.AbstractBase");
+
+		test.project("https://github.com/kuujo/copycat.git","master")
+		.atCommit("19a49f8f36b2f6d82534dc13504d672e41a3a8d1")
+		.containsOnly(
+		"Pull Up Method private doAppendEntries(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.ActiveState to private doAppendEntries(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.PassiveState",
+		"Pull Up Method private doCheckPreviousEntry(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.ActiveState to private doCheckPreviousEntry(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.PassiveState",
+		"Pull Up Method private handleAppend(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.ActiveState to private handleAppend(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.PassiveState",
+		"Pull Up Method private applyCommits(commitIndex long) : CompletableFuture<Void> from class net.kuujo.copycat.raft.state.ActiveState to private applyCommits(commitIndex long) : CompletableFuture from class net.kuujo.copycat.raft.state.PassiveState",
+		"Pull Up Method private applyIndex(globalIndex long) : void from class net.kuujo.copycat.raft.state.ActiveState to private applyIndex(globalIndex long) : void from class net.kuujo.copycat.raft.state.PassiveState");
+
+		test.project("https://github.com/codinguser/gnucash-android.git","master")
+		.atCommit("bba4af3f52064b5a2de2c9a57f9d34ba67dcdd8c")
+		.containsOnly(
+		"Pull Up Method public getAllTransactionsCount() : long from class org.gnucash.android.db.TransactionsDbAdapter to public getRecordsCount() : long from class org.gnucash.android.db.DatabaseAdapter");
+
+		test.project("https://github.com/crate/crate.git","master")
+		.atCommit("72b5348307d86b1a118e546c24d97f1ac1895bdb")
+		.containsOnly(
+		"Pull Up Method public downstreamNodes(nodes Set<String>) : void from classes io.crate.planner.node.dql.MergeNode and io.crate.planner.node.dql.join.NestedLoopNode to class io.crate.planner.node.dql.AbstractDQLPlanNode",
+		"Pull Up Method public downstreamExecutionNodeId(downstreamExecutionNodeId int) : void from class io.crate.planner.node.dql.MergeNode to class io.crate.planner.node.dql.AbstractDQLPlanNode",
+		"Pull Up Method public downstreamNodes(downStreamNodes List<String>) : void from class io.crate.planner.node.dql.CollectNode to class io.crate.planner.node.dql.AbstractDQLPlanNode");
+
+		test.project("https://github.com/geoserver/geoserver.git","master")
+		.atCommit("182f4d1174036417aad9d6db908ceaf64234fd5f")
+		.containsOnly(
+		"Pull Up Method public pre(item ImportTask, data ImportData) : void from class org.geoserver.importer.transform.VectorTransformChain to public pre(item ImportTask, data ImportData) : void from class org.geoserver.importer.transform.TransformChain",
+		"Pull Up Method public post(task ImportTask, data ImportData) : void from class org.geoserver.importer.transform.VectorTransformChain to public post(task ImportTask, data ImportData) : void from class org.geoserver.importer.transform.TransformChain");
+
+		test.project("https://github.com/fabric8io/fabric8.git","master")
+		.atCommit("07807aed847e1d0589c094461544e54a2677cbf5")
+		.containsOnly(
+		"Pull Up Method protected isKubernetesJsonArtifact(classifier String, type String) : boolean from class io.fabric8.maven.JsonMojo to package isKubernetesJsonArtifact(classifier String, type String) : boolean from class io.fabric8.maven.AbstractFabric8Mojo",
+		"Pull Up Method private hasKubernetesJson(f File) : boolean from class io.fabric8.maven.ApplyMojo to package hasKubernetesJson(f File) : boolean from class io.fabric8.maven.AbstractFabric8Mojo",
+		"Pull Up Method private getDependencies() : Set<File> from class io.fabric8.maven.ApplyMojo to package getDependencies() : Set<File> from class io.fabric8.maven.AbstractFabric8Mojo");
+
+		test.project("https://github.com/jankotek/MapDB.git","master")
+		.atCommit("32dd05fc13b53873bf18c589622b55d12e3883c7")
+		.containsOnly(
+		"Pull Up Method protected longStackValParitySet(value long) : long from class org.mapdb.StoreDirect to protected longParitySet(value long) : long from class org.mapdb.Store");
+
+		test.project("https://github.com/apache/zookeeper.git","master")
+		.atCommit("3fd77b419673ce6ec41e06cdc27558b1d8f4ca06")
+		.containsOnly(
+		"Pull Up Method private cleanupWriterSocket(pwriter PrintWriter) : void from class org.apache.zookeeper.server.NIOServerCnxn to class org.apache.zookeeper.server.ServerCnxn",
+		"Pull Up Method private cleanupWriterSocket(pwriter PrintWriter) : void from class org.apache.zookeeper.server.NettyServerCnxn to class org.apache.zookeeper.server.ServerCnxn");
+
+		test.project("https://github.com/QuantumBadger/RedReader.git","master")
+		.atCommit("51b8b0e1ad4be1b137d67774eab28dc0ef52cb0a")
+		.containsOnly(
+		"Pull Up Method public onSharedPreferenceChanged(prefs SharedPreferences, key String) : void from class org.quantumbadger.redreader.activities.MainActivity to protected onSharedPreferenceChangedInner(prefs SharedPreferences, key String) : void from class org.quantumbadger.redreader.activities.RefreshableActivity");
+
+		test.project("https://github.com/Activiti/Activiti.git","master")
+		.atCommit("53036cece662f9c796d2a187b0077059c3d9088a")
+		.containsOnly(
+		"Pull Up Method public isAsynchronous() : boolean from class org.activiti.bpmn.model.Activity to public isAsynchronous() : boolean from class org.activiti.bpmn.model.FlowNode",
+		"Pull Up Method public isAsynchronous() : boolean from class org.activiti.bpmn.model.Gateway to public isAsynchronous() : boolean from class org.activiti.bpmn.model.FlowNode",
+		"Pull Up Method public isNotExclusive() : boolean from class org.activiti.bpmn.model.Gateway to public isNotExclusive() : boolean from class org.activiti.bpmn.model.FlowNode",
+		"Pull Up Method public isNotExclusive() : boolean from class org.activiti.bpmn.model.Activity to public isNotExclusive() : boolean from class org.activiti.bpmn.model.FlowNode",
+		"Pull Up Method public setAsynchronous(asynchronous boolean) : void from class org.activiti.bpmn.model.Gateway to public setAsynchronous(asynchronous boolean) : void from class org.activiti.bpmn.model.FlowNode",
+		"Pull Up Method public setAsynchronous(asynchronous boolean) : void from class org.activiti.bpmn.model.Activity to public setAsynchronous(asynchronous boolean) : void from class org.activiti.bpmn.model.FlowNode",
+		"Pull Up Method public setNotExclusive(notExclusive boolean) : void from class org.activiti.bpmn.model.Gateway to public setNotExclusive(notExclusive boolean) : void from class org.activiti.bpmn.model.FlowNode",
+		"Pull Up Method public setNotExclusive(notExclusive boolean) : void from class org.activiti.bpmn.model.Activity to public setNotExclusive(notExclusive boolean) : void from class org.activiti.bpmn.model.FlowNode");
+
+		test.project("https://github.com/orientechnologies/orientdb.git","master")
+		.atCommit("0a1ff849ec7709be8553383fe9c2c7301980dde0")
+		.containsOnly(
+		"Pull Up Method public getDatabase() : ODatabaseDocumentInternal from class com.orientechnologies.orient.core.sql.parser.OStatement to public getDatabase() : ODatabaseDocumentInternal from class com.orientechnologies.orient.core.sql.parser.SimpleNode");
+
+		test.project("https://github.com/tomahawk-player/tomahawk-android.git","master")
+		.atCommit("56c273ee11296288cb15320c3de781b94a1e8eb4")
+		.containsOnly(
+		"Pull Up Method public wipe() : void from class org.tomahawk.libtomahawk.collection.NativeCollection to public wipe() : void from class org.tomahawk.libtomahawk.collection.Collection");
+
+		test.project("https://github.com/JetBrains/intellij-community.git","master")
+		.atCommit("6ff3fe00d7ffe04dbe0904b8bad98285b6988d6d")
+		.containsOnly(
+		"Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List from class org.jetbrains.idea.maven.server.Maven32ServerEmbedderImpl to public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List from class org.jetbrains.idea.maven.server.Maven3ServerEmbedder",
+		"Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List from class org.jetbrains.idea.maven.server.Maven30ServerEmbedderImpl to public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List from class org.jetbrains.idea.maven.server.Maven3ServerEmbedder");
+
+		test.project("https://github.com/JetBrains/intellij-community.git","master")
+		.atCommit("33b0ac3a029845f9c20f7f5967c03b31b24f3b4b")
+		.containsOnly(
+		"Pull Up Method private iterateRecursively(root VirtualFile, processor ContentIterator, indicator ProgressIndicator, visitedRoots Set<VirtualFile>, projectFileIndex ProjectFileIndex) : void from class com.intellij.util.indexing.FileBasedIndexImpl to public iterateRecursively(root VirtualFile, processor ContentIterator, indicator ProgressIndicator, visitedRoots Set, projectFileIndex ProjectFileIndex) : void from class com.intellij.util.indexing.FileBasedIndex");
+
+		test.project("https://github.com/spring-projects/spring-roo.git","master")
+		.atCommit("0bb4cca1105fc6eb86e7c4b75bfff3dbbd55f0c8")
+		.containsOnly(
+		"Pull Up Method public getGenericDefinition() : String from class org.springframework.roo.classpath.details.MethodMetadataBuilder to public getGenericDefinition() : String from class org.springframework.roo.classpath.details.AbstractInvocableMemberMetadataBuilder",
+		"Pull Up Method public setGenericDefinition(definition String) : void from class org.springframework.roo.classpath.details.MethodMetadataBuilder to class org.springframework.roo.classpath.details.AbstractInvocableMemberMetadataBuilder");
+
+		test.project("https://github.com/VoltDB/voltdb.git","master")
+		.atCommit("e2de877a29217a50afbd142454a330e423d86045")
+		.containsOnly(
+		"Pull Up Method private findAllAggPlanNodes(node AbstractPlanNode) : List<AbstractPlanNode> from class org.voltdb.planner.TestPlansApproxCountDistinct to class org.voltdb.planner.PlannerTestCase");
+
+		test.project("https://github.com/apache/drill.git","master")
+		.atCommit("c1b847acdc8cb90a1498b236b3bb5c81ca75c044")
+		.containsOnly(
+		"Pull Up Method public addMiniDfsBasedStorage() : void from class org.apache.drill.exec.impersonation.TestImpersonationDisabledWithMiniDFS to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation",
+		"Pull Up Method public addMiniDfsBasedStorage() : void from class org.apache.drill.exec.impersonation.TestImpersonationMetadata to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation",
+		"Pull Up Method public addMiniDfsBasedStorageAndGenerateTestData() : void from class org.apache.drill.exec.impersonation.TestImpersonationQueries to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation");
 	}
 }

@@ -689,7 +689,8 @@ public class RefactoringPopulator {
 		test.project("https://github.com/puniverse/quasar.git","master")
 		.atCommit("c22d40fab8dfe4c5cad9ba582caf0855ff64b324")
 		.containsOnly(
-		"Extract Method protected failedSubscribe(s Subscription) : void extracted from public onSubscribe(s Subscription) : void in class co.paralleluniverse.strands.channels.reactivestreams.ChannelSubscriber");
+		"Extract Method protected failedSubscribe(s Subscription) : void extracted from public onSubscribe(s Subscription) : void in class co.paralleluniverse.strands.channels.reactivestreams.ChannelSubscriber",
+		"Extract Method protected failedSubscribe(s Subscriber, t Throwable) : void extracted from public subscribe(s Subscriber) : void in class co.paralleluniverse.strands.channels.reactivestreams.ChannelPublisher");
 
 		test.project("https://github.com/rstudio/rstudio.git","master")
 		.atCommit("cb49e436b9d7ee55f2531ebc2ef1863f5c9ba9fe")
@@ -779,7 +780,10 @@ public class RefactoringPopulator {
 		.atCommit("d5b2bb8cd1393f1c5a5bb623e3d8906cd57e53c4")
 		.containsOnly(
 		"Extract Method public addPredicatedHandler(predicate Predicate, handlerWrapper HandlerWrapper, elseBranch HandlerWrapper) : PredicatesHandler extracted from public addPredicatedHandler(predicate Predicate, handlerWrapper HandlerWrapper) : PredicatesHandler in class io.undertow.predicate.PredicatesHandler");
-
+		// TBD
+		// Move Method
+		//  Extract Method public tokenize(string String) : Deque extracted from public parse(contents String, classLoader ClassLoader) : List in class io.undertow.server.handlers.builder.PredicatedHandlersParser
+		//  https://github.com/undertow-io/undertow/commit/d5b2bb8cd1393f1c5a5bb623e3d8906cd57e53c4
 		test.project("https://github.com/Netflix/eureka.git","master")
 		.atCommit("f6212a7e474f812f31ddbce6d4f7a7a0d498b751")
 		.containsOnly(
@@ -797,7 +801,11 @@ public class RefactoringPopulator {
 		.containsOnly(
 		"Extract Method protected initPriorityQueue(kBase InternalKnowledgeBase) : BinaryHeapQueue extracted from public AgendaGroupQueueImpl(name String, kBase InternalKnowledgeBase) in class org.drools.core.common.AgendaGroupQueueImpl",
 		"Extract Method private internalAddEntry(entry PropagationEntry) : void extracted from public addEntry(entry PropagationEntry) : void in class org.drools.core.phreak.SynchronizedPropagationList");
-
+		//TBD 
+		//  Extract Method private fire(wm InternalWorkingMemory, filter AgendaFilter, fireCount int, fireLimit int, agenda InternalAgenda) : int extracted from public evaluateNetworkAndFire(wm InternalWorkingMemory, filter AgendaFilter, fireCount int, fireLimit int) : int in class org.drools.core.phreak.RuleExecutor
+		//  https://github.com/droolsjbpm/drools/commit/1bf2875e9d73e2d1cd3b58200d5300485f890ff5#diff-48ebc0346526122dd9a4568d42907628L55
+		
+		
 		test.project("https://github.com/spring-projects/spring-data-rest.git","master")
 		.atCommit("b7cba6a700d8c5e456cdeffe9c5bf54563eab7d3")
 		.containsOnly(
@@ -1051,7 +1059,8 @@ public class RefactoringPopulator {
 		test.project("https://github.com/SonarSource/sonarqube.git","master")
 		.atCommit("021bf45623b748e70f20d956e86d595191241786")
 		.containsOnly(
-		"Extract Method package getPluginMetrics() : List<Metric> extracted from public start() : void in class org.sonar.server.startup.RegisterMetrics");
+		"Extract Method package getPluginMetrics() : List<Metric> extracted from public start() : void in class org.sonar.server.startup.RegisterMetrics",
+		"Extract Method package register(metrics Iterable) : void extracted from public start() : void in class org.sonar.server.startup.RegisterMetrics");
 
 		test.project("https://github.com/wordpress-mobile/WordPress-Android.git","master")
 		.atCommit("f8d5cf01f123a1d0a65857aa2db0571fe9cd1911")
@@ -1147,6 +1156,10 @@ public class RefactoringPopulator {
 		.atCommit("e2dd54ab180b577b08cf6b0e69310ac81fc99fd3")
 		.containsOnly(
 		"Extract Method private foldExprFull(desc ExprNodeDesc, constants Map<ColumnInfo,ExprNodeDesc>, cppCtx ConstantPropagateProcCtx, op Operator<? extends Serializable>, tag int, propagate boolean) : ExprNodeDesc extracted from private foldExpr(desc ExprNodeDesc, constants Map<ColumnInfo,ExprNodeDesc>, cppCtx ConstantPropagateProcCtx, op Operator<? extends Serializable>, tag int, propagate boolean) : ExprNodeDesc in class org.apache.hadoop.hive.ql.optimizer.ConstantPropagateProcFactory");
+		
+		//TBD
+		//  Extract Method private foldExprShortcut(desc ExprNodeDesc, constants Map, cppCtx ConstantPropagateProcCtx, op Operator, tag int, propagate boolean) : ExprNodeDesc extracted from private foldExpr(desc ExprNodeDesc, constants Map, cppCtx ConstantPropagateProcCtx, op Operator, tag int, propagate boolean) : ExprNodeDesc in class org.apache.hadoop.hive.ql.optimizer.ConstantPropagateProcFactory
+
 
 		test.project("https://github.com/ratpack/ratpack.git","master")
 		.atCommit("da6167af3bdbf7663af6c20fb603aba27dd5e174")
@@ -1419,7 +1432,12 @@ public class RefactoringPopulator {
 		.atCommit("e813a0be86c87366157a0201e6c61662cadee586")
 		.containsOnly(
 		"Extract Method private getAndroidIdViaReflection(context Context) : AttributionIdentifiers extracted from private getAndroidId(context Context) : AttributionIdentifiers in class com.facebook.internal.AttributionIdentifiers");
-
+		//TBD
+		//seems the same thing extracted to two methods
+		//  Extract Method private getAndroidIdViaService(context Context) : AttributionIdentifiers extracted from private getAndroidId(context Context) : AttributionIdentifiers in class com.facebook.internal.AttributionIdentifiers
+		//	https://github.com/facebook/facebook-android-sdk/commit/e813a0be86c87366157a0201e6c61662cadee586#diff-ffb6ca289dbd8b98fdfd8f6b376a1464L62
+		
+		
 		test.project("https://github.com/fabric8io/fabric8.git","master")
 		.atCommit("e068eb7f484f24dee285d29b8a910d9019592020")
 		.containsOnly(
@@ -1571,7 +1589,8 @@ public class RefactoringPopulator {
 		test.project("https://github.com/google/j2objc.git","master")
 		.atCommit("fa3e6fa02dadc675f0d487a15cd842b3ac4a0c11")
 		.containsOnly(
-		"Extract Method private getOperatorFunctionModifier(expr Expression) : String extracted from private rewriteBoxedPrefixOrPostfix(node TreeNode, operand Expression, funcName String) : void in class com.google.devtools.j2objc.translate.Autoboxer");
+		"Extract Method private getOperatorFunctionModifier(expr Expression) : String extracted from private rewriteBoxedPrefixOrPostfix(node TreeNode, operand Expression, funcName String) : void in class com.google.devtools.j2objc.translate.Autoboxer",
+		"Extract Method private getOperatorFunctionModifier(expr Expression) : String extracted from private rewriteBoxedAssignment(node Assignment) : void in class com.google.devtools.j2objc.translate.Autoboxer");
 
 		test.project("https://github.com/deeplearning4j/deeplearning4j.git","master")
 		.atCommit("91cdfa1ffd937a4cb01cdc0052874ef7831955e2")
@@ -1778,7 +1797,14 @@ public class RefactoringPopulator {
 		"Extract Method protected startSelectors() : void extracted from public start() : void in class com.hazelcast.client.connection.nio.ClientConnectionManagerImpl",
 		"Extract Method protected initializeSelectors(client HazelcastClientInstanceImpl) : void extracted from public ClientConnectionManagerImpl(client HazelcastClientInstanceImpl, addressTranslator AddressTranslator) in class com.hazelcast.client.connection.nio.ClientConnectionManagerImpl",
 		"Extract Method protected shutdownSelectors() : void extracted from public shutdown() : void in class com.hazelcast.client.connection.nio.ClientConnectionManagerImpl");
-
+		//TBD to me False
+		//Extract Method private createAddresses(ports AtomicInteger, addressArray String[]) : List extracted from public TestHazelcastInstanceFactory(addresses String[]) in class com.hazelcast.test.TestHazelcastInstanceFactory
+//		  Extract Method private createAddresses(ports AtomicInteger, count int) : List extracted from public TestHazelcastInstanceFactory(addresses String[]) in class com.hazelcast.test.TestHazelcastInstanceFactory
+//		  Rename Method private tripshutdown(instances HazelcastInstance[]) : void renamed to private tripTerminate(instances HazelcastInstance[]) : void in class com.hazelcast.mapreduce.MapReduceTest
+//		  Extract Method private createAddresses(ports AtomicInteger, count int) : List extracted from public TestHazelcastInstanceFactory(count int) in class com.hazelcast.test.TestHazelcastInstanceFactory
+//		  Extract Method private createAddresses(ports AtomicInteger, addressArray String[]) : List extracted from public TestHazelcastInstanceFactory(count int) in class com.hazelcast.test.TestHazelcastInstanceFactory
+		//https://github.com/hazelcast/hazelcast/commit/76d7f5e3fe4eb41b383c1d884bc1217b9fa7192e#diff-17f53e9abe4ccd40013a293698fa234dL49
+		
 		test.project("https://github.com/geometer/FBReaderJ.git","master")
 		.atCommit("42e0649f82779ecd48bff6448924fc7dc2534554")
 		.containsOnly(
@@ -1798,7 +1824,8 @@ public class RefactoringPopulator {
 		test.project("https://github.com/wordpress-mobile/WordPress-Android.git","master")
 		.atCommit("1b21ba4bcea986988d4bbd578e3bb9a20ec69606")
 		.containsOnly(
-		"Extract Method private privacyStringForValue(value int) : String extracted from public onPreferenceChange(preference Preference, newValue Object) : boolean in class org.wordpress.android.ui.prefs.SiteSettingsFragment");
+		"Extract Method private privacyStringForValue(value int) : String extracted from public onPreferenceChange(preference Preference, newValue Object) : boolean in class org.wordpress.android.ui.prefs.SiteSettingsFragment",
+		"Extract Method private changeEditTextPreferenceValue(pref EditTextPreference, newValue String) : void extracted from public onPreferenceChange(preference Preference, newValue Object) : boolean in class org.wordpress.android.ui.prefs.SiteSettingsFragment");
 
 		test.project("https://github.com/robovm/robovm.git","master")
 		.atCommit("7837d0baf1aef45340eec699516a8c3a22aeb553")
@@ -1892,6 +1919,10 @@ public class RefactoringPopulator {
 		.containsOnly(
 		"Extract Method protected movePanel(xoffset int, yoffset int) : void extracted from public mouseDragged(e MouseEvent) : void in class com.jme3.gde.materialdefinition.editor.DraggablePanel",
 		"Extract Method protected saveLocation() : void extracted from public mousePressed(e MouseEvent) : void in class com.jme3.gde.materialdefinition.editor.DraggablePanel");
+		//TBD
+		//method signature changed 
+		//  Extract Method private doSelect(selectable Selectable, multi boolean) : Selectable extracted from public select(key String) : Selectable in class com.jme3.gde.materialdefinition.editor.Diagram
+		//	https://github.com/jMonkeyEngine/jmonkeyengine/commit/5989711f7315abe4c3da0f1516a3eb3a81da6716#diff-fac57d828f8b8ffbc1f94d953107a9d3L384
 
 		test.project("https://github.com/facebook/presto.git","master")
 		.atCommit("8b1f5ce432bd6f579c646705d79ff0c4690495ae")
@@ -2135,7 +2166,8 @@ public class RefactoringPopulator {
 		"Extract Method public formatCSV(header boolean, delimiter char) : String extracted from public formatCSV(delimiter char) : String in class org.jooq.impl.ResultImpl",
 		"Extract Method public formatCSV(writer Writer, header boolean, delimiter char) : void extracted from public formatCSV(writer Writer, delimiter char) : void in class org.jooq.impl.ResultImpl",
 		"Extract Method public formatCSV(stream OutputStream, header boolean, delimiter char, nullString String) : void extracted from public formatCSV(stream OutputStream, delimiter char, nullString String) : void in class org.jooq.impl.ResultImpl",
-		"Extract Method public formatCSV(writer Writer, header boolean, delimiter char, nullString String) : void extracted from public formatCSV(writer Writer, delimiter char, nullString String) : void in class org.jooq.impl.ResultImpl");
+		"Extract Method public formatCSV(writer Writer, header boolean, delimiter char, nullString String) : void extracted from public formatCSV(writer Writer, delimiter char, nullString String) : void in class org.jooq.impl.ResultImpl",
+		"Extract Method public formatCSV(stream OutputStream, header boolean, delimiter char) : void extracted from public formatCSV(stream OutputStream, delimiter char) : void in class org.jooq.impl.ResultImpl");
 
 		test.project("https://github.com/eclipse/vert.x.git","master")
 		.atCommit("0ef66582ffaba9a8df1cad846880df2074d34505")
@@ -2201,16 +2233,19 @@ public class RefactoringPopulator {
 		test.project("https://github.com/bitcoinj/bitcoinj.git","master")
 		.atCommit("12602650ce99f34cb530fc24266c23e39733b0bb")
 		.containsOnly(
-		"Extract Method public makeInventoryMessage(payloadBytes byte[], length int) : InventoryMessage extracted from private makeMessage(command String, length int, payloadBytes byte[], hash byte[], checksum byte[]) : Message in class org.bitcoinj.core.BitcoinSerializer",
+		"Extract Method public makeInventoryMessage(payloadBytes byte[], length int) : InventoryMessage extracted from private makeMessage(command String, length int, payloadBytes byte[], hash byte[], checksum byte[]) : Message in class org.bitcoinj.core.BitcoinSerializer",// use the combination of fields and parameters to detect extract or...
 		"Extract Method public makeAddressMessage(payloadBytes byte[], length int) : AddressMessage extracted from private makeMessage(command String, length int, payloadBytes byte[], hash byte[], checksum byte[]) : Message in class org.bitcoinj.core.BitcoinSerializer",
 		"Extract Method protected parseTransactions(transactionsOffset int) : void extracted from protected parseTransactions() : void in class org.bitcoinj.core.Block",
 		"Extract Method public makeTransaction(payloadBytes byte[], offset int, length int, hash byte[]) : Transaction extracted from private makeMessage(command String, length int, payloadBytes byte[], hash byte[], checksum byte[]) : Message in class org.bitcoinj.core.BitcoinSerializer",
-		"Extract Method public makeBlock(payloadBytes byte[], length int) : Block extracted from private makeMessage(command String, length int, payloadBytes byte[], hash byte[], checksum byte[]) : Message in class org.bitcoinj.core.BitcoinSerializer");
+		"Extract Method public makeBlock(payloadBytes byte[], length int) : Block extracted from private makeMessage(command String, length int, payloadBytes byte[], hash byte[], checksum byte[]) : Message in class org.bitcoinj.core.BitcoinSerializer",
+		"Extract Method public makeBloomFilter(payloadBytes byte[]) : Message extracted from private makeMessage(command String, length int, payloadBytes byte[], hash byte[], checksum byte[]) : Message in class org.bitcoinj.core.BitcoinSerializer",
+		"Extract Method public makeAlertMessage(payloadBytes byte[]) : Message extracted from private makeMessage(command String, length int, payloadBytes byte[], hash byte[], checksum byte[]) : Message in class org.bitcoinj.core.BitcoinSerializer");
 
 		test.project("https://github.com/alibaba/druid.git","master")
 		.atCommit("87f3f8144b7a6cb57b6e21cd3753d09ecde0d88f")
 		.containsOnly(
-		"Extract Method protected printJoinType(joinType JoinType) : void extracted from public visit(x SQLJoinTableSource) : boolean in class com.alibaba.druid.sql.visitor.SQLASTOutputVisitor");
+		"Extract Method protected printJoinType(joinType JoinType) : void extracted from public visit(x SQLJoinTableSource) : boolean in class com.alibaba.druid.sql.visitor.SQLASTOutputVisitor",
+		"Extract Method protected printJoinType(joinType JoinType) : void extracted from public visit(x SQLJoinTableSource) : boolean in class com.alibaba.druid.sql.dialect.odps.visitor.OdpsOutputVisitor");
 
 		test.project("https://github.com/eclipse/jetty.project.git","master")
 		.atCommit("837d1a74bb7d694220644a2539c4440ce55462cf")
@@ -2317,7 +2352,8 @@ public class RefactoringPopulator {
 		.atCommit("043030723632627b0908dca6b24dae91d3dfd938")
 		.containsOnly(
 		"Extract Method private rehashAwareIteration(complete AtomicBoolean, consumer Consumer<R>, supplier IteratorSupplier<R>, iteratorParallelDistribute boolean) : void extracted from package remoteIterator() : Iterator<R> in class org.infinispan.stream.impl.DistributedCacheStream",
-		"Extract Method private ignoreRehashIteration(consumer Consumer<R>, supplier IteratorSupplier<R>, iteratorParallelDistribute boolean) : void extracted from package remoteIterator() : Iterator<R> in class org.infinispan.stream.impl.DistributedCacheStream");
+		"Extract Method private ignoreRehashIteration(consumer Consumer<R>, supplier IteratorSupplier<R>, iteratorParallelDistribute boolean) : void extracted from package remoteIterator() : Iterator<R> in class org.infinispan.stream.impl.DistributedCacheStream",
+		"Extract Method protected supplierForSegments(ch ConsistentHash, targetSegments Set, excludedKeys Set, primaryOwnerOnly boolean) : Supplier extracted from protected supplierForSegments(ch ConsistentHash, targetSegments Set, excludedKeys Set) : Supplier in class org.infinispan.stream.impl.AbstractCacheStream");
 
 		test.project("https://github.com/MovingBlocks/Terasology.git","master")
 		.atCommit("8f63cc5c8edb8e740026447bc4827f8e8e6c34b1")
@@ -2571,3 +2607,4 @@ public class RefactoringPopulator {
 		"Pull Up Method public addMiniDfsBasedStorageAndGenerateTestData() : void from class org.apache.drill.exec.impersonation.TestImpersonationQueries to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation");
 	}
 }
+ 

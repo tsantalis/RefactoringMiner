@@ -2446,7 +2446,8 @@ public class RefactoringPopulator {
 		test.project("https://github.com/VoltDB/voltdb.git","master")
 		.atCommit("cfc54e8afa7ee7d5376525a84559e90b21487ccf")
 		.containsOnly(
-		"Extract Method private resetLeader() : void extracted from public getLastOffset(whichTime long) : long and public run() : void in class org.voltdb.importclient.kafka.KafkaStreamImporter.TopicPartitionFetcher");
+		"Extract Method private resetLeader() : void extracted from public getLastOffset(whichTime long) : long in class org.voltdb.importclient.kafka.KafkaStreamImporter.TopicPartitionFetcher",
+		"Extract Method private resetLeader() : void extracted from public run() : void in class org.voltdb.importclient.kafka.KafkaStreamImporter.TopicPartitionFetcher");
 	}
 
 	private static void FSE_PullUpMethodRefactorings(TestBuilder test, int flag) {

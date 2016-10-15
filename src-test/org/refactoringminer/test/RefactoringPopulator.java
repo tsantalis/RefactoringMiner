@@ -51,6 +51,7 @@ public class RefactoringPopulator {
 		if ((systemsFlag & Systems.FSE.getValue())>0) {
 			FSE_ExtractMethodRefactorings(test, systemsFlag);
 			FSE_PullUpMethodRefactorings(test, systemsFlag);
+			FSE_InlineMethodRefactorings(test, systemsFlag);
 		}
 	}
 
@@ -2605,6 +2606,254 @@ public class RefactoringPopulator {
 		"Pull Up Method public addMiniDfsBasedStorage() : void from class org.apache.drill.exec.impersonation.TestImpersonationDisabledWithMiniDFS to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation",
 		"Pull Up Method public addMiniDfsBasedStorage() : void from class org.apache.drill.exec.impersonation.TestImpersonationMetadata to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation",
 		"Pull Up Method public addMiniDfsBasedStorageAndGenerateTestData() : void from class org.apache.drill.exec.impersonation.TestImpersonationQueries to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation");
+	}
+
+	private static void FSE_InlineMethodRefactorings(TestBuilder test, int flag) {
+		test.project("https://github.com/JetBrains/MPS.git","master")
+		.atCommit("2bcd05a827ead109a56cb1f79a83dcd332f42888")
+		.containsOnly(
+		"Inline Method public getLanguage(id SLanguageId, langName String, version int) : SLanguage inlined to public getLanguage(id SLanguageId, langName String) : SLanguage in class jetbrains.mps.smodel.adapter.structure.MetaAdapterFactory");
+
+		test.project("https://github.com/vaadin/vaadin.git","master")
+		.atCommit("b0d5315e8ba95d099f93dc2d16339033a6525b59")
+		.containsOnly(
+		"Inline Method private remove() : void inlined to public testColExpandRatioIsForgotten() : void in class com.vaadin.ui.GridLayoutExpandRatioTest");
+
+		test.project("https://github.com/JetBrains/intellij-community.git","master")
+		.atCommit("04397f41107bd6de41b31d45a4e8e2ed65628bbe")
+		.containsOnly(
+		"Inline Method private checkForTestRoots(srcModule Module, testFolders Set<VirtualFile>, processed Set<Module>) : void inlined to protected checkForTestRoots(srcModule Module, testFolders Set<VirtualFile>) : void in class com.intellij.testIntegration.createTest.CreateTestAction");
+
+		test.project("https://github.com/puniverse/quasar.git","master")
+		.atCommit("56d4b999e8be70be237049708f019c278c356e71")
+		.containsOnly(
+		"Inline Method public pushMethod(entry int, numSlots int, method String, sourceLine int) : void inlined to public pushMethod(entry int, numSlots int) : void in class co.paralleluniverse.fibers.Stack",
+		"Inline Method package verifySuspend(current Fiber, exc boolean) : Fiber inlined to package verifySuspend(current Fiber) : Fiber in class co.paralleluniverse.fibers.Fiber",
+		"Inline Method public checkInstrumentation(exc boolean) : boolean inlined to public checkInstrumentation() : boolean in class co.paralleluniverse.fibers.Fiber",
+		"Inline Method public popMethod(catchAll boolean) : void inlined to public popMethod() : void in class co.paralleluniverse.fibers.Stack");
+
+		test.project("https://github.com/wordpress-mobile/WordPress-Android.git","master")
+		.atCommit("2252ed3754bff8c39db48d172ac76ac5a4e15359")
+		.containsOnly(
+		"Inline Method private shouldShowTagToolbar() : boolean inlined to public onCreateView(inflater LayoutInflater, container ViewGroup, savedInstanceState Bundle) : View in class org.wordpress.android.ui.reader.ReaderPostListFragment");
+
+		test.project("https://github.com/google/closure-compiler.git","master")
+		.atCommit("ba5e6d44526a2491a7004423ca2ad780c6992c46")
+		.containsOnly(
+		"Inline Method private getRawTypeFromJSType(t JSType) : RawNominalType inlined to private visitOtherPropertyDeclaration(getProp Node) : void in class com.google.javascript.jscomp.GlobalTypeInfo.ProcessScope");
+
+		test.project("https://github.com/eclipse/vert.x.git","master")
+		.atCommit("32a8c9086040fd6d6fa11a214570ee4f75a4301f")
+		.containsOnly(
+		"Inline Method private handleHttp(conn ServerConnection, ch Channel, msg Object) : void inlined to protected doMessageReceived(conn ServerConnection, ctx ChannelHandlerContext, msg Object) : void in class io.vertx.core.http.impl.HttpServerImpl.ServerHandler");
+
+		test.project("https://github.com/killbill/killbill.git","master")
+		.atCommit("66901e86e8bea2b999ed9f33e013fa5ed21507c7")
+		.containsOnly(
+		"Inline Method private sanityOnPaymentInfoPlugin(paymentInfoPlugin PaymentTransactionInfoPlugin) : void inlined to private doOperation() : OperationResult in class org.killbill.billing.payment.core.sm.payments.PaymentOperation");
+
+		test.project("https://github.com/real-logic/Aeron.git","master")
+		.atCommit("35893c115ba23bd62a7036a33390420f074ce660")
+		.containsOnly(
+		"Inline Method private verifyPublicationClosed(times VerificationMode) : void inlined to public shouldErrorOnRemoveChannelOnUnknownStreamId() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",
+		"Inline Method private verifyExceptionLogged() : void inlined to public shouldErrorOnRemoveChannelOnUnknownSessionId() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",
+		"Inline Method private verifyExceptionLogged() : void inlined to public shouldErrorOnAddSubscriptionWithInvalidUri() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",
+		"Inline Method private verifyExceptionLogged() : void inlined to public shouldErrorOnRemoveChannelOnUnknownStreamId() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",
+		"Inline Method private verifyNeverSucceeds() : void inlined to public shouldErrorOnRemoveChannelOnUnknownStreamId() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",
+		"Inline Method private verifyNeverSucceeds() : void inlined to public shouldErrorOnRemoveChannelOnUnknownSessionId() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",
+		"Inline Method private verifyNeverSucceeds() : void inlined to public shouldErrorOnAddSubscriptionWithInvalidUri() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",
+		"Inline Method private verifySenderNotifiedOfNewPublication() : void inlined to public shouldBeAbleToAddSinglePublication() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",
+		"Inline Method private verifySenderNotifiedOfNewPublication() : void inlined to public shouldNotTimeoutPublicationOnKeepAlive() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",
+		"Inline Method private verifySenderNotifiedOfNewPublication() : void inlined to public shouldTimeoutPublication() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",
+		"Inline Method private verifyReceiverRemovesSubscription(times VerificationMode) : void inlined to public shouldNotTimeoutSubscriptionOnKeepAlive() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",
+		"Inline Method private verifyReceiverRemovesSubscription(times VerificationMode) : void inlined to public shouldTimeoutSubscription() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",
+		"Inline Method private verifyReceiverSubscribes() : void inlined to public shouldNotTimeoutSubscriptionOnKeepAlive() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",
+		"Inline Method private verifyReceiverSubscribes() : void inlined to public shouldTimeoutSubscription() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest");
+
+		test.project("https://github.com/netty/netty.git","master")
+		.atCommit("303cb535239a6f07cbe24a033ef965e2f55758eb")
+		.containsOnly(
+		"Inline Method private principal(certs Certificate[]) : Principal inlined to public getLocalPrincipal() : Principal in class io.netty.handler.ssl.OpenSslEngine.OpenSslSession",
+		"Inline Method private principal(certs Certificate[]) : Principal inlined to public getPeerPrincipal() : Principal in class io.netty.handler.ssl.OpenSslEngine.OpenSslSession");
+
+		test.project("https://github.com/FasterXML/jackson-databind.git","master")
+		.atCommit("da29a040ebae664274b28117b157044af0f525fa")
+		.containsOnly(
+		"Inline Method private _writeCloseableValue(gen JsonGenerator, value Object, cfg SerializationConfig) : void inlined to public writeValue(gen JsonGenerator, value Object) : void in class com.fasterxml.jackson.databind.ObjectWriter");
+
+		test.project("https://github.com/infinispan/infinispan.git","master")
+		.atCommit("ce4f6292d6350a2c6b82d995352fdf6d07042c9c")
+		.containsOnly(
+		"Inline Method protected lockAndWrap(ctx InvocationContext, key Object, ice InternalCacheEntry, command FlagAffectedCommand) : void inlined to private localGet(ctx InvocationContext, key Object, isWrite boolean, command FlagAffectedCommand, isGetCacheEntry boolean) : Object in class org.infinispan.interceptors.distribution.TxDistributionInterceptor",
+		"Inline Method protected lockAndWrap(ctx InvocationContext, key Object, ice InternalCacheEntry, command FlagAffectedCommand) : void inlined to private remoteGet(ctx InvocationContext, key Object, isWrite boolean, command FlagAffectedCommand) : InternalCacheEntry in class org.infinispan.interceptors.distribution.TxDistributionInterceptor",
+		"Inline Method private sendCommitCommand(ctx TxInvocationContext, command CommitCommand) : void inlined to public visitCommitCommand(ctx TxInvocationContext, command CommitCommand) : Object in class org.infinispan.interceptors.distribution.TxDistributionInterceptor");
+
+		test.project("https://github.com/processing/processing.git","master")
+		.atCommit("8707194f003444a9fb8e00bffa2893ef0c2492c6")
+		.containsOnly(
+		"Inline Method private setFrameCentered() : void inlined to public placeWindow(location int[], editorLocation int[]) : void in class processing.opengl.PSurfaceJOGL");
+
+		test.project("https://github.com/gradle/gradle.git","master")
+		.atCommit("f841d8dda2bf461f595755f85c3eba786783702d")
+		.containsOnly(
+		"Inline Method private adaptResult(result BuildResult, startTime long, endTime long) : AbstractOperationResult inlined to private adaptResult(source BuildOperationInternal) : AbstractOperationResult in class org.gradle.tooling.internal.provider.runner.ClientForwardingBuildListener");
+
+		test.project("https://github.com/processing/processing.git","master")
+		.atCommit("acf67c8cb58d13827e14bbeeec11a66f9277015f")
+		.containsOnly(
+		"Inline Method protected runSketchEDT(args String[], constructedSketch PApplet) : void inlined to public runSketch(args String[], constructedSketch PApplet) : void in class processing.core.PApplet");
+
+		test.project("https://github.com/neo4j/neo4j.git","master")
+		.atCommit("77fab3caea4495798a248035f0e928f745c7c2db")
+		.containsOnly(
+		"Inline Method public releaseAllShared() : void inlined to public releaseAll() : void in class org.neo4j.kernel.impl.locking.community.CommunityLockClient",
+		"Inline Method public releaseAllExclusive() : void inlined to public releaseAll() : void in class org.neo4j.kernel.impl.locking.community.CommunityLockClient");
+
+		test.project("https://github.com/CyanogenMod/android_frameworks_base.git","master")
+		.atCommit("f166866cd68efa963534c5bc7fc9ca38e4aa2838")
+		.containsOnly(
+		"Inline Method public is24HourFormatLocale(context Context) : boolean inlined to public is24HourFormat(context Context, userHandle int) : boolean in class android.text.format.DateFormat");
+
+		test.project("https://github.com/WhisperSystems/TextSecure.git","master")
+		.atCommit("99528dcc3b4a82b5e52a87d3e7aed5c6479028c7")
+		.containsOnly(
+		"Inline Method private getSynchronousRecipient(context Context, recipientId long) : Recipient inlined to package getRecipient(context Context, recipientId long, asynchronous boolean) : Recipient in class org.thoughtcrime.securesms.recipients.RecipientProvider");
+
+		test.project("https://github.com/spring-projects/spring-integration.git","master")
+		.atCommit("ec5230abc7500734d7b78a176c291378e100a927")
+		.containsOnly(
+		"Inline Method private doClose() : void inlined to public close() : void in class org.springframework.integration.ip.tcp.connection.CachingClientConnectionFactory.CachedConnection");
+
+		test.project("https://github.com/apache/drill.git","master")
+		.atCommit("00aa01fb90f3210d1e3027d7f759fb1085b814bd")
+		.containsOnly(
+		"Inline Method private assertCancelled(controls String, testQuery String, listener WaitUntilCompleteListener) : void inlined to private assertCancelledWithoutException(controls String, listener WaitUntilCompleteListener, query String) : void in class org.apache.drill.exec.server.TestDrillbitResilience");
+
+		test.project("https://github.com/aws/aws-sdk-java.git","master")
+		.atCommit("4baf0a4de8d03022df48d696d210cc8b3117d38a")
+		.containsOnly(
+		"Inline Method private killServer() : void inlined to public cleanUp() : void in class com.amazonaws.util.EC2MetadataUtilsTest");
+
+		test.project("https://github.com/libgdx/libgdx.git","master")
+		.atCommit("2bd1557bc293cb8c2348374771aad832befbe26f")
+		.containsOnly(
+		"Inline Method public setCheckBoxRight(right boolean) : void inlined to public CheckBox(text String, style CheckBoxStyle) in class com.badlogic.gdx.scenes.scene2d.ui.CheckBox");
+
+		test.project("https://github.com/JetBrains/intellij-community.git","master")
+		.atCommit("8d7a26edd1fedb9505b4f2b4fe57b2d2958b4dd9")
+		.containsOnly(
+		"Inline Method private writeContentToFile(revision byte[]) : void inlined to private write(revision byte[]) : void in class com.intellij.openapi.vcs.history.FileHistoryPanelImpl.MyGetVersionAction");
+
+		test.project("https://github.com/spring-projects/spring-boot.git","master")
+		.atCommit("1e464da2480568014a87dd0bac6febe63a76c889")
+		.containsOnly(
+		"Inline Method private addStaticIndexHtmlViewControllers(registry ViewControllerRegistry) : void inlined to public addViewControllers(registry ViewControllerRegistry) : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter");
+
+		test.project("https://github.com/rstudio/rstudio.git","master")
+		.atCommit("229d1b60c03a3f8375451c68a6911660a3993777")
+		.containsOnly(
+		"Inline Method private fireValidatedRSconnectPublish(result RSConnectPublishResult, launchBrowser boolean) : void inlined to public fireRSConnectPublishEvent(result RSConnectPublishResult, launchBrowser boolean) : void in class org.rstudio.studio.client.rsconnect.RSConnect");
+
+		test.project("https://github.com/JetBrains/MPS.git","master")
+		.atCommit("fe6653db5fb9f1a25d5ee30e4d5d54ccdaba65fa")
+		.containsOnly(
+		"Inline Method private createManyCells() : EditorCell_Collection inlined to public createCell() : EditorCell in class jetbrains.mps.lang.editor.cellProviders.SingleRoleCellProvider");
+
+		test.project("https://github.com/google/guava.git","master")
+		.atCommit("5bab9e837cf273250aa26702204f139fdcfd9e7a")
+		.containsOnly(
+		"Inline Method private checkForConcurrentModification() : void inlined to public hasNext() : boolean in class com.google.common.collect.HashBiMap.Itr",
+		"Inline Method private checkForConcurrentModification() : void inlined to public remove() : void in class com.google.common.collect.HashBiMap.Itr");
+
+		test.project("https://github.com/abarisain/dmix.git","master")
+		.atCommit("885771d57c97bd2dd48951e8aeaaa87ceb87532b")
+		.containsOnly(
+		"Inline Method package processIntent(action String, mpd MPD) : void inlined to protected onHandleIntent(intent Intent) : void in class com.namelessdev.mpdroid.widgets.WidgetHelperService");
+
+		test.project("https://github.com/WhisperSystems/TextSecure.git","master")
+		.atCommit("fa62b9bde224341e0c2d43c0694fc10c4df7336f")
+		.containsOnly(
+		"Inline Method private init() : void inlined to public EmojiDrawer(context Context, attrs AttributeSet, defStyle int) in class org.thoughtcrime.securesms.components.emoji.EmojiDrawer",
+		"Inline Method private initializeResources() : void inlined to private initialize() : void in class org.thoughtcrime.securesms.components.emoji.EmojiToggle");
+
+		test.project("https://github.com/spring-projects/spring-data-mongodb.git","master")
+		.atCommit("3224fa8ce7e0079d6ad507e17534cdf01f758876")
+		.containsOnly(
+		"Inline Method private processTypeHintForNestedDocuments(source Object, info TypeInformation<?>) : TypeInformation<?> inlined to private getTypeHintForEntity(source Object, entity MongoPersistentEntity<?>) : TypeInformation<?> in class org.springframework.data.mongodb.core.convert.UpdateMapper");
+
+		test.project("https://github.com/google/closure-compiler.git","master")
+		.atCommit("b9a17665b158955ad28ef7f50cc0a8585460f053")
+		.containsOnly(
+		"Inline Method private createUntaggedTemplateLiteral(n Node) : void inlined to package visitTemplateLiteral(t NodeTraversal, n Node) : void in class com.google.javascript.jscomp.Es6TemplateLiterals");
+
+		test.project("https://github.com/apache/cassandra.git","master")
+		.atCommit("f283ed29814403bde6350a2598cdd6e2c8b983d5")
+		.containsOnly(
+		"Inline Method public submitBackground(cfs ColumnFamilyStore, autoFill boolean) : List<Future<?>> inlined to public submitBackground(cfs ColumnFamilyStore) : List<Future<?>> in class org.apache.cassandra.db.compaction.CompactionManager");
+
+		test.project("https://github.com/checkstyle/checkstyle.git","master")
+		.atCommit("a07cae0aca9f9072256b3a5fd05779e8d69b9748")
+		.containsOnly(
+		"Inline Method private leaveLiteralIf(literalIf DetailAST) : void inlined to public leaveToken(literalIf DetailAST) : void in class com.puppycrawl.tools.checkstyle.checks.coding.NestedIfDepthCheck",
+		"Inline Method private visitLiteralTry(literalTry DetailAST) : void inlined to public visitToken(literalTry DetailAST) : void in class com.puppycrawl.tools.checkstyle.checks.coding.NestedTryDepthCheck",
+		"Inline Method private leaveLiteralTry() : void inlined to public leaveToken(literalTry DetailAST) : void in class com.puppycrawl.tools.checkstyle.checks.coding.NestedTryDepthCheck",
+		"Inline Method private visitLiteralIf(literalIf DetailAST) : void inlined to public visitToken(literalIf DetailAST) : void in class com.puppycrawl.tools.checkstyle.checks.coding.NestedIfDepthCheck");
+
+		test.project("https://github.com/netty/netty.git","master")
+		.atCommit("8a16081a9322b4a4062baaf32edc6b6b8b4afa88")
+		.containsOnly(
+		"Inline Method private cancelPendingStreams() : void inlined to public close() : void in class io.netty.handler.codec.http2.StreamBufferingEncoder");
+
+		test.project("https://github.com/amplab/tachyon.git","master")
+		.atCommit("5b184ac783784c1ca4baf1437888c79bd9460763")
+		.containsOnly(
+		"Inline Method private freeSpace(bytesToBeAvailable long, location BlockStoreLocation) : EvictionPlan inlined to public freeSpaceWithView(bytesToBeAvailable long, location BlockStoreLocation, view BlockMetadataManagerView) : EvictionPlan in class tachyon.worker.block.evictor.LRUEvictor");
+
+		test.project("https://github.com/zeromq/jeromq.git","master")
+		.atCommit("02d3fa171d02c9d82c7bdcaeb739f47d0c0006a0")
+		.containsOnly(
+		"Inline Method private makeFdPair() : void inlined to public Signaler() in class zmq.Signaler");
+
+		test.project("https://github.com/MovingBlocks/Terasology.git","master")
+		.atCommit("543a9808a85619dbe5acc2373cb4fe5344442de7")
+		.containsOnly(
+		"Inline Method private initTimer(context Context) : void inlined to public preInitialise(context Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglTimer",
+		"Inline Method private initOpenAL(context Context) : void inlined to public initialise(rootContext Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglAudio");
+
+		test.project("https://github.com/ignatov/intellij-erlang.git","master")
+		.atCommit("3855f0ca82795f7481b34342c7d9e5644a1d42c3")
+		.containsOnly(
+		"Inline Method private getModuleFileName() : String inlined to public resolve() : PsiElement in class org.intellij.erlang.psi.impl.ErlangFunctionReferenceImpl");
+
+		test.project("https://github.com/linkedin/rest.li.git","master")
+		.atCommit("f61db44ca4a862f1a84450643d92f85449016cfa")
+		.containsOnly(
+		"Inline Method public generate(schema DataSchema) : ClassTemplateSpec inlined to private generateRecord(schema RecordDataSchema) : RecordTemplateSpec in class com.linkedin.pegasus.generator.TemplateSpecGenerator");
+
+		test.project("https://github.com/jenkinsci/workflow-plugin.git","master")
+		.atCommit("d0e374ce8ecb687b4dc046d1edea9e52da17706f")
+		.containsOnly(
+		"Inline Method private setBranch(property BranchJobProperty, branch Branch, project WorkflowJob) : void inlined to public setBranch(project WorkflowJob, branch Branch) : WorkflowJob in class org.jenkinsci.plugins.workflow.multibranch.WorkflowBranchProjectFactory");
+
+		test.project("https://github.com/facebook/buck.git","master")
+		.atCommit("6ed4cf9e83fe24fc6ab6fc9ebede016c777c9725")
+		.containsOnly(
+		"Inline Method public sanitize(workingDir Optional<Path>, contents String, expandPaths boolean) : String inlined to public sanitize(workingDir Optional<Path>, contents String) : String in class com.facebook.buck.cxx.DebugPathSanitizer");
+
+		test.project("https://github.com/bitcoinj/bitcoinj.git","master")
+		.atCommit("7744a00629514b9539acac05596d64af878fe747")
+		.containsOnly(
+		"Inline Method private testCachedParsing(lazy boolean) : void inlined to public testCachedParsing() : void in class org.bitcoinj.core.BitcoinSerializerTest");
+
+		test.project("https://github.com/netty/netty.git","master")
+		.atCommit("d31fa31cdcc5ea2fa96116e3b1265baa180df58a")
+		.containsOnly(
+		"Inline Method private comparator(ignoreCase boolean) : Comparator<CharSequence> inlined to public contains(name CharSequence, value CharSequence, ignoreCase boolean) : boolean in class io.netty.handler.codec.DefaultTextHeaders");
+
+		test.project("https://github.com/gradle/gradle.git","master")
+		.atCommit("c41466b6fd11ef4edc40cb9fd42dc13cf4f6fde1")
+		.containsOnly(
+		"Inline Method public resolveMetaDataArtifact(artifact ModuleComponentArtifactMetaData, result ResourceAwareResolveResult) : LocallyAvailableExternalResource inlined to public resolveArtifact(artifact ModuleComponentArtifactMetaData, result ResourceAwareResolveResult) : LocallyAvailableExternalResource in class org.gradle.api.internal.artifacts.repositories.resolver.DefaultExternalResourceArtifactResolver");
 	}
 }
  

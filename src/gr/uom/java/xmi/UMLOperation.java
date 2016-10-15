@@ -301,4 +301,13 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
 		return normalized;
 	}
+
+	public boolean equalParameters(UMLOperation operation) {
+	      return this.equalReturnParameter(operation) && this.getParameters().equals(operation.getParameters());
+	   }
+
+	public boolean overloadedParameters(UMLOperation operation) {
+	      return this.equalReturnParameter(operation) &&
+	    		  (this.getParameters().containsAll(operation.getParameters()) || operation.getParameters().containsAll(this.getParameters()));
+	   }
 }

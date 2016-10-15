@@ -342,6 +342,8 @@ public class RefactoringPopulator {
 						"Pull Up Method private initFigs() : void from class org.argouml.uml.diagram.state.ui.FigSynchState to protected initFigs() : void from class org.argouml.uml.diagram.state.ui.FigStateVertex",
 						// FN** minnor modifications, but no statement is
 						// exactly the same
+						"Extract Method public getModelImpl() : MDRModelImplementation extracted from public createPartition() : Partition in class org.argouml.model.mdr.ActivityGraphsFactoryMDRImpl",
+						"Extract Method public initialize2(myPartition Partition) : void extracted from public createPartition() : Partition in class org.argouml.model.mdr.ActivityGraphsFactoryMDRImpl",
 						"Pull Up Method public createPartition() : Partition from class org.argouml.model.mdr.ActivityGraphsFactoryMDRImpl to public createPartition() : Partition from class org.argouml.model.mdr.AbstractUmlModelFactoryMDR",
 						"Pull Up Method public set(modelElement Object, value Object) : void from class org.argouml.core.propertypanels.model.GetterSetterManagerImpl.ChangeabilityGetterSetter to public set(modelElement Object, value Object) : void from class org.argouml.core.propertypanels.model.GetterSetterManager.OptionGetterSetter");
 	}
@@ -1802,16 +1804,10 @@ public class RefactoringPopulator {
 		.atCommit("76d7f5e3fe4eb41b383c1d884bc1217b9fa7192e")
 		.containsOnly(
 		"Extract Method protected createAddress(host String, port int) : Address extracted from private createAddresses(count int) : Address[] in class com.hazelcast.test.TestHazelcastInstanceFactory",
+		"Extract Method protected createAddress(host String, port int) : Address extracted from private createAddresses(addressArray String[]) : Address[] in class com.hazelcast.test.TestHazelcastInstanceFactory",
 		"Extract Method protected startSelectors() : void extracted from public start() : void in class com.hazelcast.client.connection.nio.ClientConnectionManagerImpl",
 		"Extract Method protected initializeSelectors(client HazelcastClientInstanceImpl) : void extracted from public ClientConnectionManagerImpl(client HazelcastClientInstanceImpl, addressTranslator AddressTranslator) in class com.hazelcast.client.connection.nio.ClientConnectionManagerImpl",
 		"Extract Method protected shutdownSelectors() : void extracted from public shutdown() : void in class com.hazelcast.client.connection.nio.ClientConnectionManagerImpl");
-		//TBD to me False
-		//Extract Method private createAddresses(ports AtomicInteger, addressArray String[]) : List extracted from public TestHazelcastInstanceFactory(addresses String[]) in class com.hazelcast.test.TestHazelcastInstanceFactory
-//		  Extract Method private createAddresses(ports AtomicInteger, count int) : List extracted from public TestHazelcastInstanceFactory(addresses String[]) in class com.hazelcast.test.TestHazelcastInstanceFactory
-//		  Rename Method private tripshutdown(instances HazelcastInstance[]) : void renamed to private tripTerminate(instances HazelcastInstance[]) : void in class com.hazelcast.mapreduce.MapReduceTest
-//		  Extract Method private createAddresses(ports AtomicInteger, count int) : List extracted from public TestHazelcastInstanceFactory(count int) in class com.hazelcast.test.TestHazelcastInstanceFactory
-//		  Extract Method private createAddresses(ports AtomicInteger, addressArray String[]) : List extracted from public TestHazelcastInstanceFactory(count int) in class com.hazelcast.test.TestHazelcastInstanceFactory
-		//https://github.com/hazelcast/hazelcast/commit/76d7f5e3fe4eb41b383c1d884bc1217b9fa7192e#diff-17f53e9abe4ccd40013a293698fa234dL49
 		
 		test.project("https://github.com/geometer/FBReaderJ.git","master")
 		.atCommit("42e0649f82779ecd48bff6448924fc7dc2534554")

@@ -1036,6 +1036,9 @@ public class RefactoringPopulator {
 		test.project("https://github.com/infinispan/infinispan.git","master")
 		.atCommit("ce4f6292d6350a2c6b82d995352fdf6d07042c9c")
 		.containsOnly(
+		"Inline Method protected lockAndWrap(ctx InvocationContext, key Object, ice InternalCacheEntry, command FlagAffectedCommand) : void inlined to private localGet(ctx InvocationContext, key Object, isWrite boolean, command FlagAffectedCommand, isGetCacheEntry boolean) : Object in class org.infinispan.interceptors.distribution.TxDistributionInterceptor",
+		"Inline Method protected lockAndWrap(ctx InvocationContext, key Object, ice InternalCacheEntry, command FlagAffectedCommand) : void inlined to private remoteGet(ctx InvocationContext, key Object, isWrite boolean, command FlagAffectedCommand) : InternalCacheEntry in class org.infinispan.interceptors.distribution.TxDistributionInterceptor",
+		"Inline Method private sendCommitCommand(ctx TxInvocationContext, command CommitCommand) : void inlined to public visitCommitCommand(ctx TxInvocationContext, command CommitCommand) : Object in class org.infinispan.interceptors.distribution.TxDistributionInterceptor",
 		"Extract Method private replayRemoteTransactionIfNeeded(ctx RemoteTxInvocationContext, topologyId int) : void extracted from public visitCommitCommand(ctx TxInvocationContext, command CommitCommand) : Object in class org.infinispan.interceptors.TxInterceptor",
 		"Extract Method public throwRollbackExceptionIfAny() : void extracted from public commit() : void in class org.infinispan.transaction.tm.DummyTransaction",
 		"Extract Method protected assertNoTransactions(cacheName String) : void extracted from protected assertNoTransactions() : void in class org.infinispan.test.MultipleCacheManagersTest",
@@ -1408,11 +1411,13 @@ public class RefactoringPopulator {
 		test.project("https://github.com/apache/drill.git","master")
 		.atCommit("00aa01fb90f3210d1e3027d7f759fb1085b814bd")
 		.containsOnly(
+		"Inline Method private assertCancelled(controls String, testQuery String, listener WaitUntilCompleteListener) : void inlined to private assertCancelledWithoutException(controls String, listener WaitUntilCompleteListener, query String) : void in class org.apache.drill.exec.server.TestDrillbitResilience",
 		"Extract Method public setSessionOption(drillClient DrillClient, option String, value String) : void extracted from public setControls(drillClient DrillClient, controls String) : void in class org.apache.drill.exec.testing.ControlsInjectionUtil");
 
 		test.project("https://github.com/aws/aws-sdk-java.git","master")
 		.atCommit("4baf0a4de8d03022df48d696d210cc8b3117d38a")
 		.containsOnly(
+		"Inline Method private killServer() : void inlined to public cleanUp() : void in class com.amazonaws.util.EC2MetadataUtilsTest",
 		"Extract Method private pause(delay long) : void extracted from private pauseExponentially(retries int) : void in class com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper");
 
 		test.project("https://github.com/apache/drill.git","master")
@@ -1531,6 +1536,7 @@ public class RefactoringPopulator {
 		test.project("https://github.com/rstudio/rstudio.git","master")
 		.atCommit("229d1b60c03a3f8375451c68a6911660a3993777")
 		.containsOnly(
+		"Inline Method private fireValidatedRSconnectPublish(result RSConnectPublishResult, launchBrowser boolean) : void inlined to public fireRSConnectPublishEvent(result RSConnectPublishResult, launchBrowser boolean) : void in class org.rstudio.studio.client.rsconnect.RSConnect",
 		"Extract Method private isUpdate() : boolean extracted from public getResult() : RSConnectPublishResult in class org.rstudio.studio.client.rsconnect.ui.RSConnectDeploy");
 
 		test.project("https://github.com/neo4j/neo4j.git","master")
@@ -2690,6 +2696,13 @@ public class RefactoringPopulator {
 		test.project("https://github.com/infinispan/infinispan.git","master")
 		.atCommit("ce4f6292d6350a2c6b82d995352fdf6d07042c9c")
 		.containsOnly(
+		"Extract Method private replayRemoteTransactionIfNeeded(ctx RemoteTxInvocationContext, topologyId int) : void extracted from public visitCommitCommand(ctx TxInvocationContext, command CommitCommand) : Object in class org.infinispan.interceptors.TxInterceptor",
+		"Extract Method public throwRollbackExceptionIfAny() : void extracted from public commit() : void in class org.infinispan.transaction.tm.DummyTransaction",
+		"Extract Method protected assertNoTransactions(cacheName String) : void extracted from protected assertNoTransactions() : void in class org.infinispan.test.MultipleCacheManagersTest",
+		"Extract Method protected eventually(message String, ec Condition, timeout long, pollInterval long, unit TimeUnit) : void extracted from protected eventually(ec Condition, timeout long, pollInterval long, unit TimeUnit) : void in class org.infinispan.test.AbstractInfinispanTest",
+		"Extract Method protected eventually(message String, ec Condition, timeoutMillis long, loops int) : void extracted from protected eventually(ec Condition, timeoutMillis long, loops int) : void in class org.infinispan.test.AbstractInfinispanTest",
+		"Extract Method private verifyRemoteTransaction(ctx RemoteTxInvocationContext, command AbstractTransactionBoundaryCommand) : void extracted from private invokeNextInterceptorAndVerifyTransaction(ctx TxInvocationContext, command AbstractTransactionBoundaryCommand) : Object in class org.infinispan.interceptors.TxInterceptor",
+		"Extract Method private createRollbackRpcOptions() : RpcOptions extracted from public visitRollbackCommand(ctx TxInvocationContext, command RollbackCommand) : Object in class org.infinispan.interceptors.distribution.TxDistributionInterceptor",
 		"Inline Method protected lockAndWrap(ctx InvocationContext, key Object, ice InternalCacheEntry, command FlagAffectedCommand) : void inlined to private localGet(ctx InvocationContext, key Object, isWrite boolean, command FlagAffectedCommand, isGetCacheEntry boolean) : Object in class org.infinispan.interceptors.distribution.TxDistributionInterceptor",
 		"Inline Method protected lockAndWrap(ctx InvocationContext, key Object, ice InternalCacheEntry, command FlagAffectedCommand) : void inlined to private remoteGet(ctx InvocationContext, key Object, isWrite boolean, command FlagAffectedCommand) : InternalCacheEntry in class org.infinispan.interceptors.distribution.TxDistributionInterceptor",
 		"Inline Method private sendCommitCommand(ctx TxInvocationContext, command CommitCommand) : void inlined to public visitCommitCommand(ctx TxInvocationContext, command CommitCommand) : Object in class org.infinispan.interceptors.distribution.TxDistributionInterceptor");
@@ -2733,11 +2746,13 @@ public class RefactoringPopulator {
 		test.project("https://github.com/apache/drill.git","master")
 		.atCommit("00aa01fb90f3210d1e3027d7f759fb1085b814bd")
 		.containsOnly(
+		"Extract Method public setSessionOption(drillClient DrillClient, option String, value String) : void extracted from public setControls(drillClient DrillClient, controls String) : void in class org.apache.drill.exec.testing.ControlsInjectionUtil",
 		"Inline Method private assertCancelled(controls String, testQuery String, listener WaitUntilCompleteListener) : void inlined to private assertCancelledWithoutException(controls String, listener WaitUntilCompleteListener, query String) : void in class org.apache.drill.exec.server.TestDrillbitResilience");
 
 		test.project("https://github.com/aws/aws-sdk-java.git","master")
 		.atCommit("4baf0a4de8d03022df48d696d210cc8b3117d38a")
 		.containsOnly(
+		"Extract Method private pause(delay long) : void extracted from private pauseExponentially(retries int) : void in class com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper",
 		"Inline Method private killServer() : void inlined to public cleanUp() : void in class com.amazonaws.util.EC2MetadataUtilsTest");
 
 		test.project("https://github.com/libgdx/libgdx.git","master")
@@ -2758,6 +2773,7 @@ public class RefactoringPopulator {
 		test.project("https://github.com/rstudio/rstudio.git","master")
 		.atCommit("229d1b60c03a3f8375451c68a6911660a3993777")
 		.containsOnly(
+		"Extract Method private isUpdate() : boolean extracted from public getResult() : RSConnectPublishResult in class org.rstudio.studio.client.rsconnect.ui.RSConnectDeploy",
 		"Inline Method private fireValidatedRSconnectPublish(result RSConnectPublishResult, launchBrowser boolean) : void inlined to public fireRSConnectPublishEvent(result RSConnectPublishResult, launchBrowser boolean) : void in class org.rstudio.studio.client.rsconnect.RSConnect");
 
 		test.project("https://github.com/JetBrains/MPS.git","master")

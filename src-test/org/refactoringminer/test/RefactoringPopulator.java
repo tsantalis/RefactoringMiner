@@ -1348,6 +1348,7 @@ public class RefactoringPopulator {
 		test.project("https://github.com/jankotek/MapDB.git","master")
 		.atCommit("32dd05fc13b53873bf18c589622b55d12e3883c7")
 		.containsOnly(
+		"Pull Up Method protected longStackValParitySet(value long) : long from class org.mapdb.StoreDirect to protected longParitySet(value long) : long from class org.mapdb.Store",
 		"Extract Method private insertOrUpdate(recid long, out DataOutputByteArray, isInsert boolean) : void extracted from protected update2(recid long, out DataOutputByteArray) : void in class org.mapdb.StoreAppend");
 
 		test.project("https://github.com/bitcoinj/bitcoinj.git","master")
@@ -2059,6 +2060,8 @@ public class RefactoringPopulator {
 		test.project("https://github.com/JetBrains/intellij-community.git","master")
 		.atCommit("6ff3fe00d7ffe04dbe0904b8bad98285b6988d6d")
 		.containsOnly(
+		"Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List from class org.jetbrains.idea.maven.server.Maven32ServerEmbedderImpl to public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List from class org.jetbrains.idea.maven.server.Maven3ServerEmbedder",
+		"Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List from class org.jetbrains.idea.maven.server.Maven30ServerEmbedderImpl to public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List from class org.jetbrains.idea.maven.server.Maven3ServerEmbedder",
 		"Extract Method public customizeComponents() : void extracted from public customize(workspaceMap MavenWorkspaceMap, failOnUnresolvedDependency boolean, console MavenServerConsole, indicator MavenServerProgressIndicator, alwaysUpdateSnapshots boolean) : void in class org.jetbrains.idea.maven.server.Maven32ServerEmbedderImpl",
 		"Extract Method public customizeComponents() : void extracted from public customize(workspaceMap MavenWorkspaceMap, failOnUnresolvedDependency boolean, console MavenServerConsole, indicator MavenServerProgressIndicator, alwaysUpdateSnapshots boolean) : void in class org.jetbrains.idea.maven.server.Maven30ServerEmbedderImpl");
 
@@ -2543,6 +2546,7 @@ public class RefactoringPopulator {
 		test.project("https://github.com/jankotek/MapDB.git","master")
 		.atCommit("32dd05fc13b53873bf18c589622b55d12e3883c7")
 		.containsOnly(
+		"Extract Method private insertOrUpdate(recid long, out DataOutputByteArray, isInsert boolean) : void extracted from protected update2(recid long, out DataOutputByteArray) : void in class org.mapdb.StoreAppend",
 		"Pull Up Method protected longStackValParitySet(value long) : long from class org.mapdb.StoreDirect to protected longParitySet(value long) : long from class org.mapdb.Store");
 
 		test.project("https://github.com/apache/zookeeper.git","master")
@@ -2581,6 +2585,8 @@ public class RefactoringPopulator {
 		test.project("https://github.com/JetBrains/intellij-community.git","master")
 		.atCommit("6ff3fe00d7ffe04dbe0904b8bad98285b6988d6d")
 		.containsOnly(
+		"Extract Method public customizeComponents() : void extracted from public customize(workspaceMap MavenWorkspaceMap, failOnUnresolvedDependency boolean, console MavenServerConsole, indicator MavenServerProgressIndicator, alwaysUpdateSnapshots boolean) : void in class org.jetbrains.idea.maven.server.Maven32ServerEmbedderImpl",
+		"Extract Method public customizeComponents() : void extracted from public customize(workspaceMap MavenWorkspaceMap, failOnUnresolvedDependency boolean, console MavenServerConsole, indicator MavenServerProgressIndicator, alwaysUpdateSnapshots boolean) : void in class org.jetbrains.idea.maven.server.Maven30ServerEmbedderImpl",
 		"Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List from class org.jetbrains.idea.maven.server.Maven32ServerEmbedderImpl to public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List from class org.jetbrains.idea.maven.server.Maven3ServerEmbedder",
 		"Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List from class org.jetbrains.idea.maven.server.Maven30ServerEmbedderImpl to public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List from class org.jetbrains.idea.maven.server.Maven3ServerEmbedder");
 

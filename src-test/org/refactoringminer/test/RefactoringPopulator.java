@@ -1435,6 +1435,10 @@ public class RefactoringPopulator {
 		test.project("https://github.com/apache/drill.git","master")
 		.atCommit("c1b847acdc8cb90a1498b236b3bb5c81ca75c044")
 		.containsOnly(
+		"Inline Method public createFileSystem(proxyUserName String, fsConf Configuration, stats OperatorStats) : DrillFileSystem inlined to public createFileSystem(proxyUserName String, fsConf Configuration) : DrillFileSystem in class org.apache.drill.exec.util.ImpersonationUtil",
+		"Pull Up Method public addMiniDfsBasedStorage() : void from class org.apache.drill.exec.impersonation.TestImpersonationDisabledWithMiniDFS to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation",
+		"Pull Up Method public addMiniDfsBasedStorage() : void from class org.apache.drill.exec.impersonation.TestImpersonationMetadata to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation",
+		"Pull Up Method public addMiniDfsBasedStorageAndGenerateTestData() : void from class org.apache.drill.exec.impersonation.TestImpersonationQueries to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation",
 		"Extract Method private createTestData() : void extracted from public addMiniDfsBasedStorageAndGenerateTestData() : void in class org.apache.drill.exec.impersonation.TestImpersonationQueries");
 
 		test.project("https://github.com/facebook/facebook-android-sdk.git","master")
@@ -2616,6 +2620,8 @@ public class RefactoringPopulator {
 		test.project("https://github.com/apache/drill.git","master")
 		.atCommit("c1b847acdc8cb90a1498b236b3bb5c81ca75c044")
 		.containsOnly(
+		"Inline Method public createFileSystem(proxyUserName String, fsConf Configuration, stats OperatorStats) : DrillFileSystem inlined to public createFileSystem(proxyUserName String, fsConf Configuration) : DrillFileSystem in class org.apache.drill.exec.util.ImpersonationUtil",
+		"Extract Method private createTestData() : void extracted from public addMiniDfsBasedStorageAndGenerateTestData() : void in class org.apache.drill.exec.impersonation.TestImpersonationQueries",
 		"Pull Up Method public addMiniDfsBasedStorage() : void from class org.apache.drill.exec.impersonation.TestImpersonationDisabledWithMiniDFS to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation",
 		"Pull Up Method public addMiniDfsBasedStorage() : void from class org.apache.drill.exec.impersonation.TestImpersonationMetadata to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation",
 		"Pull Up Method public addMiniDfsBasedStorageAndGenerateTestData() : void from class org.apache.drill.exec.impersonation.TestImpersonationQueries to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation");
@@ -2893,6 +2899,10 @@ public class RefactoringPopulator {
 		test.project("https://github.com/apache/drill.git","master")
 		.atCommit("c1b847acdc8cb90a1498b236b3bb5c81ca75c044")
 		.containsOnly(
+				"Extract Method private createTestData() : void extracted from public addMiniDfsBasedStorageAndGenerateTestData() : void in class org.apache.drill.exec.impersonation.TestImpersonationQueries",
+		"Pull Up Method public addMiniDfsBasedStorage() : void from class org.apache.drill.exec.impersonation.TestImpersonationDisabledWithMiniDFS to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation",
+		"Pull Up Method public addMiniDfsBasedStorage() : void from class org.apache.drill.exec.impersonation.TestImpersonationMetadata to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation",
+		"Pull Up Method public addMiniDfsBasedStorageAndGenerateTestData() : void from class org.apache.drill.exec.impersonation.TestImpersonationQueries to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation",
 		"Inline Method public createFileSystem(proxyUserName String, fsConf Configuration, stats OperatorStats) : DrillFileSystem inlined to public createFileSystem(proxyUserName String, fsConf Configuration) : DrillFileSystem in class org.apache.drill.exec.util.ImpersonationUtil");
 		
 		test.project("https://github.com/linkedin/rest.li.git","master")

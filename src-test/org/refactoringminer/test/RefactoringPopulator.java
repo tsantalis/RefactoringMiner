@@ -1549,6 +1549,9 @@ public class RefactoringPopulator {
 		test.project("https://github.com/katzer/cordova-plugin-local-notifications.git","master")
 		.atCommit("51f498a96b2fa1822e392027982c20e950535fd1")
 		.containsOnly(
+		"Inline Method public postMessage(id String, data Object) : void inlined to public onCreateOptionsMenu(menu Menu) : boolean in class org.apache.cordova.CordovaActivity",
+		"Inline Method public postMessage(id String, data Object) : void inlined to public onOptionsItemSelected(item MenuItem) : boolean in class org.apache.cordova.CordovaActivity",
+		"Inline Method public postMessage(id String, data Object) : void inlined to public onPrepareOptionsMenu(menu Menu) : boolean in class org.apache.cordova.CordovaActivity",
 		"Extract Method public handleEndTag(xml XmlPullParser) : void extracted from public parse(xml XmlResourceParser) : void in class org.apache.cordova.ConfigXmlParser",
 		"Extract Method public handleStartTag(xml XmlPullParser) : void extracted from public parse(xml XmlResourceParser) : void in class org.apache.cordova.ConfigXmlParser");
 
@@ -2228,6 +2231,8 @@ public class RefactoringPopulator {
 		test.project("https://github.com/hazelcast/hazelcast.git","master")
 		.atCommit("204bf49cba03fe5d581a35ff82dd22587a681f46")
 		.containsOnly(
+		"Inline Method private sendHearBeatIfRequired(now long, member MemberImpl) : void inlined to private heartBeaterSlave(now long, clockJump long) : void in class com.hazelcast.cluster.impl.ClusterServiceImpl",
+		"Inline Method private sendHearBeatIfRequired(now long, member MemberImpl) : void inlined to private heartBeaterMaster(now long, clockJump long) : void in class com.hazelcast.cluster.impl.ClusterServiceImpl",
 		"Extract Method private createConfig() : Config extracted from private testWaitingInvocations_whenNodeSplitFromCluster(splitAction SplitAction) : void in class com.hazelcast.spi.impl.operationservice.impl.InvocationNetworkSplitTest",
 		"Extract Method private createConfig() : Config extracted from private testWaitNotifyService_whenNodeSplitFromCluster(action SplitAction) : void in class com.hazelcast.spi.impl.operationservice.impl.InvocationNetworkSplitTest");
 
@@ -2861,6 +2866,9 @@ public class RefactoringPopulator {
 		test.project("https://github.com/bitcoinj/bitcoinj.git","master")
 		.atCommit("7744a00629514b9539acac05596d64af878fe747")
 		.containsOnly(
+		"Inline Method protected parseTransactions() : void inlined to protected parse() : void in class org.bitcoinj.core.Block",
+		"Inline Method protected parseHeader() : void inlined to protected parse() : void in class org.bitcoinj.core.Block",
+		"Inline Method public getMessageSize() : int inlined to protected parse() : void in class org.bitcoinj.core.AddressMessage",
 		"Inline Method private testCachedParsing(lazy boolean) : void inlined to public testCachedParsing() : void in class org.bitcoinj.core.BitcoinSerializerTest");
 
 		test.project("https://github.com/netty/netty.git","master")
@@ -2872,6 +2880,39 @@ public class RefactoringPopulator {
 		.atCommit("c41466b6fd11ef4edc40cb9fd42dc13cf4f6fde1")
 		.containsOnly(
 		"Inline Method public resolveMetaDataArtifact(artifact ModuleComponentArtifactMetaData, result ResourceAwareResolveResult) : LocallyAvailableExternalResource inlined to public resolveArtifact(artifact ModuleComponentArtifactMetaData, result ResourceAwareResolveResult) : LocallyAvailableExternalResource in class org.gradle.api.internal.artifacts.repositories.resolver.DefaultExternalResourceArtifactResolver");
+		
+		test.project("https://github.com/katzer/cordova-plugin-local-notifications.git","master")
+		.atCommit("51f498a96b2fa1822e392027982c20e950535fd1")
+		.containsOnly(
+		"Extract Method public handleEndTag(xml XmlPullParser) : void extracted from public parse(xml XmlResourceParser) : void in class org.apache.cordova.ConfigXmlParser",
+		"Extract Method public handleStartTag(xml XmlPullParser) : void extracted from public parse(xml XmlResourceParser) : void in class org.apache.cordova.ConfigXmlParser",
+		"Inline Method public postMessage(id String, data Object) : void inlined to public onCreateOptionsMenu(menu Menu) : boolean in class org.apache.cordova.CordovaActivity",
+		"Inline Method public postMessage(id String, data Object) : void inlined to public onOptionsItemSelected(item MenuItem) : boolean in class org.apache.cordova.CordovaActivity",
+		"Inline Method public postMessage(id String, data Object) : void inlined to public onPrepareOptionsMenu(menu Menu) : boolean in class org.apache.cordova.CordovaActivity");
+		
+		test.project("https://github.com/apache/drill.git","master")
+		.atCommit("c1b847acdc8cb90a1498b236b3bb5c81ca75c044")
+		.containsOnly(
+		"Inline Method public createFileSystem(proxyUserName String, fsConf Configuration, stats OperatorStats) : DrillFileSystem inlined to public createFileSystem(proxyUserName String, fsConf Configuration) : DrillFileSystem in class org.apache.drill.exec.util.ImpersonationUtil");
+		
+		test.project("https://github.com/linkedin/rest.li.git","master")
+		.atCommit("54fa890a6af4ccf564fb481d3e1b6ad4d084de9e")
+		.containsOnly(
+		"Extract Method public addResponseCompressionHeaders(responseCompressionOverride CompressionOption, req RestRequest) : RestRequest extracted from public onRestRequest(req RestRequest, requestContext RequestContext, wireAttrs Map<String,String>, nextFilter NextFilter<RestRequest,RestResponse>) : void in class com.linkedin.r2.filter.compression.ClientCompressionFilter",
+		"Extract Method public addCompressionHeaders(getMessage HttpGet, acceptEncoding String) : void extracted from public testCompressionBetter(compressor Compressor) : void in class com.linkedin.restli.examples.TestCompressionServer",
+		"Extract Method public addCompressionHeaders(getMessage HttpGet, acceptEncoding String) : void extracted from public testAcceptEncoding(acceptedEncoding String, contentEncoding String) : void in class com.linkedin.restli.examples.TestCompressionServer",
+		"Extract Method public addCompressionHeaders(getMessage HttpGet, acceptEncoding String) : void extracted from public testCompressionWorse(compressor Compressor) : void in class com.linkedin.restli.examples.TestCompressionServer",
+		"Extract Method public addCompressionHeaders(getMessage HttpGet, acceptEncoding String) : void extracted from public testCompatibleDefault(acceptEncoding String, contentEncoding String) : void in class com.linkedin.restli.examples.TestCompressionServer",
+		"Extract Method public addCompressionHeaders(getMessage HttpGet, acceptEncoding String) : void extracted from public test406Error(acceptContent String) : void in class com.linkedin.restli.examples.TestCompressionServer",
+		"Inline Method public createServer(engine Engine, port int, supportedCompression String, useAsyncServletApi boolean, asyncTimeOut int, requestFilters List, responseFilters List) : HttpServer inlined to public createServer(engine Engine, port int, supportedCompression String, useAsyncServletApi boolean, asyncTimeOut int) : HttpServer in class com.linkedin.restli.examples.RestLiIntTestServer");
+		
+		test.project("https://github.com/hazelcast/hazelcast.git","master")
+		.atCommit("204bf49cba03fe5d581a35ff82dd22587a681f46")
+		.containsOnly(
+		"Extract Method private createConfig() : Config extracted from private testWaitingInvocations_whenNodeSplitFromCluster(splitAction SplitAction) : void in class com.hazelcast.spi.impl.operationservice.impl.InvocationNetworkSplitTest",
+		"Extract Method private createConfig() : Config extracted from private testWaitNotifyService_whenNodeSplitFromCluster(action SplitAction) : void in class com.hazelcast.spi.impl.operationservice.impl.InvocationNetworkSplitTest",
+		"Inline Method private sendHearBeatIfRequired(now long, member MemberImpl) : void inlined to private heartBeaterSlave(now long, clockJump long) : void in class com.hazelcast.cluster.impl.ClusterServiceImpl",
+		"Inline Method private sendHearBeatIfRequired(now long, member MemberImpl) : void inlined to private heartBeaterMaster(now long, clockJump long) : void in class com.hazelcast.cluster.impl.ClusterServiceImpl");
 	}
 }
  

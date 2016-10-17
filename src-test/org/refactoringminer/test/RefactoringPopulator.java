@@ -2675,6 +2675,7 @@ public class RefactoringPopulator {
 		.atCommit("35893c115ba23bd62a7036a33390420f074ce660")
 		.containsOnly(
 		"Inline Method private verifyPublicationClosed(times VerificationMode) : void inlined to public shouldErrorOnRemoveChannelOnUnknownStreamId() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",
+		"Inline Method private verifyPublicationClosed(times VerificationMode) : void inlined to public shouldNotTimeoutPublicationOnKeepAlive() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",
 		"Inline Method private verifyExceptionLogged() : void inlined to public shouldErrorOnRemoveChannelOnUnknownSessionId() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",
 		"Inline Method private verifyExceptionLogged() : void inlined to public shouldErrorOnAddSubscriptionWithInvalidUri() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",
 		"Inline Method private verifyExceptionLogged() : void inlined to public shouldErrorOnRemoveChannelOnUnknownStreamId() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest",

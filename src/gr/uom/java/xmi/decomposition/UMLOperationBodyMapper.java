@@ -482,7 +482,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private String preprocessInput(AbstractCodeFragment leaf1, AbstractCodeFragment leaf2) {
-		String argumentizedString = leaf1.getArgumentizedString();
+		String argumentizedString = new String(leaf1.getArgumentizedString());
 		if (leaf1 instanceof StatementObject && leaf2 instanceof AbstractExpression) {
 			if (argumentizedString.startsWith("return ") && argumentizedString.endsWith(";\n")) {
 				argumentizedString = argumentizedString.substring("return ".length(),
@@ -556,36 +556,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		//double initialDistance = (double)StringDistance.editDistance(statement1.getString(), statement2.getString())/(double)Math.max(statement1.getString().length(), statement2.getString().length());
 		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 		if (initialDistanceRaw > 0) {
-			for(String s11 : variablesAndMethodInvocations1) {
+			for(String s1 : variablesAndMethodInvocations1) {
 				TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
-				String original = argumentizedString1;
 				int minDistance = initialDistanceRaw;
-				for(String s21 : variablesAndMethodInvocations2) {
-					String temp = original.replaceAll(Pattern.quote(s11), Matcher.quoteReplacement(s21));
+				for(String s2 : variablesAndMethodInvocations2) {
+					String temp = argumentizedString1.replaceAll(Pattern.quote(s1), Matcher.quoteReplacement(s2));
 					int distanceRaw = StringDistance.editDistance(temp, argumentizedString2, minDistance);
 					//double distance = (double)StringDistance.editDistance(temp, statement2.getString())/(double)Math.max(temp.length(), statement2.getString().length());
 					if(distanceRaw >= 0 && distanceRaw < initialDistanceRaw) {
 						minDistance = distanceRaw;
-						Replacement replacement1 = null;
-						if(variables1.contains(s11) && variables2.contains(s21)) {
-							replacement1 = new VariableRename(s11, s21);
+						Replacement replacement = null;
+						if(variables1.contains(s1) && variables2.contains(s2)) {
+							replacement = new VariableRename(s1, s2);
 						}
-						else if(variables1.contains(s11) && methodInvocations2.contains(s21)) {
-							replacement1 = new VariableReplacementWithMethodInvocation(s11, s21, statement2.getMethodInvocationMap().get(s21));
+						else if(variables1.contains(s1) && methodInvocations2.contains(s2)) {
+							replacement = new VariableReplacementWithMethodInvocation(s1, s2, statement2.getMethodInvocationMap().get(s2));
 						}
-						else if(methodInvocations1.contains(s11) && methodInvocations2.contains(s21)) {
-							double threshold = (double)Math.max(s11.length(), s21.length()) * 0.4;
-							int methodInvocationDistanceRaw = StringDistance.editDistance(s11, s21, (int)Math.ceil(threshold));
-							//double methodInvocationDistance = (double)StringDistance.editDistance(s11, s21)/(double)Math.max(s11.length(), s21.length());
-							if(methodInvocationDistanceRaw >= 0 && methodInvocationDistanceRaw < threshold)
-								replacement1 = new MethodInvocationReplacement(s11, s21, statement1.getMethodInvocationMap().get(s11), statement2.getMethodInvocationMap().get(s21));
+						else if(methodInvocations1.contains(s1) && methodInvocations2.contains(s2)) {
+							replacement = new MethodInvocationReplacement(s1, s2, statement1.getMethodInvocationMap().get(s1), statement2.getMethodInvocationMap().get(s2));
 						}
-						else if(methodInvocations1.contains(s11) && variables2.contains(s21)) {
-							replacement1 = new Replacement(s11, s21);
+						else if(methodInvocations1.contains(s1) && variables2.contains(s2)) {
+							replacement = new Replacement(s1, s2);
 						}
-						if(replacement1 != null) {
+						if(replacement != null) {
 							double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), argumentizedString2.length());
-							replacementMap.put(distancenormalized, replacement1);
+							replacementMap.put(distancenormalized, replacement);
 						}
 						if(distanceRaw == 0) {
 							break;
@@ -593,13 +588,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				if(!replacementMap.isEmpty()) {
-					replacements.add(replacementMap.firstEntry().getValue());
+					Replacement replacement = replacementMap.firstEntry().getValue();
+					replacements.add(replacement);
+					argumentizedString1 = argumentizedString1.replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter()));
+					initialDistanceRaw = StringDistance.editDistance(argumentizedString1, argumentizedString2);
+					if(replacementMap.firstEntry().getKey() == 0) {
+						break;
+					}
 				}
 			}
 		}
 		
-		String s1 = argumentizedString1;
-		String s2 = argumentizedString2;
+		String s1 = preprocessInput1(statement1, statement2);
+		String s2 = preprocessInput2(statement1, statement2);
 		for(Replacement replacement : replacements) {
 			s1 = s1.replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter()));
 		}

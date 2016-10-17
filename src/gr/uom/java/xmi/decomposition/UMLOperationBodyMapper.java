@@ -142,6 +142,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			processLeaves(leaves1, leaves2, parameterToArgumentMap);
 
 			List<CompositeStatementObject> innerNodes1 = operationBodyMapper.getNonMappedInnerNodesT1();
+			//adding innerNodes that were mapped with replacements
+			Set<CompositeStatementObject> addedInnerNodes1 = new LinkedHashSet<CompositeStatementObject>();
+			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+				if(!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2())) {
+					AbstractCodeFragment fragment = mapping.getFragment1();
+					if(fragment instanceof CompositeStatementObject) {
+						CompositeStatementObject statement = (CompositeStatementObject)fragment;
+						if(!innerNodes1.contains(statement)) {
+							innerNodes1.add(statement);
+							addedInnerNodes1.add(statement);
+						}
+					}
+				}
+			}
 			List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
 			innerNodes2.remove(composite2);
 			//replace parameters with arguments in innerNode2
@@ -166,6 +180,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			operationBodyMapper.mappings.addAll(this.mappings);
 			//remove the leaves that were mapped with replacement, if they are not mapped again for a second time
 			leaves1.removeAll(addedLeaves1);
+			//remove the innerNodes that were mapped with replacement, if they are not mapped again for a second time
+			innerNodes1.removeAll(addedInnerNodes1);
 			nonMappedLeavesT1.addAll(leaves1);
 			nonMappedLeavesT2.addAll(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
@@ -226,6 +242,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
 			innerNodes1.remove(composite1);
 			List<CompositeStatementObject> innerNodes2 = operationBodyMapper.getNonMappedInnerNodesT2();
+			//adding innerNodes that were mapped with replacements or are inexact matches
+			Set<CompositeStatementObject> addedInnerNodes2 = new LinkedHashSet<CompositeStatementObject>();
+			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+				if(!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2())) {
+					AbstractCodeFragment fragment = mapping.getFragment2();
+					if(fragment instanceof CompositeStatementObject) {
+						CompositeStatementObject statement = (CompositeStatementObject)fragment;
+						if(!innerNodes2.contains(statement)) {
+							innerNodes2.add(statement);
+							addedInnerNodes2.add(statement);
+						}
+					}
+				}
+			}
 			//replace parameters with arguments in innerNodes1
 			if(!parameterToArgumentMap.isEmpty()) {
 				for(CompositeStatementObject innerNode1 : innerNodes1) {
@@ -247,6 +277,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			operationBodyMapper.mappings.addAll(this.mappings);
 			//remove the leaves that were mapped with replacement, if they are not mapped again for a second time
 			leaves2.removeAll(addedLeaves2);
+			//remove the innerNodes that were mapped with replacement, if they are not mapped again for a second time
+			innerNodes2.removeAll(addedInnerNodes2);
 			nonMappedLeavesT1.addAll(leaves1);
 			nonMappedLeavesT2.addAll(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);

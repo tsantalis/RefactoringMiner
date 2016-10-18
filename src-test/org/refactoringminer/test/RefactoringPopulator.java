@@ -905,6 +905,22 @@ public class RefactoringPopulator {
 		test.project("https://github.com/robovm/robovm.git","master")
 		.atCommit("bf5ee44b3b576e01ab09cae9f50300417b01dc07")
 		.containsOnly(
+		"Extract Method public has(key CFString) : boolean extracted from public getMakerOlympusData() : CFDictionary in class org.robovm.apple.imageio.CGImageProperties",
+		"Extract Method public has(key CFString) : boolean extracted from public shouldExcludeXMP() : boolean in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions",
+		"Extract Method public has(key CFString) : boolean extracted from public getMakerPentaxData() : CFDictionary in class org.robovm.apple.imageio.CGImageProperties",
+		"Extract Method public has(key NSString) : boolean extracted from public getSolicitedServiceUUIDs() : NSArray in class org.robovm.apple.corebluetooth.CBCentralManagerScanOptions",
+		"Extract Method public has(key CFString) : boolean extracted from public getMakerNikonData() : CGImagePropertyNikonData in class org.robovm.apple.imageio.CGImageProperties",
+		"Extract Method public has(key CFString) : boolean extracted from public shouldCreateThumbnailFromImageIfAbsent() : boolean in class org.robovm.apple.imageio.CGImageSourceOptions",
+		"Extract Method public has(key CFString) : boolean extracted from public shouldCacheImmediately() : boolean in class org.robovm.apple.imageio.CGImageSourceOptions",
+		"Extract Method public has(key CFString) : boolean extracted from public shouldCreateThumbnailWithTransform() : boolean in class org.robovm.apple.imageio.CGImageSourceOptions",
+		"Extract Method public has(key CFString) : boolean extracted from public shouldExcludeGPS() : boolean in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions",
+		"Extract Method public has(key CFString) : boolean extracted from public getOrientation() : CGImagePropertyOrientation in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions",
+		"Extract Method public has(key CFString) : boolean extracted from public getMakerMinoltaData() : CFDictionary in class org.robovm.apple.imageio.CGImageProperties",
+		"Extract Method public has(key CFString) : boolean extracted from public getThumbnailMaxPixelSize() : long in class org.robovm.apple.imageio.CGImageSourceOptions",
+		"Extract Method public has(key CFString) : boolean extracted from public getLossyCompressionQuality() : double in class org.robovm.apple.imageio.CGImageDestinationProperties",
+		"Extract Method public has(key CFString) : boolean extracted from public getMakerCanonData() : CGImagePropertyCanonData in class org.robovm.apple.imageio.CGImageProperties",
+		"Extract Method public has(key NSString) : boolean extracted from public getSolicitedServiceUUIDs() : NSArray in class org.robovm.apple.corebluetooth.CBAdvertisementData",
+		"Extract Method public has(key NSString) : boolean extracted from public getOverflowServiceUUIDs() : NSArray in class org.robovm.apple.corebluetooth.CBAdvertisementData",
 		"Extract Method public has(key CFString) : boolean extracted from public getFileSize() : long in class org.robovm.apple.imageio.CGImageProperties",
 		"Extract Method public has(key CFString) : boolean extracted from public getRawData() : CFDictionary in class org.robovm.apple.imageio.CGImageProperties",
 		"Extract Method public has(key CFString) : boolean extracted from public getPixelHeight() : long in class org.robovm.apple.imageio.CGImageProperties",
@@ -946,7 +962,36 @@ public class RefactoringPopulator {
 		"Extract Method public has(key NSString) : boolean extracted from public getTxPowerLevel() : double in class org.robovm.apple.corebluetooth.CBAdvertisementData",
 		"Extract Method public has(key CFString) : boolean extracted from public getPixelWidth() : long in class org.robovm.apple.imageio.CGImageProperties",
 		"Extract Method public has(key NSString) : boolean extracted from public getServiceUUIDs() : NSArray<CBUUID> in class org.robovm.apple.corebluetooth.CBAdvertisementData",
-		"Extract Method public has(key NSString) : boolean extracted from public getServices() : NSArray<CBMutableService> in class org.robovm.apple.corebluetooth.CBPeripheralManagerRestoredState");
+		"Extract Method public has(key NSString) : boolean extracted from public getServices() : NSArray<CBMutableService> in class org.robovm.apple.corebluetooth.CBPeripheralManagerRestoredState",
+		//Extract Method in renamed method
+		"Extract Method public has(key NSString) : boolean extracted from public isNotifyingOnConnection() : boolean in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
+		"Rename Method public isNotifyingOnConnection() : boolean renamed to public notifiesOnConnection() : boolean in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
+		"Extract Method public has(key NSString) : boolean extracted from public isNotifyingOnDisconnection() : boolean in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
+		"Rename Method public isNotifyingOnDisconnection() : boolean renamed to public notifiesOnDisconnection() : boolean in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
+		"Extract Method public has(key NSString) : boolean extracted from public isNotifyingOnNotification() : boolean in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
+		"Rename Method public isNotifyingOnNotification() : boolean renamed to public notifiesOnNotification() : boolean in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
+		"Extract Method public has(key NSString) : boolean extracted from public isShowingPowerAlert() : boolean in class org.robovm.apple.corebluetooth.CBCentralManagerOptions",
+		"Rename Method public isShowingPowerAlert() : boolean renamed to public showsPowerAlert() : boolean in class org.robovm.apple.corebluetooth.CBCentralManagerOptions",
+		"Extract Method public has(key NSString) : boolean extracted from public isShowingPowerAlert() : boolean in class org.robovm.apple.corebluetooth.CBPeripheralManagerOptions",
+		"Rename Method public isShowingPowerAlert() : boolean renamed to public showsPowerAlert() : boolean in class org.robovm.apple.corebluetooth.CBPeripheralManagerOptions",
+		"Extract Method public has(key CFString) : boolean extracted from public isMergingMetadata() : boolean in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions",
+		"Rename Method public isMergingMetadata() : boolean renamed to public mergesMetadata() : boolean in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions",
+		"Extract Method public has(key CFString) : boolean extracted from public isEmbeddingThumbnail() : boolean in class org.robovm.apple.imageio.CGImageDestinationProperties",
+		"Rename Method public isEmbeddingThumbnail() : boolean renamed to public embedsThumbnail() : boolean in class org.robovm.apple.imageio.CGImageDestinationProperties",
+		"Extract Method public has(key NSString) : boolean extracted from public isAllowingDuplicates() : boolean in class org.robovm.apple.corebluetooth.CBCentralManagerScanOptions",
+		"Rename Method public isAllowingDuplicates() : boolean renamed to public allowsDuplicates() : boolean in class org.robovm.apple.corebluetooth.CBCentralManagerScanOptions",
+		"Extract Method public has(key CFString) : boolean extracted from public isEnumeratingRecursively() : boolean in class org.robovm.apple.imageio.CGImageMetadataEnumerationOptions",
+		"Rename Method public isEnumeratingRecursively() : boolean renamed to public enumeratesRecursively() : boolean in class org.robovm.apple.imageio.CGImageMetadataEnumerationOptions",
+		"Extract Method public has(key CFString) : boolean extracted from public get8BIMData() : CGImageProperty8BIMData in class org.robovm.apple.imageio.CGImageProperties",
+		"Rename Method public get8BIMData() : CGImageProperty8BIMData renamed to public getData() : CGImageProperty8BIMData in class org.robovm.apple.imageio.CGImageProperties",
+		"Extract Method public has(key CFString) : boolean extracted from public isContainingFloatingPointPixels() : boolean in class org.robovm.apple.imageio.CGImageProperties",
+		"Rename Method public isContainingFloatingPointPixels() : boolean renamed to public containsFloatingPointPixels() : boolean in class org.robovm.apple.imageio.CGImageProperties",
+		//renamed methods
+		"Rename Method public setContactInfo(contactInfo CGImagePropertyIPTCContactInfoData) : CGImagePropertyIPTCData renamed to public setCreatorContactInfo(creatorContactInfo CGImagePropertyIPTCContactInfoData) : CGImagePropertyIPTCData in class org.robovm.apple.imageio.CGImagePropertyIPTCData",
+		"Rename Method public getContactInfo() : CGImagePropertyIPTCContactInfoData renamed to public getCreatorContactInfo() : CGImagePropertyIPTCContactInfoData in class org.robovm.apple.imageio.CGImagePropertyIPTCData",
+		"Rename Method public setNotifyOnDisconnection(notify boolean) : CBConnectPeripheralOptions renamed to public setNotifiesOnDisconnection(notifiesOnDisconnection boolean) : CBConnectPeripheralOptions in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
+		"Rename Method public setNotifyOnNotification(notify boolean) : CBConnectPeripheralOptions renamed to public setNotifiesOnNotification(notifiesOnNotification boolean) : CBConnectPeripheralOptions in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
+		"Rename Method public setNotifyOnConnection(notify boolean) : CBConnectPeripheralOptions renamed to public setNotifiesOnConnection(notifiesOnConnection boolean) : CBConnectPeripheralOptions in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions");
 
 		test.project("https://github.com/GoClipse/goclipse.git","master")
 		.atCommit("851ab757698304e9d8d4ae24ab75be619ddae31a")

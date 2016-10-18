@@ -336,6 +336,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return count;
 	}
 
+	public int editDistance() {
+		int count = 0;
+		for(AbstractCodeMapping mapping : getMappings()) {
+			String s1 = preprocessInput1(mapping.getFragment1(), mapping.getFragment2());
+			String s2 = preprocessInput2(mapping.getFragment1(), mapping.getFragment2());
+			count += StringDistance.editDistance(s1, s2);
+		}
+		return count;
+	}
+
 	public Set<Replacement> getReplacements() {
 		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 		for(AbstractCodeMapping mapping : getMappings()) {
@@ -712,8 +722,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public int compareTo(UMLOperationBodyMapper operationBodyMapper) {
 		int thisExactMatches = this.exactMatches();
 		int otherExactMateches = operationBodyMapper.exactMatches();
-		if(thisExactMatches != otherExactMateches)
+		if(thisExactMatches != otherExactMateches) {
 			return -Integer.compare(thisExactMatches, otherExactMateches);
-		return this.operation1.toString().compareTo(operationBodyMapper.operation1.toString());
+		}
+		else {
+			return Integer.compare(this.editDistance(), operationBodyMapper.editDistance());
+		}
 	}
 }

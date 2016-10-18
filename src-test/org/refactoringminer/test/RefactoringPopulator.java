@@ -991,7 +991,13 @@ public class RefactoringPopulator {
 		"Rename Method public getContactInfo() : CGImagePropertyIPTCContactInfoData renamed to public getCreatorContactInfo() : CGImagePropertyIPTCContactInfoData in class org.robovm.apple.imageio.CGImagePropertyIPTCData",
 		"Rename Method public setNotifyOnDisconnection(notify boolean) : CBConnectPeripheralOptions renamed to public setNotifiesOnDisconnection(notifiesOnDisconnection boolean) : CBConnectPeripheralOptions in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
 		"Rename Method public setNotifyOnNotification(notify boolean) : CBConnectPeripheralOptions renamed to public setNotifiesOnNotification(notifiesOnNotification boolean) : CBConnectPeripheralOptions in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
-		"Rename Method public setNotifyOnConnection(notify boolean) : CBConnectPeripheralOptions renamed to public setNotifiesOnConnection(notifiesOnConnection boolean) : CBConnectPeripheralOptions in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions");
+		"Rename Method public setNotifyOnConnection(notify boolean) : CBConnectPeripheralOptions renamed to public setNotifiesOnConnection(notifiesOnConnection boolean) : CBConnectPeripheralOptions in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
+		"Rename Method public setMergeMetadata(merge boolean) : CGImageDestinationCopySourceOptions renamed to public setMergesMetadata(mergesMetadata boolean) : CGImageDestinationCopySourceOptions in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions",
+		"Rename Method public setShowPowerAlert(showAlert boolean) : CBCentralManagerOptions renamed to public setShowsPowerAlert(showsPowerAlert boolean) : CBCentralManagerOptions in class org.robovm.apple.corebluetooth.CBCentralManagerOptions",
+		"Rename Method public setIndexed(isIndexed boolean) : CGImageProperties renamed to public setIsIndexed(isIndexed boolean) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+		"Rename Method public setEmbedThumbnail(embed boolean) : CGImageDestinationProperties renamed to public setEmbedsThumbnail(embedsThumbnail boolean) : CGImageDestinationProperties in class org.robovm.apple.imageio.CGImageDestinationProperties",
+		"Rename Method public setEnumerateRecursively(recursive boolean) : CGImageMetadataEnumerationOptions renamed to public setEnumeratesRecursively(enumeratesRecursively boolean) : CGImageMetadataEnumerationOptions in class org.robovm.apple.imageio.CGImageMetadataEnumerationOptions",
+		"Rename Method public setShowPowerAlert(showAlert boolean) : CBPeripheralManagerOptions renamed to public setShowsPowerAlert(showsPowerAlert boolean) : CBPeripheralManagerOptions in class org.robovm.apple.corebluetooth.CBPeripheralManagerOptions");
 
 		test.project("https://github.com/GoClipse/goclipse.git","master")
 		.atCommit("851ab757698304e9d8d4ae24ab75be619ddae31a")

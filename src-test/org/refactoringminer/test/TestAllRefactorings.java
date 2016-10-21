@@ -13,12 +13,13 @@ public class TestAllRefactorings {
 	
 	@Test
 	public void testAllRefactorings() throws Exception {
-
-		TestBuilder test = new TestBuilder(new GitHistoryRefactoringMinerImpl(), "tmp1");
 		
-		RefactoringPopulator.feedRefactoringsInstances(Refactorings.All.getValue(), Systems.All.getValue(), test);
+		int refactoring= Refactorings.ExtractMethod.getValue();
 
+		TestBuilder test = new TestBuilder(new GitHistoryRefactoringMinerImpl(), "tmp1", refactoring);
 		
+		RefactoringPopulator.feedRefactoringsInstances(refactoring, Systems.FSE.getValue(), test);
+
 		test.assertExpectations();
 
 	}

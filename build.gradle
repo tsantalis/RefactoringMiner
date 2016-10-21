@@ -28,6 +28,9 @@ dependencies {
 	compile 'com.jcabi:jcabi-github:0.17'
 	compile 'org.hibernate:hibernate-entitymanager:4.2.6.Final'
 	compile 'org.slf4j:slf4j-log4j12:1.7.7'
+	compile 'com.fasterxml.jackson.core:jackson-core:version:2.8.4'
+	compile 'com.fasterxml.jackson.core:jackson-databind:version:2.8.4'
+	compile 'com.fasterxml.jackson.core:jackson-annotations:version:2.8.4'
 	
 	compile files('lib/org.eclipse.core.commands_3.7.0.v20150422-0725.jar')
 	compile files('lib/org.eclipse.core.contenttype_3.5.0.v20150421-2214.jar')

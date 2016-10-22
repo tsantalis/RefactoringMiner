@@ -42,7 +42,7 @@
 	"author": "Oliver Trosien",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private convertPemKeyPair(pemKeyPair PEMKeyPair) : KeyPair extracted from public loadKeys() : IterableKeyPair in class org.crsh.auth.FilePublicKeyProvider"
+		"description": "Extract Method private convertPemKeyPair(pemKeyPair PEMKeyPair) : KeyPair extracted from public loadKeys() : Iterable<KeyPair> in class org.crsh.auth.FilePublicKeyProvider"
 	}],
 	"time": "6/7/15 11:15 PM",
 	"id": 1102793
@@ -207,7 +207,7 @@
 	"author": "Ekaterina Tuzova",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private addCoursesFromStepic(result ListCourseInfo, pageNumber int) : boolean extracted from public getCourses() : ListCourseInfo in class com.jetbrains.edu.stepic.EduStepicConnector"
+		"description": "Extract Method private addCoursesFromStepic(result List<CourseInfo>, pageNumber int) : boolean extracted from public getCourses() : List<CourseInfo> in class com.jetbrains.edu.stepic.EduStepicConnector"
 	}],
 	"time": "6/8/15 10:29 AM",
 	"id": 1100842
@@ -418,10 +418,10 @@
 	"author": "Rafael Winterhalter",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method protected wrap(values ListParameterDescription) : ParameterList from class net.bytebuddy.description.method.ParameterList.Explicit to class  net.bytebuddy.description.method.ParameterList.AbstractBase"
+		"description": "Pull Up Method protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.Explicit to class  net.bytebuddy.description.method.ParameterList.AbstractBase"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method protected wrap(values ListParameterDescription) : ParameterList from class net.bytebuddy.description.method.ParameterList.ForLoadedExecutable to class  net.bytebuddy.description.method.ParameterList.AbstractBase"
+		"description": "Pull Up Method protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.ForLoadedExecutable to class  net.bytebuddy.description.method.ParameterList.AbstractBase"
 	}],
 	"time": "6/10/15 5:31 AM",
 	"id": 1108762
@@ -440,7 +440,7 @@
 		"description": "Pull Up Method private handleAppend(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.ActiveState to class net.kuujo.copycat.raft.state.PassiveState"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method private applyCommits(commitIndex long) : CompletableFutureVoid from class net.kuujo.copycat.raft.state.ActiveState to class net.kuujo.copycat.raft.state.PassiveState"
+		"description": "Pull Up Method private applyCommits(commitIndex long) : CompletableFuture<Void> from class net.kuujo.copycat.raft.state.ActiveState to class net.kuujo.copycat.raft.state.PassiveState"
 	}, {
 		"type": "Pull Up Method",
 		"description": "Pull Up Method private applyIndex(globalIndex long) : void from class net.kuujo.copycat.raft.state.ActiveState to class net.kuujo.copycat.raft.state.PassiveState"
@@ -466,7 +466,7 @@
 	"author": "Eugene Zhuravlev",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public removeNodes(paths CollectionTreePath) : void extracted from public removeNode(nodePath TreePath) : void in class com.intellij.compiler.options.AnnotationProcessorsPanel.MyTreeModel"
+		"description": "Extract Method public removeNodes(paths Collection<TreePath>) : void extracted from public removeNode(nodePath TreePath) : void in class com.intellij.compiler.options.AnnotationProcessorsPanel.MyTreeModel"
 	}],
 	"time": "6/10/15 9:11 AM",
 	"id": 1107379
@@ -626,7 +626,7 @@
 	"author": "Alexandre Dutra",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public values(names ListString, values ListObject) : Insert extracted from public values(names String[], values Object[]) : Insert in class com.datastax.driver.core.querybuilder.Insert"
+		"description": "Extract Method public values(names List<String>, values List<Object>) : Insert extracted from public values(names String[], values Object[]) : Insert in class com.datastax.driver.core.querybuilder.Insert"
 	}],
 	"time": "6/15/15 4:48 AM",
 	"id": 1110245
@@ -677,7 +677,7 @@
 	"author": "purplefox",
 	"refactorings": [{
 		"type": "Push Down Attribute",
-		"description": "Push Down Attribute protected connectionMap : MapChannel,C from class io.vertx.core.net.impl.VertxHandler to class io.vertx.core.http.impl.VertxHttpHandler"
+		"description": "Push Down Attribute protected connectionMap : Map<Channel,C> from class io.vertx.core.net.impl.VertxHandler to class io.vertx.core.http.impl.VertxHttpHandler"
 	}],
 	"time": "6/15/15 7:22 AM",
 	"id": 1112031
@@ -755,7 +755,7 @@
 	"author": "Kevin Gallardo",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method package getPreparedQuery(type QueryType, columns SetColumnMapper?, options Option[]) : PreparedStatement extracted from package getPreparedQuery(type QueryType, options Option[]) : PreparedStatement in class com.datastax.driver.mapping.Mapper"
+		"description": "Extract Method package getPreparedQuery(type QueryType, columns Set<ColumnMapper<?>>, options Option[]) : PreparedStatement extracted from package getPreparedQuery(type QueryType, options Option[]) : PreparedStatement in class com.datastax.driver.mapping.Mapper"
 	}],
 	"time": "6/15/15 10:45 AM",
 	"id": 1110240
@@ -830,7 +830,7 @@
 	"author": "Phillip Webb",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private getFullKey(path String, key String) : String extracted from private flatten(properties Properties, input MapString,Object, path String) : void in class org.springframework.boot.cloudfoundry.VcapApplicationListener"
+		"description": "Extract Method private getFullKey(path String, key String) : String extracted from private flatten(properties Properties, input Map<String,Object>, path String) : void in class org.springframework.boot.cloudfoundry.VcapApplicationListener"
 	}],
 	"time": "6/15/15 3:31 PM",
 	"id": 1112627
@@ -969,10 +969,10 @@
 		"description": "Move Attribute private rightMergeNode : MergeNode from class io.crate.planner.node.dql.join.NestedLoop to class io.crate.planner.node.dql.join.NestedLoopNode"
 	}, {
 		"type": "Pull Up Attribute",
-		"description": "Pull Up Attribute private downstreamNodes : ListString from class io.crate.planner.node.dql.CollectNode to class io.crate.planner.node.dql.AbstractDQLPlanNode"
+		"description": "Pull Up Attribute private downstreamNodes : List<String> from class io.crate.planner.node.dql.CollectNode to class io.crate.planner.node.dql.AbstractDQLPlanNode"
 	}, {
 		"type": "Pull Up Attribute",
-		"description": "Pull Up Attribute private downstreamNodes : ListString from class 2 others to class io.crate.planner.node.dql.AbstractDQLPlanNode"
+		"description": "Pull Up Attribute private downstreamNodes : List<String> from class 2 others to class io.crate.planner.node.dql.AbstractDQLPlanNode"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute private downstreamExecutionNodeId : int from class io.crate.planner.node.dql.CollectNode to class io.crate.planner.node.dql.AbstractDQLPlanNode"
@@ -993,7 +993,7 @@
 		"description": "Pull Up Method public downstreamExecutionNodeId(downstreamExecutionNodeId int) : void from class io.crate.planner.node.dql.MergeNode to class io.crate.planner.node.dql.AbstractDQLPlanNode"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public downstreamNodes(downStreamNodes ListString) : void from class io.crate.planner.node.dql.CollectNode to class io.crate.planner.node.dql.AbstractDQLPlanNode"
+		"description": "Pull Up Method public downstreamNodes(downStreamNodes List<String>) : void from class io.crate.planner.node.dql.CollectNode to class io.crate.planner.node.dql.AbstractDQLPlanNode"
 	}],
 	"time": "6/16/15 7:01 AM",
 	"id": 1117005
@@ -1013,7 +1013,7 @@
 	"author": "Tglman",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method protected rewriteLinksInDocument(document ODocument, rewrite OIndexOIdentifiable) : void extracted from private rewriteLinksInDocument(document ODocument) : void in class com.orientechnologies.orient.core.db.tool.ODatabaseImport"
+		"description": "Extract Method protected rewriteLinksInDocument(document ODocument, rewrite OIndex<OIdentifiable>) : void extracted from private rewriteLinksInDocument(document ODocument) : void in class com.orientechnologies.orient.core.db.tool.ODatabaseImport"
 	}],
 	"time": "6/16/15 7:33 AM",
 	"id": 1112642
@@ -1075,7 +1075,7 @@
 	"author": "Dan Berindei",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method protected waitForCacheToStabilize(cache CacheObject,Object, cacheConfig Configuration) : void extracted from public perform(ctx InvocationContext) : Object in class org.infinispan.commands.CreateCacheCommand"
+		"description": "Extract Method protected waitForCacheToStabilize(cache Cache<Object,Object>, cacheConfig Configuration) : void extracted from public perform(ctx InvocationContext) : Object in class org.infinispan.commands.CreateCacheCommand"
 	}],
 	"time": "6/16/15 10:48 AM",
 	"id": 1117171
@@ -1108,7 +1108,7 @@
 	"author": "Benedict Elliott Smith",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public submitBackground(cfs ColumnFamilyStore, autoFill boolean) : ListFuture? extracted from public submitBackground(cfs ColumnFamilyStore) : ListFuture? in class org.apache.cassandra.db.compaction.CompactionManager"
+		"description": "Extract Method public submitBackground(cfs ColumnFamilyStore, autoFill boolean) : List<Future<?>> extracted from public submitBackground(cfs ColumnFamilyStore) : List<Future<?>> in class org.apache.cassandra.db.compaction.CompactionManager"
 	}],
 	"time": "6/16/15 12:28 PM",
 	"id": 1117885
@@ -1437,7 +1437,7 @@
 	"author": "Thomas Gummerer",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public getDevices() : ListIDevice extracted from public adbCall(adbCallable AdbCallable) : boolean in class com.facebook.buck.android.AdbHelper"
+		"description": "Extract Method public getDevices() : List<IDevice> extracted from public adbCall(adbCallable AdbCallable) : boolean in class com.facebook.buck.android.AdbHelper"
 	}],
 	"time": "6/16/15 4:56 PM",
 	"id": 1117635
@@ -1564,10 +1564,10 @@
 	"author": "izeye",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private findAll(predicate PredicateString) : IterableMetric? extracted from public findAll() : IterableMetric? in class org.springframework.boot.actuate.metrics.buffer.BufferMetricReader"
+		"description": "Extract Method private findAll(predicate Predicate<String>) : Iterable<Metric<?>> extracted from public findAll() : Iterable<Metric<?>> in class org.springframework.boot.actuate.metrics.buffer.BufferMetricReader"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private findAll(predicate PredicateString) : IterableMetric? extracted from public findAll(prefix String) : IterableMetric? in class org.springframework.boot.actuate.metrics.buffer.BufferMetricReader"
+		"description": "Extract Method private findAll(predicate Predicate<String>) : Iterable<Metric<?>> extracted from public findAll(prefix String) : Iterable<Metric<?>> in class org.springframework.boot.actuate.metrics.buffer.BufferMetricReader"
 	}],
 	"time": "6/17/15 2:03 AM",
 	"id": 1117232
@@ -1930,7 +1930,7 @@
 	"author": "Stephane Landelle",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method package signatureBaseString(method String, uri Uri, oauthTimestamp long, nonce String, formParams ListParam, queryParams ListParam) : StringBuilder extracted from public calculateSignature(method String, uri Uri, oauthTimestamp long, nonce String, formParams ListParam, queryParams ListParam) : String in class org.asynchttpclient.oauth.OAuthSignatureCalculator"
+		"description": "Extract Method package signatureBaseString(method String, uri Uri, oauthTimestamp long, nonce String, formParams List<Param>, queryParams List<Param>) : StringBuilder extracted from public calculateSignature(method String, uri Uri, oauthTimestamp long, nonce String, formParams List<Param>, queryParams List<Param>) : String in class org.asynchttpclient.oauth.OAuthSignatureCalculator"
 	}],
 	"time": "6/17/15 6:11 PM",
 	"id": 1118568
@@ -2149,7 +2149,7 @@
 	"author": "Simon Brandhof",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method package getPluginMetrics() : ListMetric extracted from public start() : void in class org.sonar.server.startup.RegisterMetrics"
+		"description": "Extract Method package getPluginMetrics() : List<Metric> extracted from public start() : void in class org.sonar.server.startup.RegisterMetrics"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method package register(metrics Iterable) : void extracted from public start() : void in class org.sonar.server.startup.RegisterMetrics"
@@ -2233,7 +2233,7 @@
 		"description": "Pull Up Attribute protected combineDependencies : boolean from class io.fabric8.maven.JsonMojo to class io.fabric8.maven.AbstractFabric8Mojo"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method private getDependencies() : SetFile from class io.fabric8.maven.ApplyMojo to class io.fabric8.maven.AbstractFabric8Mojo"
+		"description": "Pull Up Method private getDependencies() : Set<File> from class io.fabric8.maven.ApplyMojo to class io.fabric8.maven.AbstractFabric8Mojo"
 	}],
 	"time": "6/18/15 11:29 AM",
 	"id": 1119833
@@ -2276,7 +2276,7 @@
 	"author": "Bin Fan",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private reserveSpace(size long) : void extracted from public addBlockMeta(block BlockMeta) : OptionalBlockMeta in class tachyon.worker.block.meta.StorageDir"
+		"description": "Extract Method private reserveSpace(size long) : void extracted from public addBlockMeta(block BlockMeta) : Optional<BlockMeta> in class tachyon.worker.block.meta.StorageDir"
 	}],
 	"time": "6/18/15 8:46 PM",
 	"id": 1120023
@@ -2289,7 +2289,7 @@
 		"description": "Extract Method private setNotificationContent(context Context, message Message, sender CharSequence, subject CharSequence, builder Builder, accountDescr String) : Builder extracted from private notifyAccountWithDataLocked(context Context, account Account, message LocalMessage, data NotificationData) : void in class com.fsck.k9.controller.MessagingController"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private buildNotificationNavigationStack(context Context, account Account, message LocalMessage, newMessages int, unreadCount int, allRefs ArrayListMessageReference) : TaskStackBuilder extracted from private notifyAccountWithDataLocked(context Context, account Account, message LocalMessage, data NotificationData) : void in class com.fsck.k9.controller.MessagingController"
+		"description": "Extract Method private buildNotificationNavigationStack(context Context, account Account, message LocalMessage, newMessages int, unreadCount int, allRefs ArrayList<MessageReference>) : TaskStackBuilder extracted from private notifyAccountWithDataLocked(context Context, account Account, message LocalMessage, data NotificationData) : void in class com.fsck.k9.controller.MessagingController"
 	}],
 	"time": "6/18/15 9:19 PM",
 	"id": 1119677
@@ -2299,10 +2299,10 @@
 	"author": "parrt",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public getDescendants(t ParseTree) : ListParseTree extracted from public descendants(t ParseTree) : ListParseTree in class org.antlr.v4.runtime.tree.Trees"
+		"description": "Extract Method public getDescendants(t ParseTree) : List<ParseTree> extracted from public descendants(t ParseTree) : List<ParseTree> in class org.antlr.v4.runtime.tree.Trees"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method public getAmbuityParserInterpreter(g Grammar, originalParser Parser, tokens TokenStream) : ParserInterpreter extracted from public getAllPossibleParseTrees(g Grammar, originalParser Parser, tokens TokenStream, decision int, alts BitSet, startIndex int, stopIndex int, startRuleIndex int) : ListParserRuleContext in class org.antlr.v4.tool.GrammarParserInterpreter"
+		"description": "Extract Method public getAmbuityParserInterpreter(g Grammar, originalParser Parser, tokens TokenStream) : ParserInterpreter extracted from public getAllPossibleParseTrees(g Grammar, originalParser Parser, tokens TokenStream, decision int, alts BitSet, startIndex int, stopIndex int, startRuleIndex int) : List<ParserRuleContext> in class org.antlr.v4.tool.GrammarParserInterpreter"
 	}],
 	"time": "6/18/15 9:25 PM",
 	"id": 1119661
@@ -2342,10 +2342,10 @@
 	"author": "Sam Brannen",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private assertMissingTextAttribute(attributes MapString,Object) : void extracted from public synthesizeAnnotationFromMapWithMissingAttributeValue() : void in class org.springframework.core.annotation.AnnotationUtilsTests"
+		"description": "Extract Method private assertMissingTextAttribute(attributes Map<String,Object>) : void extracted from public synthesizeAnnotationFromMapWithMissingAttributeValue() : void in class org.springframework.core.annotation.AnnotationUtilsTests"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private assertMissingTextAttribute(attributes MapString,Object) : void extracted from public synthesizeAnnotationFromMapWithNullAttributeValue() : void in class org.springframework.core.annotation.AnnotationUtilsTests"
+		"description": "Extract Method private assertMissingTextAttribute(attributes Map<String,Object>) : void extracted from public synthesizeAnnotationFromMapWithNullAttributeValue() : void in class org.springframework.core.annotation.AnnotationUtilsTests"
 	}],
 	"time": "6/19/15 10:27 AM",
 	"id": 1120106
@@ -2355,7 +2355,7 @@
 	"author": "William Burns",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method protected shouldInvoke(event EventK,V) : boolean extracted from protected shouldInvoke(event CacheEntryEventK,V, isLocalNodePrimaryOwner boolean) : CacheEntryEventK,V in class org.infinispan.notifications.cachelistener.CacheNotifierImpl.BaseCacheEntryListenerInvocation"
+		"description": "Extract Method protected shouldInvoke(event Event<K,V) : boolean extracted from protected shouldInvoke(event CacheEntryEvent<K,V>, isLocalNodePrimaryOwner boolean) : CacheEntryEvent<K,V> in class org.infinispan.notifications.cachelistener.CacheNotifierImpl.BaseCacheEntryListenerInvocation"
 	}],
 	"time": "6/19/15 11:03 AM",
 	"id": 1120213
@@ -2425,7 +2425,7 @@
 	"author": "Brice Dutheil",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private allMockedTypes(features MockFeaturesT) : Class?[] extracted from public generateMockClass(features MockFeaturesT) : Class? extends T in class org.mockito.internal.creation.bytebuddy.MockBytecodeGenerator"
+		"description": "Extract Method private allMockedTypes(features MockFeatures<T>) : Class<?>[] extracted from public generateMockClass(features MockFeatures<T>) : Class<?> extends T in class org.mockito.internal.creation.bytebuddy.MockBytecodeGenerator"
 	}],
 	"time": "6/19/15 4:07 PM",
 	"id": 1120985
@@ -2466,10 +2466,10 @@
 	"author": "Eugene Susla",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private downloadArtifact(artifactToDownload Artifact, repoSys RepositorySystem, session RepositorySystemSession, buckFiles MapPath,SortedSetPrebuilt, graph MutableDirectedGraphArtifact) : void extracted from public resolve(mavenCoords String[]) : void in class com.facebook.buck.maven.Resolver"
+		"description": "Extract Method private downloadArtifact(artifactToDownload Artifact, repoSys RepositorySystem, session RepositorySystemSession, buckFiles Map<Path,SortedSet<Prebuilt>>, graph MutableDirectedGraph<Artifact>) : void extracted from public resolve(mavenCoords String[]) : void in class com.facebook.buck.maven.Resolver"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private createBuckFiles(buckFilesData MapPath,SortedSetPrebuilt) : void extracted from public resolve(mavenCoords String[]) : void in class com.facebook.buck.maven.Resolver"
+		"description": "Extract Method private createBuckFiles(buckFilesData Map<Path,SortedSet<Prebuilt>>) : void extracted from public resolve(mavenCoords String[]) : void in class com.facebook.buck.maven.Resolver"
 	}],
 	"time": "6/19/15 6:27 PM",
 	"id": 1120931
@@ -2545,7 +2545,7 @@
 	"author": "alenkacz",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private evaluateTemplate(check Check, subscription Subscription, alerts ListAlert, templateContent String) : String extracted from public createBody(check Check, subscription Subscription, alerts ListAlert) : String in class com.seyren.core.util.velocity.VelocityEmailHelper"
+		"description": "Extract Method private evaluateTemplate(check Check, subscription Subscription, alerts List<Alert>, templateContent String) : String extracted from public createBody(check Check, subscription Subscription, alerts List<Alert>) : String in class com.seyren.core.util.velocity.VelocityEmailHelper"
 	}],
 	"time": "6/20/15 4:49 AM",
 	"id": 1121744
@@ -2575,7 +2575,7 @@
 	"author": "Victor Shcherb",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private addPreviousToActionPoints(lastProjection Location, routeNodes ListLocation, DISTANCE_ACTION double, prevFinishPoint int, routePoint int, loc Location) : void extracted from private calculateActionPoints(topLatitude double, leftLongitude double, bottomLatitude double, rightLongitude double, lastProjection Location, routeNodes ListLocation, cd int, it IteratorRouteDirectionInfo, zoom int) : void in class net.osmand.plus.views.RouteLayer"
+		"description": "Extract Method private addPreviousToActionPoints(lastProjection Location, routeNodes List<Location>, DISTANCE_ACTION double, prevFinishPoint int, routePoint int, loc Location) : void extracted from private calculateActionPoints(topLatitude double, leftLongitude double, bottomLatitude double, rightLongitude double, lastProjection Location, routeNodes List<Location>, cd int, it IteratorRouteDirectionInfo, zoom int) : void in class net.osmand.plus.views.RouteLayer"
 	}],
 	"time": "6/20/15 5:09 PM",
 	"id": 1120722
@@ -2675,7 +2675,7 @@
 		"description": "Extract Interface org.drools.core.util.ByteArrayClassLoader from type org.drools.core.base.ClassFieldAccessorCache.DefaultByteArrayClassLoader"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method public loadClass(className String, classLoader ClassLoader) : Class? extracted from public instantiateObject(className String, classLoader ClassLoader) : Object in class org.drools.core.util.ClassUtils"
+		"description": "Extract Method public loadClass(className String, classLoader ClassLoader) : Class<?> extracted from public instantiateObject(className String, classLoader ClassLoader) : Object in class org.drools.core.util.ClassUtils"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public instantiateObject(className String, args Object[]) : Object extracted from public instantiateObject(className String) : Object in class org.drools.core.util.ClassUtils"
@@ -2724,19 +2724,19 @@
 	"author": "Daniel Naber",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private getMouseAdapter() : MouseAdapter extracted from public show(rules ListRule) : void in class org.languagetool.gui.ConfigurationDialog"
+		"description": "Extract Method private getMouseAdapter() : MouseAdapter extracted from public show(rules List<Rule>) : void in class org.languagetool.gui.ConfigurationDialog"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private createNonOfficeElements(cons GridBagConstraints, portPanel JPanel) : void extracted from public show(rules ListRule) : void in class org.languagetool.gui.ConfigurationDialog"
+		"description": "Extract Method private createNonOfficeElements(cons GridBagConstraints, portPanel JPanel) : void extracted from public show(rules List<Rule>) : void in class org.languagetool.gui.ConfigurationDialog"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private getMotherTonguePanel(cons GridBagConstraints) : JPanel extracted from public show(rules ListRule) : void in class org.languagetool.gui.ConfigurationDialog"
+		"description": "Extract Method private getMotherTonguePanel(cons GridBagConstraints) : JPanel extracted from public show(rules List<Rule>) : void in class org.languagetool.gui.ConfigurationDialog"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private getTreeModel(rootNode DefaultMutableTreeNode) : DefaultTreeModel extracted from public show(rules ListRule) : void in class org.languagetool.gui.ConfigurationDialog"
+		"description": "Extract Method private getTreeModel(rootNode DefaultMutableTreeNode) : DefaultTreeModel extracted from public show(rules List<Rule>) : void in class org.languagetool.gui.ConfigurationDialog"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private getTreeButtonPanel() : JPanel extracted from public show(rules ListRule) : void in class org.languagetool.gui.ConfigurationDialog"
+		"description": "Extract Method private getTreeButtonPanel() : JPanel extracted from public show(rules List<Rule>) : void in class org.languagetool.gui.ConfigurationDialog"
 	}],
 	"time": "6/22/15 5:37 AM",
 	"id": 1121834
@@ -2821,7 +2821,7 @@
 	"author": "Will Kwon",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private getBlogsForCurrentView() : ListMapString,Object extracted from protected doInBackground(params Void[]) : SiteList in class org.wordpress.android.ui.main.SitePickerAdapter.LoadSitesTask"
+		"description": "Extract Method private getBlogsForCurrentView() : List<Map<String,Object>> extracted from protected doInBackground(params Void[]) : SiteList in class org.wordpress.android.ui.main.SitePickerAdapter.LoadSitesTask"
 	}],
 	"time": "6/22/15 1:48 PM",
 	"id": 1121855
@@ -2854,10 +2854,10 @@
 	"author": "Xin Jia",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private isGroupbyMatchingIndex(matchingCase MatViewIndexMacthingGroupby, groupbyColRefs ListColumnRef, groupbyExprs ListAbstractExpression, indexedColRefs ListColumnRef, indexedExprs ListAbstractExpression, srcColumnArray ListColumn) : boolean extracted from private findBestMatchIndexForMatviewMinOrMax(matviewinfo MaterializedViewInfo, srcTable Table, groupbyExprs ListAbstractExpression, singleUniqueMinMaxAggExpr AbstractExpression) : Index in class org.voltdb.compiler.DDLCompiler"
+		"description": "Extract Method private isGroupbyMatchingIndex(matchingCase MatViewIndexMacthingGroupby, groupbyColRefs List<ColumnRef>, groupbyExprs List<AbstractExpression>, indexedColRefs List<ColumnRef>, indexedExprs List<AbstractExpression>, srcColumnArray List<Column>) : boolean extracted from private findBestMatchIndexForMatviewMinOrMax(matviewinfo MaterializedViewInfo, srcTable Table, groupbyExprs List<AbstractExpression>, singleUniqueMinMaxAggExpr AbstractExpression) : Index in class org.voltdb.compiler.DDLCompiler"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private isIndexOptimalForMinMax(matchingCase MatViewIndexMacthingGroupby, singleUniqueMinMaxAggExpr AbstractExpression, indexedColRefs ListColumnRef, indexedExprs ListAbstractExpression, srcColumnArray ListColumn) : boolean extracted from private findBestMatchIndexForMatviewMinOrMax(matviewinfo MaterializedViewInfo, srcTable Table, groupbyExprs ListAbstractExpression, singleUniqueMinMaxAggExpr AbstractExpression) : Index in class org.voltdb.compiler.DDLCompiler"
+		"description": "Extract Method private isIndexOptimalForMinMax(matchingCase MatViewIndexMacthingGroupby, singleUniqueMinMaxAggExpr AbstractExpression, indexedColRefs List<ColumnRef>, indexedExprs List<AbstractExpression>, srcColumnArray List<Column>) : boolean extracted from private findBestMatchIndexForMatviewMinOrMax(matviewinfo MaterializedViewInfo, srcTable Table, groupbyExprs List<AbstractExpression>, singleUniqueMinMaxAggExpr AbstractExpression) : Index in class org.voltdb.compiler.DDLCompiler"
 	}],
 	"time": "6/22/15 3:24 PM",
 	"id": 1121538
@@ -2886,7 +2886,7 @@
 		"description": "Extract Method private bail(txt String) : void extracted from public processData() : Msg in class org.openhab.binding.insteonplm.internal.message.MsgFactory"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private processBindingConfiguration() : void extracted from public updated(config DictionaryString,?) : void in class org.openhab.binding.insteonplm.InsteonPLMActiveBinding"
+		"description": "Extract Method private processBindingConfiguration() : void extracted from public updated(config Dictionary<String,?>) : void in class org.openhab.binding.insteonplm.InsteonPLMActiveBinding"
 	}],
 	"time": "6/22/15 4:45 PM",
 	"id": 1122760
@@ -2988,7 +2988,7 @@
 		"description": "Extract Method private generateFakeEndpoints(tmd TokenMetadata, numOldNodes int, numVNodes int) : void extracted from private generateFakeEndpoints(numOldNodes int) : void in class org.apache.cassandra.dht.BootStrapperTest"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private getSpecifiedTokens(metadata TokenMetadata, initialTokens CollectionString) : CollectionToken extracted from public getBootstrapTokens(metadata TokenMetadata) : CollectionToken in class org.apache.cassandra.dht.BootStrapper"
+		"description": "Extract Method private getSpecifiedTokens(metadata TokenMetadata, initialTokens Collection<String>) : Collection<Token> extracted from public getBootstrapTokens(metadata TokenMetadata) : Collection<Token> in class org.apache.cassandra.dht.BootStrapper"
 	}],
 	"time": "6/23/15 8:03 AM",
 	"id": 1122401
@@ -3057,7 +3057,7 @@
 	"author": "Jacob Hansson",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private createNewThread(group Group, job Runnable, metadata MapString,String) : Thread extracted from public schedule(group Group, job Runnable, metadata MapString,String) : JobHandle in class org.neo4j.kernel.impl.util.Neo4jJobScheduler"
+		"description": "Extract Method private createNewThread(group Group, job Runnable, metadata Map<String,String>) : Thread extracted from public schedule(group Group, job Runnable, metadata Map<String,String>) : JobHandle in class org.neo4j.kernel.impl.util.Neo4jJobScheduler"
 	}],
 	"time": "6/23/15 2:17 PM",
 	"id": 1124846
@@ -3150,7 +3150,7 @@
 	"author": "Prasanth Jayachandran",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method package generateSplitsInfo(conf Configuration, numSplits int) : ListOrcSplit extracted from package generateSplitsInfo(conf Configuration) : ListOrcSplit in class org.apache.hadoop.hive.ql.io.orc.OrcInputFormat"
+		"description": "Extract Method package generateSplitsInfo(conf Configuration, numSplits int) : List<OrcSplit> extracted from package generateSplitsInfo(conf Configuration) : List<OrcSplit> in class org.apache.hadoop.hive.ql.io.orc.OrcInputFormat"
 	}],
 	"time": "6/23/15 6:19 PM",
 	"id": 1123501
@@ -3245,7 +3245,7 @@
 	"author": "Axel Morgner",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private getSchemaProperties(schemaNode SchemaNode) : ListSchemaProperty extracted from private getPropertiesForView(type Class, view String, schemaNode SchemaNode) : MapString,Object in class org.structr.rest.resource.SchemaTypeResource"
+		"description": "Extract Method private getSchemaProperties(schemaNode SchemaNode) : List<SchemaProperty> extracted from private getPropertiesForView(type Class, view String, schemaNode SchemaNode) : Map<String,Object> in class org.structr.rest.resource.SchemaTypeResource"
 	}],
 	"time": "6/24/15 10:45 AM",
 	"id": 1123527
@@ -3280,7 +3280,7 @@
 		"description": "Move Class TypeTest moved from org.apache.cassandra.cql3 to org.apache.cassandra.cql3.validation.entities"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private makeCasRequest(options BatchQueryOptions, state QueryState) : PairCQL3CasRequest,SetColumnDefinition extracted from private executeWithConditions(options BatchQueryOptions, state QueryState) : ResultMessage in class org.apache.cassandra.cql3.statements.BatchStatement"
+		"description": "Extract Method private makeCasRequest(options BatchQueryOptions, state QueryState) : Pair<CQL3CasRequest,Set<ColumnDefinition>> extracted from private executeWithConditions(options BatchQueryOptions, state QueryState) : ResultMessage in class org.apache.cassandra.cql3.statements.BatchStatement"
 	}, {
 		"type": "Move Class",
 		"description": "Move Class CrcCheckChanceTest moved from org.apache.cassandra.cql3 to org.apache.cassandra.cql3.validation.miscellaneous"
@@ -3289,7 +3289,7 @@
 		"description": "Move Class SSTableMetadataTrackingTest moved from org.apache.cassandra.cql3 to org.apache.cassandra.cql3.validation.miscellaneous"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method protected assertInvalidThrowMessage(errorMessage String, exception Class? extends Throwable, query String, values Object[]) : void extracted from protected assertInvalidMessage(errorMessage String, query String, values Object[]) : void in class org.apache.cassandra.cql3.CQLTester"
+		"description": "Extract Method protected assertInvalidThrowMessage(errorMessage String, exception Class<?> extends Throwable, query String, values Object[]) : void extracted from protected assertInvalidMessage(errorMessage String, query String, values Object[]) : void in class org.apache.cassandra.cql3.CQLTester"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public executeInternalWithoutCondition(queryState QueryState, options QueryOptions) : ResultMessage extracted from public executeInternal(queryState QueryState, options QueryOptions) : ResultMessage in class org.apache.cassandra.cql3.statements.ModificationStatement"
@@ -3302,10 +3302,10 @@
 	"author": "Russell Porter",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private getTestPathPredicate(enableStringWhitelisting boolean, whitelistedStringDirs ImmutableSetPath, locales ImmutableSetString) : PredicatePath extracted from public testFilterLocales() : void in class com.facebook.buck.android.FilterResourcesStepTest"
+		"description": "Extract Method private getTestPathPredicate(enableStringWhitelisting boolean, whitelistedStringDirs ImmutableSet<Path>, locales ImmutableSet<String>) : Predicate<Path> extracted from public testFilterLocales() : void in class com.facebook.buck.android.FilterResourcesStepTest"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private getTestPathPredicate(enableStringWhitelisting boolean, whitelistedStringDirs ImmutableSetPath, locales ImmutableSetString) : PredicatePath extracted from public testFilterStrings() : void in class com.facebook.buck.android.FilterResourcesStepTest"
+		"description": "Extract Method private getTestPathPredicate(enableStringWhitelisting boolean, whitelistedStringDirs ImmutableSet<Path>, locales ImmutableSet<String>) : Predicate<Path> extracted from public testFilterStrings() : void in class com.facebook.buck.android.FilterResourcesStepTest"
 	}],
 	"time": "6/24/15 1:21 PM",
 	"id": 1123715
@@ -3489,7 +3489,7 @@
 		"description": "Extract Method public setSessionOption(drillClient DrillClient, option String, value String) : void extracted from public setControls(drillClient DrillClient, controls String) : void in class org.apache.drill.exec.testing.ControlsInjectionUtil"
 	}, {
 		"type": "Inline Method",
-		"description": "Inline Method private assertCancelled(controls String, testQuery String, listener WaitUntilCompleteListener) : void inlined to private assertCancelledWithoutException(controls String, listener WaitUntilCompleteListener, query String) : void in class org.apache.drill.exec.server.TestDrillbitResilience"
+		"description": "Inline Method private assertCancelled(controls String, testQuery String, List<ener> WaitUntilCompleteListener) : void inlined to private assertCancelledWithoutException(controls String, listener WaitUntilCompleteListener, query String) : void in class org.apache.drill.exec.server.TestDrillbitResilience"
 	}],
 	"time": "6/24/15 8:24 PM",
 	"id": 1124355
@@ -3840,7 +3840,7 @@
 	"author": "Oliver Gierke",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method protected getCountQuery(spec SpecificationT, mode QueryMode) : TypedQueryLong extracted from protected getCountQuery(spec SpecificationT) : TypedQueryLong in class org.springframework.data.jpa.repository.support.SimpleJpaRepository"
+		"description": "Extract Method protected getCountQuery(spec SpecificationT, mode QueryMode) : TypedQuery<Long> extracted from protected getCountQuery(spec Specification<T>) : TypedQuery<Long> in class org.springframework.data.jpa.repository.support.SimpleJpaRepository"
 	}],
 	"time": "6/29/15 7:28 AM",
 	"id": 1126375
@@ -3961,16 +3961,16 @@
 	"author": "Aleksey Yeschenko",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private onCreateFunctionInternal(ksName String, functionName String, argTypes ListAbstractType?) : void extracted from public onCreateAggregate(ksName String, aggregateName String, argTypes ListAbstractType?) : void in class org.apache.cassandra.cql3.QueryProcessor.MigrationSubscriber"
+		"description": "Extract Method private onCreateFunctionInternal(ksName String, functionName String, argTypes List<AbstractType<?>>) : void extracted from public onCreateAggregate(ksName String, aggregateName String, argTypes List<AbstractType<?>>) : void in class org.apache.cassandra.cql3.QueryProcessor.MigrationSubscriber"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private onCreateFunctionInternal(ksName String, functionName String, argTypes ListAbstractType?) : void extracted from public onCreateFunction(ksName String, functionName String, argTypes ListAbstractType?) : void in class org.apache.cassandra.cql3.QueryProcessor.MigrationSubscriber"
+		"description": "Extract Method private onCreateFunctionInternal(ksName String, functionName String, argTypes List<AbstractType<?>>) : void extracted from public onCreateFunction(ksName String, functionName String, argTypes List<AbstractType<?>>) : void in class org.apache.cassandra.cql3.QueryProcessor.MigrationSubscriber"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private onDropFunctionInternal(ksName String, functionName String, argTypes ListAbstractType?) : void extracted from public onDropAggregate(ksName String, aggregateName String, argTypes ListAbstractType?) : void in class org.apache.cassandra.cql3.QueryProcessor.MigrationSubscriber"
+		"description": "Extract Method private onDropFunctionInternal(ksName String, functionName String, argTypes List<AbstractType<?>>) : void extracted from public onDropAggregate(ksName String, aggregateName String, argTypes List<AbstractType<?>>) : void in class org.apache.cassandra.cql3.QueryProcessor.MigrationSubscriber"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private onDropFunctionInternal(ksName String, functionName String, argTypes ListAbstractType?) : void extracted from public onDropFunction(ksName String, functionName String, argTypes ListAbstractType?) : void in class org.apache.cassandra.cql3.QueryProcessor.MigrationSubscriber"
+		"description": "Extract Method private onDropFunctionInternal(ksName String, functionName String, argTypes List<AbstractType<?>>) : void extracted from public onDropFunction(ksName String, functionName String, argTypes List<AbstractType<?>>) : void in class org.apache.cassandra.cql3.QueryProcessor.MigrationSubscriber"
 	}],
 	"time": "6/30/15 9:04 AM",
 	"id": 1129630
@@ -4033,10 +4033,10 @@
 	"author": "lufe66",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method protected classForName(name String) : Class? extracted from public findClass(className String) : Class? in class com.fasterxml.jackson.databind.type.TypeFactory"
+		"description": "Extract Method protected classForName(name String) : Class<?> extracted from public findClass(className String) : Class<?> in class com.fasterxml.jackson.databind.type.TypeFactory"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method protected classForName(name String, initialize boolean, loader ClassLoader) : Class? extracted from public findClass(className String) : Class? in class com.fasterxml.jackson.databind.type.TypeFactory"
+		"description": "Extract Method protected classForName(name String, initialize boolean, loader ClassLoader) : Class<?> extracted from public findClass(className String) : Class<?> in class com.fasterxml.jackson.databind.type.TypeFactory"
 	}],
 	"time": "6/30/15 10:35 AM",
 	"id": 1129493
@@ -4194,7 +4194,7 @@
 		"description": "Move Method public highlightImage(imageUrl String) : String from class com.gh4a.utils.StringUtils to class com.gh4a.activities.FileViewerActivity"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private isExtensionIn(filename String, extensions ListString) : boolean extracted from public isImage(filename String) : boolean in class com.gh4a.utils.FileUtils"
+		"description": "Extract Method private isExtensionIn(filename String, extensions List<String>) : boolean extracted from public isImage(filename String) : boolean in class com.gh4a.utils.FileUtils"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private writeCssInclude(builder StringBuilder, cssType String) : void from class com.gh4a.utils.StringUtils to class com.gh4a.activities.WebViewerActivity"
@@ -4249,16 +4249,16 @@
 		"description": "Push Down Attribute private gradleUserHomeDir : File from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public getTasks() : ListString from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
+		"description": "Push Down Method public getTasks() : List<String> from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Attribute",
-		"description": "Push Down Attribute private arguments : ListString from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
+		"description": "Push Down Attribute private arguments : List<String> from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Attribute",
-		"description": "Push Down Attribute private taskNames : ListString from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
+		"description": "Push Down Attribute private taskNames : List<String> from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public getArguments() : ListString from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
+		"description": "Push Down Method public getArguments() : List<String> from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Attribute",
 		"description": "Push Down Attribute private workingDirectory : File from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
@@ -4270,10 +4270,10 @@
 		"description": "Push Down Method public setWorkingDir(workingDirectory File) : void from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public setArguments(arguments ListString) : void from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
+		"description": "Push Down Method public setArguments(arguments List<String>) : void from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public setTasks(taskNames ListString) : void from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
+		"description": "Push Down Method public setTasks(taskNames List<String>) : void from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Method",
 		"description": "Push Down Method public getWorkingDir() : File from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
@@ -4329,7 +4329,7 @@
 	"author": "Christian Haudum",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public add(info ReferenceInfo, partitionBy boolean) : Builder extracted from public add(column String, type DataType, path ListString, columnPolicy ColumnPolicy, indexType IndexType, partitionBy boolean) : Builder in class io.crate.metadata.table.TestingTableInfo.Builder"
+		"description": "Extract Method public add(info ReferenceInfo, partitionBy boolean) : Builder extracted from public add(column String, type DataType, path List<String>, columnPolicy ColumnPolicy, indexType IndexType, partitionBy boolean) : Builder in class io.crate.metadata.table.TestingTableInfo.Builder"
 	}],
 	"time": "7/6/15 11:45 AM",
 	"id": 1134252
@@ -4398,7 +4398,7 @@
 	"author": "kak",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public isOrdered(comparator Comparator? super T) : void extracted from public isPartiallyOrdered(comparator Comparator? super T) : void in class com.google.common.truth.IterableSubject"
+		"description": "Extract Method public isOrdered(comparator Comparator<?> super T) : void extracted from public isPartiallyOrdered(comparator Comparator<?> super T) : void in class com.google.common.truth.IterableSubject"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public isOrdered() : void extracted from public isPartiallyOrdered() : void in class com.google.common.truth.IterableSubject"
@@ -4564,7 +4564,7 @@
 	"author": "Christoph Strobl",
 	"refactorings": [{
 		"type": "Inline Method",
-		"description": "Inline Method private processTypeHintForNestedDocuments(source Object, info TypeInformation?) : TypeInformation? inlined to private getTypeHintForEntity(source Object, entity MongoPersistentEntity?) : TypeInformation? in class org.springframework.data.mongodb.core.convert.UpdateMapper"
+		"description": "Inline Method private processTypeHintForNestedDocuments(source Object, info TypeInformation<?>) : TypeInformation<?> inlined to private getTypeHintForEntity(source Object, entity MongoPersistentEntity<?>) : TypeInformation<?> in class org.springframework.data.mongodb.core.convert.UpdateMapper"
 	}],
 	"time": "7/7/15 4:57 AM",
 	"id": 1133515
@@ -4655,10 +4655,10 @@
 	"author": "Enno Gottschalk",
 	"refactorings": [{
 		"type": "Push Down Method",
-		"description": "Push Down Method public getAlbumTimeStamps() : ConcurrentHashMapAlbum,Long from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
+		"description": "Push Down Method public getAlbumTimeStamps() : ConcurrentHashMap<Album,Long> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
 	}, {
 		"type": "Pull Up Attribute",
-		"description": "Pull Up Attribute protected mAlbumTracks : ConcurrentHashMapAlbum,SetQuery from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
+		"description": "Pull Up Attribute protected mAlbumTracks : ConcurrentHashMap<Album,Set<Query>> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
 	}, {
 		"type": "Pull Up Method",
 		"description": "Pull Up Method public wipe() : void from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
@@ -4670,31 +4670,31 @@
 		"description": "Pull Up Attribute protected mArtists : SetArtist from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public getArtistTimeStamps() : ConcurrentHashMapArtist,Long from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
+		"description": "Push Down Method public getArtistTimeStamps() : ConcurrentHashMap<Artist,Long> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
 	}, {
 		"type": "Push Down Attribute",
-		"description": "Push Down Attribute private mArtistTimeStamps : ConcurrentHashMapArtist,Long from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
+		"description": "Push Down Attribute private mArtistTimeStamps : ConcurrentHashMap<Artist,Long> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
 	}, {
 		"type": "Push Down Method",
 		"description": "Push Down Method public addQuery(query Query, addedTimeStamp long) : void from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public getQueryTimeStamps() : ConcurrentHashMapQuery,Long from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
+		"description": "Push Down Method public getQueryTimeStamps() : ConcurrentHashMap<Query,Long> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute protected mAlbumArtists : SetArtist from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
 	}, {
 		"type": "Push Down Attribute",
-		"description": "Push Down Attribute private mQueryTimeStamps : ConcurrentHashMapQuery,Long from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
+		"description": "Push Down Attribute private mQueryTimeStamps : ConcurrentHashMap<Query,Long> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute protected mAlbums : SetAlbum from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
 	}, {
 		"type": "Push Down Attribute",
-		"description": "Push Down Attribute private mAlbumTimeStamps : ConcurrentHashMapAlbum,Long from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
+		"description": "Push Down Attribute private mAlbumTimeStamps : ConcurrentHashMap<Album,Long> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
 	}, {
 		"type": "Pull Up Attribute",
-		"description": "Pull Up Attribute protected mArtistAlbums : ConcurrentHashMapArtist,SetAlbum from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
+		"description": "Pull Up Attribute protected mArtistAlbums : ConcurrentHashMap<Artist,Set<Album>> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
 	}],
 	"time": "7/7/15 10:44 PM",
 	"id": 1135559
@@ -4704,7 +4704,7 @@
 	"author": "kouxian",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public migration(dao Dao, klass Class?, add boolean, del boolean, tableName Object) : void extracted from public migration(dao Dao, klass Class?, add boolean, del boolean) : void in class org.nutz.dao.util.Daos"
+		"description": "Extract Method public migration(dao Dao, klass Class<?>, add boolean, del boolean, tableName Object) : void extracted from public migration(dao Dao, klass Class<?>, add boolean, del boolean) : void in class org.nutz.dao.util.Daos"
 	}],
 	"time": "7/8/15 5:25 AM",
 	"id": 1136424
@@ -4727,7 +4727,7 @@
 	"author": "Yuki Morishita",
 	"refactorings": [{
 		"type": "Inline Method",
-		"description": "Inline Method public submitBackground(cfs ColumnFamilyStore, autoFill boolean) : ListFuture? inlined to public submitBackground(cfs ColumnFamilyStore) : ListFuture? in class org.apache.cassandra.db.compaction.CompactionManager"
+		"description": "Inline Method public submitBackground(cfs ColumnFamilyStore, autoFill boolean) : List<Future<?>> inlined to public submitBackground(cfs ColumnFamilyStore) : List<Future<?>> in class org.apache.cassandra.db.compaction.CompactionManager"
 	}],
 	"time": "7/8/15 1:58 PM",
 	"id": 1136760
@@ -4747,7 +4747,7 @@
 	"author": "Fedor Isakov",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private getTreePath(components ListString, escapePathSep boolean) : TreePath extracted from private stringToPath(pathString String) : TreePath in class jetbrains.mps.ide.ui.tree.MPSTree"
+		"description": "Extract Method private getTreePath(components List<String>, escapePathSep boolean) : TreePath extracted from private stringToPath(pathString String) : TreePath in class jetbrains.mps.ide.ui.tree.MPSTree"
 	}],
 	"time": "7/8/15 2:53 PM",
 	"id": 1136831
@@ -4822,7 +4822,7 @@
 	"author": "Mike Hearn",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public getUTXOs(outPoints ListTransactionOutPoint, includeMempool boolean) : ListenableFutureUTXOsMessage extracted from public getUTXOs(outPoints ListTransactionOutPoint) : ListenableFutureUTXOsMessage in class org.bitcoinj.core.Peer"
+		"description": "Extract Method public getUTXOs(outPoints List<TransactionOutPoint>, includeMempool boolean) : ListenableFuture<UTXOsMessage> extracted from public getUTXOs(outPoints List<TransactionOutPoint>) : ListenableFuture<UTXOsMessage> in class org.bitcoinj.core.Peer"
 	}],
 	"time": "7/8/15 7:36 PM",
 	"id": 1136537
@@ -5026,13 +5026,13 @@
 	"author": "dpb",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private deferredElements() : ImmutableMapString,Optional? extends Element extracted from public process(annotations Set? extends TypeElement, roundEnv RoundEnvironment) : boolean in class com.google.auto.common.BasicAnnotationProcessor"
+		"description": "Extract Method private deferredElements() : ImmutableMap<String,Optional<? extends Element>> extracted from public process(annotations Set? extends TypeElement, roundEnv RoundEnvironment) : boolean in class com.google.auto.common.BasicAnnotationProcessor"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private validElements(deferredElements ImmutableMapString,Optional? extends Element, roundEnv RoundEnvironment) : ImmutableSetMultimapClass? extends Annotation,Element extracted from public process(annotations Set? extends TypeElement, roundEnv RoundEnvironment) : boolean in class com.google.auto.common.BasicAnnotationProcessor"
+		"description": "Extract Method private validElements(deferredElements ImmutableMap<String,Optional<? extends Element>>, roundEnv RoundEnvironment) : ImmutableSetMultimap<Class<?>> extends Annotation,Element extracted from public process(annotations Set? extends TypeElement, roundEnv RoundEnvironment) : boolean in class com.google.auto.common.BasicAnnotationProcessor"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private process(validElements ImmutableSetMultimapClass? extends Annotation,Element) : void extracted from public process(annotations Set? extends TypeElement, roundEnv RoundEnvironment) : boolean in class com.google.auto.common.BasicAnnotationProcessor"
+		"description": "Extract Method private process(validElements ImmutableSetMultimap<Class<?>> extends Annotation,Element) : void extracted from public process(annotations Set? extends TypeElement, roundEnv RoundEnvironment) : boolean in class com.google.auto.common.BasicAnnotationProcessor"
 	}],
 	"time": "7/9/15 9:16 PM",
 	"id": 1137576
@@ -5091,7 +5091,7 @@
 	"author": "Vladislav.Soroka",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private addAnnotationProcessorOption(compilerArg String, optionsMap MapString,String) : void extracted from private getAnnotationProcessorOptionsFromCompilerConfig(compilerConfig Element) : MapString,String in class org.jetbrains.idea.maven.project.MavenProject"
+		"description": "Extract Method private addAnnotationProcessorOption(compilerArg String, optionsMap Map<String,String>) : void extracted from private getAnnotationProcessorOptionsFromCompilerConfig(compilerConfig Element) : Map<String,String> in class org.jetbrains.idea.maven.project.MavenProject"
 	}],
 	"time": "7/10/15 10:34 AM",
 	"id": 1137311
@@ -5288,10 +5288,10 @@
 	"author": "Adrian Cole",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method protected parseAndValidateMetadata(targetType Class?, method Method) : MethodMetadata extracted from public parseAndValidatateMetadata(method Method) : MethodMetadata in class feign.Contract.BaseContract"
+		"description": "Extract Method protected parseAndValidateMetadata(targetType Class<?>, method Method) : MethodMetadata extracted from public parseAndValidatateMetadata(method Method) : MethodMetadata in class feign.Contract.BaseContract"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private headersFromAnnotation(targetType Class?, data MethodMetadata) : void extracted from public parseAndValidatateMetadata(method Method) : MethodMetadata in class feign.Contract.Default"
+		"description": "Extract Method private headersFromAnnotation(targetType Class<?>, data MethodMetadata) : void extracted from public parseAndValidatateMetadata(method Method) : MethodMetadata in class feign.Contract.Default"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public configKey(targetType Class, method Method) : String extracted from public configKey(method Method) : String in class feign.Feign"
@@ -5320,7 +5320,7 @@
 	"author": "Christian Morgner",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method package handleObject(nodeFactory NodeFactory, relFactory RelationshipFactory, key String, value Object, includeHiddenAndDeleted boolean, publicOnly boolean, level int) : Object extracted from public execute(query String, parameters MapString,Object, includeHiddenAndDeleted boolean, publicOnly boolean) : ListGraphObject in class org.structr.core.graph.CypherQueryCommand"
+		"description": "Extract Method package handleObject(nodeFactory NodeFactory, relFactory RelationshipFactory, key String, value Object, includeHiddenAndDeleted boolean, publicOnly boolean, level int) : Object extracted from public execute(query String, parameters Map<String,Object>, includeHiddenAndDeleted boolean, publicOnly boolean) : ListGraphObject in class org.structr.core.graph.CypherQueryCommand"
 	}],
 	"time": "7/13/15 4:05 PM",
 	"id": 1139781
@@ -5355,7 +5355,7 @@
 	"author": "Nikolay Pultsin",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private allTopLevelNodes() : ListMenuNode extracted from public topLevelNodes() : ListMenuNode in class org.geometerplus.android.fbreader.MenuData"
+		"description": "Extract Method private allTopLevelNodes() : List<MenuNode> extracted from public topLevelNodes() : List<MenuNode> in class org.geometerplus.android.fbreader.MenuData"
 	}],
 	"time": "7/13/15 11:13 PM",
 	"id": 1140269
@@ -5365,7 +5365,7 @@
 	"author": "Rob Winch",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public createExpressionMessageMetadataSource(matcherToExpression LinkedHashMapMessageMatcher?,String, handler SecurityExpressionHandlerMessageObject) : MessageSecurityMetadataSource extracted from public createExpressionMessageMetadataSource(matcherToExpression LinkedHashMapMessageMatcher?,String) : MessageSecurityMetadataSource in class org.springframework.security.messaging.access.expression.ExpressionBasedMessageSecurityMetadataSourceFactory"
+		"description": "Extract Method public createExpressionMessageMetadataSource(matcherToExpression LinkedHashMap<MessageMatcher<?>,String>, handler SecurityExpressionHandler<Message<Object>>) : MessageSecurityMetadataSource extracted from public createExpressionMessageMetadataSource(matcherToExpression LinkedHashMap<MessageMatcher<?>,String>) : MessageSecurityMetadataSource in class org.springframework.security.messaging.access.expression.ExpressionBasedMessageSecurityMetadataSourceFactory"
 	}],
 	"time": "7/14/15 12:45 AM",
 	"id": 1139995
@@ -6012,7 +6012,7 @@
 	"author": "Joram Barrez",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method protected flushPersistentObjects(persistentObjectClass Class? extends PersistentObject, persistentObjectsToInsert ListPersistentObject) : void extracted from protected flushInserts() : void in class org.activiti.engine.impl.db.DbSqlSession"
+		"description": "Extract Method protected flushPersistentObjects(persistentObjectClass Class<?> extends PersistentObject, persistentObjectsToInsert List<PersistentObject>) : void extracted from protected flushInserts() : void in class org.activiti.engine.impl.db.DbSqlSession"
 	}],
 	"time": "7/14/15 8:27 AM",
 	"id": 1140275
@@ -6052,7 +6052,7 @@
 	"author": "Shenwei Liu",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private generateSingleCopyFilesBuildPhase(target PBXNativeTarget, destinationSpec CopyFilePhaseDestinationSpec, targetNodes IterableTargetNode?) : void extracted from private generateCopyFilesBuildPhases(target PBXNativeTarget, copiedNodes IterableTargetNode?) : void in class com.facebook.buck.apple.ProjectGenerator"
+		"description": "Extract Method private generateSingleCopyFilesBuildPhase(target PBXNativeTarget, destinationSpec CopyFilePhaseDestinationSpec, targetNodes Iterable<TargetNode<?>>) : void extracted from private generateCopyFilesBuildPhases(target PBXNativeTarget, copiedNodes Iterable<TargetNode<?>>) : void in class com.facebook.buck.apple.ProjectGenerator"
 	}],
 	"time": "7/14/15 12:10 PM",
 	"id": 1141343
@@ -6208,7 +6208,7 @@
 	"author": "Shenwei Liu",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private createSymLinkSdks(sdks IterableString, root Path, version String) : void extracted from private createSymLinkIosSdks(root Path, version String) : void in class com.facebook.buck.apple.AppleSdkDiscoveryTest"
+		"description": "Extract Method private createSymLinkSdks(sdks Iterable<String>, root Path, version String) : void extracted from private createSymLinkIosSdks(root Path, version String) : void in class com.facebook.buck.apple.AppleSdkDiscoveryTest"
 	}],
 	"time": "7/14/15 9:46 PM",
 	"id": 1141324
@@ -6231,7 +6231,7 @@
 	"author": "nik",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public addJarsToRoots(jarPaths ListString, libraryName String, module Module, location PsiElement) : void extracted from public addJarToRoots(libPath String, module Module, location PsiElement) : void in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix"
+		"description": "Extract Method public addJarsToRoots(jarPaths List<String>, libraryName String, module Module, location PsiElement) : void extracted from public addJarToRoots(libPath String, module Module, location PsiElement) : void in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix"
 	}],
 	"time": "7/15/15 8:49 AM",
 	"id": 1140956
@@ -6254,7 +6254,7 @@
 		"description": "Move Method private getJUnit4JarPaths() : List from class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix to class com.intellij.openapi.projectRoots.ex.JavaSdkUtil"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method public getLibraryPaths() : ListString extracted from public getLibraryPath() : String in class com.intellij.execution.junit.JUnit4Framework"
+		"description": "Extract Method public getLibraryPaths() : List<String> extracted from public getLibraryPath() : String in class com.intellij.execution.junit.JUnit4Framework"
 	}],
 	"time": "7/15/15 11:13 AM",
 	"id": 1140931
@@ -6287,7 +6287,7 @@
 	"author": "Nikolay Mikhaylov",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public resolveAndDownloadImpl(project Project, coord String, attachJavaDoc boolean, attachSources boolean, copyTo String, repositories ListMavenRepositoryInfo) : ListOrderRoot extracted from public resolveAndDownload(project Project, coord String, attachJavaDoc boolean, attachSources boolean, copyTo String, repositories ListMavenRepositoryInfo) : NewLibraryConfiguration in class org.jetbrains.idea.maven.utils.library.RepositoryAttachHandler"
+		"description": "Extract Method public resolveAndDownloadImpl(project Project, coord String, attachJavaDoc boolean, attachSources boolean, copyTo String, repositories List<MavenRepositoryInfo>) : List<OrderRoot> extracted from public resolveAndDownload(project Project, coord String, attachJavaDoc boolean, attachSources boolean, copyTo String, repositories List<MavenRepositoryInfo>) : NewLibraryConfiguration in class org.jetbrains.idea.maven.utils.library.RepositoryAttachHandler"
 	}],
 	"time": "7/15/15 4:10 PM",
 	"id": 1142230
@@ -6602,7 +6602,7 @@
 			"description": "Push Down Attribute public side : ForgeDirection from class buildcraft.api.robots.ResourceId to class buildcraft.api.robots.ResourceIdBlock"
 		}, {
 			"type": "Extract Method",
-			"description": "Extract Method private getAvailableRequests(station DockingStation) : CollectionStackRequest extracted from private getOrderFromRequestingStation(station DockingStation, take boolean) : StackRequest in class buildcraft.robotics.ai.AIRobotSearchStackRequest"
+			"description": "Extract Method private getAvailableRequests(station DockingStation) : Collection<StackRequest> extracted from private getOrderFromRequestingStation(station DockingStation, take boolean) : StackRequest in class buildcraft.robotics.ai.AIRobotSearchStackRequest"
 		}, {
 			"type": "Push Down Attribute",
 			"description": "Push Down Attribute private index : BlockIndex from class buildcraft.api.robots.ResourceId to class buildcraft.api.robots.ResourceIdRequest"
@@ -6652,7 +6652,7 @@
 	"author": "Stefan Plantikow",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private getSortedIndexUpdates(descriptor IndexDescriptor) : TreeMapDefinedProperty,DiffSetsLong extracted from private getIndexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSetsLong in class org.neo4j.kernel.impl.api.state.TxState"
+		"description": "Extract Method private getSortedIndexUpdates(descriptor IndexDescriptor) : TreeMap<DefinedProperty,DiffSets<Long>> extracted from private getIndexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSetsLong in class org.neo4j.kernel.impl.api.state.TxState"
 	}],
 	"time": "7/20/15 6:24 AM",
 	"id": 1144559
@@ -6745,7 +6745,7 @@
 	"author": "Paulo Motta",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private listSnapshots() : ListFile extracted from public getSnapshotDetails() : MapString,PairLong,Long in class org.apache.cassandra.db.Directories"
+		"description": "Extract Method private listSnapshots() : List<File> extracted from public getSnapshotDetails() : Map<String,Pair<Long,Long>> in class org.apache.cassandra.db.Directories"
 	}],
 	"time": "7/22/15 12:11 AM",
 	"id": 1148572
@@ -6870,10 +6870,10 @@
 	"author": "Nikolay Mikhaylov",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : ListString from class org.jetbrains.idea.maven.server.Maven30ServerEmbedderImpl to class  org.jetbrains.idea.maven.server.Maven3ServerEmbedder"
+		"description": "Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List<String> from class org.jetbrains.idea.maven.server.Maven30ServerEmbedderImpl to class  org.jetbrains.idea.maven.server.Maven3ServerEmbedder"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : ListString from class org.jetbrains.idea.maven.server.Maven32ServerEmbedderImpl to class  org.jetbrains.idea.maven.server.Maven3ServerEmbedder"
+		"description": "Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List<String> from class org.jetbrains.idea.maven.server.Maven32ServerEmbedderImpl to class  org.jetbrains.idea.maven.server.Maven3ServerEmbedder"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public customizeComponents() : void extracted from public customize(workspaceMap MavenWorkspaceMap, failOnUnresolvedDependency boolean, console MavenServerConsole, indicator MavenServerProgressIndicator, alwaysUpdateSnapshots boolean) : void in class org.jetbrains.idea.maven.server.Maven32ServerEmbedderImpl"
@@ -6909,7 +6909,7 @@
 	"author": "Cirrus Pairing Station 5",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private closeGraphiteConnection() : void extracted from public report(gauges SortedMapString,Gauge, counters SortedMapString,Counter, histograms SortedMapString,Histogram, meters SortedMapString,Meter, timers SortedMapString,Timer) : void in class com.codahale.metrics.graphite.GraphiteReporter"
+		"description": "Extract Method private closeGraphiteConnection() : void extracted from public report(gauges SortedMap<String,Gauge>, counters SortedMap<String,Counter>, histograms SortedMap<String,Histogram>, meters SortedMap<String,Meter>, timers SortedMap<String,Timer>) : void in class com.codahale.metrics.graphite.GraphiteReporter"
 	}],
 	"time": "7/23/15 8:02 AM",
 	"id": 1147348
@@ -6998,7 +6998,7 @@
 	"author": "Al Sutton",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private getAllPathsWork(workingDir Path) : ImmutableBiMapPath,Path extracted from private getAllPaths(workingDir OptionalPath) : ImmutableBiMapPath,Path in class com.facebook.buck.cxx.DebugPathSanitizer"
+		"description": "Extract Method private getAllPathsWork(workingDir Path) : ImmutableBiMap<Path,Path> extracted from private getAllPaths(workingDir Optional<Path>) : ImmutableBiMap<Path,Path> in class com.facebook.buck.cxx.DebugPathSanitizer"
 	}],
 	"time": "7/24/15 7:16 AM",
 	"id": 1147466
@@ -7028,7 +7028,7 @@
 	"author": "Miguel Augusto Pereira de Oliveira",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public getTargetsAndDependencies(params CommandRunnerParams, argumentsFormattedAsBuildTargets ListString, showTransitive boolean, showTests boolean, enableProfiling boolean) : MultimapBuildTarget,BuildTarget extracted from public runWithoutHelp(params CommandRunnerParams) : int in class com.facebook.buck.cli.AuditDependenciesCommand"
+		"description": "Extract Method public getTargetsAndDependencies(params CommandRunnerParams, argumentsFormattedAsBuildTargets List<String>, showTransitive boolean, showTests boolean, enableProfiling boolean) : Multimap<BuildTarget,BuildTarget> extracted from public runWithoutHelp(params CommandRunnerParams) : int in class com.facebook.buck.cli.AuditDependenciesCommand"
 	}],
 	"time": "7/24/15 9:44 AM",
 	"id": 1147442
@@ -7048,7 +7048,7 @@
 	"author": "Sergey Malenkov",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private createConfigurable(ep ConfigurableEPT, log boolean) : T extracted from public wrapConfigurable(ep ConfigurableEPT) : T in class com.intellij.openapi.options.ex.ConfigurableWrapper"
+		"description": "Extract Method private createConfigurable(ep ConfigurableEP<T>, log boolean) : T extracted from public wrapConfigurable(ep ConfigurableEP<T>) : T in class com.intellij.openapi.options.ex.ConfigurableWrapper"
 	}],
 	"time": "7/24/15 1:53 PM",
 	"id": 1146371
@@ -7100,7 +7100,7 @@
 		"description": "Extract Method public incrementDroppedMessages(verb Verb, isCrossNodeTimeout boolean) : void extracted from public incrementDroppedMessages(verb Verb) : void in class org.apache.cassandra.net.MessagingService"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method package getDroppedMessagesLogs() : ListString extracted from private logDroppedMessages() : void in class org.apache.cassandra.net.MessagingService"
+		"description": "Extract Method package getDroppedMessagesLogs() : List<String> extracted from private logDroppedMessages() : void in class org.apache.cassandra.net.MessagingService"
 	}],
 	"time": "7/24/15 5:41 PM",
 	"id": 1150188
@@ -7198,10 +7198,10 @@
 	"author": "sdirbach",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private handleExcludeMethods(componentDescription EJBComponentDescription, excludeList ExcludeListMetaData) : void extracted from protected handleDeploymentDescriptor(deploymentUnit DeploymentUnit, deploymentReflectionIndex DeploymentReflectionIndex, componentClass Class?, componentDescription EJBComponentDescription) : void in class org.jboss.as.ejb3.deployment.processors.merging.MethodPermissionsMergingProcessor"
+		"description": "Extract Method private handleExcludeMethods(componentDescription EJBComponentDescription, excludeList ExcludeListMetaData) : void extracted from protected handleDeploymentDescriptor(deploymentUnit DeploymentUnit, deploymentReflectionIndex DeploymentReflectionIndex, componentClass Class<?>, componentDescription EJBComponentDescription) : void in class org.jboss.as.ejb3.deployment.processors.merging.MethodPermissionsMergingProcessor"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private handleMethodPermissions(componentDescription EJBComponentDescription, methodPermissions MethodPermissionsMetaData) : void extracted from protected handleDeploymentDescriptor(deploymentUnit DeploymentUnit, deploymentReflectionIndex DeploymentReflectionIndex, componentClass Class?, componentDescription EJBComponentDescription) : void in class org.jboss.as.ejb3.deployment.processors.merging.MethodPermissionsMergingProcessor"
+		"description": "Extract Method private handleMethodPermissions(componentDescription EJBComponentDescription, methodPermissions MethodPermissionsMetaData) : void extracted from protected handleDeploymentDescriptor(deploymentUnit DeploymentUnit, deploymentReflectionIndex DeploymentReflectionIndex, componentClass Class<?>, componentDescription EJBComponentDescription) : void in class org.jboss.as.ejb3.deployment.processors.merging.MethodPermissionsMergingProcessor"
 	}],
 	"time": "7/26/15 5:51 PM",
 	"id": 1151684
@@ -7224,7 +7224,7 @@
 	"author": "Thomas Eichst\u00e4dt-Engelen",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private initTimeMap() : MapString,Integer extracted from public parameters() : CollectionObject[] in class org.openhab.core.library.types.DateTimeTypeTest"
+		"description": "Extract Method private initTimeMap() : Map<String,Integer> extracted from public parameters() : Collection<Object[]> in class org.openhab.core.library.types.DateTimeTypeTest"
 	}],
 	"time": "7/27/15 7:48 AM",
 	"id": 1150588
@@ -7602,7 +7602,7 @@
 	"author": "Uri Baghin",
 	"refactorings": [{
 		"type": "Inline Method",
-		"description": "Inline Method public sanitize(workingDir OptionalPath, contents String, expandPaths boolean) : String inlined to public sanitize(workingDir OptionalPath, contents String) : String in class com.facebook.buck.cxx.DebugPathSanitizer"
+		"description": "Inline Method public sanitize(workingDir Optional<Path>, contents String, expandPaths boolean) : String inlined to public sanitize(workingDir Optional<Path>, contents String) : String in class com.facebook.buck.cxx.DebugPathSanitizer"
 	}],
 	"time": "7/28/15 3:32 PM",
 	"id": 1151927
@@ -7612,16 +7612,16 @@
 	"author": "Martino Luca",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private computeRuleFlags(source CxxSource) : ImmutableListString extracted from public createPreprocessBuildRule(resolver BuildRuleResolver, name String, source CxxSource, pic PicType) : CxxPreprocessAndCompile in class com.facebook.buck.cxx.CxxSourceRuleFactory"
+		"description": "Extract Method private computeRuleFlags(source CxxSource) : ImmutableList<String> extracted from public createPreprocessBuildRule(resolver BuildRuleResolver, name String, source CxxSource, pic PicType) : CxxPreprocessAndCompile in class com.facebook.buck.cxx.CxxSourceRuleFactory"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private computePlatformCompilerFlags(pic PicType, source CxxSource) : ImmutableListString extracted from public createPreprocessAndCompileBuildRule(resolver BuildRuleResolver, name String, source CxxSource, pic PicType, strategy CxxPreprocessMode) : CxxPreprocessAndCompile in class com.facebook.buck.cxx.CxxSourceRuleFactory"
+		"description": "Extract Method private computePlatformCompilerFlags(pic PicType, source CxxSource) : ImmutableList<String> extracted from public createPreprocessAndCompileBuildRule(resolver BuildRuleResolver, name String, source CxxSource, pic PicType, strategy CxxPreprocessMode) : CxxPreprocessAndCompile in class com.facebook.buck.cxx.CxxSourceRuleFactory"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private computePlatformFlags(pic PicType, source CxxSource) : ImmutableListString extracted from public createPreprocessBuildRule(resolver BuildRuleResolver, name String, source CxxSource, pic PicType) : CxxPreprocessAndCompile in class com.facebook.buck.cxx.CxxSourceRuleFactory"
+		"description": "Extract Method private computePlatformFlags(pic PicType, source CxxSource) : ImmutableList<String> extracted from public createPreprocessBuildRule(resolver BuildRuleResolver, name String, source CxxSource, pic PicType) : CxxPreprocessAndCompile in class com.facebook.buck.cxx.CxxSourceRuleFactory"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private computeRuleCompilerFlags(source CxxSource) : ImmutableListString extracted from public createPreprocessAndCompileBuildRule(resolver BuildRuleResolver, name String, source CxxSource, pic PicType, strategy CxxPreprocessMode) : CxxPreprocessAndCompile in class com.facebook.buck.cxx.CxxSourceRuleFactory"
+		"description": "Extract Method private computeRuleCompilerFlags(source CxxSource) : ImmutableList<String> extracted from public createPreprocessAndCompileBuildRule(resolver BuildRuleResolver, name String, source CxxSource, pic PicType, strategy CxxPreprocessMode) : CxxPreprocessAndCompile in class com.facebook.buck.cxx.CxxSourceRuleFactory"
 	}],
 	"time": "7/28/15 3:36 PM",
 	"id": 1151906
@@ -7700,10 +7700,10 @@
 	"author": "Yuya Tanaka",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private awaitForComplete(latch CountDownLatch, subscription Subscription) : void extracted from private blockForSingle(observable Observable? extends T) : T in class rx.observables.BlockingObservable"
+		"description": "Extract Method private awaitForComplete(latch CountDownLatch, subscription Subscription) : void extracted from private blockForSingle(observable Observable<?> extends T) : T in class rx.observables.BlockingObservable"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private awaitForComplete(latch CountDownLatch, subscription Subscription) : void extracted from public forEach(onNext Action1? super T) : void in class rx.observables.BlockingObservable"
+		"description": "Extract Method private awaitForComplete(latch CountDownLatch, subscription Subscription) : void extracted from public forEach(onNext Action1<?> super T) : void in class rx.observables.BlockingObservable"
 	}],
 	"time": "7/29/15 2:36 PM",
 	"id": 1153435
@@ -7798,7 +7798,7 @@
 	"author": "Jakob Buchgraber",
 	"refactorings": [{
 		"type": "Inline Method",
-		"description": "Inline Method private comparator(ignoreCase boolean) : ComparatorCharSequence inlined to public contains(name CharSequence, value CharSequence, ignoreCase boolean) : boolean in class io.netty.handler.codec.DefaultTextHeaders"
+		"description": "Inline Method private comparator(ignoreCase boolean) : Comparator<CharSequence> inlined to public contains(name CharSequence, value CharSequence, ignoreCase boolean) : boolean in class io.netty.handler.codec.DefaultTextHeaders"
 	}],
 	"time": "7/30/15 2:38 PM",
 	"id": 1153762
@@ -7808,7 +7808,7 @@
 	"author": "Christopher M. Wolff",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method private findAllAggPlanNodes(node AbstractPlanNode) : ListAbstractPlanNode from class org.voltdb.planner.TestPlansApproxCountDistinct to class org.voltdb.planner.PlannerTestCase"
+		"description": "Pull Up Method private findAllAggPlanNodes(node AbstractPlanNode) : List<AbstractPlanNode> from class org.voltdb.planner.TestPlansApproxCountDistinct to class org.voltdb.planner.PlannerTestCase"
 	}],
 	"time": "7/30/15 8:14 PM",
 	"id": 1153866
@@ -7987,10 +7987,10 @@
 	"author": "gustavonalle",
 	"refactorings": [{
 			"type": "Extract Method",
-			"description": "Extract Method private rehashAwareIteration(complete AtomicBoolean, consumer ConsumerR, supplier IteratorSupplierR, iteratorParallelDistribute boolean) : void extracted from package remoteIterator() : IteratorR in class org.infinispan.stream.impl.DistributedCacheStream"
+			"description": "Extract Method private rehashAwareIteration(complete AtomicBoolean, consumer Consumer<R>, supplier IteratorSupplier<R>, iteratorParallelDistribute boolean) : void extracted from package remoteIterator() : Iterator<R> in class org.infinispan.stream.impl.DistributedCacheStream"
 		}, {
 			"type": "Extract Method",
-			"description": "Extract Method private ignoreRehashIteration(consumer ConsumerR, supplier IteratorSupplierR, iteratorParallelDistribute boolean) : void extracted from package remoteIterator() : IteratorR in class org.infinispan.stream.impl.DistributedCacheStream"
+			"description": "Extract Method private ignoreRehashIteration(consumer Consumer<R>, supplier IteratorSupplier<R>, iteratorParallelDistribute boolean) : void extracted from package remoteIterator() : Iterator<R> in class org.infinispan.stream.impl.DistributedCacheStream"
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method protected supplierForSegments(ch ConsistentHash, targetSegments Set, excludedKeys Set, primaryOwnerOnly boolean) : Supplier extracted from protected supplierForSegments(ch ConsistentHash, targetSegments Set, excludedKeys Set) : Supplier in class org.infinispan.stream.impl.AbstractCacheStream"
@@ -8055,7 +8055,7 @@
 	"author": "Robert Stupp",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public assertUdfsEnabled(language String) : void extracted from public create(name FunctionName, argNames ListColumnIdentifier, argTypes ListAbstractType?, returnType AbstractType?, calledOnNullInput boolean, language String, body String) : UDFunction in class org.apache.cassandra.cql3.functions.UDFunction"
+		"description": "Extract Method public assertUdfsEnabled(language String) : void extracted from public create(name FunctionName, argNames List<ColumnIdentifier>, argTypes List<AbstractType<?>>, returnType AbstractType<?>, calledOnNullInput boolean, language String, body String) : UDFunction in class org.apache.cassandra.cql3.functions.UDFunction"
 	}],
 	"time": "8/3/15 7:05 PM",
 	"id": 1156434
@@ -8147,10 +8147,10 @@
 	"author": "Oliver Gierke",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private assertCanWrite(converter GenericHttpMessageConverterObject, type Class?, expected boolean) : void extracted from public canWriteTypeIfAssignableToConfiguredType() : void in class org.springframework.hateoas.mvc.TypeConstrainedMappingJackson2HttpMessageConverterUnitTest"
+		"description": "Extract Method private assertCanWrite(converter GenericHttpMessageConverter<Object>, type Class<?>, expected boolean) : void extracted from public canWriteTypeIfAssignableToConfiguredType() : void in class org.springframework.hateoas.mvc.TypeConstrainedMappingJackson2HttpMessageConverterUnitTest"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private assertCanRead(converter GenericHttpMessageConverterObject, type Class?, expected boolean) : void extracted from public canReadTypeIfAssignableToConfiguredType() : void in class org.springframework.hateoas.mvc.TypeConstrainedMappingJackson2HttpMessageConverterUnitTest"
+		"description": "Extract Method private assertCanRead(converter GenericHttpMessageConverter<Object>, type Class<?>, expected boolean) : void extracted from public canReadTypeIfAssignableToConfiguredType() : void in class org.springframework.hateoas.mvc.TypeConstrainedMappingJackson2HttpMessageConverterUnitTest"
 	}],
 	"time": "8/4/15 5:35 AM",
 	"id": 1156210
@@ -8345,7 +8345,7 @@
 	"author": "Dmitry Batkovich",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private getFileNamesToCreate() : SetString extracted from private createPropertiesFiles() : ListPsiFile in class com.intellij.lang.properties.create.CreateResourceBundleDialogComponent"
+		"description": "Extract Method private getFileNamesToCreate() : SetString extracted from private createPropertiesFiles() : List<PsiFile> in class com.intellij.lang.properties.create.CreateResourceBundleDialogComponent"
 	}],
 	"time": "8/5/15 12:07 PM",
 	"id": 1158123
@@ -8365,7 +8365,7 @@
 	"author": "Konstantin Kolosovsky",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public format(path String, pegRevision SVNRevision) : String extracted from public put(parameters ListString, path String, pegRevision SVNRevision) : void in class org.jetbrains.idea.svn.commandLine.CommandUtil"
+		"description": "Extract Method public format(path String, pegRevision SVNRevision) : String extracted from public put(parameters List<String>, path String, pegRevision SVNRevision) : void in class org.jetbrains.idea.svn.commandLine.CommandUtil"
 	}],
 	"time": "8/5/15 1:03 PM",
 	"id": 1158121
@@ -8433,7 +8433,7 @@
 		"description": "Extract Method public of(cells Cell[][], row int, column int, size byte) : Cell extracted from public of(row int, column int, size byte) : Cell in class com.android.internal.widget.LockPatternView.Cell"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method public stringToPattern(string String, size byte) : ListLockPatternView.Cell extracted from public stringToPattern(string String) : ListLockPatternView.Cell in class com.android.internal.widget.LockPatternUtils"
+		"description": "Extract Method public stringToPattern(string String, size byte) : List<LockPatternView.Cell> extracted from public stringToPattern(string String) : List<LockPatternView.Cell> in class com.android.internal.widget.LockPatternUtils"
 	}],
 	"time": "8/5/15 9:45 PM",
 	"id": 1157971
@@ -8466,10 +8466,10 @@
 	"author": "Alexandra Vesloguzova",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private collectFiles(module Module, onlyTestModules boolean, filesCollector ProcessorVirtualFile) : void extracted from private addErlangModules(module Module, onlyTestModules boolean, erlangModules CollectionErlangFile) : CollectionErlangFile in class org.intellij.erlang.utils.ErlangModulesUtil"
+		"description": "Extract Method private collectFiles(module Module, onlyTestModules boolean, filesCollector Processor<VirtualFile>) : void extracted from private addErlangModules(module Module, onlyTestModules boolean, erlangModules Collection<ErlangFile>) : Collection<ErlangFile> in class org.intellij.erlang.utils.ErlangModulesUtil"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private addSourceRoot(module Module, sourceRootName String, rootType JpsModuleSourceRootType?) : VirtualFile extracted from private addSourceRoot(module Module, sourceRootName String, isTestSourceRoot boolean) : VirtualFile in class org.intellij.erlang.compilation.ErlangCompilationTestBase"
+		"description": "Extract Method private addSourceRoot(module Module, sourceRootName String, rootType JpsModuleSourceRootType<?>) : VirtualFile extracted from private addSourceRoot(module Module, sourceRootName String, isTestSourceRoot boolean) : VirtualFile in class org.intellij.erlang.compilation.ErlangCompilationTestBase"
 	}],
 	"time": "8/6/15 12:37 PM",
 	"id": 1159409
@@ -8587,7 +8587,7 @@
 		"description": "Extract Method public of(cells Cell[][], row int, column int, size byte) : Cell extracted from public of(row int, column int, size byte) : Cell in class com.android.internal.widget.LockPatternView.Cell"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method public stringToPattern(string String, size byte) : ListLockPatternView.Cell extracted from public stringToPattern(string String) : ListLockPatternView.Cell in class com.android.internal.widget.LockPatternUtils"
+		"description": "Extract Method public stringToPattern(string String, size byte) : List<LockPatternView.Cell> extracted from public stringToPattern(string String) : List<LockPatternView.Cell> in class com.android.internal.widget.LockPatternUtils"
 	}],
 	"time": "8/6/15 3:00 PM",
 	"id": 1158923
@@ -8607,7 +8607,7 @@
 	"author": "samanzanedo",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method protected validate(titleMap MapLocale,String, startTimeJCalendar Calendar, endTimeJCalendar Calendar, untilJCalendar Calendar) : void extracted from protected validate(titleMap MapLocale,String, startTimeJCalendar Calendar, endTimeJCalendar Calendar) : void in class com.liferay.calendar.service.impl.CalendarBookingLocalServiceImpl"
+		"description": "Extract Method protected validate(titleMap Map<Locale,String>, startTimeJCalendar Calendar, endTimeJCalendar Calendar, untilJCalendar Calendar) : void extracted from protected validate(titleMap Map<Locale,String>, startTimeJCalendar Calendar, endTimeJCalendar Calendar) : void in class com.liferay.calendar.service.impl.CalendarBookingLocalServiceImpl"
 	}],
 	"time": "8/6/15 6:31 PM",
 	"id": 1159760
@@ -8617,7 +8617,7 @@
 	"author": "Ben Hamilton",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public get(buildTarget BuildTarget, eventBus OptionalBuckEventBus) : TargetNode? extracted from public get(buildTarget BuildTarget) : TargetNode? in class com.facebook.buck.parser.Parser.CachedState"
+		"description": "Extract Method public get(buildTarget BuildTarget, eventBus Optional<BuckEventBus>) : TargetNode<?> extracted from public get(buildTarget BuildTarget) : TargetNode<?> in class com.facebook.buck.parser.Parser.CachedState"
 	}],
 	"time": "8/6/15 7:42 PM",
 	"id": 1159266

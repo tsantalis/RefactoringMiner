@@ -2720,7 +2720,6 @@ public class RefactoringPopulator {
 		List<Root> refactorings = getFSERefactorings(flag);
 
 		for (Root refactoring : refactorings) {
-			
 			test.project(refactoring.repository, "master").atCommit(refactoring.sha1).contains(extractRefactorings(refactoring.refactorings));
 		}
 	}
@@ -2739,7 +2738,9 @@ public class RefactoringPopulator {
 	private static List<Root> getFSERefactorings(int flag) throws JsonParseException, JsonMappingException, IOException{
 		ObjectMapper mapper = new ObjectMapper();
 
-		List<Root> roots = mapper.readValue(new File("/Users/matin/Repos/RefactoringMiner.git/src-test/Data/data.json"),
+		String jsonFile= System.getProperty("user.dir")+"/src-test/Data/data.json";
+
+		List<Root> roots = mapper.readValue(new File(jsonFile),
 				mapper.getTypeFactory().constructCollectionType(List.class, Root.class));
 
 		List<Root> filtered = new ArrayList<>();

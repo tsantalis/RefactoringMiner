@@ -256,10 +256,10 @@
 	"author": "dreamhead",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method protected onRequestAttached(matcher RequestMatcher) : HttpResponseSetting from class com.github.dreamhead.moco.internal.ActualHttpServer to class com.github.dreamhead.moco.internal.HttpConfiguration"
+		"description": "Pull Up Method protected onRequestAttached(matcher RequestMatcher) : HttpResponseSetting from class com.github.dreamhead.moco.internal.ActualHttpServer to protected onRequestAttached(matcher RequestMatcher) : HttpResponseSetting from class com.github.dreamhead.moco.internal.HttpConfiguration"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public redirectTo(url String) : HttpResponseSetting from class com.github.dreamhead.moco.internal.ActualHttpServer to class com.github.dreamhead.moco.internal.HttpConfiguration"
+		"description": "Pull Up Method public redirectTo(url String) : HttpResponseSetting from class com.github.dreamhead.moco.internal.ActualHttpServer to public redirectTo(url String) : HttpResponseSetting from class com.github.dreamhead.moco.internal.HttpConfiguration"
 	}],
 	"time": "6/8/15 11:18 AM",
 	"id": 1104637
@@ -298,7 +298,7 @@
 	"author": "Anna Kozlova",
 	"refactorings": [{
 		"type": "Inline Method",
-		"description": "Inline Method private checkForTestRoots(srcModule Module, testFolders SetVirtualFile, processed SetModule) : void inlined to protected checkForTestRoots(srcModule Module, testFolders SetVirtualFile) : void in class com.intellij.testIntegration.createTest.CreateTestAction"
+		"description": "Inline Method private checkForTestRoots(srcModule Module, testFolders Set<VirtualFile>, processed Set<Module>) : void inlined to protected checkForTestRoots(srcModule Module, testFolders Set<VirtualFile>) : void in class com.intellij.testIntegration.createTest.CreateTestAction"
 	}],
 	"time": "6/8/15 11:50 AM",
 	"id": 1105947
@@ -418,10 +418,10 @@
 	"author": "Rafael Winterhalter",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.Explicit to class  net.bytebuddy.description.method.ParameterList.AbstractBase"
+		"description": "Pull Up Method protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.Explicit to protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.AbstractBase"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.ForLoadedExecutable to class  net.bytebuddy.description.method.ParameterList.AbstractBase"
+		"description": "Pull Up Method protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.ForLoadedExecutable to protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.AbstractBase"
 	}],
 	"time": "6/10/15 5:31 AM",
 	"id": 1108762
@@ -431,19 +431,19 @@
 	"author": "Jordan Halterman",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method private doAppendEntries(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.ActiveState to class net.kuujo.copycat.raft.state.PassiveState"
+		"description": "Pull Up Method private doAppendEntries(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.ActiveState to private doAppendEntries(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.PassiveState"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method private doCheckPreviousEntry(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.ActiveState to class net.kuujo.copycat.raft.state.PassiveState"
+		"description": "Pull Up Method private doCheckPreviousEntry(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.ActiveState to private doCheckPreviousEntry(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.PassiveState"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method private handleAppend(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.ActiveState to class net.kuujo.copycat.raft.state.PassiveState"
+		"description": "Pull Up Method private handleAppend(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.ActiveState to private handleAppend(request AppendRequest) : AppendResponse from class net.kuujo.copycat.raft.state.PassiveState"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method private applyCommits(commitIndex long) : CompletableFuture<Void> from class net.kuujo.copycat.raft.state.ActiveState to class net.kuujo.copycat.raft.state.PassiveState"
+		"description": "Pull Up Method private applyCommits(commitIndex long) : CompletableFuture<Void> from class net.kuujo.copycat.raft.state.ActiveState to private applyCommits(commitIndex long) : CompletableFuture<Void> from class net.kuujo.copycat.raft.state.PassiveState"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method private applyIndex(globalIndex long) : void from class net.kuujo.copycat.raft.state.ActiveState to class net.kuujo.copycat.raft.state.PassiveState"
+		"description": "Pull Up Method private applyIndex(globalIndex long) : void from class net.kuujo.copycat.raft.state.ActiveState to private applyIndex(globalIndex long) : void from class net.kuujo.copycat.raft.state.PassiveState"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute protected transition : boolean from class net.kuujo.copycat.raft.state.ActiveState to class net.kuujo.copycat.raft.state.PassiveState"
@@ -850,7 +850,7 @@
 	"author": "Oliver Gierke",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private addEntityScanBeanPostProcessor(registry BeanDefinitionRegistry, packagesToScan SetString) : void extracted from public registerBeanDefinitions(importingClassMetadata AnnotationMetadata, registry BeanDefinitionRegistry) : void in class org.springframework.boot.orm.jpa.EntityScanRegistrar"
+		"description": "Extract Method private addEntityScanBeanPostProcessor(registry BeanDefinitionRegistry, packagesToScan Set<String>) : void extracted from public registerBeanDefinitions(importingClassMetadata AnnotationMetadata, registry BeanDefinitionRegistry) : void in class org.springframework.boot.orm.jpa.EntityScanRegistrar"
 	}],
 	"time": "6/15/15 4:21 PM",
 	"id": 1112624
@@ -946,7 +946,7 @@
 	"author": "Ngewi Fet",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public getAllTransactionsCount() : long from class org.gnucash.android.db.TransactionsDbAdapter to class org.gnucash.android.db.DatabaseAdapter"
+		"description": "Pull Up Method public getAllTransactionsCount() : long from class org.gnucash.android.db.TransactionsDbAdapter to public getRecordsCount() : long from class org.gnucash.android.db.DatabaseAdapter"
 	}],
 	"time": "6/16/15 6:15 AM",
 	"id": 1116810
@@ -1551,10 +1551,10 @@
 	"author": "Norman Maurer",
 	"refactorings": [{
 		"type": "Inline Method",
-		"description": "Inline Method private principal(certs Certificate[]) : Principal inlined to public getLocalPrincipal() : Principal in class  io.netty.handler.ssl.OpenSslEngine.OpenSslSession"
+		"description": "Inline Method private principal(certs Certificate[]) : Principal inlined to public getLocalPrincipal() : Principal in class io.netty.handler.ssl.OpenSslEngine.OpenSslSession"
 	}, {
 		"type": "Inline Method",
-		"description": "Inline Method private principal(certs Certificate[]) : Principal inlined to public getPeerPrincipal() : Principal in class  io.netty.handler.ssl.OpenSslEngine.OpenSslSession"
+		"description": "Inline Method private principal(certs Certificate[]) : Principal inlined to public getPeerPrincipal() : Principal in class io.netty.handler.ssl.OpenSslEngine.OpenSslSession"
 	}],
 	"time": "6/17/15 1:35 AM",
 	"id": 1117922
@@ -2098,10 +2098,10 @@
 		"description": "Extract Method private verifyRemoteTransaction(ctx RemoteTxInvocationContext, command AbstractTransactionBoundaryCommand) : void extracted from private invokeNextInterceptorAndVerifyTransaction(ctx TxInvocationContext, command AbstractTransactionBoundaryCommand) : Object in class org.infinispan.interceptors.TxInterceptor"
 	}, {
 		"type": "Inline Method",
-		"description": "Inline Method protected lockAndWrap(ctx InvocationContext, key Object, ice InternalCacheEntry, command FlagAffectedCommand) : void inlined to private localGet(ctx InvocationContext, key Object, isWrite boolean, command FlagAffectedCommand, isGetCacheEntry boolean) : Object in class  org.infinispan.interceptors.distribution.TxDistributionInterceptor"
+		"description": "Inline Method protected lockAndWrap(ctx InvocationContext, key Object, ice InternalCacheEntry, command FlagAffectedCommand) : void inlined to private localGet(ctx InvocationContext, key Object, isWrite boolean, command FlagAffectedCommand, isGetCacheEntry boolean) : Object in class org.infinispan.interceptors.distribution.TxDistributionInterceptor"
 	}, {
 		"type": "Inline Method",
-		"description": "Inline Method protected lockAndWrap(ctx InvocationContext, key Object, ice InternalCacheEntry, command FlagAffectedCommand) : void inlined to private remoteGet(ctx InvocationContext, key Object, isWrite boolean, command FlagAffectedCommand) : InternalCacheEntry in class  org.infinispan.interceptors.distribution.TxDistributionInterceptor"
+		"description": "Inline Method protected lockAndWrap(ctx InvocationContext, key Object, ice InternalCacheEntry, command FlagAffectedCommand) : void inlined to private remoteGet(ctx InvocationContext, key Object, isWrite boolean, command FlagAffectedCommand) : InternalCacheEntry in class org.infinispan.interceptors.distribution.TxDistributionInterceptor"
 	}, {
 		"type": "Inline Method",
 		"description": "Inline Method private sendCommitCommand(ctx TxInvocationContext, command CommitCommand) : void inlined to public visitCommitCommand(ctx TxInvocationContext, command CommitCommand) : Object in class org.infinispan.interceptors.distribution.TxDistributionInterceptor"
@@ -2221,19 +2221,19 @@
 	"author": "Ioannis Canellos",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method protected isKubernetesJsonArtifact(classifier String, type String) : boolean from class io.fabric8.maven.JsonMojo to class io.fabric8.maven.AbstractFabric8Mojo"
+		"description": "Pull Up Method protected isKubernetesJsonArtifact(classifier String, type String) : boolean from class io.fabric8.maven.JsonMojo to package isKubernetesJsonArtifact(classifier String, type String) : boolean from class io.fabric8.maven.AbstractFabric8Mojo"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute private DEFAULT_CONFIG_FILE_NAME : String from class io.fabric8.maven.ApplyMojo to class io.fabric8.maven.AbstractFabric8Mojo"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method private hasKubernetesJson(f File) : boolean from class io.fabric8.maven.ApplyMojo to class io.fabric8.maven.AbstractFabric8Mojo"
+		"description": "Pull Up Method private hasKubernetesJson(f File) : boolean from class io.fabric8.maven.ApplyMojo to package hasKubernetesJson(f File) : boolean from class io.fabric8.maven.AbstractFabric8Mojo"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute protected combineDependencies : boolean from class io.fabric8.maven.JsonMojo to class io.fabric8.maven.AbstractFabric8Mojo"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method private getDependencies() : Set<File> from class io.fabric8.maven.ApplyMojo to class io.fabric8.maven.AbstractFabric8Mojo"
+		"description": "Pull Up Method private getDependencies() : Set<File> from class io.fabric8.maven.ApplyMojo to package getDependencies() : Set<File> from class io.fabric8.maven.AbstractFabric8Mojo"
 	}],
 	"time": "6/18/15 11:29 AM",
 	"id": 1119833
@@ -2425,7 +2425,7 @@
 	"author": "Brice Dutheil",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private allMockedTypes(features MockFeatures<T>) : Class<?>[] extracted from public generateMockClass(features MockFeatures<T>) : Class<?> extends T in class org.mockito.internal.creation.bytebuddy.MockBytecodeGenerator"
+		"description": "Extract Method private allMockedTypes(features MockFeatures<T>) : Class<?>[] extracted from public generateMockClass(features MockFeatures<T>) : Class<? extends T> in class org.mockito.internal.creation.bytebuddy.MockBytecodeGenerator"
 	}],
 	"time": "6/19/15 4:07 PM",
 	"id": 1120985
@@ -2489,7 +2489,7 @@
 	"author": "Jason Dere",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private foldExprFull(desc ExprNodeDesc, constants MapColumnInfo,ExprNodeDesc, cppCtx ConstantPropagateProcCtx, op Operator? extends Serializable, tag int, propagate boolean) : ExprNodeDesc extracted from private foldExpr(desc ExprNodeDesc, constants MapColumnInfo,ExprNodeDesc, cppCtx ConstantPropagateProcCtx, op Operator? extends Serializable, tag int, propagate boolean) : ExprNodeDesc in class org.apache.hadoop.hive.ql.optimizer.ConstantPropagateProcFactory"
+		"description": "Extract Method private foldExprFull(desc ExprNodeDesc, constants Map<ColumnInfo,ExprNodeDesc>, cppCtx ConstantPropagateProcCtx, op Operator<? extends Serializable>, tag int, propagate boolean) : ExprNodeDesc extracted from private foldExpr(desc ExprNodeDesc, constants Map<ColumnInfo,ExprNodeDesc>, cppCtx ConstantPropagateProcCtx, op Operator<? extends Serializable>, tag int, propagate boolean) : ExprNodeDesc in class org.apache.hadoop.hive.ql.optimizer.ConstantPropagateProcFactory"
 	}],
 	"time": "6/19/15 7:19 PM",
 	"id": 1121499
@@ -2575,7 +2575,7 @@
 	"author": "Victor Shcherb",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private addPreviousToActionPoints(lastProjection Location, routeNodes List<Location>, DISTANCE_ACTION double, prevFinishPoint int, routePoint int, loc Location) : void extracted from private calculateActionPoints(topLatitude double, leftLongitude double, bottomLatitude double, rightLongitude double, lastProjection Location, routeNodes List<Location>, cd int, it IteratorRouteDirectionInfo, zoom int) : void in class net.osmand.plus.views.RouteLayer"
+		"description": "Extract Method private addPreviousToActionPoints(lastProjection Location, routeNodes List<Location>, DISTANCE_ACTION double, prevFinishPoint int, routePoint int, loc Location) : void extracted from private calculateActionPoints(topLatitude double, leftLongitude double, bottomLatitude double, rightLongitude double, lastProjection Location, routeNodes List<Location>, cd int, it Iterator<RouteDirectionInfo>, zoom int) : void in class net.osmand.plus.views.RouteLayer"
 	}],
 	"time": "6/20/15 5:09 PM",
 	"id": 1120722
@@ -3199,7 +3199,7 @@
 		"description": "Extract Method private insertOrUpdate(recid long, out DataOutputByteArray, isInsert boolean) : void extracted from protected update2(recid long, out DataOutputByteArray) : void in class org.mapdb.StoreAppend"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method protected longStackValParitySet(value long) : long from class org.mapdb.StoreDirect to class org.mapdb.Store"
+		"description": "Pull Up Method protected longStackValParitySet(value long) : long from class org.mapdb.StoreDirect to protected longParitySet(value long) : long from class org.mapdb.Store"
 	}],
 	"time": "6/24/15 8:51 AM",
 	"id": 1122979
@@ -3489,7 +3489,7 @@
 		"description": "Extract Method public setSessionOption(drillClient DrillClient, option String, value String) : void extracted from public setControls(drillClient DrillClient, controls String) : void in class org.apache.drill.exec.testing.ControlsInjectionUtil"
 	}, {
 		"type": "Inline Method",
-		"description": "Inline Method private assertCancelled(controls String, testQuery String, List<ener> WaitUntilCompleteListener) : void inlined to private assertCancelledWithoutException(controls String, listener WaitUntilCompleteListener, query String) : void in class org.apache.drill.exec.server.TestDrillbitResilience"
+		"description": "Inline Method private assertCancelled(controls String, testQuery String, listener WaitUntilCompleteListener) : void inlined to private assertCancelledWithoutException(controls String, listener WaitUntilCompleteListener, query String) : void in class org.apache.drill.exec.server.TestDrillbitResilience"
 	}],
 	"time": "6/24/15 8:24 PM",
 	"id": 1124355
@@ -3771,7 +3771,7 @@
 	"author": "QuantumBadger",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public onSharedPreferenceChanged(prefs SharedPreferences, key String) : void from class org.quantumbadger.redreader.activities.MainActivity to class org.quantumbadger.redreader.activities.RefreshableActivity"
+		"description": "Pull Up Method public onSharedPreferenceChanged(prefs SharedPreferences, key String) : void from class org.quantumbadger.redreader.activities.MainActivity to protected onSharedPreferenceChangedInner(prefs SharedPreferences, key String) : void from class org.quantumbadger.redreader.activities.RefreshableActivity"
 	}],
 	"time": "6/28/15 5:50 PM",
 	"id": 1126206
@@ -3990,22 +3990,22 @@
 	"author": "Tijs Rademakers",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public isAsynchronous() : boolean from class org.activiti.bpmn.model.Activity to class  org.activiti.bpmn.model.FlowNode"
+		"description": "Pull Up Method public isAsynchronous() : boolean from class org.activiti.bpmn.model.Activity to public isAsynchronous() : boolean from class org.activiti.bpmn.model.FlowNode"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public isAsynchronous() : boolean from class org.activiti.bpmn.model.Gateway to class  org.activiti.bpmn.model.FlowNode"
+		"description": "Pull Up Method public isAsynchronous() : boolean from class org.activiti.bpmn.model.Gateway to public isAsynchronous() : boolean from class org.activiti.bpmn.model.FlowNode"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public isNotExclusive() : boolean from class org.activiti.bpmn.model.Activity to class  org.activiti.bpmn.model.FlowNode"
+		"description": "Pull Up Method public isNotExclusive() : boolean from class org.activiti.bpmn.model.Activity to public isNotExclusive() : boolean from class org.activiti.bpmn.model.FlowNode"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public isNotExclusive() : boolean from class org.activiti.bpmn.model.Gateway to class  org.activiti.bpmn.model.FlowNode"
+		"description": "Pull Up Method public isNotExclusive() : boolean from class org.activiti.bpmn.model.Gateway to public isNotExclusive() : boolean from class org.activiti.bpmn.model.FlowNode"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public setAsynchronous(asynchronous boolean) : void from class org.activiti.bpmn.model.Activity to class  org.activiti.bpmn.model.FlowNode"
+		"description": "Pull Up Method public setAsynchronous(asynchronous boolean) : void from class org.activiti.bpmn.model.Activity to public setAsynchronous(asynchronous boolean) : void from class org.activiti.bpmn.model.FlowNode"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public setAsynchronous(asynchronous boolean) : void from class org.activiti.bpmn.model.Gateway to class  org.activiti.bpmn.model.FlowNode"
+		"description": "Pull Up Method public setAsynchronous(asynchronous boolean) : void from class org.activiti.bpmn.model.Gateway to public setAsynchronous(asynchronous boolean) : void from class org.activiti.bpmn.model.FlowNode"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute protected asynchronous : boolean from class org.activiti.bpmn.model.Activity to class org.activiti.bpmn.model.FlowNode"
@@ -4020,10 +4020,10 @@
 		"description": "Pull Up Attribute protected notExclusive : boolean from class org.activiti.bpmn.model.Gateway to class org.activiti.bpmn.model.FlowNode"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public setNotExclusive(notExclusive boolean) : void from class org.activiti.bpmn.model.Activity to class  org.activiti.bpmn.model.FlowNode"
+		"description": "Pull Up Method public setNotExclusive(notExclusive boolean) : void from class org.activiti.bpmn.model.Activity to public setNotExclusive(notExclusive boolean) : void from class org.activiti.bpmn.model.FlowNode"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public setNotExclusive(notExclusive boolean) : void from class org.activiti.bpmn.model.Gateway to class  org.activiti.bpmn.model.FlowNode"
+		"description": "Pull Up Method public setNotExclusive(notExclusive boolean) : void from class org.activiti.bpmn.model.Gateway to public setNotExclusive(notExclusive boolean) : void from class org.activiti.bpmn.model.FlowNode"
 	}],
 	"time": "6/30/15 9:29 AM",
 	"id": 1129294
@@ -4181,7 +4181,7 @@
 	"author": "Luigi Dell'Aquila",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public getDatabase() : ODatabaseDocumentInternal from class com.orientechnologies.orient.core.sql.parser.OStatement to class com.orientechnologies.orient.core.sql.parser.SimpleNode"
+		"description": "Pull Up Method public getDatabase() : ODatabaseDocumentInternal from class com.orientechnologies.orient.core.sql.parser.OStatement to public getDatabase() : ODatabaseDocumentInternal from class com.orientechnologies.orient.core.sql.parser.SimpleNode"
 	}],
 	"time": "7/3/15 5:48 AM",
 	"id": 1131689
@@ -4359,10 +4359,10 @@
 	"author": "Chris Povirk",
 	"refactorings": [{
 		"type": "Inline Method",
-		"description": "Inline Method private checkForConcurrentModification() : void inlined to public hasNext() : boolean in class  com.google.common.collect.HashBiMap.Itr"
+		"description": "Inline Method private checkForConcurrentModification() : void inlined to public hasNext() : boolean in class com.google.common.collect.HashBiMap.Itr"
 	}, {
 		"type": "Inline Method",
-		"description": "Inline Method private checkForConcurrentModification() : void inlined to public remove() : void in class  com.google.common.collect.HashBiMap.Itr"
+		"description": "Inline Method private checkForConcurrentModification() : void inlined to public remove() : void in class com.google.common.collect.HashBiMap.Itr"
 	}],
 	"time": "7/6/15 1:19 PM",
 	"id": 1133583
@@ -4398,7 +4398,7 @@
 	"author": "kak",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public isOrdered(comparator Comparator<?> super T) : void extracted from public isPartiallyOrdered(comparator Comparator<?> super T) : void in class com.google.common.truth.IterableSubject"
+		"description": "Extract Method public isOrdered(comparator Comparator<? super T>) : void extracted from public isPartiallyOrdered(comparator Comparator<? super T>) : void in class com.google.common.truth.IterableSubject"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public isOrdered() : void extracted from public isPartiallyOrdered() : void in class com.google.common.truth.IterableSubject"
@@ -4661,7 +4661,7 @@
 		"description": "Pull Up Attribute protected mAlbumTracks : ConcurrentHashMap<Album,Set<Query>> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public wipe() : void from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
+		"description": "Pull Up Method public wipe() : void from class org.tomahawk.libtomahawk.collection.NativeCollection to public wipe() : void from class org.tomahawk.libtomahawk.collection.Collection"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute protected mQueries : SetQuery from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
@@ -5320,7 +5320,7 @@
 	"author": "Christian Morgner",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method package handleObject(nodeFactory NodeFactory, relFactory RelationshipFactory, key String, value Object, includeHiddenAndDeleted boolean, publicOnly boolean, level int) : Object extracted from public execute(query String, parameters Map<String,Object>, includeHiddenAndDeleted boolean, publicOnly boolean) : ListGraphObject in class org.structr.core.graph.CypherQueryCommand"
+		"description": "Extract Method package handleObject(nodeFactory NodeFactory, relFactory RelationshipFactory, key String, value Object, includeHiddenAndDeleted boolean, publicOnly boolean, level int) : Object extracted from public execute(query String, parameters Map<String,Object>, includeHiddenAndDeleted boolean, publicOnly boolean) : List<GraphObject> in class org.structr.core.graph.CypherQueryCommand"
 	}],
 	"time": "7/13/15 4:05 PM",
 	"id": 1139781
@@ -6012,7 +6012,7 @@
 	"author": "Joram Barrez",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method protected flushPersistentObjects(persistentObjectClass Class<?> extends PersistentObject, persistentObjectsToInsert List<PersistentObject>) : void extracted from protected flushInserts() : void in class org.activiti.engine.impl.db.DbSqlSession"
+		"description": "Extract Method protected flushPersistentObjects(persistentObjectClass Class<? extends PersistentObject>, persistentObjectsToInsert List<PersistentObject>) : void extracted from protected flushInserts() : void in class org.activiti.engine.impl.db.DbSqlSession"
 	}],
 	"time": "7/14/15 8:27 AM",
 	"id": 1140275
@@ -6264,7 +6264,7 @@
 	"author": "peter",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private fillWithScopeExpansion(elements SetObject, pattern String) : boolean extracted from public computeInReadAction(indicator ProgressIndicator) : void in class com.intellij.ide.util.gotoByName.ChooseByNameBase.CalcElementsThread"
+		"description": "Extract Method private fillWithScopeExpansion(elements Set<Object>, pattern String) : boolean extracted from public computeInReadAction(indicator ProgressIndicator) : void in class com.intellij.ide.util.gotoByName.ChooseByNameBase.CalcElementsThread"
 	}],
 	"time": "7/15/15 2:24 PM",
 	"id": 1140896
@@ -6870,10 +6870,10 @@
 	"author": "Nikolay Mikhaylov",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List<String> from class org.jetbrains.idea.maven.server.Maven30ServerEmbedderImpl to class  org.jetbrains.idea.maven.server.Maven3ServerEmbedder"
+		"description": "Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List<String> from class org.jetbrains.idea.maven.server.Maven30ServerEmbedderImpl to public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List from class org.jetbrains.idea.maven.server.Maven3ServerEmbedder"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List<String> from class org.jetbrains.idea.maven.server.Maven32ServerEmbedderImpl to class  org.jetbrains.idea.maven.server.Maven3ServerEmbedder"
+		"description": "Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List<String> from class org.jetbrains.idea.maven.server.Maven32ServerEmbedderImpl to public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List from class org.jetbrains.idea.maven.server.Maven3ServerEmbedder"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public customizeComponents() : void extracted from public customize(workspaceMap MavenWorkspaceMap, failOnUnresolvedDependency boolean, console MavenServerConsole, indicator MavenServerProgressIndicator, alwaysUpdateSnapshots boolean) : void in class org.jetbrains.idea.maven.server.Maven32ServerEmbedderImpl"
@@ -6899,7 +6899,7 @@
 	"author": "Dennis Ushakov",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method private iterateRecursively(root VirtualFile, processor ContentIterator, indicator ProgressIndicator, visitedRoots SetVirtualFile, projectFileIndex ProjectFileIndex) : void from class com.intellij.util.indexing.FileBasedIndexImpl to class com.intellij.util.indexing.FileBasedIndex"
+		"description": "Pull Up Method private iterateRecursively(root VirtualFile, processor ContentIterator, indicator ProgressIndicator, visitedRoots Set<VirtualFile>, projectFileIndex ProjectFileIndex) : void from class com.intellij.util.indexing.FileBasedIndexImpl to public iterateRecursively(root VirtualFile, processor ContentIterator, indicator ProgressIndicator, visitedRoots Set<VirtualFile>, projectFileIndex ProjectFileIndex) : void from class com.intellij.util.indexing.FileBasedIndex"
 	}],
 	"time": "7/23/15 6:15 AM",
 	"id": 1146483
@@ -7508,13 +7508,13 @@
 	"author": "Juan Carlos Garc\u00eda",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public getGenericDefinition() : String from class org.springframework.roo.classpath.details.MethodMetadataBuilder to class org.springframework.roo.classpath.details.AbstractInvocableMemberMetadataBuilder"
+		"description": "Pull Up Method public getGenericDefinition() : String from class org.springframework.roo.classpath.details.MethodMetadataBuilder to public getGenericDefinition() : String from class org.springframework.roo.classpath.details.AbstractInvocableMemberMetadataBuilder"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute private genericDefinition : String from class org.springframework.roo.classpath.details.MethodMetadataBuilder to class org.springframework.roo.classpath.details.AbstractInvocableMemberMetadataBuilder"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public setGenericDefinition(definition String) : void from class org.springframework.roo.classpath.details.MethodMetadataBuilder to class org.springframework.roo.classpath.details.AbstractInvocableMemberMetadataBuilder"
+		"description": "Pull Up Method public setGenericDefinition(definition String) : void from class org.springframework.roo.classpath.details.MethodMetadataBuilder to public setGenericDefinition(definition String) : void from class org.springframework.roo.classpath.details.AbstractInvocableMemberMetadataBuilder"
 	}],
 	"time": "7/28/15 5:42 AM",
 	"id": 1152218
@@ -7700,10 +7700,10 @@
 	"author": "Yuya Tanaka",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private awaitForComplete(latch CountDownLatch, subscription Subscription) : void extracted from private blockForSingle(observable Observable<?> extends T) : T in class rx.observables.BlockingObservable"
+		"description": "Extract Method private awaitForComplete(latch CountDownLatch, subscription Subscription) : void extracted from private blockForSingle(observable Observable<? extends T>) : T in class rx.observables.BlockingObservable"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private awaitForComplete(latch CountDownLatch, subscription Subscription) : void extracted from public forEach(onNext Action1<?> super T) : void in class rx.observables.BlockingObservable"
+		"description": "Extract Method private awaitForComplete(latch CountDownLatch, subscription Subscription) : void extracted from public forEach(onNext Action1<? super T>) : void in class rx.observables.BlockingObservable"
 	}],
 	"time": "7/29/15 2:36 PM",
 	"id": 1153435
@@ -7924,7 +7924,7 @@
 	"author": "Manju James",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public callProcedure(ic ImportContext, procCallback ProcedureCallback, proc String, fieldList Object) : boolean extracted from public callProcedure(ic ImportContext, proc String, fieldList Object) : boolean in class org.voltdb.ImportHandler"
+		"description": "Extract Method public callProcedure(ic ImportContext, procCallback ProcedureCallback, proc String, fieldList Object[]) : boolean extracted from public callProcedure(ic ImportContext, proc String, fieldList Object[]) : boolean in class org.voltdb.ImportHandler"
 	}],
 	"time": "7/31/15 6:44 PM",
 	"id": 1154537
@@ -8345,7 +8345,7 @@
 	"author": "Dmitry Batkovich",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private getFileNamesToCreate() : SetString extracted from private createPropertiesFiles() : List<PsiFile> in class com.intellij.lang.properties.create.CreateResourceBundleDialogComponent"
+		"description": "Extract Method private getFileNamesToCreate() : Set<String> extracted from private createPropertiesFiles() : List<PsiFile> in class com.intellij.lang.properties.create.CreateResourceBundleDialogComponent"
 	}],
 	"time": "8/5/15 12:07 PM",
 	"id": 1158123

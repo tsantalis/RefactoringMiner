@@ -3574,6 +3574,33 @@
 	}, {
 		"type": "Inline Method",
 		"description": "Inline Method private assertCancelled(controls String, testQuery String, listener WaitUntilCompleteListener) : void inlined to private assertCancelledWithoutException(controls String, listener WaitUntilCompleteListener, query String) : void in class org.apache.drill.exec.server.TestDrillbitResilience"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private assertCompleteState(result Pair, expectedState QueryState) : void renamed to private assertStateCompleted(result Pair, expectedState QueryState) : void in class org.apache.drill.exec.server.TestDrillbitResilience"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public resumeFragment(outcomeListener RpcOutcomeListener, handle FragmentHandle) : void renamed to public unpauseFragment(outcomeListener RpcOutcomeListener, handle FragmentHandle) : void in class org.apache.drill.exec.rpc.control.ControlTunnel"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public cancelBeforeAnyResultsArrive() : void renamed to public cancelWhenQueryIdArrives() : void in class org.apache.drill.exec.server.TestDrillbitResilience"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testInterruptingPartitionerThreadFragment() : void renamed to public interruptingPartitionerThreadFragment() : void in class org.apache.drill.exec.server.TestDrillbitResilience"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testInterruptingAfterMSorterSetup() : void renamed to public failsAfterMSorterSetup() : void in class org.apache.drill.exec.server.TestDrillbitResilience"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testInterruptingAfterMSorterSorting() : void renamed to public failsAfterMSorterSorting() : void in class org.apache.drill.exec.server.TestDrillbitResilience"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private testInterruptingBlockedFragmentsWaitingForData(control String) : void renamed to private interruptingBlockedFragmentsWaitingForData(control String) : void in class org.apache.drill.exec.server.TestDrillbitResilience"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private assertExceptionInjected(throwable Throwable, exceptionClass Class, desc String) : void renamed to private assertExceptionMessage(throwable Throwable, exceptionClass Class, desc String) : void in class org.apache.drill.exec.server.TestDrillbitResilience"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public settingNoopInjectionsAndQuery() : void renamed to public settingNoOpInjectionsAndQuery() : void in class org.apache.drill.exec.server.TestDrillbitResilience"
 	}],
 	"time": "6/24/15 8:24 PM",
 	"id": 1124355

@@ -44,16 +44,20 @@ public abstract class AbstractCodeFragment {
 				Pattern p = Pattern.compile(Pattern.quote(parameter));
 				Matcher m = p.matcher(afterReplacements);
 				while(m.find()) {
-					//avoid replacing the parameter if it has "this." as a prefix
+					//check if the matched string is an argument
+					//previous character should be "(" or "," or " " or there is no previous character
 					int start = m.start();
-					boolean thisPrefixFound = false;
-					if(start >= 5) {
-						String prefix = afterReplacements.substring(start-5, start);
-						if(prefix.equals("this.")) {
-							thisPrefixFound = true;
+					boolean isArgument = false;
+					if(start >= 1) {
+						String previousChar = afterReplacements.substring(start-1, start);
+						if(previousChar.equals("(") || previousChar.equals(",") || previousChar.equals(" ")) {
+							isArgument = true;
 						}
 					}
-					if(!thisPrefixFound) {
+					else if(start == 0) {
+						isArgument = true;
+					}
+					if(isArgument) {
 						m.appendReplacement(sb, Matcher.quoteReplacement(argument));
 					}
 				}

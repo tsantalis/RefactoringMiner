@@ -1389,6 +1389,90 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public setShowPowerAlert(showAlert boolean) : CBPeripheralManagerOptions renamed to public setShowsPowerAlert(showsPowerAlert boolean) : CBPeripheralManagerOptions in class org.robovm.apple.corebluetooth.CBPeripheralManagerOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImageProperty8BIM, value NativeObject) : CGImageProperty8BIMData extracted from public set(property CGImageProperty8BIM, value String) : CGImageProperty8BIMData in class org.robovm.apple.imageio.CGImageProperty8BIMData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyIPTC, value NativeObject) : CGImagePropertyIPTCData extracted from public set(property CGImagePropertyIPTC, value double) : CGImagePropertyIPTCData in class org.robovm.apple.imageio.CGImagePropertyIPTCData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyDNG, value NativeObject) : CGImagePropertyDNGData extracted from public set(property CGImagePropertyDNG, value String) : CGImagePropertyDNGData in class org.robovm.apple.imageio.CGImagePropertyDNGData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyNikon, value NativeObject) : CGImagePropertyNikonData extracted from public set(property CGImagePropertyNikon, value String) : CGImagePropertyNikonData in class org.robovm.apple.imageio.CGImagePropertyNikonData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImageProperty8BIM, value NativeObject) : CGImageProperty8BIMData extracted from public set(property CGImageProperty8BIM, value double) : CGImageProperty8BIMData in class org.robovm.apple.imageio.CGImageProperty8BIMData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyExifAux, value NativeObject) : CGImagePropertyExifAuxData extracted from public set(property CGImagePropertyExifAux, value double) : CGImagePropertyExifAuxData in class org.robovm.apple.imageio.CGImagePropertyExifAuxData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyIPTC, value NativeObject) : CGImagePropertyIPTCData extracted from public set(property CGImagePropertyIPTC, value String) : CGImagePropertyIPTCData in class org.robovm.apple.imageio.CGImagePropertyIPTCData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyExif, value NativeObject) : CGImagePropertyExifData extracted from public set(property CGImagePropertyExif, value String) : CGImagePropertyExifData in class org.robovm.apple.imageio.CGImagePropertyExifData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyDNG, value NativeObject) : CGImagePropertyDNGData extracted from public set(property CGImagePropertyDNG, value double) : CGImagePropertyDNGData in class org.robovm.apple.imageio.CGImagePropertyDNGData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyCanon, value NativeObject) : CGImagePropertyCanonData extracted from public set(property CGImagePropertyCanon, value double) : CGImagePropertyCanonData in class org.robovm.apple.imageio.CGImagePropertyCanonData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyIPTCContactInfo, value NativeObject) : CGImagePropertyIPTCContactInfoData extracted from public set(property CGImagePropertyIPTCContactInfo, value String) : CGImagePropertyIPTCContactInfoData in class org.robovm.apple.imageio.CGImagePropertyIPTCContactInfoData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyGIF, value NativeObject) : CGImagePropertyGIFData extracted from public set(property CGImagePropertyGIF, value double) : CGImagePropertyGIFData in class org.robovm.apple.imageio.CGImagePropertyGIFData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyCIFF, value NativeObject) : CGImagePropertyCIFFData extracted from public set(property CGImagePropertyCIFF, value double) : CGImagePropertyCIFFData in class org.robovm.apple.imageio.CGImagePropertyCIFFData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyPNG, value NativeObject) : CGImagePropertyPNGData extracted from public set(property CGImagePropertyPNG, value double) : CGImagePropertyPNGData in class org.robovm.apple.imageio.CGImagePropertyPNGData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyTIFF, value NativeObject) : CGImagePropertyTIFFData extracted from public set(property CGImagePropertyTIFF, value double) : CGImagePropertyTIFFData in class org.robovm.apple.imageio.CGImagePropertyTIFFData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyGPS, value NativeObject) : CGImagePropertyGPSData extracted from public set(property CGImagePropertyGPS, value String) : CGImagePropertyGPSData in class org.robovm.apple.imageio.CGImagePropertyGPSData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyPNG, value NativeObject) : CGImagePropertyPNGData extracted from public set(property CGImagePropertyPNG, value String) : CGImagePropertyPNGData in class org.robovm.apple.imageio.CGImagePropertyPNGData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyJFIF, value NativeObject) : CGImagePropertyJFIFData extracted from public set(property CGImagePropertyJFIF, value double) : CGImagePropertyJFIFData in class org.robovm.apple.imageio.CGImagePropertyJFIFData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyTIFF, value NativeObject) : CGImagePropertyTIFFData extracted from public set(property CGImagePropertyTIFF, value String) : CGImagePropertyTIFFData in class org.robovm.apple.imageio.CGImagePropertyTIFFData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyCIFF, value NativeObject) : CGImagePropertyCIFFData extracted from public set(property CGImagePropertyCIFF, value String) : CGImagePropertyCIFFData in class org.robovm.apple.imageio.CGImagePropertyCIFFData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyJFIF, value NativeObject) : CGImagePropertyJFIFData extracted from public set(property CGImagePropertyJFIF, value String) : CGImagePropertyJFIFData in class org.robovm.apple.imageio.CGImagePropertyJFIFData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyExif, value NativeObject) : CGImagePropertyExifData extracted from public set(property CGImagePropertyExif, value double) : CGImagePropertyExifData in class org.robovm.apple.imageio.CGImagePropertyExifData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyNikon, value NativeObject) : CGImagePropertyNikonData extracted from public set(property CGImagePropertyNikon, value double) : CGImagePropertyNikonData in class org.robovm.apple.imageio.CGImagePropertyNikonData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyGIF, value NativeObject) : CGImagePropertyGIFData extracted from public set(property CGImagePropertyGIF, value String) : CGImagePropertyGIFData in class org.robovm.apple.imageio.CGImagePropertyGIFData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyExifAux, value NativeObject) : CGImagePropertyExifAuxData extracted from public set(property CGImagePropertyExifAux, value String) : CGImagePropertyExifAuxData in class org.robovm.apple.imageio.CGImagePropertyExifAuxData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyGPS, value NativeObject) : CGImagePropertyGPSData extracted from public set(property CGImagePropertyGPS, value double) : CGImagePropertyGPSData in class org.robovm.apple.imageio.CGImagePropertyGPSData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyCanon, value NativeObject) : CGImagePropertyCanonData extracted from public set(property CGImagePropertyCanon, value String) : CGImagePropertyCanonData in class org.robovm.apple.imageio.CGImagePropertyCanonData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CGImagePropertyIPTCContactInfo, value NativeObject) : CGImagePropertyIPTCContactInfoData extracted from public set(property CGImagePropertyIPTCContactInfo, value double) : CGImagePropertyIPTCContactInfoData in class org.robovm.apple.imageio.CGImagePropertyIPTCContactInfoData"
 	}],
 	"time": "6/16/15 1:58 PM",
 	"id": 1117916

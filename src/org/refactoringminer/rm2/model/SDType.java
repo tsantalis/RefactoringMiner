@@ -1,7 +1,9 @@
 package org.refactoringminer.rm2.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SDType extends SDContainerEntity {
 
@@ -9,27 +11,30 @@ public class SDType extends SDContainerEntity {
 	private String sourceFilePath;
 	private boolean isInterface;
 	private boolean isAnonymous;
+	private boolean isLocalType = false;
 	private boolean deprecatedAnnotation;
 	private EntitySet<SDType> subtypes = new EntitySet<SDType>();
-	private List<SDType> anonymousClasses = new ArrayList<SDType>();
+	//private List<SDType> anonymousClasses = new ArrayList<SDType>();
+	private Map<String, List<SDType>> anonymousClasses = new HashMap<String, List<SDType>>();
 	private SourceRepresentation source;
 	private int nestingLevel;
 	private Multiset<SDType> origins;
 	private Multiset<SDType> referencedBy;
 	
 	public SDType(SDModel.Snapshot snapshot, int id, String simpleName, SDContainerEntity container, String sourceFilePath) {
-		this(snapshot, id, simpleName, container.fullName() + "." + simpleName, new EntityKey(container.key() + "." + simpleName), container, sourceFilePath, false);
+		this(snapshot, id, simpleName, container.fullName() + "." + simpleName, new EntityKey(container.key() + "." + simpleName), container, sourceFilePath, false, false);
 	}
 
-	private SDType(SDModel.Snapshot snapshot, int id, int anonymousId, SDType container, String sourceFilePath) {
-	    this(snapshot, id, "" + anonymousId, container.fullName() + "$" + anonymousId, new EntityKey(container.key() + "$" + anonymousId), container, sourceFilePath, true);
+	private SDType(SDModel.Snapshot snapshot, int id, String anonymousId, SDType container, String sourceFilePath, boolean localType) {
+	    this(snapshot, id, "" + anonymousId, container.fullName() + "$" + anonymousId, new EntityKey(container.key() + "$" + anonymousId), container, sourceFilePath, true, localType);
 	}
 
-	private SDType(SDModel.Snapshot snapshot, int id, String simpleName, String fullName, EntityKey key, SDContainerEntity container, String sourceFilePath, boolean isAnonymous) {
+	private SDType(SDModel.Snapshot snapshot, int id, String simpleName, String fullName, EntityKey key, SDContainerEntity container, String sourceFilePath, boolean isAnonymous, boolean localType) {
 	    super(snapshot, id, fullName, key, container);
 	    this.simpleName = simpleName;
 	    this.sourceFilePath = sourceFilePath;
 	    this.isAnonymous = isAnonymous;
+	    this.isLocalType = localType;
 	    if (container instanceof SDType) {
 	        SDType parentType = (SDType) container;
 	        this.nestingLevel = parentType.nestingLevel + 1;
@@ -59,7 +64,7 @@ public class SDType extends SDContainerEntity {
 	}
 
 	public boolean isAnonymous() {
-	    return isAnonymous;
+	    return isAnonymous || isLocalType;
 	}
 	
 	@Override
@@ -67,8 +72,13 @@ public class SDType extends SDContainerEntity {
 		return false;
 	}
 	
-	public List<SDType> anonymousClasses() {
-		return anonymousClasses;
+	public List<SDType> getAnonymousClasses(String localName) {
+	  List<SDType> list = anonymousClasses.get(localName);
+    if (list == null) {
+      list = new ArrayList<>();
+      anonymousClasses.put(localName, list);
+    }
+		return list;
 	}
 	
 	public SourceRepresentation sourceCode() {
@@ -123,9 +133,13 @@ public class SDType extends SDContainerEntity {
 		subtypes.add(type);
 	}
 
-	public SDType addAnonymousClass(int id, int anonId) {
-		SDType anon = new SDType(snapshot, id, anonId, this, sourceFilePath);
-		anonymousClasses.add(anon);
+	public SDType addAnonymousClass(int id, String localName) {
+	  List<SDType> list = getAnonymousClasses(localName);
+	  int count = list.size() + 1;
+	  String anonId = count + localName;
+	  boolean isLocalType = !localName.equals("");
+    SDType anon = new SDType(snapshot, id, anonId, this, sourceFilePath, isLocalType);
+    list.add(anon);
 		return anon;
 	}
 

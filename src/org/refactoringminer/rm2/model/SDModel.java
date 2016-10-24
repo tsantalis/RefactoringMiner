@@ -74,7 +74,7 @@ public class SDModel {
 		
 		SDAttribute createAttribute(String attributeName, SDContainerEntity container);
 
-		SDType createAnonymousType(SDContainerEntity peek, String sourceFilePath);
+		SDType createAnonymousType(SDContainerEntity peek, String sourceFilePath, String localName);
 		
 		Set<SDType> getUnmatchedTypes();
 
@@ -155,12 +155,10 @@ public class SDModel {
 			return sdType;
 		}
 
-		public SDType createAnonymousType(SDContainerEntity container, String sourceFilePath) {
+		public SDType createAnonymousType(SDContainerEntity container, String sourceFilePath, String localName) {
 			SDType parent = (SDType) container;
-			int anonId = parent.anonymousClasses().size() + 1;
-			EntityKey key = new EntityKey(container.key() + "$" + anonId);
-			SDType sdType = parent.addAnonymousClass(getId(), anonId);
-			putAtMap(key, sdType);
+			SDType sdType = parent.addAnonymousClass(getId(), localName);
+			putAtMap(sdType.key(), sdType);
 			return sdType;
 		}
 

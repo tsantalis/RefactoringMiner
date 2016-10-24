@@ -69,7 +69,7 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 			ClassInstanceCreation parent = (ClassInstanceCreation) node.getParent();
 			ITypeBinding typeBinding = parent.getType().resolveBinding();
 			if (typeBinding != null && typeBinding.isFromSource()) {
-				SDType type = model.createAnonymousType(containerStack.peek(), sourceFilePath);
+				SDType type = model.createAnonymousType(containerStack.peek(), sourceFilePath, "");
 				containerStack.push(type);
 				extractSupertypesForPostProcessing(type, typeBinding);
 				return true;
@@ -120,8 +120,13 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 	}
 
 	private SDType visitTypeDeclaration(AbstractTypeDeclaration node, List<Type> supertypes) {
-	    String typeName = node.getName().getIdentifier();
-		SDType type = model.createType(typeName, containerStack.peek(), sourceFilePath);
+	  SDType type;
+	  String typeName = node.getName().getIdentifier();
+	  if (node.isLocalTypeDeclaration()) {
+	    type = model.createAnonymousType(containerStack.peek(), sourceFilePath, typeName);
+	  } else {
+	    type = model.createType(typeName, containerStack.peek(), sourceFilePath);
+	  } 
 		type.setSourceCode(scanner.getLineBasedSourceRepresentation(fileContent, node.getStartPosition(), node.getLength()));
 		
 		Set<String> annotations = extractAnnotationTypes(node.modifiers());

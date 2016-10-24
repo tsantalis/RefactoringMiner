@@ -23,16 +23,20 @@ public class TestWithArqsoft16Dataset {
 
   public static void main(String[] args) {
     Arqsoft16Dataset oracle = new Arqsoft16Dataset();
-    EnumSet<RefactoringType> refTypesToIgnore = EnumSet.of(
-        /*RefactoringType.EXTRACT_OPERATION, 
+    EnumSet<RefactoringType> refTypesToIgnore1 = EnumSet.of(
+        RefactoringType.EXTRACT_OPERATION, 
         RefactoringType.EXTRACT_SUPERCLASS, 
         RefactoringType.EXTRACT_INTERFACE, 
+        RefactoringType.MOVE_CLASS, 
         RefactoringType.INLINE_OPERATION, 
-        RefactoringType.MOVE_ATTRIBUTE, 
+        RefactoringType.MOVE_ATTRIBUTE,
         RefactoringType.PULL_UP_ATTRIBUTE, 
-        RefactoringType.PUSH_DOWN_ATTRIBUTE,*/
-        RefactoringType.RENAME_PACKAGE);
+        RefactoringType.PUSH_DOWN_ATTRIBUTE);
     String basePath = "data/refactoring-crawler-results/";
+    
+    EnumSet<RefactoringType> refTypesToIgnore2 = EnumSet.of(
+        RefactoringType.RENAME_PACKAGE,
+        RefactoringType.CHANGE_METHOD_SIGNATURE);
     
     RefactoringSet atmosphere_cc2b3f1 = RefactoringCrawlerResultReader.read("https://github.com/aserg-ufmg/atmosphere.git", "cc2b3f1", basePath + "atmosphere-cc2b3f1");
     RefactoringSet clojure_17217a1 = RefactoringCrawlerResultReader.read("https://github.com/aserg-ufmg/clojure.git", "17217a1", basePath + "clojure-17217a1");
@@ -45,13 +49,13 @@ public class TestWithArqsoft16Dataset {
     boolean grouped = true;
     boolean verbose = false;
     CombinedCompareResult cr = new CombinedCompareResult(
-        oracle.atmosphere_cc2b3f1.ignoring(refTypesToIgnore).compareTo(atmosphere_cc2b3f1, grouped),
-        oracle.clojure_17217a1.ignoring(refTypesToIgnore).compareTo(clojure_17217a1, grouped),
-        oracle.guava_79767ec.ignoring(refTypesToIgnore).compareTo(guava_79767ec, grouped),
-        oracle.metrics_276d5e4.ignoring(refTypesToIgnore).compareTo(metrics_276d5e4, grouped),
-        oracle.orientdb_b213aaf.ignoring(refTypesToIgnore).compareTo(orientdb_b213aaf, grouped),
-        oracle.retrofit_f13f317.ignoring(refTypesToIgnore).compareTo(retrofit_f13f317, grouped),
-        oracle.springBoot_48e893a.ignoring(refTypesToIgnore).compareTo(springBoot_48e893a, grouped)
+        oracle.atmosphere_cc2b3f1.ignoring(refTypesToIgnore1).compareTo(atmosphere_cc2b3f1.ignoring(refTypesToIgnore2), grouped),
+        oracle.clojure_17217a1.ignoring(refTypesToIgnore1).compareTo(clojure_17217a1.ignoring(refTypesToIgnore2), grouped),
+        oracle.guava_79767ec.ignoring(refTypesToIgnore1).compareTo(guava_79767ec.ignoring(refTypesToIgnore2), grouped),
+        oracle.metrics_276d5e4.ignoring(refTypesToIgnore1).compareTo(metrics_276d5e4.ignoring(refTypesToIgnore2), grouped),
+        oracle.orientdb_b213aaf.ignoring(refTypesToIgnore1).compareTo(orientdb_b213aaf.ignoring(refTypesToIgnore2), grouped),
+        oracle.retrofit_f13f317.ignoring(refTypesToIgnore1).compareTo(retrofit_f13f317.ignoring(refTypesToIgnore2), grouped),
+        oracle.springBoot_48e893a.ignoring(refTypesToIgnore1).compareTo(springBoot_48e893a.ignoring(refTypesToIgnore2), grouped)
     );
     cr.printReport(System.out, verbose);
     
@@ -67,13 +71,13 @@ public class TestWithArqsoft16Dataset {
     RefactoringSet springBoot_48e893a_rm2 = collectRmResult(rm2, "https://github.com/aserg-ufmg/spring-boot.git", "48e893a");
     
     CombinedCompareResult cr2 = new CombinedCompareResult(
-        oracle.atmosphere_cc2b3f1.ignoring(refTypesToIgnore).compareTo(atmosphere_cc2b3f1_rm2, grouped),
-        oracle.clojure_17217a1.ignoring(refTypesToIgnore).compareTo(clojure_17217a1_rm2, grouped),
-        oracle.guava_79767ec.ignoring(refTypesToIgnore).compareTo(guava_79767ec_rm2, grouped),
-        oracle.metrics_276d5e4.ignoring(refTypesToIgnore).compareTo(metrics_276d5e4_rm2, grouped),
-        oracle.orientdb_b213aaf.ignoring(refTypesToIgnore).compareTo(orientdb_b213aaf_rm2, grouped),
-        oracle.retrofit_f13f317.ignoring(refTypesToIgnore).compareTo(retrofit_f13f317_rm2, grouped),
-        oracle.springBoot_48e893a.ignoring(refTypesToIgnore).compareTo(springBoot_48e893a_rm2, grouped)
+        oracle.atmosphere_cc2b3f1.compareTo(atmosphere_cc2b3f1_rm2, grouped),
+        oracle.clojure_17217a1.compareTo(clojure_17217a1_rm2, grouped),
+        oracle.guava_79767ec.compareTo(guava_79767ec_rm2, grouped),
+        oracle.metrics_276d5e4.compareTo(metrics_276d5e4_rm2, grouped),
+        oracle.orientdb_b213aaf.compareTo(orientdb_b213aaf_rm2, grouped),
+        oracle.retrofit_f13f317.compareTo(retrofit_f13f317_rm2, grouped),
+        oracle.springBoot_48e893a.compareTo(springBoot_48e893a_rm2, grouped)
     );
     cr2.printReport(System.out, true);
   }

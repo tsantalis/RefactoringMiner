@@ -87,20 +87,22 @@ public class Arqsoft16Dataset {
     retrofit_f13f317.add(item("Rename Method", "retrofit2.RequestBuilder#addHeader(String, String)", "retrofit2.RequestBuilder#addHeaderToRequestBuilder(String, String)"));
     retrofit_f13f317.add(item("Rename Method", "retrofit2.RequestBuilder#addPathParam(String, String, boolean)", "retrofit2.RequestBuilder#addPathParamNameAndValue(String, String, boolean)"));
     retrofit_f13f317.add(item("Rename Method", "retrofit2.RequestBuilder#addQueryParam(String, String, boolean)", "retrofit2.RequestBuilder#addQueryParamNameAndValue(String, String, boolean)"));
-    retrofit_f13f317.add(item("Move Method", "retrofit2.Retrofit.Builder#createCallBackExecutor(Platform)", "retrofit2.Platform#createCallBackExecutor(Builder)"));
-    retrofit_f13f317.add(item("Move Method", "retrofit2.Retrofit.Builder#createCallFactory()", "retrofit2.Platform#createCallFactory(Builder)"));
+    // Extract and move
+    //retrofit_f13f317.add(item("Move Method", "retrofit2.Retrofit.Builder#createCallBackExecutor(Platform)", "retrofit2.Platform#createCallBackExecutor(Builder)"));
+    //retrofit_f13f317.add(item("Move Method", "retrofit2.Retrofit.Builder#createCallFactory()", "retrofit2.Platform#createCallFactory(Builder)"));
     retrofit_f13f317.add(item("Move Method", "retrofit2.ServiceMethod.Builder#createCallAdapter()", "retrofit2.Retrofit#createCallAdapter(Builder)"));
     retrofit_f13f317.add(item("Move Method", "retrofit2.OkHttpCall#createRawCall()", "retrofit2.ServiceMethod#createRawCall(OkHttpCall)"));
-    retrofit_f13f317.add(item("Move Method", "retrofit2.Utils#indexOf(Object, Object)", "retrofit2.IndexSearch#indexOf(Object, Object)"));
-    retrofit_f13f317.add(item("Pull Up Method", "retrofit2.Utils#typeToString(Type)", "retrofit2.SuperUtils#typeToString(Type)"));
-    retrofit_f13f317.add(item("Pull Up Method", "retrofit2.Utils#equals(Type, Type)", "retrofit2.SuperUtils#equals(Type, Type)"));
-    retrofit_f13f317.add(item("Pull Up Method", "retrofit2.Utils#equal(Object, Object)", "retrofit2.SuperUtils#equal(Object, Object)"));
-    retrofit_f13f317.add(item("Extract Method", "retrofit2.Retrofit.Builder#build()", "retrofit2.Retrofit.Builder#createCallFactory()"));
-    retrofit_f13f317.add(item("Extract Method", "retrofit2.Retrofit.Builder#build()", "retrofit2.Retrofit.Builder#createCallBackExecutor()"));
-    retrofit_f13f317.add(item("Extract Method", "retrofit2.Retrofit.Builder#build()", "retrofit2.Retrofit.Builder#createURL()"));
+    retrofit_f13f317.add(item("Move Method", "retrofit2.Utils#indexOf(Object[], Object)", "retrofit2.IndexSearch#indexOf(Object[], Object)"));
+    // Redundant: Extract superclass
+    //retrofit_f13f317.add(item("Pull Up Method", "retrofit2.Utils#typeToString(Type)", "retrofit2.SuperUtils#typeToString(Type)"));
+    //retrofit_f13f317.add(item("Pull Up Method", "retrofit2.Utils#equals(Type, Type)", "retrofit2.SuperUtils#equals(Type, Type)"));
+    //retrofit_f13f317.add(item("Pull Up Method", "retrofit2.Utils#equal(Object, Object)", "retrofit2.SuperUtils#equal(Object, Object)"));
+    retrofit_f13f317.add(item("Extract Method", "retrofit2.Retrofit.Builder#build()", "retrofit2.Platform#createCallFactory(Builder)"));
+    retrofit_f13f317.add(item("Extract Method", "retrofit2.Retrofit.Builder#build()", "retrofit2.Platform#createCallBackExecutor(Builder)"));
+    retrofit_f13f317.add(item("Extract Method", "retrofit2.RequestBuilder.build()", "retrofit2.RequestBuilder#createURL()"));
     retrofit_f13f317.add(item("Extract Method", "retrofit2.ParameterHandler.Body#apply(RequestBuilder, T)", "retrofit2.ParameterHandler.Body#createBody(RequestBuilder, T)"));
     retrofit_f13f317.add(item("Extract Method", "retrofit2.ParameterHandler.Part#apply(RequestBuilder, T)", "retrofit2.ParameterHandler.Part#createBody(RequestBuilder, T)"));
-    retrofit_f13f317.add(item("Inline Method", "retrofit2.Utils#checkNotPrimitive(Type)", "retrofit2.Utils#ParameterizedTypeImpl(Type, Type, Type[])\nretrofit2.Utils#WildcardTypeImpl(Type[], Type[])"));
+    retrofit_f13f317.add(item("Inline Method", "retrofit2.Utils#checkNotPrimitive(Type)", "retrofit2.Utils.ParameterizedTypeImpl#(Type, Type, Type[])\nretrofit2.Utils.WildcardTypeImpl#(Type[], Type[])"));
     retrofit_f13f317.add(item("Inline Method", "retrofit2.Utils#validateServiceInterface(Class)", "retrofit2.Retrofit#create(Class)"));
     retrofit_f13f317.add(item("Inline Method", "retrofit2.Utils#getCallResponseType(Type)", "retrofit2.DefaultCallAdapterFactory#get(Type, Annotation[], Retrofit)\nretrofit2.ExecutorCallAdapterFactory#get(Type, Annotation[], Retrofit)"));
     retrofit_f13f317.add(item("Inline Method", "retrofit2.Utils#hashCodeOrZero(Object)", "retrofit2.Utils.ParameterizedTypeImpl#hashCode()"));
@@ -109,7 +111,7 @@ public class Arqsoft16Dataset {
     retrofit_f13f317.add(item("Move Field", "retrofit2.converter.simplexml.SimpleXmlRequestBodyConverter#MEDIA_TYPE", "retrofit2.converter.simplexml.SimpleXmlConverterFactory#MEDIA_TYPE"));
     retrofit_f13f317.add(item("Move Field", "retrofit2.converter.gson.GsonRequestBodyConverter#MEDIA_TYPE", "retrofit2.converter.gson.GsonConverterFactory#MEDIA_TYPE"));
     retrofit_f13f317.add(item("Move Field", "retrofit2.converter.gson.GsonRequestBodyConverter#UTF_8", "retrofit2.converter.gson.GsonConverterFactory#UTF_8"));
-    retrofit_f13f317.add(item("Move Field", "retrofit2.converter.jackson.JacksonRequestConverter#MEDIA_TYPE", "retrofit2.converter.jackson.JacksonConverterFactory#MEDIA_TYPE"));
+    retrofit_f13f317.add(item("Move Field", "retrofit2.converter.jackson.JacksonRequestBodyConverter#MEDIA_TYPE", "retrofit2.converter.jackson.JacksonConverterFactory#MEDIA_TYPE"));
     retrofit_f13f317.add(item("Pull Up Field", "retrofit2.ParameterHandler.Path#name\nretrofit2.ParameterHandler.Query#name\nretrofit2.ParameterHandler.Field#name", "retrofit2.ParameterHandler#name"));
     retrofit_f13f317.add(item("Pull Up Field", "retrofit2.ParameterHandler.Part#headers", "retrofit2.ParameterHandler#headers"));
     retrofit_f13f317.add(item("Pull Up Field", "retrofit2.ParameterHandler.PartMap#transferEncoding", "retrofit2.ParameterHandler#transferEncoding"));

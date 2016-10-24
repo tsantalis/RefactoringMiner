@@ -190,10 +190,19 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 			for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 				UMLOperation addedOperation = addedOperationIterator.next();
 				
-				UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
-				if(!operationBodyMapper.getMappings().isEmpty() && operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2() == 0/* &&
-						operationBodyMapper.exactMatches() > 0*/) {
-					mapperSet.add(operationBodyMapper);
+				if(removedOperation.getName().equals(addedOperation.getName()) ||
+						(addedOperation.getParameterTypeList().size() > 0 && removedOperation.getParameterTypeList().size() > 0 && addedOperation.equalParameters(removedOperation)) ||
+						(addedOperation.getParameterTypeList().size() > 0 && removedOperation.getParameterTypeList().size() > 0 && addedOperation.overloadedParameters(removedOperation))) {
+					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
+					if(!operationBodyMapper.getMappings().isEmpty() && operationBodyMapper.exactMatches() > 0) {
+						mapperSet.add(operationBodyMapper);
+					}
+				}
+				else {
+					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
+					if(!operationBodyMapper.getMappings().isEmpty() && operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2() == 0) {
+						mapperSet.add(operationBodyMapper);
+					}
 				}
 			}
 			if(!mapperSet.isEmpty()) {

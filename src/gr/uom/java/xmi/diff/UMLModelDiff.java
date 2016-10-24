@@ -752,16 +752,16 @@ public class UMLModelDiff {
 	
 	               Refactoring refactoring = null;
 	               if(removedOperation.getClassName().equals(addedOperation.getClassName())) {
-	            	  if (equalParameters(removedOperation, addedOperation)) {
+	            	  if (addedOperation.equalParameters(removedOperation)) {
 	            		  refactoring = new RenameOperationRefactoring(removedOperation, addedOperation);
 	            	  } else {
 	            		  // Methods in the same class with similar body but different signature
 	            	  }
 	               }
-	               else if(isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && (equalParameters(removedOperation, addedOperation) || overloadedParameters(removedOperation, addedOperation))) {
+	               else if(isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && (addedOperation.equalParameters(removedOperation) || addedOperation.overloadedParameters(removedOperation))) {
 	                  refactoring = new PullUpOperationRefactoring(removedOperation, addedOperation);
 	               }
-	               else if(isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && (equalParameters(removedOperation, addedOperation) || overloadedParameters(removedOperation, addedOperation))) {
+	               else if(isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && (addedOperation.equalParameters(removedOperation) || addedOperation.overloadedParameters(removedOperation))) {
 	                  refactoring = new PushDownOperationRefactoring(removedOperation, addedOperation);
 	               }
 	               else if(movedMethodSignature(removedOperation, addedOperation)) {
@@ -808,16 +808,16 @@ public class UMLModelDiff {
 
 	               Refactoring refactoring = null;
 	               if(removedOperation.getClassName().equals(addedOperation.getClassName())) {
-	            	  if (equalParameters(removedOperation, addedOperation)) {
+	            	  if (addedOperation.equalParameters(removedOperation)) {
 	            		  refactoring = new RenameOperationRefactoring(removedOperation, addedOperation);
 	            	  } else {
 	            		  // Methods in the same class with similar body but different signature
 	            	  }
 	               }
-	               else if(isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && (equalParameters(removedOperation, addedOperation) || overloadedParameters(removedOperation, addedOperation))) {
+	               else if(isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && (addedOperation.equalParameters(removedOperation) || addedOperation.overloadedParameters(removedOperation))) {
 	                  refactoring = new PullUpOperationRefactoring(removedOperation, addedOperation);
 	               }
-	               else if(isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && (equalParameters(removedOperation, addedOperation) || overloadedParameters(removedOperation, addedOperation))) {
+	               else if(isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && (addedOperation.equalParameters(removedOperation) || addedOperation.overloadedParameters(removedOperation))) {
 	                  refactoring = new PushDownOperationRefactoring(removedOperation, addedOperation);
 	               }
 	               else if(movedMethodSignature(removedOperation, addedOperation)) {
@@ -834,15 +834,6 @@ public class UMLModelDiff {
       }
    }
    
-   private boolean equalParameters(UMLOperation removedOperation, UMLOperation addedOperation) {
-      return addedOperation.equalReturnParameter(removedOperation) && addedOperation.getParameters().equals(removedOperation.getParameters());
-   }
-   
-   private boolean overloadedParameters(UMLOperation removedOperation, UMLOperation addedOperation) {
-      return addedOperation.equalReturnParameter(removedOperation) &&
-    		  (addedOperation.getParameters().containsAll(removedOperation.getParameters()) || removedOperation.getParameters().containsAll(addedOperation.getParameters()));
-   }
-    
    private boolean movedMethodSignature(UMLOperation removedOperation, UMLOperation addedOperation) {
 	   if(!addedOperation.isConstructor() &&
 	      !removedOperation.isConstructor() &&

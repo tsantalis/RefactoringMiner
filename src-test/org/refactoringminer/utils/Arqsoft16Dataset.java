@@ -40,18 +40,20 @@ public class Arqsoft16Dataset {
     atmosphere_cc2b3f1.add(item("Move Method", "org.atmosphere.util.Utils#firefoxWebSocketEnabled(HttpServletRequest)", "org.atmosphere.websocket.DefaultWebSocketProcessor#firefoxWebSocketEnabled(HttpServletRequest)"));
     atmosphere_cc2b3f1.add(item("Move Method", "org.atmosphere.util.Utils#properProtocol(HttpServletRequest)", "org.atmosphere.cpr.AsynchronousProcessor#properProtocol(HttpServletRequest)"));
     atmosphere_cc2b3f1.add(item("Pull Up Method", "org.atmosphere.jersey.BroadcasterInjector#isValidType(Type)", "org.atmosphere.jersey.BaseInjectableProvider#isValidType(Type)"));
+    // Abstract method getUrlTarget already exists in BaseTest
     atmosphere_cc2b3f1.add(item("Pull Up Method", "org.atmosphere.jersey.QueryStringTest#getUrlTarget(int) \norg.atmosphere.jersey.MappingResourceTest#getUrlTarget(int)", "org.atmosphere.jersey.BaseTest#getUrlTarget(int)"));
     atmosphere_cc2b3f1.add(item("Pull Up Method", "org.atmosphere.container.BlockingIOCometSupport#suspend(Action, AtmosphereRequest, AtmosphereResponse)", "org.atmosphere.cpr.AsynchronousProcessor#suspend(Action, AtmosphereRequest, AtmosphereResponse)"));
     atmosphere_cc2b3f1.add(item("Push Down Method", "org.atmosphere.websocket.WebSocket#attachment()", "org.atmosphere.container.EmbeddedWebSocketHandler.ArrayBaseWebSocket#attachment()\norg.atmosphere.container.version.Grizzly2WebSocket#attachment()\norg.atmosphere.container.version.GrizzlyWebSocket#attachment()\norg.atmosphere.container.version.JBossWebSocket#attachment()\norg.atmosphere.container.version.JSR356WebSocket#attachment()\norg.atmosphere.container.version.Jetty8WebSocket#attachment()\norg.atmosphere.container.version.Jetty9WebSocket#attachment()\norg.atmosphere.annotation.ManagedAtmosphereHandlerTest.ArrayBaseWebSocket#attachment()\norg.atmosphere.container.version.TomcatWebSocket#attachment()\norg.atmosphere.annotation.path.PathTest.ArrayBaseWebSocket#attachment()\norg.atmosphere.cpr.TrackMessageSizeInterceptorTest.ArrayBaseWebSocket#attachment()\norg.atmosphere.container.version.WebLogicWebSocket#attachment()\norg.atmosphere.cpr.WebSocketHandlerTest.ArrayBaseWebSocket#attachment()\norg.atmosphere.cpr.WebSocketProcessorTest.ArrayBaseWebSocket#attachment()\norg.atmosphere.cpr.WebSocketStreamingHandlerTest.ArrayBaseWebSocket#attachment()"));
     atmosphere_cc2b3f1.add(item("Push Down Method", "org.atmosphere.cpr.AtmosphereServlet#newAtmosphereFramework()", "org.atmosphere.cpr.MeteorServlet#newAtmosphereFramework()\norg.atmosphere.cpr.AtmosphereFrameworkTest.MyAtmosphereServlet#newAtmosphereFramework()"));
     atmosphere_cc2b3f1.add(item("Push Down Method", "org.atmosphere.websocket.WebSocket#attachment(Object)", "org.atmosphere.container.EmbeddedWebSocketHandler.ArrayBaseWebSocket#attachment(Object)\norg.atmosphere.container.version.Grizzly2WebSocket#attachment(Object)\norg.atmosphere.container.version.GrizzlyWebSocket#attachment(Object)\norg.atmosphere.container.version.JBossWebSocket#attachment(Object)\norg.atmosphere.container.version.JSR356WebSocket#attachment(Object)\norg.atmosphere.container.version.Jetty8WebSocket#attachment(Object)\norg.atmosphere.container.version.Jetty9WebSocket#attachment(Object)\norg.atmosphere.annotation.ManagedAtmosphereHandlerTest.ArrayBaseWebSocket#attachment(Object)\norg.atmosphere.container.version.TomcatWebSocket#attachment(Object)\norg.atmosphere.annotation.path.PathTest.ArrayBaseWebSocket#attachment(Object)\norg.atmosphere.cpr.TrackMessageSizeInterceptorTest.ArrayBaseWebSocket#attachment(Object)\norg.atmosphere.container.version.WebLogicWebSocket#attachment(Object)\norg.atmosphere.cpr.WebSocketStreamingHandlerTest.ArrayBaseWebSocket#attachment(Object)\norg.atmosphere.cpr.WebSocketHandlerTest.ArrayBaseWebSocket#attachment(Object)\norg.atmosphere.cpr.WebSocketProcessorTest.ArrayBaseWebSocket#attachment(Object)"));
     atmosphere_cc2b3f1.add(item("Extract Method", "org.atmosphere.config.managed.ManagedServiceInterceptor#mapAnnotatedService(boolean, String, AtmosphereRequest, AtmosphereFramework.AtmosphereHandlerWrapper)", "org.atmosphere.config.managed.ManagedServiceInterceptor#configureAnnotatedProxyIfSingleton(AtmosphereFramework.AtmosphereHandlerWrapper, AnnotatedProxy)"));
-    atmosphere_cc2b3f1.add(item("Extract Method", "com.sun.jersey.api.JResponseAsResponse.AtmosphereFilter#filter(ContainerRequest, ContainerResponse)", "com.sun.jersey.api.JResponseAsResponse.AtmosphereFilter#getContainerResponseWriter(String)"));
+    atmosphere_cc2b3f1.add(item("Extract Method", "org.atmosphere.jersey.AtmosphereFilter.Filter#filter(ContainerRequest, ContainerResponse)", "org.atmosphere.jersey.AtmosphereFilter#getContainerResponseWriter(String)"));
     atmosphere_cc2b3f1.add(item("Extract Method", "org.atmosphere.jersey.AtmosphereFilter#create(AbstractMethod)", "org.atmosphere.jersey.AtmosphereFilter#getFilterForAnnotation(AbstractMethod, Class[])"));
     atmosphere_cc2b3f1.add(item("Extract Method", "org.atmosphere.annotation.AtmosphereHandlerServiceProcessor#handle(AtmosphereFramework, Class<AtmosphereHandler>)", "org.atmosphere.annotation.AtmosphereHandlerServiceProcessor#getListAtmosphereInterceptor(AtmosphereFramework, AtmosphereHandlerService)"));
     atmosphere_cc2b3f1.add(item("Extract Method", "org.atmosphere.cache.UUIDBroadcasterCache#addToCache(String, String, BroadcastMessage)", "org.atmosphere.cache.UUIDBroadcasterCache#configureCacheMessage(String, String, boolean, CacheMessage)"));
     atmosphere_cc2b3f1.add(item("Inline Method", "org.atmosphere.annotation.AnnotationUtil#checkDefault(Class<? extends AtmosphereInterceptor>)", "org.atmosphere.annotation.AnnotationUtil#interceptorsForManagedService(AtmosphereFramework, List<Class<? extends AtmosphereInterceptor>>, List<AtmosphereInterceptor>, boolean)"));
-    atmosphere_cc2b3f1.add(item("Inline Method", "org.atmosphere.cpr.AtmosphereServlet#configureFramework(ServletConfig, boolean)", "org.atmosphere.cpr.AtmosphereServlet#configureFramework(ServletConfig)"));
+    // This refactoring was not performed
+    //atmosphere_cc2b3f1.add(item("Inline Method", "org.atmosphere.cpr.AtmosphereServlet#configureFramework(ServletConfig, boolean)", "org.atmosphere.cpr.AtmosphereServlet#configureFramework(ServletConfig)"));
     atmosphere_cc2b3f1.add(item("Inline Method", "org.atmosphere.websocket.protocol.ProtocolUtil#attributes(WebSocket, AtmosphereRequest)", "org.atmosphere.websocket.protocol.ProtocolUtil#constructRequest(WebSocket, String, String, String, String, boolean)"));
     atmosphere_cc2b3f1.add(item("Inline Method", "org.atmosphere.jersey.BaseTest#stopServer()", "org.atmosphere.jersey.BaseTest#unsetAtmosphereHandler()"));
     atmosphere_cc2b3f1.add(item("Inline Method", "org.atmosphere.jersey.BaseTest.configureCometSupport()", "org.atmosphere.jersey.BaseTest#setUpGlobal()"));
@@ -118,29 +120,27 @@ public class Arqsoft16Dataset {
     clojure_17217a1.add(item("Rename Class", "clojure.lang.Var", "clojure.lang.Variable"));
     clojure_17217a1.add(item("Rename Class", "clojure.lang.BigInt", "clojure.lang.ClojureBigInteger"));
     clojure_17217a1.add(item("Rename Class", "clojure.lang.IObj", "clojure.lang.IClojureObject"));
-    clojure_17217a1.add(item("Move Class", "clojure.lang.Ifn", "clojure.lang.Ifn"));
-    clojure_17217a1.add(item("Move Class", "clojure.lang.Iproxy", "clojure.lang.interfaces.IProxy"));
+    clojure_17217a1.add(item("Move Class", "clojure.lang.IFn", "clojure.lang.interfaces.IFn"));
+    clojure_17217a1.add(item("Move Class", "clojure.lang.IProxy", "clojure.lang.interfaces.IProxy"));
     clojure_17217a1.add(item("Move Class", "clojure.lang.IType", "clojure.lang.interfaces.IType"));
     clojure_17217a1.add(item("Move Class", "clojure.lang.ISeq", "clojure.lang.interfaces.ISeq"));
     clojure_17217a1.add(item("Move Class", "clojure.lang.IRef", "clojure.lang.interfaces.IRef"));
-    clojure_17217a1.add(item("Extract Superclass", "clojure.asm.AnnotationVisitor // clojure.asm.ClassVisitor", "clojure.asm.ObjectVisitor"));
+    clojure_17217a1.add(item("Extract Superclass", "clojure.asm.AnnotationVisitor\nclojure.asm.ClassVisitor", "clojure.asm.ObjectVisitor"));
     clojure_17217a1.add(item("Extract Interface", "clojure.asm.commons.InstructionAdapter", "clojure.asm.commons.IStackablle"));
     clojure_17217a1.add(item("Rename Method", "clojure.asm.commons.GeneratorAdapter.pop2()", "clojure.asm.commons.GeneratorAdapter.popLongDouble()"));
-    clojure_17217a1.add(item("Rename Method", "clojure.lang.AReference.meta()", "clojure.lang.Areference.getMeta()"));
-    clojure_17217a1.add(item("Rename Method", "clojure.lang.ASeq.equiv(Object)", "clojure.lang.Aseq.isEquivalent(Object)"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.AReference.meta()", "clojure.lang.AReference.getMeta()"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.ASeq.equiv(Object)", "clojure.lang.ASeq.isEquivalent(Object)"));
     clojure_17217a1.add(item("Rename Method", "clojure.lang.ExceptionInfo.getData()", "clojure.lang.ExceptionInfo.getExceptionData()"));
     clojure_17217a1.add(item("Rename Method", "clojure.asm.Attribute.put(ClassWriter, byte[], int, int, int, ByteVector)", "clojure.asm.Attribute.writeAllAtributes(ClassWriter, byte[], int, int, int, ByteVector)"));
-    clojure_17217a1.add(item("Move Method", "clojure.lang.Numbers.reduceBigInt(ClojureBigInteger)", "clojure.lang.ClojureBigInteger.reduceBigInt(ClojureBigInteger)"));
-    clojure_17217a1.add(item("Move Method", "clojure.lang.Variable.intern(Namespace, Symbol)", "clojure.lang.Namespace.intern(Namespace, Symbol)"));
-    clojure_17217a1.add(item("Move Method", "clojure.lang.Variable.intern(Namespace, Symbol, Object)", "clojure.lang.Namespace.intern(Namespace, Symbol, Object)"));
-    clojure_17217a1.add(item("Move Method", "clojure.lang.Variable.intern(Namespace, Symbol, Object, boolean)", "clojure.lang.Namespace.intern(Namespace, Symbol, Object, boolean)"));
-    clojure_17217a1.add(item("Move Method", "clojure.lang.Variable.find(Symbol)", "clojure.lang.Symbol.find(Symbol)"));
+    clojure_17217a1.add(item("Move Method", "clojure.lang.Numbers.reduceBigInt(BigInt)", "clojure.lang.ClojureBigInteger.reduceBigInt(ClojureBigInteger)"));
+    clojure_17217a1.add(item("Move Method", "clojure.lang.Var.intern(Namespace, Symbol)", "clojure.lang.Namespace.intern(Namespace, Symbol)"));
+    clojure_17217a1.add(item("Move Method", "clojure.lang.Var.intern(Namespace, Symbol, Object)", "clojure.lang.Namespace.intern(Namespace, Symbol, Object)"));
+    clojure_17217a1.add(item("Move Method", "clojure.lang.Var.intern(Namespace, Symbol, Object, boolean)", "clojure.lang.Namespace.intern(Namespace, Symbol, Object, boolean)"));
+    clojure_17217a1.add(item("Move Method", "clojure.lang.Var.find(Symbol)", "clojure.lang.Symbol.find(Symbol)"));
+    // The method is not moved, @Override added
     clojure_17217a1.add(item("Pull Up Method", "clojure.lang.AMapEntry.nth(int)", "clojure.lang.Indexed.nth(int)"));
+    // This refactoring was not performed
     clojure_17217a1.add(item("Pull Up Method", "clojure.lang.Volatile.reset(Object)", "clojure.lang.IDeref.reset(Object)"));
-    clojure_17217a1.add(item("Pull Up Method", "", ""));
-    clojure_17217a1.add(item("Push Down Method", "", ""));
-    clojure_17217a1.add(item("Push Down Method", "", ""));
-    clojure_17217a1.add(item("Push Down Method", "", ""));
     clojure_17217a1.add(item("Extract Method", "clojure.lang.Compiler.FnMethod.parse(ObjExpr, ISeq, Object)", "clojure.lang.Compiler.FnMethod.getFnMethod(ObjExpr)"));
     clojure_17217a1.add(item("Extract Method", "clojure.lang.Compiler.NewInstanceExpr.build(IPersistentVector, IPersistentVector, Symbol, String, Symbol, Symbol, ISeq, Object, IPersistentMap)", "clojure.lang.Compiler.NewInstanceExpr.getInstanceExpr(IPersistentVector, Symbol, Symbol, Object, IPersistentMap)"));
     clojure_17217a1.add(item("Extract Method", "clojure.lang.Compiler.ObjExpr.emitValue(Object, GeneratorAdapter)", "clojure.lang.Compiler.ObjExpr.defineGeneratoAdaptaer(Object, GeneratorAdapter, boolean)"));
@@ -178,24 +178,25 @@ public class Arqsoft16Dataset {
     metrics_276d5e4.add(item("Extract Method", "com.codahale.metrics.MetricRegistry#registerAll(MetricName, MetricSet)", "com.codahale.metrics.MetricRegistry#registerLoop(MetricName, MetricSet)"));
     metrics_276d5e4.add(item("Extract Method", "io.dropwizard.metrics.graphite.GraphiteReporter#reportTimer(MetricName, Timer, long)", "io.dropwizard.metrics.graphite.GraphiteReporter#sendDataToGraphite(MetricName, long, Snapshot)"));
     metrics_276d5e4.add(item("Extract Method", "io.dropwizard.metrics.graphite.PickledGraphite#pickleMetrics(List<MetricTuple>)", "io.dropwizard.metrics.graphite.PickledGraphite#populateWithTupleValues(List<MetricTuple>, Writer)"));
-    metrics_276d5e4.add(item("Extract Method", "io.dropwizard.metrics.health.SharedHealthCheckRegistries#getOrCreate(String)", "io.dropwizard.metrics.health.SharedHealthCheckRegistries#createRegistry(String)"));
+    metrics_276d5e4.add(item("Extract Method", "io.dropwizard.metrics.health.SharedHealthCheckRegistries#getOrCreate(String)", "io.dropwizard.metrics.health.jvm.SharedHealthCheckRegistries#createRegistry(String)"));
     metrics_276d5e4.add(item("Extract Method", "io.dropwizard.metrics.jetty9.InstrumentedHandler#updateResponses(HttpServletRequest, HttpServletResponse, long)", "io.dropwizard.metrics.jetty9.InstrumentedHandler#updateRequest(HttpServletRequest, long)"));
     metrics_276d5e4.add(item("Inline Method", "io.dropwizard.metrics.jdbi.InstrumentedTimingCollector#getTimer(StatementContext)", "io.dropwizard.metrics.jdbi.InstrumentedTimingCollector#collect(long, StatementContext)"));
     metrics_276d5e4.add(item("Inline Method", "io.dropwizard.metrics.FixedNameCsvFileProvider#sanitize(MetricName)", "io.dropwizard.metrics.FixedNameCsvFileProvider#getFile(File, MetricName)"));
     metrics_276d5e4.add(item("Inline Method", "io.dropwizard.metrics.ScheduledReporter#calculateRateUnit(TimeUnit)", "io.dropwizard.metrics.ScheduledReporter.ScheduledReporter(MetricRegistry, MetricFilter, TimeUnit, TimeUnit, ScheduledExecutorService)"));
-    metrics_276d5e4.add(item("Inline Method", "io.dropwizard.metrics.SlidingTimeWindowReservoir#trim()", "io.dropwizard.metrics.SlidingTimeWindowReservoir#getSnapshot() io.dropwizard.metrics.SlidingTimeWindowReservoir#update(long) io.dropwizard.metrics.SlidingTimeWindowReservoir#size()"));
+    metrics_276d5e4.add(item("Inline Method", "io.dropwizard.metrics.SlidingTimeWindowReservoir#trim()", "io.dropwizard.metrics.SlidingTimeWindowReservoir#getSnapshot()\nio.dropwizard.metrics.SlidingTimeWindowReservoir#update(long)\nio.dropwizard.metrics.SlidingTimeWindowReservoir#size()"));
     metrics_276d5e4.add(item("Inline Method", "io.dropwizard.metrics.CsvReporter.reportHistogram(long, MetricName, Histogram)", "io.dropwizard.metrics.CsvReporter#report(SortedMap<MetricName, Gauge>, SortedMap<MetricName, Counter>, SortedMap<MetricName, Histogram>, SortedMap<MetricName, Meter>, SortedMap<MetricName, Timer>)"));
-    metrics_276d5e4.add(item("Move Method", "io.dropwizard.metrics.SlidingTimeWindowReservoir#getTick()", "io.dropwizard.metrics.Clock"));
-    metrics_276d5e4.add(item("Move Method", "io.dropwizard.metrics.Meter#tickIfNecessary()", "io.dropwizard.metrics.Clock"));
-    metrics_276d5e4.add(item("Move Method", "io.dropwizard.metrics.Timer#update(long)", "io.dropwizard.metrics.Histogram"));
-    metrics_276d5e4.add(item("Move Method", "io.dropwizard.metrics.ConsolePrinter#printMeter(Meter)", "io.dropwizard.metrics.Meter"));
-    metrics_276d5e4.add(item("Move Method", "io.dropwizard.metrics.Slf4jReporter#prefix(MetricName, String[])", "io.dropwizard.metrics.MetricName"));
+    metrics_276d5e4.add(item("Move Method", "io.dropwizard.metrics.SlidingTimeWindowReservoir#getTick()", "io.dropwizard.metrics.Clock#getTick(SlidingTimeWindowReservoir)"));
+    metrics_276d5e4.add(item("Move Method", "io.dropwizard.metrics.Meter#tickIfNecessary()", "io.dropwizard.metrics.Clock#tickIfNecessary(Meter)"));
+    metrics_276d5e4.add(item("Move Method", "io.dropwizard.metrics.Timer#update(long)", "io.dropwizard.metrics.Histogram#update(Timer, long)"));
+    metrics_276d5e4.add(item("Move Method", "io.dropwizard.metrics.ConsoleReporter#printMeter(Meter)", "io.dropwizard.metrics.Meter#printMeter(ConsolePrinter)"));
+    metrics_276d5e4.add(item("Move Method", "io.dropwizard.metrics.Slf4jReporter#prefix(MetricName, String[])", "io.dropwizard.metrics.MetricName#prefix(Slf4jReporter, String[])"));
     metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.graphite.Graphite#send(String, String, long)", "io.dropwizard.metrics.graphite.Graphite#sendData(String, String, long)"));
     metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.graphite.Graphite#flush()", "io.dropwizard.metrics.graphite.Graphite#flushData()"));
-    metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.health.HealthCheck#execute()", "io.dropwizard.metrics.health.HealthCheck#executeCheck()"));
+    metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.health.HealthCheck#execute()", "io.dropwizard.metrics.health.jvm.HealthCheck#executeCheck()"));
     metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.UnsafeStriped64#internalReset(long)", "io.dropwizard.metrics.UnsafeStriped64#internalResetData(long)"));
-    metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.servlet.InstrumentedFilter#createMeterNamesByStatusCode()", "io.dropwizard.metrics.servlet.InstrumentedFilter#createByStatusCode()"));
-    metrics_276d5e4.add(item("Pull Up Method", "io.dropwizard.metrics.servlet.InstrumentedFilter#createByStatusCode()", "io.dropwizard.metrics.servlet.AbstractInstrumentedFilter#createByStatusCode()"));
+    // Rename before pull up
+    //metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.servlet.InstrumentedFilter#createMeterNamesByStatusCode()", "io.dropwizard.metrics.servlet.InstrumentedFilter#createByStatusCode()"));
+    metrics_276d5e4.add(item("Pull Up Method", "io.dropwizard.metrics.servlet.InstrumentedFilter#createMeterNamesByStatusCode()", "io.dropwizard.metrics.servlet.AbstractInstrumentedFilter#createByStatusCode()"));
     metrics_276d5e4.add(item("Pull Up Method", "io.dropwizard.metrics.graphite.GraphiteReporter#format(long)", "io.dropwizard.metrics.ScheduledReporter#format(long)"));
     metrics_276d5e4.add(item("Pull Up Method", "io.dropwizard.metrics.graphite.GraphiteReporter#format(double)", "io.dropwizard.metrics.ScheduledReporter#format(double)"));
     metrics_276d5e4.add(item("Push Down Method", "io.dropwizard.metrics.jdbi.strategies.DelegatingStatementNameStrategy#registerStrategies(StatementNameStrategy[])", "io.dropwizard.metrics.jdbi.BasicSqlNameStrategy#registerStrategies(StatementNameStrategy[])\n io.dropwizard.metrics.jdbi.strategies.ContextNameStrategy#registerStrategies(StatementNameStrategy[])\n io.dropwizard.metrics.jdbi.strategies.NaiveNameStrategy#registerStrategies(StatementNameStrategy[])\n io.dropwizard.metrics.jdbi.strategies.ShortNameStrategy#registerStrategies(StatementNameStrategy[])\n io.dropwizard.metrics.jdbi.strategies.SmartNameStrategy#registerStrategies(StatementNameStrategy[])"));
@@ -237,10 +238,12 @@ public class Arqsoft16Dataset {
     guava_79767ec.add(item("Move Method", "com.google.common.math.Quantiles#selectInPlace(int required, double[] array, int from, int to)", "com.google.common.math.Quantiles.ScaleAndIndex#selectInPlace(int required, double[] array, int from, int to)"));
     guava_79767ec.add(item("Pull Up Method", "com.google.common.escape.CharEscaper#growBuffer(char[] dest, int index, int size)\ncom.google.common.escape.UnicodeEscaper#growBuffer(char[] dest, int index, int size)", "com.google.common.escape.Escaper#growBuffer(char[] dest, int index, int size)"));
     guava_79767ec.add(item("Pull Up Method", "com.google.common.base.Utf8#encodedLengthGeneral(CharSequence sequence, int start) ", "com.google.common.base.Encoding#encodedLengthGeneral(CharSequence sequence, int start) "));
+    // Pull Up to interface
     guava_79767ec.add(item("Pull Up Method", "com.google.common.cache.LongAdder#fn(long v, long x)", "com.google.common.cache.LongAddable#fn(long v, long x)\ncom.google.common.cache.LongAddables#fn(long v, long x)"));
     guava_79767ec.add(item("Push Down Method", "com.google.common.escape.Escaper#asFunction()", "com.google.common.escape.CharEscaper#asFunction()\ncom.google.common.escape.UnicodeEscaper#asFunction()"));
-    guava_79767ec.add(item("Push Down Method", "com.google.common.io.LineBuffer#add(char[] cbuf, int off, int len)", "com.google.common.io.LineReader#add(char[] cbuf, int off, int len)"));
-    guava_79767ec.add(item("Push Down Method", "com.google.common.io.LineBuffer#finishLine(boolean sawNewline)", "com.google.common.io.LineReader#finishLine(boolean sawNewline)"));
+    // Not a push down, but move
+    guava_79767ec.add(item("Move Method", "com.google.common.io.LineBuffer#add(char[] cbuf, int off, int len)", "com.google.common.io.LineReader#add(char[] cbuf, int off, int len)"));
+    guava_79767ec.add(item("Move Method", "com.google.common.io.LineBuffer#finishLine(boolean sawNewline)", "com.google.common.io.LineReader#finishLine(boolean sawNewline)"));
     guava_79767ec.add(item("Extract Method", "com.google.common.math.BigIntegerMath#sqrt(BigInteger x, RoundingMode mode)", "com.google.common.math.BigIntegerMath#sqrtMode(BigInteger x, RoundingMode mode)"));
     guava_79767ec.add(item("Extract Method", "com.google.common.math.IntMath#binomial(int n, int k) ", "com.google.common.math.IntMath#calculateK(int n, int k)"));
     guava_79767ec.add(item("Extract Method", "com.google.common.net.InetAddresses#convertDottedQuadToHex(String ipString)", "com.google.common.net.InetAddresses#concatLastTerms(String initialPart, byte[] quad)"));
@@ -257,11 +260,12 @@ public class Arqsoft16Dataset {
     guava_79767ec.add(item("Move Field", "com.google.common.net.InternetDomainName#DOT_REGEX", "com.google.common.net.HostAndPort#DOT_REGEX"));
     guava_79767ec.add(item("Move Field", "com.google.common.net.MediaType#CHARSET_ATTRIBUTE", "com.google.common.net.HostAndPort#CHARSET_ATTRIBUTE"));
     guava_79767ec.add(item("Pull Up Field", "com.google.common.escape.CharEscaper#DEST_PAD_MULTIPLIER", "com.google.common.escape.Escaper#DEST_PAD_MULTIPLIER"));
-    guava_79767ec.add(item("Pull Up Field", "com.google.common.base.SmallCharMatcher#C1", "com.google.common.base.CharMatcher#C1"));
-    guava_79767ec.add(item("Pull Up Field", "com.google.common.base.SmallCharMatcher#C2", "com.google.common.base.CharMatcher#C2"));
+    guava_79767ec.add(item("Pull Up Field", "com.google.common.base.SmallCharMatcher#C1", "com.google.common.base.CharMatcher.NamedFastMatcher#C1"));
+    guava_79767ec.add(item("Pull Up Field", "com.google.common.base.SmallCharMatcher#C2", "com.google.common.base.CharMatcher.NamedFastMatcher#C2"));
     guava_79767ec.add(item("Push Down Field", "com.google.common.escape.Escaper#asFunction", "com.google.common.escape.CharEscaper#asFunction\ncom.google.common.escape.UnicodeEscaper#asFunction"));
-    guava_79767ec.add(item("Push Down Field", "com.google.common.io.LineBuffer#line", "com.google.common.io.LineReader#line"));
-    guava_79767ec.add(item("Push Down Field", "com.google.common.io.LineBuffer#sawReturn", "com.google.common.io.LineReader#sawReturn"));
+    // Not a push down, but move
+    guava_79767ec.add(item("Move Field", "com.google.common.io.LineBuffer#line", "com.google.common.io.LineReader#line"));
+    guava_79767ec.add(item("Move Field", "com.google.common.io.LineBuffer#sawReturn", "com.google.common.io.LineReader#sawReturn"));
     
     springBoot_48e893a.add(item("Rename Class", "org.springframework.boot.yaml.ArrayDocumentMatcher", "org.springframework.boot.yaml.ArrayDocumentMatcherNew"));
     springBoot_48e893a.add(item("Rename Class", "org.springframework.boot.logging.log4j2.ColorConverter", "org.springframework.boot.logging.log4j2.ColorConverterRenamed"));
@@ -327,14 +331,16 @@ public class Arqsoft16Dataset {
 //    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.jdbc.OrientDataCode#orientDataSource", "com.orientechnologies.orient.jdbc.OrientDataCode#orientDataCode")); // errado
     orientdb_b213aaf.add(item("Rename Class", "com.orientechnologies.orient.jdbc.OrientDataSource", "com.orientechnologies.orient.jdbc.OrientDataCoude")); // certo
     
-    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.ODatabaseHelper#releaseDataBase(ODatabase)", "com.orientechnologies.orient.client.db.ODatabaseHelper#releaseDb(ODatabase)"));
-    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.ODatabaseHelper#freezeDatabase(ODatabase)", "com.orientechnologies.orient.client.db.ODatabaseHelper#freezeDB(ODatabase)"));     orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.ODatabaseHelper#existsDatabase(String)", "com.orientechnologies.orient.client.db.ODatabaseHelper#existsDB(String)"));
-    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.ODatabaseHelper#dropDatabase(ODatabase, String, String)", "com.orientechnologies.orient.client.db.ODatabaseHelper#dropDB(ODatabase, String, String)"));
+    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.ODatabaseHelper#releaseDatabase(ODatabase)", "com.orientechnologies.orient.client.db.ODatabaseHelper#releaseDb(ODatabase)"));
+    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.ODatabaseHelper#freezeDatabase(ODatabase)", "com.orientechnologies.orient.client.db.ODatabaseHelper#freezeDb(ODatabase)"));
+    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.ODatabaseHelper#existsDatabase(String)", "com.orientechnologies.orient.client.db.ODatabaseHelper#existsDb(String)"));
+    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.ODatabaseHelper#dropDatabase(ODatabase, String, String)", "com.orientechnologies.orient.client.db.ODatabaseHelper#dropDb(ODatabase, String, String)"));
+    // Not sure, pull up to interface but
     orientdb_b213aaf.add(item("Pull Up Method", "com.orientechnologies.orient.client.remote.OStorageRemoteAsynchEventListener#getStorage()", "com.orientechonologies.orient.enterprise.chamennel.binary.ORemoteServerEventListener#getStorage()"));
 //    orientdb_b213aaf.add(item("Pull Up Method", "com.orientechnologies.orient.graph.handler.OgraphServerHandler#getname()", "com.orientechonologies.orient.core.command.script.Oscriptlnjection#getName()")); ??
 //    orientdb_b213aaf.add(item("Pull Up Method", "com.orientechnologies.orient.client.remote.OengineRemote#NAME", "com.orientechnologies.orient.core.engine.OengineAbstract#NAME")); // errado
-    orientdb_b213aaf.add(item("Pull Up Field", "com.orientechnologies.orient.client.remote.OengineRemote#NAME", "com.orientechnologies.orient.core.engine.OengineAbstract#NAME")); // certo
-    orientdb_b213aaf.add(item("Pull Up Field", "com.orientechnologies.orient.client.remote.OStorageRemoteConfiguration#networkRecordSerializer", "com.orientechnologies.orient.core.config.OstorageConfiguration#networkRecordSerializer"));
+    orientdb_b213aaf.add(item("Pull Up Field", "com.orientechnologies.orient.client.remote.OEngineRemote#NAME", "com.orientechnologies.orient.core.engine.OEngineAbstract#NAME")); // certo
+    orientdb_b213aaf.add(item("Pull Up Field", "com.orientechnologies.orient.client.remote.OStorageRemoteConfiguration#networkRecordSerializer", "com.orientechnologies.orient.core.config.OStorageConfiguration#networkRecordSerializer"));
 //    orientdb_b213aaf.add(item("Pull Up Field", "com.orientechnologies.orient.etl.source.OfileSource#input", "com.orientechnologies.orient.etl.source.OabstractSouce#input")); ??
     
   }

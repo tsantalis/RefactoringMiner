@@ -1,22 +1,18 @@
 package org.refactoringminer.test;
 
 import java.util.EnumSet;
-import java.util.List;
 
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
-import org.refactoringminer.api.Refactoring;
-import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.api.RefactoringType;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.rm2.analysis.GitHistoryRefactoringMiner2;
-import org.refactoringminer.rm2.model.refactoring.SDRefactoring;
 import org.refactoringminer.util.GitServiceImpl;
 import org.refactoringminer.utils.Arqsoft16Dataset;
 import org.refactoringminer.utils.CombinedCompareResult;
+import org.refactoringminer.utils.RefactoringCollector;
 import org.refactoringminer.utils.RefactoringCrawlerResultReader;
-import org.refactoringminer.utils.RefactoringRelationship;
 import org.refactoringminer.utils.RefactoringSet;
 
 public class TestWithArqsoft16Dataset {
@@ -48,6 +44,8 @@ public class TestWithArqsoft16Dataset {
     
     boolean grouped = true;
     boolean verbose = false;
+    
+    System.out.println("# Refactoring Crawler #");
     CombinedCompareResult cr = new CombinedCompareResult(
         oracle.atmosphere_cc2b3f1.ignoring(refTypesToIgnore1).compareTo(atmosphere_cc2b3f1.ignoring(refTypesToIgnore2), grouped),
         oracle.clojure_17217a1.ignoring(refTypesToIgnore1).compareTo(clojure_17217a1.ignoring(refTypesToIgnore2), grouped),
@@ -60,15 +58,24 @@ public class TestWithArqsoft16Dataset {
     cr.printReport(System.out, verbose);
     
     
+    GitHistoryRefactoringMinerImpl rm1 = new GitHistoryRefactoringMinerImpl();
     GitHistoryRefactoringMiner2 rm2 = new GitHistoryRefactoringMiner2();
     
-    RefactoringSet atmosphere_cc2b3f1_rm2 = collectRmResult(rm2, "https://github.com/aserg-ufmg/atmosphere.git", "cc2b3f1");
-    RefactoringSet clojure_17217a1_rm2 = collectRmResult(rm2, "https://github.com/aserg-ufmg/clojure.git", "17217a1");
-    RefactoringSet guava_79767ec_rm2 = collectRmResult(rm2, "https://github.com/aserg-ufmg/guava.git", "79767ec");
-    RefactoringSet metrics_276d5e4_rm2 = collectRmResult(rm2, "https://github.com/aserg-ufmg/metrics.git", "276d5e4");
-    RefactoringSet orientdb_b213aaf_rm2 = collectRmResult(rm2, "https://github.com/aserg-ufmg/orientdb.git", "b213aaf");
-    RefactoringSet retrofit_f13f317_rm2 = collectRmResult(rm2, "https://github.com/aserg-ufmg/retrofit.git", "f13f317");
-    RefactoringSet springBoot_48e893a_rm2 = collectRmResult(rm2, "https://github.com/aserg-ufmg/spring-boot.git", "48e893a");
+    System.out.println("# RM1 #");
+    runWithRM(oracle, grouped, rm1);
+    
+    System.out.println("# RM2 #");
+    runWithRM(oracle, grouped, rm2);
+  }
+
+  private static void runWithRM(Arqsoft16Dataset oracle, boolean grouped, GitHistoryRefactoringMiner rm) {
+    RefactoringSet atmosphere_cc2b3f1_rm2 = collectRmResult(rm, "https://github.com/aserg-ufmg/atmosphere.git", "cc2b3f1");
+    RefactoringSet clojure_17217a1_rm2 = collectRmResult(rm, "https://github.com/aserg-ufmg/clojure.git", "17217a1");
+    RefactoringSet guava_79767ec_rm2 = collectRmResult(rm, "https://github.com/aserg-ufmg/guava.git", "79767ec");
+    RefactoringSet metrics_276d5e4_rm2 = collectRmResult(rm, "https://github.com/aserg-ufmg/metrics.git", "276d5e4");
+    RefactoringSet orientdb_b213aaf_rm2 = collectRmResult(rm, "https://github.com/aserg-ufmg/orientdb.git", "b213aaf");
+    RefactoringSet retrofit_f13f317_rm2 = collectRmResult(rm, "https://github.com/aserg-ufmg/retrofit.git", "f13f317");
+    RefactoringSet springBoot_48e893a_rm2 = collectRmResult(rm, "https://github.com/aserg-ufmg/spring-boot.git", "48e893a");
     
     CombinedCompareResult cr2 = new CombinedCompareResult(
         oracle.atmosphere_cc2b3f1.compareTo(atmosphere_cc2b3f1_rm2, grouped),
@@ -93,32 +100,5 @@ public class TestWithArqsoft16Dataset {
       throw new RuntimeException(e); 
     }
     return rc.assertAndGetResult();
-  }
-
-  private static class RefactoringCollector extends RefactoringHandler {
-    private final RefactoringSet rs;
-    private Exception ex = null;
-    public RefactoringCollector(String cloneUrl, String commitId) {
-      rs = new RefactoringSet(cloneUrl, commitId);
-    }
-    @Override
-    public void handle(RevCommit commitData, List<Refactoring> refactorings) {
-      for (Refactoring r : refactorings) {
-        if (r instanceof SDRefactoring) {
-          SDRefactoring sdr = (SDRefactoring) r;
-          rs.add(new RefactoringRelationship(sdr.getRefactoringType(), sdr.getEntityBefore().toString(), sdr.getEntityAfter().toString()));
-        }
-      }
-    }
-    @Override
-    public void handleException(String commitId, Exception e) {
-      this.ex = e;
-    }
-    public RefactoringSet assertAndGetResult() {
-      if (ex == null) {
-        return rs;
-      }
-      throw new RuntimeException(ex); 
-    }
   } 
 }

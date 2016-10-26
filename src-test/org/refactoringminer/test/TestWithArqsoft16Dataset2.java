@@ -1,21 +1,16 @@
 package org.refactoringminer.test;
 
 import java.util.EnumSet;
-import java.util.List;
 
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
-import org.refactoringminer.api.Refactoring;
-import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.api.RefactoringType;
-import org.refactoringminer.rm2.analysis.GitHistoryRefactoringMiner2;
-import org.refactoringminer.rm2.model.refactoring.SDRefactoring;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.util.GitServiceImpl;
 import org.refactoringminer.utils.Arqsoft16Dataset;
 import org.refactoringminer.utils.CombinedCompareResult;
-import org.refactoringminer.utils.RefactoringRelationship;
+import org.refactoringminer.utils.RefactoringCollector;
 import org.refactoringminer.utils.RefactoringSet;
 
 public class TestWithArqsoft16Dataset2 {
@@ -32,7 +27,7 @@ public class TestWithArqsoft16Dataset2 {
         RefactoringType.PUSH_DOWN_ATTRIBUTE,*/
         RefactoringType.RENAME_PACKAGE);
     
-    GitHistoryRefactoringMiner2 rm2 = new GitHistoryRefactoringMiner2();
+    GitHistoryRefactoringMinerImpl rm2 = new GitHistoryRefactoringMinerImpl();
     
 //    RefactoringSet atmosphere_cc2b3f1_rm2 = collectRmResult(rm2, "https://github.com/aserg-ufmg/atmosphere.git", "cc2b3f1");
 //    RefactoringSet clojure_17217a1_rm2 = collectRmResult(rm2, "https://github.com/aserg-ufmg/clojure.git", "17217a1");
@@ -68,30 +63,4 @@ public class TestWithArqsoft16Dataset2 {
     return rc.assertAndGetResult();
   }
 
-  private static class RefactoringCollector extends RefactoringHandler {
-    private final RefactoringSet rs;
-    private Exception ex = null;
-    public RefactoringCollector(String cloneUrl, String commitId) {
-      rs = new RefactoringSet(cloneUrl, commitId);
-    }
-    @Override
-    public void handle(RevCommit commitData, List<Refactoring> refactorings) {
-      for (Refactoring r : refactorings) {
-        if (r instanceof SDRefactoring) {
-          SDRefactoring sdr = (SDRefactoring) r;
-          rs.add(new RefactoringRelationship(sdr.getRefactoringType(), sdr.getEntityBefore().toString(), sdr.getEntityAfter().toString()));
-        }
-      }
-    }
-    @Override
-    public void handleException(String commitId, Exception e) {
-      this.ex = e;
-    }
-    public RefactoringSet assertAndGetResult() {
-      if (ex == null) {
-        return rs;
-      }
-      throw new RuntimeException(ex); 
-    }
-  } 
 }

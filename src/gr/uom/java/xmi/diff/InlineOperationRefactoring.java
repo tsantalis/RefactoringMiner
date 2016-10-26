@@ -35,4 +35,13 @@ public class InlineOperationRefactoring implements Refactoring {
 	public RefactoringType getRefactoringType() {
 		return RefactoringType.INLINE_OPERATION;
 	}
+
+  public UMLOperation getInlinedOperation() {
+    return inlinedOperation;
+  }
+
+  public UMLOperation getInlinedToOperation() {
+    return inlinedToOperation;
+  }
+	
 }

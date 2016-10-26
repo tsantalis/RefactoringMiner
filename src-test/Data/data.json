@@ -4214,13 +4214,13 @@
 			"type": "Extract Method",
 			"description": "Extract Method public handleStartTag(xml XmlPullParser) : void extracted from public parse(xml XmlResourceParser) : void in class org.apache.cordova.ConfigXmlParser"
 		}, {
-			"type": "Extract Method",
+			"type": "Inline Method",
 			"description": "Inline Method public postMessage(id String, data Object) : void inlined to public onCreateOptionsMenu(menu Menu) : boolean in class org.apache.cordova.CordovaActivity"
 		}, {
-			"type": "Extract Method",
+			"type": "Inline Method",
 			"description": "Inline Method public postMessage(id String, data Object) : void inlined to public onOptionsItemSelected(item MenuItem) : boolean in class org.apache.cordova.CordovaActivity"
 		}, {
-			"type": "Extract Method",
+			"type": "Inline Method",
 			"description": "Inline Method public postMessage(id String, data Object) : void inlined to public onPrepareOptionsMenu(menu Menu) : boolean in class org.apache.cordova.CordovaActivity"
 		}
 

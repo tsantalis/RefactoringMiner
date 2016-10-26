@@ -2720,7 +2720,7 @@ public class RefactoringPopulator {
 		List<Root> refactorings = getFSERefactorings(flag);
 
 		for (Root refactoring : refactorings) {
-			test.project(refactoring.repository, "master").atCommit(refactoring.sha1).contains(extractRefactorings(refactoring.refactorings));
+			test.project(refactoring.repository, "master").atCommit(refactoring.sha1).containsOnly(extractRefactorings(refactoring.refactorings));
 		}
 	}
 	

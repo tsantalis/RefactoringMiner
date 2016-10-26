@@ -29,7 +29,7 @@ public class RefactoringPopulator {
 	public enum Refactorings {
 		MoveMethod(1), MoveAttribute(2), InlineMethod(4), ExtractMethod(8), PushDownMethod(16), PushDownAttribute(
 				32), PullUpMethod(64), PullUpAttribute(128), ExtractInterface(
-						256), ExtractSuperclass(512), MoveClass(1024), RenamePackage(2048),RenameMethod(4096), All(8191);
+						256), ExtractSuperclass(512), MoveClass(1024), RenamePackage(2048),RenameMethod(4096), ExtractAndMoveMethod(8192), All(16383);
 		private int value;
 
 		private Refactorings(int value) {
@@ -427,8 +427,8 @@ public class RefactoringPopulator {
 						"Pull Up Method private initFigs() : void from class org.argouml.uml.diagram.state.ui.FigSynchState to protected initFigs() : void from class org.argouml.uml.diagram.state.ui.FigStateVertex",
 						// FN** minnor modifications, but no statement is
 						// exactly the same
-						"Extract Method public getModelImpl() : MDRModelImplementation extracted from public createPartition() : Partition in class org.argouml.model.mdr.ActivityGraphsFactoryMDRImpl",
-						"Extract Method public initialize2(myPartition Partition) : void extracted from public createPartition() : Partition in class org.argouml.model.mdr.ActivityGraphsFactoryMDRImpl",
+						//"Extract Method public getModelImpl() : MDRModelImplementation extracted from public createPartition() : Partition in class org.argouml.model.mdr.ActivityGraphsFactoryMDRImpl",
+						//"Extract Method public initialize2(myPartition Partition) : void extracted from public createPartition() : Partition in class org.argouml.model.mdr.ActivityGraphsFactoryMDRImpl",
 						"Pull Up Method public createPartition() : Partition from class org.argouml.model.mdr.ActivityGraphsFactoryMDRImpl to public createPartition() : Partition from class org.argouml.model.mdr.AbstractUmlModelFactoryMDR",
 						"Pull Up Method public set(modelElement Object, value Object) : void from class org.argouml.core.propertypanels.model.GetterSetterManagerImpl.ChangeabilityGetterSetter to public set(modelElement Object, value Object) : void from class org.argouml.core.propertypanels.model.GetterSetterManager.OptionGetterSetter");
 	}

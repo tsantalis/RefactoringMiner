@@ -191,8 +191,8 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 				UMLOperation addedOperation = addedOperationIterator.next();
 				
 				if(removedOperation.getName().equals(addedOperation.getName()) ||
-						(addedOperation.getParameterTypeList().size() > 0 && removedOperation.getParameterTypeList().size() > 0 && addedOperation.equalParameters(removedOperation)) ||
-						(addedOperation.getParameterTypeList().size() > 0 && removedOperation.getParameterTypeList().size() > 0 && addedOperation.overloadedParameters(removedOperation))) {
+						addedOperation.equalParameters(removedOperation) ||
+						addedOperation.overloadedParameters(removedOperation)) {
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
 					if(!operationBodyMapper.getMappings().isEmpty() && operationBodyMapper.exactMatches() > 0) {
 						mapperSet.add(operationBodyMapper);

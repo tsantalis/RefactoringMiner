@@ -336,14 +336,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return count;
 	}
 
-	public int editDistance() {
+	private int editDistance() {
 		int count = 0;
 		for(AbstractCodeMapping mapping : getMappings()) {
 			String s1 = preprocessInput1(mapping.getFragment1(), mapping.getFragment2());
 			String s2 = preprocessInput2(mapping.getFragment1(), mapping.getFragment2());
-			count += StringDistance.editDistance(s1, s2);
+			if(!s1.equals(s2)) {
+				count += StringDistance.editDistance(s1, s2);
+			}
 		}
 		return count;
+	}
+
+	private int operationNameEditDistance() {
+		return StringDistance.editDistance(this.operation1.getName(), this.operation2.getName());
 	}
 
 	public Set<Replacement> getReplacements() {
@@ -718,6 +724,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 //		return sb.toString();
 //	}
 
+	public boolean equals(Object o) {
+		if(this == o) {
+    		return true;
+    	}
+    	
+    	if(o instanceof UMLOperationBodyMapper) {
+    		UMLOperationBodyMapper other = (UMLOperationBodyMapper)o;
+    		return this.operation1.equals(other.operation1) && this.operation2.equals(other.operation2);
+    	}
+    	return false;
+	}
+
 	@Override
 	public int compareTo(UMLOperationBodyMapper operationBodyMapper) {
 		int thisExactMatches = this.exactMatches();
@@ -726,7 +744,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return -Integer.compare(thisExactMatches, otherExactMateches);
 		}
 		else {
-			return Integer.compare(this.editDistance(), operationBodyMapper.editDistance());
+			int thisEditDistance = this.editDistance();
+			int otherEditDistance = operationBodyMapper.editDistance();
+			if(thisEditDistance != otherEditDistance) {
+				return Integer.compare(thisEditDistance, otherEditDistance);
+			}
+			else {
+				int thisOperationNameEditDistance = this.operationNameEditDistance();
+				int otherOperationNameEditDistance = operationBodyMapper.operationNameEditDistance();
+				return Integer.compare(thisOperationNameEditDistance, otherOperationNameEditDistance);
+			}
 		}
 	}
 }

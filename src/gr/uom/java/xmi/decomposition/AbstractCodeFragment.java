@@ -50,7 +50,7 @@ public abstract class AbstractCodeFragment {
 					boolean isArgument = false;
 					if(start >= 1) {
 						String previousChar = afterReplacements.substring(start-1, start);
-						if(previousChar.equals("(") || previousChar.equals(",") || previousChar.equals(" ")) {
+						if(previousChar.equals("(") || previousChar.equals(",") || previousChar.equals(" ") || previousChar.equals("=")) {
 							isArgument = true;
 						}
 					}

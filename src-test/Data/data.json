@@ -3601,6 +3601,15 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public settingNoopInjectionsAndQuery() : void renamed to public settingNoOpInjectionsAndQuery() : void in class org.apache.drill.exec.server.TestDrillbitResilience"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testInterruptingWhileFragmentIsBlockedInAcquiringSendingTicket() : void renamed to public interruptingWhileFragmentIsBlockedInAcquiringSendingTicket() : void in class org.apache.drill.exec.server.TestDrillbitResilience"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testInterruptingBlockedMergingRecordBatch() : void renamed to public interruptingBlockedMergingRecordBatch() : void in class org.apache.drill.exec.server.TestDrillbitResilience"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testInterruptingBlockedUnorderedReceiverBatch() : void renamed to public interruptingBlockedUnorderedReceiverBatch() : void in class org.apache.drill.exec.server.TestDrillbitResilience"
 	}],
 	"time": "6/24/15 8:24 PM",
 	"id": 1124355

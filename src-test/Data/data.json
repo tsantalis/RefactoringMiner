@@ -947,6 +947,15 @@
 	"refactorings": [{
 		"type": "Pull Up Method",
 		"description": "Pull Up Method public getAllTransactionsCount() : long from class org.gnucash.android.db.TransactionsDbAdapter to public getRecordsCount() : long from class org.gnucash.android.db.DatabaseAdapter"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testDeletingAccountShouldDeleteSplits() : void renamed to public shouldDeleteSplitsWhenAccountDeleted() : void in class org.gnucash.android.test.unit.db.AccountsDbAdapterTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testAlphabeticalSorting() : void renamed to public shouldBeAlphabeticallySortedByDefault() : void in class org.gnucash.android.test.unit.db.AccountsDbAdapterTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testAddAccountWithTransaction() : void renamed to public shouldAddAccountsToDatabase() : void in class org.gnucash.android.test.unit.db.AccountsDbAdapterTest"
 	}],
 	"time": "6/16/15 6:15 AM",
 	"id": 1116810
@@ -1594,8 +1603,10 @@
 		}, {
 			"type": "Inline Method",
 			"description": "Inline Method private verifyReceiverSubscribes() : void inlined to public shouldTimeoutSubscription() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method private processTimersUntil(condition BooleanSupplier) : long renamed to private doWorkUntil(condition BooleanSupplier) : long in class uk.co.real_logic.aeron.driver.DriverConductorTest"
 		}
-
 	],
 	"time": "6/16/15 9:43 PM",
 	"id": 1117698
@@ -2005,6 +2016,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method public fillUpRegistryOfServer(serverIdx int, count int, instanceTemplate InstanceInfo) : void extracted from public fillUpRegistry(count int, instanceTemplate InstanceInfo) : void in class com.netflix.eureka2.integration.EurekaDeploymentClients"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testRegistrationAndDiscoveryServices() : void renamed to public testRegistrationAndInterestServices() : void in class com.netflix.eureka2.testkit.embedded.server.EmbeddedWriteServerTest"
 	}],
 	"time": "6/17/15 1:22 PM",
 	"id": 1119965
@@ -2387,6 +2401,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public getAmbuityParserInterpreter(g Grammar, originalParser Parser, tokens TokenStream) : ParserInterpreter extracted from public getAllPossibleParseTrees(g Grammar, originalParser Parser, tokens TokenStream, decision int, alts BitSet, startIndex int, stopIndex int, startRuleIndex int) : List<ParserRuleContext> in class org.antlr.v4.tool.GrammarParserInterpreter"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testInterp(lg LexerGrammar, g Grammar, startRule String, input String, decision int, expectedAmbigAlts String, overallTree String, expectedParseTrees String[]) : void renamed to public testAmbiguousTrees(lg LexerGrammar, g Grammar, startRule String, input String, decision int, expectedAmbigAlts String, overallTree String, expectedParseTrees String[]) : void in class org.antlr.v4.test.tool.TestAmbigParseTrees"
 	}],
 	"time": "6/18/15 9:25 PM",
 	"id": 1119661
@@ -3340,6 +3357,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method public getPathToJSBundleDir(target BuildTarget) : Path extracted from protected ReactNativeBundle(ruleParams BuildRuleParams, resolver SourcePathResolver, entryPath SourcePath, isDevMode boolean, bundleName String, jsPackager SourcePath, platform ReactNativePlatform, depsFinder ReactNativeDeps) in class com.facebook.buck.js.ReactNativeBundle"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getPathToResources() : Path renamed to public getResources() : Path in class com.facebook.buck.js.ReactNativeBundle"
 	}],
 	"time": "6/24/15 1:08 PM",
 	"id": 1123736
@@ -3390,6 +3410,12 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private getTestPathPredicate(enableStringWhitelisting boolean, whitelistedStringDirs ImmutableSet<Path>, locales ImmutableSet<String>) : Predicate<Path> extracted from public testFilterStrings() : void in class com.facebook.buck.android.FilterResourcesStepTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testFilterStrings() : void renamed to public testWhitelistFilter() : void in class com.facebook.buck.android.FilterResourcesStepTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public enableStringsFilter() : Builder renamed to public enableStringWhitelisting() : Builder in class com.facebook.buck.android.FilterResourcesStep.Builder"
 	}],
 	"time": "6/24/15 1:21 PM",
 	"id": 1123715
@@ -3551,6 +3577,18 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private rescueMembersAndInstantiateSuperInterfaces(type JDeclaredType) : void extracted from public visit(type JInterfaceType, ctx Context) : boolean in class com.google.gwt.dev.jjs.impl.ControlFlowAnalyzer.RescueVisitor"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public _disabled_testJsType3DimArray_castedFromNativeWithACall() : void renamed to public __disabled__testJsType3DimArray_castedFromNativeWithACall() : void in class com.google.gwt.core.client.interop.JsTypeArrayTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private rescueMembersIfInstantiable(type JDeclaredType) : void renamed to private rescueMembers(type JDeclaredType) : void in class com.google.gwt.dev.jjs.impl.ControlFlowAnalyzer.RescueVisitor"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public _disabled_testJsTypeArray_returnFromNativeWithACall() : void renamed to public testJsTypeArray_returnFromNativeWithACall() : void in class com.google.gwt.core.client.interop.JsTypeArrayTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public _disabled_testJsTypeArray_asAField() : void renamed to public __disabled__testJsTypeArray_asAField() : void in class com.google.gwt.core.client.interop.JsTypeArrayTest"
 	}],
 	"time": "6/24/15 6:41 PM",
 	"id": 1124507
@@ -3912,6 +3950,12 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private terminate() : void extracted from protected report(e Exception) : void in class com.koushikdutta.async.http.AsyncHttpResponseImpl"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package spewInternal() : void renamed to package sendCachedDataOnNetworkThread() : void in class com.koushikdutta.async.http.cache.ResponseCacheMiddleware.CachedBodyEmitter"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package spew() : void renamed to package sendCachedData() : void in class com.koushikdutta.async.http.cache.ResponseCacheMiddleware.CachedBodyEmitter"
 	}],
 	"time": "6/28/15 6:25 PM",
 	"id": 1127199
@@ -4334,6 +4378,9 @@
 	"refactorings": [{
 		"type": "Push Down Method",
 		"description": "Push Down Method protected getConnection() : HazelcastConnection from class com.hazelcast.jca.AbstractDeploymentTest to class com.hazelcast.jca.XATransactionTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public Init() : void renamed to public init() : void in class com.hazelcast.jca.XATransactionTest"
 	}],
 	"time": "7/6/15 5:59 AM",
 	"id": 1132974
@@ -4509,6 +4556,9 @@
 	}, {
 		"type": "Move Class",
 		"description": "Move Class Foo moved from com.google.common.truth.ListTest to com.google.common.truth.IterableTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public listContainsExactlyArray() : void renamed to public iterableContainsExactlyArray() : void in class com.google.common.truth.IterableTest"
 	}],
 	"time": "7/6/15 1:54 PM",
 	"id": 1133238
@@ -4522,6 +4572,21 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public isOrdered() : void extracted from public isPartiallyOrdered() : void in class com.google.common.truth.IterableSubject"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public listIsPartiallyOrderedWithComparatorFailure() : void renamed to public listIsOrderedWithComparatorFailure() : void in class com.google.common.truth.ListTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public isPartiallyOrderedFailure() : void renamed to public isOrderedFailure() : void in class com.google.common.truth.ListTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public isPartiallyOrderedWithNonComparableElementsFailure() : void renamed to public isOrderedWithNonComparableElementsFailure() : void in class com.google.common.truth.ListTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public listIsPartiallyOrdered() : void renamed to public listIsOrdered() : void in class com.google.common.truth.ListTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public listIsPartiallyOrderedWithComparator() : void renamed to public listIsOrderedWithComparator() : void in class com.google.common.truth.ListTest"
 	}],
 	"time": "7/6/15 1:54 PM",
 	"id": 1133240
@@ -4675,6 +4740,12 @@
 	}, {
 		"type": "Inline Method",
 		"description": "Inline Method private initializeResources() : void inlined to private initialize() : void in class org.thoughtcrime.securesms.components.emoji.EmojiToggle"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method protected onKeyboardShown(keyboardHeight int) : void renamed to protected onKeyboardOpen(keyboardHeight int) : void in class org.thoughtcrime.securesms.components.KeyboardAwareLinearLayout"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public toggle() : void renamed to public setToIme() : void in class org.thoughtcrime.securesms.components.emoji.EmojiToggle"
 	}],
 	"time": "7/6/15 8:50 PM",
 	"id": 1133054
@@ -4858,6 +4929,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method public saveResource(relativePath Path, content byte[]) : void extracted from public save(bytecode byte[]) : void in class net.orfjackal.retrolambda.files.ClassSaver"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public save(bytecode byte[]) : void renamed to public saveClass(bytecode byte[]) : void in class net.orfjackal.retrolambda.files.ClassSaver"
 	}],
 	"time": "7/8/15 2:08 PM",
 	"id": 1136668
@@ -5112,8 +5186,10 @@
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method protected setCpuSpeedSteps(numSpeedSteps int) : void extracted from package readFromParcelLocked(in Parcel) : void in class com.android.internal.os.BatteryStatsImpl"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method private load() : void renamed to private loadStats() : void in class com.android.internal.os.BatteryStatsHelper"
 		}
-
 	],
 	"time": "7/9/15 4:42 PM",
 	"id": 1137231
@@ -5454,9 +5530,7 @@
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method protected createAddress(host String, port int) : Address extracted from private createAddresses(addressArray String[]) : Address[] in class com.hazelcast.test.TestHazelcastInstanceFactory"
-		},
-
-		{
+		}, {
 			"type": "Extract Method",
 			"description": "Extract Method protected startSelectors() : void extracted from public start() : void in class com.hazelcast.client.connection.nio.ClientConnectionManagerImpl"
 		}, {
@@ -5465,6 +5539,9 @@
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method protected shutdownSelectors() : void extracted from public shutdown() : void in class com.hazelcast.client.connection.nio.ClientConnectionManagerImpl"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method private tripshutdown(instances HazelcastInstance[]) : void renamed to private tripTerminate(instances HazelcastInstance[]) : void in class com.hazelcast.mapreduce.MapReduceTest"
 		}
 	],
 	"time": "7/13/15 8:28 PM",
@@ -6329,6 +6406,12 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private createSymLinkSdks(sdks Iterable<String>, root Path, version String) : void extracted from private createSymLinkIosSdks(root Path, version String) : void in class com.facebook.buck.apple.AppleSdkDiscoveryTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public simulatorPlatformSetsLinkerFlags() : void renamed to public iphoneOSSimulatorPlatformSetsLinkerFlags() : void in class com.facebook.buck.apple.AppleCxxPlatformsTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public appleSdkPathsBuiltFromDirectory() : void renamed to public iphoneOSSdkPathsBuiltFromDirectory() : void in class com.facebook.buck.apple.AppleCxxPlatformsTest"
 	}],
 	"time": "7/14/15 9:46 PM",
 	"id": 1141324
@@ -6735,8 +6818,19 @@
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method private releaseCurrentRequest() : void extracted from public delegateAIEnded(ai AIRobot) : void in class buildcraft.robotics.boards.BoardRobotDelivery"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public provideItemsForRequest(i int, stack ItemStack) : ItemStack renamed to public offerItem(i int, stack ItemStack) : ItemStack in class buildcraft.robotics.TileRequester"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public provideItemsForRequest(i int, stack ItemStack) : ItemStack renamed to public offerItem(slot int, stack ItemStack) : ItemStack in class buildcraft.builders.TileBuilder"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public getNumberOfRequests() : int renamed to public getRequestsCount() : int in class buildcraft.builders.TileBuilder"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public getNumberOfRequests() : int renamed to public getRequestsCount() : int in class buildcraft.robotics.TileRequester"
 		}
-
 	],
 	"time": "7/17/15 8:32 AM",
 	"id": 1143517
@@ -7309,6 +7403,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public getDefinitionPosition(javaNode JavaNode) : CodePosition extracted from public getDefinitionPosition(line int, offset int) : CodePosition in class jadx.api.JavaClass"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public length() : int renamed to public bufLength() : int in class jadx.core.codegen.CodeWriter"
 	}],
 	"time": "7/26/15 11:19 AM",
 	"id": 1150361
@@ -7446,8 +7543,16 @@
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method private init() : void extracted from public ClientOptionsBase() in class io.vertx.core.net.ClientOptionsBase"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public setDSync(dsync boolean) : OpenOptions renamed to public setDsync(dsync boolean) : OpenOptions in class io.vertx.core.file.OpenOptions"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public setWebsocketSubProtocol(subProtocols String) : HttpServerOptions renamed to public setWebsocketSubProtocols(subProtocols String) : HttpServerOptions in class io.vertx.core.http.HttpServerOptions"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public isDSync() : boolean renamed to public isDsync() : boolean in class io.vertx.core.file.OpenOptions"
 		}
-
 	],
 	"time": "7/27/15 10:38 AM",
 	"id": 1152344
@@ -7601,8 +7706,10 @@
 		}, {
 			"type": "Inline Method",
 			"description": "Inline Method private sendHearBeatIfRequired(now long, member MemberImpl) : void inlined to private heartBeaterMaster(now long, clockJump long) : void in class com.hazelcast.cluster.impl.ClusterServiceImpl"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public testTcpIp__ClusterMerge() : void renamed to public testTcpIp_ClusterMerge() : void in class com.hazelcast.cluster.SplitBrainHandlerTest"
 		}
-
 	],
 	"time": "7/28/15 4:32 AM",
 	"id": 1151667
@@ -7619,6 +7726,24 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public convertTypeToCSharp(type String) : String from class com.hazelcast.client.protocol.generator.CodecModel.ParameterModel to class com.hazelcast.client.protocol.generator.CodeGenerationUtils"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getKeyTypeInsideMap(type String) : String renamed to public getFirstGenericParameterType(type String) : String in class com.hazelcast.client.protocol.generator.CodeGenerationUtils"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getTypeInsideCollection(type String) : String renamed to public getGenericType(type String) : String in class com.hazelcast.client.protocol.generator.CodeGenerationUtils"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getTypeInsideData(type String) : String renamed to public getArrayType(type String) : String in class com.hazelcast.client.protocol.generator.CodeGenerationUtils"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getValueTypeInsideMap(type String) : String renamed to public getSecondGenericParameterType(type String) : String in class com.hazelcast.client.protocol.generator.CodeGenerationUtils"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public calculateStringDataSize(string String) : int renamed to public calculateDataSize(string String) : int in class com.hazelcast.client.impl.protocol.util.ParameterUtil"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public calculateByteArrayDataSize(bytes byte[]) : int renamed to public calculateDataSize(bytes byte[]) : int in class com.hazelcast.client.impl.protocol.util.ParameterUtil"
 	}],
 	"time": "7/28/15 5:19 AM",
 	"id": 1151664
@@ -7919,6 +8044,15 @@
 	"refactorings": [{
 		"type": "Inline Method",
 		"description": "Inline Method private comparator(ignoreCase boolean) : Comparator<CharSequence> inlined to public contains(name CharSequence, value CharSequence, ignoreCase boolean) : boolean in class io.netty.handler.codec.DefaultTextHeaders"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public as(value byte[]) : ByteString renamed to public bs(value byte[]) : ByteString in class io.netty.handler.codec.http2.Http2TestUtil"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getInt(name T, defaultValue short) : short renamed to public getShort(name T, defaultValue short) : short in class io.netty.handler.codec.DefaultHeaders"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getInt(name T, defaultValue short) : short renamed to public getShort(name T, defaultValue short) : short in class io.netty.handler.codec.EmptyHeaders"
 	}],
 	"time": "7/30/15 2:38 PM",
 	"id": 1153762
@@ -8214,14 +8348,21 @@
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method public addCompressionHeaders(getMessage HttpGet, acceptEncoding String) : void extracted from public test406Error(acceptContent String) : void in class com.linkedin.restli.examples.TestCompressionServer"
-		},
-
-		{
+		}, {
 			"type": "Move Method",
 			"description": "Move Method public shouldCompressRequest(entityLength int, requestCompressionOverride CompressionOption) : boolean from class com.linkedin.r2.filter.CompressionConfig to class com.linkedin.r2.filter.compression.ClientCompressionFilter"
 		}, {
 			"type": "Move Method",
 			"description": "Move Method public testEncodingGeneration(encoding EncodingType[], acceptEncoding String) : void from class com.linkedin.restli.examples.TestCompressionServer to class com.linkedin.r2.filter.compression.TestClientCompressionFilter"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method private shouldCompressResponse(operation String) : boolean renamed to private shouldCompressResponseForOperation(operation String) : boolean in class com.linkedin.r2.filter.compression.ClientCompressionFilter"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public testGetCompressionConfig(serviceName String, requestCompressionThresholdDefault int, expectedConfig CompressionConfig) : void renamed to public testGetRequestCompressionConfig(serviceName String, requestCompressionThresholdDefault int, expectedConfig CompressionConfig) : void in class com.linkedin.r2.transport.http.client.TestHttpClientFactory"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method private provideRequestData() : Object[][] renamed to private provideRequestCompressionData() : Object[][] in class com.linkedin.r2.filter.compression.TestClientCompressionFilter"
 		}
 	],
 	"time": "8/3/15 9:25 PM",
@@ -8531,6 +8672,12 @@
 	}, {
 		"type": "Extract Superclass",
 		"description": "Extract Superclass org.geoserver.ogr.core.AbstractToolConfigurator from class org.geoserver.wfs.response.Ogr2OgrConfigurator"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getOgrExecutable() : String renamed to public getExecutable() : String in class org.geoserver.wfs.response.Ogr2OgrOutputFormat"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public setOgrExecutable(ogrExecutable String) : void renamed to public setExecutable(ogrExecutable String) : void in class org.geoserver.wfs.response.Ogr2OgrOutputFormat"
 	}],
 	"time": "8/5/15 7:22 PM",
 	"id": 1158913
@@ -8590,6 +8737,12 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private addSourceRoot(module Module, sourceRootName String, rootType JpsModuleSourceRootType<?>) : VirtualFile extracted from private addSourceRoot(module Module, sourceRootName String, isTestSourceRoot boolean) : VirtualFile in class org.intellij.erlang.compilation.ErlangCompilationTestBase"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private getErlangModuleDescriptorFromConfig(target ErlangTarget, context CompileContext, isTests boolean) : List renamed to private getErlangFileDescriptorFromConfig(target ErlangTarget, context CompileContext, isTests boolean) : List in class org.intellij.erlang.jps.builder.ErlangBuilder"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private assertSameErlangModules(moduleDescriptors List, expectedModules String[]) : void renamed to private assertSameErlangFiles(moduleDescriptors List, expectedModules String[]) : void in class org.intellij.erlang.compilation.ErlangDependenciesResolutionTest"
 	}],
 	"time": "8/6/15 12:37 PM",
 	"id": 1159409

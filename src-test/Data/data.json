@@ -396,6 +396,33 @@
 	}, {
 		"type": "Move Class",
 		"description": "Move Class SplitCallable moved from org.apache.cassandra.hadoop.AbstractColumnFamilyInputFormat to org.apache.cassandra.hadoop.cql3.CqlInputFormat"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageFilter() : void renamed to public testCqlNativeStorageFilter() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageFullCopy() : void renamed to public testCqlNativeStorageFullCopy() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageBagOnlyCopy() : void renamed to public testCqlNativeStorageBagOnlyCopy() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageSingleTupleCopy() : void renamed to public testCqlNativeStorageSingleTupleCopy() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageCounterCF() : void renamed to public testCqlNativeStorageCounterCF() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageJoin() : void renamed to public testCqlNativeStorageJoin() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageCompositeColumnCF() : void renamed to public testCqlNativeStorageCompositeColumnCF() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageSchema() : void renamed to public testCqlNativeStorageSchema() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageCompositeKeyCF() : void renamed to public testCqlNativeStorageCompositeKeyCF() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
 	}],
 	"time": "6/8/15 4:41 PM",
 	"id": 1106365
@@ -736,6 +763,12 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public notifyHalt() : void from class org.drools.reteoo.common.ReteAgenda to class org.drools.core.phreak.SynchronizedBypassPropagationList"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public requiresImmediateFlushingIfNotFiring() : boolean renamed to public requiresImmediateFlushing() : boolean in class org.drools.core.phreak.PhreakTimerNode.TimerAction"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public requiresImmediateFlushingIfNotFiring() : boolean renamed to public requiresImmediateFlushing() : boolean in class org.drools.core.phreak.PropagationEntry.AbstractPropagationEntry"
 	}],
 	"time": "6/15/15 9:41 AM",
 	"id": 1112091
@@ -1495,6 +1528,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public contains(other SourceRange) : boolean extracted from public inclusiveContains(other SourceRange) : boolean in class melnorme.lang.tooling.ast.SourceRange"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getInvocationOffest() : int renamed to public getInvocationOffset() : int in class melnorme.lang.ide.ui.editor.actions.AbstractOpenElementOperation"
 	}],
 	"time": "6/16/15 2:13 PM",
 	"id": 1117765
@@ -2169,6 +2205,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private initialize() : void extracted from public launchPig(physicalPlan PhysicalPlan, grpName String, pigContext PigContext) : PigStats in class org.apache.pig.backend.hadoop.executionengine.spark.SparkLauncher"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private startSparkJob() : void renamed to private addFilesToSparkJob() : void in class org.apache.pig.backend.hadoop.executionengine.spark.SparkLauncher"
 	}],
 	"time": "6/18/15 1:08 AM",
 	"id": 1119037
@@ -2251,6 +2290,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method package register(metrics Iterable) : void extracted from public start() : void in class org.sonar.server.startup.RegisterMetrics"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package getMetricsRepositories() : List renamed to package getPluginMetrics() : List in class org.sonar.server.startup.RegisterMetrics"
 	}],
 	"time": "6/18/15 6:52 AM",
 	"id": 1118403
@@ -2744,6 +2786,9 @@
 	"refactorings": [{
 		"type": "Move Attribute",
 		"description": "Move Attribute public VIDMINKY_MAP : Map from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.PosTagHelper"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private hasRequiredPosTag(posTagsToFind Collection, tokenReadings AnalyzedTokenReadings) : boolean renamed to private getReadingWithVidmPosTag(posTagsToFind Collection, tokenReadings AnalyzedTokenReadings) : boolean in class org.languagetool.rules.uk.TokenAgreementRule"
 	}],
 	"time": "6/21/15 12:33 PM",
 	"id": 1121417
@@ -4015,6 +4060,9 @@
 	"refactorings": [{
 		"type": "Extract Superclass",
 		"description": "Extract Superclass com.facebook.presto.PartitionedPagePartitionFunction from class com.facebook.presto.HashPagePartitionFunction"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package getPartitionHashBucket(partitionCount int, position int, page Page) : int renamed to package getPartitionBucket(partitionCount int, position int, page Page) : int in class com.facebook.presto.operator.HashGenerator"
 	}],
 	"time": "6/30/15 12:08 AM",
 	"id": 1127907
@@ -4487,6 +4535,9 @@
 	}, {
 		"type": "Move Class",
 		"description": "Move Class ConcurrentLRUList moved from com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache.local"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getAllocatedPages() : long renamed to public getExclusiveWriteCachePagesSize() : long in class com.orientechnologies.orient.core.storage.impl.memory.ODirectMemoryOnlyDiskCache"
 	}],
 	"time": "7/6/15 10:20 AM",
 	"id": 1132674
@@ -4517,6 +4568,12 @@
 	"refactorings": [{
 		"type": "Move Class",
 		"description": "Move Class ReverseFilterResultComparator moved from org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testEmbeddedQuery() : void renamed to public testEmbeddedLuceneQuery() : void in class org.infinispan.client.hotrod.marshall.EmbeddedCompatTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private createAccount(id int) : AccountPB renamed to private createAccountPB(id int) : AccountPB in class org.infinispan.client.hotrod.marshall.EmbeddedCompatTest"
 	}],
 	"time": "7/6/15 1:12 PM",
 	"id": 1134634
@@ -4801,6 +4858,9 @@
 	"refactorings": [{
 		"type": "Inline Method",
 		"description": "Inline Method private createUntaggedTemplateLiteral(n Node) : void inlined to package visitTemplateLiteral(t NodeTraversal, n Node) : void in class com.google.javascript.jscomp.Es6TemplateLiterals"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private createTaggedTemplateLiteral(t NodeTraversal, n Node) : void renamed to package visitTaggedTemplateLiteral(t NodeTraversal, n Node) : void in class com.google.javascript.jscomp.Es6TemplateLiterals"
 	}],
 	"time": "7/7/15 1:21 PM",
 	"id": 1135734
@@ -4824,6 +4884,24 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method protected checkRequest(request HttpServletRequest) : void extracted from protected checkAndPrepare(request HttpServletRequest, response HttpServletResponse, cacheControl CacheControl) : void in class org.springframework.web.servlet.support.WebContentGenerator"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method protected lookupCacheSeconds(urlPath String) : CacheControl renamed to protected lookupCacheControl(urlPath String) : CacheControl in class org.springframework.web.servlet.mvc.WebContentInterceptor"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testSetPathMatcherToNull() : void renamed to public throwsExceptionWithNullPathMatcher() : void in class org.springframework.web.servlet.mvc.WebContentInterceptorTests"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public preHandleSetsCacheSecondsOnMatchingRequest() : void renamed to public cacheResourcesConfiguration() : void in class org.springframework.web.servlet.mvc.WebContentInterceptorTests"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public preHandleSetsCacheSecondsOnMatchingRequestWithCustomCacheMapping() : void renamed to public mappedCacheConfigurationOverridesGlobal() : void in class org.springframework.web.servlet.mvc.WebContentInterceptorTests"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public preHandleSetsCacheSecondsOnMatchingRequestWithCachingDisabled() : void renamed to public emptyCacheConfiguration() : void in class org.springframework.web.servlet.mvc.WebContentInterceptorTests"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public preHandleSetsCacheSecondsOnMatchingRequestWithNoCaching() : void renamed to public preventCacheConfiguration() : void in class org.springframework.web.servlet.mvc.WebContentInterceptorTests"
 	}],
 	"time": "7/7/15 8:08 PM",
 	"id": 1135909
@@ -5007,6 +5085,9 @@
 	"refactorings": [{
 		"type": "Move Method",
 		"description": "Move Method private getLiveIndicator(base Icon) : Icon from class com.intellij.execution.ui.RunContentManagerImpl to class com.intellij.execution.runners.ExecutionUtil"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private getConfiguration(project Project) : RunnerAndConfigurationSettings renamed to private getSelectedConfiguration(project Project) : RunnerAndConfigurationSettings in class com.intellij.execution.ExecutorRegistryImpl.ExecutorAction"
 	}],
 	"time": "7/8/15 5:41 PM",
 	"id": 1136184
@@ -5092,6 +5173,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private getCustomRoutingCol() : ColumnIdent extracted from private getRoutingCol() : ColumnIdent in class io.crate.metadata.doc.DocIndexMetaData"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testSelectById() : void renamed to public testSelectByIdWithCustomRouting() : void in class io.crate.analyze.where.WhereClauseAnalyzerTest"
 	}],
 	"time": "7/9/15 6:48 AM",
 	"id": 1136870
@@ -5341,6 +5425,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private onUserLoggedIn(uri Uri) : void extracted from protected onNewIntent(intent Intent) : void in class com.github.mobile.accounts.LoginActivity"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private endAccess(accessToken String, scope String) : void renamed to private endAuth(accessToken String, scope String) : void in class com.github.mobile.accounts.LoginActivity"
 	}],
 	"time": "7/11/15 9:20 AM",
 	"id": 1139092
@@ -5491,6 +5578,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public configKey(targetType Class, method Method) : String extracted from public configKey(method Method) : String in class feign.Feign"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public toKeyMethodFormatsAsExpected() : void renamed to public configKeyFormatsAsExpected() : void in class feign.FeignTest"
 	}],
 	"time": "7/13/15 1:49 PM",
 	"id": 1140131
@@ -6160,6 +6250,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private changeEditTextPreferenceValue(pref EditTextPreference, newValue String) : void extracted from public onPreferenceChange(preference Preference, newValue Object) : boolean in class org.wordpress.android.ui.prefs.SiteSettingsFragment"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private applySettings() : void renamed to private applyChanges() : void in class org.wordpress.android.ui.prefs.SiteSettingsFragment"
 	}],
 	"time": "7/14/15 2:27 AM",
 	"id": 1140686
@@ -6240,6 +6333,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private dummy(builder PsiBuilder) : void extracted from public parseTypeParameter(builder PsiBuilder) : Marker in class com.intellij.lang.java.parser.ReferenceParser"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testAnyType() : void renamed to public testAnyTypeParams() : void in class com.intellij.lang.java.parser.partial.ReferenceParserTest"
 	}],
 	"time": "7/14/15 10:55 AM",
 	"id": 1141018
@@ -6308,6 +6404,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private dummy(builder PsiBuilder) : void extracted from public parseTypeParameter(builder PsiBuilder) : Marker in class com.intellij.lang.java.parser.ReferenceParser"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testAnyType() : void renamed to public testAnyTypeParams() : void in class com.intellij.lang.java.parser.partial.ReferenceParserTest"
 	}],
 	"time": "7/14/15 4:07 PM",
 	"id": 1140982
@@ -6331,6 +6430,9 @@
 	}, {
 		"type": "Move Class",
 		"description": "Move Class SaveContextPrintWriter moved from org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to org.springframework.security.web.context.OnCommittedResponseWrapper"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private doSaveContext() : void renamed to protected onResponseCommitted() : void in class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper"
 	}],
 	"time": "7/14/15 4:48 PM",
 	"id": 1141078
@@ -6344,6 +6446,9 @@
 	}, {
 		"type": "Move Class",
 		"description": "Move Class SaveContextPrintWriter moved from org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to org.springframework.security.web.context.OnCommittedResponseWrapper"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private doSaveContext() : void renamed to protected onResponseCommitted() : void in class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper"
 	}],
 	"time": "7/14/15 4:49 PM",
 	"id": 1141077
@@ -7962,6 +8067,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public dumpMemtable() : void extracted from public truncateBlocking() : void in class org.apache.cassandra.db.ColumnFamilyStore"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public initRowCache() : void renamed to public init() : void in class org.apache.cassandra.db.ColumnFamilyStore"
 	}],
 	"time": "7/29/15 5:15 PM",
 	"id": 1153409
@@ -8871,6 +8979,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private assertExistsAndReturn(content String) : Object extracted from public exists(content String) : void in class org.springframework.test.util.JsonPathExpectationsHelper"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public test() : void renamed to public assertValueWithDifferentExpectedType() : void in class org.springframework.test.util.JsonPathExpectationsHelperTests"
 	}],
 	"time": "8/6/15 5:08 PM",
 	"id": 1159696

@@ -27,9 +27,6 @@ public class OperationInvocation {
 		if(invocation.getExpression() != null) {
 			this.expression = invocation.getExpression().toString();
 		}
-		else {
-			this.expression = "";
-		}
 	}
 	
 	public OperationInvocation(SuperMethodInvocation invocation) {
@@ -40,7 +37,6 @@ public class OperationInvocation {
 		for(Expression argument : args) {
 			this.arguments.add(argument.toString());
 		}
-		this.expression = "super";
 	}
 
     public String getMethodName() {

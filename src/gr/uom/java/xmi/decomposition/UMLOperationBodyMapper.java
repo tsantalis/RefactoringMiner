@@ -661,6 +661,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return replacements;
 		}
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+				invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() != null &&
 				invocationCoveringTheEntireStatement1.getExpression().equals(invocationCoveringTheEntireStatement2.getExpression()) &&
 				!invocationCoveringTheEntireStatement1.getMethodName().equals(invocationCoveringTheEntireStatement2.getMethodName())) {
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getMethodName(),

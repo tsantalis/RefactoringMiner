@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 public class OperationInvocation {
 	private String methodName;
 	private int typeArguments;
+	private String expression;
 	private List<String> arguments;
 	private volatile int hashCode = 0;
 	
@@ -23,6 +24,12 @@ public class OperationInvocation {
 		for(Expression argument : args) {
 			this.arguments.add(argument.toString());
 		}
+		if(invocation.getExpression() != null) {
+			this.expression = invocation.getExpression().toString();
+		}
+		else {
+			this.expression = "";
+		}
 	}
 	
 	public OperationInvocation(SuperMethodInvocation invocation) {
@@ -33,6 +40,15 @@ public class OperationInvocation {
 		for(Expression argument : args) {
 			this.arguments.add(argument.toString());
 		}
+		this.expression = "super";
+	}
+
+    public String getMethodName() {
+		return methodName;
+	}
+
+	public String getExpression() {
+		return expression;
 	}
 
     public List<String> getArguments() {

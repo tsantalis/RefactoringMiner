@@ -61,7 +61,7 @@ public class RefactoringRelationship implements Comparable<RefactoringRelationsh
   
   @Override
   public String toString() {
-    return String.format("%s : %s %s", refactoringType.getDisplayName(), entityBefore, entityAfter);
+    return String.format("%s\t%s\t%s", refactoringType.getDisplayName(), entityBefore, entityAfter);
   }
 
   public static String normalize(String entity) {
@@ -126,17 +126,18 @@ public class RefactoringRelationship implements Comparable<RefactoringRelationsh
   
   @Override
   public int compareTo(RefactoringRelationship o) {
+    int rt = getRefactoringType().compareTo(o.getRefactoringType());
     int cm = getMainEntity().compareTo(o.getMainEntity());
     int cs = getSecondaryEntity().compareTo(o.getSecondaryEntity());
     int ct = refactoringType.compareTo(o.refactoringType);
-    return cm != 0 ? cm : cs != 0 ? cs : ct;
+    return rt != 0 ? rt : cm != 0 ? cm : cs != 0 ? cs : ct;
   }
 
   public GroupKey getGroupKey() {
     return new GroupKey(refactoringType, getMainEntity());
   }
 
-  public static class GroupKey implements Comparable<GroupKey>{
+  public static class GroupKey implements Comparable<GroupKey> {
     private final RefactoringType refactoringType;
     private final String mainEntity;
 
@@ -165,14 +166,15 @@ public class RefactoringRelationship implements Comparable<RefactoringRelationsh
 
     @Override
     public int compareTo(GroupKey o) {
+      int rt = refactoringType.compareTo(o.refactoringType);
       int cm = mainEntity.compareTo(o.mainEntity);
       int ct = refactoringType.compareTo(o.refactoringType);
-      return cm != 0 ? cm : ct;
+      return rt != 0 ? rt : cm != 0 ? cm : ct;
     }
     
     @Override
     public String toString() {
-      return String.format("%s : %s", refactoringType.getDisplayName(), mainEntity);
+      return String.format("%s\t%s", refactoringType.getDisplayName(), mainEntity);
     }
   }
 }

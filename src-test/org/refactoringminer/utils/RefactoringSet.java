@@ -36,6 +36,10 @@ public class RefactoringSet {
   public Set<RefactoringRelationship> getRefactorings() {
     return refactorings;
   }
+  
+  public Set<RefactoringRelationship.GroupKey> getRefactoringsGroups() {
+    return refactoringGroups.keySet();
+  }
 
   public void add(RefactoringRelationship r) {
     this.refactorings.add(r);
@@ -51,14 +55,6 @@ public class RefactoringSet {
   public void add(Iterable<RefactoringRelationship> rs) {
     for (RefactoringRelationship r : rs) {
       this.add(r);
-    }
-  }
-
-  public CompareResult compareTo(RefactoringSet set, boolean grouped) {
-    if (grouped) {
-      return new CompareResult(project, revision, refactoringGroups.keySet(), set.refactoringGroups.keySet());
-    } else {
-      return new CompareResult(project, revision, refactorings, set.refactorings);
     }
   }
 

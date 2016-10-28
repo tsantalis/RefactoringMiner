@@ -348,6 +348,18 @@ public class Arqsoft16Dataset {
     
   }
 
+  public RefactoringSet[] all() {
+      return new RefactoringSet[]{
+          atmosphere_cc2b3f1,
+          clojure_17217a1,
+          guava_79767ec,
+          metrics_276d5e4,
+          orientdb_b213aaf,
+          retrofit_f13f317,
+          springBoot_48e893a
+      };
+  }
+  
   private List<RefactoringRelationship> item(String refTypeS, String before, String after) {
     if (before.trim().isEmpty() || after.trim().isEmpty()) {
       return Collections.emptyList();

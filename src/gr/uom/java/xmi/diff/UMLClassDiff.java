@@ -184,47 +184,70 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	}
 	
 	public void checkForOperationSignatureChanges() {
-		for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
-			UMLOperation removedOperation = removedOperationIterator.next();
-			TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
-			for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
-				UMLOperation addedOperation = addedOperationIterator.next();
-				
-				if(removedOperation.getName().equals(addedOperation.getName()) ||
-						addedOperation.equalParameters(removedOperation) ||
-						addedOperation.overloadedParameters(removedOperation)) {
-					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
-					if(!operationBodyMapper.getMappings().isEmpty() &&
-							(operationBodyMapper.exactMatches() > 0 ||
-							//all statements should be matched, but if there is only one statement, it should have only one replacement
-							(operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2() == 0 &&
-							operationBodyMapper.getMappings().size() == 1 ? operationBodyMapper.getReplacements().size() == 1 : true)
-							)) {
-						mapperSet.add(operationBodyMapper);
+		if(removedOperations.size() <= addedOperations.size()) {
+			for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
+				UMLOperation removedOperation = removedOperationIterator.next();
+				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
+				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
+					UMLOperation addedOperation = addedOperationIterator.next();
+
+					if(removedOperation.getName().equals(addedOperation.getName()) ||
+							addedOperation.equalParameters(removedOperation) ||
+							addedOperation.overloadedParameters(removedOperation)) {
+						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
+						if(!operationBodyMapper.getMappings().isEmpty() &&
+								operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2()) {
+							mapperSet.add(operationBodyMapper);
+						}
 					}
 				}
-				else {
-					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
-					if(!operationBodyMapper.getMappings().isEmpty() && operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2() == 0) {
-						mapperSet.add(operationBodyMapper);
+				if(!mapperSet.isEmpty()) {
+					UMLOperationBodyMapper firstMapper = mapperSet.first();
+					UMLOperation addedOperation = firstMapper.getOperation2();
+					addedOperations.remove(addedOperation);
+					removedOperationIterator.remove();
+
+					UMLOperationDiff operationDiff = new UMLOperationDiff(removedOperation, addedOperation);
+					operationDiffList.add(operationDiff);
+					if(!removedOperation.getName().equals(addedOperation.getName()) && addedOperation.equalReturnParameter(removedOperation)) {
+						RenameOperationRefactoring rename = new RenameOperationRefactoring(removedOperation, addedOperation);
+						refactorings.add(rename);
 					}
+					this.addOperationBodyMapper(firstMapper);
 				}
 			}
-			if(!mapperSet.isEmpty()) {
-				UMLOperationBodyMapper firstMapper = mapperSet.first();
-				UMLOperation addedOperation = firstMapper.getOperation2();
-				addedOperations.remove(addedOperation);
-				removedOperationIterator.remove();
-				
-				UMLOperationDiff operationDiff = new UMLOperationDiff(removedOperation, addedOperation);
-				operationDiffList.add(operationDiff);
-				if(!removedOperation.getName().equals(addedOperation.getName()) &&
-					addedOperation.equalReturnParameter(removedOperation) &&
-					addedOperation.getParameters().equals(removedOperation.getParameters())) {
-					RenameOperationRefactoring rename = new RenameOperationRefactoring(removedOperation, addedOperation);
-					refactorings.add(rename);
+		}
+		else {
+			for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
+				UMLOperation addedOperation = addedOperationIterator.next();
+				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
+				for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
+					UMLOperation removedOperation = removedOperationIterator.next();
+
+					if(removedOperation.getName().equals(addedOperation.getName()) ||
+							addedOperation.equalParameters(removedOperation) ||
+							addedOperation.overloadedParameters(removedOperation)) {
+						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
+						if(!operationBodyMapper.getMappings().isEmpty() &&
+								operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2()) {
+							mapperSet.add(operationBodyMapper);
+						}
+					}
 				}
-				this.addOperationBodyMapper(firstMapper);
+				if(!mapperSet.isEmpty()) {
+					UMLOperationBodyMapper firstMapper = mapperSet.first();
+					UMLOperation removedOperation = firstMapper.getOperation1();
+					removedOperations.remove(removedOperation);
+					addedOperationIterator.remove();
+
+					UMLOperationDiff operationDiff = new UMLOperationDiff(removedOperation, addedOperation);
+					operationDiffList.add(operationDiff);
+					if(!removedOperation.getName().equals(addedOperation.getName()) && addedOperation.equalReturnParameter(removedOperation)) {
+						RenameOperationRefactoring rename = new RenameOperationRefactoring(removedOperation, addedOperation);
+						refactorings.add(rename);
+					}
+					this.addOperationBodyMapper(firstMapper);
+				}
 			}
 		}
 	}

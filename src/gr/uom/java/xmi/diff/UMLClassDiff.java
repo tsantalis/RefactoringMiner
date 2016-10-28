@@ -194,8 +194,12 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 						addedOperation.equalParameters(removedOperation) ||
 						addedOperation.overloadedParameters(removedOperation)) {
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
-					if(!operationBodyMapper.getMappings().isEmpty() && (operationBodyMapper.exactMatches() > 0 ||
-							operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2() == 0)) {
+					if(!operationBodyMapper.getMappings().isEmpty() &&
+							(operationBodyMapper.exactMatches() > 0 ||
+							//all statements should be matched, but if there is only one statement, it should have only one replacement
+							(operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2() == 0 &&
+							operationBodyMapper.getMappings().size() == 1 ? operationBodyMapper.getReplacements().size() == 1 : true)
+							)) {
 						mapperSet.add(operationBodyMapper);
 					}
 				}

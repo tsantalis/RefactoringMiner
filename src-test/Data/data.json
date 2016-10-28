@@ -2293,6 +2293,9 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method package getMetricsRepositories() : List renamed to package getPluginMetrics() : List in class org.sonar.server.startup.RegisterMetrics"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public disable(session DbSession, ids List) : void renamed to public disableByIds(session DbSession, ids List) : void in class org.sonar.server.metric.persistence.MetricDao"
 	}],
 	"time": "6/18/15 6:52 AM",
 	"id": 1118403
@@ -7792,6 +7795,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected isSubtype(other JSType, implicitImplCache ImplCache) : boolean extracted from public isSubtype(other JSType) : boolean in class com.google.javascript.rhino.jstype.ArrowType"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public usesImplicitMatch() : boolean renamed to public isStructuralInterface() : boolean in class com.google.javascript.rhino.jstype.FunctionType"
 	}],
 	"time": "7/27/15 8:33 PM",
 	"id": 1151129
@@ -7953,6 +7959,18 @@
 	"refactorings": [{
 		"type": "Inline Method",
 		"description": "Inline Method public sanitize(workingDir Optional<Path>, contents String, expandPaths boolean) : String inlined to public sanitize(workingDir Optional<Path>, contents String) : String in class com.facebook.buck.cxx.DebugPathSanitizer"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public sanitizeWithoutAnyMatchesWithExpandPaths() : void renamed to public sanitizeWithoutAnyMatches() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public sanitizeProjectRootWithoutExpandPaths() : void renamed to public sanitizeProjectRoot() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public sanitizeDirectoriesThatArePrefixOfOtherDirectoriesWithoutExpandPaths() : void renamed to public sanitizeDirectoriesThatArePrefixOfOtherDirectories() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public sanitizeOtherDirectoriesWithoutExpandPaths() : void renamed to public sanitizeOtherDirectories() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest"
 	}],
 	"time": "7/28/15 3:32 PM",
 	"id": 1151927

@@ -396,6 +396,33 @@
 	}, {
 		"type": "Move Class",
 		"description": "Move Class SplitCallable moved from org.apache.cassandra.hadoop.AbstractColumnFamilyInputFormat to org.apache.cassandra.hadoop.cql3.CqlInputFormat"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageFilter() : void renamed to public testCqlNativeStorageFilter() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageFullCopy() : void renamed to public testCqlNativeStorageFullCopy() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageBagOnlyCopy() : void renamed to public testCqlNativeStorageBagOnlyCopy() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageSingleTupleCopy() : void renamed to public testCqlNativeStorageSingleTupleCopy() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageCounterCF() : void renamed to public testCqlNativeStorageCounterCF() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageJoin() : void renamed to public testCqlNativeStorageJoin() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageCompositeColumnCF() : void renamed to public testCqlNativeStorageCompositeColumnCF() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageSchema() : void renamed to public testCqlNativeStorageSchema() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testCassandraStorageCompositeKeyCF() : void renamed to public testCqlNativeStorageCompositeKeyCF() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
 	}],
 	"time": "6/8/15 4:41 PM",
 	"id": 1106365
@@ -736,6 +763,12 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public notifyHalt() : void from class org.drools.reteoo.common.ReteAgenda to class org.drools.core.phreak.SynchronizedBypassPropagationList"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public requiresImmediateFlushingIfNotFiring() : boolean renamed to public requiresImmediateFlushing() : boolean in class org.drools.core.phreak.PhreakTimerNode.TimerAction"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public requiresImmediateFlushingIfNotFiring() : boolean renamed to public requiresImmediateFlushing() : boolean in class org.drools.core.phreak.PropagationEntry.AbstractPropagationEntry"
 	}],
 	"time": "6/15/15 9:41 AM",
 	"id": 1112091
@@ -947,6 +980,15 @@
 	"refactorings": [{
 		"type": "Pull Up Method",
 		"description": "Pull Up Method public getAllTransactionsCount() : long from class org.gnucash.android.db.TransactionsDbAdapter to public getRecordsCount() : long from class org.gnucash.android.db.DatabaseAdapter"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testDeletingAccountShouldDeleteSplits() : void renamed to public shouldDeleteSplitsWhenAccountDeleted() : void in class org.gnucash.android.test.unit.db.AccountsDbAdapterTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testAlphabeticalSorting() : void renamed to public shouldBeAlphabeticallySortedByDefault() : void in class org.gnucash.android.test.unit.db.AccountsDbAdapterTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testAddAccountWithTransaction() : void renamed to public shouldAddAccountsToDatabase() : void in class org.gnucash.android.test.unit.db.AccountsDbAdapterTest"
 	}],
 	"time": "6/16/15 6:15 AM",
 	"id": 1116810
@@ -1486,6 +1528,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public contains(other SourceRange) : boolean extracted from public inclusiveContains(other SourceRange) : boolean in class melnorme.lang.tooling.ast.SourceRange"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getInvocationOffest() : int renamed to public getInvocationOffset() : int in class melnorme.lang.ide.ui.editor.actions.AbstractOpenElementOperation"
 	}],
 	"time": "6/16/15 2:13 PM",
 	"id": 1117765
@@ -1594,8 +1639,10 @@
 		}, {
 			"type": "Inline Method",
 			"description": "Inline Method private verifyReceiverSubscribes() : void inlined to public shouldTimeoutSubscription() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method private processTimersUntil(condition BooleanSupplier) : long renamed to private doWorkUntil(condition BooleanSupplier) : long in class uk.co.real_logic.aeron.driver.DriverConductorTest"
 		}
-
 	],
 	"time": "6/16/15 9:43 PM",
 	"id": 1117698
@@ -2005,6 +2052,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method public fillUpRegistryOfServer(serverIdx int, count int, instanceTemplate InstanceInfo) : void extracted from public fillUpRegistry(count int, instanceTemplate InstanceInfo) : void in class com.netflix.eureka2.integration.EurekaDeploymentClients"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testRegistrationAndDiscoveryServices() : void renamed to public testRegistrationAndInterestServices() : void in class com.netflix.eureka2.testkit.embedded.server.EmbeddedWriteServerTest"
 	}],
 	"time": "6/17/15 1:22 PM",
 	"id": 1119965
@@ -2155,6 +2205,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private initialize() : void extracted from public launchPig(physicalPlan PhysicalPlan, grpName String, pigContext PigContext) : PigStats in class org.apache.pig.backend.hadoop.executionengine.spark.SparkLauncher"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private startSparkJob() : void renamed to private addFilesToSparkJob() : void in class org.apache.pig.backend.hadoop.executionengine.spark.SparkLauncher"
 	}],
 	"time": "6/18/15 1:08 AM",
 	"id": 1119037
@@ -2237,6 +2290,12 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method package register(metrics Iterable) : void extracted from public start() : void in class org.sonar.server.startup.RegisterMetrics"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package getMetricsRepositories() : List renamed to package getPluginMetrics() : List in class org.sonar.server.startup.RegisterMetrics"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public disable(session DbSession, ids List) : void renamed to public disableByIds(session DbSession, ids List) : void in class org.sonar.server.metric.persistence.MetricDao"
 	}],
 	"time": "6/18/15 6:52 AM",
 	"id": 1118403
@@ -2387,6 +2446,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public getAmbuityParserInterpreter(g Grammar, originalParser Parser, tokens TokenStream) : ParserInterpreter extracted from public getAllPossibleParseTrees(g Grammar, originalParser Parser, tokens TokenStream, decision int, alts BitSet, startIndex int, stopIndex int, startRuleIndex int) : List<ParserRuleContext> in class org.antlr.v4.tool.GrammarParserInterpreter"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testInterp(lg LexerGrammar, g Grammar, startRule String, input String, decision int, expectedAmbigAlts String, overallTree String, expectedParseTrees String[]) : void renamed to public testAmbiguousTrees(lg LexerGrammar, g Grammar, startRule String, input String, decision int, expectedAmbigAlts String, overallTree String, expectedParseTrees String[]) : void in class org.antlr.v4.test.tool.TestAmbigParseTrees"
 	}],
 	"time": "6/18/15 9:25 PM",
 	"id": 1119661
@@ -2727,6 +2789,9 @@
 	"refactorings": [{
 		"type": "Move Attribute",
 		"description": "Move Attribute public VIDMINKY_MAP : Map from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.PosTagHelper"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private hasRequiredPosTag(posTagsToFind Collection, tokenReadings AnalyzedTokenReadings) : boolean renamed to private getReadingWithVidmPosTag(posTagsToFind Collection, tokenReadings AnalyzedTokenReadings) : boolean in class org.languagetool.rules.uk.TokenAgreementRule"
 	}],
 	"time": "6/21/15 12:33 PM",
 	"id": 1121417
@@ -3340,6 +3405,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method public getPathToJSBundleDir(target BuildTarget) : Path extracted from protected ReactNativeBundle(ruleParams BuildRuleParams, resolver SourcePathResolver, entryPath SourcePath, isDevMode boolean, bundleName String, jsPackager SourcePath, platform ReactNativePlatform, depsFinder ReactNativeDeps) in class com.facebook.buck.js.ReactNativeBundle"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getPathToResources() : Path renamed to public getResources() : Path in class com.facebook.buck.js.ReactNativeBundle"
 	}],
 	"time": "6/24/15 1:08 PM",
 	"id": 1123736
@@ -3390,6 +3458,12 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private getTestPathPredicate(enableStringWhitelisting boolean, whitelistedStringDirs ImmutableSet<Path>, locales ImmutableSet<String>) : Predicate<Path> extracted from public testFilterStrings() : void in class com.facebook.buck.android.FilterResourcesStepTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testFilterStrings() : void renamed to public testWhitelistFilter() : void in class com.facebook.buck.android.FilterResourcesStepTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public enableStringsFilter() : Builder renamed to public enableStringWhitelisting() : Builder in class com.facebook.buck.android.FilterResourcesStep.Builder"
 	}],
 	"time": "6/24/15 1:21 PM",
 	"id": 1123715
@@ -3551,6 +3625,18 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private rescueMembersAndInstantiateSuperInterfaces(type JDeclaredType) : void extracted from public visit(type JInterfaceType, ctx Context) : boolean in class com.google.gwt.dev.jjs.impl.ControlFlowAnalyzer.RescueVisitor"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public _disabled_testJsType3DimArray_castedFromNativeWithACall() : void renamed to public __disabled__testJsType3DimArray_castedFromNativeWithACall() : void in class com.google.gwt.core.client.interop.JsTypeArrayTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private rescueMembersIfInstantiable(type JDeclaredType) : void renamed to private rescueMembers(type JDeclaredType) : void in class com.google.gwt.dev.jjs.impl.ControlFlowAnalyzer.RescueVisitor"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public _disabled_testJsTypeArray_returnFromNativeWithACall() : void renamed to public testJsTypeArray_returnFromNativeWithACall() : void in class com.google.gwt.core.client.interop.JsTypeArrayTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public _disabled_testJsTypeArray_asAField() : void renamed to public __disabled__testJsTypeArray_asAField() : void in class com.google.gwt.core.client.interop.JsTypeArrayTest"
 	}],
 	"time": "6/24/15 6:41 PM",
 	"id": 1124507
@@ -3912,6 +3998,12 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private terminate() : void extracted from protected report(e Exception) : void in class com.koushikdutta.async.http.AsyncHttpResponseImpl"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package spewInternal() : void renamed to package sendCachedDataOnNetworkThread() : void in class com.koushikdutta.async.http.cache.ResponseCacheMiddleware.CachedBodyEmitter"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package spew() : void renamed to package sendCachedData() : void in class com.koushikdutta.async.http.cache.ResponseCacheMiddleware.CachedBodyEmitter"
 	}],
 	"time": "6/28/15 6:25 PM",
 	"id": 1127199
@@ -3971,6 +4063,9 @@
 	"refactorings": [{
 		"type": "Extract Superclass",
 		"description": "Extract Superclass com.facebook.presto.PartitionedPagePartitionFunction from class com.facebook.presto.HashPagePartitionFunction"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package getPartitionHashBucket(partitionCount int, position int, page Page) : int renamed to package getPartitionBucket(partitionCount int, position int, page Page) : int in class com.facebook.presto.operator.HashGenerator"
 	}],
 	"time": "6/30/15 12:08 AM",
 	"id": 1127907
@@ -4334,6 +4429,9 @@
 	"refactorings": [{
 		"type": "Push Down Method",
 		"description": "Push Down Method protected getConnection() : HazelcastConnection from class com.hazelcast.jca.AbstractDeploymentTest to class com.hazelcast.jca.XATransactionTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public Init() : void renamed to public init() : void in class com.hazelcast.jca.XATransactionTest"
 	}],
 	"time": "7/6/15 5:59 AM",
 	"id": 1132974
@@ -4440,6 +4538,9 @@
 	}, {
 		"type": "Move Class",
 		"description": "Move Class ConcurrentLRUList moved from com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache.local"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getAllocatedPages() : long renamed to public getExclusiveWriteCachePagesSize() : long in class com.orientechnologies.orient.core.storage.impl.memory.ODirectMemoryOnlyDiskCache"
 	}],
 	"time": "7/6/15 10:20 AM",
 	"id": 1132674
@@ -4470,6 +4571,12 @@
 	"refactorings": [{
 		"type": "Move Class",
 		"description": "Move Class ReverseFilterResultComparator moved from org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testEmbeddedQuery() : void renamed to public testEmbeddedLuceneQuery() : void in class org.infinispan.client.hotrod.marshall.EmbeddedCompatTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private createAccount(id int) : AccountPB renamed to private createAccountPB(id int) : AccountPB in class org.infinispan.client.hotrod.marshall.EmbeddedCompatTest"
 	}],
 	"time": "7/6/15 1:12 PM",
 	"id": 1134634
@@ -4509,6 +4616,9 @@
 	}, {
 		"type": "Move Class",
 		"description": "Move Class Foo moved from com.google.common.truth.ListTest to com.google.common.truth.IterableTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public listContainsExactlyArray() : void renamed to public iterableContainsExactlyArray() : void in class com.google.common.truth.IterableTest"
 	}],
 	"time": "7/6/15 1:54 PM",
 	"id": 1133238
@@ -4522,6 +4632,21 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public isOrdered() : void extracted from public isPartiallyOrdered() : void in class com.google.common.truth.IterableSubject"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public listIsPartiallyOrderedWithComparatorFailure() : void renamed to public listIsOrderedWithComparatorFailure() : void in class com.google.common.truth.ListTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public isPartiallyOrderedFailure() : void renamed to public isOrderedFailure() : void in class com.google.common.truth.ListTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public isPartiallyOrderedWithNonComparableElementsFailure() : void renamed to public isOrderedWithNonComparableElementsFailure() : void in class com.google.common.truth.ListTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public listIsPartiallyOrdered() : void renamed to public listIsOrdered() : void in class com.google.common.truth.ListTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public listIsPartiallyOrderedWithComparator() : void renamed to public listIsOrderedWithComparator() : void in class com.google.common.truth.ListTest"
 	}],
 	"time": "7/6/15 1:54 PM",
 	"id": 1133240
@@ -4675,6 +4800,12 @@
 	}, {
 		"type": "Inline Method",
 		"description": "Inline Method private initializeResources() : void inlined to private initialize() : void in class org.thoughtcrime.securesms.components.emoji.EmojiToggle"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method protected onKeyboardShown(keyboardHeight int) : void renamed to protected onKeyboardOpen(keyboardHeight int) : void in class org.thoughtcrime.securesms.components.KeyboardAwareLinearLayout"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public toggle() : void renamed to public setToIme() : void in class org.thoughtcrime.securesms.components.emoji.EmojiToggle"
 	}],
 	"time": "7/6/15 8:50 PM",
 	"id": 1133054
@@ -4730,6 +4861,9 @@
 	"refactorings": [{
 		"type": "Inline Method",
 		"description": "Inline Method private createUntaggedTemplateLiteral(n Node) : void inlined to package visitTemplateLiteral(t NodeTraversal, n Node) : void in class com.google.javascript.jscomp.Es6TemplateLiterals"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private createTaggedTemplateLiteral(t NodeTraversal, n Node) : void renamed to package visitTaggedTemplateLiteral(t NodeTraversal, n Node) : void in class com.google.javascript.jscomp.Es6TemplateLiterals"
 	}],
 	"time": "7/7/15 1:21 PM",
 	"id": 1135734
@@ -4753,6 +4887,24 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method protected checkRequest(request HttpServletRequest) : void extracted from protected checkAndPrepare(request HttpServletRequest, response HttpServletResponse, cacheControl CacheControl) : void in class org.springframework.web.servlet.support.WebContentGenerator"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method protected lookupCacheSeconds(urlPath String) : CacheControl renamed to protected lookupCacheControl(urlPath String) : CacheControl in class org.springframework.web.servlet.mvc.WebContentInterceptor"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testSetPathMatcherToNull() : void renamed to public throwsExceptionWithNullPathMatcher() : void in class org.springframework.web.servlet.mvc.WebContentInterceptorTests"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public preHandleSetsCacheSecondsOnMatchingRequest() : void renamed to public cacheResourcesConfiguration() : void in class org.springframework.web.servlet.mvc.WebContentInterceptorTests"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public preHandleSetsCacheSecondsOnMatchingRequestWithCustomCacheMapping() : void renamed to public mappedCacheConfigurationOverridesGlobal() : void in class org.springframework.web.servlet.mvc.WebContentInterceptorTests"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public preHandleSetsCacheSecondsOnMatchingRequestWithCachingDisabled() : void renamed to public emptyCacheConfiguration() : void in class org.springframework.web.servlet.mvc.WebContentInterceptorTests"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public preHandleSetsCacheSecondsOnMatchingRequestWithNoCaching() : void renamed to public preventCacheConfiguration() : void in class org.springframework.web.servlet.mvc.WebContentInterceptorTests"
 	}],
 	"time": "7/7/15 8:08 PM",
 	"id": 1135909
@@ -4858,6 +5010,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method public saveResource(relativePath Path, content byte[]) : void extracted from public save(bytecode byte[]) : void in class net.orfjackal.retrolambda.files.ClassSaver"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public save(bytecode byte[]) : void renamed to public saveClass(bytecode byte[]) : void in class net.orfjackal.retrolambda.files.ClassSaver"
 	}],
 	"time": "7/8/15 2:08 PM",
 	"id": 1136668
@@ -4933,6 +5088,9 @@
 	"refactorings": [{
 		"type": "Move Method",
 		"description": "Move Method private getLiveIndicator(base Icon) : Icon from class com.intellij.execution.ui.RunContentManagerImpl to class com.intellij.execution.runners.ExecutionUtil"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private getConfiguration(project Project) : RunnerAndConfigurationSettings renamed to private getSelectedConfiguration(project Project) : RunnerAndConfigurationSettings in class com.intellij.execution.ExecutorRegistryImpl.ExecutorAction"
 	}],
 	"time": "7/8/15 5:41 PM",
 	"id": 1136184
@@ -5018,6 +5176,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private getCustomRoutingCol() : ColumnIdent extracted from private getRoutingCol() : ColumnIdent in class io.crate.metadata.doc.DocIndexMetaData"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testSelectById() : void renamed to public testSelectByIdWithCustomRouting() : void in class io.crate.analyze.where.WhereClauseAnalyzerTest"
 	}],
 	"time": "7/9/15 6:48 AM",
 	"id": 1136870
@@ -5112,8 +5273,10 @@
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method protected setCpuSpeedSteps(numSpeedSteps int) : void extracted from package readFromParcelLocked(in Parcel) : void in class com.android.internal.os.BatteryStatsImpl"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method private load() : void renamed to private loadStats() : void in class com.android.internal.os.BatteryStatsHelper"
 		}
-
 	],
 	"time": "7/9/15 4:42 PM",
 	"id": 1137231
@@ -5265,6 +5428,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private onUserLoggedIn(uri Uri) : void extracted from protected onNewIntent(intent Intent) : void in class com.github.mobile.accounts.LoginActivity"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private endAccess(accessToken String, scope String) : void renamed to private endAuth(accessToken String, scope String) : void in class com.github.mobile.accounts.LoginActivity"
 	}],
 	"time": "7/11/15 9:20 AM",
 	"id": 1139092
@@ -5415,6 +5581,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public configKey(targetType Class, method Method) : String extracted from public configKey(method Method) : String in class feign.Feign"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public toKeyMethodFormatsAsExpected() : void renamed to public configKeyFormatsAsExpected() : void in class feign.FeignTest"
 	}],
 	"time": "7/13/15 1:49 PM",
 	"id": 1140131
@@ -5454,9 +5623,7 @@
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method protected createAddress(host String, port int) : Address extracted from private createAddresses(addressArray String[]) : Address[] in class com.hazelcast.test.TestHazelcastInstanceFactory"
-		},
-
-		{
+		}, {
 			"type": "Extract Method",
 			"description": "Extract Method protected startSelectors() : void extracted from public start() : void in class com.hazelcast.client.connection.nio.ClientConnectionManagerImpl"
 		}, {
@@ -5465,6 +5632,9 @@
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method protected shutdownSelectors() : void extracted from public shutdown() : void in class com.hazelcast.client.connection.nio.ClientConnectionManagerImpl"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method private tripshutdown(instances HazelcastInstance[]) : void renamed to private tripTerminate(instances HazelcastInstance[]) : void in class com.hazelcast.mapreduce.MapReduceTest"
 		}
 	],
 	"time": "7/13/15 8:28 PM",
@@ -6083,6 +6253,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private changeEditTextPreferenceValue(pref EditTextPreference, newValue String) : void extracted from public onPreferenceChange(preference Preference, newValue Object) : boolean in class org.wordpress.android.ui.prefs.SiteSettingsFragment"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private applySettings() : void renamed to private applyChanges() : void in class org.wordpress.android.ui.prefs.SiteSettingsFragment"
 	}],
 	"time": "7/14/15 2:27 AM",
 	"id": 1140686
@@ -6163,6 +6336,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private dummy(builder PsiBuilder) : void extracted from public parseTypeParameter(builder PsiBuilder) : Marker in class com.intellij.lang.java.parser.ReferenceParser"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testAnyType() : void renamed to public testAnyTypeParams() : void in class com.intellij.lang.java.parser.partial.ReferenceParserTest"
 	}],
 	"time": "7/14/15 10:55 AM",
 	"id": 1141018
@@ -6231,6 +6407,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private dummy(builder PsiBuilder) : void extracted from public parseTypeParameter(builder PsiBuilder) : Marker in class com.intellij.lang.java.parser.ReferenceParser"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testAnyType() : void renamed to public testAnyTypeParams() : void in class com.intellij.lang.java.parser.partial.ReferenceParserTest"
 	}],
 	"time": "7/14/15 4:07 PM",
 	"id": 1140982
@@ -6254,6 +6433,9 @@
 	}, {
 		"type": "Move Class",
 		"description": "Move Class SaveContextPrintWriter moved from org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to org.springframework.security.web.context.OnCommittedResponseWrapper"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private doSaveContext() : void renamed to protected onResponseCommitted() : void in class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper"
 	}],
 	"time": "7/14/15 4:48 PM",
 	"id": 1141078
@@ -6267,6 +6449,9 @@
 	}, {
 		"type": "Move Class",
 		"description": "Move Class SaveContextPrintWriter moved from org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to org.springframework.security.web.context.OnCommittedResponseWrapper"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private doSaveContext() : void renamed to protected onResponseCommitted() : void in class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper"
 	}],
 	"time": "7/14/15 4:49 PM",
 	"id": 1141077
@@ -6329,6 +6514,12 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private createSymLinkSdks(sdks Iterable<String>, root Path, version String) : void extracted from private createSymLinkIosSdks(root Path, version String) : void in class com.facebook.buck.apple.AppleSdkDiscoveryTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public simulatorPlatformSetsLinkerFlags() : void renamed to public iphoneOSSimulatorPlatformSetsLinkerFlags() : void in class com.facebook.buck.apple.AppleCxxPlatformsTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public appleSdkPathsBuiltFromDirectory() : void renamed to public iphoneOSSdkPathsBuiltFromDirectory() : void in class com.facebook.buck.apple.AppleCxxPlatformsTest"
 	}],
 	"time": "7/14/15 9:46 PM",
 	"id": 1141324
@@ -6735,8 +6926,19 @@
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method private releaseCurrentRequest() : void extracted from public delegateAIEnded(ai AIRobot) : void in class buildcraft.robotics.boards.BoardRobotDelivery"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public provideItemsForRequest(i int, stack ItemStack) : ItemStack renamed to public offerItem(i int, stack ItemStack) : ItemStack in class buildcraft.robotics.TileRequester"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public provideItemsForRequest(i int, stack ItemStack) : ItemStack renamed to public offerItem(slot int, stack ItemStack) : ItemStack in class buildcraft.builders.TileBuilder"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public getNumberOfRequests() : int renamed to public getRequestsCount() : int in class buildcraft.builders.TileBuilder"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public getNumberOfRequests() : int renamed to public getRequestsCount() : int in class buildcraft.robotics.TileRequester"
 		}
-
 	],
 	"time": "7/17/15 8:32 AM",
 	"id": 1143517
@@ -7309,6 +7511,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public getDefinitionPosition(javaNode JavaNode) : CodePosition extracted from public getDefinitionPosition(line int, offset int) : CodePosition in class jadx.api.JavaClass"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public length() : int renamed to public bufLength() : int in class jadx.core.codegen.CodeWriter"
 	}],
 	"time": "7/26/15 11:19 AM",
 	"id": 1150361
@@ -7446,8 +7651,16 @@
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method private init() : void extracted from public ClientOptionsBase() in class io.vertx.core.net.ClientOptionsBase"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public setDSync(dsync boolean) : OpenOptions renamed to public setDsync(dsync boolean) : OpenOptions in class io.vertx.core.file.OpenOptions"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public setWebsocketSubProtocol(subProtocols String) : HttpServerOptions renamed to public setWebsocketSubProtocols(subProtocols String) : HttpServerOptions in class io.vertx.core.http.HttpServerOptions"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public isDSync() : boolean renamed to public isDsync() : boolean in class io.vertx.core.file.OpenOptions"
 		}
-
 	],
 	"time": "7/27/15 10:38 AM",
 	"id": 1152344
@@ -7582,6 +7795,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected isSubtype(other JSType, implicitImplCache ImplCache) : boolean extracted from public isSubtype(other JSType) : boolean in class com.google.javascript.rhino.jstype.ArrowType"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public usesImplicitMatch() : boolean renamed to public isStructuralInterface() : boolean in class com.google.javascript.rhino.jstype.FunctionType"
 	}],
 	"time": "7/27/15 8:33 PM",
 	"id": 1151129
@@ -7601,8 +7817,10 @@
 		}, {
 			"type": "Inline Method",
 			"description": "Inline Method private sendHearBeatIfRequired(now long, member MemberImpl) : void inlined to private heartBeaterMaster(now long, clockJump long) : void in class com.hazelcast.cluster.impl.ClusterServiceImpl"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public testTcpIp__ClusterMerge() : void renamed to public testTcpIp_ClusterMerge() : void in class com.hazelcast.cluster.SplitBrainHandlerTest"
 		}
-
 	],
 	"time": "7/28/15 4:32 AM",
 	"id": 1151667
@@ -7619,6 +7837,24 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public convertTypeToCSharp(type String) : String from class com.hazelcast.client.protocol.generator.CodecModel.ParameterModel to class com.hazelcast.client.protocol.generator.CodeGenerationUtils"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getKeyTypeInsideMap(type String) : String renamed to public getFirstGenericParameterType(type String) : String in class com.hazelcast.client.protocol.generator.CodeGenerationUtils"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getTypeInsideCollection(type String) : String renamed to public getGenericType(type String) : String in class com.hazelcast.client.protocol.generator.CodeGenerationUtils"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getTypeInsideData(type String) : String renamed to public getArrayType(type String) : String in class com.hazelcast.client.protocol.generator.CodeGenerationUtils"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getValueTypeInsideMap(type String) : String renamed to public getSecondGenericParameterType(type String) : String in class com.hazelcast.client.protocol.generator.CodeGenerationUtils"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public calculateStringDataSize(string String) : int renamed to public calculateDataSize(string String) : int in class com.hazelcast.client.impl.protocol.util.ParameterUtil"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public calculateByteArrayDataSize(bytes byte[]) : int renamed to public calculateDataSize(bytes byte[]) : int in class com.hazelcast.client.impl.protocol.util.ParameterUtil"
 	}],
 	"time": "7/28/15 5:19 AM",
 	"id": 1151664
@@ -7723,6 +7959,18 @@
 	"refactorings": [{
 		"type": "Inline Method",
 		"description": "Inline Method public sanitize(workingDir Optional<Path>, contents String, expandPaths boolean) : String inlined to public sanitize(workingDir Optional<Path>, contents String) : String in class com.facebook.buck.cxx.DebugPathSanitizer"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public sanitizeWithoutAnyMatchesWithExpandPaths() : void renamed to public sanitizeWithoutAnyMatches() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public sanitizeProjectRootWithoutExpandPaths() : void renamed to public sanitizeProjectRoot() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public sanitizeDirectoriesThatArePrefixOfOtherDirectoriesWithoutExpandPaths() : void renamed to public sanitizeDirectoriesThatArePrefixOfOtherDirectories() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public sanitizeOtherDirectoriesWithoutExpandPaths() : void renamed to public sanitizeOtherDirectories() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest"
 	}],
 	"time": "7/28/15 3:32 PM",
 	"id": 1151927
@@ -7837,6 +8085,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public dumpMemtable() : void extracted from public truncateBlocking() : void in class org.apache.cassandra.db.ColumnFamilyStore"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public initRowCache() : void renamed to public init() : void in class org.apache.cassandra.db.ColumnFamilyStore"
 	}],
 	"time": "7/29/15 5:15 PM",
 	"id": 1153409
@@ -7919,6 +8170,15 @@
 	"refactorings": [{
 		"type": "Inline Method",
 		"description": "Inline Method private comparator(ignoreCase boolean) : Comparator<CharSequence> inlined to public contains(name CharSequence, value CharSequence, ignoreCase boolean) : boolean in class io.netty.handler.codec.DefaultTextHeaders"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public as(value byte[]) : ByteString renamed to public bs(value byte[]) : ByteString in class io.netty.handler.codec.http2.Http2TestUtil"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getInt(name T, defaultValue short) : short renamed to public getShort(name T, defaultValue short) : short in class io.netty.handler.codec.DefaultHeaders"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getInt(name T, defaultValue short) : short renamed to public getShort(name T, defaultValue short) : short in class io.netty.handler.codec.EmptyHeaders"
 	}],
 	"time": "7/30/15 2:38 PM",
 	"id": 1153762
@@ -8214,14 +8474,21 @@
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method public addCompressionHeaders(getMessage HttpGet, acceptEncoding String) : void extracted from public test406Error(acceptContent String) : void in class com.linkedin.restli.examples.TestCompressionServer"
-		},
-
-		{
+		}, {
 			"type": "Move Method",
 			"description": "Move Method public shouldCompressRequest(entityLength int, requestCompressionOverride CompressionOption) : boolean from class com.linkedin.r2.filter.CompressionConfig to class com.linkedin.r2.filter.compression.ClientCompressionFilter"
 		}, {
 			"type": "Move Method",
 			"description": "Move Method public testEncodingGeneration(encoding EncodingType[], acceptEncoding String) : void from class com.linkedin.restli.examples.TestCompressionServer to class com.linkedin.r2.filter.compression.TestClientCompressionFilter"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method private shouldCompressResponse(operation String) : boolean renamed to private shouldCompressResponseForOperation(operation String) : boolean in class com.linkedin.r2.filter.compression.ClientCompressionFilter"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public testGetCompressionConfig(serviceName String, requestCompressionThresholdDefault int, expectedConfig CompressionConfig) : void renamed to public testGetRequestCompressionConfig(serviceName String, requestCompressionThresholdDefault int, expectedConfig CompressionConfig) : void in class com.linkedin.r2.transport.http.client.TestHttpClientFactory"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method private provideRequestData() : Object[][] renamed to private provideRequestCompressionData() : Object[][] in class com.linkedin.r2.filter.compression.TestClientCompressionFilter"
 		}
 	],
 	"time": "8/3/15 9:25 PM",
@@ -8531,6 +8798,12 @@
 	}, {
 		"type": "Extract Superclass",
 		"description": "Extract Superclass org.geoserver.ogr.core.AbstractToolConfigurator from class org.geoserver.wfs.response.Ogr2OgrConfigurator"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getOgrExecutable() : String renamed to public getExecutable() : String in class org.geoserver.wfs.response.Ogr2OgrOutputFormat"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public setOgrExecutable(ogrExecutable String) : void renamed to public setExecutable(ogrExecutable String) : void in class org.geoserver.wfs.response.Ogr2OgrOutputFormat"
 	}],
 	"time": "8/5/15 7:22 PM",
 	"id": 1158913
@@ -8590,6 +8863,12 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private addSourceRoot(module Module, sourceRootName String, rootType JpsModuleSourceRootType<?>) : VirtualFile extracted from private addSourceRoot(module Module, sourceRootName String, isTestSourceRoot boolean) : VirtualFile in class org.intellij.erlang.compilation.ErlangCompilationTestBase"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private getErlangModuleDescriptorFromConfig(target ErlangTarget, context CompileContext, isTests boolean) : List renamed to private getErlangFileDescriptorFromConfig(target ErlangTarget, context CompileContext, isTests boolean) : List in class org.intellij.erlang.jps.builder.ErlangBuilder"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private assertSameErlangModules(moduleDescriptors List, expectedModules String[]) : void renamed to private assertSameErlangFiles(moduleDescriptors List, expectedModules String[]) : void in class org.intellij.erlang.compilation.ErlangDependenciesResolutionTest"
 	}],
 	"time": "8/6/15 12:37 PM",
 	"id": 1159409
@@ -8718,6 +8997,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private assertExistsAndReturn(content String) : Object extracted from public exists(content String) : void in class org.springframework.test.util.JsonPathExpectationsHelper"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public test() : void renamed to public assertValueWithDifferentExpectedType() : void in class org.springframework.test.util.JsonPathExpectationsHelperTests"
 	}],
 	"time": "8/6/15 5:08 PM",
 	"id": 1159696

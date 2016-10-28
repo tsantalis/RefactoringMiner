@@ -571,17 +571,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		
 		Set<String> methodInvocations1 = new LinkedHashSet<String>(statement1.getMethodInvocationMap().keySet());
 		Set<String> methodInvocations2 = new LinkedHashSet<String>(statement2.getMethodInvocationMap().keySet());
+		OperationInvocation invocationCoveringTheEntireStatement1 = null;
+		OperationInvocation invocationCoveringTheEntireStatement2 = null;
 		//remove methodInvocation covering the entire statement
 		for(String methodInvocation1 : statement1.getMethodInvocationMap().keySet()) {
 			if((methodInvocation1 + ";\n").equals(statement1.getString()) || methodInvocation1.equals(statement1.getString()) ||
 					("return " + methodInvocation1 + ";\n").equals(statement1.getString())) {
 				methodInvocations1.remove(methodInvocation1);
+				invocationCoveringTheEntireStatement1 = statement1.getMethodInvocationMap().get(methodInvocation1);
 			}
 		}
 		for(String methodInvocation2 : statement2.getMethodInvocationMap().keySet()) {
 			if((methodInvocation2 + ";\n").equals(statement2.getString()) || methodInvocation2.equals(statement2.getString()) ||
 					("return " + methodInvocation2 + ";\n").equals(statement2.getString())) {
 				methodInvocations2.remove(methodInvocation2);
+				invocationCoveringTheEntireStatement2 = statement2.getMethodInvocationMap().get(methodInvocation2);
 			}
 		}
 		Set<String> methodInvocationIntersection = new LinkedHashSet<String>(methodInvocations1);
@@ -654,6 +658,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		boolean isEqualWithReplacement = s1.equals(s2);
 		if(isEqualWithReplacement) {
+			return replacements;
+		}
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+				invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() != null &&
+				invocationCoveringTheEntireStatement1.getExpression().equals(invocationCoveringTheEntireStatement2.getExpression()) &&
+				!invocationCoveringTheEntireStatement1.getMethodName().equals(invocationCoveringTheEntireStatement2.getMethodName()) &&
+				invocationCoveringTheEntireStatement1.getArguments().equals(invocationCoveringTheEntireStatement2.getArguments())) {
+			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getMethodName(),
+					invocationCoveringTheEntireStatement2.getMethodName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2);
+			replacements = new LinkedHashSet<Replacement>();
+			replacements.add(replacement);
 			return replacements;
 		}
 		return null;

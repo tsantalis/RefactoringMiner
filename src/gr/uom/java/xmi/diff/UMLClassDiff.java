@@ -190,15 +190,10 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
 				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 					UMLOperation addedOperation = addedOperationIterator.next();
-
-					if(removedOperation.getName().equals(addedOperation.getName()) ||
-							addedOperation.equalParameters(removedOperation) ||
-							addedOperation.overloadedParameters(removedOperation)) {
-						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
-						if(!operationBodyMapper.getMappings().isEmpty() &&
-								operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2()) {
-							mapperSet.add(operationBodyMapper);
-						}
+					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
+					if(!operationBodyMapper.getMappings().isEmpty() &&
+							operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT1()) {
+						mapperSet.add(operationBodyMapper);
 					}
 				}
 				if(!mapperSet.isEmpty()) {
@@ -209,7 +204,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 
 					UMLOperationDiff operationDiff = new UMLOperationDiff(removedOperation, addedOperation);
 					operationDiffList.add(operationDiff);
-					if(!removedOperation.getName().equals(addedOperation.getName()) && addedOperation.equalReturnParameter(removedOperation)) {
+					if(!removedOperation.getName().equals(addedOperation.getName()) && addedOperation.equalParameters(removedOperation)) {
 						RenameOperationRefactoring rename = new RenameOperationRefactoring(removedOperation, addedOperation);
 						refactorings.add(rename);
 					}
@@ -223,15 +218,10 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
 				for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 					UMLOperation removedOperation = removedOperationIterator.next();
-
-					if(removedOperation.getName().equals(addedOperation.getName()) ||
-							addedOperation.equalParameters(removedOperation) ||
-							addedOperation.overloadedParameters(removedOperation)) {
-						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
-						if(!operationBodyMapper.getMappings().isEmpty() &&
-								operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2()) {
-							mapperSet.add(operationBodyMapper);
-						}
+					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
+					if(!operationBodyMapper.getMappings().isEmpty() &&
+							operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT1()) {
+						mapperSet.add(operationBodyMapper);
 					}
 				}
 				if(!mapperSet.isEmpty()) {
@@ -242,7 +232,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 
 					UMLOperationDiff operationDiff = new UMLOperationDiff(removedOperation, addedOperation);
 					operationDiffList.add(operationDiff);
-					if(!removedOperation.getName().equals(addedOperation.getName()) && addedOperation.equalReturnParameter(removedOperation)) {
+					if(!removedOperation.getName().equals(addedOperation.getName()) && addedOperation.equalParameters(removedOperation)) {
 						RenameOperationRefactoring rename = new RenameOperationRefactoring(removedOperation, addedOperation);
 						refactorings.add(rename);
 					}

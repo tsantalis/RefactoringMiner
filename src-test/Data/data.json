@@ -2985,6 +2985,18 @@
 		"type": "Inline Method",
 		"description": "Inline Method public releaseAllExclusive() : void inlined to public releaseAll() : void in class org.neo4j.kernel.impl.locking.community.CommunityLockClient"
 	}],
+	"comment":[{
+	"refactored":"incrementAndRemoveAlreadyTakenLocks",
+	"link": "https://github.com/neo4j/neo4j/commit/77fab3caea4495798a248035f0e928f745c7c2db#diff-612330276167ffdceecbf23913844464L116",
+	"message":"Low similarity",
+	"type":"TBD"
+},
+{
+	"refactored":"incrementAndRemoveAlreadyTakenLocks",
+	"link": "https://github.com/neo4j/neo4j/commit/77fab3caea4495798a248035f0e928f745c7c2db#diff-612330276167ffdceecbf23913844464L116",
+	"message":"Low similarity",
+	"type":"TBD"
+}],
 	"time": "6/22/15 2:06 PM",
 	"id": 1122159
 }, {
@@ -3616,6 +3628,22 @@
 		}
 
 	],
+	"comment":[{
+	"refactored":"testBTree",
+	"link": "https://github.com/neo4j/neo4j/commit/dc199688d69416da58b370ca2aa728e935fc8e0d#diff-94e898a8535f13220449b217db75fd90L842",
+	"message":"method was in another class.",
+	"type":"TBD"
+},{
+"refactored":"testBST",
+"link": "https://github.com/neo4j/neo4j/commit/dc199688d69416da58b370ca2aa728e935fc8e0d#diff-94e898a8535f13220449b217db75fd90L842",
+"message":"method was in another class.",
+"type":"TBD"
+},{
+"refactored":"testAVLTree",
+"link": "https://github.com/neo4j/neo4j/commit/dc199688d69416da58b370ca2aa728e935fc8e0d#diff-94e898a8535f13220449b217db75fd90L842",
+"message":"method was in another class.",
+"type":"TBD"
+}],
 	"time": "6/24/15 5:48 PM",
 	"id": 1123684
 }, {
@@ -3697,6 +3725,7 @@
 		"type": "Rename Method",
 		"description": "Rename Method public testInterruptingBlockedUnorderedReceiverBatch() : void renamed to public interruptingBlockedUnorderedReceiverBatch() : void in class org.apache.drill.exec.server.TestDrillbitResilience"
 	}],
+
 	"time": "6/24/15 8:24 PM",
 	"id": 1124355
 }, {
@@ -3795,7 +3824,11 @@
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute protected MINIDFS_STORAGE_PLUGIN_NAME : String from class 2 others to class org.apache.drill.exec.impersonation.BaseTestImpersonation"
-	}],
+	},{
+		"type": "Inline Method",
+		"description": "Inline Method public createFileSystem(proxyUserName String, fsConf Configuration, stats OperatorStats) : DrillFileSystem inlined to public createFileSystem(proxyUserName String, fsConf Configuration) : DrillFileSystem in class org.apache.drill.exec.util.ImpersonationUtil"
+	}
+],
 	"time": "6/25/15 11:53 AM",
 	"id": 1125095
 }, {
@@ -4461,13 +4494,13 @@
 	"author": "Benjamin Muschko",
 	"refactorings": [{
 		"type": "Push Down Method",
-		"description": "Push Down Method public setGradleUserHomeDir(gradleUserHomeDir File) : void from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
+		"description": "Push Down Method public setGradleUserHomeDir(gradleUserHomeDir File) : void from class org.gradle.testkit.functional.GradleRunner to public setGradleUserHomeDir(gradleUserHomeDir File) : void from class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Attribute",
 		"description": "Push Down Attribute private gradleUserHomeDir : File from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public getTasks() : List<String> from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
+		"description": "Push Down Method public getTasks() : List from class org.gradle.testkit.functional.GradleRunner to public getTasks() : List from class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Attribute",
 		"description": "Push Down Attribute private arguments : List<String> from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
@@ -4476,25 +4509,25 @@
 		"description": "Push Down Attribute private taskNames : List<String> from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public getArguments() : List<String> from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
+		"description": "Push Down Method public setArguments(arguments List) : void from class org.gradle.testkit.functional.GradleRunner to public setArguments(arguments List) : void from class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Attribute",
 		"description": "Push Down Attribute private workingDirectory : File from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public getGradleUserHomeDir() : File from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
+		"description": "Push Down Method public getGradleUserHomeDir() : File from class org.gradle.testkit.functional.GradleRunner to public getGradleUserHomeDir() : File from class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public setWorkingDir(workingDirectory File) : void from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
+		"description": "Push Down Method public setWorkingDir(workingDirectory File) : void from class org.gradle.testkit.functional.GradleRunner to public setWorkingDir(workingDirectory File) : void from class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Method",
 		"description": "Push Down Method public setArguments(arguments List<String>) : void from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public setTasks(taskNames List<String>) : void from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
+		"description": "Push Down Method public setTasks(taskNames List) : void from class org.gradle.testkit.functional.GradleRunner to public setTasks(taskNames List) : void from class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public getWorkingDir() : File from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
+		"description": "Push Down Method public getWorkingDir() : File from class org.gradle.testkit.functional.GradleRunner to public getWorkingDir() : File from class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}],
 	"time": "7/6/15 10:08 AM",
 	"id": 1134188
@@ -4578,6 +4611,13 @@
 		"type": "Rename Method",
 		"description": "Rename Method private createAccount(id int) : AccountPB renamed to private createAccountPB(id int) : AccountPB in class org.infinispan.client.hotrod.marshall.EmbeddedCompatTest"
 	}],
+	"comment":[{
+	"refactored":"executeNonIndexedQuery",
+	"link": "https://github.com/infinispan/infinispan/commit/35b6c869546a7968b6fd2f640add6eea87e03c22#diff-8adab1b08cc0cabd2ef98a61322bb8d2L79",
+	"message":"one similar Statement!!",
+	"type":"TBD"
+}]
+	,
 	"time": "7/6/15 1:12 PM",
 	"id": 1134634
 }, {
@@ -4927,7 +4967,7 @@
 	"author": "Enno Gottschalk",
 	"refactorings": [{
 		"type": "Push Down Method",
-		"description": "Push Down Method public getAlbumTimeStamps() : ConcurrentHashMap<Album,Long> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
+		"description": "Push Down Method public getAlbumTimeStamps() : ConcurrentHashMap from class org.tomahawk.libtomahawk.collection.NativeCollection to public getAlbumTimeStamps() : ConcurrentHashMap from class org.tomahawk.libtomahawk.collection.UserCollection"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute protected mAlbumTracks : ConcurrentHashMap<Album,Set<Query>> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
@@ -4942,16 +4982,16 @@
 		"description": "Pull Up Attribute protected mArtists : SetArtist from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public getArtistTimeStamps() : ConcurrentHashMap<Artist,Long> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
+		"description": "Push Down Method public getArtistTimeStamps() : ConcurrentHashMap from class org.tomahawk.libtomahawk.collection.NativeCollection to public getArtistTimeStamps() : ConcurrentHashMap from class org.tomahawk.libtomahawk.collection.UserCollection"
 	}, {
 		"type": "Push Down Attribute",
 		"description": "Push Down Attribute private mArtistTimeStamps : ConcurrentHashMap<Artist,Long> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public addQuery(query Query, addedTimeStamp long) : void from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
+		"description": "Push Down Method public addQuery(query Query, addedTimeStamp long) : void from class org.tomahawk.libtomahawk.collection.NativeCollection to public addQuery(query Query, addedTimeStamp long) : void from class org.tomahawk.libtomahawk.collection.UserCollection"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public getQueryTimeStamps() : ConcurrentHashMap<Query,Long> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
+		"description": "Push Down Method public getQueryTimeStamps() : ConcurrentHashMap from class org.tomahawk.libtomahawk.collection.NativeCollection to public getQueryTimeStamps() : ConcurrentHashMap from class org.tomahawk.libtomahawk.collection.UserCollection"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute protected mAlbumArtists : SetArtist from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
@@ -6481,7 +6521,11 @@
 	}, {
 		"type": "Move Class",
 		"description": "Move Class GraphicsSupport moved from org.antlr.v4.runtime.misc to org.antlr.v4.gui"
-	}],
+	},{
+		"type": "Inline Method",
+		"description": "Inline Method public toStringTree(t Tree, nodeTextProvider TreeTextProvider) : String inlined to public toStringTree(t Tree, ruleNames List) : String in class org.antlr.v4.runtime.tree.Trees"
+	}
+],
 	"time": "7/14/15 6:29 PM",
 	"id": 1141310
 }, {
@@ -6919,7 +6963,13 @@
 			"description": "Push Down Attribute private index : BlockIndex from class buildcraft.api.robots.ResourceId to class buildcraft.api.robots.ResourceIdRequest"
 		}, {
 			"type": "Push Down Method",
-			"description": "Push Down Method public equals(obj Object) : boolean from class buildcraft.api.robots.ResourceId to class buildcraft.api.robots.ResourceIdBlock"
+			"description": "Push Down Method public equals(obj Object) : boolean from class buildcraft.api.robots.ResourceId to public equals(obj Object) : boolean from class buildcraft.api.robots.ResourceIdBlock",
+			"comment": "it should be change to polymorphysim as soon as we add this refactoring"
+		},
+		{
+			"type": "Push Down Method",
+			"description": "Push Down Method public equals(obj Object) : boolean from class buildcraft.api.robots.ResourceId to public equals(obj Object) : boolean from class buildcraft.api.robots.ResourceIdRequest",
+			"comment": "it should be change to polymorphysim as soon as we add this refactoring"
 		}, {
 			"type": "Push Down Attribute",
 			"description": "Push Down Attribute private side : ForgeDirection from class buildcraft.api.robots.ResourceId to class buildcraft.api.robots.ResourceIdRequest"
@@ -7039,6 +7089,12 @@
 		"type": "Move Method",
 		"description": "Move Method public wcwidth(cs CharSequence) : int from class jline.console.WCWidth to class jline.console.ConsoleReader"
 	}],
+	"comment":[{
+	"refactored":"print",
+	"link": "https://github.com/jline/jline2/commit/1eb3b624b288a4b1a054420d3efb05b8f1d28517#diff-f9b07b9c8a524104bce4b7a19cd0d6a9L3479",
+	"message":"similar to rename method refactoring",
+	"type":"False Positive"
+}],
 	"time": "7/20/15 2:41 PM",
 	"id": 1144626
 }, {
@@ -8170,6 +8226,11 @@
 	"refactorings": [{
 		"type": "Inline Method",
 		"description": "Inline Method private comparator(ignoreCase boolean) : Comparator<CharSequence> inlined to public contains(name CharSequence, value CharSequence, ignoreCase boolean) : boolean in class io.netty.handler.codec.DefaultTextHeaders"
+	},
+	{
+		"type": "Inline Method",
+		"description": "Inline Method public contains(name T, value T, keyComparator Comparator, valueComparator Comparator) : boolean inlined to public contains(name T, value T, valueComparator Comparator) : boolean in class io.netty.handler.codec.DefaultHeaders",
+		"comment": "the similarity is somhow low"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public as(value byte[]) : ByteString renamed to public bs(value byte[]) : ByteString in class io.netty.handler.codec.http2.Http2TestUtil"
@@ -8480,6 +8541,10 @@
 		}, {
 			"type": "Move Method",
 			"description": "Move Method public testEncodingGeneration(encoding EncodingType[], acceptEncoding String) : void from class com.linkedin.restli.examples.TestCompressionServer to class com.linkedin.r2.filter.compression.TestClientCompressionFilter"
+		},
+		{
+			"type": "Inline Method",
+			"description": "Inline Method public createServer(engine Engine, port int, supportedCompression String, useAsyncServletApi boolean, asyncTimeOut int, requestFilters List, responseFilters List) : HttpServer inlined to public createServer(engine Engine, port int, supportedCompression String, useAsyncServletApi boolean, asyncTimeOut int) : HttpServer in class com.linkedin.restli.examples.RestLiIntTestServer"
 		}, {
 			"type": "Rename Method",
 			"description": "Rename Method private shouldCompressResponse(operation String) : boolean renamed to private shouldCompressResponseForOperation(operation String) : boolean in class com.linkedin.r2.filter.compression.ClientCompressionFilter"
@@ -8598,6 +8663,10 @@
 	"refactorings": [{
 		"type": "Rename Package",
 		"description": "Rename Package android.widget to com.joanzapata.android.iconify.views"
+	},
+	{
+		"type": "Inline Method",
+		"description": "Inline Method public addIcons(icon T, textViews TextView[]) : void inlined to public addIcons(textViews TextView[]) : void in class com.joanzapata.android.iconify.Iconify"
 	}],
 	"time": "8/4/15 6:55 PM",
 	"id": 1157168

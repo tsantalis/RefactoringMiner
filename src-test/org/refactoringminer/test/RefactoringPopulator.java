@@ -2783,15 +2783,21 @@ public class RefactoringPopulator {
 		public String author;
 		public String time;
 		public List<Refactoring> refactorings;
+		public List<Comment> comment;
 	}
 
 	public static class Refactoring {
 		public String type;
 		public String description;
+		public String comment;
 	}
 
-	public class Description {
-		public String description;
+	
+	public static class Comment{
+		public String refactored;
+		public String link;
+		public String message;
+		public String type;
 	}
 
 

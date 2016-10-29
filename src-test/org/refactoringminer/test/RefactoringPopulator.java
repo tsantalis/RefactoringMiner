@@ -2798,6 +2798,7 @@ public class RefactoringPopulator {
 		public String link;
 		public String message;
 		public String type;
+		public String reportedCase;
 	}
 
 

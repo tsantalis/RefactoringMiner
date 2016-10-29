@@ -4461,7 +4461,7 @@
 	"author": "mustafaiman",
 	"refactorings": [{
 		"type": "Push Down Method",
-		"description": "Push Down Method protected getConnection() : HazelcastConnection from class com.hazelcast.jca.AbstractDeploymentTest to class com.hazelcast.jca.XATransactionTest"
+		"description": "Push Down Method protected getConnection() : HazelcastConnection from class com.hazelcast.jca.AbstractDeploymentTest to protected getConnection() : HazelcastConnection from class com.hazelcast.jca.XATransactionTest"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public Init() : void renamed to public init() : void in class com.hazelcast.jca.XATransactionTest"

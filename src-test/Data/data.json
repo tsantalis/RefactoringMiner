@@ -2325,6 +2325,18 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected query(query Query) : PrimitiveLongIterator extracted from public scan() : PrimitiveLongIterator in class org.neo4j.kernel.api.impl.index.LuceneIndexAccessorReader"
+	}, {
+		"type": "Rename Method",
+		"description":"Rename Method public newMatchAllQuery() : Query renamed to public newAllQuery() : Query in class org.neo4j.kernel.api.impl.index.LuceneDocumentStructure"
+	}, {
+		"type": "Rename Method",
+		"description":"Rename Method public newQuery(value Object) : Query renamed to public newValueQuery(value Object) : Query in class org.neo4j.kernel.api.impl.index.LuceneDocumentStructure"
+	}, {
+		"type": "Rename Method",
+		"description":"Rename Method protected getAllNodes(propertyValue String) : List renamed to protected getAllNodesWithProperty(propertyValue String) : List in class org.neo4j.kernel.api.index.IndexAccessorCompatibility"
+	}, {
+		"type": "Rename Method",
+		"description":"Rename Method public newQueryForChangeOrRemove(nodeId long) : Term renamed to public newTermForChangeOrRemove(nodeId long) : Term in class org.neo4j.kernel.api.impl.index.LuceneDocumentStructure"
 	}],
 	"time": "6/18/15 7:27 AM",
 	"id": 1119504
@@ -2692,6 +2704,10 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private evaluateTemplate(check Check, subscription Subscription, alerts List<Alert>, templateContent String) : String extracted from public createBody(check Check, subscription Subscription, alerts List<Alert>) : String in class com.seyren.core.util.velocity.VelocityEmailHelper"
+	},
+	{
+		"type": "Rename Method",
+		"description": "Rename Method public subjectIsCorrect() : void renamed to public bodyContainsItemsFromModel() : void in class com.seyren.core.util.velocity.VelocityEmailHelperTest"
 	}],
 	"time": "6/20/15 4:49 AM",
 	"id": 1121744
@@ -2896,6 +2912,14 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private availability() : Availability extracted from private availability(millis long) : Availability in class org.neo4j.kernel.AvailabilityGuard"
+	},
+	{
+		"type": "Rename Method",
+		"description": "Rename Method public givenAccessGuardWith2ConditionsWhenGrantTwiceAndAwaitThenTrue() : void renamed to public givenAccessGuardWith2ConditionsWhenGrantEachAndAwaitThenTrue() : void in class org.neo4j.kernel.AvailabilityGuardTest"
+	},
+	{
+		"type": "Rename Method",
+		"description": "Rename Method public deny(requirementNotMet AvailabilityRequirement) : void renamed to public require(requirement AvailabilityRequirement) : void in class org.neo4j.kernel.AvailabilityGuard"
 	}],
 	"time": "6/22/15 7:06 AM",
 	"id": 1122167
@@ -3333,6 +3357,13 @@
 		"type": "Extract Method",
 		"description": "Extract Method private putFilter(sName String, filter ZuulFilter, lastModified long) : void extracted from public putFilter(file File) : boolean in class com.netflix.zuul.FilterLoader"
 	}],
+	"comment":[{
+	"refactored":"getLocations",
+	"link": "https://github.com/Netflix/zuul/commit/b25d3f32ed2e2da86f5c746098686445c2e2a314#diff-9a6e4382103efe13a34c209e61e213caL192",
+	"message":"one statement method. semantically match better for another case",
+	"type":"False Positive",
+	"case": "Rename Method public getLocations() : String[] renamed to public getClassNames() : String[] in class com.netflix.zuul.FilterFileManager.FilterFileManagerConfig"
+}],
 	"time": "6/23/15 11:44 PM",
 	"id": 1122892
 }, {
@@ -3477,6 +3508,13 @@
 		"type": "Rename Method",
 		"description": "Rename Method public enableStringsFilter() : Builder renamed to public enableStringWhitelisting() : Builder in class com.facebook.buck.android.FilterResourcesStep.Builder"
 	}],
+	"comment":[{
+	"refactored":"testFilterStringsIncludingEnglishStrings",
+	"link": "https://github.com/facebook/buck/commit/d49765899cb9df6781fff9773ffc244b5167351c#diff-8a2b970217a8ec6767bb53b08c484dddL208",
+	"message":"Thins this is a FP",
+	"type":"TBD",
+	"case": "Rename Method public testFilterStringsIncludingEnglishStrings() : void renamed to public testWhitelistFilter() : void in class com.facebook.buck.android.FilterResourcesStepTest"
+}],
 	"time": "6/24/15 1:21 PM",
 	"id": 1123715
 }, {
@@ -4466,6 +4504,13 @@
 		"type": "Rename Method",
 		"description": "Rename Method public Init() : void renamed to public init() : void in class com.hazelcast.jca.XATransactionTest"
 	}],
+	"comment":[{
+	"refactored":"deploymentHzRar",
+	"link": "https://github.com/hazelcast/hazelcast/commit/c00275e7f85c8a9af5785f66cc0f75dc027b6cb6#diff-22dfe0f78bf18ede2a20e8d12655eea5L36",
+	"message":"think this is FP",
+	"type":"TBD",
+	"case": "Rename Method public deploymentHzRar() : ResourceAdapterArchive renamed to public createResourceAdapterDeployment() : ResourceAdapterArchive in class com.hazelcast.jca.AbstractDeploymentTest"
+}],
 	"time": "7/6/15 5:59 AM",
 	"id": 1132974
 }, {
@@ -4843,7 +4888,19 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method protected onKeyboardShown(keyboardHeight int) : void renamed to protected onKeyboardOpen(keyboardHeight int) : void in class org.thoughtcrime.securesms.components.KeyboardAwareLinearLayout"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public toggle() : void renamed to public setToIme() : void in class org.thoughtcrime.securesms.components.emoji.EmojiToggle"
 	}],
+"comment":[{
+	"refactored":"getIndexUpdatesForPrefix",
+	"link": "https://github.com/WhisperSystems/Signal-Android/commit/fa62b9bde224341e0c2d43c0694fc10c4df7336f#diff-548d31780e5060b87418f36e2e224e47L37",
+	"message":"The method splited to two different methods.",
+	"type":"TBD",
+	"case": "Rename Method public toggle() : void renamed to public setToEmoji() : void in class org.thoughtcrime.securesms.components.emoji.EmojiToggle"
+
+}]
+	,
 	"time": "7/6/15 8:50 PM",
 	"id": 1133054
 }, {
@@ -7022,7 +7079,44 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private getSortedIndexUpdates(descriptor IndexDescriptor) : TreeMap<DefinedProperty,DiffSets<Long>> extracted from private getIndexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSetsLong in class org.neo4j.kernel.impl.api.state.TxState"
-	}],
+	},
+	{
+		"type": "Rename Method",
+		"description": "Rename Method public shouldComputeIndexUpdatesOnAnEmptyTxState() : void renamed to public shouldComputeIndexUpdatesForScanOrSeekOnAnEmptyTxState() : void in class org.neo4j.kernel.impl.api.state.TxStateTest",
+		"comment": "The only exact match is : assertTrue( diffSets.isEmpty() );"
+	},
+	{
+		"type": "Rename Method",
+		"description": "Rename Method private getIndexUpdates(label int, propertyKeyId int) : DiffSets renamed to private getIndexUpdatesForScanOrSeek(label int, propertyKeyId int) : DiffSets in class org.neo4j.kernel.impl.api.state.TxState"
+	},
+	{
+		"type": "Rename Method",
+		"description": "Rename Method private getIndexUpdates(label int, create boolean, property DefinedProperty) : DiffSets renamed to private getIndexUpdatesForScanOrSeek(label int, create boolean, property DefinedProperty) : DiffSets in class org.neo4j.kernel.impl.api.state.TxState"
+	},
+	{
+		"type": "Rename Method",
+		"description": "Rename Method private filterIndexStateChanges(state KernelStatement, index IndexDescriptor, value Object, nodeIds PrimitiveLongIterator) : PrimitiveLongIterator renamed to private filterIndexStateChangesForScanOrSeek(state KernelStatement, index IndexDescriptor, value Object, nodeIds PrimitiveLongIterator) : PrimitiveLongIterator in class org.neo4j.kernel.impl.api.StateHandlingStatementOperations"
+	},
+	{
+		"type": "Rename Method",
+		"description": "Rename Method private filterIndexStateChangesForPrefix(state KernelStatement, index IndexDescriptor, prefix String, nodeIds PrimitiveLongIterator) : PrimitiveLongIterator renamed to private filterIndexStateChangesForRangeSeekByPrefix(state KernelStatement, index IndexDescriptor, prefix String, nodeIds PrimitiveLongIterator) : PrimitiveLongIterator in class org.neo4j.kernel.impl.api.StateHandlingStatementOperations"
+	}
+],
+"comment":[{
+	"refactored":"getIndexUpdatesForPrefix",
+	"link": "https://github.com/neo4j/neo4j/commit/dc199688d69416da58b370ca2aa728e935fc8e0d#diff-a57268ea99b659fe815634ce2660672eL1207",
+	"message":"check again",
+	"type":"TBD",
+	"case": "Rename Method private getIndexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets renamed to private getIndexUpdatesForRangeSeekByPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets in class org.neo4j.kernel.impl.api.state.TxState"
+},
+{
+	"refactored":"indexUpdates",
+	"link": "https://github.com/neo4j/neo4j/commit/dc199688d69416da58b370ca2aa728e935fc8e0d#diff-a57268ea99b659fe815634ce2660672eL1193",
+	"message":"check again",
+	"type":"TBD",
+	"case":"Rename Method public indexUpdates(descriptor IndexDescriptor, value Object) : ReadableDiffSets renamed to public indexUpdatesForScanOrSeek(descriptor IndexDescriptor, value Object) : ReadableDiffSets in class org.neo4j.kernel.impl.api.state.TxState"
+}]
+	,
 	"time": "7/20/15 6:24 AM",
 	"id": 1144559
 }, {
@@ -7593,6 +7687,9 @@
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private fileLock : FileLock from class org.neo4j.kernel.impl.store.standard.StoreOpenCloseCycle to class org.neo4j.io.pagecache.impl.SingleFilePageSwapper"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method protected releaseFileLockAndCloseFileChannel() : void renamed to protected closeFileChannel() : void in class org.neo4j.kernel.impl.store.CommonAbstractStore"
 	}],
 	"time": "7/27/15 6:06 AM",
 	"id": 1150670
@@ -8024,7 +8121,29 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public sanitizeOtherDirectoriesWithoutExpandPaths() : void renamed to public sanitizeOtherDirectories() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest"
-	}],
+	}]
+	,
+	"comment":[{
+	"refactored":"sanitizeProjectRootWithoutExpandPaths",
+	"link": "https://github.com/facebook/buck/commit/6ed4cf9e83fe24fc6ab6fc9ebede016c777c9725#diff-4c085fb7767d88740f1ab8cf013e07f1L78",
+	"message":"this is a bettter match for sanitizeProjectRoot()",
+	"type":"False Positive",
+	"case": "Rename Method public sanitizeProjectRootWithoutExpandPaths() : void renamed to public sanitizeOtherDirectories() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest"
+},
+{
+	"refactored":"sanitizeProjectRootWithExpandPaths",
+	"link": "https://github.com/facebook/buck/commit/6ed4cf9e83fe24fc6ab6fc9ebede016c777c9725#diff-4c085fb7767d88740f1ab8cf013e07f1L70",
+	"message":"a bettter match for another one",
+	"type":"False Positive",
+	"case":"Rename Method public sanitizeProjectRootWithExpandPaths() : void renamed to public sanitizeDirectoriesThatArePrefixOfOtherDirectories() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest"
+},
+{
+	"refactored":"sanitizeWithoutAnyMatchesWithoutExpandPaths",
+	"link": "https://github.com/facebook/buck/commit/6ed4cf9e83fe24fc6ab6fc9ebede016c777c9725#diff-4c085fb7767d88740f1ab8cf013e07f1L59",
+	"message":"a bettter match is already existed for sanitizeProjectRoot()",
+	"type":"False Positive",
+	"case":"Rename Method public sanitizeWithoutAnyMatchesWithoutExpandPaths() : void renamed to public sanitizeProjectRoot() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest"
+}],
 	"time": "7/28/15 3:32 PM",
 	"id": 1151927
 }, {

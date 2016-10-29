@@ -4500,7 +4500,7 @@
 		"description": "Push Down Attribute private gradleUserHomeDir : File from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public getTasks() : List from class org.gradle.testkit.functional.GradleRunner to public getTasks() : List from class org.gradle.testkit.functional.internal.DefaultGradleRunner"
+		"description": "Push Down Method public getTasks() : List<String> from class org.gradle.testkit.functional.GradleRunner to public getTasks() : List<String> from class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Attribute",
 		"description": "Push Down Attribute private arguments : List<String> from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
@@ -4509,7 +4509,7 @@
 		"description": "Push Down Attribute private taskNames : List<String> from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public setArguments(arguments List) : void from class org.gradle.testkit.functional.GradleRunner to public setArguments(arguments List) : void from class org.gradle.testkit.functional.internal.DefaultGradleRunner"
+		"description": "Push Down Method public setArguments(arguments List<String>) : void from class org.gradle.testkit.functional.GradleRunner to public setArguments(arguments List<String>) : void from class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Attribute",
 		"description": "Push Down Attribute private workingDirectory : File from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
@@ -4521,10 +4521,10 @@
 		"description": "Push Down Method public setWorkingDir(workingDirectory File) : void from class org.gradle.testkit.functional.GradleRunner to public setWorkingDir(workingDirectory File) : void from class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public setArguments(arguments List<String>) : void from class org.gradle.testkit.functional.GradleRunner to class org.gradle.testkit.functional.internal.DefaultGradleRunner"
+		"description": "Push Down Method public getArguments() : List<String> from class org.gradle.testkit.functional.GradleRunner to public getArguments() : List<String> from class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public setTasks(taskNames List) : void from class org.gradle.testkit.functional.GradleRunner to public setTasks(taskNames List) : void from class org.gradle.testkit.functional.internal.DefaultGradleRunner"
+		"description": "Push Down Method public setTasks(taskNames List<String>) : void from class org.gradle.testkit.functional.GradleRunner to public setTasks(taskNames List<String>) : void from class org.gradle.testkit.functional.internal.DefaultGradleRunner"
 	}, {
 		"type": "Push Down Method",
 		"description": "Push Down Method public getWorkingDir() : File from class org.gradle.testkit.functional.GradleRunner to public getWorkingDir() : File from class org.gradle.testkit.functional.internal.DefaultGradleRunner"

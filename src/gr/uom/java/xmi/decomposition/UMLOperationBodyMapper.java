@@ -320,11 +320,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public int nonMappedElementsT1() {
-		return getNonMappedLeavesT1().size() + getNonMappedInnerNodesT1().size();
+		int nonMappedInnerNodeCount = 0;
+		for(CompositeStatementObject composite : getNonMappedInnerNodesT1()) {
+			if(!composite.getString().equals("{"))
+				nonMappedInnerNodeCount++;
+		}
+		return getNonMappedLeavesT1().size() + nonMappedInnerNodeCount;
 	}
 
 	public int nonMappedElementsT2() {
-		return getNonMappedLeavesT2().size() + getNonMappedInnerNodesT2().size();
+		int nonMappedInnerNodeCount = 0;
+		for(CompositeStatementObject composite : getNonMappedInnerNodesT2()) {
+			if(!composite.getString().equals("{"))
+				nonMappedInnerNodeCount++;
+		}
+		return getNonMappedLeavesT2().size() + nonMappedInnerNodeCount;
 	}
 
 	public int exactMatches() {

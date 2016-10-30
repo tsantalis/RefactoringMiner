@@ -340,7 +340,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public int exactMatches() {
 		int count = 0;
 		for(AbstractCodeMapping mapping : getMappings()) {
-			if(mapping.isExact())
+			if(mapping.isExact() && !mapping.getFragment1().getString().equals("{"))
 				count++;
 		}
 		return count;

@@ -3009,18 +3009,6 @@
 		"type": "Inline Method",
 		"description": "Inline Method public releaseAllExclusive() : void inlined to public releaseAll() : void in class org.neo4j.kernel.impl.locking.community.CommunityLockClient"
 	}],
-	"comment":[{
-	"refactored":"incrementAndRemoveAlreadyTakenLocks",
-	"link": "https://github.com/neo4j/neo4j/commit/77fab3caea4495798a248035f0e928f745c7c2db#diff-612330276167ffdceecbf23913844464L116",
-	"message":"Low similarity",
-	"type":"TBD"
-},
-{
-	"refactored":"incrementAndRemoveAlreadyTakenLocks",
-	"link": "https://github.com/neo4j/neo4j/commit/77fab3caea4495798a248035f0e928f745c7c2db#diff-612330276167ffdceecbf23913844464L116",
-	"message":"Low similarity",
-	"type":"TBD"
-}],
 	"time": "6/22/15 2:06 PM",
 	"id": 1122159
 }, {
@@ -3357,13 +3345,6 @@
 		"type": "Extract Method",
 		"description": "Extract Method private putFilter(sName String, filter ZuulFilter, lastModified long) : void extracted from public putFilter(file File) : boolean in class com.netflix.zuul.FilterLoader"
 	}],
-	"comment":[{
-	"refactored":"getLocations",
-	"link": "https://github.com/Netflix/zuul/commit/b25d3f32ed2e2da86f5c746098686445c2e2a314#diff-9a6e4382103efe13a34c209e61e213caL192",
-	"message":"one statement method. semantically match better for another case",
-	"type":"False Positive",
-	"reportedCase": "Rename Method public getLocations() : String[] renamed to public getClassNames() : String[] in class com.netflix.zuul.FilterFileManager.FilterFileManagerConfig"
-}],
 	"time": "6/23/15 11:44 PM",
 	"id": 1122892
 }, {
@@ -3508,13 +3489,6 @@
 		"type": "Rename Method",
 		"description": "Rename Method public enableStringsFilter() : Builder renamed to public enableStringWhitelisting() : Builder in class com.facebook.buck.android.FilterResourcesStep.Builder"
 	}],
-	"comment":[{
-	"refactored":"testFilterStringsIncludingEnglishStrings",
-	"link": "https://github.com/facebook/buck/commit/d49765899cb9df6781fff9773ffc244b5167351c#diff-8a2b970217a8ec6767bb53b08c484dddL208",
-	"message":"Thins this is a FP",
-	"type":"TBD",
-	"reportedCase": "Rename Method public testFilterStringsIncludingEnglishStrings() : void renamed to public testWhitelistFilter() : void in class com.facebook.buck.android.FilterResourcesStepTest"
-}],
 	"time": "6/24/15 1:21 PM",
 	"id": 1123715
 }, {
@@ -3658,30 +3632,12 @@
 	"repository": "https://github.com/phishman3579/java-algorithms-implementation.git",
 	"author": "Justin Wetherell",
 	"refactorings": [{
-			"type": "Extract Method",
-			"description": "Extract Method private runTest(testable Testable, unsorted Integer[], sorted Integer[], results double[], count int) : int extracted from public main(args String[]) : void in class com.jwetherell.algorithms.sorts.timing.SortsTiming"
-		}, {
-			"type": "Extract Method",
-			"description": "Extract Method private runTests(testable Testable, tests int, unsorteds Integer[][], sorteds Integer[][], strings String[]) : boolean extracted from private runTests() : boolean in class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming"
-		}
-
-	],
-	"comment":[{
-	"refactored":"testBTree",
-	"link": "https://github.com/neo4j/neo4j/commit/dc199688d69416da58b370ca2aa728e935fc8e0d#diff-94e898a8535f13220449b217db75fd90L842",
-	"message":"method was in another class.",
-	"type":"TBD"
-},{
-"refactored":"testBST",
-"link": "https://github.com/neo4j/neo4j/commit/dc199688d69416da58b370ca2aa728e935fc8e0d#diff-94e898a8535f13220449b217db75fd90L842",
-"message":"method was in another class.",
-"type":"TBD"
-},{
-"refactored":"testAVLTree",
-"link": "https://github.com/neo4j/neo4j/commit/dc199688d69416da58b370ca2aa728e935fc8e0d#diff-94e898a8535f13220449b217db75fd90L842",
-"message":"method was in another class.",
-"type":"TBD"
-}],
+		"type": "Extract Method",
+		"description": "Extract Method private runTest(testable Testable, unsorted Integer[], sorted Integer[], results double[], count int) : int extracted from public main(args String[]) : void in class com.jwetherell.algorithms.sorts.timing.SortsTiming"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private runTests(testable Testable, tests int, unsorteds Integer[][], sorteds Integer[][], strings String[]) : boolean extracted from private runTests() : boolean in class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming"
+	}],
 	"time": "6/24/15 5:48 PM",
 	"id": 1123684
 }, {
@@ -4504,13 +4460,6 @@
 		"type": "Rename Method",
 		"description": "Rename Method public Init() : void renamed to public init() : void in class com.hazelcast.jca.XATransactionTest"
 	}],
-	"comment":[{
-	"refactored":"deploymentHzRar",
-	"link": "https://github.com/hazelcast/hazelcast/commit/c00275e7f85c8a9af5785f66cc0f75dc027b6cb6#diff-22dfe0f78bf18ede2a20e8d12655eea5L36",
-	"message":"think this is FP",
-	"type":"TBD",
-	"reportedCase": "Rename Method public deploymentHzRar() : ResourceAdapterArchive renamed to public createResourceAdapterDeployment() : ResourceAdapterArchive in class com.hazelcast.jca.AbstractDeploymentTest"
-}],
 	"time": "7/6/15 5:59 AM",
 	"id": 1132974
 }, {
@@ -4656,13 +4605,6 @@
 		"type": "Rename Method",
 		"description": "Rename Method private createAccount(id int) : AccountPB renamed to private createAccountPB(id int) : AccountPB in class org.infinispan.client.hotrod.marshall.EmbeddedCompatTest"
 	}],
-	"comment":[{
-	"refactored":"executeNonIndexedQuery",
-	"link": "https://github.com/infinispan/infinispan/commit/35b6c869546a7968b6fd2f640add6eea87e03c22#diff-8adab1b08cc0cabd2ef98a61322bb8d2L79",
-	"message":"one similar Statement!!",
-	"type":"TBD"
-}]
-	,
 	"time": "7/6/15 1:12 PM",
 	"id": 1134634
 }, {
@@ -4888,19 +4830,7 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method protected onKeyboardShown(keyboardHeight int) : void renamed to protected onKeyboardOpen(keyboardHeight int) : void in class org.thoughtcrime.securesms.components.KeyboardAwareLinearLayout"
-	}, {
-		"type": "Rename Method",
-		"description": "Rename Method public toggle() : void renamed to public setToIme() : void in class org.thoughtcrime.securesms.components.emoji.EmojiToggle"
 	}],
-"comment":[{
-	"refactored":"getIndexUpdatesForPrefix",
-	"link": "https://github.com/WhisperSystems/Signal-Android/commit/fa62b9bde224341e0c2d43c0694fc10c4df7336f#diff-548d31780e5060b87418f36e2e224e47L37",
-	"message":"The method splited to two different methods.",
-	"type":"TBD",
-	"reportedCase": "Rename Method public toggle() : void renamed to public setToEmoji() : void in class org.thoughtcrime.securesms.components.emoji.EmojiToggle"
-
-}]
-	,
 	"time": "7/6/15 8:50 PM",
 	"id": 1133054
 }, {
@@ -7018,12 +6948,10 @@
 		}, {
 			"type": "Push Down Method",
 			"description": "Push Down Method public equals(obj Object) : boolean from class buildcraft.api.robots.ResourceId to public equals(obj Object) : boolean from class buildcraft.api.robots.ResourceIdBlock",
-			"comment": "it should be change to polymorphysim as soon as we add this refactoring"
 		},
 		{
 			"type": "Push Down Method",
 			"description": "Push Down Method public equals(obj Object) : boolean from class buildcraft.api.robots.ResourceId to public equals(obj Object) : boolean from class buildcraft.api.robots.ResourceIdRequest",
-			"comment": "it should be change to polymorphysim as soon as we add this refactoring"
 		}, {
 			"type": "Push Down Attribute",
 			"description": "Push Down Attribute private side : ForgeDirection from class buildcraft.api.robots.ResourceId to class buildcraft.api.robots.ResourceIdRequest"
@@ -7083,7 +7011,6 @@
 	{
 		"type": "Rename Method",
 		"description": "Rename Method public shouldComputeIndexUpdatesOnAnEmptyTxState() : void renamed to public shouldComputeIndexUpdatesForScanOrSeekOnAnEmptyTxState() : void in class org.neo4j.kernel.impl.api.state.TxStateTest",
-		"comment": "The only exact match is : assertTrue( diffSets.isEmpty() );"
 	},
 	{
 		"type": "Rename Method",
@@ -7100,23 +7027,15 @@
 	{
 		"type": "Rename Method",
 		"description": "Rename Method private filterIndexStateChangesForPrefix(state KernelStatement, index IndexDescriptor, prefix String, nodeIds PrimitiveLongIterator) : PrimitiveLongIterator renamed to private filterIndexStateChangesForRangeSeekByPrefix(state KernelStatement, index IndexDescriptor, prefix String, nodeIds PrimitiveLongIterator) : PrimitiveLongIterator in class org.neo4j.kernel.impl.api.StateHandlingStatementOperations"
-	}
-],
-"comment":[{
-	"refactored":"getIndexUpdatesForPrefix",
-	"link": "https://github.com/neo4j/neo4j/commit/dc199688d69416da58b370ca2aa728e935fc8e0d#diff-a57268ea99b659fe815634ce2660672eL1207",
-	"message":"check again",
-	"type":"TBD",
-	"reportedCase": "Rename Method private getIndexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets renamed to private getIndexUpdatesForRangeSeekByPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets in class org.neo4j.kernel.impl.api.state.TxState"
-},
-{
-	"refactored":"indexUpdates",
-	"link": "https://github.com/neo4j/neo4j/commit/dc199688d69416da58b370ca2aa728e935fc8e0d#diff-a57268ea99b659fe815634ce2660672eL1193",
-	"message":"check again",
-	"type":"TBD",
-	"reportedCase":"Rename Method public indexUpdates(descriptor IndexDescriptor, value Object) : ReadableDiffSets renamed to public indexUpdatesForScanOrSeek(descriptor IndexDescriptor, value Object) : ReadableDiffSets in class org.neo4j.kernel.impl.api.state.TxState"
-}]
-	,
+	},
+	{
+		"type": "Rename Method",
+		"description": "Rename Method public indexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets<Long> renamed to public indexUpdatesForRangeSeekByPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets<Long> in class org.neo4j.kernel.impl.api.state.TxState"
+	},
+	{
+		"type": "Rename Method",
+		"description": "Rename Method public indexUpdates(descriptor IndexDescriptor, value Object) : ReadableDiffSets<Long> renamed to public indexUpdatesForScanOrSeek(descriptor IndexDescriptor, value Object) : ReadableDiffSets<Long> in class org.neo4j.kernel.impl.api.state.TxState"
+	}],
 	"time": "7/20/15 6:24 AM",
 	"id": 1144559
 }, {
@@ -7180,12 +7099,6 @@
 		"type": "Move Method",
 		"description": "Move Method public wcwidth(cs CharSequence) : int from class jline.console.WCWidth to class jline.console.ConsoleReader"
 	}],
-	"comment":[{
-	"refactored":"print",
-	"link": "https://github.com/jline/jline2/commit/1eb3b624b288a4b1a054420d3efb05b8f1d28517#diff-f9b07b9c8a524104bce4b7a19cd0d6a9L3479",
-	"message":"similar to rename method refactoring",
-	"type":"False Positive"
-}],
 	"time": "7/20/15 2:41 PM",
 	"id": 1144626
 }, {
@@ -8121,29 +8034,7 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public sanitizeOtherDirectoriesWithoutExpandPaths() : void renamed to public sanitizeOtherDirectories() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest"
-	}]
-	,
-	"comment":[{
-	"refactored":"sanitizeProjectRootWithoutExpandPaths",
-	"link": "https://github.com/facebook/buck/commit/6ed4cf9e83fe24fc6ab6fc9ebede016c777c9725#diff-4c085fb7767d88740f1ab8cf013e07f1L78",
-	"message":"this is a bettter match for sanitizeProjectRoot()",
-	"type":"False Positive",
-	"reportedCase": "Rename Method public sanitizeProjectRootWithoutExpandPaths() : void renamed to public sanitizeOtherDirectories() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest"
-},
-{
-	"refactored":"sanitizeProjectRootWithExpandPaths",
-	"link": "https://github.com/facebook/buck/commit/6ed4cf9e83fe24fc6ab6fc9ebede016c777c9725#diff-4c085fb7767d88740f1ab8cf013e07f1L70",
-	"message":"a bettter match for another one",
-	"type":"False Positive",
-	"reportedCase":"Rename Method public sanitizeProjectRootWithExpandPaths() : void renamed to public sanitizeDirectoriesThatArePrefixOfOtherDirectories() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest"
-},
-{
-	"refactored":"sanitizeWithoutAnyMatchesWithoutExpandPaths",
-	"link": "https://github.com/facebook/buck/commit/6ed4cf9e83fe24fc6ab6fc9ebede016c777c9725#diff-4c085fb7767d88740f1ab8cf013e07f1L59",
-	"message":"a bettter match is already existed for sanitizeProjectRoot()",
-	"type":"False Positive",
-	"reportedCase":"Rename Method public sanitizeWithoutAnyMatchesWithoutExpandPaths() : void renamed to public sanitizeProjectRoot() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest"
-}],
+	}],
 	"time": "7/28/15 3:32 PM",
 	"id": 1151927
 }, {
@@ -8342,11 +8233,6 @@
 	"refactorings": [{
 		"type": "Inline Method",
 		"description": "Inline Method private comparator(ignoreCase boolean) : Comparator<CharSequence> inlined to public contains(name CharSequence, value CharSequence, ignoreCase boolean) : boolean in class io.netty.handler.codec.DefaultTextHeaders"
-	},
-	{
-		"type": "Inline Method",
-		"description": "Inline Method public contains(name T, value T, keyComparator Comparator, valueComparator Comparator) : boolean inlined to public contains(name T, value T, valueComparator Comparator) : boolean in class io.netty.handler.codec.DefaultHeaders",
-		"comment": "the similarity is somhow low"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public as(value byte[]) : ByteString renamed to public bs(value byte[]) : ByteString in class io.netty.handler.codec.http2.Http2TestUtil"

@@ -27,30 +27,30 @@ public class TestWithArqsoft16Dataset {
             RefactoringType.PUSH_DOWN_OPERATION);
         
         Arqsoft16Dataset oracle = new Arqsoft16Dataset();
-//        GitHistoryRefactoringMinerImpl rm1 = new GitHistoryRefactoringMinerImpl();
-//        GitHistoryRefactoringMiner rm2 = new GitHistoryRefactoringMiner2();
-//
-//        RefactoringSet[] rm1Results = getRmResults(rm1);
-//        RefactoringSet[] rm2Results = getRmResults(rm2);
-//        
-//        ResultComparator rc1 = new ResultComparator();
-//        rc1.expect(oracle.all());
-//        rc1.compareWith("RM1", rm1Results);
-//        rc1.compareWith("RM2", rm2Results);
-//        rc1.compareWith("RC", readRefactoringCrawlerResults());
-//        rc1.printSummary(System.out, true, refTypesToConsider);
-//        
-//        
-//        ResultComparator rc2 = new ResultComparator();
-//        rc2.expect(oracle.all());
-//        rc2.compareWith("RM1", rm1Results);
-//        rc2.compareWith("RM2", rm2Results);
-//        rc2.printSummary(System.out, false, allRefTypes);
-//        rc1.printDetails(System.out, false, allRefTypes);
+        GitHistoryRefactoringMinerImpl rm1 = new GitHistoryRefactoringMinerImpl();
+        GitHistoryRefactoringMiner rm2 = new GitHistoryRefactoringMiner2();
+
+        RefactoringSet[] rm1Results = getRmResults(rm1);
+        RefactoringSet[] rm2Results = getRmResults(rm2);
         
-        ResultComparator rc3 = new ResultComparator();
-        rc3.expect(oracle.all());
-        rc3.compareWith("Oracle", oracle.all());
+        ResultComparator rc1 = new ResultComparator();
+        rc1.expect(oracle.all());
+        rc1.compareWith("RM1", rm1Results);
+        rc1.compareWith("RM2", rm2Results);
+        rc1.compareWith("RC", readRefactoringCrawlerResults());
+        rc1.printSummary(System.out, true, refTypesToConsider);
+        
+        
+        ResultComparator rc2 = new ResultComparator();
+        rc2.expect(oracle.all());
+        rc2.compareWith("RM1", rm1Results);
+        rc2.compareWith("RM2", rm2Results);
+        rc2.printSummary(System.out, false, allRefTypes);
+        rc1.printDetails(System.out, false, allRefTypes);
+        
+//        ResultComparator rc3 = new ResultComparator();
+//        rc3.expect(oracle.all());
+//        rc3.compareWith("Oracle", oracle.all());
     }
 
     private static RefactoringSet[] readRefactoringCrawlerResults() {

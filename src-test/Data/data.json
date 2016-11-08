@@ -4776,12 +4776,6 @@
 	"author": "Hanifi Gunes",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private allocateBytes(size long) : void extracted from public allocateNew(valueCount int) : void in class org.apache.drill.exec.vector.$"
-	}, {
-		"type": "Extract Method",
-		"description": "Extract Method private allocateBytes(size long) : void extracted from public allocateNewSafe() : boolean in class org.apache.drill.exec.vector.$"
-	}, {
-		"type": "Extract Method",
 		"description": "Extract Method private allocateBytes(size long) : void extracted from public allocateNew(valueCount int) : void in class org.apache.drill.exec.vector.BitVector"
 	}, {
 		"type": "Extract Method",

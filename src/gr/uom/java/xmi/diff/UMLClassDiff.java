@@ -341,7 +341,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	private boolean parameterTypesMatch(Map<UMLParameter, UMLParameter> originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters) {
 		for(UMLParameter key : originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters.keySet()) {
 			UMLParameter value = originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters.get(key);
-			if(!key.getType().equals(value.getType())) {
+			if(!key.getType().equals(value.getType()) && !key.getType().equalsWithSubType(value.getType())) {
 				return false;
 			}
 		}

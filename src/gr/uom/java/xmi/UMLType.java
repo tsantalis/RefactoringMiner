@@ -50,6 +50,26 @@ public class UMLType implements Serializable {
         return false;
     }
 
+    public boolean equalsWithSubType(UMLType typeObject) {
+    	if(lastCamelCaseTokenMatch(this.classType, typeObject.classType)) {
+            if(this.genericType == null && typeObject.genericType == null)
+                return this.arrayDimension == typeObject.arrayDimension;
+            else if(this.genericType != null && typeObject.genericType != null)
+                return equalGenericType(typeObject) && this.arrayDimension == typeObject.arrayDimension;
+        }
+    	return false;
+    }
+
+	private boolean lastCamelCaseTokenMatch(String classType1, String classType2) {
+		String regex = "(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])";
+		String[] tokens1 = classType1.split(regex);
+		String[] tokens2 = classType2.split(regex);
+		if(tokens1.length > 0 && tokens2.length > 0) {
+			return tokens1[tokens1.length-1].equals(tokens2[tokens2.length-1]);
+		}
+		return false;
+	}
+
 	private boolean equalGenericType(UMLType typeObject) {
 		if((this.genericType.equals("<?>") && typeObject.genericType.startsWith("<? ")) || 
 				(this.genericType.startsWith("<? ") && typeObject.genericType.equals("<?>"))) {

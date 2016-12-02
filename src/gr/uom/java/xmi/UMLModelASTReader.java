@@ -22,11 +22,15 @@ import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.FileASTRequestor;
+import org.eclipse.jdt.core.dom.IDocElement;
 import org.eclipse.jdt.core.dom.ITypeBinding;
+import org.eclipse.jdt.core.dom.Javadoc;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.TagElement;
+import org.eclipse.jdt.core.dom.TextElement;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
@@ -110,6 +114,21 @@ public class UMLModelASTReader {
 	}
 
 	private void processTypeDeclaration(TypeDeclaration typeDeclaration, String packageName, String sourceFile) {
+		Javadoc javaDoc = typeDeclaration.getJavadoc();
+		if(javaDoc != null) {
+			List<TagElement> tags = javaDoc.tags();
+			for(TagElement tag : tags) {
+				List<IDocElement> fragments = tag.fragments();
+				for(IDocElement docElement : fragments) {
+					if(docElement instanceof TextElement) {
+						TextElement textElement = (TextElement)docElement;
+						if(textElement.getText().contains("Source code generated using FreeMarker template")) {
+							return;
+						}
+					}
+				}
+			}
+		}
 		String className = typeDeclaration.getName().getFullyQualifiedName();
 		UMLClass umlClass = new UMLClass(packageName, className, sourceFile, typeDeclaration.isPackageMemberTypeDeclaration());
 		

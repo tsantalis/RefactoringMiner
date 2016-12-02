@@ -3,6 +3,7 @@ package gr.uom.java.xmi.diff;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
@@ -300,30 +301,51 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 						}
 					}
 					if(addedOperationInvocation != null) {
+						List<UMLParameter> originalMethodParameters = mapper.getOperation1().getParametersWithoutReturnType();
+						Map<UMLParameter, UMLParameter> originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters = new LinkedHashMap<UMLParameter, UMLParameter>();
 						List<String> arguments = addedOperationInvocation.getArguments();
-						List<String> parameters = addedOperation.getParameterNameList();
+						List<UMLParameter> parameters = addedOperation.getParametersWithoutReturnType();
 						Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
 						for(int i=0; i<parameters.size(); i++) {
-							parameterToArgumentMap.put(parameters.get(i), arguments.get(i));
+							String argumentName = arguments.get(i);
+							String parameterName = parameters.get(i).getName();
+							parameterToArgumentMap.put(parameterName, argumentName);
+							for(UMLParameter originalMethodParameter : originalMethodParameters) {
+								if(originalMethodParameter.getName().equals(argumentName)) {
+									originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters.put(originalMethodParameter, parameters.get(i));
+								}
+							}
 						}
-						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap);
-						if(!operationBodyMapper.getMappings().isEmpty() &&
-								(operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT2()
-										|| operationBodyMapper.exactMatches() > 0) ) {
-							ExtractOperationRefactoring extractOperationRefactoring =
-									new ExtractOperationRefactoring(addedOperation, operationBodyMapper.getOperation1(), operationBodyMapper.getOperation1().getClassName());
-							refactorings.add(extractOperationRefactoring);
-							operationsToBeRemoved.add(addedOperation);
-						}
-						else if(addedOperation.isDelegate() != null) {
-							extractedDelegateOperations.put(addedOperation, addedOperation.isDelegate());
-							operationsToBeRemoved.add(addedOperation);
+						if(parameterTypesMatch(originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters)) {
+							UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap);
+							if(!operationBodyMapper.getMappings().isEmpty() &&
+									(operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT2()
+											|| operationBodyMapper.exactMatches() > 0) ) {
+								ExtractOperationRefactoring extractOperationRefactoring =
+										new ExtractOperationRefactoring(addedOperation, operationBodyMapper.getOperation1(), operationBodyMapper.getOperation1().getClassName());
+								refactorings.add(extractOperationRefactoring);
+								operationsToBeRemoved.add(addedOperation);
+							}
+							else if(addedOperation.isDelegate() != null) {
+								extractedDelegateOperations.put(addedOperation, addedOperation.isDelegate());
+								operationsToBeRemoved.add(addedOperation);
+							}
 						}
 					}
 				}
 			}
 		}
 		addedOperations.removeAll(operationsToBeRemoved);
+	}
+
+	private boolean parameterTypesMatch(Map<UMLParameter, UMLParameter> originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters) {
+		for(UMLParameter key : originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters.keySet()) {
+			UMLParameter value = originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters.get(key);
+			if(!key.getType().equals(value.getType()) && !key.getType().equalsWithSubType(value.getType())) {
+				return false;
+			}
+		}
+		return true;
 	}
 /*
 	public void checkForOperationSignatureChanges() {

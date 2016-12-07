@@ -503,7 +503,7 @@
 	"author": "Julien Lancelot",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method private createComponentDto(reportComponent Component, component Component) : ComponentDto from class org.sonar.server.computation.step.PersistComponentsStep to class org.sonar.server.computation.step.PersistComponentsStep.PersisComponent"
+		"description": "Move Method private createComponentDto(reportComponent Component, component Component) : ComponentDto from class org.sonar.server.computation.step.PersistComponentsStep to private createComponentDto(reportComponent Component, component Component) : ComponentDto from class org.sonar.server.computation.step.PersistComponentsStep.PersisComponent"
 	}],
 	"time": "6/10/15 9:30 AM",
 	"id": 1107718
@@ -620,7 +620,7 @@
 	"author": "Christoph B\u00fcscher",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method public newFilter(parseContext QueryParseContext, fieldPattern String, queryName String) : Query from class org.elasticsearch.index.query.ExistsQueryParser to class org.elasticsearch.index.query.ExistsQueryBuilder"
+		"description": "Move Method public newFilter(parseContext QueryParseContext, fieldPattern String, queryName String) : Query from class org.elasticsearch.index.query.ExistsQueryParser to public newFilter(parseContext QueryParseContext, fieldPattern String, queryName String) : Query from class org.elasticsearch.index.query.ExistsQueryBuilder"
 	}],
 	"time": "6/11/15 9:40 AM",
 	"id": 1107899
@@ -1577,7 +1577,7 @@
 		"description": "Move Class ConflictingHeadersException moved from com.facebook.buck.cxx.AbstractCxxPreprocessorInput to com.facebook.buck.cxx.AbstractCxxHeaders"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private addAllEntriesToIncludeMap(destination Map, source Map) : void from class com.facebook.buck.cxx.AbstractCxxPreprocessorInput to class com.facebook.buck.cxx.AbstractCxxHeaders"
+		"description": "Move Method private addAllEntriesToIncludeMap(destination Map, source Map) : void from class com.facebook.buck.cxx.AbstractCxxPreprocessorInput to public addAllEntriesToIncludeMap(destination Map, source Map) : void from class com.facebook.buck.cxx.AbstractCxxHeaders"
 	}],
 	"time": "6/16/15 4:55 PM",
 	"id": 1117640
@@ -2439,7 +2439,7 @@
 	"author": "Tilottama Gaat",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method public sendResponse(channel ChannelHandlerContext, request HttpRequest, messageBody String, status HttpResponseStatus) : void from class com.rackspacecloud.blueflood.inputs.handlers.HttpMetricsIngestionHandler to class com.rackspacecloud.blueflood.http.DefaultHandler"
+		"description": "Move Method public sendResponse(channel ChannelHandlerContext, request HttpRequest, messageBody String, status HttpResponseStatus) : void from class com.rackspacecloud.blueflood.inputs.handlers.HttpMetricsIngestionHandler to public sendResponse(channel ChannelHandlerContext, request HttpRequest, messageBody String, status HttpResponseStatus) : void from class com.rackspacecloud.blueflood.http.DefaultHandler"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private sendResponseTimer : Timer from class com.rackspacecloud.blueflood.inputs.handlers.HttpMetricsIngestionHandler to class com.rackspacecloud.blueflood.http.DefaultHandler"
@@ -2617,7 +2617,7 @@
 		"description": "Move Attribute private certificateKeystoreType : String from class org.apache.tomcat.util.net.SSLHostConfig to class org.apache.tomcat.util.net.SSLHostConfigCertificate"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method public getCertificateKeyAlias() : String from class org.apache.tomcat.util.net.SSLHostConfig to class org.apache.tomcat.util.net.SSLHostConfigCertificate"
+		"description": "Move Method public getCertificateKeyAlias() : String from class org.apache.tomcat.util.net.SSLHostConfig to public getCertificateKeyAlias() : String from class org.apache.tomcat.util.net.SSLHostConfigCertificate"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private certificateKeystoreFile : String from class org.apache.tomcat.util.net.SSLHostConfig to class org.apache.tomcat.util.net.SSLHostConfigCertificate"
@@ -2632,10 +2632,10 @@
 		"description": "Move Attribute private certificateKeystorePassword : String from class org.apache.tomcat.util.net.SSLHostConfig to class org.apache.tomcat.util.net.SSLHostConfigCertificate"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method public getCertificateKeystoreFile() : String from class org.apache.tomcat.util.net.SSLHostConfig to class org.apache.tomcat.util.net.SSLHostConfigCertificate"
+		"description": "Move Method public getCertificateKeystoreFile() : String from class org.apache.tomcat.util.net.SSLHostConfig to public getCertificateKeystoreFile() : String from class org.apache.tomcat.util.net.SSLHostConfigCertificate"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method public getCertificateKeystorePassword() : String from class org.apache.tomcat.util.net.SSLHostConfig to class org.apache.tomcat.util.net.SSLHostConfigCertificate"
+		"description": "Move Method public getCertificateKeystorePassword() : String from class org.apache.tomcat.util.net.SSLHostConfig to public getCertificateKeystorePassword() : String from class org.apache.tomcat.util.net.SSLHostConfigCertificate"
 	}],
 	"time": "6/19/15 4:38 PM",
 	"id": 1120391
@@ -3156,7 +3156,7 @@
 	"author": "Alexey Kudravtsev",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method public averageAmongMedians(time long[], part int) : long from class com.intellij.testFramework.PlatformTestUtil to class com.intellij.util.ArrayUtil"
+		"description": "Move Method public averageAmongMedians(time long[], part int) : long from class com.intellij.testFramework.PlatformTestUtil to public averageAmongMedians(time long[], part int) : long from class com.intellij.util.ArrayUtil"
 	}],
 	"time": "6/23/15 6:36 AM",
 	"id": 1121973
@@ -3631,7 +3631,7 @@
 	"author": "Chinmay Gupte",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method public sendResponse(channel ChannelHandlerContext, request HttpRequest, messageBody String, status HttpResponseStatus) : void from class com.rackspacecloud.blueflood.inputs.handlers.HttpMetricsIngestionHandler to class com.rackspacecloud.blueflood.http.DefaultHandler"
+		"description": "Move Method public sendResponse(channel ChannelHandlerContext, request HttpRequest, messageBody String, status HttpResponseStatus) : void from class com.rackspacecloud.blueflood.inputs.handlers.HttpMetricsIngestionHandler to public sendResponse(channel ChannelHandlerContext, request HttpRequest, messageBody String, status HttpResponseStatus) : void from class com.rackspacecloud.blueflood.http.DefaultHandler"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private sendResponseTimer : Timer from class com.rackspacecloud.blueflood.inputs.handlers.HttpMetricsIngestionHandler to class com.rackspacecloud.blueflood.http.DefaultHandler"
@@ -4074,13 +4074,13 @@
 		"description": "Extract Method private executeInternal(sql String, call boolean) : boolean extracted from private execute(line String, call boolean, entireLineAsCommand boolean) : boolean in class org.apache.hive.beeline.Commands"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private getFirstCmd(cmd String, length int) : String from class org.apache.hive.beeline.BeeLine to class org.apache.hive.beeline.Commands"
+		"description": "Move Method private getFirstCmd(cmd String, length int) : String from class org.apache.hive.beeline.BeeLine to private getFirstCmd(cmd String, length int) : String from class org.apache.hive.beeline.Commands"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public handleMultiLineCmd(line String) : String extracted from private execute(line String, call boolean, entireLineAsCommand boolean) : boolean in class org.apache.hive.beeline.Commands"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private isSourceCMD(cmd String) : boolean from class org.apache.hive.beeline.BeeLine to class org.apache.hive.beeline.Commands"
+		"description": "Move Method private isSourceCMD(cmd String) : boolean from class org.apache.hive.beeline.BeeLine to private isSourceCMD(cmd String) : boolean from class org.apache.hive.beeline.Commands"
 	}],
 	"time": "6/28/15 9:42 PM",
 	"id": 1127268
@@ -4205,16 +4205,16 @@
 	"author": "Jochen Schalanda",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method public timestampStatsOfIndex(index String) : TimestampStats from class org.graylog2.indexer.searches.Searches to class org.graylog2.indexer.ranges.EsIndexRangeService"
+		"description": "Move Method public testTimestampStatsOfIndex() : void from class org.graylog2.indexer.searches.SearchesTest to public testTimestampStatsOfIndex() : void from class org.graylog2.indexer.ranges.EsIndexRangeServiceTest"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method public testTimestampStatsOfIndexWithNonExistingIndex() : void from class org.graylog2.indexer.searches.SearchesTest to class org.graylog2.indexer.ranges.EsIndexRangeServiceTest"
+		"description": "Move Method public testTimestampStatsOfIndexWithNonExistingIndex() : void from class org.graylog2.indexer.searches.SearchesTest to public testTimestampStatsOfIndexWithNonExistingIndex() : void from class org.graylog2.indexer.ranges.EsIndexRangeServiceTest"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method public testTimestampStatsOfIndex() : void from class org.graylog2.indexer.searches.SearchesTest to class org.graylog2.indexer.ranges.EsIndexRangeServiceTest"
+		"description": "Move Method public timestampStatsOfIndex(index String) : TimestampStats from class org.graylog2.indexer.searches.Searches to protected timestampStatsOfIndex(index String) : TimestampStats from class org.graylog2.indexer.ranges.EsIndexRangeService"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method public testTimestampStatsOfIndexWithEmptyIndex() : void from class org.graylog2.indexer.searches.SearchesTest to class org.graylog2.indexer.ranges.EsIndexRangeServiceTest"
+		"description": "Move Method public testTimestampStatsOfIndexWithEmptyIndex() : void from class org.graylog2.indexer.searches.SearchesTest to public testTimestampStatsOfIndexWithEmptyIndex() : void from class org.graylog2.indexer.ranges.EsIndexRangeServiceTest"
 	}],
 	"time": "6/30/15 8:46 AM",
 	"id": 1130153
@@ -4325,7 +4325,7 @@
 	"author": "Jonathan McPherson",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method public checkForExistingApp(account RSConnectAccount, appName String, onValidated OperationWithInput) : void from class org.rstudio.studio.client.rsconnect.RSConnect to class org.rstudio.studio.client.rsconnect.ui.RSConnectDeploy"
+		"description": "Move Method public checkForExistingApp(account RSConnectAccount, appName String, onValidated OperationWithInput) : void from class org.rstudio.studio.client.rsconnect.RSConnect to private checkForExistingApp(account RSConnectAccount, appName String, onValidated OperationWithInput) : void from class org.rstudio.studio.client.rsconnect.ui.RSConnectDeploy"
 	}, {
 		"type": "Inline Method",
 		"description": "Inline Method private fireValidatedRSconnectPublish(result RSConnectPublishResult, launchBrowser boolean) : void inlined to public fireRSConnectPublishEvent(result RSConnectPublishResult, launchBrowser boolean) : void in class org.rstudio.studio.client.rsconnect.RSConnect"
@@ -4454,16 +4454,16 @@
 	"author": "Danny Baumann",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method public highlightImage(imageUrl String) : String from class com.gh4a.utils.StringUtils to class com.gh4a.activities.FileViewerActivity"
+		"description": "Move Method public highlightImage(imageUrl String) : String from class com.gh4a.utils.StringUtils to private highlightImage(imageUrl String) : String from class com.gh4a.activities.FileViewerActivity"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private isExtensionIn(filename String, extensions List<String>) : boolean extracted from public isImage(filename String) : boolean in class com.gh4a.utils.FileUtils"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private writeCssInclude(builder StringBuilder, cssType String) : void from class com.gh4a.utils.StringUtils to class com.gh4a.activities.WebViewerActivity"
+		"description": "Move Method private writeCssInclude(builder StringBuilder, cssType String) : void from class com.gh4a.utils.StringUtils to protected writeCssInclude(builder StringBuilder, cssType String) : void from class com.gh4a.activities.WebViewerActivity"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private writeScriptInclude(builder StringBuilder, scriptName String) : void from class com.gh4a.utils.StringUtils to class com.gh4a.activities.WebViewerActivity"
+		"description": "Move Method private writeScriptInclude(builder StringBuilder, scriptName String) : void from class com.gh4a.utils.StringUtils to protected writeScriptInclude(builder StringBuilder, scriptName String) : void from class com.gh4a.activities.WebViewerActivity"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private SKIP_PRETTIFY_EXT : List from class com.gh4a.Constants to class com.gh4a.activities.WebViewerActivity"
@@ -4912,7 +4912,7 @@
 	"author": "nyghtowl",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method public testBackTrackLine() : void from class org.deeplearning4j.plot.ListenerTest to class org.deeplearning4j.optimize.solver.BackTrackLineSearchTest"
+		"description": "Move Method public testBackTrackLine() : void from class org.deeplearning4j.plot.ListenerTest to public testBackTrackLine() : void from class org.deeplearning4j.optimize.solver.BackTrackLineSearchTest"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private getNewScore(oldParameters INDArray) : double extracted from public optimize(initialStep double, parameters INDArray, gradients INDArray) : double in class org.deeplearning4j.optimize.solvers.BackTrackLineSearch"
@@ -6546,7 +6546,7 @@
 	"author": "yuananf",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method private flipComparison(type Type) : Type from class com.facebook.presto.sql.planner.RelationPlanner to class com.facebook.presto.sql.ExpressionUtils"
+		"description": "Move Method private flipComparison(type Type) : Type from class com.facebook.presto.sql.planner.RelationPlanner to public flipComparison(type Type) : Type from class com.facebook.presto.sql.ExpressionUtils"
 	}],
 	"time": "7/14/15 8:33 PM",
 	"id": 1141149
@@ -6605,7 +6605,7 @@
 	"author": "nik",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method private getJUnit4JarPaths() : List from class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix to class com.intellij.openapi.projectRoots.ex.JavaSdkUtil"
+		"description": "Move Method private getJUnit4JarPaths() : List from class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix to public getJUnit4JarPaths() : List from class com.intellij.openapi.projectRoots.ex.JavaSdkUtil"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public getLibraryPaths() : List<String> extracted from public getLibraryPath() : String in class com.intellij.execution.junit.JUnit4Framework"
@@ -6651,7 +6651,7 @@
 	"author": "Owen O'Malley",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method public getAcidEventFields() : List from class org.apache.hadoop.hive.ql.io.orc.OrcRecordUpdater to class org.apache.hadoop.hive.ql.io.orc.RecordReaderFactory"
+		"description": "Move Method public getAcidEventFields() : List from class org.apache.hadoop.hive.ql.io.orc.OrcRecordUpdater to package getAcidEventFields() : List from class org.apache.hadoop.hive.ql.io.orc.RecordReaderFactory"
 	}],
 	"time": "7/15/15 6:41 PM",
 	"id": 1142783
@@ -7247,7 +7247,7 @@
 	"author": "jfarcand",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method private getInheritedPrivateFields(type Class) : Set from class org.atmosphere.inject.InjectableObjectFactory to class org.atmosphere.util.Utils"
+		"description": "Move Method private getInheritedPrivateFields(type Class) : Set from class org.atmosphere.inject.InjectableObjectFactory to public getInheritedPrivateFields(type Class) : Set from class org.atmosphere.util.Utils"
 	}],
 	"time": "7/22/15 3:38 PM",
 	"id": 1149312
@@ -7569,10 +7569,10 @@
 	"author": "Dain Sundstrom",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method private formatDomain(table TableHandle, column ColumnHandle, domain Domain) : String from class com.facebook.presto.sql.planner.PlanPrinter to class com.facebook.presto.sql.planner.PlanPrinter.Visitor"
+		"description": "Move Method private formatDomain(table TableHandle, column ColumnHandle, domain Domain) : String from class com.facebook.presto.sql.planner.PlanPrinter to private formatDomain(table TableHandle, column ColumnHandle, domain Domain) : String from class com.facebook.presto.sql.planner.PlanPrinter.Visitor"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private printConstraint(indent int, table TableHandle, column ColumnHandle, constraint TupleDomain) : void from class com.facebook.presto.sql.planner.PlanPrinter to class com.facebook.presto.sql.planner.PlanPrinter.Visitor"
+		"description": "Move Method private printConstraint(indent int, table TableHandle, column ColumnHandle, constraint TupleDomain) : void from class com.facebook.presto.sql.planner.PlanPrinter to private printConstraint(indent int, table TableHandle, column ColumnHandle, constraint TupleDomain) : void from class com.facebook.presto.sql.planner.PlanPrinter.Visitor"
 	}],
 	"time": "7/25/15 2:59 PM",
 	"id": 1149788
@@ -8932,10 +8932,10 @@
 	"author": "Johan Haleby",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method public supportsOverridingKeystore() : void from class com.jayway.restassured.itest.java.SpecificationBuilderITest to class com.jayway.restassured.itest.java.SSLITest"
+		"description": "Move Method public supportsOverridingKeystore() : void from class com.jayway.restassured.itest.java.SpecificationBuilderITest to public supportsOverridingKeystore() : void from class com.jayway.restassured.itest.java.SSLITest"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method public supportsSpecifyingKeystore() : void from class com.jayway.restassured.itest.java.SpecificationBuilderITest to class com.jayway.restassured.itest.java.SSLITest"
+		"description": "Move Method public supportsSpecifyingKeystore() : void from class com.jayway.restassured.itest.java.SpecificationBuilderITest to public supportsSpecifyingKeystore() : void from class com.jayway.restassured.itest.java.SSLITest"
 	}],
 	"time": "8/6/15 5:44 AM",
 	"id": 1158457

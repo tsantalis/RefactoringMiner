@@ -4126,7 +4126,7 @@
 			"description": "Move Attribute private tag : byte from class org.apache.hadoop.hive.ql.exec.SparkHashTableSinkOperator to class org.apache.hadoop.hive.ql.plan.SparkHashTableSinkDesc"
 		}, {
 			"type": "Move Method",
-			"description": "Move Method public setTag(tag byte) : void from class org.apache.hadoop.hive.ql.exec.SparkHashTableSinkOperator to class org.apache.hadoop.hive.ql.plan.SparkHashTableSinkDesc"
+			"description": "Move Method public setTag(tag byte) : void from class org.apache.hadoop.hive.ql.exec.SparkHashTableSinkOperator to public setTag(tag byte) : void from class org.apache.hadoop.hive.ql.plan.SparkHashTableSinkDesc"
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method protected getCountQuery(spec Specification<T>, mode QueryMode) : TypedQuery<Long> extracted from protected getCountQuery(spec Specification<T>) : TypedQuery<Long> in class org.springframework.data.jpa.repository.support.SimpleJpaRepository"
@@ -8557,7 +8557,7 @@
 			"description": "Move Method public shouldCompressRequest(entityLength int, requestCompressionOverride CompressionOption) : boolean from class com.linkedin.r2.filter.CompressionConfig to private shouldCompressRequest(entityLength int, requestCompressionOverride CompressionOption) : boolean from class com.linkedin.r2.filter.compression.ClientCompressionFilter"
 		}, {
 			"type": "Move Method",
-			"description": "Move Method public testEncodingGeneration(encoding EncodingType[], acceptEncoding String) : void from class com.linkedin.restli.examples.TestCompressionServer to class com.linkedin.r2.filter.compression.TestClientCompressionFilter"
+			"description": "Move Method public testEncodingGeneration(encoding EncodingType[], acceptEncoding String) : void from class com.linkedin.restli.examples.TestCompressionServer to public testEncodingGeneration(encoding EncodingType[], acceptEncoding String) : void from class com.linkedin.r2.filter.compression.TestClientCompressionFilter"
 		},
 		{
 			"type": "Inline Method",

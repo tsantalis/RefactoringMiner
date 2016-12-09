@@ -414,8 +414,8 @@ public class RefactoringPopulator {
 				.atCommit("8c2be520e01a83ee893158aa6cb90ee2d64f6a63").containsOnly(
 						// FN** getMechList remains in CompositeCM, but it is
 						// also added as abstract in ControlMech and implemented
-						// in other subclasses
-						 "Pull Up Method getMechList from class org.argouml.cognitive.CompositeCM to getMechList from class org.argouml.cognitive.ControlMech",
+						// in other subclasses. THIS IS NOT A FALSE NEGATIVE. DO NOT UNCOMMENT
+						//"Pull Up Method public getMechList() : List<ControlMech> from class org.argouml.cognitive.CompositeCM to public getMechList() : List<ControlMech> from class org.argouml.cognitive.ControlMech",
 						"Pull Up Method public parse(modelElement Object, text String) : void from class org.argouml.notation.providers.uml.AttributeNotationUml to public parse(modelElement Object, text String) : void from class org.argouml.notation.providers.AttributeNotation",
 						"Pull Up Method public transform(file File, version int) : File from class org.argouml.persistence.UmlFilePersister to public transform(file File, version int) : File from class org.argouml.persistence.AbstractFilePersister",
 						"Pull Up Method private colToString(set Collection) : String from class org.argouml.profile.internal.ui.PropPanelCritic to protected colToString(set Collection) : String from class org.argouml.uml.ui.PropPanel",
@@ -423,7 +423,7 @@ public class RefactoringPopulator {
 						"Pull Up Method protected computeOffenders(ps Object) : ListSet from class org.argouml.uml.cognitive.critics.CrMultipleShallowHistoryStates to protected computeOffenders(ps Object) : ListSet from class org.argouml.uml.cognitive.critics.CrUML",
 						"Pull Up Method public getFigEdgeFor(gm GraphModel, lay Layer, edge Object, styleAttributes Map) : FigEdge from class org.argouml.uml.diagram.collaboration.ui.CollabDiagramRenderer to public getFigEdgeFor(gm GraphModel, lay Layer, edge Object, styleAttributes Map) : FigEdge from class org.argouml.uml.diagram.UmlDiagramRenderer",
 						"Pull Up Method private initFigs() : void from class org.argouml.uml.diagram.state.ui.FigSynchState to protected initFigs() : void from class org.argouml.uml.diagram.state.ui.FigStateVertex",
-						// FN** minnor modifications, but no statement is
+						// FN** minor modifications, but no statement is
 						// exactly the same
 						//"Extract Method public getModelImpl() : MDRModelImplementation extracted from public createPartition() : Partition in class org.argouml.model.mdr.ActivityGraphsFactoryMDRImpl",
 						//"Extract Method public initialize2(myPartition Partition) : void extracted from public createPartition() : Partition in class org.argouml.model.mdr.ActivityGraphsFactoryMDRImpl",

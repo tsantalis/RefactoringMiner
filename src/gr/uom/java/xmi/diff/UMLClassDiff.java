@@ -193,7 +193,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 					UMLOperation addedOperation = addedOperationIterator.next();
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
 					if(!operationBodyMapper.getMappings().isEmpty() &&
-							operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT1()) {
+							operationBodyMapper.getMappings().size() > (operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2())/2.0) {
 						mapperSet.add(operationBodyMapper);
 					}
 				}
@@ -221,7 +221,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 					UMLOperation removedOperation = removedOperationIterator.next();
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
 					if(!operationBodyMapper.getMappings().isEmpty() &&
-							operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT1()) {
+							operationBodyMapper.getMappings().size() > (operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2())/2.0) {
 						mapperSet.add(operationBodyMapper);
 					}
 				}

@@ -861,7 +861,7 @@ public class UMLModelDiff {
 					   newParameters.add(newParameter);
 				   }
 			   }
-			   return oldParameters.equals(newParameters);
+			   return oldParameters.equals(newParameters) || oldParameters.containsAll(newParameters) || newParameters.containsAll(oldParameters);
 		   }
 	   }
 	   return false;

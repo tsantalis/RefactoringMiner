@@ -704,8 +704,10 @@
 		},{
 			"type":"Move Method",
 			"description":"Move Method private isSpecialChar(token String) : boolean from class io.undertow.server.handlers.builder.HandlerParser to private isSpecialChar(token String) : boolean from class io.undertow.server.handlers.builder.PredicatedHandlersParser"
+		},{
+			"type":"Move Method",
+			"description":"Move Method private handleSingleArrayValue(string String, builder PredicateBuilder, tokens Deque, token Token, attributeParser ExchangeAttributeParser, endChar String) : Node from class io.undertow.predicate.PredicateParser to private handleSingleArrayValue(string String, builder Token, tokens Deque, endChar String) : Node from class io.undertow.server.handlers.builder.PredicatedHandlersParser"
 		}
-
 	],
 	"time": "6/15/15 6:06 AM",
 	"id": 1111161
@@ -7523,7 +7525,7 @@
 		"description": "Move Attribute private allPropertyCursor : InstanceCache from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private nodeDegreeByDirection(nodeId long, group RelationshipGroupRecord, direction Direction) : long from class org.neo4j.kernel.impl.api.store.DiskLayer to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
+		"description": "Move Method private nodeDegreeByDirection(nodeId long, group RelationshipGroupRecord, direction Direction) : long from class org.neo4j.kernel.impl.api.store.DiskLayer to private nodeDegreeByDirection(group RelationshipGroupRecord, direction Direction) : long from class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
 	}, {
 		"type": "Move Class",
 		"description": "Move Class AllStoreIdIterator moved from org.neo4j.kernel.impl.api.store.DiskLayer to org.neo4j.kernel.impl.api.store.StoreStatement"
@@ -7553,7 +7555,7 @@
 		"description": "Move Attribute private allPropertyCursor : InstanceCache from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractRelationshipCursor"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private countByFirstPrevPointer(nodeId long, relationshipId long) : long from class org.neo4j.kernel.impl.api.store.DiskLayer to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
+		"description": "Move Method private countByFirstPrevPointer(nodeId long, relationshipId long) : long from class org.neo4j.kernel.impl.api.store.DiskLayer to private countByFirstPrevPointer(relationshipId long) : long from class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private labelCursor : InstanceCache from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
@@ -8493,7 +8495,7 @@
 	"author": "Sterling Greene",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method private registerOrFindDeploymentHandle(deploymentRegistry DeploymentRegistry, deploymentId String) : PlayApplicationDeploymentHandle from class org.gradle.play.plugins.PlayApplicationPlugin.Rules to class org.gradle.play.tasks.PlayRun"
+		"description": "Move Method private registerOrFindDeploymentHandle(deploymentRegistry DeploymentRegistry, deploymentId String) : PlayApplicationDeploymentHandle from class org.gradle.play.plugins.PlayApplicationPlugin.Rules to private registerOrFindDeploymentHandle(deploymentId String) : PlayApplicationDeploymentHandle from class org.gradle.play.tasks.PlayRun"
 	}],
 	"time": "8/3/15 4:21 PM",
 	"id": 1156456

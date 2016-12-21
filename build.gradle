@@ -7,6 +7,7 @@ sourceSets {
         java {
             srcDir 'src'
             srcDir 'src-google-diff-match-patch'
+            srcDir 'src-test'
         }
         resources  {
             srcDir 'res'
@@ -31,6 +32,7 @@ dependencies {
 	compile 'com.fasterxml.jackson.core:jackson-core:2.8.4'
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.8.4'
 	compile 'com.fasterxml.jackson.core:jackson-annotations:2.8.4'
+	compile 'junit:junit:4.11'
 	
 	compile files('lib/org.eclipse.core.commands_3.7.0.v20150422-0725.jar')
 	compile files('lib/org.eclipse.core.contenttype_3.5.0.v20150421-2214.jar')

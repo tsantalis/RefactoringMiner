@@ -5583,6 +5583,12 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private createCountsTracker() : CountsTracker extracted from 5 others in class org.neo4j.kernel.impl.store.counts.CountsComputerTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public setup() : void renamed to public setUp() : void in class org.neo4j.kernel.impl.store.StoreFactoryTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public teardown() : void renamed to public tearDown() : void in class org.neo4j.kernel.impl.store.StoreFactoryTest"
 	}],
 	"time": "7/13/15 8:59 AM",
 	"id": 1140032

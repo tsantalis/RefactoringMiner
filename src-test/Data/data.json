@@ -679,7 +679,7 @@
 			"description": "Move Method private isOperator(op String) : boolean from class io.undertow.predicate.PredicateParser to class io.undertow.server.handlers.builder.PredicatedHandlersParser"
 		}, {
 			"type": "Move Class",
-			"description": "Move Class Token moved from io.undertow.util.PredicateTokeniser to io.undertow.server.handlers.builder.PredicatedHandlersParser"
+			"description": "Move Class io.undertow.util.PredicateTokeniser.Token moved to io.undertow.server.handlers.builder.PredicatedHandlersParser.Token"
 		}, {
 			"type": "Move Method",
 			"description": "Move Method private isOperator(op String) : boolean from class io.undertow.server.handlers.builder.HandlerParser to class io.undertow.server.handlers.builder.PredicatedHandlersParser"
@@ -1576,7 +1576,7 @@
 	"author": "Andrew Gallagher",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class ConflictingHeadersException moved from com.facebook.buck.cxx.AbstractCxxPreprocessorInput to com.facebook.buck.cxx.AbstractCxxHeaders"
+		"description": "Move Class com.facebook.buck.cxx.AbstractCxxPreprocessorInput.ConflictingHeadersException moved to com.facebook.buck.cxx.AbstractCxxHeaders.ConflictingHeadersException"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private addAllEntriesToIncludeMap(destination Map, source Map) : void from class com.facebook.buck.cxx.AbstractCxxPreprocessorInput to public addAllEntriesToIncludeMap(destination Map, source Map) : void from class com.facebook.buck.cxx.AbstractCxxHeaders"
@@ -2044,7 +2044,7 @@
 	"author": "alarmnummer",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class ServiceInfo moved from com.hazelcast.spi to com.hazelcast.spi.impl.servicemanager"
+		"description": "Move Class com.hazelcast.spi.ServiceInfo moved to com.hazelcast.spi.impl.servicemanager.ServiceInfo"
 	}],
 	"time": "6/17/15 9:05 AM",
 	"id": 1118362
@@ -2638,6 +2638,12 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getCertificateKeystorePassword() : String from class org.apache.tomcat.util.net.SSLHostConfig to public getCertificateKeystorePassword() : String from class org.apache.tomcat.util.net.SSLHostConfigCertificate"
+	}, {
+		"type": "Move Method",
+		"description": "Move Method public getCertificateKeystoreType() : String from class org.apache.tomcat.util.net.SSLHostConfig to public getCertificateKeystoreType() : String from class org.apache.tomcat.util.net.SSLHostConfigCertificate"
+	}, {
+		"type": "Move Method",
+		"description": "Move Method public getCertificateKeystoreProvider() : String from class org.apache.tomcat.util.net.SSLHostConfig to public getCertificateKeystoreProvider() : String from class org.apache.tomcat.util.net.SSLHostConfigCertificate"
 	}],
 	"time": "6/19/15 4:38 PM",
 	"id": 1120391
@@ -3063,7 +3069,7 @@
 	"author": "alarmnummer",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class ExecutorCallbackAdapter moved from com.hazelcast.spi.impl.operationservice.impl.InvocationFuture to com.hazelcast.spi.InvocationBuilder"
+		"description": "Move Class com.hazelcast.spi.impl.operationservice.impl.InvocationFuture.ExecutorCallbackAdapter moved to com.hazelcast.spi.InvocationBuilder.ExecutorCallbackAdapter"
 	}, {
 		"type": "Extract Superclass",
 		"description": "Extract Superclass com.hazelcast.spi.impl.SimpleExecutionCallback from class com.hazelcast.cache.impl.operation.CacheCreateConfigOperation.CacheConfigCreateCallback"
@@ -3520,7 +3526,7 @@
 	"author": "Simon Stewart",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class ReportGenerator moved from com.facebook.buck.java to com.facebook.buck.java.coverage"
+		"description": "Move Class com.facebook.buck.java.ReportGenerator moved to com.facebook.buck.java.coverage.ReportGenerator"
 	}],
 	"time": "6/24/15 1:23 PM",
 	"id": 1123712
@@ -3928,7 +3934,7 @@
 	"author": "Grigory Fedorov",
 	"refactorings": [{
 		"type": "Extract Interface",
-		"description": "Extract Interface com.xabber.android.ui.ContactAdder from type com.xabber.android.ui.ContactAddFragment"
+		"description": "Extract Interface com.xabber.android.ui.ContactAdder from class com.xabber.android.ui.ContactAddFragment"
 	}],
 	"time": "6/26/15 10:16 AM",
 	"id": 1125117
@@ -4482,7 +4488,12 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public Init() : void renamed to public init() : void in class com.hazelcast.jca.XATransactionTest"
-	}],
+	}, {
+		"type": "Push Down Attribute",
+		"description": "Push Down Attribute private connectionFactory : HazelcastConnectionFactory from class com.hazelcast.jca.AbstractDeploymentTest to class com.hazelcast.jca.XATransactionTest"
+	}]
+
+	,
 	"time": "7/6/15 5:59 AM",
 	"id": 1132974
 }, {
@@ -6372,7 +6383,7 @@
 	"author": "Joram Barrez",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class UserEntityTest moved from org.activiti.engine.impl.persistence.entity to org.activiti.engine.test.api.identity"
+		"description": "Move Class org.activiti.engine.impl.persistence.entity.UserEntityTest moved to org.activiti.engine.test.api.identity.UserEntityTest"
 	}],
 	"time": "7/14/15 8:59 AM",
 	"id": 1140273
@@ -8982,82 +8993,82 @@
 	"author": "Marcos Lilljedahl",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class MultiKeyBinaryCommands moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.ProtocolCommand moved to redis.clients.jedis.commands.ProtocolCommand"
+	},{
 		"type": "Move Class",
-		"description": "Move Class AdvancedJedisCommands moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.BinaryJedisCommands moved to redis.clients.jedis.commands.BinaryJedisCommands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class BasicRedisPipeline moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.BinaryScriptingCommandsPipeline moved to redis.clients.jedis.commands.BinaryScriptingCommandsPipeline"
+	},{
 		"type": "Move Class",
-		"description": "Move Class JedisClusterScriptingCommands moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.BasicRedisPipeline moved to redis.clients.jedis.commands.BasicRedisPipeline"
+	},{
 		"type": "Move Class",
-		"description": "Move Class MultiKeyBinaryJedisClusterCommands moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.JedisClusterBinaryScriptingCommands moved to redis.clients.jedis.commands.JedisClusterBinaryScriptingCommands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class ScriptingCommandsPipeline moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.MultiKeyBinaryJedisClusterCommands moved to redis.clients.jedis.commands.MultiKeyBinaryJedisClusterCommands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class ProtocolCommand moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.ClusterCommands moved to redis.clients.jedis.commands.ClusterCommands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class BinaryScriptingCommandsPipeline moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.JedisCommands moved to redis.clients.jedis.commands.JedisCommands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class JedisCommands moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.MultiKeyBinaryCommands moved to redis.clients.jedis.commands.MultiKeyBinaryCommands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class JedisClusterCommands moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.MultiKeyCommands moved to redis.clients.jedis.commands.MultiKeyCommands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class AdvancedBinaryJedisCommands moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.Commands moved to redis.clients.jedis.commands.Commands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class BinaryJedisClusterCommands moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.BinaryScriptingCommands moved to redis.clients.jedis.commands.BinaryScriptingCommands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class BasicCommands moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.BinaryRedisPipeline moved to redis.clients.jedis.commands.BinaryRedisPipeline"
+	},{
 		"type": "Move Class",
-		"description": "Move Class BinaryScriptingCommands moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.BasicCommands moved to redis.clients.jedis.commands.BasicCommands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class ClusterCommands moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.JedisClusterCommands moved to redis.clients.jedis.commands.JedisClusterCommands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class MultiKeyJedisClusterCommands moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.ScriptingCommands moved to redis.clients.jedis.commands.ScriptingCommands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class BinaryRedisPipeline moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.AdvancedJedisCommands moved to redis.clients.jedis.commands.AdvancedJedisCommands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class BinaryJedisCommands moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.MultiKeyJedisClusterCommands moved to redis.clients.jedis.commands.MultiKeyJedisClusterCommands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class MultiKeyBinaryRedisPipeline moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.ScriptingCommandsPipeline moved to redis.clients.jedis.commands.ScriptingCommandsPipeline"
+	},{
 		"type": "Move Class",
-		"description": "Move Class MultiKeyCommandsPipeline moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.ClusterPipeline moved to redis.clients.jedis.commands.ClusterPipeline"
+	},{
 		"type": "Move Class",
-		"description": "Move Class Commands moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.JedisClusterScriptingCommands moved to redis.clients.jedis.commands.JedisClusterScriptingCommands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class ScriptingCommands moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.BinaryJedisClusterCommands moved to redis.clients.jedis.commands.BinaryJedisClusterCommands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class JedisClusterBinaryScriptingCommands moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.MultiKeyCommandsPipeline moved to redis.clients.jedis.commands.MultiKeyCommandsPipeline"
+	},{
 		"type": "Move Class",
-		"description": "Move Class MultiKeyCommands moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.SentinelCommands moved to redis.clients.jedis.commands.SentinelCommands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class ClusterPipeline moved from redis.clients.jedis to redis.clients.jedis.commands"
-	}, {
+		"description":"Move Class redis.clients.jedis.AdvancedBinaryJedisCommands moved to redis.clients.jedis.commands.AdvancedBinaryJedisCommands"
+	},{
 		"type": "Move Class",
-		"description": "Move Class SentinelCommands moved from redis.clients.jedis to redis.clients.jedis.commands"
+		"description":"Move Class redis.clients.jedis.MultiKeyBinaryRedisPipeline moved to redis.clients.jedis.commands.MultiKeyBinaryRedisPipeline"
 	}],
 	"time": "8/6/15 2:15 PM",
 	"id": 1159198

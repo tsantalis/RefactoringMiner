@@ -312,11 +312,20 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 	}
 
 	public boolean equalParameters(UMLOperation operation) {
-	      return this.equalReturnParameter(operation) && this.getParameters().equals(operation.getParameters());
-	   }
+		return this.equalReturnParameter(operation) && this.getParameters().equals(operation.getParameters());
+	}
+
+	public boolean equalParameterTypes(UMLOperation operation) {
+		return this.equalReturnParameter(operation) && this.getParameterTypeList().equals(operation.getParameterTypeList());
+	}
 
 	public boolean overloadedParameters(UMLOperation operation) {
-	      return this.equalReturnParameter(operation) &&
-	    		  (this.getParameters().containsAll(operation.getParameters()) || operation.getParameters().containsAll(this.getParameters()));
-	   }
+		return this.equalReturnParameter(operation) &&
+				(this.getParameters().containsAll(operation.getParameters()) || operation.getParameters().containsAll(this.getParameters()));
+	}
+
+	public boolean overloadedParameterTypes(UMLOperation operation) {
+		return this.equalReturnParameter(operation) &&
+				(this.getParameterTypeList().containsAll(operation.getParameterTypeList()) || operation.getParameterTypeList().containsAll(this.getParameterTypeList()));
+	}
 }

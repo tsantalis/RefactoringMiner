@@ -251,7 +251,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     }
 
     public UMLClassDiff diff(UMLClass umlClass) {
-    	UMLClassDiff classDiff = new UMLClassDiff(this);
+    	UMLClassDiff classDiff = new UMLClassDiff(this, umlClass);
     	if(!this.visibility.equals(umlClass.visibility)) {
     		classDiff.setVisibilityChanged(true);
     		classDiff.setOldVisibility(this.visibility);

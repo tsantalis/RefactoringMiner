@@ -628,7 +628,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(distanceRaw >= 0 && distanceRaw < initialDistanceRaw) {
 						minDistance = distanceRaw;
 						Replacement replacement = null;
-						if(variables1.contains(s1) && variables2.contains(s2)) {
+						if(variables1.contains(s1) && variables2.contains(s2) && variablesStartWithSameCase(s1, s2)) {
 							replacement = new VariableRename(s1, s2);
 						}
 						else if(variables1.contains(s1) && methodInvocations2.contains(s2)) {
@@ -681,7 +681,29 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			replacements.add(replacement);
 			return replacements;
 		}
+		//check if the argument lists are identical after replacements
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+				(invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() == null ||
+				invocationCoveringTheEntireStatement1.getExpression() == null && invocationCoveringTheEntireStatement2.getExpression() != null) &&
+				!invocationCoveringTheEntireStatement1.getMethodName().equals(invocationCoveringTheEntireStatement2.getMethodName()) &&
+				s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).equals(s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"))) &&
+				s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).length() > 0) {
+			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getMethodName(),
+					invocationCoveringTheEntireStatement2.getMethodName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2);
+			replacements.add(replacement);
+			return replacements;
+		}
 		return null;
+	}
+
+	private boolean variablesStartWithSameCase(String s1, String s2) {
+		if(s1.length() > 0 && s2.length() > 0) {
+			if(Character.isUpperCase(s1.charAt(0)) && Character.isUpperCase(s2.charAt(0)))
+				return true;
+			if(Character.isLowerCase(s1.charAt(0)) && Character.isLowerCase(s2.charAt(0)))
+				return true;
+		}
+		return false;
 	}
 
 	private double compositeChildMatchingScore(CompositeStatementObject composite1, CompositeStatementObject composite2) {

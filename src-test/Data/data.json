@@ -2271,6 +2271,12 @@
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private configuration : Configuration from class org.infinispan.tx.TransactionXaAdapterTmIntegrationTest to class org.infinispan.partitionhandling.impl.PartitionHandlingManagerImpl"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public removeRecoveryInformationFromCluster(where Collection, xid Xid, sync boolean, gtx GlobalTransaction) : void renamed to public removeRecoveryInformation(where Collection, xid Xid, sync boolean, gtx GlobalTransaction, fromCluster boolean) : void in class org.infinispan.tx.recovery.PostCommitRecoveryStateTest.RecoveryManagerDelegate"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public removeRecoveryInformationFromCluster(lockOwners Collection, xid Xid, sync boolean, gtx GlobalTransaction) : void renamed to public removeRecoveryInformation(lockOwners Collection, xid Xid, sync boolean, gtx GlobalTransaction, fromCluster boolean) : void in class org.infinispan.transaction.xa.recovery.RecoveryManagerImpl"
 	}],
 	"time": "6/18/15 3:08 AM",
 	"id": 1119109
@@ -2733,10 +2739,6 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private evaluateTemplate(check Check, subscription Subscription, alerts List<Alert>, templateContent String) : String extracted from public createBody(check Check, subscription Subscription, alerts List<Alert>) : String in class com.seyren.core.util.velocity.VelocityEmailHelper"
-	},
-	{
-		"type": "Rename Method",
-		"description": "Rename Method public subjectIsCorrect() : void renamed to public bodyContainsItemsFromModel() : void in class com.seyren.core.util.velocity.VelocityEmailHelperTest"
 	}],
 	"time": "6/20/15 4:49 AM",
 	"id": 1121744
@@ -3511,9 +3513,6 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private getTestPathPredicate(enableStringWhitelisting boolean, whitelistedStringDirs ImmutableSet<Path>, locales ImmutableSet<String>) : Predicate<Path> extracted from public testFilterStrings() : void in class com.facebook.buck.android.FilterResourcesStepTest"
-	}, {
-		"type": "Rename Method",
-		"description": "Rename Method public testFilterStrings() : void renamed to public testWhitelistFilter() : void in class com.facebook.buck.android.FilterResourcesStepTest"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public enableStringsFilter() : Builder renamed to public enableStringWhitelisting() : Builder in class com.facebook.buck.android.FilterResourcesStep.Builder"
@@ -5163,6 +5162,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method public setMedia(slide Slide, masterSecret MasterSecret) : void extracted from public setMedia(slide Slide) : void in class org.thoughtcrime.securesms.mms.AttachmentManager"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private constructPartFromUri(uri Uri) : PduPart renamed to private constructPartFromByteArrayAndUri(uri Uri, data byte[], encrypted boolean) : PduPart in class org.thoughtcrime.securesms.mms.ImageSlide"
 	}],
 	"time": "7/8/15 8:01 PM",
 	"id": 1136333
@@ -5228,9 +5230,6 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private getCustomRoutingCol() : ColumnIdent extracted from private getRoutingCol() : ColumnIdent in class io.crate.metadata.doc.DocIndexMetaData"
-	}, {
-		"type": "Rename Method",
-		"description": "Rename Method public testSelectById() : void renamed to public testSelectByIdWithCustomRouting() : void in class io.crate.analyze.where.WhereClauseAnalyzerTest"
 	}],
 	"time": "7/9/15 6:48 AM",
 	"id": 1136870
@@ -6417,6 +6416,12 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private buildErrorResponse(result RestLiServiceException, errorResponseFormat ErrorResponseFormat) : ErrorResponse extracted from public buildErrorResponse(result RestLiServiceException) : ErrorResponse in class com.linkedin.restli.internal.server.methods.response.ErrorResponseBuilder"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getAugmentedRestLiResponseData() : AugmentedRestLiResponseData renamed to public getRestLiResponseEnvelope() : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.RestLiCallback.FilterResponseContextAdapter"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public setAugmentedRestLiResponseData(data AugmentedRestLiResponseData) : void renamed to public setRestLiResponseEnvelope(data RestLiResponseEnvelope) : void in class com.linkedin.restli.internal.server.RestLiCallback.FilterResponseContextAdapter"
 	}],
 	"time": "7/14/15 1:26 PM",
 	"id": 1141428
@@ -6491,9 +6496,6 @@
 	}, {
 		"type": "Move Class",
 		"description": "Move Class SaveContextPrintWriter moved from org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to org.springframework.security.web.context.OnCommittedResponseWrapper"
-	}, {
-		"type": "Rename Method",
-		"description": "Rename Method private doSaveContext() : void renamed to protected onResponseCommitted() : void in class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper"
 	}],
 	"time": "7/14/15 4:48 PM",
 	"id": 1141078
@@ -6507,9 +6509,6 @@
 	}, {
 		"type": "Move Class",
 		"description": "Move Class SaveContextPrintWriter moved from org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to org.springframework.security.web.context.OnCommittedResponseWrapper"
-	}, {
-		"type": "Rename Method",
-		"description": "Rename Method private doSaveContext() : void renamed to protected onResponseCommitted() : void in class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper"
 	}],
 	"time": "7/14/15 4:49 PM",
 	"id": 1141077
@@ -7040,7 +7039,7 @@
 	"author": "Stefan Plantikow",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private getSortedIndexUpdates(descriptor IndexDescriptor) : TreeMap<DefinedProperty,DiffSets<Long>> extracted from private getIndexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSetsLong in class org.neo4j.kernel.impl.api.state.TxState"
+		"description": "Extract Method private getSortedIndexUpdates(descriptor IndexDescriptor) : TreeMap<DefinedProperty,DiffSets<Long>> extracted from private getIndexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets<Long> in class org.neo4j.kernel.impl.api.state.TxState"
 	},
 	{
 		"type": "Rename Method",
@@ -7069,6 +7068,10 @@
 	{
 		"type": "Rename Method",
 		"description": "Rename Method public indexUpdates(descriptor IndexDescriptor, value Object) : ReadableDiffSets<Long> renamed to public indexUpdatesForScanOrSeek(descriptor IndexDescriptor, value Object) : ReadableDiffSets<Long> in class org.neo4j.kernel.impl.api.state.TxState"
+	},
+	{
+		"type": "Rename Method",
+		"description": "Rename Method private getIndexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets renamed to private getIndexUpdatesForRangeSeekByPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets in class org.neo4j.kernel.impl.api.state.TxState"
 	}],
 	"time": "7/20/15 6:24 AM",
 	"id": 1144559
@@ -7339,6 +7342,9 @@
 	}, {
 		"type": "Extract Superclass",
 		"description": "Extract Superclass org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method protected runInternalArnoldi(iterations int) : int renamed to protected runInternalIteration() : int in class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi"
 	}],
 	"time": "7/23/15 10:19 AM",
 	"id": 1149802
@@ -8185,6 +8191,9 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public initRowCache() : void renamed to public init() : void in class org.apache.cassandra.db.ColumnFamilyStore"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private wrapResponseHandler(mutation Mutation, consistency_level ConsistencyLevel, writeType WriteType) : WriteResponseHandlerWrapper renamed to private wrapBatchResponseHandler(mutation Mutation, consistency_level ConsistencyLevel, batchConsistencyLevel ConsistencyLevel, writeType WriteType, cleanup BatchlogCleanup) : WriteResponseHandlerWrapper in class org.apache.cassandra.service.StorageProxy"
 	}],
 	"time": "7/29/15 5:15 PM",
 	"id": 1153409
@@ -8372,6 +8381,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private copyOneFunction(dbName String, funcName String) : void extracted from private copyFunctions() : void in class org.apache.hadoop.hive.metastore.hbase.HBaseImport"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public doImport() : void renamed to public importAll() : void in class org.apache.hadoop.hive.metastore.hbase.TestHBaseImport"
 	}],
 	"time": "7/31/15 3:07 PM",
 	"id": 1155930
@@ -8587,6 +8599,9 @@
 		}, {
 			"type": "Rename Method",
 			"description": "Rename Method public testGetCompressionConfig(serviceName String, requestCompressionThresholdDefault int, expectedConfig CompressionConfig) : void renamed to public testGetRequestCompressionConfig(serviceName String, requestCompressionThresholdDefault int, expectedConfig CompressionConfig) : void in class com.linkedin.r2.transport.http.client.TestHttpClientFactory"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method package getCompressionConfig(httpServiceName String, requestContentEncodingName String) : CompressionConfig renamed to package getRequestCompressionConfig(httpServiceName String, requestContentEncoding EncodingType) : CompressionConfig in class com.linkedin.r2.transport.http.client.HttpClientFactory"
 		}, {
 			"type": "Rename Method",
 			"description": "Rename Method private provideRequestData() : Object[][] renamed to private provideRequestCompressionData() : Object[][] in class com.linkedin.r2.filter.compression.TestClientCompressionFilter"
@@ -9102,9 +9117,6 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private assertExistsAndReturn(content String) : Object extracted from public exists(content String) : void in class org.springframework.test.util.JsonPathExpectationsHelper"
-	}, {
-		"type": "Rename Method",
-		"description": "Rename Method public test() : void renamed to public assertValueWithDifferentExpectedType() : void in class org.springframework.test.util.JsonPathExpectationsHelperTests"
 	}],
 	"time": "8/6/15 5:08 PM",
 	"id": 1159696

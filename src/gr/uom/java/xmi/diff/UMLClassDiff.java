@@ -5,6 +5,7 @@ import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
@@ -21,6 +22,7 @@ import org.refactoringminer.api.Refactoring;
 
 public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	private UMLClass originalClass;
+	private UMLClass nextClass;
 	private String className;
 	private List<UMLOperation> addedOperations;
 	private List<UMLOperation> removedOperations;
@@ -40,9 +42,11 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	private boolean superclassChanged;
 	private UMLType oldSuperclass;
 	private UMLType newSuperclass;
+	private static final int MAX_DIFFERENCE_IN_POSITION = 5;
 	
-	public UMLClassDiff(UMLClass originalClass) {
+	public UMLClassDiff(UMLClass originalClass, UMLClass nextClass) {
 		this.originalClass = originalClass;
+		this.nextClass = nextClass;
 		this.className = originalClass.getName();
 		this.addedOperations = new ArrayList<UMLOperation>();
 		this.removedOperations = new ArrayList<UMLOperation>();
@@ -184,6 +188,12 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		}
 	}
 	
+	private int computeAbsoluteDifferenceInPositionWithinClass(UMLOperation removedOperation, UMLOperation addedOperation) {
+		int index1 = originalClass.getOperations().indexOf(removedOperation);
+		int index2 = nextClass.getOperations().indexOf(addedOperation);
+		return Math.abs(index1-index2);
+	}
+
 	public void checkForOperationSignatureChanges() {
 		if(removedOperations.size() <= addedOperations.size()) {
 			for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
@@ -192,9 +202,17 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 					UMLOperation addedOperation = addedOperationIterator.next();
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
-					if(!operationBodyMapper.getMappings().isEmpty() &&
-							operationBodyMapper.getMappings().size() > (operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2())/2.0) {
-						mapperSet.add(operationBodyMapper);
+					List<AbstractCodeMapping> mappings = operationBodyMapper.getMappings();
+					if(!mappings.isEmpty()) {
+						if(operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() == 0 && mappings.size() == operationBodyMapper.exactMatches()) {
+							mapperSet.add(operationBodyMapper);
+						}
+						else if(mappings.size() > operationBodyMapper.nonMappedElementsT1() &&
+								mappings.size() > operationBodyMapper.nonMappedElementsT2() &&
+								computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) <= MAX_DIFFERENCE_IN_POSITION &&
+								(addedOperation.equalParameterTypes(removedOperation) || addedOperation.overloadedParameterTypes(removedOperation))) {
+							mapperSet.add(operationBodyMapper);
+						}
 					}
 				}
 				if(!mapperSet.isEmpty()) {
@@ -205,7 +223,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 
 					UMLOperationDiff operationDiff = new UMLOperationDiff(removedOperation, addedOperation);
 					operationDiffList.add(operationDiff);
-					if(!removedOperation.getName().equals(addedOperation.getName()) && addedOperation.equalParameters(removedOperation)) {
+					if(!removedOperation.getName().equals(addedOperation.getName())) {
 						RenameOperationRefactoring rename = new RenameOperationRefactoring(removedOperation, addedOperation);
 						refactorings.add(rename);
 					}
@@ -220,9 +238,17 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 				for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 					UMLOperation removedOperation = removedOperationIterator.next();
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
-					if(!operationBodyMapper.getMappings().isEmpty() &&
-							operationBodyMapper.getMappings().size() > (operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2())/2.0) {
-						mapperSet.add(operationBodyMapper);
+					List<AbstractCodeMapping> mappings = operationBodyMapper.getMappings();
+					if(!mappings.isEmpty()) {
+						if(operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() == 0 && mappings.size() == operationBodyMapper.exactMatches()) {
+							mapperSet.add(operationBodyMapper);
+						}
+						else if(mappings.size() > operationBodyMapper.nonMappedElementsT1() &&
+								mappings.size() > operationBodyMapper.nonMappedElementsT2() &&
+								computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) <= MAX_DIFFERENCE_IN_POSITION &&
+								(addedOperation.equalParameterTypes(removedOperation) || addedOperation.overloadedParameterTypes(removedOperation))) {
+							mapperSet.add(operationBodyMapper);
+						}
 					}
 				}
 				if(!mapperSet.isEmpty()) {
@@ -233,7 +259,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 
 					UMLOperationDiff operationDiff = new UMLOperationDiff(removedOperation, addedOperation);
 					operationDiffList.add(operationDiff);
-					if(!removedOperation.getName().equals(addedOperation.getName()) && addedOperation.equalParameters(removedOperation)) {
+					if(!removedOperation.getName().equals(addedOperation.getName())) {
 						RenameOperationRefactoring rename = new RenameOperationRefactoring(removedOperation, addedOperation);
 						refactorings.add(rename);
 					}

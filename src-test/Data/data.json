@@ -5648,6 +5648,9 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public toKeyMethodFormatsAsExpected() : void renamed to public configKeyFormatsAsExpected() : void in class feign.FeignTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public parseAndValidatateMetadata(method Method) : MethodMetadata renamed to protected parseAndValidateMetadata(targetType Class<?>, method Method) : MethodMetadata in class feign.jaxrs.JAXRSContract"
 	}],
 	"time": "7/13/15 1:49 PM",
 	"id": 1140131

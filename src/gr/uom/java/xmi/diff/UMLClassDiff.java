@@ -194,6 +194,27 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		return Math.abs(index1-index2);
 	}
 
+	private UMLOperation matchingRemovedOperationInNextClassCallsAddedOperation(UMLOperation removedOperation, UMLOperation addedOperation) {
+		UMLOperation removedOperationInNextClass = null;
+		for(UMLOperation nextOperation : nextClass.getOperations()) {
+			if(nextOperation.getName().equals(removedOperation.getName()) && 
+					(nextOperation.getParameterTypeList().equals(removedOperation.getParameterTypeList()) || 
+					nextOperation.getParameterTypeList().containsAll(removedOperation.getParameterTypeList()) || removedOperation.getParameterTypeList().containsAll(nextOperation.getParameterTypeList()))) {
+				removedOperationInNextClass = nextOperation;
+				break;
+			}
+		}
+		if(removedOperationInNextClass != null) {
+			Set<OperationInvocation> operationInvocations = removedOperationInNextClass.getBody().getAllOperationInvocations();
+			for(OperationInvocation invocation : operationInvocations) {
+				if(invocation.matchesOperation(addedOperation)) {
+					return removedOperationInNextClass;
+				}
+			}
+		}
+		return null;
+	}
+
 	public void checkForOperationSignatureChanges() {
 		if(removedOperations.size() <= addedOperations.size()) {
 			for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
@@ -211,7 +232,13 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 								mappings.size() > operationBodyMapper.nonMappedElementsT2() &&
 								computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) <= MAX_DIFFERENCE_IN_POSITION &&
 								(addedOperation.equalParameterTypes(removedOperation) || addedOperation.overloadedParameterTypes(removedOperation))) {
-							mapperSet.add(operationBodyMapper);
+							UMLOperation removedOperationInNextClass = matchingRemovedOperationInNextClassCallsAddedOperation(removedOperation, addedOperation);
+							if(removedOperationInNextClass != null) {
+								mapperSet.add(new UMLOperationBodyMapper(removedOperation, removedOperationInNextClass));
+							}
+							else {
+								mapperSet.add(operationBodyMapper);
+							}
 						}
 					}
 				}
@@ -247,7 +274,13 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 								mappings.size() > operationBodyMapper.nonMappedElementsT2() &&
 								computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) <= MAX_DIFFERENCE_IN_POSITION &&
 								(addedOperation.equalParameterTypes(removedOperation) || addedOperation.overloadedParameterTypes(removedOperation))) {
-							mapperSet.add(operationBodyMapper);
+							UMLOperation removedOperationInNextClass = matchingRemovedOperationInNextClassCallsAddedOperation(removedOperation, addedOperation);
+							if(removedOperationInNextClass != null) {
+								mapperSet.add(new UMLOperationBodyMapper(removedOperation, removedOperationInNextClass));
+							}
+							else {
+								mapperSet.add(operationBodyMapper);
+							}
 						}
 					}
 				}
@@ -373,150 +406,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		}
 		return true;
 	}
-/*
-	public void checkForOperationSignatureChanges() {
-		for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
-			UMLOperation removedOperation = removedOperationIterator.next();
-			List<UMLOperation> matchingAddedOperations = new ArrayList<UMLOperation>();
-			for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
-				UMLOperation addedOperation = addedOperationIterator.next();
-				if(removedOperation.getName().equals(addedOperation.getName())) {
-					matchingAddedOperations.add(addedOperation);
-				}
-			}
-			if(matchingAddedOperations.size() == 1) {
-				UMLOperation addedOperation = matchingAddedOperations.get(0);
-				UMLOperationDiff operationDiff = new UMLOperationDiff(removedOperation, addedOperation);
-				addedOperations.remove(addedOperation);
-				removedOperationIterator.remove();
-				operationDiffList.add(operationDiff);
-				UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
-    			this.addOperationBodyMapper(operationBodyMapper);
-			}
-			else if(matchingAddedOperations.size() > 1) {
-				UMLOperation addedOperation = null;
-				for(UMLOperation operation : matchingAddedOperations) {
-					if(operation.getParameters().size() == removedOperation.getParameters().size()) {
-						addedOperation = operation;
-						break;
-					}
-				}
-				if(addedOperation != null) {
-					UMLOperationDiff operationDiff = new UMLOperationDiff(removedOperation, addedOperation);
-					addedOperations.remove(addedOperation);
-					removedOperationIterator.remove();
-					operationDiffList.add(operationDiff);
-					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
-	    			this.addOperationBodyMapper(operationBodyMapper);
-				}
-			}
-		}
-	}
 
-	public void checkForOperationRenames() {
-		for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
-			UMLOperation removedOperation = removedOperationIterator.next();
-			Map<UMLOperationDiff, Double> diffMap = new HashMap<UMLOperationDiff, Double>();
-			for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
-				UMLOperation addedOperation = addedOperationIterator.next();
-				if(removedOperation.equalSignatureIgnoringOperationName(addedOperation)) {
-					int bothMethodCallsFound = 0;
-					for(UMLOperationBodyDiff operationBodyDiff : operationBodyDiffList) {
-						boolean removedMethodCallFound = false;
-						boolean addedMethodCallFound = false;
-						for(MethodCall methodCall : operationBodyDiff.getRemovedMethodCalls()) {
-							if(methodCall.matchesOperation(removedOperation)) {
-								removedMethodCallFound = true;
-								break;
-							}
-						}
-						for(MethodCall methodCall : operationBodyDiff.getAddedMethodCalls()) {
-							if(methodCall.matchesOperation(addedOperation)) {
-								addedMethodCallFound = true;
-								break;
-							}
-						}
-						if(removedMethodCallFound && addedMethodCallFound) {
-							bothMethodCallsFound++;
-						}
-					}
-					if(bothMethodCallsFound > 0) {
-						UMLOperationDiff operationDiff = new UMLOperationDiff(removedOperation, addedOperation);
-						double normalized = removedOperation.normalizedNameDistance(addedOperation);
-						diffMap.put(operationDiff, normalized);
-					}
-				}
-			}
-			double min = 1.0;
-			UMLOperationDiff minOperationDiff = null;
-			for(UMLOperationDiff operationDiff : diffMap.keySet()) {
-				double value = diffMap.get(operationDiff);
-				if(value < min) {
-					minOperationDiff = operationDiff;
-					min = value;
-				}
-			}
-			if(minOperationDiff != null) {
-				operationDiffList.add(minOperationDiff);
-				addedOperations.remove(minOperationDiff.getAddedOperation());
-				removedOperationIterator.remove();
-				UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(minOperationDiff.getRemovedOperation(), minOperationDiff.getAddedOperation());
-    			this.addOperationBodyMapper(operationBodyMapper);
-			}
-		}
-	}
-
-	public void checkForAttributeRenames() {
-		for(Iterator<UMLAttribute> removedAttributeIterator = removedAttributes.iterator(); removedAttributeIterator.hasNext();) {
-			UMLAttribute removedAttribute = removedAttributeIterator.next();
-			Map<UMLAttributeDiff, Double> diffMap = new HashMap<UMLAttributeDiff, Double>();
-			for(Iterator<UMLAttribute> addedAttributeIterator = addedAttributes.iterator(); addedAttributeIterator.hasNext();) {
-				UMLAttribute addedAttribute = addedAttributeIterator.next();
-				if(removedAttribute.getType().equals(addedAttribute.getType())) {
-					int bothFieldAccessesFound = 0;
-					for(UMLOperationBodyDiff operationBodyDiff : operationBodyDiffList) {
-						boolean removedFieldAccessFound = false;
-						boolean addedFieldAccessFound = false;
-						for(FieldAccess fieldAccess : operationBodyDiff.getRemovedFieldAccesses()) {
-							if(fieldAccess.matchesAttribute(removedAttribute)) {
-								removedFieldAccessFound = true;
-								break;
-							}
-						}
-						for(FieldAccess fieldAccess : operationBodyDiff.getAddedFieldAccesses()) {
-							if(fieldAccess.matchesAttribute(addedAttribute)) {
-								addedFieldAccessFound = true;
-								break;
-							}
-						}
-						if(removedFieldAccessFound && addedFieldAccessFound) {
-							bothFieldAccessesFound++;
-						}
-					}
-					if(bothFieldAccessesFound > 0) {
-						UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute);
-						double normalized = removedAttribute.normalizedNameDistance(addedAttribute);
-						diffMap.put(attributeDiff, normalized);
-					}
-				}
-			}
-			double min = 1.0;
-			UMLAttributeDiff minAttributeDiff = null;
-			for(UMLAttributeDiff attributeDiff : diffMap.keySet()) {
-				double value = diffMap.get(attributeDiff);
-				if(value < min) {
-					minAttributeDiff = attributeDiff;
-					min = value;
-				}
-			}
-			if(minAttributeDiff != null) {
-				attributeDiffList.add(minAttributeDiff);
-				addedAttributes.remove(minAttributeDiff.getAddedAttribute());
-				removedAttributeIterator.remove();
-			}
-		}
-	}
-*/
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		if(!isEmpty())

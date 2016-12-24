@@ -110,13 +110,13 @@
 	"author": "Jeeeyul Lee",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class TestView moved from net.jeeeyul.eclipse.themes.test.e4app to net.jeeeyul.eclipse.themes.test.e4app.views"
+		"description": "Move Class net.jeeeyul.eclipse.themes.test.e4app.TestView moved to net.jeeeyul.eclipse.themes.test.e4app.views.TestView"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class SplashHandler moved from net.jeeeyul.eclipse.themes.test.e4app to net.jeeeyul.eclipse.themes.test.e4app.handlers"
+		"description": "Move Class net.jeeeyul.eclipse.themes.test.e4app.SplashHandler moved to net.jeeeyul.eclipse.themes.test.e4app.handlers.SplashHandler"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class AboutHandler moved from net.jeeeyul.eclipse.themes.test.e4app to net.jeeeyul.eclipse.themes.test.e4app.handlers"
+		"description": "Move Class net.jeeeyul.eclipse.themes.test.e4app.AboutHandler moved to net.jeeeyul.eclipse.themes.test.e4app.handlers.AboutHandler"
 	}],
 	"time": "6/8/15 6:29 AM",
 	"id": 1102923
@@ -392,10 +392,10 @@
 	"author": "Philip Thompson",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class NullOutputHandler moved from org.apache.cassandra.hadoop.BulkRecordWriter to org.apache.cassandra.hadoop.cql3.CqlBulkRecordWriter"
+		"description": "Move Class org.apache.cassandra.hadoop.BulkRecordWriter.NullOutputHandler moved to org.apache.cassandra.hadoop.cql3.CqlBulkRecordWriter.NullOutputHandler"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class SplitCallable moved from org.apache.cassandra.hadoop.AbstractColumnFamilyInputFormat to org.apache.cassandra.hadoop.cql3.CqlInputFormat"
+		"description": "Move Class org.apache.cassandra.hadoop.AbstractColumnFamilyInputFormat.SplitCallable moved to org.apache.cassandra.hadoop.cql3.CqlInputFormat.SplitCallable"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public testCassandraStorageFilter() : void renamed to public testCqlNativeStorageFilter() : void in class org.apache.cassandra.pig.ThriftColumnFamilyTest"
@@ -601,16 +601,16 @@
 	"author": "Simon Willnauer",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class VersionFieldUpgraderTest moved from org.elasticsearch.index.merge.policy to org.elasticsearch.index.shard"
+		"description": "Move Class org.elasticsearch.index.merge.policy.ElasticsearchMergePolicy moved to org.elasticsearch.index.shard.ElasticsearchMergePolicy"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class FilterDocValuesProducer moved from org.elasticsearch.index.merge.policy to org.elasticsearch.index.shard"
+		"description": "Move Class org.elasticsearch.index.merge.policy.VersionFieldUpgrader moved to org.elasticsearch.index.shard.VersionFieldUpgrader"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class ElasticsearchMergePolicy moved from org.elasticsearch.index.merge.policy to org.elasticsearch.index.shard"
+		"description": "Move Class org.elasticsearch.index.merge.policy.VersionFieldUpgraderTest moved to org.elasticsearch.index.shard.VersionFieldUpgraderTest"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class VersionFieldUpgrader moved from org.elasticsearch.index.merge.policy to org.elasticsearch.index.shard"
+		"description": "Move Class org.elasticsearch.index.merge.policy.FilterDocValuesProducer moved to org.elasticsearch.index.shard.FilterDocValuesProducer"
 	}],
 	"time": "6/11/15 6:58 AM",
 	"id": 1107905
@@ -2437,7 +2437,7 @@
 	"author": "blickly",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class TypeDeclarationsIRFactory moved from com.google.javascript.jscomp.parsing to com.google.javascript.jscomp.JsdocToEs6TypedConverter"
+		"description": "Move Class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactory moved to com.google.javascript.jscomp.JsdocToEs6TypedConverter.TypeDeclarationsIRFactory"
 	}],
 	"time": "6/18/15 2:34 PM",
 	"id": 1119978
@@ -2900,7 +2900,7 @@
 		"description": "Pull Up Attribute private completableFuturePresent : boolean from class org.springframework.aop.interceptor.AsyncExecutionInterceptor to class org.springframework.aop.interceptor.AsyncExecutionAspectSupport"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class CompletableFutureDelegate moved from org.springframework.aop.interceptor.AsyncExecutionInterceptor to org.springframework.aop.interceptor.AsyncExecutionAspectSupport"
+		"description": "Move Class org.springframework.aop.interceptor.AsyncExecutionInterceptor.CompletableFutureDelegate moved to org.springframework.aop.interceptor.AsyncExecutionAspectSupport.CompletableFutureDelegate"
 	}],
 	"time": "6/21/15 7:29 PM",
 	"id": 1121426
@@ -3271,10 +3271,10 @@
 	"author": "Dilip Krishnan",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class DefaultModelPropertiesProvider moved from springfox.documentation.schema.property.provider to springfox.documentation.schema.property"
+		"description": "Move Class springfox.documentation.schema.property.provider.DefaultModelPropertiesProvider moved to springfox.documentation.schema.property.DefaultModelPropertiesProvider"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class ModelPropertiesProvider moved from springfox.documentation.schema.property.provider to springfox.documentation.schema.property"
+		"description": "Move Class springfox.documentation.schema.property.provider.ModelPropertiesProvider moved to springfox.documentation.schema.property.ModelPropertiesProvider"
 	}],
 	"time": "6/23/15 2:54 PM",
 	"id": 1123376
@@ -4009,7 +4009,7 @@
 	"author": "John Engelman",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class JacksonModule moved from ratpack.jackson to ratpack.jackson.guice"
+		"description": "Move Class ratpack.jackson.JacksonModule moved to ratpack.jackson.guice.JacksonModule"
 	}],
 	"time": "6/28/15 12:21 PM",
 	"id": 1126459
@@ -4086,6 +4086,13 @@
 		"type": "Extract Method",
 		"description": "Extract Method public handleMultiLineCmd(line String) : String extracted from private execute(line String, call boolean, entireLineAsCommand boolean) : boolean in class org.apache.hive.beeline.Commands"
 	}, {
+		"type": "Move Method",
+		"description":"Move Method private sourceFile(cmd String) : boolean from class org.apache.hive.beeline.BeeLine to private sourceFile(cmd String) : boolean from class org.apache.hive.beeline.Commands"
+	},
+{
+		"type": "Move Method",
+		"description":"Move Method private cliToBeelineCmd(cmd String) : String from class org.apache.hive.beeline.BeeLine to private cliToBeelineCmd(cmd String) : String from class org.apache.hive.beeline.Commands"
+	},{
 		"type": "Move Method",
 		"description": "Move Method private isSourceCMD(cmd String) : boolean from class org.apache.hive.beeline.BeeLine to private isSourceCMD(cmd String) : boolean from class org.apache.hive.beeline.Commands"
 	}],
@@ -4630,7 +4637,7 @@
 	"author": "Adrian Nistor",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class ReverseFilterResultComparator moved from org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery"
+		"description": "Move Class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery.ReverseFilterResultComparator moved to org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery.ReverseFilterResultComparator"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public testEmbeddedQuery() : void renamed to public testEmbeddedLuceneQuery() : void in class org.infinispan.client.hotrod.marshall.EmbeddedCompatTest"
@@ -5285,7 +5292,7 @@
 	"author": "Claus Ibsen",
 	"refactorings": [{
 		"type": "Extract Interface",
-		"description": "Extract Interface org.apache.camel.model.OtherAttributesAware from type org.apache.camel.model.ProcessorDefinition"
+		"description": "Extract Interface org.apache.camel.model.OtherAttributesAware from class org.apache.camel.model.ProcessorDefinition7ccbd4693288dbdbc2e6844aa0877640d63fbd04"
 	}],
 	"time": "7/9/15 1:06 PM",
 	"id": 1138152
@@ -6290,13 +6297,13 @@
 	"author": "Dilip Krishnan",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class Paths moved from springfox.documentation.spring.web to springfox.documentation.spring.web.paths"
+		"description": "Move Class springfox.documentation.spring.web.AbstractPathProvider moved to springfox.documentation.spring.web.paths.AbstractPathProvider"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class RelativePathProvider moved from springfox.documentation.spring.web to springfox.documentation.spring.web.paths"
+		"description": "Move Class springfox.documentation.spring.web.RelativePathProvider moved to springfox.documentation.spring.web.paths.RelativePathProvider"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class AbstractPathProvider moved from springfox.documentation.spring.web to springfox.documentation.spring.web.paths"
+		"description": "Move Class springfox.documentation.spring.web.Paths moved to springfox.documentation.spring.web.paths.Paths"
 	}],
 	"time": "7/14/15 1:47 AM",
 	"id": 1140621
@@ -6808,7 +6815,7 @@
 	"author": "Sylvain Lebresne",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class ScoreUpdater moved from org.apache.cassandra.locator.DynamicEndpointSnitchTest to org.apache.cassandra.locator.DynamicEndpointSnitchLongTest"
+		"description": "Move Class org.apache.cassandra.locator.DynamicEndpointSnitchTest.ScoreUpdater moved to org.apache.cassandra.locator.DynamicEndpointSnitchLongTest.ScoreUpdater"
 	}],
 	"time": "7/16/15 10:21 AM",
 	"id": 1143549
@@ -6861,7 +6868,7 @@
 	"author": "zhl",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class TempFeature moved from org.ansj.app.crf.pojo to org.ansj.app.crf.CrfppModelParser"
+		"description": "Move Class org.ansj.app.crf.pojo.TempFeature moved to org.ansj.app.crf.CrfppModelParser.TempFeature"
 	}],
 	"time": "7/16/15 2:33 PM",
 	"id": 1144936
@@ -7144,7 +7151,7 @@
 	"author": "Markus",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class PropertyConverter moved from de.greenrobot.dao to de.greenrobot.dao.converter"
+		"description": "Move Class de.greenrobot.dao.PropertyConverter moved to de.greenrobot.dao.converter.PropertyConverter"
 	}],
 	"time": "7/20/15 5:25 PM",
 	"id": 1144604
@@ -7215,28 +7222,35 @@
 	"author": "Petr Bouda",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class JerseyConfig moved from org.glassfish.jersey.examples.hello.spring.annotations.annotations to org.glassfish.jersey.examples.hello.spring.annotations"
-	}, {
+		"description":"Move Class org.glassfish.jersey.examples.hello.spring.annotations.annotations.NorwegianGoodbyeService moved to org.glassfish.jersey.examples.hello.spring.annotations.NorwegianGoodbyeService"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class SpringAnnotationConfig moved from org.glassfish.jersey.examples.hello.spring.annotations.annotations to org.glassfish.jersey.examples.hello.spring.annotations"
-	}, {
+		"description":"Move Class org.glassfish.jersey.examples.hello.spring.annotations.annotations.JerseyConfig moved to org.glassfish.jersey.examples.hello.spring.annotations.JerseyConfig"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class NorwegianGoodbyeService moved from org.glassfish.jersey.examples.hello.spring.annotations.annotations to org.glassfish.jersey.examples.hello.spring.annotations"
-	}, {
+		"description":"Move Class org.glassfish.jersey.examples.hello.spring.annotations.annotations.EnglishGoodbyeService moved to org.glassfish.jersey.examples.hello.spring.annotations.EnglishGoodbyeService"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class EnglishGoodbyeService moved from org.glassfish.jersey.examples.hello.spring.annotations.annotations to org.glassfish.jersey.examples.hello.spring.annotations"
-	}, {
+		"description":"Move Class org.glassfish.jersey.examples.hello.spring.annotations.annotations.SpringRequestResourceTest moved to org.glassfish.jersey.examples.hello.spring.annotations.SpringRequestResourceTest"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class SpringRequestResourceTest moved from org.glassfish.jersey.examples.hello.spring.annotations.annotations to org.glassfish.jersey.examples.hello.spring.annotations"
-	}, {
+		"description":"Move Class org.glassfish.jersey.examples.hello.spring.annotations.annotations.GoodbyeService moved to org.glassfish.jersey.examples.hello.spring.annotations.GoodbyeService"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class SpringRequestResource moved from org.glassfish.jersey.examples.hello.spring.annotations.annotations to org.glassfish.jersey.examples.hello.spring.annotations"
-	}, {
+		"description":"Move Class org.glassfish.jersey.examples.hello.spring.annotations.annotations.SpringAnnotationConfig moved to org.glassfish.jersey.examples.hello.spring.annotations.SpringAnnotationConfig"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class GreetingService moved from org.glassfish.jersey.examples.hello.spring.annotations.annotations to org.glassfish.jersey.examples.hello.spring.annotations"
-	}, {
+		"description":"Move Class org.glassfish.jersey.examples.hello.spring.annotations.annotations.SpringRequestResource moved to org.glassfish.jersey.examples.hello.spring.annotations.SpringRequestResource"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class GoodbyeService moved from org.glassfish.jersey.examples.hello.spring.annotations.annotations to org.glassfish.jersey.examples.hello.spring.annotations"
+		"description":"Move Class org.glassfish.jersey.examples.hello.spring.annotations.annotations.GreetingService moved to org.glassfish.jersey.examples.hello.spring.annotations.GreetingService"
 	}],
 	"time": "7/22/15 12:37 PM",
 	"id": 1147835
@@ -8123,25 +8137,31 @@
 	"author": "ian",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class SpawnBalancerConfig moved from com.addthis.hydra.job.spawn to com.addthis.hydra.job.spawn.balancer"
-	}, {
+		"description":"Move Class com.addthis.hydra.job.spawn.SpawnBalancer.HostAndScore moved to com.addthis.hydra.job.spawn.balancer.HostAndScore"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class SpawnBalancer moved from com.addthis.hydra.job.spawn to com.addthis.hydra.job.spawn.balancer"
-	}, {
+		"description":"Move Class com.addthis.hydra.job.spawn.SpawnBalancerTest moved to com.addthis.hydra.job.spawn.balancer.SpawnBalancerTest"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class SpawnBalancerTest moved from com.addthis.hydra.job.spawn to com.addthis.hydra.job.spawn.balancer"
-	}, {
+		"description":"Move Class com.addthis.hydra.job.spawn.SpawnBalancer.HostScore moved to com.addthis.hydra.job.spawn.balancer.HostScore"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class JobTaskItem moved from com.addthis.hydra.job.spawn.SpawnBalancer to com.addthis.hydra.job.spawn.balancer"
-	}, {
+		"description":"Move Class com.addthis.hydra.job.spawn.SpawnBalancer moved to com.addthis.hydra.job.spawn.balancer.SpawnBalancer"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class HostScore moved from com.addthis.hydra.job.spawn.SpawnBalancer to com.addthis.hydra.job.spawn.balancer"
-	}, {
+		"description":"Move Class com.addthis.hydra.job.spawn.SpawnBalancerConfig moved to com.addthis.hydra.job.spawn.balancer.SpawnBalancerConfig"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class HostAndScore moved from com.addthis.hydra.job.spawn.SpawnBalancer to com.addthis.hydra.job.spawn.balancer"
-	}, {
+		"description":"Move Class com.addthis.hydra.job.spawn.SpawnBalancerTaskSizer moved to com.addthis.hydra.job.spawn.balancer.SpawnBalancerTaskSizer"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class SpawnBalancerTaskSizer moved from com.addthis.hydra.job.spawn to com.addthis.hydra.job.spawn.balancer"
+		"description":"Move Class com.addthis.hydra.job.spawn.SpawnBalancer.JobTaskItem moved to com.addthis.hydra.job.spawn.balancer.JobTaskItem"
 	}],
 	"time": "7/28/15 5:43 PM",
 	"id": 1152530
@@ -8161,7 +8181,7 @@
 	"author": "Gail Badner",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class EntityWithLazyProperty moved from org.hibernate.jpa.test.callbacks to org.hibernate.jpa.test.instrument.domain"
+		"description": "Move Class org.hibernate.jpa.test.callbacks.EntityWithLazyProperty moved to org.hibernate.jpa.test.instrument.domain.EntityWithLazyProperty"
 	}],
 	"time": "7/29/15 12:10 AM",
 	"id": 1152358
@@ -8184,7 +8204,7 @@
 	"author": "Carl Yeksigian",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class AbstractReadCommandBuilder moved from org.apache.cassandra to org.apache.cassandra.db"
+		"description": "Move Class org.apache.cassandra.AbstractReadCommandBuilder moved to org.apache.cassandra.db.AbstractReadCommandBuilder"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public dumpMemtable() : void extracted from public truncateBlocking() : void in class org.apache.cassandra.db.ColumnFamilyStore"
@@ -8727,10 +8747,10 @@
 	"author": "Janario Oliveira",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class LastNumberType moved from org.hibernate.test.annotations.enumerated to org.hibernate.test.annotations.enumerated.custom_types"
+		"description": "Move Class org.hibernate.test.annotations.enumerated.FirstLetterType moved to org.hibernate.test.annotations.enumerated.custom_types.FirstLetterType"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class FirstLetterType moved from org.hibernate.test.annotations.enumerated to org.hibernate.test.annotations.enumerated.custom_types"
+		"description": "Move Class org.hibernate.test.annotations.enumerated.LastNumberType moved to org.hibernate.test.annotations.enumerated.custom_types.LastNumberType"
 	}],
 	"time": "8/4/15 11:50 PM",
 	"id": 1157522

@@ -205,10 +205,17 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 			}
 		}
 		if(removedOperationInNextClass != null) {
-			Set<OperationInvocation> operationInvocations = removedOperationInNextClass.getBody().getAllOperationInvocations();
-			for(OperationInvocation invocation : operationInvocations) {
-				if(invocation.matchesOperation(addedOperation)) {
-					return removedOperationInNextClass;
+			boolean delegateMatchesAddedOperation = false;
+			OperationInvocation delegate = removedOperationInNextClass.isDelegate();
+			if(delegate != null) {
+				delegateMatchesAddedOperation = delegate.matchesOperation(addedOperation);
+			}
+			if(!delegateMatchesAddedOperation) {
+				Set<OperationInvocation> operationInvocations = removedOperationInNextClass.getBody().getAllOperationInvocations();
+				for(OperationInvocation invocation : operationInvocations) {
+					if(invocation.matchesOperation(addedOperation)) {
+						return removedOperationInNextClass;
+					}
 				}
 			}
 		}

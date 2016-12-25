@@ -213,7 +213,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 				Map<String, OperationInvocation> operationInvocationMap = statement.getMethodInvocationMap();
 				for(String key : operationInvocationMap.keySet()) {
 					OperationInvocation operationInvocation = operationInvocationMap.get(key);
-					if(operationInvocation.matchesOperation(this)) {
+					if(operationInvocation.matchesOperation(this) || operationInvocation.getMethodName().equals(this.getName())) {
 						return operationInvocation;
 					}
 				}

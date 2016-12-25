@@ -753,7 +753,7 @@
 	"author": "S\u00e9bastien Lesaint",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class QualityGateStatus moved from org.sonar.server.computation.measure.Measure to org.sonar.server.computation.measure"
+		"description": "Move Class org.sonar.server.computation.measure.Measure.QualityGateStatus moved to org.sonar.server.computation.measure.QualityGateStatus"
 	}],
 	"time": "6/15/15 8:07 AM",
 	"id": 1110654
@@ -763,7 +763,7 @@
 	"author": "Yaroslav Lepenkin",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class NewLineBlocksIterator moved from com.intellij.psi.codeStyle.autodetect to com.intellij.psi.formatter.common"
+		"description": "Move Class com.intellij.psi.codeStyle.autodetect.NewLineBlocksIterator moved to com.intellij.psi.formatter.common.NewLineBlocksIterator"
 	}],
 	"time": "6/15/15 9:02 AM",
 	"id": 1110272
@@ -1068,7 +1068,7 @@
 	"author": "Konstantin Bulenkov",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class JBPanel moved from com.intellij.util.ui.components to com.intellij.ui.components"
+		"description": "Move Class com.intellij.util.ui.components.JBPanel moved to com.intellij.ui.components.JBPanel"
 	}],
 	"time": "6/16/15 7:14 AM",
 	"id": 1112702
@@ -2748,7 +2748,7 @@
 	"author": "Bernhard Bonigl",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class RecipeMatch moved from tconstruct.library.modifiers to tconstruct.library.mantle"
+		"description": "Move Class tconstruct.library.modifiers.RecipeMatch moved to tconstruct.library.mantle.RecipeMatch"
 	}],
 	"time": "6/20/15 11:27 AM",
 	"id": 1120836
@@ -4806,7 +4806,7 @@
 	"author": "Aslak Helles\u00f8y",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class ObjectFactory moved from cucumber.runtime.java to cucumber.api.java"
+		"description": "Move Class cucumber.runtime.java.ObjectFactory moved to cucumber.api.java.ObjectFactory"
 	}],
 	"time": "7/6/15 7:36 PM",
 	"id": 1133977
@@ -5116,6 +5116,17 @@
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private PICTURE_PARAM : String from class com.facebook.share.internal.ShareInternalUtility to class com.facebook.GraphRequest"
+	},{
+		"type": "Move Method",
+		"description":"Move Method public newUploadPhotoRequest(graphPath String, accessToken AccessToken, photoUri Uri, caption String, params Bundle, callback Callback) : GraphRequest from class com.facebook.share.internal.ShareInternalUtility to public newUploadPhotoRequest(accessToken AccessToken, graphPath String, photoUri Uri, caption String, params Bundle, callback Callback) : GraphRequest from class com.facebook.GraphRequest"
+	},
+{
+		"type": "Move Method",
+		"description":"Move Method public newUploadPhotoRequest(graphPath String, accessToken AccessToken, image Bitmap, caption String, params Bundle, callback Callback) : GraphRequest from class com.facebook.share.internal.ShareInternalUtility to public newUploadPhotoRequest(accessToken AccessToken, graphPath String, image Bitmap, caption String, params Bundle, callback Callback) : GraphRequest from class com.facebook.GraphRequest"
+	},
+{
+		"type": "Move Method",
+		"description":"Move Method public newUploadPhotoRequest(graphPath String, accessToken AccessToken, file File, caption String, params Bundle, callback Callback) : GraphRequest from class com.facebook.share.internal.ShareInternalUtility to public newUploadPhotoRequest(accessToken AccessToken, graphPath String, file File, caption String, params Bundle, callback Callback) : GraphRequest from class com.facebook.GraphRequest"
 	}],
 	"time": "7/8/15 3:33 PM",
 	"id": 1137085
@@ -5570,7 +5581,7 @@
 	"author": "Bananeweizen",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class TerraCachingConnector moved from cgeo.geocaching.connector to cgeo.geocaching.connector.tc"
+		"description": "Move Class cgeo.geocaching.connector.TerraCachingConnector moved to cgeo.geocaching.connector.tc.TerraCachingConnector"
 	}],
 	"time": "7/12/15 7:01 AM",
 	"id": 1139097
@@ -5648,7 +5659,7 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public toKeyMethodFormatsAsExpected() : void renamed to public configKeyFormatsAsExpected() : void in class feign.FeignTest"
-	}, {
+	},{
 		"type": "Rename Method",
 		"description": "Rename Method public parseAndValidatateMetadata(method Method) : MethodMetadata renamed to protected parseAndValidateMetadata(targetType Class<?>, method Method) : MethodMetadata in class feign.jaxrs.JAXRSContract"
 	}],
@@ -5730,567 +5741,744 @@
 	"sha1": "e29924b33ec0c0298ba4fc3f7a8c218c8e6cfa0c",
 	"repository": "https://github.com/plutext/docx4j.git",
 	"author": "Jason Harrop",
-	"refactorings": [{
-		"type": "Move Class",
-		"description": "Move Class SpecialPropertySet moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class HeaderBlockConstants moved from org.apache.poi.poifs.storage to org.docx4j.org.apache.poi.poifs.storage"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Decryptor moved from org.apache.poi.poifs.crypt to org.docx4j.org.apache.poi.poifs.crypt"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class BlockAllocationTableReader moved from org.apache.poi.poifs.storage to org.docx4j.org.apache.poi.poifs.storage"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class BATBlockAndIndex moved from org.apache.poi.poifs.storage.BATBlock to org.docx4j.org.apache.poi.poifs.storage.BATBlock"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class NotOLE2FileException moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class RawDataBlock moved from org.apache.poi.poifs.storage to org.docx4j.org.apache.poi.poifs.storage"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class ListManagedBlock moved from org.apache.poi.poifs.storage to org.docx4j.org.apache.poi.poifs.storage"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class OldExcelFormatException moved from org.apache.poi.hssf to org.docx4j.org.apache.poi.hssf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class DirectoryEntry moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class PropertySet moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class LittleEndianByteArrayOutputStream moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class POIFSReaderListener moved from org.apache.poi.poifs.eventfilesystem to org.docx4j.org.apache.poi.poifs.eventfilesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class IntegerField moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class IntList moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class MarkUnsupportedException moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class AgileEncryptor moved from org.apache.poi.poifs.crypt.agile to org.docx4j.org.apache.poi.poifs.crypt.agile"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class TypeWriter moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class DocumentOutputStream moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class StandardEncryptionVerifier moved from org.apache.poi.poifs.crypt.standard to org.docx4j.org.apache.poi.poifs.crypt.standard"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class HPSFRuntimeException moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class ReadingNotSupportedException moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class NDocumentInputStream moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class RootProperty moved from org.apache.poi.poifs.property to org.docx4j.org.apache.poi.poifs.property"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class EncryptionInfo moved from org.apache.poi.poifs.crypt to org.docx4j.org.apache.poi.poifs.crypt"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class UnexpectedPropertySetTypeException moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Date moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class NoFormatIDException moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class DataSpaceMapUtils moved from org.apache.poi.poifs.crypt to org.docx4j.org.apache.poi.poifs.crypt"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class BlockWritable moved from org.apache.poi.poifs.storage to org.docx4j.org.apache.poi.poifs.storage"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class AgileEncryptionVerifier moved from org.apache.poi.poifs.crypt.agile to org.docx4j.org.apache.poi.poifs.crypt.agile"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Property moved from org.apache.poi.poifs.property to org.docx4j.org.apache.poi.poifs.property"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class BlockStore moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class EncryptionInfoBuilder moved from org.apache.poi.poifs.crypt to org.docx4j.org.apache.poi.poifs.crypt"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Parent moved from org.apache.poi.poifs.property to org.docx4j.org.apache.poi.poifs.property"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class PropertyTableBase moved from org.apache.poi.poifs.property to org.docx4j.org.apache.poi.poifs.property"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class StandardEncryptor moved from org.apache.poi.poifs.crypt.standard to org.docx4j.org.apache.poi.poifs.crypt.standard"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class SAXHelper moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class DocumentInputStream moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Decimal moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class POIFSDocumentPath moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class BinaryRC4EncryptionVerifier moved from org.apache.poi.poifs.crypt.binaryrc4 to org.docx4j.org.apache.poi.poifs.crypt.binaryrc4"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class BitFieldFactory moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class BlockAllocationTableWriter moved from org.apache.poi.poifs.storage to org.docx4j.org.apache.poi.poifs.storage"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class DocumentDescriptor moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class NoSingleSectionException moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class BATManaged moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class HexRead moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Filetime moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class SummaryInformation moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class VariantTypeException moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class UnsupportedVariantTypeException moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class EncryptionHeader moved from org.apache.poi.poifs.crypt to org.docx4j.org.apache.poi.poifs.crypt"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class BinaryRC4Encryptor moved from org.apache.poi.poifs.crypt.binaryrc4 to org.docx4j.org.apache.poi.poifs.crypt.binaryrc4"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class MutablePropertySet moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class ByteArrayBackedDataSource moved from org.apache.poi.poifs.nio to org.docx4j.org.apache.poi.poifs.nio"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class TypedPropertyValue moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class NPOIFSFileSystem moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Currency moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class ByteField moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class POIFSReader moved from org.apache.poi.poifs.eventfilesystem to org.docx4j.org.apache.poi.poifs.eventfilesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class EncryptionRecord moved from org.apache.poi.poifs.crypt.standard to org.docx4j.org.apache.poi.poifs.crypt.standard"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class RawDataBlockList moved from org.apache.poi.poifs.storage to org.docx4j.org.apache.poi.poifs.storage"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class CodePageUtil moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class DataInputBlock moved from org.apache.poi.poifs.storage to org.docx4j.org.apache.poi.poifs.storage"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class FixedField moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class FileBackedDataSource moved from org.apache.poi.poifs.nio to org.docx4j.org.apache.poi.poifs.nio"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class VariantSupport moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class DocumentHelper moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class EntryNode moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Child moved from org.apache.poi.poifs.property to org.docx4j.org.apache.poi.poifs.property"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class BinaryRC4EncryptionHeader moved from org.apache.poi.poifs.crypt.binaryrc4 to org.docx4j.org.apache.poi.poifs.crypt.binaryrc4"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Section moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class HeaderBlock moved from org.apache.poi.poifs.storage to org.docx4j.org.apache.poi.poifs.storage"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class PropertyIDMap moved from org.apache.poi.hpsf.wellknown to org.docx4j.org.apache.poi.hpsf.wellknown"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class PropertyTable moved from org.apache.poi.poifs.property to org.docx4j.org.apache.poi.poifs.property"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class NPOIFSStream moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class OPOIFSDocument moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class MissingSectionException moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class NPropertyTable moved from org.apache.poi.poifs.property to org.docx4j.org.apache.poi.poifs.property"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class POIFSViewEngine moved from org.apache.poi.poifs.dev to org.docx4j.org.apache.poi.poifs.dev"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class StandardDecryptor moved from org.apache.poi.poifs.crypt.standard to org.docx4j.org.apache.poi.poifs.crypt.standard"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class EncryptionDocument moved from org.apache.poi.poifs.crypt.agile to org.docx4j.org.apache.poi.poifs.crypt.agile"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class IndirectPropertyName moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class PropertyFactory moved from org.apache.poi.poifs.property to org.docx4j.org.apache.poi.poifs.property"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class DocumentProperty moved from org.apache.poi.poifs.property to org.docx4j.org.apache.poi.poifs.property"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class OfficeXmlFileException moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class EntryUtils moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class HeaderBlockWriter moved from org.apache.poi.poifs.storage to org.docx4j.org.apache.poi.poifs.storage"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class POIFSConstants moved from org.apache.poi.poifs.common to org.docx4j.org.apache.poi.poifs.common"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class NDocumentOutputStream moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class VariantBool moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class HexDump moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class CryptoAPIEncryptionHeader moved from org.apache.poi.poifs.crypt.cryptoapi to org.docx4j.org.apache.poi.poifs.crypt.cryptoapi"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class AgileEncryptionHeader moved from org.apache.poi.poifs.crypt.agile to org.docx4j.org.apache.poi.poifs.crypt.agile"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class DataSource moved from org.apache.poi.poifs.nio to org.docx4j.org.apache.poi.poifs.nio"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class CustomProperties moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Extract Method",
-		"description": "Extract Method public save(outStream OutputStream, flags int, password String) : void extracted from public save(outStream OutputStream, flags int) : void in class org.docx4j.openpackaging.packages.OpcPackage"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class LittleEndian moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class NPOIFSMiniStore moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class CryptoAPIDecryptor moved from org.apache.poi.poifs.crypt.cryptoapi to org.docx4j.org.apache.poi.poifs.crypt.cryptoapi"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Vector moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class NPOIFSDocument moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class POIFSFileSystem moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Util moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class ChunkedCipherOutputStream moved from org.apache.poi.poifs.crypt to org.docx4j.org.apache.poi.poifs.crypt"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class PropertyBlock moved from org.apache.poi.poifs.storage to org.docx4j.org.apache.poi.poifs.storage"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class MutableSection moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class VersionedStream moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class LittleEndianConsts moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class CryptoAPIEncryptionVerifier moved from org.apache.poi.poifs.crypt.cryptoapi to org.docx4j.org.apache.poi.poifs.crypt.cryptoapi"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class OPOIFSFileSystem moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class EncryptionVerifier moved from org.apache.poi.poifs.crypt to org.docx4j.org.apache.poi.poifs.crypt"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class LongField moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class StandardEncryptionInfoBuilder moved from org.apache.poi.poifs.crypt.standard to org.docx4j.org.apache.poi.poifs.crypt.standard"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class POIFSWriterListener moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Blob moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class WritingNotSupportedException moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class DocumentBlock moved from org.apache.poi.poifs.storage to org.docx4j.org.apache.poi.poifs.storage"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class CodePageString moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Ole10NativeException moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class BitField moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class DocumentSummaryInformation moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
-		"type": "Extract Method",
-		"description": "Extract Method public save(outFile File, flags int, password String) : void extracted from public save(outFile File, flags int) : void in class org.docx4j.openpackaging.packages.OpcPackage"
-	}, {
+	"refactorings": [ {
 		"type": "Extract Method",
 		"description": "Extract Method public save(outFile File, flags int, password String) : void extracted from public save(outStream OutputStream, flags int) : void in class org.docx4j.openpackaging.packages.OpcPackage"
-	}, {
+	},{
 		"type": "Move Class",
-		"description": "Move Class LittleEndianOutput moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
+		"description":"Move Class org.apache.poi.util.LittleEndianConsts moved to org.docx4j.org.apache.poi.util.LittleEndianConsts"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class TempFileCreationStrategy moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.filesystem.Ole10Native moved to org.docx4j.org.apache.poi.poifs.filesystem.Ole10Native"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class StandardEncryptionHeader moved from org.apache.poi.poifs.crypt.standard to org.docx4j.org.apache.poi.poifs.crypt.standard"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.storage.RawDataBlockList moved to org.docx4j.org.apache.poi.poifs.storage.RawDataBlockList"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class BoundedInputStream moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.crypt.Decryptor moved to org.docx4j.org.apache.poi.poifs.crypt.Decryptor"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class PropertySetFactory moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
+		"description":"Move Class org.apache.poi.util.RecordFormatException moved to org.docx4j.org.apache.poi.util.RecordFormatException"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class POIFSReaderEvent moved from org.apache.poi.poifs.eventfilesystem to org.docx4j.org.apache.poi.poifs.eventfilesystem"
-	}, {
+		"description":"Move Class org.apache.poi.hpsf.ReadingNotSupportedException moved to org.docx4j.org.apache.poi.hpsf.ReadingNotSupportedException"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class StringUtil moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.crypt.binaryrc4.BinaryRC4Decryptor moved to org.docx4j.org.apache.poi.poifs.crypt.binaryrc4.BinaryRC4Decryptor"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class CryptoAPIEncryptor moved from org.apache.poi.poifs.crypt.cryptoapi to org.docx4j.org.apache.poi.poifs.crypt.cryptoapi"
-	}, {
+		"description":"Move Class org.apache.poi.util.StringUtil moved to org.docx4j.org.apache.poi.util.StringUtil"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class DocumentEntry moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
+		"description":"Move Class org.apache.poi.hpsf.Property moved to org.docx4j.org.apache.poi.hpsf.Property"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class Ole10Native moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.crypt.standard.EncryptionRecord moved to org.docx4j.org.apache.poi.poifs.crypt.standard.EncryptionRecord"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class Encryptor moved from org.apache.poi.poifs.crypt to org.docx4j.org.apache.poi.poifs.crypt"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.crypt.standard.StandardEncryptor moved to org.docx4j.org.apache.poi.poifs.crypt.standard.StandardEncryptor"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class CryptoAPIEncryptionInfoBuilder moved from org.apache.poi.poifs.crypt.cryptoapi to org.docx4j.org.apache.poi.poifs.crypt.cryptoapi"
-	}, {
+		"description":"Move Class org.apache.poi.util.ShortField moved to org.docx4j.org.apache.poi.util.ShortField"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class IllegalPropertySetDataException moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.property.PropertyTableBase moved to org.docx4j.org.apache.poi.poifs.property.PropertyTableBase"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class DirectoryProperty moved from org.apache.poi.poifs.property to org.docx4j.org.apache.poi.poifs.property"
-	}, {
+		"description":"Move Class org.apache.poi.util.LittleEndianInputStream moved to org.docx4j.org.apache.poi.util.LittleEndianInputStream"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class CryptoFunctions moved from org.apache.poi.poifs.crypt to org.docx4j.org.apache.poi.poifs.crypt"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.filesystem.POIFSFileSystem moved to org.docx4j.org.apache.poi.poifs.filesystem.POIFSFileSystem"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class HPSFException moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
+		"description":"Move Class org.apache.poi.util.ByteField moved to org.docx4j.org.apache.poi.util.ByteField"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class BigBlock moved from org.apache.poi.poifs.storage to org.docx4j.org.apache.poi.poifs.storage"
-	}, {
+		"description":"Move Class org.apache.poi.hpsf.NoFormatIDException moved to org.docx4j.org.apache.poi.hpsf.NoFormatIDException"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class POIFSReaderRegistry moved from org.apache.poi.poifs.eventfilesystem to org.docx4j.org.apache.poi.poifs.eventfilesystem"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.storage.SmallBlockTableWriter moved to org.docx4j.org.apache.poi.poifs.storage.SmallBlockTableWriter"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class ClipboardData moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.crypt.cryptoapi.CryptoAPIEncryptionHeader moved to org.docx4j.org.apache.poi.poifs.crypt.cryptoapi.CryptoAPIEncryptionHeader"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class GUID moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.eventfilesystem.POIFSReaderEvent moved to org.docx4j.org.apache.poi.poifs.eventfilesystem.POIFSReaderEvent"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class BlockListImpl moved from org.apache.poi.poifs.storage to org.docx4j.org.apache.poi.poifs.storage"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.filesystem.OPOIFSFileSystem moved to org.docx4j.org.apache.poi.poifs.filesystem.OPOIFSFileSystem"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class POIFSWriterEvent moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.crypt.cryptoapi.CryptoAPIEncryptionVerifier moved to org.docx4j.org.apache.poi.poifs.crypt.cryptoapi.CryptoAPIEncryptionVerifier"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class PropertyConstants moved from org.apache.poi.poifs.property to org.docx4j.org.apache.poi.poifs.property"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.storage.HeaderBlockWriter moved to org.docx4j.org.apache.poi.poifs.storage.HeaderBlockWriter"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class Entry moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.filesystem.FilteringDirectoryNode moved to org.docx4j.org.apache.poi.poifs.filesystem.FilteringDirectoryNode"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class IOUtils moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.dev.POIFSViewable moved to org.docx4j.org.apache.poi.poifs.dev.POIFSViewable"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class RecordFormatException moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.storage.BlockWritable moved to org.docx4j.org.apache.poi.poifs.storage.BlockWritable"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class BinaryRC4EncryptionInfoBuilder moved from org.apache.poi.poifs.crypt.binaryrc4 to org.docx4j.org.apache.poi.poifs.crypt.binaryrc4"
-	}, {
+		"description":"Move Class org.apache.poi.hssf.OldExcelFormatException moved to org.docx4j.org.apache.poi.hssf.OldExcelFormatException"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class DocumentNode moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.crypt.binaryrc4.BinaryRC4EncryptionVerifier moved to org.docx4j.org.apache.poi.poifs.crypt.binaryrc4.BinaryRC4EncryptionVerifier"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class CloseIgnoringInputStream moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
+		"description":"Move Class org.apache.poi.hpsf.ClassID moved to org.docx4j.org.apache.poi.hpsf.ClassID"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class DirectoryNode moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.property.Parent moved to org.docx4j.org.apache.poi.poifs.property.Parent"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class Variant moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
+		"description":"Move Class org.apache.poi.util.CloseIgnoringInputStream moved to org.docx4j.org.apache.poi.util.CloseIgnoringInputStream"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class OldFileFormatException moved from org.apache.poi to org.docx4j.org.apache.poi"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.crypt.Encryptor moved to org.docx4j.org.apache.poi.poifs.crypt.Encryptor"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class ODocumentInputStream moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.storage.BlockList moved to org.docx4j.org.apache.poi.poifs.storage.BlockList"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class PngUtils moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.storage.ListManagedBlock moved to org.docx4j.org.apache.poi.poifs.storage.ListManagedBlock"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class POIFSBigBlockSize moved from org.apache.poi.poifs.common to org.docx4j.org.apache.poi.poifs.common"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.storage.BlockListImpl moved to org.docx4j.org.apache.poi.poifs.storage.BlockListImpl"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class TempFile moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
+		"description":"Move Class org.apache.poi.hpsf.TypeWriter moved to org.docx4j.org.apache.poi.hpsf.TypeWriter"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class FilteringDirectoryNode moved from org.apache.poi.poifs.filesystem to org.docx4j.org.apache.poi.poifs.filesystem"
-	}, {
+		"description":"Move Class org.apache.poi.util.DelayableLittleEndianOutput moved to org.docx4j.org.apache.poi.util.DelayableLittleEndianOutput"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class ClassID moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.crypt.EncryptionInfo moved to org.docx4j.org.apache.poi.poifs.crypt.EncryptionInfo"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class EncryptedDocumentException moved from org.apache.poi to org.docx4j.org.apache.poi"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.nio.ByteArrayBackedDataSource moved to org.docx4j.org.apache.poi.poifs.nio.ByteArrayBackedDataSource"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class LittleEndianInput moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
+		"description":"Move Class org.apache.poi.hpsf.NoPropertySetStreamException moved to org.docx4j.org.apache.poi.hpsf.NoPropertySetStreamException"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class AgileDecryptor moved from org.apache.poi.poifs.crypt.agile to org.docx4j.org.apache.poi.poifs.crypt.agile"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.filesystem.DocumentNode moved to org.docx4j.org.apache.poi.poifs.filesystem.DocumentNode"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class Property moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
+		"description":"Move Class org.apache.poi.util.LittleEndianOutput moved to org.docx4j.org.apache.poi.util.LittleEndianOutput"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class UnsupportedFileFormatException moved from org.apache.poi to org.docx4j.org.apache.poi"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.filesystem.EntryUtils moved to org.docx4j.org.apache.poi.poifs.filesystem.EntryUtils"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class CustomProperty moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
+		"description":"Move Class org.apache.poi.util.IOUtils moved to org.docx4j.org.apache.poi.util.IOUtils"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class NoPropertySetStreamException moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.filesystem.NPOIFSFileSystem moved to org.docx4j.org.apache.poi.poifs.filesystem.NPOIFSFileSystem"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class MutableProperty moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
+		"description":"Move Class org.apache.poi.hpsf.UnexpectedPropertySetTypeException moved to org.docx4j.org.apache.poi.hpsf.UnexpectedPropertySetTypeException"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class BlockList moved from org.apache.poi.poifs.storage to org.docx4j.org.apache.poi.poifs.storage"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.crypt.cryptoapi.CryptoAPIDecryptor moved to org.docx4j.org.apache.poi.poifs.crypt.cryptoapi.CryptoAPIDecryptor"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class POIFSViewable moved from org.apache.poi.poifs.dev to org.docx4j.org.apache.poi.poifs.dev"
-	}, {
+		"description":"Move Class org.apache.poi.hpsf.Filetime moved to org.docx4j.org.apache.poi.hpsf.Filetime"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class BinaryRC4Decryptor moved from org.apache.poi.poifs.crypt.binaryrc4 to org.docx4j.org.apache.poi.poifs.crypt.binaryrc4"
-	}, {
+		"description":"Move Class org.apache.poi.hpsf.TypedPropertyValue moved to org.docx4j.org.apache.poi.hpsf.TypedPropertyValue"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class LittleEndianInputStream moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.filesystem.BATManaged moved to org.docx4j.org.apache.poi.poifs.filesystem.BATManaged"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class SmallDocumentBlockList moved from org.apache.poi.poifs.storage to org.docx4j.org.apache.poi.poifs.storage"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.filesystem.DocumentOutputStream moved to org.docx4j.org.apache.poi.poifs.filesystem.DocumentOutputStream"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class EmptyFileException moved from org.apache.poi to org.docx4j.org.apache.poi"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.crypt.agile.EncryptionDocument moved to org.docx4j.org.apache.poi.poifs.crypt.agile.EncryptionDocument"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class Array moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.property.PropertyFactory moved to org.docx4j.org.apache.poi.poifs.property.PropertyFactory"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class DelayableLittleEndianOutput moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.filesystem.Entry moved to org.docx4j.org.apache.poi.poifs.filesystem.Entry"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class SectionIDMap moved from org.apache.poi.hpsf.wellknown to org.docx4j.org.apache.poi.hpsf.wellknown"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.filesystem.NPOIFSStream moved to org.docx4j.org.apache.poi.poifs.filesystem.NPOIFSStream"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class ChunkedCipherInputStream moved from org.apache.poi.poifs.crypt to org.docx4j.org.apache.poi.poifs.crypt"
-	}, {
+		"description":"Move Class org.apache.poi.poifs.crypt.standard.StandardDecryptor moved to org.docx4j.org.apache.poi.poifs.crypt.standard.StandardDecryptor"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class LittleEndianOutputStream moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
+		"description":"Move Class org.apache.poi.hpsf.MutableSection moved to org.docx4j.org.apache.poi.hpsf.MutableSection"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class POIFSViewer moved from org.apache.poi.poifs.dev to org.docx4j.org.apache.poi.poifs.dev"
-	}, {
+		"description":"Move Class org.apache.poi.hpsf.SummaryInformation moved to org.docx4j.org.apache.poi.hpsf.SummaryInformation"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class ShortField moved from org.apache.poi.util to org.docx4j.org.apache.poi.util"
-	}, {
+		"description":"Move Class org.apache.poi.util.LittleEndianByteArrayOutputStream moved to org.docx4j.org.apache.poi.util.LittleEndianByteArrayOutputStream"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class UnicodeString moved from org.apache.poi.hpsf to org.docx4j.org.apache.poi.hpsf"
-	}, {
+		"description":"Move Class org.apache.poi.hpsf.DocumentSummaryInformation moved to org.docx4j.org.apache.poi.hpsf.DocumentSummaryInformation"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class POIFSLister moved from org.apache.poi.poifs.dev to org.docx4j.org.apache.poi.poifs.dev"
-	}, {
+		"description":"Move Class org.apache.poi.util.PngUtils moved to org.docx4j.org.apache.poi.util.PngUtils"
+	},
+{
 		"type": "Move Class",
-		"description": "Move Class SmallBlockTableWriter moved from org.apache.poi.poifs.storage to org.docx4j.org.apache.poi.poifs.storage"
+		"description":"Move Class org.apache.poi.util.CodePageUtil moved to org.docx4j.org.apache.poi.util.CodePageUtil"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.storage.BigBlock moved to org.docx4j.org.apache.poi.poifs.storage.BigBlock"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.property.NPropertyTable moved to org.docx4j.org.apache.poi.poifs.property.NPropertyTable"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.Vector moved to org.docx4j.org.apache.poi.hpsf.Vector"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.util.DocumentHelper moved to org.docx4j.org.apache.poi.util.DocumentHelper"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.SpecialPropertySet moved to org.docx4j.org.apache.poi.hpsf.SpecialPropertySet"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.IndirectPropertyName moved to org.docx4j.org.apache.poi.hpsf.IndirectPropertyName"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.VersionedStream moved to org.docx4j.org.apache.poi.hpsf.VersionedStream"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.property.Property moved to org.docx4j.org.apache.poi.poifs.property.Property"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.MutablePropertySet moved to org.docx4j.org.apache.poi.hpsf.MutablePropertySet"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.WritingNotSupportedException moved to org.docx4j.org.apache.poi.hpsf.WritingNotSupportedException"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.Util moved to org.docx4j.org.apache.poi.hpsf.Util"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.storage.HeaderBlock moved to org.docx4j.org.apache.poi.poifs.storage.HeaderBlock"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.Array moved to org.docx4j.org.apache.poi.hpsf.Array"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.property.PropertyTable moved to org.docx4j.org.apache.poi.poifs.property.PropertyTable"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.EncryptionInfoBuilder moved to org.docx4j.org.apache.poi.poifs.crypt.EncryptionInfoBuilder"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.storage.DocumentBlock moved to org.docx4j.org.apache.poi.poifs.storage.DocumentBlock"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.MissingSectionException moved to org.docx4j.org.apache.poi.hpsf.MissingSectionException"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.util.HexRead moved to org.docx4j.org.apache.poi.util.HexRead"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.standard.StandardEncryptionHeader moved to org.docx4j.org.apache.poi.poifs.crypt.standard.StandardEncryptionHeader"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.util.BoundedInputStream moved to org.docx4j.org.apache.poi.util.BoundedInputStream"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.EncryptionVerifier moved to org.docx4j.org.apache.poi.poifs.crypt.EncryptionVerifier"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.property.RootProperty moved to org.docx4j.org.apache.poi.poifs.property.RootProperty"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.OfficeXmlFileException moved to org.docx4j.org.apache.poi.poifs.filesystem.OfficeXmlFileException"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.util.IntegerField moved to org.docx4j.org.apache.poi.util.IntegerField"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.util.FixedField moved to org.docx4j.org.apache.poi.util.FixedField"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.util.BitField moved to org.docx4j.org.apache.poi.util.BitField"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.ChunkedCipherOutputStream moved to org.docx4j.org.apache.poi.poifs.crypt.ChunkedCipherOutputStream"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.POIFSWriterEvent moved to org.docx4j.org.apache.poi.poifs.filesystem.POIFSWriterEvent"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.storage.PropertyBlock moved to org.docx4j.org.apache.poi.poifs.storage.PropertyBlock"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.util.HexDump moved to org.docx4j.org.apache.poi.util.HexDump"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.Ole10NativeException moved to org.docx4j.org.apache.poi.poifs.filesystem.Ole10NativeException"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.OldFileFormatException moved to org.docx4j.org.apache.poi.OldFileFormatException"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.DocumentDescriptor moved to org.docx4j.org.apache.poi.poifs.filesystem.DocumentDescriptor"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.property.DocumentProperty moved to org.docx4j.org.apache.poi.poifs.property.DocumentProperty"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.Variant moved to org.docx4j.org.apache.poi.hpsf.Variant"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.eventfilesystem.POIFSReader moved to org.docx4j.org.apache.poi.poifs.eventfilesystem.POIFSReader"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.storage.BlockAllocationTableWriter moved to org.docx4j.org.apache.poi.poifs.storage.BlockAllocationTableWriter"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.util.TempFileCreationStrategy moved to org.docx4j.org.apache.poi.util.TempFileCreationStrategy"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.GUID moved to org.docx4j.org.apache.poi.hpsf.GUID"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.agile.AgileEncryptionHeader moved to org.docx4j.org.apache.poi.poifs.crypt.agile.AgileEncryptionHeader"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.agile.AgileEncryptionVerifier moved to org.docx4j.org.apache.poi.poifs.crypt.agile.AgileEncryptionVerifier"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.dev.POIFSViewer moved to org.docx4j.org.apache.poi.poifs.dev.POIFSViewer"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.DataSpaceMapUtils moved to org.docx4j.org.apache.poi.poifs.crypt.DataSpaceMapUtils"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.standard.StandardEncryptionVerifier moved to org.docx4j.org.apache.poi.poifs.crypt.standard.StandardEncryptionVerifier"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.standard.StandardEncryptionInfoBuilder moved to org.docx4j.org.apache.poi.poifs.crypt.standard.StandardEncryptionInfoBuilder"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.EncryptedDocumentException moved to org.docx4j.org.apache.poi.EncryptedDocumentException"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.binaryrc4.BinaryRC4Encryptor moved to org.docx4j.org.apache.poi.poifs.crypt.binaryrc4.BinaryRC4Encryptor"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.NotOLE2FileException moved to org.docx4j.org.apache.poi.poifs.filesystem.NotOLE2FileException"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.util.LongField moved to org.docx4j.org.apache.poi.util.LongField"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.DocumentEntry moved to org.docx4j.org.apache.poi.poifs.filesystem.DocumentEntry"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.HPSFException moved to org.docx4j.org.apache.poi.hpsf.HPSFException"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.nio.DataSource moved to org.docx4j.org.apache.poi.poifs.nio.DataSource"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.property.PropertyConstants moved to org.docx4j.org.apache.poi.poifs.property.PropertyConstants"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.ChunkedCipherInputStream moved to org.docx4j.org.apache.poi.poifs.crypt.ChunkedCipherInputStream"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.VariantBool moved to org.docx4j.org.apache.poi.hpsf.VariantBool"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.storage.SmallDocumentBlockList moved to org.docx4j.org.apache.poi.poifs.storage.SmallDocumentBlockList"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.property.Child moved to org.docx4j.org.apache.poi.poifs.property.Child"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.storage.RawDataBlock moved to org.docx4j.org.apache.poi.poifs.storage.RawDataBlock"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.UnsupportedFileFormatException moved to org.docx4j.org.apache.poi.UnsupportedFileFormatException"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.nio.FileBackedDataSource moved to org.docx4j.org.apache.poi.poifs.nio.FileBackedDataSource"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.UnsupportedVariantTypeException moved to org.docx4j.org.apache.poi.hpsf.UnsupportedVariantTypeException"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.util.SAXHelper moved to org.docx4j.org.apache.poi.util.SAXHelper"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.util.IntList moved to org.docx4j.org.apache.poi.util.IntList"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.CryptoFunctions moved to org.docx4j.org.apache.poi.poifs.crypt.CryptoFunctions"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.CustomProperty moved to org.docx4j.org.apache.poi.hpsf.CustomProperty"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.dev.POIFSViewEngine moved to org.docx4j.org.apache.poi.poifs.dev.POIFSViewEngine"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.storage.HeaderBlockConstants moved to org.docx4j.org.apache.poi.poifs.storage.HeaderBlockConstants"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.cryptoapi.CryptoAPIEncryptionInfoBuilder moved to org.docx4j.org.apache.poi.poifs.crypt.cryptoapi.CryptoAPIEncryptionInfoBuilder"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.util.BitFieldFactory moved to org.docx4j.org.apache.poi.util.BitFieldFactory"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.MarkUnsupportedException moved to org.docx4j.org.apache.poi.hpsf.MarkUnsupportedException"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.agile.AgileEncryptor moved to org.docx4j.org.apache.poi.poifs.crypt.agile.AgileEncryptor"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.agile.AgileDecryptor moved to org.docx4j.org.apache.poi.poifs.crypt.agile.AgileDecryptor"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.binaryrc4.BinaryRC4EncryptionInfoBuilder moved to org.docx4j.org.apache.poi.poifs.crypt.binaryrc4.BinaryRC4EncryptionInfoBuilder"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.util.TempFile moved to org.docx4j.org.apache.poi.util.TempFile"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.NoSingleSectionException moved to org.docx4j.org.apache.poi.hpsf.NoSingleSectionException"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.wellknown.PropertyIDMap moved to org.docx4j.org.apache.poi.hpsf.wellknown.PropertyIDMap"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.wellknown.SectionIDMap moved to org.docx4j.org.apache.poi.hpsf.wellknown.SectionIDMap"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.VariantTypeException moved to org.docx4j.org.apache.poi.hpsf.VariantTypeException"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.DirectoryEntry moved to org.docx4j.org.apache.poi.poifs.filesystem.DirectoryEntry"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.EmptyFileException moved to org.docx4j.org.apache.poi.EmptyFileException"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.ClipboardData moved to org.docx4j.org.apache.poi.hpsf.ClipboardData"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.eventfilesystem.POIFSReaderRegistry moved to org.docx4j.org.apache.poi.poifs.eventfilesystem.POIFSReaderRegistry"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.IllegalPropertySetDataException moved to org.docx4j.org.apache.poi.hpsf.IllegalPropertySetDataException"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.util.LittleEndianInput moved to org.docx4j.org.apache.poi.util.LittleEndianInput"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.PropertySetFactory moved to org.docx4j.org.apache.poi.hpsf.PropertySetFactory"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.EntryNode moved to org.docx4j.org.apache.poi.poifs.filesystem.EntryNode"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.property.DirectoryProperty moved to org.docx4j.org.apache.poi.poifs.property.DirectoryProperty"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.util.LittleEndian moved to org.docx4j.org.apache.poi.util.LittleEndian"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.Currency moved to org.docx4j.org.apache.poi.hpsf.Currency"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.NDocumentInputStream moved to org.docx4j.org.apache.poi.poifs.filesystem.NDocumentInputStream"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.Date moved to org.docx4j.org.apache.poi.hpsf.Date"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.BlockStore moved to org.docx4j.org.apache.poi.poifs.filesystem.BlockStore"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.POIFSDocumentPath moved to org.docx4j.org.apache.poi.poifs.filesystem.POIFSDocumentPath"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.storage.BlockAllocationTableReader moved to org.docx4j.org.apache.poi.poifs.storage.BlockAllocationTableReader"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.util.LittleEndianOutputStream moved to org.docx4j.org.apache.poi.util.LittleEndianOutputStream"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.eventfilesystem.POIFSReaderListener moved to org.docx4j.org.apache.poi.poifs.eventfilesystem.POIFSReaderListener"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.Decimal moved to org.docx4j.org.apache.poi.hpsf.Decimal"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.Blob moved to org.docx4j.org.apache.poi.hpsf.Blob"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.NPOIFSDocument moved to org.docx4j.org.apache.poi.poifs.filesystem.NPOIFSDocument"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.UnicodeString moved to org.docx4j.org.apache.poi.hpsf.UnicodeString"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.binaryrc4.BinaryRC4EncryptionHeader moved to org.docx4j.org.apache.poi.poifs.crypt.binaryrc4.BinaryRC4EncryptionHeader"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.ODocumentInputStream moved to org.docx4j.org.apache.poi.poifs.filesystem.ODocumentInputStream"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.NPOIFSMiniStore moved to org.docx4j.org.apache.poi.poifs.filesystem.NPOIFSMiniStore"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.OPOIFSDocument moved to org.docx4j.org.apache.poi.poifs.filesystem.OPOIFSDocument"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.storage.DataInputBlock moved to org.docx4j.org.apache.poi.poifs.storage.DataInputBlock"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.VariantSupport moved to org.docx4j.org.apache.poi.hpsf.VariantSupport"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.common.POIFSConstants moved to org.docx4j.org.apache.poi.poifs.common.POIFSConstants"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.NDocumentOutputStream moved to org.docx4j.org.apache.poi.poifs.filesystem.NDocumentOutputStream"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.POIFSWriterListener moved to org.docx4j.org.apache.poi.poifs.filesystem.POIFSWriterListener"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.DirectoryNode moved to org.docx4j.org.apache.poi.poifs.filesystem.DirectoryNode"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.EncryptionHeader moved to org.docx4j.org.apache.poi.poifs.crypt.EncryptionHeader"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.crypt.cryptoapi.CryptoAPIEncryptor moved to org.docx4j.org.apache.poi.poifs.crypt.cryptoapi.CryptoAPIEncryptor"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.dev.POIFSLister moved to org.docx4j.org.apache.poi.poifs.dev.POIFSLister"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.HPSFRuntimeException moved to org.docx4j.org.apache.poi.hpsf.HPSFRuntimeException"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.PropertySet moved to org.docx4j.org.apache.poi.hpsf.PropertySet"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.common.POIFSBigBlockSize moved to org.docx4j.org.apache.poi.poifs.common.POIFSBigBlockSize"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.CodePageString moved to org.docx4j.org.apache.poi.hpsf.CodePageString"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.Section moved to org.docx4j.org.apache.poi.hpsf.Section"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.MutableProperty moved to org.docx4j.org.apache.poi.hpsf.MutableProperty"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.filesystem.DocumentInputStream moved to org.docx4j.org.apache.poi.poifs.filesystem.DocumentInputStream"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.poifs.storage.BATBlock.BATBlockAndIndex moved to org.docx4j.org.apache.poi.poifs.storage.BATBlock.BATBlockAndIndex"
+	},
+{
+		"type": "Move Class",
+		"description":"Move Class org.apache.poi.hpsf.CustomProperties moved to org.docx4j.org.apache.poi.hpsf.CustomProperties"
 	}],
 	"time": "7/14/15 12:58 AM",
 	"id": 1140071
@@ -6656,10 +6844,10 @@
 	"author": "Akarshit Wal",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class UpdateStatusPanel moved from processing.app.contrib to processing.app.contrib.UpdateContributionTab"
+		"description": "Move Class processing.app.contrib.UpdateContribListingPanel moved to processing.app.contrib.UpdateContributionTab.UpdateContribListingPanel"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class UpdateContribListingPanel moved from processing.app.contrib to processing.app.contrib.UpdateContributionTab"
+		"description": "Move Class processing.app.contrib.UpdateStatusPanel moved to processing.app.contrib.UpdateContributionTab.UpdateStatusPanel"
 	}],
 	"time": "7/15/15 2:57 PM",
 	"id": 1142385
@@ -6828,7 +7016,7 @@
 	"author": "Matthew Wigginton Conway",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class WorkerIdDefiner moved from org.opentripplanner.analyst.cluster.AnalystWorker to org.opentripplanner.analyst.cluster"
+		"description": "Move Class org.opentripplanner.analyst.cluster.AnalystWorker.WorkerIdDefiner moved to org.opentripplanner.analyst.cluster.WorkerIdDefiner"
 	}],
 	"time": "7/16/15 11:10 AM",
 	"id": 1143739
@@ -6838,7 +7026,7 @@
 	"author": "Eugene Zhuravlev",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class MyLoggerFactory moved from org.jetbrains.jps.cmdline.BuildMain to org.jetbrains.jps.cmdline.LogSetup"
+		"description": "Move Class org.jetbrains.jps.cmdline.BuildMain.MyLoggerFactory moved to org.jetbrains.jps.cmdline.LogSetup.MyLoggerFactory"
 	}],
 	"time": "7/16/15 12:00 PM",
 	"id": 1143000
@@ -7523,10 +7711,10 @@
 	"author": "liana.bakradze",
 	"refactorings": [{
 		"type": "Extract Interface",
-		"description": "Extract Interface com.jetbrains.edu.courseFormat.Named from type com.jetbrains.edu.courseFormat.Lesson"
+		"description": "Extract Interface com.jetbrains.edu.courseFormat.Named from class com.jetbrains.edu.courseFormat.Lesson"
 	}, {
 		"type": "Extract Interface",
-		"description": "Extract Interface com.jetbrains.edu.courseFormat.Named from type com.jetbrains.edu.courseFormat.Task"
+		"description": "Extract Interface com.jetbrains.edu.courseFormat.Named from class com.jetbrains.edu.courseFormat.Task"
 	}],
 	"time": "7/24/15 4:28 PM",
 	"id": 1149690
@@ -8248,7 +8436,7 @@
 	"author": "kirbs",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class LambdaExpressionTest moved from com.google.devtools.j2objc.translate to com.google.devtools.j2objc.ast"
+		"description": "Move Class com.google.devtools.j2objc.translate.LambdaExpressionTest moved to com.google.devtools.j2objc.ast.LambdaExpressionTest"
 	}],
 	"time": "7/29/15 9:03 PM",
 	"id": 1153111
@@ -8327,7 +8515,7 @@
 	"author": "Max Medvedev",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class ResolveProfiler moved from org.jetbrains.plugins.groovy.util to com.intellij.util.profiling"
+		"description": "Move Class org.jetbrains.plugins.groovy.util.ResolveProfiler moved to com.intellij.util.profiling.ResolveProfiler"
 	}],
 	"time": "7/30/15 10:53 PM",
 	"id": 1153913
@@ -8686,7 +8874,7 @@
 	"author": "Sergey Savenko",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class IDE moved from com.intellij.execution.console.RunIdeConsoleAction to com.intellij.ide.script"
+		"description": "Move Class com.intellij.execution.console.RunIdeConsoleAction.IDE moved to com.intellij.ide.script.IDE"
 	}],
 	"time": "8/4/15 8:47 AM",
 	"id": 1156853

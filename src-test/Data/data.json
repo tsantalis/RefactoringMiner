@@ -5743,7 +5743,10 @@
 	"author": "Jason Harrop",
 	"refactorings": [ {
 		"type": "Extract Method",
-		"description": "Extract Method public save(outFile File, flags int, password String) : void extracted from public save(outStream OutputStream, flags int) : void in class org.docx4j.openpackaging.packages.OpcPackage"
+		"description": "Extract Method public save(outFile File, flags int, password String) : void extracted from public save(outFile File, flags int) : void in class org.docx4j.openpackaging.packages.OpcPackage"
+	},{
+		"type": "Extract Method",
+		"description": "Extract Method public save(outStream OutputStream, flags int, password String) : void extracted from public save(outStream OutputStream, flags int) : void in class org.docx4j.openpackaging.packages.OpcPackage"
 	},{
 		"type": "Move Class",
 		"description":"Move Class org.apache.poi.util.LittleEndianConsts moved to org.docx4j.org.apache.poi.util.LittleEndianConsts"

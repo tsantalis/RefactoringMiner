@@ -3110,7 +3110,7 @@
 	"author": "Jeff Yemin",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class JsonPoweredTestHelper moved from com.mongodb to util"
+		"description": "Move Class com.mongodb.JsonPoweredTestHelper moved to util.JsonPoweredTestHelper"
 	}],
 	"time": "6/22/15 6:05 PM",
 	"id": 1122348
@@ -5237,7 +5237,7 @@
 		"description": "Rename Package reactor.bus.alloc to reactor.alloc"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class Recyclable moved from reactor.core.alloc to reactor.core.support"
+		"description": "Move Class reactor.core.alloc.Recyclable moved to reactor.core.support.Recyclable"
 	}],
 	"time": "7/9/15 6:45 AM",
 	"id": 1136729
@@ -6690,10 +6690,10 @@
 	"author": "Rob Winch",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class SaveContextServletOutputStream moved from org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to org.springframework.security.web.context.OnCommittedResponseWrapper"
+		"description": "Move Class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream moved to org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextServletOutputStream"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class SaveContextPrintWriter moved from org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to org.springframework.security.web.context.OnCommittedResponseWrapper"
+		"description": "Move Class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter moved to org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter"
 	}],
 	"time": "7/14/15 4:48 PM",
 	"id": 1141078
@@ -6703,10 +6703,10 @@
 	"author": "Rob Winch",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class SaveContextServletOutputStream moved from org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to org.springframework.security.web.context.OnCommittedResponseWrapper"
+		"description": "Move Class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream moved to org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextServletOutputStream"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class SaveContextPrintWriter moved from org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to org.springframework.security.web.context.OnCommittedResponseWrapper"
+		"description": "Move Class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter moved to org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter"
 	}],
 	"time": "7/14/15 4:49 PM",
 	"id": 1141077

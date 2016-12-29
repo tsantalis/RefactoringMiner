@@ -4323,13 +4323,13 @@
 	"author": "Dan Roundhill",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class NotificationsSettingsActivity moved from org.wordpress.android.ui.prefs to org.wordpress.android.ui.prefs.notifications"
+		"description": "Move Class org.wordpress.android.ui.prefs.NotificationsPreference moved to org.wordpress.android.ui.prefs.notifications.NotificationsPreference"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class NotificationsPreference moved from org.wordpress.android.ui.prefs to org.wordpress.android.ui.prefs.notifications"
+		"description": "Move Class org.wordpress.android.ui.prefs.NotificationsSettingsActivity moved to org.wordpress.android.ui.prefs.notifications.NotificationsSettingsActivity"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class NotificationsSettingsFragment moved from org.wordpress.android.ui.prefs to org.wordpress.android.ui.prefs.notifications"
+		"description": "Move Class org.wordpress.android.ui.prefs.NotificationsSettingsFragment moved to org.wordpress.android.ui.prefs.notifications.NotificationsSettingsFragment"
 	}],
 	"time": "6/30/15 2:48 PM",
 	"id": 1130125
@@ -6514,6 +6514,9 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method private applySettings() : void renamed to private applyChanges() : void in class org.wordpress.android.ui.prefs.SiteSettingsFragment"
+	}, {
+		"type": "Move Method",
+		"description": "Move Method private getLanguageString(languagueCode String) : String from class org.wordpress.android.ui.prefs.SiteSettingsFragment to public getLanguageString(languagueCode String, displayLocale Locale) : String from class org.wordpress.android.util.StringUtils"
 	}],
 	"time": "7/14/15 2:27 AM",
 	"id": 1140686

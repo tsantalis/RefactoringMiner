@@ -1,4 +1,4 @@
-package org.refactoringminer.rm2.analysis;
+package org.refactoringminer.rm2.analysis.codesimilarity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,28 +10,54 @@ import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.compiler.IScanner;
 import org.eclipse.jdt.core.compiler.ITerminalSymbols;
 import org.eclipse.jdt.core.compiler.InvalidInputException;
-import org.refactoringminer.rm2.model.SourceRepresentation;
+import org.refactoringminer.rm2.analysis.SourceRepresentationBuilder;
 
-public class SourceScanner {
+class TokenBigramsSRBuilder implements SourceRepresentationBuilder {
 
     IScanner scanner = ToolFactory.createScanner(true, true, false, "1.8");
 
     private static final int TOKENS = 0;
     private static final int LINES = 1;
 
-    public SourceRepresentation getLineBasedSourceRepresentation(char[] charArray, int start, int length) {
-        Map<Integer, String> debug = new HashMap<Integer, String>();
-        List<Integer> lines = computeHashes(charArray, start, length, LINES, debug);
-        return new SourceRepresentation(computeBigrams(lines), debug);
+    @Override
+    public TokenBigramsSR buildSourceRepresentationForType(char[] charArray, int start, int length) {
+        return getLineBasedSourceRepresentation(charArray, start, length);
     }
 
-    public SourceRepresentation getTokenBasedSourceRepresentation(char[] charArray, int start, int length) {
-        Map<Integer, String> debug = new HashMap<Integer, String>();
-        //List<Integer> lines = computeHashes(charArray, start, length, LINES, null);
-        List<Integer> tokens = computeHashes(charArray, start, length, TOKENS, debug);
-        return new SourceRepresentation(computeBigrams(tokens), debug);
+    @Override
+    public TokenBigramsSR buildSourceRepresentationForMethodBody(char[] charArray, int start, int length) {
+        return getTokenBasedSourceRepresentation(charArray, start, length);
     }
-    
+
+    @Override
+    public TokenBigramsSR buildSourceRepresentationForStatement(char[] charArray, int start, int length) {
+        return getTokenBasedSourceRepresentation(charArray, start, length);
+    }
+
+    @Override
+    public TokenBigramsSR buildSourceRepresentationForExpression(char[] charArray, int start, int length) {
+        return getTokenBasedSourceRepresentation(charArray, start, length);
+    }
+
+    @Override
+    public TokenBigramsSR buildEmptySourceRepresentation() {
+        return new TokenBigramsSR(new long[0]);
+    }
+
+    private TokenBigramsSR getLineBasedSourceRepresentation(char[] charArray, int start, int length) {
+        Map<Integer, String> debug = new HashMap<Integer, String>();
+        List<Integer> lines = computeHashes(charArray, start, length, LINES, debug);
+        return new TokenBigramsSR(computeBigrams(lines), debug);
+    }
+
+    private TokenBigramsSR getTokenBasedSourceRepresentation(char[] charArray, int start, int length) {
+        Map<Integer, String> debug = new HashMap<Integer, String>();
+        // List<Integer> lines = computeHashes(charArray, start, length, LINES,
+        // null);
+        List<Integer> tokens = computeHashes(charArray, start, length, TOKENS, debug);
+        return new TokenBigramsSR(computeBigrams(tokens), debug);
+    }
+
     private List<Integer> computeHashes(char[] charArray, int start, int length, int granularity, Map<Integer, String> debug) {
         try {
             scanner.setSource(charArray);
@@ -53,20 +79,23 @@ public class SourceScanner {
                     currentEnd = tokenEnd;
                     if (granularity == TOKENS) {
                         hashes.add(h);
-                        if (debug != null) debug.put(h, new String(charArray, currentStart, currentEnd - currentStart + 1));
+                        if (debug != null)
+                            debug.put(h, new String(charArray, currentStart, currentEnd - currentStart + 1));
                         h = 0;
                     }
                 } else {
                     if (granularity == LINES && indexOf(charArray, tokenStart, tokenEnd, '\n') != -1 && h != 0) {
                         hashes.add(h);
-                        if (debug != null) debug.put(h, new String(charArray, currentStart, currentEnd - currentStart + 1));
+                        if (debug != null)
+                            debug.put(h, new String(charArray, currentStart, currentEnd - currentStart + 1));
                         h = 0;
                     }
                 }
             }
             if (granularity == LINES && h != 0) {
                 hashes.add(h);
-                if (debug != null) debug.put(h, new String(charArray, currentStart, currentEnd - currentStart + 1));
+                if (debug != null)
+                    debug.put(h, new String(charArray, currentStart, currentEnd - currentStart + 1));
                 h = 0;
             }
 
@@ -91,7 +120,7 @@ public class SourceScanner {
         }
         return bigrams;
     }
-    
+
     private static int hash(int h, char[] charArray, int tokenStart, int tokenEnd) {
         if (tokenEnd >= tokenStart) {
             for (int i = tokenStart; i <= tokenEnd; i++) {

@@ -37,7 +37,11 @@ public enum RefactoringType {
 		this.aggregateGroups = aggregateGroups;
 	}
 
-	public String getDisplayName() {
+	public Pattern getRegex() {
+        return regex;
+    }
+
+    public String getDisplayName() {
 		return this.displayName;
 	}
 

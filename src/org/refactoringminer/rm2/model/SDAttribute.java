@@ -16,7 +16,6 @@ public class SDAttribute extends SDEntity {
 		super(snapshot, id, container.fullName() + "#" + name, new EntityKey(container.key() + "#" + name), container);
 		this.name = name;
 		this.referencedBy = new Multiset<SDMethod>();
-		this.clientCode = new SourceRepresentation(new long[0]);
 	}
 
 	@Override

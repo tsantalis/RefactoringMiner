@@ -28,9 +28,11 @@ import org.refactoringminer.rm2.model.SourceRepresentation;
 public class SDModelBuilder {
     
     private final RefactoringDetectorConfig config;
+    private final SourceRepresentationBuilder srBuilder;
     
     public SDModelBuilder(RefactoringDetectorConfig config) {
         this.config = config;
+        this.srBuilder = config.getCodeSimilarityStrategy().createSourceRepresentationBuilder();
     }
 
     private SDModel model = new SDModel();
@@ -153,7 +155,7 @@ public class SDModelBuilder {
 		  sourceFolder = sourceFilePath.substring(0, sourceFilePath.indexOf(packagePath));
 		}
 		SDPackage sdPackage = model.getOrCreatePackage(packageName, sourceFolder);
-		BindingsRecoveryAstVisitor visitor = new BindingsRecoveryAstVisitor(model, sourceFilePath, fileContent, sdPackage, postProcessReferences, postProcessSupertypes, postProcessClientCode);
+		BindingsRecoveryAstVisitor visitor = new BindingsRecoveryAstVisitor(model, sourceFilePath, fileContent, sdPackage, postProcessReferences, postProcessSupertypes, postProcessClientCode, srBuilder);
 		compilationUnit.accept(visitor);
 	}
 

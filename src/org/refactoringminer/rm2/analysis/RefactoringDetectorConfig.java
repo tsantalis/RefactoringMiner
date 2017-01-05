@@ -1,22 +1,26 @@
 package org.refactoringminer.rm2.analysis;
 
+import org.refactoringminer.rm2.analysis.codesimilarity.CodeSimilarityStrategy;
+
 public class RefactoringDetectorConfig {
-    
+
     private double moveTypeThreshold = 0.4;
     private double renameTypeThreshold = 0.4;
     private double moveAndRenameTypeThreshold = 0.5;
     private double extractSupertypeThreshold = 0.5;
-    
+
     private double renameMethodThreshold = 0.5;
     private double moveMethodThreshold = 0.5;
     private double pullUpMethodThreshold = 0.5;
     private double pushDownMethodThreshold = 0.5;
     private double extractMethodThreshold = 0.5;
     private double inlineMethodThreshold = 0.5;
-    
+
     private double moveAttributeThreshold = 0.2;
     private double pullUpAttributeThreshold = 0.1;
     private double pushDownAttributeThreshold = 0.1;
+
+    private CodeSimilarityStrategy codeSimilarityStrategy = CodeSimilarityStrategy.BIGRAM;
 
     public double getMoveTypeThreshold() {
         return moveTypeThreshold;
@@ -121,4 +125,13 @@ public class RefactoringDetectorConfig {
     public void setPushDownAttributeThreshold(double pushDownAttributeThreshold) {
         this.pushDownAttributeThreshold = pushDownAttributeThreshold;
     }
+
+    public CodeSimilarityStrategy getCodeSimilarityStrategy() {
+        return codeSimilarityStrategy;
+    }
+
+    public void setCodeSimilarityStrategy(CodeSimilarityStrategy codeSimilarityStrategy) {
+        this.codeSimilarityStrategy = codeSimilarityStrategy;
+    }
+
 }

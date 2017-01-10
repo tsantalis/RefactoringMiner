@@ -84,8 +84,9 @@ public class SDModelBuilder {
 
 	public void analyzeBefore(File rootFolder, List<String> javaFiles) {
 	    this.analyze(rootFolder, javaFiles, model.before());
+	    srBuilder.onComplete();
 	}
-	
+
 	private void analyze(File rootFolder, List<String> javaFiles, final SDModel.Snapshot model) {
 	    postProcessReferences = new HashMap<SDEntity, List<String>>();
 		postProcessSupertypes = new HashMap<SDType, List<String>>();

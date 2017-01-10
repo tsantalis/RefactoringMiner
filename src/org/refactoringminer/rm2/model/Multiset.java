@@ -48,6 +48,19 @@ public class Multiset<E> implements Collection<E> {
 		}
 		return result;
 	}
+	
+	public Multiset<E> plus(Multiset<E> other) {
+        Multiset<E> result = new Multiset<E>();
+        for (Entry<E, Integer> e : other.map.entrySet()) {
+            E key = e.getKey();
+            if (map.containsKey(key)) {
+                result.add(key, map.get(key) + e.getValue());
+            } else {
+                result.add(key, e.getValue());
+            }
+        }
+        return result;
+    }
 
 	public Multiset<E> minus(E entity) {
 		if (map.containsKey(entity)) {
@@ -142,4 +155,5 @@ public class Multiset<E> implements Collection<E> {
 	public Set<E> asSet() {
 	    return map.keySet();
 	}
+
 }

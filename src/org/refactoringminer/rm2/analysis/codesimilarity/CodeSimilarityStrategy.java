@@ -13,4 +13,10 @@ public interface CodeSimilarityStrategy {
         }
     };
 
+    public static CodeSimilarityStrategy TFIDF = new CodeSimilarityStrategy() {
+        @Override
+        public SourceRepresentationBuilder createSourceRepresentationBuilder() {
+            return new TokenIdfSRBuilder();
+        }
+    };
 }

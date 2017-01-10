@@ -20,7 +20,7 @@ public class RefactoringDetectorConfig {
     private double pullUpAttributeThreshold = 0.1;
     private double pushDownAttributeThreshold = 0.1;
 
-    private CodeSimilarityStrategy codeSimilarityStrategy = CodeSimilarityStrategy.BIGRAM;
+    private CodeSimilarityStrategy codeSimilarityStrategy = CodeSimilarityStrategy.TFIDF;
 
     public double getMoveTypeThreshold() {
         return moveTypeThreshold;

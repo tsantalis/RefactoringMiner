@@ -14,4 +14,6 @@ public interface SourceRepresentationBuilder {
 
     SourceRepresentation buildEmptySourceRepresentation();
 
+    default void onComplete() {}
+
 }

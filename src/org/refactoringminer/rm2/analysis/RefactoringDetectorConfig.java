@@ -2,136 +2,34 @@ package org.refactoringminer.rm2.analysis;
 
 import org.refactoringminer.rm2.analysis.codesimilarity.CodeSimilarityStrategy;
 
-public class RefactoringDetectorConfig {
+public interface RefactoringDetectorConfig {
 
-    private double moveTypeThreshold = 0.4;
-    private double renameTypeThreshold = 0.4;
-    private double moveAndRenameTypeThreshold = 0.5;
-    private double extractSupertypeThreshold = 0.5;
+    double getMoveTypeThreshold();
 
-    private double renameMethodThreshold = 0.5;
-    private double moveMethodThreshold = 0.5;
-    private double pullUpMethodThreshold = 0.5;
-    private double pushDownMethodThreshold = 0.5;
-    private double extractMethodThreshold = 0.5;
-    private double inlineMethodThreshold = 0.5;
+    double getRenameTypeThreshold();
 
-    private double moveAttributeThreshold = 0.2;
-    private double pullUpAttributeThreshold = 0.1;
-    private double pushDownAttributeThreshold = 0.1;
+    double getMoveAndRenameTypeThreshold();
 
-    private CodeSimilarityStrategy codeSimilarityStrategy = CodeSimilarityStrategy.TFIDF;
+    double getExtractSupertypeThreshold();
 
-    public double getMoveTypeThreshold() {
-        return moveTypeThreshold;
-    }
+    double getRenameMethodThreshold();
 
-    public void setMoveTypeThreshold(double moveTypeThreshold) {
-        this.moveTypeThreshold = moveTypeThreshold;
-    }
+    double getMoveMethodThreshold();
 
-    public double getRenameTypeThreshold() {
-        return renameTypeThreshold;
-    }
+    double getPullUpMethodThreshold();
 
-    public void setRenameTypeThreshold(double renameTypeThreshold) {
-        this.renameTypeThreshold = renameTypeThreshold;
-    }
+    double getPushDownMethodThreshold();
 
-    public double getMoveAndRenameTypeThreshold() {
-        return moveAndRenameTypeThreshold;
-    }
+    double getExtractMethodThreshold();
 
-    public void setMoveAndRenameTypeThreshold(double moveAndRenameTypeThreshold) {
-        this.moveAndRenameTypeThreshold = moveAndRenameTypeThreshold;
-    }
+    double getInlineMethodThreshold();
 
-    public double getExtractSupertypeThreshold() {
-        return extractSupertypeThreshold;
-    }
+    double getMoveAttributeThreshold();
 
-    public void setExtractSupertypeThreshold(double extractSupertypeThreshold) {
-        this.extractSupertypeThreshold = extractSupertypeThreshold;
-    }
+    double getPullUpAttributeThreshold();
 
-    public double getRenameMethodThreshold() {
-        return renameMethodThreshold;
-    }
+    double getPushDownAttributeThreshold();
 
-    public void setRenameMethodThreshold(double renameMethodThreshold) {
-        this.renameMethodThreshold = renameMethodThreshold;
-    }
-
-    public double getMoveMethodThreshold() {
-        return moveMethodThreshold;
-    }
-
-    public void setMoveMethodThreshold(double moveMethodThreshold) {
-        this.moveMethodThreshold = moveMethodThreshold;
-    }
-
-    public double getPullUpMethodThreshold() {
-        return pullUpMethodThreshold;
-    }
-
-    public void setPullUpMethodThreshold(double pullUpMethodThreshold) {
-        this.pullUpMethodThreshold = pullUpMethodThreshold;
-    }
-
-    public double getPushDownMethodThreshold() {
-        return pushDownMethodThreshold;
-    }
-
-    public void setPushDownMethodThreshold(double pushDownMethodThreshold) {
-        this.pushDownMethodThreshold = pushDownMethodThreshold;
-    }
-
-    public double getExtractMethodThreshold() {
-        return extractMethodThreshold;
-    }
-
-    public void setExtractMethodThreshold(double extractMethodThreshold) {
-        this.extractMethodThreshold = extractMethodThreshold;
-    }
-
-    public double getInlineMethodThreshold() {
-        return inlineMethodThreshold;
-    }
-
-    public void setInlineMethodThreshold(double inlineMethodThreshold) {
-        this.inlineMethodThreshold = inlineMethodThreshold;
-    }
-
-    public double getMoveAttributeThreshold() {
-        return moveAttributeThreshold;
-    }
-
-    public void setMoveAttributeThreshold(double moveAttributeThreshold) {
-        this.moveAttributeThreshold = moveAttributeThreshold;
-    }
-
-    public double getPullUpAttributeThreshold() {
-        return pullUpAttributeThreshold;
-    }
-
-    public void setPullUpAttributeThreshold(double pullUpAttributeThreshold) {
-        this.pullUpAttributeThreshold = pullUpAttributeThreshold;
-    }
-
-    public double getPushDownAttributeThreshold() {
-        return pushDownAttributeThreshold;
-    }
-
-    public void setPushDownAttributeThreshold(double pushDownAttributeThreshold) {
-        this.pushDownAttributeThreshold = pushDownAttributeThreshold;
-    }
-
-    public CodeSimilarityStrategy getCodeSimilarityStrategy() {
-        return codeSimilarityStrategy;
-    }
-
-    public void setCodeSimilarityStrategy(CodeSimilarityStrategy codeSimilarityStrategy) {
-        this.codeSimilarityStrategy = codeSimilarityStrategy;
-    }
+    CodeSimilarityStrategy getCodeSimilarityStrategy();
 
 }

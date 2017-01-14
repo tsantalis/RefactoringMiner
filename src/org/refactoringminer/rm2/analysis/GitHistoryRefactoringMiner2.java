@@ -11,7 +11,7 @@ public class GitHistoryRefactoringMiner2 implements GitHistoryRefactoringMiner {
     private RefactoringDetectorConfig config;
     
     public GitHistoryRefactoringMiner2() {
-        this(new RefactoringDetectorConfig());
+        this(new RefactoringDetectorConfigImpl());
     }
     
 	public GitHistoryRefactoringMiner2(RefactoringDetectorConfig config) {

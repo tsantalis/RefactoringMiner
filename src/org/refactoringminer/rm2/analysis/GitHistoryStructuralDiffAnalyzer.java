@@ -23,7 +23,7 @@ public class GitHistoryStructuralDiffAnalyzer {
 	private final RefactoringDetectorConfig config;
 	
 	public GitHistoryStructuralDiffAnalyzer() {
-        this(new RefactoringDetectorConfig());
+        this(new RefactoringDetectorConfigImpl());
     }
 	
 	public GitHistoryStructuralDiffAnalyzer(RefactoringDetectorConfig config) {

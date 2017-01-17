@@ -48,7 +48,10 @@ public class RefactoringDetector {
                 }
 
                 protected void onMatch(SDModel m, SDType entityBefore, SDType entityAfter) {
-                    m.addRefactoring(new SDMoveClass(entityBefore, entityAfter));
+                    // There might be a MOVE relationship without changing packages (source folder)
+                    if (!entityBefore.key().equals(entityAfter.key())) {
+                        m.addRefactoring(new SDMoveClass(entityBefore, entityAfter));
+                    }
                 }
             })
             .addCriterion(new Criterion<SDType>(RelationshipType.RENAME_TYPE, config.getRenameTypeThreshold()) {

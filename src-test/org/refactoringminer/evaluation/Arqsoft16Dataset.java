@@ -1,10 +1,12 @@
-package org.refactoringminer.utils;
+package org.refactoringminer.evaluation;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.refactoringminer.api.RefactoringType;
+import org.refactoringminer.utils.RefactoringRelationship;
+import org.refactoringminer.utils.RefactoringSet;
 
 public class Arqsoft16Dataset {
 

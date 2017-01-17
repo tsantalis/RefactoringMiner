@@ -202,4 +202,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 	}
 
+	@Override
+	public String getConfigId() {
+	    return "RM1";
+	}
 }

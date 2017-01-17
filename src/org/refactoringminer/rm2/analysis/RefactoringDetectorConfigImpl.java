@@ -4,6 +4,8 @@ import org.refactoringminer.rm2.analysis.codesimilarity.CodeSimilarityStrategy;
 
 public class RefactoringDetectorConfigImpl implements RefactoringDetectorConfig {
 
+    private String id = "rm2-default";
+
     private double moveTypeThreshold = 0.4;
     private double renameTypeThreshold = 0.4;
     private double moveAndRenameTypeThreshold = 0.5;
@@ -21,6 +23,15 @@ public class RefactoringDetectorConfigImpl implements RefactoringDetectorConfig 
     private double pushDownAttributeThreshold = 0.1;
 
     private CodeSimilarityStrategy codeSimilarityStrategy = CodeSimilarityStrategy.BIGRAM;
+
+    public String getId() {
+        return id;
+    }
+
+    public RefactoringDetectorConfig setId(String id) {
+        this.id = id;
+        return this;
+    }
 
     @Override
     public double getMoveTypeThreshold() {

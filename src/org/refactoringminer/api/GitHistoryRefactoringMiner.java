@@ -41,4 +41,8 @@ public interface GitHistoryRefactoringMiner {
 	 */
 	void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler);
 
+	/**
+	 * @return An ID that represents the current configuration for the Refactoring Miner algorithm in use.
+	 */
+	String getConfigId();
 }

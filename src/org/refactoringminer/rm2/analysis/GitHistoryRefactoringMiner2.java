@@ -64,4 +64,9 @@ public class GitHistoryRefactoringMiner2 implements GitHistoryRefactoringMiner {
 	    sda.detectAtCommit(repository, commitId, new HandlerAdpater(handler));
 	}
 
+	@Override
+	public String getConfigId() {
+	    return config.getId();
+	}
+
 }

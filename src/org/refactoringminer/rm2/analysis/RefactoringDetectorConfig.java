@@ -4,6 +4,8 @@ import org.refactoringminer.rm2.analysis.codesimilarity.CodeSimilarityStrategy;
 
 public interface RefactoringDetectorConfig {
 
+    String getId();
+
     double getMoveTypeThreshold();
 
     double getRenameTypeThreshold();

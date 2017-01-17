@@ -1,5 +1,6 @@
 package org.refactoringminer.utils;
 
+import java.io.File;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,17 +12,29 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.jgit.lib.Repository;
+import org.refactoringminer.api.GitHistoryRefactoringMiner;
+import org.refactoringminer.api.GitService;
 import org.refactoringminer.api.RefactoringType;
+import org.refactoringminer.util.GitServiceImpl;
 
 public class ResultComparator {
 
     Set<String> groupIds = new LinkedHashSet<>();
     Map<String, RefactoringSet> expectedMap = new LinkedHashMap<>();
+    Map<String, RefactoringSet> notExpectedMap = new LinkedHashMap<>();
     Map<String, RefactoringSet> resultMap = new HashMap<>();
 
     public ResultComparator expect(RefactoringSet ... sets) {
         for (RefactoringSet set : sets) {
             expectedMap.put(getProjectRevisionId(set.getProject(), set.getRevision()), set);
+        }
+        return this;
+    }
+
+    public ResultComparator dontExpect(RefactoringSet ... sets) {
+        for (RefactoringSet set : sets) {
+            notExpectedMap.put(getProjectRevisionId(set.getProject(), set.getRevision()), set);
         }
         return this;
     }
@@ -179,4 +192,37 @@ public class ResultComparator {
             return (int) this.falseNegatives.stream().filter(r -> r.toString().startsWith(rt.getDisplayName())).count();
         }
     }
+
+    public static RefactoringSet collectRmResult(GitHistoryRefactoringMiner rm, String cloneUrl, String commitId) {
+        GitService git = new GitServiceImpl();
+        String tempDir = "tmp";
+        String resultCacheDir = "tmpResult";
+        String projectName = cloneUrl.substring(cloneUrl.lastIndexOf('/') + 1, cloneUrl.lastIndexOf('.'));
+        File cachedResult = new File(resultCacheDir + "/" + projectName + "-" + commitId + "-" + rm.getConfigId());
+        if (cachedResult.exists()) {
+            RefactoringSet rs = new RefactoringSet(cloneUrl, commitId);
+            rs.readFromFile(cachedResult);
+            return rs;
+        } else {
+            String folder = tempDir + "/" + projectName;
+            final RefactoringCollector rc = new RefactoringCollector(cloneUrl, commitId);
+            try (Repository repo = git.cloneIfNotExists(folder, cloneUrl)) {
+                rm.detectAtCommit(repo, commitId, rc);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            RefactoringSet rs = rc.assertAndGetResult();
+            rs.saveToFile(cachedResult);
+            return rs;
+        }
+    }
+
+    public static RefactoringSet[] collectRmResult(GitHistoryRefactoringMiner rm, RefactoringSet[] oracle) {
+        RefactoringSet[] result = new RefactoringSet[oracle.length];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = collectRmResult(rm, oracle[i].getProject(), oracle[i].getRevision());
+        }
+        return result;
+    }
+
 }

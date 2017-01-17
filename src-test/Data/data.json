@@ -565,10 +565,10 @@
 	"author": "Cowtowncoder",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class Issue222BeanB moved from com.fasterxml.jackson.failing.TestExternalTypeId222 to com.fasterxml.jackson.databind.jsontype.TestExternalId"
+		"description": "Move Class com.fasterxml.jackson.failing.TestExternalTypeId222.Issue222BeanB moved to com.fasterxml.jackson.databind.jsontype.TestExternalId.Issue222BeanB"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class Issue222Bean moved from com.fasterxml.jackson.failing.TestExternalTypeId222 to com.fasterxml.jackson.databind.jsontype.TestExternalId"
+		"description": "Move Class com.fasterxml.jackson.failing.TestExternalTypeId222.Issue222Bean moved to com.fasterxml.jackson.databind.jsontype.TestExternalId.Issue222Bean"
 	}],
 	"time": "6/10/15 8:33 PM",
 	"id": 1109077
@@ -954,6 +954,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method protected fireEvent(event DiscoveryEvent) : void extracted from protected onRemoteStatusChanged(oldStatus InstanceStatus, newStatus InstanceStatus) : void in class com.netflix.discovery.DiscoveryClient"
+	},{
+		"type": "Extract Superclass",
+		"description": "Extract Superclass com.netflix.discovery.DiscoveryEvent from class com.netflix.discovery.StatusChangeEvent"
 	}],
 	"time": "6/15/15 5:16 PM",
 	"id": 1116963
@@ -1022,6 +1025,9 @@
 	"refactorings": [{
 		"type": "Inline Method",
 		"description": "Inline Method private handleHttp(conn ServerConnection, ch Channel, msg Object) : void inlined to protected doMessageReceived(conn ServerConnection, ctx ChannelHandlerContext, msg Object) : void in class io.vertx.core.http.impl.HttpServerImpl.ServerHandler"
+	},{
+		"type": "Inline Method",
+		"description": "Inline Method private handleExpectWebsockets(conn ServerConnection, ctx ChannelHandlerContext, msg Object) : void inlined to protected doMessageReceived(conn ServerConnection, ctx ChannelHandlerContext, msg Object) : void in class io.vertx.core.http.impl.HttpServerImpl.ServerHandler"
 	}],
 	"time": "6/16/15 6:37 AM",
 	"id": 1116953
@@ -1731,13 +1737,13 @@
 	"author": "Evan Thomas",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class AbsoluteMetricLoadCacheKey moved from com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue"
+		"description": "Move Class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue.AbsoluteMetricLoadCacheKey moved to com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue.AbsoluteMetricLoadCacheKey"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class AbsoluteMetricCache moved from com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue"
+		"description": "Move Class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue.AbsoluteMetricCacheKey moved to com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue.AbsoluteMetricCacheKey"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class AbsoluteMetricCacheKey moved from com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue"
+		"description": "Move Class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue.AbsoluteMetricCache moved to com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue.AbsoluteMetricCache"
 	}, {
 		"type": "Rename Package",
 		"description": "Rename Package com.eucalyptus.cloudwatch.domain.absolute to com.eucalyptus.cluster.callback.cloudwatch"
@@ -2712,10 +2718,10 @@
 	"author": "Brett Wooldridge",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class MillisecondClockSource moved from com.zaxxer.hikari.util to com.zaxxer.hikari.util.ClockSource"
+		"description": "Move Class com.zaxxer.hikari.util.NanosecondClockSource moved to com.zaxxer.hikari.util.ClockSource.NanosecondClockSource"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class NanosecondClockSource moved from com.zaxxer.hikari.util to com.zaxxer.hikari.util.ClockSource"
+		"description": "Move Class com.zaxxer.hikari.util.MillisecondClockSource moved to com.zaxxer.hikari.util.ClockSource.MillisecondClockSource"
 	}],
 	"time": "6/20/15 3:06 AM",
 	"id": 1120998
@@ -2725,10 +2731,10 @@
 	"author": "Brett Wooldridge",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class IConcurrentBagEntry moved from com.zaxxer.hikari.util to com.zaxxer.hikari.util.ConcurrentBag"
+		"description": "Move Class com.zaxxer.hikari.util.IConcurrentBagEntry moved to com.zaxxer.hikari.util.ConcurrentBag.IConcurrentBagEntry"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class IBagStateListener moved from com.zaxxer.hikari.util to com.zaxxer.hikari.util.ConcurrentBag"
+		"description": "Move Class com.zaxxer.hikari.util.IBagStateListener moved to com.zaxxer.hikari.util.ConcurrentBag.IBagStateListener"
 	}],
 	"time": "6/20/15 3:12 AM",
 	"id": 1120997
@@ -3827,16 +3833,16 @@
 		"description": "Pull Up Attribute protected org1Groups : String[] from class org.apache.drill.exec.impersonation.TestImpersonationQueries to class org.apache.drill.exec.impersonation.BaseTestImpersonation"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class TableNameLoader moved from org.apache.drill.exec.store.hive.schema.HiveSchemaFactory to org.apache.drill.exec.store.hive.DrillHiveMetaStoreClient.NonCloseableHiveClientWithCaching"
+		"description": "Move Class org.apache.drill.exec.store.hive.schema.HiveSchemaFactory.TableNameLoader moved to org.apache.drill.exec.store.hive.DrillHiveMetaStoreClient.NonCloseableHiveClientWithCaching.TableNameLoader"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute protected org1Users : String[] from class org.apache.drill.exec.impersonation.TestImpersonationQueries to class org.apache.drill.exec.impersonation.BaseTestImpersonation"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class TableLoader moved from org.apache.drill.exec.store.hive.schema.HiveSchemaFactory to org.apache.drill.exec.store.hive.DrillHiveMetaStoreClient.NonCloseableHiveClientWithCaching"
+		"description": "Move Class org.apache.drill.exec.store.hive.schema.HiveSchemaFactory.TableLoader moved to org.apache.drill.exec.store.hive.DrillHiveMetaStoreClient.NonCloseableHiveClientWithCaching.TableLoader"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class DatabaseLoader moved from org.apache.drill.exec.store.hive.schema.HiveSchemaFactory to org.apache.drill.exec.store.hive.DrillHiveMetaStoreClient.NonCloseableHiveClientWithCaching"
+		"description": "Move Class org.apache.drill.exec.store.hive.schema.HiveSchemaFactory.DatabaseLoader moved to org.apache.drill.exec.store.hive.DrillHiveMetaStoreClient.NonCloseableHiveClientWithCaching.DatabaseLoader"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute protected org2Users : String[] from class org.apache.drill.exec.impersonation.TestImpersonationQueries to class org.apache.drill.exec.impersonation.BaseTestImpersonation"
@@ -3845,10 +3851,19 @@
 		"description": "Pull Up Attribute protected MINIDFS_STORAGE_PLUGIN_NAME : String from class org.apache.drill.exec.impersonation.TestImpersonationDisabledWithMiniDFS to class org.apache.drill.exec.impersonation.BaseTestImpersonation"
 	}, {
 		"type": "Pull Up Attribute",
-		"description": "Pull Up Attribute protected MINIDFS_STORAGE_PLUGIN_NAME : String from class 2 others to class org.apache.drill.exec.impersonation.BaseTestImpersonation"
+		"description": "Pull Up Attribute protected MINIDFS_STORAGE_PLUGIN_NAME : String from class org.apache.drill.exec.impersonation.TestImpersonationMetadata to class org.apache.drill.exec.impersonation.BaseTestImpersonation"
 	},{
 		"type": "Inline Method",
 		"description": "Inline Method public createFileSystem(proxyUserName String, fsConf Configuration, stats OperatorStats) : DrillFileSystem inlined to public createFileSystem(proxyUserName String, fsConf Configuration) : DrillFileSystem in class org.apache.drill.exec.util.ImpersonationUtil"
+	},{
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public addMiniDfsBasedStorage() : void from class org.apache.drill.exec.impersonation.TestImpersonationMetadata to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation"
+	},{
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public addMiniDfsBasedStorage() : void from class org.apache.drill.exec.impersonation.TestImpersonationDisabledWithMiniDFS to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation"
+	},{
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public addMiniDfsBasedStorageAndGenerateTestData() : void from class org.apache.drill.exec.impersonation.TestImpersonationQueries to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation"
 	}
 ],
 	"time": "6/25/15 11:53 AM",
@@ -4388,6 +4403,12 @@
 		}, {
 			"type": "Inline Method",
 			"description": "Inline Method public postMessage(id String, data Object) : void inlined to public onPrepareOptionsMenu(menu Menu) : boolean in class org.apache.cordova.CordovaActivity"
+		}, {
+			"type": "Move Attribute",
+			"description": "Move Attribute private cordova : CordovaInterface from class org.apache.cordova.CordovaWebView to class org.apache.cordova.NativeToJsMessageQueue.LoadUrlBridgeMode"
+		}, {
+			"type": "Move Attribute",
+			"description": "Move Attribute private cordova : CordovaInterface from class org.apache.cordova.NativeToJsMessageQueue to class org.apache.cordova.NativeToJsMessageQueue.LoadUrlBridgeMode"
 		}
 
 	],
@@ -4679,10 +4700,10 @@
 	"author": "kak",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class Bar moved from com.google.common.truth.ListTest to com.google.common.truth.IterableTest"
+		"description": "Move Class com.google.common.truth.ListTest.Bar moved to com.google.common.truth.IterableTest.Bar"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class Foo moved from com.google.common.truth.ListTest to com.google.common.truth.IterableTest"
+		"description": "Move Class com.google.common.truth.ListTest.Foo moved to com.google.common.truth.IterableTest.Foo"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public listContainsExactlyArray() : void renamed to public iterableContainsExactlyArray() : void in class com.google.common.truth.IterableTest"
@@ -5136,7 +5157,7 @@
 	"author": "Daniel Kurka",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class Md5Digest moved from com.google.gwt.core.client.impl to java.security.MessageDigest"
+		"description": "Move Class com.google.gwt.core.client.impl.Md5Digest moved to java.security.MessageDigest.Md5Digest"
 	}],
 	"time": "7/8/15 4:20 PM",
 	"id": 1136996
@@ -5326,7 +5347,7 @@
 			"description": "Extract Method private queryProperty(id int, fromDock boolean) : long extracted from private queryProperty(id int) : long in class android.os.BatteryManager"
 		}, {
 			"type": "Extract Interface",
-			"description": "Extract Interface com.android.systemui.statusbar.policy.BatteryStateRegistar from type com.android.systemui.statusbar.policy.BatteryController"
+			"description": "Extract Interface com.android.systemui.statusbar.policy.BatteryStateRegistar from class com.android.systemui.statusbar.policy.BatteryController"
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method protected getBoltPointsArrayResource() : int extracted from private loadBoltPoints(res Resources) : float[] in class com.android.systemui.BatteryMeterView.NormalBatteryMeterDrawable"
@@ -6576,7 +6597,7 @@
 	"author": "Andy Wilkinson",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class SpringBootSecDispatcher moved from org.springframework.boot.cli.compiler.grape.SettingsXmlRepositorySystemSessionAutoConfiguration to org.springframework.boot.cli.compiler.MavenSettingsReader"
+		"description": "Move Class org.springframework.boot.cli.compiler.grape.SettingsXmlRepositorySystemSessionAutoConfiguration.SpringBootSecDispatcher moved to org.springframework.boot.cli.compiler.MavenSettingsReader.SpringBootSecDispatcher"
 	}],
 	"time": "7/14/15 8:30 AM",
 	"id": 1139791
@@ -6732,16 +6753,16 @@
 	"author": "Terence Parr",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class JFileChooserConfirmOverwrite moved from org.antlr.v4.runtime.misc to org.antlr.v4.gui"
+		"description": "Move Class org.antlr.v4.runtime.misc.JFileChooserConfirmOverwrite moved to org.antlr.v4.gui.JFileChooserConfirmOverwrite"
 	}, {
 		"type": "Rename Package",
 		"description": "Rename Package org.antlr.v4.runtime.tree.gui to org.antlr.v4.gui"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class TestRig moved from org.antlr.v4.runtime.misc to org.antlr.v4.gui"
+		"description": "Move Class org.antlr.v4.runtime.misc.TestRig moved to org.antlr.v4.gui.TestRig"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class GraphicsSupport moved from org.antlr.v4.runtime.misc to org.antlr.v4.gui"
+		"description": "Move Class org.antlr.v4.runtime.misc.GraphicsSupport moved to org.antlr.v4.gui.GraphicsSupport"
 	},{
 		"type": "Inline Method",
 		"description": "Inline Method public toStringTree(t Tree, nodeTextProvider TreeTextProvider) : String inlined to public toStringTree(t Tree, ruleNames List) : String in class org.antlr.v4.runtime.tree.Trees"
@@ -7394,22 +7415,22 @@
 	"author": "lutovich",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class MandatoryNodePropertyConstraintRule moved from org.neo4j.kernel.impl.store to org.neo4j.kernel.impl.store.record"
+		"description": "Move Class org.neo4j.kernel.impl.store.PropertyConstraintRule moved to org.neo4j.kernel.impl.store.record.PropertyConstraintRule"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class UniquePropertyConstraintRule moved from org.neo4j.kernel.impl.store to org.neo4j.kernel.impl.store.record"
+		"description": "Move Class org.neo4j.kernel.impl.store.RelationshipPropertyConstraintRule moved to org.neo4j.kernel.impl.store.record.RelationshipPropertyConstraintRule"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class MandatoryRelationshipPropertyConstraintRule moved from org.neo4j.kernel.impl.store to org.neo4j.kernel.impl.store.record"
+		"description": "Move Class org.neo4j.kernel.impl.store.NodePropertyConstraintRule moved to org.neo4j.kernel.impl.store.record.NodePropertyConstraintRule"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class RelationshipPropertyConstraintRule moved from org.neo4j.kernel.impl.store to org.neo4j.kernel.impl.store.record"
+		"description": "Move Class org.neo4j.kernel.impl.store.UniquePropertyConstraintRule moved to org.neo4j.kernel.impl.store.record.UniquePropertyConstraintRule"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class PropertyConstraintRule moved from org.neo4j.kernel.impl.store to org.neo4j.kernel.impl.store.record"
+		"description": "Move Class org.neo4j.kernel.impl.store.MandatoryRelationshipPropertyConstraintRule moved to org.neo4j.kernel.impl.store.record.MandatoryRelationshipPropertyConstraintRule"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class NodePropertyConstraintRule moved from org.neo4j.kernel.impl.store to org.neo4j.kernel.impl.store.record"
+		"description": "Move Class org.neo4j.kernel.impl.store.MandatoryNodePropertyConstraintRule moved to org.neo4j.kernel.impl.store.record.MandatoryNodePropertyConstraintRule"
 	}],
 	"time": "7/22/15 7:06 AM",
 	"id": 1147092
@@ -7762,7 +7783,7 @@
 		"description": "Move Method private nodeDegreeByDirection(nodeId long, group RelationshipGroupRecord, direction Direction) : long from class org.neo4j.kernel.impl.api.store.DiskLayer to private nodeDegreeByDirection(group RelationshipGroupRecord, direction Direction) : long from class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class AllStoreIdIterator moved from org.neo4j.kernel.impl.api.store.DiskLayer to org.neo4j.kernel.impl.api.store.StoreStatement"
+		"description": "Move Class org.neo4j.kernel.impl.api.store.DiskLayer.AllStoreIdIterator moved to org.neo4j.kernel.impl.api.store.StoreStatement.AllStoreIdIterator4beba7bbdf927486a5cbf298a0fb2be50905a590"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private singleLabelCursor : InstanceCache from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
@@ -8531,10 +8552,10 @@
 	"author": "Mehant Baid",
 	"refactorings": [{
 		"type": "Extract Interface",
-		"description": "Extract Interface org.apache.drill.exec.ops.OptimizerRulesContext from type org.apache.drill.exec.ops.QueryContext"
+		"description": "Extract Interface org.apache.drill.exec.ops.OptimizerRulesContext from class org.apache.drill.exec.ops.QueryContext"
 	}, {
 		"type": "Extract Interface",
-		"description": "Extract Interface org.apache.drill.exec.expr.fn.FunctionLookupContext from type org.apache.drill.exec.expr.fn.FunctionImplementationRegistry"
+		"description": "Extract Interface org.apache.drill.exec.expr.fn.FunctionLookupContext from class org.apache.drill.exec.expr.fn.FunctionImplementationRegistry"
 	}],
 	"time": "7/31/15 12:17 AM",
 	"id": 1155351
@@ -8544,7 +8565,7 @@
 	"author": "Kevin Smith",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class PropertyRule moved from org.geoserver.wfs.xml to org.geoserver.util"
+		"description": "Move Class org.geoserver.wfs.xml.PropertyRule moved to org.geoserver.util.PropertyRule"
 	}],
 	"time": "7/31/15 7:12 AM",
 	"id": 1153812
@@ -9109,10 +9130,10 @@
 	"author": "Tom Gianos",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class TestGenieApplication moved from com.netflix.genie.server.startup to com.netflix.genie.web.startup"
+		"description": "Move Class com.netflix.genie.server.startup.TestGenieApplication moved to com.netflix.genie.web.startup.TestGenieApplication"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class GenieApplication moved from com.netflix.genie.server.startup to com.netflix.genie.web.startup"
+		"description": "Move Class com.netflix.genie.server.startup.GenieApplication moved to com.netflix.genie.web.startup.GenieApplication"
 	}, {
 		"type": "Rename Package",
 		"description": "Rename Package com.netflix.genie.server.health to com.netflix.genie.web.health"
@@ -9150,7 +9171,7 @@
 	"author": "James Perkins",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class JobXmlFilter moved from org.wildfly.extension.batch.jberet.deployment.BatchEnvironmentProcessor to org.wildfly.extension.batch.jberet.deployment.WildFlyJobXmlResolver"
+		"description": "Move Class org.wildfly.extension.batch.jberet.deployment.BatchEnvironmentProcessor.JobXmlFilter moved to org.wildfly.extension.batch.jberet.deployment.WildFlyJobXmlResolver.JobXmlFilter"
 	}],
 	"time": "8/5/15 7:32 PM",
 	"id": 1158180

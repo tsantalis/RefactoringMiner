@@ -9,7 +9,7 @@ public class SDAttribute extends SDEntity {
     private String type;
     private boolean isStatic;
     private Multiset<SDMethod> referencedBy;
-    private SourceRepresentation assignment;
+    //private SourceRepresentation assignment;
     private SourceRepresentation clientCode;
 	
 	public SDAttribute(SDModel.Snapshot snapshot, int id, String name, SDContainerEntity container) {
@@ -78,13 +78,13 @@ public class SDAttribute extends SDEntity {
         this.clientCode = clientCode;
     }
 
-    public SourceRepresentation assignment() {
-        return assignment;
-    }
-
-    public void setAssignment(SourceRepresentation assignment) {
-        this.assignment = assignment;
-    }
+//    public SourceRepresentation assignment() {
+//        return assignment;
+//    }
+//
+//    public void setAssignment(SourceRepresentation assignment) {
+//        this.assignment = assignment;
+//    }
 
     public String getVerboseSimpleName() {
         StringBuilder sb = new StringBuilder();

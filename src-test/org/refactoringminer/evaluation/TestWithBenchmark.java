@@ -31,11 +31,11 @@ public class TestWithBenchmark {
         List<GitHistoryRefactoringMiner> list = new ArrayList<>();
         list.add(new GitHistoryRefactoringMiner2());
         
-//        RefactoringDetectorConfigImpl config = new RefactoringDetectorConfigImpl();
-//        config.setId("rm2-idf");
-//        config.setCodeSimilarityStrategy(CodeSimilarityStrategy.TFIDF);
-//        
-//        list.add(new GitHistoryRefactoringMiner2(config));
+        RefactoringDetectorConfigImpl config = new RefactoringDetectorConfigImpl();
+        config.setId("rm2-idf");
+        config.setCodeSimilarityStrategy(CodeSimilarityStrategy.TFIDF);
+        
+        list.add(new GitHistoryRefactoringMiner2(config));
         return list;
     }
 

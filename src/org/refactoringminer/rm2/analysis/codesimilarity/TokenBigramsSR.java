@@ -1,6 +1,8 @@
 package org.refactoringminer.rm2.analysis.codesimilarity;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.refactoringminer.rm2.model.HashArray;
@@ -43,8 +45,9 @@ class TokenBigramsSR extends HashArray implements SourceRepresentation {
     }
 
     @Override
-    public TokenBigramsSR combine(Iterable<SourceRepresentation> others) {
+    public TokenBigramsSR combine(SourceRepresentation other) {
         int totalLength = this.hashes.length;
+        List<SourceRepresentation> others = Collections.singletonList(other);
         for (SourceRepresentation sr : others) {
             long[] hashes = ((TokenBigramsSR) sr).hashes;
             totalLength += hashes.length;

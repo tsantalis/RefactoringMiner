@@ -27,12 +27,10 @@ class TokenIdfSR implements SourceRepresentation {
     }
 
     @Override
-    public TokenIdfSR combine(Iterable<SourceRepresentation> others) {
+    public TokenIdfSR combine(SourceRepresentation sr) {
         Multiset<String> multisetUnion = tokens;
-        for (SourceRepresentation sr : others) {
-            TokenIdfSR tokenIdfSR = (TokenIdfSR) sr;
-            multisetUnion = multisetUnion.plus(tokenIdfSR.tokens);
-        }
+        TokenIdfSR tokenIdfSR = (TokenIdfSR) sr;
+        multisetUnion = multisetUnion.plus(tokenIdfSR.tokens);
         return new TokenIdfSR(multisetUnion, builder);
     }
 

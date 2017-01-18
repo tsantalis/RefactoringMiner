@@ -222,18 +222,23 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
                     // System.out.println("null");
                     // }
                     SourceRepresentation code = srbForAttributes.buildSourceRepresentation(fileContent, stm.getStartPosition(), stm.getLength());
-                    List<SourceRepresentation> codeFragments = postProcessClientCode.get(attributeKey);
-                    if (codeFragments == null) {
-                        codeFragments = new ArrayList<SourceRepresentation>();
-                    }
-                    codeFragments.add(code);
-                    postProcessClientCode.put(attributeKey, codeFragments);
+                    addClientCode(attributeKey, code);
                 }
+
             });
             postProcessReferences.put(method, references);
         }
 
         return true;
+    }
+
+    private void addClientCode(String attributeKey, SourceRepresentation code) {
+        List<SourceRepresentation> codeFragments = postProcessClientCode.get(attributeKey);
+        if (codeFragments == null) {
+            codeFragments = new ArrayList<SourceRepresentation>();
+        }
+        codeFragments.add(code);
+        postProcessClientCode.put(attributeKey, codeFragments);
     }
 
     private Visibility getVisibility(int methodModifiers) {
@@ -266,11 +271,10 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 
             Expression expression = fragment.getInitializer();
             if (expression != null) {
-                attribute.setAssignment(srbForAttributes.buildSourceRepresentation(fileContent, expression.getStartPosition(), expression.getLength()));
-            } else {
-                attribute.setAssignment(srbForAttributes.buildEmptySourceRepresentation());
+                //attribute.setAssignment(srbForAttributes.buildSourceRepresentation(fileContent, expression.getStartPosition(), expression.getLength()));
+                addClientCode(attribute.key().toString(), srbForAttributes.buildSourceRepresentation(fileContent, expression.getStartPosition(), expression.getLength()));
             }
-            attribute.setClientCode(attribute.assignment());
+            attribute.setClientCode(srbForAttributes.buildEmptySourceRepresentation());
         }
         return true;
     }

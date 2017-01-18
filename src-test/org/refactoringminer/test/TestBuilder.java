@@ -70,22 +70,13 @@ public class TestBuilder {
 
 	private void count(int type, String refactoring) {
 		c.c[type]++;
-		RefactoringType refType = extractRefactoringType(refactoring);
+		RefactoringType refType = RefactoringType.extractFromDescription(refactoring);
 		Counter refTypeCounter = cMap.get(refType);
 		if (refTypeCounter == null) {
 			refTypeCounter = new Counter();
 			cMap.put(refType, refTypeCounter);
 		}
 		refTypeCounter.c[type]++;
-	}
-
-	private RefactoringType extractRefactoringType(String refactoring) {
-		for (RefactoringType refType : RefactoringType.values()) {
-			if (refactoring.startsWith(refType.getDisplayName())) {
-				return refType;
-			}
-		}
-		throw new RuntimeException("Unknown refactoring type: " + refactoring);
 	}
 
 	private int get(int type) {
@@ -163,7 +154,7 @@ public class TestBuilder {
 	}
 
 	private List<String> normalize(String refactoring) {
-		RefactoringType refType = extractRefactoringType(refactoring);
+		RefactoringType refType = RefactoringType.extractFromDescription(refactoring);
 		refactoring = normalizeSingle(refactoring);
 		if (aggregate) {
 			refactoring = refType.aggregate(refactoring);

@@ -4,19 +4,40 @@ import org.refactoringminer.rm2.analysis.SourceRepresentationBuilder;
 
 public interface CodeSimilarityStrategy {
 
-    SourceRepresentationBuilder createSourceRepresentationBuilder();
+    SourceRepresentationBuilder createSourceRepresentationBuilderForTypes();
+
+    SourceRepresentationBuilder createSourceRepresentationBuilderForMethods();
+
+    SourceRepresentationBuilder createSourceRepresentationBuilderForAttributes();
 
     public static CodeSimilarityStrategy BIGRAM = new CodeSimilarityStrategy() {
         @Override
-        public SourceRepresentationBuilder createSourceRepresentationBuilder() {
-            return new TokenBigramsSRBuilder();
+        public SourceRepresentationBuilder createSourceRepresentationBuilderForTypes() {
+            return new TokenBigramsSRBuilder(TokenBigramsSRBuilder.LINES);
+        }
+        @Override
+        public SourceRepresentationBuilder createSourceRepresentationBuilderForMethods() {
+            return new TokenBigramsSRBuilder(TokenBigramsSRBuilder.TOKENS);
+        }
+        @Override
+        public SourceRepresentationBuilder createSourceRepresentationBuilderForAttributes() {
+            return new TokenBigramsSRBuilder(TokenBigramsSRBuilder.TOKENS);
         }
     };
 
     public static CodeSimilarityStrategy TFIDF = new CodeSimilarityStrategy() {
         @Override
-        public SourceRepresentationBuilder createSourceRepresentationBuilder() {
+        public SourceRepresentationBuilder createSourceRepresentationBuilderForTypes() {
+            return new TokenIdfSRBuilder();
+        }
+        @Override
+        public SourceRepresentationBuilder createSourceRepresentationBuilderForMethods() {
+            return new TokenIdfSRBuilder();
+        }
+        @Override
+        public SourceRepresentationBuilder createSourceRepresentationBuilderForAttributes() {
             return new TokenIdfSRBuilder();
         }
     };
+
 }

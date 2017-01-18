@@ -16,46 +16,25 @@ class TokenBigramsSRBuilder implements SourceRepresentationBuilder {
 
     IScanner scanner = ToolFactory.createScanner(true, true, false, "1.8");
 
-    private static final int TOKENS = 0;
-    private static final int LINES = 1;
+    public static final int TOKENS = 0;
+    public static final int LINES = 1;
 
-    @Override
-    public TokenBigramsSR buildSourceRepresentationForType(char[] charArray, int start, int length) {
-        return getLineBasedSourceRepresentation(charArray, start, length);
+    private final int tokenType;
+
+    public TokenBigramsSRBuilder(int tokenType) {
+        this.tokenType = tokenType;
     }
 
     @Override
-    public TokenBigramsSR buildSourceRepresentationForMethodBody(char[] charArray, int start, int length) {
-        return getTokenBasedSourceRepresentation(charArray, start, length);
-    }
-
-    @Override
-    public TokenBigramsSR buildSourceRepresentationForStatement(char[] charArray, int start, int length) {
-        return getTokenBasedSourceRepresentation(charArray, start, length);
-    }
-
-    @Override
-    public TokenBigramsSR buildSourceRepresentationForExpression(char[] charArray, int start, int length) {
-        return getTokenBasedSourceRepresentation(charArray, start, length);
+    public TokenBigramsSR buildSourceRepresentation(char[] charArray, int start, int length) {
+        Map<Integer, String> debug = new HashMap<Integer, String>();
+        List<Integer> lines = computeHashes(charArray, start, length, tokenType, debug);
+        return new TokenBigramsSR(computeBigrams(lines), debug);
     }
 
     @Override
     public TokenBigramsSR buildEmptySourceRepresentation() {
         return new TokenBigramsSR(new long[0]);
-    }
-
-    private TokenBigramsSR getLineBasedSourceRepresentation(char[] charArray, int start, int length) {
-        Map<Integer, String> debug = new HashMap<Integer, String>();
-        List<Integer> lines = computeHashes(charArray, start, length, LINES, debug);
-        return new TokenBigramsSR(computeBigrams(lines), debug);
-    }
-
-    private TokenBigramsSR getTokenBasedSourceRepresentation(char[] charArray, int start, int length) {
-        Map<Integer, String> debug = new HashMap<Integer, String>();
-        // List<Integer> lines = computeHashes(charArray, start, length, LINES,
-        // null);
-        List<Integer> tokens = computeHashes(charArray, start, length, TOKENS, debug);
-        return new TokenBigramsSR(computeBigrams(tokens), debug);
     }
 
     private List<Integer> computeHashes(char[] charArray, int start, int length, int granularity, Map<Integer, String> debug) {

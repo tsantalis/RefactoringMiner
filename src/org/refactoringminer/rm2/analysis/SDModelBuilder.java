@@ -28,11 +28,15 @@ import org.refactoringminer.rm2.model.SourceRepresentation;
 public class SDModelBuilder {
     
     private final RefactoringDetectorConfig config;
-    private final SourceRepresentationBuilder srBuilder;
-    
+    private final SourceRepresentationBuilder srbForTypes;
+    private final SourceRepresentationBuilder srbForMethods;
+    private final SourceRepresentationBuilder srbForAttributes;
+
     public SDModelBuilder(RefactoringDetectorConfig config) {
         this.config = config;
-        this.srBuilder = config.getCodeSimilarityStrategy().createSourceRepresentationBuilder();
+        this.srbForTypes = config.getCodeSimilarityStrategy().createSourceRepresentationBuilderForTypes();
+        this.srbForMethods = config.getCodeSimilarityStrategy().createSourceRepresentationBuilderForMethods();
+        this.srbForAttributes = config.getCodeSimilarityStrategy().createSourceRepresentationBuilderForAttributes();
     }
 
     private SDModel model = new SDModel();
@@ -84,7 +88,9 @@ public class SDModelBuilder {
 
 	public void analyzeBefore(File rootFolder, List<String> javaFiles) {
 	    this.analyze(rootFolder, javaFiles, model.before());
-	    srBuilder.onComplete();
+	    srbForTypes.onComplete();
+	    srbForMethods.onComplete();
+	    srbForAttributes.onComplete();
 	}
 
 	private void analyze(File rootFolder, List<String> javaFiles, final SDModel.Snapshot model) {
@@ -156,7 +162,7 @@ public class SDModelBuilder {
 		  sourceFolder = sourceFilePath.substring(0, sourceFilePath.indexOf(packagePath));
 		}
 		SDPackage sdPackage = model.getOrCreatePackage(packageName, sourceFolder);
-		BindingsRecoveryAstVisitor visitor = new BindingsRecoveryAstVisitor(model, sourceFilePath, fileContent, sdPackage, postProcessReferences, postProcessSupertypes, postProcessClientCode, srBuilder);
+		BindingsRecoveryAstVisitor visitor = new BindingsRecoveryAstVisitor(model, sourceFilePath, fileContent, sdPackage, postProcessReferences, postProcessSupertypes, postProcessClientCode, srbForTypes, srbForMethods, srbForAttributes);
 		compilationUnit.accept(visitor);
 	}
 

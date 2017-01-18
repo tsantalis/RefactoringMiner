@@ -49,10 +49,12 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
     private final Map<SDEntity, List<String>> postProcessReferences;
     private final Map<SDType, List<String>> postProcessSupertypes;
     private final Map<String, List<SourceRepresentation>> postProcessClientCode;
-    private final SourceRepresentationBuilder scanner;
+    private final SourceRepresentationBuilder srbForTypes;
+    private final SourceRepresentationBuilder srbForMethods;
+    private final SourceRepresentationBuilder srbForAttributes;
 
     public BindingsRecoveryAstVisitor(SDModel.Snapshot model, String sourceFilePath, char[] fileContent, SDPackage sdPackage, Map<SDEntity, List<String>> postProcessReferences,
-        Map<SDType, List<String>> postProcessSupertypes, Map<String, List<SourceRepresentation>> postProcessClientCode, SourceRepresentationBuilder scanner) {
+        Map<SDType, List<String>> postProcessSupertypes, Map<String, List<SourceRepresentation>> postProcessClientCode, SourceRepresentationBuilder srbForTypes, SourceRepresentationBuilder srbForMethods, SourceRepresentationBuilder srbForAttributes) {
         this.model = model;
         this.sourceFilePath = sourceFilePath;
         this.fileContent = fileContent;
@@ -61,7 +63,9 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
         this.postProcessReferences = postProcessReferences;
         this.postProcessSupertypes = postProcessSupertypes;
         this.postProcessClientCode = postProcessClientCode;
-        this.scanner = scanner;
+        this.srbForTypes = srbForTypes;
+        this.srbForMethods = srbForMethods;
+        this.srbForAttributes = srbForAttributes;
     }
 
     @Override
@@ -130,7 +134,7 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
         } else {
             type = model.createType(typeName, containerStack.peek(), sourceFilePath);
         }
-        type.setSourceCode(scanner.buildSourceRepresentationForType(fileContent, node.getStartPosition(), node.getLength()));
+        type.setSourceCode(srbForTypes.buildSourceRepresentation(fileContent, node.getStartPosition(), node.getLength()));
 
         Set<String> annotations = extractAnnotationTypes(node.modifiers());
         type.setDeprecatedAnnotation(annotations.contains("Deprecated"));
@@ -196,10 +200,10 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
         method.setNumberOfStatements(AstUtils.countNumberOfStatements(methodDeclaration));
         Block body = methodDeclaration.getBody();
         if (body == null) {
-            method.setSourceCode(scanner.buildEmptySourceRepresentation());
+            method.setSourceCode(srbForMethods.buildEmptySourceRepresentation());
             method.setAbstract(true);
         } else {
-            method.setSourceCode(scanner.buildSourceRepresentationForMethodBody(this.fileContent, body.getStartPosition() + 1, body.getLength() - 2));
+            method.setSourceCode(srbForMethods.buildSourceRepresentation(this.fileContent, body.getStartPosition() + 1, body.getLength() - 2));
             final List<String> references = new ArrayList<String>();
             body.accept(new DependenciesAstVisitor(true) {
                 @Override
@@ -217,7 +221,7 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
                     // if (stm == null) {
                     // System.out.println("null");
                     // }
-                    SourceRepresentation code = scanner.buildSourceRepresentationForStatement(fileContent, stm.getStartPosition(), stm.getLength());
+                    SourceRepresentation code = srbForAttributes.buildSourceRepresentation(fileContent, stm.getStartPosition(), stm.getLength());
                     List<SourceRepresentation> codeFragments = postProcessClientCode.get(attributeKey);
                     if (codeFragments == null) {
                         codeFragments = new ArrayList<SourceRepresentation>();
@@ -262,9 +266,9 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
 
             Expression expression = fragment.getInitializer();
             if (expression != null) {
-                attribute.setAssignment(scanner.buildSourceRepresentationForExpression(fileContent, expression.getStartPosition(), expression.getLength()));
+                attribute.setAssignment(srbForAttributes.buildSourceRepresentation(fileContent, expression.getStartPosition(), expression.getLength()));
             } else {
-                attribute.setAssignment(scanner.buildEmptySourceRepresentation());
+                attribute.setAssignment(srbForAttributes.buildEmptySourceRepresentation());
             }
             attribute.setClientCode(attribute.assignment());
         }

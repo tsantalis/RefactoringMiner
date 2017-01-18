@@ -16,7 +16,7 @@ import org.refactoringminer.rm2.model.Multiset;
 
 class TokenIdfSRBuilder implements SourceRepresentationBuilder {
 
-    IScanner scanner = ToolFactory.createScanner(true, true, false, "1.8");
+    IScanner scanner = ToolFactory.createScanner(false, true, false, "1.8");
     Map<String, Integer> df = new HashMap<String, Integer>();
     int dc = 0;
     
@@ -63,23 +63,8 @@ class TokenIdfSRBuilder implements SourceRepresentationBuilder {
     }
 
     @Override
-    public TokenIdfSR buildSourceRepresentationForType(char[] charArray, int start, int length) {
+    public TokenIdfSR buildSourceRepresentation(char[] charArray, int start, int length) {
         return getTokenBasedSourceRepresentation(charArray, start, length, true);
-    }
-
-    @Override
-    public TokenIdfSR buildSourceRepresentationForMethodBody(char[] charArray, int start, int length) {
-        return getTokenBasedSourceRepresentation(charArray, start, length, true);
-    }
-
-    @Override
-    public TokenIdfSR buildSourceRepresentationForStatement(char[] charArray, int start, int length) {
-        return getTokenBasedSourceRepresentation(charArray, start, length, false);
-    }
-
-    @Override
-    public TokenIdfSR buildSourceRepresentationForExpression(char[] charArray, int start, int length) {
-        return getTokenBasedSourceRepresentation(charArray, start, length, false);
     }
 
     @Override

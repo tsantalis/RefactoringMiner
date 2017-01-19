@@ -42,7 +42,7 @@ public class RefactoringDetector {
 
     private void identifyMatchingTypes(SDModel m) {
         new TypeMatcher()
-            .addCriterion(new Criterion<SDType>(RelationshipType.MOVE_TYPE, config.getMoveTypeThreshold()) {
+            .addCriterion(new Criterion<SDType>(RelationshipType.MOVE_TYPE, config.getThreshold(RelationshipType.MOVE_TYPE)) {
                 protected boolean canMatch(SDModel m, SDType entityBefore, SDType entityAfter) {
                     return entityBefore.simpleName().equals(entityAfter.simpleName());
                 }
@@ -54,7 +54,7 @@ public class RefactoringDetector {
                     }
                 }
             })
-            .addCriterion(new Criterion<SDType>(RelationshipType.RENAME_TYPE, config.getRenameTypeThreshold()) {
+            .addCriterion(new Criterion<SDType>(RelationshipType.RENAME_TYPE, config.getThreshold(RelationshipType.RENAME_TYPE)) {
                 protected boolean canMatch(SDModel m, SDType entityBefore, SDType entityAfter) {
                     return m.entitiesMatch(entityBefore.container(), entityAfter.container());
                 }
@@ -63,7 +63,7 @@ public class RefactoringDetector {
                     m.addRefactoring(new SDRenameClass(entityBefore, entityAfter));
                 }
             })
-            .addCriterion(new Criterion<SDType>(RelationshipType.MOVE_AND_RENAME_TYPE, config.getMoveAndRenameTypeThreshold()) {
+            .addCriterion(new Criterion<SDType>(RelationshipType.MOVE_AND_RENAME_TYPE, config.getThreshold(RelationshipType.MOVE_AND_RENAME_TYPE)) {
                 protected boolean canMatch(SDModel m, SDType entityBefore, SDType entityAfter) {
                     return !entityBefore.simpleName().equals(entityAfter.simpleName()) &&
                         !m.entitiesMatch(entityBefore.container(), entityAfter.container());
@@ -82,7 +82,7 @@ public class RefactoringDetector {
             for (SDType subtype : typeAfter.subtypes().suchThat(m.<SDType> isMatched())) {
                 MembersRepresentation subtypeMembersBefore = m.before(subtype).membersRepresentation();
                 double sim = supertypeMembers.partialSimilarity(subtypeMembersBefore);
-                if (sim >= config.getExtractSupertypeThreshold()) {
+                if (sim >= config.getThreshold(RelationshipType.EXTRACT_SUPERTYPE)) {
                     // found an extracted supertype
                     typeAfter.addOrigin(m.before(subtype), 1);
                     m.addRelationship(RelationshipType.EXTRACT_SUPERTYPE, m.before(subtype), typeAfter, 1);
@@ -97,7 +97,7 @@ public class RefactoringDetector {
 
     private void identifyMatchingMethods(SDModel m) {
         new MethodMatcher()
-            .addCriterion(new Criterion<SDMethod>(RelationshipType.CHANGE_METHOD_SIGNATURE, config.getRenameMethodThreshold()) {
+            .addCriterion(new Criterion<SDMethod>(RelationshipType.CHANGE_METHOD_SIGNATURE, config.getThreshold(RelationshipType.CHANGE_METHOD_SIGNATURE)) {
                 protected boolean canMatch(SDModel m, SDMethod methodBefore, SDMethod methodAfter) {
                     return methodBefore.identifier().equals(methodAfter.identifier()) &&
                         !methodBefore.isAbstract() && !methodAfter.isAbstract() &&
@@ -108,7 +108,7 @@ public class RefactoringDetector {
                     // change signature
                 }
             })
-            .addCriterion(new Criterion<SDMethod>(RelationshipType.RENAME_METHOD, config.getRenameMethodThreshold()) {
+            .addCriterion(new Criterion<SDMethod>(RelationshipType.RENAME_METHOD, config.getThreshold(RelationshipType.RENAME_METHOD)) {
                 protected boolean canMatch(SDModel m, SDMethod methodBefore, SDMethod methodAfter) {
                     return !methodBefore.identifier().equals(methodAfter.identifier()) &&
                         !methodBefore.isAbstract() && !methodAfter.isAbstract() &&
@@ -119,7 +119,7 @@ public class RefactoringDetector {
                     m.addRefactoring(new SDRenameMethod(methodBefore, methodAfter));
                 }
             })
-            .addCriterion(new Criterion<SDMethod>(RelationshipType.PULL_UP_METHOD, config.getPullUpMethodThreshold()) {
+            .addCriterion(new Criterion<SDMethod>(RelationshipType.PULL_UP_METHOD, config.getThreshold(RelationshipType.PULL_UP_METHOD)) {
                 protected boolean canMatch(SDModel m, SDMethod methodBefore, SDMethod methodAfter) {
                     return methodBefore.identifier().equals(methodAfter.identifier()) &&
                         !methodBefore.isAbstract() && !methodAfter.isAbstract() &&
@@ -135,7 +135,7 @@ public class RefactoringDetector {
                     }
                 }
             })
-            .addCriterion(new Criterion<SDMethod>(RelationshipType.PUSH_DOWN_METHOD, config.getPushDownMethodThreshold()) {
+            .addCriterion(new Criterion<SDMethod>(RelationshipType.PUSH_DOWN_METHOD, config.getThreshold(RelationshipType.PUSH_DOWN_METHOD)) {
                 protected boolean canMatch(SDModel m, SDMethod methodBefore, SDMethod methodAfter) {
                     return methodBefore.identifier().equals(methodAfter.identifier()) &&
                         !methodBefore.isAbstract() && !methodAfter.isAbstract() &&
@@ -149,7 +149,7 @@ public class RefactoringDetector {
                     m.addRefactoring(new SDPushDownMethod(methodBefore, methodAfter));
                 }
             })
-            .addCriterion(new Criterion<SDMethod>(RelationshipType.MOVE_METHOD, config.getMoveMethodThreshold()) {
+            .addCriterion(new Criterion<SDMethod>(RelationshipType.MOVE_METHOD, config.getThreshold(RelationshipType.MOVE_METHOD)) {
                 protected boolean canMatch(SDModel m, SDMethod methodBefore, SDMethod methodAfter) {
                     return methodBefore.identifier().equals(methodAfter.identifier()) &&
                         !methodBefore.isAbstract() && !methodAfter.isAbstract() &&
@@ -167,7 +167,7 @@ public class RefactoringDetector {
 
     private void identifyMatchingAttributes(SDModel m) {
         new AttributeMatcher()
-            .addCriterion(new Criterion<SDAttribute>(RelationshipType.PULL_UP_FIELD, config.getPullUpAttributeThreshold()) {
+            .addCriterion(new Criterion<SDAttribute>(RelationshipType.PULL_UP_FIELD, config.getThreshold(RelationshipType.PULL_UP_FIELD)) {
                 protected boolean canMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
                     return attributeBefore.simpleName().equals(attributeAfter.simpleName()) &&
                         attributeBefore.type().equals(attributeAfter.type()) &&
@@ -181,7 +181,7 @@ public class RefactoringDetector {
                     }
                 }
             })
-            .addCriterion(new Criterion<SDAttribute>(RelationshipType.PUSH_DOWN_FIELD, config.getPushDownAttributeThreshold()) {
+            .addCriterion(new Criterion<SDAttribute>(RelationshipType.PUSH_DOWN_FIELD, config.getThreshold(RelationshipType.PUSH_DOWN_FIELD)) {
                 protected boolean canMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
                     return attributeBefore.simpleName().equals(attributeAfter.simpleName()) &&
                         attributeBefore.type().equals(attributeAfter.type()) &&
@@ -193,7 +193,7 @@ public class RefactoringDetector {
                     m.addRefactoring(new SDPushDownAttribute(attributeBefore, attributeAfter));
                 }
             })
-            .addCriterion(new Criterion<SDAttribute>(RelationshipType.MOVE_FIELD, config.getMoveAttributeThreshold()) {
+            .addCriterion(new Criterion<SDAttribute>(RelationshipType.MOVE_FIELD, config.getThreshold(RelationshipType.MOVE_FIELD)) {
                 protected boolean canMatch(SDModel m, SDAttribute attributeBefore, SDAttribute attributeAfter) {
                     return attributeBefore.simpleName().equals(attributeAfter.simpleName()) &&
                         attributeBefore.type().equals(attributeAfter.type());
@@ -215,7 +215,7 @@ public class RefactoringDetector {
                 SourceRepresentation removedCode = callerBodyBefore.minus(callerBodyAfter);
                 SourceRepresentation methodBody = method.sourceCode();
                 double sim = methodBody.partialSimilarity(removedCode);
-                if (sim >= config.getExtractMethodThreshold()) {
+                if (sim >= config.getThreshold(RelationshipType.EXTRACT_METHOD)) {
                     // found an extracted method
                     // now find how many times the body of the extracted method
                     // was duplicated at the origin
@@ -253,7 +253,7 @@ public class RefactoringDetector {
                 SourceRepresentation addedCode = callerBodyAfter.minus(callerBodyBefore);
                 SourceRepresentation methodBody = method.sourceCode();
                 double sim = methodBody.partialSimilarity(addedCode);
-                if (sim >= config.getInlineMethodThreshold()) {
+                if (sim >= config.getThreshold(RelationshipType.INLINE_METHOD)) {
                     // found an inline method
                     method.addInlinedTo(dest, 1);
 

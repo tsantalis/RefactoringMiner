@@ -1,36 +1,13 @@
 package org.refactoringminer.rm2.analysis;
 
 import org.refactoringminer.rm2.analysis.codesimilarity.CodeSimilarityStrategy;
+import org.refactoringminer.rm2.model.RelationshipType;
 
 public interface RefactoringDetectorConfig {
 
     String getId();
 
-    double getMoveTypeThreshold();
-
-    double getRenameTypeThreshold();
-
-    double getMoveAndRenameTypeThreshold();
-
-    double getExtractSupertypeThreshold();
-
-    double getRenameMethodThreshold();
-
-    double getMoveMethodThreshold();
-
-    double getPullUpMethodThreshold();
-
-    double getPushDownMethodThreshold();
-
-    double getExtractMethodThreshold();
-
-    double getInlineMethodThreshold();
-
-    double getMoveAttributeThreshold();
-
-    double getPullUpAttributeThreshold();
-
-    double getPushDownAttributeThreshold();
+    double getThreshold(RelationshipType relationshipType);
 
     CodeSimilarityStrategy getCodeSimilarityStrategy();
 

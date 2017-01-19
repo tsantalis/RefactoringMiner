@@ -78,11 +78,7 @@ public class SDModelBuilder {
 	        if (entity != null) {
 	            List<SourceRepresentation> sourceSnippets = entry.getValue();
 	            if (sourceSnippets.size() > 0) {
-	                SourceRepresentation sr = sourceSnippets.get(0);
-	                for (int i = 1; i < sourceSnippets.size(); i++) {
-	                    sr = sr.combine(sourceSnippets.get(i));
-	                }
-	                entity.setClientCode(sr);
+	                entity.setClientCode(srbForAttributes.buildSourceRepresentation(entity, sourceSnippets));
 	            }
 	        }
 	    }

@@ -134,7 +134,8 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
         } else {
             type = model.createType(typeName, containerStack.peek(), sourceFilePath);
         }
-        type.setSourceCode(srbForTypes.buildSourceRepresentation(fileContent, node.getStartPosition(), node.getLength()));
+        //type.setSourceCode(srbForTypes.buildSourceRepresentation(fileContent, node.getStartPosition(), node.getLength()));
+        type.setSourceCode(srbForTypes.buildSourceRepresentation(type, fileContent, node));
 
         Set<String> annotations = extractAnnotationTypes(node.modifiers());
         type.setDeprecatedAnnotation(annotations.contains("Deprecated"));
@@ -203,7 +204,8 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
             method.setSourceCode(srbForMethods.buildEmptySourceRepresentation());
             method.setAbstract(true);
         } else {
-            method.setSourceCode(srbForMethods.buildSourceRepresentation(this.fileContent, body.getStartPosition() + 1, body.getLength() - 2));
+            //method.setSourceCode(srbForMethods.buildSourceRepresentation(this.fileContent, body.getStartPosition() + 1, body.getLength() - 2));
+            method.setSourceCode(srbForMethods.buildSourceRepresentation(method, this.fileContent, body));
             final List<String> references = new ArrayList<String>();
             body.accept(new DependenciesAstVisitor(true) {
                 @Override
@@ -221,7 +223,7 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
                     // if (stm == null) {
                     // System.out.println("null");
                     // }
-                    SourceRepresentation code = srbForAttributes.buildSourceRepresentation(fileContent, stm.getStartPosition(), stm.getLength());
+                    SourceRepresentation code = srbForAttributes.buildPartialSourceRepresentation(fileContent, stm);
                     addClientCode(attributeKey, code);
                 }
 
@@ -272,7 +274,7 @@ public class BindingsRecoveryAstVisitor extends ASTVisitor {
             Expression expression = fragment.getInitializer();
             if (expression != null) {
                 //attribute.setAssignment(srbForAttributes.buildSourceRepresentation(fileContent, expression.getStartPosition(), expression.getLength()));
-                addClientCode(attribute.key().toString(), srbForAttributes.buildSourceRepresentation(fileContent, expression.getStartPosition(), expression.getLength()));
+                addClientCode(attribute.key().toString(), srbForAttributes.buildPartialSourceRepresentation(fileContent, expression));
             }
             attribute.setClientCode(srbForAttributes.buildEmptySourceRepresentation());
         }

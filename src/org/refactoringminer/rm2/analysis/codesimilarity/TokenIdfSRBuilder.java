@@ -1,7 +1,7 @@
 package org.refactoringminer.rm2.analysis.codesimilarity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -11,8 +11,11 @@ import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.compiler.IScanner;
 import org.eclipse.jdt.core.compiler.ITerminalSymbols;
 import org.eclipse.jdt.core.compiler.InvalidInputException;
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.refactoringminer.rm2.analysis.SourceRepresentationBuilder;
 import org.refactoringminer.rm2.model.Multiset;
+import org.refactoringminer.rm2.model.SDEntity;
+import org.refactoringminer.rm2.model.SourceRepresentation;
 
 class TokenIdfSRBuilder implements SourceRepresentationBuilder {
 
@@ -34,7 +37,7 @@ class TokenIdfSRBuilder implements SourceRepresentationBuilder {
 //        }
 //    }
     
-    private void countDf(List<String> debug) {
+    private void countDf(Collection<String> debug) {
         dc++;
         HashSet<String> tokens = new HashSet<String>(debug);
         for (String token : tokens) {
@@ -50,21 +53,36 @@ class TokenIdfSRBuilder implements SourceRepresentationBuilder {
         if (key == null) {
             throw new NullPointerException("key cannot be null");
         }
-        return Math.log(((double) dc)/df.get(key));
+        return 1.0 + Math.log(((double) dc)/df.get(key));
     }
 
     @Override
     public void onComplete() {
-        System.out.println(String.format("Vocabulary size: %d", df.size()));
-        df.entrySet().stream().sorted(Map.Entry.comparingByValue()).forEachOrdered(entry -> {
-            double idf = Math.log(((double) dc)/entry.getValue());
-            System.out.println(String.format("%d %.2f %s", entry.getValue(), idf, entry.getKey()));
-        });
+        System.out.println(String.format("Vocabulary size: %d, Documents: %d", df.size(), dc));
+//        df.entrySet().stream().sorted(Map.Entry.comparingByValue()).forEachOrdered(entry -> {
+//            double idf = idf(entry.getKey());
+//            System.out.println(String.format("%d %.2f %s", entry.getValue(), idf, entry.getKey()));
+//        });
     }
 
     @Override
-    public TokenIdfSR buildSourceRepresentation(char[] charArray, int start, int length) {
-        return getTokenBasedSourceRepresentation(charArray, start, length, true);
+    public SourceRepresentation buildPartialSourceRepresentation(char[] charArray, ASTNode astNode) {
+        return getTokenBasedSourceRepresentation(charArray, astNode.getStartPosition(), astNode.getLength(), false);
+    }
+
+    @Override
+    public SourceRepresentation buildSourceRepresentation(SDEntity entity, char[] charArray, ASTNode astNode) {
+        return getTokenBasedSourceRepresentation(charArray, astNode.getStartPosition(), astNode.getLength(), true);
+    }
+
+    @Override
+    public SourceRepresentation buildSourceRepresentation(SDEntity entity, List<SourceRepresentation> parts) {
+        SourceRepresentation result = buildEmptySourceRepresentation();
+        for (SourceRepresentation sr : parts) {
+            result = result.combine(sr);
+        }
+        countDf(((TokenIdfSR) result).getTokenSet());
+        return result;
     }
 
     @Override
@@ -74,7 +92,7 @@ class TokenIdfSRBuilder implements SourceRepresentationBuilder {
 
     private TokenIdfSR getTokenBasedSourceRepresentation(char[] charArray, int start, int length, boolean count) {
         List<String> debug = new ArrayList<String>();
-        List<Integer> tokens = computeHashes(charArray, start, length, TOKENS, debug);
+        computeHashes(charArray, start, length, TOKENS, debug);
         if (count) countDf(debug);
         Multiset<String> multiset = new Multiset<String>();
         multiset.addAll(debug);
@@ -126,22 +144,6 @@ class TokenIdfSRBuilder implements SourceRepresentationBuilder {
         } catch (InvalidInputException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private static long[] computeBigrams(List<Integer> hashes) {
-        int n = hashes.size();
-        long[] bigrams = new long[n];
-        if (n > 0) {
-            bigrams[0] = 0L | hashes.get(0) & 0xFFFFFFFFL;
-            for (int i = 1; i < n; i++) {
-                int h1 = hashes.get(i - 1);
-                int h2 = hashes.get(i);
-                long bh = (long) h1 << 32 | h2 & 0xFFFFFFFFL;
-                bigrams[i] = bh;
-            }
-            Arrays.sort(bigrams);
-        }
-        return bigrams;
     }
 
     private static int hash(int h, char[] charArray, int tokenStart, int tokenEnd) {

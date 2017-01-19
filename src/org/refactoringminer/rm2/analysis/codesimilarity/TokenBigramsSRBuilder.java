@@ -10,7 +10,10 @@ import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.compiler.IScanner;
 import org.eclipse.jdt.core.compiler.ITerminalSymbols;
 import org.eclipse.jdt.core.compiler.InvalidInputException;
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.refactoringminer.rm2.analysis.SourceRepresentationBuilder;
+import org.refactoringminer.rm2.model.SDEntity;
+import org.refactoringminer.rm2.model.SourceRepresentation;
 
 class TokenBigramsSRBuilder implements SourceRepresentationBuilder {
 
@@ -26,6 +29,24 @@ class TokenBigramsSRBuilder implements SourceRepresentationBuilder {
     }
 
     @Override
+    public SourceRepresentation buildPartialSourceRepresentation(char[] charArray, ASTNode astNode) {
+        return buildSourceRepresentation(charArray, astNode.getStartPosition(), astNode.getLength());
+    }
+
+    @Override
+    public SourceRepresentation buildSourceRepresentation(SDEntity entity, char[] charArray, ASTNode astNode) {
+        return buildSourceRepresentation(charArray, astNode.getStartPosition(), astNode.getLength());
+    }
+
+    @Override
+    public SourceRepresentation buildSourceRepresentation(SDEntity entity, List<SourceRepresentation> parts) {
+        SourceRepresentation result = buildEmptySourceRepresentation();
+        for (SourceRepresentation sr : parts) {
+            result = result.combine(sr);
+        }
+        return result;
+    }
+
     public TokenBigramsSR buildSourceRepresentation(char[] charArray, int start, int length) {
         Map<Integer, String> debug = new HashMap<Integer, String>();
         List<Integer> lines = computeHashes(charArray, start, length, tokenType, debug);

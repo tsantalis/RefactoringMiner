@@ -112,38 +112,44 @@ public class ResultComparator {
     public void printDetails(PrintStream out, boolean groupRefactorings, EnumSet<RefactoringType> refTypesToConsider) {
         String[] labels = {"TN", "FP", "FN", "TP"};
         EnumSet<RefactoringType> ignore = EnumSet.complementOf(refTypesToConsider);
+        boolean headerPrinted = false;
         for (RefactoringSet expected : expectedMap.values()) {
-            out.println(getProjectRevisionId(expected.getProject(), expected.getRevision()));
-            out.print("Ref Type\tEntity before\tEntity after");
             Set<RefactoringRelationship> all = new HashSet<>();
             Set<RefactoringRelationship> expectedRefactorings = expected.ignoring(ignore).getRefactorings();
             all.addAll(expectedRefactorings); //
-            
+
+            StringBuilder header = new StringBuilder("Ref Type\tEntity before\tEntity after");
             for (String groupId : groupIds) {
-                out.print('\t');
-                out.print(groupId);
+                header.append('\t');
+                header.append(groupId);
                 RefactoringSet actual = resultMap.get(getResultId(expected.getProject(), expected.getRevision(), groupId));
                 if (actual != null) {
                     all.addAll(actual.ignoring(ignore).getRefactorings()); //
                 }
             }
-            out.println();
-            ArrayList<RefactoringRelationship> allList = new ArrayList<>();
-            allList.addAll(all);
-            Collections.sort(allList);
-            for (RefactoringRelationship r : allList) {
-                out.print(r.toString());
-                for (String groupId : groupIds) {
-                    RefactoringSet actual = resultMap.get(getResultId(expected.getProject(), expected.getRevision(), groupId));
-                    out.print('\t');
-                    if (actual != null) {
-                        Set<RefactoringRelationship> actualRefactorings = actual.ignoring(ignore).getRefactorings();
-                        int correct = expectedRefactorings.contains(r) ? 2 : 0;
-                        int found = actualRefactorings.contains(r) ? 1 : 0;
-                        out.print(labels[correct + found]);
+            if (!headerPrinted) {
+                out.println(header.toString());
+                headerPrinted = true;
+            }
+            if (!all.isEmpty()) {
+                out.println(getProjectRevisionId(expected.getProject(), expected.getRevision()));
+                ArrayList<RefactoringRelationship> allList = new ArrayList<>();
+                allList.addAll(all);
+                Collections.sort(allList);
+                for (RefactoringRelationship r : allList) {
+                    out.print(r.toString());
+                    for (String groupId : groupIds) {
+                        RefactoringSet actual = resultMap.get(getResultId(expected.getProject(), expected.getRevision(), groupId));
+                        out.print('\t');
+                        if (actual != null) {
+                            Set<RefactoringRelationship> actualRefactorings = actual.ignoring(ignore).getRefactorings();
+                            int correct = expectedRefactorings.contains(r) ? 2 : 0;
+                            int found = actualRefactorings.contains(r) ? 1 : 0;
+                            out.print(labels[correct + found]);
+                        }
                     }
+                    out.println();
                 }
-                out.println();
             }
         }
         out.println();

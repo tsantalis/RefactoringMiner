@@ -35,7 +35,9 @@ public class BenchmarkDataset {
             .add(RefactoringType.MOVE_OPERATION, "org.jbpm.services.task.commands.TaskQueryDataCommand.execute(Context)", "org.jbpm.services.task.commands.TaskQueryWhereCommand.execute(Context)")
             .add(RefactoringType.RENAME_METHOD, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.taskOwner(String[])", "org.jbpm.services.task.impl.TaskQueryBuilderImpl.actualOwner(String[])")
             .add(RefactoringType.RENAME_METHOD, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.orderBy(OrderBy)", "org.jbpm.services.task.impl.TaskQueryBuilderImpl.getOrderByListId(OrderBy)")
-            .add(RefactoringType.RENAME_METHOD, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.buildQuery()", "org.jbpm.services.task.impl.TaskQueryBuilderImpl.build()");
+            .add(RefactoringType.RENAME_METHOD, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.buildQuery()", "org.jbpm.services.task.impl.TaskQueryBuilderImpl.build()")
+            .add(RefactoringType.RENAME_CLASS, "org.jbpm.query.jpa.data.QueryWhere.ParameterType", "org.jbpm.query.jpa.data.QueryWhere.QueryCriteriaType");
+            
         at("https://github.com/gradle/gradle.git", "44aab62")
             .add(RefactoringType.EXTRACT_INTERFACE, "org.gradle.api.internal.file.FileResolver", "org.gradle.internal.file.RelativeFilePathResolver");
         at("https://github.com/jenkinsci/workflow-plugin.git", "d0e374c")

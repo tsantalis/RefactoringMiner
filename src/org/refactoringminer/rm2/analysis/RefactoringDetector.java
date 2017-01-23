@@ -49,7 +49,7 @@ public class RefactoringDetector {
 
                 protected void onMatch(SDModel m, SDType entityBefore, SDType entityAfter) {
                     // There might be a MOVE relationship without changing packages (source folder)
-                    if (!entityBefore.key().equals(entityAfter.key())) {
+                    if (!entityBefore.fullName().equals(entityAfter.fullName())) {
                         m.addRefactoring(new SDMoveClass(entityBefore, entityAfter));
                     }
                 }

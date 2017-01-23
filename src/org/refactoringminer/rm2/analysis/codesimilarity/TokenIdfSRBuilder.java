@@ -58,7 +58,7 @@ class TokenIdfSRBuilder implements SourceRepresentationBuilder {
 
     @Override
     public void onComplete() {
-        System.out.println(String.format("Vocabulary size: %d, Documents: %d", df.size(), dc));
+        //System.out.println(String.format("Vocabulary size: %d, Documents: %d", df.size(), dc));
 //        df.entrySet().stream().sorted(Map.Entry.comparingByValue()).forEachOrdered(entry -> {
 //            double idf = idf(entry.getKey());
 //            System.out.println(String.format("%d %.2f %s", entry.getValue(), idf, entry.getKey()));

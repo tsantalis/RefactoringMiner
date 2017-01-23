@@ -10,18 +10,18 @@ public class RefactoringDetectorConfigImpl implements RefactoringDetectorConfig 
 
     private String id = "rm2-default";
 
-    private double defaultThreshold = 0.6;
+    private double defaultThreshold = 0.5;
     
     private Map<RelationshipType, Double> thresholds = new HashMap<>();
     
     private CodeSimilarityStrategy codeSimilarityStrategy = CodeSimilarityStrategy.BIGRAM;
-    
+
     public RefactoringDetectorConfigImpl() {
-        setThreshold(RelationshipType.MOVE_TYPE, 0.4);
-        setThreshold(RelationshipType.RENAME_TYPE, 0.4);
-        setThreshold(RelationshipType.MOVE_FIELD, 0.2);
-        setThreshold(RelationshipType.PULL_UP_FIELD, 0.1);
-        setThreshold(RelationshipType.PUSH_DOWN_FIELD, 0.1);
+//        setThreshold(RelationshipType.MOVE_TYPE, 0.6);
+//        setThreshold(RelationshipType.RENAME_TYPE, 0.4);
+//        setThreshold(RelationshipType.MOVE_FIELD, 0.2);
+//        setThreshold(RelationshipType.PULL_UP_FIELD, 0.1);
+//        setThreshold(RelationshipType.PUSH_DOWN_FIELD, 0.1);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class RefactoringDetectorConfigImpl implements RefactoringDetectorConfig 
     }
 
     public void setThreshold(RelationshipType relationshipType, double value) {
-        thresholds.put(relationshipType, 0.1);
+        thresholds.put(relationshipType, value);
     }
 
     public double getDefaultThreshold() {
@@ -60,6 +60,16 @@ public class RefactoringDetectorConfigImpl implements RefactoringDetectorConfig 
     public RefactoringDetectorConfig setCodeSimilarityStrategy(CodeSimilarityStrategy codeSimilarityStrategy) {
         this.codeSimilarityStrategy = codeSimilarityStrategy;
         return this;
+    }
+
+    @Override
+    protected RefactoringDetectorConfigImpl clone() throws CloneNotSupportedException {
+        RefactoringDetectorConfigImpl c = new RefactoringDetectorConfigImpl();
+        c.id = id;
+        c.defaultThreshold = defaultThreshold;
+        c.codeSimilarityStrategy = codeSimilarityStrategy;
+        c.thresholds = new HashMap<>(thresholds);
+        return c;
     }
 
 }

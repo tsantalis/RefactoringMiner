@@ -63,7 +63,7 @@ public class RefactoringDetectorConfigImpl implements RefactoringDetectorConfig 
     }
 
     @Override
-    protected RefactoringDetectorConfigImpl clone() throws CloneNotSupportedException {
+    public RefactoringDetectorConfigImpl clone() {
         RefactoringDetectorConfigImpl c = new RefactoringDetectorConfigImpl();
         c.id = id;
         c.defaultThreshold = defaultThreshold;
@@ -72,4 +72,22 @@ public class RefactoringDetectorConfigImpl implements RefactoringDetectorConfig 
         return c;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("RefactoringDetectorConfig(");
+        sb.append(id);
+        sb.append(", ");
+        sb.append(codeSimilarityStrategy.toString());
+        sb.append(")");
+        for (RelationshipType type : RelationshipType.values()) {
+            if (thresholds.containsKey(type)) {
+                sb.append("\n\t");
+                sb.append(type.toString());
+                sb.append(": ");
+                sb.append(thresholds.get(type));
+            }
+        }
+        return sb.toString();
+    }
 }

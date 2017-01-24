@@ -49,7 +49,7 @@ public class ResultComparator {
 
     public void printSummary(PrintStream out, boolean groupRefactorings, EnumSet<RefactoringType> refTypesToConsider) {
         for (String groupId : groupIds) {
-            CompareResult r = getCombinedResult(groupId, groupRefactorings, refTypesToConsider);
+            CompareResult r = getCompareResult(groupId, groupRefactorings, refTypesToConsider);
             out.println("# " + groupId + " #");
             out.println("Total  " + getResultLine(r.getTPCount(), r.getFPCount(), r.getFNCount()));
 
@@ -66,7 +66,7 @@ public class ResultComparator {
         out.println();
     }
 
-    private CompareResult getCombinedResult(String groupId, boolean groupRefactorings, EnumSet<RefactoringType> refTypesToConsider) {
+    public CompareResult getCompareResult(String groupId, boolean groupRefactorings, EnumSet<RefactoringType> refTypesToConsider) {
         Set<Object> truePositives = new HashSet<>();
         Set<Object> falsePositives = new HashSet<>();
         Set<Object> falseNegatives = new HashSet<>();
@@ -104,9 +104,17 @@ public class ResultComparator {
     }
 
     private String getResultLine(int tp, int fp, int fn) {
-        double precision = ((double) tp / (tp + fp));
-        double recall = ((double) tp) / (tp + fn);
+        double precision = getPrecision(tp, fp, fn);
+        double recall = getRecall(tp, fp, fn);
         return String.format("TP: %3d  FP: %3d  FN: %3d  Prec.: %.3f  Recall: %.3f", tp, fp, fn, precision, recall);
+    }
+
+    private static double getPrecision(int tp, int fp, int fn) {
+        return tp == 0 ? 0.0 : ((double) tp / (tp + fp));
+    }
+
+    private static double getRecall(int tp, int fp, int fn) {
+        return tp == 0 ? 0.0 : ((double) tp) / (tp + fn);
     }
 
     public void printDetails(PrintStream out, boolean groupRefactorings, EnumSet<RefactoringType> refTypesToConsider) {
@@ -163,7 +171,7 @@ public class ResultComparator {
         return project.substring(0, project.length() - 4) + "/commit/" + revision + ";" + groupId;
     }
 
-    private static class CompareResult {
+    public static class CompareResult {
         private final Set<Object> truePositives;
         private final Set<Object> falsePositives;
         private final Set<Object> falseNegatives;
@@ -186,6 +194,29 @@ public class ResultComparator {
             return this.falseNegatives.size();
         }
 
+        public double getPrecision() {
+            int tp = this.truePositives.size();
+            int fp = this.falsePositives.size();
+            int fn = this.falseNegatives.size();
+            return ResultComparator.getPrecision(tp, fp, fn);
+        }
+        
+        public double getRecall() {
+            int tp = this.truePositives.size();
+            int fp = this.falsePositives.size();
+            int fn = this.falseNegatives.size();
+            return ResultComparator.getRecall(tp, fp, fn);
+        }
+        
+        public double getF1() {
+            int tp = this.truePositives.size();
+            int fp = this.falsePositives.size();
+            int fn = this.falseNegatives.size();
+            double precision = ResultComparator.getPrecision(tp, fp, fn);
+            double recall = ResultComparator.getRecall(tp, fp, fn);
+            return tp == 0 ? 0.0 : 2.0 * precision * recall / (precision + recall);
+        }
+
         public int getTPCount(RefactoringType rt) {
             return (int) this.truePositives.stream().filter(r -> r.toString().startsWith(rt.getDisplayName())).count();
         }
@@ -204,7 +235,7 @@ public class ResultComparator {
         String tempDir = "tmp";
         String resultCacheDir = "tmpResult";
         String projectName = cloneUrl.substring(cloneUrl.lastIndexOf('/') + 1, cloneUrl.lastIndexOf('.'));
-        File cachedResult = new File(resultCacheDir + "/" + projectName + "-" + commitId + "-" + rm.getConfigId());
+        File cachedResult = new File(resultCacheDir + "/" + rm.getConfigId() + "-" + projectName + "-" + commitId);
         if (cachedResult.exists()) {
             RefactoringSet rs = new RefactoringSet(cloneUrl, commitId);
             rs.readFromFile(cachedResult);

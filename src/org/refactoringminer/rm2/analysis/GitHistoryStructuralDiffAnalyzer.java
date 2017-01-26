@@ -119,15 +119,27 @@ public class GitHistoryStructuralDiffAnalyzer {
 		SDModelBuilder builder = new SDModelBuilder(config);
 //		if (!filesBefore.isEmpty() && !filesCurrent.isEmpty()) {
 			// Checkout and build model for current commit
-			gitService.checkout(repository, commitId);
-			logger.info(String.format("Analyzing code after (%s) ...", commitId));
-			builder.analyzeAfter(projectFolder, filesCurrent);
-			
-			// Checkout and build model for parent commit
-			String parentCommit = currentCommit.getParent(0).getName();
-			gitService.checkout(repository, parentCommit);
-			logger.info(String.format("Analyzing code before (%s) ...", parentCommit));
-			builder.analyzeBefore(projectFolder, filesBefore);
+	    File folderAfter = new File(projectFolder.getParentFile(), "v1/" + projectFolder.getName() + "-" + commitId.substring(0, 7));
+	    if (folderAfter.exists()) {
+	        logger.info(String.format("Analyzing code after (%s) ...", commitId));
+	        builder.analyzeAfter(folderAfter, filesCurrent);
+	    } else {
+	        gitService.checkout(repository, commitId);
+	        logger.info(String.format("Analyzing code after (%s) ...", commitId));
+	        builder.analyzeAfter(projectFolder, filesCurrent);
+	    }
+	
+	    String parentCommit = currentCommit.getParent(0).getName();
+		File folderBefore = new File(projectFolder.getParentFile(), "v0/" + projectFolder.getName() + "-" + commitId.substring(0, 7));
+		if (folderBefore.exists()) {
+		    logger.info(String.format("Analyzing code before (%s) ...", parentCommit));
+            builder.analyzeBefore(projectFolder, filesBefore);
+		} else {
+		    // Checkout and build model for parent commit
+		    gitService.checkout(repository, parentCommit);
+		    logger.info(String.format("Analyzing code before (%s) ...", parentCommit));
+		    builder.analyzeBefore(projectFolder, filesBefore);
+		}
 //		}
 		final SDModel model = builder.buildModel();
 		handler.handle(currentCommit, model);

@@ -32,7 +32,7 @@ public class BenchmarkDataset {
             .add(RefactoringType.RENAME_CLASS, "org.jbpm.services.task.commands.TaskQueryDataCommand", "org.jbpm.services.task.commands.TaskQueryWhereCommand")
             .add(RefactoringType.RENAME_METHOD, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.initiator(String[])", "org.jbpm.services.task.impl.TaskQueryBuilderImpl.createdBy(String[])")
             .add(RefactoringType.RENAME_METHOD, "org.jbpm.query.jpa.data.QueryWhere.addAppropriateParam(String,T[])", "org.jbpm.query.jpa.data.QueryWhere.addParameter(String,T[])")
-            .add(RefactoringType.MOVE_OPERATION, "org.jbpm.services.task.commands.TaskQueryDataCommand.execute(Context)", "org.jbpm.services.task.commands.TaskQueryWhereCommand.execute(Context)")
+            //.add(RefactoringType.MOVE_OPERATION, "org.jbpm.services.task.commands.TaskQueryDataCommand.execute(Context)", "org.jbpm.services.task.commands.TaskQueryWhereCommand.execute(Context)")
             .add(RefactoringType.RENAME_METHOD, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.taskOwner(String[])", "org.jbpm.services.task.impl.TaskQueryBuilderImpl.actualOwner(String[])")
             .add(RefactoringType.RENAME_METHOD, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.orderBy(OrderBy)", "org.jbpm.services.task.impl.TaskQueryBuilderImpl.getOrderByListId(OrderBy)")
             .add(RefactoringType.RENAME_METHOD, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.buildQuery()", "org.jbpm.services.task.impl.TaskQueryBuilderImpl.build()")
@@ -62,11 +62,18 @@ public class BenchmarkDataset {
             .add(RefactoringType.RENAME_METHOD, "buildcraft.builders.TileBuilder.getNumberOfRequests()", "buildcraft.builders.TileBuilder.getRequestsCount()");
         at("https://github.com/droolsjbpm/drools.git", "1bf2875")
             .add(RefactoringType.RENAME_METHOD, "org.drools.core.phreak.PhreakTimerNode.TimerAction.requiresImmediateFlushingIfNotFiring()", "org.drools.core.phreak.PhreakTimerNode.TimerAction.requiresImmediateFlushing()")
-            .add(RefactoringType.MOVE_OPERATION, "org.drools.reteoo.common.ReteAgenda.notifyHalt()", "org.drools.core.phreak.SynchronizedBypassPropagationList.notifyHalt()")
-            .add(RefactoringType.MOVE_OPERATION, "org.drools.core.common.DefaultAgenda.notifyHalt()", "org.drools.core.phreak.SynchronizedBypassPropagationList.notifyHalt()")
+            .add(RefactoringType.MOVE_OPERATION, "org.drools.core.common.InternalAgenda.notifyHalt()", "org.drools.core.common.InternalWorkingMemory.notifyHalt()")
+            //.add(RefactoringType.MOVE_OPERATION, "org.drools.reteoo.common.ReteAgenda.notifyHalt()", "org.drools.core.phreak.SynchronizedBypassPropagationList.notifyHalt()")
+            //.add(RefactoringType.MOVE_OPERATION, "org.drools.core.common.DefaultAgenda.notifyHalt()", "org.drools.core.phreak.SynchronizedBypassPropagationList.notifyHalt()")
             .add(RefactoringType.EXTRACT_OPERATION, "org.drools.core.phreak.SynchronizedPropagationList.addEntry(PropagationEntry)", "org.drools.core.phreak.SynchronizedPropagationList.internalAddEntry(PropagationEntry)")
             .add(RefactoringType.RENAME_METHOD, "org.drools.core.phreak.PropagationEntry.AbstractPropagationEntry.requiresImmediateFlushingIfNotFiring()", "org.drools.core.phreak.PropagationEntry.AbstractPropagationEntry.requiresImmediateFlushing()")
             .add(RefactoringType.RENAME_METHOD, "org.drools.core.phreak.RuleExecutor.isHighestSalience(RuleAgendaItem)", "org.drools.core.phreak.RuleExecutor.isHigherSalience(RuleAgendaItem)")
+            // Rename of abstract method
+            .add(RefactoringType.RENAME_METHOD, "org.drools.core.common.InternalAgenda.executeIfNotFiring(Runnable)", "org.drools.core.common.InternalAgenda.executeTask(ExecutableEntry)")
+            // Rename of two concrete implementations
+            .add(RefactoringType.RENAME_METHOD, "org.drools.reteoo.common.ReteAgenda.executeIfNotFiring(Runnable)", "org.drools.reteoo.common.ReteAgenda.executeTask(ExecutableEntry)")
+            .add(RefactoringType.RENAME_METHOD, "org.drools.core.common.DefaultAgenda.executeIfNotFiring(Runnable)", "org.drools.core.common.DefaultAgenda.executeTask(ExecutableEntry)")
+            
             .add(RefactoringType.EXTRACT_OPERATION, "org.drools.core.common.AgendaGroupQueueImpl.(String,InternalKnowledgeBase)", "org.drools.core.common.AgendaGroupQueueImpl.initPriorityQueue(InternalKnowledgeBase)")
             .add(RefactoringType.PUSH_DOWN_ATTRIBUTE, "org.drools.core.impl.StatefulKnowledgeSessionImpl.evaluatingActionQueue", "org.drools.reteoo.common.ReteWorkingMemory.evaluatingActionQueue");
         at("https://github.com/jersey/jersey.git", "d94ca2b")

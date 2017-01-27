@@ -2024,10 +2024,10 @@
 	"author": "bennidi",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class TestEvent moved from net.engio.mbassy.ConditionalHandlers to net.engio.mbassy.ConditionalHandlerTest"
+		"description": "Move Class net.engio.mbassy.ConditionalHandlers.ConditionalMessageListener moved to net.engio.mbassy.ConditionalHandlerTest.ConditionalMessageListener"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class ConditionalMessageListener moved from net.engio.mbassy.ConditionalHandlers to net.engio.mbassy.ConditionalHandlerTest"
+		"description": "Move Class net.engio.mbassy.ConditionalHandlers.TestEvent moved to net.engio.mbassy.ConditionalHandlerTest.TestEvent"
 	}],
 	"time": "6/17/15 7:55 AM",
 	"id": 1117602
@@ -2526,6 +2526,10 @@
 	"refactorings": [{
 		"type": "Move Attribute",
 		"description": "Move Attribute private userWriter : UserJsonWriter from class org.sonar.server.issue.ws.IssueJsonWriter to class org.sonar.server.issue.InternalRubyIssueService"
+	},
+	{
+		"type": "Move Attribute",
+		"description": "Move Attribute package userWriter : UserJsonWriter from class org.sonar.server.issue.ws.IssueJsonWriter to class org.sonar.server.issue.InternalRubyIssueServiceTest"
 	}],
 	"time": "6/19/15 9:57 AM",
 	"id": 1119473
@@ -3785,7 +3789,7 @@
 	"author": "Szczepan Faber",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class MatchersPrinter moved from org.mockito.internal.matchers to org.mockito.internal.matchers.text"
+		"description": "Move Class org.mockito.internal.matchers.MatchersPrinter moved to org.mockito.internal.matchers.text.MatchersPrinter"
 	}, {
 		"type": "Rename Package",
 		"description": "Rename Package org.mockito.internal.util.text to org.mockito.internal.matchers.text"
@@ -5324,7 +5328,7 @@
 	"author": "Claus Ibsen",
 	"refactorings": [{
 		"type": "Extract Interface",
-		"description": "Extract Interface org.apache.camel.model.OtherAttributesAware from class org.apache.camel.model.ProcessorDefinition7ccbd4693288dbdbc2e6844aa0877640d63fbd04"
+		"description": "Extract Interface org.apache.camel.model.OtherAttributesAware from class org.apache.camel.model.ProcessorDefinition"
 	}],
 	"time": "7/9/15 1:06 PM",
 	"id": 1138152
@@ -8003,45 +8007,57 @@
 	"sha1": "f1e26fa73074a89680a2e1756d85eb80ad87c3bf",
 	"repository": "https://github.com/hazelcast/hazelcast.git",
 	"author": "Jaromir Hamala",
-	"refactorings": [{
+	"refactorings": [ {
 		"type": "Move Class",
-		"description": "Move Class InstanceOfPredicate moved from com.hazelcast.query.Predicates to com.hazelcast.query.impl.predicates"
-	}, {
+		"description":"Move Class com.hazelcast.query.Predicates.RegexPredicate moved to com.hazelcast.query.impl.predicates.RegexPredicate"
+	},
+ {
 		"type": "Move Class",
-		"description": "Move Class InPredicate moved from com.hazelcast.query.Predicates to com.hazelcast.query.impl.predicates"
-	}, {
+		"description":"Move Class com.hazelcast.query.Predicates.OrPredicate moved to com.hazelcast.query.impl.predicates.OrPredicate"
+	},
+ {
 		"type": "Move Class",
-		"description": "Move Class OrPredicate moved from com.hazelcast.query.Predicates to com.hazelcast.query.impl.predicates"
-	}, {
+		"description":"Move Class com.hazelcast.query.Predicates.EqualPredicate moved to com.hazelcast.query.impl.predicates.EqualPredicate"
+	},
+ {
 		"type": "Move Class",
-		"description": "Move Class RegexPredicate moved from com.hazelcast.query.Predicates to com.hazelcast.query.impl.predicates"
-	}, {
+		"description":"Move Class com.hazelcast.query.Predicates.InstanceOfPredicate moved to com.hazelcast.query.impl.predicates.InstanceOfPredicate"
+	},
+ {
 		"type": "Move Class",
-		"description": "Move Class AbstractPredicate moved from com.hazelcast.query.Predicates to com.hazelcast.query.impl.predicates"
-	}, {
+		"description":"Move Class com.hazelcast.query.Predicates.NotPredicate moved to com.hazelcast.query.impl.predicates.NotPredicate"
+	},
+ {
 		"type": "Move Class",
-		"description": "Move Class GreaterLessPredicate moved from com.hazelcast.query.Predicates to com.hazelcast.query.impl.predicates"
-	}, {
+		"description":"Move Class com.hazelcast.query.Predicates.GreaterLessPredicate moved to com.hazelcast.query.impl.predicates.GreaterLessPredicate"
+	},
+ {
 		"type": "Move Class",
-		"description": "Move Class NotEqualPredicate moved from com.hazelcast.query.Predicates to com.hazelcast.query.impl.predicates"
-	}, {
+		"description":"Move Class com.hazelcast.query.Predicates.AndPredicate moved to com.hazelcast.query.impl.predicates.AndPredicate"
+	},
+ {
 		"type": "Move Class",
-		"description": "Move Class AndPredicate moved from com.hazelcast.query.Predicates to com.hazelcast.query.impl.predicates"
-	}, {
+		"description":"Move Class com.hazelcast.query.Predicates.LikePredicate moved to com.hazelcast.query.impl.predicates.LikePredicate"
+	},
+ {
 		"type": "Move Class",
-		"description": "Move Class NotPredicate moved from com.hazelcast.query.Predicates to com.hazelcast.query.impl.predicates"
-	}, {
+		"description":"Move Class com.hazelcast.query.Predicates.BetweenPredicate moved to com.hazelcast.query.impl.predicates.BetweenPredicate"
+	},
+ {
 		"type": "Move Class",
-		"description": "Move Class LikePredicate moved from com.hazelcast.query.Predicates to com.hazelcast.query.impl.predicates"
-	}, {
+		"description":"Move Class com.hazelcast.query.Predicates.InPredicate moved to com.hazelcast.query.impl.predicates.InPredicate"
+	},
+ {
 		"type": "Move Class",
-		"description": "Move Class ILikePredicate moved from com.hazelcast.query.Predicates to com.hazelcast.query.impl.predicates"
-	}, {
+		"description":"Move Class com.hazelcast.query.Predicates.AbstractPredicate moved to com.hazelcast.query.impl.predicates.AbstractPredicate"
+	},
+ {
 		"type": "Move Class",
-		"description": "Move Class EqualPredicate moved from com.hazelcast.query.Predicates to com.hazelcast.query.impl.predicates"
-	}, {
+		"description":"Move Class com.hazelcast.query.Predicates.NotEqualPredicate moved to com.hazelcast.query.impl.predicates.NotEqualPredicate"
+	},
+ {
 		"type": "Move Class",
-		"description": "Move Class BetweenPredicate moved from com.hazelcast.query.Predicates to com.hazelcast.query.impl.predicates"
+		"description":"Move Class com.hazelcast.query.Predicates.ILikePredicate moved to com.hazelcast.query.impl.predicates.ILikePredicate"
 	}],
 	"time": "7/27/15 10:56 AM",
 	"id": 1150594
@@ -8742,7 +8758,7 @@
 	"author": "Pavel Bucek",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class HttpUrlConnector moved from org.glassfish.jersey.client to org.glassfish.jersey.client.internal"
+		"description": "Move Class org.glassfish.jersey.client.HttpUrlConnector moved to org.glassfish.jersey.client.internal.HttpUrlConnector"
 	}],
 	"time": "8/3/15 2:32 PM",
 	"id": 1156317

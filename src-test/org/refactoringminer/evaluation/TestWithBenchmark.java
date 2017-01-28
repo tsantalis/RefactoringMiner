@@ -24,12 +24,17 @@ public class TestWithBenchmark {
         config = calibrate(oracle, config, RelationshipType.MOVE_TYPE, RefactoringType.MOVE_CLASS);
         config = calibrate(oracle, config, RelationshipType.RENAME_TYPE, RefactoringType.RENAME_CLASS);
         config = calibrate(oracle, config, RelationshipType.EXTRACT_SUPERTYPE, RefactoringType.EXTRACT_SUPERCLASS, RefactoringType.EXTRACT_INTERFACE);
+        
         config = calibrate(oracle, config, RelationshipType.MOVE_METHOD, RefactoringType.MOVE_OPERATION);
         config = calibrate(oracle, config, RelationshipType.RENAME_METHOD, RefactoringType.RENAME_METHOD);
         config = calibrate(oracle, config, RelationshipType.PULL_UP_METHOD, RefactoringType.PULL_UP_OPERATION);
         config = calibrate(oracle, config, RelationshipType.PUSH_DOWN_METHOD, RefactoringType.PUSH_DOWN_OPERATION);
         config = calibrate(oracle, config, RelationshipType.EXTRACT_METHOD, RefactoringType.EXTRACT_OPERATION);
         config = calibrate(oracle, config, RelationshipType.INLINE_METHOD, RefactoringType.INLINE_OPERATION);
+        
+        config = calibrate(oracle, config, RelationshipType.PULL_UP_FIELD, RefactoringType.PULL_UP_ATTRIBUTE);
+        config = calibrate(oracle, config, RelationshipType.PUSH_DOWN_FIELD, RefactoringType.PUSH_DOWN_ATTRIBUTE);
+        config = calibrate(oracle, config, RelationshipType.MOVE_FIELD, RefactoringType.MOVE_ATTRIBUTE);
         
         config.setId("rm2-idf-final");
         System.out.println(config.toString());

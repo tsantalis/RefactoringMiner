@@ -16,6 +16,13 @@ public class BenchmarkDataset {
             .add(RefactoringType.MOVE_OPERATION, "com.linkedin.restli.examples.TestCompressionServer.testEncodingGeneration(EncodingType[],String)", "com.linkedin.r2.filter.compression.TestClientCompressionFilter.testEncodingGeneration(EncodingType[],String)")
             .add(RefactoringType.RENAME_METHOD, "com.linkedin.r2.transport.http.client.HttpClientFactory.getCompressionConfig(String,String)", "com.linkedin.r2.transport.http.client.HttpClientFactory.getRequestCompressionConfig(String,EncodingType)")
             .add(RefactoringType.EXTRACT_OPERATION, "com.linkedin.r2.filter.compression.ClientCompressionFilter.onRestRequest(RestRequest,RequestContext,Map,NextFilter)", "com.linkedin.r2.filter.compression.ClientCompressionFilter.addResponseCompressionHeaders(CompressionOption,RestRequest)")
+            
+            .add(RefactoringType.EXTRACT_OPERATION, "com.linkedin.restli.examples.TestCompressionServer.test406Error(String)", "com.linkedin.restli.examples.TestCompressionServer.addCompressionHeaders(HttpGet,String)")
+            .add(RefactoringType.EXTRACT_OPERATION, "com.linkedin.restli.examples.TestCompressionServer.testAcceptEncoding(String,String)", "com.linkedin.restli.examples.TestCompressionServer.addCompressionHeaders(HttpGet,String)")
+            .add(RefactoringType.EXTRACT_OPERATION, "com.linkedin.restli.examples.TestCompressionServer.testCompatibleDefault(String,String)", "com.linkedin.restli.examples.TestCompressionServer.addCompressionHeaders(HttpGet,String)")
+            .add(RefactoringType.EXTRACT_OPERATION, "com.linkedin.restli.examples.TestCompressionServer.testCompressionBetter(Compressor)", "com.linkedin.restli.examples.TestCompressionServer.addCompressionHeaders(HttpGet,String)")
+            .add(RefactoringType.EXTRACT_OPERATION, "com.linkedin.restli.examples.TestCompressionServer.testCompressionWorse(Compressor)", "com.linkedin.restli.examples.TestCompressionServer.addCompressionHeaders(HttpGet,String)")
+            
             .add(RefactoringType.MOVE_OPERATION, "com.linkedin.r2.filter.CompressionConfig.shouldCompressRequest(int,CompressionOption)", "com.linkedin.r2.filter.compression.ClientCompressionFilter.shouldCompressRequest(int,CompressionOption)")
             .add(RefactoringType.MOVE_OPERATION, "com.linkedin.restli.examples.TestCompressionServer.contentEncodingGeneratorDataProvider()", "com.linkedin.r2.filter.compression.TestClientCompressionFilter.contentEncodingGeneratorDataProvider()")
             .add(RefactoringType.INLINE_OPERATION, "com.linkedin.restli.examples.RestLiIntTestServer.createServer(Engine,int,String,boolean,int,List,List)", "com.linkedin.restli.examples.RestLiIntTestServer.createServer(Engine,int,String,boolean,int)")
@@ -36,6 +43,15 @@ public class BenchmarkDataset {
             .add(RefactoringType.RENAME_METHOD, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.taskOwner(String[])", "org.jbpm.services.task.impl.TaskQueryBuilderImpl.actualOwner(String[])")
             .add(RefactoringType.RENAME_METHOD, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.orderBy(OrderBy)", "org.jbpm.services.task.impl.TaskQueryBuilderImpl.getOrderByListId(OrderBy)")
             .add(RefactoringType.RENAME_METHOD, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.buildQuery()", "org.jbpm.services.task.impl.TaskQueryBuilderImpl.build()")
+            
+            .add(RefactoringType.EXTRACT_OPERATION, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.(String,CommandService)", "org.jbpm.query.jpa.data.QueryWhere.setAscending(String)")
+            .add(RefactoringType.EXTRACT_OPERATION, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.clear()", "org.jbpm.query.jpa.data.QueryWhere.setAscending(String)")
+            .add(RefactoringType.EXTRACT_OPERATION, "org.jbpm.services.task.impl.TaskQueryServiceImpl.getTasksByVariousFields(String,Map,boolean)", "org.jbpm.query.jpa.data.QueryWhere.setAscending(String)")
+            
+            .add(RefactoringType.INLINE_OPERATION, "org.jbpm.query.jpa.data.QueryWhere.getAppropriateQueryCriteria(String,int)", "org.jbpm.query.jpa.data.QueryWhere.addParameter(String,T[])")
+            .add(RefactoringType.INLINE_OPERATION, "org.jbpm.query.jpa.data.QueryWhere.getAppropriateQueryCriteria(String,int)", "org.jbpm.query.jpa.data.QueryWhere.addRangeParameter(String,T,boolean)")
+            .add(RefactoringType.INLINE_OPERATION, "org.jbpm.query.jpa.data.QueryWhere.resetGroup()", "org.jbpm.query.jpa.data.QueryWhere.clear()")
+            
             .add(RefactoringType.RENAME_CLASS, "org.jbpm.query.jpa.data.QueryWhere.ParameterType", "org.jbpm.query.jpa.data.QueryWhere.QueryCriteriaType");
             
         at("https://github.com/gradle/gradle.git", "44aab62")
@@ -66,6 +82,17 @@ public class BenchmarkDataset {
             //.add(RefactoringType.MOVE_OPERATION, "org.drools.reteoo.common.ReteAgenda.notifyHalt()", "org.drools.core.phreak.SynchronizedBypassPropagationList.notifyHalt()")
             //.add(RefactoringType.MOVE_OPERATION, "org.drools.core.common.DefaultAgenda.notifyHalt()", "org.drools.core.phreak.SynchronizedBypassPropagationList.notifyHalt()")
             .add(RefactoringType.EXTRACT_OPERATION, "org.drools.core.phreak.SynchronizedPropagationList.addEntry(PropagationEntry)", "org.drools.core.phreak.SynchronizedPropagationList.internalAddEntry(PropagationEntry)")
+            
+            .add(RefactoringType.EXTRACT_OPERATION, "org.drools.core.common.DefaultAgenda.fireUntilHalt(AgendaFilter)", "org.drools.core.common.DefaultAgenda.waitAndEnterExecutionState(ExecutionState)")
+            .add(RefactoringType.EXTRACT_OPERATION, "org.drools.core.rule.SlidingTimeWindow.assertFact(Object,InternalFactHandle,PropagationContext,InternalWorkingMemory)", "org.drools.core.rule.SlidingTimeWindow.SlidingTimeWindowContext.add(EventFactHandle)")
+            .add(RefactoringType.EXTRACT_OPERATION, "org.drools.core.rule.SlidingTimeWindow.assertFact(Object,InternalFactHandle,PropagationContext,InternalWorkingMemory)", "org.drools.core.rule.SlidingTimeWindow.SlidingTimeWindowContext.peek()")
+            .add(RefactoringType.EXTRACT_OPERATION, "org.drools.core.rule.SlidingTimeWindow.expireFacts(Object,PropagationContext,InternalWorkingMemory)", "org.drools.core.rule.SlidingTimeWindow.SlidingTimeWindowContext.peek()")
+            .add(RefactoringType.EXTRACT_OPERATION, "org.drools.core.rule.SlidingTimeWindow.retractFact(Object,InternalFactHandle,PropagationContext,InternalWorkingMemory)", "org.drools.core.rule.SlidingTimeWindow.SlidingTimeWindowContext.peek()")
+            .add(RefactoringType.EXTRACT_OPERATION, "org.drools.core.rule.SlidingTimeWindow.retractFact(Object,InternalFactHandle,PropagationContext,InternalWorkingMemory)", "org.drools.core.rule.SlidingTimeWindow.SlidingTimeWindowContext.poll()")
+            .add(RefactoringType.EXTRACT_OPERATION, "org.drools.core.rule.SlidingTimeWindow.expireFacts(Object,PropagationContext,InternalWorkingMemory)", "org.drools.core.rule.SlidingTimeWindow.SlidingTimeWindowContext.remove()")
+            .add(RefactoringType.EXTRACT_OPERATION, "org.drools.core.rule.SlidingTimeWindow.retractFact(Object,InternalFactHandle,PropagationContext,InternalWorkingMemory)", "org.drools.core.rule.SlidingTimeWindow.SlidingTimeWindowContext.remove(EventFactHandle)")
+            
+            
             .add(RefactoringType.RENAME_METHOD, "org.drools.core.phreak.PropagationEntry.AbstractPropagationEntry.requiresImmediateFlushingIfNotFiring()", "org.drools.core.phreak.PropagationEntry.AbstractPropagationEntry.requiresImmediateFlushing()")
             .add(RefactoringType.RENAME_METHOD, "org.drools.core.phreak.RuleExecutor.isHighestSalience(RuleAgendaItem)", "org.drools.core.phreak.RuleExecutor.isHigherSalience(RuleAgendaItem)")
             // Rename of abstract method
@@ -78,7 +105,8 @@ public class BenchmarkDataset {
             .add(RefactoringType.PUSH_DOWN_ATTRIBUTE, "org.drools.core.impl.StatefulKnowledgeSessionImpl.evaluatingActionQueue", "org.drools.reteoo.common.ReteWorkingMemory.evaluatingActionQueue");
         at("https://github.com/jersey/jersey.git", "d94ca2b")
             .add(RefactoringType.MOVE_CLASS, "org.glassfish.jersey.client.HttpUrlConnector", "org.glassfish.jersey.client.internal.HttpUrlConnector")
-            .add(RefactoringType.EXTRACT_OPERATION, "org.glassfish.jersey.client.HttpUrlConnector._apply(ClientRequest)", "org.glassfish.jersey.client.internal.HttpUrlConnector.secureConnection(Client,HttpURLConnection)");
+            .add(RefactoringType.EXTRACT_OPERATION, "org.glassfish.jersey.client.HttpUrlConnector._apply(ClientRequest)", "org.glassfish.jersey.client.internal.HttpUrlConnector.secureConnection(Client,HttpURLConnection)")
+            .add(RefactoringType.EXTRACT_OPERATION, "org.glassfish.jersey.client.HttpUrlConnectorProvider.getConnector(Client,Configuration)", "org.glassfish.jersey.client.HttpUrlConnectorProvider.createHttpUrlConnector(Client,ConnectionFactory,int,boolean,boolean)");
         at("https://github.com/undertow-io/undertow.git", "d5b2bb8")
             .add(RefactoringType.MOVE_OPERATION, "io.undertow.server.handlers.builder.HandlerParser.coerceToType(String,Token,Class,ExchangeAttributeParser)", "io.undertow.server.handlers.builder.PredicatedHandlersParser.coerceToType(String,Token,Class,ExchangeAttributeParser)")
             .add(RefactoringType.EXTRACT_OPERATION, "io.undertow.predicate.PredicatesHandler.addPredicatedHandler(Predicate,HandlerWrapper)", "io.undertow.predicate.PredicatesHandler.addPredicatedHandler(Predicate,HandlerWrapper,HandlerWrapper)")

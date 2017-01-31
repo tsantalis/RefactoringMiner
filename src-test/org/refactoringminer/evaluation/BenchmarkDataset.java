@@ -79,7 +79,7 @@ public class BenchmarkDataset {
         at("https://github.com/droolsjbpm/drools.git", "1bf2875")
             .add(RefactoringType.RENAME_METHOD, "org.drools.core.phreak.PhreakTimerNode.TimerAction.requiresImmediateFlushingIfNotFiring()", "org.drools.core.phreak.PhreakTimerNode.TimerAction.requiresImmediateFlushing()")
             .add(RefactoringType.MOVE_OPERATION, "org.drools.core.common.InternalAgenda.notifyHalt()", "org.drools.core.common.InternalWorkingMemory.notifyHalt()")
-            //.add(RefactoringType.MOVE_OPERATION, "org.drools.reteoo.common.ReteAgenda.notifyHalt()", "org.drools.core.phreak.SynchronizedBypassPropagationList.notifyHalt()")
+            .add(RefactoringType.MOVE_OPERATION, "org.drools.reteoo.common.ReteAgenda.notifyHalt()", "org.drools.core.phreak.SynchronizedBypassPropagationList.notifyHalt()")
             //.add(RefactoringType.MOVE_OPERATION, "org.drools.core.common.DefaultAgenda.notifyHalt()", "org.drools.core.phreak.SynchronizedBypassPropagationList.notifyHalt()")
             .add(RefactoringType.EXTRACT_OPERATION, "org.drools.core.phreak.SynchronizedPropagationList.addEntry(PropagationEntry)", "org.drools.core.phreak.SynchronizedPropagationList.internalAddEntry(PropagationEntry)")
             

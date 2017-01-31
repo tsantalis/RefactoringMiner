@@ -53,7 +53,7 @@ class TokenIdfSRBuilder implements SourceRepresentationBuilder {
         if (key == null) {
             throw new NullPointerException("key cannot be null");
         }
-        return 1.0 + Math.log(((double) dc)/df.get(key));
+        return 0.1 + Math.log(((double) dc)/df.get(key));
     }
 
     @Override

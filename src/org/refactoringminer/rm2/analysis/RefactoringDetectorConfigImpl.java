@@ -82,10 +82,11 @@ public class RefactoringDetectorConfigImpl implements RefactoringDetectorConfig 
         sb.append(")");
         for (RelationshipType type : RelationshipType.values()) {
             if (thresholds.containsKey(type)) {
-                sb.append("\n\t");
+                sb.append("\n\tconfig.setThreshold(RelationshipType.");
                 sb.append(type.toString());
-                sb.append(": ");
+                sb.append(", ");
                 sb.append(thresholds.get(type));
+                sb.append(");");
             }
         }
         return sb.toString();

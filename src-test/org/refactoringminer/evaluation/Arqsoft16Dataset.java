@@ -65,7 +65,7 @@ public class Arqsoft16Dataset {
     atmosphere_cc2b3f1.add(item("Move Field", "org.atmosphere.util.VoidExecutorService#VOID", "org.atmosphere.websocket.DefaultWebSocketProcessor#VOID"));
     atmosphere_cc2b3f1.add(item("Move Field", "org.atmosphere.cpr.DefaultBroadcaster#POLLING_DEFAULT", "org.atmosphere.cpr.AtmosphereFramework#POLLING_DEFAULT"));
     atmosphere_cc2b3f1.add(item("Pull Up Field", "org.atmosphere.handler.ReflectorServletProcessor#config\norg.atmosphere.config.managed.ManagedAtmosphereHandler#config", "org.atmosphere.handler.AbstractReflectorAtmosphereHandler#config"));
-    atmosphere_cc2b3f1.add(item("Pull Up Field", "org.atmosphere.config.managed.ServiceInterceptor#config\norg.atmosphere.util.Utils.closeMessage.OnDisconnectInterceptor#config\norg.atmosphere.interceptor.JSONPAtmosphereInterceptor#config\norg.atmosphere.interceptor.IdleResourceInterceptor#config\norg.atmosphere.interceptor.HeartbeatInterceptor#config", "org.atmosphere.cpr.AtmosphereInterceptorAdapter#config"));
+    atmosphere_cc2b3f1.add(item("Pull Up Field", "org.atmosphere.config.managed.ServiceInterceptor#config\norg.atmosphere.interceptor.OnDisconnectInterceptor#config\norg.atmosphere.interceptor.JSONPAtmosphereInterceptor#config\norg.atmosphere.interceptor.IdleResourceInterceptor#config\norg.atmosphere.interceptor.HeartbeatInterceptor#config", "org.atmosphere.cpr.AtmosphereInterceptorAdapter#config"));
     atmosphere_cc2b3f1.add(item("Pull Up Field", "org.atmosphere.interceptor.TrackMessageSizeB64Interceptor#OUT_ENCODING\norg.atmosphere.client.TrackMessageSizeInterceptor#OUT_ENCODING", "org.atmosphere.cpr.AtmosphereInterceptorAdapter#OUT_ENCODING"));
     atmosphere_cc2b3f1.add(item("Push Down Field", "", ""));
     atmosphere_cc2b3f1.add(item("Push Down Field", "org.atmosphere.websocket.WebSocket#attachment", "org.atmosphere.container.EmbeddedWebSocketHandler.ArrayBaseWebSocket#attachment\norg.atmosphere.container.version.Grizzly2WebSocket#attachment\norg.atmosphere.container.version.GrizzlyWebSocket#attachment\norg.atmosphere.container.version.JBossWebSocket#attachment\norg.atmosphere.container.version.Jetty8WebSocket#attachment\norg.atmosphere.container.version.JSR356WebSocket#attachment\norg.atmosphere.container.version.Jetty9WebSocket#attachment\norg.atmosphere.annotation.ManagedAtmosphereHandlerTest.ArrayBaseWebSocket#attachment\norg.atmosphere.container.version.TomcatWebSocket#attachment\norg.atmosphere.annotation.path.PathTest.ArrayBaseWebSocket#attachment\norg.atmosphere.cpr.TrackMessageSizeInterceptorTest.ArrayBaseWebSocket#attachment\norg.atmosphere.container.version.WebLogicWebSocket#attachment\norg.atmosphere.cpr.WebSocketStreamingHandlerTest.ArrayBaseWebSocket#attachment\norg.atmosphere.cpr.WebSocketProcessorTest.ArrayBaseWebSocket#attachment\norg.atmosphere.cpr.WebSocketHandlerTest.ArrayBaseWebSocket#attachment"));
@@ -132,8 +132,30 @@ public class Arqsoft16Dataset {
     clojure_17217a1.add(item("Extract Superclass", "clojure.asm.AnnotationVisitor\nclojure.asm.ClassVisitor", "clojure.asm.ObjectVisitor"));
     clojure_17217a1.add(item("Extract Interface", "clojure.asm.commons.InstructionAdapter", "clojure.asm.commons.IStackablle"));
     clojure_17217a1.add(item("Rename Method", "clojure.asm.commons.GeneratorAdapter.pop2()", "clojure.asm.commons.GeneratorAdapter.popLongDouble()"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.IMeta.meta()", "clojure.lang.IMeta.getMeta()"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.AFunction.meta()", "clojure.lang.AFunction.getMeta()"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.APersistentVector.SubVector.meta()", "clojure.lang.APersistentVector.SubVector.getMeta()"));
     clojure_17217a1.add(item("Rename Method", "clojure.lang.AReference.meta()", "clojure.lang.AReference.getMeta()"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.Obj.meta()", "clojure.lang.ClojureObject.getMeta()"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.FnLoaderThunk.meta()", "clojure.lang.FnLoaderThunk.getMeta()"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.PersistentArrayMap.meta()", "clojure.lang.PersistentArrayMap.getMeta()"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.PersistentHashMap.meta()", "clojure.lang.PersistentHashMap.getMeta()"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.PersistentHashSet.meta()", "clojure.lang.PersistentHashSet.getMeta()"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.PersistentList.Primordial.meta()", "clojure.lang.PersistentList.Primordial.getMeta()"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.PersistentStructMap.meta()", "clojure.lang.PersistentStructMap.getMeta()"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.PersistentTreeMap.meta()", "clojure.lang.PersistentTreeMap.getMeta()"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.PersistentTreeSet.meta()", "clojure.lang.PersistentTreeSet.getMeta()"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.PersistentVector.meta()", "clojure.lang.PersistentVector.getMeta()"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.Symbol.meta()", "clojure.lang.Symbol.getMeta()"));
+    
     clojure_17217a1.add(item("Rename Method", "clojure.lang.ASeq.equiv(Object)", "clojure.lang.ASeq.isEquivalent(Object)"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.APersistentMap.equiv(Object)", "clojure.lang.APersistentMap.isEquivalent(Object)"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.APersistentVector.equiv(Object)", "clojure.lang.APersistentVector.isEquivalent(Object)"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.APersistentSet.equiv(Object)", "clojure.lang.APersistentSet.isEquivalent(Object)"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.PersistentList.EmptyList.equiv(Object)", "clojure.lang.PersistentList.EmptyList.isEquivalent(Object)"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.PersistentQueue.equiv(Object)", "clojure.lang.PersistentQueue.isEquivalent(Object)"));
+    clojure_17217a1.add(item("Rename Method", "clojure.lang.LazySeq.equiv(Object)", "clojure.lang.LazySeq.isEquivalent(Object)"));
+    
     clojure_17217a1.add(item("Rename Method", "clojure.lang.ExceptionInfo.getData()", "clojure.lang.ExceptionInfo.getExceptionData()"));
     clojure_17217a1.add(item("Rename Method", "clojure.asm.Attribute.put(ClassWriter, byte[], int, int, int, ByteVector)", "clojure.asm.Attribute.writeAllAtributes(ClassWriter, byte[], int, int, int, ByteVector)"));
     clojure_17217a1.add(item("Move Method", "clojure.lang.Numbers.reduceBigInt(BigInt)", "clojure.lang.ClojureBigInteger.reduceBigInt(ClojureBigInteger)"));
@@ -144,16 +166,16 @@ public class Arqsoft16Dataset {
     // The method is not moved, @Override added
     clojure_17217a1.add(item("Pull Up Method", "clojure.lang.AMapEntry.nth(int)", "clojure.lang.Indexed.nth(int)"));
     // This refactoring was not performed
-    clojure_17217a1.add(item("Pull Up Method", "clojure.lang.Volatile.reset(Object)", "clojure.lang.IDeref.reset(Object)"));
+    //clojure_17217a1.add(item("Pull Up Method", "clojure.lang.Volatile.reset(Object)", "clojure.lang.IDeref.reset(Object)"));
     clojure_17217a1.add(item("Extract Method", "clojure.lang.Compiler.FnMethod.parse(ObjExpr, ISeq, Object)", "clojure.lang.Compiler.FnMethod.getFnMethod(ObjExpr)"));
     clojure_17217a1.add(item("Extract Method", "clojure.lang.Compiler.NewInstanceExpr.build(IPersistentVector, IPersistentVector, Symbol, String, Symbol, Symbol, ISeq, Object, IPersistentMap)", "clojure.lang.Compiler.NewInstanceExpr.getInstanceExpr(IPersistentVector, Symbol, Symbol, Object, IPersistentMap)"));
     clojure_17217a1.add(item("Extract Method", "clojure.lang.Compiler.ObjExpr.emitValue(Object, GeneratorAdapter)", "clojure.lang.Compiler.ObjExpr.defineGeneratoAdaptaer(Object, GeneratorAdapter, boolean)"));
     clojure_17217a1.add(item("Extract Method", "clojure.lang.Compiler.ObjExpr.compile(String, String[], boolean)", "clojure.lang.Compiler.ObjExpr.getStringMap(String, int, int)"));
     clojure_17217a1.add(item("Extract Method", "clojure.lang.Compiler.FnMethod.doEmitStatic(ObjExpr, ClassVisitor)", "clojure.lang.Compiler.FnMethod.generatePrimInvoke(ClassVisitor, Method)"));
-    clojure_17217a1.add(item("Inline Method", "clojure.lang.AMapEntry.asVector()", "clojure.lang.AMapEntry.assocN(int, Object)"));
-    clojure_17217a1.add(item("Inline Method", "clojure.lang.ASeq.reify()", "clojure.lang.ASeq.subList(int, int)"));
-    clojure_17217a1.add(item("Inline Method", "clojure.lang.LazySeq.reify()", "clojure.lang.LazySeq.subList(int, int)"));
-    clojure_17217a1.add(item("Inline Method", "clojure.lang.MultiFn.isA(Object, Object)", "clojure.lang.MultiFn.dominates(Object, Object)"));
+    clojure_17217a1.add(item("Inline Method", "clojure.lang.AMapEntry.asVector()", "clojure.lang.AMapEntry.assocN(int, Object)\nclojure.lang.AMapEntry.cons(Object)\nclojure.lang.AMapEntry.seq()"));
+    clojure_17217a1.add(item("Inline Method", "clojure.lang.ASeq.reify()", "clojure.lang.ASeq.subList(int, int)\nclojure.lang.ASeq.listIterator(int)\nclojure.lang.ASeq.listIterator()\nclojure.lang.ASeq.lastIndexOf(Object)"));
+    clojure_17217a1.add(item("Inline Method", "clojure.lang.LazySeq.reify()", "clojure.lang.LazySeq.subList(int, int)\nclojure.lang.LazySeq.listIterator(int)\nclojure.lang.LazySeq.listIterator()\nclojure.lang.LazySeq.lastIndexOf(Object)"));
+    clojure_17217a1.add(item("Inline Method", "clojure.lang.MultiFn.isA(Object, Object)", "clojure.lang.MultiFn.dominates(Object, Object)\nclojure.lang.MultiFn.findAndCacheBestMethod(Object)"));
     clojure_17217a1.add(item("Inline Method", "clojure.lang.Util.dohasheq(IHashEq)", "clojure.lang.Util.hasheq(Object)"));
     clojure_17217a1.add(item("Move Field", "", ""));
     clojure_17217a1.add(item("Move Field", "", ""));
@@ -233,7 +255,16 @@ public class Arqsoft16Dataset {
     guava_79767ec.add(item("Rename Method", "com.google.common.io.MultiReader#advance()", "com.google.common.io.MultiReader#openNextStream()"));
     guava_79767ec.add(item("Rename Method", "com.google.common.net.HostSpecifier#from(String specifier)", "com.google.common.net.HostSpecifier#create(String specifier)"));
     guava_79767ec.add(item("Rename Method", "com.google.common.io.ReaderInputStream#grow(CharBuffer buf)", "com.google.common.io.ReaderInputStream#growTwice(CharBuffer buf)"));
-    guava_79767ec.add(item("Rename Method", "com.google.common.hash.HashFunction#bits", "com.google.common.hash.HashFunction#numberOfBits"));
+    guava_79767ec.add(item("Rename Method", "com.google.common.hash.HashFunction#bits()", "com.google.common.hash.HashFunction#numberOfBits()"));
+    guava_79767ec.add(item("Rename Method", "com.google.common.hash.ChecksumHashFunction.bits()", "com.google.common.hash.ChecksumHashFunction.numberOfBits()"));
+    guava_79767ec.add(item("Rename Method", "com.google.common.hash.Crc32cHashFunction.bits()", "com.google.common.hash.Crc32cHashFunction.numberOfBits()"));
+    guava_79767ec.add(item("Rename Method", "com.google.common.hash.FarmHashFingerprint64.bits()", "com.google.common.hash.FarmHashFingerprint64.numberOfBits()"));
+    guava_79767ec.add(item("Rename Method", "com.google.common.hash.Hashing.ConcatenatedHashFunction.bits()", "com.google.common.hash.Hashing.ConcatenatedHashFunction.numberOfBits()"));
+    guava_79767ec.add(item("Rename Method", "com.google.common.hash.MacHashFunction.bits()", "com.google.common.hash.MacHashFunction.numberOfBits()"));
+    guava_79767ec.add(item("Rename Method", "com.google.common.hash.MessageDigestHashFunction.bits()", "com.google.common.hash.MessageDigestHashFunction.numberOfBits()"));
+    guava_79767ec.add(item("Rename Method", "com.google.common.hash.Murmur3_128HashFunction.bits()", "com.google.common.hash.Murmur3_128HashFunction.numberOfBits()"));
+    guava_79767ec.add(item("Rename Method", "com.google.common.hash.Murmur3_32HashFunction.bits()", "com.google.common.hash.Murmur3_32HashFunction.numberOfBits()"));
+    guava_79767ec.add(item("Rename Method", "com.google.common.hash.SipHashFunction.bits()", "com.google.common.hash.SipHashFunction.numberOfBits()"));
     guava_79767ec.add(item("Rename Method", "com.google.common.math.BigIntegerMath#binomial(int n, int k)", "com.google.common.math.BigIntegerMath#binomialCoefficient(int n, int k)"));
     guava_79767ec.add(item("Move Method", "com.google.common.io.CharStreams#copy(Readable from, Appendable to)", "com.google.common.io.CharSource#copy(Readable from, Appendable to) "));
     guava_79767ec.add(item("Move Method", "com.google.common.math.Quantiles#interpolate(double lower, double upper, double remainder, double scale)", "com.google.common.math.Quantiles.ScaleAndIndex#interpolate(double lower, double upper, double remainder, double scale)"));
@@ -248,6 +279,7 @@ public class Arqsoft16Dataset {
     // Not a push down, but move
     guava_79767ec.add(item("Move Method", "com.google.common.io.LineBuffer#add(char[] cbuf, int off, int len)", "com.google.common.io.LineReader#add(char[] cbuf, int off, int len)"));
     guava_79767ec.add(item("Move Method", "com.google.common.io.LineBuffer#finishLine(boolean sawNewline)", "com.google.common.io.LineReader#finishLine(boolean sawNewline)"));
+    guava_79767ec.add(item("Move Method", "com.google.common.io.LineBuffer#finish()", "com.google.common.io.LineReader#finish()"));
     guava_79767ec.add(item("Extract Method", "com.google.common.math.BigIntegerMath#sqrt(BigInteger x, RoundingMode mode)", "com.google.common.math.BigIntegerMath#sqrtMode(BigInteger x, RoundingMode mode)"));
     guava_79767ec.add(item("Extract Method", "com.google.common.math.IntMath#binomial(int n, int k) ", "com.google.common.math.IntMath#calculateK(int n, int k)"));
     guava_79767ec.add(item("Extract Method", "com.google.common.net.InetAddresses#convertDottedQuadToHex(String ipString)", "com.google.common.net.InetAddresses#concatLastTerms(String initialPart, byte[] quad)"));
@@ -255,7 +287,7 @@ public class Arqsoft16Dataset {
     guava_79767ec.add(item("Extract Method", "com.google.common.io.Files#simplifyPath(String pathname)", "com.google.common.io.Files#joinPath(String pathname, List<String> path)"));
     guava_79767ec.add(item("Inline Method", "com.google.common.io.CharSequenceReader#hasRemaining()", "com.google.common.io.CharSequenceReader#read(CharBuffer target)\ncom.google.common.io.CharSequenceReader#read()\ncom.google.common.io.CharSequenceReader#read(char[] cbuf, int off, int len)"));
     guava_79767ec.add(item("Inline Method", "com.google.common.net.HostAndPort#hasPort()", "com.google.common.net.HostAndPort#getPort()\ncom.google.common.net.HostAndPort#getPortOrDefault(int defaultPort)\ncom.google.common.net.HostAndPort#fromParts(String host, int port) \ncom.google.common.net.HostAndPort#fromHost(String host)\ncom.google.common.net.HostAndPort#withDefaultPort(int defaultPort)\ncom.google.common.net.HostAndPort#toString()\ncom.google.common.net.HostSpecifier#fromValid(String specifier)"));
-    guava_79767ec.add(item("Inline Method", "com.google.common.util.concurrent.ThreadFactoryBuilder#format(String format, Object[] args)", "com.google.common.util.concurrent.ThreadFactoryBuilder#setNameFormat(String nameFormat)\ncom.google.common.util.concurrent.ThreadFactoryBuilder#build(ThreadFactoryBuilder builder)\ncom.google.common.util.concurrent.ThreadFactoryBuilder#newThread(Runnable runnable)"));
+    guava_79767ec.add(item("Inline Method", "com.google.common.util.concurrent.ThreadFactoryBuilder#format(String format, Object[] args)", "com.google.common.util.concurrent.ThreadFactoryBuilder#setNameFormat(String nameFormat)\ncom.google.common.util.concurrent.ThreadFactoryBuilder#build(ThreadFactoryBuilder builder)"));
     guava_79767ec.add(item("Inline Method", "com.google.thirdparty.publicsuffix.TrieParser#reverse(CharSequence s)", "com.google.thirdparty.publicsuffix.TrieParser#doParseTrieToBuilder(List<CharSequence> stack, CharSequence encoded, ImmutableMap.Builder<String,PublicSuffixType> builder)"));
     guava_79767ec.add(item("Inline Method", "com.google.common.math.IntMath#sqrtFloor(int)", "com.google.common.math.IntMath#sqrt(int x, RoundingMode mode)"));
     guava_79767ec.add(item("Move Field", "com.google.common.net.InternetDomainName#DOTS_MATCHER", "com.google.common.net.InetAddresses#DOTS_MATCHER"));

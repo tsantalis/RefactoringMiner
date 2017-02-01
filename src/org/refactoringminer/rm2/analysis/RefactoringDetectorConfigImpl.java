@@ -14,14 +14,21 @@ public class RefactoringDetectorConfigImpl implements RefactoringDetectorConfig 
     
     private Map<RelationshipType, Double> thresholds = new HashMap<>();
     
-    private CodeSimilarityStrategy codeSimilarityStrategy = CodeSimilarityStrategy.BIGRAM;
+    private CodeSimilarityStrategy codeSimilarityStrategy = CodeSimilarityStrategy.TFIDF;
 
     public RefactoringDetectorConfigImpl() {
-//        setThreshold(RelationshipType.MOVE_TYPE, 0.6);
-//        setThreshold(RelationshipType.RENAME_TYPE, 0.4);
-//        setThreshold(RelationshipType.MOVE_FIELD, 0.2);
-//        setThreshold(RelationshipType.PULL_UP_FIELD, 0.1);
-//        setThreshold(RelationshipType.PUSH_DOWN_FIELD, 0.1);
+        setThreshold(RelationshipType.MOVE_TYPE, 0.9);
+        setThreshold(RelationshipType.RENAME_TYPE, 0.4);
+        setThreshold(RelationshipType.EXTRACT_SUPERTYPE, 0.8);
+        setThreshold(RelationshipType.MOVE_METHOD, 0.4);
+        setThreshold(RelationshipType.RENAME_METHOD, 0.3);
+        setThreshold(RelationshipType.PULL_UP_METHOD, 0.4);
+        setThreshold(RelationshipType.PUSH_DOWN_METHOD, 0.6);
+        setThreshold(RelationshipType.EXTRACT_METHOD, 0.1);
+        setThreshold(RelationshipType.INLINE_METHOD, 0.3);
+        setThreshold(RelationshipType.MOVE_FIELD, 0.5);
+        setThreshold(RelationshipType.PULL_UP_FIELD, 0.5);
+        setThreshold(RelationshipType.PUSH_DOWN_FIELD, 0.3);
     }
 
     @Override

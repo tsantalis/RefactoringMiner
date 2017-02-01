@@ -33,18 +33,15 @@ public class TestWithArqsoft16Dataset {
         rc1.compareWith("RM1", rm1Results);
         rc1.compareWith("RM2", rm2Results);
         rc1.compareWith("RC", readRefactoringCrawlerResults());
-        rc1.printSummary(System.out, true, refTypesToConsider);
+        rc1.printSummary(System.out, false, refTypesToConsider);
+        rc1.printDetails(System.out, false, refTypesToConsider);
 
         ResultComparator rc2 = new ResultComparator();
         rc2.expect(oracle.all());
         rc2.compareWith("RM1", rm1Results);
         rc2.compareWith("RM2", rm2Results);
         rc2.printSummary(System.out, false, allRefTypes);
-        rc1.printDetails(System.out, false, allRefTypes);
-
-        // ResultComparator rc3 = new ResultComparator();
-        // rc3.expect(oracle.all());
-        // rc3.compareWith("Oracle", oracle.all());
+        rc2.printDetails(System.out, false, allRefTypes);
     }
 
     private static RefactoringSet[] readRefactoringCrawlerResults() {

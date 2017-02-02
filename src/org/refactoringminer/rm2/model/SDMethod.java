@@ -214,11 +214,20 @@ public class SDMethod extends SDEntity {
 	    return container().isAnonymous();
 	}
 
-  public boolean isSetter() {
-      return simpleName().startsWith("set") && numberOfStatements == 1 && parameters.size() == 1;
-  }
+    public boolean isSetter() {
+        return simpleName().startsWith("set") && numberOfStatements == 1 && parameters.size() == 1;
+    }
 
-  public boolean isGetter() {
-      return simpleName().startsWith("get") && numberOfStatements == 1 && parameters.size() == 0;
-  }
+    public boolean isGetter() {
+        return simpleName().startsWith("get") && numberOfStatements == 1 && parameters.size() == 0;
+    }
+
+    @Override
+    public String toString() {
+        if (isConstructor()) {
+            String result = super.toString();
+            return result.replace("#(", "#" + container.simpleName() + "(");
+        }
+        return super.toString();
+    }
 }

@@ -114,7 +114,7 @@ public class Arqsoft16Dataset {
     retrofit_f13f317.add(item("Move Field", "retrofit2.converter.gson.GsonRequestBodyConverter#MEDIA_TYPE", "retrofit2.converter.gson.GsonConverterFactory#MEDIA_TYPE"));
     retrofit_f13f317.add(item("Move Field", "retrofit2.converter.gson.GsonRequestBodyConverter#UTF_8", "retrofit2.converter.gson.GsonConverterFactory#UTF_8"));
     retrofit_f13f317.add(item("Move Field", "retrofit2.converter.jackson.JacksonRequestBodyConverter#MEDIA_TYPE", "retrofit2.converter.jackson.JacksonConverterFactory#MEDIA_TYPE"));
-    retrofit_f13f317.add(item("Pull Up Field", "retrofit2.ParameterHandler.Path#name\nretrofit2.ParameterHandler.Query#name\nretrofit2.ParameterHandler.Field#name", "retrofit2.ParameterHandler#name"));
+    retrofit_f13f317.add(item("Pull Up Field", "retrofit2.ParameterHandler.Path#name\nretrofit2.ParameterHandler.Query#name\nretrofit2.ParameterHandler.Field#name\nretrofit2.ParameterHandler.Header#name", "retrofit2.ParameterHandler#name"));
     retrofit_f13f317.add(item("Pull Up Field", "retrofit2.ParameterHandler.Part#headers", "retrofit2.ParameterHandler#headers"));
     retrofit_f13f317.add(item("Pull Up Field", "retrofit2.ParameterHandler.PartMap#transferEncoding", "retrofit2.ParameterHandler#transferEncoding"));
     retrofit_f13f317.add(item("Push Down Field", "retrofit2.Platform#PLATFORM", "retrofit2.Platform.Android#PLATFORM\nretrofit2.Platform.IOS#PLATFORM\nretrofit2.Platform.Java8#PLATFORM"));
@@ -211,13 +211,22 @@ public class Arqsoft16Dataset {
     metrics_276d5e4.add(item("Inline Method", "io.dropwizard.metrics.ScheduledReporter#calculateRateUnit(TimeUnit)", "io.dropwizard.metrics.ScheduledReporter.ScheduledReporter(MetricRegistry, MetricFilter, TimeUnit, TimeUnit, ScheduledExecutorService)"));
     metrics_276d5e4.add(item("Inline Method", "io.dropwizard.metrics.SlidingTimeWindowReservoir#trim()", "io.dropwizard.metrics.SlidingTimeWindowReservoir#getSnapshot()\nio.dropwizard.metrics.SlidingTimeWindowReservoir#update(long)\nio.dropwizard.metrics.SlidingTimeWindowReservoir#size()"));
     metrics_276d5e4.add(item("Inline Method", "io.dropwizard.metrics.CsvReporter.reportHistogram(long, MetricName, Histogram)", "io.dropwizard.metrics.CsvReporter#report(SortedMap<MetricName, Gauge>, SortedMap<MetricName, Counter>, SortedMap<MetricName, Histogram>, SortedMap<MetricName, Meter>, SortedMap<MetricName, Timer>)"));
+    metrics_276d5e4.add(item("Inline Method", "io.dropwizard.metrics.jdbi.strategies.DelegatingStatementNameStrategy.registerStrategies(StatementNameStrategy[])", "io.dropwizard.metrics.jdbi.strategies.DelegatingStatementNameStrategy.DelegatingStatementNameStrategy(StatementNameStrategy[])"));
     metrics_276d5e4.add(item("Move Method", "io.dropwizard.metrics.SlidingTimeWindowReservoir#getTick()", "io.dropwizard.metrics.Clock#getTick(SlidingTimeWindowReservoir)"));
     metrics_276d5e4.add(item("Move Method", "io.dropwizard.metrics.Meter#tickIfNecessary()", "io.dropwizard.metrics.Clock#tickIfNecessary(Meter)"));
     metrics_276d5e4.add(item("Move Method", "io.dropwizard.metrics.Timer#update(long)", "io.dropwizard.metrics.Histogram#update(Timer, long)"));
     metrics_276d5e4.add(item("Move Method", "io.dropwizard.metrics.ConsoleReporter#printMeter(Meter)", "io.dropwizard.metrics.Meter#printMeter(ConsolePrinter)"));
     metrics_276d5e4.add(item("Move Method", "io.dropwizard.metrics.Slf4jReporter#prefix(MetricName, String[])", "io.dropwizard.metrics.MetricName#prefix(Slf4jReporter, String[])"));
+    metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.graphite.GraphiteSender#send(String, String, long)", "io.dropwizard.metrics.graphite.GraphiteSender#sendData(String, String, long)"));
     metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.graphite.Graphite#send(String, String, long)", "io.dropwizard.metrics.graphite.Graphite#sendData(String, String, long)"));
-    metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.graphite.Graphite#flush()", "io.dropwizard.metrics.graphite.Graphite#flushData()"));
+    metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.graphite.GraphiteRabbitMQ#send(String, String, long)", "io.dropwizard.metrics.graphite.GraphiteRabbitMQ#sendData(String, String, long)"));
+    metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.graphite.GraphiteUDP#send(String, String, long)", "io.dropwizard.metrics.graphite.GraphiteUDP#sendData(String, String, long)"));
+    metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.graphite.PickledGraphite#send(String, String, long)", "io.dropwizard.metrics.graphite.PickledGraphite#sendData(String, String, long)"));
+    metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.graphite.GraphiteSender.flush()", "io.dropwizard.metrics.graphite.GraphiteSender.flushData()"));
+    metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.graphite.Graphite.flush()", "io.dropwizard.metrics.graphite.Graphite.flushData()"));
+    metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.graphite.GraphiteRabbitMQ.flush()", "io.dropwizard.metrics.graphite.GraphiteRabbitMQ.flushData()"));
+    metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.graphite.GraphiteUDP.flush()", "io.dropwizard.metrics.graphite.GraphiteUDP.flushData()"));
+    metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.graphite.PickledGraphite.flush()", "io.dropwizard.metrics.graphite.PickledGraphite.flushData()"));
     metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.health.HealthCheck#execute()", "io.dropwizard.metrics.health.jvm.HealthCheck#executeCheck()"));
     metrics_276d5e4.add(item("Rename Method", "io.dropwizard.metrics.UnsafeStriped64#internalReset(long)", "io.dropwizard.metrics.UnsafeStriped64#internalResetData(long)"));
     // Rename before pull up
@@ -228,6 +237,7 @@ public class Arqsoft16Dataset {
     metrics_276d5e4.add(item("Push Down Method", "io.dropwizard.metrics.jdbi.strategies.DelegatingStatementNameStrategy#registerStrategies(StatementNameStrategy[])", "io.dropwizard.metrics.jdbi.BasicSqlNameStrategy#registerStrategies(StatementNameStrategy[])\n io.dropwizard.metrics.jdbi.strategies.ContextNameStrategy#registerStrategies(StatementNameStrategy[])\n io.dropwizard.metrics.jdbi.strategies.NaiveNameStrategy#registerStrategies(StatementNameStrategy[])\n io.dropwizard.metrics.jdbi.strategies.ShortNameStrategy#registerStrategies(StatementNameStrategy[])\n io.dropwizard.metrics.jdbi.strategies.SmartNameStrategy#registerStrategies(StatementNameStrategy[])"));
     metrics_276d5e4.add(item("Push Down Method", "io.dropwizard.metrics.ScheduledReporter#convertRate(double)", "io.dropwizard.metrics.ConsolePrinter#convertRate(double)\n io.dropwizard.metrics.CsvReporter#convertRate(double)\n io.dropwizard.metrics.graphite.GraphiteReporter#convertRate(double)\n io.dropwizard.metrics.influxdb.InfluxDbReporter#convertRate(double)\n io.dropwizard.metrics.Slf4jReporter#convertRate(double)"));
     metrics_276d5e4.add(item("Push Down Method", "io.dropwizard.metrics.ScheduledReporter#convertDuration(double)", "io.dropwizard.metrics.ConsolePrinter#convertDuration(double)\n io.dropwizard.metrics.CsvReporter#convertDuration(double)\n io.dropwizard.metrics.graphite.GraphiteReporter#convertDuration(double)\n io.dropwizard.metrics.influxdb.InfluxDbReporter#convertDuration(double)\n io.dropwizard.metrics.Slf4jReporter#convertDuration(double)"));
+    metrics_276d5e4.add(item("Push Down Method", "io.dropwizard.metrics.ScheduledReporter.getDurationUnit()", "io.dropwizard.metrics.ConsolePrinter.getDurationUnit()\nio.dropwizard.metrics.CsvReporter.getDurationUnit()\nio.dropwizard.metrics.Slf4jReporter.getDurationUnit()\nio.dropwizard.metrics.graphite.GraphiteReporter.getDurationUnit()\nio.dropwizard.metrics.influxdb.InfluxDbReporter.getDurationUnit()"));
     metrics_276d5e4.add(item("Move Field", "io.dropwizard.metrics.CsvReporter#UTF_8", "io.dropwizard.metrics.CsvReporterTest#UTF_8"));
     metrics_276d5e4.add(item("Move Field", "io.dropwizard.metrics.jvm.GarbageCollectorMetricSet#WHITESPACE", "io.dropwizard.metrics.jvm.GarbageCollectorMetricSetTest#WHITESPACE"));
     metrics_276d5e4.add(item("Move Field", "io.dropwizard.metrics.jvm.MemoryUsageGaugeSet#WHITESPACE", "io.dropwizard.metrics.jvm.MemoryUsageGaugeSetTest#WHITESPACE"));
@@ -236,6 +246,10 @@ public class Arqsoft16Dataset {
     metrics_276d5e4.add(item("Pull Up Field", "io.dropwizard.metrics.servlet.InstrumentedFilter#CREATED", "io.dropwizard.metrics.servlet.AbstractInstrumentedFilter#CREATED"));
     metrics_276d5e4.add(item("Pull Up Field", "io.dropwizard.metrics.servlet.InstrumentedFilter#NO_CONTENT", "io.dropwizard.metrics.servlet.AbstractInstrumentedFilter#NO_CONTENT"));
     metrics_276d5e4.add(item("Pull Up Field", "io.dropwizard.metrics.servlet.InstrumentedFilter#BAD_REQUEST", "io.dropwizard.metrics.servlet.AbstractInstrumentedFilter#BAD_REQUEST"));
+    metrics_276d5e4.add(item("Pull Up Field", "io.dropwizard.metrics.servlet.InstrumentedFilter#NOT_FOUND", "io.dropwizard.metrics.servlet.AbstractInstrumentedFilter#NOT_FOUND"));
+    metrics_276d5e4.add(item("Pull Up Field", "io.dropwizard.metrics.servlet.InstrumentedFilter#NAME_PREFIX", "io.dropwizard.metrics.servlet.AbstractInstrumentedFilter#NAME_PREFIX"));
+    metrics_276d5e4.add(item("Pull Up Field", "io.dropwizard.metrics.servlet.InstrumentedFilter#OK", "io.dropwizard.metrics.servlet.AbstractInstrumentedFilter#OK"));
+    metrics_276d5e4.add(item("Pull Up Field", "io.dropwizard.metrics.servlet.InstrumentedFilter#SERVER_ERROR", "io.dropwizard.metrics.servlet.AbstractInstrumentedFilter#SERVER_ERROR"));
     metrics_276d5e4.add(item("Push Down Field", "io.dropwizard.metrics.ScheduledReporter#durationUnit", "io.dropwizard.metrics.ConsolePrinter#durationUnit\nio.dropwizard.metrics.CsvReporter#durationUnit\nio.dropwizard.metrics.graphite.GraphiteReporter#durationUnit\nio.dropwizard.metrics.influxdb.InfluxDbReporter#durationUnit\nio.dropwizard.metrics.Slf4jReporter#durationUnit"));
     metrics_276d5e4.add(item("Push Down Field", "io.dropwizard.metrics.ScheduledReporter#rateFactor", "io.dropwizard.metrics.ConsolePrinter#rateFactor\nio.dropwizard.metrics.CsvReporter#rateFactor\nio.dropwizard.metrics.graphite.GraphiteReporter#rateFactor\nio.dropwizard.metrics.influxdb.InfluxDbReporter#rateFactor\nio.dropwizard.metrics.Slf4jReporter#rateFactor"));
     metrics_276d5e4.add(item("Push Down Field", "io.dropwizard.metrics.ScheduledReporter#durationFactor", "io.dropwizard.metrics.ConsolePrinter#durationFactor\nio.dropwizard.metrics.CsvReporter#durationFactor\nio.dropwizard.metrics.graphite.GraphiteReporter#durationFactor\nio.dropwizard.metrics.influxdb.InfluxDbReporter#durationFactor\nio.dropwizard.metrics.Slf4jReporter#durationFactor"));
@@ -274,7 +288,7 @@ public class Arqsoft16Dataset {
     guava_79767ec.add(item("Pull Up Method", "com.google.common.escape.CharEscaper#growBuffer(char[] dest, int index, int size)\ncom.google.common.escape.UnicodeEscaper#growBuffer(char[] dest, int index, int size)", "com.google.common.escape.Escaper#growBuffer(char[] dest, int index, int size)"));
     guava_79767ec.add(item("Pull Up Method", "com.google.common.base.Utf8#encodedLengthGeneral(CharSequence sequence, int start) ", "com.google.common.base.Encoding#encodedLengthGeneral(CharSequence sequence, int start) "));
     // Pull Up to interface
-    guava_79767ec.add(item("Pull Up Method", "com.google.common.cache.LongAdder#fn(long v, long x)", "com.google.common.cache.LongAddable#fn(long v, long x)\ncom.google.common.cache.LongAddables#fn(long v, long x)"));
+    guava_79767ec.add(item("Pull Up Method", "com.google.common.cache.LongAdder#fn(long v, long x)", "com.google.common.cache.LongAddable#fn(long v, long x)"));
     guava_79767ec.add(item("Push Down Method", "com.google.common.escape.Escaper#asFunction()", "com.google.common.escape.CharEscaper#asFunction()\ncom.google.common.escape.UnicodeEscaper#asFunction()"));
     // Not a push down, but move
     guava_79767ec.add(item("Move Method", "com.google.common.io.LineBuffer#add(char[] cbuf, int off, int len)", "com.google.common.io.LineReader#add(char[] cbuf, int off, int len)"));
@@ -346,7 +360,7 @@ public class Arqsoft16Dataset {
     springBoot_48e893a.add(item("Inline Method", "org.springframework.boot.context.properties.EnableConfigurationPropertiesImportSelector.ConfigurationPropertiesBeanRegistrar#collectClasses(List<Object>)", "org.springframework.boot.context.properties.EnableConfigurationPropertiesImportSelector.ConfigurationPropertiesBeanRegistrar#registerBeanDefinitions(AnnotationMetadata, BeanDefinitionRegistry)"));
     springBoot_48e893a.add(item("Inline Method", "org.springframework.boot.actuate.cache.EhCacheStatisticsProvider#cacheHitRatio(StatisticsGateway)", "org.springframework.boot.actuate.cache.EhCacheStatisticsProvider#getCacheStatistics(CacheManager, EhCacheCache)"));
     springBoot_48e893a.add(item("Move Field", "Não foi possível realizar a refatoração ", ""));
-    springBoot_48e893a.add(item("Pull Up Field", "org.springframework.boot.actuate.autoconfigure.OnEnabledEndpointElementCondition#prefix", "org.springframework.boot.autoconfigure.condition.SpringBootCondition#prefix"));
+    springBoot_48e893a.add(item("Pull Up Field", "org.springframework.boot.actuate.autoconfigure.OnEnabledEndpointElementCondition#prefix\norg.springframework.boot.autoconfigure.condition.ResourceCondition#prefix", "org.springframework.boot.autoconfigure.condition.SpringBootCondition#prefix"));
     springBoot_48e893a.add(item("Pull Up Field", "org.springframework.boot.actuate.autoconfigure.OnEnabledEndpointElementCondition#annotationType", "org.springframework.boot.autoconfigure.condition.SpringBootCondition#annotationType"));
     springBoot_48e893a.add(item("Pull Up Field", "org.springframework.boot.loader.ExecutableArchiveLauncher#archive", "org.springframework.boot.loader.Launcher#archive"));
     springBoot_48e893a.add(item("Push Down Field", "org.springframework.boot.context.embedded.RegistrationBean#enabled", "org.springframework.boot.context.embedded.AbstractFilterRegistrationBean#enabled\norg.springframework.boot.context.embedded.ServletListenerRegistrationBean#enabled\norg.springframework.boot.context.embedded.ServletRegistrationBean#enabled"));
@@ -358,12 +372,17 @@ public class Arqsoft16Dataset {
 //    orientdb_b213aaf.add(item("Rename Class", "com.orientechnologies.orient.client.remote.OstorageRemote", "com.orientechnologies.orient.client.remote.OstorageRemote")); // errado
     orientdb_b213aaf.add(item("Rename Class", "com.orientechnologies.orient.client.remote.OStorageRemoteAsynchEventListener", "com.orientechnologies.orient.client.remote.OStorageRemEventLis"));
     orientdb_b213aaf.add(item("Rename Class", "com.orientechnologies.orient.client.remote.OStorageRemoteConfiguration", "com.orientechnologies.orient.client.remote.OStorageConfingRem"));
+    
 //    orientdb_b213aaf.add(item("Extract Class", "com.orientechnologies.orient.server.Oserver", "com.orientechnologies.orient.server.OserverConfigData"));
 //    orientdb_b213aaf.add(item("Extract Class", "com.orientechnologies.orient.server.network.protocol.http.OhttpResponse", "com.orientechnologies.orient.server.network.protocol.http.OhttpResponseData"));
+    orientdb_b213aaf.add(item("Move Attribute", "com.orientechnologies.orient.server.network.protocol.http.OHttpResponse.code", "com.orientechnologies.orient.server.network.protocol.http.OHttpResponseData.code"));
+    orientdb_b213aaf.add(item("Move Attribute", "com.orientechnologies.orient.server.network.protocol.http.OHttpResponse.httpVersion", "com.orientechnologies.orient.server.network.protocol.http.OHttpResponseData.httpVersion"));
+    orientdb_b213aaf.add(item("Move Attribute", "com.orientechnologies.orient.server.network.protocol.http.OHttpResponse.sessionId", "com.orientechnologies.orient.server.network.protocol.http.OHttpResponseData.sessionId"));
+    orientdb_b213aaf.add(item("Move Attribute", "com.orientechnologies.orient.server.network.protocol.http.OHttpResponse.serverInfo", "com.orientechnologies.orient.server.network.protocol.http.OHttpResponseData.serverInfo"));
 //    orientdb_b213aaf.add(item("Extract Class", "com.orientechnologies.orient.server.network.protocol.http.command.post.OserverCommandPostUploadSingleFile", "com.orientechnologies.orient.server.network.protocol.http.command.post.OserverCommandData"));
 //    orientdb_b213aaf.add(item("Extract Class", "com.orientechnologies.orient.server.plugin.OserverPluginManager", "com.orientechnologies.orient.server.plugin.OserverPluginManagerData"));
 //    orientdb_b213aaf.add(item("Extract Class", "com.orientechnologies.orient.server.plugin.mail.OmailPlugin", "com.orientechnologies.orient.server.plugin.mail.OmailPluginData"));
-    orientdb_b213aaf.add(item("Extract Superclass", "com.orientechnologies.orient.etl.extractor.OJDBCExtractor\ncom.orientechno.OETLStubRandomExtractor", "com.orientechnologies.orient.etl.extractor.OextractorSuper"));
+    orientdb_b213aaf.add(item("Extract Superclass", "com.orientechnologies.orient.etl.extractor.OJDBCExtractor", "com.orientechnologies.orient.etl.extractor.OextractorSuper"));
     orientdb_b213aaf.add(item("Extract Interface", "com.orientechnologies.orient.jdbc.OrientBlob", "com.orientechnologies.orient.jdbc.OrientBlobInterface"));
 //    orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.jdbc.OrientDataCode#orientDataSource", "com.orientechnologies.orient.jdbc.OrientDataCode#orientDataCode")); // errado
     orientdb_b213aaf.add(item("Rename Class", "com.orientechnologies.orient.jdbc.OrientDataSource", "com.orientechnologies.orient.jdbc.OrientDataCoude")); // certo
@@ -372,8 +391,8 @@ public class Arqsoft16Dataset {
     orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.ODatabaseHelper#freezeDatabase(ODatabase)", "com.orientechnologies.orient.client.db.ODatabaseHelper#freezeDb(ODatabase)"));
     orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.ODatabaseHelper#existsDatabase(String)", "com.orientechnologies.orient.client.db.ODatabaseHelper#existsDb(String)"));
     orientdb_b213aaf.add(item("Rename Method", "com.orientechnologies.orient.client.db.ODatabaseHelper#dropDatabase(ODatabase, String, String)", "com.orientechnologies.orient.client.db.ODatabaseHelper#dropDb(ODatabase, String, String)"));
-    // Not sure, pull up to interface but
-    orientdb_b213aaf.add(item("Pull Up Method", "com.orientechnologies.orient.client.remote.OStorageRemoteAsynchEventListener#getStorage()", "com.orientechonologies.orient.enterprise.chamennel.binary.ORemoteServerEventListener#getStorage()"));
+    // Pull up to interface but not implemented (compilation error)
+    //orientdb_b213aaf.add(item("Pull Up Method", "com.orientechnologies.orient.client.remote.OStorageRemoteAsynchEventListener#getStorage()", "com.orientechonologies.orient.enterprise.chamennel.binary.ORemoteServerEventListener#getStorage()"));
 //    orientdb_b213aaf.add(item("Pull Up Method", "com.orientechnologies.orient.graph.handler.OgraphServerHandler#getname()", "com.orientechonologies.orient.core.command.script.Oscriptlnjection#getName()")); ??
 //    orientdb_b213aaf.add(item("Pull Up Method", "com.orientechnologies.orient.client.remote.OengineRemote#NAME", "com.orientechnologies.orient.core.engine.OengineAbstract#NAME")); // errado
     orientdb_b213aaf.add(item("Pull Up Field", "com.orientechnologies.orient.client.remote.OEngineRemote#NAME", "com.orientechnologies.orient.core.engine.OEngineAbstract#NAME")); // certo

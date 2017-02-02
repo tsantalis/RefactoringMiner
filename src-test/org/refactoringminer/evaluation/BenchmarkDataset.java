@@ -44,7 +44,7 @@ public class BenchmarkDataset {
             .add(RefactoringType.RENAME_METHOD, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.orderBy(OrderBy)", "org.jbpm.services.task.impl.TaskQueryBuilderImpl.getOrderByListId(OrderBy)")
             .add(RefactoringType.RENAME_METHOD, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.buildQuery()", "org.jbpm.services.task.impl.TaskQueryBuilderImpl.build()")
             
-            .add(RefactoringType.EXTRACT_OPERATION, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.(String,CommandService)", "org.jbpm.query.jpa.data.QueryWhere.setAscending(String)")
+            .add(RefactoringType.EXTRACT_OPERATION, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.TaskQueryBuilderImpl(String,CommandService)", "org.jbpm.query.jpa.data.QueryWhere.setAscending(String)")
             .add(RefactoringType.EXTRACT_OPERATION, "org.jbpm.services.task.impl.TaskQueryBuilderImpl.clear()", "org.jbpm.query.jpa.data.QueryWhere.setAscending(String)")
             .add(RefactoringType.EXTRACT_OPERATION, "org.jbpm.services.task.impl.TaskQueryServiceImpl.getTasksByVariousFields(String,Map,boolean)", "org.jbpm.query.jpa.data.QueryWhere.setAscending(String)")
             
@@ -101,7 +101,7 @@ public class BenchmarkDataset {
             .add(RefactoringType.RENAME_METHOD, "org.drools.reteoo.common.ReteAgenda.executeIfNotFiring(Runnable)", "org.drools.reteoo.common.ReteAgenda.executeTask(ExecutableEntry)")
             .add(RefactoringType.RENAME_METHOD, "org.drools.core.common.DefaultAgenda.executeIfNotFiring(Runnable)", "org.drools.core.common.DefaultAgenda.executeTask(ExecutableEntry)")
             
-            .add(RefactoringType.EXTRACT_OPERATION, "org.drools.core.common.AgendaGroupQueueImpl.(String,InternalKnowledgeBase)", "org.drools.core.common.AgendaGroupQueueImpl.initPriorityQueue(InternalKnowledgeBase)")
+            .add(RefactoringType.EXTRACT_OPERATION, "org.drools.core.common.AgendaGroupQueueImpl.AgendaGroupQueueImpl(String,InternalKnowledgeBase)", "org.drools.core.common.AgendaGroupQueueImpl.initPriorityQueue(InternalKnowledgeBase)")
             .add(RefactoringType.PUSH_DOWN_ATTRIBUTE, "org.drools.core.impl.StatefulKnowledgeSessionImpl.evaluatingActionQueue", "org.drools.reteoo.common.ReteWorkingMemory.evaluatingActionQueue");
         at("https://github.com/jersey/jersey.git", "d94ca2b")
             .add(RefactoringType.MOVE_CLASS, "org.glassfish.jersey.client.HttpUrlConnector", "org.glassfish.jersey.client.internal.HttpUrlConnector")

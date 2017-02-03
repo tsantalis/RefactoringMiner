@@ -1,0 +1,6 @@
+move_field("WHITESPACE","io.dropwizard.metrics.jvm%.GarbageCollectorMetricSet","io.dropwizard.metrics.jvm%.GarbageCollectorMetricSetTest")
+move_field("UTF_8","io.dropwizard.metrics.jvm%.ThreadDump","io.dropwizard.metrics.jvm%.ThreadDumpTest")
+move_field("WHITESPACE","io.dropwizard.metrics.jvm%.MemoryUsageGaugeSet","io.dropwizard.metrics.jvm%.GarbageCollectorMetricSetTest")
+move_field("MAX_STACK_TRACE_DEPTH","io.dropwizard.metrics.jvm%.ThreadDeadlockDetector","io.dropwizard.metrics.jvm%.ThreadDeadlockDetectorTest")
+move_field("WHITESPACE","io.dropwizard.metrics.jvm%.MemoryUsageGaugeSet","io.dropwizard.metrics.jvm%.MemoryUsageGaugeSetTest")
+move_field("WHITESPACE","io.dropwizard.metrics.jvm%.GarbageCollectorMetricSet","io.dropwizard.metrics.jvm%.MemoryUsageGaugeSetTest")

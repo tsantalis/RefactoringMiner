@@ -1,0 +1,6 @@
+replace_method_with_method_object("io.dropwizard.metrics.health.jvm%.ThreadDeadlockHealthCheckTest#isHealthyIfNoThreadsAreDeadlocked()","io.dropwizard.metrics.health.jvm%.HealthCheck#Result")
+replace_method_with_method_object("io.dropwizard.metrics.health.jvm%.ThreadDeadlockHealthCheckTest#automaticallyUsesThePlatformThreadBeans()","io.dropwizard.metrics.health.jvm%.HealthCheck#Result")
+replace_method_with_method_object("io.dropwizard.metrics.health.jvm%.ThreadDeadlockHealthCheckTest#isUnhealthyIfThreadsAreDeadlocked()","io.dropwizard.metrics.health.jvm%.HealthCheck#Result")
+replace_method_with_method_object("io.dropwizard.metrics.health%.HealthCheckRegistry#runHealthChecks()","io.dropwizard.metrics.health.jvm%.HealthCheck#Result")
+replace_method_with_method_object("io.dropwizard.metrics.health%.HealthCheckRegistry#runHealthChecks()","io.dropwizard.metrics.health.jvm%.HealthCheck")
+replace_data_with_object("io.dropwizard.metrics.health%.HealthCheckTest#healthCheck","io.dropwizard.metrics.health.jvm%.HealthCheck")

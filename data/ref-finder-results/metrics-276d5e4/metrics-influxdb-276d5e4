@@ -1,0 +1,7 @@
+replace_magic_number_with_constant("io.dropwizard.metrics.influxdb%.InfluxDbReporter#<init>()","io.dropwizard.metrics.influxdb%.InfluxDbReporter#durationFactor")
+remove_parameter("io.dropwizard.metrics.influxdb%.InfluxDbReporter#reportCounter()","Counter:counter")
+remove_parameter("io.dropwizard.metrics.influxdb%.InfluxDbReporter#report()","Counter>:counters")
+add_parameter("io.dropwizard.metrics.influxdb%.InfluxDbReporter#report()","CounterMetric>:counters")
+replace_magic_number_with_constant("io.dropwizard.metrics.influxdb%.InfluxDbReporter#<init>()","io.dropwizard.metrics.influxdb%.InfluxDbReporter#durationUnit")
+replace_magic_number_with_constant("io.dropwizard.metrics.influxdb%.InfluxDbReporter#<init>()","io.dropwizard.metrics.influxdb%.InfluxDbReporter#rateFactor")
+add_parameter("io.dropwizard.metrics.influxdb%.InfluxDbReporter#reportCounter()","CounterMetric:counter")

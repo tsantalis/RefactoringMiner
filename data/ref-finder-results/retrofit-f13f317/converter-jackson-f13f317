@@ -1,0 +1,7 @@
+move_field("MEDIA_TYPE","retrofit2.converter.jackson%.JacksonRequestBodyConverter","retrofit2.converter.jackson%.JacksonConverterFactory")
+move_field("adapter","retrofit2.converter.jackson%.JacksonResponseBodyConverter","retrofit2.converter.jackson%.JacksonRequestConverter")
+move_field("adapter","retrofit2.converter.jackson%.JacksonRequestBodyConverter","retrofit2.converter.jackson%.JacksonResponseConverter")
+move_method("convert()","retrofit2.converter.jackson%.JacksonRequestBodyConverter","retrofit2.converter.jackson%.JacksonRequestConverter")
+move_field("adapter","retrofit2.converter.jackson%.JacksonRequestBodyConverter","retrofit2.converter.jackson%.JacksonRequestConverter")
+move_method("convert()","retrofit2.converter.jackson%.JacksonResponseBodyConverter","retrofit2.converter.jackson%.JacksonResponseConverter")
+move_field("adapter","retrofit2.converter.jackson%.JacksonResponseBodyConverter","retrofit2.converter.jackson%.JacksonResponseConverter")

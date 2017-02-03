@@ -1,0 +1,6 @@
+move_field("userName","com.orientechnologies.orient.etl.extractor%.OJDBCExtractor","com.orientechnologies.orient.etl.extractor%.OextractorSuper")
+extract_superclass("com.orientechnologies.orient.etl.extractor%.OJDBCExtractor","com.orientechnologies.orient.etl.extractor%.OextractorSuper")
+move_field("url","com.orientechnologies.orient.etl.extractor%.OJDBCExtractor","com.orientechnologies.orient.etl.extractor%.OextractorSuper")
+move_field("userPassword","com.orientechnologies.orient.etl.extractor%.OJDBCExtractor","com.orientechnologies.orient.etl.extractor%.OextractorSuper")
+move_method("getName()","com.orientechnologies.orient.etl.extractor%.OJDBCExtractor","com.orientechnologies.orient.etl.extractor%.OextractorSuper")
+move_field("queryCount","com.orientechnologies.orient.etl.extractor%.OJDBCExtractor","com.orientechnologies.orient.etl.extractor%.OextractorSuper")

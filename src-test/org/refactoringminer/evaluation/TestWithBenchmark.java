@@ -51,8 +51,8 @@ public class TestWithBenchmark {
         ResultComparator rc1 = new ResultComparator();
         rc1.expect(oracle.all());
         rc1.compareWith(config.getId(), ResultComparator.collectRmResult(new GitHistoryRefactoringMiner2(config), oracle.all()));
-        rc1.printSummary(System.out, false, EnumSet.allOf(RefactoringType.class));
-        rc1.printDetails(System.out, false, EnumSet.allOf(RefactoringType.class));
+        rc1.printSummary(System.out, EnumSet.allOf(RefactoringType.class));
+        rc1.printDetails(System.out, EnumSet.allOf(RefactoringType.class));
         
         System.out.println(config.toString());
     }
@@ -68,15 +68,15 @@ public class TestWithBenchmark {
         
         for (RefactoringDetectorConfigImpl config : configurations) {
             rc1.compareWith(config.getId(), ResultComparator.collectRmResult(new GitHistoryRefactoringMiner2(config), oracle.all()));
-            CompareResult result = rc1.getCompareResult(config.getId(), false, refTypeSet);
+            CompareResult result = rc1.getCompareResult(config.getId(), refTypeSet);
             double f1 = result.getF1();
             if (f1 >= maxF1) {
                 maxF1 = f1;
                 maxConfig = config;
             }
         }
-        rc1.printSummary(System.out, false, refTypeSet);
-        rc1.printDetails(System.out, false, refTypeSet);
+        rc1.printSummary(System.out, refTypeSet);
+        rc1.printDetails(System.out, refTypeSet);
         return maxConfig;
     }
 

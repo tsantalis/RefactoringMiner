@@ -72,10 +72,25 @@ public class RefactoringSet {
 
     public RefactoringSet ignoring(EnumSet<RefactoringType> refTypes) {
         RefactoringSet newSet = new RefactoringSet(project, revision);
-        newSet.add(refactorings.stream().filter(r ->
-            !refTypes.contains(r.getRefactoringType())
-            ).collect(Collectors.toList()));
+        newSet.add(refactorings.stream()
+            .filter(r -> !refTypes.contains(r.getRefactoringType()))
+            .collect(Collectors.toList()));
         return newSet;
+    }
+    public RefactoringSet ignoringMethodParameters(boolean active) {
+        if (!active) {
+            return this;
+        }
+        RefactoringSet newSet = new RefactoringSet(project, revision);
+        newSet.add(refactorings.stream()
+            .map(r -> new RefactoringRelationship(r.getRefactoringType(), stripParameters(r.getEntityBefore()), stripParameters(r.getEntityAfter())))
+            .collect(Collectors.toList()));
+        return newSet;
+    }
+
+    private static String stripParameters(String entity) {
+        int openPar = entity.indexOf('(');
+        return openPar != -1 ? entity.substring(0, openPar + 1) + ")" : entity;
     }
 
     public void printSourceCode(PrintStream pw) {

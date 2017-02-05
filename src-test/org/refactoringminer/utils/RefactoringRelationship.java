@@ -68,6 +68,10 @@ public class RefactoringRelationship implements Comparable<RefactoringRelationsh
     return normalizeParameters(stripTypeArguments(entity).replace('#', '.')).replace(" ", "");
   }
 
+  public static String parentOf(String entity) {
+      return entity.substring(0, entity.lastIndexOf('.'));
+  }
+
   private static String normalizeParameters(String r) {
     int indexOfPar = r.indexOf('(');
     if (indexOfPar != -1) {

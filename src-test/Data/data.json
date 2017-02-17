@@ -174,7 +174,7 @@
 	"author": "Cedric Champeau",
 	"refactorings": [{
 		"type": "Extract Interface",
-		"description": "Extract Interface org.gradle.api.internal.artifacts.ivyservice.resolveengine.result.ResolvedArtifactsContainer from type org.gradle.api.internal.artifacts.ivyservice.resolveengine.oldresult.ResolvedArtifactResults"
+		"description": "Extract Interface org.gradle.api.internal.artifacts.ivyservice.resolveengine.result.ResolvedArtifactsContainer from class org.gradle.api.internal.artifacts.ivyservice.resolveengine.oldresult.ResolvedArtifactResults"
 	}],
 	"time": "6/8/15 9:02 AM",
 	"id": 1104952
@@ -194,7 +194,7 @@
 	"author": "Simon Brandhof",
 	"refactorings": [{
 		"type": "Rename Package",
-		"description": "Rename Package org.sonar.server.notifications.email to org.sonar.server.notification.email"
+		"description": "Rename Package org.sonar.core to org.sonar.server"
 	}, {
 		"type": "Rename Package",
 		"description": "Rename Package org.sonar.server.notifications to org.sonar.server.notification"
@@ -227,10 +227,7 @@
 	"author": "Teryk Bellahsene",
 	"refactorings": [{
 		"type": "Rename Package",
-		"description": "Rename Package org.sonar.server.custommeasure.ws to org.sonar.server.measure.custom.ws"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.sonar.server.custommeasure.persistence to org.sonar.server.measure.custom.persistence"
+		"description": "Rename Package org.sonar.server.custommeasure to org.sonar.server.measure.custom"
 	}],
 	"time": "6/8/15 11:12 AM",
 	"id": 1101296
@@ -843,10 +840,10 @@
 	"author": "Duarte Meneses",
 	"refactorings": [{
 		"type": "Extract Interface",
-		"description": "Extract Interface org.sonar.api.utils.ProjectTempFolder from type org.sonar.api.utils.internal.DefaultTempFolder"
+		"description": "Extract Interface org.sonar.api.utils.ProjectTempFolder from class org.sonar.api.utils.internal.DefaultTempFolder"
 	}, {
 		"type": "Extract Interface",
-		"description": "Extract Interface org.sonar.api.utils.ProjectTempFolder from type org.sonar.api.utils.internal.JUnitTempFolder"
+		"description": "Extract Interface org.sonar.api.utils.ProjectTempFolder from class org.sonar.api.utils.internal.JUnitTempFolder"
 	}],
 	"time": "6/15/15 12:04 PM",
 	"id": 1117448
@@ -2878,7 +2875,7 @@
 	"author": "kedzie",
 	"refactorings": [{
 		"type": "Extract Interface",
-		"description": "Extract Interface org.drools.core.util.ByteArrayClassLoader from type org.drools.core.base.ClassFieldAccessorCache.DefaultByteArrayClassLoader"
+		"description": "Extract Interface org.drools.core.util.ByteArrayClassLoader from class org.drools.core.base.ClassFieldAccessorCache.DefaultByteArrayClassLoader"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public loadClass(className String, classLoader ClassLoader) : Class<?> extracted from public instantiateObject(className String, classLoader ClassLoader) : Object in class org.drools.core.util.ClassUtils"
@@ -3009,10 +3006,10 @@
 		"description": "Move Class UI moved from org.graylog2 to org.graylog2.shared"
 	}, {
 		"type": "Extract Interface",
-		"description": "Extract Interface org.graylog2.bootstrap.CliCommand from type org.graylog2.bootstrap.CmdLineTool"
+		"description": "Extract Interface org.graylog2.bootstrap.CliCommand from class org.graylog2.bootstrap.CmdLineTool"
 	}, {
 		"type": "Extract Interface",
-		"description": "Extract Interface org.graylog2.bootstrap.CliCommand from type org.graylog2.bootstrap.commands.ShowVersion"
+		"description": "Extract Interface org.graylog2.bootstrap.CliCommand from class org.graylog2.bootstrap.commands.ShowVersion"
 	}, {
 		"type": "Move Class",
 		"description": "Move Class Radio moved from org.graylog2.bootstrap.commands to org.graylog2.radio.commands"
@@ -3792,7 +3789,7 @@
 		"description": "Move Class org.mockito.internal.matchers.MatchersPrinter moved to org.mockito.internal.matchers.text.MatchersPrinter"
 	}, {
 		"type": "Rename Package",
-		"description": "Rename Package org.mockito.internal.util.text to org.mockito.internal.matchers.text"
+		"description": "Rename Package org.mockito.internal.util to org.mockito.internal.matchers"
 	}, {
 		"type": "Extract Superclass",
 		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.LocalizedMatcher"
@@ -5696,13 +5693,7 @@
 	"author": "David Murray",
 	"refactorings": [{
 		"type": "Rename Package",
-		"description": "Rename Package com.amazonaws.service.codecommit to com.amazonaws.services.codecommit"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.amazonaws.service.codecommit.model to com.amazonaws.services.codecommit.model"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.amazonaws.service.codecommit.model.transform to com.amazonaws.services.codecommit.model.transform"
+		"description": "Rename Package com.amazonaws.service to com.amazonaws.services"
 	}],
 	"time": "7/13/15 3:02 PM",
 	"id": 1140316
@@ -6842,7 +6833,7 @@
 	"author": "Jason Harrop",
 	"refactorings": [{
 		"type": "Rename Package",
-		"description": "Rename Package org.docx4j.schemas.microsoft.com.office.word_2006.wordml to org.docx4j.com.microsoft.schemas.office.word.x2006.wordml"
+		"description": "Rename Package org.docx4j.schemas.microsoft.com.office.word_2006 to org.docx4j.com.microsoft.schemas.office.word.x2006"
 	}],
 	"time": "7/15/15 8:55 AM",
 	"id": 1141185
@@ -8994,109 +8985,7 @@
 	"author": "Henri Sweers",
 	"refactorings": [{
 		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.model to com.github.pockethub.model"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.persistence to com.github.pockethub.persistence"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.tests.issue to com.github.pockethub.tests.issue"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.core.commit to com.github.pockethub.core.commit"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.ui.search to com.github.pockethub.ui.search"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.ui.comment to com.github.pockethub.ui.comment"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.ui.commit to com.github.pockethub.ui.commit"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.ui.user to com.github.pockethub.ui.user"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.ui to com.github.pockethub.ui"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.core.repo to com.github.pockethub.core.repo"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.core to com.github.pockethub.core"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.ui.roboactivities to com.github.pockethub.ui.roboactivities"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.tests.commit to com.github.pockethub.tests.commit"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.core.user to com.github.pockethub.core.user"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.tests.gist to com.github.pockethub.tests.gist"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.core.ref to com.github.pockethub.core.ref"
-	}, {
-		"type": "Rename Package",
 		"description": "Rename Package com.github.mobile to com.github.pockethub"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.tests.util to com.github.pockethub.tests.util"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.util to com.github.pockethub.util"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.tests.repo to com.github.pockethub.tests.repo"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.ui.code to com.github.pockethub.ui.code"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.core.code to com.github.pockethub.core.code"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.core.search to com.github.pockethub.core.search"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.tests.ref to com.github.pockethub.tests.ref"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.ui.gist to com.github.pockethub.ui.gist"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.accounts to com.github.pockethub.accounts"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.core.issue to com.github.pockethub.core.issue"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.sync to com.github.pockethub.sync"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.ui.ref to com.github.pockethub.ui.ref"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.core.gist to com.github.pockethub.core.gist"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.tests to com.github.pockethub.tests"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.api to com.github.pockethub.api"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.tests.user to com.github.pockethub.tests.user"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.ui.issue to com.github.pockethub.ui.issue"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package com.github.mobile.ui.repo to com.github.pockethub.ui.repo"
 	}],
 	"time": "8/5/15 4:34 AM",
 	"id": 1157300
@@ -9136,7 +9025,7 @@
 	"author": "Adrian Kelly",
 	"refactorings": [{
 		"type": "Extract Interface",
-		"description": "Extract Interface org.gradle.internal.file.RelativeFilePathResolver from type org.gradle.api.internal.file.FileResolver"
+		"description": "Extract Interface org.gradle.internal.file.RelativeFilePathResolver from class org.gradle.api.internal.file.FileResolver"
 	}],
 	"time": "8/5/15 1:14 PM",
 	"id": 1158716

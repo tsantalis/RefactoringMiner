@@ -23,6 +23,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RenamePackageRefactoring;
 
 public class UMLModelDiff {
    private List<UMLClass> addedClasses;
@@ -610,6 +611,7 @@ public class UMLModelDiff {
 
    private List<Refactoring> getMoveClassRefactorings() {
 	   List<Refactoring> refactorings = new ArrayList<Refactoring>();
+	   List<RenamePackageRefactoring> renamePackageRefactorings = new ArrayList<RenamePackageRefactoring>();
 	   for(UMLClassMoveDiff classMoveDiff : classMoveDiffList) {
 		   UMLClass originalClass = classMoveDiff.getOriginalClass();
 		   String originalName = originalClass.getName();
@@ -618,18 +620,45 @@ public class UMLModelDiff {
 		   
 		   String originalPath = originalClass.getSourceFile();
 		   String movedPath = movedClass.getSourceFile();
-		   boolean pathIsUnchanged = originalPath.equals(movedPath);
+		   boolean pathIsTheSame = originalPath.equals(movedPath);
 		   
 		   if (!originalName.equals(movedName)) {
-			   if (!pathIsUnchanged || !movedClass.isTopLevel()) {
+			   if (!pathIsTheSame || !movedClass.isTopLevel()) {
 				   MoveClassRefactoring refactoring = new MoveClassRefactoring(originalName, movedName);
-				   refactorings.add(refactoring);
+				   RenamePattern renamePattern = refactoring.getRenamePattern();
+				   //check if the the original path is a substring of the moved path and vice versa
+				   if(renamePattern.getOriginalPath().contains(renamePattern.getMovedPath()) ||
+						   renamePattern.getMovedPath().contains(renamePattern.getOriginalPath())) {
+					   refactorings.add(refactoring);
+				   }
+				   else {
+					   boolean foundInMatchingRenamePackageRefactoring = false;
+					   for(RenamePackageRefactoring renamePackageRefactoring : renamePackageRefactorings) {
+						   if(renamePackageRefactoring.getPattern().equals(renamePattern)) {
+							   renamePackageRefactoring.addMoveClassRefactoring(refactoring);
+							   foundInMatchingRenamePackageRefactoring = true;
+							   break;
+						   }
+					   }
+					   if(!foundInMatchingRenamePackageRefactoring) {
+						   renamePackageRefactorings.add(new RenamePackageRefactoring(refactoring));
+					   }
+				   }
 			   }
 		   } else {
-			   if (!pathIsUnchanged) {
+			   if (!pathIsTheSame) {
 				   MoveClassFolderRefactoring refactoring = new MoveClassFolderRefactoring(originalName, originalPath, movedPath);
 				   refactorings.add(refactoring);
 			   }
+		   }
+	   }
+	   for(RenamePackageRefactoring renamePackageRefactoring : renamePackageRefactorings) {
+		   List<MoveClassRefactoring> moveClassRefactorings = renamePackageRefactoring.getMoveClassRefactorings();
+		   if(moveClassRefactorings.size() > 1) {
+			   refactorings.add(renamePackageRefactoring);
+		   }
+		   else if(moveClassRefactorings.size() == 1) {
+			   refactorings.add(moveClassRefactorings.get(0));
 		   }
 	   }
 	   return refactorings;

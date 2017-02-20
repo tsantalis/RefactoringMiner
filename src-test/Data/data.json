@@ -1998,10 +1998,19 @@
 	"author": "Andrea Aime",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public pre(item ImportTask, data ImportData) : void from class org.geoserver.importer.transform.VectorTransformChain to class org.geoserver.importer.transform.TransformChain"
+		"description": "Pull Up Method public pre(item ImportTask, data ImportData) : void from class org.geoserver.importer.transform.VectorTransformChain to public pre(item ImportTask, data ImportData) : void from class org.geoserver.importer.transform.TransformChain"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public post(task ImportTask, data ImportData) : void from class org.geoserver.importer.transform.VectorTransformChain to class org.geoserver.importer.transform.TransformChain"
+		"description": "Pull Up Method public post(task ImportTask, data ImportData) : void from class org.geoserver.importer.transform.VectorTransformChain to public post(task ImportTask, data ImportData) : void from class org.geoserver.importer.transform.TransformChain"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.geoserver.importer.transform.PostVectorTransform renamed to org.geoserver.importer.transform.PostTransform"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.geoserver.importer.transform.AbstractVectorTransform renamed to org.geoserver.importer.transform.AbstractTransform"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.geoserver.importer.transform.PreVectorTransform renamed to org.geoserver.importer.transform.PreTransform"
 	}],
 	"time": "6/17/15 6:09 AM",
 	"id": 1117213
@@ -3022,7 +3031,10 @@
 	"author": "Davide Grohmann",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class Recovery moved from org.neo4j.kernel to org.neo4j.kernel.recovery"
+		"description": "Move Class org.neo4j.kernel.Recovery moved to org.neo4j.kernel.recovery.Recovery"
+	}, {
+		"type": "Rename Class",
+		"description": "org.neo4j.kernel.impl.transaction.log.rotation.LogRotationControl renamed to org.neo4j.kernel.impl.transaction.log.rotation.StoreFlusher"
 	}],
 	"time": "6/22/15 1:34 PM",
 	"id": 1122164
@@ -3084,7 +3096,13 @@
 		"description": "Extract Superclass com.hazelcast.spi.impl.SimpleExecutionCallback from class com.hazelcast.cache.impl.operation.CacheCreateConfigOperation.CacheConfigCreateCallback"
 	}, {
 		"type": "Extract Superclass",
-		"description": "Extract Superclass com.hazelcast.spi.impl.SimpleExecutionCallback from class 3 others"
+		"description": "Extract Superclass com.hazelcast.spi.impl.SimpleExecutionCallback from class com.hazelcast.client.impl.client.MultiTargetClientRequest.SingleTargetCallback"
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass com.hazelcast.spi.impl.SimpleExecutionCallback from class com.hazelcast.partition.impl.MigrationRequestOperation.MigrationCallback"
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass com.hazelcast.spi.impl.SimpleExecutionCallback from class com.hazelcast.client.impl.protocol.task.AbstractMultiTargetMessageTask.SingleTargetCallback"
 	}],
 	"time": "6/22/15 3:53 PM",
 	"id": 1122778
@@ -3767,6 +3785,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private pause(delay long) : void extracted from private pauseExponentially(retries int) : void in class com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private callUntilCompletion(batch Map) : FailedBatch renamed to private doBatchWriteItemWithRetry(batch Map, batchWriteRetryStrategy BatchWriteRetryStrategy) : FailedBatch in class com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper"
 	}],
 	"time": "6/24/15 8:54 PM",
 	"id": 1124370
@@ -3825,7 +3846,7 @@
 		"description": "Pull Up Attribute protected org2Groups : String[] from class org.apache.drill.exec.impersonation.TestImpersonationQueries to class org.apache.drill.exec.impersonation.BaseTestImpersonation"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class TableLoaderLoader moved from org.apache.drill.exec.store.hive.schema.HiveSchemaFactory to org.apache.drill.exec.store.hive.DrillHiveMetaStoreClient.NonCloseableHiveClientWithCaching"
+		"description": "Move Class org.apache.drill.exec.store.hive.schema.HiveSchemaFactory.TableLoaderLoader moved to org.apache.drill.exec.store.hive.DrillHiveMetaStoreClient.NonCloseableHiveClientWithCaching.TableLoaderLoader"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private createTestData() : void extracted from public addMiniDfsBasedStorageAndGenerateTestData() : void in class org.apache.drill.exec.impersonation.TestImpersonationQueries"
@@ -4372,6 +4393,60 @@
 	"refactorings": [{
 		"type": "Extract Superclass",
 		"description": "Extract Superclass org.neo4j.kernel.api.constraints.PropertyConstraint from class org.neo4j.kernel.api.constraints.UniquenessConstraint"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public shouldBeAbleToResolveConflictsAndRecreateConstraintAfterFailingToCreateConstraintDueToConflict() : void renamed to public shouldBeAbleToResolveConflictsAndRecreateConstraintAfterFailingToCreateUniquePropertyConstraintDueToConflict() : void in class org.neo4j.kernel.impl.api.integrationtest.ConstraintsCreationIT"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public shouldNotLeaveAnyStateBehindAfterFailingToCreateConstraint() : void renamed to public shouldNotLeaveAnyStateBehindAfterFailingToCreateUniquePropertyConstraint() : void in class org.neo4j.kernel.impl.api.integrationtest.ConstraintsCreationIT"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public shouldNotPersistUniquenessConstraintsCreatedInAbortedTransaction() : void renamed to public shouldNotPersistUniquePropertyConstraintsCreatedInAbortedTransaction() : void in class org.neo4j.kernel.impl.api.integrationtest.ConstraintsCreationIT"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public shouldBeAbleToStoreAndRetrieveUniquenessConstraintRule() : void renamed to public shouldBeAbleToStoreAndRetrieveUniquePropertyConstraintRule() : void in class org.neo4j.kernel.impl.api.integrationtest.ConstraintsCreationIT"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public shouldNotStoreUniquenessConstraintThatIsRemovedInTheSameTransaction() : void renamed to public shouldNotStoreUniquePropertyConstraintThatIsRemovedInTheSameTransaction() : void in class org.neo4j.kernel.impl.api.integrationtest.ConstraintsCreationIT"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public shouldNotRemoveConstraintThatGetsReAdded() : void renamed to public shouldNotRemoveUniquePropertyConstraintThatGetsReAdded() : void in class org.neo4j.kernel.impl.api.integrationtest.ConstraintsCreationIT"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public shouldNotCreateUniquenessConstraintThatAlreadyExists() : void renamed to public shouldNotCreateUniquePropertyConstraintThatAlreadyExists() : void in class org.neo4j.kernel.impl.api.integrationtest.ConstraintsCreationIT"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public shouldCreateAnIndexToGoAlongWithAUniquenessConstraint() : void renamed to public shouldCreateAnIndexToGoAlongWithAUniquePropertyConstraint() : void in class org.neo4j.kernel.impl.api.integrationtest.ConstraintsCreationIT"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public uniquenessConstraintCreate(state KernelStatement, labelId int, propertyKeyId int) : UniquenessConstraint renamed to public uniquePropertyConstraintCreate(state KernelStatement, labelId int, propertyKeyId int) : UniquenessConstraint in class org.neo4j.kernel.impl.api.StateHandlingStatementOperations"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public visitAddedConstraint(element UniquenessConstraint) : void renamed to public visitAddedUniquePropertyConstraint(element UniquenessConstraint) : void in class org.neo4j.kernel.impl.api.KernelTransactionImplementation.TransactionToRecordStateVisitor"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public visitRemovedConstraint(element UniquenessConstraint) : void renamed to public visitRemovedUniquePropertyConstraint(element UniquenessConstraint) : void in class org.neo4j.kernel.impl.api.KernelTransactionImplementation.TransactionToRecordStateVisitor"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public canListConstraints() : void renamed to public canListUniquePropertyConstraints() : void in class org.neo4j.shell.TestApps"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public canListConstraintsByLabel() : void renamed to public canListUniquePropertyConstraintsByLabel() : void in class org.neo4j.shell.TestApps"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public canListConstraintsByLabelAndProperty() : void renamed to public canListUniquePropertyConstraintsByLabelAndProperty() : void in class org.neo4j.shell.TestApps"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public uniquenessConstraintCreate(labelId int, propertyKeyId int) : UniquenessConstraint renamed to public uniquePropertyConstraintCreate(labelId int, propertyKeyId int) : UniquenessConstraint in class org.neo4j.kernel.impl.api.OperationsFacade"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public uniquenessConstraintCreate(state KernelStatement, labelId int, propertyKeyId int) : UniquenessConstraint renamed to public uniquePropertyConstraintCreate(state KernelStatement, labelId int, propertyKeyId int) : UniquenessConstraint in class org.neo4j.kernel.impl.api.LockingStatementOperations"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.neo4j.kernel.impl.store.UniquenessConstraintRule renamed to org.neo4j.kernel.impl.store.UniquePropertyConstraintRule"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.neo4j.kernel.impl.coreapi.schema.PropertyUniqueConstraintDefinition renamed to org.neo4j.kernel.impl.coreapi.schema.PropertyConstraintDefinition"
 	}],
 	"time": "7/2/15 2:23 AM",
 	"id": 1130638
@@ -7657,7 +7732,10 @@
 	"author": "Philipp Jahoda",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class Highlight moved from com.github.mikephil.charting.utils to com.github.mikephil.charting.highlight"
+		"description": "Move Class com.github.mikephil.charting.utils.Highlight moved to com.github.mikephil.charting.highlight.Highlight"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class com.github.mikephil.charting.interfaces.BarLineScatterCandleDataProvider renamed to com.github.mikephil.charting.interfaces.BarLineScatterCandleBubbleDataProvider"
 	}],
 	"time": "7/24/15 8:11 AM",
 	"id": 1147051
@@ -8602,7 +8680,10 @@
 	"author": "Artem Bilan",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class CompositeCodecTests moved from org.springframework.integration.codec to org.springframework.integration.codec.kryo"
+		"description": "Move Class org.springframework.integration.codec.CompositeCodecTests moved to org.springframework.integration.codec.kryo.CompositeCodecTests"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.springframework.integration.mail.config.ImapIdelIntegrationTests renamed to org.springframework.integration.mail.config.ImapIdleIntegrationTests"
 	}],
 	"time": "7/31/15 2:19 PM",
 	"id": 1155401
@@ -9006,6 +9087,12 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private unpackBytesHeader() : int extracted from public unpackBytes() : byte[] in class org.neo4j.packstream.PackStream.Unpacker"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public unpackString() : String renamed to public unpackText() : String in class org.neo4j.packstream.PackStream.Unpacker"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.neo4j.packstream.PackStream.PackstreamException renamed to org.neo4j.packstream.PackStream.PackStreamException"
 	}],
 	"time": "8/5/15 12:32 PM",
 	"id": 1159151
@@ -9034,14 +9121,8 @@
 	"repository": "https://github.com/Netflix/genie.git",
 	"author": "Tom Gianos",
 	"refactorings": [{
-		"type": "Move Class",
-		"description": "Move Class com.netflix.genie.server.startup.TestGenieApplication moved to com.netflix.genie.web.startup.TestGenieApplication"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class com.netflix.genie.server.startup.GenieApplication moved to com.netflix.genie.web.startup.GenieApplication"
-	}, {
 		"type": "Rename Package",
-		"description": "Rename Package com.netflix.genie.server.health to com.netflix.genie.web.health"
+		"description": "Rename Package com.netflix.genie.server to com.netflix.genie.web"
 	}],
 	"time": "8/5/15 5:47 PM",
 	"id": 1158352

@@ -250,14 +250,13 @@ public class UMLModelDiff {
 			   String renamedFile =  renamedFileHints.get(removedClass.getSourceFile());
 			   if(removedClass.hasSameNameAndKind(addedClass) 
 					   && (removedClass.hasSameAttributesAndOperations(addedClass) || addedClass.getSourceFile().equals(renamedFile) )) {
-				   UMLClassMoveDiff classMoveDiff = new UMLClassMoveDiff(removedClass, addedClass);
-				   // Add diff for moved classes?
-				   // this.addUMLClassDiff(addedClass.diff(removedClass));
-				   //
-				   addedClassIterator.remove();
-				   removedClassIterator.remove();
-				   classMoveDiffList.add(classMoveDiff);
-				   break;
+				   if(!conflictingMoveOfTopLevelClass(removedClass, addedClass)) {
+					   UMLClassMoveDiff classMoveDiff = new UMLClassMoveDiff(removedClass, addedClass);
+					   addedClassIterator.remove();
+					   removedClassIterator.remove();
+					   classMoveDiffList.add(classMoveDiff);
+					   break;
+				   }
 			   }
 		   }
 	   }
@@ -277,6 +276,21 @@ public class UMLModelDiff {
 	   this.classMoveDiffList.removeAll(innerClassMoveDiffList);
    }
 
+   private boolean conflictingMoveOfTopLevelClass(UMLClass removedClass, UMLClass addedClass) {
+	   if(!removedClass.isTopLevel() || !addedClass.isTopLevel()) {
+		   //check if classMoveDiffList contains already a move for the outer class to a different target
+		   for(UMLClassMoveDiff diff : classMoveDiffList) {
+			   if((diff.getOriginalClass().getName().equals(removedClass.getPackageName()) &&
+					   !diff.getMovedClass().getName().equals(addedClass.getPackageName())) ||
+					   (!diff.getOriginalClass().getName().equals(removedClass.getPackageName()) &&
+						diff.getMovedClass().getName().equals(addedClass.getPackageName()))) {
+				   return true;
+			   }
+		   }
+	   }
+	   return false;
+   }
+
    public void checkForRenamedClasses(Map<String, String> renamedFileHints) {
       for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
          UMLClass removedClass = removedClassIterator.next();
@@ -286,11 +300,10 @@ public class UMLModelDiff {
             String renamedFile =  renamedFileHints.get(removedClass.getSourceFile());
             if(removedClass.hasSameKind(addedClass) 
             		&& (removedClass.hasSameAttributesAndOperations(addedClass) || addedClass.getSourceFile().equals(renamedFile))) {
-               UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass);
-               // Add diff for renamed classes?
-               // this.addUMLClassDiff(addedClass.diff(removedClass));
-               //
-               diffSet.add(classRenameDiff);
+               if(!innerClassWithTheSameName(removedClass, addedClass)) {
+            	   UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass);
+            	   diffSet.add(classRenameDiff);
+               }
             }
          }
          if(!diffSet.isEmpty()) {
@@ -314,6 +327,18 @@ public class UMLModelDiff {
       this.classMoveDiffList.removeAll(innerClassMoveDiffList);
    }
 
+   private boolean innerClassWithTheSameName(UMLClass removedClass, UMLClass addedClass) {
+	   if(!removedClass.isTopLevel() || !addedClass.isTopLevel()) {
+		   String removedClassName = removedClass.getName();
+		   String removedName = removedClassName.substring(removedClassName.lastIndexOf(".")+1, removedClassName.length());
+		   String addedClassName = addedClass.getName();
+		   String addedName = addedClassName.substring(addedClassName.lastIndexOf(".")+1, addedClassName.length());
+		   if(removedName.equals(addedName)) {
+			   return true;
+		   }
+	   }
+	   return false;
+   }
 // public List<UMLClass> getAddedClasses() {
 //    return addedClasses;
 // }
@@ -623,12 +648,13 @@ public class UMLModelDiff {
 		   boolean pathIsTheSame = originalPath.equals(movedPath);
 		   
 		   if (!originalName.equals(movedName)) {
-			   if (!pathIsTheSame || !movedClass.isTopLevel()) {
+			   if (!pathIsTheSame) {
 				   MoveClassRefactoring refactoring = new MoveClassRefactoring(originalName, movedName);
 				   RenamePattern renamePattern = refactoring.getRenamePattern();
 				   //check if the the original path is a substring of the moved path and vice versa
 				   if(renamePattern.getOriginalPath().contains(renamePattern.getMovedPath()) ||
-						   renamePattern.getMovedPath().contains(renamePattern.getOriginalPath())) {
+						   renamePattern.getMovedPath().contains(renamePattern.getOriginalPath()) ||
+						   !originalClass.isTopLevel() || !movedClass.isTopLevel()) {
 					   refactorings.add(refactoring);
 				   }
 				   else {

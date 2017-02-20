@@ -328,4 +328,56 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 		return this.equalReturnParameter(operation) &&
 				(this.getParameterTypeList().containsAll(operation.getParameterTypeList()) || operation.getParameterTypeList().containsAll(this.getParameterTypeList()));
 	}
+	
+	public boolean replacedParameterTypes(UMLOperation operation) {
+		List<UMLType> thisParameterTypes = this.getParameterTypeList();
+		List<UMLType> otherParameterTypes = operation.getParameterTypeList();
+		
+		if(thisParameterTypes.size() == otherParameterTypes.size() && thisParameterTypes.size() > 0) {
+			int commonParameterTypes = 0;
+			int differentParameterTypes = 0;
+			for(int i=0; i<thisParameterTypes.size(); i++) {
+				UMLType thisParameterType = thisParameterTypes.get(i);
+				UMLType otherParameterType = otherParameterTypes.get(i);
+				if(thisParameterType.equals(otherParameterType)) {
+					commonParameterTypes++;
+				}
+				else {
+					differentParameterTypes++;
+				}
+			}
+			return commonParameterTypes >= differentParameterTypes;
+		}
+		else if(thisParameterTypes.size() > otherParameterTypes.size() && thisParameterTypes.size() > 0) {
+			int commonParameterTypes = 0;
+			int differentParameterTypes = 0;
+			for(int i=0; i<otherParameterTypes.size(); i++) {
+				UMLType thisParameterType = thisParameterTypes.get(i);
+				UMLType otherParameterType = otherParameterTypes.get(i);
+				if(thisParameterType.equals(otherParameterType)) {
+					commonParameterTypes++;
+				}
+				else {
+					differentParameterTypes++;
+				}
+			}
+			return commonParameterTypes >= differentParameterTypes + Math.abs(thisParameterTypes.size() - otherParameterTypes.size());
+		}
+		else if(otherParameterTypes.size() > thisParameterTypes.size() && thisParameterTypes.size() > 0) {
+			int commonParameterTypes = 0;
+			int differentParameterTypes = 0;
+			for(int i=0; i<thisParameterTypes.size(); i++) {
+				UMLType thisParameterType = thisParameterTypes.get(i);
+				UMLType otherParameterType = otherParameterTypes.get(i);
+				if(thisParameterType.equals(otherParameterType)) {
+					commonParameterTypes++;
+				}
+				else {
+					differentParameterTypes++;
+				}
+			}
+			return commonParameterTypes >= differentParameterTypes + Math.abs(thisParameterTypes.size() - otherParameterTypes.size());
+		}
+		return false;
+	}
 }

@@ -43,6 +43,10 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
         this.superclass = null;
     }
 
+    public String getPackageName() {
+		return this.packageName;
+	}
+
     public String getName() {
     	return this.qualifiedName;
     }

@@ -1,10 +1,10 @@
-package org.refactoringminer.api;
+package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import gr.uom.java.xmi.diff.MoveClassRefactoring;
-import gr.uom.java.xmi.diff.RenamePattern;
+import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringType;
 
 public class RenamePackageRefactoring implements Refactoring {
 

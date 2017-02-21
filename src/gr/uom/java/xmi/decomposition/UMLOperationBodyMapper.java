@@ -319,6 +319,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return nonMappedInnerNodesT2;
 	}
 
+	public int mappingsWithoutBlocks() {
+		int count = 0;
+		for(AbstractCodeMapping mapping : getMappings()) {
+			if(!mapping.getFragment1().getString().equals("{"))
+				count++;
+		}
+		return count;
+	}
+
 	public int nonMappedElementsT1() {
 		int nonMappedInnerNodeCount = 0;
 		for(CompositeStatementObject composite : getNonMappedInnerNodesT1()) {

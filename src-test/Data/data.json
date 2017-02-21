@@ -3287,6 +3287,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private createNewThread(group Group, job Runnable, metadata Map<String,String>) : Thread extracted from public schedule(group Group, job Runnable, metadata Map<String,String>) : JobHandle in class org.neo4j.kernel.impl.util.Neo4jJobScheduler"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.neo4j.ndp.transport.socket.client.WebSocketConnection renamed to org.neo4j.ndp.transport.socket.client.SecureWebSocketConnection"
 	}],
 	"time": "6/23/15 2:17 PM",
 	"id": 1124846
@@ -4515,8 +4518,8 @@
 	"repository": "https://github.com/square/wire.git",
 	"author": "jwilson",
 	"refactorings": [{
-		"type": "Extract Method",
-		"description": "Extract Method private fieldInitializer(type ProtoTypeName, value Object) : CodeBlock extracted from private defaultValue(field WireField) : CodeBlock in class com.squareup.wire.java.TypeWriter"
+		"type": "Rename Class",
+		"description": "Rename Class com.squareup.wire.model.LinkerTest renamed to com.squareup.wire.model.OptionsTest"
 	}],
 	"time": "7/3/15 1:18 AM",
 	"id": 1131927
@@ -5391,6 +5394,9 @@
 	"refactorings": [{
 		"type": "Inline Method",
 		"description": "Inline Method private cancelPendingStreams() : void inlined to public close() : void in class io.netty.handler.codec.http2.StreamBufferingEncoder"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class io.netty.handler.codec.http2.StreamBufferingEncoder.GoAwayException renamed to io.netty.handler.codec.http2.StreamBufferingEncoder.Http2GoAwayException"
 	}],
 	"time": "7/9/15 11:35 AM",
 	"id": 1138004
@@ -7298,6 +7304,9 @@
 		}, {
 			"type": "Rename Method",
 			"description": "Rename Method public getNumberOfRequests() : int renamed to public getRequestsCount() : int in class buildcraft.robotics.TileRequester"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method public getAvailableRequest(i int) : StackRequest renamed to public getRequest(slot int) : ItemStack in class buildcraft.builders.TileBuilder"
 		}
 	],
 	"time": "7/17/15 8:32 AM",
@@ -8608,6 +8617,12 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public getInt(name T, defaultValue short) : short renamed to public getShort(name T, defaultValue short) : short in class io.netty.handler.codec.EmptyHeaders"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public visit(entry Entry<ByteString, ByteString>) : boolean renamed to public translate(entry Entry<ByteString, ByteString>) : void in class io.netty.handler.codec.http2.HttpUtil.Http2ToHttpHeaderTranslator"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public visit(entry Entry<CharSequence, CharSequence>) : boolean renamed to public encode(entry Entry<CharSequence, CharSequence>) : void in class io.netty.handler.codec.AsciiHeadersEncoder"
 	}],
 	"time": "7/30/15 2:38 PM",
 	"id": 1153762
@@ -9213,6 +9228,9 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method private assertSameErlangModules(moduleDescriptors List, expectedModules String[]) : void renamed to private assertSameErlangFiles(moduleDescriptors List, expectedModules String[]) : void in class org.intellij.erlang.compilation.ErlangDependenciesResolutionTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private addErlangModules(module Module, onlyTestModules boolean, erlangModules Collection<ErlangFile>) : Collection<ErlangFile> renamed to private collectFiles(module Module, onlyTestModules boolean, filesCollector Processor<VirtualFile>) : void in class org.intellij.erlang.utils.ErlangModulesUtil"
 	}],
 	"time": "8/6/15 12:37 PM",
 	"id": 1159409

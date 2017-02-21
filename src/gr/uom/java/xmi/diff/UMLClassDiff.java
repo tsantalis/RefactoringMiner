@@ -230,13 +230,14 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 					UMLOperation addedOperation = addedOperationIterator.next();
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
-					List<AbstractCodeMapping> mappings = operationBodyMapper.getMappings();
-					if(!mappings.isEmpty()) {
-						if(operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() == 0 && mappings.size() == operationBodyMapper.exactMatches()) {
+					operationBodyMapper.getMappings();
+					int mappings = operationBodyMapper.mappingsWithoutBlocks();
+					if(mappings > 0) {
+						if(operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() == 0 && mappings == operationBodyMapper.exactMatches()) {
 							mapperSet.add(operationBodyMapper);
 						}
-						else if(mappings.size() > operationBodyMapper.nonMappedElementsT1() &&
-								mappings.size() > operationBodyMapper.nonMappedElementsT2() &&
+						else if(mappings > operationBodyMapper.nonMappedElementsT1() &&
+								mappings > operationBodyMapper.nonMappedElementsT2() &&
 								computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) <= MAX_DIFFERENCE_IN_POSITION &&
 								(addedOperation.equalParameterTypes(removedOperation) || addedOperation.overloadedParameterTypes(removedOperation) || addedOperation.replacedParameterTypes(removedOperation))) {
 							UMLOperation removedOperationInNextClass = matchingRemovedOperationInNextClassCallsAddedOperation(removedOperation, addedOperation);
@@ -272,13 +273,14 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 				for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 					UMLOperation removedOperation = removedOperationIterator.next();
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
-					List<AbstractCodeMapping> mappings = operationBodyMapper.getMappings();
-					if(!mappings.isEmpty()) {
-						if(operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() == 0 && mappings.size() == operationBodyMapper.exactMatches()) {
+					operationBodyMapper.getMappings();
+					int mappings = operationBodyMapper.mappingsWithoutBlocks();
+					if(mappings > 0) {
+						if(operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() == 0 && mappings == operationBodyMapper.exactMatches()) {
 							mapperSet.add(operationBodyMapper);
 						}
-						else if(mappings.size() > operationBodyMapper.nonMappedElementsT1() &&
-								mappings.size() > operationBodyMapper.nonMappedElementsT2() &&
+						else if(mappings > operationBodyMapper.nonMappedElementsT1() &&
+								mappings > operationBodyMapper.nonMappedElementsT2() &&
 								computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) <= MAX_DIFFERENCE_IN_POSITION &&
 								(addedOperation.equalParameterTypes(removedOperation) || addedOperation.overloadedParameterTypes(removedOperation) || addedOperation.replacedParameterTypes(removedOperation))) {
 							UMLOperation removedOperationInNextClass = matchingRemovedOperationInNextClassCallsAddedOperation(removedOperation, addedOperation);
@@ -333,9 +335,9 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 							parameterToArgumentMap.put(parameters.get(i), arguments.get(i));
 						}
 						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap);
-						if(!operationBodyMapper.getMappings().isEmpty() &&
-								(operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT1()
-										|| operationBodyMapper.exactMatches() > 0) ) {
+						operationBodyMapper.getMappings();
+						int mappings = operationBodyMapper.mappingsWithoutBlocks();
+						if(mappings > 0 && (mappings > operationBodyMapper.nonMappedElementsT1() || operationBodyMapper.exactMatches() > 0)) {
 							if(operationBodyMapper.nonMappedElementsT1() > 0) {
 								mappersToBeAdded.add(operationBodyMapper);
 							}
@@ -384,9 +386,9 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 						}
 						if(parameterTypesMatch(originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters)) {
 							UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap);
-							if(!operationBodyMapper.getMappings().isEmpty() &&
-									(operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT2()
-											|| operationBodyMapper.exactMatches() > 0) ) {
+							operationBodyMapper.getMappings();
+							int mappings = operationBodyMapper.mappingsWithoutBlocks();
+							if(mappings > 0 && (mappings > operationBodyMapper.nonMappedElementsT2() || operationBodyMapper.exactMatches() > 0)) {
 								ExtractOperationRefactoring extractOperationRefactoring =
 										new ExtractOperationRefactoring(addedOperation, operationBodyMapper.getOperation1(), operationBodyMapper.getOperation1().getClassName());
 								refactorings.add(extractOperationRefactoring);

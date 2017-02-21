@@ -740,9 +740,9 @@ public class UMLModelDiff {
             		  parameterToArgumentMap.put(parameters.get(i), arguments.get(i));
             	  }
                   UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap);
-                  if(!operationBodyMapper.getMappings().isEmpty() &&
-                        (operationBodyMapper.getMappings().size() > operationBodyMapper.nonMappedElementsT2()
-                              || operationBodyMapper.exactMatches() > 0) &&
+                  operationBodyMapper.getMappings();
+                  int mappings = operationBodyMapper.mappingsWithoutBlocks();
+                  if(mappings > 0 && (mappings > operationBodyMapper.nonMappedElementsT2() || operationBodyMapper.exactMatches() > 0) &&
                         mapper.getOperation1().isDelegate() == null && mapper.getOperation2().isDelegate() != null) {
                      ExtractAndMoveOperationRefactoring extractOperationRefactoring =
                            new ExtractAndMoveOperationRefactoring(addedOperation, operationBodyMapper.getOperation1());
@@ -782,8 +782,10 @@ public class UMLModelDiff {
 	            UMLOperation removedOperation = removedOperationIterator.next();
 	            
 	            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
-	            if(!operationBodyMapper.getMappings().isEmpty() &&
-	                  (operationBodyMapper.getMappings().size() > (operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2())/2.0
+	            operationBodyMapper.getMappings();
+	            int mappings = operationBodyMapper.mappingsWithoutBlocks();
+	            if(mappings > 0 &&
+	                  (mappings > (operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2())/2.0
 	                        || operationBodyMapper.exactMatches() > 0) ) {
 	               int exactMatches = operationBodyMapper.exactMatches();
 	               if(operationBodyMapperMap.containsKey(exactMatches)) {
@@ -838,8 +840,10 @@ public class UMLModelDiff {
 	            UMLOperation addedOperation = addedOperationIterator.next();
 	            
 	            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
-	            if(!operationBodyMapper.getMappings().isEmpty() &&
-	                  (operationBodyMapper.getMappings().size() > (operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2())/2.0
+	            operationBodyMapper.getMappings();
+	            int mappings = operationBodyMapper.mappingsWithoutBlocks();
+	            if(mappings > 0 &&
+	                  (mappings > (operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2())/2.0
 	                        || operationBodyMapper.exactMatches() > 0) ) {
 	               int exactMatches = operationBodyMapper.exactMatches();
 	               if(operationBodyMapperMap.containsKey(exactMatches)) {

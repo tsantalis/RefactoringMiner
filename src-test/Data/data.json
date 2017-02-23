@@ -510,10 +510,19 @@
 	"author": "Julien Lancelot",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class SnapshotQuery moved from org.sonar.core.component to org.sonar.core.component.db"
+		"description": "Move Class org.sonar.core.component.SnapshotQuery moved to org.sonar.core.component.db.SnapshotQuery"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class SnapshotQueryTest moved from org.sonar.core.component to org.sonar.core.component.db"
+		"description": "Move Class org.sonar.core.component.SnapshotQueryTest moved to org.sonar.core.component.db.SnapshotQueryTest"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.sonar.server.computation.step.PersistComponentsStep.PersisComponent renamed to org.sonar.server.computation.step.PersistComponentsStep.PersistComponentExecutor"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public not_update_create_at() : void renamed to public do_not_update_created_at_on_existing_component() : void in class org.sonar.server.computation.step.PersistComponentsStepTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public fail_to_get_periods_if_not_initialized() : void renamed to public get_periods_throws_illegal_state_exception_if_not_initialized() : void in class org.sonar.server.computation.period.PeriodsHolderImplTest"
 	}],
 	"time": "6/10/15 9:30 AM",
 	"id": 1107713
@@ -530,6 +539,12 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private addAdditionalLoggingHandler(loggingHandler LoggingHandlerBase) : void extracted from public addAdditionalLog(presentableName String) : LoggingHandler in class com.intellij.remoteServer.impl.runtime.log.DeploymentLogManagerImpl"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getLoggingHandler() : LoggingHandlerImpl renamed to public getComponent() : JComponent in class com.intellij.remoteServer.impl.runtime.ui.tree.ServersTreeStructure.DeploymentNodeImpl"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getLoggingHandler() : LoggingHandlerImpl renamed to public getComponent() : JComponent in class com.intellij.remoteServer.impl.runtime.ui.tree.ServersTreeStructure.DeploymentLogNode"
 	}],
 	"time": "6/10/15 4:04 PM",
 	"id": 1107345
@@ -597,17 +612,11 @@
 	"repository": "https://github.com/elastic/elasticsearch.git",
 	"author": "Simon Willnauer",
 	"refactorings": [{
-		"type": "Move Class",
-		"description": "Move Class org.elasticsearch.index.merge.policy.ElasticsearchMergePolicy moved to org.elasticsearch.index.shard.ElasticsearchMergePolicy"
+		"type": "Rename Package",
+		"description": "Rename Package org.elasticsearch.index.merge.policy to org.elasticsearch.index.shard"
 	}, {
-		"type": "Move Class",
-		"description": "Move Class org.elasticsearch.index.merge.policy.VersionFieldUpgrader moved to org.elasticsearch.index.shard.VersionFieldUpgrader"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class org.elasticsearch.index.merge.policy.VersionFieldUpgraderTest moved to org.elasticsearch.index.shard.VersionFieldUpgraderTest"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class org.elasticsearch.index.merge.policy.FilterDocValuesProducer moved to org.elasticsearch.index.shard.FilterDocValuesProducer"
+		"type": "Rename Method",
+		"description": "Rename Method public getMergePolicyProvider() : MergePolicyProvider renamed to public getMergePolicy() : MergePolicy in class org.elasticsearch.index.engine.EngineConfig"
 	}],
 	"time": "6/11/15 6:58 AM",
 	"id": 1107905
@@ -912,35 +921,20 @@
 	"repository": "https://github.com/facebook/buck.git",
 	"author": "Thomas Gummerer",
 	"refactorings": [{
-		"type": "Move Class",
-		"description": "Move Class StartActivityEvent moved from com.facebook.buck.cli to com.facebook.buck.event"
+		"type": "Rename Class",
+		"description": "Rename Class com.facebook.buck.cli.AdbOptions renamed to com.facebook.buck.cli.AdbCommandLineOptions"
 	}, {
-		"type": "Move Class",
-		"description": "Move Class InstallEvent moved from com.facebook.buck.cli to com.facebook.buck.event"
+		"type": "Rename Class",
+		"description": "Rename Class com.facebook.buck.cli.TargetDeviceOptionsTest renamed to com.facebook.buck.cli.TargetDeviceCommandLineOptionsTest"
 	}, {
-		"type": "Move Class",
-		"description": "Move Class StartActivityEventTest moved from com.facebook.buck.cli to com.facebook.buck.event"
+		"type": "Rename Class",
+		"description": "Rename Class com.facebook.buck.cli.TargetDeviceOptions renamed to com.facebook.buck.cli.TargetDeviceCommandLineOptions"
 	}, {
-		"type": "Move Class",
-		"description": "Move Class ErrorParsingReceiver moved from com.facebook.buck.cli.AdbHelper to com.facebook.buck.android.AdbHelper"
+		"type": "Rename Package",
+		"description": "Rename Package com.facebook.buck.cli to com.facebook.buck.event"
 	}, {
-		"type": "Move Class",
-		"description": "Move Class InstallEventTest moved from com.facebook.buck.cli to com.facebook.buck.event"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class UninstallEvent moved from com.facebook.buck.cli to com.facebook.buck.event"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class CommandFailedException moved from com.facebook.buck.cli.AdbHelper to com.facebook.buck.android.AdbHelper"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class AdbCallable moved from com.facebook.buck.cli.AdbHelper to com.facebook.buck.android.AdbHelper"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class TestDevice moved from com.facebook.buck.cli to com.facebook.buck.android"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class UninstallEventTest moved from com.facebook.buck.cli to com.facebook.buck.event"
+		"type": "Rename Package",
+		"description": "Rename Package com.facebook.buck.cli to com.facebook.buck.android"
 	}],
 	"time": "6/15/15 5:07 PM",
 	"id": 1116663
@@ -1583,6 +1577,9 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private addAllEntriesToIncludeMap(destination Map, source Map) : void from class com.facebook.buck.cxx.AbstractCxxPreprocessorInput to public addAllEntriesToIncludeMap(destination Map, source Map) : void from class com.facebook.buck.cxx.AbstractCxxHeaders"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public combineCxxPreprocessorInput(params BuildRuleParams, cxxPlatform CxxPlatform, preprocessorFlags ImmutableMultimap<CxxSource.Type, String>, prefixHeaders ImmutableList<SourcePath>, headerSymlinkTrees ImmutableList<SymlinkTree>, frameworkSearchPaths ImmutableList<Path>, cxxPreprocessorInputFromDeps Iterable<CxxPreprocessorInput>) : CxxPreprocessorInput renamed to public collectCxxPreprocessorInput(params BuildRuleParams, cxxPlatform CxxPlatform, preprocessorFlags ImmutableMultimap<CxxSource.Type, String>, prefixHeaders ImmutableList<SourcePath>, headerSymlinkTrees ImmutableList<SymlinkTree>, frameworkSearchPaths ImmutableList<Path>, cxxPreprocessorInputFromDeps Iterable<CxxPreprocessorInput>) : ImmutableList<CxxPreprocessorInput> in class com.facebook.buck.cxx.CxxDescriptionEnhancer"
 	}],
 	"time": "6/16/15 4:55 PM",
 	"id": 1117640
@@ -1790,7 +1787,7 @@
 		"description": "Move Attribute protected N_ELE : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method package internalEdgeDisconnect(edgeToRemove int, edgeToUpdatePointer long, baseNode int, adjNode int) : long from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method package internalEdgeDisconnect(edgeToRemove int, edgeToUpdatePointer long, baseNode int, adjNode int) : long from class com.graphhopper.storage.GraphHopperStorage to package internalEdgeDisconnect(edgeToRemove int, edgeToUpdatePointer long, baseNode int, adjNode int) : long from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private removedNodes : GHBitSet from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
@@ -1820,7 +1817,7 @@
 		"description": "Move Attribute package wayGeometry : DataAccess from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method public getDebugInfo(node int, area int) : String from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method public getDebugInfo(node int, area int) : String from class com.graphhopper.storage.GraphHopperStorage to public getDebugInfo(node int, area int) : String from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute protected N_LAT : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
@@ -1829,10 +1826,10 @@
 		"description": "Move Attribute private maxGeoRef : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method protected createSingleEdge(edgeId int, nodeId int) : SingleEdge from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method protected createSingleEdge(edgeId int, nodeId int) : SingleEdge from class com.graphhopper.storage.GraphHopperStorage to protected createSingleEdge(edgeId int, nodeId int) : SingleEdge from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private getDist(pointer long) : double from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method private getDist(pointer long) : double from class com.graphhopper.storage.GraphHopperStorage to private getDist(pointer long) : double from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute protected N_LON : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
@@ -1841,13 +1838,13 @@
 		"description": "Move Attribute package nodeAccess : NodeAccess from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method protected setNodesHeader() : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method protected setNodesHeader() : int from class com.graphhopper.storage.GraphHopperStorage to protected setNodesHeader() : int from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method protected loadNodesHeader() : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method protected loadNodesHeader() : int from class com.graphhopper.storage.GraphHopperStorage to protected loadNodesHeader() : int from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private nextEdge() : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method private nextEdge() : int from class com.graphhopper.storage.GraphHopperStorage to private nextEdge() : int from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute protected nodeCount : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
@@ -1856,7 +1853,7 @@
 		"description": "Move Attribute protected E_LINKB : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method protected initStorage() : void from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method protected initStorage() : void from class com.graphhopper.storage.GraphHopperStorage to package initStorage() : void from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private edgeEntryIndex : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
@@ -1871,73 +1868,73 @@
 		"description": "Move Attribute protected E_LINKA : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private ensureEdgeIndex(edgeIndex int) : void from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method private ensureEdgeIndex(edgeIndex int) : void from class com.graphhopper.storage.GraphHopperStorage to private ensureEdgeIndex(edgeIndex int) : void from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private ensureGeometry(bytePos long, byteLength int) : void from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method private ensureGeometry(bytePos long, byteLength int) : void from class com.graphhopper.storage.GraphHopperStorage to private ensureGeometry(bytePos long, byteLength int) : void from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method protected setEdgesHeader() : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method protected setEdgesHeader() : int from class com.graphhopper.storage.GraphHopperStorage to protected setEdgesHeader() : int from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute protected N_EDGE_REF : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private nextGeoRef(arrayLength int) : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method private nextGeoRef(arrayLength int) : int from class com.graphhopper.storage.GraphHopperStorage to private nextGeoRef(arrayLength int) : int from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute protected E_FLAGS : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method package setEdgeCount(cnt int) : void from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method package setEdgeCount(cnt int) : void from class com.graphhopper.storage.GraphHopperStorage to package setEdgeCount(cnt int) : void from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private connectNewEdge(fromNode int, newOrExistingEdge int) : void from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method private connectNewEdge(fromNode int, newOrExistingEdge int) : void from class com.graphhopper.storage.GraphHopperStorage to private connectNewEdge(fromNode int, newOrExistingEdge int) : void from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private inPlaceNodeRemove(removeNodeCount int) : void from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method private inPlaceNodeRemove(removeNodeCount int) : void from class com.graphhopper.storage.GraphHopperStorage to package inPlaceNodeRemove(removeNodeCount int) : void from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method protected setWayGeometryHeader() : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method protected setWayGeometryHeader() : int from class com.graphhopper.storage.GraphHopperStorage to protected setWayGeometryHeader() : int from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method protected initNodeAndEdgeEntrySize() : void from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method protected initNodeAndEdgeEntrySize() : void from class com.graphhopper.storage.GraphHopperStorage to protected initNodeAndEdgeEntrySize() : void from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private getOtherNode(nodeThis int, edgePointer long) : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method private getOtherNode(nodeThis int, edgePointer long) : int from class com.graphhopper.storage.GraphHopperStorage to private getOtherNode(nodeThis int, edgePointer long) : int from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private initNodeRefs(oldCapacity long, newCapacity long) : void from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method private initNodeRefs(oldCapacity long, newCapacity long) : void from class com.graphhopper.storage.GraphHopperStorage to package initNodeRefs(oldCapacity long, newCapacity long) : void from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute protected E_DIST : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method package checkInit() : void from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method package checkInit() : void from class com.graphhopper.storage.GraphHopperStorage to package checkInit() : void from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private invalidateEdge(edgePointer long) : void from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method private invalidateEdge(edgePointer long) : void from class com.graphhopper.storage.GraphHopperStorage to private invalidateEdge(edgePointer long) : void from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute protected nodeEntryBytes : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method package copyProperties(from EdgeIteratorState, to EdgeIteratorState) : EdgeIteratorState from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method package copyProperties(from EdgeIteratorState, to EdgeIteratorState) : EdgeIteratorState from class com.graphhopper.storage.GraphHopperStorage to package copyProperties(from EdgeIteratorState, to EdgeIteratorState) : EdgeIteratorState from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute protected E_NAME : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method protected getLinkPosInEdgeArea(nodeThis int, nodeOther int, edgePointer long) : long from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method protected getLinkPosInEdgeArea(nodeThis int, nodeOther int, edgePointer long) : long from class com.graphhopper.storage.GraphHopperStorage to protected getLinkPosInEdgeArea(nodeThis int, nodeOther int, edgePointer long) : long from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private writeEdge(edge int, nodeThis int, nodeOther int, nextEdge int, nextEdgeOther int) : long from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method private writeEdge(edge int, nodeThis int, nodeOther int, nextEdge int, nextEdgeOther int) : long from class com.graphhopper.storage.GraphHopperStorage to private writeEdge(edge int, nodeThis int, nodeOther int, nextEdge int, nextEdgeOther int) : long from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute protected edges : DataAccess from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private distToInt(distance double) : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method private distToInt(distance double) : int from class com.graphhopper.storage.GraphHopperStorage to private distToInt(distance double) : int from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private nodeEntryIndex : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
@@ -1946,19 +1943,19 @@
 		"description": "Move Attribute protected E_GEO : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private getRemovedNodes() : GHBitSet from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method private getRemovedNodes() : GHBitSet from class com.graphhopper.storage.GraphHopperStorage to package getRemovedNodes() : GHBitSet from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method protected loadEdgesHeader() : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method protected loadEdgesHeader() : int from class com.graphhopper.storage.GraphHopperStorage to protected loadEdgesHeader() : int from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute protected edgeEntryBytes : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private isTestingEnabled() : boolean from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method private isTestingEnabled() : boolean from class com.graphhopper.storage.GraphHopperStorage to private isTestingEnabled() : boolean from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method protected nextNodeEntryIndex(sizeInBytes int) : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method protected nextNodeEntryIndex(sizeInBytes int) : int from class com.graphhopper.storage.GraphHopperStorage to protected nextNodeEntryIndex(sizeInBytes int) : int from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute package nameIndex : NameIndex from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
@@ -1967,28 +1964,85 @@
 		"description": "Move Attribute protected E_NODEB : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private trimToSize() : void from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method private trimToSize() : void from class com.graphhopper.storage.GraphHopperStorage to protected trimToSize() : void from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method package internalEdgeAdd(fromNodeId int, toNodeId int) : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method package internalEdgeAdd(fromNodeId int, toNodeId int) : int from class com.graphhopper.storage.GraphHopperStorage to package internalEdgeAdd(fromNodeId int, toNodeId int) : int from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private INT_DIST_FACTOR : double from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method protected nextEdgeEntryIndex(sizeInBytes int) : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method protected nextEdgeEntryIndex(sizeInBytes int) : int from class com.graphhopper.storage.GraphHopperStorage to protected nextEdgeEntryIndex(sizeInBytes int) : int from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private stringHashCode(str String) : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method private stringHashCode(str String) : int from class com.graphhopper.storage.GraphHopperStorage to private stringHashCode(str String) : int from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method protected loadWayGeometryHeader() : int from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method protected loadWayGeometryHeader() : int from class com.graphhopper.storage.GraphHopperStorage to protected loadWayGeometryHeader() : int from class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute package bitUtil : BitUtil from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method package ensureNodeIndex(nodeIndex int) : void from class com.graphhopper.storage.GraphHopperStorage to class com.graphhopper.storage.BaseGraph"
+		"description": "Move Method package ensureNodeIndex(nodeIndex int) : void from class com.graphhopper.storage.GraphHopperStorage to package ensureNodeIndex(nodeIndex int) : void from class com.graphhopper.storage.BaseGraph"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class com.graphhopper.storage.LevelGraphStorageTest renamed to com.graphhopper.storage.GraphHopperStorageCHTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method protected createGraph(is3D boolean) : Graph renamed to protected createGHStorage(is3D boolean) : GraphHopperStorage in class com.graphhopper.routing.AbstractRoutingAlgorithmTester"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method protected createGraph(em EncodingManager, is3D boolean) : Graph renamed to protected createGHStorage(em EncodingManager, is3D boolean) : GraphHopperStorage in class com.graphhopper.routing.AbstractRoutingAlgorithmTester"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package calcPathViaQuery(weighting String, graph Graph, fromLat double, fromLon double, toLat double, toLon double) : Path renamed to package calcPathViaQuery_(weighting String, ghStorage GraphHopperStorage, fromLat double, fromLon double, toLat double, toLon double) : Path in class com.graphhopper.routing.AbstractRoutingAlgorithmTester"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method protected newRAMGraph() : GraphStorage renamed to protected newRAMGHStorage() : GraphHopperStorage in class com.graphhopper.storage.AbstractGraphStorageTester"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method protected createGraph() : GraphStorage renamed to protected createGHStorage() : GraphHopperStorage in class com.graphhopper.storage.AbstractGraphStorageTester"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package createTarjanTestGraph() : GraphStorage renamed to package createTarjanTestStorage() : GraphHopperStorage in class com.graphhopper.routing.util.PrepareRoutingSubnetworksTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package createGraph(eman EncodingManager) : GraphStorage renamed to package createStorage(eman EncodingManager) : GraphHopperStorage in class com.graphhopper.routing.util.PrepareRoutingSubnetworksTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package createDeadEndUnvisitedNetworkGraph(em EncodingManager) : GraphStorage renamed to package createDeadEndUnvisitedNetworkStorage(em EncodingManager) : GraphHopperStorage in class com.graphhopper.routing.util.PrepareRoutingSubnetworksTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package createSubnetworkTestGraph2(em EncodingManager) : GraphStorage renamed to package createSubnetworkTestStorage2(em EncodingManager) : GraphHopperStorage in class com.graphhopper.routing.util.PrepareRoutingSubnetworksTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package createSubnetworkTestGraph() : GraphStorage renamed to package createSubnetworkTestStorage() : GraphHopperStorage in class com.graphhopper.routing.util.PrepareRoutingSubnetworksTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public createGraph(location String, enabled3D boolean) : GraphStorage renamed to public createGHStorage(location String, enabled3D boolean) : GraphHopperStorage in class com.graphhopper.storage.GraphHopperStorageTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method protected newGraph(dir Directory, enabled3D boolean) : GraphStorage renamed to protected newGHStorage(dir Directory, enabled3D boolean) : GraphHopperStorage in class com.graphhopper.storage.GraphHopperStorageTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getGraph() : GraphStorage renamed to public getGraphHopperStorage() : GraphHopperStorage in class com.graphhopper.GraphHopper"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public setGraph(graph GraphStorage) : void renamed to public setGraphHopperStorage(ghStorage GraphHopperStorage) : void in class com.graphhopper.GraphHopper"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package createGraph(dir Directory, encodingManager EncodingManager, is3D boolean) : Graph renamed to package createGHStorage(dir Directory, encodingManager EncodingManager, is3D boolean) : GraphHopperStorage in class com.graphhopper.storage.index.AbstractLocationIndexTester"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method protected newGraph(dir Directory, is3D boolean) : GraphStorage renamed to protected newGHStorage(dir Directory, is3D boolean) : GraphHopperStorage in class com.graphhopper.storage.GraphHopperStorageWithTurnCostsTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method protected createGraph(em EncodingManager) : GraphStorage renamed to protected createStorage(em EncodingManager) : GraphHopperStorage in class com.graphhopper.routing.EdgeBasedRoutingAlgorithmTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public createGraph(location String, is3D boolean) : GraphStorage renamed to public createGHStorage(location String, is3D boolean) : GraphHopperStorage in class com.graphhopper.storage.GraphStorageViaMMapTest"
 	}],
 	"time": "6/17/15 5:42 AM",
 	"id": 1117304
@@ -2108,92 +2162,35 @@
 	"repository": "https://github.com/square/okhttp.git",
 	"author": "Jake Wharton",
 	"refactorings": [{
-		"type": "Move Class",
-		"description": "Move Class Huffman moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
+		"type": "Rename Package",
+		"description": "Rename Package com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
 	}, {
-		"type": "Move Class",
-		"description": "Move Class HpackDecodeTestBase moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
+		"type": "Rename Class",
+		"description": "Rename Class com.squareup.okhttp.internal.spdy.SpdyConnection renamed to com.squareup.okhttp.internal.framed.FramedConnection"
 	}, {
-		"type": "Move Class",
-		"description": "Move Class HpackRoundTripTest moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
+		"type": "Rename Class",
+		"description": "Rename Class com.squareup.okhttp.internal.spdy.SpdyStream.SpdyDataSource renamed to com.squareup.okhttp.internal.framed.FramedStream.FramedDataSource"
 	}, {
-		"type": "Move Class",
-		"description": "Move Class HpackTest moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
+		"type": "Rename Class",
+		"description": "Rename Class com.squareup.okhttp.internal.spdy.SpdyStream.SpdyTimeout renamed to com.squareup.okhttp.internal.framed.FramedStream.StreamTimeout"
 	}, {
-		"type": "Move Class",
-		"description": "Move Class Ping moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
+		"type": "Rename Class",
+		"description": "Rename Class com.squareup.okhttp.internal.spdy.SpdyStream.SpdyDataSink renamed to com.squareup.okhttp.internal.framed.FramedStream.FramedDataSink"
 	}, {
-		"type": "Move Class",
-		"description": "Move Class Http2 moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
+		"type": "Rename Class",
+		"description": "Rename Class com.squareup.okhttp.internal.spdy.SpdyStream renamed to com.squareup.okhttp.internal.framed.FramedStream"
 	}, {
-		"type": "Move Class",
-		"description": "Move Class Http2FrameLoggerTest moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
+		"type": "Rename Class",
+		"description": "Rename Class com.squareup.okhttp.internal.spdy.SpdyServer renamed to com.squareup.okhttp.internal.framed.FramedServer"
 	}, {
-		"type": "Move Class",
-		"description": "Move Class HpackDecodeInteropTest moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
+		"type": "Rename Class",
+		"description": "Rename Class com.squareup.okhttp.internal.http.SpdyTransport renamed to com.squareup.okhttp.internal.http.FramedTransport"
 	}, {
-		"type": "Move Class",
-		"description": "Move Class IncomingStreamHandler moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
+		"type": "Rename Class",
+		"description": "Rename Class com.squareup.okhttp.mockwebserver.MockWebServer.SpdySocketHandler renamed to com.squareup.okhttp.mockwebserver.MockWebServer.FramedSocketHandler"
 	}, {
-		"type": "Move Class",
-		"description": "Move Class MockSpdyPeer moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Settings moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class BaseTestHandler moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Http2ConnectionTest moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Spdy3 moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Story moved from com.squareup.okhttp.internal.spdy.hpackjson to com.squareup.okhttp.internal.framed.hpackjson"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class FrameWriter moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Header moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Spdy3ConnectionTest moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class HuffmanTest moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class PushObserver moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Variant moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Spdy3Test moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Case moved from com.squareup.okhttp.internal.spdy.hpackjson to com.squareup.okhttp.internal.framed.hpackjson"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class HpackJsonUtil moved from com.squareup.okhttp.internal.spdy.hpackjson to com.squareup.okhttp.internal.framed.hpackjson"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Hpack moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class NameValueBlockReader moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class FrameReader moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Http2Test moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class SettingsTest moved from com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed"
+		"type": "Rename Method",
+		"description": "Rename Method package isSpdy() : boolean renamed to package isFramed() : boolean in class com.squareup.okhttp.Connection"
 	}],
 	"time": "6/17/15 7:40 PM",
 	"id": 1118645
@@ -2318,6 +2315,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private validateLongValue(value String, errorKey String, errorMessage String) : void extracted from protected validateLong(field String, errorKey String, errorMessage String) : void in class com.jfinal.validate.Validator"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class com.jfinal.plugin.activerecord.tx.TxByActionMethods renamed to com.jfinal.plugin.activerecord.tx.TxByMethods"
 	}],
 	"time": "6/18/15 5:57 AM",
 	"id": 1118473
@@ -2398,6 +2398,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method public openPostInReaderOrInAppWebview(ctx Context, remoteBlogID String, remoteItemID String, itemType String, itemURL String) : void extracted from public openPostInReaderOrInAppWebview(ctx Context, post PostModel) : void in class org.wordpress.android.ui.stats.StatsUtils"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.wordpress.android.ui.stats.StatsSinglePostDetailsActivity renamed to org.wordpress.android.ui.stats.StatsSingleItemDetailsActivity"
 	}],
 	"time": "6/18/15 8:36 AM",
 	"id": 1119082
@@ -2549,6 +2552,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private assertMissingTextAttribute(attributes Map<String,Object>) : void extracted from public synthesizeAnnotationFromMapWithNullAttributeValue() : void in class org.springframework.core.annotation.AnnotationUtilsTests"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private validateAttributes(attributes Map<String, Object>, annotationType Class<? extends Annotation>) : void renamed to private enrichAndValidateAttributes(attributes Map<String, Object>, annotationType Class<? extends Annotation>) : Map<String, Object> in class org.springframework.core.annotation.MapAnnotationAttributeExtractor"
 	}],
 	"time": "6/19/15 10:27 AM",
 	"id": 1120106
@@ -2558,7 +2564,7 @@
 	"author": "William Burns",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method protected shouldInvoke(event Event<K,V) : boolean extracted from protected shouldInvoke(event CacheEntryEvent<K,V>, isLocalNodePrimaryOwner boolean) : CacheEntryEvent<K,V> in class org.infinispan.notifications.cachelistener.CacheNotifierImpl.BaseCacheEntryListenerInvocation"
+		"description": "Extract Method protected shouldInvoke(event Event<K,V>) : boolean extracted from protected shouldInvoke(event CacheEntryEvent<K,V>, isLocalNodePrimaryOwner boolean) : CacheEntryEvent<K,V> in class org.infinispan.notifications.cachelistener.CacheNotifierImpl.BaseCacheEntryListenerInvocation"
 	}],
 	"time": "6/19/15 11:03 AM",
 	"id": 1120213
@@ -2891,6 +2897,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public instantiateObject(className String, args Object[]) : Object extracted from public instantiateObject(className String) : Object in class org.drools.core.util.ClassUtils"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.drools.core.base.ClassFieldAccessorCache.ByteArrayClassLoader renamed to org.drools.core.base.ClassFieldAccessorCache.DefaultByteArrayClassLoader"
 	}],
 	"time": "6/21/15 6:50 PM",
 	"id": 1121326
@@ -3005,15 +3014,6 @@
 	"repository": "https://github.com/Graylog2/graylog2-server.git",
 	"author": "Kay Roepke",
 	"refactorings": [{
-		"type": "Rename Package",
-		"description": "Rename Package org.graylog2.bootstrap.commands.journal to org.graylog2.commands.journal"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class Server moved from org.graylog2.bootstrap.commands to org.graylog2.commands"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class UI moved from org.graylog2 to org.graylog2.shared"
-	}, {
 		"type": "Extract Interface",
 		"description": "Extract Interface org.graylog2.bootstrap.CliCommand from class org.graylog2.bootstrap.CmdLineTool"
 	}, {
@@ -3021,7 +3021,25 @@
 		"description": "Extract Interface org.graylog2.bootstrap.CliCommand from class org.graylog2.bootstrap.commands.ShowVersion"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class Radio moved from org.graylog2.bootstrap.commands to org.graylog2.radio.commands"
+		"description": "Move Class org.graylog2.bootstrap.commands.journal.JournalDecode moved to org.graylog2.commands.journal.JournalDecode"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.graylog2.UI moved to org.graylog2.shared.UI"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.graylog2.bootstrap.commands.journal.AbstractJournalCommand moved to org.graylog2.commands.journal.AbstractJournalCommand"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.graylog2.bootstrap.commands.journal.JournalTruncate moved to org.graylog2.commands.journal.JournalTruncate"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.graylog2.bootstrap.commands.journal.JournalShow moved to org.graylog2.commands.journal.JournalShow"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.graylog2.bootstrap.commands.Radio moved to org.graylog2.radio.commands.Radio"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.graylog2.bootstrap.commands.Server moved to org.graylog2.commands.Server"
 	}],
 	"time": "6/22/15 1:20 PM",
 	"id": 1121861
@@ -3419,6 +3437,12 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private init() : void extracted from public reset() : void in class org.glassfish.jersey.server.internal.scanning.FilesScanner"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.glassfish.jersey.server.internal.scanning.ResourceFinderStackTest renamed to org.glassfish.jersey.server.internal.scanning.CompositeResourceFinderTest"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.glassfish.jersey.server.internal.scanning.ResourceFinderStack renamed to org.glassfish.jersey.server.internal.scanning.CompositeResourceFinder"
 	}],
 	"time": "6/24/15 6:33 AM",
 	"id": 1123789
@@ -3512,22 +3536,40 @@
 		"description": "Extract Method private executeInternalWithoutCondition(queryState QueryState, options QueryOptions) : ResultMessage extracted from public executeInternal(queryState QueryState, options QueryOptions) : ResultMessage in class org.apache.cassandra.cql3.statements.BatchStatement"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class TypeTest moved from org.apache.cassandra.cql3 to org.apache.cassandra.cql3.validation.entities"
+		"description": "Move Class org.apache.cassandra.cql3.TypeTest moved to org.apache.cassandra.cql3.validation.entities.TypeTest"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private makeCasRequest(options BatchQueryOptions, state QueryState) : Pair<CQL3CasRequest,Set<ColumnDefinition>> extracted from private executeWithConditions(options BatchQueryOptions, state QueryState) : ResultMessage in class org.apache.cassandra.cql3.statements.BatchStatement"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class CrcCheckChanceTest moved from org.apache.cassandra.cql3 to org.apache.cassandra.cql3.validation.miscellaneous"
+		"description": "Move Class org.apache.cassandra.cql3.CrcCheckChanceTest moved to org.apache.cassandra.cql3.validation.miscellaneous.CrcCheckChanceTest"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class SSTableMetadataTrackingTest moved from org.apache.cassandra.cql3 to org.apache.cassandra.cql3.validation.miscellaneous"
+		"description": "Move Class org.apache.cassandra.cql3.SSTableMetadataTrackingTest moved to org.apache.cassandra.cql3.validation.miscellaneous.SSTableMetadataTrackingTest"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method protected assertInvalidThrowMessage(errorMessage String, exception Class<?> extends Throwable, query String, values Object[]) : void extracted from protected assertInvalidMessage(errorMessage String, query String, values Object[]) : void in class org.apache.cassandra.cql3.CQLTester"
+		"description": "Extract Method protected assertInvalidThrowMessage(errorMessage String, exception Class<? extends Throwable>, query String, values Object[]) : void extracted from protected assertInvalidMessage(errorMessage String, query String, values Object[]) : void in class org.apache.cassandra.cql3.CQLTester"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public executeInternalWithoutCondition(queryState QueryState, options QueryOptions) : ResultMessage extracted from public executeInternal(queryState QueryState, options QueryOptions) : ResultMessage in class org.apache.cassandra.cql3.statements.ModificationStatement"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.apache.cassandra.cql3.FrozenCollectionsTest moved to org.apache.cassandra.cql3.validation.entities.FrozenCollectionsTest"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.apache.cassandra.cql3.UserTypesTest moved to org.apache.cassandra.cql3.validation.entities.UserTypesTest"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.apache.cassandra.cql3.SliceQueryFilterWithTombstonesTest renamed to org.apache.cassandra.cql3.validation.miscellaneous.TombstonesTest"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.apache.cassandra.cql3.UseStatementTest renamed to org.apache.cassandra.cql3.validation.operations.UseTest"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.apache.cassandra.cql3.MultiColumnRelationTest renamed to org.apache.cassandra.cql3.validation.operations.SelectMultiColumnRelationTest"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.apache.cassandra.cql3.SingleColumnRelationTest renamed to org.apache.cassandra.cql3.validation.operations.SelectSingleColumnRelationTest"
 	}],
 	"time": "6/24/15 1:10 PM",
 	"id": 1123899
@@ -3563,100 +3605,133 @@
 	"author": "Vince Bickers",
 	"refactorings": [{
 		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.movies to org.springframework.data.neo4j.queries"
+		"description": "Rename Package org.springframework.data.neo4j.integration to org.springframework.data.neo4j.examples"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class GraphRepositoryFactoryTest moved from org.springframework.data.neo4j.repository.support to org.springframework.data.neo4j.repositories.support"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.jsr303.service to org.springframework.data.neo4j.examples.jsr303.service"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.movies.domain to org.springframework.data.neo4j.examples.movies.domain"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.web.domain to org.springframework.data.neo4j.web.domain"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.repositories.repo to org.springframework.data.neo4j.repositories.repo"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.extensions.domain to org.springframework.data.neo4j.extensions.domain"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.repositories to org.springframework.data.neo4j.repositories"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.web.context to org.springframework.data.neo4j.web.context"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.extensions to org.springframework.data.neo4j.extensions"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.web.repo to org.springframework.data.neo4j.web.repo"
+		"description": "Move Class org.springframework.data.neo4j.integration.transactions.ApplicationConfig moved to org.springframework.data.neo4j.transactions.ApplicationConfig"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class TestNeo4jEventListener moved from org.springframework.data.neo4j.integration.template to org.springframework.data.neo4j.template"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.movies.service to org.springframework.data.neo4j.examples.movies.service"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.web.service to org.springframework.data.neo4j.web.service"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.transactions to org.springframework.data.neo4j.transactions"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.helloworld to org.springframework.data.neo4j.examples.galaxy"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.repositories.domain to org.springframework.data.neo4j.repositories.domain"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.jsr303.repo to org.springframework.data.neo4j.examples.jsr303.repo"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.jsr303.domain to org.springframework.data.neo4j.examples.jsr303.domain"
+		"description": "Move Class org.springframework.data.neo4j.integration.repositories.ProgrammaticRepositoryTest moved to org.springframework.data.neo4j.repositories.ProgrammaticRepositoryTest"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class TemplateApplicationEventTest moved from org.springframework.data.neo4j.integration.template to org.springframework.data.neo4j.template"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.jsr303 to org.springframework.data.neo4j.examples.jsr303"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.movies to org.springframework.data.neo4j.transactions"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.jsr303.controller to org.springframework.data.neo4j.examples.jsr303.controller"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.helloworld.service to org.springframework.data.neo4j.examples.galaxy.service"
+		"description": "Move Class org.springframework.data.neo4j.integration.extensions.UserRepository moved to org.springframework.data.neo4j.extensions.UserRepository"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class ExceptionTranslationTest moved from org.springframework.data.neo4j.integration.template to org.springframework.data.neo4j.template"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.template.context to org.springframework.data.neo4j.template.context"
+		"description": "Move Class org.springframework.data.neo4j.integration.template.ExceptionTranslationTest moved to org.springframework.data.neo4j.template.ExceptionTranslationTest"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class Neo4jTemplateTest moved from org.springframework.data.neo4j.integration.template to org.springframework.data.neo4j.template"
+		"description": "Move Class org.springframework.data.neo4j.integration.repositories.repo.MovieRepository moved to org.springframework.data.neo4j.repositories.repo.MovieRepository"
 	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.transactions.service to org.springframework.data.neo4j.transactions.service"
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.transactions.TransactionBoundaryTest moved to org.springframework.data.neo4j.transactions.TransactionBoundaryTest"
 	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.web.controller to org.springframework.data.neo4j.web.controller"
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.web.domain.Cinema moved to org.springframework.data.neo4j.web.domain.Cinema"
 	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.movies.domain.queryresult to org.springframework.data.neo4j.examples.movies.domain.queryresult"
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.repositories.RepoScanningTest moved to org.springframework.data.neo4j.repositories.RepoScanningTest"
 	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.movies.repo to org.springframework.data.neo4j.examples.movies.repo"
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.repositories.RepositoryDefinitionTest moved to org.springframework.data.neo4j.repositories.RepositoryDefinitionTest"
 	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.springframework.data.neo4j.integration.web to org.springframework.data.neo4j.web"
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.movies.TransactionIntegrationTest moved to org.springframework.data.neo4j.transactions.TransactionIntegrationTest"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.web.WebIntegrationTest moved to org.springframework.data.neo4j.web.WebIntegrationTest"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.extensions.CustomGraphRepositoryTest moved to org.springframework.data.neo4j.extensions.CustomGraphRepositoryTest"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.repository.support.GraphRepositoryFactoryTest moved to org.springframework.data.neo4j.repositories.support.GraphRepositoryFactoryTest"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.repositories.repo.UserRepository moved to org.springframework.data.neo4j.repositories.repo.UserRepository"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.template.TemplateApplicationEventTest moved to org.springframework.data.neo4j.template.TemplateApplicationEventTest"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.template.context.DataManipulationEventConfiguration moved to org.springframework.data.neo4j.template.context.DataManipulationEventConfiguration"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.web.domain.Genre moved to org.springframework.data.neo4j.examples.movies.domain.Genre"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.transactions.service.WrapperService moved to org.springframework.data.neo4j.transactions.service.WrapperService"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.extensions.CustomPersistenceContext moved to org.springframework.data.neo4j.extensions.CustomPersistenceContext"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.web.repo.UserRepository moved to org.springframework.data.neo4j.web.repo.UserRepository"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.extensions.CustomGraphRepository moved to org.springframework.data.neo4j.extensions.CustomGraphRepository"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.web.context.WebAppContext moved to org.springframework.data.neo4j.web.context.WebAppContext"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.repositories.domain.Movie moved to org.springframework.data.neo4j.repositories.domain.Movie"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.web.service.UserService moved to org.springframework.data.neo4j.web.service.UserService"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.extensions.domain.User moved to org.springframework.data.neo4j.extensions.domain.User"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.extensions.CustomGraphRepositoryImpl moved to org.springframework.data.neo4j.extensions.CustomGraphRepositoryImpl"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.web.service.UserServiceImpl moved to org.springframework.data.neo4j.web.service.UserServiceImpl"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.transactions.service.BusinessService moved to org.springframework.data.neo4j.transactions.service.BusinessService"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.web.repo.GenreRepository moved to org.springframework.data.neo4j.web.repo.GenreRepository"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.repositories.domain.User moved to org.springframework.data.neo4j.repositories.domain.User"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.web.domain.User moved to org.springframework.data.neo4j.web.domain.User"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.template.Neo4jTemplateTest moved to org.springframework.data.neo4j.template.Neo4jTemplateTest"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.movies.domain.Genre moved to org.springframework.data.neo4j.web.domain.Genre"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.web.context.WebPersistenceContext moved to org.springframework.data.neo4j.web.context.WebPersistenceContext"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.web.controller.UserController moved to org.springframework.data.neo4j.web.controller.UserController"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.template.TestNeo4jEventListener moved to org.springframework.data.neo4j.template.TestNeo4jEventListener"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.springframework.data.neo4j.integration.repositories.repo.PersistenceContextInTheSamePackage moved to org.springframework.data.neo4j.repositories.repo.PersistenceContextInTheSamePackage"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.springframework.data.neo4j.integration.repositories.context.PersistenceContext renamed to org.springframework.data.neo4j.repositories.context.RepositoriesTestContext"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.springframework.data.neo4j.integration.movies.context.PersistenceContext renamed to org.springframework.data.neo4j.examples.movies.context.MoviesContext"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.springframework.data.neo4j.integration.helloworld.context.HelloWorldContext renamed to org.springframework.data.neo4j.examples.galaxy.context.GalaxyContext"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.springframework.data.neo4j.integration.movies.End2EndIntegrationTest renamed to org.springframework.data.neo4j.examples.movies.MoviesIntegrationTest"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.springframework.data.neo4j.integration.jsr303.PersistenceConfiguration renamed to org.springframework.data.neo4j.examples.jsr303.JSR303Context"
 	}],
 	"time": "6/24/15 2:10 PM",
 	"id": 1123966
@@ -3791,6 +3866,15 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method private callUntilCompletion(batch Map) : FailedBatch renamed to private doBatchWriteItemWithRetry(batch Map, batchWriteRetryStrategy BatchWriteRetryStrategy) : FailedBatch in class com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class com.amazonaws.services.elasticfilesystem.model.transform.BadRequestExceptionUnmarshaller renamed to com.amazonaws.services.config.model.transform.InvalidRecordingGroupExceptionUnmarshaller"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class com.amazonaws.services.elasticfilesystem.model.transform.DependencyTimeoutExceptionUnmarshaller renamed to com.amazonaws.services.cognitoidentity.model.transform.ConcurrentModificationExceptionUnmarshaller"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class com.amazonaws.services.elasticfilesystem.model.transform.FileSystemAlreadyExistsExceptionUnmarshaller renamed to com.amazonaws.services.cognitosync.model.transform.ConcurrentModificationExceptionUnmarshaller"
 	}],
 	"time": "6/24/15 8:54 PM",
 	"id": 1124370
@@ -4670,44 +4754,20 @@
 	"repository": "https://github.com/orientechnologies/orientdb.git",
 	"author": "laa",
 	"refactorings": [{
-		"type": "Move Class",
-		"description": "Move Class PageGroup moved from com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache.local"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class HashLRUList moved from com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache.local"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class LRUEntry moved from com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache.local"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class ReadWriteDiskCacheTest moved from com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache.local"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class HashLRUListTest moved from com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache.local"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class OBlockedPageException moved from com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class OPageDataVerificationError moved from com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class LRUList moved from com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache.local"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class OReadCache moved from com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class SynchronizedLRUList moved from com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache.local"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class OCachePointer moved from com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class ConcurrentLRUList moved from com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache.local"
-	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public getAllocatedPages() : long renamed to public getExclusiveWriteCachePagesSize() : long in class com.orientechnologies.orient.core.storage.impl.memory.ODirectMemoryOnlyDiskCache"
+	}, {
+		"type": "Rename Package",
+		"description": "Rename Package com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache.local"
+	}, {
+		"type": "Rename Package",
+		"description": "Rename Package com.orientechnologies.orient.core.index.hashindex.local to com.orientechnologies.orient.core.storage"
+	}, {
+		"type": "Extract Interface",
+		"description": "Extract Interface com.orientechnologies.orient.core.storage.cache.local.OWOWCacheMXBean from class com.orientechnologies.orient.core.storage.cache.local.OWOWCache"
+	}, {
+		"type": "Extract Interface",
+		"description": "Extract Interface com.orientechnologies.orient.core.storage.cache.local.O2QCacheMXBean from class com.orientechnologies.orient.core.storage.cache.local.O2QCache"
 	}],
 	"time": "7/6/15 10:20 AM",
 	"id": 1132674
@@ -4832,14 +4892,17 @@
 	"repository": "https://github.com/hibernate/hibernate-orm.git",
 	"author": "barreiro",
 	"refactorings": [{
-		"type": "Rename Package",
-		"description": "Rename Package org.hibernate.test.bytecode.enhancement.entity to org.hibernate.test.bytecode.enhancement.basic"
+		"type": "Rename Class",
+		"description": "Rename Class org.hibernate.test.bytecode.enhancement.MostBasicEnhancementTest renamed to org.hibernate.test.bytecode.enhancement.basic.BasicInSessionTest"
 	}, {
 		"type": "Rename Package",
 		"description": "Rename Package org.hibernate.test.bytecode.enhancement.entity.customer to org.hibernate.test.bytecode.enhancement.association"
 	}, {
 		"type": "Rename Package",
 		"description": "Rename Package org.hibernate.test.bytecode.enhancement.entity to org.hibernate.test.bytecode.enhancement.dirty"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.hibernate.test.bytecode.enhancement.entity.MyEntity moved to org.hibernate.test.bytecode.enhancement.basic.MyEntity"
 	}],
 	"time": "7/6/15 3:34 PM",
 	"id": 1134096
@@ -5085,7 +5148,7 @@
 	"author": "Enno Gottschalk",
 	"refactorings": [{
 		"type": "Push Down Method",
-		"description": "Push Down Method public getAlbumTimeStamps() : ConcurrentHashMap from class org.tomahawk.libtomahawk.collection.NativeCollection to public getAlbumTimeStamps() : ConcurrentHashMap from class org.tomahawk.libtomahawk.collection.UserCollection"
+		"description": "Push Down Method public getAlbumTimeStamps() : ConcurrentHashMap<Album,Long> from class org.tomahawk.libtomahawk.collection.NativeCollection to public getAlbumTimeStamps() : ConcurrentHashMap<Album,Long> from class org.tomahawk.libtomahawk.collection.UserCollection"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute protected mAlbumTracks : ConcurrentHashMap<Album,Set<Query>> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
@@ -5094,13 +5157,13 @@
 		"description": "Pull Up Method public wipe() : void from class org.tomahawk.libtomahawk.collection.NativeCollection to public wipe() : void from class org.tomahawk.libtomahawk.collection.Collection"
 	}, {
 		"type": "Pull Up Attribute",
-		"description": "Pull Up Attribute protected mQueries : SetQuery from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
+		"description": "Pull Up Attribute protected mQueries : Set<Query> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
 	}, {
 		"type": "Pull Up Attribute",
-		"description": "Pull Up Attribute protected mArtists : SetArtist from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
+		"description": "Pull Up Attribute protected mArtists : Set<Artist> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public getArtistTimeStamps() : ConcurrentHashMap from class org.tomahawk.libtomahawk.collection.NativeCollection to public getArtistTimeStamps() : ConcurrentHashMap from class org.tomahawk.libtomahawk.collection.UserCollection"
+		"description": "Push Down Method public getArtistTimeStamps() : ConcurrentHashMap<Artist,Long> from class org.tomahawk.libtomahawk.collection.NativeCollection to public getArtistTimeStamps() : ConcurrentHashMap<Artist,Long> from class org.tomahawk.libtomahawk.collection.UserCollection"
 	}, {
 		"type": "Push Down Attribute",
 		"description": "Push Down Attribute private mArtistTimeStamps : ConcurrentHashMap<Artist,Long> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
@@ -5109,16 +5172,16 @@
 		"description": "Push Down Method public addQuery(query Query, addedTimeStamp long) : void from class org.tomahawk.libtomahawk.collection.NativeCollection to public addQuery(query Query, addedTimeStamp long) : void from class org.tomahawk.libtomahawk.collection.UserCollection"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public getQueryTimeStamps() : ConcurrentHashMap from class org.tomahawk.libtomahawk.collection.NativeCollection to public getQueryTimeStamps() : ConcurrentHashMap from class org.tomahawk.libtomahawk.collection.UserCollection"
+		"description": "Push Down Method public getQueryTimeStamps() : ConcurrentHashMap<Query,Long> from class org.tomahawk.libtomahawk.collection.NativeCollection to public getQueryTimeStamps() : ConcurrentHashMap<Query,Long> from class org.tomahawk.libtomahawk.collection.UserCollection"
 	}, {
 		"type": "Pull Up Attribute",
-		"description": "Pull Up Attribute protected mAlbumArtists : SetArtist from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
+		"description": "Pull Up Attribute protected mAlbumArtists : Set<Artist> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
 	}, {
 		"type": "Push Down Attribute",
 		"description": "Push Down Attribute private mQueryTimeStamps : ConcurrentHashMap<Query,Long> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
 	}, {
 		"type": "Pull Up Attribute",
-		"description": "Pull Up Attribute protected mAlbums : SetAlbum from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
+		"description": "Pull Up Attribute protected mAlbums : Set<Album> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection"
 	}, {
 		"type": "Push Down Attribute",
 		"description": "Push Down Attribute private mAlbumTimeStamps : ConcurrentHashMap<Album,Long> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.UserCollection"
@@ -5158,6 +5221,9 @@
 	"refactorings": [{
 		"type": "Inline Method",
 		"description": "Inline Method public submitBackground(cfs ColumnFamilyStore, autoFill boolean) : List<Future<?>> inlined to public submitBackground(cfs ColumnFamilyStore) : List<Future<?>> in class org.apache.cassandra.db.compaction.CompactionManager"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.apache.cassandra.db.compaction.CompactionManager.BackgroundCompactionTask renamed to org.apache.cassandra.db.compaction.CompactionManager.BackgroundCompactionCandidate"
 	}],
 	"time": "7/8/15 1:58 PM",
 	"id": 1136760
@@ -5330,14 +5396,35 @@
 	"repository": "https://github.com/reactor/reactor.git",
 	"author": "Stephane Maldini",
 	"refactorings": [{
-		"type": "Rename Package",
-		"description": "Rename Package reactor.core.alloc to reactor.alloc"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package reactor.bus.alloc to reactor.alloc"
-	}, {
 		"type": "Move Class",
 		"description": "Move Class reactor.core.alloc.Recyclable moved to reactor.core.support.Recyclable"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class reactor.bus.alloc.EventAllocator moved to reactor.alloc.EventAllocator"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class reactor.core.alloc.ReferenceCountingAllocator moved to reactor.alloc.ReferenceCountingAllocator"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class reactor.bus.alloc.EventAllocatorTests moved to reactor.alloc.EventAllocatorTests"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class reactor.core.alloc.RecyclableString moved to reactor.alloc.RecyclableString"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class reactor.bus.alloc.EventFactorySupplier moved to reactor.alloc.EventFactorySupplier"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class reactor.core.alloc.AbstractReference moved to reactor.alloc.AbstractReference"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class reactor.core.alloc.Allocator moved to reactor.alloc.Allocator"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class reactor.core.alloc.Reference moved to reactor.alloc.Reference"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class reactor.core.alloc.RecyclableNumber moved to reactor.alloc.RecyclableNumber"
 	}],
 	"time": "7/9/15 6:45 AM",
 	"id": 1136729
@@ -5348,6 +5435,12 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private getCustomRoutingCol() : ColumnIdent extracted from private getRoutingCol() : ColumnIdent in class io.crate.metadata.doc.DocIndexMetaData"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private validateNoUnsupportedFields(function Function, context Context) : String renamed to private rewriteAndValidateFields(function Function, context Context) : Function in class io.crate.lucene.LuceneQueryBuilder.Visitor"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testSelectById() : void renamed to public testSelectByIdWithCustomRouting() : void in class io.crate.analyze.where.WhereClauseAnalyzerTest"
 	}],
 	"time": "7/9/15 6:48 AM",
 	"id": 1136870
@@ -5380,10 +5473,13 @@
 	"author": "Friedger M\u00fcffke",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class Base64DecoderException moved from com.novoda to com.novoda.demo.encryption"
+		"description": "Move Class com.novoda.Base64DecoderException moved to com.novoda.demo.encryption.Base64DecoderException"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class Base64 moved from com.novoda to com.novoda.demo.encryption"
+		"description": "Move Class com.novoda.Base64 moved to com.novoda.demo.encryption.Base64"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class com.novoda.Encrypt renamed to com.novoda.demo.encryption.EncryptionActivity"
 	}],
 	"time": "7/9/15 10:00 AM",
 	"id": 1136374
@@ -5663,8 +5759,11 @@
 	"repository": "https://github.com/checkstyle/checkstyle.git",
 	"author": "Michal Kordas",
 	"refactorings": [{
-		"type": "Rename Package",
-		"description": "Rename Package com.google.checkstyle.test.chapter5naming.rule521packageNames to com.google.checkstyle.test.chapter5naming.rule521packageNamesCamelCase"
+		"type": "Rename Class",
+		"description": "Rename Class com.google.checkstyle.test.chapter4formatting.rule4822variabledistance.InputVariableDeclarationUsageDistanceCheck.writer renamed to com.google.checkstyle.test.chapter4formatting.rule4822variabledistance.InputVariableDeclarationUsageDistanceCheck.otherWriter"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class com.google.checkstyle.test.chapter5naming.rule521packageNames.PackageNameInputBad moved to com.google.checkstyle.test.chapter5naming.rule521packageNamesCamelCase.PackageNameInputBad"
 	}],
 	"time": "7/12/15 2:07 AM",
 	"id": 1139443
@@ -6707,6 +6806,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private generateSingleCopyFilesBuildPhase(target PBXNativeTarget, destinationSpec CopyFilePhaseDestinationSpec, targetNodes Iterable<TargetNode<?>>) : void extracted from private generateCopyFilesBuildPhases(target PBXNativeTarget, copiedNodes Iterable<TargetNode<?>>) : void in class com.facebook.buck.apple.ProjectGenerator"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private getDestination(targetNode TargetNode<?>) : Optional<PBXCopyFilesBuildPhase.Destination> renamed to private getDestinationSpec(targetNode TargetNode<?>) : Optional<CopyFilePhaseDestinationSpec> in class com.facebook.buck.apple.ProjectGenerator"
 	}],
 	"time": "7/14/15 12:10 PM",
 	"id": 1141343
@@ -6742,25 +6844,19 @@
 	"author": "Tristan Tarrant",
 	"refactorings": [{
 		"type": "Rename Package",
-		"description": "Rename Package org.jboss.as.clustering.jgroups to org.infinispan.server.jgroups.security"
+		"description": "Rename Package org.jboss.as.clustering to org.infinispan.server.commons"
 	}, {
 		"type": "Rename Package",
-		"description": "Rename Package org.jboss.as.clustering.jgroups to org.infinispan.server.jgroups.spi"
+		"description": "Rename Package org.jboss.as.clustering to org.infinispan.server"
 	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.jboss.as.clustering.jgroups.subsystem to org.infinispan.server.jgroups.subsystem"
+		"type": "Move Class",
+		"description": "Move Class org.jboss.as.clustering.jgroups.subsystem.ClusteringSubsystemTest moved to org.infinispan.server.commons.subsystem.ClusteringSubsystemTest"
 	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.jboss.as.clustering.jgroups to org.infinispan.server.jgroups"
+		"type": "Move Class",
+		"description": "Move Class org.jboss.as.clustering.jgroups.ServiceContainerHelper moved to org.infinispan.server.commons.msc.ServiceContainerHelper"
 	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.jboss.as.clustering.jgroups to org.infinispan.server.commons.msc"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.jboss.as.clustering.concurrent to org.infinispan.server.commons.concurrent"
-	}, {
-		"type": "Rename Package",
-		"description": "Rename Package org.jboss.as.clustering.jgroups.subsystem to org.infinispan.server.commons.subsystem"
+		"type": "Rename Class",
+		"description": "Rename Class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackRemove renamed to org.infinispan.server.jgroups.subsystem.StackRemoveHandler"
 	}],
 	"time": "7/14/15 4:06 PM",
 	"id": 1142116
@@ -7046,6 +7142,45 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private renderGc() : void extracted from public toString() : String in class com.hazelcast.internal.monitors.HealthMonitor.HealthMetrics"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class com.hazelcast.internal.metrics.LongProbe renamed to com.hazelcast.internal.metrics.LongProbeFunction"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class com.hazelcast.internal.metrics.DoubleProbe renamed to com.hazelcast.internal.metrics.DoubleProbeFunction"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class com.hazelcast.internal.metrics.impl.GaugeImplTest.SomeObject moved to com.hazelcast.internal.metrics.impl.DoubleGaugeImplTest.SomeObject"
+	}, {
+		"type": "Extract Interface",
+		"description": "Extract Interface com.hazelcast.internal.metrics.ProbeFunction from class com.hazelcast.internal.metrics.DoubleProbeFunction"
+	}, {
+		"type": "Extract Interface",
+		"description": "Extract Interface com.hazelcast.internal.metrics.ProbeFunction from class com.hazelcast.internal.metrics.LongProbeFunction"
+	}, {
+		"type": "Extract Interface",
+		"description": "Extract Interface com.hazelcast.internal.metrics.ProbeFunction from class com.hazelcast.internal.metrics.impl.MethodProbe"
+	}, {
+		"type": "Extract Interface",
+		"description": "Extract Interface com.hazelcast.internal.metrics.ProbeFunction from class com.hazelcast.internal.metrics.impl.FieldProbe"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getMetric_whenNullName() : void renamed to public newGauge_whenNullName() : void in class com.hazelcast.internal.metrics.impl.MetricsRegistryImplTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getMetric_whenNotExistingMetric() : void renamed to public newGauge_whenNotExistingMetric() : void in class com.hazelcast.internal.metrics.impl.MetricsRegistryImplTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getMetric_whenExistingMetric() : void renamed to public newGauge_whenExistingMetric() : void in class com.hazelcast.internal.metrics.impl.MetricsRegistryImplTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package getObjectMetadata(clazz Class<?>) : SourceMetadata renamed to package loadSourceMetadata(clazz Class<?>) : SourceMetadata in class com.hazelcast.internal.metrics.impl.MetricsRegistryImpl"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package getLastHandle() : long renamed to package getLastWriteTime() : long in class com.hazelcast.nio.tcp.WriteHandler"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package getLastHandle() : long renamed to package getLastReadTime() : long in class com.hazelcast.nio.tcp.ReadHandler"
 	}],
 	"time": "7/16/15 1:56 AM",
 	"id": 1143042
@@ -7080,6 +7215,21 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public _testFieldValidatedResourceParamProvided(target WebTarget) : void extracted from public testFieldValidatedResourceParamProvided() : void in class org.glassfish.jersey.tests.cdi.bv.BaseValidationTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private listTypes(logMsgBuilder StringBuilder, types Collection<Type>) : StringBuilder renamed to private listElements(logMsgBuilder StringBuilder, elements Collection<? extends Object>) : StringBuilder in class org.glassfish.jersey.ext.cdi1x.internal.CdiComponentProvider"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.glassfish.jersey.tests.cdi.bv.CdiTest renamed to org.glassfish.jersey.tests.cdi.bv.RawCdiTest"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.glassfish.jersey.tests.cdi.bv.Hk2Test renamed to org.glassfish.jersey.tests.cdi.bv.RawHk2Test"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.glassfish.jersey.ext.cdi1x.internal.DefaultHk2LocatorManager renamed to org.glassfish.jersey.ext.cdi1x.internal.SingleHk2LocatorManager"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.glassfish.jersey.tests.cdi.resources.MyApplication renamed to org.glassfish.jersey.tests.cdi.resources.MainApplication"
 	}],
 	"time": "7/16/15 4:51 AM",
 	"id": 1143365
@@ -7231,7 +7381,7 @@
 	"author": "Immortius",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class ThreadManagerSubsystem moved from org.terasology.engine.subsystem to org.terasology.engine.subsystem.common"
+		"description": "Move Class org.terasology.engine.subsystem.ThreadManagerSubsystem moved to org.terasology.engine.subsystem.common.ThreadManagerSubsystem"
 	}, {
 		"type": "Inline Method",
 		"description": "Inline Method private initTimer(context Context) : void inlined to public preInitialise(context Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglTimer"
@@ -7239,17 +7389,29 @@
 		"type": "Move Attribute",
 		"description": "Move Attribute private time : EngineTime from class org.terasology.engine.TerasologyEngine to class org.terasology.engine.subsystem.lwjgl.LwjglTimer"
 	}, {
-		"type": "Move Method",
-		"description": "Move Method public isFullscreen() : boolean from class org.terasology.engine.TerasologyEngine to class org.terasology.engine.subsystem.lwjgl.LwjglDisplayDevice"
-	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private time : EngineTime from class org.terasology.engine.TerasologyEngine to class org.terasology.engine.subsystem.headless.HeadlessTimer"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class ThreadManager moved from org.terasology.engine.subsystem to org.terasology.engine.subsystem.common"
+		"description": "Move Class org.terasology.engine.subsystem.ThreadManager moved to org.terasology.engine.subsystem.common.ThreadManager"
 	}, {
 		"type": "Inline Method",
 		"description": "Inline Method private initOpenAL(context Context) : void inlined to public initialise(rootContext Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglAudio"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.terasology.engine.subsystem.lwjgl.LwjglCustomViewPort renamed to org.terasology.engine.subsystem.lwjgl.LwjglPortlet"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public dispose() : void renamed to public shutdown() : void in class org.terasology.engine.subsystem.headless.HeadlessAudio"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public dispose() : void renamed to public shutdown() : void in class org.terasology.engine.subsystem.lwjgl.LwjglAudio"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public dispose() : void renamed to public shutdown() : void in class org.terasology.engine.subsystem.lwjgl.LwjglInput"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public dispose() : void renamed to public shutdown() : void in class org.terasology.engine.subsystem.lwjgl.LwjglGraphics"
 	}],
 	"time": "7/17/15 3:07 AM",
 	"id": 1145105
@@ -7722,6 +7884,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected decompose(dataType DataType, protocolVersion int, value Object) : ByteBuffer extracted from protected decompose(protocolVersion int, value Object) : ByteBuffer in class org.apache.cassandra.cql3.functions.UDFunction"
+	}, {
+		"type": "Rename Class",
+		"description": "Rename Class org.apache.cassandra.cql3.functions.JavaSourceUDFFactory renamed to org.apache.cassandra.cql3.functions.JavaBasedUDFunction"
 	}],
 	"time": "7/24/15 6:37 AM",
 	"id": 1148549
@@ -8438,8 +8603,16 @@
 		}, {
 			"type": "Extract Method",
 			"description": "Inline Method public getMessageSize() : int inlined to protected parse() : void in class org.bitcoinj.core.AddressMessage"
+		}, {
+			"type": "Rename Class",
+			"description": "Rename Class org.bitcoinj.core.LazyParseByteCacheTest renamed to org.bitcoinj.core.ParseByteCacheTest"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method protected parseLite() : void renamed to protected parse() : void in class org.bitcoinj.core.RejectMessage"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method protected parseLite() : void renamed to protected parse() : void in class org.bitcoinj.core.TransactionOutput"
 		}
-
 	],
 	"time": "7/28/15 5:14 PM",
 	"id": 1152026
@@ -8722,9 +8895,6 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private copyOneFunction(dbName String, funcName String) : void extracted from private copyFunctions() : void in class org.apache.hadoop.hive.metastore.hbase.HBaseImport"
-	}, {
-		"type": "Rename Method",
-		"description": "Rename Method public doImport() : void renamed to public importAll() : void in class org.apache.hadoop.hive.metastore.hbase.TestHBaseImport"
 	}],
 	"time": "7/31/15 3:07 PM",
 	"id": 1155930

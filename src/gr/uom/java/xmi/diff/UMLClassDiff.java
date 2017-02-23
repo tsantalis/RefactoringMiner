@@ -239,7 +239,8 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 						else if(mappings > operationBodyMapper.nonMappedElementsT1() &&
 								mappings > operationBodyMapper.nonMappedElementsT2() &&
 								computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) <= MAX_DIFFERENCE_IN_POSITION &&
-								(addedOperation.equalParameterTypes(removedOperation) || addedOperation.overloadedParameterTypes(removedOperation) || addedOperation.replacedParameterTypes(removedOperation))) {
+								(addedOperation.equalParameterTypes(removedOperation) || addedOperation.overloadedParameterTypes(removedOperation) || addedOperation.replacedParameterTypes(removedOperation)) ||
+								(computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) == 0 && addedOperation.getParameterTypeList().equals(removedOperation.getParameterTypeList()))) {
 							UMLOperation removedOperationInNextClass = matchingRemovedOperationInNextClassCallsAddedOperation(removedOperation, addedOperation);
 							if(removedOperationInNextClass != null) {
 								mapperSet.add(new UMLOperationBodyMapper(removedOperation, removedOperationInNextClass));
@@ -282,7 +283,8 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 						else if(mappings > operationBodyMapper.nonMappedElementsT1() &&
 								mappings > operationBodyMapper.nonMappedElementsT2() &&
 								computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) <= MAX_DIFFERENCE_IN_POSITION &&
-								(addedOperation.equalParameterTypes(removedOperation) || addedOperation.overloadedParameterTypes(removedOperation) || addedOperation.replacedParameterTypes(removedOperation))) {
+								(addedOperation.equalParameterTypes(removedOperation) || addedOperation.overloadedParameterTypes(removedOperation) || addedOperation.replacedParameterTypes(removedOperation)) ||
+								(computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) == 0 && addedOperation.getParameterTypeList().equals(removedOperation.getParameterTypeList()))) {
 							UMLOperation removedOperationInNextClass = matchingRemovedOperationInNextClassCallsAddedOperation(removedOperation, addedOperation);
 							if(removedOperationInNextClass != null) {
 								mapperSet.add(new UMLOperationBodyMapper(removedOperation, removedOperationInNextClass));

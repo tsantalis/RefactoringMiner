@@ -66,11 +66,13 @@ public class UMLModelDiff {
    }
 
    public void reportAddedClass(UMLClass umlClass) {
-      this.addedClasses.add(umlClass);
+	   if(!addedClasses.contains(umlClass))
+		   this.addedClasses.add(umlClass);
    }
 
    public void reportRemovedClass(UMLClass umlClass) {
-      this.removedClasses.add(umlClass);
+	   if(!removedClasses.contains(umlClass))
+		   this.removedClasses.add(umlClass);
    }
 
 //   public void reportAddedAnonymousClass(UMLAnonymousClass umlClass) {
@@ -784,9 +786,7 @@ public class UMLModelDiff {
 	            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
 	            operationBodyMapper.getMappings();
 	            int mappings = operationBodyMapper.mappingsWithoutBlocks();
-	            if(mappings > 0 &&
-	                  (mappings > (operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2())/2.0
-	                        || operationBodyMapper.exactMatches() > 0) ) {
+	            if(mappings > 0 && mappings > operationBodyMapper.nonMappedElementsT1() && mappings > operationBodyMapper.nonMappedElementsT2()) {
 	               int exactMatches = operationBodyMapper.exactMatches();
 	               if(operationBodyMapperMap.containsKey(exactMatches)) {
 	                  List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
@@ -842,9 +842,7 @@ public class UMLModelDiff {
 	            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
 	            operationBodyMapper.getMappings();
 	            int mappings = operationBodyMapper.mappingsWithoutBlocks();
-	            if(mappings > 0 &&
-	                  (mappings > (operationBodyMapper.nonMappedElementsT1() + operationBodyMapper.nonMappedElementsT2())/2.0
-	                        || operationBodyMapper.exactMatches() > 0) ) {
+	            if(mappings > 0 && mappings > operationBodyMapper.nonMappedElementsT1() && mappings > operationBodyMapper.nonMappedElementsT2()) {
 	               int exactMatches = operationBodyMapper.exactMatches();
 	               if(operationBodyMapperMap.containsKey(exactMatches)) {
 	                  List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);

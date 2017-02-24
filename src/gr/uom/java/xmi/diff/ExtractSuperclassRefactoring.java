@@ -2,6 +2,7 @@ package gr.uom.java.xmi.diff;
 
 import gr.uom.java.xmi.UMLClass;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.refactoringminer.api.Refactoring;
@@ -9,9 +10,9 @@ import org.refactoringminer.api.RefactoringType;
 
 public class ExtractSuperclassRefactoring implements Refactoring {
 	private UMLClass extractedClass;
-	private Set<String> subclassSet;
+	private Set<UMLClass> subclassSet;
 	
-	public ExtractSuperclassRefactoring(UMLClass extractedClass, Set<String> subclassSet) {
+	public ExtractSuperclassRefactoring(UMLClass extractedClass, Set<UMLClass> subclassSet) {
 		this.extractedClass = extractedClass;
 		this.subclassSet = subclassSet;
 	}
@@ -36,12 +37,15 @@ public class ExtractSuperclassRefactoring implements Refactoring {
 			return RefactoringType.EXTRACT_SUPERCLASS;
 	}
 
-  public UMLClass getExtractedClass() {
-    return extractedClass;
-  }
+	public UMLClass getExtractedClass() {
+		return extractedClass;
+	}
 
-  public Set<String> getSubclassSet() {
-    return subclassSet;
-  }
-	
+	public Set<String> getSubclassSet() {
+		Set<String> subclassSet = new LinkedHashSet<String>();
+		for(UMLClass umlClass : this.subclassSet) {
+			subclassSet.add(umlClass.getName());
+		}
+		return subclassSet;
+	}
 }

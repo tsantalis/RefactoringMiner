@@ -1094,8 +1094,11 @@
 	"repository": "https://github.com/hierynomus/sshj.git",
 	"author": "Jeroen van Erp",
 	"refactorings": [{
-		"type": "Rename Package",
-		"description": "Rename Package nl.javadude.sshj.connection.channel to com.hierynomus.sshj.connection.channel"
+		"type": "Move Class",
+		"description": "Move Class nl.javadude.sshj.connection.channel.ChannelCloseEofTest moved to com.hierynomus.sshj.connection.channel.ChannelCloseEofTest"
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass com.hierynomus.sshj.SshIntegrationTestBase from class com.hierynomus.sshj.connection.channel.ChannelCloseEofTest"
 	}],
 	"time": "6/16/15 9:12 AM",
 	"id": 1116627
@@ -3607,6 +3610,12 @@
 		"type": "Rename Package",
 		"description": "Rename Package org.springframework.data.neo4j.integration to org.springframework.data.neo4j.examples"
 	}, {
+		"type": "Rename Package",
+		"description": "Rename Package org.springframework.data.neo4j.integration.movies to org.springframework.data.neo4j.queries"
+	}, {
+		"type": "Rename Package",
+		"description": "Rename Package org.springframework.data.neo4j.integration.helloworld to org.springframework.data.neo4j.examples.galaxy"
+	}, {
 		"type": "Move Class",
 		"description": "Move Class org.springframework.data.neo4j.integration.transactions.ApplicationConfig moved to org.springframework.data.neo4j.transactions.ApplicationConfig"
 	}, {
@@ -3996,35 +4005,14 @@
 	"author": "Sean Wiese",
 	"refactorings": [{
 			"type": "Rename Package",
-			"description": "Rename Package com.facebook.scrumptious.usersettings to com.example.scrumptious.usersettings"
+			"description": "Rename Package com.facebook.samples to com.example"
 		}, {
 			"type": "Rename Package",
-			"description": "Rename Package com.facebook.samples.rps to com.example.rps"
+			"description": "Rename Package com.facebook to com.example"
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method private getAndroidIdViaReflection(context Context) : AttributionIdentifiers extracted from private getAndroidId(context Context) : AttributionIdentifiers in class com.facebook.internal.AttributionIdentifiers"
-		}, {
-			"type": "Rename Package",
-			"description": "Rename Package com.facebook.samples.hellofacebook to com.example.hellofacebook"
-		}, {
-			"type": "Rename Package",
-			"description": "Rename Package com.facebook.iconicus to com.example.iconicus"
-		}, {
-			"type": "Rename Package",
-			"description": "Rename Package com.facebook.samples.switchuser to com.example.switchuser"
-		}, {
-			"type": "Rename Package",
-			"description": "Rename Package com.facebook.samples.rps.usersettings to com.example.rps.usersettings"
-		}, {
-			"type": "Rename Package",
-			"description": "Rename Package com.facebook.scrumptious to com.example.scrumptious"
-		}, {
-			"type": "Rename Package",
-			"description": "Rename Package com.facebook.scrumptious.picker to com.example.scrumptious.picker"
 		}
-
-
-
 	],
 	"time": "6/25/15 3:56 PM",
 	"id": 1125333
@@ -4076,8 +4064,14 @@
 	"repository": "https://github.com/cbeust/testng.git",
 	"author": "Julien Herr",
 	"refactorings": [{
-		"type": "Rename Package",
-		"description": "Rename Package test.testng234 to test.inheritance.testng234"
+		"type": "Move Class",
+		"description": "Move Class test.testng234.ParentTest moved to test.inheritance.testng234.ParentTest"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class test.testng234.PolymorphicFailureTest moved to test.inheritance.testng234.PolymorphicFailureTest"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class test.testng234.ChildTest moved to test.inheritance.testng234.ChildTest"
 	}],
 	"time": "6/27/15 6:02 AM",
 	"id": 1126248
@@ -4529,6 +4523,9 @@
 		"type": "Rename Method",
 		"description": "Rename Method public uniquenessConstraintCreate(state KernelStatement, labelId int, propertyKeyId int) : UniquenessConstraint renamed to public uniquePropertyConstraintCreate(state KernelStatement, labelId int, propertyKeyId int) : UniquenessConstraint in class org.neo4j.kernel.impl.api.LockingStatementOperations"
 	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public uniquenessConstraintCreate(state KernelStatement, labelId int, propertyKey int) : UniquenessConstraint renamed to public uniquePropertyConstraintCreate(state KernelStatement, labelId int, propertyKey int) : UniquenessConstraint in class org.neo4j.kernel.impl.api.DataIntegrityValidatingStatementOperations"
+	}, {
 		"type": "Rename Class",
 		"description": "Rename Class org.neo4j.kernel.impl.store.UniquenessConstraintRule renamed to org.neo4j.kernel.impl.store.UniquePropertyConstraintRule"
 	}, {
@@ -4701,8 +4698,8 @@
 	"repository": "https://github.com/gradle/gradle.git",
 	"author": "Rene Groeschke",
 	"refactorings": [{
-		"type": "Rename Package",
-		"description": "Rename Package org.gradle.tooling.tests to org.gradle.tooling.test"
+		"type": "Move Class",
+		"description": "Move Class org.gradle.tooling.tests.TestExecutionException moved to org.gradle.tooling.test.TestExecutionException"
 	}],
 	"time": "7/6/15 7:43 AM",
 	"id": 1134191
@@ -4992,25 +4989,13 @@
 	"author": "Daz DeBoer",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class ArtifactSet moved from org.gradle.api.internal.artifacts.ivyservice.resolveengine.graph to org.gradle.api.internal.artifacts.ivyservice.resolveengine.oldresult"
+		"description": "Move Class org.gradle.api.internal.artifacts.ivyservice.resolveengine.graph.ResolvedLocalComponentsResultGraphVisitor moved to org.gradle.api.internal.artifacts.ivyservice.resolveengine.projectresult.ResolvedLocalComponentsResultGraphVisitor"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class ResolutionResultDependencyGraphVisitor moved from org.gradle.api.internal.artifacts.ivyservice.resolveengine.graph to org.gradle.api.internal.artifacts.ivyservice.resolveengine.result"
+		"description": "Move Class org.gradle.api.internal.artifacts.ivyservice.resolveengine.graph.ResolutionResultDependencyGraphVisitor moved to org.gradle.api.internal.artifacts.ivyservice.resolveengine.result.ResolutionResultDependencyGraphVisitor"
 	}, {
-		"type": "Move Class",
-		"description": "Move Class DependencyArtifactSet moved from org.gradle.api.internal.artifacts.ivyservice.resolveengine.graph to org.gradle.api.internal.artifacts.ivyservice.resolveengine.oldresult"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class ConfigurationArtifactSet moved from org.gradle.api.internal.artifacts.ivyservice.resolveengine.graph to org.gradle.api.internal.artifacts.ivyservice.resolveengine.oldresult"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class ResolvedConfigurationDependencyGraphVisitor moved from org.gradle.api.internal.artifacts.ivyservice.resolveengine.graph to org.gradle.api.internal.artifacts.ivyservice.resolveengine.oldresult"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class ResolvedLocalComponentsResultGraphVisitor moved from org.gradle.api.internal.artifacts.ivyservice.resolveengine.graph to org.gradle.api.internal.artifacts.ivyservice.resolveengine.projectresult"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class AbstractArtifactSet moved from org.gradle.api.internal.artifacts.ivyservice.resolveengine.graph to org.gradle.api.internal.artifacts.ivyservice.resolveengine.oldresult"
+		"type": "Rename Package",
+		"description": "Rename Package org.gradle.api.internal.artifacts.ivyservice.resolveengine.graph to org.gradle.api.internal.artifacts.ivyservice.resolveengine.oldresult"
 	}],
 	"time": "7/6/15 8:45 PM",
 	"id": 1134151
@@ -5619,10 +5604,10 @@
 		"description": "Move Attribute public UTF_8 : Charset from class com.hazelcast.client.impl.protocol.util.UnsafeBuffer to class com.hazelcast.nio.Bits"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class Int2ObjectHashMap moved from com.hazelcast.client.impl.protocol.util to com.hazelcast.util.collection"
+		"description": "Move Class com.hazelcast.client.impl.protocol.util.Int2ObjectHashMap moved to com.hazelcast.util.collection.Int2ObjectHashMap"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class Int2ObjectHashMapTest moved from com.hazelcast.client.protocol to com.hazelcast.util.collection"
+		"description": "Move Class com.hazelcast.client.protocol.Int2ObjectHashMapTest moved to com.hazelcast.util.collection.Int2ObjectHashMapTest"
 	}],
 	"time": "7/10/15 5:19 AM",
 	"id": 1137397
@@ -5726,22 +5711,7 @@
 	"sha1": "78b54757c0d234db671526aed9b3288a85048e22",
 	"repository": "https://github.com/liferay/liferay-plugins.git",
 	"author": "Minhchau Dang",
-	"refactorings": [{
-		"type": "Move Class",
-		"description": "Move Class BaseRawMetadataProcessor moved from com.liferay.portal.metadata to com.liferay.tika.metadata"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class MimeTypesImpl moved from com.liferay.portal.util to com.liferay.tika.util"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class XugglerRawMetadataProcessor moved from com.liferay.portal.metadata to com.liferay.tika.metadata"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class XMPDM moved from com.liferay.portal.metadata to com.liferay.tika.metadata"
-	}, {
-		"type": "Move Class",
-		"description": "Move Class TikaRawMetadataProcessor moved from com.liferay.portal.metadata to com.liferay.tika.metadata"
-	}],
+	"refactorings": [],
 	"time": "7/11/15 5:06 PM",
 	"id": 1139721
 }, {
@@ -6849,6 +6819,12 @@
 		"type": "Rename Package",
 		"description": "Rename Package org.jboss.as.clustering to org.infinispan.server"
 	}, {
+		"type": "Rename Package",
+		"description": "Rename Package org.jboss.as.clustering.jgroups to org.infinispan.server.jgroups.spi"
+	}, {
+		"type": "Rename Package",
+		"description": "Rename Package org.jboss.as.clustering.jgroups to org.infinispan.server.jgroups.security"
+	}, {
 		"type": "Move Class",
 		"description": "Move Class org.jboss.as.clustering.jgroups.subsystem.ClusteringSubsystemTest moved to org.infinispan.server.commons.subsystem.ClusteringSubsystemTest"
 	}, {
@@ -6924,18 +6900,30 @@
 	"repository": "https://github.com/antlr/antlr4.git",
 	"author": "Terence Parr",
 	"refactorings": [{
-		"type": "Move Class",
-		"description": "Move Class org.antlr.v4.runtime.misc.JFileChooserConfirmOverwrite moved to org.antlr.v4.gui.JFileChooserConfirmOverwrite"
-	}, {
 		"type": "Rename Package",
-		"description": "Rename Package org.antlr.v4.runtime.tree.gui to org.antlr.v4.gui"
+		"description": "Rename Package org.antlr.v4.runtime.misc to org.antlr.v4.gui"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class org.antlr.v4.runtime.misc.TestRig moved to org.antlr.v4.gui.TestRig"
+		"description": "Move Class org.antlr.v4.runtime.tree.gui.TreePostScriptGenerator moved to org.antlr.v4.gui.TreePostScriptGenerator"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class org.antlr.v4.runtime.misc.GraphicsSupport moved to org.antlr.v4.gui.GraphicsSupport"
-	},{
+		"description": "Move Class org.antlr.v4.runtime.tree.gui.TreeTextProvider moved to org.antlr.v4.gui.TreeTextProvider"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.antlr.v4.runtime.tree.gui.TreeLayoutAdaptor moved to org.antlr.v4.gui.TreeLayoutAdaptor"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.antlr.v4.runtime.tree.gui.BasicFontMetrics moved to org.antlr.v4.gui.BasicFontMetrics"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.antlr.v4.runtime.tree.gui.TreeViewer moved to org.antlr.v4.gui.TreeViewer"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.antlr.v4.runtime.tree.gui.SystemFontMetrics moved to org.antlr.v4.gui.SystemFontMetrics"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.antlr.v4.runtime.tree.gui.PostScriptDocument moved to org.antlr.v4.gui.PostScriptDocument"
+	}, {
 		"type": "Inline Method",
 		"description": "Inline Method public toStringTree(t Tree, nodeTextProvider TreeTextProvider) : String inlined to public toStringTree(t Tree, ruleNames List) : String in class org.antlr.v4.runtime.tree.Trees"
 	}
@@ -8030,7 +8018,7 @@
 		"description": "Move Method private nodeDegreeByDirection(nodeId long, group RelationshipGroupRecord, direction Direction) : long from class org.neo4j.kernel.impl.api.store.DiskLayer to private nodeDegreeByDirection(group RelationshipGroupRecord, direction Direction) : long from class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class org.neo4j.kernel.impl.api.store.DiskLayer.AllStoreIdIterator moved to org.neo4j.kernel.impl.api.store.StoreStatement.AllStoreIdIterator4beba7bbdf927486a5cbf298a0fb2be50905a590"
+		"description": "Move Class org.neo4j.kernel.impl.api.store.DiskLayer.AllStoreIdIterator moved to org.neo4j.kernel.impl.api.store.StoreStatement.AllStoreIdIterator"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private singleLabelCursor : InstanceCache from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"

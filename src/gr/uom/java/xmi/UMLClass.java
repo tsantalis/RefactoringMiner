@@ -14,6 +14,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     private String name;
     private String qualifiedName;
     private String sourceFile;
+    private String sourceFolder;
     private String visibility;
 	private boolean isAbstract;
 	private boolean isInterface;
@@ -35,6 +36,34 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     		this.qualifiedName = packageName + "." + name;
         
         this.sourceFile = sourceFile;
+        this.sourceFolder = "";
+        if(packageName.equals("")) {
+        	int index = sourceFile.indexOf(name);
+        	if(index != -1) {
+    			this.sourceFolder = sourceFile.substring(0, index);
+    		}
+        }
+        else {
+        	if(topLevel) {
+        		int index = sourceFile.indexOf(packageName.replace('.', '/'));
+        		if(index != -1) {
+        			this.sourceFolder = sourceFile.substring(0, index);
+        		}
+        	}
+        	else {
+        		int index = -1;
+        		if(packageName.contains(".")) {
+        			String realPackageName = packageName.substring(0, packageName.lastIndexOf('.'));
+        			index = sourceFile.indexOf(realPackageName.replace('.', '/'));
+        		}
+        		else {
+        			index = sourceFile.indexOf(packageName);
+        		}
+        		if(index != -1) {
+        			this.sourceFolder = sourceFile.substring(0, index);
+        		}
+        	}
+        }
         this.isAbstract = false;
         this.isInterface = false;
         this.topLevel = topLevel;
@@ -348,6 +377,14 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
 	public double normalizedPackageNameDistance(UMLClass c) {
 		String s1 = packageName.toLowerCase();
 		String s2 = c.packageName.toLowerCase();
+		int distance = StringDistance.editDistance(s1, s2);
+		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
+		return normalized;
+	}
+	
+	public double normalizedSourceFolderDistance(UMLClass c) {
+		String s1 = sourceFolder.toLowerCase();
+		String s2 = c.sourceFolder.toLowerCase();
 		int distance = StringDistance.editDistance(s1, s2);
 		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
 		return normalized;

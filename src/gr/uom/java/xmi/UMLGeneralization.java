@@ -1,29 +1,21 @@
 package gr.uom.java.xmi;
 
 public class UMLGeneralization implements Comparable<UMLGeneralization> {
-    private String child;
+    private UMLClass child;
     private String parent;
 
-    public UMLGeneralization(String child, String parent) {
+    public UMLGeneralization(UMLClass child, String parent) {
         this.child = child;
         this.parent = parent;
     }
 
-    public String getChild() {
+    public UMLClass getChild() {
         return child;
     }
-
-    public void setChild(String child) {
-		this.child = child;
-	}
 
 	public String getParent() {
         return parent;
     }
-
-    public void setParent(String parent) {
-		this.parent = parent;
-	}
 
 	public boolean equals(Object o) {
     	if(this == o) {

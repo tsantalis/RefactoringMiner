@@ -152,14 +152,14 @@ public class UMLModelASTReader {
     	Type superclassType = typeDeclaration.getSuperclassType();
     	if(superclassType != null) {
     		UMLType umlType = UMLType.extractTypeObject(this.getTypeName(superclassType, 0));
-    		UMLGeneralization umlGeneralization = new UMLGeneralization(umlClass.getName(), umlType.getClassType());
+    		UMLGeneralization umlGeneralization = new UMLGeneralization(umlClass, umlType.getClassType());
     		umlClass.setSuperclass(umlType);
     		getUmlModel().addGeneralization(umlGeneralization);
     	}
     	
     	List<Type> superInterfaceTypes = typeDeclaration.superInterfaceTypes();
     	for(Type interfaceType : superInterfaceTypes) {
-    		UMLRealization umlRealization = new UMLRealization(umlClass.getName(), this.getTypeName(interfaceType, 0));
+    		UMLRealization umlRealization = new UMLRealization(umlClass, this.getTypeName(interfaceType, 0));
     		getUmlModel().addRealization(umlRealization);
     	}
     	

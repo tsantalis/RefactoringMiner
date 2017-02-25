@@ -175,6 +175,9 @@
 	"refactorings": [{
 		"type": "Extract Interface",
 		"description": "Extract Interface org.gradle.api.internal.artifacts.ivyservice.resolveengine.result.ResolvedArtifactsContainer from class org.gradle.api.internal.artifacts.ivyservice.resolveengine.oldresult.ResolvedArtifactResults"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.gradle.internal.component.model.ComponentArtifactIdentifier moved to org.gradle.api.artifacts.component.ComponentArtifactIdentifier"
 	}],
 	"time": "6/8/15 9:02 AM",
 	"id": 1104952
@@ -306,6 +309,9 @@
 	"refactorings": [{
 		"type": "Move Attribute",
 		"description": "Move Attribute package ARRAY_MODIFIERS : int from class net.bytebuddy.description.type.TypeDescription.ArrayProjection to class net.bytebuddy.description.type.TypeDescription"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class net.bytebuddy.dynamic.TargetType.TypeVariableProxy moved to net.bytebuddy.description.type.generic.GenericTypeDescription.Visitor.Substitutor.ForRawType.TypeVariableProxy"
 	}],
 	"time": "6/8/15 12:07 PM",
 	"id": 1103823
@@ -1742,6 +1748,9 @@
 		"type": "Move Class",
 		"description": "Move Class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue.AbsoluteMetricCache moved to com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue.AbsoluteMetricCache"
 	}, {
+		"type": "Move Class",
+		"description": "Move Class com.eucalyptus.cluster.callback.CloudWatchHelper moved to com.eucalyptus.cluster.callback.cloudwatch.CloudWatchHelper"
+	}, {
 		"type": "Rename Package",
 		"description": "Rename Package com.eucalyptus.cloudwatch.domain.absolute to com.eucalyptus.cluster.callback.cloudwatch"
 	}],
@@ -2340,6 +2349,9 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public disable(session DbSession, ids List) : void renamed to public disableByIds(session DbSession, ids List) : void in class org.sonar.server.metric.persistence.MetricDao"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.sonar.core.metric.DefaultMetricFinderTest moved to org.sonar.server.metric.DefaultMetricFinderTest"
 	}],
 	"time": "6/18/15 6:52 AM",
 	"id": 1118403
@@ -4206,13 +4218,15 @@
 	}, {
 		"type": "Move Method",
 		"description":"Move Method private sourceFile(cmd String) : boolean from class org.apache.hive.beeline.BeeLine to private sourceFile(cmd String) : boolean from class org.apache.hive.beeline.Commands"
-	},
-{
+	}, {
 		"type": "Move Method",
 		"description":"Move Method private cliToBeelineCmd(cmd String) : String from class org.apache.hive.beeline.BeeLine to private cliToBeelineCmd(cmd String) : String from class org.apache.hive.beeline.Commands"
-	},{
+	}, {
 		"type": "Move Method",
 		"description": "Move Method private isSourceCMD(cmd String) : boolean from class org.apache.hive.beeline.BeeLine to private isSourceCMD(cmd String) : boolean from class org.apache.hive.beeline.Commands"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class org.apache.hadoop.hive.ql.parse.VariableSubstitution moved to org.apache.hadoop.hive.conf.VariableSubstitution"
 	}],
 	"time": "6/28/15 9:42 PM",
 	"id": 1127268
@@ -5529,6 +5543,9 @@
 		}, {
 			"type": "Rename Method",
 			"description": "Rename Method private load() : void renamed to private loadStats() : void in class com.android.internal.os.BatteryStatsHelper"
+		}, {
+			"type": "Move Class",
+			"description": "Move Class com.android.systemui.statusbar.policy.BatteryController.BatteryStateChangeCallback moved to com.android.systemui.statusbar.policy.BatteryStateRegistar.BatteryStateChangeCallback"
 		}
 	],
 	"time": "7/9/15 4:42 PM",
@@ -5647,7 +5664,7 @@
 	"author": "Thomas Broyer",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class Parameterized moved from com.squareup.javapoet.TypesTest to com.squareup.javapoet.AbstractTypesTest"
+		"description": "Move Class com.squareup.javapoet.TypesTest.Parameterized moved to com.squareup.javapoet.AbstractTypesTest.Parameterized"
 	}, {
 		"type": "Extract Superclass",
 		"description": "Extract Superclass com.squareup.javapoet.AbstractTypesTest from class com.squareup.javapoet.TypesTest"

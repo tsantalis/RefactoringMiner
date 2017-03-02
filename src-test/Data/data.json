@@ -452,6 +452,12 @@
 	}, {
 		"type": "Pull Up Method",
 		"description": "Pull Up Method protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.ForLoadedExecutable to protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.AbstractBase"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.ForLoadedExecutable.OfLegacyVmMethod to protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.AbstractBase"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.ForLoadedExecutable.OfLegacyVmConstructor to protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.AbstractBase"
 	}],
 	"time": "6/10/15 5:31 AM",
 	"id": 1108762
@@ -8078,6 +8084,18 @@
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private nodeRelationshipCursor : InstanceCache from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.neo4j.kernel.api.cursor.NodeItem.NodeItemHelper from class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.neo4j.kernel.api.cursor.EntityItem.EntityItemHelper from class org.neo4j.kernel.impl.api.store.StoreAbstractRelationshipCursor"
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.neo4j.kernel.api.cursor.EntityItem.EntityItemHelper from class org.neo4j.kernel.impl.api.cursor.TxAbstractRelationshipCursor"
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.neo4j.kernel.api.cursor.NodeItem.NodeItemHelper from class org.neo4j.kernel.impl.api.cursor.TxAbstractNodeCursor"
 	}],
 	"time": "7/25/15 7:28 AM",
 	"id": 1149799

@@ -630,6 +630,11 @@ public class UMLModelDiff {
       if (parent.contains(".") && !addedClassName.contains(".")) {
          return addedClassName.equals(parent.substring(parent.lastIndexOf(".") + 1));
       }
+      if (parent.contains(".") && addedClassName.contains(".")) {
+    	  String s1 = parent.substring(parent.lastIndexOf(".") + 1);
+    	  String s2 = addedClassName.substring(addedClassName.lastIndexOf(".") + 1);
+    	  return s1.equals(s2);
+      }
       return parent.equals(addedClassName);
    }
 

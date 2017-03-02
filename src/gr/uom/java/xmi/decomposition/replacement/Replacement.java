@@ -1,4 +1,4 @@
-package gr.uom.java.xmi.decomposition;
+package gr.uom.java.xmi.decomposition.replacement;
 
 public class Replacement {
 	private String before;

@@ -4,6 +4,8 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.decomposition.replacement.Replacement;
+import gr.uom.java.xmi.decomposition.replacement.TypeReplacement;
 
 public abstract class AbstractCodeMapping {
 
@@ -51,6 +53,15 @@ public abstract class AbstractCodeMapping {
 
 	public Set<Replacement> getReplacements() {
 		return replacements;
+	}
+
+	public boolean containsTypeReplacement() {
+		for(Replacement replacement : replacements) {
+			if(replacement instanceof TypeReplacement) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public String toString() {

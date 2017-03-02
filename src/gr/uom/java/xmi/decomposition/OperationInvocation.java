@@ -55,6 +55,20 @@ public class OperationInvocation {
     	return this.methodName.equals(operation.getName()) && this.typeArguments == operation.getParameterTypeList().size();
     }
 
+    public boolean compatibleExpression(OperationInvocation other) {
+    	if(this.expression != null && other.expression != null) {
+    		if(this.expression.startsWith("new ") && !other.expression.startsWith("new "))
+    			return false;
+    		if(!this.expression.startsWith("new ") && other.expression.startsWith("new "))
+    			return false;
+    	}
+    	if(this.expression != null && this.expression.startsWith("new ") && other.expression == null)
+    		return false;
+    	if(other.expression != null && other.expression.startsWith("new ") && this.expression == null)
+    		return false;
+    	return true;
+    }
+
 	public boolean equals(Object o) {
         if(this == o) {
             return true;

@@ -2,6 +2,11 @@ package gr.uom.java.xmi.decomposition;
 
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
+import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement;
+import gr.uom.java.xmi.decomposition.replacement.TypeReplacement;
+import gr.uom.java.xmi.decomposition.replacement.VariableRename;
+import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
@@ -621,6 +626,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		variablesAndMethodInvocations2.addAll(methodInvocations2);
 		variablesAndMethodInvocations2.addAll(variables2);
 		
+		Set<String> types1 = new LinkedHashSet<String>(statement1.getTypes());
+		Set<String> types2 = new LinkedHashSet<String>(statement2.getTypes());
+		Set<String> typeIntersection = new LinkedHashSet<String>(types1);
+		typeIntersection.retainAll(types2);
+		// remove common types from the two sets
+		types1.removeAll(typeIntersection);
+		types2.removeAll(typeIntersection);
+		
 		String argumentizedString1 = preprocessInput1(statement1, statement2);
 		String argumentizedString2 = preprocessInput2(statement1, statement2);
 		int initialDistanceRaw = StringDistance.editDistance(argumentizedString1, argumentizedString2);
@@ -644,10 +657,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							replacement = new VariableReplacementWithMethodInvocation(s1, s2, statement2.getMethodInvocationMap().get(s2));
 						}
 						else if(methodInvocations1.contains(s1) && methodInvocations2.contains(s2)) {
-							replacement = new MethodInvocationReplacement(s1, s2, statement1.getMethodInvocationMap().get(s1), statement2.getMethodInvocationMap().get(s2));
+							OperationInvocation invokedOperationBefore = statement1.getMethodInvocationMap().get(s1);
+							OperationInvocation invokedOperationAfter = statement2.getMethodInvocationMap().get(s2);
+							if(invokedOperationBefore.compatibleExpression(invokedOperationAfter)) {
+								replacement = new MethodInvocationReplacement(s1, s2, invokedOperationBefore, invokedOperationAfter);
+							}
 						}
 						else if(methodInvocations1.contains(s1) && variables2.contains(s2)) {
-							replacement = new Replacement(s1, s2);
+							replacement = new VariableReplacementWithMethodInvocation(s1, s2, statement1.getMethodInvocationMap().get(s1));
 						}
 						if(replacement != null) {
 							double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), argumentizedString2.length());
@@ -666,6 +683,34 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(replacementMap.firstEntry().getKey() == 0) {
 						break;
 					}
+				}
+			}
+		}
+		
+		//perform type replacements
+		for(String type1 : types1) {
+			TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
+			int minDistance = initialDistanceRaw;
+			for(String type2 : types2) {
+				String temp = argumentizedString1.replaceAll(Pattern.quote(type1), Matcher.quoteReplacement(type2));
+				int distanceRaw = StringDistance.editDistance(temp, argumentizedString2, minDistance);
+				if(distanceRaw >= 0 && distanceRaw < initialDistanceRaw) {
+					minDistance = distanceRaw;
+					Replacement replacement = new TypeReplacement(type1, type2);
+					double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), argumentizedString2.length());
+					replacementMap.put(distancenormalized, replacement);
+					if(distanceRaw == 0) {
+						break;
+					}
+				}
+			}
+			if(!replacementMap.isEmpty()) {
+				Replacement replacement = replacementMap.firstEntry().getValue();
+				replacements.add(replacement);
+				argumentizedString1 = argumentizedString1.replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter()));
+				initialDistanceRaw = StringDistance.editDistance(argumentizedString1, argumentizedString2);
+				if(replacementMap.firstEntry().getKey() == 0) {
+					break;
 				}
 			}
 		}

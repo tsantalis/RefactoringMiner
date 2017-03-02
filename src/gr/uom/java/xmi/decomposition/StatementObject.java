@@ -18,6 +18,7 @@ public class StatementObject extends AbstractStatement {
 	
 	private String statement;
 	private List<String> variables;
+	private List<String> types;
 	private List<VariableDeclaration> variableDeclarations;
 	private Map<String, OperationInvocation> methodInvocationMap;
 	
@@ -26,6 +27,7 @@ public class StatementObject extends AbstractStatement {
 		SimpleNameVisitor visitor = new SimpleNameVisitor();
 		statement.accept(visitor);
 		this.variables = visitor.getVariables();
+		this.types = visitor.getTypes();
 		this.variableDeclarations = visitor.getVariableDeclarations();
 		this.methodInvocationMap = visitor.getMethodInvocationMap();
 		setDepth(depth);
@@ -114,6 +116,11 @@ public class StatementObject extends AbstractStatement {
 	@Override
 	public List<String> getVariables() {
 		return variables;
+	}
+
+	@Override
+	public List<String> getTypes() {
+		return types;
 	}
 
 	@Override

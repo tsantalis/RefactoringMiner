@@ -233,14 +233,14 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 					operationBodyMapper.getMappings();
 					int mappings = operationBodyMapper.mappingsWithoutBlocks();
 					if(mappings > 0) {
-						if(operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() == 0 && mappings == operationBodyMapper.exactMatches()) {
+						int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
+						if(operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() == 0 && allMappingsAreExactMatches(operationBodyMapper, mappings)) {
 							mapperSet.add(operationBodyMapper);
 						}
 						else if(mappings > operationBodyMapper.nonMappedElementsT1() &&
 								mappings > operationBodyMapper.nonMappedElementsT2() &&
-								computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) <= MAX_DIFFERENCE_IN_POSITION &&
-								(addedOperation.equalParameterTypes(removedOperation) || addedOperation.overloadedParameterTypes(removedOperation) || addedOperation.replacedParameterTypes(removedOperation)) ||
-								(computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) == 0 && addedOperation.getParameterTypeList().equals(removedOperation.getParameterTypeList()))) {
+								absoluteDifferenceInPosition <= MAX_DIFFERENCE_IN_POSITION &&
+								compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition)) {
 							UMLOperation removedOperationInNextClass = matchingRemovedOperationInNextClassCallsAddedOperation(removedOperation, addedOperation);
 							if(removedOperationInNextClass != null) {
 								mapperSet.add(new UMLOperationBodyMapper(removedOperation, removedOperationInNextClass));
@@ -277,14 +277,14 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 					operationBodyMapper.getMappings();
 					int mappings = operationBodyMapper.mappingsWithoutBlocks();
 					if(mappings > 0) {
-						if(operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() == 0 && mappings == operationBodyMapper.exactMatches()) {
+						int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
+						if(operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() == 0 && allMappingsAreExactMatches(operationBodyMapper, mappings)) {
 							mapperSet.add(operationBodyMapper);
 						}
 						else if(mappings > operationBodyMapper.nonMappedElementsT1() &&
 								mappings > operationBodyMapper.nonMappedElementsT2() &&
-								computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) <= MAX_DIFFERENCE_IN_POSITION &&
-								(addedOperation.equalParameterTypes(removedOperation) || addedOperation.overloadedParameterTypes(removedOperation) || addedOperation.replacedParameterTypes(removedOperation)) ||
-								(computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) == 0 && addedOperation.getParameterTypeList().equals(removedOperation.getParameterTypeList()))) {
+								absoluteDifferenceInPosition <= MAX_DIFFERENCE_IN_POSITION &&
+								compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition)) {
 							UMLOperation removedOperationInNextClass = matchingRemovedOperationInNextClassCallsAddedOperation(removedOperation, addedOperation);
 							if(removedOperationInNextClass != null) {
 								mapperSet.add(new UMLOperationBodyMapper(removedOperation, removedOperationInNextClass));
@@ -311,6 +311,27 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 				}
 			}
 		}
+	}
+
+	private boolean allMappingsAreExactMatches(UMLOperationBodyMapper operationBodyMapper, int mappings) {
+		if(mappings == operationBodyMapper.exactMatches()) {
+			return true;
+		}
+		int mappingsWithTypeReplacement = 0;
+		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+			if(mapping.containsTypeReplacement()) {
+				mappingsWithTypeReplacement++;
+			}
+		}
+		if(mappings == operationBodyMapper.exactMatches() + mappingsWithTypeReplacement && mappings > mappingsWithTypeReplacement) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean compatibleSignatures(UMLOperation removedOperation, UMLOperation addedOperation, int absoluteDifferenceInPosition) {
+		return addedOperation.equalParameterTypes(removedOperation) || addedOperation.overloadedParameterTypes(removedOperation) || addedOperation.replacedParameterTypes(removedOperation) ||
+		(absoluteDifferenceInPosition == 0 && addedOperation.getParameterTypeList().equals(removedOperation.getParameterTypeList()));
 	}
 	
 	public void checkForInlinedOperations() {

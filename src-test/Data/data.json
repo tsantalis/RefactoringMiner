@@ -2055,6 +2055,9 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public createGraph(location String, is3D boolean) : GraphStorage renamed to public createGHStorage(location String, is3D boolean) : GraphHopperStorage in class com.graphhopper.storage.GraphStorageViaMMapTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method protected createTestGraph() : Graph renamed to protected createTestStorage() : GraphHopperStorage in class com.graphhopper.routing.AbstractRoutingAlgorithmTester"
 	}],
 	"time": "6/17/15 5:42 AM",
 	"id": 1117304
@@ -3982,6 +3985,9 @@
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute protected MINIDFS_STORAGE_PLUGIN_NAME : String from class org.apache.drill.exec.impersonation.TestImpersonationMetadata to class org.apache.drill.exec.impersonation.BaseTestImpersonation"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected MINIDFS_STORAGE_PLUGIN_NAME : String from class org.apache.drill.exec.impersonation.TestImpersonationQueries to class org.apache.drill.exec.impersonation.BaseTestImpersonation"
 	},{
 		"type": "Inline Method",
 		"description": "Inline Method public createFileSystem(proxyUserName String, fsConf Configuration, stats OperatorStats) : DrillFileSystem inlined to public createFileSystem(proxyUserName String, fsConf Configuration) : DrillFileSystem in class org.apache.drill.exec.util.ImpersonationUtil"
@@ -4545,6 +4551,9 @@
 	}, {
 		"type": "Rename Class",
 		"description": "Rename Class org.neo4j.kernel.impl.coreapi.schema.PropertyUniqueConstraintDefinition renamed to org.neo4j.kernel.impl.coreapi.schema.PropertyConstraintDefinition"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public uniquenessConstraint(labelId int, propertyKeyId int) : UniquenessConstraintRule renamed to private propertyConstraint(type Class<Rule>, labelId int, propertyKeyId int) : Rule in class org.neo4j.kernel.impl.store.SchemaStorage"
 	}],
 	"time": "7/2/15 2:23 AM",
 	"id": 1130638

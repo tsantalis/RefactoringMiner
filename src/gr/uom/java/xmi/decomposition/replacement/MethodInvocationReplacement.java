@@ -1,4 +1,6 @@
-package gr.uom.java.xmi.decomposition;
+package gr.uom.java.xmi.decomposition.replacement;
+
+import gr.uom.java.xmi.decomposition.OperationInvocation;
 
 public class MethodInvocationReplacement extends Replacement {
 	private OperationInvocation invokedOperationBefore;

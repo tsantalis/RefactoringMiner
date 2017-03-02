@@ -134,6 +134,10 @@ public class SimpleNameVisitor extends ASTVisitor {
 		return variableDeclarations;
 	}
 
+	public List<String> getTypes() {
+		return types;
+	}
+
 	public List<String> getVariables() {
 		List<String> variables = new ArrayList<String>(this.allIdentifiers);
 		variables.removeAll(this.invokedMethodNames);

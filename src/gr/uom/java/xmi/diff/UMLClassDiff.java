@@ -128,6 +128,14 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		return null;
 	}
 
+	public UMLType getOldSuperclass() {
+		return oldSuperclass;
+	}
+
+	public UMLType getNewSuperclass() {
+		return newSuperclass;
+	}
+
 	public boolean containsOperationWithTheSameSignature(UMLOperation operation) {
 		for(UMLOperation originalOperation : originalClass.getOperations()) {
 			if(originalOperation.equalSignature(operation))

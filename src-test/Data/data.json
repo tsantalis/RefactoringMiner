@@ -3403,8 +3403,8 @@
 	"repository": "https://github.com/go-lang-plugin-org/go-lang-idea-plugin.git",
 	"author": "Alexander Zolotov",
 	"refactorings": [{
-		"type": "Extract Method",
-		"description": "Extract Method public processResolveVariants(processor GoScopeProcessor) : void extracted from public resolveInner() : PsiElement in class com.goide.psi.impl.GoVarReference"
+		"type": "Rename Method",
+		"description": "Rename Method public getVariants() : Object[] renamed to public processResolveVariants(processor GoScopeProcessor) : void in class com.goide.psi.impl.GoVarReference"
 	}],
 	"time": "6/23/15 4:19 PM",
 	"id": 1123103
@@ -4830,6 +4830,27 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method private createAccount(id int) : AccountPB renamed to private createAccountPB(id int) : AccountPB in class org.infinispan.client.hotrod.marshall.EmbeddedCompatTest"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute private booleanFilterNormalizer : BooleanFilterNormalizer from class org.infinispan.objectfilter.impl.BaseMatcher to class org.infinispan.query.remote.QueryFacadeImpl"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute private booleanFilterNormalizer : BooleanFilterNormalizer from class org.infinispan.objectfilter.impl.BaseMatcher to class org.infinispan.query.dsl.embedded.impl.QueryEngine"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute private booleanFilterNormalizer : BooleanFilterNormalizer from class org.infinispan.objectfilter.impl.BaseMatcher to class org.infinispan.objectfilter.impl.FilterRegistry"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected projection : String[] from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.impl.BaseQuery"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public getProjection() : String[] from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to public getProjection() : String[] from class org.infinispan.query.dsl.impl.BaseQuery"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private parseQuery(cacheConfiguration Configuration, serCtx SerializationContext, queryString String, searchFactory SearchIntegrator) : LuceneQueryParsingResult renamed to private transformJpaToLucene(isCompatMode boolean, serCtx SerializationContext, jpqlString String, searchFactory SearchIntegrator) : LuceneQueryParsingResult in class org.infinispan.query.remote.QueryFacadeImpl"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private executeIndexedQuery(cache AdvancedCache<byte[],byte[]>, cacheConfiguration Configuration, serCtx SerializationContext, request QueryRequest) : QueryResponse renamed to private buildLuceneQuery(cache AdvancedCache<?,?>, isCompatMode boolean, serCtx SerializationContext, jpqlString String, startOffset long, maxResults int) : Query in class org.infinispan.query.remote.QueryFacadeImpl"
 	}],
 	"time": "7/6/15 1:12 PM",
 	"id": 1134634

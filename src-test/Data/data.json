@@ -4115,7 +4115,7 @@
 	"author": "Martin Fietz",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public addQueueItem(context Context, performAutoDownload boolean, itemIds long[]) : Future? extracted from public addQueueItem(context Context, itemIds long[]) : Future? in class de.danoeh.antennapod.core.storage.DBWriter"
+		"description": "Extract Method public addQueueItem(context Context, performAutoDownload boolean, itemIds long[]) : Future<?> extracted from public addQueueItem(context Context, itemIds long[]) : Future<?> in class de.danoeh.antennapod.core.storage.DBWriter"
 	}],
 	"time": "6/27/15 1:01 PM",
 	"id": 1126591
@@ -5357,7 +5357,7 @@
 	"author": "Vassiliy.Kudryashov",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method private getLiveIndicator(base Icon) : Icon from class com.intellij.execution.ui.RunContentManagerImpl to class com.intellij.execution.runners.ExecutionUtil"
+		"description": "Move Method private getLiveIndicator(base Icon) : Icon from class com.intellij.execution.ui.RunContentManagerImpl to public getLiveIndicator(base Icon) : Icon from class com.intellij.execution.runners.ExecutionUtil"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method private getConfiguration(project Project) : RunnerAndConfigurationSettings renamed to private getSelectedConfiguration(project Project) : RunnerAndConfigurationSettings in class com.intellij.execution.ExecutorRegistryImpl.ExecutorAction"

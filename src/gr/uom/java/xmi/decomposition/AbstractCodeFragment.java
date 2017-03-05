@@ -35,6 +35,7 @@ public abstract class AbstractCodeFragment {
 	public abstract List<String> getTypes();
 	public abstract List<VariableDeclaration> getVariableDeclarations();
 	public abstract Map<String, OperationInvocation> getMethodInvocationMap();
+	public abstract List<String> getAnonymousClassDeclarations();
 	
 	public void replaceParametersWithArguments(Map<String, String> parameterToArgumentMap) {
 		String afterReplacements = getString();

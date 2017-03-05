@@ -2,6 +2,7 @@ package gr.uom.java.xmi.decomposition;
 
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
+import gr.uom.java.xmi.decomposition.replacement.AnonymousClassDeclarationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.TypeReplacement;
@@ -723,6 +724,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		boolean isEqualWithReplacement = s1.equals(s2);
 		if(isEqualWithReplacement) {
 			return replacements;
+		}
+		List<String> anonymousClassDeclarations1 = statement1.getAnonymousClassDeclarations();
+		List<String> anonymousClassDeclarations2 = statement2.getAnonymousClassDeclarations();
+		if(!anonymousClassDeclarations1.isEmpty() && !anonymousClassDeclarations2.isEmpty() &&
+				anonymousClassDeclarations1.size() == anonymousClassDeclarations2.size()) {
+			for(int i=0; i<anonymousClassDeclarations1.size(); i++) {
+				String anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);
+				String anonymousClassDeclaration2 = anonymousClassDeclarations2.get(i);
+				int indexOfAnonymousClassDeclaration1 = statement1.getString().indexOf(anonymousClassDeclaration1);
+				int indexOfAnonymousClassDeclaration2 = statement2.getString().indexOf(anonymousClassDeclaration2);
+				if(indexOfAnonymousClassDeclaration1 != -1 && indexOfAnonymousClassDeclaration2 != -1) {
+					String statementWithoutAnonymous1 = statement1.getString().substring(0, indexOfAnonymousClassDeclaration1);
+					String statementWithoutAnonymous2 = statement2.getString().substring(0, indexOfAnonymousClassDeclaration2);
+					if(statementWithoutAnonymous1.equals(statementWithoutAnonymous2)) {
+						int editDistance = StringDistance.editDistance(anonymousClassDeclaration1, anonymousClassDeclaration2);
+						double distancenormalized = (double)editDistance/(double)Math.max(anonymousClassDeclaration1.length(), anonymousClassDeclaration2.length());
+						if(distancenormalized < 0.2) {
+							Replacement replacement = new AnonymousClassDeclarationReplacement(anonymousClassDeclaration1, anonymousClassDeclaration2);
+							replacements = new LinkedHashSet<Replacement>();
+							replacements.add(replacement);
+							return replacements;
+						}
+					}
+				}
+			}
 		}
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() != null &&

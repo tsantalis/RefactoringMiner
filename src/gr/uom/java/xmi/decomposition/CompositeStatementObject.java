@@ -112,6 +112,15 @@ public class CompositeStatementObject extends AbstractStatement {
 		return map;
 	}
 
+	@Override
+	public List<String> getAnonymousClassDeclarations() {
+		List<String> anonymousClassDeclarations = new ArrayList<String>();
+		for(AbstractExpression expression : expressionList) {
+			anonymousClassDeclarations.addAll(expression.getAnonymousClassDeclarations());
+		}
+		return anonymousClassDeclarations;
+	}
+
 	public Map<String, OperationInvocation> getAllMethodInvocations() {
 		Map<String, OperationInvocation> map = new LinkedHashMap<String, OperationInvocation>();
 		map.putAll(getMethodInvocationMap());

@@ -13,14 +13,16 @@ public class AbstractExpression extends AbstractCodeFragment {
 	private List<String> types;
 	private List<VariableDeclaration> variableDeclarations;
 	private Map<String, OperationInvocation> methodInvocationMap;
+	private List<String> anonymousClassDeclarations;
     
     public AbstractExpression(Expression expression) {
-    	SimpleNameVisitor visitor = new SimpleNameVisitor();
+    	Visitor visitor = new Visitor();
     	expression.accept(visitor);
 		this.variables = visitor.getVariables();
 		this.types = visitor.getTypes();
 		this.variableDeclarations = visitor.getVariableDeclarations();
 		this.methodInvocationMap = visitor.getMethodInvocationMap();
+		this.anonymousClassDeclarations = visitor.getAnonymousClassDeclarations();
     	this.expression = expression.toString();
     	this.owner = null;
     }
@@ -63,5 +65,10 @@ public class AbstractExpression extends AbstractCodeFragment {
 	@Override
 	public Map<String, OperationInvocation> getMethodInvocationMap() {
 		return methodInvocationMap;
+	}
+
+	@Override
+	public List<String> getAnonymousClassDeclarations() {
+		return anonymousClassDeclarations;
 	}
 }

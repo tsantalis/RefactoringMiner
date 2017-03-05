@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldAccess;
@@ -20,16 +21,22 @@ import org.eclipse.jdt.core.dom.ThisExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.WildcardType;
 
-public class SimpleNameVisitor extends ASTVisitor {
+public class Visitor extends ASTVisitor {
 
 	private List<String> allIdentifiers = new ArrayList<String>();
 	private List<String> invokedMethodNames = new ArrayList<String>();
 	private List<String> types = new ArrayList<String>();
 	private Map<String, OperationInvocation> methodInvocationMap = new LinkedHashMap<String, OperationInvocation>();
 	private List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
+	private List<String> anonymousClassDeclarations = new ArrayList<String>();
 	
 	public boolean visit(VariableDeclarationFragment node) {
 		variableDeclarations.add(new VariableDeclaration(node));
+		return super.visit(node);
+	}
+
+	public boolean visit(AnonymousClassDeclaration node) {
+		anonymousClassDeclarations.add(node.toString());
 		return super.visit(node);
 	}
 
@@ -136,6 +143,10 @@ public class SimpleNameVisitor extends ASTVisitor {
 
 	public List<String> getTypes() {
 		return types;
+	}
+
+	public List<String> getAnonymousClassDeclarations() {
+		return anonymousClassDeclarations;
 	}
 
 	public List<String> getVariables() {

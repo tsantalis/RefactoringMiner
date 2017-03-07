@@ -4175,6 +4175,18 @@
 	"refactorings": [{
 		"type": "Pull Up Method",
 		"description": "Pull Up Method public onSharedPreferenceChanged(prefs SharedPreferences, key String) : void from class org.quantumbadger.redreader.activities.MainActivity to protected onSharedPreferenceChangedInner(prefs SharedPreferences, key String) : void from class org.quantumbadger.redreader.activities.RefreshableActivity"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected onDestroy() : void from class org.quantumbadger.redreader.activities.CommentListingActivity to protected onDestroy() : void from class org.quantumbadger.redreader.activities.BaseActivity"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected onDestroy() : void from class org.quantumbadger.redreader.activities.MoreCommentsListingActivity to protected onDestroy() : void from class org.quantumbadger.redreader.activities.BaseActivity"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected onDestroy() : void from class org.quantumbadger.redreader.activities.MainActivity to protected onDestroy() : void from class org.quantumbadger.redreader.activities.BaseActivity"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected onDestroy() : void from class org.quantumbadger.redreader.activities.PostListingActivity to protected onDestroy() : void from class org.quantumbadger.redreader.activities.BaseActivity"
 	}],
 	"time": "6/28/15 5:50 PM",
 	"id": 1126206

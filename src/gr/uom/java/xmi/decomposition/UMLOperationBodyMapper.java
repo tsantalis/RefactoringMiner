@@ -3,6 +3,7 @@ package gr.uom.java.xmi.decomposition;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.decomposition.replacement.AnonymousClassDeclarationReplacement;
+import gr.uom.java.xmi.decomposition.replacement.ArgumentReplacementWithReturnExpression;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.TypeReplacement;
@@ -770,6 +771,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).length() > 0) {
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getMethodName(),
 					invocationCoveringTheEntireStatement2.getMethodName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2);
+			replacements.add(replacement);
+			return replacements;
+		}
+		//check if the argument of the method call in the first statement is returned in the second statement
+		if(invocationCoveringTheEntireStatement1 != null && argumentizedString2.startsWith("return ") &&
+				invocationCoveringTheEntireStatement1.getArguments().size() == 1 &&
+				//length()-2 to remove ";\n" from the end of the return statement, 7 to remove the prefix "return "
+				invocationCoveringTheEntireStatement1.getArguments().get(0).equals(argumentizedString2.substring(7, argumentizedString2.length()-2))) {
+			Replacement replacement = new ArgumentReplacementWithReturnExpression(invocationCoveringTheEntireStatement1.getArguments().get(0),
+					argumentizedString2.substring(7, argumentizedString2.length()-2));
+			replacements = new LinkedHashSet<Replacement>();
 			replacements.add(replacement);
 			return replacements;
 		}

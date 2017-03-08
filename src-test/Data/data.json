@@ -3931,6 +3931,51 @@
 	}, {
 		"type": "Extract Superclass",
 		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.LocalizedMatcher"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.NotNull"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.Contains"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.EndsWith"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.InstanceOf"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.StartsWith"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.Matches"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.Find"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.CompareTo"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.Any"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.Equals"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.apachecommons.ReflectionEquals"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.EqualsWithDelta"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.Null"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.VarargCapturingMatcher"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.CapturingMatcher"
 	}],
 	"time": "6/25/15 11:28 AM",
 	"id": 1124301
@@ -5588,6 +5633,9 @@
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method protected setCpuSpeedSteps(numSpeedSteps int) : void extracted from package readFromParcelLocked(in Parcel) : void in class com.android.internal.os.BatteryStatsImpl"
+		}, {
+			"type": "Extract Method",
+			"description": "Extract Method protected getKernelWakelockUpdateVersion() : int extracted from public updateKernelWakelocksLocked() : void in class com.android.internal.os.BatteryStatsImpl"
 		}, {
 			"type": "Rename Method",
 			"description": "Rename Method private load() : void renamed to private loadStats() : void in class com.android.internal.os.BatteryStatsHelper"
@@ -8745,6 +8793,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private awaitForComplete(latch CountDownLatch, subscription Subscription) : void extracted from public forEach(onNext Action1<? super T>) : void in class rx.observables.BlockingObservable"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private createObservable() : Observable<Void> renamed to private createOnUnsubscribe() : Action0 in class rx.observables.BlockingObservableTest.InterruptionTests"
 	}],
 	"time": "7/29/15 2:36 PM",
 	"id": 1153435

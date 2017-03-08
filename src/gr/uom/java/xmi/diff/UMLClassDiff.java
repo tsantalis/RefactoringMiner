@@ -205,9 +205,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	private UMLOperation matchingRemovedOperationInNextClassCallsAddedOperation(UMLOperation removedOperation, UMLOperation addedOperation) {
 		UMLOperation removedOperationInNextClass = null;
 		for(UMLOperation nextOperation : nextClass.getOperations()) {
-			if(nextOperation.getName().equals(removedOperation.getName()) && 
-					(nextOperation.getParameterTypeList().equals(removedOperation.getParameterTypeList()) || 
-					nextOperation.getParameterTypeList().containsAll(removedOperation.getParameterTypeList()) || removedOperation.getParameterTypeList().containsAll(nextOperation.getParameterTypeList()))) {
+			if(nextOperation.getName().equals(removedOperation.getName()) && nextOperation.getParameterTypeList().equals(removedOperation.getParameterTypeList())) {
 				removedOperationInNextClass = nextOperation;
 				break;
 			}
@@ -339,7 +337,8 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 
 	private boolean compatibleSignatures(UMLOperation removedOperation, UMLOperation addedOperation, int absoluteDifferenceInPosition) {
 		return addedOperation.equalParameterTypes(removedOperation) || addedOperation.overloadedParameterTypes(removedOperation) || addedOperation.replacedParameterTypes(removedOperation) ||
-		(absoluteDifferenceInPosition == 0 && addedOperation.getParameterTypeList().equals(removedOperation.getParameterTypeList()));
+		(absoluteDifferenceInPosition == 0 && (addedOperation.getParameterTypeList().equals(removedOperation.getParameterTypeList()) || 
+				addedOperation.normalizedNameDistance(removedOperation) <= 0.2));
 	}
 	
 	public void checkForInlinedOperations() {

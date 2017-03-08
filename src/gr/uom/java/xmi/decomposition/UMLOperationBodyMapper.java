@@ -646,7 +646,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
 				int minDistance = initialDistanceRaw;
 				for(String s2 : variablesAndMethodInvocations2) {
-					String temp = argumentizedString1.replaceAll(Pattern.quote(s1), Matcher.quoteReplacement(s2));
+					String temp = performReplacement(argumentizedString1, argumentizedString2, s1, s2, variables1, variables2);
 					int distanceRaw = StringDistance.editDistance(temp, argumentizedString2, minDistance);
 					//double distance = (double)StringDistance.editDistance(temp, statement2.getString())/(double)Math.max(temp.length(), statement2.getString().length());
 					if(distanceRaw >= 0 && distanceRaw < initialDistanceRaw) {
@@ -680,7 +680,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(!replacementMap.isEmpty()) {
 					Replacement replacement = replacementMap.firstEntry().getValue();
 					replacements.add(replacement);
-					argumentizedString1 = argumentizedString1.replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter()));
+					argumentizedString1 = performReplacement(argumentizedString1, argumentizedString2, replacement.getBefore(), replacement.getAfter(), variables1, variables2);
 					initialDistanceRaw = StringDistance.editDistance(argumentizedString1, argumentizedString2);
 					if(replacementMap.firstEntry().getKey() == 0) {
 						break;
@@ -720,7 +720,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		String s1 = preprocessInput1(statement1, statement2);
 		String s2 = preprocessInput2(statement1, statement2);
 		for(Replacement replacement : replacements) {
-			s1 = s1.replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter()));
+			s1 = performReplacement(s1, s2, replacement.getBefore(), replacement.getAfter(), variables1, variables2);
 		}
 		boolean isEqualWithReplacement = s1.equals(s2);
 		if(isEqualWithReplacement) {
@@ -786,6 +786,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return replacements;
 		}
 		return null;
+	}
+
+	private String performReplacement(String completeString1, String completeString2, String subString1, String subString2, Set<String> variables1, Set<String> variables2) {
+		String temp = null;
+		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + ";") && completeString2.contains(subString2 + ";")) {
+			//special handling for enhanced for loops
+			temp = completeString1.replace(subString1 + ";", subString2 + ";");
+		}
+		else {
+			temp = completeString1.replaceAll(Pattern.quote(subString1), Matcher.quoteReplacement(subString2));
+		}
+		return temp;
 	}
 
 	private boolean variablesStartWithSameCase(String s1, String s2) {

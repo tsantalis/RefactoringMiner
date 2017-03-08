@@ -2064,6 +2064,9 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method protected createTestGraph() : Graph renamed to protected createTestStorage() : GraphHopperStorage in class com.graphhopper.routing.AbstractRoutingAlgorithmTester"
+	}, {
+		"type": "Extract And Move Method",
+		"description": "Extract And Move Method public setAdditionalEdgeField(edgePointer long, value int) : void extracted from public setAdditionalEdgeField(edgePointer long, value int) : void in class com.graphhopper.storage.GraphHopperStorage & moved to class com.graphhopper.storage.BaseGraph"
 	}],
 	"time": "6/17/15 5:42 AM",
 	"id": 1117304
@@ -4459,6 +4462,9 @@
 	"refactorings": [{
 		"type": "Move Attribute",
 		"description": "Move Attribute private stopped : AtomicBoolean from class org.gradle.play.internal.run.PlayApplicationDeploymentHandle to class org.gradle.play.internal.run.PlayApplicationRunnerToken"
+	}, {
+		"type": "Extract And Move Method",
+		"description": "Extract And Move Method public isRunning() : boolean extracted from public isRunning() : boolean in class org.gradle.play.internal.run.PlayApplicationDeploymentHandle & moved to class org.gradle.play.internal.run.PlayApplicationRunnerToken"
 	}],
 	"time": "6/30/15 9:10 AM",
 	"id": 1129713

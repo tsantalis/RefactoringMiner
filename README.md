@@ -68,14 +68,24 @@ There is also a lower level API that works comparing the source code from two
 folders that contain the code before and after the code changes:  
 
 ```java
-UMLModel model1 = new ASTReader(new File("/path/to/version1/")).getUmlModel();
-UMLModel model2 = new ASTReader(new File("/path/to/version2/")).getUmlModel();
+// Assuming you have a List<String> of the changed/added/removed file paths from version1 to version2
+// filename format example: /src/gr/uom/java/xmi/UMLModelASTReader.java
+
+File rootFolder1 = new File("/path/to/version1/");
+File rootFolder2 = new File("/path/to/version2/");
+List<String> filePaths1 = new ArrayList<String>();
+filePaths1.add("/src/package/Foo.java");
+List<String> filePaths2 = new ArrayList<String>();
+filePaths2.add("/src/package/Foo.java");
+
+UMLModel model1 = new UMLModelASTReader(rootFolder1, filePaths1).getUmlModel();
+UMLModel model2 = new UMLModelASTReader(rootFolder2, filePaths2).getUmlModel();
 UMLModelDiff modelDiff = model1.diff(model2);
 List<Refactoring> refactorings = modelDiff.getRefactorings();
 ```
 
 Note that by doing this you may get different results from the git history analysis, because
-it uses information from git to better identify moves and renames.
+the latter uses information from git to better identify moves and renames.
 
 
 ## Running from the command line ##

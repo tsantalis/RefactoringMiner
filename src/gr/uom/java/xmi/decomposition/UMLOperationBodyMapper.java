@@ -789,12 +789,49 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private String performReplacement(String completeString1, String completeString2, String subString1, String subString2, Set<String> variables1, Set<String> variables2) {
-		String temp = null;
+		String temp = new String(completeString1);
+		boolean replacementOccurred = false;
 		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + ";") && completeString2.contains(subString2 + ";")) {
 			//special handling for enhanced for loops
-			temp = completeString1.replace(subString1 + ";", subString2 + ";");
+			temp = temp.replace(subString1 + ";", subString2 + ";");
+			replacementOccurred = true;
 		}
-		else {
+		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + ",") && completeString2.contains(subString2 + ",")) {
+			//special handling for arguments
+			temp = temp.replace(subString1 + ",", subString2 + ",");
+			replacementOccurred = true;
+		}
+		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + ")") && completeString2.contains(subString2 + ")")) {
+			//special handling for arguments
+			temp = temp.replace(subString1 + ")", subString2 + ")");
+			replacementOccurred = true;
+		}
+		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + "=") && completeString2.contains(subString2 + "=")) {
+			//special handling for variable assignments
+			temp = temp.replace(subString1 + "=", subString2 + "=");
+			replacementOccurred = true;
+		}
+		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + "+") && completeString2.contains(subString2 + "+")) {
+			//special handling for postfix expressions
+			temp = temp.replace(subString1 + "+", subString2 + "+");
+			replacementOccurred = true;
+		}
+		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + "-") && completeString2.contains(subString2 + "-")) {
+			//special handling for postfix expressions
+			temp = temp.replace(subString1 + "-", subString2 + "-");
+			replacementOccurred = true;
+		}
+		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + ">") && completeString2.contains(subString2 + ">")) {
+			//special handling for infix expressions
+			temp = temp.replace(subString1 + ">", subString2 + ">");
+			replacementOccurred = true;
+		}
+		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + "<") && completeString2.contains(subString2 + "<")) {
+			//special handling for infix expressions
+			temp = temp.replace(subString1 + "<", subString2 + "<");
+			replacementOccurred = true;
+		}
+		if(!replacementOccurred) {
 			temp = completeString1.replaceAll(Pattern.quote(subString1), Matcher.quoteReplacement(subString2));
 		}
 		return temp;

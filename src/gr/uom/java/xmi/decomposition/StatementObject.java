@@ -22,6 +22,7 @@ public class StatementObject extends AbstractStatement {
 	private List<VariableDeclaration> variableDeclarations;
 	private Map<String, OperationInvocation> methodInvocationMap;
 	private List<String> anonymousClassDeclarations;
+	private List<String> stringLiterals;
 	
 	public StatementObject(Statement statement, int depth) {
 		super();
@@ -32,6 +33,7 @@ public class StatementObject extends AbstractStatement {
 		this.variableDeclarations = visitor.getVariableDeclarations();
 		this.methodInvocationMap = visitor.getMethodInvocationMap();
 		this.anonymousClassDeclarations = visitor.getAnonymousClassDeclarations();
+		this.stringLiterals = visitor.getStringLiterals();
 		setDepth(depth);
 		if(statement.toString().matches("!(\\w|\\.)*@\\w*")) {
 			if(statement instanceof VariableDeclarationStatement) {
@@ -138,5 +140,10 @@ public class StatementObject extends AbstractStatement {
 	@Override
 	public List<String> getAnonymousClassDeclarations() {
 		return anonymousClassDeclarations;
+	}
+
+	@Override
+	public List<String> getStringLiterals() {
+		return stringLiterals;
 	}
 }

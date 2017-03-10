@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
+import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldAccess;
@@ -14,8 +15,10 @@ import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.ParameterizedType;
 import org.eclipse.jdt.core.dom.QualifiedName;
+import org.eclipse.jdt.core.dom.QualifiedType;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
+import org.eclipse.jdt.core.dom.StringLiteral;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 import org.eclipse.jdt.core.dom.ThisExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
@@ -29,6 +32,7 @@ public class Visitor extends ASTVisitor {
 	private Map<String, OperationInvocation> methodInvocationMap = new LinkedHashMap<String, OperationInvocation>();
 	private List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
 	private List<String> anonymousClassDeclarations = new ArrayList<String>();
+	private List<String> stringLiterals = new ArrayList<String>();
 	
 	public boolean visit(VariableDeclarationFragment node) {
 		variableDeclarations.add(new VariableDeclaration(node));
@@ -37,6 +41,11 @@ public class Visitor extends ASTVisitor {
 
 	public boolean visit(AnonymousClassDeclaration node) {
 		anonymousClassDeclarations.add(node.toString());
+		return super.visit(node);
+	}
+
+	public boolean visit(StringLiteral node) {
+		stringLiterals.add(node.toString());
 		return super.visit(node);
 	}
 
@@ -51,20 +60,30 @@ public class Visitor extends ASTVisitor {
 		return super.visit(node);
 	}
 	
+	public boolean visit(ArrayType node) {
+		types.add(node.toString());
+		return false;
+	}
+	
 	public boolean visit(ParameterizedType node) {
 		types.add(node.toString());
-		return super.visit(node);
+		return false;
 	}
 	
 	public boolean visit(WildcardType node) {
 		types.add(node.toString());
-		return super.visit(node);
+		return false;
+	}
+	
+	public boolean visit(QualifiedType node) {
+		types.add(node.toString());
+		return false;
 	}
 	
 	public boolean visit(SimpleType node) {
 		Name name = node.getName();
 		types.add(name.getFullyQualifiedName());
-		return super.visit(node);
+		return false;
 	}
 	
 	public boolean visit(MethodInvocation node) {
@@ -147,6 +166,10 @@ public class Visitor extends ASTVisitor {
 
 	public List<String> getAnonymousClassDeclarations() {
 		return anonymousClassDeclarations;
+	}
+
+	public List<String> getStringLiterals() {
+		return stringLiterals;
 	}
 
 	public List<String> getVariables() {

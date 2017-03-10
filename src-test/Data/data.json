@@ -2310,6 +2310,9 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public removeRecoveryInformationFromCluster(lockOwners Collection, xid Xid, sync boolean, gtx GlobalTransaction) : void renamed to public removeRecoveryInformation(lockOwners Collection, xid Xid, sync boolean, gtx GlobalTransaction, fromCluster boolean) : void in class org.infinispan.transaction.xa.recovery.RecoveryManagerImpl"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method protected assertNotLocked(cache Cache, key Object) : void renamed to protected assertEventuallyNotLocked(cache Cache, key Object) : void in class org.infinispan.test.AbstractCacheTest"
 	}],
 	"time": "6/18/15 3:08 AM",
 	"id": 1119109
@@ -2542,6 +2545,9 @@
 	"refactorings": [{
 		"type": "Inline Method",
 		"description": "Inline Method private adaptResult(result BuildResult, startTime long, endTime long) : AbstractOperationResult inlined to private adaptResult(source BuildOperationInternal) : AbstractOperationResult in class org.gradle.tooling.internal.provider.runner.ClientForwardingBuildListener"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getPayload() : Object renamed to public getFailure() : Throwable in class org.gradle.internal.progress.BuildOperationInternal"
 	}],
 	"time": "6/19/15 1:38 AM",
 	"id": 1121362
@@ -3812,6 +3818,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private rescueMembersAndInstantiateSuperInterfaces(type JDeclaredType) : void extracted from public visit(type JInterfaceType, ctx Context) : boolean in class com.google.gwt.dev.jjs.impl.ControlFlowAnalyzer.RescueVisitor"
 	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private rescueMembersAndInstantiateSuperInterfaces(type JDeclaredType) : void extracted from public visit(type JClassType, ctx Context) : boolean in class com.google.gwt.dev.jjs.impl.ControlFlowAnalyzer.RescueVisitor"
+	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public _disabled_testJsType3DimArray_castedFromNativeWithACall() : void renamed to public __disabled__testJsType3DimArray_castedFromNativeWithACall() : void in class com.google.gwt.core.client.interop.JsTypeArrayTest"
 	}, {
@@ -3823,6 +3832,12 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public _disabled_testJsTypeArray_asAField() : void renamed to public __disabled__testJsTypeArray_asAField() : void in class com.google.gwt.core.client.interop.JsTypeArrayTest"
+	}, {
+		"type": "Inline Method",
+		"description": "Inline Method private rescueAndInstantiate(type JClassType) : void inlined to public visit(x JNewInstance, ctx Context) : boolean in class com.google.gwt.dev.jjs.impl.ControlFlowAnalyzer.RescueVisitor"
+	}, {
+		"type": "Inline Method",
+		"description": "Inline Method private rescueAndInstantiate(type JClassType) : void inlined to public visit(x JsniMethodRef, ctx Context) : boolean in class com.google.gwt.dev.jjs.impl.ControlFlowAnalyzer.RescueVisitor"
 	}],
 	"time": "6/24/15 6:41 PM",
 	"id": 1124507
@@ -3979,6 +3994,9 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.CapturingMatcher"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.ArrayEquals"
 	}],
 	"time": "6/25/15 11:28 AM",
 	"id": 1124301
@@ -9017,6 +9035,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private copyOneFunction(dbName String, funcName String) : void extracted from private copyFunctions() : void in class org.apache.hadoop.hive.metastore.hbase.HBaseImport"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public doImport() : void renamed to public importAll() : void in class org.apache.hadoop.hive.metastore.hbase.TestHBaseImport"
 	}],
 	"time": "7/31/15 3:07 PM",
 	"id": 1155930
@@ -9455,6 +9476,9 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public setOgrExecutable(ogrExecutable String) : void renamed to public setExecutable(ogrExecutable String) : void in class org.geoserver.wfs.response.Ogr2OgrOutputFormat"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getGdalData() : String renamed to public getEnvironment() : Map<String, String> in class org.geoserver.wfs.response.Ogr2OgrOutputFormat"
 	}],
 	"time": "8/5/15 7:22 PM",
 	"id": 1158913

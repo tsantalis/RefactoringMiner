@@ -123,6 +123,15 @@ public class CompositeStatementObject extends AbstractStatement {
 		return anonymousClassDeclarations;
 	}
 
+	@Override
+	public List<String> getStringLiterals() {
+		List<String> stringLiterals = new ArrayList<String>();
+		for(AbstractExpression expression : expressionList) {
+			stringLiterals.addAll(expression.getStringLiterals());
+		}
+		return stringLiterals;
+	}
+
 	public Map<String, OperationInvocation> getAllMethodInvocations() {
 		Map<String, OperationInvocation> map = new LinkedHashMap<String, OperationInvocation>();
 		map.putAll(getMethodInvocationMap());

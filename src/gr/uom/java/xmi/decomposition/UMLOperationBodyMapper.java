@@ -330,7 +330,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public int mappingsWithoutBlocks() {
 		int count = 0;
 		for(AbstractCodeMapping mapping : getMappings()) {
-			if(!mapping.getFragment1().getString().equals("{"))
+			if(countableStatement(mapping.getFragment1().getString()))
 				count++;
 		}
 		return count;
@@ -339,28 +339,42 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public int nonMappedElementsT1() {
 		int nonMappedInnerNodeCount = 0;
 		for(CompositeStatementObject composite : getNonMappedInnerNodesT1()) {
-			if(!composite.getString().equals("{"))
+			if(countableStatement(composite.getString()))
 				nonMappedInnerNodeCount++;
 		}
-		return getNonMappedLeavesT1().size() + nonMappedInnerNodeCount;
+		int nonMappedLeafCount = 0;
+		for(StatementObject statement : getNonMappedLeavesT1()) {
+			if(countableStatement(statement.getString()))
+				nonMappedLeafCount++;
+		}
+		return nonMappedLeafCount + nonMappedInnerNodeCount;
 	}
 
 	public int nonMappedElementsT2() {
 		int nonMappedInnerNodeCount = 0;
 		for(CompositeStatementObject composite : getNonMappedInnerNodesT2()) {
-			if(!composite.getString().equals("{"))
+			if(countableStatement(composite.getString()))
 				nonMappedInnerNodeCount++;
 		}
-		return getNonMappedLeavesT2().size() + nonMappedInnerNodeCount;
+		int nonMappedLeafCount = 0;
+		for(StatementObject statement : getNonMappedLeavesT2()) {
+			if(countableStatement(statement.getString()))
+				nonMappedLeafCount++;
+		}
+		return nonMappedLeafCount + nonMappedInnerNodeCount;
 	}
 
 	public int exactMatches() {
 		int count = 0;
 		for(AbstractCodeMapping mapping : getMappings()) {
-			if(mapping.isExact() && !mapping.getFragment1().getString().equals("{"))
+			if(mapping.isExact() && countableStatement(mapping.getFragment1().getString()))
 				count++;
 		}
 		return count;
+	}
+
+	private boolean countableStatement(String statement) {
+		return !statement.equals("{") && !statement.startsWith("case ") && !statement.startsWith("default :");
 	}
 
 	private int editDistance() {
@@ -670,7 +684,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						else if(methodInvocations1.contains(s1) && methodInvocations2.contains(s2)) {
 							OperationInvocation invokedOperationBefore = statement1.getMethodInvocationMap().get(s1);
 							OperationInvocation invokedOperationAfter = statement2.getMethodInvocationMap().get(s2);
-							if(invokedOperationBefore.compatibleExpression(invokedOperationAfter)) {
+							if(invokedOperationBefore.compatibleExpression(invokedOperationAfter) && !variableReplacementWithinMethodInvocations(s1, s2, variables1, variables2)) {
 								replacement = new MethodInvocationReplacement(s1, s2, invokedOperationBefore, invokedOperationAfter);
 							}
 						}
@@ -681,7 +695,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), argumentizedString2.length());
 							replacementMap.put(distancenormalized, replacement);
 						}
-						if(distanceRaw == 0) {
+						if(distanceRaw == 0 && !replacements.isEmpty()) {
 							break;
 						}
 					}
@@ -824,7 +838,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				invocationCoveringTheEntireStatement1.getExpression() == null && invocationCoveringTheEntireStatement2.getExpression() != null) &&
 				!invocationCoveringTheEntireStatement1.getMethodName().equals(invocationCoveringTheEntireStatement2.getMethodName()) &&
 				s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).equals(s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"))) &&
-				s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).length() > 0) {
+				s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).length() > 0 &&
+				!allArgumentsReplaced(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacements)) {
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getMethodName(),
 					invocationCoveringTheEntireStatement2.getMethodName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2);
 			replacements.add(replacement);
@@ -844,6 +859,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return null;
 	}
 
+	private boolean variableReplacementWithinMethodInvocations(String s1, String s2, Set<String> variables1, Set<String> variables2) {
+		for(String variable1 : variables1) {
+			if(s1.contains(variable1)) {
+				int startIndex1 = s1.indexOf(variable1);
+				String substringBeforeIndex1 = s1.substring(0, startIndex1);
+				String substringAfterIndex1 = s1.substring(startIndex1 + variable1.length(), s1.length());
+				for(String variable2 : variables2) {
+					if(s2.contains(variable2)) {
+						int startIndex2 = s2.indexOf(variable2);
+						String substringBeforeIndex2 = s2.substring(0, startIndex2);
+						String substringAfterIndex2 = s2.substring(startIndex2 + variable2.length(), s2.length());
+						if(substringBeforeIndex1.equals(substringBeforeIndex2) && substringAfterIndex1.equals(substringAfterIndex2)) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	private boolean containsMethodInvocationReplacement(Set<Replacement> replacements) {
 		for(Replacement replacement : replacements) {
 			if(replacement instanceof MethodInvocationReplacement) {
@@ -851,6 +887,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return false;
+	}
+
+	private boolean allArgumentsReplaced(OperationInvocation invocation1, OperationInvocation invocation2, Set<Replacement> replacements) {
+		int replacedArguments = 0;
+		for(int i=0; i<invocation1.getArguments().size(); i++) {
+			String argument1 = invocation1.getArguments().get(i);
+			String argument2 = invocation2.getArguments().get(i);
+			for(Replacement replacement : replacements) {
+				if(replacement.getBefore().equals(argument1) && replacement.getAfter().equals(argument2)) {
+					replacedArguments++;
+					break;
+				}
+			}
+		}
+		return replacedArguments > 0 && replacedArguments == invocation1.getArguments().size();
 	}
 
 	private boolean invocationsWithIdenticalExpressions(OperationInvocation invocation1, OperationInvocation invocation2) {
@@ -902,6 +953,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			temp = temp.replace(subString1 + "<", subString2 + "<");
 			replacementOccurred = true;
 		}
+		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + ".") && completeString2.contains(subString2 + ".")) {
+			//special handling for method invocation expressions
+			temp = temp.replace(subString1 + ".", subString2 + ".");
+			replacementOccurred = true;
+		}
 		if(!replacementOccurred) {
 			temp = completeString1.replaceAll(Pattern.quote(subString1), Matcher.quoteReplacement(subString2));
 		}
@@ -913,6 +969,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(Character.isUpperCase(s1.charAt(0)) && Character.isUpperCase(s2.charAt(0)))
 				return true;
 			if(Character.isLowerCase(s1.charAt(0)) && Character.isLowerCase(s2.charAt(0)))
+				return true;
+			if(s1.charAt(0) == '_' && s2.charAt(0) == '_')
 				return true;
 		}
 		return false;

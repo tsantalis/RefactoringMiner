@@ -7963,6 +7963,9 @@
 	"refactorings": [{
 		"type": "Inline Method",
 		"description": "Inline Method public generate(schema DataSchema) : ClassTemplateSpec inlined to private generateRecord(schema RecordDataSchema) : RecordTemplateSpec in class com.linkedin.pegasus.generator.TemplateSpecGenerator"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getSchemaAndNames() : Collection<CodeUtil.Pair<DataSchema, String>> renamed to public getSchemaAndLocations() : Collection<CodeUtil.Pair<DataSchema, DataSchemaLocation>> in class com.linkedin.pegasus.generator.DataSchemaParser.ParseResult"
 	}],
 	"time": "7/23/15 6:42 PM",
 	"id": 1147644

@@ -3619,6 +3619,9 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public enableStringsFilter() : Builder renamed to public enableStringWhitelisting() : Builder in class com.facebook.buck.android.FilterResourcesStep.Builder"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testFilterStrings() : void renamed to public testWhitelistFilter() : void in class com.facebook.buck.android.FilterResourcesStepTest"
 	}],
 	"time": "6/24/15 1:21 PM",
 	"id": 1123715
@@ -9298,6 +9301,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method public minorWasTriggered(keyspace String, cf String) : boolean extracted from public testTriggerMinorCompaction() : void in class org.apache.cassandra.db.compaction.CompactionsCQLTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public testTriggerMinorCompaction() : void renamed to public testTriggerMinorCompactionDTCS() : void in class org.apache.cassandra.db.compaction.CompactionsCQLTest"
 	}],
 	"time": "8/4/15 4:51 AM",
 	"id": 1156431

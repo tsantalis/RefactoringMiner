@@ -5916,13 +5916,28 @@
 		"description": "Extract Method private createCountsTracker(pageCache PageCache) : CountsTracker extracted from public shouldCreateEmptyCountsTrackerStoreWhenCreatingDatabase() : void in class org.neo4j.kernel.impl.store.counts.CountsRotationTest"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private createCountsTracker(pageCache PageCache) : CountsTracker extracted from 2 others in class org.neo4j.kernel.impl.store.counts.CountsRotationTest"
+		"description": "Extract Method private createCountsTracker(pageCache PageCache) : CountsTracker extracted from public shouldRotateCountsStoreWhenClosingTheDatabase() : void in class org.neo4j.kernel.impl.store.counts.CountsRotationTest"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private createCountsTracker(pageCache PageCache) : CountsTracker extracted from public shouldRotateCountsStoreWhenRotatingLog() : void in class org.neo4j.kernel.impl.store.counts.CountsRotationTest"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountStoreWhenDBContainsDenseNodes() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private createCountsTracker() : CountsTracker extracted from 5 others in class org.neo4j.kernel.impl.store.counts.CountsComputerTest"
+		"description": "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountsStoreWhenThereAreNodesAndRelationshipsInTheDB() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateAnEmptyCountsStoreFromAnEmptyDatabase() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountsStoreWhenThereAreUnusedRelationshipRecordsInTheDB() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountsStoreWhenThereAreNodesInTheDB() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private createCountsTracker() : CountsTracker extracted from public shouldCreateACountsStoreWhenThereAreUnusedNodeRecordsInTheDB() : void in class org.neo4j.kernel.impl.store.counts.CountsComputerTest"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public setup() : void renamed to public setUp() : void in class org.neo4j.kernel.impl.store.StoreFactoryTest"

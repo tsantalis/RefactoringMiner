@@ -8,6 +8,7 @@ import gr.uom.java.xmi.decomposition.replacement.CreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationArgumentReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationRename;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
+import gr.uom.java.xmi.decomposition.replacement.ObjectCreationArgumentReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.StringLiteralReplacement;
 import gr.uom.java.xmi.decomposition.replacement.TypeReplacement;
@@ -917,6 +918,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			replacements = new LinkedHashSet<Replacement>();
 			replacements.add(replacement);
 			return replacements;
+		}
+		//object creation has only changes in the arguments
+		if(!creations1.isEmpty() && creationCoveringTheEntireStatement2 != null) {
+			for(String creation1 : creations1) {
+				ObjectCreation objectCreation1 = statement1.getCreationMap().get(creation1);
+				if(objectCreation1.getType().equals(creationCoveringTheEntireStatement2.getType()) &&
+						!objectCreation1.getArguments().equals(creationCoveringTheEntireStatement2.getArguments()) &&
+						objectCreation1.getArguments().size() != creationCoveringTheEntireStatement2.getArguments().size()) {
+					Set<String> argumentIntersection = new LinkedHashSet<String>(objectCreation1.getArguments());
+					argumentIntersection.retainAll(creationCoveringTheEntireStatement2.getArguments());
+					if(!argumentIntersection.isEmpty()) {
+						Replacement replacement = new ObjectCreationArgumentReplacement(objectCreation1.getType().toString(),
+								creationCoveringTheEntireStatement2.getType().toString(), objectCreation1, creationCoveringTheEntireStatement2);
+						replacements = new LinkedHashSet<Replacement>();
+						replacements.add(replacement);
+						return replacements;
+					}
+				}
+			}
 		}
 		return null;
 	}

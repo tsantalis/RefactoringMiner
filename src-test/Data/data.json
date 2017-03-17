@@ -4411,7 +4411,34 @@
 		"description": "Extract Method private createUser(id String) : User extracted from public testActivateFromIncorrectStatus() : void in class org.jbpm.services.task.LifeCycleBaseTest"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private createUser(id String) : User extracted from 10 others in class org.jbpm.services.task.LifeCycleBaseTest"
+		"description": "Extract Method private createUser(id String) : User extracted from public testForwardFromReserved() : void in class org.jbpm.services.task.LifeCycleBaseTest"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private createUser(id String) : User extracted from public testDelegateFromReserved() : void in class org.jbpm.services.task.LifeCycleBaseTest"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private createUser(id String) : User extracted from public testNominateOnOtherThanCreated() : void in class org.jbpm.services.task.LifeCycleBaseTest"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private createUser(id String) : User extracted from public testForwardFromReservedWithIncorrectUser() : void in class org.jbpm.services.task.LifeCycleBaseTest"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private createUser(id String) : User extracted from public testRemoveNotInRecipientList() : void in class org.jbpm.services.task.LifeCycleBaseTest"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private createUser(id String) : User extracted from public testNominateWithIncorrectUser() : void in class org.jbpm.services.task.LifeCycleBaseTest"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private createUser(id String) : User extracted from public testNominateToUser() : void in class org.jbpm.services.task.LifeCycleBaseTest"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private createUser(id String) : User extracted from public testDelegateFromReady() : void in class org.jbpm.services.task.LifeCycleBaseTest"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private createUser(id String) : User extracted from public testCompleteWithComments() : void in class org.jbpm.services.task.LifeCycleBaseTest"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private createUser(id String) : User extracted from public testDelegateFromReservedWithIncorrectUser() : void in class org.jbpm.services.task.LifeCycleBaseTest"
 	}],
 	"time": "6/30/15 6:06 AM",
 	"id": 1129518

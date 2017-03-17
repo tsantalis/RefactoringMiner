@@ -132,6 +132,15 @@ public class CompositeStatementObject extends AbstractStatement {
 		return stringLiterals;
 	}
 
+	@Override
+	public Map<String, ObjectCreation> getCreationMap() {
+		Map<String, ObjectCreation> creationMap = new LinkedHashMap<String, ObjectCreation>();
+		for(AbstractExpression expression : expressionList) {
+			creationMap.putAll(expression.getCreationMap());
+		}
+		return creationMap;
+	}
+
 	public Map<String, OperationInvocation> getAllMethodInvocations() {
 		Map<String, OperationInvocation> map = new LinkedHashMap<String, OperationInvocation>();
 		map.putAll(getMethodInvocationMap());

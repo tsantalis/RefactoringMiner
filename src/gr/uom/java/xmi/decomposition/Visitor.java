@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
+import org.eclipse.jdt.core.dom.ArrayCreation;
 import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.Expression;
@@ -33,7 +34,18 @@ public class Visitor extends ASTVisitor {
 	private List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
 	private List<String> anonymousClassDeclarations = new ArrayList<String>();
 	private List<String> stringLiterals = new ArrayList<String>();
+	private Map<String, ObjectCreation> creationMap = new LinkedHashMap<String, ObjectCreation>();
 	
+	public boolean visit(ClassInstanceCreation node) {
+		creationMap.put(node.toString(), new ObjectCreation(node));
+		return super.visit(node);
+	}
+
+	public boolean visit(ArrayCreation node) {
+		creationMap.put(node.toString(), new ObjectCreation(node));
+		return super.visit(node);
+	}
+
 	public boolean visit(VariableDeclarationFragment node) {
 		variableDeclarations.add(new VariableDeclaration(node));
 		return super.visit(node);
@@ -170,6 +182,10 @@ public class Visitor extends ASTVisitor {
 
 	public List<String> getStringLiterals() {
 		return stringLiterals;
+	}
+
+	public Map<String, ObjectCreation> getCreationMap() {
+		return creationMap;
 	}
 
 	public List<String> getVariables() {

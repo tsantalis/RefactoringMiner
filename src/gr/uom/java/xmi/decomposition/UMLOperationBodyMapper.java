@@ -4,6 +4,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.decomposition.replacement.AnonymousClassDeclarationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ArgumentReplacementWithReturnExpression;
+import gr.uom.java.xmi.decomposition.replacement.CreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationArgumentReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationRename;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
@@ -651,6 +652,39 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		types1.removeAll(typeIntersection);
 		types2.removeAll(typeIntersection);
 		
+		Set<String> creations1 = new LinkedHashSet<String>(statement1.getCreationMap().keySet());
+		Set<String> creations2 = new LinkedHashSet<String>(statement2.getCreationMap().keySet());
+		ObjectCreation creationCoveringTheEntireStatement1 = null;
+		ObjectCreation creationCoveringTheEntireStatement2 = null;
+		//remove objectCreation covering the entire statement
+		for(String objectCreation1 : statement1.getCreationMap().keySet()) {
+			if((objectCreation1 + ";\n").equals(statement1.getString()) || objectCreation1.equals(statement1.getString()) ||
+					("return " + objectCreation1 + ";\n").equals(statement1.getString()) ||
+					("throw " + objectCreation1 + ";\n").equals(statement1.getString())) {
+				creations1.remove(objectCreation1);
+				creationCoveringTheEntireStatement1 = statement1.getCreationMap().get(objectCreation1);
+			}
+			if(statement1.getCreationMap().get(objectCreation1).getAnonymousClassDeclaration() != null) {
+				creations1.remove(objectCreation1);
+			}
+		}
+		for(String objectCreation2 : statement2.getCreationMap().keySet()) {
+			if((objectCreation2 + ";\n").equals(statement2.getString()) || objectCreation2.equals(statement2.getString()) ||
+					("return " + objectCreation2 + ";\n").equals(statement2.getString()) ||
+					("throw " + objectCreation2 + ";\n").equals(statement2.getString())) {
+				creations2.remove(objectCreation2);
+				creationCoveringTheEntireStatement2 = statement2.getCreationMap().get(objectCreation2);
+			}
+			if(statement2.getCreationMap().get(objectCreation2).getAnonymousClassDeclaration() != null) {
+				creations2.remove(objectCreation2);
+			}
+		}
+		Set<String> creationIntersection = new LinkedHashSet<String>(creations1);
+		creationIntersection.retainAll(creations2);
+		// remove common creations from the two sets
+		creations1.removeAll(creationIntersection);
+		creations2.removeAll(creationIntersection);
+		
 		Set<String> stringLiterals1 = new LinkedHashSet<String>(statement1.getStringLiterals());
 		Set<String> stringLiterals2 = new LinkedHashSet<String>(statement2.getStringLiterals());
 		Set<String> stringLiteralIntersection = new LinkedHashSet<String>(stringLiterals1);
@@ -722,6 +756,34 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(distanceRaw >= 0 && distanceRaw < initialDistanceRaw) {
 					minDistance = distanceRaw;
 					Replacement replacement = new TypeReplacement(type1, type2);
+					double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), argumentizedString2.length());
+					replacementMap.put(distancenormalized, replacement);
+					if(distanceRaw == 0) {
+						break;
+					}
+				}
+			}
+			if(!replacementMap.isEmpty()) {
+				Replacement replacement = replacementMap.firstEntry().getValue();
+				replacements.add(replacement);
+				argumentizedString1 = argumentizedString1.replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter()));
+				initialDistanceRaw = StringDistance.editDistance(argumentizedString1, argumentizedString2);
+				if(replacementMap.firstEntry().getKey() == 0) {
+					break;
+				}
+			}
+		}
+		
+		//perform creation replacements
+		for(String creation1 : creations1) {
+			TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
+			int minDistance = initialDistanceRaw;
+			for(String creation2 : creations2) {
+				String temp = argumentizedString1.replaceAll(Pattern.quote(creation1), Matcher.quoteReplacement(creation2));
+				int distanceRaw = StringDistance.editDistance(temp, argumentizedString2, minDistance);
+				if(distanceRaw >= 0 && distanceRaw < initialDistanceRaw) {
+					minDistance = distanceRaw;
+					Replacement replacement = new CreationReplacement(creation1, creation2);
 					double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), argumentizedString2.length());
 					replacementMap.put(distancenormalized, replacement);
 					if(distanceRaw == 0) {

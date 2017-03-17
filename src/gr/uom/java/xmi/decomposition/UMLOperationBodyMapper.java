@@ -887,12 +887,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				invocationCoveringTheEntireStatement1.getArguments().size() != invocationCoveringTheEntireStatement2.getArguments().size()) {
 			Set<String> argumentIntersection = new LinkedHashSet<String>(invocationCoveringTheEntireStatement1.getArguments());
 			argumentIntersection.retainAll(invocationCoveringTheEntireStatement2.getArguments());
-			if(!argumentIntersection.isEmpty()) {
+			if(!argumentIntersection.isEmpty() || invocationCoveringTheEntireStatement1.getArguments().size() == 0 || invocationCoveringTheEntireStatement2.getArguments().size() == 0) {
 				Replacement replacement = new MethodInvocationArgumentReplacement(invocationCoveringTheEntireStatement1.getMethodName(),
 						invocationCoveringTheEntireStatement2.getMethodName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2);
 				replacements = new LinkedHashSet<Replacement>();
 				replacements.add(replacement);
 				return replacements;
+			}
+		}
+		if(!methodInvocations1.isEmpty() && invocationCoveringTheEntireStatement2 != null) {
+			for(String methodInvocation1 : methodInvocations1) {
+				OperationInvocation operationInvocation1 = statement1.getMethodInvocationMap().get(methodInvocation1);
+				if(invocationsWithIdenticalExpressions(operationInvocation1, invocationCoveringTheEntireStatement2) &&
+						operationInvocation1.getMethodName().equals(invocationCoveringTheEntireStatement2.getMethodName()) &&
+						!operationInvocation1.getArguments().equals(invocationCoveringTheEntireStatement2.getArguments()) &&
+						operationInvocation1.getArguments().size() != invocationCoveringTheEntireStatement2.getArguments().size()) {
+					Set<String> argumentIntersection = new LinkedHashSet<String>(operationInvocation1.getArguments());
+					argumentIntersection.retainAll(invocationCoveringTheEntireStatement2.getArguments());
+					if(!argumentIntersection.isEmpty() || operationInvocation1.getArguments().size() == 0 || invocationCoveringTheEntireStatement2.getArguments().size() == 0) {
+						Replacement replacement = new MethodInvocationArgumentReplacement(operationInvocation1.getMethodName(),
+								operationInvocation1.getMethodName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2);
+						replacements = new LinkedHashSet<Replacement>();
+						replacements.add(replacement);
+						return replacements;
+					}
+				}
 			}
 		}
 		//check if the argument lists are identical after replacements
@@ -928,7 +947,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						objectCreation1.getArguments().size() != creationCoveringTheEntireStatement2.getArguments().size()) {
 					Set<String> argumentIntersection = new LinkedHashSet<String>(objectCreation1.getArguments());
 					argumentIntersection.retainAll(creationCoveringTheEntireStatement2.getArguments());
-					if(!argumentIntersection.isEmpty()) {
+					if(!argumentIntersection.isEmpty() || objectCreation1.getArguments().size() == 0 || creationCoveringTheEntireStatement2.getArguments().size() == 0) {
 						Replacement replacement = new ObjectCreationArgumentReplacement(objectCreation1.getType().toString(),
 								creationCoveringTheEntireStatement2.getType().toString(), objectCreation1, creationCoveringTheEntireStatement2);
 						replacements = new LinkedHashSet<Replacement>();

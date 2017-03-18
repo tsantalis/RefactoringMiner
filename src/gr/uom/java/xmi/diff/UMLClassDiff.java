@@ -270,8 +270,8 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 					}
 				}
 				if(!mapperSet.isEmpty()) {
-					UMLOperationBodyMapper firstMapper = mapperSet.first();
-					UMLOperation addedOperation = firstMapper.getOperation2();
+					UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
+					UMLOperation addedOperation = bestMapper.getOperation2();
 					addedOperations.remove(addedOperation);
 					removedOperationIterator.remove();
 
@@ -281,7 +281,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 						RenameOperationRefactoring rename = new RenameOperationRefactoring(removedOperation, addedOperation);
 						refactorings.add(rename);
 					}
-					this.addOperationBodyMapper(firstMapper);
+					this.addOperationBodyMapper(bestMapper);
 				}
 			}
 		}
@@ -325,8 +325,8 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 					}
 				}
 				if(!mapperSet.isEmpty()) {
-					UMLOperationBodyMapper firstMapper = mapperSet.first();
-					UMLOperation removedOperation = firstMapper.getOperation1();
+					UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
+					UMLOperation removedOperation = bestMapper.getOperation1();
 					removedOperations.remove(removedOperation);
 					addedOperationIterator.remove();
 
@@ -336,10 +336,32 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 						RenameOperationRefactoring rename = new RenameOperationRefactoring(removedOperation, addedOperation);
 						refactorings.add(rename);
 					}
-					this.addOperationBodyMapper(firstMapper);
+					this.addOperationBodyMapper(bestMapper);
 				}
 			}
 		}
+	}
+
+	private UMLOperationBodyMapper findBestMapper(TreeSet<UMLOperationBodyMapper> mapperSet) {
+		List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>(mapperSet);
+		UMLOperationBodyMapper bestMapper = mapperSet.first();
+		for(int i=1; i<mapperList.size(); i++) {
+			UMLOperationBodyMapper mapper = mapperList.get(i);
+			UMLOperation operation = mapper.getOperation2();
+			Set<OperationInvocation> operationInvocations = operation.getBody().getAllOperationInvocations();
+			boolean anotherMapperCallsOperation2OfTheBestMapper = false;
+			for(OperationInvocation invocation : operationInvocations) {
+				if(invocation.matchesOperation(bestMapper.getOperation2()) && !invocation.matchesOperation(bestMapper.getOperation1())) {
+					anotherMapperCallsOperation2OfTheBestMapper = true;
+					break;
+				}
+			}
+			if(anotherMapperCallsOperation2OfTheBestMapper) {
+				bestMapper = mapper;
+				break;
+			}
+		}
+		return bestMapper;
 	}
 
 	private boolean isPartOfMethodExtracted(UMLOperation removedOperation, UMLOperation addedOperation) {

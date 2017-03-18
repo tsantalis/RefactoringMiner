@@ -7707,7 +7707,7 @@
 	},
 	{
 		"type": "Rename Method",
-		"description": "Rename Method private getIndexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets renamed to private getIndexUpdatesForRangeSeekByPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets in class org.neo4j.kernel.impl.api.state.TxState"
+		"description": "Rename Method private getIndexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets<Long> renamed to private getIndexUpdatesForRangeSeekByPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets<Long> in class org.neo4j.kernel.impl.api.state.TxState"
 	}],
 	"time": "7/20/15 6:24 AM",
 	"id": 1144559
@@ -9597,7 +9597,7 @@
 		"description": "Rename Method private assertSameErlangModules(moduleDescriptors List, expectedModules String[]) : void renamed to private assertSameErlangFiles(moduleDescriptors List, expectedModules String[]) : void in class org.intellij.erlang.compilation.ErlangDependenciesResolutionTest"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method private addErlangModules(module Module, onlyTestModules boolean, erlangModules Collection<ErlangFile>) : Collection<ErlangFile> renamed to private collectFiles(module Module, onlyTestModules boolean, filesCollector Processor<VirtualFile>) : void in class org.intellij.erlang.utils.ErlangModulesUtil"
+		"description": "Rename Method private addErlangModules(module Module, onlyTestModules boolean, erlangModules Collection<ErlangFile>) : Collection<ErlangFile> renamed to private addErlangFiles(module Module, onlyTestModules boolean, erlangModules Collection<ErlangFile>, type ErlangFileType) : Collection<ErlangFile> in class org.intellij.erlang.utils.ErlangModulesUtil"
 	}],
 	"time": "8/6/15 12:37 PM",
 	"id": 1159409

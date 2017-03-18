@@ -203,32 +203,6 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		return Math.abs(index1-index2);
 	}
 
-	private UMLOperation matchingRemovedOperationInNextClassCallsAddedOperation(UMLOperation removedOperation, UMLOperation addedOperation) {
-		UMLOperation removedOperationInNextClass = null;
-		for(UMLOperation nextOperation : nextClass.getOperations()) {
-			if(nextOperation.getName().equals(removedOperation.getName()) && nextOperation.getParameterTypeList().equals(removedOperation.getParameterTypeList())) {
-				removedOperationInNextClass = nextOperation;
-				break;
-			}
-		}
-		if(removedOperationInNextClass != null) {
-			boolean delegateMatchesAddedOperation = false;
-			OperationInvocation delegate = removedOperationInNextClass.isDelegate();
-			if(delegate != null) {
-				delegateMatchesAddedOperation = delegate.matchesOperation(addedOperation);
-			}
-			if(!delegateMatchesAddedOperation) {
-				Set<OperationInvocation> operationInvocations = removedOperationInNextClass.getBody().getAllOperationInvocations();
-				for(OperationInvocation invocation : operationInvocations) {
-					if(invocation.matchesOperation(addedOperation)) {
-						return removedOperationInNextClass;
-					}
-				}
-			}
-		}
-		return null;
-	}
-
 	public void checkForOperationSignatureChanges() {
 		if(removedOperations.size() <= addedOperations.size()) {
 			for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
@@ -248,24 +222,12 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 								mappings > operationBodyMapper.nonMappedElementsT2() &&
 								absoluteDifferenceInPosition <= MAX_DIFFERENCE_IN_POSITION &&
 								compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition)) {
-							UMLOperation removedOperationInNextClass = matchingRemovedOperationInNextClassCallsAddedOperation(removedOperation, addedOperation);
-							if(removedOperationInNextClass != null) {
-								mapperSet.add(new UMLOperationBodyMapper(removedOperation, removedOperationInNextClass));
-							}
-							else {
-								mapperSet.add(operationBodyMapper);
-							}
+							mapperSet.add(operationBodyMapper);
 						}
 						else if(mappings > operationBodyMapper.nonMappedElementsT2() &&
 								absoluteDifferenceInPosition <= MAX_DIFFERENCE_IN_POSITION &&
 								isPartOfMethodExtracted(removedOperation, addedOperation)) {
-							UMLOperation removedOperationInNextClass = matchingRemovedOperationInNextClassCallsAddedOperation(removedOperation, addedOperation);
-							if(removedOperationInNextClass != null) {
-								mapperSet.add(new UMLOperationBodyMapper(removedOperation, removedOperationInNextClass));
-							}
-							else {
-								mapperSet.add(operationBodyMapper);
-							}
+							mapperSet.add(operationBodyMapper);
 						}
 					}
 				}
@@ -303,24 +265,12 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 								mappings > operationBodyMapper.nonMappedElementsT2() &&
 								absoluteDifferenceInPosition <= MAX_DIFFERENCE_IN_POSITION &&
 								compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition)) {
-							UMLOperation removedOperationInNextClass = matchingRemovedOperationInNextClassCallsAddedOperation(removedOperation, addedOperation);
-							if(removedOperationInNextClass != null) {
-								mapperSet.add(new UMLOperationBodyMapper(removedOperation, removedOperationInNextClass));
-							}
-							else {
-								mapperSet.add(operationBodyMapper);
-							}
+							mapperSet.add(operationBodyMapper);
 						}
 						else if(mappings > operationBodyMapper.nonMappedElementsT2() &&
 								absoluteDifferenceInPosition <= MAX_DIFFERENCE_IN_POSITION &&
 								isPartOfMethodExtracted(removedOperation, addedOperation)) {
-							UMLOperation removedOperationInNextClass = matchingRemovedOperationInNextClassCallsAddedOperation(removedOperation, addedOperation);
-							if(removedOperationInNextClass != null) {
-								mapperSet.add(new UMLOperationBodyMapper(removedOperation, removedOperationInNextClass));
-							}
-							else {
-								mapperSet.add(operationBodyMapper);
-							}
+							mapperSet.add(operationBodyMapper);
 						}
 					}
 				}

@@ -442,6 +442,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 							InlineOperationRefactoring inlineOperationRefactoring =
 									new InlineOperationRefactoring(removedOperation, operationBodyMapper.getOperation2(), operationBodyMapper.getOperation2().getClassName());
 							refactorings.add(inlineOperationRefactoring);
+							mapper.addAdditionalMapper(operationBodyMapper);
 							operationsToBeRemoved.add(removedOperation);
 						}
 					}
@@ -490,6 +491,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 								ExtractOperationRefactoring extractOperationRefactoring =
 										new ExtractOperationRefactoring(addedOperation, operationBodyMapper.getOperation1(), operationBodyMapper.getOperation1().getClassName());
 								refactorings.add(extractOperationRefactoring);
+								mapper.addAdditionalMapper(operationBodyMapper);
 								operationsToBeRemoved.add(addedOperation);
 							}
 							else if(addedOperation.isDelegate() != null) {

@@ -39,6 +39,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private List<StatementObject> nonMappedLeavesT2;
 	private List<CompositeStatementObject> nonMappedInnerNodesT1;
 	private List<CompositeStatementObject> nonMappedInnerNodesT2;
+	private List<UMLOperationBodyMapper> additionalMappers = new ArrayList<UMLOperationBodyMapper>();
 	
 	public UMLOperationBodyMapper(UMLOperation operation1, UMLOperation operation2) {
 		this.operation1 = operation1;
@@ -49,6 +50,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.nonMappedInnerNodesT1 = new ArrayList<CompositeStatementObject>();
 		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
 		this.isInitialized = false;
+	}
+
+	public void addAdditionalMapper(UMLOperationBodyMapper mapper) {
+		this.additionalMappers.add(mapper);
+		//TODO add logic to remove the mappings from "this" mapper,
+		//which are less similar than the mappings of the mapper passed as parameter
+	}
+
+	public List<UMLOperationBodyMapper> getAdditionalMappers() {
+		return additionalMappers;
 	}
 
 	private void initialize() {

@@ -8919,6 +8919,9 @@
 	"refactorings": [{
 		"type": "Move Class",
 		"description": "Move Class com.google.devtools.j2objc.translate.LambdaExpressionTest moved to com.google.devtools.j2objc.ast.LambdaExpressionTest"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public printLambdaCall(functionalInterface IMethodBinding, functionalTypeBinding ITypeBinding, methodBinding IMethodBinding, parameters List<VariableDeclaration>, isCapturing boolean) : void extracted from public visit(node LambdaExpression) : boolean in class com.google.devtools.j2objc.gen.StatementGenerator"
 	}],
 	"time": "7/29/15 9:03 PM",
 	"id": 1153111

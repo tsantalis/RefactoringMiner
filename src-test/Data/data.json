@@ -1640,6 +1640,9 @@
 			"description": "Inline Method private verifyPublicationClosed(times VerificationMode) : void inlined to public shouldNotTimeoutPublicationOnKeepAlive() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest"
 		}, {
 			"type": "Inline Method",
+			"description": "Inline Method private verifyPublicationClosed(times VerificationMode) : void inlined to public shouldTimeoutPublication() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest"
+		}, {
+			"type": "Inline Method",
 			"description": "Inline Method private verifyExceptionLogged() : void inlined to public shouldErrorOnRemoveChannelOnUnknownSessionId() : void in class uk.co.real_logic.aeron.driver.DriverConductorTest"
 		}, {
 			"type": "Inline Method",
@@ -3617,6 +3620,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private getTestPathPredicate(enableStringWhitelisting boolean, whitelistedStringDirs ImmutableSet<Path>, locales ImmutableSet<String>) : Predicate<Path> extracted from public testFilterStrings() : void in class com.facebook.buck.android.FilterResourcesStepTest"
 	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private assertNotMatchesRegex(path String) : void extracted from public testNonEnglishStringsPathRegex() : void in class com.facebook.buck.android.FilterResourcesStepTest"
+	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public enableStringsFilter() : Builder renamed to public enableStringWhitelisting() : Builder in class com.facebook.buck.android.FilterResourcesStep.Builder"
 	}, {
@@ -5244,6 +5250,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private getNewScore(oldParameters INDArray) : double extracted from public optimize(initialStep double, parameters INDArray, gradients INDArray) : double in class org.deeplearning4j.optimize.solvers.BackTrackLineSearch"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private getIrisLogisticLayerConfig(activationFunction String, iterations int) : OutputLayer extracted from public testLineSearch() : void in class org.deeplearning4j.optimize.solver.BackTrackLineSearchTest"
 	}],
 	"time": "7/7/15 8:06 PM",
 	"id": 1135604
@@ -5931,6 +5940,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private printNotifyInsert(writer JavaWriter, uri UriContract) : void extracted from public write(filer Filer) : void in class net.simonvt.schematic.compiler.ContentProviderWriter"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private printNotifyBulkInsert(writer JavaWriter, uri UriContract) : void extracted from public write(filer Filer) : void in class net.simonvt.schematic.compiler.ContentProviderWriter"
 	}],
 	"time": "7/12/15 10:27 AM",
 	"id": 1139075
@@ -8093,6 +8105,9 @@
 	"refactorings": [{
 		"type": "Rename Package",
 		"description": "Rename Package org.robobinding.codegen.presentationmodel.nestedIPMexample to org.robobinding.codegen.presentationmodel.nestedIPM"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private removeItemPresentationModelFactoryMethod(dataSetProperties Collection<DataSetPropertyInfoImpl>) : void extracted from private processDataSetProperties() : void in class org.robobinding.codegen.presentationmodel.processor.PresentationModelInfoBuilder"
 	}],
 	"time": "7/24/15 8:26 AM",
 	"id": 1147192
@@ -8574,6 +8589,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected isSubtype(other JSType, implicitImplCache ImplCache) : boolean extracted from public isSubtype(other JSType) : boolean in class com.google.javascript.rhino.jstype.ArrowType"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method protected implicitMatch(rightType JSType, leftType JSType, implicitImplCache ImplCache) : boolean extracted from package isSubtypeHelper(thisType JSType, thatType JSType) : boolean in class com.google.javascript.rhino.jstype.JSType"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public usesImplicitMatch() : boolean renamed to public isStructuralInterface() : boolean in class com.google.javascript.rhino.jstype.FunctionType"

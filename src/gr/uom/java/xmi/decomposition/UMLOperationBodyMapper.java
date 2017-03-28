@@ -4,6 +4,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.decomposition.replacement.AnonymousClassDeclarationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ArgumentReplacementWithReturnExpression;
+import gr.uom.java.xmi.decomposition.replacement.ArgumentReplacementWithRightHandSideOfAssignmentExpression;
 import gr.uom.java.xmi.decomposition.replacement.CreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationArgumentReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationRename;
@@ -414,24 +415,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return replacements;
 	}
 
-	public Set<VariableReplacementWithMethodInvocation> getVariableReplacementsWithMethodInvocation() {
-		Set<VariableReplacementWithMethodInvocation> replacements = new LinkedHashSet<VariableReplacementWithMethodInvocation>();
+	public Set<Replacement> getReplacementsInvolvingMethodInvocation() {
+		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 		for(AbstractCodeMapping mapping : getMappings()) {
 			for(Replacement replacement : mapping.getReplacements()) {
-				if(replacement instanceof VariableReplacementWithMethodInvocation) {
-					replacements.add((VariableReplacementWithMethodInvocation)replacement);
-				}
-			}
-		}
-		return replacements;
-	}
-
-	public Set<MethodInvocationReplacement> getMethodInvocationReplacements() {
-		Set<MethodInvocationReplacement> replacements = new LinkedHashSet<MethodInvocationReplacement>();
-		for(AbstractCodeMapping mapping : getMappings()) {
-			for(Replacement replacement : mapping.getReplacements()) {
-				if(replacement instanceof MethodInvocationReplacement) {
-					replacements.add((MethodInvocationReplacement)replacement);
+				if(replacement instanceof MethodInvocationReplacement ||
+						replacement instanceof VariableReplacementWithMethodInvocation ||
+						replacement instanceof ArgumentReplacementWithRightHandSideOfAssignmentExpression) {
+					replacements.add(replacement);
 				}
 			}
 		}
@@ -976,6 +967,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				invocationCoveringTheEntireStatement1.getArguments().get(0).equals(argumentizedString2.substring(7, argumentizedString2.length()-2))) {
 			Replacement replacement = new ArgumentReplacementWithReturnExpression(invocationCoveringTheEntireStatement1.getArguments().get(0),
 					argumentizedString2.substring(7, argumentizedString2.length()-2));
+			replacements = new LinkedHashSet<Replacement>();
+			replacements.add(replacement);
+			return replacements;
+		}
+		//check if the argument of the method call in the second statement is the right hand side of an assignment in the first statement
+		if(invocationCoveringTheEntireStatement2 != null && invocationCoveringTheEntireStatement2.getArguments().size() == 1 &&
+				argumentizedString1.contains("=") && argumentizedString1.endsWith(";\n") &&
+				//length()-2 to remove ";\n" from the end of the assignment statement, indexOf("=")+1 to remove the left hand side of the assignment
+				invocationCoveringTheEntireStatement2.getArguments().get(0).equals(argumentizedString1.substring(argumentizedString1.indexOf("=")+1, argumentizedString1.length()-2)) &&
+				methodInvocationMap1.containsKey(invocationCoveringTheEntireStatement2.getArguments().get(0))) {
+			Replacement replacement = new ArgumentReplacementWithRightHandSideOfAssignmentExpression(argumentizedString1.substring(argumentizedString1.indexOf("=")+1, argumentizedString1.length()-2),
+					invocationCoveringTheEntireStatement2.getArguments().get(0));
 			replacements = new LinkedHashSet<Replacement>();
 			replacements.add(replacement);
 			return replacements;

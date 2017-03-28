@@ -416,7 +416,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 			UMLOperation removedOperation = removedOperationIterator.next();
 			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
 				if(!mapper.getNonMappedLeavesT2().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty() ||
-					!mapper.getVariableReplacementsWithMethodInvocation().isEmpty() || !mapper.getMethodInvocationReplacements().isEmpty()) {
+					!mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
 					Set<OperationInvocation> operationInvocations = mapper.getOperation1().getBody().getAllOperationInvocations();
 					OperationInvocation removedOperationInvocation = null;
 					for(OperationInvocation invocation : operationInvocations) {
@@ -458,7 +458,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 			UMLOperation addedOperation = addedOperationIterator.next();
 			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
 				if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
-					!mapper.getVariableReplacementsWithMethodInvocation().isEmpty() || !mapper.getMethodInvocationReplacements().isEmpty()) {
+					!mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
 					Set<OperationInvocation> operationInvocations = mapper.getOperation2().getBody().getAllOperationInvocations();
 					OperationInvocation addedOperationInvocation = null;
 					for(OperationInvocation invocation : operationInvocations) {

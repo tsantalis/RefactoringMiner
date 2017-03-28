@@ -8917,7 +8917,7 @@
 		"description": "Move Method protected logInfo(message String, arguments Object[]) : void from class cascading.stats.tez.TezNodeStats to protected logInfo(message String, arguments Object[]) : void from class cascading.stats.CascadingStats"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method protected logWarn(message String, arguments Object[]) : void from class cascading.stats.tez.TezNodeStats to class cascading.stats.CascadingStats"
+		"description": "Move Method protected logWarn(message String, arguments Object[]) : void from class cascading.stats.tez.TezNodeStats to protected logWarn(message String, arguments Object[]) : void from class cascading.stats.CascadingStats"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private prefixID : String from class cascading.stats.tez.TezNodeStats to class cascading.stats.CascadingStats"

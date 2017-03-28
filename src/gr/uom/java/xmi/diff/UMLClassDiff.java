@@ -494,7 +494,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 								mapper.addAdditionalMapper(operationBodyMapper);
 								operationsToBeRemoved.add(addedOperation);
 							}
-							else if(addedOperation.isDelegate() != null) {
+							else if(addedOperation.isDelegate() != null && !mapper.getOperation1().getBody().getAllOperationInvocations().contains(addedOperationInvocation)) {
 								extractedDelegateOperations.put(addedOperation, addedOperation.isDelegate());
 								operationsToBeRemoved.add(addedOperation);
 							}

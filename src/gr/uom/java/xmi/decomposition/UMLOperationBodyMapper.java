@@ -41,6 +41,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private List<CompositeStatementObject> nonMappedInnerNodesT1;
 	private List<CompositeStatementObject> nonMappedInnerNodesT2;
 	private List<UMLOperationBodyMapper> additionalMappers = new ArrayList<UMLOperationBodyMapper>();
+	private static final double MAX_ANONYMOUS_CLASS_DECLARATION_DISTANCE = 0.2;
 	
 	public UMLOperationBodyMapper(UMLOperation operation1, UMLOperation operation2) {
 		this.operation1 = operation1;
@@ -374,6 +375,38 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(StatementObject statement : getNonMappedLeavesT2()) {
 			if(countableStatement(statement.getString()))
 				nonMappedLeafCount++;
+		}
+		return nonMappedLeafCount + nonMappedInnerNodeCount;
+	}
+
+	public int nonMappedElementsT2CallingAddedOperation(List<UMLOperation> addedOperations) {
+		int nonMappedInnerNodeCount = 0;
+		for(CompositeStatementObject composite : getNonMappedInnerNodesT2()) {
+			if(countableStatement(composite.getString())) {
+				Map<String, OperationInvocation> methodInvocationMap = composite.getMethodInvocationMap();
+				for(OperationInvocation invocation : methodInvocationMap.values()) {
+					for(UMLOperation operation : addedOperations) {
+						if(invocation.matchesOperation(operation)) {
+							nonMappedInnerNodeCount++;
+							break;
+						}
+					}
+				}
+			}
+		}
+		int nonMappedLeafCount = 0;
+		for(StatementObject statement : getNonMappedLeavesT2()) {
+			if(countableStatement(statement.getString())) {
+				Map<String, OperationInvocation> methodInvocationMap = statement.getMethodInvocationMap();
+				for(OperationInvocation invocation : methodInvocationMap.values()) {
+					for(UMLOperation operation : addedOperations) {
+						if(invocation.matchesOperation(operation)) {
+							nonMappedLeafCount++;
+							break;
+						}
+					}
+				}
+			}
 		}
 		return nonMappedLeafCount + nonMappedInnerNodeCount;
 	}
@@ -873,6 +906,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		boolean isEqualWithReplacement = s1.equals(s2);
 		if(isEqualWithReplacement) {
+			if(statement1.getVariableDeclarations().size() == 1 && statement2.getVariableDeclarations().size() == 1) {
+				boolean typeReplacement = false, variableRename = false, methodInvocationReplacement = false;
+				for(Replacement replacement : replacements) {
+					if(replacement instanceof TypeReplacement)
+						typeReplacement = true;
+					else if(replacement instanceof VariableRename)
+						variableRename = true;
+					else if(replacement instanceof MethodInvocationReplacement)
+						methodInvocationReplacement = true;
+				}
+				if(typeReplacement && variableRename && methodInvocationReplacement) {
+					return null;
+				}
+			}
 			return replacements;
 		}
 		List<String> anonymousClassDeclarations1 = statement1.getAnonymousClassDeclarations();
@@ -890,7 +937,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(statementWithoutAnonymous1.equals(statementWithoutAnonymous2)) {
 						int editDistance = StringDistance.editDistance(anonymousClassDeclaration1, anonymousClassDeclaration2);
 						double distancenormalized = (double)editDistance/(double)Math.max(anonymousClassDeclaration1.length(), anonymousClassDeclaration2.length());
-						if(distancenormalized < 0.2) {
+						if(distancenormalized < MAX_ANONYMOUS_CLASS_DECLARATION_DISTANCE) {
 							Replacement replacement = new AnonymousClassDeclarationReplacement(anonymousClassDeclaration1, anonymousClassDeclaration2);
 							replacements = new LinkedHashSet<Replacement>();
 							replacements.add(replacement);
@@ -1215,31 +1262,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return getNonMappedLeavesT1().isEmpty() && getNonMappedInnerNodesT1().isEmpty() &&
 				getNonMappedLeavesT2().isEmpty() && getNonMappedInnerNodesT2().isEmpty();
 	}
-	
-//	public String toString() {
-//		StringBuilder sb = new StringBuilder();
-//		if(!isEmpty()) {
-//			sb.append("operation ").append(operation1.toString()).append("\n");
-//		}
-//		if(!nonMappedLeavesT1.isEmpty()) {
-//			sb.append("non mapped leaves T1\n");
-//			sb.append(nonMappedLeavesT1).append("\n");
-//		}
-//		if(!nonMappedInnerNodesT1.isEmpty()) {
-//			sb.append("non mapped inner nodes T1\n");
-//			sb.append(nonMappedInnerNodesT1).append("\n");
-//		}
-//		
-//		if(!nonMappedLeavesT2.isEmpty()) {
-//			sb.append("non mapped leaves T2\n");
-//			sb.append(nonMappedLeavesT2).append("\n");
-//		}
-//		if(!nonMappedInnerNodesT2.isEmpty()) {
-//			sb.append("non mapped inner nodes T2\n");
-//			sb.append(nonMappedInnerNodesT2).append("\n");
-//		}
-//		return sb.toString();
-//	}
 
 	public boolean equals(Object o) {
 		if(this == o) {

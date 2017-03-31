@@ -13,13 +13,11 @@ public class UMLModel {
     private List<UMLClass> classList;
     private List<UMLGeneralization> generalizationList;
     private List<UMLRealization> realizationList;
-    private List<UMLAnonymousClass> anonymousClassList;
 
     public UMLModel() {
         classList = new ArrayList<UMLClass>();
         generalizationList = new ArrayList<UMLGeneralization>();
         realizationList = new ArrayList<UMLRealization>();
-        anonymousClassList = new ArrayList<UMLAnonymousClass>();
     }
 
 	public void addClass(UMLClass umlClass) {
@@ -32,10 +30,6 @@ public class UMLModel {
 
     public void addRealization(UMLRealization umlRealization) {
     	realizationList.add(umlRealization);
-    }
-
-    public void addAnonymousClass(UMLAnonymousClass anonymousClass) {
-    	anonymousClassList.add(anonymousClass);
     }
 
     public UMLClass getClass(UMLClass umlClassFromOtherModel) {
@@ -152,15 +146,6 @@ public class UMLModel {
     			}
     		}
     	}
-    	
-    	for(UMLAnonymousClass umlClass : anonymousClassList) {
-    		if(!umlModel.anonymousClassList.contains(umlClass))
-    			modelDiff.reportRemovedAnonymousClass(umlClass);
-    	}
-//    	for(UMLAnonymousClass umlClass : umlModel.anonymousClassList) {
-//    		if(!this.anonymousClassList.contains(umlClass))
-//    			modelDiff.reportAddedAnonymousClass(umlClass);
-//    	}
     	modelDiff.checkForOperationMoves();
     	modelDiff.checkForExtractedAndMovedOperations();
     	return modelDiff;

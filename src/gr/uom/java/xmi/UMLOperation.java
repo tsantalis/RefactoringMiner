@@ -8,10 +8,8 @@ import gr.uom.java.xmi.diff.StringDistance;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.refactoringminer.util.AstUtils;
 
@@ -21,7 +19,6 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 	private boolean isAbstract;
 	private List<UMLParameter> parameters;
 	private String className;
-	private Set<AccessedMember> accessedMembers;
 	private boolean isConstructor;
 	private boolean isFinal;
 	private boolean isStatic;
@@ -31,7 +28,6 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 	public UMLOperation(String name) {
         this.name = name;
         this.parameters = new ArrayList<UMLParameter>();
-        this.accessedMembers = new LinkedHashSet<AccessedMember>();
     }
 
 	public String getName() {
@@ -108,18 +104,6 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 
 	public List<UMLParameter> getParameters() {
 		return parameters;
-	}
-
-	public void addAccessedMember(AccessedMember member) {
-		this.accessedMembers.add(member);
-	}
-
-	public Set<AccessedMember> getAccessedMembers() {
-		return accessedMembers;
-	}
-
-	public void setAccessedMembers(Set<AccessedMember> accessedMembers) {
-		this.accessedMembers = accessedMembers;
 	}
 
 	public UMLParameter getReturnParameter() {
@@ -379,5 +363,27 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 			return commonParameterTypes >= differentParameterTypes /*+ Math.abs(thisParameterTypes.size() - otherParameterTypes.size())*/;
 		}
 		return false;
+	}
+
+	public List<UMLOperation> getOperationsInsideAnonymousClass(List<UMLAnonymousClass> allAddedAnonymousClasses) {
+		List<UMLOperation> operationsInsideAnonymousClass = new ArrayList<UMLOperation>();
+		if(this.operationBody != null) {
+			List<String> anonymousClassDeclarations = this.operationBody.getAllAnonymousClassDeclarations();
+			for(String anonymousClassDeclaration : anonymousClassDeclarations) {
+				for(UMLAnonymousClass anonymousClass : allAddedAnonymousClasses) {
+					int foundOperations = 0;
+					List<UMLOperation> operations = anonymousClass.getOperations();
+					for(UMLOperation operation : operations) {
+						if(anonymousClassDeclaration.contains(operation.getName())) {
+							foundOperations++;
+						}
+					}
+					if(foundOperations == operations.size()) {
+						operationsInsideAnonymousClass.addAll(operations);
+					}
+				}
+			}
+		}
+		return operationsInsideAnonymousClass;
 	}
 }

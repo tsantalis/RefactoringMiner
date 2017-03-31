@@ -2348,6 +2348,9 @@
 	}, {
 		"type": "Rename Class",
 		"description": "Rename Class com.jfinal.plugin.activerecord.tx.TxByActionMethods renamed to com.jfinal.plugin.activerecord.tx.TxByMethods"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public findById(id Object, columns String) : M renamed to public findByIdLoadColumns(idValues Object[], columns String) : M in class com.jfinal.plugin.activerecord.Model"
 	}],
 	"time": "6/18/15 5:57 AM",
 	"id": 1118473
@@ -6025,9 +6028,12 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public toKeyMethodFormatsAsExpected() : void renamed to public configKeyFormatsAsExpected() : void in class feign.FeignTest"
-	},{
+	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public parseAndValidatateMetadata(method Method) : MethodMetadata renamed to protected parseAndValidateMetadata(targetType Class<?>, method Method) : MethodMetadata in class feign.jaxrs.JAXRSContract"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public parseAndValidatateMetadata(method Method) : MethodMetadata renamed to protected parseAndValidateMetadata(targetType Class<?>, method Method) : MethodMetadata in class feign.Contract.Default"
 	}],
 	"time": "7/13/15 1:49 PM",
 	"id": 1140131
@@ -7363,6 +7369,9 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method package getLastHandle() : long renamed to package getLastReadTime() : long in class com.hazelcast.nio.tcp.ReadHandler"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public toString() : String renamed to public render() : String in class com.hazelcast.internal.monitors.HealthMonitor.HealthMetrics"
 	}],
 	"time": "7/16/15 1:56 AM",
 	"id": 1143042
@@ -7720,6 +7729,10 @@
 	{
 		"type": "Rename Method",
 		"description": "Rename Method private getIndexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets<Long> renamed to private getIndexUpdatesForRangeSeekByPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets<Long> in class org.neo4j.kernel.impl.api.state.TxState"
+	},
+	{
+		"type": "Rename Method",
+		"description": "Rename Method private addToIndex(labelId int, propertyKeyId int, nodeIds long[]) : void renamed to public withStringProperties(nodesWithValues Collection<Pair<Long, String>>) : void in class org.neo4j.kernel.impl.api.state.TxStateTest"
 	}],
 	"time": "7/20/15 6:24 AM",
 	"id": 1144559
@@ -9364,9 +9377,6 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method public minorWasTriggered(keyspace String, cf String) : boolean extracted from public testTriggerMinorCompaction() : void in class org.apache.cassandra.db.compaction.CompactionsCQLTest"
-	}, {
-		"type": "Rename Method",
-		"description": "Rename Method public testTriggerMinorCompaction() : void renamed to public testTriggerMinorCompactionDTCS() : void in class org.apache.cassandra.db.compaction.CompactionsCQLTest"
 	}],
 	"time": "8/4/15 4:51 AM",
 	"id": 1156431
@@ -9488,8 +9498,14 @@
 		"type": "Extract Method",
 		"description": "Extract Method private unpackBytesHeader() : int extracted from public unpackBytes() : byte[] in class org.neo4j.packstream.PackStream.Unpacker"
 	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private unpackRawBytesInto(buffer byte[], offset int, size int) : void extracted from private unpackBytes(size int) : byte[] in class org.neo4j.packstream.PackStream.Unpacker"
+	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public unpackString() : String renamed to public unpackText() : String in class org.neo4j.packstream.PackStream.Unpacker"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private unpackBytes(size int) : byte[] renamed to private unpackRawBytes(size int) : byte[] in class org.neo4j.packstream.PackStream.Unpacker"
 	}, {
 		"type": "Rename Class",
 		"description": "Rename Class org.neo4j.packstream.PackStream.PackstreamException renamed to org.neo4j.packstream.PackStream.PackStreamException"

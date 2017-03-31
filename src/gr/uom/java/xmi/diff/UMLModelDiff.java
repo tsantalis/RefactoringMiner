@@ -39,7 +39,6 @@ public class UMLModelDiff {
    private List<UMLClassMoveDiff> classMoveDiffList;
    private List<UMLClassMoveDiff> innerClassMoveDiffList;
    private List<UMLClassRenameDiff> classRenameDiffList;
-   private List<UMLAnonymousClass> removedAnonymousClasses;
    private List<Refactoring> refactorings;
    
    public UMLModelDiff() {
@@ -55,7 +54,6 @@ public class UMLModelDiff {
       this.classMoveDiffList = new ArrayList<UMLClassMoveDiff>();
       this.innerClassMoveDiffList = new ArrayList<UMLClassMoveDiff>();
       this.classRenameDiffList = new ArrayList<UMLClassRenameDiff>();
-      this.removedAnonymousClasses = new ArrayList<UMLAnonymousClass>();
       this.refactorings = new ArrayList<Refactoring>();
    }
 
@@ -67,10 +65,6 @@ public class UMLModelDiff {
    public void reportRemovedClass(UMLClass umlClass) {
 	   if(!removedClasses.contains(umlClass))
 		   this.removedClasses.add(umlClass);
-   }
-
-   public void reportRemovedAnonymousClass(UMLAnonymousClass umlClass) {
-      this.removedAnonymousClasses.add(umlClass);
    }
 
    public void reportAddedGeneralization(UMLGeneralization umlGeneralization) {
@@ -478,14 +472,16 @@ public class UMLModelDiff {
 
    private List<ConvertAnonymousClassToTypeRefactoring> identifyConvertAnonymousClassToTypeRefactorings() {
       List<ConvertAnonymousClassToTypeRefactoring> refactorings = new ArrayList<ConvertAnonymousClassToTypeRefactoring>();
-      for(UMLAnonymousClass anonymousClass : removedAnonymousClasses) {
-         for(UMLClass addedClass : addedClasses) {
-            if(addedClass.getAttributes().containsAll(anonymousClass.getAttributes()) &&
-                  addedClass.getOperations().containsAll(anonymousClass.getOperations())) {
-               ConvertAnonymousClassToTypeRefactoring refactoring = new ConvertAnonymousClassToTypeRefactoring(anonymousClass, addedClass);
-               refactorings.add(refactoring);
-            }
-         }
+      for(UMLClassDiff classDiff : commonClassDiffList) {
+	      for(UMLAnonymousClass anonymousClass : classDiff.getRemovedAnonymousClasses()) {
+	         for(UMLClass addedClass : addedClasses) {
+	            if(addedClass.getAttributes().containsAll(anonymousClass.getAttributes()) &&
+	                  addedClass.getOperations().containsAll(anonymousClass.getOperations())) {
+	               ConvertAnonymousClassToTypeRefactoring refactoring = new ConvertAnonymousClassToTypeRefactoring(anonymousClass, addedClass);
+	               refactorings.add(refactoring);
+	            }
+	         }
+	      }
       }
       return refactorings;
    }

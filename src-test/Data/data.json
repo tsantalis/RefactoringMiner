@@ -2360,10 +2360,7 @@
 	"author": "Simon Brandhof",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method package getPluginMetrics() : List<Metric> extracted from public start() : void in class org.sonar.server.startup.RegisterMetrics"
-	}, {
-		"type": "Extract Method",
-		"description": "Extract Method package register(metrics Iterable) : void extracted from public start() : void in class org.sonar.server.startup.RegisterMetrics"
+		"description": "Extract Method package register(metrics Iterable<Metric>) : void extracted from public start() : void in class org.sonar.server.startup.RegisterMetrics"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method package getMetricsRepositories() : List renamed to package getPluginMetrics() : List in class org.sonar.server.startup.RegisterMetrics"
@@ -2373,6 +2370,9 @@
 	}, {
 		"type": "Move Class",
 		"description": "Move Class org.sonar.core.metric.DefaultMetricFinderTest moved to org.sonar.server.metric.DefaultMetricFinderTest"
+	}, {
+		"type": "Inline Method",
+		"description": "Inline Method private removeExistingUserManagedMetrics(metrics List<Metric>) : List<Metric> inlined to package getPluginMetrics() : List<Metric> in class org.sonar.server.startup.RegisterMetrics"
 	}],
 	"time": "6/18/15 6:52 AM",
 	"id": 1118403
@@ -5687,6 +5687,9 @@
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method protected getBoltPointsArrayResource() : int extracted from private loadBoltPoints(res Resources) : float[] in class com.android.systemui.BatteryMeterView.NormalBatteryMeterDrawable"
+		}, {
+			"type": "Extract Method",
+			"description": "Extract Method protected getBoltPointsArrayResource() : int extracted from private loadBoltPoints(res Resources) : float[] in class com.android.systemui.BatteryMeterView.CircleBatteryMeterDrawable"
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method public internalStoreStatsHistoryInFile(stats BatteryStats, fname String) : void extracted from public storeStatsHistoryInFile(fname String) : void in class com.android.internal.os.BatteryStatsHelper"

@@ -42,6 +42,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private List<CompositeStatementObject> nonMappedInnerNodesT2;
 	private List<UMLOperationBodyMapper> additionalMappers = new ArrayList<UMLOperationBodyMapper>();
 	private static final double MAX_ANONYMOUS_CLASS_DECLARATION_DISTANCE = 0.2;
+	private static final String[] SPECIAL_CHARACTERS = {";", ",", ")", "=", "+", "-", ">", "<", "."};
 	
 	public UMLOperationBodyMapper(UMLOperation operation1, UMLOperation operation2) {
 		this.operation1 = operation1;
@@ -620,6 +621,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private Set<Replacement> findReplacementsWithExactMatching(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			Map<String, String> parameterToArgumentMap) {
+		List<VariableDeclaration> variableDeclarations1 = new ArrayList<VariableDeclaration>(statement1.getVariableDeclarations());
+		List<VariableDeclaration> variableDeclarations2 = new ArrayList<VariableDeclaration>(statement2.getVariableDeclarations());
 		Set<String> variables1 = new LinkedHashSet<String>(statement1.getVariables());
 		Set<String> variables2 = new LinkedHashSet<String>(statement2.getVariables());
 		Set<String> variableIntersection = new LinkedHashSet<String>(variables1);
@@ -656,14 +659,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		//remove methodInvocation covering the entire statement
 		for(String methodInvocation1 : methodInvocationMap1.keySet()) {
 			if((methodInvocation1 + ";\n").equals(statement1.getString()) || methodInvocation1.equals(statement1.getString()) ||
-					("return " + methodInvocation1 + ";\n").equals(statement1.getString())) {
+					("return " + methodInvocation1 + ";\n").equals(statement1.getString()) ||
+					(variableDeclarations1.size() == 1 && variableDeclarations1.get(0).getInitializer() != null &&
+					variableDeclarations1.get(0).getInitializer().equals(methodInvocation1))) {
 				methodInvocations1.remove(methodInvocation1);
 				invocationCoveringTheEntireStatement1 = methodInvocationMap1.get(methodInvocation1);
 			}
 		}
 		for(String methodInvocation2 : methodInvocationMap2.keySet()) {
 			if((methodInvocation2 + ";\n").equals(statement2.getString()) || methodInvocation2.equals(statement2.getString()) ||
-					("return " + methodInvocation2 + ";\n").equals(statement2.getString())) {
+					("return " + methodInvocation2 + ";\n").equals(statement2.getString()) ||
+					(variableDeclarations2.size() == 1 && variableDeclarations2.get(0).getInitializer() != null &&
+					variableDeclarations2.get(0).getInitializer().equals(methodInvocation2))) {
 				methodInvocations2.remove(methodInvocation2);
 				invocationCoveringTheEntireStatement2 = methodInvocationMap2.get(methodInvocation2);
 			}
@@ -770,7 +777,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
 				int minDistance = initialDistanceRaw;
 				for(String s2 : variablesAndMethodInvocations2) {
-					String temp = performReplacement(argumentizedString1, argumentizedString2, s1, s2, variables1, variables2);
+					String temp = performReplacement(argumentizedString1, argumentizedString2, s1, s2, variablesAndMethodInvocations1, variablesAndMethodInvocations2);
 					int distanceRaw = StringDistance.editDistance(temp, argumentizedString2, minDistance);
 					//double distance = (double)StringDistance.editDistance(temp, statement2.getString())/(double)Math.max(temp.length(), statement2.getString().length());
 					if(distanceRaw >= 0 && distanceRaw < initialDistanceRaw) {
@@ -785,7 +792,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						else if(methodInvocations1.contains(s1) && methodInvocations2.contains(s2)) {
 							OperationInvocation invokedOperationBefore = methodInvocationMap1.get(s1);
 							OperationInvocation invokedOperationAfter = methodInvocationMap2.get(s2);
-							if(invokedOperationBefore.compatibleExpression(invokedOperationAfter) && !variableReplacementWithinMethodInvocations(s1, s2, variables1, variables2)) {
+							if(invokedOperationBefore.compatibleExpression(invokedOperationAfter)) {
 								replacement = new MethodInvocationReplacement(s1, s2, invokedOperationBefore, invokedOperationAfter);
 							}
 						}
@@ -804,7 +811,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(!replacementMap.isEmpty()) {
 					Replacement replacement = replacementMap.firstEntry().getValue();
 					replacements.add(replacement);
-					argumentizedString1 = performReplacement(argumentizedString1, argumentizedString2, replacement.getBefore(), replacement.getAfter(), variables1, variables2);
+					argumentizedString1 = performReplacement(argumentizedString1, argumentizedString2, replacement.getBefore(), replacement.getAfter(), variablesAndMethodInvocations1, variablesAndMethodInvocations2);
 					initialDistanceRaw = StringDistance.editDistance(argumentizedString1, argumentizedString2);
 					if(replacementMap.firstEntry().getKey() == 0) {
 						break;
@@ -901,12 +908,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		
 		String s1 = preprocessInput1(statement1, statement2);
 		String s2 = preprocessInput2(statement1, statement2);
+		Set<Replacement> replacementsToBeRemoved = new LinkedHashSet<Replacement>();
+		Set<Replacement> replacementsToBeAdded = new LinkedHashSet<Replacement>();
 		for(Replacement replacement : replacements) {
-			s1 = performReplacement(s1, s2, replacement.getBefore(), replacement.getAfter(), variables1, variables2);
+			s1 = performReplacement(s1, s2, replacement.getBefore(), replacement.getAfter(), variablesAndMethodInvocations1, variablesAndMethodInvocations2);
+			//find variable replacements within method invocation replacements
+			Replacement r = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), variables1, variables2);
+			if(r != null) {
+				replacementsToBeRemoved.add(replacement);
+				replacementsToBeAdded.add(r);
+			}
 		}
+		replacements.removeAll(replacementsToBeRemoved);
+		replacements.addAll(replacementsToBeAdded);
 		boolean isEqualWithReplacement = s1.equals(s2);
 		if(isEqualWithReplacement) {
-			if(statement1.getVariableDeclarations().size() == 1 && statement2.getVariableDeclarations().size() == 1) {
+			if(variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1) {
 				boolean typeReplacement = false, variableRename = false, methodInvocationReplacement = false;
 				for(Replacement replacement : replacements) {
 					if(replacement instanceof TypeReplacement)
@@ -1052,7 +1069,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return null;
 	}
 
-	private boolean variableReplacementWithinMethodInvocations(String s1, String s2, Set<String> variables1, Set<String> variables2) {
+	private Replacement variableReplacementWithinMethodInvocations(String s1, String s2, Set<String> variables1, Set<String> variables2) {
 		for(String variable1 : variables1) {
 			if(s1.contains(variable1)) {
 				int startIndex1 = s1.indexOf(variable1);
@@ -1064,13 +1081,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						String substringBeforeIndex2 = s2.substring(0, startIndex2);
 						String substringAfterIndex2 = s2.substring(startIndex2 + variable2.length(), s2.length());
 						if(substringBeforeIndex1.equals(substringBeforeIndex2) && substringAfterIndex1.equals(substringAfterIndex2)) {
-							return true;
+							return new VariableRename(variable1, variable2);
 						}
 					}
 				}
 			}
 		}
-		return false;
+		return null;
 	}
 
 	private boolean containsMethodInvocationReplacement(Set<Replacement> replacements) {
@@ -1105,108 +1122,33 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private String performReplacement(String completeString, String subString, String replacement) {
 		String temp = new String(completeString);
-		boolean replacementOccurred = false;
-		if(completeString.contains(subString + ";")) {
-			//special handling for enhanced for loops
-			temp = temp.replace(subString + ";", replacement + ";");
-			replacementOccurred = true;
-		}
-		if(completeString.contains(subString + ",")) {
-			//special handling for arguments
-			temp = temp.replace(subString + ",", replacement + ",");
-			replacementOccurred = true;
-		}
-		if(completeString.contains(subString + ")")) {
-			//special handling for arguments
-			temp = temp.replace(subString + ")", replacement + ")");
-			replacementOccurred = true;
-		}
-		if(completeString.contains(subString + "=")) {
-			//special handling for variable assignments
-			temp = temp.replace(subString + "=", replacement + "=");
-			replacementOccurred = true;
-		}
-		if(completeString.contains(subString + "+")) {
-			//special handling for postfix expressions
-			temp = temp.replace(subString + "+", replacement + "+");
-			replacementOccurred = true;
-		}
-		if(completeString.contains(subString + "-")) {
-			//special handling for postfix expressions
-			temp = temp.replace(subString + "-", replacement + "-");
-			replacementOccurred = true;
-		}
-		if(completeString.contains(subString + ">")) {
-			//special handling for infix expressions
-			temp = temp.replace(subString + ">", replacement + ">");
-			replacementOccurred = true;
-		}
-		if(completeString.contains(subString + "<")) {
-			//special handling for infix expressions
-			temp = temp.replace(subString + "<", replacement + "<");
-			replacementOccurred = true;
-		}
-		if(completeString.contains(subString + ".")) {
-			//special handling for method invocation expressions
-			temp = temp.replace(subString + ".", replacement + ".");
-			replacementOccurred = true;
-		}
-		if(!replacementOccurred) {
-			temp = completeString.replaceAll(Pattern.quote(subString), Matcher.quoteReplacement(replacement));
+		for(String character : SPECIAL_CHARACTERS) {
+			if(completeString.contains(subString + character)) {
+				temp = temp.replace(subString + character, replacement + character);
+			}
 		}
 		return temp;
 	}
 
-	private String performReplacement(String completeString1, String completeString2, String subString1, String subString2, Set<String> variables1, Set<String> variables2) {
+	private String performReplacement(String completeString1, String completeString2, String subString1, String subString2, Set<String> variables1, Set<String> variables2) {	
 		String temp = new String(completeString1);
 		boolean replacementOccurred = false;
-		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + ";") && completeString2.contains(subString2 + ";")) {
-			//special handling for enhanced for loops
-			temp = temp.replace(subString1 + ";", subString2 + ";");
-			replacementOccurred = true;
+		for(String character : SPECIAL_CHARACTERS) {
+			if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + character) && completeString2.contains(subString2 + character)) {
+				temp = temp.replace(subString1 + character, subString2 + character);
+				replacementOccurred = true;
+			}
 		}
-		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + ",") && completeString2.contains(subString2 + ",")) {
-			//special handling for arguments
-			temp = temp.replace(subString1 + ",", subString2 + ",");
-			replacementOccurred = true;
-		}
-		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + ")") && completeString2.contains(subString2 + ")")) {
-			//special handling for arguments
-			temp = temp.replace(subString1 + ")", subString2 + ")");
-			replacementOccurred = true;
-		}
-		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + "=") && completeString2.contains(subString2 + "=")) {
-			//special handling for variable assignments
-			temp = temp.replace(subString1 + "=", subString2 + "=");
-			replacementOccurred = true;
-		}
-		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + "+") && completeString2.contains(subString2 + "+")) {
-			//special handling for postfix expressions
-			temp = temp.replace(subString1 + "+", subString2 + "+");
-			replacementOccurred = true;
-		}
-		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + "-") && completeString2.contains(subString2 + "-")) {
-			//special handling for postfix expressions
-			temp = temp.replace(subString1 + "-", subString2 + "-");
-			replacementOccurred = true;
-		}
-		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + ">") && completeString2.contains(subString2 + ">")) {
-			//special handling for infix expressions
-			temp = temp.replace(subString1 + ">", subString2 + ">");
-			replacementOccurred = true;
-		}
-		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + "<") && completeString2.contains(subString2 + "<")) {
-			//special handling for infix expressions
-			temp = temp.replace(subString1 + "<", subString2 + "<");
-			replacementOccurred = true;
-		}
-		if(variables1.contains(subString1) && variables2.contains(subString2) && completeString1.contains(subString1 + ".") && completeString2.contains(subString2 + ".")) {
-			//special handling for method invocation expressions
-			temp = temp.replace(subString1 + ".", subString2 + ".");
-			replacementOccurred = true;
-		}
-		if(!replacementOccurred) {
-			temp = completeString1.replaceAll(Pattern.quote(subString1), Matcher.quoteReplacement(subString2));
+		if(!replacementOccurred && completeString1.contains(subString1) && completeString2.contains(subString2)) {
+			try {
+				char nextCharacter1 = completeString1.charAt(completeString1.indexOf(subString1) + subString1.length());
+				char nextCharacter2 = completeString2.charAt(completeString2.indexOf(subString2) + subString2.length());
+				if(nextCharacter1 == nextCharacter2) {
+					temp = completeString1.replaceAll(Pattern.quote(subString1), Matcher.quoteReplacement(subString2));
+				}
+			} catch(IndexOutOfBoundsException e) {
+				return temp;
+			}
 		}
 		return temp;
 	}

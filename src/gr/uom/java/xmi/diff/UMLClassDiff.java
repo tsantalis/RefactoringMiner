@@ -489,7 +489,6 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 
 	public void checkForInlinedOperations() {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
-		List<UMLOperationBodyMapper> mappersToBeAdded = new ArrayList<UMLOperationBodyMapper>();
 		for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 			UMLOperation removedOperation = removedOperationIterator.next();
 			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
@@ -503,7 +502,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 							break;
 						}
 					}
-					if(removedOperationInvocation != null) {
+					if(removedOperationInvocation != null && !invocationMatchesWithAddedOperation(removedOperationInvocation, mapper.getOperation2().getBody().getAllOperationInvocations())) {
 						List<String> arguments = removedOperationInvocation.getArguments();
 						List<String> parameters = removedOperation.getParameterNameList();
 						Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
@@ -514,9 +513,6 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 						operationBodyMapper.getMappings();
 						int mappings = operationBodyMapper.mappingsWithoutBlocks();
 						if(mappings > 0 && (mappings > operationBodyMapper.nonMappedElementsT1() || operationBodyMapper.exactMatches() > 0)) {
-							if(operationBodyMapper.nonMappedElementsT1() > 0) {
-								mappersToBeAdded.add(operationBodyMapper);
-							}
 							InlineOperationRefactoring inlineOperationRefactoring =
 									new InlineOperationRefactoring(removedOperation, operationBodyMapper.getOperation2(), operationBodyMapper.getOperation2().getClassName());
 							refactorings.add(inlineOperationRefactoring);
@@ -529,7 +525,18 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		}
 		removedOperations.removeAll(operationsToBeRemoved);
 	}
-	
+
+	private boolean invocationMatchesWithAddedOperation(OperationInvocation removedOperationInvocation, Set<OperationInvocation> operationInvocationsInNewMethod) {
+		if(operationInvocationsInNewMethod.contains(removedOperationInvocation)) {
+			for(UMLOperation addedOperation : addedOperations) {
+				if(removedOperationInvocation.matchesOperation(addedOperation)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public void checkForExtractedOperations() {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
 		for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {

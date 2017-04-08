@@ -48,7 +48,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		this.setRefactoringTypesToConsider(
 			RefactoringType.RENAME_CLASS,
 			RefactoringType.MOVE_CLASS,
-			RefactoringType.MOVE_CLASS_FOLDER,
+			RefactoringType.MOVE_SOURCE_FOLDER,
 			RefactoringType.RENAME_METHOD,
 			RefactoringType.EXTRACT_OPERATION,
 			RefactoringType.INLINE_OPERATION,

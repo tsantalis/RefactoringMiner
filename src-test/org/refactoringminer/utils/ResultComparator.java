@@ -253,7 +253,7 @@ public class ResultComparator {
             if (expectedUnfiltered.contains(new RefactoringRelationship(RefactoringType.MOVE_CLASS, parentOf(parentOf(r.getEntityBefore())), parentOf(parentOf(r.getEntityAfter()))))) {
                 return true;
             }
-            if (expectedUnfiltered.contains(new RefactoringRelationship(RefactoringType.MOVE_CLASS_FOLDER, parentOf(r.getEntityBefore()), parentOf(r.getEntityAfter())))) {
+            if (expectedUnfiltered.contains(new RefactoringRelationship(RefactoringType.MOVE_SOURCE_FOLDER, parentOf(r.getEntityBefore()), parentOf(r.getEntityAfter())))) {
                 return true;
             }
         }

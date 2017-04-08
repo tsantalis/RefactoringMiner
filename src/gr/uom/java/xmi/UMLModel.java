@@ -146,8 +146,6 @@ public class UMLModel {
     			}
     		}
     	}
-    	modelDiff.checkForOperationMoves();
-    	modelDiff.checkForExtractedAndMovedOperations();
     	return modelDiff;
     }
 }

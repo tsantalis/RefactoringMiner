@@ -82,6 +82,12 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable {
 		return false;
 	}
 
+	public boolean equalsIgnoringChangedVisibility(UMLAttribute attribute) {
+		if(this.name.equals(attribute.name) && this.type.equals(attribute.type))
+			return true;
+		return false;
+	}
+
 	public boolean equals(Object o) {
 		if(this == o) {
     		return true;

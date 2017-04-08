@@ -29,7 +29,7 @@ public class RefactoringPopulator {
 	public enum Refactorings {
 		MoveMethod(1), MoveAttribute(2), InlineMethod(4), ExtractMethod(8), PushDownMethod(16), PushDownAttribute(
 				32), PullUpMethod(64), PullUpAttribute(128), ExtractInterface(
-						256), ExtractSuperclass(512), MoveClass(1024), RenamePackage(2048),RenameMethod(4096), ExtractAndMoveMethod(8192), RenameClass(16384), All(32767);
+						256), ExtractSuperclass(512), MoveClass(1024), RenamePackage(2048),RenameMethod(4096), ExtractAndMoveMethod(8192), RenameClass(16384), MoveSourceFolder(32768), All(65535);
 		private int value;
 
 		private Refactorings(int value) {

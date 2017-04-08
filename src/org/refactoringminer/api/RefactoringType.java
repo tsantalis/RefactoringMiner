@@ -19,7 +19,7 @@ public enum RefactoringType {
 	PULL_UP_OPERATION("Pull Up Method", "Pull Up Method (.+) from class (.+) to (.+) from class (.+)", 1, 2),
 	MOVE_CLASS("Move Class", "Move Class (.+) moved to (.+)"),
 	MOVE_RENAME_CLASS("Move And Rename Class", ".+"),
-	MOVE_CLASS_FOLDER("Move Class Folder", ".+"),
+	MOVE_SOURCE_FOLDER("Move Source Folder", "Move Source Folder (.+) to (.+)"),
 	PULL_UP_ATTRIBUTE("Pull Up Attribute", "Pull Up Attribute (.+) from class (.+) to class (.+)", 2),
 	PUSH_DOWN_ATTRIBUTE("Push Down Attribute", "Push Down Attribute (.+) from class (.+) to class (.+)", 3),
 	PUSH_DOWN_OPERATION("Push Down Method", "Push Down Method (.+) from class (.+) to (.+) from class (.+)", 3, 4),

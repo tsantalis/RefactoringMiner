@@ -159,6 +159,22 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		return false;
 	}
 
+	public UMLOperation containsRemovedOperationWithTheSameSignature(UMLOperation operation) {
+		for(UMLOperation removedOperation : removedOperations) {
+			if(removedOperation.equalSignature(operation))
+				return removedOperation;
+		}
+		return null;
+	}
+
+	public UMLAttribute containsRemovedAttributeWithTheSameSignature(UMLAttribute attribute) {
+		for(UMLAttribute removedAttribute : removedAttributes) {
+			if(removedAttribute.equalsIgnoringChangedVisibility(attribute))
+				return removedAttribute;
+		}
+		return null;
+	}
+
 	public boolean isEmpty() {
 		return addedOperations.isEmpty() && removedOperations.isEmpty() &&
 			addedAttributes.isEmpty() && removedAttributes.isEmpty() &&

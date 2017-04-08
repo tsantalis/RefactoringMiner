@@ -151,12 +151,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 		int i=0;
 		for(UMLParameter thisParameter : this.parameters) {
 			UMLParameter otherParameter = operation.parameters.get(i);
-			//String thisParameterType = thisParameter.getType().getClassType();
-			//String otherParameterType = otherParameter.getType().getClassType();
-			//if(!thisParameterType.equals(this.className) && !otherParameterType.equals(operation.className)) {
 			if(!thisParameter.equals(otherParameter) && !thisParameter.equalsExcludingType(otherParameter))
 				return false;
-			//}
 			i++;
 		}
 		return true;

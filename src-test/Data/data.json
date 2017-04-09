@@ -162,7 +162,7 @@
 			"description": "Extract Method protected failedSubscribe(s Subscription) : void extracted from public onSubscribe(s Subscription) : void in class co.paralleluniverse.strands.channels.reactivestreams.ChannelSubscriber"
 		}, {
 			"type": "Extract Method",
-			"description": "Extract Method protected failedSubscribe(s Subscriber, t Throwable) : void extracted from public subscribe(s Subscriber) : void in class co.paralleluniverse.strands.channels.reactivestreams.ChannelPublisher"
+			"description": "Extract Method protected failedSubscribe(s Subscriber<? super T>, t Throwable) : void extracted from public subscribe(s Subscriber<? super T>) : void in class co.paralleluniverse.strands.channels.reactivestreams.ChannelPublisher"
 		}
 
 	],
@@ -706,16 +706,16 @@
 			"description": "Move Method private isOperator(op String) : boolean from class io.undertow.server.handlers.builder.HandlerParser to class io.undertow.server.handlers.builder.PredicatedHandlersParser"
 		},{
 			"type":"Move Method",
-			"description":"Move Method private coerceToType(string String, token Token, type Class, attributeParser ExchangeAttributeParser) : Object from class io.undertow.predicate.PredicateParser to private coerceToType(string String, token Token, type Class, attributeParser ExchangeAttributeParser) : Object from class io.undertow.server.handlers.builder.PredicatedHandlersParser"
+			"description":"Move Method private coerceToType(string String, token Token, type Class<?>, attributeParser ExchangeAttributeParser) : Object from class io.undertow.predicate.PredicateParser to private coerceToType(string String, token Token, type Class<?>, attributeParser ExchangeAttributeParser) : Object from class io.undertow.server.handlers.builder.PredicatedHandlersParser"
 		},{
 			"type":"Move Method",
-			"description":"Move Method package tokenize(string String) : Deque from class io.undertow.server.handlers.builder.HandlerParser to public tokenize(string String) : Deque from class io.undertow.server.handlers.builder.PredicatedHandlersParser"
+			"description":"Move Method package tokenize(string String) : Deque<Token> from class io.undertow.server.handlers.builder.HandlerParser to public tokenize(string String) : Deque<Token> from class io.undertow.server.handlers.builder.PredicatedHandlersParser"
 		},{
 			"type":"Move Method",
 			"description":"Move Method private isSpecialChar(token String) : boolean from class io.undertow.predicate.PredicateParser to private isSpecialChar(token String) : boolean from class io.undertow.server.handlers.builder.PredicatedHandlersParser"
 		},{
 			"type":"Move Method",
-			"description":"Move Method private coerceToType(string String, token Token, type Class, attributeParser ExchangeAttributeParser) : Object from class io.undertow.server.handlers.builder.HandlerParser to private coerceToType(string String, token Token, type Class, attributeParser ExchangeAttributeParser) : Object from class io.undertow.server.handlers.builder.PredicatedHandlersParser"
+			"description":"Move Method private coerceToType(string String, token Token, type Class<?>, attributeParser ExchangeAttributeParser) : Object from class io.undertow.server.handlers.builder.HandlerParser to private coerceToType(string String, token Token, type Class<?>, attributeParser ExchangeAttributeParser) : Object from class io.undertow.server.handlers.builder.PredicatedHandlersParser"
 		},{
 			"type":"Move Method",
 			"description":"Move Method private precedence(operator String) : int from class io.undertow.server.handlers.builder.HandlerParser to private precedence(operator String) : int from class io.undertow.server.handlers.builder.PredicatedHandlersParser"
@@ -1315,7 +1315,7 @@
 		"description": "Extract Method public has(key CFString) : boolean extracted from public getMakerPentaxData() : CFDictionary in class org.robovm.apple.imageio.CGImageProperties"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method public has(key NSString) : boolean extracted from public getSolicitedServiceUUIDs() : NSArray in class org.robovm.apple.corebluetooth.CBCentralManagerScanOptions"
+		"description": "Extract Method public has(key NSString) : boolean extracted from public getSolicitedServiceUUIDs() : NSArray<CBUUID> in class org.robovm.apple.corebluetooth.CBCentralManagerScanOptions"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public has(key CFString) : boolean extracted from public getMakerNikonData() : CGImagePropertyNikonData in class org.robovm.apple.imageio.CGImageProperties"
@@ -1348,10 +1348,10 @@
 		"description": "Extract Method public has(key CFString) : boolean extracted from public getMakerCanonData() : CGImagePropertyCanonData in class org.robovm.apple.imageio.CGImageProperties"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method public has(key NSString) : boolean extracted from public getSolicitedServiceUUIDs() : NSArray in class org.robovm.apple.corebluetooth.CBAdvertisementData"
+		"description": "Extract Method public has(key NSString) : boolean extracted from public getSolicitedServiceUUIDs() : NSArray<CBUUID> in class org.robovm.apple.corebluetooth.CBAdvertisementData"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method public has(key NSString) : boolean extracted from public getOverflowServiceUUIDs() : NSArray in class org.robovm.apple.corebluetooth.CBAdvertisementData"
+		"description": "Extract Method public has(key NSString) : boolean extracted from public getOverflowServiceUUIDs() : NSArray<CBUUID> in class org.robovm.apple.corebluetooth.CBAdvertisementData"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public has(key CFString) : boolean extracted from public getFileSize() : long in class org.robovm.apple.imageio.CGImageProperties"
@@ -1366,7 +1366,7 @@
 		"description": "Extract Method public has(key CFString) : boolean extracted from public getBackgroundColor() : CGColor in class org.robovm.apple.imageio.CGImageDestinationProperties"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method public has(key NSString) : boolean extracted from public getPeripherals() : NSArray in class org.robovm.apple.corebluetooth.CBCentralManagerRestoredState"
+		"description": "Extract Method public has(key NSString) : boolean extracted from public getPeripherals() : NSArray<CBPeripheral> in class org.robovm.apple.corebluetooth.CBCentralManagerRestoredState"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public has(key CFString) : boolean extracted from public getDPIHeight() : long in class org.robovm.apple.imageio.CGImageProperties"
@@ -1441,7 +1441,7 @@
 		"description": "Extract Method public has(key CFString) : boolean extracted from public getMetadata() : CGImageMetadata in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method public has(key NSString) : boolean extracted from public getScanServices() : NSArray in class org.robovm.apple.corebluetooth.CBCentralManagerRestoredState"
+		"description": "Extract Method public has(key NSString) : boolean extracted from public getScanServices() : NSArray<CBUUID> in class org.robovm.apple.corebluetooth.CBCentralManagerRestoredState"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public has(key CFString) : boolean extracted from public getTIFFData() : CGImagePropertyTIFFData in class org.robovm.apple.imageio.CGImageProperties"
@@ -1702,10 +1702,10 @@
 		"description": "Move Class com.facebook.buck.cxx.AbstractCxxPreprocessorInput.ConflictingHeadersException moved to com.facebook.buck.cxx.AbstractCxxHeaders.ConflictingHeadersException"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private addAllEntriesToIncludeMap(destination Map, source Map) : void from class com.facebook.buck.cxx.AbstractCxxPreprocessorInput to public addAllEntriesToIncludeMap(destination Map, source Map) : void from class com.facebook.buck.cxx.AbstractCxxHeaders"
+		"description": "Move Method private addAllEntriesToIncludeMap(destination Map<Path,SourcePath>, source Map<Path,SourcePath>) : void from class com.facebook.buck.cxx.AbstractCxxPreprocessorInput to public addAllEntriesToIncludeMap(destination Map<Path,SourcePath>, source Map<Path,SourcePath>) : void from class com.facebook.buck.cxx.AbstractCxxHeaders"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method public combineCxxPreprocessorInput(params BuildRuleParams, cxxPlatform CxxPlatform, preprocessorFlags ImmutableMultimap<CxxSource.Type, String>, prefixHeaders ImmutableList<SourcePath>, headerSymlinkTrees ImmutableList<SymlinkTree>, frameworkSearchPaths ImmutableList<Path>, cxxPreprocessorInputFromDeps Iterable<CxxPreprocessorInput>) : CxxPreprocessorInput renamed to public collectCxxPreprocessorInput(params BuildRuleParams, cxxPlatform CxxPlatform, preprocessorFlags ImmutableMultimap<CxxSource.Type, String>, prefixHeaders ImmutableList<SourcePath>, headerSymlinkTrees ImmutableList<SymlinkTree>, frameworkSearchPaths ImmutableList<Path>, cxxPreprocessorInputFromDeps Iterable<CxxPreprocessorInput>) : ImmutableList<CxxPreprocessorInput> in class com.facebook.buck.cxx.CxxDescriptionEnhancer"
+		"description": "Rename Method public combineCxxPreprocessorInput(params BuildRuleParams, cxxPlatform CxxPlatform, preprocessorFlags ImmutableMultimap<CxxSource.Type,String>, prefixHeaders ImmutableList<SourcePath>, headerSymlinkTrees ImmutableList<SymlinkTree>, frameworkSearchPaths ImmutableList<Path>, cxxPreprocessorInputFromDeps Iterable<CxxPreprocessorInput>) : CxxPreprocessorInput renamed to public collectCxxPreprocessorInput(params BuildRuleParams, cxxPlatform CxxPlatform, preprocessorFlags ImmutableMultimap<CxxSource.Type,String>, prefixHeaders ImmutableList<SourcePath>, headerSymlinkTrees ImmutableList<SymlinkTree>, frameworkSearchPaths ImmutableList<Path>, cxxPreprocessorInputFromDeps Iterable<CxxPreprocessorInput>) : ImmutableList<CxxPreprocessorInput> in class com.facebook.buck.cxx.CxxDescriptionEnhancer"
 	}],
 	"time": "6/16/15 4:55 PM",
 	"id": 1117640
@@ -2420,10 +2420,10 @@
 		"description": "Move Attribute private configuration : Configuration from class org.infinispan.tx.TransactionXaAdapterTmIntegrationTest to class org.infinispan.partitionhandling.impl.PartitionHandlingManagerImpl"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method public removeRecoveryInformationFromCluster(where Collection, xid Xid, sync boolean, gtx GlobalTransaction) : void renamed to public removeRecoveryInformation(where Collection, xid Xid, sync boolean, gtx GlobalTransaction, fromCluster boolean) : void in class org.infinispan.tx.recovery.PostCommitRecoveryStateTest.RecoveryManagerDelegate"
+		"description": "Rename Method public removeRecoveryInformationFromCluster(where Collection<Address>, xid Xid, sync boolean, gtx GlobalTransaction) : void renamed to public removeRecoveryInformation(where Collection<Address>, xid Xid, sync boolean, gtx GlobalTransaction, fromCluster boolean) : void in class org.infinispan.tx.recovery.PostCommitRecoveryStateTest.RecoveryManagerDelegate"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method public removeRecoveryInformationFromCluster(lockOwners Collection, xid Xid, sync boolean, gtx GlobalTransaction) : void renamed to public removeRecoveryInformation(lockOwners Collection, xid Xid, sync boolean, gtx GlobalTransaction, fromCluster boolean) : void in class org.infinispan.transaction.xa.recovery.RecoveryManagerImpl"
+		"description": "Rename Method public removeRecoveryInformationFromCluster(lockOwners Collection<Address>, xid Xid, sync boolean, gtx GlobalTransaction) : void renamed to public removeRecoveryInformation(lockOwners Collection<Address>, xid Xid, sync boolean, gtx GlobalTransaction, fromCluster boolean) : void in class org.infinispan.transaction.xa.recovery.RecoveryManagerImpl"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method protected assertNotLocked(cache Cache, key Object) : void renamed to protected assertEventuallyNotLocked(cache Cache, key Object) : void in class org.infinispan.test.AbstractCacheTest"
@@ -2474,10 +2474,10 @@
 		"description": "Extract Method package register(metrics Iterable<Metric>) : void extracted from public start() : void in class org.sonar.server.startup.RegisterMetrics"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method package getMetricsRepositories() : List renamed to package getPluginMetrics() : List in class org.sonar.server.startup.RegisterMetrics"
+		"description": "Rename Method package getMetricsRepositories() : List<Metric> renamed to package getPluginMetrics() : List<Metric> in class org.sonar.server.startup.RegisterMetrics"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method public disable(session DbSession, ids List) : void renamed to public disableByIds(session DbSession, ids List) : void in class org.sonar.server.metric.persistence.MetricDao"
+		"description": "Rename Method public disable(session DbSession, ids List<Integer>) : void renamed to public disableByIds(session DbSession, ids List<Integer>) : void in class org.sonar.server.metric.persistence.MetricDao"
 	}, {
 		"type": "Move Class",
 		"description": "Move Class org.sonar.core.metric.DefaultMetricFinderTest moved to org.sonar.server.metric.DefaultMetricFinderTest"
@@ -2521,7 +2521,7 @@
 		"description":"Rename Method public newQuery(value Object) : Query renamed to public newValueQuery(value Object) : Query in class org.neo4j.kernel.api.impl.index.LuceneDocumentStructure"
 	}, {
 		"type": "Rename Method",
-		"description":"Rename Method protected getAllNodes(propertyValue String) : List renamed to protected getAllNodesWithProperty(propertyValue String) : List in class org.neo4j.kernel.api.index.IndexAccessorCompatibility"
+		"description":"Rename Method protected getAllNodes(propertyValue String) : List<Long> renamed to protected getAllNodesWithProperty(propertyValue String) : List<Long> in class org.neo4j.kernel.api.index.IndexAccessorCompatibility"
 	}, {
 		"type": "Rename Method",
 		"description":"Rename Method public newQueryForChangeOrRemove(nodeId long) : Term renamed to public newTermForChangeOrRemove(nodeId long) : Term in class org.neo4j.kernel.api.impl.index.LuceneDocumentStructure"
@@ -2734,7 +2734,7 @@
 		"description": "Extract Method private assertMissingTextAttribute(attributes Map<String,Object>) : void extracted from public synthesizeAnnotationFromMapWithNullAttributeValue() : void in class org.springframework.core.annotation.AnnotationUtilsTests"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method private validateAttributes(attributes Map<String, Object>, annotationType Class<? extends Annotation>) : void renamed to private enrichAndValidateAttributes(attributes Map<String, Object>, annotationType Class<? extends Annotation>) : Map<String, Object> in class org.springframework.core.annotation.MapAnnotationAttributeExtractor"
+		"description": "Rename Method private validateAttributes(attributes Map<String,Object>, annotationType Class<? extends Annotation>) : void renamed to private enrichAndValidateAttributes(attributes Map<String,Object>, annotationType Class<? extends Annotation>) : Map<String,Object> in class org.springframework.core.annotation.MapAnnotationAttributeExtractor"
 	}],
 	"time": "6/19/15 10:27 AM",
 	"id": 1120106
@@ -3334,10 +3334,10 @@
 	"author": "Andriy Rysin",
 	"refactorings": [{
 		"type": "Move Attribute",
-		"description": "Move Attribute public VIDMINKY_MAP : Map from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.PosTagHelper"
+		"description": "Move Attribute public VIDMINKY_MAP : Map<String,String> from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.PosTagHelper"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method private hasRequiredPosTag(posTagsToFind Collection, tokenReadings AnalyzedTokenReadings) : boolean renamed to private getReadingWithVidmPosTag(posTagsToFind Collection, tokenReadings AnalyzedTokenReadings) : boolean in class org.languagetool.rules.uk.TokenAgreementRule"
+		"description": "Rename Method private hasRequiredPosTag(posTagsToFind Collection<String>, tokenReadings AnalyzedTokenReadings) : boolean renamed to private getReadingWithVidmPosTag(posTagsToFind Collection<String>, tokenReadings AnalyzedTokenReadings) : boolean in class org.languagetool.rules.uk.TokenAgreementRule"
 	}],
 	"time": "6/21/15 12:33 PM",
 	"id": 1121417
@@ -4394,10 +4394,10 @@
 		"description": "Inline Method private assertCancelled(controls String, testQuery String, listener WaitUntilCompleteListener) : void inlined to private assertCancelledWithoutException(controls String, listener WaitUntilCompleteListener, query String) : void in class org.apache.drill.exec.server.TestDrillbitResilience"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method private assertCompleteState(result Pair, expectedState QueryState) : void renamed to private assertStateCompleted(result Pair, expectedState QueryState) : void in class org.apache.drill.exec.server.TestDrillbitResilience"
+		"description": "Rename Method private assertCompleteState(result Pair<QueryState,Exception>, expectedState QueryState) : void renamed to private assertStateCompleted(result Pair<QueryState,Exception>, expectedState QueryState) : void in class org.apache.drill.exec.server.TestDrillbitResilience"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method public resumeFragment(outcomeListener RpcOutcomeListener, handle FragmentHandle) : void renamed to public unpauseFragment(outcomeListener RpcOutcomeListener, handle FragmentHandle) : void in class org.apache.drill.exec.rpc.control.ControlTunnel"
+		"description": "Rename Method public resumeFragment(outcomeListener RpcOutcomeListener<Ack>, handle FragmentHandle) : void renamed to public unpauseFragment(outcomeListener RpcOutcomeListener<Ack>, handle FragmentHandle) : void in class org.apache.drill.exec.rpc.control.ControlTunnel"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public cancelBeforeAnyResultsArrive() : void renamed to public cancelWhenQueryIdArrives() : void in class org.apache.drill.exec.server.TestDrillbitResilience"
@@ -4415,7 +4415,7 @@
 		"description": "Rename Method private testInterruptingBlockedFragmentsWaitingForData(control String) : void renamed to private interruptingBlockedFragmentsWaitingForData(control String) : void in class org.apache.drill.exec.server.TestDrillbitResilience"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method private assertExceptionInjected(throwable Throwable, exceptionClass Class, desc String) : void renamed to private assertExceptionMessage(throwable Throwable, exceptionClass Class, desc String) : void in class org.apache.drill.exec.server.TestDrillbitResilience"
+		"description": "Rename Method private assertExceptionInjected(throwable Throwable, exceptionClass Class<? extends Throwable>, desc String) : void renamed to private assertExceptionMessage(throwable Throwable, exceptionClass Class<? extends Throwable>, desc String) : void in class org.apache.drill.exec.server.TestDrillbitResilience"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public settingNoopInjectionsAndQuery() : void renamed to public settingNoOpInjectionsAndQuery() : void in class org.apache.drill.exec.server.TestDrillbitResilience"
@@ -4444,7 +4444,7 @@
 		"description": "Extract Method private pause(delay long) : void extracted from private pauseExponentially(retries int) : void in class com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method private callUntilCompletion(batch Map) : FailedBatch renamed to private doBatchWriteItemWithRetry(batch Map, batchWriteRetryStrategy BatchWriteRetryStrategy) : FailedBatch in class com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper"
+		"description": "Rename Method private callUntilCompletion(batch Map<String,List<WriteRequest>>) : FailedBatch renamed to private doBatchWriteItemWithRetry(batch Map<String,List<WriteRequest>>, batchWriteRetryStrategy BatchWriteRetryStrategy) : FailedBatch in class com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper"
 	}, {
 		"type": "Rename Class",
 		"description": "Rename Class com.amazonaws.services.elasticfilesystem.model.transform.BadRequestExceptionUnmarshaller renamed to com.amazonaws.services.config.model.transform.InvalidRecordingGroupExceptionUnmarshaller"
@@ -4596,13 +4596,13 @@
 		"description": "Inline Method public createFileSystem(proxyUserName String, fsConf Configuration, stats OperatorStats) : DrillFileSystem inlined to public createFileSystem(proxyUserName String, fsConf Configuration) : DrillFileSystem in class org.apache.drill.exec.util.ImpersonationUtil"
 	},{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public addMiniDfsBasedStorage() : void from class org.apache.drill.exec.impersonation.TestImpersonationMetadata to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation"
+		"description": "Pull Up Method public addMiniDfsBasedStorage() : void from class org.apache.drill.exec.impersonation.TestImpersonationMetadata to protected addMiniDfsBasedStorage(workspaces Map<String,WorkspaceConfig>) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation"
 	},{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public addMiniDfsBasedStorage() : void from class org.apache.drill.exec.impersonation.TestImpersonationDisabledWithMiniDFS to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation"
+		"description": "Pull Up Method public addMiniDfsBasedStorage() : void from class org.apache.drill.exec.impersonation.TestImpersonationDisabledWithMiniDFS to protected addMiniDfsBasedStorage(workspaces Map<String,WorkspaceConfig>) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation"
 	},{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public addMiniDfsBasedStorageAndGenerateTestData() : void from class org.apache.drill.exec.impersonation.TestImpersonationQueries to protected addMiniDfsBasedStorage(workspaces Map) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation"
+		"description": "Pull Up Method public addMiniDfsBasedStorageAndGenerateTestData() : void from class org.apache.drill.exec.impersonation.TestImpersonationQueries to protected addMiniDfsBasedStorage(workspaces Map<String,WorkspaceConfig>) : void from class org.apache.drill.exec.impersonation.BaseTestImpersonation"
 	}
 ],
 	"time": "6/25/15 11:53 AM",
@@ -4613,10 +4613,10 @@
 	"author": "Simon Stewart",
 	"refactorings": [{
 		"type": "Move Attribute",
-		"description": "Move Attribute private PATH_TO_URL : Function from class com.facebook.buck.util.ClassLoaderCache to class com.facebook.buck.java.JarBackedJavac"
+		"description": "Move Attribute private PATH_TO_URL : Function<Path,URL> from class com.facebook.buck.util.ClassLoaderCache to class com.facebook.buck.java.JarBackedJavac"
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute private PATH_TO_URL : Function from class com.facebook.buck.util.ClassLoaderCacheTest to class com.facebook.buck.java.JarBackedJavac"
+		"description": "Move Attribute private PATH_TO_URL : Function<Path,URL> from class com.facebook.buck.util.ClassLoaderCacheTest to class com.facebook.buck.java.JarBackedJavac"
 	}],
 	"time": "6/25/15 3:55 PM",
 	"id": 1124975
@@ -5004,7 +5004,7 @@
 	"author": "Jochen Schalanda",
 	"refactorings": [{
 		"type": "Move Attribute",
-		"description": "Move Attribute package COMPARATOR : Comparator from class org.graylog2.indexer.ranges.MongoIndexRangeService to class org.graylog2.indexer.ranges.IndexRange"
+		"description": "Move Attribute package COMPARATOR : Comparator<IndexRange> from class org.graylog2.indexer.ranges.MongoIndexRangeService to class org.graylog2.indexer.ranges.IndexRange"
 	}],
 	"time": "6/30/15 8:11 AM",
 	"id": 1130163
@@ -5137,7 +5137,7 @@
 	"author": "Jonathan McPherson",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method public checkForExistingApp(account RSConnectAccount, appName String, onValidated OperationWithInput) : void from class org.rstudio.studio.client.rsconnect.RSConnect to private checkForExistingApp(account RSConnectAccount, appName String, onValidated OperationWithInput) : void from class org.rstudio.studio.client.rsconnect.ui.RSConnectDeploy"
+		"description": "Move Method public checkForExistingApp(account RSConnectAccount, appName String, onValidated OperationWithInput<Boolean>) : void from class org.rstudio.studio.client.rsconnect.RSConnect to private checkForExistingApp(account RSConnectAccount, appName String, onValidated OperationWithInput<Boolean>) : void from class org.rstudio.studio.client.rsconnect.ui.RSConnectDeploy"
 	}, {
 		"type": "Inline Method",
 		"description": "Inline Method private fireValidatedRSconnectPublish(result RSConnectPublishResult, launchBrowser boolean) : void inlined to public fireRSConnectPublishEvent(result RSConnectPublishResult, launchBrowser boolean) : void in class org.rstudio.studio.client.rsconnect.RSConnect"
@@ -5327,16 +5327,16 @@
 	"author": "Chen Mulong",
 	"refactorings": [{
 		"type": "Move Attribute",
-		"description": "Move Attribute package CASTING_TYPES : Map from class io.realm.processor.RealmProxyClassGenerator to class io.realm.processor.Constants"
+		"description": "Move Attribute package CASTING_TYPES : Map<String,String> from class io.realm.processor.RealmProxyClassGenerator to class io.realm.processor.Constants"
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute package NULLABLE_JAVA_TYPES : Map from class io.realm.processor.RealmProxyClassGenerator to class io.realm.processor.Constants"
+		"description": "Move Attribute package NULLABLE_JAVA_TYPES : Map<String,String> from class io.realm.processor.RealmProxyClassGenerator to class io.realm.processor.Constants"
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute package JAVA_TO_COLUMN_TYPES : Map from class io.realm.processor.RealmProxyClassGenerator to class io.realm.processor.Constants"
+		"description": "Move Attribute package JAVA_TO_COLUMN_TYPES : Map<String,String> from class io.realm.processor.RealmProxyClassGenerator to class io.realm.processor.Constants"
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute package JAVA_TO_REALM_TYPES : Map from class io.realm.processor.RealmProxyClassGenerator to class io.realm.processor.Constants"
+		"description": "Move Attribute package JAVA_TO_REALM_TYPES : Map<String,String> from class io.realm.processor.RealmProxyClassGenerator to class io.realm.processor.Constants"
 	}],
 	"time": "7/3/15 5:44 AM",
 	"id": 1131658
@@ -5368,7 +5368,7 @@
 		"description": "Move Method private writeScriptInclude(builder StringBuilder, scriptName String) : void from class com.gh4a.utils.StringUtils to protected writeScriptInclude(builder StringBuilder, scriptName String) : void from class com.gh4a.activities.WebViewerActivity"
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute private SKIP_PRETTIFY_EXT : List from class com.gh4a.Constants to class com.gh4a.activities.WebViewerActivity"
+		"description": "Move Attribute private SKIP_PRETTIFY_EXT : List<String> from class com.gh4a.Constants to class com.gh4a.activities.WebViewerActivity"
 	}],
 	"time": "7/6/15 4:56 AM",
 	"id": 1133259
@@ -7513,7 +7513,7 @@
 	"author": "Mattias Persson",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method public arrayAsCollection(arrayValue Object) : Collection from class org.neo4j.kernel.impl.util.IoPrimitiveUtils to public arrayAsCollection(arrayValue Object) : Collection from class org.neo4j.graphdb.Neo4jMatchers"
+		"description": "Move Method public arrayAsCollection(arrayValue Object) : Collection<Object> from class org.neo4j.kernel.impl.util.IoPrimitiveUtils to public arrayAsCollection(arrayValue Object) : Collection<Object> from class org.neo4j.graphdb.Neo4jMatchers"
 	}],
 	"time": "7/14/15 5:14 AM",
 	"id": 1140028
@@ -7746,7 +7746,7 @@
 		"description": "Move Class org.antlr.v4.runtime.tree.gui.PostScriptDocument moved to org.antlr.v4.gui.PostScriptDocument"
 	}, {
 		"type": "Inline Method",
-		"description": "Inline Method public toStringTree(t Tree, nodeTextProvider TreeTextProvider) : String inlined to public toStringTree(t Tree, ruleNames List) : String in class org.antlr.v4.runtime.tree.Trees"
+		"description": "Inline Method public toStringTree(t Tree, nodeTextProvider TreeTextProvider) : String inlined to public toStringTree(t Tree, ruleNames List<String>) : String in class org.antlr.v4.runtime.tree.Trees"
 	}
 ],
 	"time": "7/14/15 6:29 PM",
@@ -7829,7 +7829,7 @@
 	"author": "nik",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method private getJUnit4JarPaths() : List from class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix to public getJUnit4JarPaths() : List from class com.intellij.openapi.projectRoots.ex.JavaSdkUtil"
+		"description": "Move Method private getJUnit4JarPaths() : List<String> from class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix to public getJUnit4JarPaths() : List<String> from class com.intellij.openapi.projectRoots.ex.JavaSdkUtil"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public getLibraryPaths() : List<String> extracted from public getLibraryPath() : String in class com.intellij.execution.junit.JUnit4Framework"
@@ -7875,7 +7875,7 @@
 	"author": "Owen O'Malley",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method public getAcidEventFields() : List from class org.apache.hadoop.hive.ql.io.orc.OrcRecordUpdater to package getAcidEventFields() : List from class org.apache.hadoop.hive.ql.io.orc.RecordReaderFactory"
+		"description": "Move Method public getAcidEventFields() : List<String> from class org.apache.hadoop.hive.ql.io.orc.OrcRecordUpdater to package getAcidEventFields() : List<String> from class org.apache.hadoop.hive.ql.io.orc.RecordReaderFactory"
 	}],
 	"time": "7/15/15 6:41 PM",
 	"id": 1142783
@@ -8178,7 +8178,7 @@
 	"author": "Marek Sebera",
 	"refactorings": [{
 		"type": "Move Attribute",
-		"description": "Move Attribute private TAG : WeakReference from class com.loopj.android.http.RequestHandle to class com.loopj.android.http.AsyncHttpResponseHandler"
+		"description": "Move Attribute private TAG : WeakReference<Object> from class com.loopj.android.http.RequestHandle to class com.loopj.android.http.AsyncHttpResponseHandler"
 	}],
 	"time": "7/16/15 7:18 PM",
 	"id": 1143208
@@ -8340,11 +8340,11 @@
 	},
 	{
 		"type": "Rename Method",
-		"description": "Rename Method private getIndexUpdates(label int, propertyKeyId int) : DiffSets renamed to private getIndexUpdatesForScanOrSeek(label int, propertyKeyId int) : DiffSets in class org.neo4j.kernel.impl.api.state.TxState"
+		"description": "Rename Method private getIndexUpdates(label int, propertyKeyId int) : DiffSets<Long> renamed to private getIndexUpdatesForScanOrSeek(label int, propertyKeyId int) : DiffSets<Long> in class org.neo4j.kernel.impl.api.state.TxState"
 	},
 	{
 		"type": "Rename Method",
-		"description": "Rename Method private getIndexUpdates(label int, create boolean, property DefinedProperty) : DiffSets renamed to private getIndexUpdatesForScanOrSeek(label int, create boolean, property DefinedProperty) : DiffSets in class org.neo4j.kernel.impl.api.state.TxState"
+		"description": "Rename Method private getIndexUpdates(label int, create boolean, property DefinedProperty) : DiffSets<Long> renamed to private getIndexUpdatesForScanOrSeek(label int, create boolean, property DefinedProperty) : DiffSets<Long> in class org.neo4j.kernel.impl.api.state.TxState"
 	},
 	{
 		"type": "Rename Method",
@@ -8368,7 +8368,7 @@
 	},
 	{
 		"type": "Rename Method",
-		"description": "Rename Method private addToIndex(labelId int, propertyKeyId int, nodeIds long[]) : void renamed to public withStringProperties(nodesWithValues Collection<Pair<Long, String>>) : void in class org.neo4j.kernel.impl.api.state.TxStateTest"
+		"description": "Rename Method private addToIndex(labelId int, propertyKeyId int, nodeIds long[]) : void renamed to public withStringProperties(nodesWithValues Collection<Pair<Long,String>>) : void in class org.neo4j.kernel.impl.api.state.TxStateTest"
 	}],
 	"time": "7/20/15 6:24 AM",
 	"id": 1144559
@@ -8576,7 +8576,7 @@
 	"author": "jfarcand",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method private getInheritedPrivateFields(type Class) : Set from class org.atmosphere.inject.InjectableObjectFactory to public getInheritedPrivateFields(type Class) : Set from class org.atmosphere.util.Utils"
+		"description": "Move Method private getInheritedPrivateFields(type Class<?>) : Set<Field> from class org.atmosphere.inject.InjectableObjectFactory to public getInheritedPrivateFields(type Class<?>) : Set<Field> from class org.atmosphere.util.Utils"
 	}],
 	"time": "7/22/15 3:38 PM",
 	"id": 1149312
@@ -8596,10 +8596,10 @@
 	"author": "Nikolay Mikhaylov",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List<String> from class org.jetbrains.idea.maven.server.Maven30ServerEmbedderImpl to public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List from class org.jetbrains.idea.maven.server.Maven3ServerEmbedder"
+		"description": "Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List<String> from class org.jetbrains.idea.maven.server.Maven30ServerEmbedderImpl to public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List<String> from class org.jetbrains.idea.maven.server.Maven3ServerEmbedder"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List<String> from class org.jetbrains.idea.maven.server.Maven32ServerEmbedderImpl to public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List from class org.jetbrains.idea.maven.server.Maven3ServerEmbedder"
+		"description": "Pull Up Method public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List<String> from class org.jetbrains.idea.maven.server.Maven32ServerEmbedderImpl to public retrieveAvailableVersions(groupId String, artifactId String, remoteRepositoryUrl String) : List<String> from class org.jetbrains.idea.maven.server.Maven3ServerEmbedder"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public customizeComponents() : void extracted from public customize(workspaceMap MavenWorkspaceMap, failOnUnresolvedDependency boolean, console MavenServerConsole, indicator MavenServerProgressIndicator, alwaysUpdateSnapshots boolean) : void in class org.jetbrains.idea.maven.server.Maven32ServerEmbedderImpl"
@@ -8657,7 +8657,7 @@
 		"description": "Pull Up Attribute protected relationDirection : Direction from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase"
 	}, {
 		"type": "Pull Up Attribute",
-		"description": "Pull Up Attribute protected relationshipSet : Set from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase"
+		"description": "Pull Up Attribute protected relationshipSet : Set<Relationship> from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute protected nodeSet : Set<Node> from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase"
@@ -8669,7 +8669,7 @@
 		"description": "Pull Up Attribute protected nodeSet : Set<Node> from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase"
 	}, {
 		"type": "Pull Up Attribute",
-		"description": "Pull Up Attribute protected relationshipSet : Set from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase"
+		"description": "Pull Up Attribute protected relationshipSet : Set<Relationship> from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute protected doneCalculation : boolean from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase"
@@ -8785,7 +8785,7 @@
 		"description": "Inline Method public generate(schema DataSchema) : ClassTemplateSpec inlined to private generateRecord(schema RecordDataSchema) : RecordTemplateSpec in class com.linkedin.pegasus.generator.TemplateSpecGenerator"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method public getSchemaAndNames() : Collection<CodeUtil.Pair<DataSchema, String>> renamed to public getSchemaAndLocations() : Collection<CodeUtil.Pair<DataSchema, DataSchemaLocation>> in class com.linkedin.pegasus.generator.DataSchemaParser.ParseResult"
+		"description": "Rename Method public getSchemaAndNames() : Collection<CodeUtil.Pair<DataSchema,String>> renamed to public getSchemaAndLocations() : Collection<CodeUtil.Pair<DataSchema,DataSchemaLocation>> in class com.linkedin.pegasus.generator.DataSchemaParser.ParseResult"
 	}],
 	"time": "7/23/15 6:42 PM",
 	"id": 1147644
@@ -8972,10 +8972,10 @@
 	"author": "Rickard O?berg",
 	"refactorings": [{
 		"type": "Move Attribute",
-		"description": "Move Attribute private singlePropertyCursor : InstanceCache from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
+		"description": "Move Attribute private singlePropertyCursor : InstanceCache<StoreSinglePropertyCursor> from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute private allPropertyCursor : InstanceCache from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
+		"description": "Move Attribute private allPropertyCursor : InstanceCache<StorePropertyCursor> from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private nodeDegreeByDirection(nodeId long, group RelationshipGroupRecord, direction Direction) : long from class org.neo4j.kernel.impl.api.store.DiskLayer to private nodeDegreeByDirection(group RelationshipGroupRecord, direction Direction) : long from class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
@@ -8984,7 +8984,7 @@
 		"description": "Move Class org.neo4j.kernel.impl.api.store.DiskLayer.AllStoreIdIterator moved to org.neo4j.kernel.impl.api.store.StoreStatement.AllStoreIdIterator"
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute private singleLabelCursor : InstanceCache from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
+		"description": "Move Attribute private singleLabelCursor : InstanceCache<StoreSingleLabelCursor> from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public nodesGetAllCursor(statement StoreStatement) : Cursor from class org.neo4j.kernel.impl.api.store.DiskLayer to class org.neo4j.kernel.impl.api.store.StoreStatement"
@@ -8996,25 +8996,25 @@
 		"description": "Extract Method private assertHasRelationships(node long) : void extracted from private deleteNode2(node long, prop1 DefinedProperty, prop2 DefinedProperty, prop3 DefinedProperty) : void in class org.neo4j.kernel.impl.store.TestNeoStore"
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute package GET_LABEL : ToIntFunction from class org.neo4j.kernel.api.cursor.LabelItem to class org.neo4j.kernel.api.cursor.NodeItem"
+		"description": "Move Attribute package GET_LABEL : ToIntFunction<LabelItem> from class org.neo4j.kernel.api.cursor.LabelItem to class org.neo4j.kernel.api.cursor.NodeItem"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private directionOf(nodeId long, relationshipId long, startNode long, endNode long) : Direction from class org.neo4j.kernel.impl.api.store.DiskLayer to private directionOf(nodeId long, relationshipId long, startNode long, endNode long) : Direction from class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute private singlePropertyCursor : InstanceCache from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractRelationshipCursor"
+		"description": "Move Attribute private singlePropertyCursor : InstanceCache<StoreSinglePropertyCursor> from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractRelationshipCursor"
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute private allPropertyCursor : InstanceCache from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractRelationshipCursor"
+		"description": "Move Attribute private allPropertyCursor : InstanceCache<StorePropertyCursor> from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractRelationshipCursor"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private countByFirstPrevPointer(nodeId long, relationshipId long) : long from class org.neo4j.kernel.impl.api.store.DiskLayer to private countByFirstPrevPointer(relationshipId long) : long from class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute private labelCursor : InstanceCache from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
+		"description": "Move Attribute private labelCursor : InstanceCache<StoreLabelCursor> from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute private nodeRelationshipCursor : InstanceCache from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
+		"description": "Move Attribute private nodeRelationshipCursor : InstanceCache<StoreNodeRelationshipCursor> from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
 	}, {
 		"type": "Extract Superclass",
 		"description": "Extract Superclass org.neo4j.kernel.api.cursor.NodeItem.NodeItemHelper from class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
@@ -9039,7 +9039,7 @@
 		"description": "Move Method private formatDomain(table TableHandle, column ColumnHandle, domain Domain) : String from class com.facebook.presto.sql.planner.PlanPrinter to private formatDomain(table TableHandle, column ColumnHandle, domain Domain) : String from class com.facebook.presto.sql.planner.PlanPrinter.Visitor"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method private printConstraint(indent int, table TableHandle, column ColumnHandle, constraint TupleDomain) : void from class com.facebook.presto.sql.planner.PlanPrinter to private printConstraint(indent int, table TableHandle, column ColumnHandle, constraint TupleDomain) : void from class com.facebook.presto.sql.planner.PlanPrinter.Visitor"
+		"description": "Move Method private printConstraint(indent int, table TableHandle, column ColumnHandle, constraint TupleDomain<ColumnHandle>) : void from class com.facebook.presto.sql.planner.PlanPrinter to private printConstraint(indent int, table TableHandle, column ColumnHandle, constraint TupleDomain<ColumnHandle>) : void from class com.facebook.presto.sql.planner.PlanPrinter.Visitor"
 	}],
 	"time": "7/25/15 2:59 PM",
 	"id": 1149788
@@ -9289,7 +9289,7 @@
 	"author": "Hassan Eslami",
 	"refactorings": [{
 		"type": "Move Attribute",
-		"description": "Move Attribute private edgeStore : EdgeStore from class org.apache.giraph.comm.ServerData to class org.apache.giraph.partition.SimplePartitionStore"
+		"description": "Move Attribute private edgeStore : EdgeStore<I,V,E> from class org.apache.giraph.comm.ServerData to class org.apache.giraph.partition.SimplePartitionStore"
 	}],
 	"time": "7/27/15 4:20 PM",
 	"id": 1151028
@@ -9773,10 +9773,10 @@
 		"description": "Rename Method public getInt(name T, defaultValue short) : short renamed to public getShort(name T, defaultValue short) : short in class io.netty.handler.codec.EmptyHeaders"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method public visit(entry Entry<ByteString, ByteString>) : boolean renamed to public translate(entry Entry<ByteString, ByteString>) : void in class io.netty.handler.codec.http2.HttpUtil.Http2ToHttpHeaderTranslator"
+		"description": "Rename Method public visit(entry Entry<ByteString,ByteString>) : boolean renamed to public translate(entry Entry<ByteString,ByteString>) : void in class io.netty.handler.codec.http2.HttpUtil.Http2ToHttpHeaderTranslator"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method public visit(entry Entry<CharSequence, CharSequence>) : boolean renamed to public encode(entry Entry<CharSequence, CharSequence>) : void in class io.netty.handler.codec.AsciiHeadersEncoder"
+		"description": "Rename Method public visit(entry Entry<CharSequence,CharSequence>) : boolean renamed to public encode(entry Entry<CharSequence,CharSequence>) : void in class io.netty.handler.codec.AsciiHeadersEncoder"
 	}],
 	"time": "7/30/15 2:38 PM",
 	"id": 1153762
@@ -9966,7 +9966,7 @@
 		"description": "Rename Method public taskOwner(taskOwnerId String[]) : TaskQueryBuilder renamed to public actualOwner(taskOwnerId String[]) : TaskQueryBuilder in class org.jbpm.services.task.impl.TaskQueryBuilderImpl"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method public buildQuery() : ParametrizedQuery renamed to public build() : ParametrizedQuery in class org.jbpm.services.task.impl.TaskQueryBuilderImpl"
+		"description": "Rename Method public buildQuery() : ParametrizedQuery<TaskSummary> renamed to public build() : ParametrizedQuery<TaskSummary> in class org.jbpm.services.task.impl.TaskQueryBuilderImpl"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public addAppropriateParam(listId String, param T[]) : QueryCriteria renamed to public addParameter(listId String, param T[]) : QueryCriteria in class org.jbpm.query.jpa.data.QueryWhere"
@@ -10034,7 +10034,7 @@
 			"description": "Extract Method private ignoreRehashIteration(consumer Consumer<R>, supplier IteratorSupplier<R>, iteratorParallelDistribute boolean) : void extracted from package remoteIterator() : Iterator<R> in class org.infinispan.stream.impl.DistributedCacheStream"
 		}, {
 			"type": "Extract Method",
-			"description": "Extract Method protected supplierForSegments(ch ConsistentHash, targetSegments Set, excludedKeys Set, primaryOwnerOnly boolean) : Supplier extracted from protected supplierForSegments(ch ConsistentHash, targetSegments Set, excludedKeys Set) : Supplier in class org.infinispan.stream.impl.AbstractCacheStream"
+			"description": "Extract Method protected supplierForSegments(ch ConsistentHash, targetSegments Set<Integer>, excludedKeys Set<Object>, primaryOwnerOnly boolean) : Supplier<Stream<CacheEntry>> extracted from protected supplierForSegments(ch ConsistentHash, targetSegments Set<Integer>, excludedKeys Set<Object>) : Supplier<Stream<CacheEntry>> in class org.infinispan.stream.impl.AbstractCacheStream"
 		}
 
 	],
@@ -10144,7 +10144,7 @@
 		},
 		{
 			"type": "Inline Method",
-			"description": "Inline Method public createServer(engine Engine, port int, supportedCompression String, useAsyncServletApi boolean, asyncTimeOut int, requestFilters List, responseFilters List) : HttpServer inlined to public createServer(engine Engine, port int, supportedCompression String, useAsyncServletApi boolean, asyncTimeOut int) : HttpServer in class com.linkedin.restli.examples.RestLiIntTestServer"
+			"description": "Inline Method public createServer(engine Engine, port int, supportedCompression String, useAsyncServletApi boolean, asyncTimeOut int, requestFilters List<? extends RequestFilter>, responseFilters List<? extends ResponseFilter>) : HttpServer inlined to public createServer(engine Engine, port int, supportedCompression String, useAsyncServletApi boolean, asyncTimeOut int) : HttpServer in class com.linkedin.restli.examples.RestLiIntTestServer"
 		}, {
 			"type": "Rename Method",
 			"description": "Rename Method private shouldCompressResponse(operation String) : boolean renamed to private shouldCompressResponseForOperation(operation String) : boolean in class com.linkedin.r2.filter.compression.ClientCompressionFilter"
@@ -10382,7 +10382,7 @@
 		"description": "Rename Method public setOgrExecutable(ogrExecutable String) : void renamed to public setExecutable(ogrExecutable String) : void in class org.geoserver.wfs.response.Ogr2OgrOutputFormat"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method public getGdalData() : String renamed to public getEnvironment() : Map<String, String> in class org.geoserver.wfs.response.Ogr2OgrOutputFormat"
+		"description": "Rename Method public getGdalData() : String renamed to public getEnvironment() : Map<String,String> in class org.geoserver.wfs.response.Ogr2OgrOutputFormat"
 	}, {
 		"type": "Pull Up Method",
 		"description": "Pull Up Method package run(cmd List<String>, sb StringBuilder) : int from class org.geoserver.wfs.response.OGRWrapper to protected run(cmd List<String>, sb StringBuilder) : int from class org.geoserver.ogr.core.AbstractToolWrapper"
@@ -10474,10 +10474,10 @@
 		"description": "Extract Method private addSourceRoot(module Module, sourceRootName String, rootType JpsModuleSourceRootType<?>) : VirtualFile extracted from private addSourceRoot(module Module, sourceRootName String, isTestSourceRoot boolean) : VirtualFile in class org.intellij.erlang.compilation.ErlangCompilationTestBase"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method private getErlangModuleDescriptorFromConfig(target ErlangTarget, context CompileContext, isTests boolean) : List renamed to private getErlangFileDescriptorFromConfig(target ErlangTarget, context CompileContext, isTests boolean) : List in class org.intellij.erlang.jps.builder.ErlangBuilder"
+		"description": "Rename Method private getErlangModuleDescriptorFromConfig(target ErlangTarget, context CompileContext, isTests boolean) : List<ErlangFileDescriptor> renamed to private getErlangFileDescriptorFromConfig(target ErlangTarget, context CompileContext, isTests boolean) : List<ErlangFileDescriptor> in class org.intellij.erlang.jps.builder.ErlangBuilder"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method private assertSameErlangModules(moduleDescriptors List, expectedModules String[]) : void renamed to private assertSameErlangFiles(moduleDescriptors List, expectedModules String[]) : void in class org.intellij.erlang.compilation.ErlangDependenciesResolutionTest"
+		"description": "Rename Method private assertSameErlangModules(moduleDescriptors List<ErlangFileDescriptor>, expectedModules String[]) : void renamed to private assertSameErlangFiles(moduleDescriptors List<ErlangFileDescriptor>, expectedModules String[]) : void in class org.intellij.erlang.compilation.ErlangDependenciesResolutionTest"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method private addErlangModules(module Module, onlyTestModules boolean, erlangModules Collection<ErlangFile>) : Collection<ErlangFile> renamed to private addErlangFiles(module Module, onlyTestModules boolean, erlangModules Collection<ErlangFile>, type ErlangFileType) : Collection<ErlangFile> in class org.intellij.erlang.utils.ErlangModulesUtil"

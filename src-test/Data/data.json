@@ -557,6 +557,9 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public getLoggingHandler() : LoggingHandlerImpl renamed to public getComponent() : JComponent in class com.intellij.remoteServer.impl.runtime.ui.tree.ServersTreeStructure.DeploymentLogNode"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public dispose() : void from class com.intellij.remoteServer.impl.runtime.log.LoggingHandlerImpl to public dispose() : void from class com.intellij.remoteServer.impl.runtime.log.LoggingHandlerBase"
 	}],
 	"time": "6/10/15 4:04 PM",
 	"id": 1107345
@@ -2522,6 +2525,36 @@
 	}, {
 		"type": "Rename Method",
 		"description":"Rename Method public newQueryForChangeOrRemove(nodeId long) : Term renamed to public newTermForChangeOrRemove(nodeId long) : Term in class org.neo4j.kernel.api.impl.index.LuceneDocumentStructure"
+	}, {
+		"type": "Pull Up Attribute",
+		"description":"Pull Up Attribute protected documentLogic : LuceneDocumentStructure from class org.neo4j.kernel.api.impl.index.LuceneIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest"
+	}, {
+		"type": "Pull Up Attribute",
+		"description":"Pull Up Attribute protected documentLogic : LuceneDocumentStructure from class org.neo4j.kernel.api.impl.index.LuceneUniqueIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest"
+	}, {
+		"type": "Pull Up Attribute",
+		"description":"Pull Up Attribute protected closeable : Closeable from class org.neo4j.kernel.api.impl.index.LuceneIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest"
+	}, {
+		"type": "Pull Up Attribute",
+		"description":"Pull Up Attribute protected reader : IndexReader from class org.neo4j.kernel.api.impl.index.LuceneIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest"
+	}, {
+		"type": "Pull Up Attribute",
+		"description":"Pull Up Attribute protected closeable : Closeable from class org.neo4j.kernel.api.impl.index.LuceneUniqueIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest"
+	}, {
+		"type": "Pull Up Attribute",
+		"description":"Pull Up Attribute protected reader : IndexReader from class org.neo4j.kernel.api.impl.index.LuceneUniqueIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest"
+	}, {
+		"type": "Pull Up Attribute",
+		"description":"Pull Up Attribute protected searcher : IndexSearcher from class org.neo4j.kernel.api.impl.index.LuceneUniqueIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest"
+	}, {
+		"type": "Pull Up Attribute",
+		"description":"Pull Up Attribute protected terms : TermEnum from class org.neo4j.kernel.api.impl.index.LuceneIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest"
+	}, {
+		"type": "Pull Up Attribute",
+		"description":"Pull Up Attribute protected searcher : IndexSearcher from class org.neo4j.kernel.api.impl.index.LuceneIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest"
+	}, {
+		"type": "Pull Up Attribute",
+		"description":"Pull Up Attribute protected BUFFER_SIZE_LIMIT : int from class org.neo4j.kernel.api.impl.index.LuceneIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest"
 	}],
 	"time": "6/18/15 7:27 AM",
 	"id": 1119504
@@ -3631,6 +3664,87 @@
 	"refactorings": [{
 		"type": "Extract Superclass",
 		"description": "Extract Superclass org.springframework.web.socket.server.support.AbstractHandshakeHandler from class org.springframework.web.socket.server.support.DefaultHandshakeHandler"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method private initRequestUpgradeStrategy() : RequestUpgradeStrategy from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to private initRequestUpgradeStrategy() : RequestUpgradeStrategy from class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public setSupportedProtocols(protocols String[]) : void from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to public setSupportedProtocols(protocols String[]) : void from class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public getSupportedProtocols() : String[] from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to public getSupportedProtocols() : String[] from class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public isRunning() : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to public isRunning() : boolean from class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public start() : void from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to public start() : void from class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public stop() : void from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to public stop() : void from class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public doHandshake(request ServerHttpRequest, response ServerHttpResponse, wsHandler WebSocketHandler, attributes Map<String,Object>) : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to public doHandshake(request ServerHttpRequest, response ServerHttpResponse, wsHandler WebSocketHandler, attributes Map<String,Object>) : boolean from class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected handleInvalidUpgradeHeader(request ServerHttpRequest, response ServerHttpResponse) : void from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected handleInvalidUpgradeHeader(request ServerHttpRequest, response ServerHttpResponse) : void from class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected handleInvalidConnectHeader(request ServerHttpRequest, response ServerHttpResponse) : void from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected handleInvalidConnectHeader(request ServerHttpRequest, response ServerHttpResponse) : void from class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected isWebSocketVersionSupported(httpHeaders WebSocketHttpHeaders) : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected isWebSocketVersionSupported(httpHeaders WebSocketHttpHeaders) : boolean from class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected getSupportedVersions() : String[] from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected getSupportedVersions() : String[] from class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected handleWebSocketVersionNotSupported(request ServerHttpRequest, response ServerHttpResponse) : void from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected handleWebSocketVersionNotSupported(request ServerHttpRequest, response ServerHttpResponse) : void from class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected isValidOrigin(request ServerHttpRequest) : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected isValidOrigin(request ServerHttpRequest) : boolean from class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected selectProtocol(requestedProtocols List<String>, webSocketHandler WebSocketHandler) : String from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected selectProtocol(requestedProtocols List<String>, webSocketHandler WebSocketHandler) : String from class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected determineHandlerSupportedProtocols(handler WebSocketHandler) : List<String> from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected determineHandlerSupportedProtocols(handler WebSocketHandler) : List<String> from class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected filterRequestedExtensions(request ServerHttpRequest, requestedExtensions List<WebSocketExtension>, supportedExtensions List<WebSocketExtension>) : List<WebSocketExtension> from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected filterRequestedExtensions(request ServerHttpRequest, requestedExtensions List<WebSocketExtension>, supportedExtensions List<WebSocketExtension>) : List<WebSocketExtension> from class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected determineUser(request ServerHttpRequest, wsHandler WebSocketHandler, attributes Map<String,Object>) : Principal from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected determineUser(request ServerHttpRequest, wsHandler WebSocketHandler, attributes Map<String,Object>) : Principal from class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute private UTF8_CHARSET : Charset from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute private jettyWsPresent : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute private tomcatWsPresent : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute private undertowWsPresent : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute private glassFishWsPresent : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute private webLogicWsPresent : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected logger : Log from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute private requestUpgradeStrategy : RequestUpgradeStrategy from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute private supportedProtocols : List<String> from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute private running : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler"
 	}],
 	"time": "6/22/15 11:30 PM",
 	"id": 1122508
@@ -4767,6 +4881,21 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method package getPartitionHashBucket(partitionCount int, position int, page Page) : int renamed to package getPartitionBucket(partitionCount int, position int, page Page) : int in class com.facebook.presto.operator.HashGenerator"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public setHashPartitionedOutput(partitionKeys List<Symbol>, hash Optional<Symbol>) : FragmentProperties renamed to public setPartitionedOutput(partitionKeys Optional<List<Symbol>>, hash Optional<Symbol>) : FragmentProperties in class com.facebook.presto.sql.planner.PlanFragmenter.FragmentProperties"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public getPartition() : int from class com.facebook.presto.HashPagePartitionFunction to public getPartition() : int from class com.facebook.presto.PartitionedPagePartitionFunction"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public getPartitionCount() : int from class com.facebook.presto.HashPagePartitionFunction to public getPartitionCount() : int from class com.facebook.presto.PartitionedPagePartitionFunction"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected partitionCount : int from class com.facebook.presto.HashPagePartitionFunction to class com.facebook.presto.PartitionedPagePartitionFunction"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected partition : int from class com.facebook.presto.HashPagePartitionFunction to class com.facebook.presto.PartitionedPagePartitionFunction"
 	}],
 	"time": "6/30/15 12:08 AM",
 	"id": 1127907
@@ -5085,6 +5214,30 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public uniquenessConstraint(labelId int, propertyKeyId int) : UniquenessConstraintRule renamed to private propertyConstraint(type Class<Rule>, labelId int, propertyKeyId int) : Rule in class org.neo4j.kernel.impl.store.SchemaStorage"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public toString() : String from class org.neo4j.kernel.api.constraints.UniquenessConstraint to public toString() : String from class org.neo4j.kernel.api.constraints.PropertyConstraint"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public label() : int from class org.neo4j.kernel.api.constraints.UniquenessConstraint to public label() : int from class org.neo4j.kernel.api.constraints.PropertyConstraint"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public equals(obj Object) : boolean from class org.neo4j.kernel.api.constraints.UniquenessConstraint to public equals(obj Object) : boolean from class org.neo4j.kernel.api.constraints.PropertyConstraint"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public propertyKeyId() : int from class org.neo4j.kernel.api.constraints.UniquenessConstraint to public propertyKeyId() : int from class org.neo4j.kernel.api.constraints.PropertyConstraint"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public hashCode() : int from class org.neo4j.kernel.api.constraints.UniquenessConstraint to public hashCode() : int from class org.neo4j.kernel.api.constraints.PropertyConstraint"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public userDescription(tokenNameLookup TokenNameLookup) : String from class org.neo4j.kernel.api.constraints.UniquenessConstraint to public userDescription(tokenNameLookup TokenNameLookup) : String from class org.neo4j.kernel.api.constraints.PropertyConstraint"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute private propertyKeyId : int from class org.neo4j.kernel.api.constraints.UniquenessConstraint to class org.neo4j.kernel.api.constraints.PropertyConstraint"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute private labelId : int from class org.neo4j.kernel.api.constraints.UniquenessConstraint to class org.neo4j.kernel.api.constraints.PropertyConstraint"
 	}],
 	"time": "7/2/15 2:23 AM",
 	"id": 1130638
@@ -6238,6 +6391,66 @@
 	}, {
 		"type": "Extract Superclass",
 		"description": "Extract Superclass com.squareup.javapoet.AbstractTypesTest from class com.squareup.javapoet.TypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method private getElement(clazz Class<?>) : TypeElement from class com.squareup.javapoet.TypesTest to private getElement(clazz Class<?>) : TypeElement from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method private getMirror(clazz Class<?>) : TypeMirror from class com.squareup.javapoet.TypesTest to private getMirror(clazz Class<?>) : TypeMirror from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public getBasicTypeMirror() : void from class com.squareup.javapoet.TypesTest to public getBasicTypeMirror() : void from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public getParameterizedTypeMirror() : void from class com.squareup.javapoet.TypesTest to public getParameterizedTypeMirror() : void from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public getTypeVariableTypeMirror() : void from class com.squareup.javapoet.TypesTest to public getTypeVariableTypeMirror() : void from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public getPrimitiveTypeMirror() : void from class com.squareup.javapoet.TypesTest to public getPrimitiveTypeMirror() : void from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public getArrayTypeMirror() : void from class com.squareup.javapoet.TypesTest to public getArrayTypeMirror() : void from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public getVoidTypeMirror() : void from class com.squareup.javapoet.TypesTest to public getVoidTypeMirror() : void from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public getNullTypeMirror() : void from class com.squareup.javapoet.TypesTest to public getNullTypeMirror() : void from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public parameterizedType() : void from class com.squareup.javapoet.TypesTest to public parameterizedType() : void from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public arrayType() : void from class com.squareup.javapoet.TypesTest to public arrayType() : void from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public wildcardExtendsType() : void from class com.squareup.javapoet.TypesTest to public wildcardExtendsType() : void from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public wildcardExtendsObject() : void from class com.squareup.javapoet.TypesTest to public wildcardExtendsObject() : void from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public wildcardSuperType() : void from class com.squareup.javapoet.TypesTest to public wildcardSuperType() : void from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public wildcardMirrorNoBounds() : void from class com.squareup.javapoet.TypesTest to public wildcardMirrorNoBounds() : void from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public wildcardMirrorExtendsType() : void from class com.squareup.javapoet.TypesTest to public wildcardMirrorExtendsType() : void from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public wildcardMirrorSuperType() : void from class com.squareup.javapoet.TypesTest to public wildcardMirrorSuperType() : void from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public typeVariable() : void from class com.squareup.javapoet.TypesTest to public typeVariable() : void from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public box() : void from class com.squareup.javapoet.TypesTest to public box() : void from class com.squareup.javapoet.AbstractTypesTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public unbox() : void from class com.squareup.javapoet.TypesTest to public unbox() : void from class com.squareup.javapoet.AbstractTypesTest"
 	}],
 	"time": "7/10/15 11:56 AM",
 	"id": 1139380
@@ -7829,6 +8042,21 @@
 	}, {
 		"type": "Rename Class",
 		"description": "Rename Class org.glassfish.jersey.tests.cdi.resources.MyApplication renamed to org.glassfish.jersey.tests.cdi.resources.MainApplication"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public registerLocator(locator ServiceLocator) : void from class org.glassfish.jersey.ext.cdi1x.servlet.internal.ServletHk2LocatorManager to public registerLocator(locator ServiceLocator) : void from class org.glassfish.jersey.ext.cdi1x.internal.GenericHk2LocatorManager"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public getEffectiveLocator() : ServiceLocator from class org.glassfish.jersey.ext.cdi1x.servlet.internal.ServletHk2LocatorManager to public getEffectiveLocator() : ServiceLocator from class org.glassfish.jersey.ext.cdi1x.internal.GenericHk2LocatorManager"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public notify(target Hk2InjectedTarget) : void from class org.glassfish.jersey.ext.cdi1x.servlet.internal.ServletHk2LocatorManager to public notify(target Hk2InjectedTarget) : void from class org.glassfish.jersey.ext.cdi1x.internal.GenericHk2LocatorManager"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute private locator : ServiceLocator from class org.glassfish.jersey.ext.cdi1x.servlet.internal.ServletHk2LocatorManager to class org.glassfish.jersey.ext.cdi1x.internal.GenericHk2LocatorManager"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute private multipleLocators : boolean from class org.glassfish.jersey.ext.cdi1x.servlet.internal.ServletHk2LocatorManager to class org.glassfish.jersey.ext.cdi1x.internal.GenericHk2LocatorManager"
 	}],
 	"time": "7/16/15 4:51 AM",
 	"id": 1143365
@@ -9775,6 +10003,12 @@
 	}, {
 		"type": "Pull Up Method",
 		"description": "Pull Up Method public getPersistenceUnitName() : String from class org.jbpm.process.audit.JPAAuditLogService to public getPersistenceUnitName() : String from class org.jbpm.process.audit.JPAService"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected persistenceUnitName : String from class org.jbpm.process.audit.JPAAuditLogService to class org.jbpm.process.audit.JPAService"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected persistenceStrategy : PersistenceStrategy from class org.jbpm.process.audit.JPAAuditLogService to class org.jbpm.process.audit.JPAService"
 	}],
 	"time": "8/1/15 7:38 PM",
 	"id": 1155451
@@ -9991,7 +10225,7 @@
 	"author": "Aleksey Pivovarov",
 	"refactorings": [{
 		"type": "Move Attribute",
-		"description": "Move Attribute public ORIGINAL_DOCUMENT : Key from class com.intellij.diff.actions.DocumentFragmentContent to class com.intellij.openapi.command.undo.UndoManager"
+		"description": "Move Attribute public ORIGINAL_DOCUMENT : Key<Document> from class com.intellij.diff.actions.DocumentFragmentContent to class com.intellij.openapi.command.undo.UndoManager"
 	}],
 	"time": "8/4/15 10:40 AM",
 	"id": 1156821

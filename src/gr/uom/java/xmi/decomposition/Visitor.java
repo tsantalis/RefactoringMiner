@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldAccess;
+import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.ParameterizedType;
@@ -35,7 +36,13 @@ public class Visitor extends ASTVisitor {
 	private List<String> anonymousClassDeclarations = new ArrayList<String>();
 	private List<String> stringLiterals = new ArrayList<String>();
 	private Map<String, ObjectCreation> creationMap = new LinkedHashMap<String, ObjectCreation>();
+	private List<String> infixOperators = new ArrayList<String>();
 	
+	public boolean visit(InfixExpression node) {
+		infixOperators.add(node.getOperator().toString());
+		return super.visit(node);
+	}
+
 	public boolean visit(ClassInstanceCreation node) {
 		creationMap.put(node.toString(), new ObjectCreation(node));
 		return super.visit(node);
@@ -186,6 +193,10 @@ public class Visitor extends ASTVisitor {
 
 	public Map<String, ObjectCreation> getCreationMap() {
 		return creationMap;
+	}
+
+	public List<String> getInfixOperators() {
+		return infixOperators;
 	}
 
 	public List<String> getVariables() {

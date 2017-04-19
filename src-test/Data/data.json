@@ -642,6 +642,9 @@
 	"refactorings": [{
 		"type": "Move Method",
 		"description": "Move Method public newFilter(parseContext QueryParseContext, fieldPattern String, queryName String) : Query from class org.elasticsearch.index.query.ExistsQueryParser to public newFilter(parseContext QueryParseContext, fieldPattern String, queryName String) : Query from class org.elasticsearch.index.query.ExistsQueryBuilder"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public parse(parseContext QueryParseContext) : Query renamed to public fromXContent(parseContext QueryParseContext) : QueryBuilder in class org.elasticsearch.index.query.ExistsQueryParser"
 	}],
 	"time": "6/11/15 9:40 AM",
 	"id": 1107899
@@ -813,6 +816,9 @@
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public requiresImmediateFlushingIfNotFiring() : boolean renamed to public requiresImmediateFlushing() : boolean in class org.drools.core.phreak.PropagationEntry.AbstractPropagationEntry"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public isHighestSalience(nextRule RuleAgendaItem) : boolean renamed to private isHigherSalience(nextRule RuleAgendaItem) : boolean in class org.drools.core.phreak.RuleExecutor"
 	}],
 	"time": "6/15/15 9:41 AM",
 	"id": 1112091
@@ -4942,6 +4948,9 @@
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private SERVLET_RESOURCE_LOCATIONS : String[] from class org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration to class org.springframework.boot.autoconfigure.web.ResourceProperties"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute private managementServerProperties : ManagementServerProperties from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration to class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcChildContextConfiguration"
 	}],
 	"time": "6/30/15 5:42 AM",
 	"id": 1127383
@@ -9380,6 +9389,9 @@
 		}, {
 			"type": "Rename Method",
 			"description": "Rename Method public testTcpIp__ClusterMerge() : void renamed to public testTcpIp_ClusterMerge() : void in class com.hazelcast.cluster.SplitBrainHandlerTest"
+		}, {
+			"type": "Rename Method",
+			"description": "Rename Method private isJoinRequestFromAnExistingMember(joinRequest JoinRequest, connection Connection) : boolean renamed to private checkIfJoinRequestFromAnExistingMember(joinMessage JoinMessage, connection Connection) : boolean in class com.hazelcast.cluster.impl.ClusterServiceImpl"
 		}
 	],
 	"time": "7/28/15 4:32 AM",
@@ -10057,6 +10069,9 @@
 	"refactorings": [{
 		"type": "Move Class",
 		"description": "Move Class org.glassfish.jersey.client.HttpUrlConnector moved to org.glassfish.jersey.client.internal.HttpUrlConnector"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method protected createHttpUrlConnector(client Client, connectionFactory ConnectionFactory, chunkSize int, fixLengthStreaming boolean, setMethodWorkaround boolean) : Connector extracted from public getConnector(client Client, config Configuration) : Connector in class org.glassfish.jersey.client.HttpUrlConnectorProvider"
 	}],
 	"time": "8/3/15 2:32 PM",
 	"id": 1156317

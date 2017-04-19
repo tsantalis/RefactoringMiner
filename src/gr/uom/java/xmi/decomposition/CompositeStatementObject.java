@@ -133,6 +133,15 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	@Override
+	public List<String> getInfixOperators() {
+		List<String> infixOperators = new ArrayList<String>();
+		for(AbstractExpression expression : expressionList) {
+			infixOperators.addAll(expression.getInfixOperators());
+		}
+		return infixOperators;
+	}
+
+	@Override
 	public Map<String, ObjectCreation> getCreationMap() {
 		Map<String, ObjectCreation> creationMap = new LinkedHashMap<String, ObjectCreation>();
 		for(AbstractExpression expression : expressionList) {

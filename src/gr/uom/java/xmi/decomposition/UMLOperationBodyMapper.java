@@ -6,6 +6,7 @@ import gr.uom.java.xmi.decomposition.replacement.AnonymousClassDeclarationReplac
 import gr.uom.java.xmi.decomposition.replacement.ArgumentReplacementWithReturnExpression;
 import gr.uom.java.xmi.decomposition.replacement.ArgumentReplacementWithRightHandSideOfAssignmentExpression;
 import gr.uom.java.xmi.decomposition.replacement.CreationReplacement;
+import gr.uom.java.xmi.decomposition.replacement.InfixOperatorReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationArgumentReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationRename;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
@@ -767,6 +768,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		stringLiterals1.removeAll(stringLiteralIntersection);
 		stringLiterals2.removeAll(stringLiteralIntersection);
 		
+		Set<String> infixOperators1 = new LinkedHashSet<String>(statement1.getInfixOperators());
+		Set<String> infixOperators2 = new LinkedHashSet<String>(statement2.getInfixOperators());
+		Set<String> infixOperatorIntersection = new LinkedHashSet<String>(infixOperators1);
+		infixOperatorIntersection.retainAll(infixOperators2);
+		// remove common infix operators from the two sets
+		infixOperators1.removeAll(infixOperatorIntersection);
+		infixOperators2.removeAll(infixOperatorIntersection);
+		
 		String argumentizedString1 = preprocessInput1(statement1, statement2);
 		String argumentizedString2 = preprocessInput2(statement1, statement2);
 		int initialDistanceRaw = StringDistance.editDistance(argumentizedString1, argumentizedString2);
@@ -902,6 +911,33 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(replacementMap.firstEntry().getKey() == 0) {
 						break;
 					}
+				}
+			}
+		}
+		
+		for(String infixOperator1 : infixOperators1) {
+			TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
+			int minDistance = initialDistanceRaw;
+			for(String infixOperator2 : infixOperators2) {
+				String temp = argumentizedString1.replaceAll(Pattern.quote(infixOperator1), Matcher.quoteReplacement(infixOperator2));
+				int distanceRaw = StringDistance.editDistance(temp, argumentizedString2, minDistance);
+				if(distanceRaw >= 0 && distanceRaw < initialDistanceRaw) {
+					minDistance = distanceRaw;
+					Replacement replacement = new InfixOperatorReplacement(infixOperator1, infixOperator2);
+					double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), argumentizedString2.length());
+					replacementMap.put(distancenormalized, replacement);
+					if(distanceRaw == 0) {
+						break;
+					}
+				}
+			}
+			if(!replacementMap.isEmpty()) {
+				Replacement replacement = replacementMap.firstEntry().getValue();
+				replacements.add(replacement);
+				argumentizedString1 = argumentizedString1.replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter()));
+				initialDistanceRaw = StringDistance.editDistance(argumentizedString1, argumentizedString2);
+				if(replacementMap.firstEntry().getKey() == 0) {
+					break;
 				}
 			}
 		}

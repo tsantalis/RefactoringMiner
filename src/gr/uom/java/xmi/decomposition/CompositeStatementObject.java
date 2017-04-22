@@ -181,4 +181,15 @@ public class CompositeStatementObject extends AbstractStatement {
 		}
 		return anonymousClassDeclarations;
 	}
+
+	@Override
+	public int statementCount() {
+		int count = 0;
+		if(!this.getString().equals("{"))
+			count++;
+		for(AbstractStatement statement : statementList) {
+			count += statement.statementCount();
+		}
+		return count;
+	}
 }

@@ -86,6 +86,12 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 		return operationBody;
 	}
 
+	public int statementCount() {
+		if(operationBody != null)
+			return operationBody.statementCount();
+		return 0;
+	}
+
 	public void setBody(OperationBody body) {
 		this.operationBody = body;
 	}

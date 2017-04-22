@@ -160,4 +160,9 @@ public class StatementObject extends AbstractStatement {
 	public List<String> getInfixOperators() {
 		return infixOperators;
 	}
+
+	@Override
+	public int statementCount() {
+		return 1;
+	}
 }

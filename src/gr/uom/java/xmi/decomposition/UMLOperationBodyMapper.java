@@ -35,8 +35,6 @@ import java.util.regex.Pattern;
 public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper> {
 	private UMLOperation operation1;
 	private UMLOperation operation2;
-	private int statementCountOperation1;
-	private int statementCountOperation2;
 	private boolean isInitialized = true;
 	private List<AbstractCodeMapping> mappings;
 	private List<StatementObject> nonMappedLeavesT1;
@@ -75,8 +73,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.isInitialized = true;
 		OperationBody body1 = operation1.getBody();
 		OperationBody body2 = operation2.getBody();
-		this.statementCountOperation1 = operation1.statementCount();
-		this.statementCountOperation2 = operation2.statementCount();
 		if(body1 != null && body2 != null) {
 			CompositeStatementObject composite1 = body1.getCompositeStatement();
 			CompositeStatementObject composite2 = body2.getCompositeStatement();
@@ -460,9 +456,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private boolean countableStatement(AbstractCodeFragment fragment) {
 		String statement = fragment.getString();
-		if(statementCountOperation1 == 1 && statementCountOperation2 == 1) {
-			return true;
-		}
+		//covers the cases of methods with only one statement in their body, and conditionals with only one statement in their body
 		if(fragment instanceof AbstractStatement && ((AbstractStatement)fragment).getParent().statementCount() == 1) {
 			return true;
 		}

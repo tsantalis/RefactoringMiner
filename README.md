@@ -111,4 +111,4 @@ The output would be:
 ## Research ##
 
 RefactoringMiner has been used in the following papers:
-* Danilo Silva, Nikolaos Tsantalis, and Marco Tulio Valente, "[Why We Refactor? Confessions of GitHub Contributors](http://arxiv.org/pdf/1607.02459v1)," *24th ACM SIGSOFT International Symposium on the Foundations of Software Engineering* (FSE'2016), Seattle, WA, USA, November 13-18, 2016.
+* Danilo Silva, Nikolaos Tsantalis, and Marco Tulio Valente, "[Why We Refactor? Confessions of GitHub Contributors](https://users.encs.concordia.ca/~nikolaos/publications/FSE_2016.pdf)," *24th ACM SIGSOFT International Symposium on the Foundations of Software Engineering* (FSE'2016), Seattle, WA, USA, November 13-18, 2016.

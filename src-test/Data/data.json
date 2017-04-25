@@ -806,10 +806,10 @@
 		"description": "Push Down Attribute private evaluatingActionQueue : AtomicBoolean from class org.drools.core.impl.StatefulKnowledgeSessionImpl to class org.drools.reteoo.common.ReteWorkingMemory"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method public notifyHalt() : void from class org.drools.core.common.DefaultAgenda to class org.drools.core.phreak.SynchronizedBypassPropagationList"
+		"description": "Move Method public notifyHalt() : void from class org.drools.core.common.DefaultAgenda to public notifyHalt() : void from class org.drools.core.phreak.SynchronizedBypassPropagationList"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method public notifyHalt() : void from class org.drools.reteoo.common.ReteAgenda to class org.drools.core.phreak.SynchronizedBypassPropagationList"
+		"description": "Move Method public notifyHalt() : void from class org.drools.reteoo.common.ReteAgenda to public notifyHalt() : void from class org.drools.core.phreak.SynchronizedBypassPropagationList"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public requiresImmediateFlushingIfNotFiring() : boolean renamed to public requiresImmediateFlushing() : boolean in class org.drools.core.phreak.PhreakTimerNode.TimerAction"
@@ -8994,9 +8994,6 @@
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private singleLabelCursor : InstanceCache<StoreSingleLabelCursor> from class org.neo4j.kernel.impl.api.store.StoreStatement to class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor"
-	}, {
-		"type": "Move Method",
-		"description": "Move Method public nodesGetAllCursor(statement StoreStatement) : Cursor from class org.neo4j.kernel.impl.api.store.DiskLayer to class org.neo4j.kernel.impl.api.store.StoreStatement"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private assertHasRelationships(node long) : void extracted from private deleteNode1(node long, prop1 DefinedProperty, prop2 DefinedProperty, prop3 DefinedProperty) : void in class org.neo4j.kernel.impl.store.TestNeoStore"

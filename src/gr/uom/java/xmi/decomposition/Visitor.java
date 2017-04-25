@@ -68,6 +68,13 @@ public class Visitor extends ASTVisitor {
 		return super.visit(node);
 	}
 
+	public boolean visit(ThisExpression node) {
+		if(!(node.getParent() instanceof FieldAccess)) {
+			allIdentifiers.add(node.toString());
+		}
+		return super.visit(node);
+	}
+	
 	public boolean visit(SimpleName node) {
 		if(node.getParent() instanceof FieldAccess && ((FieldAccess)node.getParent()).getExpression() instanceof ThisExpression) {
 			FieldAccess fieldAccess = (FieldAccess)node.getParent();

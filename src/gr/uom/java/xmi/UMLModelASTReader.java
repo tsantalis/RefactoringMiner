@@ -44,8 +44,8 @@ public class UMLModelASTReader {
 	private String projectRoot;
 	private ASTParser parser;
 
-	public UMLModelASTReader(File rootFolder, List<String> javaFiles2) {
-		this(rootFolder, buildAstParser(rootFolder), javaFiles2);
+	public UMLModelASTReader(File rootFolder, List<String> javaFiles) {
+		this(rootFolder, buildAstParser(rootFolder), javaFiles);
 	}
 
 	public UMLModelASTReader(File rootFolder, ASTParser parser, List<String> javaFiles) {

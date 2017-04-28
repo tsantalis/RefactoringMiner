@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
 import org.junit.Assert;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
@@ -115,7 +114,7 @@ public class TestBuilder {
 				if (m.ignoreNonSpecifiedCommits) {
 					// It is faster to only look at particular commits
 					for (String commitId : m.getCommits()) {
-						refactoringDetector.detectAtCommit(rep, commitId, m);
+						refactoringDetector.detectAtCommit(rep, m.cloneUrl, commitId, m);
 					}
 				} else {
 					// Iterate over each commit
@@ -243,11 +242,11 @@ public class TestBuilder {
 		}
 
 		@Override
-		public void handle(RevCommit curRevision, List<Refactoring> refactorings) {
+		public void handle(String commitId, List<Refactoring> refactorings) {
 			refactorings= filterRefactoring(refactorings);
 			CommitMatcher matcher;
 			commitsCount++;
-			String commitId = curRevision.getId().getName();
+			//String commitId = curRevision.getId().getName();
 			if (expected.containsKey(commitId)) {
 				matcher = expected.get(commitId);
 			} else if (!this.ignoreNonSpecifiedCommits) {

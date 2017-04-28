@@ -2,7 +2,6 @@ package org.refactoringminer.utils;
 
 import java.util.List;
 
-import org.eclipse.jgit.revwalk.RevCommit;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.rm2.model.refactoring.SDRefactoring;
@@ -23,7 +22,7 @@ public class RefactoringCollector extends RefactoringHandler {
     rs = new RefactoringSet(cloneUrl, commitId);
   }
   @Override
-  public void handle(RevCommit commitData, List<Refactoring> refactorings) {
+  public void handle(String commitId, List<Refactoring> refactorings) {
     for (Refactoring r : refactorings) {
       if (r instanceof SDRefactoring) {
         SDRefactoring sdr = (SDRefactoring) r;

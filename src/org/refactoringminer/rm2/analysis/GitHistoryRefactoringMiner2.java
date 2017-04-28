@@ -36,6 +36,11 @@ public class GitHistoryRefactoringMiner2 implements GitHistoryRefactoringMiner {
 		}
 
 		@Override
+		public void handle(String commitId, SDModel sdModel) {
+			handler.handle(commitId, sdModel.getRefactorings());
+		}
+
+		@Override
 		public void handleException(String commitId, Exception e) {
 		    handler.handleException(commitId, e);
 		}
@@ -59,7 +64,7 @@ public class GitHistoryRefactoringMiner2 implements GitHistoryRefactoringMiner {
 	}
 
 	@Override
-	public void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler) {
+	public void detectAtCommit(Repository repository, String cloneURL, String commitId, RefactoringHandler handler) {
 	    GitHistoryStructuralDiffAnalyzer sda = new GitHistoryStructuralDiffAnalyzer(config);
 	    sda.detectAtCommit(repository, commitId, new HandlerAdpater(handler));
 	}

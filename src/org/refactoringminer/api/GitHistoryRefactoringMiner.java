@@ -36,10 +36,11 @@ public interface GitHistoryRefactoringMiner {
 	 * Detect refactorings performed in the specified commit. 
 	 * 
 	 * @param repository A git repository (from JGit library).
+	 * @param cloneURL The clone URL of the repository.
 	 * @param commitId The SHA key that identifies the commit.
 	 * @param handler A handler object that is responsible to process the detected refactorings. 
 	 */
-	void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler);
+	void detectAtCommit(Repository repository, String cloneURL, String commitId, RefactoringHandler handler);
 
 	/**
 	 * @return An ID that represents the current configuration for the Refactoring Miner algorithm in use.

@@ -3,7 +3,6 @@ package org.refactoringminer;
 import java.util.List;
 
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
 import org.refactoringminer.api.Refactoring;
@@ -23,9 +22,9 @@ public class RefactoringMiner {
         GitService gitService = new GitServiceImpl(); 
         try (Repository repo = gitService.openRepository(folder)) {
             GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
-            detector.detectAtCommit(repo, commitId, new RefactoringHandler() {
+            detector.detectAtCommit(repo, null, commitId, new RefactoringHandler() {
                 @Override
-                public void handle(RevCommit commitData, List<Refactoring> refactorings) {
+                public void handle(String commitId, List<Refactoring> refactorings) {
                     if (refactorings.isEmpty()) {
                         System.out.println("No refactorings found in commit " + commitId);
                     } else {

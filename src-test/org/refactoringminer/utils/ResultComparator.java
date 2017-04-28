@@ -339,7 +339,7 @@ public class ResultComparator {
             String folder = tempDir + "/" + projectName;
             final RefactoringCollector rc = new RefactoringCollector(cloneUrl, commitId);
             try (Repository repo = git.cloneIfNotExists(folder, cloneUrl)) {
-                rm.detectAtCommit(repo, commitId, rc);
+                rm.detectAtCommit(repo, cloneUrl, commitId, rc);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

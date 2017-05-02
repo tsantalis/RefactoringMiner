@@ -240,10 +240,10 @@
 	"author": "Chris Kittrell",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public setColumn(column Integer) : void from class org.broadleafcommerce.openadmin.dto.BasicFieldMetadata to class org.broadleafcommerce.openadmin.dto.FieldMetadata"
+		"description": "Pull Up Method public setColumn(column Integer) : void from class org.broadleafcommerce.openadmin.dto.BasicFieldMetadata to public setColumn(column Integer) : void from class org.broadleafcommerce.openadmin.dto.FieldMetadata"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public getColumn() : Integer from class org.broadleafcommerce.openadmin.dto.BasicFieldMetadata to class org.broadleafcommerce.openadmin.dto.FieldMetadata"
+		"description": "Pull Up Method public getColumn() : Integer from class org.broadleafcommerce.openadmin.dto.BasicFieldMetadata to public getColumn() : Integer from class org.broadleafcommerce.openadmin.dto.FieldMetadata"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute private column : Integer from class org.broadleafcommerce.openadmin.dto.BasicFieldMetadata to class org.broadleafcommerce.openadmin.dto.FieldMetadata"
@@ -331,7 +331,7 @@
 	"author": "Julien Lancelot",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method private createComponentDto(reportComponent Component, component Component) : ComponentDto from class org.sonar.server.computation.step.PersistComponentsStep to class org.sonar.server.computation.step.PersistComponentsStep.PersisComponent"
+		"description": "Move Method private createComponentDto(reportComponent Component, component Component) : ComponentDto from class org.sonar.server.computation.step.PersistComponentsStep to private createComponentDto(reportComponent Component, component Component) : ComponentDto from class org.sonar.server.computation.step.PersistComponentsStep.PersisComponent"
 	}],
 	"time": "6/8/15 1:21 PM",
 	"id": 1105969
@@ -439,6 +439,24 @@
 	}, {
 		"type": "Extract Superclass",
 		"description": "Extract Superclass tachyon.worker.block.meta.BlockMetaBase from class tachyon.worker.block.meta.TempBlockMeta"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected mBlockSize : long from class tachyon.worker.block.meta.BlockMeta to class tachyon.worker.block.meta.BlockMetaBase"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected mBlockId : long from class tachyon.worker.block.meta.BlockMeta to class tachyon.worker.block.meta.BlockMetaBase"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected mDir : StorageDir from class tachyon.worker.block.meta.BlockMeta to class tachyon.worker.block.meta.BlockMetaBase"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public getParentDir() : StorageDir from class tachyon.worker.block.meta.BlockMeta to public getParentDir() : StorageDir from class tachyon.worker.block.meta.BlockMetaBase"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public getBlockId() : long from class tachyon.worker.block.meta.BlockMeta to public getBlockId() : long from class tachyon.worker.block.meta.BlockMetaBase"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public getBlockSize() : long from class tachyon.worker.block.meta.BlockMeta to public getBlockSize() : long from class tachyon.worker.block.meta.BlockMetaBase"
 	}],
 	"time": "6/10/15 3:33 AM",
 	"id": 1109449
@@ -608,7 +626,7 @@
 		"description": "Push Down Attribute private mBlockSize : long from class tachyon.worker.block.meta.BlockMetaBase to class tachyon.worker.block.meta.BlockMeta"
 	}, {
 		"type": "Push Down Method",
-		"description": "Push Down Method public getBlockSize() : long from class tachyon.worker.block.meta.BlockMetaBase to class tachyon.worker.block.meta.BlockMeta"
+		"description": "Push Down Method public getBlockSize() : long from class tachyon.worker.block.meta.BlockMetaBase to public getBlockSize() : long from class tachyon.worker.block.meta.BlockMeta"
 	}],
 	"time": "6/10/15 9:21 PM",
 	"id": 1109425
@@ -1163,28 +1181,70 @@
 		"description": "Pull Up Attribute private downstreamNodes : List<String> from class io.crate.planner.node.dql.CollectNode to class io.crate.planner.node.dql.AbstractDQLPlanNode"
 	}, {
 		"type": "Pull Up Attribute",
-		"description": "Pull Up Attribute private downstreamNodes : List<String> from class 2 others to class io.crate.planner.node.dql.AbstractDQLPlanNode"
+		"description": "Pull Up Attribute private downstreamNodes : List<String> from class io.crate.planner.node.dql.join.NestedLoopNode to class io.crate.planner.node.dql.AbstractDQLPlanNode"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute private downstreamNodes : List<String> from class io.crate.planner.node.dql.MergeNode to class io.crate.planner.node.dql.AbstractDQLPlanNode"
 	}, {
 		"type": "Pull Up Attribute",
 		"description": "Pull Up Attribute private downstreamExecutionNodeId : int from class io.crate.planner.node.dql.CollectNode to class io.crate.planner.node.dql.AbstractDQLPlanNode"
 	}, {
 		"type": "Pull Up Attribute",
-		"description": "Pull Up Attribute private downstreamExecutionNodeId : int from class 2 others to class io.crate.planner.node.dql.AbstractDQLPlanNode"
+		"description": "Pull Up Attribute private downstreamExecutionNodeId : int from class io.crate.planner.node.dql.join.NestedLoopNode to class io.crate.planner.node.dql.AbstractDQLPlanNode"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute private downstreamExecutionNodeId : int from class io.crate.planner.node.dql.MergeNode to class io.crate.planner.node.dql.AbstractDQLPlanNode"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public downstreamNodes(nodes SetString) : void from class io.crate.planner.node.dql.MergeNode to class  io.crate.planner.node.dql.AbstractDQLPlanNode"
+		"description": "Pull Up Method public downstreamNodes(nodes Set<String>) : void from class io.crate.planner.node.dql.MergeNode to public downstreamNodes(downStreamNodes Set<String>) : void from class io.crate.planner.node.dql.AbstractDQLPlanNode"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public downstreamNodes(nodes SetString) : void from class io.crate.planner.node.dql.join.NestedLoopNode to class  io.crate.planner.node.dql.AbstractDQLPlanNode"
+		"description": "Pull Up Method public downstreamNodes(nodes Set<String>) : void from class io.crate.planner.node.dql.join.NestedLoopNode to public downstreamNodes(downStreamNodes Set<String>) : void from class io.crate.planner.node.dql.AbstractDQLPlanNode"
 	}, {
 		"type": "Move Attribute",
 		"description": "Move Attribute private leftMergeNode : MergeNode from class io.crate.planner.node.dql.join.NestedLoop to class io.crate.planner.node.dql.join.NestedLoopNode"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public downstreamExecutionNodeId(downstreamExecutionNodeId int) : void from class io.crate.planner.node.dql.MergeNode to class io.crate.planner.node.dql.AbstractDQLPlanNode"
+		"description": "Pull Up Method public downstreamExecutionNodeId(downstreamExecutionNodeId int) : void from class io.crate.planner.node.dql.MergeNode to public downstreamExecutionNodeId(downstreamExecutionNodeId int) : void from class io.crate.planner.node.dql.AbstractDQLPlanNode"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method public downstreamNodes(downStreamNodes List<String>) : void from class io.crate.planner.node.dql.CollectNode to class io.crate.planner.node.dql.AbstractDQLPlanNode"
+		"description": "Pull Up Method public downstreamNodes(downStreamNodes List<String>) : void from class io.crate.planner.node.dql.CollectNode to public downstreamNodes(downStreamNodes List<String>) : void from class io.crate.planner.node.dql.AbstractDQLPlanNode"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public downstreamExecutionNodeId(downstreamExecutionNodeId int) : void from class io.crate.planner.node.dql.join.NestedLoopNode to public downstreamExecutionNodeId(downstreamExecutionNodeId int) : void from class io.crate.planner.node.dql.AbstractDQLPlanNode"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public downstreamNodes() : List<String> from class io.crate.planner.node.dql.MergeNode to public downstreamNodes() : List<String> from class io.crate.planner.node.dql.AbstractDQLPlanNode"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public downstreamNodes() : List<String> from class io.crate.planner.node.dql.CollectNode to public downstreamNodes() : List<String> from class io.crate.planner.node.dql.AbstractDQLPlanNode"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public downstreamNodes() : List<String> from class io.crate.planner.node.dql.join.NestedLoopNode to public downstreamNodes() : List<String> from class io.crate.planner.node.dql.AbstractDQLPlanNode"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public downstreamExecutionNodeId() : int from class io.crate.planner.node.dql.CollectNode to public downstreamExecutionNodeId() : int from class io.crate.planner.node.dql.AbstractDQLPlanNode"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public downstreamExecutionNodeId() : int from class io.crate.planner.node.dql.MergeNode to public downstreamExecutionNodeId() : int from class io.crate.planner.node.dql.AbstractDQLPlanNode"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public downstreamExecutionNodeId() : int from class io.crate.planner.node.dql.join.NestedLoopNode to public downstreamExecutionNodeId() : int from class io.crate.planner.node.dql.AbstractDQLPlanNode"
+	}, {
+		"type": "Move Method",
+		"description": "Move Method public rightMergeNode(rightMergeNode MergeNode) : void from class io.crate.planner.node.dql.join.NestedLoop to public rightMergeNode(rightMergeNode MergeNode) : void from class io.crate.planner.node.dql.join.NestedLoopNode"
+	}, {
+		"type": "Move Method",
+		"description": "Move Method public leftMergeNode(leftMergeNode MergeNode) : void from class io.crate.planner.node.dql.join.NestedLoop to public leftMergeNode(leftMergeNode MergeNode) : void from class io.crate.planner.node.dql.join.NestedLoopNode"
+	}, {
+		"type": "Move Method",
+		"description": "Move Method public public rightMergeNode() : MergeNode from class io.crate.planner.node.dql.join.NestedLoop to public rightMergeNode() : MergeNode from class io.crate.planner.node.dql.join.NestedLoopNode"
+	}, {
+		"type": "Move Method",
+		"description": "Move Method public leftMergeNode() : MergeNode from class io.crate.planner.node.dql.join.NestedLoop to public leftMergeNode() : MergeNode from class io.crate.planner.node.dql.join.NestedLoopNode"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public downstreamExecutionNodeId(executionNodeId int) : void from class io.crate.planner.node.dql.CollectNode to public downstreamExecutionNodeId(downstreamExecutionNodeId int) : void from class io.crate.planner.node.dql.AbstractDQLPlanNode"
 	}],
 	"time": "6/16/15 7:01 AM",
 	"id": 1117005
@@ -2241,10 +2301,19 @@
 	"author": "Dennis Oelkers",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class KeysPresentMatcher moved from integration.BaseRestTest to integration.BaseRestTestHelper"
+		"description": "Move Class integration.BaseRestTest.KeysPresentMatcher moved to integration.BaseRestTestHelper.KeysPresentMatcher"
 	}, {
 		"type": "Extract Superclass",
 		"description": "Extract Superclass integration.BaseRestTestHelper from class integration.BaseRestTest"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public containsAllKeys(keys String[]) : ResponseAwareMatcher from class integration.BaseRestTest to public containsAllKeys(keys String[]) : ResponseAwareMatcher from class integration.BaseRestTestHelper"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected jsonResourceForMethod() : byte[] from class integration.BaseRestTest to protected jsonResourceForMethod() : byte[] from class integration.BaseRestTestHelper"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method protected jsonResource(relativeFileName String) : byte[] from class integration.BaseRestTest to protected jsonResource(relativeFileName String) : byte[] from class integration.BaseRestTestHelper"
 	}],
 	"time": "6/17/15 8:59 AM",
 	"id": 1118067
@@ -2659,6 +2728,15 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private reserveSpace(size long) : void extracted from public addBlockMeta(block BlockMeta) : Optional<BlockMeta> in class tachyon.worker.block.meta.StorageDir"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private reclaimSpace(size long) : void extracted from public removeTempBlockMeta(tempBlockMeta TempBlockMeta) : boolean in class tachyon.worker.block.meta.StorageDir"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private reclaimSpace(size long) : void extracted from public removeBlockMeta(block BlockMeta) : boolean in class tachyon.worker.block.meta.StorageDir"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private reserveSpace(size long) : void extracted from public addTempBlockMeta(tempBlockMeta TempBlockMeta) : boolean in class tachyon.worker.block.meta.StorageDir"
 	}],
 	"time": "6/18/15 8:46 PM",
 	"id": 1120023
@@ -2672,6 +2750,9 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private buildNotificationNavigationStack(context Context, account Account, message LocalMessage, newMessages int, unreadCount int, allRefs ArrayList<MessageReference>) : TaskStackBuilder extracted from private notifyAccountWithDataLocked(context Context, account Account, message LocalMessage, data NotificationData) : void in class com.fsck.k9.controller.MessagingController"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method private addWearActions(builder Builder, totalMsgCount int, msgCount int, account Account, allRefs ArrayList<MessageReference>, messages List<? extends Message>, notificationID int) : void extracted from private notifyAccountWithDataLocked(context Context, account Account, message LocalMessage, data NotificationData) : void in class com.fsck.k9.controller.MessagingController"
 	}],
 	"time": "6/18/15 9:19 PM",
 	"id": 1119677
@@ -3395,7 +3476,43 @@
 		"description": "Extract Superclass com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest from class com.querydsl.sql.types.JSR310InstantTypeTest"
 	}, {
 		"type": "Extract Superclass",
-		"description": "Extract Superclass com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest from class 6 others"
+		"description": "Extract Superclass com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest from class com.querydsl.sql.types.JSR310LocalDateTypeTest"
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest from class com.querydsl.sql.types.JSR310LocalTimeTypeTest"
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest from class com.querydsl.sql.types.JSR310ZonedDateTimeTypeTest"
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest from class com.querydsl.sql.types.JSR310LocalDateTimeTypeTest"
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest from class com.querydsl.sql.types.JSR310OffsetTimeTypeTest"
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest from class com.querydsl.sql.types.JSR310OffsetDateTimeTypeTest"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected UTC : Calendar from class com.querydsl.sql.types.JSR310ZonedDateTimeTypeTest to class com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected UTC : Calendar from class com.querydsl.sql.types.JSR310LocalDateTypeTest to class com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected UTC : Calendar from class com.querydsl.sql.types.JSR310OffsetTimeTypeTest to class com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected UTC : Calendar from class com.querydsl.sql.types.JSR310LocalDateTimeTypeTest to class com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected UTC : Calendar from class com.querydsl.sql.types.JSR310LocalTimeTypeTest to class com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected UTC : Calendar from class com.querydsl.sql.types.JSR310InstantTypeTest to class com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected UTC : Calendar from class com.querydsl.sql.types.JSR310OffsetDateTimeTypeTest to class com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest"
 	}],
 	"time": "6/21/15 7:29 PM",
 	"id": 1120650
@@ -3829,7 +3946,7 @@
 	"author": "Philipp Bogensberger",
 	"refactorings": [{
 		"type": "Push Down Method",
-		"description": "Push Down Method public plan() : Plan from class io.crate.planner.node.dql.ESDQLPlanNode to class io.crate.planner.node.dql.ESGetNode"
+		"description": "Push Down Method public plan() : Plan from class io.crate.planner.node.dql.ESDQLPlanNode to public plan() : Plan from class io.crate.planner.node.dql.ESGetNode"
 	}],
 	"time": "6/23/15 10:52 AM",
 	"id": 1122454
@@ -3855,10 +3972,13 @@
 	"author": "Moxie Marlinspike",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class ExpandingLayerDrawable moved from org.thoughtcrime.securesms.contacts.ContactPhotoFactory to org.thoughtcrime.securesms.contacts.avatars.ResourceContactPhoto"
+		"description": "Move Class org.thoughtcrime.securesms.contacts.ContactPhotoFactory.ExpandingLayerDrawable moved to org.thoughtcrime.securesms.contacts.avatars.ResourceContactPhoto.ExpandingLayerDrawable"
 	}, {
 		"type": "Inline Method",
 		"description": "Inline Method private getSynchronousRecipient(context Context, recipientId long) : Recipient inlined to package getRecipient(context Context, recipientId long, asynchronous boolean) : Recipient in class org.thoughtcrime.securesms.recipients.RecipientProvider"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method private getRecipientDetails(context Context, number String) : RecipientDetails renamed to private getIndividualRecipientDetails(context Context, number String) : RecipientDetails in class org.thoughtcrime.securesms.recipients.RecipientProvider"
 	}],
 	"time": "6/23/15 2:15 PM",
 	"id": 1123651
@@ -4764,10 +4884,10 @@
 	"author": "Ra\u00fal Guti\u00e9rrez Segal\u00e9s",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method private cleanupWriterSocket(pwriter PrintWriter) : void from class org.apache.zookeeper.server.NIOServerCnxn to class  org.apache.zookeeper.server.ServerCnxn"
+		"description": "Pull Up Method private cleanupWriterSocket(pwriter PrintWriter) : void from class org.apache.zookeeper.server.NIOServerCnxn to public cleanupWriterSocket(pwriter PrintWriter) : void from class org.apache.zookeeper.server.ServerCnxn"
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method private cleanupWriterSocket(pwriter PrintWriter) : void from class org.apache.zookeeper.server.NettyServerCnxn to class  org.apache.zookeeper.server.ServerCnxn"
+		"description": "Pull Up Method private cleanupWriterSocket(pwriter PrintWriter) : void from class org.apache.zookeeper.server.NettyServerCnxn to public cleanupWriterSocket(pwriter PrintWriter) : void from class org.apache.zookeeper.server.ServerCnxn"
 	}],
 	"time": "6/28/15 4:09 PM",
 	"id": 1126576
@@ -4863,7 +4983,10 @@
 	"author": "Lorant Pinter",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public getInputs() : SetLanguageSourceSet extracted from public getAllSources() : SetLanguageSourceSet in class org.gradle.platform.base.binary.BaseBinarySpec"
+		"description": "Extract Method public getInputs() : Set<LanguageSourceSet> extracted from public getAllSources() : Set<LanguageSourceSet> in class org.gradle.platform.base.binary.BaseBinarySpec"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public getAllSources() : Set<LanguageSourceSet> renamed to public getInputs() : Set<LanguageSourceSet> in class org.gradle.nativeplatform.test.internal.DefaultNativeTestSuiteBinarySpec"
 	}],
 	"time": "6/29/15 5:34 AM",
 	"id": 1126709
@@ -4873,7 +4996,7 @@
 	"author": "Oliver Gierke",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method protected getCountQuery(spec SpecificationT, mode QueryMode) : TypedQuery<Long> extracted from protected getCountQuery(spec Specification<T>) : TypedQuery<Long> in class org.springframework.data.jpa.repository.support.SimpleJpaRepository"
+		"description": "Extract Method protected getCountQuery(spec Specification<T>, mode QueryMode) : TypedQuery<Long> extracted from protected getCountQuery(spec Specification<T>) : TypedQuery<Long> in class org.springframework.data.jpa.repository.support.SimpleJpaRepository"
 	}],
 	"time": "6/29/15 7:28 AM",
 	"id": 1126375
@@ -5768,7 +5891,7 @@
 	"author": "L\u00f3r\u00e1nt Pint\u00e9r",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class JarBinaryRules moved from org.gradle.jvm.plugins to org.gradle.jvm.internal"
+		"description": "Move Class org.gradle.jvm.plugins.JarBinaryRules moved to org.gradle.jvm.internal.JarBinaryRules"
 	}],
 	"time": "7/7/15 8:09 AM",
 	"id": 1134145
@@ -5778,7 +5901,7 @@
 	"author": "Dev Naruka",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class PropertyChangeEnsuringBeanWrapper moved from org.springframework.data.jpa.repository.augment.JpaSoftDeleteQueryAugmentor to org.springframework.data.jpa.repository.augment"
+		"description": "Move Class org.springframework.data.jpa.repository.augment.JpaSoftDeleteQueryAugmentor.PropertyChangeEnsuringBeanWrapper moved to org.springframework.data.jpa.repository.augment.PropertyChangeEnsuringBeanWrapper"
 	}],
 	"time": "7/7/15 9:13 AM",
 	"id": 1133761
@@ -6238,6 +6361,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method package run0(client HeliosClient, out PrintStream, json boolean, name String, full boolean) : int extracted from package run(options Namespace, client HeliosClient, out PrintStream, json boolean, stdin BufferedReader) : int in class com.spotify.helios.cli.command.DeploymentGroupStatusCommand"
+	}, {
+		"type": "Inline Method",
+		"description": "Inline Method package watchDeploymentGroup(out PrintStream, name String, interval int, clients List<TargetAndClient>) : void inlined to package run(options Namespace, client HeliosClient, out PrintStream, json boolean, stdin BufferedReader) : int in class com.spotify.helios.cli.command.DeploymentGroupWatchCommand"
 	}],
 	"time": "7/9/15 3:44 PM",
 	"id": 1137619
@@ -6311,13 +6437,13 @@
 	"author": "dpb",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private deferredElements() : ImmutableMap<String,Optional<? extends Element>> extracted from public process(annotations Set? extends TypeElement, roundEnv RoundEnvironment) : boolean in class com.google.auto.common.BasicAnnotationProcessor"
+		"description": "Extract Method private deferredElements() : ImmutableMap<String,Optional<? extends Element>> extracted from public process(annotations Set<? extends TypeElement>, roundEnv RoundEnvironment) : boolean in class com.google.auto.common.BasicAnnotationProcessor"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private validElements(deferredElements ImmutableMap<String,Optional<? extends Element>>, roundEnv RoundEnvironment) : ImmutableSetMultimap<Class<?>> extends Annotation,Element extracted from public process(annotations Set? extends TypeElement, roundEnv RoundEnvironment) : boolean in class com.google.auto.common.BasicAnnotationProcessor"
+		"description": "Extract Method private validElements(deferredElements ImmutableMap<String,Optional<? extends Element>>, roundEnv RoundEnvironment) : ImmutableSetMultimap<Class<? extends Annotation>,Element> extracted from public process(annotations Set<? extends TypeElement>, roundEnv RoundEnvironment) : boolean in class com.google.auto.common.BasicAnnotationProcessor"
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private process(validElements ImmutableSetMultimap<Class<?>> extends Annotation,Element) : void extracted from public process(annotations Set? extends TypeElement, roundEnv RoundEnvironment) : boolean in class com.google.auto.common.BasicAnnotationProcessor"
+		"description": "Extract Method private process(validElements ImmutableSetMultimap<Class<? extends Annotation>,Element>) : void extracted from public process(annotations Set<? extends TypeElement>, roundEnv RoundEnvironment) : boolean in class com.google.auto.common.BasicAnnotationProcessor"
 	}],
 	"time": "7/9/15 9:16 PM",
 	"id": 1137576
@@ -6470,6 +6596,9 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private getDeploymentGroup(client ZooKeeperClient, name String) : DeploymentGroup extracted from public getDeploymentGroup(name String) : DeploymentGroup in class com.spotify.helios.master.ZooKeeperMasterModel"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method public configDeploymentGroups(name String) : String renamed to public configDeploymentGroup(name String) : String in class com.spotify.helios.servicescommon.coordination.Paths"
 	}],
 	"time": "7/10/15 6:18 PM",
 	"id": 1139036
@@ -8138,7 +8267,10 @@
 	"author": "Stefano Santoro",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class CallbacksRef moved from org.voltdb.importer.ChannelChangeNotifier to org.voltdb.importer.ChannelDistributer"
+		"description": "Move Class org.voltdb.importer.ChannelChangeNotifier.CallbacksRef moved to org.voltdb.importer.ChannelDistributer.CallbacksRef"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package fromURIs(uris Set<URI>) : Set<ChannelSpec> renamed to package asSpecs(uris Set<URI>) : Set<ChannelSpec> in class org.voltdb.importer.TestChannelDistribute"
 	}],
 	"time": "7/16/15 12:48 PM",
 	"id": 1142910
@@ -8258,6 +8390,12 @@
 	"refactorings": [{
 		"type": "Extract Method",
 		"description": "Extract Method private validateParameters() : void extracted from public prepare(manager MappingManager, ps PreparedStatement) : void in class com.datastax.driver.mapping.MethodMapper"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package should_include_enumtype_in_accessor_string() : void renamed to public should_allow_enum_as_string_in_accessor_params() : void in class com.datastax.driver.mapping.MapperAccessorParamsTest"
+	}, {
+		"type": "Rename Method",
+		"description": "Rename Method package should_include_enumtype_in_accessor_ordinal() : void renamed to public should_allow_enum_as_int_in_accessor_params() : void in class com.datastax.driver.mapping.MapperAccessorParamsTest"
 	}],
 	"time": "7/17/15 6:52 AM",
 	"id": 1142921
@@ -8483,13 +8621,13 @@
 	"author": "Luanne Misquitta",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class Person moved from org.springframework.data.neo4j.examples.friends to org.springframework.data.neo4j.examples.friends.domain"
+		"description": "Move Class org.springframework.data.neo4j.examples.friends.Person moved to org.springframework.data.neo4j.examples.friends.domain.Person"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class Friendship moved from org.springframework.data.neo4j.examples.friends to org.springframework.data.neo4j.examples.friends.domain"
+		"description": "Move Class org.springframework.data.neo4j.examples.friends.Friendship moved to org.springframework.data.neo4j.examples.friends.domain.Friendship"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class FriendContext moved from org.springframework.data.neo4j.examples.friends to org.springframework.data.neo4j.examples.friends.context"
+		"description": "Move Class org.springframework.data.neo4j.examples.friends.FriendContext moved to org.springframework.data.neo4j.examples.friends.context.FriendContext"
 	}],
 	"time": "7/22/15 6:08 AM",
 	"id": 1149047
@@ -8595,7 +8733,7 @@
 	"author": "Timo Westk\u00e4mper",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method private escapeLiteral(str String) : String from class com.querydsl.jpa.JPQLSerializer to class com.querydsl.jpa.JPQLTemplates"
+		"description": "Move Method private escapeLiteral(str String) : String from class com.querydsl.jpa.JPQLSerializer to private escapeLiteral(str String) : String from class com.querydsl.jpa.JPQLTemplates"
 	}],
 	"time": "7/22/15 5:03 PM",
 	"id": 1146882
@@ -9795,7 +9933,7 @@
 	"author": "Christopher M. Wolff",
 	"refactorings": [{
 		"type": "Pull Up Method",
-		"description": "Pull Up Method private findAllAggPlanNodes(node AbstractPlanNode) : List<AbstractPlanNode> from class org.voltdb.planner.TestPlansApproxCountDistinct to class org.voltdb.planner.PlannerTestCase"
+		"description": "Pull Up Method private findAllAggPlanNodes(node AbstractPlanNode) : List<AbstractPlanNode> from class org.voltdb.planner.TestPlansApproxCountDistinct to protected findAllAggPlanNodes(fragment AbstractPlanNode) : List<AbstractPlanNode> from class org.voltdb.planner.PlannerTestCase"
 	}],
 	"time": "7/30/15 8:14 PM",
 	"id": 1153866
@@ -9937,7 +10075,7 @@
 	"author": "Ricki Hirner",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method package recurrenceSetsToAndroidString(dates List) : String from class at.bitfire.davdroid.resource.LocalCalendar to class at.bitfire.davdroid.DateUtils"
+		"description": "Move Method package recurrenceSetsToAndroidString(dates List<? extends DateListProperty>) : String from class at.bitfire.davdroid.resource.LocalCalendar to public recurrenceSetsToAndroidString(dates List<? extends DateListProperty>, allDay boolean) : String from class at.bitfire.davdroid.DateUtils"
 	}],
 	"time": "8/1/15 8:25 AM",
 	"id": 1155159
@@ -10179,22 +10317,22 @@
 	"author": "Ray Ryan",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method public cannotRegisterOnDestroyed() : void from class mortar.ObjectGraphServiceTest to class mortar.MortarScopeTest"
+		"description": "Move Method public cannotRegisterOnDestroyed() : void from class mortar.ObjectGraphServiceTest to public cannotRegisterOnDestroyed() : void from class mortar.MortarScopeTest"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method public isDestroyedGetsSet() : void from class mortar.ObjectGraphServiceTest to class mortar.MortarScopeTest"
+		"description": "Move Method public isDestroyedGetsSet() : void from class mortar.ObjectGraphServiceTest to public isDestroyedGetsSet() : void from class mortar.MortarScopeTest"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method public isDestroyedStartsFalse() : void from class mortar.ObjectGraphServiceTest to class mortar.MortarScopeTest"
+		"description": "Move Method public isDestroyedStartsFalse() : void from class mortar.ObjectGraphServiceTest to public isDestroyedStartsFalse() : void from class mortar.MortarScopeTest"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method public cannotFindChildFromDestroyed() : void from class mortar.ObjectGraphServiceTest to class mortar.MortarScopeTest"
+		"description": "Move Method public cannotFindChildFromDestroyed() : void from class mortar.ObjectGraphServiceTest to public cannotFindChildFromDestroyed() : void from class mortar.MortarScopeTest"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method public rootDestroyIsIdempotent() : void from class mortar.ObjectGraphServiceTest to class mortar.MortarScopeTest"
+		"description": "Move Method public rootDestroyIsIdempotent() : void from class mortar.ObjectGraphServiceTest to public rootDestroyIsIdempotent() : void from class mortar.MortarScopeTest"
 	}, {
 		"type": "Move Method",
-		"description": "Move Method public destroyIsIdempotent() : void from class mortar.ObjectGraphServiceTest to class mortar.MortarScopeTest"
+		"description": "Move Method public destroyIsIdempotent() : void from class mortar.ObjectGraphServiceTest to public destroyIsIdempotent() : void from class mortar.MortarScopeTest"
 	}],
 	"time": "8/3/15 10:11 PM",
 	"id": 1156165
@@ -10659,9 +10797,6 @@
 	"repository": "https://github.com/VoltDB/voltdb.git",
 	"author": "Qingyang",
 	"refactorings": [{
-		"type": "Extract Method",
-		"description": "Extract Method private resetLeader() : void extracted from public getLastOffset(whichTime long) : long in class org.voltdb.importclient.kafka.KafkaStreamImporter.TopicPartitionFetcher"
-	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private resetLeader() : void extracted from public run() : void in class org.voltdb.importclient.kafka.KafkaStreamImporter.TopicPartitionFetcher"
 	}],

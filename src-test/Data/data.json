@@ -5825,6 +5825,12 @@
 	}, {
 		"type": "Move Class",
 		"description": "Move Class exportbenchmark.NoOpExporter moved to exportbenchmark2.exporter.exportbenchmark.NoOpExporter"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class exportbenchmark.ExportBenchmark.ExportCallback moved to exportbenchmark2.client.exportbenchmark.ExportBenchmark.ExportCallback"
+	}, {
+		"type": "Move Class",
+		"description": "Move Class exportbenchmark.ExportBenchmark.ExportBenchConfig moved to exportbenchmark2.client.exportbenchmark.ExportBenchmark.ExportBenchConfig"
 	}],
 	"time": "7/6/15 4:02 PM",
 	"id": 1132736
@@ -8288,7 +8294,7 @@
 		"description": "Move Class org.voltdb.importer.ChannelChangeNotifier.CallbacksRef moved to org.voltdb.importer.ChannelDistributer.CallbacksRef"
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method package fromURIs(uris Set<URI>) : Set<ChannelSpec> renamed to package asSpecs(uris Set<URI>) : Set<ChannelSpec> in class org.voltdb.importer.TestChannelDistribute"
+		"description": "Rename Method package fromURIs(uris Set<URI>) : Set<ChannelSpec> renamed to package asSpecs(uris Set<URI>) : Set<ChannelSpec> in class org.voltdb.importer.TestChannelDistributer"
 	}],
 	"time": "7/16/15 12:48 PM",
 	"id": 1142910

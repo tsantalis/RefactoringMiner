@@ -502,47 +502,42 @@ public class UMLModelDiff {
 		   
 		   String originalPath = originalClass.getSourceFile();
 		   String movedPath = movedClass.getSourceFile();
-		   boolean pathIsTheSame = originalPath.equals(movedPath);
 		   
 		   if (!originalName.equals(movedName)) {
-			   if (!pathIsTheSame) {
-				   MoveClassRefactoring refactoring = new MoveClassRefactoring(originalName, movedName);
-				   RenamePattern renamePattern = refactoring.getRenamePattern();
-				   //check if the the original path is a substring of the moved path and vice versa
-				   if(renamePattern.getOriginalPath().contains(renamePattern.getMovedPath()) ||
-						   renamePattern.getMovedPath().contains(renamePattern.getOriginalPath()) ||
-						   !originalClass.isTopLevel() || !movedClass.isTopLevel()) {
-					   refactorings.add(refactoring);
-				   }
-				   else {
-					   boolean foundInMatchingRenamePackageRefactoring = false;
-					   for(RenamePackageRefactoring renamePackageRefactoring : renamePackageRefactorings) {
-						   if(renamePackageRefactoring.getPattern().equals(renamePattern)) {
-							   renamePackageRefactoring.addMoveClassRefactoring(refactoring);
-							   foundInMatchingRenamePackageRefactoring = true;
-							   break;
-						   }
-					   }
-					   if(!foundInMatchingRenamePackageRefactoring) {
-						   renamePackageRefactorings.add(new RenamePackageRefactoring(refactoring));
-					   }
-				   }
+			   MoveClassRefactoring refactoring = new MoveClassRefactoring(originalName, movedName);
+			   RenamePattern renamePattern = refactoring.getRenamePattern();
+			   //check if the the original path is a substring of the moved path and vice versa
+			   if(renamePattern.getOriginalPath().contains(renamePattern.getMovedPath()) ||
+					   renamePattern.getMovedPath().contains(renamePattern.getOriginalPath()) ||
+					   !originalClass.isTopLevel() || !movedClass.isTopLevel()) {
+				   refactorings.add(refactoring);
 			   }
-		   } else {
-			   if (!pathIsTheSame) {
-				   MovedClassToAnotherSourceFolder refactoring = new MovedClassToAnotherSourceFolder(originalName, originalPath, movedPath);
-				   RenamePattern renamePattern = refactoring.getRenamePattern();
-				   boolean foundInMatchingMoveSourceFolderRefactoring = false;
-				   for(MoveSourceFolderRefactoring moveSourceFolderRefactoring : moveSourceFolderRefactorings) {
-					   if(moveSourceFolderRefactoring.getPattern().equals(renamePattern)) {
-						   moveSourceFolderRefactoring.addMovedClassToAnotherSourceFolder(refactoring);
-						   foundInMatchingMoveSourceFolderRefactoring = true;
+			   else {
+				   boolean foundInMatchingRenamePackageRefactoring = false;
+				   for(RenamePackageRefactoring renamePackageRefactoring : renamePackageRefactorings) {
+					   if(renamePackageRefactoring.getPattern().equals(renamePattern)) {
+						   renamePackageRefactoring.addMoveClassRefactoring(refactoring);
+						   foundInMatchingRenamePackageRefactoring = true;
 						   break;
 					   }
 				   }
-				   if(!foundInMatchingMoveSourceFolderRefactoring) {
-					   moveSourceFolderRefactorings.add(new MoveSourceFolderRefactoring(refactoring));
+				   if(!foundInMatchingRenamePackageRefactoring) {
+					   renamePackageRefactorings.add(new RenamePackageRefactoring(refactoring));
 				   }
+			   }
+		   } else {
+			   MovedClassToAnotherSourceFolder refactoring = new MovedClassToAnotherSourceFolder(originalName, originalPath, movedPath);
+			   RenamePattern renamePattern = refactoring.getRenamePattern();
+			   boolean foundInMatchingMoveSourceFolderRefactoring = false;
+			   for(MoveSourceFolderRefactoring moveSourceFolderRefactoring : moveSourceFolderRefactorings) {
+				   if(moveSourceFolderRefactoring.getPattern().equals(renamePattern)) {
+					   moveSourceFolderRefactoring.addMovedClassToAnotherSourceFolder(refactoring);
+					   foundInMatchingMoveSourceFolderRefactoring = true;
+					   break;
+				   }
+			   }
+			   if(!foundInMatchingMoveSourceFolderRefactoring) {
+				   moveSourceFolderRefactorings.add(new MoveSourceFolderRefactoring(refactoring));
 			   }
 		   }
 	   }

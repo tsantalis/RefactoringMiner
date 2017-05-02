@@ -4505,6 +4505,24 @@
 	"refactorings": [{
 		"type": "Extract Superclass",
 		"description": "Extract Superclass org.broadleafcommerce.openadmin.dto.override.MetadataOverride from class org.broadleafcommerce.openadmin.dto.override.FieldMetadataOverride"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public getName() : String from class org.broadleafcommerce.openadmin.dto.override.FieldMetadataOverride to public getName() : String from class org.broadleafcommerce.openadmin.dto.override.MetadataOverride"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public getOrder() : Integer from class org.broadleafcommerce.openadmin.dto.override.FieldMetadataOverride to public getOrder() : Integer from class org.broadleafcommerce.openadmin.dto.override.MetadataOverride"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public setName(name String) : void from class org.broadleafcommerce.openadmin.dto.override.FieldMetadataOverride to public setName(name String) : void from class org.broadleafcommerce.openadmin.dto.override.MetadataOverride"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public setOrder(order Integer) : void from class org.broadleafcommerce.openadmin.dto.override.FieldMetadataOverride to public setOrder(order Integer) : void from class org.broadleafcommerce.openadmin.dto.override.MetadataOverride"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected order : Integer from class org.broadleafcommerce.openadmin.dto.override.FieldMetadataOverride to class org.broadleafcommerce.openadmin.dto.override.MetadataOverride"
+	}, {
+		"type": "Pull Up Attribute",
+		"description": "Pull Up Attribute protected name : String from class org.broadleafcommerce.openadmin.dto.override.FieldMetadataOverride to class org.broadleafcommerce.openadmin.dto.override.MetadataOverride"
 	}],
 	"time": "6/24/15 6:52 PM",
 	"id": 1125111
@@ -5779,34 +5797,34 @@
 	"author": "peter shaw",
 	"refactorings": [{
 		"type": "Move Class",
-		"description": "Move Class SocketExporter moved from exportbenchmark to exportbenchmark2.exporter.exportbenchmark"
+		"description": "Move Class exportbenchmark.SocketExporter moved to exportbenchmark2.exporter.exportbenchmark.SocketExporter"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class Connect2Server moved from exportbenchmark to exportbenchmark2.client.exportbenchmark"
+		"description": "Move Class exportbenchmark.Connect2Server moved to exportbenchmark2.client.exportbenchmark.Connect2Server"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class TruncateTables moved from exportbenchmark.procedures to exportbenchmark2.db.exportbenchmark.procedures"
+		"description": "Move Class exportbenchmark.procedures.TruncateTables moved to exportbenchmark2.db.exportbenchmark.procedures.TruncateTables"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class InsertExport5 moved from exportbenchmark.procedures to exportbenchmark2.db.exportbenchmark.procedures"
+		"description": "Move Class exportbenchmark.procedures.InsertExport5 moved to exportbenchmark2.db.exportbenchmark.procedures.InsertExport5"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class InsertExport10 moved from exportbenchmark.procedures to exportbenchmark2.db.exportbenchmark.procedures"
+		"description": "Move Class exportbenchmark.procedures.InsertExport10 moved to exportbenchmark2.db.exportbenchmark.procedures.InsertExport10"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class InsertExport moved from exportbenchmark.procedures to exportbenchmark2.db.exportbenchmark.procedures"
+		"description": "Move Class exportbenchmark.procedures.InsertExport moved to exportbenchmark2.db.exportbenchmark.procedures.InsertExport"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class SampleRecord moved from exportbenchmark.procedures to exportbenchmark2.db.exportbenchmark.procedures"
+		"description": "Move Class exportbenchmark.procedures.SampleRecord moved to exportbenchmark2.db.exportbenchmark.procedures.SampleRecord"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class InsertExport0 moved from exportbenchmark.procedures to exportbenchmark2.db.exportbenchmark.procedures"
+		"description": "Move Class exportbenchmark.procedures.InsertExport0 moved to exportbenchmark2.db.exportbenchmark.procedures.InsertExport0"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class InsertExport1 moved from exportbenchmark.procedures to exportbenchmark2.db.exportbenchmark.procedures"
+		"description": "Move Class exportbenchmark.procedures.InsertExport1 moved to exportbenchmark2.db.exportbenchmark.procedures.InsertExport1"
 	}, {
 		"type": "Move Class",
-		"description": "Move Class NoOpExporter moved from exportbenchmark to exportbenchmark2.exporter.exportbenchmark"
+		"description": "Move Class exportbenchmark.NoOpExporter moved to exportbenchmark2.exporter.exportbenchmark.NoOpExporter"
 	}],
 	"time": "7/6/15 4:02 PM",
 	"id": 1132736

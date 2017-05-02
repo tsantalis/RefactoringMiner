@@ -5,7 +5,6 @@ import gr.uom.java.xmi.UMLModelASTReader;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,18 +18,13 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.eclipse.egit.github.core.Commit;
-import org.eclipse.egit.github.core.CommitFile;
-import org.eclipse.egit.github.core.IRepositoryIdProvider;
-import org.eclipse.egit.github.core.RepositoryCommit;
-import org.eclipse.egit.github.core.RepositoryId;
-import org.eclipse.egit.github.core.client.GitHubClient;
-import org.eclipse.egit.github.core.service.CommitService;
-import org.eclipse.egit.github.core.service.RepositoryService;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.kohsuke.github.GHCommit;
+import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GitHub;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
 import org.refactoringminer.api.Refactoring;
@@ -152,48 +146,15 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	protected List<Refactoring> detectRefactorings(final RefactoringHandler handler, File projectFolder, String cloneURL, String currentCommitId) {
 		List<Refactoring> refactoringsAtRevision = Collections.emptyList();
 		try {
-			RepositoryService repositoryService = null;
-			try {
-				Properties prop = new Properties();
-				InputStream input = new FileInputStream("github-credentials.properties");
-				prop.load(input);
-				String username = prop.getProperty("username");
-				String password = prop.getProperty("password");
-				GitHubClient client = new GitHubClient();
-				client.setCredentials(username, password);
-				repositoryService = new RepositoryService(client);
-			}
-			catch(FileNotFoundException fnfe) {
-				repositoryService = new RepositoryService();
-			}
-			RepositoryId repoId = RepositoryId.createFromUrl(cloneURL);
-			String repoName = repoId.getName().endsWith(".git") ? repoId.getName().substring(0, repoId.getName().length()-4) : repoId.getName();
-			IRepositoryIdProvider repository = repositoryService.getRepository(repoId.getOwner(), repoName);
-			CommitService commitService = new CommitService();
-			RepositoryCommit commit = commitService.getCommit(repository, currentCommitId);
-			Commit parentCommit = commit.getParents().get(0);
-			String parentCommitId = parentCommit.getSha();
-			List<CommitFile> commitFiles = commit.getFiles();
+			Properties prop = new Properties();
+			InputStream input = new FileInputStream("github-credentials.properties");
+			prop.load(input);
+			String username = prop.getProperty("username");
+			String password = prop.getProperty("password");
 			List<String> filesBefore = new ArrayList<String>();
 			List<String> filesCurrent = new ArrayList<String>();
 			Map<String, String> renamedFilesHint = new HashMap<String, String>();
-			for (CommitFile commitFile : commitFiles) {
-				if (commitFile.getFilename().endsWith(".java")) {
-					if (commitFile.getStatus().equals("modified")) {
-						filesBefore.add(commitFile.getFilename());
-						filesCurrent.add(commitFile.getFilename());
-					}
-					else if (commitFile.getStatus().equals("added")) {
-						filesCurrent.add(commitFile.getFilename());
-					}
-					else if (commitFile.getStatus().equals("removed")) {
-						filesBefore.add(commitFile.getFilename());
-					}
-					else if (commitFile.getStatus().equals("renamed")) {
-						//TODO
-					}
-				}
-			}
+			String parentCommitId = populateWithGitHubAPI(cloneURL, currentCommitId, username, password, filesBefore, filesCurrent, renamedFilesHint);
 			File currentFolder = new File(projectFolder.getParentFile(), projectFolder.getName() + "-" + currentCommitId);
 			File parentFolder = new File(projectFolder.getParentFile(), projectFolder.getName() + "-" + parentCommitId);
 			if (currentFolder.exists() && parentFolder.exists()) {
@@ -206,14 +167,50 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			else {
 				logger.warn(String.format("Folder %s not found", currentFolder.getPath()));
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			logger.warn(String.format("Ignored revision %s due to error", currentCommitId), e);
 			handler.handleException(currentCommitId, e);
-		} catch (Exception e) {
-			
 		}
 		handler.handle(currentCommitId, refactoringsAtRevision);
 		return refactoringsAtRevision;
+	}
+
+	private String populateWithGitHubAPI(String cloneURL, String currentCommitId, String username, String password,
+			List<String> filesBefore, List<String> filesCurrent, Map<String, String> renamedFilesHint) throws IOException {
+		String parentCommitId = null;
+		GitHub gitHub = null;
+		if (username != null && password != null) {
+			gitHub = GitHub.connectUsingPassword(username, password);
+		}
+		else {
+			gitHub = GitHub.connect();
+		}
+		//https://github.com/ is 19 chars
+		String repoName = cloneURL.substring(19, cloneURL.indexOf(".git"));
+		GHRepository repository = gitHub.getRepository(repoName);
+		GHCommit commit = repository.getCommit(currentCommitId);
+		parentCommitId = commit.getParents().get(0).getSHA1();
+		List<GHCommit.File> commitFiles = commit.getFiles();
+		for (GHCommit.File commitFile : commitFiles) {
+			if (commitFile.getFileName().endsWith(".java")) {
+				if (commitFile.getStatus().equals("modified")) {
+					filesBefore.add(commitFile.getFileName());
+					filesCurrent.add(commitFile.getFileName());
+				}
+				else if (commitFile.getStatus().equals("added")) {
+					filesCurrent.add(commitFile.getFileName());
+				}
+				else if (commitFile.getStatus().equals("removed")) {
+					filesBefore.add(commitFile.getFileName());
+				}
+				else if (commitFile.getStatus().equals("renamed")) {
+					filesBefore.add(commitFile.getPreviousFilename());
+					filesCurrent.add(commitFile.getFileName());
+					renamedFilesHint.put(commitFile.getPreviousFilename(), commitFile.getFileName());
+				}
+			}
+		}
+		return parentCommitId;
 	}
 
 	protected List<Refactoring> filter(List<Refactoring> refactoringsAtRevision) {

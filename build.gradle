@@ -48,8 +48,9 @@ dependencies {
 	compile files('lib/org.eclipse.jdt.core_3.12.1.v20160829-0950.jar')
 	compile files('lib/org.eclipse.osgi_3.10.101.v20150820-1432.jar')
 	compile files('lib/org.eclipse.text_3.5.400.v20150505-1044.jar')
-	compile files('lib/org.eclipse.egit.github.core_4.6.0.201612231935-r.jar')
-	compile files('lib/com.google.gson_2.2.4.v201311231704.jar')
+	compile files('lib/commons-codec-1.10.jar')
+	compile files('lib/commons-lang-2.6.jar')
+	compile files('lib/github-api-1.84.jar')
 	
 	testCompile 'junit:junit:4.11'
 }

@@ -1102,7 +1102,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(invocationCoveringTheEntireStatement1 != null && argumentizedString2.startsWith("return ") &&
 				invocationCoveringTheEntireStatement1.getArguments().size() == 1 &&
 				//length()-2 to remove ";\n" from the end of the return statement, 7 to remove the prefix "return "
-				invocationCoveringTheEntireStatement1.getArguments().get(0).equals(argumentizedString2.substring(7, argumentizedString2.length()-2))) {
+				equalsIgnoringExtraParenthesis(invocationCoveringTheEntireStatement1.getArguments().get(0), argumentizedString2.substring(7, argumentizedString2.length()-2))) {
 			Replacement replacement = new ArgumentReplacementWithReturnExpression(invocationCoveringTheEntireStatement1.getArguments().get(0),
 					argumentizedString2.substring(7, argumentizedString2.length()-2));
 			replacements = new LinkedHashSet<Replacement>();
@@ -1113,7 +1113,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(invocationCoveringTheEntireStatement2 != null && invocationCoveringTheEntireStatement2.getArguments().size() == 1 &&
 				argumentizedString1.contains("=") && argumentizedString1.endsWith(";\n") &&
 				//length()-2 to remove ";\n" from the end of the assignment statement, indexOf("=")+1 to remove the left hand side of the assignment
-				invocationCoveringTheEntireStatement2.getArguments().get(0).equals(argumentizedString1.substring(argumentizedString1.indexOf("=")+1, argumentizedString1.length()-2)) &&
+				equalsIgnoringExtraParenthesis(invocationCoveringTheEntireStatement2.getArguments().get(0), argumentizedString1.substring(argumentizedString1.indexOf("=")+1, argumentizedString1.length()-2)) &&
 				methodInvocationMap1.containsKey(invocationCoveringTheEntireStatement2.getArguments().get(0))) {
 			Replacement replacement = new ArgumentReplacementWithRightHandSideOfAssignmentExpression(argumentizedString1.substring(argumentizedString1.indexOf("=")+1, argumentizedString1.length()-2),
 					invocationCoveringTheEntireStatement2.getArguments().get(0));
@@ -1141,6 +1141,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private boolean equalsIgnoringExtraParenthesis(String s1, String s2) {
+		if(s1.equals(s2))
+			return true;
+		String parenthesizedS1 = "("+s1+")";
+		if(parenthesizedS1.equals(s2))
+			return true;
+		String parenthesizedS2 = "("+s2+")";
+		if(parenthesizedS2.equals(s1))
+			return true;
+		return false;
 	}
 
 	private Replacement variableReplacementWithinMethodInvocations(String s1, String s2, Set<String> variables1, Set<String> variables2) {

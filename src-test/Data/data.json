@@ -6396,9 +6396,6 @@
 	"repository": "https://github.com/CyanogenMod/android_frameworks_base.git",
 	"author": "Jorge Ruesga",
 	"refactorings": [{
-			"type": "Extract Method",
-			"description": "Extract Method private queryProperty(id int, fromDock boolean) : long extracted from private queryProperty(id int) : long in class android.os.BatteryManager"
-		}, {
 			"type": "Extract Interface",
 			"description": "Extract Interface com.android.systemui.statusbar.policy.BatteryStateRegistar from class com.android.systemui.statusbar.policy.BatteryController"
 		}, {

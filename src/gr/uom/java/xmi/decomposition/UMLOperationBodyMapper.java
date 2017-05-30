@@ -461,7 +461,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return true;
 		}
 		return !statement.equals("{") && !statement.startsWith("case ") && !statement.startsWith("default :") &&
-				!statement.startsWith("return true") && !statement.startsWith("return false") && !statement.startsWith("return;");
+				!statement.startsWith("return true") && !statement.startsWith("return false") && !statement.startsWith("return this") && !statement.startsWith("return;");
 	}
 
 	private int editDistance() {
@@ -681,11 +681,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		
 		// replace variables with the corresponding arguments
 		for(String parameter : parameterToArgumentMap.keySet()) {
+			String argument = parameterToArgumentMap.get(parameter);
 			if(variables1.contains(parameter)) {
-				variables1.add(parameterToArgumentMap.get(parameter));
+				variables1.add(argument);
+				if(argument.contains("(") && argument.contains(")")) {
+					int indexOfOpeningParenthesis = argument.indexOf("(");
+					int indexOfClosingParenthesis = argument.lastIndexOf(")");
+					String arguments = argument.substring(indexOfOpeningParenthesis+1, indexOfClosingParenthesis);
+					if(!arguments.isEmpty() && !arguments.contains(",") && !arguments.contains("(") && !arguments.contains(")")) {
+						variables1.add(arguments);
+					}
+				}
 			}
 			if(variables2.contains(parameter)) {
-				variables2.add(parameterToArgumentMap.get(parameter));
+				variables2.add(argument);
+				if(argument.contains("(") && argument.contains(")")) {
+					int indexOfOpeningParenthesis = argument.indexOf("(");
+					int indexOfClosingParenthesis = argument.lastIndexOf(")");
+					String arguments = argument.substring(indexOfOpeningParenthesis+1, indexOfClosingParenthesis);
+					if(!arguments.isEmpty() && !arguments.contains(",") && !arguments.contains("(") && !arguments.contains(")")) {
+						variables2.add(arguments);
+					}
+				}
 			}
 		}
 		

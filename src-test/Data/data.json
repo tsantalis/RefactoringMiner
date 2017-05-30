@@ -1727,6 +1727,174 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public set(key CGImagePropertyIPTCContactInfo, value NativeObject) : CGImagePropertyIPTCContactInfoData extracted from public set(property CGImagePropertyIPTCContactInfo, value double) : CGImagePropertyIPTCContactInfoData in class org.robovm.apple.imageio.CGImagePropertyIPTCContactInfoData"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageDestinationCopySourceOptions extracted from public setOrientation(orientation CGImagePropertyOrientation) : CGImageDestinationCopySourceOptions in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setGIFData(metadata CGImagePropertyGIFData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setDepth(depth int) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setExifAuxData(metadata CGImagePropertyExifAuxData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageSourceOptions extracted from public setShouldCache(cache boolean) : CGImageSourceOptions in class org.robovm.apple.imageio.CGImageSourceOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setHasAlphaChannel(alphaChannel boolean) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setMakerMinoltaData(metadata CFDictionary) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setMakerOlympusData(metadata CFDictionary) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageDestinationCopySourceOptions extracted from public setDateTime(dateTime String) : CGImageDestinationCopySourceOptions in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key NSString, value NSObject) : CBCentralManagerScanOptions extracted from public setAllowsDuplicates(allowDuplicates boolean) : CBCentralManagerScanOptions in class org.robovm.apple.corebluetooth.CBCentralManagerScanOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key NSString, value NSObject) : CBConnectPeripheralOptions extracted from public setNotifyOnConnection(notify boolean) : CBConnectPeripheralOptions in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageSourceOptions extracted from public setShouldAllowFloat(allowFloat boolean) : CGImageSourceOptions in class org.robovm.apple.imageio.CGImageSourceOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageSourceOptions extracted from public setTypeIdentifierHint(typeIdentifier String) : CGImageSourceOptions in class org.robovm.apple.imageio.CGImageSourceOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageDestinationProperties extracted from public setMaxPixelSize(size long) : CGImageDestinationProperties in class org.robovm.apple.imageio.CGImageDestinationProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setCIFFData(metadata CGImagePropertyCIFFData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key NSString, value NSObject) : CBCentralManagerOptions extracted from public setRestoreIdentifier(identifier String) : CBCentralManagerOptions in class org.robovm.apple.corebluetooth.CBCentralManagerOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setColorModel(colorModel CGImagePropertyColorModel) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public set8BIMData(metadata CGImageProperty8BIMData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setDPIWidth(dpi long) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key NSString, value NSObject) : CBCentralManagerScanOptions extracted from public setSolicitedServiceUUIDs(uuids NSArray) : CBCentralManagerScanOptions in class org.robovm.apple.corebluetooth.CBCentralManagerScanOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageDestinationCopySourceOptions extracted from public setShouldExcludeGPS(exclude boolean) : CGImageDestinationCopySourceOptions in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key NSString, value NSObject) : CBConnectPeripheralOptions extracted from public setNotifyOnNotification(notify boolean) : CBConnectPeripheralOptions in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setIPTCData(metadata CGImagePropertyIPTCData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageDestinationProperties extracted from public setLossyCompressionQuality(quality double) : CGImageDestinationProperties in class org.robovm.apple.imageio.CGImageDestinationProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setMakerFujiData(metadata CFDictionary) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key NSString, value NSObject) : CBCentralManagerOptions extracted from public setShowPowerAlert(showAlert boolean) : CBCentralManagerOptions in class org.robovm.apple.corebluetooth.CBCentralManagerOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setGPSData(metadata CGImagePropertyGPSData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setIndexed(isIndexed boolean) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key NSString, value NSObject) : CBPeripheralManagerOptions extracted from public setShowPowerAlert(showAlert boolean) : CBPeripheralManagerOptions in class org.robovm.apple.corebluetooth.CBPeripheralManagerOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setContainsFloatingPointPixels(isFloat boolean) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageSourceOptions extracted from public setShouldCreateThumbnailWithTransform(transform boolean) : CGImageSourceOptions in class org.robovm.apple.imageio.CGImageSourceOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setMakerNikonData(metadata CGImagePropertyNikonData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setRawData(metadata CFDictionary) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setMakerPentaxData(metadata CFDictionary) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setJFIFData(metadata CGImagePropertyJFIFData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setFileSize(fileSize long) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setTIFFData(metadata CGImagePropertyTIFFData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key NSString, value NSObject) : CBConnectPeripheralOptions extracted from public setNotifyOnDisconnection(notify boolean) : CBConnectPeripheralOptions in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageMetadataEnumerationOptions extracted from public setEnumerateRecursively(recursive boolean) : CGImageMetadataEnumerationOptions in class org.robovm.apple.imageio.CGImageMetadataEnumerationOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageSourceOptions extracted from public setThumbnailMaxPixelSize(maxSize long) : CGImageSourceOptions in class org.robovm.apple.imageio.CGImageSourceOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setDNGData(metadata CGImagePropertyDNGData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setDPIHeight(dpi long) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageDestinationCopySourceOptions extracted from public setShouldExcludeXMP(exclude boolean) : CGImageDestinationCopySourceOptions in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setOrientation(orientation CGImagePropertyOrientation) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setICCProfile(profile String) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setPNGData(metadata CGImagePropertyPNGData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setExifData(metadata CGImagePropertyExifData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageSourceOptions extracted from public setShouldCacheImmediately(cache boolean) : CGImageSourceOptions in class org.robovm.apple.imageio.CGImageSourceOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setMakerCanonData(metadata CGImagePropertyCanonData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key NSString, value NSObject) : CBPeripheralManagerOptions extracted from public setRestoreIdentifier(identifier String) : CBPeripheralManagerOptions in class org.robovm.apple.corebluetooth.CBPeripheralManagerOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageSourceOptions extracted from public setShouldCreateThumbnailFromImageIfAbsent(createThumbnail boolean) : CGImageSourceOptions in class org.robovm.apple.imageio.CGImageSourceOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setPixelHeight(height long) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageProperties extracted from public setPixelWidth(width long) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageDestinationProperties extracted from public setEmbedThumbnail(embed boolean) : CGImageDestinationProperties in class org.robovm.apple.imageio.CGImageDestinationProperties"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageDestinationCopySourceOptions extracted from public setMergeMetadata(merge boolean) : CGImageDestinationCopySourceOptions in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions"
+	}, {
+		"type": "Extract Method",
+		"description": "Extract Method public set(key CFString, value NativeObject) : CGImageDestinationProperties extracted from public setBackgroundColor(color CGColor) : CGImageDestinationProperties in class org.robovm.apple.imageio.CGImageDestinationProperties"
 	}],
 	"time": "6/16/15 1:58 PM",
 	"id": 1117916

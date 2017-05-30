@@ -121,7 +121,7 @@ public class OperationInvocation {
 	}
 
     public boolean matchesOperation(UMLOperation operation) {
-    	return this.methodName.equals(operation.getName()) && this.typeArguments == operation.getParameterTypeList().size();
+    	return this.methodName.equals(operation.getName()) && (this.typeArguments == operation.getParameterTypeList().size() || this.typeArguments == operation.getNumberOfNonVarargsParameters());
     }
 
     public boolean compatibleExpression(OperationInvocation other) {

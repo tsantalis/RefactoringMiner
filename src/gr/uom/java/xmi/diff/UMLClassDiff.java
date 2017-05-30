@@ -585,7 +585,9 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 						List<String> arguments = removedOperationInvocation.getArguments();
 						List<String> parameters = removedOperation.getParameterNameList();
 						Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
-						for(int i=0; i<parameters.size(); i++) {
+						//special handling for methods with varargs parameter for which no argument is passed in the matching invocation
+						int size = Math.min(arguments.size(), parameters.size());
+						for(int i=0; i<size; i++) {
 							parameterToArgumentMap.put(parameters.get(i), arguments.get(i));
 						}
 						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap);
@@ -637,7 +639,9 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 						List<String> arguments = addedOperationInvocation.getArguments();
 						List<UMLParameter> parameters = addedOperation.getParametersWithoutReturnType();
 						Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
-						for(int i=0; i<parameters.size(); i++) {
+						//special handling for methods with varargs parameter for which no argument is passed in the matching invocation
+						int size = Math.min(arguments.size(), parameters.size());
+						for(int i=0; i<size; i++) {
 							String argumentName = arguments.get(i);
 							String parameterName = parameters.get(i).getName();
 							parameterToArgumentMap.put(parameterName, argumentName);

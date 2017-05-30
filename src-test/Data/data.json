@@ -2133,8 +2133,37 @@
 		}, {
 			"type": "Extract Method",
 			"description": "Extract Method private load(config Class<?>, environment String[]) : void extracted from public overrideDateFormat() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests"
+		}, {
+			"type": "Extract Method",
+			"description": "Extract Method private load(config Class<?>, environment String[]) : void extracted from public resourceHandlerMappingDisabled() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests"
+		}, {
+			"type": "Extract Method",
+			"description": "Extract Method private load(config Class<?>, environment String[]) : void extracted from public noLocaleResolver() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests"
+		}, {
+			"type": "Extract Method",
+			"description": "Extract Method private load(config Class<?>, environment String[]) : void extracted from public resourceHandlerMappingOverrideAll() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests"
+		}, {
+			"type": "Extract Method",
+			"description": "Extract Method private load(config Class<?>, environment String[]) : void extracted from public noDateFormat() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests"
+		}, {
+			"type": "Extract Method",
+			"description": "Extract Method private load(config Class<?>, environment String[]) : void extracted from public customContentNegotiatingViewResolver() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests"
+		}, {
+			"type": "Extract Method",
+			"description": "Extract Method private load(config Class<?>, environment String[]) : void extracted from public customViewResolver() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests"
+		}, {
+			"type": "Extract Method",
+			"description": "Extract Method private load(config Class<?>, environment String[]) : void extracted from public faviconMappingDisabled() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests"
+		}, {
+			"type": "Extract Method",
+			"description": "Extract Method private load(config Class<?>, environment String[]) : void extracted from public resourceHandlerMappingOverrideWebjars() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests"
+		}, {
+			"type": "Extract Method",
+			"description": "Extract Method private load(config Class<?>, environment String[]) : void extracted from public customAsyncRequestTimeout() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests"
+		}, {
+			"type": "Extract Method",
+			"description": "Extract Method private load(config Class<?>, environment String[]) : void extracted from public noMessageCodesResolver() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests"
 		}
-
 	],
 	"time": "6/17/15 4:27 AM",
 	"id": 1117231

@@ -191,6 +191,16 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 		return parameterNameList;
 	}
 
+	public int getNumberOfNonVarargsParameters() {
+		int counter = 0;
+		for(UMLParameter parameter : parameters) {
+			if(!parameter.getKind().equals("return") && !parameter.isVarargs()) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
 	public OperationInvocation isDelegate() {
 		if(getBody() != null) {
 			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();

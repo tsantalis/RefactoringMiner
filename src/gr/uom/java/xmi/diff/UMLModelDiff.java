@@ -598,7 +598,9 @@ public class UMLModelDiff {
             	  List<String> arguments = addedOperationInvocation.getArguments();
             	  List<String> parameters = addedOperation.getParameterNameList();
             	  Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
-            	  for(int i=0; i<parameters.size(); i++) {
+            	  //special handling for methods with varargs parameter for which no argument is passed in the matching invocation
+				  int size = Math.min(arguments.size(), parameters.size());
+            	  for(int i=0; i<size; i++) {
             		  parameterToArgumentMap.put(parameters.get(i), arguments.get(i));
             	  }
                   UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap);

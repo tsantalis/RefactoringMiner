@@ -6,11 +6,13 @@ public class UMLParameter implements Serializable {
 	private String name;
 	private UMLType type;
 	private String kind;
+	private boolean varargs;
 
-	public UMLParameter(String name, UMLType type, String kind) {
+	public UMLParameter(String name, UMLType type, String kind, boolean varargs) {
 		this.name = name;
 		this.type = type;
 		this.kind = kind;
+		this.varargs = varargs;
 	}
 
 	public UMLType getType() {
@@ -27,6 +29,10 @@ public class UMLParameter implements Serializable {
 
 	public String getKind() {
 		return kind;
+	}
+
+	public boolean isVarargs() {
+		return varargs;
 	}
 
 	public boolean equalsExcludingType(UMLParameter parameter) {

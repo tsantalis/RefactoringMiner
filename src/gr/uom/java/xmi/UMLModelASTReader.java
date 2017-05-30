@@ -248,7 +248,7 @@ public class UMLModelASTReader {
 		Type returnType = methodDeclaration.getReturnType2();
 		if(returnType != null) {
 			UMLType type = UMLType.extractTypeObject(getTypeName(returnType, 0));
-			UMLParameter returnParameter = new UMLParameter("return", type, "return");
+			UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
 			umlOperation.addParameter(returnParameter);
 		}
 		List<SingleVariableDeclaration> parameters = methodDeclaration.parameters();
@@ -260,7 +260,7 @@ public class UMLModelASTReader {
 				typeName = typeName + "[]";
 			}
 			UMLType type = UMLType.extractTypeObject(typeName);
-			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in");
+			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarargs());
 			umlOperation.addParameter(umlParameter);
 		}
 		return umlOperation;

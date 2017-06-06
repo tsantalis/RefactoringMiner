@@ -2765,7 +2765,7 @@ public class RefactoringPopulator {
 			throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 
-		String jsonFile = System.getProperty("user.dir") + "/src-test/Data/data_merged.json";
+		String jsonFile = System.getProperty("user.dir") + "/src-test/Data/data.json";
 		 
 
 		List<Root> roots = mapper.readValue(new File(jsonFile),

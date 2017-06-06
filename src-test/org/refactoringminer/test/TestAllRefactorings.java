@@ -10,17 +10,19 @@ import org.junit.Test;
 
 public class TestAllRefactorings {
 
-	
 	@Test
 	public void testAllRefactorings() throws Exception {
-		
-		int refactoring= Refactorings.All.getValue();
+
+		int refactoring = Refactorings.All.getValue();
 
 		TestBuilder test = new TestBuilder(new GitHistoryRefactoringMinerImpl(), "tmp1", refactoring);
-		
-		RefactoringPopulator.feedRefactoringsInstances(refactoring, Systems.argoUML.getValue(), test);
 
+		RefactoringPopulator.feedRefactoringsInstances(refactoring, refactoring, test);
+
+		RefactoringPopulator.printRefDiffResults(refactoring);
 		test.assertExpectations();
-
+		
 	}
+	
+	public void generateTbaleReult(){}
 }

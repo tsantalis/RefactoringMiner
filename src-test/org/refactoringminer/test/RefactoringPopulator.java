@@ -3,8 +3,10 @@ package org.refactoringminer.test;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
+import org.hibernate.internal.jaxb.cfg.JaxbHibernateConfiguration.JaxbSessionFactory;
 import org.refactoringminer.test.TestBuilder.ProjectMatcher.CommitMatcher;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -28,8 +30,9 @@ public class RefactoringPopulator {
 
 	public enum Refactorings {
 		MoveMethod(1), MoveAttribute(2), InlineMethod(4), ExtractMethod(8), PushDownMethod(16), PushDownAttribute(
-				32), PullUpMethod(64), PullUpAttribute(128), ExtractInterface(
-						256), ExtractSuperclass(512), MoveClass(1024), RenamePackage(2048),RenameMethod(4096), ExtractAndMoveMethod(8192), RenameClass(16384), MoveSourceFolder(32768), All(65535);
+				32), PullUpMethod(64), PullUpAttribute(128), ExtractInterface(256), ExtractSuperclass(512), MoveClass(
+						1024), RenamePackage(2048), RenameMethod(4096), ExtractAndMoveMethod(
+								8192), RenameClass(16384), MoveSourceFolder(32768), All(65535);
 		private int value;
 
 		private Refactorings(int value) {
@@ -41,12 +44,13 @@ public class RefactoringPopulator {
 		}
 	}
 
-	public static void feedRefactoringsInstances(int refactoringsFlag, int systemsFlag, TestBuilder test) throws JsonParseException, JsonMappingException, IOException {
-	
-		if((systemsFlag & Systems.FSE.getValue()) > 0) {
+	public static void feedRefactoringsInstances(int refactoringsFlag, int systemsFlag, TestBuilder test)
+			throws JsonParseException, JsonMappingException, IOException {
+
+		if ((systemsFlag & Systems.FSE.getValue()) > 0) {
 			prepareFSERefactorings(test, refactoringsFlag);
 		}
-		
+
 		if ((systemsFlag & Systems.aTunes.getValue()) > 0) {
 			aTunesRefactorings(test, refactoringsFlag);
 		}
@@ -63,11 +67,11 @@ public class RefactoringPopulator {
 			jUnitRefactorings(test, systemsFlag);
 		}
 
-//		if ((systemsFlag & Systems.FSE.getValue()) > 0) {
-//			FSE_ExtractMethodRefactorings(test, systemsFlag);
-//			FSE_PullUpMethodRefactorings(test, systemsFlag);
-//			FSE_InlineMethodRefactorings(test, systemsFlag);
-//		}
+		// if ((systemsFlag & Systems.FSE.getValue()) > 0) {
+		// FSE_ExtractMethodRefactorings(test, systemsFlag);
+		// FSE_PullUpMethodRefactorings(test, systemsFlag);
+		// FSE_InlineMethodRefactorings(test, systemsFlag);
+		// }
 	}
 
 	private static void argoRefactorings(TestBuilder test, int flag) {
@@ -414,8 +418,13 @@ public class RefactoringPopulator {
 				.atCommit("8c2be520e01a83ee893158aa6cb90ee2d64f6a63").containsOnly(
 						// FN** getMechList remains in CompositeCM, but it is
 						// also added as abstract in ControlMech and implemented
-						// in other subclasses. THIS IS NOT A FALSE NEGATIVE. DO NOT UNCOMMENT
-						//"Pull Up Method public getMechList() : List<ControlMech> from class org.argouml.cognitive.CompositeCM to public getMechList() : List<ControlMech> from class org.argouml.cognitive.ControlMech",
+						// in other subclasses. THIS IS NOT A FALSE NEGATIVE. DO
+						// NOT UNCOMMENT
+						// "Pull Up Method public getMechList() :
+						// List<ControlMech> from class
+						// org.argouml.cognitive.CompositeCM to public
+						// getMechList() : List<ControlMech> from class
+						// org.argouml.cognitive.ControlMech",
 						"Pull Up Method public parse(modelElement Object, text String) : void from class org.argouml.notation.providers.uml.AttributeNotationUml to public parse(modelElement Object, text String) : void from class org.argouml.notation.providers.AttributeNotation",
 						"Pull Up Method public transform(file File, version int) : File from class org.argouml.persistence.UmlFilePersister to public transform(file File, version int) : File from class org.argouml.persistence.AbstractFilePersister",
 						"Pull Up Method private colToString(set Collection) : String from class org.argouml.profile.internal.ui.PropPanelCritic to protected colToString(set Collection) : String from class org.argouml.uml.ui.PropPanel",
@@ -425,8 +434,14 @@ public class RefactoringPopulator {
 						"Pull Up Method private initFigs() : void from class org.argouml.uml.diagram.state.ui.FigSynchState to protected initFigs() : void from class org.argouml.uml.diagram.state.ui.FigStateVertex",
 						// FN** minor modifications, but no statement is
 						// exactly the same
-						//"Extract Method public getModelImpl() : MDRModelImplementation extracted from public createPartition() : Partition in class org.argouml.model.mdr.ActivityGraphsFactoryMDRImpl",
-						//"Extract Method public initialize2(myPartition Partition) : void extracted from public createPartition() : Partition in class org.argouml.model.mdr.ActivityGraphsFactoryMDRImpl",
+						// "Extract Method public getModelImpl() :
+						// MDRModelImplementation extracted from public
+						// createPartition() : Partition in class
+						// org.argouml.model.mdr.ActivityGraphsFactoryMDRImpl",
+						// "Extract Method public initialize2(myPartition
+						// Partition) : void extracted from public
+						// createPartition() : Partition in class
+						// org.argouml.model.mdr.ActivityGraphsFactoryMDRImpl",
 						"Pull Up Method public createPartition() : Partition from class org.argouml.model.mdr.ActivityGraphsFactoryMDRImpl to public createPartition() : Partition from class org.argouml.model.mdr.AbstractUmlModelFactoryMDR",
 						"Pull Up Method public set(modelElement Object, value Object) : void from class org.argouml.core.propertypanels.model.GetterSetterManagerImpl.ChangeabilityGetterSetter to public set(modelElement Object, value Object) : void from class org.argouml.core.propertypanels.model.GetterSetterManager.OptionGetterSetter");
 	}
@@ -1953,7 +1968,15 @@ public class RefactoringPopulator {
 				.atCommit("dc199688d69416da58b370ca2aa728e935fc8e0d").containsOnly(
 						"Extract Method private getSortedIndexUpdates(descriptor IndexDescriptor) : TreeMap<DefinedProperty,DiffSets<Long>> extracted from private getIndexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets<Long> in class org.neo4j.kernel.impl.api.state.TxState");
 		// TBD
-		// Extract Method private filterIndexStateChangesForRangeSeekByNumber(state KernelStatement,index IndexDescriptor, lower Number, includeLower boolean, upper Number, includeUpper boolean, nodeIds PrimitiveLongIterator) : PrimitiveLongIterator extracted from public nodesGetFromIndexRangeSeekByNumber(state KernelStatement, index IndexDescriptor, lower Number, includeLower boolean, upper Number, includeUpper boolean) : PrimitiveLongIterator in class org.neo4j.kernel.impl.api.StateHandlingStatementOperations
+		// Extract Method private
+		// filterIndexStateChangesForRangeSeekByNumber(state
+		// KernelStatement,index IndexDescriptor, lower Number, includeLower
+		// boolean, upper Number, includeUpper boolean, nodeIds
+		// PrimitiveLongIterator) : PrimitiveLongIterator extracted from public
+		// nodesGetFromIndexRangeSeekByNumber(state KernelStatement, index
+		// IndexDescriptor, lower Number, includeLower boolean, upper Number,
+		// includeUpper boolean) : PrimitiveLongIterator in class
+		// org.neo4j.kernel.impl.api.StateHandlingStatementOperations
 
 		test.project("https://github.com/apache/camel.git", "master")
 				.atCommit("14a7dd79148f9306dcd2f748b56fd6550e9406ab").containsOnly(
@@ -2711,32 +2734,39 @@ public class RefactoringPopulator {
 						"Inline Method private sendHearBeatIfRequired(now long, member MemberImpl) : void inlined to private heartBeaterSlave(now long, clockJump long) : void in class com.hazelcast.cluster.impl.ClusterServiceImpl",
 						"Inline Method private sendHearBeatIfRequired(now long, member MemberImpl) : void inlined to private heartBeaterMaster(now long, clockJump long) : void in class com.hazelcast.cluster.impl.ClusterServiceImpl");
 	}
-	
-	
 
-	private static void prepareFSERefactorings(TestBuilder test, int flag) throws JsonParseException, JsonMappingException, IOException{
+	private static void prepareFSERefactorings(TestBuilder test, int flag)
+			throws JsonParseException, JsonMappingException, IOException {
 		List<Root> refactorings = getFSERefactorings(flag);
 
-		for (Root refactoring : refactorings) {
-			test.project(refactoring.repository, "master").atCommit(refactoring.sha1).containsOnly(extractRefactorings(refactoring.refactorings));
+		for (Root root : refactorings) {
+			for (Refactoring refactoring : root.refactorings) {
+				if (refactoring.validation.contains("TP"))
+					test.project(root.repository, "master").atCommit(root.sha1)
+							.containsOnly(extractRefactorings(root.refactorings));
+
+			}
+
 		}
 	}
-	
-	private static String[] extractRefactorings(List<Refactoring>  refactoring){
-		
-		String[] refactorings=new String[refactoring.size()];
-		
+
+	public static String[] extractRefactorings(List<Refactoring> refactoring) {
+
+		String[] refactorings = new String[refactoring.size()];
+
 		for (int i = 0; i < refactoring.size(); i++) {
-			refactorings[i]=refactoring.get(i).description;
-		} 
-		
+			refactorings[i] = refactoring.get(i).description;
+		}
+
 		return refactorings;
 	}
-	
-	public static List<Root> getFSERefactorings(int flag) throws JsonParseException, JsonMappingException, IOException{
+
+	public static List<Root> getFSERefactorings(int flag )
+			throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 
-		String jsonFile= System.getProperty("user.dir")+"/src-test/Data/data.json";
+		String jsonFile = System.getProperty("user.dir") + "/src-test/Data/data_merged.json";
+		 
 
 		List<Root> roots = mapper.readValue(new File(jsonFile),
 				mapper.getTypeFactory().constructCollectionType(List.class, Root.class));
@@ -2747,10 +2777,11 @@ public class RefactoringPopulator {
 			List<Refactoring> refactorings = new ArrayList<>();
 
 			root.refactorings.forEach((refactoring) -> {
-				if (isAdded(refactoring, flag))  // refactoring.type.equals("Extract Method"))
+				if (isAdded(refactoring, flag)) // refactoring.type.equals("Extract
+												// Method"))
 					refactorings.add(refactoring);
 			});
-			
+
 			if (refactorings.size() > 0) {
 
 				Root tmp = root;
@@ -2761,43 +2792,130 @@ public class RefactoringPopulator {
 
 		return filtered;
 	}
-	
-	private static boolean isAdded(Refactoring refactoring, int flag){
+
+	private static boolean isAdded(Refactoring refactoring, int flag) {
 		try {
-			return ((Enum.valueOf(Refactorings.class, refactoring.type.replace(" ", "")).getValue() &flag) > 0);
-			
+			return ((Enum.valueOf(Refactorings.class, refactoring.type.replace(" ", "")).getValue() & flag) > 0);
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			return false;
 		}
 	}
-	
-	
+
+	public static void printRefDiffResults(int flag) {
+		Hashtable<String, Tuple> result = new Hashtable<>();
+		try {
+			List<Root> roots = getFSERefactorings(flag);
+
+			for (Refactorings ref : Refactorings.values()) {
+				if(ref == Refactorings.All)
+					continue;
+				result.put(ref.toString(), new Tuple());
+			}
+			for (Root root : roots) {
+				for (Refactoring ref : root.refactorings) {
+					Tuple tuple = result.get(ref.type.replace(" ", ""));
+					tuple.totalTruePositives += ref.validation.contains("TP") ? 1 : 0;
+					tuple.unknown += ref.validation.equals("UKN") ? 1 : 0;
+
+					if (ref.detectionTools.contains("RefDiff")) {
+						tuple.refDiffTruePositives += ref.validation.contains("TP") ? 1 : 0;
+						tuple.refDiffFalsePositives += ref.validation.equals("FP") ? 1 : 0;
+					}
+
+				}
+			}
+			Tuple[] tmp = {};
+			System.out.println("Total\t" + buildResultMessage(result.values().toArray(tmp)));
+			for (String key : result.keySet()) {
+				System.out.println(getInitials(key) + "\t" + buildResultMessage(result.get(key)));
+			}
+
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private static String getInitials(String str) {
+		StringBuffer sb = new StringBuffer();
+
+		for (int i = 0; i < str.length(); i++) {
+			String character = str.substring(i, i + 1);
+			if (character == character.toUpperCase())
+				sb.append(character);
+		}
+		return sb.toString();
+	}
+
+	private static String buildResultMessage(Tuple... result) {
+		int trueP = 0;
+		int total = 0;
+		int ukn = 0;
+		int falseP = 0;
+		for (Tuple res : result) {
+			trueP += res.refDiffTruePositives;
+			total += res.totalTruePositives;
+			ukn += res.unknown;
+			falseP += res.refDiffFalsePositives;
+		}
+		double precision = trueP / (double) (trueP + falseP);
+		double recall = trueP / (double) (total);
+		try {
+			String mainResultMessage = String.format("TP: %2d  FP: %2d  FN: %2d  Unk.: %2d  Prec.: %.3f  Recall: %.3f",
+					(int) trueP, (int) falseP, (int) (total - trueP), ukn, precision, recall);
+			return mainResultMessage;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("");
+		}
+		return "";
+	}
+
+	public static class Tuple {
+		public int totalTruePositives;
+		public int refDiffTruePositives;
+		public int falseNegatives;
+		public int unknown;
+		public int refDiffFalsePositives;
+	}
+
 	public static class Root {
 		public int id;
 		public String repository;
 		public String sha1;
-
+		public String url;
 		public String author;
 		public String time;
 		public List<Refactoring> refactorings;
-		public List<Comment> comment;
+		public long refDiffExecutionTime;
+
 	}
 
 	public static class Refactoring {
 		public String type;
 		public String description;
 		public String comment;
+		public String validation;
+		public String detectionTools;
+		public String validators;
+
 	}
 
-	
-	public static class Comment{
+	public static class Comment {
 		public String refactored;
 		public String link;
 		public String message;
 		public String type;
 		public String reportedCase;
 	}
-
 
 }

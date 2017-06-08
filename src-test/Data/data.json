@@ -241,10 +241,10 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private showStatus(txt String) : void extracted from protected onCreate(savedInstanceState Bundle) : void in class io.realm.examples.realmmigrationexample.MigrationExampleActivity",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "The method showStatus(txt String) is added in the refactored version and indeed is called inside onCreate(..) but there ",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}],
 	"refDiffExecutionTime": 1250
 }, {
@@ -901,10 +901,10 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public resolve(typeDescription GenericTypeDescription, substitute TypeDescription) : GenericTypeDescription extracted from protected resolveReturnType(instrumentedType TypeDescription) : TypeDescription in class net.bytebuddy.dynamic.DynamicType.Builder.AbstractBase.MethodToken",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "The call to method resolve with three params in verson is changed to call to mathod resolve with two params in the refactroded verison. Not an extract method refactroing.",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public resolve(typeDescription GenericTypeDescription, substitute TypeDescription) : GenericTypeDescription extracted from protected resolveFieldType(instrumentedType TypeDescription) : TypeDescription in class net.bytebuddy.dynamic.DynamicType.Builder.AbstractBase.FieldToken",
@@ -1057,9 +1057,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private emitInstrumentedAnn() : void extracted from public visitEnd() : void in class co.paralleluniverse.fibers.instrument.InstrumentClass",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}],
 	"refDiffExecutionTime": 970
 }, {
@@ -2176,10 +2176,10 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private waitAndEnterExecutionState(newState ExecutionState) : void extracted from public fireUntilHalt(agendaFilter AgendaFilter) : void in class org.drools.core.common.DefaultAgenda",
-		"comment": null,
-		"validation": "UKN",
+		"comment": " Statments in waitAndEnterExecutionState(..) are not part of  fireUntilHalt(..)",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh, Davood"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public takeAll() : PropagationEntry extracted from public flush() : void in class org.drools.core.phreak.SynchronizedPropagationList",
@@ -2190,10 +2190,10 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public add(handle EventFactHandle) : void extracted from public assertFact(context Object, fact InternalFactHandle, pctx PropagationContext, workingMemory InternalWorkingMemory) : boolean in class org.drools.core.rule.SlidingTimeWindow",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is extract and move since the method is moved to the inner class",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public peek() : EventFactHandle extracted from public assertFact(context Object, fact InternalFactHandle, pctx PropagationContext, workingMemory InternalWorkingMemory) : boolean in class org.drools.core.rule.SlidingTimeWindow",
@@ -4699,16 +4699,16 @@
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyCIFF, type Class) : T extracted from public getNumber(property CGImagePropertyCIFF) : double in class org.robovm.apple.imageio.CGImagePropertyCIFFData",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyCanon, type Class) : T extracted from public getString(property CGImagePropertyCanon) : String in class org.robovm.apple.imageio.CGImagePropertyCanonData",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyCanon, type Class) : T extracted from public getNumber(property CGImagePropertyCanon) : double in class org.robovm.apple.imageio.CGImagePropertyCanonData",
@@ -4755,9 +4755,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyExif, type Class) : T extracted from public getString(property CGImagePropertyExif) : String in class org.robovm.apple.imageio.CGImagePropertyExifData",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyGIF, type Class) : T extracted from public getString(property CGImagePropertyGIF) : String in class org.robovm.apple.imageio.CGImagePropertyGIFData",
@@ -4804,9 +4804,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyIPTC, type Class) : T extracted from public getString(property CGImagePropertyIPTC) : String in class org.robovm.apple.imageio.CGImagePropertyIPTCData",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyIPTC, type Class) : T extracted from public getNumber(property CGImagePropertyIPTC) : double in class org.robovm.apple.imageio.CGImagePropertyIPTCData",
@@ -4832,9 +4832,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyNikon, type Class) : T extracted from public getString(property CGImagePropertyNikon) : String in class org.robovm.apple.imageio.CGImagePropertyNikonData",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyNikon, type Class) : T extracted from public getNumber(property CGImagePropertyNikon) : double in class org.robovm.apple.imageio.CGImagePropertyNikonData",
@@ -4867,9 +4867,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyTIFF, type Class) : T extracted from public getNumber(property CGImagePropertyTIFF) : double in class org.robovm.apple.imageio.CGImagePropertyTIFFData",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}],
 	"refDiffExecutionTime": 11040
 }, {
@@ -5397,9 +5397,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method public addQueueItems(queueItems List) : void extracted from private processCloudWatchStats(msg DescribeSensorsResponse) : void in class com.eucalyptus.cluster.callback.DescribeSensorCallback",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private EBS_ABSOLUTE_METRICS : Map from class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to class com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue",
@@ -5433,10 +5433,10 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public serialize(gen JsonGenerator, value Object, prov DefaultSerializerProvider) : void extracted from protected _configAndWriteValue(gen JsonGenerator, value Object) : void in class com.fasterxml.jackson.databind.ObjectWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is moved to the inner class, it should be extract and move",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public serialize(gen JsonGenerator, value Object, prov DefaultSerializerProvider) : void extracted from private _writeCloseable(gen JsonGenerator, value Object, cfg SerializationConfig) : void in class com.fasterxml.jackson.databind.ObjectWriter",
@@ -5447,10 +5447,10 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public serialize(gen JsonGenerator, value Object, prov DefaultSerializerProvider) : void extracted from public writeValue(gen JsonGenerator, value Object) : void in class com.fasterxml.jackson.databind.ObjectWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is moved to the inner class, it should be extract and move",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}],
 	"refDiffExecutionTime": 1433
 }, {
@@ -5555,16 +5555,16 @@
 		"type": "Extract Method",
 		"description": "Extract Method private load(environment String[]) : void extracted from public ignoreDefaultModelOnRedirectIsTrue() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private load(environment String[]) : void extracted from public handerAdaptersCreated() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private load(environment String[]) : void extracted from public handerMappingsCreated() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
@@ -5576,9 +5576,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private load(environment String[]) : void extracted from public resourceHandlerMapping() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private load(environment String[]) : void extracted from public faviconMapping() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
@@ -6557,45 +6557,45 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected getGraph(ghStorage GraphHopperStorage) : LevelGraph extracted from public createFactory(g Graph, opts AlgorithmOptions) : RoutingAlgorithmFactory in class com.graphhopper.routing.ch.DijkstraBidirectionCHTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It will be hard to detect, it needs semantic analysis.",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh, Davood, Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method package close() : void extracted from public close() : void in class com.graphhopper.storage.GraphHopperStorage",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is extactect and move refactroing, since it is moved to class BaseGraph.java. Since RefDiff does not detetc extactect and move we accept it conditinally",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method package create(initSize long) : void extracted from public create(byteCount long) : GraphStorage in class com.graphhopper.storage.GraphHopperStorage",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is extactect and move refactroing, since it is moved to class BaseGraph.java. Since RefDiff does not detetc extactect and move we accept it conditinally",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method package flush() : void extracted from public flush() : void in class com.graphhopper.storage.GraphHopperStorage",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is extactect and move refactroing, since it is moved to class BaseGraph.java. Since RefDiff does not detetc extactect and move we accept it conditinally",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method package loadExisting(dim String) : void extracted from public loadExisting() : boolean in class com.graphhopper.storage.GraphHopperStorage",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is extactect and move refactroing, since it is moved to class BaseGraph.java. Since RefDiff does not detetc extactect and move we accept it conditinally",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh, Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public setAdditionalEdgeField(edgePointer long, value int) : void extracted from public setAdditionalEdgeField(edgePointer long, value int) : void in class com.graphhopper.storage.GraphHopperStorage",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is extactect and move refactroing, since it is moved to class BaseGraph.java. Since RefDiff does not detetc extactect and move we accept it conditinally",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh, Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method package setSegmentSize(bytes int) : void extracted from public setSegmentSize(bytes int) : void in class com.graphhopper.storage.GraphHopperStorage",
@@ -6620,10 +6620,10 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public isCHPossible() : boolean extracted from package _copyTo(clonedG GraphHopperStorage) : Graph in class com.graphhopper.storage.GraphHopperStorage",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "The  statment in isCHPossible() does not match to any statements in  _copyTo(clonedG GraphHopperStorage)",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh, Davood, Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private nodeA : int from class com.graphhopper.storage.GraphHopperStorage.AllEdgeIterator to class com.graphhopper.storage.BaseGraph.AllEdgeIterator",

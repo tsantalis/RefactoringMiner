@@ -901,7 +901,7 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public resolve(typeDescription GenericTypeDescription, substitute TypeDescription) : GenericTypeDescription extracted from protected resolveReturnType(instrumentedType TypeDescription) : TypeDescription in class net.bytebuddy.dynamic.DynamicType.Builder.AbstractBase.MethodToken",
-		"comment": "The call to method resolve with three params in verson is changed to call to mathod resolve with two params in the refactroded verison. Not an extract method refactroing.",
+		"comment": "The call to method resolve() with three params is changed to method resolve() with two params in the refactored version. Not an extract method refactroing.",
 		"validation": "FP",
 		"detectionTools": "RefDiff",
 		"validators": "Laleh"
@@ -2176,7 +2176,7 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private waitAndEnterExecutionState(newState ExecutionState) : void extracted from public fireUntilHalt(agendaFilter AgendaFilter) : void in class org.drools.core.common.DefaultAgenda",
-		"comment": " Statments in waitAndEnterExecutionState(..) are not part of  fireUntilHalt(..)",
+		"comment": " Statements in waitAndEnterExecutionState(..) are not part of  fireUntilHalt(..)",
 		"validation": "FP",
 		"detectionTools": "RefDiff",
 		"validators": "Laleh, Davood"
@@ -6564,35 +6564,35 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method package close() : void extracted from public close() : void in class com.graphhopper.storage.GraphHopperStorage",
-		"comment": "It is extactect and move refactroing, since it is moved to class BaseGraph.java. Since RefDiff does not detetc extactect and move we accept it conditinally",
+		"comment": "It is extract and move refactoring, since it is moved to class BaseGraph.java. Since RefDiff does not detect extract and move we accept it conditinally",
 		"validation": "CTP",
 		"detectionTools": "RefDiff",
 		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method package create(initSize long) : void extracted from public create(byteCount long) : GraphStorage in class com.graphhopper.storage.GraphHopperStorage",
-		"comment": "It is extactect and move refactroing, since it is moved to class BaseGraph.java. Since RefDiff does not detetc extactect and move we accept it conditinally",
+		"comment": "It is extract and move refactoring, since it is moved to class BaseGraph.java. Since RefDiff does not detect extract and move we accept it conditinally",
 		"validation": "CTP",
 		"detectionTools": "RefDiff",
 		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method package flush() : void extracted from public flush() : void in class com.graphhopper.storage.GraphHopperStorage",
-		"comment": "It is extactect and move refactroing, since it is moved to class BaseGraph.java. Since RefDiff does not detetc extactect and move we accept it conditinally",
+		"comment": "It is extract and move refactoring, since it is moved to class BaseGraph.java. Since RefDiff does not detect extract and move we accept it conditinally",
 		"validation": "CTP",
 		"detectionTools": "RefDiff",
 		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method package loadExisting(dim String) : void extracted from public loadExisting() : boolean in class com.graphhopper.storage.GraphHopperStorage",
-		"comment": "It is extactect and move refactroing, since it is moved to class BaseGraph.java. Since RefDiff does not detetc extactect and move we accept it conditinally",
+		"comment": "It is extract and move refactoring, since it is moved to class BaseGraph.java. Since RefDiff does not detect extract and move we accept it conditinally",
 		"validation": "CTP",
 		"detectionTools": "RefDiff",
 		"validators": "Laleh, Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public setAdditionalEdgeField(edgePointer long, value int) : void extracted from public setAdditionalEdgeField(edgePointer long, value int) : void in class com.graphhopper.storage.GraphHopperStorage",
-		"comment": "It is extactect and move refactroing, since it is moved to class BaseGraph.java. Since RefDiff does not detetc extactect and move we accept it conditinally",
+		"comment": "It is extract and move refactoring, since it is moved to class BaseGraph.java. Since RefDiff does not detect extract and move we accept it conditinally",
 		"validation": "CTP",
 		"detectionTools": "RefDiff",
 		"validators": "Laleh, Matin"
@@ -6620,7 +6620,7 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public isCHPossible() : boolean extracted from package _copyTo(clonedG GraphHopperStorage) : Graph in class com.graphhopper.storage.GraphHopperStorage",
-		"comment": "The  statment in isCHPossible() does not match to any statements in  _copyTo(clonedG GraphHopperStorage)",
+		"comment": "The  statement in isCHPossible() does not match to any statements in  _copyTo(clonedG GraphHopperStorage)",
 		"validation": "FP",
 		"detectionTools": "RefDiff",
 		"validators": "Laleh, Davood, Matin"

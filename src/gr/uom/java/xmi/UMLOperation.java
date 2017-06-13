@@ -8,8 +8,10 @@ import gr.uom.java.xmi.diff.StringDistance;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.refactoringminer.util.AstUtils;
 
@@ -84,6 +86,12 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 
 	public OperationBody getBody() {
 		return operationBody;
+	}
+
+	public Set<OperationInvocation> getAllOperationInvocations() {
+		if(operationBody != null)
+			return operationBody.getAllOperationInvocations();
+		return new LinkedHashSet<OperationInvocation>();
 	}
 
 	public int statementCount() {

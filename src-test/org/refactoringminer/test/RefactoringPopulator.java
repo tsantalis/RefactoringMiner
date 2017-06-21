@@ -2735,38 +2735,45 @@ public class RefactoringPopulator {
 						"Inline Method private sendHearBeatIfRequired(now long, member MemberImpl) : void inlined to private heartBeaterMaster(now long, clockJump long) : void in class com.hazelcast.cluster.impl.ClusterServiceImpl");
 	}
 
+	private static List<Root> refactoringsMem;
+
 	private static void prepareFSERefactorings(TestBuilder test, int flag)
 			throws JsonParseException, JsonMappingException, IOException {
 		List<Root> refactorings = getFSERefactorings(flag);
 
 		for (Root root : refactorings) {
-			for (Refactoring refactoring : root.refactorings) {
-				if (refactoring.validation.contains("TP"))
-					test.project(root.repository, "master").atCommit(root.sha1)
-							.containsOnly(extractRefactorings(root.refactorings));
-
-			}
+			test.project(root.repository, "master").atCommit(root.sha1)
+					.containsOnly(extractRefactorings(root.refactorings));
 
 		}
+
+		refactoringsMem = refactorings;
 	}
 
 	public static String[] extractRefactorings(List<Refactoring> refactoring) {
 
-		String[] refactorings = new String[refactoring.size()];
+		int count = 0;
+		for (Refactoring ref : refactoring) {
+			if (ref.validation.contains("TP"))
+				count++;
+		}
+		String[] refactorings = new String[count];
 
-		for (int i = 0; i < refactoring.size(); i++) {
-			refactorings[i] = refactoring.get(i).description;
+		int counter = 0;
+		for (Refactoring ref : refactoring) {
+			if (ref.validation.contains("TP")) {
+
+				refactorings[counter++] = ref.description;
+			}
 		}
 
 		return refactorings;
 	}
 
-	public static List<Root> getFSERefactorings(int flag )
-			throws JsonParseException, JsonMappingException, IOException {
+	public static List<Root> getFSERefactorings(int flag) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 
 		String jsonFile = System.getProperty("user.dir") + "/src-test/Data/data.json";
-		 
 
 		List<Root> roots = mapper.readValue(new File(jsonFile),
 				mapper.getTypeFactory().constructCollectionType(List.class, Root.class));
@@ -2798,7 +2805,6 @@ public class RefactoringPopulator {
 			return ((Enum.valueOf(Refactorings.class, refactoring.type.replace(" ", "")).getValue() & flag) > 0);
 
 		} catch (Exception e) {
-			// TODO: handle exception
 			return false;
 		}
 	}
@@ -2809,7 +2815,7 @@ public class RefactoringPopulator {
 			List<Root> roots = getFSERefactorings(flag);
 
 			for (Refactorings ref : Refactorings.values()) {
-				if(ref == Refactorings.All)
+				if (ref == Refactorings.All)
 					continue;
 				result.put(ref.toString(), new Tuple());
 			}
@@ -2905,7 +2911,7 @@ public class RefactoringPopulator {
 		public String description;
 		public String comment;
 		public String validation;
-		public String detectionTools;
+		public String detectionTools; 
 		public String validators;
 
 	}
@@ -2917,5 +2923,5 @@ public class RefactoringPopulator {
 		public String type;
 		public String reportedCase;
 	}
-
+ 
 }

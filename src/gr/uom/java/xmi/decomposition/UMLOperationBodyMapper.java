@@ -716,8 +716,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(String methodInvocation1 : methodInvocationMap1.keySet()) {
 			if((methodInvocation1 + ";\n").equals(statement1.getString()) || methodInvocation1.equals(statement1.getString()) ||
 					("return " + methodInvocation1 + ";\n").equals(statement1.getString()) ||
-					(variableDeclarations1.size() == 1 && variableDeclarations1.get(0).getInitializer() != null &&
-					variableDeclarations1.get(0).getInitializer().equals(methodInvocation1))) {
+					expressionIsTheInitializerOfVariableDeclaration(methodInvocation1, variableDeclarations1)) {
 				methodInvocations1.remove(methodInvocation1);
 				invocationCoveringTheEntireStatement1 = methodInvocationMap1.get(methodInvocation1);
 			}
@@ -725,8 +724,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(String methodInvocation2 : methodInvocationMap2.keySet()) {
 			if((methodInvocation2 + ";\n").equals(statement2.getString()) || methodInvocation2.equals(statement2.getString()) ||
 					("return " + methodInvocation2 + ";\n").equals(statement2.getString()) ||
-					(variableDeclarations2.size() == 1 && variableDeclarations2.get(0).getInitializer() != null &&
-					variableDeclarations2.get(0).getInitializer().equals(methodInvocation2))) {
+					expressionIsTheInitializerOfVariableDeclaration(methodInvocation2, variableDeclarations2)) {
 				methodInvocations2.remove(methodInvocation2);
 				invocationCoveringTheEntireStatement2 = methodInvocationMap2.get(methodInvocation2);
 			}
@@ -1155,9 +1153,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						return replacements;
 					}
 				}
+				//check if the argument lists are identical after replacements
+				if(objectCreation1.getType().equals(creationCoveringTheEntireStatement2.getType()) &&
+						s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).equals(s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"))) &&
+						s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).length() > 0) {
+					return replacements;
+				}
 			}
 		}
 		return null;
+	}
+
+	private boolean expressionIsTheInitializerOfVariableDeclaration(String expression, List<VariableDeclaration> variableDeclarations) {
+		if(variableDeclarations.size() == 1 && variableDeclarations.get(0).getInitializer() != null) {
+			String initializer = variableDeclarations.get(0).getInitializer();
+			if(initializer.equals(expression))
+				return true;
+			if(initializer.startsWith("(")) {
+				//ignore casting
+				String initializerWithoutCasting = initializer.substring(initializer.indexOf(")")+1,initializer.length());
+				if(initializerWithoutCasting.equals(expression))
+					return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean equalsIgnoringExtraParenthesis(String s1, String s2) {

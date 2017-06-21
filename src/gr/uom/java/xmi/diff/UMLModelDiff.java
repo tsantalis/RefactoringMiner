@@ -586,7 +586,7 @@ public class UMLModelDiff {
     	  UMLOperation addedOperation = addedOperationIterator.next();
     	  for(UMLOperationBodyMapper mapper : getOperationBodyMappersInCommonClasses()) {
     		  if(mapper.nonMappedElementsT1() > 0) {
-               Set<OperationInvocation> operationInvocations = mapper.getOperation2().getBody().getAllOperationInvocations();
+               Set<OperationInvocation> operationInvocations = mapper.getOperation2().getAllOperationInvocations();
                OperationInvocation addedOperationInvocation = null;
                for(OperationInvocation invocation : operationInvocations) {
                   if(invocation.matchesOperation(addedOperation)) {

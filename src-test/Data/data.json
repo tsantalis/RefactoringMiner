@@ -2407,9 +2407,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private updateEntityScanBeanPostProcessor(registry BeanDefinitionRegistry, packagesToScan Set) : void extracted from public registerBeanDefinitions(importingClassMetadata AnnotationMetadata, registry BeanDefinitionRegistry) : void in class org.springframework.boot.orm.jpa.EntityScanRegistrar",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}],
 	"refDiffExecutionTime": 1019
 }, {
@@ -4685,9 +4685,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyCanon, type Class) : T extracted from public getNumber(property CGImagePropertyCanon) : double in class org.robovm.apple.imageio.CGImagePropertyCanonData",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyDNG, type Class) : T extracted from public getString(property CGImagePropertyDNG) : String in class org.robovm.apple.imageio.CGImagePropertyDNGData",
@@ -4713,9 +4713,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyExifAux, type Class) : T extracted from public getString(property CGImagePropertyExifAux) : String in class org.robovm.apple.imageio.CGImagePropertyExifAuxData",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyExif, type Class) : T extracted from public getNumber(property CGImagePropertyExif) : double in class org.robovm.apple.imageio.CGImagePropertyExifData",
@@ -4741,9 +4741,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyGIF, type Class) : T extracted from public getNumber(property CGImagePropertyGIF) : double in class org.robovm.apple.imageio.CGImagePropertyGIFData",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyGPS, type Class) : T extracted from public getNumber(property CGImagePropertyGPS) : double in class org.robovm.apple.imageio.CGImagePropertyGPSData",
@@ -4755,9 +4755,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyGPS, type Class) : T extracted from public getString(property CGImagePropertyGPS) : String in class org.robovm.apple.imageio.CGImagePropertyGPSData",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyIPTCContactInfo, type Class) : T extracted from public getString(property CGImagePropertyIPTCContactInfo) : String in class org.robovm.apple.imageio.CGImagePropertyIPTCContactInfoData",
@@ -4797,9 +4797,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyJFIF, type Class) : T extracted from public getNumber(property CGImagePropertyJFIF) : double in class org.robovm.apple.imageio.CGImagePropertyJFIFData",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyNikon, type Class) : T extracted from public getString(property CGImagePropertyNikon) : String in class org.robovm.apple.imageio.CGImagePropertyNikonData",
@@ -4818,9 +4818,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyPNG, type Class) : T extracted from public getString(property CGImagePropertyPNG) : String in class org.robovm.apple.imageio.CGImagePropertyPNGData",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyPNG, type Class) : T extracted from public getNumber(property CGImagePropertyPNG) : double in class org.robovm.apple.imageio.CGImagePropertyPNGData",
@@ -5541,9 +5541,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private load(environment String[]) : void extracted from public handerMappingsCreated() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private load(environment String[]) : void extracted from public resourceHandlerMapping() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
@@ -5555,9 +5555,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private load(environment String[]) : void extracted from public faviconMapping() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private load(environment String[]) : void extracted from public defaultAsyncRequestTimeout() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
@@ -6523,9 +6523,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method protected getGraph(ghStorage GraphHopperStorage) : Graph extracted from public testWithCoordinates() : void in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected getGraph(ghStorage GraphHopperStorage) : LevelGraph extracted from public createFactory(g Graph, opts AlgorithmOptions) : RoutingAlgorithmFactory in class com.graphhopper.routing.ch.DijkstraBidirectionCHTest",
@@ -6586,9 +6586,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method public isCHPossible() : boolean extracted from public toString() : String in class com.graphhopper.storage.GraphHopperStorage",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public isCHPossible() : boolean extracted from package _copyTo(clonedG GraphHopperStorage) : Graph in class com.graphhopper.storage.GraphHopperStorage",
@@ -7048,17 +7048,17 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private set(key String, value String) : void extracted from private addCheckboxController(optionName String, label String) : void in class org.rstudio.studio.client.workbench.views.source.editors.text.ChunkOptionsPopupPanel",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
-		"validators": null
+		"comment":"The method addCheckboxController(..) is deleted in the base version, though one statement of addCheckboxController is in method set(..) that is added in the refactored version, we cannot say it is an extract method",
+		"validation":"FP",
+		"detectionTools":"RefDiff",
+		"validators":"Laleh"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private unset(key String) : void extracted from private addCheckboxController(optionName String, label String) : void in class org.rstudio.studio.client.workbench.views.source.editors.text.ChunkOptionsPopupPanel",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
-		"validators": null
+		"comment":"The method addCheckboxController(..) is deleted in the base version, though one statement of addCheckboxController is in method unset(..) that is added in the refactored version, we cannot say it is an extract method",
+		"validation":"FP",
+		"detectionTools":"RefDiff",
+		"validators":"Laleh"
 	}],
 	"refDiffExecutionTime": 2636
 }, {
@@ -7108,10 +7108,10 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public displayListFragment(inputUris ArrayList) : void extracted from private handleActions(savedInstanceState Bundle, intent Intent) : void in class org.sufficientlysecure.keychain.ui.DecryptFilesActivity",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
-		"validators": null
+		"comment":"compare the lines 98-105 in the base version with the lines 134-146 in the refactored version. A good example for Nik",
+		"validation":"TP",
+		"detectionTools":"RefDiff",
+		"validators":"Laleh"
 	}],
 	"refDiffExecutionTime": 1261
 }, {
@@ -8469,10 +8469,10 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private verticalSpacer(sizeInPixels int) : FlowPanel extracted from public ChunkOptionsPopupPanel() in class org.rstudio.studio.client.workbench.views.source.editors.text.ChunkOptionsPopupPanel",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
-		"validators": null
+		"comment":"There are two calls to verticalSpacer(sizeInPixels int) in the refactored version, the true Extract Method is for the second call",
+		"validation":"TP",
+		"detectionTools":"RefDiff",
+		"validators":"Laleh"
 	}],
 	"refDiffExecutionTime": 1522
 }, {
@@ -8694,9 +8694,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private foldExprShortcut(desc ExprNodeDesc, constants Map, cppCtx ConstantPropagateProcCtx, op Operator, tag int, propagate boolean) : ExprNodeDesc extracted from private foldExpr(desc ExprNodeDesc, constants Map, cppCtx ConstantPropagateProcCtx, op Operator, tag int, propagate boolean) : ExprNodeDesc in class org.apache.hadoop.hive.ql.optimizer.ConstantPropagateProcFactory",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Laleh"
 	}],
 	"refDiffExecutionTime": 10064
 }, {

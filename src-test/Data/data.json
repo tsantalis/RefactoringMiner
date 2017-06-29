@@ -1325,56 +1325,28 @@
 		"description": "Pull Up Method protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.Explicit to protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.AbstractBase",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
 		"type": "Pull Up Method",
 		"description": "Pull Up Method protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.ForLoadedExecutable to protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.AbstractBase",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
 		"type": "Pull Up Method",
 		"description": "Pull Up Method protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.ForLoadedExecutable.OfLegacyVmMethod to protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.AbstractBase",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
 		"type": "Pull Up Method",
 		"description": "Pull Up Method protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.ForLoadedExecutable.OfLegacyVmConstructor to protected wrap(values List<ParameterDescription>) : ParameterList from class net.bytebuddy.description.method.ParameterList.AbstractBase",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
-		"validators": null
-	}, {
-		"type": "PullUpMethod",
-		"description": "Pull Up Method protected wrap(values List) : ParameterList from class net.bytebuddy.description.method.ParameterList.Explicit to protected wrap(values List) : ParameterList from class net.bytebuddy.description.method.ParameterList.AbstractBase",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
-		"validators": null
-	}, {
-		"type": "PullUpMethod",
-		"description": "Pull Up Method protected wrap(values List) : ParameterList from class net.bytebuddy.description.method.ParameterList.ForLoadedExecutable to protected wrap(values List) : ParameterList from class net.bytebuddy.description.method.ParameterList.AbstractBase",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
-		"validators": null
-	}, {
-		"type": "PullUpMethod",
-		"description": "Pull Up Method protected wrap(values List) : ParameterList from class net.bytebuddy.description.method.ParameterList.ForLoadedExecutable.OfLegacyVmConstructor to protected wrap(values List) : ParameterList from class net.bytebuddy.description.method.ParameterList.AbstractBase",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
-		"validators": null
-	}, {
-		"type": "PullUpMethod",
-		"description": "Pull Up Method protected wrap(values List) : ParameterList from class net.bytebuddy.description.method.ParameterList.ForLoadedExecutable.OfLegacyVmMethod to protected wrap(values List) : ParameterList from class net.bytebuddy.description.method.ParameterList.AbstractBase",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}],
 	"refDiffExecutionTime": 1005
@@ -7715,7 +7687,7 @@
 		"description": "Rename Method package getMetricsRepositories() : List<Metric> renamed to package getPluginMetrics() : List<Metric> in class org.sonar.server.startup.RegisterMetrics",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
 		"type": "Rename Method",
@@ -7737,13 +7709,6 @@
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
-		"validators": null
-	}, {
-		"type": "RenameMethod",
-		"description": "Rename Method package getMetricsRepositories() : List renamed to package getPluginMetrics() : List in class org.sonar.server.startup.RegisterMetrics",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
 		"type": "RenameMethod",
@@ -7873,7 +7838,7 @@
 		"description": "Rename Method protected getAllNodes(propertyValue String) : List<Long> renamed to protected getAllNodesWithProperty(propertyValue String) : List<Long> in class org.neo4j.kernel.api.index.IndexAccessorCompatibility",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
 		"type": "Rename Method",
@@ -7951,13 +7916,6 @@
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
-		"validators": null
-	}, {
-		"type": "RenameMethod",
-		"description": "Rename Method protected getAllNodes(propertyValue String) : List renamed to protected getAllNodesWithProperty(propertyValue String) : List in class org.neo4j.kernel.api.index.IndexAccessorCompatibility",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
 		"validators": null
 	}],
 	"refDiffExecutionTime": 8600
@@ -8419,14 +8377,7 @@
 		"description": "Rename Method private validateAttributes(attributes Map<String,Object>, annotationType Class<? extends Annotation>) : void renamed to private enrichAndValidateAttributes(attributes Map<String,Object>, annotationType Class<? extends Annotation>) : Map<String,Object> in class org.springframework.core.annotation.MapAnnotationAttributeExtractor",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
-		"validators": null
-	}, {
-		"type": "RenameMethod",
-		"description": "Rename Method private validateAttributes(attributes Map, annotationType Class) : void renamed to private enrichAndValidateAttributes(attributes Map, annotationType Class) : Map in class org.springframework.core.annotation.MapAnnotationAttributeExtractor",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}],
 	"refDiffExecutionTime": 5439
@@ -21657,14 +21608,7 @@
 		"description": "Rename Method private getDestination(targetNode TargetNode<?>) : Optional<PBXCopyFilesBuildPhase.Destination> renamed to private getDestinationSpec(targetNode TargetNode<?>) : Optional<CopyFilePhaseDestinationSpec> in class com.facebook.buck.apple.ProjectGenerator",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
-		"validators": null
-	}, {
-		"type": "RenameMethod",
-		"description": "Rename Method private getDestination(targetNode TargetNode) : Optional renamed to private getDestinationSpec(targetNode TargetNode) : Optional in class com.facebook.buck.apple.ProjectGenerator",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}],
 	"refDiffExecutionTime": 4819
@@ -24949,7 +24893,7 @@
 		"description": "Rename Method private getIndexUpdates(label int, create boolean, property DefinedProperty) : DiffSets<Long> renamed to private getIndexUpdatesForScanOrSeek(label int, create boolean, property DefinedProperty) : DiffSets<Long> in class org.neo4j.kernel.impl.api.state.TxState",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
 		"type": "Rename Method",
@@ -24970,21 +24914,21 @@
 		"description": "Rename Method public indexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets<Long> renamed to public indexUpdatesForRangeSeekByPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets<Long> in class org.neo4j.kernel.impl.api.state.TxState",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public indexUpdates(descriptor IndexDescriptor, value Object) : ReadableDiffSets<Long> renamed to public indexUpdatesForScanOrSeek(descriptor IndexDescriptor, value Object) : ReadableDiffSets<Long> in class org.neo4j.kernel.impl.api.state.TxState",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method private getIndexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets<Long> renamed to private getIndexUpdatesForRangeSeekByPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets<Long> in class org.neo4j.kernel.impl.api.state.TxState",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
 		"type": "Rename Method",
@@ -24992,34 +24936,6 @@
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
-		"validators": null
-	}, {
-		"type": "RenameMethod",
-		"description": "Rename Method private getIndexUpdates(label int, create boolean, property DefinedProperty) : DiffSets renamed to private getIndexUpdatesForScanOrSeek(label int, create boolean, property DefinedProperty) : DiffSets in class org.neo4j.kernel.impl.api.state.TxState",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
-		"validators": null
-	}, {
-		"type": "RenameMethod",
-		"description": "Rename Method public indexUpdates(descriptor IndexDescriptor, value Object) : ReadableDiffSets renamed to public indexUpdatesForScanOrSeek(descriptor IndexDescriptor, value Object) : ReadableDiffSets in class org.neo4j.kernel.impl.api.state.TxState",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
-		"validators": null
-	}, {
-		"type": "RenameMethod",
-		"description": "Rename Method public indexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets renamed to public indexUpdatesForRangeSeekByPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets in class org.neo4j.kernel.impl.api.state.TxState",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
-		"validators": null
-	}, {
-		"type": "RenameMethod",
-		"description": "Rename Method private getIndexUpdatesForPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets renamed to private getIndexUpdatesForRangeSeekByPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets in class org.neo4j.kernel.impl.api.state.TxState",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
 		"validators": null
 	}],
 	"refDiffExecutionTime": 4473
@@ -29947,7 +29863,7 @@
 		"description": "Rename Method public buildQuery() : ParametrizedQuery<TaskSummary> renamed to public build() : ParametrizedQuery<TaskSummary> in class org.jbpm.services.task.impl.TaskQueryBuilderImpl",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
 		"type": "Rename Method",
@@ -30057,13 +29973,6 @@
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public orderBy(orderBy OrderBy) : TaskQueryBuilder renamed to private getOrderByListId(field OrderBy) : String in class org.jbpm.services.task.impl.TaskQueryBuilderImpl",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
-		"validators": null
-	}, {
-		"type": "RenameMethod",
-		"description": "Rename Method public buildQuery() : ParametrizedQuery renamed to public build() : ParametrizedQuery in class org.jbpm.services.task.impl.TaskQueryBuilderImpl",
 		"comment": null,
 		"validation": "UKN",
 		"detectionTools": "RefDiff",
@@ -33294,7 +33203,7 @@
 		"description": "Rename Method private getErlangModuleDescriptorFromConfig(target ErlangTarget, context CompileContext, isTests boolean) : List<ErlangFileDescriptor> renamed to private getErlangFileDescriptorFromConfig(target ErlangTarget, context CompileContext, isTests boolean) : List<ErlangFileDescriptor> in class org.intellij.erlang.jps.builder.ErlangBuilder",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
+		"detectionTools":  "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
 		"type": "Rename Method",
@@ -33309,13 +33218,6 @@
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
-		"validators": null
-	}, {
-		"type": "RenameMethod",
-		"description": "Rename Method private getErlangModuleDescriptorFromConfig(target ErlangTarget, context CompileContext, isTests boolean) : List renamed to private getErlangFileDescriptorFromConfig(target ErlangTarget, context CompileContext, isTests boolean) : List in class org.intellij.erlang.jps.builder.ErlangBuilder",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
 		"type": "RenameMethod",

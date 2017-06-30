@@ -7102,16 +7102,16 @@
 		"type": "RenameMethod",
 		"description": "Rename Method public displayListFragment(inputUri Uri) : void renamed to public displayInputFragment(showOpenDialog boolean) : void in class org.sufficientlysecure.keychain.ui.DecryptFilesActivity",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Nikos"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public displayListFragment(inputUris ArrayList) : void extracted from private handleActions(savedInstanceState Bundle, intent Intent) : void in class org.sufficientlysecure.keychain.ui.DecryptFilesActivity",
-		"comment":"compare the lines 98-105 in the base version with the lines 134-146 in the refactored version. A good example for Nik",
-		"validation":"TP",
+		"comment":"The code of displayListFragment(inputUris ArrayList) is taken from displayListFragment(inputUri Uri). Temporary variables were introduced to break the long chain of method calls.",
+		"validation":"FP",
 		"detectionTools":"RefDiff",
-		"validators":"Laleh"
+		"validators":"Nikos"
 	}],
 	"refDiffExecutionTime": 1261
 }, {
@@ -8692,7 +8692,7 @@
 		"validators": null
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private foldExprShortcut(desc ExprNodeDesc, constants Map, cppCtx ConstantPropagateProcCtx, op Operator, tag int, propagate boolean) : ExprNodeDesc extracted from private foldExpr(desc ExprNodeDesc, constants Map, cppCtx ConstantPropagateProcCtx, op Operator, tag int, propagate boolean) : ExprNodeDesc in class org.apache.hadoop.hive.ql.optimizer.ConstantPropagateProcFactory",
+		"description": "Extract Method private foldExprShortcut(desc ExprNodeDesc, constants Map<ColumnInfo,ExprNodeDesc>, cppCtx ConstantPropagateProcCtx, op Operator<? extends Serializable>, tag int, propagate boolean) : ExprNodeDesc extracted from private foldExpr(desc ExprNodeDesc, constants Map<ColumnInfo,ExprNodeDesc>, cppCtx ConstantPropagateProcCtx, op Operator<? extends Serializable>, tag int, propagate boolean) : ExprNodeDesc in class org.apache.hadoop.hive.ql.optimizer.ConstantPropagateProcFactory",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefDiff",

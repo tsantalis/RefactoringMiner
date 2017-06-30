@@ -266,7 +266,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 					UMLOperationDiff operationDiff = new UMLOperationDiff(removedOperation, addedOperation);
 					operationDiffList.add(operationDiff);
 					if(!removedOperation.getName().equals(addedOperation.getName())) {
-						RenameOperationRefactoring rename = new RenameOperationRefactoring(removedOperation, addedOperation);
+						RenameOperationRefactoring rename = new RenameOperationRefactoring(bestMapper);
 						refactorings.add(rename);
 					}
 					this.addOperationBodyMapper(bestMapper);
@@ -295,7 +295,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 					UMLOperationDiff operationDiff = new UMLOperationDiff(removedOperation, addedOperation);
 					operationDiffList.add(operationDiff);
 					if(!removedOperation.getName().equals(addedOperation.getName())) {
-						RenameOperationRefactoring rename = new RenameOperationRefactoring(removedOperation, addedOperation);
+						RenameOperationRefactoring rename = new RenameOperationRefactoring(bestMapper);
 						refactorings.add(rename);
 					}
 					this.addOperationBodyMapper(bestMapper);
@@ -594,8 +594,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 						operationBodyMapper.getMappings();
 						int mappings = operationBodyMapper.mappingsWithoutBlocks();
 						if(mappings > 0 && (mappings > operationBodyMapper.nonMappedElementsT1() || operationBodyMapper.exactMatches() > 0)) {
-							InlineOperationRefactoring inlineOperationRefactoring =
-									new InlineOperationRefactoring(removedOperation, operationBodyMapper.getOperation2(), operationBodyMapper.getOperation2().getClassName());
+							InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper);
 							refactorings.add(inlineOperationRefactoring);
 							mapper.addAdditionalMapper(operationBodyMapper);
 							operationsToBeRemoved.add(removedOperation);
@@ -656,8 +655,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 							operationBodyMapper.getMappings();
 							int mappings = operationBodyMapper.mappingsWithoutBlocks();
 							if(mappings > 0 && (mappings > operationBodyMapper.nonMappedElementsT2() || operationBodyMapper.exactMatches() > 0)) {
-								ExtractOperationRefactoring extractOperationRefactoring =
-										new ExtractOperationRefactoring(addedOperation, operationBodyMapper.getOperation1(), operationBodyMapper.getOperation1().getClassName());
+								ExtractOperationRefactoring extractOperationRefactoring = new ExtractOperationRefactoring(operationBodyMapper);
 								refactorings.add(extractOperationRefactoring);
 								mapper.addAdditionalMapper(operationBodyMapper);
 								operationsToBeRemoved.add(addedOperation);

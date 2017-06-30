@@ -1,18 +1,31 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
 public class ExtractAndMoveOperationRefactoring implements Refactoring {
 	private UMLOperation extractedOperation;
 	private UMLOperation extractedFromOperation;
+	private Set<Replacement> replacements;
 	
+	public ExtractAndMoveOperationRefactoring(UMLOperationBodyMapper bodyMapper) {
+		this.extractedOperation = bodyMapper.getOperation2();
+		this.extractedFromOperation = bodyMapper.getOperation1();
+		this.replacements = bodyMapper.getReplacements();
+	}
+
 	public ExtractAndMoveOperationRefactoring(UMLOperation extractedOperation,
 			UMLOperation extractedFromOperation) {
 		this.extractedOperation = extractedOperation;
 		this.extractedFromOperation = extractedFromOperation;
+		this.replacements = new LinkedHashSet<Replacement>();
 	}
 
 	public String toString() {
@@ -43,5 +56,8 @@ public class ExtractAndMoveOperationRefactoring implements Refactoring {
 	public UMLOperation getExtractedFromOperation() {
 		return extractedFromOperation;
 	}
-	
+
+	public Set<Replacement> getReplacements() {
+		return replacements;
+	}
 }

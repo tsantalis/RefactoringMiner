@@ -609,7 +609,7 @@ public class UMLModelDiff {
                   if(mappings > 0 && (mappings > operationBodyMapper.nonMappedElementsT2() || operationBodyMapper.exactMatches() > 0) &&
                         mapper.getOperation1().isDelegate() == null && mapper.getOperation2().isDelegate() != null) {
                      ExtractAndMoveOperationRefactoring extractOperationRefactoring =
-                           new ExtractAndMoveOperationRefactoring(addedOperation, operationBodyMapper.getOperation1());
+                           new ExtractAndMoveOperationRefactoring(operationBodyMapper);
                      refactorings.add(extractOperationRefactoring);
                      deleteAddedOperation(addedOperation);
                   }
@@ -620,7 +620,7 @@ public class UMLModelDiff {
                 		  for(OperationInvocation operationInvocation : classDiff.getExtractedDelegateOperations().values()) {
                 			  if(operationInvocation.matchesOperation(addedOperation)) {
                     			  ExtractAndMoveOperationRefactoring extractOperationRefactoring =
-                                        new ExtractAndMoveOperationRefactoring(addedOperation, operationBodyMapper.getOperation1());
+                                        new ExtractAndMoveOperationRefactoring(operationBodyMapper);
                                   refactorings.add(extractOperationRefactoring);
                                   deleteAddedOperation(addedOperation);
                     			  break;
@@ -677,13 +677,13 @@ public class UMLModelDiff {
 	            	  }
 	               }
 	               else if(isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && (addedOperation.equalParameters(removedOperation) || addedOperation.overloadedParameters(removedOperation))) {
-	                  refactoring = new PullUpOperationRefactoring(removedOperation, addedOperation);
+	                  refactoring = new PullUpOperationRefactoring(firstMapper);
 	               }
 	               else if(isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && (addedOperation.equalParameters(removedOperation) || addedOperation.overloadedParameters(removedOperation))) {
-	                  refactoring = new PushDownOperationRefactoring(removedOperation, addedOperation);
+	                  refactoring = new PushDownOperationRefactoring(firstMapper);
 	               }
 	               else if(movedMethodSignature(removedOperation, addedOperation) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
-	                  refactoring = new MoveOperationRefactoring(removedOperation, addedOperation);
+	                  refactoring = new MoveOperationRefactoring(firstMapper);
 	               }
 	               if(refactoring != null) {
 	                  deleteRemovedOperation(removedOperation);
@@ -733,13 +733,13 @@ public class UMLModelDiff {
 	            	  }
 	               }
 	               else if(isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && (addedOperation.equalParameters(removedOperation) || addedOperation.overloadedParameters(removedOperation))) {
-	                  refactoring = new PullUpOperationRefactoring(removedOperation, addedOperation);
+	                  refactoring = new PullUpOperationRefactoring(firstMapper);
 	               }
 	               else if(isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && (addedOperation.equalParameters(removedOperation) || addedOperation.overloadedParameters(removedOperation))) {
-	                  refactoring = new PushDownOperationRefactoring(removedOperation, addedOperation);
+	                  refactoring = new PushDownOperationRefactoring(firstMapper);
 	               }
 	               else if(movedMethodSignature(removedOperation, addedOperation) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
-	                  refactoring = new MoveOperationRefactoring(removedOperation, addedOperation);
+	                  refactoring = new MoveOperationRefactoring(firstMapper);
 	               }
 	               if(refactoring != null) {
 	                  deleteRemovedOperation(removedOperation);

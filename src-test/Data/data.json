@@ -26426,15 +26426,15 @@
 		"type": "Move Method",
 		"description": "Move Method public nodesGetAllCursor(statement StoreStatement) : Cursor from class org.neo4j.kernel.impl.api.store.DiskLayer to public nodesGetAllCursor() : Cursor from class org.neo4j.kernel.impl.api.store.StoreStatement",
 		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public relationshipsGetAllCursor(storeStatement StoreStatement) : Cursor from class org.neo4j.kernel.impl.api.store.DiskLayer to public relationshipsGetAllCursor() : Cursor from class org.neo4j.kernel.impl.api.store.StoreStatement",
 		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
 		"type": "Extract Method",

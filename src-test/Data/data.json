@@ -333,122 +333,123 @@
 	}, {
 		"type": "PushDownMethod",
 		"description": "Push Down Method private assertHasArtifacts() : void from class org.gradle.api.internal.artifacts.ResolverResults to private assertHasArtifacts() : void from class org.gradle.api.internal.artifacts.DefaultResolverResults",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "DefaultResolverResults is a new class and extracted from ResolverResults. Thus, it is an extract class not push down method. Since RefDiff cannot detect this kind of refactorings we may have to call this as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownMethod",
 		"description": "Push Down Method private assertHasResult() : void from class org.gradle.api.internal.artifacts.ResolverResults to private assertHasResult() : void from class org.gradle.api.internal.artifacts.DefaultResolverResults",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "DefaultResolverResults is a new class and extracted from ResolverResults. Thus, it is an extract class not push down method. Since RefDiff cannot detect this kind of refactorings we may have to call this as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownMethod",
 		"description": "Push Down Method public eachResolvedProject(action Action) : void from class org.gradle.api.internal.artifacts.ResolverResults to public eachResolvedProject(action Action) : void from class org.gradle.api.internal.artifacts.DefaultResolverResults",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "DefaultResolverResults is a new class and extracted from ResolverResults. Thus, it is an extract class not push down method. Since RefDiff cannot detect this kind of refactorings we may have to call this as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownMethod",
 		"description": "Push Down Method public failed(failure ResolveException) : void from class org.gradle.api.internal.artifacts.ResolverResults to public failed(failure ResolveException) : void from class org.gradle.api.internal.artifacts.DefaultResolverResults",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "DefaultResolverResults is a new class and extracted from ResolverResults. Thus, it is an extract class not push down method. Since RefDiff cannot detect this kind of refactorings we may have to call this as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownMethod",
 		"description": "Push Down Method public getArtifactsBuilder() : ResolvedArtifactsBuilder from class org.gradle.api.internal.artifacts.ResolverResults to public getArtifactsBuilder() : ResolvedArtifactsBuilder from class org.gradle.api.internal.artifacts.DefaultResolverResults",
 		"comment": null,
-		"validation": "UKN",
+		"comment": "DefaultResolverResults is a new class and extracted from ResolverResults. Thus, it is an extract class not push down method. Since RefDiff cannot detect this kind of refactorings we may have to call this as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownMethod",
 		"description": "Push Down Method public getGraphResults() : ResolvedGraphResults from class org.gradle.api.internal.artifacts.ResolverResults to public getGraphResults() : ResolvedGraphResults from class org.gradle.api.internal.artifacts.DefaultResolverResults",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "DefaultResolverResults is a new class and extracted from ResolverResults. Thus, it is an extract class not push down method. Since RefDiff cannot detect this kind of refactorings we may have to call this as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownMethod",
 		"description": "Push Down Method public getTransientConfigurationResultsBuilder() : TransientConfigurationResultsBuilder from class org.gradle.api.internal.artifacts.ResolverResults to public getTransientConfigurationResultsBuilder() : TransientConfigurationResultsBuilder from class org.gradle.api.internal.artifacts.DefaultResolverResults",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "DefaultResolverResults is a new class and extracted from ResolverResults. Thus, it is an extract class not push down method. Since RefDiff cannot detect this kind of refactorings we may have to call this as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownMethod",
 		"description": "Push Down Method public resolved(resolutionResult ResolutionResult, resolvedLocalComponentsResult ResolvedLocalComponentsResult) : void from class org.gradle.api.internal.artifacts.ResolverResults to public resolved(resolutionResult ResolutionResult, resolvedLocalComponentsResult ResolvedLocalComponentsResult) : void from class org.gradle.api.internal.artifacts.DefaultResolverResults",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "DefaultResolverResults is a new class and extracted from ResolverResults. Thus, it is an extract class not push down method. Since RefDiff cannot detect this kind of refactorings we may have to call this as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownMethod",
 		"description": "Push Down Method public retainState(graphResults ResolvedGraphResults, artifactResults ResolvedArtifactsBuilder, transientConfigurationResultsBuilder TransientConfigurationResultsBuilder) : void from class org.gradle.api.internal.artifacts.ResolverResults to public retainState(graphResults ResolvedGraphResults, artifactResults ResolvedArtifactsBuilder, transientConfigurationResultsBuilder TransientConfigurationResultsBuilder) : void from class org.gradle.api.internal.artifacts.DefaultResolverResults",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "DefaultResolverResults is a new class and extracted from ResolverResults. Thus, it is an extract class not push down method. Since RefDiff cannot detect this kind of refactorings we may have to call this as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownMethod",
 		"description": "Push Down Method public withResolvedConfiguration(resolvedConfiguration ResolvedConfiguration) : void from class org.gradle.api.internal.artifacts.ResolverResults to public withResolvedConfiguration(resolvedConfiguration ResolvedConfiguration) : void from class org.gradle.api.internal.artifacts.DefaultResolverResults",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "DefaultResolverResults is a new class and extracted from ResolverResults. Thus, it is an extract class not push down method. Since RefDiff cannot detect this kind of refactorings we may have to call this as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute private fatalFailure : ResolveException from class org.gradle.api.internal.artifacts.ResolverResults to class org.gradle.api.internal.artifacts.DefaultResolverResults",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "DefaultResolverResults is a new class and extracted from ResolverResults. Thus, it is an extract class not push down Attribute. Since RefDiff cannot detect this kind of refactorings we may have to call this as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute private graphResults : ResolvedGraphResults from class org.gradle.api.internal.artifacts.ResolverResults to class org.gradle.api.internal.artifacts.DefaultResolverResults",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "DefaultResolverResults is a new class and extracted from ResolverResults. Thus, it is an extract class not push down Attribute. Since RefDiff cannot detect this kind of refactorings we may have to call this as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute private resolutionResult : ResolutionResult from class org.gradle.api.internal.artifacts.ResolverResults to class org.gradle.api.internal.artifacts.DefaultResolverResults",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "DefaultResolverResults is a new class and extracted from ResolverResults. Thus, it is an extract class not push down Attribute. Since RefDiff cannot detect this kind of refactorings we may have to call this as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute private resolvedConfiguration : ResolvedConfiguration from class org.gradle.api.internal.artifacts.ResolverResults to class org.gradle.api.internal.artifacts.DefaultResolverResults",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "DefaultResolverResults is a new class and extracted from ResolverResults. Thus, it is an extract class not push down Attribute. Since RefDiff cannot detect this kind of refactorings we may have to call this as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute private resolvedLocalComponentsResult : ResolvedLocalComponentsResult from class org.gradle.api.internal.artifacts.ResolverResults to class org.gradle.api.internal.artifacts.DefaultResolverResults",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "DefaultResolverResults is a new class and extracted from ResolverResults. Thus, it is an extract class not push down Attribute. Since RefDiff cannot detect this kind of refactorings we may have to call this as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute private transientConfigurationResultsBuilder : TransientConfigurationResultsBuilder from class org.gradle.api.internal.artifacts.ResolverResults to class org.gradle.api.internal.artifacts.DefaultResolverResults",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "DefaultResolverResults is a new class and extracted from ResolverResults. Thus, it is an extract class not push down Attribute. Since RefDiff cannot detect this kind of refactorings we may have to call this as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute private artifactResults : ResolvedArtifactsBuilder from class org.gradle.api.internal.artifacts.ResolverResults to class org.gradle.api.internal.artifacts.DefaultResolverResults",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "DefaultResolverResults is a new class and extracted from ResolverResults. Thus, it is an extract class not push down Attribute. Since RefDiff cannot detect this kind of refactorings we may have to call this as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 9978
 }, {
@@ -603,10 +604,10 @@
 	}, {
 		"type": "ExtractInterface",
 		"description": "Extract Interface org.sonar.server.notification.NotificationManager from class org.sonar.server.notification.DefaultNotificationManager",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "NotificationManager existed in the previous revision too",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 9294
 }, {
@@ -880,17 +881,17 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public onType(typeDescription TypeDescription) : TypeVariableProxy from class net.bytebuddy.dynamic.TargetType.TypeVariableProxy.Extractor to public onType(typeDescription TypeDescription) : TypeVariableProxy from class net.bytebuddy.description.type.generic.GenericTypeDescription.Visitor.Substitutor.ForRawType",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Second Opinion, Seems FP since the Extractor is removerd and ForRawType is a new class. Moreover the method is the same since both class implement the same extends the same class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public onMethod(methodDescription MethodDescription) : TypeVariableProxy from class net.bytebuddy.dynamic.TargetType.TypeVariableProxy.Extractor to public onMethod(methodDescription MethodDescription) : TypeVariableProxy from class net.bytebuddy.description.type.generic.GenericTypeDescription.Visitor.Substitutor.ForRawType",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Second Opinion, Seems FP since the Extractor is removerd and ForRawType is a new class. Moreover the method is the same since both class implement the same extends the same class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public resolve(typeDescription GenericTypeDescription, substitute TypeDescription) : GenericTypeDescription extracted from public prepare(instrumentedType InstrumentedType) : InstrumentedType in class net.bytebuddy.implementation.FieldAccessor.ForNamedField.PreparationHandler.FieldDefiner",
@@ -915,17 +916,17 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private substitutionMatcher : ElementMatcher from class net.bytebuddy.dynamic.TargetType.TypeVariableProxy.Extractor to class net.bytebuddy.description.type.generic.GenericTypeDescription.Visitor.Substitutor.ForRawType",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Second Opinion. Seems FP since the Extractor is removerd and ForRawType is a new class. Moreover the attribute is the same since both class implement the same extends the same class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private substitute : TypeDescription from class net.bytebuddy.dynamic.TargetType.TypeVariableProxy.Extractor to class net.bytebuddy.description.type.generic.GenericTypeDescription.Visitor.Substitutor.ForRawType",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Second Opinion. Seems FP since the Extractor is removerd and ForRawType is a new class. Moreover the attribute is the same since both class implement the same extends the same class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 4590
 }, {
@@ -1049,10 +1050,10 @@
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method private isNonSuspendable(clazz Class, methodName String) : boolean renamed to private isSuspendable(clazz Class, methodName String) : boolean in class co.paralleluniverse.fibers.Fiber",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "The method is name is changed since the functionality is changed",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private emitInstrumentedAnn() : void extracted from public visitEnd() : void in class co.paralleluniverse.fibers.instrument.InstrumentClass",
@@ -1165,10 +1166,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private describeSplits(keyspace String, table String, tokenRange TokenRange, splitSize int) : Map from class org.apache.cassandra.hadoop.AbstractColumnFamilyInputFormat to private describeSplits(keyspace String, table String, tokenRange TokenRange, splitSize int) : Map from class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Class AbstractColumnFamilyInputFormat is deleted, thus it does not total comply with the defenition of move method.",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private getRangeMap(conf Configuration, keyspace String) : Map from class org.apache.cassandra.hadoop.AbstractColumnFamilyInputFormat to private getRangeMap(conf Configuration, keyspace String) : Map from class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
@@ -1200,52 +1201,53 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getSplits(context JobContext) : List from class org.apache.cassandra.hadoop.AbstractColumnFamilyInputFormat to public getSplits(context JobContext) : List from class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "class AbstractColumnFamilyInputFormat is deleted, thus it does not total comply with the defenition of move method.",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private cfName : String from class org.apache.cassandra.hadoop.AbstractColumnFamilyInputFormat to class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "class AbstractColumnFamilyInputFormat is deleted, thus it does not total comply with the defenition of move attribute.",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private keyspace : String from class org.apache.cassandra.hadoop.AbstractColumnFamilyInputFormat to class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "class AbstractColumnFamilyInputFormat is deleted, thus it does not total comply with the defenition of move attribute.",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private logger : Logger from class org.apache.cassandra.hadoop.AbstractColumnFamilyInputFormat to class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "class AbstractColumnFamilyInputFormat is deleted, thus it does not total comply with the defenition of move attribute.",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private partitioner : IPartitioner from class org.apache.cassandra.hadoop.AbstractColumnFamilyInputFormat to class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
 		"comment": null,
-		"validation": "UKN",
+		"comment": "class AbstractColumnFamilyInputFormat is deleted, thus it does not total comply with the defenition of move attribute.",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private session : Session from class org.apache.cassandra.hadoop.AbstractColumnFamilyInputFormat to class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "class AbstractColumnFamilyInputFormat is deleted, thus it does not total comply with the defenition of move attribute.",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute public MAPRED_TASK_ID : String from class org.apache.cassandra.hadoop.AbstractColumnFamilyInputFormat to class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "class AbstractColumnFamilyInputFormat is deleted, thus it does not total comply with the defenition of move attribute.",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 6589
 }, {
@@ -1602,28 +1604,14 @@
 		"description": "Move Class com.fasterxml.jackson.failing.TestExternalTypeId222.Issue222BeanB moved to com.fasterxml.jackson.databind.jsontype.TestExternalId.Issue222BeanB",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
 		"type": "Move Class",
 		"description": "Move Class com.fasterxml.jackson.failing.TestExternalTypeId222.Issue222Bean moved to com.fasterxml.jackson.databind.jsontype.TestExternalId.Issue222Bean",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
-		"validators": null
-	}, {
-		"type": "Other",
-		"description": "Move Class com.fasterxml.jackson.failing.TestExternalTypeId222.Issue222Bean moved to com.fasterxml.jackson.databind.jsontype.TestExternalId.Issue222Bean",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
-		"validators": null
-	}, {
-		"type": "Other",
-		"description": "Move Class com.fasterxml.jackson.failing.TestExternalTypeId222.Issue222BeanB moved to com.fasterxml.jackson.databind.jsontype.TestExternalId.Issue222BeanB",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}],
 	"refDiffExecutionTime": 1439
@@ -1716,7 +1704,7 @@
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
-		"type": "Other",
+		"type": "Move And Rename Class",
 		"description": "Move And Rename Class org.elasticsearch.index.merge.policy.TieredMergePolicyProvider moved to org.elasticsearch.index.shard.MergePolicyConfig",
 		"comment": null,
 		"validation": "UKN",
@@ -1725,17 +1713,17 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public formatNoCFSRatio(ratio double) : String from class org.elasticsearch.index.merge.policy.AbstractMergePolicyProvider to public formatNoCFSRatio(ratio double) : String from class org.elasticsearch.index.shard.MergePolicyConfig",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "class AbstractMergePolicyProvider is deleted,  thus it does not total comply with the defenition of move method.",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public parseNoCFSRatio(noCFSRatio String) : double from class org.elasticsearch.index.merge.policy.AbstractMergePolicyProvider to public parseNoCFSRatio(noCFSRatio String) : double from class org.elasticsearch.index.shard.MergePolicyConfig",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "class AbstractMergePolicyProvider is deleted,  thus it does not total comply with the defenition of move method.",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getMergePolicy() : LogByteSizeMergePolicy from class org.elasticsearch.index.merge.policy.LogByteSizeMergePolicyProvider to public getMergePolicy() : MergePolicy from class org.elasticsearch.index.engine.EngineConfig",
@@ -1753,17 +1741,17 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public onRefreshSettings(settings Settings) : void from class org.elasticsearch.index.merge.policy.TieredMergePolicyProvider.ApplySettings to public onRefreshSettings(settings Settings) : void from class org.elasticsearch.index.shard.MergePolicyConfig",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Second Opinion. The method is renamed since the return type is changed",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public build(value String) : Settings from class org.elasticsearch.index.merge.policy.MergePolicySettingsTest to public build(value String) : Settings from class org.elasticsearch.index.shard.MergePolicySettingsTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Second Opinion. It is a move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testTieredMergePolicySettingsUpdate() : void from class org.elasticsearch.index.merge.policy.MergePolicySettingsTest to public testTieredMergePolicySettingsUpdate() : void from class org.elasticsearch.index.shard.MergePolicySettingsTest",
@@ -2127,24 +2115,24 @@
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public executeIfNotFiring(task Runnable) : boolean renamed to public executeTask(executable ExecutableEntry) : void in class org.drools.reteoo.common.ReteAgenda",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Second Idea. seems false positive",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method private internalFlush() : void renamed to public flush(workingMemory InternalWorkingMemory, currentHead PropagationEntry) : void in class org.drools.core.phreak.SynchronizedPropagationList",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public addActivation(item AgendaItem, notify boolean) : void renamed to public fireTimedActivation(activation Activation) : boolean in class org.drools.core.common.DefaultAgenda",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Second Opinion. Seems FP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private waitAndEnterExecutionState(newState ExecutionState) : void extracted from public fireUntilHalt(agendaFilter AgendaFilter) : void in class org.drools.core.common.DefaultAgenda",
@@ -2521,14 +2509,14 @@
 		"type": "RenameMethod",
 		"description": "Rename Method public shouldReturnAnAbsentOptionalIfNoTargetDeviceOptionsSet() : void renamed to public shouldReturnAnAbsentOptionalIfNoTargetDeviceCommandLineOptionsSet() : void in class com.facebook.buck.cli.TargetDeviceCommandLineOptionsTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public isMultiInstallModeEnabled() : boolean renamed to public getAdbOptions() : AdbOptions in class com.facebook.buck.cli.AdbCommandLineOptions",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Second Opinion. Two method merged to one",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
@@ -3238,23 +3226,23 @@
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute protected ERROR_BACKGROUND_IMAGE_FORMAT : String from class processing.core.PConstants to class processing.core.PGraphics",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute protected ERROR_BACKGROUND_IMAGE_SIZE : String from class processing.core.PConstants to class processing.core.PGraphics",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute protected ERROR_TEXTFONT_NULL_PFONT : String from class processing.core.PConstants to class processing.core.PGraphics",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 1544
 }, {
@@ -3320,10 +3308,10 @@
 	}, {
 		"type": "InlineMethod",
 		"description": "Inline Method public rootRelation(relation AnalyzedRelation) : void inlined to public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.QueryAndFetchConsumer",
-		"comment": null,
+		"comment": "we need to show the inlined method class in result so that we can validate this",
 		"validation": "UKN",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "InlineMethod",
 		"description": "Inline Method public rootRelation(relation AnalyzedRelation) : void inlined to public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.ReduceOnCollectorGroupByConsumer",
@@ -4657,9 +4645,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImageProperty8BIM, type Class) : T extracted from public getNumber(property CGImageProperty8BIM) : double in class org.robovm.apple.imageio.CGImageProperty8BIMData",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public get(key CGImagePropertyCIFF, type Class) : T extracted from public getString(property CGImagePropertyCIFF) : String in class org.robovm.apple.imageio.CGImagePropertyCIFFData",
@@ -4929,9 +4917,9 @@
 		"type": "RenameMethod",
 		"description": "Rename Method public combineCxxPreprocessorInput(params BuildRuleParams, cxxPlatform CxxPlatform, preprocessorFlags ImmutableMultimap, prefixHeaders ImmutableList, headerSymlinkTrees ImmutableList, frameworkSearchPaths ImmutableList, cxxPreprocessorInputFromDeps Iterable) : CxxPreprocessorInput renamed to public collectCxxPreprocessorInput(params BuildRuleParams, cxxPlatform CxxPlatform, preprocessorFlags ImmutableMultimap, prefixHeaders ImmutableList, headerSymlinkTrees ImmutableList, frameworkSearchPaths ImmutableList, cxxPreprocessorInputFromDeps Iterable) : ImmutableList in class com.facebook.buck.cxx.CxxDescriptionEnhancer",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 3919
 }, {
@@ -4967,10 +4955,10 @@
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public restParams(type Node) : TypeDeclarationNode renamed to private maybeAddType(node Node, type TypeDeclarationNode) : Node in class com.google.javascript.rhino.TypeDeclarationsIR",
-		"comment": null,
-		"validation": "UKN",
+		"comment":"Second Opiniton. Seems FP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 3462
 }, {
@@ -5171,17 +5159,17 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private _excludes : List from class org.eclipse.jetty.maven.plugin.ScanTargetPattern to class org.eclipse.jetty.maven.plugin.ScanPattern",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is an Extract Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private _includes : List from class org.eclipse.jetty.maven.plugin.ScanTargetPattern to class org.eclipse.jetty.maven.plugin.ScanPattern",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is an Extract Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 7248
 }, {
@@ -5313,30 +5301,30 @@
 		"type": "RenameMethod",
 		"description": "Rename Method private addToPutMetricDataList(putMetricDataList List, cloudWatchSupplier Supplier) : void renamed to private addToQueueItems(queueItems List, cloudWatchSupplier Supplier) : void in class com.eucalyptus.cluster.callback.cloudwatch.CloudWatchHelper",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private adjustAbsoluteInstanceCPUStatisticSet(cache AbsoluteMetricCache, datum MetricDatum, absoluteMetricName String, relativeMetricName String, instanceId String) : boolean from class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to private adjustAbsoluteInstanceCPUStatisticSet(cache AbsoluteMetricCache, datum MetricDatum, absoluteMetricName String, relativeMetricName String, instanceId String) : boolean from class com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is an extract class since RefDiff cannot detect these refactorings consider as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private adjustAbsoluteInstanceStatisticSet(cache AbsoluteMetricCache, datum MetricDatum, absoluteMetricName String, relativeMetricName String, instanceId String) : boolean from class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to private adjustAbsoluteInstanceStatisticSet(cache AbsoluteMetricCache, datum MetricDatum, absoluteMetricName String, relativeMetricName String, instanceId String) : boolean from class com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is an extract class since RefDiff cannot detect these refactorings consider as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private adjustAbsoluteVolumeQueueLengthStatisticSet(cache AbsoluteMetricCache, datum MetricDatum, volumeId String) : boolean from class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to private adjustAbsoluteVolumeQueueLengthStatisticSet(cache AbsoluteMetricCache, datum MetricDatum, volumeId String) : boolean from class com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is an extract class since RefDiff cannot detect these refactorings consider as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private adjustAbsoluteVolumeStatisticSet(cache AbsoluteMetricCache, datum MetricDatum, absoluteMetricName String, relativeMetricName String, volumeId String) : boolean from class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to private adjustAbsoluteVolumeStatisticSet(cache AbsoluteMetricCache, datum MetricDatum, absoluteMetricName String, relativeMetricName String, volumeId String) : boolean from class com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue",
@@ -5347,10 +5335,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private convertVolumeTotalReadWriteTimeToVolumeIdleTime(datum MetricDatum) : void from class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to private convertVolumeTotalReadWriteTimeToVolumeIdleTime(datum MetricDatum) : void from class com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is an extract class since RefDiff cannot detect these refactorings consider as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private createVolumeThroughputMetric(accountId String, nameSpace String, metricType MetricType, datum MetricDatum) : MetricQueueItem from class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to private createVolumeThroughputMetric(accountId String, nameSpace String, datum MetricDatum) : AbsoluteMetricQueueItem from class com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue",
@@ -5361,10 +5349,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected dealWithAbsoluteMetrics(dataBatch List) : List from class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to protected dealWithAbsoluteMetrics(dataBatch List) : List from class com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is an extract class since RefDiff cannot detect these refactorings consider as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public addQueueItems(queueItems List) : void extracted from private processCloudWatchStats(msg DescribeSensorsResponse) : void in class com.eucalyptus.cluster.callback.DescribeSensorCallback",
@@ -5375,17 +5363,17 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private EBS_ABSOLUTE_METRICS : Map from class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to class com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is an extract class since RefDiff cannot detect these refactorings consider as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private EC2_ABSOLUTE_METRICS : Map from class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to class com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is an extract class since RefDiff cannot detect these refactorings consider as TP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 2499
 }, {
@@ -7025,12 +7013,12 @@
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method private addCheckboxController(optionName String, label String) : void renamed to private makeTriStateCheckBox(label String, option String) : TriStateCheckBox in class org.rstudio.studio.client.workbench.views.source.editors.text.ChunkOptionsPopupPanel",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "The changes in the code is huge. Nikos: not rename. Davood and Matin: rename",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin,Davood"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public setValue(value boolean) : void extracted from public init(widget AceEditorWidget, position Position) : void in class org.rstudio.studio.client.workbench.views.source.editors.text.ChunkOptionsPopupPanel",
@@ -7042,9 +7030,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method public get(key String) : String extracted from public init(widget AceEditorWidget, position Position) : void in class org.rstudio.studio.client.workbench.views.source.editors.text.ChunkOptionsPopupPanel",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private set(key String, value String) : void extracted from private addCheckboxController(optionName String, label String) : void in class org.rstudio.studio.client.workbench.views.source.editors.text.ChunkOptionsPopupPanel",
@@ -7253,9 +7241,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private extractJGroupsTransport(transport Transport) : JGroupsTransport extracted from private channel(cache Cache) : Channel in class org.infinispan.partitionhandling.BasePartitionHandlingTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}],
 	"refDiffExecutionTime": 7011
 }, {
@@ -7333,122 +7321,122 @@
 	}, {
 		"type": "RenameClass",
 		"description": "Rename Class com.jfinal.kit.EncryptionKit renamed to com.jfinal.kit.HashKit",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "The classes are so similar. the only difference is that the mehtods are renamed too",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public encrypt(algorithm String, srcStr String) : String renamed to public hash(algorithm String, srcStr String) : String in class com.jfinal.kit.HashKit",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public sha1Encrypt(srcStr String) : String renamed to public sha1(srcStr String) : String in class com.jfinal.kit.HashKit",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public sha256Encrypt(srcStr String) : String renamed to public sha256(srcStr String) : String in class com.jfinal.kit.HashKit",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public sha384Encrypt(srcStr String) : String renamed to public sha384(srcStr String) : String in class com.jfinal.kit.HashKit",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public sha512Encrypt(srcStr String) : String renamed to public sha512(srcStr String) : String in class com.jfinal.kit.HashKit",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public md5Encrypt(srcStr String) : String renamed to public md5(srcStr String) : String in class com.jfinal.kit.HashKit",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method protected validateString(field String, notBlank boolean, minLen int, maxLen int, errorKey String, errorMessage String) : void renamed to private validateStringValue(value String, minLen int, maxLen int, errorKey String, errorMessage String) : void in class com.jfinal.validate.Validator",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public forDbFindById(tableName String, primaryKey String, columns String) : String renamed to public forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public forDbFindById(tableName String, primaryKey String, columns String) : String renamed to public forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public forDbFindById(tableName String, primaryKey String, columns String) : String renamed to public forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public forDbFindById(tableName String, primaryKey String, columns String) : String renamed to public forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.MysqlDialect",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public forDbFindById(tableName String, primaryKey String, columns String) : String renamed to public forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method private warnning(actionKey String, controllerClass Class, method Method) : void renamed to private buildMsg(actionKey String, controllerClass Class, method Method) : String in class com.jfinal.core.ActionMapping",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public forDbDeleteById(tableName String, primaryKey String) : String renamed to public forDbFindById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public forDbDeleteById(tableName String, primaryKey String) : String renamed to public forDbFindById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public forDbDeleteById(tableName String, primaryKey String) : String renamed to public forDbFindById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getController() : Controller from class com.jfinal.core.ActionInvocation to protected getController() : Controller from class com.jfinal.validate.Validator",
@@ -7457,40 +7445,55 @@
 		"detectionTools": "RefDiff",
 		"validators": "Laleh"
 	}, {
-		"type": "Move Method",
-		"description": "Move Method public invoke() : void from class com.jfinal.aop.ActionInvocationWrapper to public invoke() : void from class com.jfinal.aop.InvocationWrapper",
+		"type": "RenameClass",
+		"description": "Rename Class com.jfinal.aop.ActionInvocationWrapper renamed to com.jfinal.aop.InvocationWrappe",
 		"comment": null,
 		"validation": "UKN",
 		"detectionTools": "RefDiff",
 		"validators": null
+	}, {
+		"type": "RenameClass",
+		"description": "Rename Class com.jfinal.core.ActionInvocation renamed to com.jfinal.aop.Invocation",
+		"comment": null,
+		"validation": "UKN",
+		"detectionTools": "RefDiff",
+		"validators": null
+	},
+	 {
+		"type": "Move Method",
+		"description": "Move Method public invoke() : void from class com.jfinal.aop.ActionInvocationWrapper to public invoke() : void from class com.jfinal.aop.InvocationWrapper",
+		"comment": "It seems that we have rename class",
+		"validation": "FP",
+		"detectionTools": "RefDiff",
+		"validators": "Matin, Davood, Nikos"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public invoke() : void from class com.jfinal.core.ActionInvocation to public invoke() : void from class com.jfinal.aop.Invocation",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems that we have rename class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood, Nikos"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getControllerKey() : String from class com.jfinal.core.ActionInvocation to public getControllerKey() : String from class com.jfinal.aop.InvocationWrapper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems that we have rename class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood, Nikos"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getViewPath() : String from class com.jfinal.core.ActionInvocation to public getViewPath() : String from class com.jfinal.aop.InvocationWrapper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems that we have rename class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood, Nikos"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getMethodName() : String from class com.jfinal.core.ActionInvocation to public getMethodName() : String from class com.jfinal.aop.InvocationWrapper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems that we have rename class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood, Nikos"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getActionKey() : String from class com.jfinal.core.ActionInvocation to public getActionKey() : String from class com.jfinal.aop.InvocationWrapper",
@@ -7501,10 +7504,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getControllerKey() : String from class com.jfinal.aop.ActionInvocationWrapper to public getControllerKey() : String from class com.jfinal.aop.InvocationWrapper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems that we have rename class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood, Nikos"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getMethod() : Method from class com.jfinal.core.ActionInvocation to public getMethod() : Method from class com.jfinal.aop.InvocationWrapper",
@@ -7515,10 +7518,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getViewPath() : String from class com.jfinal.aop.ActionInvocationWrapper to public getViewPath() : String from class com.jfinal.aop.InvocationWrapper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems that we have rename class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood, Nikos"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getMethodName() : String from class com.jfinal.aop.ActionInvocationWrapper to public getMethodName() : String from class com.jfinal.aop.InvocationWrapper",
@@ -7641,31 +7644,31 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private inters : Interceptor[] from class com.jfinal.aop.ActionInvocationWrapper to class com.jfinal.aop.InvocationWrapper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems that we have rename class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood, Nikos"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private index : int from class com.jfinal.aop.ActionInvocationWrapper to class com.jfinal.aop.InvocationWrapper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems that we have rename class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood, Nikos"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private index : int from class com.jfinal.core.ActionInvocation to class com.jfinal.aop.Invocation",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems that we have rename class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood, Nikos"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private inters : Interceptor[] from class com.jfinal.core.ActionInvocation to class com.jfinal.aop.Invocation",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems that we have rename class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood, Nikos"
 	}],
 	"refDiffExecutionTime": 1822
 }, {
@@ -7714,16 +7717,16 @@
 		"type": "RenameMethod",
 		"description": "Rename Method public shouldSaveIfNew() : void renamed to public insert_new_metrics() : void in class org.sonar.server.startup.RegisterMetricsTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Nikos"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public shouldUpdateIfAlreadyExists() : void renamed to public update_non_custom_metrics() : void in class org.sonar.server.startup.RegisterMetricsTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Nikos"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public shouldFindAll() : void from class org.sonar.core.metric.DefaultMetricFinderTest to public shouldFindAll() : void from class org.sonar.server.metric.DefaultMetricFinderTest",
@@ -7749,23 +7752,23 @@
 		"type": "Move Method",
 		"description": "Move Method public shouldFindByKeys() : void from class org.sonar.core.metric.DefaultMetricFinderTest to public shouldFindByKeys() : void from class org.sonar.server.metric.DefaultMetricFinderTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Nikos"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private dbClient() : DbClient extracted from public shouldSaveIfNew() : void in class org.sonar.server.startup.RegisterMetricsTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Nikos"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package finder : DefaultMetricFinder from class org.sonar.core.metric.DefaultMetricFinderTest to class org.sonar.server.metric.DefaultMetricFinderTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Nikos"
 	}],
 	"refDiffExecutionTime": 4571
 }, {
@@ -8065,38 +8068,38 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testConvertFunctionReturnType() : void from class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest to public testConvertFunctionReturnType() : void from class com.google.javascript.jscomp.JsdocToEs6TypedConverterTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible merge class with the JsdocToEs6TypedConverterTest",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testConvertFunctionThisType() : void from class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest to public testConvertFunctionThisType() : void from class com.google.javascript.jscomp.JsdocToEs6TypedConverterTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible merge class with the JsdocToEs6TypedConverterTest",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testConvertFunctionType() : void from class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest to public testConvertFunctionType() : void from class com.google.javascript.jscomp.JsdocToEs6TypedConverterTest",
 		"comment": "Class TypeDeclarationsIRFactoryTest is deleted in the base version and class JsdocToEs6TypedConverterTest is added in the refactored version. Most of the methods in class assertParseTypeAndConvert are moved to JsdocToEs6TypedConverterTest. So it is more like a class renaming and thus not move method",
-		"validation": "FP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
 		"validators": "Laleh"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testConvertNamedTypes() : void from class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest to public testConvertNamedTypes() : void from class com.google.javascript.jscomp.JsdocToEs6TypedConverterTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible merge class with the JsdocToEs6TypedConverterTest",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testConvertNonNullableType() : void from class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest to public testConvertNonNullableType() : void from class com.google.javascript.jscomp.JsdocToEs6TypedConverterTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible merge class with the JsdocToEs6TypedConverterTest",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testConvertNullableType() : void from class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest to public testConvertNullableType() : void from class com.google.javascript.jscomp.JsdocToEs6TypedConverterTest",
@@ -8107,10 +8110,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testConvertOptionalFunctionParameters() : void from class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest to public testConvertOptionalFunctionParameters() : void from class com.google.javascript.jscomp.JsdocToEs6TypedConverterTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible merge class with the JsdocToEs6TypedConverterTest",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testConvertRecordType() : void from class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest to public testConvertRecordType() : void from class com.google.javascript.jscomp.JsdocToEs6TypedConverterTest",
@@ -8135,10 +8138,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testConvertTypeApplication() : void from class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest to public testConvertTypeApplication() : void from class com.google.javascript.jscomp.JsdocToEs6TypedConverterTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible merge class with the JsdocToEs6TypedConverterTest",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testConvertTypeUnion() : void from class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest to public testConvertTypeUnion() : void from class com.google.javascript.jscomp.JsdocToEs6TypedConverterTest",
@@ -8149,17 +8152,17 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testConvertVariableParameters() : void from class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest to public testConvertVariableParameters() : void from class com.google.javascript.jscomp.JsdocToEs6TypedConverterTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible merge class with the JsdocToEs6TypedConverterTest",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testCreateRecordType() : void from class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest to public testCreateRecordType() : void from class com.google.javascript.jscomp.JsdocToEs6TypedConverterTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible merge class with the JsdocToEs6TypedConverterTest",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 1865
 }, {
@@ -8795,9 +8798,9 @@
 		"type": "RenameMethod",
 		"description": "Rename Method public subjectIsCorrect() : void renamed to public bodyContainsItemsFromModel() : void in class com.seyren.core.util.velocity.VelocityEmailHelperTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}],
 	"refDiffExecutionTime": 414
 }, {
@@ -8947,9 +8950,9 @@
 		"type": "Other",
 		"description": "Rename Method private getCharArray(e Expression) : char[] renamed to private getByteArray(session Session, e Expression) : byte[] in class org.lealone.command.ddl.CreateUser",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method package setPassword(user User, session Session, password Expression) : void extracted from public update() : int in class org.lealone.command.ddl.AlterUser",
@@ -9768,10 +9771,10 @@
 	}, {
 		"type": "PushDownMethod",
 		"description": "Push Down Method protected loadClass(name String, resolve boolean) : Class from class org.drools.core.common.ProjectClassLoader.InternalTypesClassLoader to protected loadClass(name String, resolve boolean) : Class from class org.drools.core.common.ProjectClassLoader.DefaultInternalTypesClassLoader",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "InternalTypesClassLoader renamed to DefaultInternalTypesClassLoader. a new interface is added which is called InternalTypesClassLoader ",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private makeClassLoader() : InternalTypesClassLoader extracted from private defineType(name String, bytecode byte[]) : Class in class org.drools.core.common.ProjectClassLoader",
@@ -9783,23 +9786,23 @@
 		"type": "Extract Method",
 		"description": "Extract Method private makeClassLoader() : ClassLoader extracted from public onAdd(registry DialectRuntimeRegistry, rootClassLoader ClassLoader) : void in class org.drools.core.rule.JavaDialectRuntimeData",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private makeClassLoader() : ClassLoader extracted from public reload() : void in class org.drools.core.rule.JavaDialectRuntimeData",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute private projectClassLoader : ProjectClassLoader from class org.drools.core.common.ProjectClassLoader.InternalTypesClassLoader to class org.drools.core.common.ProjectClassLoader.DefaultInternalTypesClassLoader",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}],
 	"refDiffExecutionTime": 2686
 }, {
@@ -9957,9 +9960,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private notifySynchronizeMailboxFailed(account Account, localFolder Folder, exception Exception) : void extracted from public sendPendingMessagesSynchronous(account Account) : void in class com.fsck.k9.controller.MessagingController",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}],
 	"refDiffExecutionTime": 1503
 }, {
@@ -10035,33 +10038,33 @@
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method public checkAvailability(millis long, cls Class) : void renamed to public await(millis long) : void in class org.neo4j.kernel.AvailabilityGuard",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method public grant(requirementNowMet AvailabilityRequirement) : void renamed to public fulfill(requirement Object) : void in class org.neo4j.kernel.AvailabilityGuard",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private checkAvailability() : void extracted from public beginTx() : Transaction in class org.neo4j.kernel.impl.factory.GraphDatabaseFacade",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private checkAvailability() : void extracted from public execute(query String, parameters Map) : Result in class org.neo4j.kernel.impl.factory.GraphDatabaseFacade",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}],
 	"refDiffExecutionTime": 3955
 }, {
@@ -10216,65 +10219,65 @@
 		"type": "RenameMethod",
 		"description": "Rename Method package rotateDone() : void renamed to package checkPointDone() : void in class synchronization.TestConcurrentRotation",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method private rotateLog() : void renamed to private checkPoint() : void in class recovery.CountsStoreRecoveryTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method private rotate(db GraphDatabaseAPI) : void renamed to private rotateAndCheckPoint(db GraphDatabaseAPI) : void in class org.neo4j.backup.BackupServiceIT",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method private rotateLog(db GraphDatabaseAPI) : void renamed to private rotateLogAndCheckPoint(db GraphDatabaseAPI) : void in class org.neo4j.backup.BackupServiceStressTestingBuilder.RunTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method private rotateLog() : void renamed to private rotateLogAndCheckPoint() : void in class org.neo4j.index.recovery.UniqueIndexRecoveryTests",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method private rotateLogs() : void renamed to private rotateLogsAndCheckPoint() : void in class org.neo4j.kernel.api.impl.index.LuceneIndexRecoveryIT",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method private rotateLogicalLog(graphdb GraphDatabaseAPI) : void renamed to private checkPoint(graphdb GraphDatabaseAPI) : void in class synchronization.TestConcurrentRotation.RotateIndexLogTask",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method private rotateLog(db GraphDatabaseAPI) : void renamed to private checkPoint(db GraphDatabaseAPI) : void in class org.neo4j.kernel.impl.store.counts.CountsRotationTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method private rotateLog() : void renamed to private checkPoint() : void in class recovery.TestRecoveryScenarios",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public start() : void from class org.neo4j.kernel.Recovery to public start() : void from class org.neo4j.kernel.recovery.Recovery",
@@ -10286,7 +10289,7 @@
 		"type": "Move Method",
 		"description": "Move Method public awaitAllTransactionsClosed() : void from class org.neo4j.kernel.impl.transaction.log.rotation.LogRotationControl to private awaitAllTransactionsClosed() : void from class org.neo4j.kernel.NeoStoreDataSource",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
@@ -10342,84 +10345,84 @@
 		"type": "InlineMethod",
 		"description": "Inline Method private assertGet(sequence OutOfOrderSequence, number long, meta long) : void inlined to public shouldExposeGapFreeSequenceSingleThreaded() : void in class org.neo4j.kernel.impl.store.ArrayQueueOutOfOrderSequenceTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "InlineMethod",
 		"description": "Inline Method private assertGet(sequence OutOfOrderSequence, number long, meta long) : void inlined to public shouldExtendArrayIfNeedBe() : void in class org.neo4j.kernel.impl.store.ArrayQueueOutOfOrderSequenceTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "InlineMethod",
 		"description": "Inline Method private assertGet(sequence OutOfOrderSequence, number long, meta long) : void inlined to public shouldDealWithThisScenario() : void in class org.neo4j.kernel.impl.store.ArrayQueueOutOfOrderSequenceTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "InlineMethod",
 		"description": "Inline Method private assertGet(sequence OutOfOrderSequence, number long, meta long) : void inlined to public shouldKeepItsCoolWhenMultipleThreadsAreHammeringIt() : void in class org.neo4j.kernel.impl.store.ArrayQueueOutOfOrderSequenceTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute private pruneLock : Lock from class org.neo4j.kernel.impl.transaction.log.pruning.LogPruning to class org.neo4j.kernel.impl.transaction.log.pruning.LogPruningImpl",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "LogPruning changed to an interface and the LogPruningImpl did not exist (it is a new class)",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute private pruneStrategy : LogPruneStrategy from class org.neo4j.kernel.impl.transaction.log.pruning.LogPruning to class org.neo4j.kernel.impl.transaction.log.pruning.LogPruningImpl",
 		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
+		"validation": "FP",
+		"detectionTools": "Matin, Davood",
 		"validators": null
 	}, {
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute private msgLog : Log from class org.neo4j.kernel.impl.transaction.log.pruning.LogPruning to class org.neo4j.kernel.impl.transaction.log.pruning.LogPruningImpl",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "LogPruning changed to an interface and the LogPruningImpl did not exist (it is a new class)",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private monitor : Monitor from class org.neo4j.kernel.Recovery to class org.neo4j.kernel.recovery.Recovery",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class or move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private channel : T from class org.neo4j.kernel.impl.transaction.log.PhysicalTransactionCursor to class org.neo4j.kernel.impl.transaction.log.LogEntryCursor",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private recoveredLog : boolean from class org.neo4j.kernel.Recovery to class org.neo4j.kernel.recovery.Recovery",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class or move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private spi : SPI from class org.neo4j.kernel.Recovery to class org.neo4j.kernel.recovery.Recovery",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class or move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private entryReader : LogEntryReader from class org.neo4j.kernel.impl.transaction.log.PhysicalTransactionCursor to class org.neo4j.kernel.impl.transaction.log.LogEntryCursor",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
 		"validators": null
 	}],
@@ -10453,28 +10456,28 @@
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Inline Method",
 		"description": "Inline Method public releaseAllExclusive() : void inlined to public releaseAll() : void in class org.neo4j.kernel.impl.locking.community.CommunityLockClient",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public acquireExclusive(resourceType Locks.ResourceType, resourceIds long[]) : void renamed to public acquireShared(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.ha.lock.SlaveLocksClient",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public acquireShared(resourceType Locks.ResourceType, resourceIds long[]) : void renamed to public acquireExclusive(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.ha.lock.SlaveLocksClient",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}],
 	"refDiffExecutionTime": 4194
 }, {
@@ -10562,9 +10565,9 @@
 		"type": "RenameMethod",
 		"description": "Rename Method public notify(response Object) : void renamed to public onResponse(response Object) : void in class com.hazelcast.map.impl.proxy.MapProxySupport.MapExecutionCallbackAdapter",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected getTargetExecutionCallback() : ExecutionCallback extracted from public invoke() : InternalCompletableFuture in class com.hazelcast.spi.impl.operationservice.impl.InvocationBuilderImpl",
@@ -10905,9 +10908,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private getProperty(event SpringApplicationEvent, candidates List) : String extracted from private writePidFile(event SpringApplicationEvent) : void in class org.springframework.boot.actuate.system.ApplicationPidFileWriter",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}],
 	"refDiffExecutionTime": 1721
 }, {
@@ -10974,9 +10977,9 @@
 		"type": "RenameMethod",
 		"description": "Rename Method public getBootstrapTokens(metadata TokenMetadata) : Collection renamed to private getSpecifiedTokens(metadata TokenMetadata, initialTokens Collection) : Collection in class org.apache.cassandra.dht.BootStrapper",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}],
 	"refDiffExecutionTime": 8768
 }, {
@@ -11382,9 +11385,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method public close() : void extracted from public reset() : void in class org.glassfish.jersey.server.internal.scanning.FilesScanner",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}],
 	"refDiffExecutionTime": 6782
 }, {
@@ -11562,9 +11565,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method public getPathToResources(target BuildTarget) : Path extracted from protected ReactNativeBundle(ruleParams BuildRuleParams, resolver SourcePathResolver, entryPath SourcePath, isDevMode boolean, bundleName String, jsPackager SourcePath, platform ReactNativePlatform, depsFinder ReactNativeDeps) in class com.facebook.buck.js.ReactNativeBundle",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}],
 	"refDiffExecutionTime": 3024
 }, {
@@ -11724,10 +11727,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testInvalidCollectionsMix() : void from class org.apache.cassandra.cql3.CollectionsTest to public testInvalidCollectionsMix() : void from class org.apache.cassandra.cql3.validation.entities.CollectionsTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Its a move class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testLists() : void from class org.apache.cassandra.cql3.CollectionsTest to public testLists() : void from class org.apache.cassandra.cql3.validation.entities.CollectionsTest",
@@ -11752,31 +11755,31 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testSets() : void from class org.apache.cassandra.cql3.CollectionsTest to public testSets() : void from class org.apache.cassandra.cql3.validation.entities.CollectionsTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Its a move class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testContainsKeyAndContainsWithIndexOnMapKey() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testContainsKeyAndContainsWithIndexOnMapKey() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible move and rename ro merge class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testContainsKeyAndContainsWithIndexOnMapValue() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testContainsKeyAndContainsWithIndexOnMapValue() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible move and rename ro merge class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testFilterForContains() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testFilterForContains() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible move and rename ro merge class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testIndexLookupWithClusteringPrefix() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testIndexLookupWithClusteringPrefix() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
@@ -11787,73 +11790,73 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testListContains() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testListContains() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible move and rename ro merge class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testListContainsWithFiltering() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testListContainsWithFiltering() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible move and rename ro merge class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testMapKeyContains() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testMapKeyContains() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible move and rename ro merge class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testMapValueContains() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testMapValueContains() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible move and rename ro merge class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testQueryMultipleIndexTypes() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testQueryMultipleIndexTypes() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible move and rename ro merge class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testSetContains() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testSetContains() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible move and rename ro merge class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private removeQuotes(indexName String) : String from class org.apache.cassandra.cql3.CreateIndexStatementTest to private removeQuotes(indexName String) : String from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible move and rename ro merge class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testCreateAndDropIndex() : void from class org.apache.cassandra.cql3.CreateIndexStatementTest to public testCreateAndDropIndex() : void from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible move and rename ro merge class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testCreateAndDropIndexWithCamelCaseIdentifier() : void from class org.apache.cassandra.cql3.CreateIndexStatementTest to public testCreateAndDropIndexWithCamelCaseIdentifier() : void from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible move and rename ro merge class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testCreateAndDropIndexWithQuotedIdentifier() : void from class org.apache.cassandra.cql3.CreateIndexStatementTest to public testCreateAndDropIndexWithQuotedIdentifier() : void from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Possible move and rename ro merge class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testCQL3PartitionKeyOnlyTable() : void from class org.apache.cassandra.cql3.CreateTableTest to public testCQL3PartitionKeyOnlyTable() : void from class org.apache.cassandra.cql3.validation.operations.CreateTest",
@@ -12238,23 +12241,23 @@
 		"type": "RenameMethod",
 		"description": "Rename Method public testFilterStrings() : void renamed to private getTestPathPredicate(enableStringWhitelisting boolean, whitelistedStringDirs ImmutableSet, locales ImmutableSet) : Predicate in class com.facebook.buck.android.FilterResourcesStepTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method private matchesRegex(input String) : boolean renamed to private assertNotMatchesRegex(path String) : void in class com.facebook.buck.android.FilterResourcesStepTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public testFilterStringsIncludingEnglishStrings() : void renamed to public testWhitelistFilter() : void in class com.facebook.buck.android.FilterResourcesStepTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private assertMatchesRegex(path String, language String, country String) : void extracted from public testNonEnglishStringsPathRegex() : void in class com.facebook.buck.android.FilterResourcesStepTest",
@@ -12667,87 +12670,87 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package javaRedBlackTreeString : java.util.TreeSet from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaRedBlackStringTree",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package javaLinkedQueue : java.util.Deque from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaLinkedQueue",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package javaLinkedList : java.util.List from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaLinkedList",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package javaMaxArrayHeap : java.util.PriorityQueue from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaMaxHeap",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package javaMinArrayHeap : java.util.PriorityQueue from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaMinHeap",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package javaStack : java.util.Stack from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaStack",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package javaArrayList : java.util.List from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaArrayList",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package javaArrayQueue : java.util.Deque from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaArrayQueue",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package javaRedBlackTreeInteger : java.util.TreeSet from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaRedBlackIntegerTree",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package javaSkipListMap : ConcurrentSkipListMap from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaSkipListMap",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package javaTreeMap : java.util.Map from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaTreeMap",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package javaHashMap : java.util.Map from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaHashMap",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}],
 	"refDiffExecutionTime": 644
 }, {
@@ -12817,9 +12820,9 @@
 		"type": "RenameMethod",
 		"description": "Rename Method public _disabled_testString3DimArray_castedFromNative() : void renamed to public __disabled__testObjectArray_castedFromNative() : void in class com.google.gwt.core.client.interop.JsTypeArrayTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}],
 	"refDiffExecutionTime": 6656
 }, {
@@ -12989,16 +12992,16 @@
 		"type": "Move Method",
 		"description": "Move Method private createExceptionOnBit(endpoint DrillbitEndpoint, desc String, nSkip int, nFire int, exceptionClass String) : String from class org.apache.drill.exec.testing.TestExceptionInjection to public createExceptionOnBit(siteClass Class, desc String, nSkip int, nFire int, exceptionClass Class, endpoint DrillbitEndpoint) : String from class org.apache.drill.exec.testing.ControlsInjectionUtil",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private createException(desc String, nSkip int, nFire int, exceptionClass String) : String from class org.apache.drill.exec.testing.TestExceptionInjection to public createException(siteClass Class, desc String, nSkip int, nFire int, exceptionClass Class) : String from class org.apache.drill.exec.testing.ControlsInjectionUtil",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public newBuilder() : Builder extracted from private testForeman(desc String) : void in class org.apache.drill.exec.server.TestDrillbitResilience",
@@ -13275,72 +13278,72 @@
 		"type": "RenameMethod",
 		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.Or",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.And",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.Not",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Doing the same thing",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.LocalizedMatcher",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getArgumentsBlock(matchers List, printSettings PrintSettings) : String from class org.mockito.internal.matchers.MatchersPrinter to public getArgumentsBlock(matchers List, printSettings PrintSettings) : String from class org.mockito.internal.matchers.text.MatchersPrinter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Its a move class. In this method there is a singature change too",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getArgumentsLine(matchers List, printSettings PrintSettings) : String from class org.mockito.internal.matchers.MatchersPrinter to public getArgumentsLine(matchers List, printSettings PrintSettings) : String from class org.mockito.internal.matchers.text.MatchersPrinter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Its a move class. In this method there is a singature change too",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected append(str String) : void from class org.mockito.internal.util.text.ValuePrinter to protected append(str String) : void from class org.mockito.internal.matchers.text.ValuePrinter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Its a move class.",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public appendList(start String, separator String, end String, i Iterator) : ValuePrinter from class org.mockito.internal.util.text.ValuePrinter to public appendList(start String, separator String, end String, i Iterator) : ValuePrinter from class org.mockito.internal.matchers.text.ValuePrinter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Its a move class.",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public appendText(text String) : ValuePrinter from class org.mockito.internal.util.text.ValuePrinter to public appendText(text String) : ValuePrinter from class org.mockito.internal.matchers.text.ValuePrinter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Its a move class.",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private descriptionOf(value Object) : String from class org.mockito.internal.util.text.ValuePrinter to private descriptionOf(value Object) : String from class org.mockito.internal.matchers.text.ValuePrinter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Its a move class.",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private toJavaSyntax(unformatted String) : void from class org.mockito.internal.util.text.ValuePrinter to private toJavaSyntax(unformatted String) : void from class org.mockito.internal.matchers.text.ValuePrinter",
@@ -13351,24 +13354,24 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public toString() : String from class org.mockito.internal.util.text.ValuePrinter to public toString() : String from class org.mockito.internal.matchers.text.ValuePrinter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Its a move class.",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private applyPrintSettings(matchers List, printSettings PrintSettings) : Iterator from class org.mockito.internal.matchers.MatchersPrinter to private applyPrintSettings(matchers List, printSettings PrintSettings) : Iterator from class org.mockito.internal.matchers.text.MatchersPrinter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Its a move class.",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public appendValue(value Object) : ValuePrinter from class org.mockito.internal.util.text.ValuePrinter to public appendValue(value Object) : ValuePrinter from class org.mockito.internal.matchers.text.ValuePrinter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Its a move class.",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public describe() : String extracted from private applyPrintSettings(matchers List, printSettings PrintSettings) : Iterator in class org.mockito.internal.matchers.MatchersPrinter",
@@ -13379,10 +13382,10 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private content : StringBuilder from class org.mockito.internal.util.text.ValuePrinter to class org.mockito.internal.matchers.text.ValuePrinter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Its a move class.",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 1564
 }, {
@@ -13547,9 +13550,9 @@
 		"type": "Move Method",
 		"description": "Move Method private executeQuery(hiveDriver Driver, query String) : void from class org.apache.drill.exec.store.hive.HiveTestDataGenerator to public executeQuery(hiveDriver Driver, query String) : void from class org.apache.drill.exec.hive.HiveTestUtilities",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public getTempDir(dirName String) : String extracted from public getInstance() : HiveTestDataGenerator in class org.apache.drill.exec.store.hive.HiveTestDataGenerator",
@@ -13575,16 +13578,16 @@
 		"type": "MoveAttribute",
 		"description": "Move Attribute private tableLoaders : LoadingCache from class org.apache.drill.exec.store.hive.schema.HiveSchemaFactory to class org.apache.drill.exec.store.hive.DrillHiveMetaStoreClient.NonCloseableHiveClientWithCaching",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private tableNameLoader : LoadingCache from class org.apache.drill.exec.store.hive.schema.HiveSchemaFactory to class org.apache.drill.exec.store.hive.DrillHiveMetaStoreClient.NonCloseableHiveClientWithCaching",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 2022
 }, {
@@ -13866,9 +13869,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private getAndroidIdViaService(context Context) : AttributionIdentifiers extracted from private getAndroidId(context Context) : AttributionIdentifiers in class com.facebook.internal.AttributionIdentifiers",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}],
 	"refDiffExecutionTime": 2914
 }, {
@@ -13889,16 +13892,16 @@
 		"type": "Extract Method",
 		"description": "Extract Method private getExecAction(prefix String, properties Properties) : ExecAction extracted from protected getProbe(prefix String) : Probe in class io.fabric8.maven.JsonMojo",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private getTCPSocketAction(prefix String, properties Properties) : TCPSocketAction extracted from protected getProbe(prefix String) : Probe in class io.fabric8.maven.JsonMojo",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Dacvood"
 	}],
 	"refDiffExecutionTime": 1151
 }, {
@@ -13926,9 +13929,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private findPaymentTransactionInfoPlugin(paymentTransactionModelDao PaymentTransactionModelDao, pluginTransactions Iterable) : PaymentTransactionInfoPlugin extracted from private toPayment(curPaymentModelDao PaymentModelDao, transactionsModelDao Iterable, pluginTransactions Iterable) : Payment in class org.killbill.billing.payment.core.PaymentProcessor",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}],
 	"refDiffExecutionTime": 1250
 }, {
@@ -14275,17 +14278,17 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public substitute(conf HiveConf, expr String) : String from class org.apache.hadoop.hive.ql.parse.VariableSubstitution to public substitute(conf HiveConf, expr String) : String from class org.apache.hadoop.hive.conf.VariableSubstitution",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a rename class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected getSubstitute(conf Configuration, var String) : String from class org.apache.hadoop.hive.ql.parse.VariableSubstitution to protected getSubstitute(conf Configuration, var String) : String from class org.apache.hadoop.hive.conf.VariableSubstitution",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a rename class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private tokenizeCmd(cmd String) : String[] extracted from private cliToBeelineCmd(cmd String) : String in class org.apache.hive.beeline.BeeLine",
@@ -14296,10 +14299,10 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private l4j : Log from class org.apache.hadoop.hive.ql.parse.VariableSubstitution to class org.apache.hadoop.hive.conf.VariableSubstitution",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a rename class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 5292
 }, {
@@ -14495,101 +14498,101 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public environmentMvcEndpoint(delegate EnvironmentEndpoint) : EnvironmentMvcEndpoint from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration to public environmentMvcEndpoint(delegate EnvironmentEndpoint) : EnvironmentMvcEndpoint from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "EndpointWebMvcConfiguration added in the new revision and seems it is a extracted",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private getCorsConfiguration(properties EndpointCorsProperties) : CorsConfiguration from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration to private getCorsConfiguration(properties EndpointCorsProperties) : CorsConfiguration from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "EndpointWebMvcConfiguration added in the new revision and seems it is a extracted",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public healthMvcEndpoint(delegate HealthEndpoint) : HealthMvcEndpoint from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration to public healthMvcEndpoint(delegate HealthEndpoint) : HealthMvcEndpoint from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "EndpointWebMvcConfiguration added in the new revision and seems it is a extracted",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public logfileMvcEndpoint() : LogFileMvcEndpoint from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration to public logfileMvcEndpoint() : LogFileMvcEndpoint from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "EndpointWebMvcConfiguration added in the new revision and seems it is a extracted",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public metricsMvcEndpoint(delegate MetricsEndpoint) : MetricsMvcEndpoint from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration to public metricsMvcEndpoint(delegate MetricsEndpoint) : MetricsMvcEndpoint from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "EndpointWebMvcConfiguration added in the new revision and seems it is a extracted",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public mvcEndpoints() : MvcEndpoints from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration to public mvcEndpoints() : MvcEndpoints from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "EndpointWebMvcConfiguration added in the new revision and seems it is a extracted",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public shutdownMvcEndpoint(delegate ShutdownEndpoint) : ShutdownMvcEndpoint from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration to public shutdownMvcEndpoint(delegate ShutdownEndpoint) : ShutdownMvcEndpoint from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "EndpointWebMvcConfiguration added in the new revision and seems it is a extracted",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public endpointHandlerMapping() : EndpointHandlerMapping from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration to public endpointHandlerMapping() : EndpointHandlerMapping from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "EndpointWebMvcConfiguration added in the new revision and seems it is a extracted",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private getRequestMatcher() : RequestMatcher extracted from protected configure(http HttpSecurity) : void in class org.springframework.boot.actuate.autoconfigure.ManagementSecurityAutoConfiguration.ManagementWebSecurityConfigurerAdapter",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private corsProperties : EndpointCorsProperties from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration to class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "EndpointWebMvcConfiguration added in the new revision and seems it is a extracted",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private healthMvcEndpointProperties : HealthMvcEndpointProperties from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration to class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "EndpointWebMvcConfiguration added in the new revision and seems it is a extracted",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private mappingCustomizers : List from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration to class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "EndpointWebMvcConfiguration added in the new revision and seems it is a extracted",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private mappingCustomizers : List from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcChildContextConfiguration.EndpointHandlerMappingConfiguration to class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "EndpointWebMvcConfiguration added in the new revision and seems it is a extracted",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private managementServerProperties : ManagementServerProperties from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration to class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "EndpointWebMvcConfiguration added in the new revision and seems it is a extracted",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 3535
 }, {
@@ -14793,16 +14796,16 @@
 		"type": "RenameClass",
 		"description": "Rename Class org.apache.cassandra.cql3.functions.Functions renamed to org.apache.cassandra.cql3.functions.FunctionResolver",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private createKeyspaceFromSchemaPartitions(serializedKeyspace RowIterator, serializedTables RowIterator, serializedTypes RowIterator, serializedFunctions RowIterator, seriazliedAggregates RowIterator) : KSMetaData extracted from public readSchemaFromSystemTables() : Collection in class org.apache.cassandra.schema.LegacySchemaTables",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "createKeyspaceFromSchemaPartitions exists in both revisions",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 8203
 }, {
@@ -15010,12 +15013,12 @@
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method protected validate(input T) : boolean renamed to protected validateAsync(input T, onValidated OperationWithInput) : void in class org.rstudio.core.client.widget.Wizard",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}],
 	"refDiffExecutionTime": 3785
 }, {
@@ -15229,33 +15232,33 @@
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method public visitAddedConstraint(element UniquenessConstraint) : void renamed to public visitAddedMandatoryPropertyConstraint(element MandatoryPropertyConstraint) : void in class org.neo4j.kernel.api.txstate.TxStateVisitor.Adapter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "renamed in the Interface",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public visitRemovedConstraint(element UniquenessConstraint) : void renamed to public visitAddedUniquePropertyConstraint(element UniquenessConstraint) : void in class org.neo4j.kernel.api.txstate.TxStateVisitor.Adapter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "renamed in the Interface",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "PullUpMethod",
 		"description": "Pull Up Method public equals(labelId int, propertyKeyId int) : boolean from class org.neo4j.kernel.api.constraints.UniquenessConstraint to public equals(type ConstraintType, labelId int, propertyKeyId int) : boolean from class org.neo4j.kernel.api.constraints.PropertyConstraint",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its an Extract Superclass",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private propertyConstraint(type Class, labelId int, propertyKeyId int) : Rule extracted from public uniquenessConstraint(labelId int, propertyKeyId int) : UniquenessConstraintRule in class org.neo4j.kernel.impl.store.SchemaStorage",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 10145
 }, {
@@ -15333,17 +15336,17 @@
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public parse(xml XmlResourceParser) : void renamed to public handleStartTag(xml XmlPullParser) : void in class org.apache.cordova.ConfigXmlParser",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is an extract method",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method package onNativeToJsMessageAvailable() : void from class org.apache.cordova.NativeToJsMessageQueue.PollingBridgeMode to public onNativeToJsMessageAvailable(queue NativeToJsMessageQueue) : void from class org.apache.cordova.NativeToJsMessageQueue.NoOpBridgeMode",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "PollingBridgeMode is deleted",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public contains(name String) : boolean extracted from protected createViews() : void in class org.apache.cordova.CordovaActivity",
@@ -15840,129 +15843,129 @@
 	}, {
 		"type": "MoveClass",
 		"description": "Move Class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache.UpdateCacheResult moved to com.orientechnologies.orient.core.storage.cache.local.O2QCache.UpdateCacheResult",
-		"comment": null,
+		"comment": "",
 		"validation": "UKN",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method public getAllocatedPages() : long renamed to public getWriteCacheSize() : long in class com.orientechnologies.orient.core.storage.cache.local.OWOWCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "based on calls sides it is renamed to getExclusiveWriteCachePagesSize() but its body is identical to getWriteCacheSize",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public addFile(fileName String, writeCache OWriteCache) : long from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to public addFile(fileName String, writeCache OWriteCache) : long from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public clear() : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to public clear() : void from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public closeFile(fileId long, flush boolean, writeCache OWriteCache) : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to public closeFile(fileId long, flush boolean, writeCache OWriteCache) : void from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public closeStorage(writeCache OWriteCache) : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to public closeStorage(writeCache OWriteCache) : void from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public deleteFile(fileId long, writeCache OWriteCache) : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to public deleteFile(fileId long, writeCache OWriteCache) : void from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public deleteStorage(writeCache OWriteCache) : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to public deleteStorage(writeCache OWriteCache) : void from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private get(fileId long, pageIndex long, useOutQueue boolean) : OCacheEntry from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to private get(fileId long, pageIndex long, useOutQueue boolean) : OCacheEntry from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method package getA1in() : LRUList from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to package getA1in() : LRUList from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method package getA1out() : LRUList from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to package getA1out() : LRUList from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method package getAm() : LRUList from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to package getAm() : LRUList from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method package getMaxSize() : int from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to package getMaxSize() : int from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getUsedMemory() : long from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to public getUsedMemory() : long from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private normalizeMemory(maxSize long, pageSize int) : int from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to private normalizeMemory(maxSize long, pageSize int) : int from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public openFile(fileName String, writeCache OWriteCache) : long from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to public openFile(fileName String, writeCache OWriteCache) : long from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private removeColdestPagesIfNeeded() : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to private removeColdestPagesIfNeeded() : void from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public truncateFile(fileId long, writeCache OWriteCache) : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to public truncateFile(fileId long, writeCache OWriteCache) : void from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public acquireExclusiveLock() : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.OCacheEntry to public acquireExclusiveLock() : void from class com.orientechnologies.orient.core.storage.cache.OCacheEntry",

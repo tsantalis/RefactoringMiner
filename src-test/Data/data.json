@@ -15969,178 +15969,178 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public acquireExclusiveLock() : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.OCacheEntry to public acquireExclusiveLock() : void from class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public acquireSharedLock() : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.OCacheEntry to public acquireSharedLock() : void from class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public decrementUsages() : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.OCacheEntry to public decrementUsages() : void from class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getCachePointer() : OCachePointer from class com.orientechnologies.orient.core.index.hashindex.local.cache.OCacheEntry to public getCachePointer() : OCachePointer from class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getFileId() : long from class com.orientechnologies.orient.core.index.hashindex.local.cache.OCacheEntry to public getFileId() : long from class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getPageIndex() : long from class com.orientechnologies.orient.core.index.hashindex.local.cache.OCacheEntry to public getPageIndex() : long from class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getUsagesCount() : int from class com.orientechnologies.orient.core.index.hashindex.local.cache.OCacheEntry to public getUsagesCount() : int from class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public incrementUsages() : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.OCacheEntry to public incrementUsages() : void from class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public releaseExclusiveLock() : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.OCacheEntry to public releaseExclusiveLock() : void from class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public releaseSharedLock() : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.OCacheEntry to public releaseSharedLock() : void from class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public allocateNewPage(fileId long, writeCache OWriteCache) : OCacheEntry from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to public allocateNewPage(fileId long, writeCache OWriteCache) : OCacheEntry from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public load(fileId long, pageIndex long, checkPinnedPages boolean, writeCache OWriteCache) : OCacheEntry from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to public load(fileId long, pageIndex long, checkPinnedPages boolean, writeCache OWriteCache) : OCacheEntry from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public hashCode() : int from class com.orientechnologies.orient.core.index.hashindex.local.cache.OCacheEntry to public hashCode() : int from class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private updateCache(fileId long, pageIndex long, addNewPages boolean, writeCache OWriteCache) : UpdateCacheResult from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to private updateCache(fileId long, pageIndex long, addNewPages boolean, writeCache OWriteCache) : UpdateCacheResult from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public equals(o Object) : boolean from class com.orientechnologies.orient.core.index.hashindex.local.cache.OCacheEntry to public equals(o Object) : boolean from class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private doLoad(fileId long, pageIndex long, checkPinnedPages boolean, addNewPages boolean, writeCache OWriteCache) : UpdateCacheResult from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to private doLoad(fileId long, pageIndex long, checkPinnedPages boolean, addNewPages boolean, writeCache OWriteCache) : UpdateCacheResult from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private remove(fileId long, pageIndex long) : OCacheEntry from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to private remove(fileId long, pageIndex long) : OCacheEntry from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private clearFile(fileId long) : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to private clearFile(fileId long) : void from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private removeColdPagesWithoutCacheLock() : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to private removeColdPagesWithoutCacheLock() : void from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public pinPage(cacheEntry OCacheEntry) : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to public pinPage(cacheEntry OCacheEntry) : void from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private removeColdPagesWithCacheLock() : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to private removeColdPagesWithCacheLock() : void from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public release(cacheEntry OCacheEntry, writeCache OWriteCache) : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to public release(cacheEntry OCacheEntry, writeCache OWriteCache) : void from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public toString() : String from class com.orientechnologies.orient.core.index.hashindex.local.cache.OCacheEntry to public toString() : String from class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private clearPinnedPages() : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to private clearPinnedPages() : void from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private clearCacheContent() : void from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to private clearCacheContent() : void from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public clearCachePointer() : void extracted from private clearCacheContent() : void in class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache",
@@ -16186,108 +16186,108 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private MAX_CACHE_OVERFLOW : int from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute public MIN_CACHE_SIZE : int from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private cacheLock : OReadersWriterSpinLock from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private coldPagesRemovalInProgress : AtomicBoolean from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private pageSize : int from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private maxSize : int from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private fileLockManager : ONewLockManager from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private pageLockManager : ONewLockManager from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private pinnedPages : ConcurrentMap from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private a1out : LRUList from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute private am : LRUList from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private filePages : ConcurrentMap from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute private a1in : LRUList from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private K_OUT : int from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private K_IN : int from class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache to class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "its a move package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 5282
 }, {
@@ -16410,9 +16410,9 @@
 		"type": "ExtractSuperClass",
 		"description": "Extract Superclass org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 6361
 }, {
@@ -16493,44 +16493,44 @@
 		"type": "Move Method",
 		"description": "Move Method public isOrderedFailure() : void from class com.google.common.truth.ListTest to public isOrderedFailure() : void from class com.google.common.truth.IterableTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public isStrictlyOrderedFailure() : void from class com.google.common.truth.ListTest to public isStrictlyOrderedFailure() : void from class com.google.common.truth.IterableTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public isOrderedWithNonComparableElementsFailure() : void from class com.google.common.truth.ListTest to public isOrderedWithNonComparableElementsFailure() : void from class com.google.common.truth.IterableTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public isStrictlyOrderedWithNonComparableElementsFailure() : void from class com.google.common.truth.ListTest to public isStrictlyOrderedWithNonComparableElementsFailure() : void from class com.google.common.truth.IterableTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private FOO_COMPARATOR : Comparator from class com.google.common.truth.ListTest to class com.google.common.truth.IterableTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private COMPARE_AS_DECIMAL : Comparator from class com.google.common.truth.ListTest to class com.google.common.truth.IterableTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 301
 }, {
@@ -16666,10 +16666,10 @@
 	}, {
 		"type": "Other",
 		"description": "Move And Rename Class org.hibernate.test.bytecode.enhancement.MostBasicEnhancementTest moved to org.hibernate.test.bytecode.enhancement.basic.BasicInSessionTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Other",
 		"description": "Move And Rename Class org.hibernate.test.bytecode.enhancement.EnhancerTestUtils.LocalPersistentAttributeInterceptor moved to org.hibernate.test.bytecode.enhancement.basic.ObjectAttributeMarkerInterceptor",
@@ -16681,520 +16681,520 @@
 		"type": "Move Method",
 		"description": "Move Method public getId() : Long from class org.hibernate.test.bytecode.enhancement.entity.SubEntity to public getId() : Integer from class org.hibernate.test.bytecode.enhancement.association.Customer",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getName() : String from class org.hibernate.test.bytecode.enhancement.entity.SubEntity to public getName() : String from class org.hibernate.test.bytecode.enhancement.association.Group",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "group is moved to another package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getSomeNumber() : long from class org.hibernate.test.bytecode.enhancement.entity.SubEntity to public getSomeNumber() : long from class org.hibernate.test.bytecode.enhancement.basic.SimpleEntity",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a rename class!",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public isActive() : boolean from class org.hibernate.test.bytecode.enhancement.entity.SubEntity to public isActive() : boolean from class org.hibernate.test.bytecode.enhancement.basic.SimpleEntity",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a rename class!",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setActive(active boolean) : void from class org.hibernate.test.bytecode.enhancement.entity.SubEntity to public setActive(active boolean) : void from class org.hibernate.test.bytecode.enhancement.basic.SimpleEntity",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a rename class!",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setId(id Long) : void from class org.hibernate.test.bytecode.enhancement.entity.SubEntity to public setId(id Long) : void from class org.hibernate.test.bytecode.enhancement.basic.SimpleEntity",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a rename class!",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setName(name String) : void from class org.hibernate.test.bytecode.enhancement.entity.SubEntity to public setName(name String) : void from class org.hibernate.test.bytecode.enhancement.association.Group",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "group is moved to another package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setSomeNumber(someNumber long) : void from class org.hibernate.test.bytecode.enhancement.entity.SubEntity to public setSomeNumber(someNumber long) : void from class org.hibernate.test.bytecode.enhancement.basic.SimpleEntity",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a rename class!",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public addInventory(inventory CustomerInventory) : void from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to public addInventory(inventory CustomerInventory) : void from class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getFirstName() : String from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to public getFirstName() : String from class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getId() : Integer from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to public getId() : Integer from class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getInventories() : List from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to public getInventories() : List from class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getLastName() : String from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to public getLastName() : String from class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getUser() : User from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to public getUser() : User from class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getVersion() : int from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to public getVersion() : int from class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public hashCode() : int from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to public hashCode() : int from class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setFirstName(firstName String) : void from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to public setFirstName(firstName String) : void from class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setId(customerId Integer) : void from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to public setId(customerId Integer) : void from class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setLastName(lastName String) : void from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to public setLastName(lastName String) : void from class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setUser(user User) : void from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to public setUser(user User) : void from class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public toString() : String from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to public toString() : String from class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public compare(cdb1 CustomerInventory, cdb2 CustomerInventory) : int from class org.hibernate.test.bytecode.enhancement.entity.customer.CustomerInventory to public compare(cdb1 CustomerInventory, cdb2 CustomerInventory) : int from class org.hibernate.test.bytecode.enhancement.association.CustomerInventory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators":"Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getCustId() : int from class org.hibernate.test.bytecode.enhancement.entity.customer.CustomerInventory to public getCustId() : int from class org.hibernate.test.bytecode.enhancement.association.CustomerInventory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getCustomer() : Customer from class org.hibernate.test.bytecode.enhancement.entity.customer.CustomerInventory to public getCustomer() : Customer from class org.hibernate.test.bytecode.enhancement.association.CustomerInventory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getId() : Long from class org.hibernate.test.bytecode.enhancement.entity.customer.CustomerInventory to public getId() : Integer from class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getVehicle() : String from class org.hibernate.test.bytecode.enhancement.entity.customer.CustomerInventory to public getVehicle() : String from class org.hibernate.test.bytecode.enhancement.association.CustomerInventory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getVersion() : int from class org.hibernate.test.bytecode.enhancement.entity.customer.CustomerInventory to public getVersion() : int from class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public hashCode() : int from class org.hibernate.test.bytecode.enhancement.entity.customer.CustomerInventory to public hashCode() : int from class org.hibernate.test.bytecode.enhancement.association.CustomerInventory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setCustomer(customer Customer) : void from class org.hibernate.test.bytecode.enhancement.entity.customer.CustomerInventory to public setCustomer(customer Customer) : void from class org.hibernate.test.bytecode.enhancement.association.CustomerInventory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getCustId() : int from class org.hibernate.test.bytecode.enhancement.entity.customer.CustomerInventoryPK to public getCustId() : int from class org.hibernate.test.bytecode.enhancement.association.CustomerInventory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getId() : Long from class org.hibernate.test.bytecode.enhancement.entity.customer.CustomerInventoryPK to public getId() : Integer from class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getName() : String from class org.hibernate.test.bytecode.enhancement.entity.customer.Group to public getName() : String from class org.hibernate.test.bytecode.enhancement.association.Group",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getUsers() : Set from class org.hibernate.test.bytecode.enhancement.entity.customer.Group to public getUsers() : Set from class org.hibernate.test.bytecode.enhancement.association.Group",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public removeUser(user User) : void from class org.hibernate.test.bytecode.enhancement.entity.customer.Group to public removeUser(user User) : void from class org.hibernate.test.bytecode.enhancement.association.Group",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setName(name String) : void from class org.hibernate.test.bytecode.enhancement.entity.customer.Group to public setName(name String) : void from class org.hibernate.test.bytecode.enhancement.association.Group",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setUsers(users Set) : void from class org.hibernate.test.bytecode.enhancement.entity.customer.Group to public setUsers(users Set) : void from class org.hibernate.test.bytecode.enhancement.association.Group",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getCustomer() : Customer from class org.hibernate.test.bytecode.enhancement.entity.customer.User to public getCustomer() : Customer from class org.hibernate.test.bytecode.enhancement.association.CustomerInventory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getGroups() : Set from class org.hibernate.test.bytecode.enhancement.entity.customer.User to public getGroups() : Set from class org.hibernate.test.bytecode.enhancement.association.User",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getLogin() : String from class org.hibernate.test.bytecode.enhancement.entity.customer.User to public getLogin() : String from class org.hibernate.test.bytecode.enhancement.association.User",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getPassword() : String from class org.hibernate.test.bytecode.enhancement.entity.customer.User to public getPassword() : String from class org.hibernate.test.bytecode.enhancement.association.User",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setCustomer(customer Customer) : void from class org.hibernate.test.bytecode.enhancement.entity.customer.User to public setCustomer(customer Customer) : void from class org.hibernate.test.bytecode.enhancement.association.CustomerInventory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "both clases are moved",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setGroups(groups Set) : void from class org.hibernate.test.bytecode.enhancement.entity.customer.User to public setGroups(groups Set) : void from class org.hibernate.test.bytecode.enhancement.association.User",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setLogin(login String) : void from class org.hibernate.test.bytecode.enhancement.entity.customer.User to public setLogin(login String) : void from class org.hibernate.test.bytecode.enhancement.association.User",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setPassword(password String) : void from class org.hibernate.test.bytecode.enhancement.entity.customer.User to public setPassword(password String) : void from class org.hibernate.test.bytecode.enhancement.association.User",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public equals(o Object) : boolean from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to public equals(o Object) : boolean from class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public equals(obj Object) : boolean from class org.hibernate.test.bytecode.enhancement.entity.customer.CustomerInventory to public equals(obj Object) : boolean from class org.hibernate.test.bytecode.enhancement.association.CustomerInventory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private decompileDumpedClass(className String) : void from class org.hibernate.test.bytecode.enhancement.EnhancerTestUtils to public decompileDumpedClass(workingDir String, className String) : void from class org.hibernate.test.bytecode.enhancement.DecompileUtils",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a extract class",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public addGroup(group Group) : void from class org.hibernate.test.bytecode.enhancement.entity.customer.User to public addGroup(group Group) : void from class org.hibernate.test.bytecode.enhancement.association.User",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public hashCode() : int from class org.hibernate.test.bytecode.enhancement.entity.customer.SupplierComponentPK to public hashCode() : int from class org.hibernate.test.bytecode.enhancement.association.CustomerInventory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private active : boolean from class org.hibernate.test.bytecode.enhancement.entity.SubEntity to class org.hibernate.test.bytecode.enhancement.basic.SimpleEntity",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private id : Long from class org.hibernate.test.bytecode.enhancement.entity.SubEntity to class org.hibernate.test.bytecode.enhancement.basic.SimpleEntity",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute package id : Long from class org.hibernate.test.bytecode.enhancement.entity.SubEntity to class org.hibernate.test.bytecode.enhancement.lazy.Child",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute private name : String from class org.hibernate.test.bytecode.enhancement.entity.SubEntity to class org.hibernate.test.bytecode.enhancement.association.Group",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private name : String from class org.hibernate.test.bytecode.enhancement.entity.SubEntity to class org.hibernate.test.bytecode.enhancement.basic.SimpleEntity",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package name : String from class org.hibernate.test.bytecode.enhancement.entity.SubEntity to class org.hibernate.test.bytecode.enhancement.lazy.Child",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private someNumber : long from class org.hibernate.test.bytecode.enhancement.entity.SubEntity to class org.hibernate.test.bytecode.enhancement.basic.SimpleEntity",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private id : int from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private user : User from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private version : int from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private version : int from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to class org.hibernate.test.bytecode.enhancement.association.CustomerInventory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private custId : int from class org.hibernate.test.bytecode.enhancement.entity.customer.CustomerInventory to class org.hibernate.test.bytecode.enhancement.association.CustomerInventory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private customer : Customer from class org.hibernate.test.bytecode.enhancement.entity.customer.CustomerInventory to class org.hibernate.test.bytecode.enhancement.association.CustomerInventory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private id : Long from class org.hibernate.test.bytecode.enhancement.entity.customer.CustomerInventory to class org.hibernate.test.bytecode.enhancement.association.CustomerInventory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private vehicle : String from class org.hibernate.test.bytecode.enhancement.entity.customer.CustomerInventory to class org.hibernate.test.bytecode.enhancement.association.CustomerInventory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private version : int from class org.hibernate.test.bytecode.enhancement.entity.customer.CustomerInventory to class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private name : String from class org.hibernate.test.bytecode.enhancement.entity.customer.Group to class org.hibernate.test.bytecode.enhancement.association.Group",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private users : Set from class org.hibernate.test.bytecode.enhancement.entity.customer.Group to class org.hibernate.test.bytecode.enhancement.association.Group",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private customer : Customer from class org.hibernate.test.bytecode.enhancement.entity.customer.User to class org.hibernate.test.bytecode.enhancement.association.User",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private login : String from class org.hibernate.test.bytecode.enhancement.entity.customer.User to class org.hibernate.test.bytecode.enhancement.association.User",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private password : String from class org.hibernate.test.bytecode.enhancement.entity.customer.User to class org.hibernate.test.bytecode.enhancement.association.User",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package id : Long from class org.hibernate.test.bytecode.enhancement.entity.SubEntity to class org.hibernate.test.bytecode.enhancement.lazy.Parent",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private customerInventories : List from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private firstName : String from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private lastName : String from class org.hibernate.test.bytecode.enhancement.entity.customer.Customer to class org.hibernate.test.bytecode.enhancement.association.Customer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It seems a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 3179
 }, {
@@ -18286,19 +18286,19 @@
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
-		"type": "Other",
+		"type": "Rename Method",
 		"description": "Rename Method public isTrustedSession(account Account, contact AxolotlAddress) : boolean renamed to public isIdentityKeyTrusted(account Account, name String, fingerprint String) : AxolotlService.SQLiteAxolotlStore.Trust in class eu.siacs.conversations.persistance.DatabaseBackend",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method public setTrustedSession(account Account, contact AxolotlAddress, trusted boolean) : void renamed to public setIdentityKeyTrust(account Account, name String, fingerprint String, trust AxolotlService.SQLiteAxolotlStore.Trust) : boolean in class eu.siacs.conversations.persistance.DatabaseBackend",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}],
 	"refDiffExecutionTime": 1622
 }, {
@@ -18497,9 +18497,9 @@
 		"type": "RenameMethod",
 		"description": "Rename Method public setBatteryController(batteryController BatteryController) : void renamed to public setBatteryStateRegistar(batteryStateRegistar BatteryStateRegistar) : void in class com.android.systemui.BatteryLevelTextView",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 11400
 }, {
@@ -18629,43 +18629,29 @@
 		"description": "Move Class com.hazelcast.client.impl.protocol.util.Int2ObjectHashMap moved to com.hazelcast.util.collection.Int2ObjectHashMap",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
+		"detectionTools": "RefactoringMiner, Matin",
 		"validators": null
 	}, {
 		"type": "Move Class",
 		"description": "Move Class com.hazelcast.client.protocol.Int2ObjectHashMapTest moved to com.hazelcast.util.collection.Int2ObjectHashMapTest",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
-	}, {
-		"type": "Other",
-		"description": "Move Class com.hazelcast.client.protocol.Int2ObjectHashMapTest moved to com.hazelcast.util.collection.Int2ObjectHashMapTest",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
-		"validators": null
-	}, {
-		"type": "Other",
-		"description": "Move Class com.hazelcast.client.impl.protocol.util.Int2ObjectHashMap moved to com.hazelcast.util.collection.Int2ObjectHashMap",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
-		"validators": null
-	}, {
-		"type": "MoveClass",
+	},  {
+		"type": "Move Class",
 		"description": "Move Class com.hazelcast.client.impl.protocol.util.Int2ObjectHashMap.Supplier moved to com.hazelcast.util.function.Supplier",
 		"comment": null,
 		"validation": "UKN",
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method public getOrDefault(key int, supplier Supplier) : V renamed to public computeIfAbsent(key int, mappingFunction IntFunction) : V in class com.hazelcast.util.collection.Int2ObjectHashMap",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}],
 	"refDiffExecutionTime": 1599
 }, {
@@ -19045,38 +19031,38 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public canHandle(geocode String) : boolean from class cgeo.geocaching.connector.TerraCachingConnector to public canHandle(geocode String) : boolean from class cgeo.geocaching.connector.tc.TerraCachingConnector",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move method",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getHost() : String from class cgeo.geocaching.connector.TerraCachingConnector to public getHost() : String from class cgeo.geocaching.connector.tc.TerraCachingConnector",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move method",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getName() : String from class cgeo.geocaching.connector.TerraCachingConnector to public getName() : String from class cgeo.geocaching.connector.tc.TerraCachingConnector",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move method",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public isOwner(cache Geocache) : boolean from class cgeo.geocaching.connector.TerraCachingConnector to public isOwner(cache Geocache) : boolean from class cgeo.geocaching.connector.tc.TerraCachingConnector",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move method",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private PATTERN_GEOCODE : Pattern from class cgeo.geocaching.connector.TerraCachingConnector to class cgeo.geocaching.connector.tc.TerraCachingConnector",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move method",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 2501
 }, {
@@ -19277,152 +19263,152 @@
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method public parseAndValidatateMetadata(method Method) : MethodMetadata renamed to private headersFromAnnotation(targetType Class, data MethodMetadata) : void in class feign.Contract.Default",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "headersFromAnnotation is extraced",
+		"validation": "FP ",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public formParamsDoesNotSetBodyType() : void in class feign.DefaultContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public headerParamsParseIntoIndexToName() : void in class feign.DefaultContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public customExpander() : void in class feign.DefaultContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public slashAreEncodedWhenNeeded() : void in class feign.DefaultContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public httpMethods() : void in class feign.DefaultContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public bodyParamIsGeneric() : void in class feign.DefaultContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public tooManyBodies() : void in class feign.DefaultContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public customMethodWithoutPath() : void in class feign.DefaultContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public queryParamsInPathExtract() : void in class feign.DefaultContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public bodyWithoutParameters() : void in class feign.DefaultContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public headersOnMethodAddsContentTypeHeader() : void in class feign.DefaultContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public headersOnTypeAddsContentTypeHeader() : void in class feign.DefaultContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public withPathAndURIParam() : void in class feign.DefaultContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public pathAndQueryParams() : void in class feign.DefaultContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public bodyWithTemplate() : void in class feign.DefaultContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public formParamsParseIntoIndexToName() : void in class feign.DefaultContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public httpMethods() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public customMethodWithoutPath() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public queryParamsInPathExtract() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public producesAddsAcceptHeader() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public producesNada() : void in class feign.jaxrs.JAXRSContractTest",
@@ -19434,9 +19420,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public producesEmpty() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public consumesAddsContentTypeHeader() : void in class feign.jaxrs.JAXRSContractTest",
@@ -19455,16 +19441,16 @@
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public consumesEmpty() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public bodyParamIsGeneric() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public tooManyBodies() : void in class feign.jaxrs.JAXRSContractTest",
@@ -19476,23 +19462,23 @@
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public emptyPathOnType() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public emptyPathParam() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public pathParamWithSpaces() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public regexPathOnMethod() : void in class feign.jaxrs.JAXRSContractTest",
@@ -19504,93 +19490,93 @@
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public withPathAndURIParams() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public pathAndQueryParams() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public emptyQueryParam() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public formParamsParseIntoIndexToName() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public formParamsDoesNotSetBodyType() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public emptyFormParam() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public headerParamsParseIntoIndexToName() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public emptyHeaderParam() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public pathsWithoutSlashesParseCorrectly() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public pathsWithSomeSlashesParseCorrectly() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public pathsWithSomeOtherSlashesParseCorrectly() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public classWithRootPathParsesCorrectly() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public classPathWithTrailingSlashParsesCorrectly() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "InlineMethod",
 		"description": "Inline Method private parsePathOnTypeMethod(name String) : MethodMetadata inlined to public parsePathMethod() : void in class feign.jaxrs.JAXRSContractTest",
@@ -19682,19 +19668,19 @@
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
-		"type": "Other",
+		"type": "Rename Method",
 		"description": "Rename Method private TestHazelcastInstanceFactory(addresses Address[]) renamed to private init(initialNodeCount int) : void in class com.hazelcast.test.TestHazelcastInstanceFactory",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private pickAddress() : Address extracted from public newHazelcastInstance(config Config) : HazelcastInstance in class com.hazelcast.test.TestHazelcastInstanceFactory",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}],
 	"refDiffExecutionTime": 4170
 }, {
@@ -19715,9 +19701,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method public nodeOption(code String) : ZLBooleanOption extracted from public topLevelNodes() : List in class org.geometerplus.android.fbreader.MenuData",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 1636
 }, {
@@ -21046,21 +21032,21 @@
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
-		"type": "MoveClass",
+		"type": "Move Class",
 		"description": "Move Class org.apache.poi.poifs.crypt.ChainingMode moved to org.docx4j.org.apache.poi.poifs.crypt.ChainingMode",
 		"comment": null,
 		"validation": "UKN",
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
-		"type": "MoveClass",
+		"type": "Move Class",
 		"description": "Move Class org.apache.poi.poifs.crypt.CipherAlgorithm moved to org.docx4j.org.apache.poi.poifs.crypt.CipherAlgorithm",
 		"comment": null,
 		"validation": "UKN",
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
-		"type": "MoveClass",
+		"type": "Move Class",
 		"description": "Move Class org.apache.poi.poifs.crypt.CipherProvider moved to org.docx4j.org.apache.poi.poifs.crypt.CipherProvider",
 		"comment": null,
 		"validation": "UKN",
@@ -21153,150 +21139,150 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public addNewEncryption() : com.microsoft.schemas.office.x2006.encryption.CTEncryption from class org.apache.poi.poifs.crypt.agile.EncryptionDocument to public addNewEncryption() : org.docx4j.com.microsoft.schemas.office.x2006.encryption.CTEncryption from class org.docx4j.org.apache.poi.poifs.crypt.agile.EncryptionDocument",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getEncryption() : com.microsoft.schemas.office.x2006.encryption.CTEncryption from class org.apache.poi.poifs.crypt.agile.EncryptionDocument to public getEncryption() : org.docx4j.com.microsoft.schemas.office.x2006.encryption.CTEncryption from class org.docx4j.org.apache.poi.poifs.crypt.agile.EncryptionDocument",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setEncryption(encryption com.microsoft.schemas.office.x2006.encryption.CTEncryption) : void from class org.apache.poi.poifs.crypt.agile.EncryptionDocument to public setEncryption(encryption org.docx4j.com.microsoft.schemas.office.x2006.encryption.CTEncryption) : void from class org.docx4j.org.apache.poi.poifs.crypt.agile.EncryptionDocument",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public dump(root DirectoryEntry, parent File) : void from class org.apache.poi.poifs.dev.POIFSDump to public dump(root DirectoryEntry, parent File) : void from class org.docx4j.org.apache.poi.poifs.dev.POIFSDump",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public displayRawBlocksSummary(data_blocks RawDataBlockList) : void from class org.apache.poi.poifs.dev.POIFSHeaderDumper to public displayRawBlocksSummary(data_blocks RawDataBlockList) : void from class org.docx4j.org.apache.poi.poifs.dev.POIFSHeaderDumper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public main(args String[]) : void from class org.apache.poi.poifs.dev.POIFSHeaderDumper to public main(args String[]) : void from class org.docx4j.org.apache.poi.poifs.dev.POIFSHeaderDumper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public countBlocks() : int from class org.apache.poi.poifs.storage.SmallBlockTableWriter to public countBlocks() : int from class org.docx4j.org.apache.poi.poifs.storage.SmallBlockTableWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getSBAT() : BlockAllocationTableWriter from class org.apache.poi.poifs.storage.SmallBlockTableWriter to public getSBAT() : BlockAllocationTableWriter from class org.docx4j.org.apache.poi.poifs.storage.SmallBlockTableWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getSBATBlockCount() : int from class org.apache.poi.poifs.storage.SmallBlockTableWriter to public getSBATBlockCount() : int from class org.docx4j.org.apache.poi.poifs.storage.SmallBlockTableWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setStartBlock(start_block int) : void from class org.apache.poi.poifs.storage.SmallBlockTableWriter to public setStartBlock(start_block int) : void from class org.docx4j.org.apache.poi.poifs.storage.SmallBlockTableWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public displayBATReader(batReader BlockAllocationTableReader) : void from class org.apache.poi.poifs.dev.POIFSHeaderDumper to public displayBATReader(type String, batReader BlockAllocationTableReader) : void from class org.docx4j.org.apache.poi.poifs.dev.POIFSHeaderDumper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public displayHeader(header_block HeaderBlock) : void from class org.apache.poi.poifs.dev.POIFSHeaderDumper to public displayHeader(header_block HeaderBlock) : void from class org.docx4j.org.apache.poi.poifs.dev.POIFSHeaderDumper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public viewFile(filename String) : void from class org.apache.poi.poifs.dev.POIFSHeaderDumper to public viewFile(filename String) : void from class org.docx4j.org.apache.poi.poifs.dev.POIFSHeaderDumper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute public builder : String from class org.apache.poi.poifs.crypt.EncryptionMode to class org.docx4j.org.apache.poi.poifs.crypt.EncryptionMode",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute public encryptionFlags : int from class org.apache.poi.poifs.crypt.EncryptionMode to class org.docx4j.org.apache.poi.poifs.crypt.EncryptionMode",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute public versionMajor : int from class org.apache.poi.poifs.crypt.EncryptionMode to class org.docx4j.org.apache.poi.poifs.crypt.EncryptionMode",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute public versionMinor : int from class org.apache.poi.poifs.crypt.EncryptionMode to class org.docx4j.org.apache.poi.poifs.crypt.EncryptionMode",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package encryption : CTEncryption from class org.apache.poi.poifs.crypt.agile.EncryptionDocument to class org.docx4j.org.apache.poi.poifs.crypt.agile.EncryptionDocument",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private _big_block_count : int from class org.apache.poi.poifs.storage.SmallBlockTableWriter to class org.docx4j.org.apache.poi.poifs.storage.SmallBlockTableWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private _root : RootProperty from class org.apache.poi.poifs.storage.SmallBlockTableWriter to class org.docx4j.org.apache.poi.poifs.storage.SmallBlockTableWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private _sbat : BlockAllocationTableWriter from class org.apache.poi.poifs.storage.SmallBlockTableWriter to class org.docx4j.org.apache.poi.poifs.storage.SmallBlockTableWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class or sth like that",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 6242
 }, {
@@ -21368,16 +21354,16 @@
 		"type": "Extract Method",
 		"description": "Extract Method private changeLanguageValue(newValue String) : void extracted from public onPreferenceChange(preference Preference, newValue Object) : boolean in class org.wordpress.android.ui.prefs.SiteSettingsFragment",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private fetchRemoteData() : void extracted from public onCreate(savedInstanceState Bundle) : void in class org.wordpress.android.ui.prefs.SiteSettingsFragment",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}],
 	"refDiffExecutionTime": 1235
 }, {
@@ -21477,59 +21463,59 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private createMirrorSelector(settings Settings) : MirrorSelector from class org.springframework.boot.cli.compiler.grape.SettingsXmlRepositorySystemSessionAutoConfiguration to private createMirrorSelector(settings Settings) : MirrorSelector from class org.springframework.boot.cli.compiler.MavenSettings",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It can be an extract method refactoring",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private createSettingsDecrypter() : SettingsDecrypter from class org.springframework.boot.cli.compiler.grape.SettingsXmlRepositorySystemSessionAutoConfiguration to private createSettingsDecrypter() : SettingsDecrypter from class org.springframework.boot.cli.compiler.MavenSettingsReader",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It can be an extract method refactoring",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private decryptSettings(settings Settings) : SettingsDecryptionResult from class org.springframework.boot.cli.compiler.grape.SettingsXmlRepositorySystemSessionAutoConfiguration to private decryptSettings(settings Settings) : SettingsDecryptionResult from class org.springframework.boot.cli.compiler.MavenSettingsReader",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It can be an extract method refactoring",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private loadSettings() : Settings from class org.springframework.boot.cli.compiler.grape.SettingsXmlRepositorySystemSessionAutoConfiguration to private loadSettings() : Settings from class org.springframework.boot.cli.compiler.MavenSettingsReader",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It can be an extract method refactoring",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private setField(clazz Class, fieldName String, target Object, value Object) : void from class org.springframework.boot.cli.compiler.grape.SettingsXmlRepositorySystemSessionAutoConfiguration to private setField(clazz Class, fieldName String, target Object, value Object) : void from class org.springframework.boot.cli.compiler.MavenSettingsReader",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It can be an extract method refactoring",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private createProxySelector(proxies List) : ProxySelector from class org.springframework.boot.cli.compiler.grape.SettingsXmlRepositorySystemSessionAutoConfiguration to private createProxySelector(decryptedSettings SettingsDecryptionResult) : ProxySelector from class org.springframework.boot.cli.compiler.MavenSettings",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It can be an extract method refactoring",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private createAuthenticationSelector(servers List) : AuthenticationSelector from class org.springframework.boot.cli.compiler.grape.SettingsXmlRepositorySystemSessionAutoConfiguration to private createAuthenticationSelector(decryptedSettings SettingsDecryptionResult) : AuthenticationSelector from class org.springframework.boot.cli.compiler.MavenSettings",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It can be an extract method refactoring",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private loadSettings() : Settings from class org.springframework.boot.cli.compiler.RepositoryConfigurationFactory to private loadSettings() : Settings from class org.springframework.boot.cli.compiler.MavenSettingsReader",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "target class did not exust in the previous revision",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public readSettings() : MavenSettings extracted from public apply(session DefaultRepositorySystemSession, repositorySystem RepositorySystem) : void in class org.springframework.boot.cli.compiler.grape.SettingsXmlRepositorySystemSessionAutoConfiguration",
@@ -21540,10 +21526,10 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private homeDir : String from class org.springframework.boot.cli.compiler.grape.SettingsXmlRepositorySystemSessionAutoConfiguration to class org.springframework.boot.cli.compiler.MavenSettingsReader",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It can be an extract method refactoring",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 2343
 }, {
@@ -21587,9 +21573,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private isKeywordAny(builder PsiBuilder) : boolean extracted from public parseTypeParameter(builder PsiBuilder) : PsiBuilder.Marker in class com.intellij.lang.java.parser.ReferenceParser",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}],
 	"refDiffExecutionTime": 18156
 }, {
@@ -21647,7 +21633,7 @@
 		"type": "Move Method",
 		"description": "Move Method public getCollectionResponseCustomMetadata() : RecordTemplate from class com.linkedin.restli.internal.server.AugmentedRestLiResponseData to public getCollectionResponseCustomMetadata() : RecordTemplate from class com.linkedin.restli.internal.server.response.CollectionResponseEnvelope",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
@@ -21661,9 +21647,9 @@
 		"type": "Move Method",
 		"description": "Move Method public fromMethodType(type ResourceMethod) : ResponseType from class com.linkedin.restli.internal.server.AugmentedRestLiResponseData.ResponseType to public fromMethodType(type ResourceMethod) : ResponseType from class com.linkedin.restli.internal.server.ResponseType",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public hasOverridingErrorResponseFormat() : boolean extracted from public buildErrorResponse(result RestLiServiceException) : ErrorResponse in class com.linkedin.restli.internal.server.methods.response.ErrorResponseBuilder",
@@ -21721,13 +21707,6 @@
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
-		"validators": null
-	}, {
-		"type": "Extract Method",
-		"description": "Extract Method private hepPlan(basePlan RelNode, followPlanChanges boolean, mdProvider RelMetadataProvider, order HepMatchOrder, rules RelOptRule[]) : RelNode extracted from public apply(cluster RelOptCluster, relOptSchema RelOptSchema, rootSchema SchemaPlus) : RelNode in class org.apache.hadoop.hive.ql.parse.CalcitePlanner.CalcitePlannerAction",
-		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
 		"validators": null
 	}],
 	"refDiffExecutionTime": 3784
@@ -21858,19 +21837,19 @@
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
-		"type": "MoveClass",
+		"type": "Move Class",
 		"description": "Move Class org.jboss.as.clustering.jgroups.TransportConfiguration.Topology moved to org.infinispan.server.jgroups.spi.TransportConfiguration.Topology",
 		"comment": null,
 		"validation": "UKN",
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method private parseRemoteSite(reader XMLExtendedStreamReader, relayAddress PathAddress, operations List) : void renamed to private parseChannel(reader XMLExtendedStreamReader, subsystemAddress PathAddress, operations Map) : void in class org.infinispan.server.jgroups.subsystem.JGroupsSubsystemXMLReader",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method private parseProtocol(reader XMLExtendedStreamReader, stackAddress PathAddress, operations List) : void renamed to private parseStacks(reader XMLExtendedStreamReader, address PathAddress, operations Map) : void in class org.infinispan.server.jgroups.subsystem.JGroupsSubsystemXMLReader",
@@ -21895,43 +21874,43 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getProtocolStackConfiguration() : ProtocolStackConfiguration from class org.jboss.as.clustering.jgroups.JChannelFactory to public getProtocolStackConfiguration() : ProtocolStackConfiguration from class org.infinispan.server.jgroups.JChannelFactory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getProtocolStackString() : String from class org.jboss.as.clustering.jgroups.JChannelFactory to public getProtocolStackString() : String from class org.infinispan.server.jgroups.JChannelFactory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private init(transport TP) : void from class org.jboss.as.clustering.jgroups.JChannelFactory to private init(transport TP) : void from class org.infinispan.server.jgroups.JChannelFactory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected performRuntime(context OperationContext, operation ModelNode, model ModelNode, verificationHandler ServiceVerificationHandler, newControllers List) : void from class org.jboss.as.clustering.jgroups.subsystem.AddStepHandler to protected performRuntime(context OperationContext, operation ModelNode, resource Resource) : void from class org.infinispan.server.commons.controller.ReloadRequiredAddStepHandler",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getValue() : Channel from class org.jboss.as.clustering.jgroups.subsystem.ChannelService to public getValue() : Channel from class org.infinispan.server.jgroups.spi.service.ChannelBuilder",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected getModelValidationConfiguration() : ValidationConfiguration from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemTest to protected getModelValidationConfiguration() : ValidationConfiguration from class org.infinispan.server.jgroups.subsystem.SubsystemParsingTestCase",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
@@ -21944,157 +21923,157 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getProperties(protocol String) : Map from class org.jboss.as.clustering.jgroups.subsystem.ProtocolDefaultsService.Defaults to public getProperties(protocol String) : Map from class org.infinispan.server.jgroups.subsystem.ProtocolDefaultsBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "The original class is removed",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getName() : String from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.Protocol to public getName() : String from class org.infinispan.server.jgroups.ForkChannelFactory.ForkProtocolStackConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "This should be FP. original class is removed and the target is created in the new revision. both class extend the same class",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getName() : String from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.ProtocolStack to public getName() : String from class org.infinispan.server.jgroups.ForkChannelFactory.ForkProtocolStackConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "This should be FP. original class is removed and the target is created in the new revision. both class extend the same class",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getProtocols() : List from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.ProtocolStack to public getProtocols() : List from class org.infinispan.server.jgroups.ForkChannelFactory.ForkProtocolStackConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "This should be FP. original class is removed and the target is created in the new revision. both class extend the same class",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getSiteName() : String from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.Relay to public getSiteName() : String from class org.infinispan.server.jgroups.subsystem.RelayConfigurationBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "This should be FP. original class is removed and the target is created in the new revision. both class extend the same class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getName() : String from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.RemoteSite to public getName() : String from class org.infinispan.server.jgroups.ForkChannelFactory.ForkProtocolStackConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "This should be FP. original class is removed and the target is created in the new revision. both class extend the same class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getClusterRole() : String from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.Sasl to public getClusterRole() : String from class org.infinispan.server.jgroups.subsystem.SaslConfigurationBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "This should be FP. original class is removed and the target is created in the new revision.",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getMech() : String from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.Sasl to public getMech() : String from class org.infinispan.server.jgroups.subsystem.SaslConfigurationBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "This should be FP. original class is removed and the target is created in the new revision.",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getTopology() : Topology from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.Transport to public getTopology() : Topology from class org.infinispan.server.jgroups.subsystem.TransportConfigurationBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "This should be FP. original class is removed and the target is created in the new revision.",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public isShared() : boolean from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.Transport to public isShared() : boolean from class org.infinispan.server.jgroups.subsystem.TransportConfigurationBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "This should be FP. original class is removed and the target is created in the new revision.",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public registerAttributes(registration ManagementResourceRegistration) : void from class org.jboss.as.clustering.jgroups.subsystem.RelayResourceDefinition to public registerAttributes(registration ManagementResourceRegistration) : void from class org.infinispan.server.jgroups.subsystem.RelayResourceDefinition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a rename class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public registerAttributes(registration ManagementResourceRegistration) : void from class org.jboss.as.clustering.jgroups.subsystem.RemoteSiteResourceDefinition to public registerAttributes(registration ManagementResourceRegistration) : void from class org.infinispan.server.jgroups.subsystem.RelayResourceDefinition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a rename class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public registerAttributes(registration ManagementResourceRegistration) : void from class org.jboss.as.clustering.jgroups.subsystem.SaslResourceDefinition to public registerAttributes(registration ManagementResourceRegistration) : void from class org.infinispan.server.jgroups.subsystem.RelayResourceDefinition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "RelayResourceDefinition is renamed",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method package setShared(shared boolean) : void from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.Transport to public setShared(shared boolean) : TransportConfigurationBuilder from class org.infinispan.server.jgroups.subsystem.TransportConfigurationBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "This should be FP. original class is removed and the target is created in the new revision.",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected executeRuntimeStep(context OperationContext, operation ModelNode) : void from class org.jboss.as.clustering.jgroups.subsystem.ExportNativeConfiguration to protected executeRuntimeStep(context OperationContext, operation ModelNode) : void from class org.infinispan.server.jgroups.subsystem.ExportNativeConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public forName(localName String) : Element from class org.jboss.as.clustering.jgroups.subsystem.Element to public forName(localName String) : Element from class org.infinispan.server.jgroups.subsystem.Element",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public registerChildren(registration ManagementResourceRegistration) : void from class org.jboss.as.clustering.jgroups.subsystem.RelayResourceDefinition to public registerChildren(registration ManagementResourceRegistration) : void from class org.infinispan.server.jgroups.subsystem.RelayResourceDefinition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public forName(localName String) : Attribute from class org.jboss.as.clustering.jgroups.subsystem.Attribute to public forName(localName String) : Attribute from class org.infinispan.server.jgroups.subsystem.Attribute",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private configureMulticastSocket(protocol ProtocolConfiguration, config org.jgroups.conf.ProtocolConfiguration, addressProperty String, portProperty String, binding SocketBinding) : void from class org.jboss.as.clustering.jgroups.JChannelFactory to private configureMulticastSocket(introspector Introspector, config org.jgroups.conf.ProtocolConfiguration, addressProperty String, portProperty String, binding SocketBinding) : void from class org.infinispan.server.jgroups.JChannelFactory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getLocalName() : String from class org.jboss.as.clustering.jgroups.subsystem.Attribute to public getLocalName() : String from class org.infinispan.server.jgroups.subsystem.Attribute",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getLocalName() : String from class org.jboss.as.clustering.jgroups.subsystem.Element to public getLocalName() : String from class org.infinispan.server.jgroups.subsystem.Attribute",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private setProperty(protocol ProtocolConfiguration, config org.jgroups.conf.ProtocolConfiguration, name String, value String) : void from class org.jboss.as.clustering.jgroups.JChannelFactory to private setProperty(introspector Introspector, config org.jgroups.conf.ProtocolConfiguration, name String, value String) : void from class org.infinispan.server.jgroups.JChannelFactory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected performRuntime(context OperationContext, operation ModelNode, model ModelNode) : void from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemRemove.OriginalSubsystemRemoveHandler to protected performRuntime(context OperationContext, operation ModelNode, model ModelNode) : void from class org.infinispan.server.jgroups.subsystem.StackRemoveHandler",
@@ -22133,36 +22112,36 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private configureBindAddress(protocol ProtocolConfiguration, config org.jgroups.conf.ProtocolConfiguration, binding SocketBinding) : void from class org.jboss.as.clustering.jgroups.JChannelFactory to private configureBindAddress(introspector Introspector, config org.jgroups.conf.ProtocolConfiguration, binding SocketBinding) : void from class org.infinispan.server.jgroups.JChannelFactory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private configureServerSocket(protocol ProtocolConfiguration, config org.jgroups.conf.ProtocolConfiguration, property String, binding SocketBinding) : void from class org.jboss.as.clustering.jgroups.JChannelFactory to private configureServerSocket(introspector Introspector, config org.jgroups.conf.ProtocolConfiguration, property String, binding SocketBinding) : void from class org.infinispan.server.jgroups.JChannelFactory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testSubsystemReadWriteOperations() : void from class org.jboss.as.clustering.jgroups.subsystem.OperationsTestCase to public testSubsystemReadWriteOperations() : void from class org.infinispan.server.jgroups.subsystem.OperationsTestCase",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Seems it is a move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public createChannel(id String) : Channel from class org.jboss.as.clustering.jgroups.JChannelFactory to public createChannel(id String) : Channel from class org.infinispan.server.jgroups.JChannelFactory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public start(context StartContext) : void from class org.jboss.as.clustering.jgroups.subsystem.ChannelService to public start(context StartContext) : void from class org.infinispan.server.jgroups.spi.service.ChannelBuilder",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
@@ -22175,17 +22154,17 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testProtocolStackRemoveRemoveSequence() : void from class org.jboss.as.clustering.jgroups.subsystem.OperationSequencesTestCase to public testProtocolStackRemoveRemoveSequence() : void from class org.infinispan.server.jgroups.subsystem.OperationSequencesTestCase",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testProtocolStackRemoveRollback() : void from class org.jboss.as.clustering.jgroups.subsystem.OperationSequencesTestCase to public testProtocolStackRemoveRollback() : void from class org.infinispan.server.jgroups.subsystem.OperationSequencesTestCase",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private writeSasl(writer XMLExtendedStreamWriter, sasl ModelNode, element Element) : void from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemXMLWriter to private writeSasl(writer XMLExtendedStreamWriter, sasl ModelNode) : void from class org.infinispan.server.jgroups.subsystem.JGroupsSubsystemXMLWriter",
@@ -22197,16 +22176,16 @@
 		"type": "Move Method",
 		"description": "Move Method public registerAttributes(resourceRegistration ManagementResourceRegistration) : void from class org.jboss.as.clustering.jgroups.subsystem.ProtocolResourceDefinition to public registerAttributes(registration ManagementResourceRegistration) : void from class org.infinispan.server.jgroups.subsystem.ProtocolResourceDefinition",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public registerAttributes(resourceRegistration ManagementResourceRegistration) : void from class org.jboss.as.clustering.jgroups.subsystem.TransportResourceDefinition to public registerAttributes(registration ManagementResourceRegistration) : void from class org.infinispan.server.jgroups.subsystem.ProtocolResourceDefinition",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected performRuntime(context OperationContext, operation ModelNode, model ModelNode, verificationHandler ServiceVerificationHandler, newControllers List) : void from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemAdd to protected performRuntime(context OperationContext, operation ModelNode, model ModelNode) : void from class org.infinispan.server.jgroups.subsystem.ChannelAddHandler",
@@ -22217,10 +22196,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testProtocolStackAddRemoveAddSequence() : void from class org.jboss.as.clustering.jgroups.subsystem.OperationSequencesTestCase to public testProtocolStackAddRemoveAddSequence() : void from class org.infinispan.server.jgroups.subsystem.OperationSequencesTestCase",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public isShutdown() : boolean from class org.jboss.as.clustering.jgroups.TimerSchedulerAdapter to public isShutdown() : boolean from class org.infinispan.server.commons.msc.DelegatingServiceContainer",
@@ -22245,10 +22224,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private createProtocol(protocolConfig ProtocolConfiguration) : org.jgroups.conf.ProtocolConfiguration from class org.jboss.as.clustering.jgroups.JChannelFactory to private createProtocol(stack ProtocolStackConfiguration, protocol ProtocolConfiguration) : org.jgroups.conf.ProtocolConfiguration from class org.infinispan.server.jgroups.JChannelFactory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private parseTransport(reader XMLExtendedStreamReader, stackAddress PathAddress, operations List) : void from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemXMLReader_1_1 to private parseTransport(reader XMLExtendedStreamReader, stackAddress PathAddress, operations Map) : void from class org.infinispan.server.jgroups.subsystem.JGroupsSubsystemXMLReader",
@@ -22322,7 +22301,7 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getProtocolStack() : List from class org.jboss.as.clustering.jgroups.JChannelFactory to public getProtocolStack() : List from class org.infinispan.server.jgroups.JChannelFactory",
-		"comment": null,
+		"comment": "It is a move clas/package",
 		"validation": "UKN",
 		"detectionTools": "RefDiff",
 		"validators": null
@@ -22518,17 +22497,17 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private name : String from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.Protocol to class org.infinispan.server.jgroups.subsystem.Attribute",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private name : String from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.Protocol to class org.infinispan.server.jgroups.subsystem.Element",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the element is moved and the name were existed in the class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private name : String from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.ProtocolStack to class org.infinispan.server.jgroups.ForkChannelFactory.ForkProtocolStackConfiguration",
@@ -22623,38 +22602,38 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private elements : Map from class org.jboss.as.clustering.jgroups.subsystem.Element to class org.infinispan.server.jgroups.subsystem.Element",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private attributes : Map from class org.jboss.as.clustering.jgroups.subsystem.Attribute to class org.infinispan.server.jgroups.subsystem.Attribute",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package SITE : SimpleAttributeDefinition from class org.jboss.as.clustering.jgroups.subsystem.RelayResourceDefinition to class org.infinispan.server.jgroups.subsystem.RelayResourceDefinition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package ATTRIBUTES : AttributeDefinition[] from class org.jboss.as.clustering.jgroups.subsystem.RelayResourceDefinition to class org.infinispan.server.jgroups.subsystem.RelayResourceDefinition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package ATTRIBUTES : AttributeDefinition[] from class org.jboss.as.clustering.jgroups.subsystem.RelayResourceDefinition to class org.infinispan.server.jgroups.subsystem.RemoteSiteResourceDefinition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "The original class is moved and the atribute is stil there",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private map : Map from class org.jboss.as.clustering.jgroups.subsystem.ProtocolDefaultsService.Defaults to class org.infinispan.server.jgroups.subsystem.ProtocolDefaultsBuilder",
@@ -22684,7 +22663,7 @@
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute private channel : Channel from class org.jboss.as.clustering.jgroups.subsystem.ChannelService to class org.infinispan.server.jgroups.spi.service.ChannelBuilder",
 		"comment": null,
 		"validation": "UKN",
@@ -22693,17 +22672,17 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private name : String from class org.jboss.as.clustering.jgroups.subsystem.Attribute to class org.infinispan.server.jgroups.ForkChannelFactory.ForkProtocolStackConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "The atrribute is existed in the original class in both revision",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private name : String from class org.jboss.as.clustering.jgroups.subsystem.Element to class org.infinispan.server.jgroups.ForkChannelFactory.ForkProtocolStackConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "The atrribute is existed in the original class in both revision",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package removeStackOp : ModelNode from class org.jboss.as.clustering.jgroups.subsystem.OperationSequencesTestCase to class org.infinispan.server.jgroups.subsystem.OperationSequencesTestCase",
@@ -22714,10 +22693,10 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private configuration : ProtocolStackConfiguration from class org.jboss.as.clustering.jgroups.JChannelFactory to class org.infinispan.server.jgroups.JChannelFactory",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is the same class. it just moved",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private environment : InjectedValue from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.ProtocolStack to class org.infinispan.server.jgroups.subsystem.JChannelFactoryBuilder",
@@ -22752,9 +22731,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private isKeywordAny(builder PsiBuilder) : boolean extracted from public parseTypeParameter(builder PsiBuilder) : PsiBuilder.Marker in class com.intellij.lang.java.parser.ReferenceParser",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 37767
 }, {
@@ -22798,191 +22777,191 @@
 		"type": "RenameMethod",
 		"description": "Rename Method private doSaveContext() : void renamed to protected onResponseCommitted() : void in class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "PullUpMethod",
 		"description": "Pull Up Method public getOutputStream() : ServletOutputStream from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public getOutputStream() : ServletOutputStream from class org.springframework.security.web.context.OnCommittedResponseWrapper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a extract super class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PullUpMethod",
 		"description": "Pull Up Method public getWriter() : PrintWriter from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public getWriter() : PrintWriter from class org.springframework.security.web.context.OnCommittedResponseWrapper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a extract super class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PullUpMethod",
 		"description": "Pull Up Method public sendError(sc int, msg String) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendError(sc int, msg String) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a extract super class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "PullUpMethod",
+		"type": "Pull Up Method",
 		"description": "Pull Up Method public sendRedirect(location String) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendRedirect(location String) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a extract super class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "PullUpMethod",
+		"type": "Pull Up Method",
 		"description": "Pull Up Method public flushBuffer() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public flushBuffer() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a extract super class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public checkError() : boolean from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public checkError() : boolean from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public equals(obj Object) : boolean from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public equals(obj Object) : boolean from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public format(l Locale, format String, args Object[]) : PrintWriter from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public format(l Locale, format String, args Object[]) : PrintWriter from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public hashCode() : int from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public hashCode() : int from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public printf(l Locale, format String, args Object[]) : PrintWriter from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public printf(l Locale, format String, args Object[]) : PrintWriter from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public toString() : String from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public toString() : String from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public equals(obj Object) : boolean from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public equals(obj Object) : boolean from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the method existed in the target class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public hashCode() : int from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public hashCode() : int from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the method existed in the target class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public toString() : String from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public toString() : String from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the method existed in the target class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public write(buf char[], off int, len int) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public write(buf char[], off int, len int) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public write(b byte[], off int, len int) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public write(b byte[], off int, len int) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextServletOutputStream",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the method existed in the target class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public append(c char) : PrintWriter from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public append(c char) : PrintWriter from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public print(b boolean) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public print(b boolean) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public print(b boolean) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public print(b boolean) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the method existed in the target class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public println() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public println() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public println() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public println() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the method existed in the target class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public close() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public close() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public close() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public close() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the method existed in the target class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public flush() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public flush() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public flush() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public flush() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the method existed in the target class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public println(d double) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public println(d double) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextServletOutputStream",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public disableOnResponseCommitted() : void extracted from public disableSaveOnResponseCommitted() : void in class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper",
@@ -22993,17 +22972,17 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private delegate : PrintWriter from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private delegate : ServletOutputStream from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextServletOutputStream",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 764
 }, {
@@ -23028,110 +23007,110 @@
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method private doSaveContext() : void renamed to protected onResponseCommitted() : void in class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
-		"type": "PullUpMethod",
+		"type": "Pull Up Method",
 		"description": "Pull Up Method public getOutputStream() : ServletOutputStream from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public getOutputStream() : ServletOutputStream from class org.springframework.security.web.context.OnCommittedResponseWrapper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a extract superclass",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PullUpMethod",
 		"description": "Pull Up Method public getWriter() : PrintWriter from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public getWriter() : PrintWriter from class org.springframework.security.web.context.OnCommittedResponseWrapper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a extract superclass",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "PullUpMethod",
+		"type": "Pull Up Method",
 		"description": "Pull Up Method public sendError(sc int, msg String) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendError(sc int, msg String) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a extract superclass",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "PullUpMethod",
+		"type": "Pull Up Method",
 		"description": "Pull Up Method public sendRedirect(location String) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendRedirect(location String) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a extract superclass",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "PullUpMethod",
+		"type": "Pull Up Method",
 		"description": "Pull Up Method public flushBuffer() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public flushBuffer() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a extract superclass",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public checkError() : boolean from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public checkError() : boolean from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public equals(obj Object) : boolean from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public equals(obj Object) : boolean from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public format(l Locale, format String, args Object[]) : PrintWriter from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public format(l Locale, format String, args Object[]) : PrintWriter from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public hashCode() : int from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public hashCode() : int from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public printf(l Locale, format String, args Object[]) : PrintWriter from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public printf(l Locale, format String, args Object[]) : PrintWriter from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public toString() : String from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public toString() : String from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public equals(obj Object) : boolean from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public equals(obj Object) : boolean from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the method existed in the target class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public hashCode() : int from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public hashCode() : int from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the method existed in the target class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public toString() : String from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public toString() : String from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the method existed in the target class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public write(buf char[], off int, len int) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public write(buf char[], off int, len int) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",

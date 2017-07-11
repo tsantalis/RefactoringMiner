@@ -22,6 +22,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     private List<UMLOperation> operations;
     private List<UMLAttribute> attributes;
     private UMLType superclass;
+    private List<UMLType> implementedInterfaces;
     private List<UMLAnonymousClass> anonymousClassList;
 
     public UMLClass(String packageName, String name, boolean topLevel) {
@@ -71,6 +72,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
         this.operations = new ArrayList<UMLOperation>();
         this.attributes = new ArrayList<UMLAttribute>();
         this.superclass = null;
+        this.implementedInterfaces = new ArrayList<UMLType>();
         this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
     }
 
@@ -137,6 +139,10 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
 		this.superclass = superclass;
 	}
 
+	public void addImplementedInterface(UMLType implementedInterface) {
+		this.implementedInterfaces.add(implementedInterface);
+	}
+
 	public void addOperation(UMLOperation operation) {
     	this.operations.add(operation);
     }
@@ -151,6 +157,10 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
 
 	public List<UMLAttribute> getAttributes() {
 		return attributes;
+	}
+
+	public List<UMLType> getImplementedInterfaces() {
+		return implementedInterfaces;
 	}
 
 	public boolean containsOperationWithTheSameSignature(UMLOperation operation) {
@@ -319,6 +329,14 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     		classDiff.setSuperclassChanged(true);
     		classDiff.setOldSuperclass(this.superclass);
     		classDiff.setNewSuperclass(umlClass.superclass);
+    	}
+    	for(UMLType implementedInterface : this.implementedInterfaces) {
+    		if(!umlClass.implementedInterfaces.contains(implementedInterface))
+    			classDiff.reportRemovedImplementedInterface(implementedInterface);
+    	}
+    	for(UMLType implementedInterface : umlClass.implementedInterfaces) {
+    		if(!this.implementedInterfaces.contains(implementedInterface))
+    			classDiff.reportAddedImplementedInterface(implementedInterface);
     	}
     	for(UMLOperation operation : this.operations) {
     		if(!umlClass.operations.contains(operation))

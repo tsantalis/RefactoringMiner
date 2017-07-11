@@ -46,6 +46,8 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	private UMLType newSuperclass;
 	private List<UMLAnonymousClass> addedAnonymousClasses;
 	private List<UMLAnonymousClass> removedAnonymousClasses;
+	private List<UMLType> addedImplementedInterfaces;
+	private List<UMLType> removedImplementedInterfaces;
 	private static final int MAX_OPERATION_POSITION_DIFFERENCE = 5;
 	private static final double MAX_OPERATION_NAME_DISTANCE = 0.34;
 	
@@ -67,6 +69,8 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		this.superclassChanged = false;
 		this.addedAnonymousClasses = new ArrayList<UMLAnonymousClass>();
 		this.removedAnonymousClasses = new ArrayList<UMLAnonymousClass>();
+		this.addedImplementedInterfaces = new ArrayList<UMLType>();
+		this.removedImplementedInterfaces = new ArrayList<UMLType>();
 	}
 
 	public String getClassName() {
@@ -95,6 +99,14 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 
 	public void reportRemovedAttribute(UMLAttribute umlAttribute) {
 		this.removedAttributes.add(umlAttribute);
+	}
+
+	public void reportAddedImplementedInterface(UMLType implementedInterface) {
+		this.addedImplementedInterfaces.add(implementedInterface);
+	}
+
+	public void reportRemovedImplementedInterface(UMLType implementedInterface) {
+		this.removedImplementedInterfaces.add(implementedInterface);
 	}
 
 	public void addOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper) {
@@ -213,6 +225,14 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 
 	public Map<UMLOperation, OperationInvocation> getExtractedDelegateOperations() {
 		return extractedDelegateOperations;
+	}
+
+	public List<UMLType> getAddedImplementedInterfaces() {
+		return addedImplementedInterfaces;
+	}
+
+	public List<UMLType> getRemovedImplementedInterfaces() {
+		return removedImplementedInterfaces;
 	}
 
 	public List<Refactoring> getRefactorings() {

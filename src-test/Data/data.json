@@ -5329,7 +5329,7 @@
 		"type": "Move Method",
 		"description": "Move Method private adjustAbsoluteVolumeStatisticSet(cache AbsoluteMetricCache, datum MetricDatum, absoluteMetricName String, relativeMetricName String, volumeId String) : boolean from class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to private adjustAbsoluteVolumeStatisticSet(cache AbsoluteMetricCache, datum MetricDatum, absoluteMetricName String, relativeMetricName String, volumeId String) : boolean from class com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue",
 		"comment": "class AbsoluteMetricQueue is added in the refactored version, it is more like an extract class refactoring since other  methods from class MetricDataQueue are also moved to class AbsoluteMetricQueue",
-		"validation": "FP",
+		"validation": "CTP",
 		"detectionTools": "RefDiff",
 		"validators": "Laleh"
 	}, {
@@ -10373,21 +10373,21 @@
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute private pruneLock : Lock from class org.neo4j.kernel.impl.transaction.log.pruning.LogPruning to class org.neo4j.kernel.impl.transaction.log.pruning.LogPruningImpl",
 		"comment": "LogPruning changed to an interface and the LogPruningImpl did not exist (it is a new class)",
-		"validation": "FP",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
 		"validators": "Matin, Davood"
 	}, {
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute private pruneStrategy : LogPruneStrategy from class org.neo4j.kernel.impl.transaction.log.pruning.LogPruning to class org.neo4j.kernel.impl.transaction.log.pruning.LogPruningImpl",
 		"comment": null,
-		"validation": "FP",
+		"validation": "TP",
 		"detectionTools": "Matin, Davood",
 		"validators": null
 	}, {
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute private msgLog : Log from class org.neo4j.kernel.impl.transaction.log.pruning.LogPruning to class org.neo4j.kernel.impl.transaction.log.pruning.LogPruningImpl",
 		"comment": "LogPruning changed to an interface and the LogPruningImpl did not exist (it is a new class)",
-		"validation": "FP",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
 		"validators": "Matin, Davood"
 	}, {
@@ -10425,6 +10425,36 @@
 		"validation": "TBD",
 		"detectionTools": "RefDiff",
 		"validators": null
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private logVersionRepository : LogVersionRepository from class org.neo4j.kernel.impl.transaction.log.pruning.ThresholdBasedPruneStrategyTest to class org.neo4j.kernel.recovery.DefaultRecoverySPI",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefDiff",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private msgLog : Log from class org.neo4j.kernel.impl.transaction.log.pruning.LogPruning to class org.neo4j.kernel.impl.transaction.log.checkpoint.CheckPointerImpl",
+	  "comment": "the new class has the same attribute as the removed one",
+	  "validation": "TBD",
+	  "detectionTools": "RefDiff",
+	  "validators": "Matin"
+	},
+	{
+	  "type": "",
+	  "description": " Move Attribute private channel : T from class org.neo4j.kernel.impl.transaction.log.PhysicalTransactionCursor to class org.neo4j.kernel.impl.transaction.log.PhysicalTransactionCursor.Marker",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefDiff",
+	  "validators": "Matin"
+	},
+	{
+	  "type": "Push Down Method",
+	  "description": "Push Down Method public finishedRotating(currentVersion long) : void from class org.neo4j.kernel.impl.transaction.log.pruning.LogPruning to public pruneLogs(upToVersion long) : void from class org.neo4j.kernel.impl.transaction.log.pruning.LogPruningImpl",
+	  "comment": "Move and rename",
+	  "validation": "TP",
+	  "detectionTools": "RefDiff",
+	  "validators": "Matin"
 	}],
 	"refDiffExecutionTime": 11758
 }, {
@@ -13102,7 +13132,750 @@
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
 		"validators": null
-	}],
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.ModifyMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.CreateTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.CreateFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.ModifyMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.ModifyMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.CreateMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private server : ServerSocket from class com.amazonaws.util.EC2MetadataUtilsTest to class com.amazonaws.util.EC2MetadataUtilsServer",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.ModifyMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.CreateMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Method private outputInstanceInfo(output PrintWriter) : void from class com.amazonaws.util.EC2MetadataUtilsTest to private outputInstanceInfo(output PrintWriter) : void from class com.amazonaws.util.EC2MetadataUtilsServer",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Method private outputIamCredList(output PrintWriter) : void from class com.amazonaws.util.EC2MetadataUtilsTest to private outputIamCredList(output PrintWriter) : void from class com.amazonaws.util.EC2MetadataUtilsServer",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Method private handleConnection(input BufferedReader, output PrintWriter) : void from class com.amazonaws.util.EC2MetadataUtilsTest to private handleConnection(input BufferedReader, output PrintWriter) : void from class com.amazonaws.util.EC2MetadataUtilsServer",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.ModifyMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.ModifyMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Method private outputIamCred(output PrintWriter) : void from class com.amazonaws.util.EC2MetadataUtilsTest to private outputIamCred(output PrintWriter) : void from class com.amazonaws.util.EC2MetadataUtilsServer",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.ModifyMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.CreateTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Method private outputIamInfo(output PrintWriter) : void from class com.amazonaws.util.EC2MetadataUtilsTest to private outputIamInfo(output PrintWriter) : void from class com.amazonaws.util.EC2MetadataUtilsServer",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.CreateFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.ModifyMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.CreateFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.ModifyMountTargetSecurityGroupsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Method private ignoreRequest(input BufferedReader) : void from class com.amazonaws.util.EC2MetadataUtilsTest to private ignoreRequest(input BufferedReader) : void from class com.amazonaws.util.EC2MetadataUtilsServer",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.CreateMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.AddTagsToVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DescribeTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateFileSystemRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private RESOURCE_PATH_TEMPLATE : String from class com.amazonaws.services.elasticfilesystem.model.transform.CreateTagsRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private STATIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.DeleteMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.ListTagsForVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private DYNAMIC_QUERY_PARAMS : Map from class com.amazonaws.services.elasticfilesystem.model.transform.CreateMountTargetRequestMarshaller to class com.amazonaws.services.glacier.model.transform.RemoveTagsFromVaultRequestMarshaller",
+	  "comment": null,
+	  "validation": "TBD",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},
+],
 	"refDiffExecutionTime": 0
 }, {
 	"id": 1124354,
@@ -23114,87 +23887,87 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public write(buf char[], off int, len int) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public write(buf char[], off int, len int) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public write(b byte[], off int, len int) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public write(b byte[], off int, len int) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextServletOutputStream",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public append(c char) : PrintWriter from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public append(c char) : PrintWriter from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public print(b boolean) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public print(b boolean) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public print(b boolean) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public print(b boolean) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the method existed in the target class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public println() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public println() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public println() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public println() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the method existed in the target class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public close() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public close() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public close() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public close() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the method existed in the target class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public flush() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public flush() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public flush() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public flush() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the method existed in the target class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public println(d double) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to public println(d double) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextServletOutputStream",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public disableOnResponseCommitted() : void extracted from public disableSaveOnResponseCommitted() : void in class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper",
@@ -23205,17 +23978,17 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private delegate : PrintWriter from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private delegate : ServletOutputStream from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream to class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextServletOutputStream",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 4803
 }, {
@@ -23329,9 +24102,9 @@
 		"type": "Move Method",
 		"description": "Move Method public getPS(t Tree, ruleNames List) : String from class org.antlr.v4.runtime.tree.Trees to public getPS(t Tree, ruleNames List) : String from class org.antlr.v4.gui.Trees",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public toStringTree(t Tree, nodeTextProvider TreeTextProvider) : String from class org.antlr.v4.runtime.tree.Trees to public toStringTree(t Tree, nodeTextProvider TreeTextProvider) : String from class org.antlr.v4.gui.Trees",
@@ -23343,14 +24116,14 @@
 		"type": "Move Method",
 		"description": "Move Method public writePS(t Tree, ruleNames List, fileName String) : void from class org.antlr.v4.runtime.tree.Trees to public writePS(t Tree, ruleNames List, fileName String) : void from class org.antlr.v4.gui.Trees",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public save(parser Parser, fileName String, fontName String, fontSize int) : void from class org.antlr.v4.runtime.RuleContext to public save(t Tree, parser Parser, fileName String, fontName String, fontSize int) : void from class org.antlr.v4.gui.Trees",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
@@ -23387,9 +24160,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private visitTagEliminateLock(tag Tag, parseDictionary IParseDictionary) : void extracted from public visitTag(tag Tag, parseDictionary IParseDictionary) : void in class org.adoptopenjdk.jitwatch.model.bytecode.BytecodeAnnotationBuilder",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 686
 }, {
@@ -23479,58 +24252,58 @@
 		"type": "RenameMethod",
 		"description": "Rename Method private convertToLibraryRoot(libPath String) : VirtualFile renamed to private refreshAndConvertToUrl(jarPath String) : String in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Dacvood"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public addJarsToRoots(jarPaths List, libraryName String, module Module, location PsiElement) : void extracted from public addJUnit4Library(inTests boolean, currentModule Module) : void in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public addJarsToRootsAndImportClass(jarPaths List, libraryName String, currentModule Module, editor Editor, reference PsiReference, className String) : void extracted from public registerFixes(registrar QuickFixActionRegistrar, reference PsiReference) : List in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "I believe it is a false positive",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public addJarsToRootsAndImportClass(jarPaths List, libraryName String, currentModule Module, editor Editor, reference PsiReference, className String) : void extracted from public invoke(project Project, editor Editor, file PsiFile) : void in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix$1",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "I believe it is a false positive",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public addJarsToRootsAndImportClass(jarPaths List, libraryName String, currentModule Module, editor Editor, reference PsiReference, className String) : void extracted from public addBundledJarToRoots(project Project, editor Editor, currentModule Module, reference PsiReference, className String, libVirtFile String) : void in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private getJUnit4JarPaths() : List extracted from public registerFixes(registrar QuickFixActionRegistrar, reference PsiReference) : List in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "I believe it is a false positive",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private getJUnit4JarPaths() : List extracted from public addJUnit4Library(inTests boolean, currentModule Module) : void in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private getJUnit4JarPaths() : List extracted from public invoke(project Project, editor Editor, file PsiFile) : void in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix$1",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "I believe it is a false positive",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 36330
 }, {
@@ -23956,61 +24729,61 @@
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method public getInvocationUsagePercentage() : double renamed to private invocationsUsedPercentage() : double in class com.hazelcast.spi.impl.operationservice.impl.InvocationRegistry",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Dacvood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getName() : String from class com.hazelcast.internal.metrics.impl.GaugeImpl to public getName() : String from class com.hazelcast.internal.metrics.impl.AbstractGauge",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setup() : void from class com.hazelcast.internal.metrics.impl.GaugeImplTest to public setup() : void from class com.hazelcast.internal.metrics.impl.DoubleGaugeImplTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Seems false positive!",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getName() : void from class com.hazelcast.internal.metrics.impl.GaugeImplTest to public getName() : void from class com.hazelcast.internal.metrics.impl.LongGaugeImplTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Seems false positive!",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public run() : void from class com.hazelcast.internal.monitors.HealthMonitor to public run() : void from class com.hazelcast.internal.monitors.HealthMonitor.HealthMonitorThread",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute private delaySeconds : int from class com.hazelcast.internal.monitors.HealthMonitor to class com.hazelcast.internal.monitors.HealthMonitor.HealthMonitorThread",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute private delaySeconds : int from class com.hazelcast.internal.monitors.PerformanceMonitor to class com.hazelcast.internal.monitors.HealthMonitor.HealthMonitorThread",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute protected name : String from class com.hazelcast.internal.metrics.impl.GaugeImpl to class com.hazelcast.internal.metrics.impl.AbstractGauge",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 5604
 }, {
@@ -24189,9 +24962,9 @@
 		"type": "Move Method",
 		"description": "Move Method protected createMainModule(moduleType ModuleType) : Module from class com.intellij.testFramework.LightPlatformTestCase to public createMainModule(project Project) : Module from class com.intellij.testFramework.LightProjectDescriptor",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public setUpProject(project Project) : ProjectInfo extracted from private initProject(descriptor LightProjectDescriptor) : void in class com.intellij.testFramework.LightPlatformTestCase",
@@ -24258,44 +25031,44 @@
 		"type": "Move Method",
 		"description": "Move Method private initLoggers() : void from class org.jetbrains.jps.cmdline.BuildMain to public initLoggers() : void from class org.jetbrains.jps.cmdline.LogSetup",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private ensureLogConfigExists(logConfig File) : void from class org.jetbrains.jps.cmdline.BuildMain to private ensureLogConfigExists(logConfig File) : void from class org.jetbrains.jps.cmdline.LogSetup",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private LOG_CONFIG_FILE_NAME : String from class org.jetbrains.jps.cmdline.BuildMain to class org.jetbrains.jps.cmdline.LogSetup",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private LOG_FILE_MACRO : String from class org.jetbrains.jps.cmdline.BuildMain to class org.jetbrains.jps.cmdline.LogSetup",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private LOG_FILE_NAME : String from class org.jetbrains.jps.cmdline.BuildMain to class org.jetbrains.jps.cmdline.LogSetup",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private DEFAULT_LOGGER_CONFIG : String from class org.jetbrains.jps.cmdline.BuildMain to class org.jetbrains.jps.cmdline.LogSetup",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 15639
 }, {
@@ -24422,9 +25195,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private resetCtx() : void extracted from public setup() : void in class io.netty.handler.codec.http2.DefaultHttp2RemoteFlowControllerTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 1272
 }, {
@@ -24567,33 +25340,33 @@
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method public shutdown(config Config) : void renamed to public preShutdown() : void in class org.terasology.engine.subsystem.lwjgl.LwjglGraphics",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "seems FP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method private createSubsystemList() : Collection renamed to private populateSubsystems(builder TerasologyEngineBuilder) : void in class org.terasology.engine.Terasology",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Seems TP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "PullUpMethod",
+		"type": "Pull Up Method",
 		"description": "Pull Up Method public shutdown(config Config) : void from class org.terasology.engine.subsystem.headless.HeadlessAudio to package shutdown() : void from class org.terasology.engine.subsystem.EngineSubsystem",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PullUpMethod",
 		"description": "Pull Up Method public shutdown(config Config) : void from class org.terasology.engine.subsystem.headless.HeadlessInput to package shutdown() : void from class org.terasology.engine.subsystem.EngineSubsystem",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private validateServerIdentity() : boolean from class org.terasology.engine.TerasologyEngine to private validateServerIdentity() : boolean from class org.terasology.engine.subsystem.common.ConfigurationSubsystem",
@@ -24639,24 +25412,24 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private commonThreadPool : TaskMaster from class org.terasology.engine.subsystem.ThreadManagerSubsystem to class org.terasology.engine.subsystem.common.ThreadManagerSubsystem",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private logger : Logger from class org.terasology.engine.subsystem.ThreadManagerSubsystem to class org.terasology.engine.subsystem.common.ThreadManagerSubsystem",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private config : Config from class org.terasology.engine.TerasologyEngine to class org.terasology.engine.subsystem.common.ConfigurationSubsystem",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 2583
 }, {
@@ -28766,6 +29539,45 @@
 		"validation": "UKN",
 		"detectionTools": "RefDiff",
 		"validators": null
+	},{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private resolver : ResourceDescriptionResolver from class org.jboss.as.clustering.controller.AddStepHandler to class org.jboss.as.clustering.controller.ResourceDescriptor",
+	  "comment": null,
+	  "validation": "TP",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},
+	{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private resolver : ResourceDescriptionResolver from class org.jboss.as.clustering.controller.BoottimeAddStepHandler to class org.jboss.as.clustering.controller.ResourceDescriptor",
+	  "comment": null,
+	  "validation": "TP",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},
+	{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private resolver : ResourceDescriptionResolver from class org.jboss.as.clustering.controller.RemoveStepHandler to class org.jboss.as.clustering.controller.ResourceDescriptor",
+	  "comment": null,
+	  "validation": "TP",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},
+	{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private resolver : ResourceDescriptionResolver from class org.jboss.as.clustering.controller.RestartParentAddHandler to class org.jboss.as.clustering.controller.ResourceDescriptor",
+	  "comment": null,
+	  "validation": "TP",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
+	},
+	{
+	  "type": "Move Attribute",
+	  "description": "Move Attribute private resolver : ResourceDescriptionResolver from class org.jboss.as.clustering.controller.RestartParentRemoveHandler to class org.jboss.as.clustering.controller.ResourceDescriptor",
+	  "comment": null,
+	  "validation": "TP",
+	  "detectionTools": "RefactoringMiner",
+	  "validators": "Matin"
 	}],
 	"refDiffExecutionTime": 8243
 }, {

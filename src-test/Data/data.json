@@ -13874,7 +13874,7 @@
 	  "validation": "TBD",
 	  "detectionTools": "RefactoringMiner",
 	  "validators": "Matin"
-	},
+	}
 ],
 	"refDiffExecutionTime": 0
 }, {
@@ -14120,14 +14120,14 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private toJavaSyntax(unformatted String) : void from class org.mockito.internal.util.text.ValuePrinter to private toJavaSyntax(unformatted String) : void from class org.mockito.internal.matchers.text.ValuePrinter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class or package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public toString() : String from class org.mockito.internal.util.text.ValuePrinter to public toString() : String from class org.mockito.internal.matchers.text.ValuePrinter",
-		"comment": "Its a move class.",
+		"comment": "Move class or package",
 		"validation": "FP",
 		"detectionTools": "RefDiff",
 		"validators": "Matin"
@@ -14176,7 +14176,7 @@
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
-		"type": "Other",
+		"type": "Inline Method",
 		"description": "Inline Method public setCheckBoxRight(right boolean) : void inlined to public CheckBox(text String, style CheckBoxStyle) in class com.badlogic.gdx.scenes.scene2d.ui.CheckBox",
 		"comment": null,
 		"validation": "UKN",
@@ -16151,7 +16151,7 @@
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
-		"type": "InlineMethod",
+		"type": "Inline Method",
 		"description": "Inline Method private createSingleCell() : EditorCell inlined to public createCell() : EditorCell in class jetbrains.mps.lang.editor.cellProviders.SingleRoleCellProvider",
 		"comment": null,
 		"validation": "UKN",
@@ -18245,9 +18245,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private hideEmojiPopup(expectingKeyboard boolean) : void extracted from public onBackPressed() : void in class org.thoughtcrime.securesms.ConversationActivity",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private hideEmojiPopup(expectingKeyboard boolean) : void extracted from public onFocusChange(v View, hasFocus boolean) : void in class org.thoughtcrime.securesms.ConversationActivity.ComposeKeyPressedListener",
@@ -18780,7 +18780,7 @@
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
-		"type": "Other",
+		"type": "Move Class",
 		"description": "Move Class com.google.gwt.core.client.impl.Md5Digest moved to java.security.MessageDigest.Md5Digest",
 		"comment": null,
 		"validation": "UKN",
@@ -20186,9 +20186,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public producesNada() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public producesEmpty() : void in class feign.jaxrs.JAXRSContractTest",
@@ -20200,16 +20200,16 @@
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public consumesAddsContentTypeHeader() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public consumesNada() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public consumesEmpty() : void in class feign.jaxrs.JAXRSContractTest",
@@ -20228,9 +20228,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public tooManyBodies() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public emptyPathOnType() : void in class feign.jaxrs.JAXRSContractTest",
@@ -20256,9 +20256,9 @@
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public regexPathOnMethod() : void in class feign.jaxrs.JAXRSContractTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public withPathAndURIParams() : void in class feign.jaxrs.JAXRSContractTest",
@@ -22606,9 +22606,9 @@
 		"type": "Other",
 		"description": "Move And Rename Class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemXMLReader_7_0 moved to org.infinispan.server.jgroups.subsystem.JGroupsSubsystemXMLReader",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Class",
 		"description": "Move Class org.jboss.as.clustering.jgroups.TransportConfiguration.Topology moved to org.infinispan.server.jgroups.spi.TransportConfiguration.Topology",
@@ -22624,26 +22624,26 @@
 		"detectionTools": "RefDiff",
 		"validators": "Matin"
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method private parseProtocol(reader XMLExtendedStreamReader, stackAddress PathAddress, operations List) : void renamed to private parseStacks(reader XMLExtendedStreamReader, address PathAddress, operations Map) : void in class org.infinispan.server.jgroups.subsystem.JGroupsSubsystemXMLReader",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Both method name exist in both revisions",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method private parseProperty(reader XMLExtendedStreamReader, address PathAddress, operations List) : void renamed to private parseFork(reader XMLExtendedStreamReader, channelAddress PathAddress, operations Map) : void in class org.infinispan.server.jgroups.subsystem.JGroupsSubsystemXMLReader",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "The parseProperty exists in the target revision although it changed a lot. Since the callers of the method, call it in the target revision not the parseFork we can say it is a TP",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method private parseStack(reader XMLExtendedStreamReader, subsystemAddress PathAddress, operations List) : void renamed to private parseChannels(reader XMLExtendedStreamReader, address PathAddress, operations Map) : void in class org.infinispan.server.jgroups.subsystem.JGroupsSubsystemXMLReader",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getProtocolStackConfiguration() : ProtocolStackConfiguration from class org.jboss.as.clustering.jgroups.JChannelFactory to public getProtocolStackConfiguration() : ProtocolStackConfiguration from class org.infinispan.server.jgroups.JChannelFactory",
@@ -22689,10 +22689,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected getModelValidationConfiguration() : ValidationConfiguration from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemTestCase to protected getModelValidationConfiguration() : ValidationConfiguration from class org.infinispan.server.jgroups.subsystem.SubsystemParsingTestCase",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "This is a getter method which return same type for both classes as both implement same class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getProperties(protocol String) : Map from class org.jboss.as.clustering.jgroups.subsystem.ProtocolDefaultsService.Defaults to public getProperties(protocol String) : Map from class org.infinispan.server.jgroups.subsystem.ProtocolDefaultsBuilder",
@@ -22850,38 +22850,38 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected performRuntime(context OperationContext, operation ModelNode, model ModelNode) : void from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemRemove.OriginalSubsystemRemoveHandler to protected performRuntime(context OperationContext, operation ModelNode, model ModelNode) : void from class org.infinispan.server.jgroups.subsystem.StackRemoveHandler",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "This is a overriden method for both classes as both implement same class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testProtocolStackAddRemoveSequenceWithParameters() : void from class org.jboss.as.clustering.jgroups.subsystem.OperationSequencesTestCase to public testProtocolStackAddRemoveSequenceWithParameters() : void from class org.infinispan.server.jgroups.subsystem.OperationSequencesTestCase",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move class or package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected performRuntime(context OperationContext, operation ModelNode, model ModelNode, verificationHandler ServiceVerificationHandler, newControllers List) : void from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd to protected performRuntime(context OperationContext, operation ModelNode, model ModelNode) : void from class org.infinispan.server.jgroups.subsystem.StackAddHandler",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "This is a overriden method for both classes as both implement same class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public registerChildren(registration ManagementResourceRegistration) : void from class org.jboss.as.clustering.jgroups.subsystem.SaslResourceDefinition to public registerChildren(registration ManagementResourceRegistration) : void from class org.infinispan.server.jgroups.subsystem.ProtocolResourceDefinition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "The method exist in the class in both revisions",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private writeRelay(writer XMLExtendedStreamWriter, relay ModelNode, element Element) : void from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemXMLWriter to private writeRelay(writer XMLExtendedStreamWriter, relay ModelNode) : void from class org.infinispan.server.jgroups.subsystem.JGroupsSubsystemXMLWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class or package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private configureBindAddress(protocol ProtocolConfiguration, config org.jgroups.conf.ProtocolConfiguration, binding SocketBinding) : void from class org.jboss.as.clustering.jgroups.JChannelFactory to private configureBindAddress(introspector Introspector, config org.jgroups.conf.ProtocolConfiguration, binding SocketBinding) : void from class org.infinispan.server.jgroups.JChannelFactory",
@@ -22920,10 +22920,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public stop() : void from class org.jboss.as.clustering.jgroups.TimerSchedulerAdapter to public stop(context StopContext) : void from class org.infinispan.server.commons.service.concurrent.CachedThreadPoolExecutorServiceBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: FP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testProtocolStackRemoveRemoveSequence() : void from class org.jboss.as.clustering.jgroups.subsystem.OperationSequencesTestCase to public testProtocolStackRemoveRemoveSequence() : void from class org.infinispan.server.jgroups.subsystem.OperationSequencesTestCase",
@@ -22941,10 +22941,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private writeSasl(writer XMLExtendedStreamWriter, sasl ModelNode, element Element) : void from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemXMLWriter to private writeSasl(writer XMLExtendedStreamWriter, sasl ModelNode) : void from class org.infinispan.server.jgroups.subsystem.JGroupsSubsystemXMLWriter",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move Class or package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public registerAttributes(resourceRegistration ManagementResourceRegistration) : void from class org.jboss.as.clustering.jgroups.subsystem.ProtocolResourceDefinition to public registerAttributes(registration ManagementResourceRegistration) : void from class org.infinispan.server.jgroups.subsystem.ProtocolResourceDefinition",
@@ -22962,10 +22962,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected performRuntime(context OperationContext, operation ModelNode, model ModelNode, verificationHandler ServiceVerificationHandler, newControllers List) : void from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemAdd to protected performRuntime(context OperationContext, operation ModelNode, model ModelNode) : void from class org.infinispan.server.jgroups.subsystem.ChannelAddHandler",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Extends the same class so the method are in the same name and so similar",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testProtocolStackAddRemoveAddSequence() : void from class org.jboss.as.clustering.jgroups.subsystem.OperationSequencesTestCase to public testProtocolStackAddRemoveAddSequence() : void from class org.infinispan.server.jgroups.subsystem.OperationSequencesTestCase",
@@ -22976,24 +22976,24 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public isShutdown() : boolean from class org.jboss.as.clustering.jgroups.TimerSchedulerAdapter to public isShutdown() : boolean from class org.infinispan.server.commons.msc.DelegatingServiceContainer",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: FP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testDescribeHandler() : void from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemTestCase to public testDescribeHandler() : void from class org.infinispan.server.jgroups.subsystem.SubsystemParsingTestCase",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: FP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected performRuntime(context OperationContext, operation ModelNode, model ModelNode) : void from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackRemove to protected performRuntime(context OperationContext, operation ModelNode, model ModelNode) : void from class org.infinispan.server.jgroups.subsystem.StackRemoveHandler",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "move class or package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private createProtocol(protocolConfig ProtocolConfiguration) : org.jgroups.conf.ProtocolConfiguration from class org.jboss.as.clustering.jgroups.JChannelFactory to private createProtocol(stack ProtocolStackConfiguration, protocol ProtocolConfiguration) : org.jgroups.conf.ProtocolConfiguration from class org.infinispan.server.jgroups.JChannelFactory",
@@ -23004,52 +23004,52 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private parseTransport(reader XMLExtendedStreamReader, stackAddress PathAddress, operations List) : void from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemXMLReader_1_1 to private parseTransport(reader XMLExtendedStreamReader, stackAddress PathAddress, operations Map) : void from class org.infinispan.server.jgroups.subsystem.JGroupsSubsystemXMLReader",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it detect move from different class to this",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private parseTransport(reader XMLExtendedStreamReader, stackAddress PathAddress, operations List) : void from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemXMLReader_1_2 to private parseTransport(reader XMLExtendedStreamReader, stackAddress PathAddress, operations Map) : void from class org.infinispan.server.jgroups.subsystem.JGroupsSubsystemXMLReader",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it detect move from different class to this",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected getSubsystemXml() : String from class org.jboss.as.clustering.jgroups.subsystem.OperationTestCaseBase to protected getSubsystemXml() : String from class org.infinispan.server.jgroups.subsystem.OperationTestCaseBase",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "seems a move class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testProtocolReadWriteOperation() : void from class org.jboss.as.clustering.jgroups.subsystem.OperationsTestCase to public testProtocolReadWriteOperation() : void from class org.infinispan.server.jgroups.subsystem.OperationsTestCase",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "seems a move class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testTransportReadWriteOperation() : void from class org.jboss.as.clustering.jgroups.subsystem.OperationsTestCase to public testTransportReadWriteOperation() : void from class org.infinispan.server.jgroups.subsystem.OperationsTestCase",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "seems a move class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setTopology(site String, rack String, machine String) : void from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.Transport to public setTopology(site String, rack String, machine String) : TransportConfigurationBuilder from class org.infinispan.server.jgroups.subsystem.TransportConfigurationBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "implement the same Interface",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testParseAndMarshalModel() : void from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemTestCase to public testParseAndMarshalModel() : void from class org.infinispan.server.jgroups.subsystem.SubsystemParsingTestCase",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: FP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private parseTransport(reader XMLExtendedStreamReader, stackAddress ModelNode, operations List) : void from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemXMLReader_1_0 to private parseTransport(reader XMLExtendedStreamReader, stackAddress PathAddress, operations Map) : void from class org.infinispan.server.jgroups.subsystem.JGroupsSubsystemXMLReader",
@@ -23060,24 +23060,24 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public registerChildren(resourceRegistration ManagementResourceRegistration) : void from class org.jboss.as.clustering.jgroups.subsystem.StackResourceDefinition to public registerChildren(registration ManagementResourceRegistration) : void from class org.infinispan.server.jgroups.subsystem.StackResourceDefinition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testTransportReadWriteWithParameters() : void from class org.jboss.as.clustering.jgroups.subsystem.OperationsTestCase to public testTransportReadWriteWithParameters() : void from class org.infinispan.server.jgroups.subsystem.OperationsTestCase",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getProtocolStack() : List from class org.jboss.as.clustering.jgroups.JChannelFactory to public getProtocolStack() : List from class org.infinispan.server.jgroups.JChannelFactory",
 		"comment": "It is a move clas/package",
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public data() : Collection from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemTestCase to public data() : Collection from class org.infinispan.server.jgroups.subsystem.SubsystemParsingTestCase",
@@ -23268,26 +23268,26 @@
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute private name : String from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.Protocol to class org.infinispan.server.jgroups.subsystem.Attribute",
 		"comment": "it is a move class/package",
 		"validation": "FP",
 		"detectionTools": "RefDiff",
 		"validators": "Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute private name : String from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.Protocol to class org.infinispan.server.jgroups.subsystem.Element",
 		"comment": "the element is moved and the name were existed in the class",
 		"validation": "FP",
 		"detectionTools": "RefDiff",
 		"validators": "Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute private name : String from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.ProtocolStack to class org.infinispan.server.jgroups.ForkChannelFactory.ForkProtocolStackConfiguration",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: FP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private siteName : String from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.Relay to class org.infinispan.server.jgroups.subsystem.RelayConfigurationBuilder",
@@ -23305,17 +23305,17 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private clusterRole : String from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.Sasl to class org.infinispan.server.jgroups.subsystem.SaslConfigurationBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class or package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private mech : String from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.Sasl to class org.infinispan.server.jgroups.subsystem.SaslConfigurationBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class or package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private shared : boolean from class org.jboss.as.clustering.jgroups.subsystem.ProtocolStackAdd.Transport to class org.infinispan.server.jgroups.subsystem.TransportConfigurationBuilder",
@@ -23326,52 +23326,52 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package ATTRIBUTES : AttributeDefinition[] from class org.jboss.as.clustering.jgroups.subsystem.RelayResourceDefinition to class org.infinispan.server.jgroups.subsystem.SaslResourceDefinition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class or package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package CLUSTER_ROLE : SimpleAttributeDefinition from class org.jboss.as.clustering.jgroups.subsystem.SaslResourceDefinition to class org.infinispan.server.jgroups.subsystem.SaslResourceDefinition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class or package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package ATTRIBUTES : AttributeDefinition[] from class org.jboss.as.clustering.jgroups.subsystem.RemoteSiteResourceDefinition to class org.infinispan.server.jgroups.subsystem.SaslResourceDefinition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class or package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package SECURITY_REALM : SimpleAttributeDefinition from class org.jboss.as.clustering.jgroups.subsystem.SaslResourceDefinition to class org.infinispan.server.jgroups.subsystem.SaslResourceDefinition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class or package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute package MECH : SimpleAttributeDefinition from class org.jboss.as.clustering.jgroups.subsystem.SaslResourceDefinition to class org.infinispan.server.jgroups.subsystem.SaslResourceDefinition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class or package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute package ATTRIBUTES : AttributeDefinition[] from class org.jboss.as.clustering.jgroups.subsystem.RelayResourceDefinition to class org.infinispan.server.jgroups.subsystem.ChannelResourceDefinition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the attribute is not removed from original class. it initialized differently",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package ATTRIBUTES : AttributeDefinition[] from class org.jboss.as.clustering.jgroups.subsystem.RelayResourceDefinition to class org.infinispan.server.jgroups.subsystem.JGroupsSubsystemResourceDefinition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the attribute is not removed from original class. it initialized differently",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private elements : Map from class org.jboss.as.clustering.jgroups.subsystem.Element to class org.infinispan.server.jgroups.subsystem.Element",
@@ -24109,9 +24109,9 @@
 		"type": "Move Method",
 		"description": "Move Method public toStringTree(t Tree, nodeTextProvider TreeTextProvider) : String from class org.antlr.v4.runtime.tree.Trees to public toStringTree(t Tree, nodeTextProvider TreeTextProvider) : String from class org.antlr.v4.gui.Trees",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public writePS(t Tree, ruleNames List, fileName String) : void from class org.antlr.v4.runtime.tree.Trees to public writePS(t Tree, ruleNames List, fileName String) : void from class org.antlr.v4.gui.Trees",
@@ -24129,10 +24129,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public inspect(parser Parser) : Future from class org.antlr.v4.runtime.RuleContext to public inspect(t Tree, parser Parser) : Future from class org.antlr.v4.gui.Trees",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "null",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 2828
 }, {
@@ -24418,14 +24418,14 @@
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
-		"type": "RenameClass",
+		"type": "Rename Class",
 		"description": "Rename Class processing.app.contrib.UpdateContribListingPanel renamed to processing.app.contrib.UpdateContributionTab",
 		"comment": null,
 		"validation": "UKN",
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
-		"type": "MoveClass",
+		"type": "Move Class",
 		"description": "Move Class processing.app.contrib.UpdateContribListingPanel.MyTableModel moved to processing.app.contrib.UpdateContributionTab.UpdateContribListingPanel.MyTableModel",
 		"comment": null,
 		"validation": "UKN",
@@ -24992,9 +24992,9 @@
 		"type": "Move Method",
 		"description": "Move Method public testConcurrency() : void from class org.apache.cassandra.locator.DynamicEndpointSnitchTest to public testConcurrency() : void from class org.apache.cassandra.locator.DynamicEndpointSnitchLongTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 4060
 }, {
@@ -25370,38 +25370,38 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private validateServerIdentity() : boolean from class org.terasology.engine.TerasologyEngine to private validateServerIdentity() : boolean from class org.terasology.engine.subsystem.common.ConfigurationSubsystem",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: TP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private restartThreads() : void from class org.terasology.engine.subsystem.ThreadManagerSubsystem to private restartThreads() : void from class org.terasology.engine.subsystem.common.ThreadManagerSubsystem",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "move class or package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private stopThreads() : void from class org.terasology.engine.subsystem.ThreadManagerSubsystem to private stopThreads() : void from class org.terasology.engine.subsystem.common.ThreadManagerSubsystem",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "move class or package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public submitTask(name String, task Runnable) : void from class org.terasology.engine.subsystem.ThreadManagerSubsystem to public submitTask(name String, task Runnable) : void from class org.terasology.engine.subsystem.common.ThreadManagerSubsystem",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "move class or package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public isFullscreen() : boolean from class org.terasology.engine.TerasologyEngine to public isFullscreen() : boolean from class org.terasology.engine.subsystem.lwjgl.LwjglDisplayDevice",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public build() : TerasologyEngine extracted from public run() : void in class org.terasology.editor.TeraEd",
@@ -26484,12 +26484,12 @@
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method public runIterations(maxNrIterations int) : int renamed to public runInternalIteration() : int in class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: TP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected changeSignBasedOnFirstNoneZeroValue() : void extracted from public runIterations(maxNrIterations int) : int in class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi",
@@ -26671,131 +26671,131 @@
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
-		"type": "Other",
+		"type": "Rename Method",
 		"description": "Rename Method package buildUDF(name FunctionName, argNames List, argTypes List, returnType AbstractType, calledOnNullInput boolean, body String) : UDFunction renamed to package JavaBasedUDFunction(name FunctionName, argNames List, argTypes List, returnType AbstractType, calledOnNullInput boolean, body String) in class org.apache.cassandra.cql3.functions.JavaBasedUDFunction",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin:TP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method protected compose_int(protocolVersion int, argIndex int, value ByteBuffer) : int renamed to protected compose(argDataTypes DataType[], protocolVersion int, argIndex int, value ByteBuffer) : Object in class org.apache.cassandra.cql3.functions.UDFunction",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected compose_boolean(protocolVersion int, argIndex int, value ByteBuffer) : boolean from class org.apache.cassandra.cql3.functions.UDFunction to protected compose_boolean(protocolVersion int, argIndex int, value ByteBuffer) : boolean from class org.apache.cassandra.cql3.functions.JavaUDF",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin:TP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected compose_byte(protocolVersion int, argIndex int, value ByteBuffer) : byte from class org.apache.cassandra.cql3.functions.UDFunction to protected compose_byte(protocolVersion int, argIndex int, value ByteBuffer) : byte from class org.apache.cassandra.cql3.functions.JavaUDF",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin:TP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected compose_double(protocolVersion int, argIndex int, value ByteBuffer) : double from class org.apache.cassandra.cql3.functions.UDFunction to protected compose_double(protocolVersion int, argIndex int, value ByteBuffer) : double from class org.apache.cassandra.cql3.functions.JavaUDF",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin:TP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected compose_float(protocolVersion int, argIndex int, value ByteBuffer) : float from class org.apache.cassandra.cql3.functions.UDFunction to protected compose_float(protocolVersion int, argIndex int, value ByteBuffer) : float from class org.apache.cassandra.cql3.functions.JavaUDF",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin:TP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected compose_long(protocolVersion int, argIndex int, value ByteBuffer) : long from class org.apache.cassandra.cql3.functions.UDFunction to protected compose_long(protocolVersion int, argIndex int, value ByteBuffer) : long from class org.apache.cassandra.cql3.functions.JavaUDF",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin:TP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected compose_short(protocolVersion int, argIndex int, value ByteBuffer) : short from class org.apache.cassandra.cql3.functions.UDFunction to protected compose_short(protocolVersion int, argIndex int, value ByteBuffer) : short from class org.apache.cassandra.cql3.functions.JavaUDF",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin:TP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testJavascriptBadReturnType() : void from class org.apache.cassandra.cql3.validation.entities.UFTest to public testJavascriptBadReturnType() : void from class org.apache.cassandra.cql3.validation.entities.UFPureScriptTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: TP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testJavascriptFunction() : void from class org.apache.cassandra.cql3.validation.entities.UFTest to public testJavascriptFunction() : void from class org.apache.cassandra.cql3.validation.entities.UFPureScriptTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: TP, it can be a rename class too",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testJavascriptSimpleCollections() : void from class org.apache.cassandra.cql3.validation.entities.UFTest to public testJavascriptSimpleCollections() : void from class org.apache.cassandra.cql3.validation.entities.UFPureScriptTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: TP, it can be a rename class too",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testJavascriptThrow() : void from class org.apache.cassandra.cql3.validation.entities.UFTest to public testJavascriptThrow() : void from class org.apache.cassandra.cql3.validation.entities.UFPureScriptTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: TP, it can be a rename class too",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testJavascriptTupleType() : void from class org.apache.cassandra.cql3.validation.entities.UFTest to public testJavascriptTupleType() : void from class org.apache.cassandra.cql3.validation.entities.UFPureScriptTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: TP, it can be a rename class too",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testJavascriptUTCollections() : void from class org.apache.cassandra.cql3.validation.entities.UFTest to public testJavascriptUTCollections() : void from class org.apache.cassandra.cql3.validation.entities.UFPureScriptTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: TP, it can be a rename class too",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testScriptParamReturnTypes() : void from class org.apache.cassandra.cql3.validation.entities.UFTest to public testScriptParamReturnTypes() : void from class org.apache.cassandra.cql3.validation.entities.UFPureScriptTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: TP, it can be a rename class too",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testScriptReturnTypeCasting() : void from class org.apache.cassandra.cql3.validation.entities.UFTest to public testScriptReturnTypeCasting() : void from class org.apache.cassandra.cql3.validation.entities.UFPureScriptTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: TP, it can be a rename class too",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testJavascriptUserType() : void from class org.apache.cassandra.cql3.validation.entities.UFTest to public testJavascriptUserType() : void from class org.apache.cassandra.cql3.validation.entities.UFPureScriptTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: TP, it can be a rename class too",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public testJavascriptTupleTypeCollection() : void from class org.apache.cassandra.cql3.validation.entities.UFTest to public testJavascriptTupleTypeCollection() : void from class org.apache.cassandra.cql3.validation.entities.UFPureScriptTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: TP, it can be a rename class too",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 3887
 }, {

@@ -24,6 +24,7 @@ import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.FileASTRequestor;
 import org.eclipse.jdt.core.dom.IDocElement;
 import org.eclipse.jdt.core.dom.ITypeBinding;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.Javadoc;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Modifier;
@@ -92,11 +93,16 @@ public class UMLModelASTReader {
 		else
 			packageName = "";
 		
+		List<ImportDeclaration> imports = compilationUnit.imports();
+		List<String> importedTypes = new ArrayList<String>();
+		for(ImportDeclaration importDeclaration : imports) {
+			importedTypes.add(importDeclaration.getName().getFullyQualifiedName());
+		}
 		List<AbstractTypeDeclaration> topLevelTypeDeclarations = compilationUnit.types();
         for(AbstractTypeDeclaration abstractTypeDeclaration : topLevelTypeDeclarations) {
         	if(abstractTypeDeclaration instanceof TypeDeclaration) {
         		TypeDeclaration topLevelTypeDeclaration = (TypeDeclaration)abstractTypeDeclaration;
-        		processTypeDeclaration(topLevelTypeDeclaration, packageName, sourceFilePath);
+        		processTypeDeclaration(topLevelTypeDeclaration, packageName, sourceFilePath, importedTypes);
         	}
         }
 	}
@@ -113,7 +119,8 @@ public class UMLModelASTReader {
 		return typeToString;
 	}
 
-	private void processTypeDeclaration(TypeDeclaration typeDeclaration, String packageName, String sourceFile) {
+	private void processTypeDeclaration(TypeDeclaration typeDeclaration, String packageName, String sourceFile,
+			List<String> importedTypes) {
 		Javadoc javaDoc = typeDeclaration.getJavadoc();
 		if(javaDoc != null) {
 			List<TagElement> tags = javaDoc.tags();
@@ -130,7 +137,7 @@ public class UMLModelASTReader {
 			}
 		}
 		String className = typeDeclaration.getName().getFullyQualifiedName();
-		UMLClass umlClass = new UMLClass(packageName, className, sourceFile, typeDeclaration.isPackageMemberTypeDeclaration());
+		UMLClass umlClass = new UMLClass(packageName, className, sourceFile, typeDeclaration.isPackageMemberTypeDeclaration(), importedTypes);
 		
 		if(typeDeclaration.isInterface()) {
 			umlClass.setInterface(true);
@@ -205,7 +212,7 @@ public class UMLModelASTReader {
 		
 		TypeDeclaration[] types = typeDeclaration.getTypes();
 		for(TypeDeclaration type : types) {
-			processTypeDeclaration(type, umlClass.getName(), sourceFile);
+			processTypeDeclaration(type, umlClass.getName(), sourceFile, importedTypes);
 		}
 	}
 

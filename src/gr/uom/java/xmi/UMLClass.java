@@ -24,12 +24,13 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     private UMLType superclass;
     private List<UMLType> implementedInterfaces;
     private List<UMLAnonymousClass> anonymousClassList;
+    private List<String> importedTypes;
 
-    public UMLClass(String packageName, String name, boolean topLevel) {
-    	this(packageName, name, packageName.replace('.', '/') + '/' + name + ".java", topLevel);
+    public UMLClass(String packageName, String name, boolean topLevel, List<String> importedTypes) {
+    	this(packageName, name, packageName.replace('.', '/') + '/' + name + ".java", topLevel, importedTypes);
     }
     
-    public UMLClass(String packageName, String name, String sourceFile, boolean topLevel) {
+    public UMLClass(String packageName, String name, String sourceFile, boolean topLevel, List<String> importedTypes) {
     	this.packageName = packageName;
         this.name = name;
         if(packageName.equals(""))
@@ -74,6 +75,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
         this.superclass = null;
         this.implementedInterfaces = new ArrayList<UMLType>();
         this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
+        this.importedTypes = importedTypes;
     }
 
     public void addAnonymousClass(UMLAnonymousClass anonymousClass) {
@@ -161,6 +163,10 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
 
 	public List<UMLType> getImplementedInterfaces() {
 		return implementedInterfaces;
+	}
+
+	public List<String> getImportedTypes() {
+		return importedTypes;
 	}
 
 	public boolean containsOperationWithTheSameSignature(UMLOperation operation) {
@@ -421,5 +427,14 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
 		int distance = StringDistance.editDistance(s1, s2);
 		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
 		return normalized;
+	}
+
+	public boolean importsType(String targetClass) {
+		for(String importedType : getImportedTypes()) {
+			if(importedType.equals(targetClass) || targetClass.startsWith(getPackageName())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

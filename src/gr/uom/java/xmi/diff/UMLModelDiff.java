@@ -141,6 +141,21 @@ public class UMLModelDiff {
 			   }
 		   }
 	   }
+	   UMLClass removedClass = getRemovedClass(subclass);
+	   if(removedClass == null) {
+		   removedClass = looksLikeRemovedClass(UMLType.extractTypeObject(subclass));
+	   }
+	   if(removedClass != null) {
+		   UMLType superclass = removedClass.getSuperclass();
+		   if(superclass != null) {
+			   return checkInheritanceRelationship(superclass, finalSuperclass);
+		   }
+		   for(UMLType implementedInterface : removedClass.getImplementedInterfaces()) {
+			   if(checkInheritanceRelationship(implementedInterface, finalSuperclass)) {
+				   return true;
+			   }
+		   }
+	   }
 	   return false;
    }
 
@@ -160,6 +175,15 @@ public class UMLModelDiff {
 	   return null;
    }
 
+   private UMLClass looksLikeRemovedClass(UMLType type) {
+	   for(UMLClass umlClass : removedClasses) {
+	         if(umlClass.getName().endsWith("." + type.getClassType())) {
+	        	 return umlClass;
+	         }
+	   }
+	   return null;
+   }
+
    public UMLClass getAddedClass(String className) {
       for(UMLClass umlClass : addedClasses) {
          if(umlClass.getName().equals(className))
@@ -168,12 +192,12 @@ public class UMLModelDiff {
       return null;
    }
 
-   public boolean isRemovedClass(String className) {
+   public UMLClass getRemovedClass(String className) {
       for(UMLClass umlClass : removedClasses) {
          if(umlClass.getName().equals(className))
-            return true;
+            return umlClass;
       }
-      return false;
+      return null;
    }
 
    public String isRenamedClass(UMLClass umlClass) {
@@ -395,7 +419,8 @@ public class UMLModelDiff {
                         removedAttribute.getClassName(), addedAttribute.getClassName());
                   refactorings.add(pushDownAttribute);
                }
-               else {
+               else if(sourceClassImportsTargetClassAfterRefactoring(removedAttribute, addedAttribute) ||
+            		   targetClassImportsSourceClassBeforeRefactoring(removedAttribute, addedAttribute)) {
                   MoveAttributeRefactoring moveAttribute = new MoveAttributeRefactoring(addedAttribute,
                         removedAttribute.getClassName(), addedAttribute.getClassName());
                   refactorings.add(moveAttribute);
@@ -404,6 +429,46 @@ public class UMLModelDiff {
          }
       }
       return refactorings;
+   }
+
+   private boolean sourceClassImportsTargetClassAfterRefactoring(UMLAttribute removedAttribute, UMLAttribute addedAttribute) {
+	   String sourceClassName = removedAttribute.getClassName();
+	   String targetClassName = addedAttribute.getClassName();
+	   UMLClassDiff classDiff = getUMLClassDiff(sourceClassName);
+	   if(classDiff == null) {
+		   classDiff = getUMLClassDiff(UMLType.extractTypeObject(sourceClassName));
+	   }
+	   if(classDiff != null) {
+		   return classDiff.nextClassImportsType(targetClassName);
+	   }
+	   UMLClass removedClass = getRemovedClass(sourceClassName);
+	   if(removedClass == null) {
+		   removedClass = looksLikeRemovedClass(UMLType.extractTypeObject(sourceClassName));
+	   }
+	   if(removedClass != null) {
+		   return removedClass.importsType(targetClassName);
+	   }
+	   return false;
+   }
+
+   private boolean targetClassImportsSourceClassBeforeRefactoring(UMLAttribute removedAttribute, UMLAttribute addedAttribute) {
+	   String sourceClassName = removedAttribute.getClassName();
+	   String targetClassName = addedAttribute.getClassName();
+	   UMLClassDiff classDiff = getUMLClassDiff(targetClassName);
+	   if(classDiff == null) {
+		   classDiff = getUMLClassDiff(UMLType.extractTypeObject(targetClassName));
+	   }
+	   if(classDiff != null) {
+		   return classDiff.originalClassImportsType(sourceClassName);
+	   }
+	   UMLClass addedClass = getAddedClass(targetClassName);
+	   if(addedClass == null) {
+		   addedClass = looksLikeAddedClass(UMLType.extractTypeObject(targetClassName));
+	   }
+	   if(addedClass != null) {
+		   return addedClass.importsType(sourceClassName);
+	   }
+	   return false;
    }
 
    private List<UMLAttribute> getAddedAttributesInCommonClasses() {

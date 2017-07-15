@@ -745,4 +745,12 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	public int compareTo(UMLClassDiff classDiff) {
 		return this.className.compareTo(classDiff.className);
 	}
+
+	public boolean nextClassImportsType(String targetClass) {
+		return nextClass.importsType(targetClass);
+	}
+
+	public boolean originalClassImportsType(String targetClass) {
+		return originalClass.importsType(targetClass);
+	}
 }

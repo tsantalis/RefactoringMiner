@@ -103,9 +103,9 @@ public class UMLType implements Serializable {
     private String simpleNameOf(String name) {
     	int numberOfDots = 0;
     	for (int i = 0; i < name.length(); i++) {
-    	    if (name.charAt(i) == '.') {
-    	        numberOfDots++;
-    	    }
+    		if (name.charAt(i) == '.') {
+    			numberOfDots++;
+    		}
     	}
     	if(numberOfDots > 1) {
     		int dotPosition = name.lastIndexOf('.');

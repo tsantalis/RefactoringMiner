@@ -139,7 +139,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 	
-	public UMLOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper, UMLOperation addedOperation, Map<String, String> parameterToArgumentMap) {
+	public UMLOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper, UMLOperation addedOperation,
+			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2) {
 		this.operation1 = operationBodyMapper.operation1;
 		this.operation2 = addedOperation;
 		this.mappings = new ArrayList<AbstractCodeMapping>();
@@ -167,14 +168,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			List<StatementObject> leaves2 = composite2.getLeaves();
+			//replace parameters with arguments in leaves1
+			if(!parameterToArgumentMap1.isEmpty()) {
+				for(StatementObject leave1 : leaves1) {
+					leave1.replaceParametersWithArguments(parameterToArgumentMap1);
+				}
+			}
 			//replace parameters with arguments in leaves2
-			if(!parameterToArgumentMap.isEmpty()) {
+			if(!parameterToArgumentMap2.isEmpty()) {
 				for(StatementObject leave2 : leaves2) {
-					leave2.replaceParametersWithArguments(parameterToArgumentMap);
+					leave2.replaceParametersWithArguments(parameterToArgumentMap2);
 				}
 			}
 			//compare leaves from T1 with leaves from T2
-			processLeaves(leaves1, leaves2, parameterToArgumentMap);
+			processLeaves(leaves1, leaves2, parameterToArgumentMap2);
 
 			List<CompositeStatementObject> innerNodes1 = operationBodyMapper.getNonMappedInnerNodesT1();
 			//adding innerNodes that were mapped with replacements
@@ -193,14 +200,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
 			innerNodes2.remove(composite2);
+			//replace parameters with arguments in innerNodes1
+			if(!parameterToArgumentMap1.isEmpty()) {
+				for(CompositeStatementObject innerNode1 : innerNodes1) {
+					innerNode1.replaceParametersWithArguments(parameterToArgumentMap1);
+				}
+			}
 			//replace parameters with arguments in innerNode2
-			if(!parameterToArgumentMap.isEmpty()) {
+			if(!parameterToArgumentMap2.isEmpty()) {
 				for(CompositeStatementObject innerNode2 : innerNodes2) {
-					innerNode2.replaceParametersWithArguments(parameterToArgumentMap);
+					innerNode2.replaceParametersWithArguments(parameterToArgumentMap2);
 				}
 			}
 			//compare inner nodes from T1 with inner nodes from T2
-			processInnerNodes(innerNodes1, innerNodes2, parameterToArgumentMap);
+			processInnerNodes(innerNodes1, innerNodes2, parameterToArgumentMap2);
 			
 			//match expressions in inner nodes from T1 with leaves from T2
 			List<AbstractExpression> expressionsT1 = new ArrayList<AbstractExpression>();
@@ -209,7 +222,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					expressionsT1.add(expression);
 				}
 			}
-			processLeaves(expressionsT1, leaves2, parameterToArgumentMap);
+			processLeaves(expressionsT1, leaves2, parameterToArgumentMap2);
 			// TODO remove non-mapped inner nodes from T1 corresponding to mapped expressions
 			
 			//remove the leaves that were mapped with replacement, if they are not mapped again for a second time

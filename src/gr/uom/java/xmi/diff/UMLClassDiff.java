@@ -671,7 +671,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 							}
 						}
 						if(parameterTypesMatch(originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters)) {
-							UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap);
+							UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, new LinkedHashMap<String, String>(), parameterToArgumentMap);
 							operationBodyMapper.getMappings();
 							int mappings = operationBodyMapper.mappingsWithoutBlocks();
 							if(mappings > 0 && (mappings > operationBodyMapper.nonMappedElementsT2() || operationBodyMapper.exactMatches() > 0)) {
@@ -752,5 +752,9 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 
 	public boolean originalClassImportsType(String targetClass) {
 		return originalClass.importsType(targetClass);
+	}
+	
+	public List<UMLAttribute> originalClassAttributesOfType(String targetClass) {
+		return originalClass.attributesOfType(targetClass);
 	}
 }

@@ -101,11 +101,17 @@ public class UMLType implements Serializable {
     }
 
     private String simpleNameOf(String name) {
-		int dotPosition = name.lastIndexOf('.');
-		if (dotPosition < 0) {
-			return name;
-		}
-		return name.substring(dotPosition + 1);
+    	int numberOfDots = 0;
+    	for (int i = 0; i < name.length(); i++) {
+    		if (name.charAt(i) == '.') {
+    			numberOfDots++;
+    		}
+    	}
+    	if(numberOfDots > 1) {
+    		int dotPosition = name.lastIndexOf('.');
+    		return name.substring(dotPosition + 1);
+    	}
+    	return name;
 	}
 
 	public static UMLType extractTypeObject(String qualifiedName) {

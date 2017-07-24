@@ -437,4 +437,14 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
 		}
 		return false;
 	}
+
+	public List<UMLAttribute> attributesOfType(String targetClass) {
+		List<UMLAttribute> attributesOfType = new ArrayList<UMLAttribute>();
+		for(UMLAttribute attribute : attributes) {
+			if(targetClass.endsWith("." + attribute.getType().getClassType())) {
+				attributesOfType.add(attribute);
+			}
+		}
+		return attributesOfType;
+	}
 }

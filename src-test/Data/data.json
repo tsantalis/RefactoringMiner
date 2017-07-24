@@ -911,14 +911,14 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public onType(typeDescription TypeDescription) : TypeVariableProxy from class net.bytebuddy.dynamic.TargetType.TypeVariableProxy.Extractor to public onType(typeDescription TypeDescription) : TypeVariableProxy from class net.bytebuddy.description.type.generic.GenericTypeDescription.Visitor.Substitutor.ForRawType",
-		"comment": "Second Opinion, Seems FP since the Extractor is removerd and ForRawType is a new class. Moreover the method is the same since both class implement the same extends the same class",
+		"comment": "Second Opinion, Seems FP since the Extractor is removerd and ForRawType is a new class. Moreover the method is the same since both class implement the same extends the same class | Davood: If you accept moving from a class which no longer exists to a new class, this is TP. Otherwise FP. However, I would mark the entire thing as a rename class. All the methods/attributes of the removed class is being repeated (with small modifications) in the new class.",
 		"validation": "TBD",
 		"detectionTools": "RefDiff",
 		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public onMethod(methodDescription MethodDescription) : TypeVariableProxy from class net.bytebuddy.dynamic.TargetType.TypeVariableProxy.Extractor to public onMethod(methodDescription MethodDescription) : TypeVariableProxy from class net.bytebuddy.description.type.generic.GenericTypeDescription.Visitor.Substitutor.ForRawType",
-		"comment": "Second Opinion, Seems FP since the Extractor is removerd and ForRawType is a new class. Moreover the method is the same since both class implement the same extends the same class",
+		"comment": "Second Opinion, Seems FP since the Extractor is removerd and ForRawType is a new class. Moreover the method is the same since both class implement the same extends the same class | Davood: same as above",
 		"validation": "TBD",
 		"detectionTools": "RefDiff",
 		"validators": "Matin"
@@ -946,14 +946,14 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private substitutionMatcher : ElementMatcher from class net.bytebuddy.dynamic.TargetType.TypeVariableProxy.Extractor to class net.bytebuddy.description.type.generic.GenericTypeDescription.Visitor.Substitutor.ForRawType",
-		"comment": "Second Opinion. Seems FP since the Extractor is removerd and ForRawType is a new class. Moreover the attribute is the same since both class implement the same extends the same class",
+		"comment": "Second Opinion. Seems FP since the Extractor is removerd and ForRawType is a new class. Moreover the attribute is the same since both class implement the same extends the same class |  Davood: If you accept moving from a class which no longer exists to a new class, this is TP. Otherwise FP",
 		"validation": "TBD",
 		"detectionTools": "RefDiff",
 		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private substitute : TypeDescription from class net.bytebuddy.dynamic.TargetType.TypeVariableProxy.Extractor to class net.bytebuddy.description.type.generic.GenericTypeDescription.Visitor.Substitutor.ForRawType",
-		"comment": "Second Opinion. Seems FP since the Extractor is removerd and ForRawType is a new class. Moreover the attribute is the same since both class implement the same extends the same class",
+		"comment": "Second Opinion. Seems FP since the Extractor is removerd and ForRawType is a new class. Moreover the attribute is the same since both class implement the same extends the same class | Davood: If you accept moving from a class which no longer exists to a new class, this is TP. Otherwise FP",
 		"validation": "TBD",
 		"detectionTools": "RefDiff",
 		"validators": "Matin"
@@ -1080,8 +1080,8 @@
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method private isNonSuspendable(clazz Class, methodName String) : boolean renamed to private isSuspendable(clazz Class, methodName String) : boolean in class co.paralleluniverse.fibers.Fiber",
-		"comment": "The method is name is changed since the functionality is changed",
-		"validation": "TBD",
+		"comment": "The method is name is changed since the functionality is changed | Davood: The method is called in (almost) the same place than the older one, I mark it as TP",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
 		"validators": "Matin"
 	}, {

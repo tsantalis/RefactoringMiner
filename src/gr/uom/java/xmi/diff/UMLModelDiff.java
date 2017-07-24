@@ -714,17 +714,22 @@ public class UMLModelDiff {
                if(addedOperationInvocation != null) {
             	  List<String> arguments = addedOperationInvocation.getArguments();
             	  List<String> parameters = addedOperation.getParameterNameList();
-            	  Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
+            	  Map<String, String> parameterToArgumentMap2 = new LinkedHashMap<String, String>();
             	  //special handling for methods with varargs parameter for which no argument is passed in the matching invocation
 				  int size = Math.min(arguments.size(), parameters.size());
             	  for(int i=0; i<size; i++) {
-            		  parameterToArgumentMap.put(parameters.get(i), arguments.get(i));
+            		  parameterToArgumentMap2.put(parameters.get(i), arguments.get(i));
             	  }
-                  UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap);
+            	  UMLClassDiff umlClassDiff = getUMLClassDiff(mapper.getOperation1().getClassName());
+            	  List<UMLAttribute> attributes = umlClassDiff.originalClassAttributesOfType(addedOperation.getClassName());
+            	  Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
+            	  for(UMLAttribute attribute : attributes) {
+            		  parameterToArgumentMap1.put(attribute.getName() + ".", "");
+            	  }
+                  UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap1, parameterToArgumentMap2);
                   operationBodyMapper.getMappings();
                   int mappings = operationBodyMapper.mappingsWithoutBlocks();
-                  if(mappings > 0 && (mappings > operationBodyMapper.nonMappedElementsT2() || operationBodyMapper.exactMatches() > 0) &&
-                        mapper.getOperation1().isDelegate() == null && mapper.getOperation2().isDelegate() != null) {
+                  if(mappings > 0 && (mappings > operationBodyMapper.nonMappedElementsT2() || operationBodyMapper.exactMatches() > 0)) {
                      ExtractAndMoveOperationRefactoring extractOperationRefactoring =
                            new ExtractAndMoveOperationRefactoring(operationBodyMapper);
                      refactorings.add(extractOperationRefactoring);

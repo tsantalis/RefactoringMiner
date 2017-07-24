@@ -1982,6 +1982,13 @@
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
 		"validators": null
+	}, {
+		"type": "Move Method",
+		"description": "Move Method public error(string String, pos int, reason String) : IllegalStateException from class io.undertow.util.PredicateTokeniser to public error(string String, pos int, reason String) : IllegalStateException from class io.undertow.server.handlers.builder.PredicatedHandlersParser",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 0
 }, {
@@ -5613,6 +5620,13 @@
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
+		"type": "Move Method",
+		"description": "Move Method public getBaseGraph() : Graph from class com.graphhopper.storage.LevelGraphStorage to public getBaseGraph() : Graph from class com.graphhopper.routing.util.TestAlgoCollector.AlgoHelperEntry",
+		"comment": "the method exist in the base class but the class is renamed so I think RefactoringMiner cannot find it in the new revision",
+		"validation": "FP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Matin"
+	},{
 		"type": "Move Method",
 		"description": "Move Method package internalEdgeDisconnect(edgeToRemove int, edgeToUpdatePointer long, baseNode int, adjNode int) : long from class com.graphhopper.storage.GraphHopperStorage to package internalEdgeDisconnect(edgeToRemove int, edgeToUpdatePointer long, baseNode int, adjNode int) : long from class com.graphhopper.storage.BaseGraph",
 		"comment": null,
@@ -9824,6 +9838,37 @@
 		"validation": "TP",
 		"detectionTools": "RefDiff",
 		"validators": "Matin"
+	},{
+	"type": "Move Method",
+	"description": "Move Method private loadType(name String, resolve boolean) : Class from class org.drools.core.common.ProjectClassLoader.InternalTypesClassLoader to public loadType(name String, resolve boolean) : Class from class org.drools.core.common.ProjectClassLoader.DefaultInternalTypesClassLoader",
+	"comment": "",
+	"validation": "TP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Attribute",
+	"description": "Move Attribute private projectClassLoader : ProjectClassLoader from class org.drools.core.common.ProjectClassLoader.InternalTypesClassLoader to class org.drools.core.common.ProjectClassLoader.DefaultInternalTypesClassLoader",
+	"comment": "",
+	"validation": "TP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Method",
+	"description": "Move Method protected loadClass(name String, resolve boolean) : Class from class org.drools.core.common.ProjectClassLoader.InternalTypesClassLoader to protected loadClass(name String, resolve boolean) : Class from class org.drools.core.common.ProjectClassLoader.DefaultInternalTypesClassLoader",
+	"comment": "",
+	"validation": "TP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Method",
+	"description": "Move Method public defineClass(name String, bytecode byte[]) : Class from class org.drools.core.common.ProjectClassLoader.InternalTypesClassLoader to public defineClass(name String, bytecode byte[]) : Class from class org.drools.core.common.ProjectClassLoader.DefaultInternalTypesClassLoader",
+	"comment": "",
+	"validation": "TP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
 	}, {
 		"type": "PushDownAttribute",
 		"description": "Push Down Attribute private projectClassLoader : ProjectClassLoader from class org.drools.core.common.ProjectClassLoader.InternalTypesClassLoader to class org.drools.core.common.ProjectClassLoader.DefaultInternalTypesClassLoader",
@@ -16238,6 +16283,21 @@
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
 		"validators": null
+	},{
+	"type": "Move Method",
+	"description": "Move Method public optionMatches(options List, namePattern String, valuePattern String) : boolean from class com.squareup.wire.internal.Util to public optionMatches(namePattern String, valuePattern String) : boolean from class com.squareup.wire.model.Options",
+	"comment": "",
+	"validation": "TP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Method",
+	"description": "Move Method package resolveFieldPath(name String, fullyQualifiedNames Set) : String[] from class com.squareup.wire.model.Linker to package resolveFieldPath(name String, fullyQualifiedNames Set) : String[] from class com.squareup.wire.model.Options",
+	"comment": "",
+	"validation": "TP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 0
 }, {
@@ -16388,6 +16448,13 @@
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
+	}, {
+		"type": "Push Attribute",
+		"description": "Move Attribute private connectionFactory : HazelcastConnectionFactory from class com.hazelcast.jca.AbstractDeploymentTest to class com.hazelcast.jca.ConnectionFactoryImplTest",
+		"comment": "Matin: FP",
+		"validation": "TBD",
+		"detectionTools": "RefactoringMiner, RefDiff",
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 2426
 }, {
@@ -17242,6 +17309,93 @@
 		"validation": "TP",
 		"detectionTools": "RefDiff",
 		"validators": "Matin"
+	},{
+	"type": "",
+	"description": "Move Attribute private INITIAL_CAPACITY : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"comment": "Extract Superclass",
+	"validation": "FP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "",
+	"description": "Move Method private listInternal() : List from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to private listInternal() : List from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"comment": "Extract Superclass",
+	"validation": "FP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "",
+	"description": "Move Attribute private resultSize : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"comment": "Extract Superclass",
+	"validation": "FP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "",
+	"description": "Move Attribute protected maxResults : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"comment": "Extract Superclass",
+	"validation": "FP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "",
+	"description": "Move Attribute private booleanFilterNormalizer : BooleanFilterNormalizer from class org.infinispan.objectfilter.impl.BaseMatcher to class org.infinispan.objectfilter.impl.syntax.BooleShannonExpansionTest",
+	"comment": "Extract Superclass",
+	"validation": "FP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "",
+	"description": "Move Method private ensureAccessPermissions(cache AdvancedCache) : void from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to private ensureAccessPermissions(cache AdvancedCache) : void from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"comment": "Extract Superclass",
+	"validation": "FP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Method",
+	"description": "Move Method public list() : List from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to public list() : List from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"comment": "Extract Superclass",
+	"validation": "FP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Attribute",
+	"description": "Move Attribute protected cache : AdvancedCache from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"comment": "Extract Superclass",
+	"validation": "FP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Attribute",
+	"description": "Move Attribute protected startOffset : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"comment": "Extract Superclass",
+	"validation": "FP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Method",
+	"description": "Move Method public getResultSize() : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to public getResultSize() : int from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"comment": "Extract Superclass",
+	"validation": "FP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Attribute",
+	"description": "Move Attribute private results : List from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"comment": "Extract Superclass",
+	"validation": "FP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 6361
 }, {
@@ -24183,6 +24337,53 @@
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
+	"type": "Move Method",
+	"description": "Move Method public save(parser Parser, fileName String) : void from class org.antlr.v4.runtime.RuleContext to public save(t Tree, parser Parser, fileName String) : void from class org.antlr.v4.gui.Trees",
+	"comment": "",
+	"validation": "TP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Method",
+	"description": "Move Method public writePS(t Tree, ruleNames List, fileName String, fontName String, fontSize int) : void from class org.antlr.v4.runtime.tree.Trees to public writePS(t Tree, ruleNames List, fileName String, fontName String, fontSize int) : void from class org.antlr.v4.gui.Trees",
+	"comment": "",
+	"validation": "TP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Method",
+	"description": "Move Method public inspect(ruleNames List) : Future from class org.antlr.v4.runtime.RuleContext to public inspect(t Tree, ruleNames List) : Future from class org.antlr.v4.gui.Trees",
+	"comment": "",
+	"validation": "TP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Method",
+	"description": "Move Method public save(parser Parser, fileName String, fontName String, fontSize int) : void from class org.antlr.v4.runtime.RuleContext to public save(t Tree, parser Parser, fileName String, fontName String, fontSize int) : void from class org.antlr.v4.gui.Trees",
+	"comment": "",
+	"validation": "TP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Method",
+	"description": "Move Method public inspect(parser Parser) : Future from class org.antlr.v4.runtime.RuleContext to public inspect(t Tree, parser Parser) : Future from class org.antlr.v4.gui.Trees",
+	"comment": "",
+	"validation": "TP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Method",
+	"description": "Move Method public getPS(t Tree, ruleNames List, fontName String, fontSize int) : String from class org.antlr.v4.runtime.tree.Trees to public getPS(t Tree, ruleNames List, fontName String, fontSize int) : String from class org.antlr.v4.gui.Trees",
+	"comment": "",
+	"validation": "TP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},{
 		"type": "Move Method",
 		"description": "Move Method public inspect(parser Parser) : Future from class org.antlr.v4.runtime.RuleContext to public inspect(t Tree, parser Parser) : Future from class org.antlr.v4.gui.Trees",
 		"comment": "null",
@@ -24840,6 +25041,45 @@
 		"validation": "FP",
 		"detectionTools": "RefDiff",
 		"validators": "Matin"
+	},{
+	"type": "Move Attribute",
+	"description": "Move Attribute private operationService : InternalOperationService from class com.hazelcast.internal.monitors.HealthMonitor to class com.hazelcast.internal.monitors.PerformanceLogFile",
+	"comment": "",
+	"validation": "TBD",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Attribute",
+	"description": "Move Attribute private delaySeconds : int from class com.hazelcast.internal.monitors.PerformanceMonitor to class com.hazelcast.internal.monitors.HealthMonitor.HealthMonitorThread",
+	"comment": "",
+	"validation": "TBD",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Attribute",
+	"description": "Move Attribute private operationService : InternalOperationService from class com.hazelcast.internal.monitors.HealthMonitor to class com.hazelcast.internal.monitors.PerformanceMonitorTest",
+	"comment": "",
+	"validation": "TBD",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Attribute",
+	"description": "Move Attribute private delaySeconds : int from class com.hazelcast.internal.monitors.HealthMonitor to class com.hazelcast.internal.monitors.PerformanceMonitor.MonitorThread",
+	"comment": "",
+	"validation": "TBD",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
+	},
+	{
+	"type": "Move Attribute",
+	"description": "Move Attribute private delaySeconds : int from class com.hazelcast.internal.monitors.PerformanceMonitor to class com.hazelcast.internal.monitors.PerformanceMonitor.MonitorThread",
+	"comment": "",
+	"validation": "TBD",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 5604
 }, {
@@ -27374,72 +27614,79 @@
 		"type": "Extract Method",
 		"description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public getAllRegionBlocks(container IContainer, blocks Set) : void in class jadx.core.utils.RegionUtils",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public isRegionContainsBlock(container IContainer, block BlockNode) : boolean in class jadx.core.utils.RegionUtils",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public getBlockContainer(container IContainer, block BlockNode) : IContainer in class jadx.core.utils.RegionUtils",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public isDominatedBy(dom BlockNode, cont IContainer) : boolean in class jadx.core.utils.RegionUtils",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public hasPathThroughBlock(block BlockNode, cont IContainer) : boolean in class jadx.core.utils.RegionUtils",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public hasExitEdge(container IContainer) : boolean in class jadx.core.utils.RegionUtils",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public getLastInsn(container IContainer) : InsnNode in class jadx.core.utils.RegionUtils",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public hasExitBlock(container IContainer) : boolean in class jadx.core.utils.RegionUtils",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public insnsCount(container IContainer) : int in class jadx.core.utils.RegionUtils",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public notEmpty(container IContainer) : boolean in class jadx.core.utils.RegionUtils",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
+	}, {
+		"type": "Move Method",
+		"description": "Move Method public hashCode() : int from class jadx.core.codegen.CodeWriter to public hashCode() : int from class jadx.api.JavaField",
+		"comment": null,
+		"validation": "FP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 975
 }, {
@@ -27850,9 +28097,9 @@
 		"type": "Move Method",
 		"description": "Move Method private readAttribute(entry Map.Entry, attribute String) : Comparable from class com.hazelcast.query.Predicates to package readAttribute(entry Map.Entry, attribute String) : Comparable from class com.hazelcast.query.impl.predicates.AttributeUtils",
 		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
-		"validators": null
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner, RefDiff",
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 3556
 }, {
@@ -27899,6 +28146,13 @@
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
 		"validators": null
+	},{
+		"type": "Move Attribute",
+		"description": "Move Attribute private edgeStore : EdgeStore from class org.apache.giraph.comm.ServerData to class org.apache.giraph.ooc.DiskBackedPartitionStore",
+		"comment": "Matin: FP",
+		"validation": "TBD",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public deletePartitionFiles(id Integer) : void from class org.apache.giraph.partition.DiskBackedPartitionStore to public deletePartitionFiles(id Integer) : void from class org.apache.giraph.ooc.DiskBackedPartitionStore",
@@ -29650,9 +29904,9 @@
 		"type": "Move Method",
 		"description": "Move Method private checkLazyField(entity EntityWithLazyProperty, em EntityManager, expected byte[]) : void from class org.hibernate.jpa.test.callbacks.CallbacksTest to private checkLazyField(entity EntityWithLazyProperty, em EntityManager, expected byte[]) : void from class org.hibernate.jpa.test.instrument.cases.TestLazyPropertyOnPreUpdateExecutable",
 		"comment": null,
-		"validation": "UKN",
-		"detectionTools": "RefDiff",
-		"validators": null
+		"validation": "TP",
+		"detectionTools": "RefDiff, RefactoringMiner",
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 5200
 }, {
@@ -29687,7 +29941,7 @@
 		"type": "Extract Method",
 		"description": "Extract Method private getInterruptedExceptionOrNull() : InterruptedException extracted from package assertUnsubscribeIsInvoked(method String, blockingAction Action1) : void in class rx.observables.BlockingObservableTest.InterruptionTests",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}],
@@ -29737,220 +29991,220 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private bb(value Object, type AbstractType) : ByteBuffer from class org.apache.cassandra.AbstractReadCommandBuilder to private bb(value Object, type AbstractType) : ByteBuffer from class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public columns(columns String[]) : AbstractReadCommandBuilder from class org.apache.cassandra.AbstractReadCommandBuilder to public columns(columns String[]) : AbstractReadCommandBuilder from class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public filterOn(column String, op Operator, value Object) : AbstractReadCommandBuilder from class org.apache.cassandra.AbstractReadCommandBuilder to public filterOn(column String, op Operator, value Object) : AbstractReadCommandBuilder from class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private forKeys(collectionType AbstractType) : AbstractType from class org.apache.cassandra.AbstractReadCommandBuilder to private forKeys(collectionType AbstractType) : AbstractType from class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private forValues(collectionType AbstractType) : AbstractType from class org.apache.cassandra.AbstractReadCommandBuilder to private forValues(collectionType AbstractType) : AbstractType from class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public fromExcl(values Object[]) : AbstractReadCommandBuilder from class org.apache.cassandra.AbstractReadCommandBuilder to public fromExcl(values Object[]) : AbstractReadCommandBuilder from class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public fromIncl(values Object[]) : AbstractReadCommandBuilder from class org.apache.cassandra.AbstractReadCommandBuilder to public fromIncl(values Object[]) : AbstractReadCommandBuilder from class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public includeRow(values Object[]) : AbstractReadCommandBuilder from class org.apache.cassandra.AbstractReadCommandBuilder to public includeRow(values Object[]) : AbstractReadCommandBuilder from class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected makeFilter() : ClusteringIndexFilter from class org.apache.cassandra.AbstractReadCommandBuilder to protected makeFilter() : ClusteringIndexFilter from class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected makeLimits() : DataLimits from class org.apache.cassandra.AbstractReadCommandBuilder to protected makeLimits() : DataLimits from class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public reverse() : AbstractReadCommandBuilder from class org.apache.cassandra.AbstractReadCommandBuilder to public reverse() : AbstractReadCommandBuilder from class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public toExcl(values Object[]) : AbstractReadCommandBuilder from class org.apache.cassandra.AbstractReadCommandBuilder to public toExcl(values Object[]) : AbstractReadCommandBuilder from class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public toIncl(values Object[]) : AbstractReadCommandBuilder from class org.apache.cassandra.AbstractReadCommandBuilder to public toIncl(values Object[]) : AbstractReadCommandBuilder from class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public withLimit(newLimit int) : AbstractReadCommandBuilder from class org.apache.cassandra.AbstractReadCommandBuilder to public withLimit(newLimit int) : AbstractReadCommandBuilder from class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public withNowInSeconds(nowInSec int) : AbstractReadCommandBuilder from class org.apache.cassandra.AbstractReadCommandBuilder to public withNowInSeconds(nowInSec int) : AbstractReadCommandBuilder from class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public withPagingLimit(newLimit int) : AbstractReadCommandBuilder from class org.apache.cassandra.AbstractReadCommandBuilder to public withPagingLimit(newLimit int) : AbstractReadCommandBuilder from class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setCompactStorage() : void from class org.apache.cassandra.cql3.statements.CreateTableStatement.RawStatement to public setCompactStorage() : void from class org.apache.cassandra.cql3.statements.CFProperties",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setOrdering(alias ColumnIdentifier, reversed boolean) : void from class org.apache.cassandra.cql3.statements.CreateTableStatement.RawStatement to public setOrdering(alias ColumnIdentifier, reversed boolean) : void from class org.apache.cassandra.cql3.statements.CFProperties",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public build() : ReadCommand from class org.apache.cassandra.AbstractReadCommandBuilder.PartitionRangeBuilder to public build() : ReadCommand from class org.apache.cassandra.db.AbstractReadCommandBuilder.PartitionRangeBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public fromKeyExcl(values Object[]) : PartitionRangeBuilder from class org.apache.cassandra.AbstractReadCommandBuilder.PartitionRangeBuilder to public fromKeyExcl(values Object[]) : PartitionRangeBuilder from class org.apache.cassandra.db.AbstractReadCommandBuilder.PartitionRangeBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public toKeyExcl(values Object[]) : PartitionRangeBuilder from class org.apache.cassandra.AbstractReadCommandBuilder.PartitionRangeBuilder to public toKeyExcl(values Object[]) : PartitionRangeBuilder from class org.apache.cassandra.db.AbstractReadCommandBuilder.PartitionRangeBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public fromKeyIncl(values Object[]) : PartitionRangeBuilder from class org.apache.cassandra.AbstractReadCommandBuilder.PartitionRangeBuilder to public fromKeyIncl(values Object[]) : PartitionRangeBuilder from class org.apache.cassandra.db.AbstractReadCommandBuilder.PartitionRangeBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public toKeyIncl(values Object[]) : PartitionRangeBuilder from class org.apache.cassandra.AbstractReadCommandBuilder.PartitionRangeBuilder to public toKeyIncl(values Object[]) : PartitionRangeBuilder from class org.apache.cassandra.db.AbstractReadCommandBuilder.PartitionRangeBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected makeColumnFilter() : ColumnFilter from class org.apache.cassandra.AbstractReadCommandBuilder to protected makeColumnFilter() : ColumnFilter from class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private clusterings : NavigableSet from class org.apache.cassandra.AbstractReadCommandBuilder to class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private cqlLimit : int from class org.apache.cassandra.AbstractReadCommandBuilder to class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private lowerClusteringBound : Slice.Bound from class org.apache.cassandra.AbstractReadCommandBuilder to class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package, lemme know if it is a TP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private pagingLimit : int from class org.apache.cassandra.AbstractReadCommandBuilder to class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private upperClusteringBound : Slice.Bound from class org.apache.cassandra.AbstractReadCommandBuilder to class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private endKey : DecoratedKey from class org.apache.cassandra.AbstractReadCommandBuilder.PartitionRangeBuilder to class org.apache.cassandra.db.AbstractReadCommandBuilder.PartitionRangeBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private startKey : DecoratedKey from class org.apache.cassandra.AbstractReadCommandBuilder.PartitionRangeBuilder to class org.apache.cassandra.db.AbstractReadCommandBuilder.PartitionRangeBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute protected cfs : ColumnFamilyStore from class org.apache.cassandra.AbstractReadCommandBuilder to class org.apache.cassandra.db.AbstractReadCommandBuilder",
@@ -29961,38 +30215,38 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private startInclusive : boolean from class org.apache.cassandra.AbstractReadCommandBuilder.PartitionRangeBuilder to class org.apache.cassandra.db.AbstractReadCommandBuilder.PartitionRangeBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private endInclusive : boolean from class org.apache.cassandra.AbstractReadCommandBuilder.PartitionRangeBuilder to class org.apache.cassandra.db.AbstractReadCommandBuilder.PartitionRangeBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute protected nowInSeconds : int from class org.apache.cassandra.AbstractReadCommandBuilder to class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute protected columns : Set from class org.apache.cassandra.AbstractReadCommandBuilder to class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute protected filter : RowFilter from class org.apache.cassandra.AbstractReadCommandBuilder to class org.apache.cassandra.db.AbstractReadCommandBuilder",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class/package",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 11578
 }, {
@@ -30038,33 +30292,33 @@
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
-		"type": "PullUpMethod",
+		"type": "Pull Up Method",
 		"description": "Pull Up Method protected logDebug(message String, arguments Object[]) : void from class cascading.stats.tez.TezNodeStats to protected logDebug(message String, arguments Object[]) : void from class cascading.stats.CascadingStats",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move but couldnt find a hierarchy",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "PullUpMethod",
+		"type": "Pull Up Method",
 		"description": "Pull Up Method protected logInfo(message String, arguments Object[]) : void from class cascading.stats.tez.TezNodeStats to protected logInfo(message String, arguments Object[]) : void from class cascading.stats.CascadingStats",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move but couldnt find a hierarchy",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PullUpMethod",
 		"description": "Pull Up Method protected logWarn(message String, arguments Object[]) : void from class cascading.stats.tez.TezNodeStats to protected logWarn(message String, arguments Object[]) : void from class cascading.stats.CascadingStats",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move but couldnt find a hierarchy",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "PullUpMethod",
 		"description": "Pull Up Method private getPrefix() : String from class cascading.stats.tez.TezNodeStats to private getPrefix() : String from class cascading.stats.CascadingStats",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move but couldnt find a hierarchy",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected logError(message String, throwable Throwable) : void extracted from public recordChildStats() : void in class cascading.stats.hadoop.BaseHadoopNodeStats",
@@ -30075,10 +30329,10 @@
 	}, {
 		"type": "PullUpAttribute",
 		"description": "Pull Up Attribute private prefixID : String from class cascading.stats.tez.TezNodeStats to class cascading.stats.CascadingStats",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "It is a move but couldnt find a hierarchy",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 1441
 }, {
@@ -30239,61 +30493,61 @@
 		"detectionTools": "RefDiff",
 		"validators": null
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method public visit(entry Entry) : boolean renamed to public encoderHeader(name CharSequence, value CharSequence, buf ByteBuf) : void in class io.netty.handler.codec.http.HttpHeadersEncoder",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method public convertName(name CharSequence) : CharSequence renamed to public validate(name CharSequence) : void in class io.netty.handler.codec.http.DefaultLastHttpContent.TrailingHttpHeaders.TrailingHttpHeadersNameValidator",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method private convertName(name T) : T renamed to private validateName(name T) : void in class io.netty.handler.codec.DefaultHeaders",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: FP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method public headersWithSameValuesShouldBeEquivalent() : void renamed to public headersWithDifferentNamesAndValuesShouldNotBeEquivalent() : void in class io.netty.handler.codec.DefaultBinaryHeadersTest",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: FP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public remove() : void from class io.netty.handler.codec.DefaultHeaders.KeyValueHeaderIterator to public remove() : void from class io.netty.handler.codec.DefaultHeaders.NameValueIterator",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Implement the same interfacec. Matin: FP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private isList(value Object) : boolean extracted from public get(name T) : T in class io.netty.handler.codec.DefaultHeaders",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: FP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private isList(value Object) : boolean extracted from public getAndRemove(name T) : T in class io.netty.handler.codec.DefaultHeaders",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: FP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private isList(value Object) : boolean extracted from public getAll(name T) : List in class io.netty.handler.codec.DefaultHeaders",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: FP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "InlineMethod",
 		"description": "Inline Method private setAllVisitor() : EntryVisitor inlined to public setAll(headers Headers) : Headers in class io.netty.handler.codec.DefaultHeaders",
@@ -30676,6 +30930,13 @@
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
+	},{
+		"type": "Move Method",
+		"description": "Move Method protected convertListToInterfaceList(internalResult List, interfaceType Class) : List from class org.jbpm.process.audit.JPAAuditLogService to public convertListToInterfaceList(internalResult List, interfaceType Class) : List from class org.jbpm.query.jpa.impl.QueryCriteriaUtil",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Matin"
 	}, {
 		"type": "Rename Class",
 		"description": "Rename Class org.jbpm.services.task.commands.TaskQueryDataCommand renamed to org.jbpm.services.task.commands.TaskQueryWhereCommand",

@@ -517,28 +517,10 @@ public class UMLModelDiff {
          Set<UMLClass> subclassSet = new LinkedHashSet<UMLClass>();
          String addedClassName = addedClass.getName();
          for(UMLGeneralization addedGeneralization : addedGeneralizations) {
-            String parent = addedGeneralization.getParent();
-            UMLClass subclass = addedGeneralization.getChild();
-			if(looksLikeSameType(parent, addedClassName) && topLevelOrSameOuterClass(addedClass, subclass) && getAddedClass(subclass.getName()) == null) {
-            	UMLClassDiff subclassDiff = getUMLClassDiff(subclass.getName());
-            	if(subclassDiff != null) {
-            		for(UMLOperation superclassOperation : addedClass.getOperations()) {
-            			UMLOperation removedOperation = subclassDiff.containsRemovedOperationWithTheSameSignature(superclassOperation);
-						if(removedOperation != null) {
-							subclassDiff.getRemovedOperations().remove(removedOperation);
-            				this.refactorings.add(new PullUpOperationRefactoring(removedOperation, superclassOperation));
-            			}
-            		}
-            		for(UMLAttribute superclassAttribute : addedClass.getAttributes()) {
-            			UMLAttribute removedAttribute = subclassDiff.containsRemovedAttributeWithTheSameSignature(superclassAttribute);
-            			if(removedAttribute != null) {
-            				subclassDiff.getRemovedAttributes().remove(removedAttribute);
-            				this.refactorings.add(new PullUpAttributeRefactoring(superclassAttribute, removedAttribute.getClassName(), superclassAttribute.getClassName()));
-            			}
-            		}
-            	}
-            	subclassSet.add(subclass);
-            }
+        	 processAddedGeneralization(addedClass, subclassSet, addedGeneralization);
+         }
+         for(UMLGeneralizationDiff generalizationDiff : generalizationDiffList) {
+             processAddedGeneralization(addedClass, subclassSet, generalizationDiff.getAddedGeneralization());
          }
          for(UMLRealization addedRealization : addedRealizations) {
             String supplier = addedRealization.getSupplier();
@@ -563,6 +545,31 @@ public class UMLModelDiff {
          }
       }
       return refactorings;
+   }
+
+   private void processAddedGeneralization(UMLClass addedClass, Set<UMLClass> subclassSet, UMLGeneralization addedGeneralization) {
+	   String parent = addedGeneralization.getParent();
+	   UMLClass subclass = addedGeneralization.getChild();
+	   if(looksLikeSameType(parent, addedClass.getName()) && topLevelOrSameOuterClass(addedClass, subclass) && getAddedClass(subclass.getName()) == null) {
+		   UMLClassDiff subclassDiff = getUMLClassDiff(subclass.getName());
+		   if(subclassDiff != null) {
+			   for(UMLOperation superclassOperation : addedClass.getOperations()) {
+				   UMLOperation removedOperation = subclassDiff.containsRemovedOperationWithTheSameSignature(superclassOperation);
+				   if(removedOperation != null) {
+					   subclassDiff.getRemovedOperations().remove(removedOperation);
+					   this.refactorings.add(new PullUpOperationRefactoring(removedOperation, superclassOperation));
+				   }
+			   }
+			   for(UMLAttribute superclassAttribute : addedClass.getAttributes()) {
+				   UMLAttribute removedAttribute = subclassDiff.containsRemovedAttributeWithTheSameSignature(superclassAttribute);
+				   if(removedAttribute != null) {
+					   subclassDiff.getRemovedAttributes().remove(removedAttribute);
+					   this.refactorings.add(new PullUpAttributeRefactoring(superclassAttribute, removedAttribute.getClassName(), superclassAttribute.getClassName()));
+				   }
+			   }
+		   }
+		   subclassSet.add(subclass);
+	   }
    }
 
    private boolean topLevelOrSameOuterClass(UMLClass class1, UMLClass class2) {

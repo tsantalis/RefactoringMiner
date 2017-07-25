@@ -911,17 +911,17 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public onType(typeDescription TypeDescription) : TypeVariableProxy from class net.bytebuddy.dynamic.TargetType.TypeVariableProxy.Extractor to public onType(typeDescription TypeDescription) : TypeVariableProxy from class net.bytebuddy.description.type.generic.GenericTypeDescription.Visitor.Substitutor.ForRawType",
-		"comment": "Second Opinion, Seems FP since the Extractor is removerd and ForRawType is a new class. Moreover the method is the same since both class implement the same extends the same class | Davood: If you accept moving from a class which no longer exists to a new class, this is TP. Otherwise FP. However, I would mark the entire thing as a rename class. All the methods/attributes of the removed class is being repeated (with small modifications) in the new class.",
-		"validation": "TBD",
+		"comment": "Second Opinion, Seems FP since the Extractor is removerd and ForRawType is a new class. Moreover the method is the same since both class implement the same extends the same class | Davood: If you accept moving from a class which no longer exists to a new class, this is TP. Otherwise FP. However, I would mark the entire thing as a rename class. All the methods/attributes of the removed class is being repeated (with small modifications) in the new class. Matin, Davood: FP, condidate move and rename class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": "Matin"
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public onMethod(methodDescription MethodDescription) : TypeVariableProxy from class net.bytebuddy.dynamic.TargetType.TypeVariableProxy.Extractor to public onMethod(methodDescription MethodDescription) : TypeVariableProxy from class net.bytebuddy.description.type.generic.GenericTypeDescription.Visitor.Substitutor.ForRawType",
 		"comment": "Second Opinion, Seems FP since the Extractor is removerd and ForRawType is a new class. Moreover the method is the same since both class implement the same extends the same class | Davood: same as above",
-		"validation": "TBD",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": "Matin"
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method public resolve(typeDescription GenericTypeDescription, substitute TypeDescription) : GenericTypeDescription extracted from public prepare(instrumentedType InstrumentedType) : InstrumentedType in class net.bytebuddy.implementation.FieldAccessor.ForNamedField.PreparationHandler.FieldDefiner",
@@ -947,16 +947,16 @@
 		"type": "MoveAttribute",
 		"description": "Move Attribute private substitutionMatcher : ElementMatcher from class net.bytebuddy.dynamic.TargetType.TypeVariableProxy.Extractor to class net.bytebuddy.description.type.generic.GenericTypeDescription.Visitor.Substitutor.ForRawType",
 		"comment": "Second Opinion. Seems FP since the Extractor is removerd and ForRawType is a new class. Moreover the attribute is the same since both class implement the same extends the same class |  Davood: If you accept moving from a class which no longer exists to a new class, this is TP. Otherwise FP",
-		"validation": "TBD",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": "Matin"
+		"validators": "Matin, Davood"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private substitute : TypeDescription from class net.bytebuddy.dynamic.TargetType.TypeVariableProxy.Extractor to class net.bytebuddy.description.type.generic.GenericTypeDescription.Visitor.Substitutor.ForRawType",
 		"comment": "Second Opinion. Seems FP since the Extractor is removerd and ForRawType is a new class. Moreover the attribute is the same since both class implement the same extends the same class | Davood: If you accept moving from a class which no longer exists to a new class, this is TP. Otherwise FP",
-		"validation": "TBD",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": "Matin"
+		"validators": "Matin, Davood"
 	}],
 	"refDiffExecutionTime": 4590
 }, {
@@ -1083,7 +1083,7 @@
 		"comment": "The method is name is changed since the functionality is changed | Davood: The method is called in (almost) the same place than the older one, I mark it as TP",
 		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": "Matin"
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private emitInstrumentedAnn() : void extracted from public visitEnd() : void in class co.paralleluniverse.fibers.instrument.InstrumentClass",
@@ -6260,37 +6260,37 @@
 		"type": "RenameMethod",
 		"description": "Rename Method protected createGraph(em EncodingManager, is3D boolean) : LevelGraph renamed to protected createGHStorage(em EncodingManager, is3D boolean) : GraphHopperStorage in class com.graphhopper.routing.ch.DijkstraBidirectionCHTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method package createGraph(dir Directory, encodingManager EncodingManager, is3D boolean) : LevelGraph renamed to package createGHStorage(dir Directory, encodingManager EncodingManager, is3D boolean) : GraphHopperStorage in class com.graphhopper.storage.index.LocationIndexTreeForLevelGraphTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method package guessStorage(g Graph, outdir Directory, encodingManager EncodingManager) : GraphStorage renamed to public newStorage(store GraphHopperStorage) : GraphHopperStorage in class com.graphhopper.util.GHUtility",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Matin: FP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method package createGraph() : LevelGraph renamed to package createGHStorage() : GraphHopperStorage in class com.graphhopper.routing.ch.PrepareContractionHierarchiesTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "RenameMethod",
 		"description": "Rename Method public newGraph(dir Directory, is3D boolean) : GraphStorage renamed to public newGHStorage(dir Directory, is3D boolean) : GraphHopperStorage in class com.graphhopper.storage.GraphHopperStorageCHTest",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getAdjNode() : int from class com.graphhopper.storage.GraphHopperStorage.AllEdgeIterator to public getAdjNode() : int from class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
@@ -6315,17 +6315,17 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getAdjNode() : int from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to public getAdjNode() : int from class com.graphhopper.storage.BaseGraph.EdgeIterable",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getBaseNode() : int from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to public getBaseNode() : int from class com.graphhopper.storage.BaseGraph.EdgeIterable",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getEdge() : int from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to public getEdge() : int from class com.graphhopper.storage.BaseGraph.EdgeIterable",
@@ -6336,24 +6336,24 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private getEdgePointer() : long from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to private getEdgePointer() : long from class com.graphhopper.storage.BaseGraph.EdgeIterable",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public toString() : String from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to public toString() : String from class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "original class moved to antoher class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public next() : boolean from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to public next() : boolean from class com.graphhopper.storage.BaseGraph.EdgeIterable",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public detach(reverseArg boolean) : EdgeIteratorState from class com.graphhopper.storage.GraphHopperStorage.AllEdgeIterator to public detach(reverseArg boolean) : EdgeIteratorState from class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
@@ -6364,10 +6364,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public detach(reverseArg boolean) : EdgeIteratorState from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to public detach(reverseArg boolean) : EdgeIteratorState from class com.graphhopper.storage.BaseGraph.EdgeIterable",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method protected setEdgeId(edgeId int) : void from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to protected setEdgeId(edgeId int) : void from class com.graphhopper.storage.BaseGraph.EdgeIterable",
@@ -6385,17 +6385,17 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setName(name String) : EdgeIteratorState from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to public setName(name String) : EdgeIteratorState from class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "the original Class moved to another class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public next() : boolean from class com.graphhopper.storage.GraphHopperStorage.AllEdgeIterator to public next() : boolean from class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setBaseNode(baseNode int) : EdgeIterator from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to public setBaseNode(baseNode int) : EdgeIterator from class com.graphhopper.storage.BaseGraph.EdgeIterable",
@@ -6406,10 +6406,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getEdge() : int from class com.graphhopper.storage.GraphHopperStorage.AllEdgeIterator to public getEdge() : int from class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getName() : String from class com.graphhopper.storage.GraphHopperStorage.AllEdgeIterator to public getName() : String from class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
@@ -6427,10 +6427,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setDistance(dist double) : EdgeIteratorState from class com.graphhopper.storage.GraphHopperStorage.AllEdgeIterator to public setDistance(dist double) : EdgeIteratorState from class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setDistance(dist double) : EdgeIteratorState from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to public setDistance(dist double) : EdgeIteratorState from class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
@@ -6455,17 +6455,17 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getAdditionalField() : int from class com.graphhopper.storage.GraphHopperStorage.AllEdgeIterator to public getAdditionalField() : int from class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getAdditionalField() : int from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to public getAdditionalField() : int from class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "original class moved to another class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setAdditionalField(value int) : EdgeIteratorState from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to public setAdditionalField(value int) : EdgeIteratorState from class com.graphhopper.storage.BaseGraph.EdgeIterable",
@@ -6490,10 +6490,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public copyPropertiesTo(edge EdgeIteratorState) : EdgeIteratorState from class com.graphhopper.storage.GraphHopperStorage.AllEdgeIterator to public copyPropertiesTo(edge EdgeIteratorState) : EdgeIteratorState from class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public copyPropertiesTo(edge EdgeIteratorState) : EdgeIteratorState from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to public copyPropertiesTo(edge EdgeIteratorState) : EdgeIteratorState from class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
@@ -6504,10 +6504,10 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public fetchWayGeometry(mode int) : PointList from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to public fetchWayGeometry(mode int) : PointList from class com.graphhopper.storage.BaseGraph.EdgeIterable",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public fetchWayGeometry(type int) : PointList from class com.graphhopper.storage.GraphHopperStorage.AllEdgeIterator to public fetchWayGeometry(type int) : PointList from class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
@@ -6532,24 +6532,24 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setFlags(fl long) : EdgeIteratorState from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to public setFlags(fl long) : EdgeIteratorState from class com.graphhopper.storage.BaseGraph.EdgeIterable",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setFlags(flags long) : EdgeIteratorState from class com.graphhopper.storage.GraphHopperStorage.AllEdgeIterator to public setFlags(flags long) : EdgeIteratorState from class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected getGraph(ghStorage GraphHopperStorage) : Graph extracted from public testTwoWeightsPerEdge2() : void in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected getGraph(ghStorage GraphHopperStorage) : Graph extracted from public testWithCoordinates() : void in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
@@ -6630,87 +6630,87 @@
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private nodeA : int from class com.graphhopper.storage.GraphHopperStorage.AllEdgeIterator to class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private nodeB : int from class com.graphhopper.storage.GraphHopperStorage.AllEdgeIterator to class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package baseNode : int from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to class com.graphhopper.storage.BaseGraph.EdgeIterable",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package edgeId : int from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to class com.graphhopper.storage.BaseGraph.EdgeIterable",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package nextEdge : int from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to class com.graphhopper.storage.BaseGraph.EdgeIterable",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private reverse : boolean from class com.graphhopper.storage.GraphHopperStorage.AllEdgeIterator to class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute protected edgePointer : long from class com.graphhopper.storage.GraphHopperStorage.AllEdgeIterator to class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private maxEdges : long from class com.graphhopper.storage.GraphHopperStorage.AllEdgeIterator to class com.graphhopper.storage.BaseGraph.AllEdgeIterator",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package reverse : boolean from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to class com.graphhopper.storage.BaseGraph.EdgeIterable",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package filter : EdgeFilter from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to class com.graphhopper.storage.BaseGraph.EdgeIterable",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package edgePointer : long from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to class com.graphhopper.storage.BaseGraph.EdgeIterable",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute package adjNode : int from class com.graphhopper.storage.GraphHopperStorage.EdgeIterable to class com.graphhopper.storage.BaseGraph.EdgeIterable",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Move class refactoring",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 3012
 }, {
@@ -16449,7 +16449,7 @@
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
-		"type": "Push Attribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute private connectionFactory : HazelcastConnectionFactory from class com.hazelcast.jca.AbstractDeploymentTest to class com.hazelcast.jca.ConnectionFactoryImplTest",
 		"comment": "Matin: FP",
 		"validation": "TBD",
@@ -17310,7 +17310,7 @@
 		"detectionTools": "RefDiff",
 		"validators": "Matin"
 	},{
-	"type": "",
+	"type": "Move Attribute",
 	"description": "Move Attribute private INITIAL_CAPACITY : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
 	"comment": "Extract Superclass",
 	"validation": "FP",
@@ -17318,7 +17318,7 @@
 	"validators": "Matin"
 	},
 	{
-	"type": "",
+	"type": "Move Method",
 	"description": "Move Method private listInternal() : List from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to private listInternal() : List from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
 	"comment": "Extract Superclass",
 	"validation": "FP",
@@ -17326,7 +17326,7 @@
 	"validators": "Matin"
 	},
 	{
-	"type": "",
+	"type": "Move Attribute",
 	"description": "Move Attribute private resultSize : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
 	"comment": "Extract Superclass",
 	"validation": "FP",
@@ -17334,7 +17334,7 @@
 	"validators": "Matin"
 	},
 	{
-	"type": "",
+	"type": "Move Attribute",
 	"description": "Move Attribute protected maxResults : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
 	"comment": "Extract Superclass",
 	"validation": "FP",
@@ -17342,7 +17342,7 @@
 	"validators": "Matin"
 	},
 	{
-	"type": "",
+	"type": "Move Attribute",
 	"description": "Move Attribute private booleanFilterNormalizer : BooleanFilterNormalizer from class org.infinispan.objectfilter.impl.BaseMatcher to class org.infinispan.objectfilter.impl.syntax.BooleShannonExpansionTest",
 	"comment": "Extract Superclass",
 	"validation": "FP",
@@ -17350,7 +17350,7 @@
 	"validators": "Matin"
 	},
 	{
-	"type": "",
+	"type": "Move Method",
 	"description": "Move Method private ensureAccessPermissions(cache AdvancedCache) : void from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to private ensureAccessPermissions(cache AdvancedCache) : void from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
 	"comment": "Extract Superclass",
 	"validation": "FP",

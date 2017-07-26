@@ -26109,30 +26109,30 @@
 		"type": "Extract Method",
 		"description": "Extract Method private print(buff CharSequence, cursorPos int) : int extracted from public putString(str CharSequence) : void in class jline.console.ConsoleReader",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Davood, Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private print(buff CharSequence, start int, end int) : int extracted from private drawBuffer(clear int) : void in class jline.console.ConsoleReader",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin, Davood"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private rawPrint(c char, num int) : void extracted from private drawBuffer(clear int) : void in class jline.console.ConsoleReader",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private rawPrint(c char, num int) : void extracted from private clearAhead(num int, delta int) : void in class jline.console.ConsoleReader",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 460
 }, {
@@ -27327,17 +27327,17 @@
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private checkEnumConstructorModifiers(ast DetailAST) : void extracted from public visitToken(ast DetailAST) : void in class com.puppycrawl.tools.checkstyle.checks.modifier.RedundantModifierCheck",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "Can be TP",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private isEnumMember(ast DetailAST) : boolean extracted from public visitToken(ast DetailAST) : void in class com.puppycrawl.tools.checkstyle.checks.modifier.RedundantModifierCheck",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 2079
 }, {
@@ -27491,16 +27491,16 @@
 		"type": "Extract Method",
 		"description": "Extract Method private assertHasRelationships(node long) : void extracted from private deleteRel1(rel long, prop1 DefinedProperty, prop2 DefinedProperty, prop3 DefinedProperty, firstNode long, secondNode long, relType int) : void in class org.neo4j.kernel.impl.store.TestNeoStore",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private assertHasRelationships(node long) : void extracted from private deleteRel2(rel long, prop1 DefinedProperty, prop2 DefinedProperty, prop3 DefinedProperty, firstNode long, secondNode long, relType int) : void in class org.neo4j.kernel.impl.store.TestNeoStore",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "InlineMethod",
 		"description": "Inline Method public acquireLabelCursor(labels long[]) : Cursor inlined to public labels() : Cursor in class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor",
@@ -27567,19 +27567,19 @@
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method public commitCreateTable(tableHandle OutputTableHandle, fragments Collection) : void renamed to public commitInsert(session Session, tableHandle InsertTableHandle, fragments Collection) : void in class com.facebook.presto.metadata.MetadataManager",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "RenameMethod",
+		"type": "Rename Method",
 		"description": "Rename Method public commitInsert(tableHandle InsertTableHandle, fragments Collection) : void renamed to public commitCreateTable(session Session, tableHandle OutputTableHandle, fragments Collection) : void in class com.facebook.presto.metadata.MetadataManager",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 9866
 }, {
@@ -28156,276 +28156,276 @@
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public deletePartitionFiles(id Integer) : void from class org.apache.giraph.partition.DiskBackedPartitionStore to public deletePartitionFiles(id Integer) : void from class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private getEdgesPath(partitionId Integer) : String from class org.apache.giraph.partition.DiskBackedPartitionStore to private getEdgesPath(partitionId Integer) : String from class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getNumPartitions() : int from class org.apache.giraph.partition.DiskBackedPartitionStore to public getNumPartitions() : int from class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getPartitionIds() : Iterable from class org.apache.giraph.partition.DiskBackedPartitionStore to public getPartitionIds() : Iterable from class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private getPartitionPath(partitionId Integer) : String from class org.apache.giraph.partition.DiskBackedPartitionStore to private getPartitionPath(partitionId Integer) : String from class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private getVerticesPath(partitionId Integer) : String from class org.apache.giraph.partition.DiskBackedPartitionStore to private getVerticesPath(partitionId Integer) : String from class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public hasPartition(id Integer) : boolean from class org.apache.giraph.partition.DiskBackedPartitionStore to public hasPartition(id Integer) : boolean from class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private readOutEdges(in DataInput, partition Partition) : void from class org.apache.giraph.partition.DiskBackedPartitionStore to private readOutEdges(in DataInput, partition Partition) : void from class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private readVertexData(in DataInput, vertex Vertex) : void from class org.apache.giraph.partition.DiskBackedPartitionStore to private readVertexData(in DataInput, vertex Vertex) : void from class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public toString() : String from class org.apache.giraph.partition.DiskBackedPartitionStore to public toString() : String from class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private writeOutEdges(output DataOutput, vertex Vertex) : void from class org.apache.giraph.partition.DiskBackedPartitionStore to private writeOutEdges(output DataOutput, vertex Vertex) : void from class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private writeVertexData(output DataOutput, vertex Vertex) : void from class org.apache.giraph.partition.DiskBackedPartitionStore to private writeVertexData(output DataOutput, vertex Vertex) : void from class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getEdgeCount() : long from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to public getEdgeCount() : long from class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getId() : int from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to public getId() : int from class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getPartition() : Partition from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to public getPartition() : Partition from class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getPrevVertexCount() : long from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to public getPrevVertexCount() : long from class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getState() : State from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to public getState() : State from class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getVertexCount() : long from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to public getVertexCount() : long from class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setPartition(partition Partition) : void from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to public setPartition(partition Partition) : void from class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setPrevVertexCount(vertexCount long) : void from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to public setPrevVertexCount(vertexCount long) : void from class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setState(state State) : void from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to public setState(state State) : void from class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setActive(partition Partition) : void from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to public setActive(partition Partition) : void from class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public setOnDisk(partition Partition) : void from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to public setOnDisk() : void from class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public toString() : String from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to public toString() : String from class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getPartitionEdgeCount(partitionId int) : long from class org.apache.giraph.partition.DiskBackedPartitionStore to public getPartitionEdgeCount(partitionId Integer) : long from class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method public getPartitionVertexCount(partitionId int) : long from class org.apache.giraph.partition.DiskBackedPartitionStore to public getPartitionVertexCount(partitionId Integer) : long from class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private offloadPartition(meta MetaPartition) : void from class org.apache.giraph.partition.DiskBackedPartitionStore to private offloadPartition(meta MetaPartition) : void from class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Move Method",
 		"description": "Move Method private putPartition(meta MetaPartition) : void from class org.apache.giraph.partition.DiskBackedPartitionStore to public putPartition(partition Partition) : void from class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
 		"description": "Extract Method private getPartition(partitionStore PartitionStore, partitionId int) : Partition extracted from public testReadWrite(partitionStore PartitionStore, conf ImmutableClassesGiraphConfiguration) : void in class org.apache.giraph.partition.TestPartitionStores",
 		"comment": null,
-		"validation": "UKN",
+		"validation": "TBD",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private basePaths : String[] from class org.apache.giraph.partition.DiskBackedPartitionStore to class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private hasher : HashFunction from class org.apache.giraph.partition.DiskBackedPartitionStore to class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute private edgeCount : long from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute private id : int from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private state : State from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private partition : Partition from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private prevVertexCount : long from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private vertexCount : long from class org.apache.giraph.partition.DiskBackedPartitionStore.MetaPartition to class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private conf : ImmutableClassesGiraphConfiguration from class org.apache.giraph.partition.DiskBackedPartitionStore to class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}, {
 		"type": "MoveAttribute",
 		"description": "Move Attribute private context : Context from class org.apache.giraph.partition.DiskBackedPartitionStore to class org.apache.giraph.ooc.DiskBackedPartitionStore",
-		"comment": null,
-		"validation": "UKN",
+		"comment": "it is a Move Class",
+		"validation": "FP",
 		"detectionTools": "RefDiff",
-		"validators": null
+		"validators": "Matin"
 	}],
 	"refDiffExecutionTime": 2713
 }, {

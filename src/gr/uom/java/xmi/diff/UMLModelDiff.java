@@ -520,7 +520,11 @@ public class UMLModelDiff {
         	 processAddedGeneralization(addedClass, subclassSet, addedGeneralization);
          }
          for(UMLGeneralizationDiff generalizationDiff : generalizationDiffList) {
-             processAddedGeneralization(addedClass, subclassSet, generalizationDiff.getAddedGeneralization());
+        	 UMLGeneralization addedGeneralization = generalizationDiff.getAddedGeneralization();
+        	 UMLGeneralization removedGeneralization = generalizationDiff.getRemovedGeneralization();
+        	 if(!addedGeneralization.getParent().equals(removedGeneralization.getParent())) {
+        		 processAddedGeneralization(addedClass, subclassSet, addedGeneralization);
+        	 }
          }
          for(UMLRealization addedRealization : addedRealizations) {
             String supplier = addedRealization.getSupplier();
@@ -685,11 +689,11 @@ public class UMLModelDiff {
 
    public List<Refactoring> getRefactorings() {
       List<Refactoring> refactorings = new ArrayList<Refactoring>();
-      refactorings.addAll(checkForAttributeMovesBetweenCommonClasses());
-      refactorings.addAll(identifyExtractSuperclassRefactorings());
       refactorings.addAll(getMoveClassRefactorings());
       refactorings.addAll(getRenameClassRefactorings());
       refactorings.addAll(identifyConvertAnonymousClassToTypeRefactorings());
+      refactorings.addAll(checkForAttributeMovesBetweenCommonClasses());
+      refactorings.addAll(identifyExtractSuperclassRefactorings());
       refactorings.addAll(checkForAttributeMovesIncludingAddedClasses());
       refactorings.addAll(checkForAttributeMovesIncludingRemovedClasses());
       

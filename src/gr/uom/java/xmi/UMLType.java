@@ -107,7 +107,7 @@ public class UMLType implements Serializable {
     			numberOfDots++;
     		}
     	}
-    	if(numberOfDots > 1) {
+    	if(numberOfDots > 2) {
     		int dotPosition = name.lastIndexOf('.');
     		return name.substring(dotPosition + 1);
     	}

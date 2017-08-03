@@ -984,7 +984,7 @@
 	"time": "6/8/15 1:21 PM",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method private createComponentDto(reportComponent Component, component Component) : ComponentDto from class org.sonar.server.computation.step.PersistComponentsStep to private createComponentDto(reportComponent Component, component Component) : ComponentDto from class org.sonar.server.computation.step.PersistComponentsStep.PersisComponent",
+		"description": "Move Method private createComponentDto(reportComponent BatchReport.Component, component Component) : ComponentDto from class org.sonar.server.computation.step.PersistComponentsStep to private createComponentDto(reportComponent BatchReport.Component, component Component) : ComponentDto from class org.sonar.server.computation.step.PersistComponentsStep.PersisComponent",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
@@ -1473,7 +1473,7 @@
 	"time": "6/10/15 9:30 AM",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method private createComponentDto(reportComponent Component, component Component) : ComponentDto from class org.sonar.server.computation.step.PersistComponentsStep to private createComponentDto(reportComponent Component, component Component) : ComponentDto from class org.sonar.server.computation.step.PersistComponentsStep.PersisComponent",
+		"description": "Move Method private createComponentDto(reportComponent BatchReport.Component, component Component) : ComponentDto from class org.sonar.server.computation.step.PersistComponentsStep to private createComponentDto(reportComponent BatchReport.Component, component Component) : ComponentDto from class org.sonar.server.computation.step.PersistComponentsStep.PersisComponent",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
@@ -2000,7 +2000,7 @@
 	"time": "6/15/15 6:55 AM",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method protected onRemoteStatusChanged(oldStatus InstanceStatus, newStatus InstanceStatus) : void extracted from private updateInstanceRemoteStatus() : void in class com.netflix.discovery.DiscoveryClient",
+		"description": "Extract Method protected onRemoteStatusChanged(oldStatus InstanceInfo.InstanceStatus, newStatus InstanceInfo.InstanceStatus) : void extracted from private updateInstanceRemoteStatus() : void in class com.netflix.discovery.DiscoveryClient",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
@@ -2573,7 +2573,7 @@
 	"time": "6/15/15 5:16 PM",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method protected fireEvent(event DiscoveryEvent) : void extracted from protected onRemoteStatusChanged(oldStatus InstanceStatus, newStatus InstanceStatus) : void in class com.netflix.discovery.DiscoveryClient",
+		"description": "Extract Method protected fireEvent(event DiscoveryEvent) : void extracted from protected onRemoteStatusChanged(oldStatus InstanceInfo.InstanceStatus, newStatus InstanceInfo.InstanceStatus) : void in class com.netflix.discovery.DiscoveryClient",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
@@ -2633,7 +2633,7 @@
 		"validators": null
 	}, {
 		"type": "Pull Up Method",
-		"description": "Pull Up Method protected newInstanceInfoBuilder(renewalIntervalInSecs int) : Builder from class com.netflix.discovery.AbstractDiscoveryClientTester to protected newInstanceInfoBuilder(renewalIntervalInSecs int) : Builder from class com.netflix.discovery.BaseDiscoveryClientTester",
+		"description": "Pull Up Method protected newInstanceInfoBuilder(renewalIntervalInSecs int) : InstanceInfo.Builder from class com.netflix.discovery.AbstractDiscoveryClientTester to protected newInstanceInfoBuilder(renewalIntervalInSecs int) : InstanceInfo.Builder from class com.netflix.discovery.BaseDiscoveryClientTester",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
@@ -3329,7 +3329,7 @@
 	"time": "6/16/15 12:04 PM",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public plan(relation AnalyzedRelation, consumerContext ConsumerContext) : PlannedAnalyzedRelation extracted from public plan(rootRelation AnalyzedRelation, plannerContext Context) : Plan in class io.crate.planner.consumer.ConsumingPlanner",
+		"description": "Extract Method public plan(relation AnalyzedRelation, consumerContext ConsumerContext) : PlannedAnalyzedRelation extracted from public plan(rootRelation AnalyzedRelation, plannerContext Planner.Context) : Plan in class io.crate.planner.consumer.ConsumingPlanner",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
@@ -8283,7 +8283,7 @@
 	"time": "6/18/15 9:19 PM",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private setNotificationContent(context Context, message Message, sender CharSequence, subject CharSequence, builder Builder, accountDescr String) : Builder extracted from private notifyAccountWithDataLocked(context Context, account Account, message LocalMessage, data NotificationData) : void in class com.fsck.k9.controller.MessagingController",
+		"description": "Extract Method private setNotificationContent(context Context, message Message, sender CharSequence, subject CharSequence, builder NotificationCompat.Builder, accountDescr String) : NotificationCompat.Builder extracted from private notifyAccountWithDataLocked(context Context, account Account, message LocalMessage, data NotificationData) : void in class com.fsck.k9.controller.MessagingController",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
@@ -8297,7 +8297,7 @@
 		"validators": null
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private addWearActions(builder Builder, totalMsgCount int, msgCount int, account Account, allRefs ArrayList<MessageReference>, messages List<? extends Message>, notificationID int) : void extracted from private notifyAccountWithDataLocked(context Context, account Account, message LocalMessage, data NotificationData) : void in class com.fsck.k9.controller.MessagingController",
+		"description": "Extract Method private addWearActions(builder NotificationCompat.Builder, totalMsgCount int, msgCount int, account Account, allRefs ArrayList<MessageReference>, messages List<? extends Message>, notificationID int) : void extracted from private notifyAccountWithDataLocked(context Context, account Account, message LocalMessage, data NotificationData) : void in class com.fsck.k9.controller.MessagingController",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
@@ -8870,7 +8870,7 @@
 	"time": "6/20/15 3:42 PM",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public isOrbotInRequiredState(middleButton int, middleButtonRunnable Runnable, fragmentActivity FragmentActivity) : boolean extracted from public isOrbotInRequiredState(middleButton int, middleButtonRunnable Runnable, proxyPrefs ProxyPrefs, fragmentActivity FragmentActivity) : boolean in class org.sufficientlysecure.keychain.util.orbot.OrbotHelper",
+		"description": "Extract Method public isOrbotInRequiredState(middleButton int, middleButtonRunnable Runnable, fragmentActivity FragmentActivity) : boolean extracted from public isOrbotInRequiredState(middleButton int, middleButtonRunnable Runnable, proxyPrefs Preferences.ProxyPrefs, fragmentActivity FragmentActivity) : boolean in class org.sufficientlysecure.keychain.util.orbot.OrbotHelper",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
@@ -8960,7 +8960,7 @@
 		"validators": null
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method public killProcessGroup(uid int, pid int) : void extracted from private crashApplication(r ProcessRecord, crashInfo CrashInfo) : void in class com.android.server.am.ActivityManagerService",
+		"description": "Extract Method public killProcessGroup(uid int, pid int) : void extracted from private crashApplication(r ProcessRecord, crashInfo ApplicationErrorReport.CrashInfo) : void in class com.android.server.am.ActivityManagerService",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
@@ -10180,6 +10180,20 @@
 	"author": "Sebastien Deleuze",
 	"time": "6/22/15 12:05 PM",
 	"refactorings": [{
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.springframework.http.converter.AbstractGenericHttpMessageConverter from class org.springframework.http.converter.json.GsonHttpMessageConverter",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.springframework.http.converter.AbstractGenericHttpMessageConverter from class org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
 		"type": "Extract Method",
 		"description": "Extract Method protected addDefaultHeaders(headers HttpHeaders, t T, contentType MediaType) : void extracted from public write(t T, contentType MediaType, outputMessage HttpOutputMessage) : void in class org.springframework.http.converter.AbstractHttpMessageConverter",
 		"comment": null,
@@ -11283,77 +11297,63 @@
 	"time": "6/23/15 4:01 PM",
 	"refactorings": [{
 		"type": "Move Attribute",
-		"description": "Move Attribute private logger : Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.planner.sql.handlers.SqlHandlerUtil",
+		"description": "Move Attribute private logger : org.slf4j.Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.planner.sql.handlers.SqlHandlerUtil",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute private logger : Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.vector.complex.impl.$",
+		"description": "Move Attribute private logger : org.slf4j.Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.planner.sql.SchemaUtilites",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute private logger : Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.planner.sql.SchemaUtilites",
+		"description": "Move Attribute private logger : org.slf4j.Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.client.PrintingResultsListener",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute private logger : Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.client.PrintingResultsListener",
+		"description": "Move Attribute private logger : org.slf4j.Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.store.parquet.ParquetReaderUtility",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute private logger : Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.expr.fn.impl.AggregateErrorFunctions",
+		"description": "Move Attribute private logger : org.slf4j.Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.common.exceptions.TestUserException",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute private logger : Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.store.parquet.ParquetReaderUtility",
+		"description": "Move Attribute private logger : org.slf4j.Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.planner.sql.handlers.CreateTableHandler",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute private logger : Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.common.exceptions.TestUserException",
+		"description": "Move Attribute private logger : org.slf4j.Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.planner.sql.DrillSqlWorker",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute private logger : Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.planner.sql.handlers.CreateTableHandler",
+		"description": "Move Attribute private logger : org.slf4j.Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.planner.sql.handlers.DescribeTableHandler",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
 		"type": "Move Attribute",
-		"description": "Move Attribute private logger : Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.planner.sql.DrillSqlWorker",
-		"comment": null,
-		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
-		"validators": null
-	}, {
-		"type": "Move Attribute",
-		"description": "Move Attribute private logger : Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.planner.sql.handlers.DescribeTableHandler",
-		"comment": null,
-		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
-		"validators": null
-	}, {
-		"type": "Move Attribute",
-		"description": "Move Attribute private logger : Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.planner.sql.handlers.ShowTablesHandler",
+		"description": "Move Attribute private logger : org.slf4j.Logger from class org.apache.drill.common.exceptions.UserException to class org.apache.drill.exec.planner.sql.handlers.ShowTablesHandler",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
@@ -11500,7 +11500,7 @@
 	"time": "6/24/15 8:51 AM",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private insertOrUpdate(recid long, out DataOutputByteArray, isInsert boolean) : void extracted from protected update2(recid long, out DataOutputByteArray) : void in class org.mapdb.StoreAppend",
+		"description": "Extract Method private insertOrUpdate(recid long, out DataIO.DataOutputByteArray, isInsert boolean) : void extracted from protected update2(recid long, out DataIO.DataOutputByteArray) : void in class org.mapdb.StoreAppend",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
@@ -12769,89 +12769,278 @@
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute package javaRedBlackTreeString : java.util.TreeSet from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaRedBlackStringTree",
 		"comment": "the target did not exist in the previous revision",
 		"validation": "CTP",
-		"detectionTools": "RefDiff",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Davood, Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute package javaLinkedQueue : java.util.Deque from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaLinkedQueue",
 		"comment": "the target did not exist in the previous revision",
 		"validation": "CTP",
-		"detectionTools": "RefDiff",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Davood, Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute package javaLinkedList : java.util.List from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaLinkedList",
 		"comment": "the target did not exist in the previous revision",
 		"validation": "CTP",
-		"detectionTools": "RefDiff",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Davood, Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute package javaMaxArrayHeap : java.util.PriorityQueue from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaMaxHeap",
 		"comment": "the target did not exist in the previous revision",
 		"validation": "CTP",
-		"detectionTools": "RefDiff",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Davood, Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute package javaMinArrayHeap : java.util.PriorityQueue from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaMinHeap",
 		"comment": "the target did not exist in the previous revision",
 		"validation": "CTP",
-		"detectionTools": "RefDiff",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Davood, Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute package javaStack : java.util.Stack from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaStack",
 		"comment": "the target did not exist in the previous revision",
 		"validation": "CTP",
-		"detectionTools": "RefDiff",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Davood, Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute package javaArrayList : java.util.List from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaArrayList",
 		"comment": "the target did not exist in the previous revision",
 		"validation": "CTP",
-		"detectionTools": "RefDiff",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Davood, Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute package javaArrayQueue : java.util.Deque from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaArrayQueue",
 		"comment": "the target did not exist in the previous revision",
 		"validation": "CTP",
-		"detectionTools": "RefDiff",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Davood, Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute package javaRedBlackTreeInteger : java.util.TreeSet from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaRedBlackIntegerTree",
 		"comment": "the target did not exist in the previous revision",
 		"validation": "CTP",
-		"detectionTools": "RefDiff",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Davood, Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute package javaSkipListMap : ConcurrentSkipListMap from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaSkipListMap",
 		"comment": "the target did not exist in the previous revision",
 		"validation": "CTP",
-		"detectionTools": "RefDiff",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Davood, Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute package javaTreeMap : java.util.Map from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaTreeMap",
 		"comment": "the target did not exist in the previous revision",
 		"validation": "CTP",
-		"detectionTools": "RefDiff",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Davood, Matin"
 	}, {
-		"type": "MoveAttribute",
+		"type": "Move Attribute",
 		"description": "Move Attribute package javaHashMap : java.util.Map from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaHashMap",
 		"comment": "the target did not exist in the previous revision",
 		"validation": "CTP",
-		"detectionTools": "RefDiff",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Davood, Matin"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package cHashMap : HashMap from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testHashMapChaining",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package aHeapMin : BinaryHeap.BinaryHeapArray from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testMinHeapArray",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package redBlackTree : BinarySearchTree from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testRedBlackTree",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package avlTree : BinarySearchTree from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testAVLTree",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package linkedQueue : Queue.LinkedQueue from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testLinkedQueue",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package bTree : BTree from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testBTree",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package arrayQueue : Queue.ArrayQueue from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testArrayQueue",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package arrayList : List.ArrayList from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testArrayList",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package tHeapMax : BinaryHeap.BinaryHeapTree from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testMaxHeapTree",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package radixTrie : RadixTrie from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testRadixTrie",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package skipList : SkipList from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testSkipList",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package hamt : HashArrayMappedTrie from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testHAMT",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package treeMap : TreeMap from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testTreeMap",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package trie : Trie from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testTrie",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package javaSkipList : NavigableSet from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaSkipList",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package splayTree : BinarySearchTree from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testSplayTree",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package linkedStack : Stack.LinkedStack from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testLinkedStack",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package pHashMap : HashMap from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testHashMapProbing",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package arrayStack : Stack.ArrayStack from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testArrayStack",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package trieMap : TrieMap from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testTrieMap",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package bst : BinarySearchTree from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testBST",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package aHeapMax : BinaryHeap.BinaryHeapArray from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testMaxHeapArray",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package linkedList : List.LinkedList from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testLinkedList",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package tHeapMin : BinaryHeap.BinaryHeapTree from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testMinHeapTree",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package patriciaTrie : PatriciaTrie from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testPatriciaTrie",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package skipListMap : SkipListMap from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testSkipListMap",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
+	}, {
+		"type": "Move Attribute",
+		"description": "Move Attribute package treap : BinarySearchTree from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testTreap",
+		"comment": "the target did not exist in the previous revision",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
 	}],
 	"refDiffExecutionTime": 644
 }, {
@@ -13992,6 +14181,181 @@
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.Find",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.InstanceOf",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.NotNull",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.Contains",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.CapturingMatcher",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.Matches",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.StartsWith",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.Null",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.EndsWith",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.CompareTo",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.Any",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.AnyVararg",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.VarargCapturingMatcher",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockitousage.matchers.CustomMatchersTest.StringThatContainsXxx",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockitousage.matchers.CustomMatchersTest.IsZeroOrOne",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockitousage.matchers.CustomMatchersTest.ContainsFoo",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.Or",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.apachecommons.ReflectionEquals",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.And",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockitousage.matchers.CustomMatchersTest.IsAnyBoolean",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.Equals",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockitousage.matchers.CustomMatchersTest.IsSorZ",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.Same",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.EqualsWithDelta",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.mockito.MockitoMatcher from class org.mockito.internal.matchers.Not",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public describeTo(description Description) : void renamed to public describe() : String in class org.mockito.internal.matchers.NotNull",
 		"comment": null,
@@ -14894,7 +15258,7 @@
 		"validators": null
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private retry(retryCurrent boolean, newConsistencyLevel ConsistencyLevel, connection Connection, response Response) : void extracted from private retry(retryCurrent boolean, newConsistencyLevel ConsistencyLevel) : void in class com.datastax.driver.core.RequestHandler.SpeculativeExecution",
+		"description": "Extract Method private retry(retryCurrent boolean, newConsistencyLevel ConsistencyLevel, connection Connection, response Message.Response) : void extracted from private retry(retryCurrent boolean, newConsistencyLevel ConsistencyLevel) : void in class com.datastax.driver.core.RequestHandler.SpeculativeExecution",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
@@ -14910,7 +15274,7 @@
 	"time": "6/27/15 8:33 PM",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private unionTester(ws Schema, rs Schema, record Record) : ResultPair extracted from private unionTester(s Schema, record Record) : ResultPair in class org.apache.hadoop.hive.serde2.avro.TestAvroDeserializer",
+		"description": "Extract Method private unionTester(ws Schema, rs Schema, record GenericData.Record) : ResultPair extracted from private unionTester(s Schema, record GenericData.Record) : ResultPair in class org.apache.hadoop.hive.serde2.avro.TestAvroDeserializer",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
@@ -15878,6 +16242,13 @@
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
 		"validators": null
+	}, {
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.neo4j.kernel.impl.store.PropertyConstraintRule from class org.neo4j.kernel.impl.store.UniquePropertyConstraintRule",
+		"comment": "The superclass contains only abstract methods implemented by the subclass",
+		"validation": "CTP",
+		"detectionTools": "RefactoringMiner",
+		"validators": "Nikos"
 	}, {
 		"type": "Rename Method",
 		"description": "Rename Method public shouldBeAbleToResolveConflictsAndRecreateConstraintAfterFailingToCreateConstraintDueToConflict() : void renamed to public shouldBeAbleToResolveConflictsAndRecreateConstraintAfterFailingToCreateUniquePropertyConstraintDueToConflict() : void in class org.neo4j.kernel.impl.api.integrationtest.ConstraintsCreationIT",
@@ -17188,7 +17559,7 @@
 	"time": "7/6/15 11:45 AM",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public add(info ReferenceInfo, partitionBy boolean) : Builder extracted from public add(column String, type DataType, path List<String>, columnPolicy ColumnPolicy, indexType IndexType, partitionBy boolean) : Builder in class io.crate.metadata.table.TestingTableInfo.Builder",
+		"description": "Extract Method public add(info ReferenceInfo, partitionBy boolean) : Builder extracted from public add(column String, type DataType, path List<String>, columnPolicy ColumnPolicy, indexType ReferenceInfo.IndexType, partitionBy boolean) : Builder in class io.crate.metadata.table.TestingTableInfo.Builder",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
@@ -17310,90 +17681,90 @@
 		"detectionTools": "RefDiff",
 		"validators": "Matin"
 	},{
-	"type": "Move Attribute",
-	"description": "Move Attribute private INITIAL_CAPACITY : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute private INITIAL_CAPACITY : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
 	"comment": "Extract Superclass",
-	"validation": "FP",
+	"validation": "TP",
 	"detectionTools": "RefactoringMiner",
 	"validators": "Matin"
 	},
 	{
-	"type": "Move Method",
-	"description": "Move Method private listInternal() : List from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to private listInternal() : List from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"type": "Pull Up Method",
+	"description": "Pull Up Method private listInternal() : List from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to private listInternal() : List from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
 	"comment": "Extract Superclass",
-	"validation": "FP",
+	"validation": "TP",
 	"detectionTools": "RefactoringMiner",
 	"validators": "Matin"
 	},
 	{
-	"type": "Move Attribute",
-	"description": "Move Attribute private resultSize : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute private resultSize : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
 	"comment": "Extract Superclass",
-	"validation": "FP",
+	"validation": "TP",
 	"detectionTools": "RefactoringMiner",
 	"validators": "Matin"
 	},
 	{
-	"type": "Move Attribute",
-	"description": "Move Attribute protected maxResults : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute protected maxResults : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
 	"comment": "Extract Superclass",
-	"validation": "FP",
+	"validation": "TP",
 	"detectionTools": "RefactoringMiner",
 	"validators": "Matin"
 	},
 	{
 	"type": "Move Attribute",
 	"description": "Move Attribute private booleanFilterNormalizer : BooleanFilterNormalizer from class org.infinispan.objectfilter.impl.BaseMatcher to class org.infinispan.objectfilter.impl.syntax.BooleShannonExpansionTest",
+	"comment": "Move to a new class",
+	"validation": "CTP",
+	"detectionTools": "RefactoringMiner",
+	"validators": "Matin, Nikos"
+	},
+	{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method private ensureAccessPermissions(cache AdvancedCache) : void from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to private ensureAccessPermissions(cache AdvancedCache) : void from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
 	"comment": "Extract Superclass",
-	"validation": "FP",
+	"validation": "TP",
 	"detectionTools": "RefactoringMiner",
 	"validators": "Matin"
 	},
 	{
-	"type": "Move Method",
-	"description": "Move Method private ensureAccessPermissions(cache AdvancedCache) : void from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to private ensureAccessPermissions(cache AdvancedCache) : void from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public list() : List from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to public list() : List from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
 	"comment": "Extract Superclass",
-	"validation": "FP",
+	"validation": "TP",
 	"detectionTools": "RefactoringMiner",
 	"validators": "Matin"
 	},
 	{
-	"type": "Move Method",
-	"description": "Move Method public list() : List from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to public list() : List from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute protected cache : AdvancedCache from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
 	"comment": "Extract Superclass",
-	"validation": "FP",
+	"validation": "TP",
 	"detectionTools": "RefactoringMiner",
 	"validators": "Matin"
 	},
 	{
-	"type": "Move Attribute",
-	"description": "Move Attribute protected cache : AdvancedCache from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute protected startOffset : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
 	"comment": "Extract Superclass",
-	"validation": "FP",
+	"validation": "TP",
 	"detectionTools": "RefactoringMiner",
 	"validators": "Matin"
 	},
 	{
-	"type": "Move Attribute",
-	"description": "Move Attribute protected startOffset : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public getResultSize() : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to public getResultSize() : int from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
 	"comment": "Extract Superclass",
-	"validation": "FP",
+	"validation": "TP",
 	"detectionTools": "RefactoringMiner",
 	"validators": "Matin"
 	},
 	{
-	"type": "Move Method",
-	"description": "Move Method public getResultSize() : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to public getResultSize() : int from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute private results : List from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
 	"comment": "Extract Superclass",
-	"validation": "FP",
-	"detectionTools": "RefactoringMiner",
-	"validators": "Matin"
-	},
-	{
-	"type": "Move Attribute",
-	"description": "Move Attribute private results : List from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
-	"comment": "Extract Superclass",
-	"validation": "FP",
+	"validation": "TP",
 	"detectionTools": "RefactoringMiner",
 	"validators": "Matin"
 	}],
@@ -18912,7 +19283,7 @@
 	"time": "7/8/15 3:33 PM",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private getErrorMessage(extras Bundle) : String extracted from private handleResultOk(request Request, data Intent) : Result in class com.facebook.login.KatanaProxyLoginMethodHandler",
+		"description": "Extract Method private getErrorMessage(extras Bundle) : String extracted from private handleResultOk(request LoginClient.Request, data Intent) : LoginClient.Result in class com.facebook.login.KatanaProxyLoginMethodHandler",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
@@ -18940,7 +19311,7 @@
 		"validators": null
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private getError(extras Bundle) : String extracted from private handleResultOk(request Request, data Intent) : Result in class com.facebook.login.KatanaProxyLoginMethodHandler",
+		"description": "Extract Method private getError(extras Bundle) : String extracted from private handleResultOk(request LoginClient.Request, data Intent) : LoginClient.Result in class com.facebook.login.KatanaProxyLoginMethodHandler",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
@@ -22540,7 +22911,7 @@
 	"time": "7/14/15 10:55 AM",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private dummy(builder PsiBuilder) : void extracted from public parseTypeParameter(builder PsiBuilder) : Marker in class com.intellij.lang.java.parser.ReferenceParser",
+		"description": "Extract Method private dummy(builder PsiBuilder) : void extracted from public parseTypeParameter(builder PsiBuilder) : PsiBuilder.Marker in class com.intellij.lang.java.parser.ReferenceParser",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
@@ -23698,7 +24069,7 @@
 	"time": "7/14/15 4:07 PM",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private dummy(builder PsiBuilder) : void extracted from public parseTypeParameter(builder PsiBuilder) : Marker in class com.intellij.lang.java.parser.ReferenceParser",
+		"description": "Extract Method private dummy(builder PsiBuilder) : void extracted from public parseTypeParameter(builder PsiBuilder) : PsiBuilder.Marker in class com.intellij.lang.java.parser.ReferenceParser",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
@@ -23743,6 +24114,13 @@
 	"author": "Rob Winch",
 	"time": "7/14/15 4:48 PM",
 	"refactorings": [{
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.springframework.security.web.context.OnCommittedResponseWrapper from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
 		"type": "Move Class",
 		"description": "Move Class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream moved to org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextServletOutputStream",
 		"comment": null,
@@ -23764,39 +24142,46 @@
 		"detectionTools": "RefDiff",
 		"validators": "Matin, Davood"
 	}, {
-		"type": "PullUpMethod",
+		"type": "Pull Up Method",
 		"description": "Pull Up Method public getOutputStream() : ServletOutputStream from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public getOutputStream() : ServletOutputStream from class org.springframework.security.web.context.OnCommittedResponseWrapper",
 		"comment": "it is a extract super class",
-		"validation": "FP",
-		"detectionTools": "RefDiff",
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Matin"
 	}, {
-		"type": "PullUpMethod",
+		"type": "Pull Up Method",
 		"description": "Pull Up Method public getWriter() : PrintWriter from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public getWriter() : PrintWriter from class org.springframework.security.web.context.OnCommittedResponseWrapper",
 		"comment": "it is a extract super class",
-		"validation": "FP",
-		"detectionTools": "RefDiff",
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Matin"
 	}, {
-		"type": "PullUpMethod",
+		"type": "Pull Up Method",
 		"description": "Pull Up Method public sendError(sc int, msg String) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendError(sc int, msg String) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
 		"comment": "it is a extract super class",
-		"validation": "FP",
-		"detectionTools": "RefDiff",
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner, RefDiff",
+		"validators": "Matin"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public sendError(sc int) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendError(sc int) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
+		"comment": "It is a extract superclass",
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
 		"validators": "Matin"
 	}, {
 		"type": "Pull Up Method",
 		"description": "Pull Up Method public sendRedirect(location String) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendRedirect(location String) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
 		"comment": "it is a extract super class",
-		"validation": "FP",
-		"detectionTools": "RefDiff",
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Matin"
 	}, {
 		"type": "Pull Up Method",
 		"description": "Pull Up Method public flushBuffer() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public flushBuffer() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
 		"comment": "it is a extract super class",
-		"validation": "FP",
-		"detectionTools": "RefDiff",
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Matin"
 	}, {
 		"type": "Move Method",
@@ -23976,6 +24361,13 @@
 	"author": "Rob Winch",
 	"time": "7/14/15 4:49 PM",
 	"refactorings": [{
+		"type": "Extract Superclass",
+		"description": "Extract Superclass org.springframework.security.web.context.OnCommittedResponseWrapper from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper",
+		"comment": null,
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
+		"validators": null
+	}, {
 		"type": "Move Class",
 		"description": "Move Class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextServletOutputStream moved to org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextServletOutputStream",
 		"comment": null,
@@ -24000,36 +24392,43 @@
 		"type": "Pull Up Method",
 		"description": "Pull Up Method public getOutputStream() : ServletOutputStream from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public getOutputStream() : ServletOutputStream from class org.springframework.security.web.context.OnCommittedResponseWrapper",
 		"comment": "It is a extract superclass",
-		"validation": "FP",
-		"detectionTools": "RefDiff",
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Matin"
 	}, {
-		"type": "PullUpMethod",
+		"type": "Pull Up Method",
 		"description": "Pull Up Method public getWriter() : PrintWriter from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public getWriter() : PrintWriter from class org.springframework.security.web.context.OnCommittedResponseWrapper",
 		"comment": "It is a extract superclass",
-		"validation": "FP",
-		"detectionTools": "RefDiff",
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Matin"
 	}, {
 		"type": "Pull Up Method",
 		"description": "Pull Up Method public sendError(sc int, msg String) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendError(sc int, msg String) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
 		"comment": "It is a extract superclass",
-		"validation": "FP",
-		"detectionTools": "RefDiff",
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner, RefDiff",
+		"validators": "Matin"
+	}, {
+		"type": "Pull Up Method",
+		"description": "Pull Up Method public sendError(sc int) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendError(sc int) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
+		"comment": "It is a extract superclass",
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner",
 		"validators": "Matin"
 	}, {
 		"type": "Pull Up Method",
 		"description": "Pull Up Method public sendRedirect(location String) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendRedirect(location String) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
 		"comment": "It is a extract superclass",
-		"validation": "FP",
-		"detectionTools": "RefDiff",
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Matin"
 	}, {
 		"type": "Pull Up Method",
 		"description": "Pull Up Method public flushBuffer() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public flushBuffer() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
 		"comment": "It is a extract superclass",
-		"validation": "FP",
-		"detectionTools": "RefDiff",
+		"validation": "TP",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Matin"
 	}, {
 		"type": "Move Method",
@@ -24431,7 +24830,7 @@
 	"time": "7/14/15 8:33 PM",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method private flipComparison(type Type) : Type from class com.facebook.presto.sql.planner.RelationPlanner to public flipComparison(type Type) : Type from class com.facebook.presto.sql.ExpressionUtils",
+		"description": "Move Method private flipComparison(type ComparisonExpression.Type) : ComparisonExpression.Type from class com.facebook.presto.sql.planner.RelationPlanner to public flipComparison(type ComparisonExpression.Type) : ComparisonExpression.Type from class com.facebook.presto.sql.ExpressionUtils",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
@@ -25249,17 +25648,10 @@
 	"time": "7/16/15 8:31 AM",
 	"refactorings": [{
 		"type": "Move Method",
-		"description": "Move Method protected createMainModule(moduleType ModuleType) : Module from class com.intellij.testFramework.LightPlatformTestCase to class com.intellij.testFramework.LightProjectDescriptor",
-		"comment": null,
-		"validation": "TP",
-		"detectionTools": "RefactoringMiner",
-		"validators": null
-	}, {
-		"type": "Move Method",
 		"description": "Move Method protected createMainModule(moduleType ModuleType) : Module from class com.intellij.testFramework.LightPlatformTestCase to public createMainModule(project Project) : Module from class com.intellij.testFramework.LightProjectDescriptor",
 		"comment": null,
 		"validation": "TP",
-		"detectionTools": "RefDiff",
+		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": "Matin"
 	}, {
 		"type": "Extract Method",
@@ -26354,14 +26746,14 @@
 	"time": "7/22/15 3:17 PM",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private statsForOneColumnFromProtoBuf(partitionColumnStats ColumnStatistics, proto ColumnStats) : ColumnStatisticsObj extracted from package deserializeStatsForOneColumn(partitionColumnStats ColumnStatistics, bytes byte[]) : ColumnStatisticsObj in class org.apache.hadoop.hive.metastore.hbase.HBaseUtils",
+		"description": "Extract Method private statsForOneColumnFromProtoBuf(partitionColumnStats ColumnStatistics, proto HbaseMetastoreProto.ColumnStats) : ColumnStatisticsObj extracted from package deserializeStatsForOneColumn(partitionColumnStats ColumnStatistics, bytes byte[]) : ColumnStatisticsObj in class org.apache.hadoop.hive.metastore.hbase.HBaseUtils",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private protoBufStatsForOneColumn(partitionColumnStats ColumnStatistics, colStats ColumnStatisticsObj) : ColumnStats extracted from package serializeStatsForOneColumn(partitionColumnStats ColumnStatistics, colStats ColumnStatisticsObj) : byte[] in class org.apache.hadoop.hive.metastore.hbase.HBaseUtils",
+		"description": "Extract Method private protoBufStatsForOneColumn(partitionColumnStats ColumnStatistics, colStats ColumnStatisticsObj) : HbaseMetastoreProto.ColumnStats extracted from package serializeStatsForOneColumn(partitionColumnStats ColumnStatistics, colStats ColumnStatisticsObj) : byte[] in class org.apache.hadoop.hive.metastore.hbase.HBaseUtils",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
@@ -27250,7 +27642,7 @@
 	"time": "7/24/15 2:43 PM",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method public use(ctx ParserRuleContext, sql String) : Integer extracted from public use(ctx Use_stmtContext) : Integer in class org.apache.hive.hplsql.Stmt",
+		"description": "Extract Method public use(ctx ParserRuleContext, sql String) : Integer extracted from public use(ctx HplsqlParser.Use_stmtContext) : Integer in class org.apache.hive.hplsql.Stmt",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
@@ -28437,14 +28829,14 @@
 	"time": "7/27/15 7:07 PM",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private createSchema(config Configuration, ddl String, sitesPerHost int, hostCount int, replication int) : void extracted from public testBasicCreateIndex() : void in class org.voltdb.TestAdhocCreateDropIndex",
+		"description": "Extract Method private createSchema(config VoltDB.Configuration, ddl String, sitesPerHost int, hostCount int, replication int) : void extracted from public testBasicCreateIndex() : void in class org.voltdb.TestAdhocCreateDropIndex",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
 		"validators": null
 	}, {
 		"type": "Extract Method",
-		"description": "Extract Method private createSchema(config Configuration, ddl String, sitesPerHost int, hostCount int, replication int) : void extracted from public testCreateDropIndexonView() : void in class org.voltdb.TestAdhocCreateDropIndex",
+		"description": "Extract Method private createSchema(config VoltDB.Configuration, ddl String, sitesPerHost int, hostCount int, replication int) : void extracted from public testCreateDropIndexonView() : void in class org.voltdb.TestAdhocCreateDropIndex",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
@@ -29041,21 +29433,21 @@
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
-		"type": "Extract Method",
+		"type": "Inline Method",
 		"description": "Inline Method protected parseTransactions() : void inlined to protected parse() : void in class org.bitcoinj.core.Block",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
-		"type": "Extract Method",
+		"type": "Inline Method",
 		"description": "Inline Method protected parseHeader() : void inlined to protected parse() : void in class org.bitcoinj.core.Block",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
 		"validators": null
 	}, {
-		"type": "Extract Method",
+		"type": "Inline Method",
 		"description": "Inline Method public getMessageSize() : int inlined to protected parse() : void in class org.bitcoinj.core.AddressMessage",
 		"comment": null,
 		"validation": "TP",
@@ -29976,7 +30368,7 @@
 		"validators": null
 	}, {
 		"type": "Rename Method",
-		"description": "Rename Method private wrapResponseHandler(mutation Mutation, consistency_level ConsistencyLevel, writeType WriteType) : WriteResponseHandlerWrapper renamed to private wrapBatchResponseHandler(mutation Mutation, consistency_level ConsistencyLevel, batchConsistencyLevel ConsistencyLevel, writeType WriteType, cleanup BatchlogCleanup) : WriteResponseHandlerWrapper in class org.apache.cassandra.service.StorageProxy",
+		"description": "Rename Method private wrapResponseHandler(mutation Mutation, consistency_level ConsistencyLevel, writeType WriteType) : WriteResponseHandlerWrapper renamed to private wrapBatchResponseHandler(mutation Mutation, consistency_level ConsistencyLevel, batchConsistencyLevel ConsistencyLevel, writeType WriteType, cleanup BatchlogResponseHandler.BatchlogCleanup) : WriteResponseHandlerWrapper in class org.apache.cassandra.service.StorageProxy",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner, RefDiff",
@@ -30870,7 +31262,7 @@
 	"time": "7/31/15 8:22 PM",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method private invokeMethod(methodToken Token) : SpecialMethodInvocation extracted from public invokeSuper(methodToken Token) : SpecialMethodInvocation in class net.bytebuddy.dynamic.scaffold.subclass.SubclassImplementationTarget",
+		"description": "Extract Method private invokeMethod(methodToken MethodDescription.Token) : Implementation.SpecialMethodInvocation extracted from public invokeSuper(methodToken MethodDescription.Token) : Implementation.SpecialMethodInvocation in class net.bytebuddy.dynamic.scaffold.subclass.SubclassImplementationTarget",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",
@@ -34641,7 +35033,7 @@
 	"time": "8/6/15 6:31 PM",
 	"refactorings": [{
 		"type": "Extract Method",
-		"description": "Extract Method protected validate(titleMap Map<Locale,String>, startTimeJCalendar Calendar, endTimeJCalendar Calendar, untilJCalendar Calendar) : void extracted from protected validate(titleMap Map<Locale,String>, startTimeJCalendar Calendar, endTimeJCalendar Calendar) : void in class com.liferay.calendar.service.impl.CalendarBookingLocalServiceImpl",
+		"description": "Extract Method protected validate(titleMap Map<Locale,String>, startTimeJCalendar java.util.Calendar, endTimeJCalendar java.util.Calendar, untilJCalendar java.util.Calendar) : void extracted from protected validate(titleMap Map<Locale,String>, startTimeJCalendar java.util.Calendar, endTimeJCalendar java.util.Calendar) : void in class com.liferay.calendar.service.impl.CalendarBookingLocalServiceImpl",
 		"comment": null,
 		"validation": "TP",
 		"detectionTools": "RefactoringMiner",

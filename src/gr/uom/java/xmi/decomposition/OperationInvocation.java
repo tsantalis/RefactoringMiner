@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.diff.StringDistance;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -145,6 +146,14 @@ public class OperationInvocation {
     	}
     	return true;
     }
+
+	public double normalizedNameDistance(OperationInvocation invocation) {
+		String s1 = getMethodName().toLowerCase();
+		String s2 = invocation.getMethodName().toLowerCase();
+		int distance = StringDistance.editDistance(s1, s2);
+		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
+		return normalized;
+	}
 
 	public boolean equals(Object o) {
         if(this == o) {

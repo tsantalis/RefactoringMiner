@@ -49,7 +49,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	private List<UMLType> addedImplementedInterfaces;
 	private List<UMLType> removedImplementedInterfaces;
 	private static final int MAX_OPERATION_POSITION_DIFFERENCE = 5;
-	private static final double MAX_OPERATION_NAME_DISTANCE = 0.34;
+	public static final double MAX_OPERATION_NAME_DISTANCE = 0.34;
 	
 	public UMLClassDiff(UMLClass originalClass, UMLClass nextClass) {
 		this.originalClass = originalClass;

@@ -419,8 +419,8 @@ public class UMLModelDiff {
                         removedAttribute.getClassName(), addedAttribute.getClassName());
                   refactorings.add(pushDownAttribute);
                }
-               else if(sourceClassImportsTargetClassAfterRefactoring(removedAttribute, addedAttribute) ||
-            		   targetClassImportsSourceClassBeforeRefactoring(removedAttribute, addedAttribute)) {
+               else if(sourceClassImportsTargetClassAfterRefactoring(removedAttribute.getClassName(), addedAttribute.getClassName()) ||
+            		   targetClassImportsSourceClassBeforeRefactoring(removedAttribute.getClassName(), addedAttribute.getClassName())) {
                   MoveAttributeRefactoring moveAttribute = new MoveAttributeRefactoring(addedAttribute,
                         removedAttribute.getClassName(), addedAttribute.getClassName());
                   refactorings.add(moveAttribute);
@@ -431,9 +431,7 @@ public class UMLModelDiff {
       return refactorings;
    }
 
-   private boolean sourceClassImportsTargetClassAfterRefactoring(UMLAttribute removedAttribute, UMLAttribute addedAttribute) {
-	   String sourceClassName = removedAttribute.getClassName();
-	   String targetClassName = addedAttribute.getClassName();
+   private boolean sourceClassImportsTargetClassAfterRefactoring(String sourceClassName, String targetClassName) {
 	   UMLClassDiff classDiff = getUMLClassDiff(sourceClassName);
 	   if(classDiff == null) {
 		   classDiff = getUMLClassDiff(UMLType.extractTypeObject(sourceClassName));
@@ -451,9 +449,7 @@ public class UMLModelDiff {
 	   return false;
    }
 
-   private boolean targetClassImportsSourceClassBeforeRefactoring(UMLAttribute removedAttribute, UMLAttribute addedAttribute) {
-	   String sourceClassName = removedAttribute.getClassName();
-	   String targetClassName = addedAttribute.getClassName();
+   private boolean targetClassImportsSourceClassBeforeRefactoring(String sourceClassName, String targetClassName) {
 	   UMLClassDiff classDiff = getUMLClassDiff(targetClassName);
 	   if(classDiff == null) {
 		   classDiff = getUMLClassDiff(UMLType.extractTypeObject(targetClassName));
@@ -740,7 +736,8 @@ public class UMLModelDiff {
                   UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap1, parameterToArgumentMap2);
                   operationBodyMapper.getMappings();
                   int mappings = operationBodyMapper.mappingsWithoutBlocks();
-                  if(mappings > 0 && (mappings > operationBodyMapper.nonMappedElementsT2() || operationBodyMapper.exactMatches() > 0)) {
+                  if(mappings > 0 && mappings > operationBodyMapper.nonMappedElementsT2() &&
+                		  sourceClassImportsTargetClassAfterRefactoring(mapper.getOperation1().getClassName(), addedOperation.getClassName())) {
                      ExtractAndMoveOperationRefactoring extractOperationRefactoring =
                            new ExtractAndMoveOperationRefactoring(operationBodyMapper);
                      refactorings.add(extractOperationRefactoring);

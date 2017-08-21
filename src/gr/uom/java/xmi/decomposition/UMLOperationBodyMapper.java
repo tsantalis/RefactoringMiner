@@ -483,7 +483,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(fragment instanceof AbstractStatement && ((AbstractStatement)fragment).getParent().statementCount() == 1) {
 			return true;
 		}
-		return !statement.equals("{") && !statement.startsWith("case ") && !statement.startsWith("default :") &&
+		return !statement.equals("{") && !statement.startsWith("catch(") && !statement.startsWith("case ") && !statement.startsWith("default :") &&
 				!statement.startsWith("return true") && !statement.startsWith("return false") && !statement.startsWith("return this") && !statement.startsWith("return;");
 	}
 
@@ -1077,6 +1077,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+		}
+		//method invocation is identical
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+				(invocationsWithIdenticalExpressions(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
+				invocationsWithIdenticalExpressionsAfterTypeReplacements(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacements)) &&
+				invocationCoveringTheEntireStatement1.getMethodName().equals(invocationCoveringTheEntireStatement2.getMethodName()) &&
+				invocationCoveringTheEntireStatement1.getArguments().equals(invocationCoveringTheEntireStatement2.getArguments())) {
+			return replacements;
 		}
 		//method invocation has been renamed but the expression and arguments are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&

@@ -350,7 +350,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 					differentParameterTypes++;
 				}
 			}
-			return commonParameterTypes >= differentParameterTypes;
+			return commonParameterTypes >= differentParameterTypes && commonParameterTypes > 0;
 		}
 		else if(thisParameterTypes.size() > otherParameterTypes.size() && thisParameterTypes.size() > 0) {
 			int commonParameterTypes = 0;
@@ -365,7 +365,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 					differentParameterTypes++;
 				}
 			}
-			return commonParameterTypes >= differentParameterTypes /*+ Math.abs(thisParameterTypes.size() - otherParameterTypes.size())*/;
+			return commonParameterTypes >= differentParameterTypes && commonParameterTypes > 0/*+ Math.abs(thisParameterTypes.size() - otherParameterTypes.size())*/;
 		}
 		else if(otherParameterTypes.size() > thisParameterTypes.size() && thisParameterTypes.size() > 0) {
 			int commonParameterTypes = 0;
@@ -380,7 +380,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 					differentParameterTypes++;
 				}
 			}
-			return commonParameterTypes >= differentParameterTypes /*+ Math.abs(thisParameterTypes.size() - otherParameterTypes.size())*/;
+			return commonParameterTypes >= differentParameterTypes && commonParameterTypes > 0/*+ Math.abs(thisParameterTypes.size() - otherParameterTypes.size())*/;
 		}
 		return false;
 	}

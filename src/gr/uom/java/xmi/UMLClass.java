@@ -431,7 +431,8 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
 
 	public boolean importsType(String targetClass) {
 		for(String importedType : getImportedTypes()) {
-			if(importedType.equals(targetClass) || targetClass.startsWith(getPackageName())) {
+			//importedType.startsWith(targetClass) -> special handling for import static
+			if(importedType.equals(targetClass) || importedType.startsWith(targetClass) || targetClass.startsWith(getPackageName())) {
 				return true;
 			}
 		}

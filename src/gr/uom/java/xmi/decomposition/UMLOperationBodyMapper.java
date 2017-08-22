@@ -390,6 +390,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return nonMappedLeafCount + nonMappedInnerNodeCount;
 	}
 
+	public int nonMappedLeafElementsT1() {
+		int nonMappedLeafCount = 0;
+		for(StatementObject statement : getNonMappedLeavesT1()) {
+			if(countableStatement(statement))
+				nonMappedLeafCount++;
+		}
+		return nonMappedLeafCount;
+	}
+
 	public int nonMappedElementsT2() {
 		int nonMappedInnerNodeCount = 0;
 		for(CompositeStatementObject composite : getNonMappedInnerNodesT2()) {
@@ -402,6 +411,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				nonMappedLeafCount++;
 		}
 		return nonMappedLeafCount + nonMappedInnerNodeCount;
+	}
+
+	public int nonMappedLeafElementsT2() {
+		int nonMappedLeafCount = 0;
+		for(StatementObject statement : getNonMappedLeavesT2()) {
+			if(countableStatement(statement))
+				nonMappedLeafCount++;
+		}
+		return nonMappedLeafCount;
 	}
 
 	public int nonMappedElementsT2CallingAddedOperation(List<UMLOperation> addedOperations) {
@@ -484,7 +502,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return true;
 		}
 		return !statement.equals("{") && !statement.startsWith("catch(") && !statement.startsWith("case ") && !statement.startsWith("default :") &&
-				!statement.startsWith("return true") && !statement.startsWith("return false") && !statement.startsWith("return this") && !statement.startsWith("return;");
+				!statement.startsWith("return true") && !statement.startsWith("return false") && !statement.startsWith("return this") && !statement.startsWith("return null") && !statement.startsWith("return;");
 	}
 
 	private int editDistance() {

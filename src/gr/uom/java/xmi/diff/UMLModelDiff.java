@@ -4,6 +4,7 @@ import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLGeneralization;
+import gr.uom.java.xmi.UMLModelASTReader;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLRealization;
@@ -11,6 +12,7 @@ import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -40,6 +42,7 @@ public class UMLModelDiff {
    private List<UMLClassMoveDiff> innerClassMoveDiffList;
    private List<UMLClassRenameDiff> classRenameDiffList;
    private List<Refactoring> refactorings;
+   private Set<String> deletedFolderPaths;
    
    public UMLModelDiff() {
       this.addedClasses = new ArrayList<UMLClass>();
@@ -55,6 +58,7 @@ public class UMLModelDiff {
       this.innerClassMoveDiffList = new ArrayList<UMLClassMoveDiff>();
       this.classRenameDiffList = new ArrayList<UMLClassRenameDiff>();
       this.refactorings = new ArrayList<Refactoring>();
+      this.deletedFolderPaths = new LinkedHashSet<String>();
    }
 
    public void reportAddedClass(UMLClass umlClass) {
@@ -263,13 +267,20 @@ public class UMLModelDiff {
       }
    }
 
-   public void checkForMovedClasses(Map<String, String> renamedFileHints) {
+   public void checkForMovedClasses(Map<String, String> renamedFileHints, String projectRoot) {
 	   for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
 		   UMLClass removedClass = removedClassIterator.next();
 		   TreeSet<UMLClassMoveDiff> diffSet = new TreeSet<UMLClassMoveDiff>(new ClassMoveComparator());
 		   for(Iterator<UMLClass> addedClassIterator = addedClasses.iterator(); addedClassIterator.hasNext();) {
 			   UMLClass addedClass = addedClassIterator.next();
-			   String renamedFile =  renamedFileHints.get(removedClass.getSourceFile());
+			   String removedClassSourceFile = removedClass.getSourceFile();
+			   String renamedFile =  renamedFileHints.get(removedClassSourceFile);
+			   String removedClassSourceFolder = removedClassSourceFile.substring(0, removedClassSourceFile.lastIndexOf("/")).replaceAll("/", UMLModelASTReader.systemFileSeparator);
+			   String removedFileFolderPathAsString = projectRoot + File.separator + removedClassSourceFolder;
+			   File removedFileFolderPath = new File(removedFileFolderPathAsString);
+			   if(!removedFileFolderPath.exists()) {
+				   deletedFolderPaths.add(removedFileFolderPathAsString);
+			   }
 			   if(removedClass.hasSameNameAndKind(addedClass) 
 					   && (removedClass.hasSameAttributesAndOperations(addedClass) || addedClass.getSourceFile().equals(renamedFile) )) {
 				   if(!conflictingMoveOfTopLevelClass(removedClass, addedClass)) {
@@ -663,15 +674,28 @@ public class UMLModelDiff {
 	   }
 	   for(RenamePackageRefactoring renamePackageRefactoring : renamePackageRefactorings) {
 		   List<MoveClassRefactoring> moveClassRefactorings = renamePackageRefactoring.getMoveClassRefactorings();
-		   if(moveClassRefactorings.size() > 1) {
+		   if(moveClassRefactorings.size() > 1 && isSourcePackageDeleted(renamePackageRefactoring)) {
 			   refactorings.add(renamePackageRefactoring);
 		   }
-		   else if(moveClassRefactorings.size() == 1) {
-			   refactorings.add(moveClassRefactorings.get(0));
+		   else {
+			   refactorings.addAll(moveClassRefactorings);
 		   }
 	   }
 	   refactorings.addAll(moveSourceFolderRefactorings);
 	   return refactorings;
+   }
+
+   private boolean isSourcePackageDeleted(RenamePackageRefactoring renamePackageRefactoring) {
+	   for(String deletedFolderPath : deletedFolderPaths) {
+		   String originalPath = renamePackageRefactoring.getPattern().getOriginalPath();
+		   //remove last .
+		   String trimmedOriginalPath = originalPath.endsWith(".") ? originalPath.substring(0, originalPath.length()-1) : originalPath;
+		   String convertedPackageToFilePath = trimmedOriginalPath.replaceAll("\\.", UMLModelASTReader.systemFileSeparator);
+		   if(deletedFolderPath.endsWith(convertedPackageToFilePath)) {
+			   return true;
+		   }
+	   }
+	   return false;
    }
 
    private List<RenameClassRefactoring> getRenameClassRefactorings() {

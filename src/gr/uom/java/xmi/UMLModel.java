@@ -10,11 +10,13 @@ import java.util.ListIterator;
 import java.util.Map;
 
 public class UMLModel {
+	private String projectRoot;
     private List<UMLClass> classList;
     private List<UMLGeneralization> generalizationList;
     private List<UMLRealization> realizationList;
 
-    public UMLModel() {
+    public UMLModel(String projectRoot) {
+    	this.projectRoot = projectRoot;
         classList = new ArrayList<UMLClass>();
         generalizationList = new ArrayList<UMLGeneralization>();
         realizationList = new ArrayList<UMLRealization>();
@@ -102,10 +104,6 @@ public class UMLModel {
     	return null;
     }
 
-    public UMLModelDiff diff(UMLModel umlModel) {
-    	return this.diff(umlModel, Collections.<String, String>emptyMap());
-    }
-
 	public UMLModelDiff diff(UMLModel umlModel, Map<String, String> renamedFileHints) {
     	UMLModelDiff modelDiff = new UMLModelDiff();
     	for(UMLClass umlClass : classList) {
@@ -116,7 +114,7 @@ public class UMLModel {
     		if(!this.classList.contains(umlClass))
     			modelDiff.reportAddedClass(umlClass);
     	}
-    	modelDiff.checkForMovedClasses(renamedFileHints);
+    	modelDiff.checkForMovedClasses(renamedFileHints, umlModel.projectRoot);
     	modelDiff.checkForRenamedClasses(renamedFileHints);
     	for(UMLGeneralization umlGeneralization : generalizationList) {
     		if(!umlModel.generalizationList.contains(umlGeneralization))

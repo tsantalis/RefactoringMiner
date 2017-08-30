@@ -39,7 +39,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import gr.uom.java.xmi.decomposition.OperationBody;
 
 public class UMLModelASTReader {
-	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
+	public static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
 	
 	private UMLModel umlModel;
 	private String projectRoot;
@@ -50,7 +50,7 @@ public class UMLModelASTReader {
 	}
 
 	public UMLModelASTReader(File rootFolder, ASTParser parser, List<String> javaFiles) {
-		this.umlModel = new UMLModel();
+		this.umlModel = new UMLModel(rootFolder.getPath());
 		this.projectRoot = rootFolder.getPath();
 		this.parser = parser;
 		final String[] emptyArray = new String[0];

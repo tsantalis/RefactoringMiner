@@ -122,14 +122,14 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		// If no java files changed, there is no refactoring. Also, if there are
 		// only ADD's or only REMOVE's there is no refactoring
 		if (!filesBefore.isEmpty() && !filesCurrent.isEmpty()) {
-			// Checkout and build model for current commit
-			gitService.checkout(repository, commitId);
-			UMLModel currentUMLModel = createModel(projectFolder, filesCurrent);
-			
 			// Checkout and build model for parent commit
 			String parentCommit = currentCommit.getParent(0).getName();
 			gitService.checkout(repository, parentCommit);
 			UMLModel parentUMLModel = createModel(projectFolder, filesBefore);
+			
+			// Checkout and build model for current commit
+			gitService.checkout(repository, commitId);
+			UMLModel currentUMLModel = createModel(projectFolder, filesCurrent);
 			
 			// Diff between currentModel e parentModel
 			refactoringsAtRevision = parentUMLModel.diff(currentUMLModel, renamedFilesHint).getRefactorings();

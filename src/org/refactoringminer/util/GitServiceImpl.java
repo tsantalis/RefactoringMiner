@@ -219,12 +219,14 @@ public class GitServiceImpl implements GitService {
 		RevWalk walk = new RevWalk(repository);
 		
 		Ref startTagRef = repository.findRef(startTag);
-		Ref endTagRef = repository.findRef(endTag);
 		ObjectId startCommit = startTagRef.getObjectId();
-		ObjectId endCommit = endTagRef.getObjectId();
-        
         walk.markStart(walk.parseCommit(startCommit));
-        walk.markUninteresting(walk.parseCommit(endCommit));
+        
+        if (endTag != null) {
+	    		Ref endTagRef = repository.findRef(endTag);
+	    		ObjectId endCommit = endTagRef.getObjectId();
+            walk.markUninteresting(walk.parseCommit(endCommit));
+        }
 		
         walk.setRevFilter(commitsFilter);
 		return walk;
@@ -236,11 +238,13 @@ public class GitServiceImpl implements GitService {
 		RevWalk walk = new RevWalk(repository);
 		
 		ObjectId startCommit = repository.resolve(startCommitId);
-		ObjectId endCommit = repository.resolve(endCommitId);
-        
         walk.markStart(walk.parseCommit(startCommit));
-        walk.markUninteresting(walk.parseCommit(endCommit));
-        
+
+        if (endCommitId != null) {
+        		ObjectId endCommit = repository.resolve(endCommitId);  
+            walk.markUninteresting(walk.parseCommit(endCommit));
+        }
+		
 		walk.setRevFilter(commitsFilter);
 		return walk;
 	}

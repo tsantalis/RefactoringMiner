@@ -91,16 +91,21 @@ public class RefactoringMiner {
 	}
 
 	private static void detectBetweenCommits(String[] args) throws Exception {
-		if (args.length != 4) {
+		if (!(args.length == 3 || args.length == 4)) {
 			throw argumentException();
 		}
 		String folder = args[1];
 		String startCommit = args[2];
-		String endCommit = args[3];
+		String endCommit = (args.length == 4) ? args[3] : null;
 		GitService gitService = new GitServiceImpl();
 		try (Repository repo = gitService.openRepository(folder)) {
 			Path folderPath = Paths.get(folder);
-			String fileName = "refactorings_" + startCommit + "_" + endCommit + ".csv";
+			String fileName = null;
+			if (endCommit == null) {
+				fileName = "refactorings_" + startCommit + "_begin" + ".csv";
+			} else {
+				fileName = "refactorings_" + startCommit + "_" + endCommit + ".csv";
+			}
 			String filePath = folderPath.toString() + "/" + fileName;
 			Files.deleteIfExists(Paths.get(filePath));
 			saveToFile(filePath, getResultHeader());
@@ -136,16 +141,21 @@ public class RefactoringMiner {
 	}
 
 	private static void detectBetweenTags(String[] args) throws Exception {
-		if (args.length != 4) {
+		if (!(args.length == 3 || args.length == 4)) {
 			throw argumentException();
 		}
 		String folder = args[1];
 		String startTag = args[2];
-		String endTag = args[3];
+		String endTag = (args.length == 4) ? args[3] : null;
 		GitService gitService = new GitServiceImpl();
 		try (Repository repo = gitService.openRepository(folder)) {
 			Path folderPath = Paths.get(folder);
-			String fileName = "refactorings_" + startTag + "_" + endTag + ".csv";
+			String fileName = null;
+			if (endTag == null) {
+				fileName = "refactorings_" + startTag + "_begin" + ".csv";
+			} else {
+				fileName = "refactorings_" + startTag + "_" + endTag + ".csv";
+			}
 			String filePath = folderPath.toString() + "/" + fileName;
 			Files.deleteIfExists(Paths.get(filePath));
 			saveToFile(filePath, getResultHeader());

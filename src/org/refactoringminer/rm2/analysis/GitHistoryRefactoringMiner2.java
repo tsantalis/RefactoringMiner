@@ -74,4 +74,18 @@ public class GitHistoryRefactoringMiner2 implements GitHistoryRefactoringMiner {
 	    return config.getId();
 	}
 
+	@Override
+	public void detectBetweenTags(Repository repository, String startTag, String endTag, RefactoringHandler handler)
+			throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void detectBetweenCommits(Repository repository, String startCommitId, String endCommitId,
+			RefactoringHandler handler) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -212,6 +212,34 @@ public class GitServiceImpl implements GitService {
 		walk.setRevFilter(commitsFilter);
 		return walk;
 	}
+	
+	@Override
+	public RevWalk createRevsWalkBetweenTags(Repository repository, String startTag, String endTag)
+			throws Exception {
+		RevWalk walk = new RevWalk(repository);
+		
+		Ref startTagRef = repository.findRef(startTag);
+		Ref endTagRef = repository.findRef(endTag);
+		ObjectId startCommit = startTagRef.getObjectId();
+		ObjectId endCommit = endTagRef.getObjectId();
+        
+        walk.markStart(walk.parseCommit(startCommit));
+        walk.markUninteresting(walk.parseCommit(endCommit));
+		return walk;
+	}
+	
+	@Override
+	public RevWalk createRevsWalkBetweenCommits(Repository repository, String startCommitId, String endCommitId)
+			throws Exception {
+		RevWalk walk = new RevWalk(repository);
+		
+		ObjectId startCommit = repository.resolve(startCommitId);
+		ObjectId endCommit = repository.resolve(endCommitId);
+        
+        walk.markStart(walk.parseCommit(startCommit));
+        walk.markUninteresting(walk.parseCommit(endCommit));
+		return walk;
+	}
 
 	public boolean isCommitAnalyzed(String sha1) {
 		return false;

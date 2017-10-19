@@ -19,6 +19,8 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -285,5 +287,43 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	@Override
 	public String getConfigId() {
 	    return "RM1";
+	}
+
+	@Override
+	public void detectBetweenTags(Repository repository, String startTag, String endTag, RefactoringHandler handler)
+			throws Exception {
+		GitService gitService = new GitServiceImpl() {
+			@Override
+			public boolean isCommitAnalyzed(String sha1) {
+				return handler.skipCommit(sha1);
+			}
+		};
+		
+		RevWalk walk = gitService.createRevsWalkBetweenTags(repository, startTag, endTag);
+
+		try {
+			detect(gitService, repository, handler, walk.iterator());
+		} finally {
+			walk.dispose();
+		}
+	}
+
+	@Override
+	public void detectBetweenCommits(Repository repository, String startCommitId, String endCommitId,
+			RefactoringHandler handler) throws Exception {
+		GitService gitService = new GitServiceImpl() {
+			@Override
+			public boolean isCommitAnalyzed(String sha1) {
+				return handler.skipCommit(sha1);
+			}
+		};
+		
+		RevWalk walk = gitService.createRevsWalkBetweenCommits(repository, startCommitId, endCommitId);
+
+		try {
+			detect(gitService, repository, handler, walk.iterator());
+		} finally {
+			walk.dispose();
+		}
 	}
 }

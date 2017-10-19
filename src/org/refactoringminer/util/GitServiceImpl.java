@@ -225,6 +225,8 @@ public class GitServiceImpl implements GitService {
         
         walk.markStart(walk.parseCommit(startCommit));
         walk.markUninteresting(walk.parseCommit(endCommit));
+		
+        walk.setRevFilter(commitsFilter);
 		return walk;
 	}
 	
@@ -238,6 +240,8 @@ public class GitServiceImpl implements GitService {
         
         walk.markStart(walk.parseCommit(startCommit));
         walk.markUninteresting(walk.parseCommit(endCommit));
+        
+		walk.setRevFilter(commitsFilter);
 		return walk;
 	}
 

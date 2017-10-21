@@ -821,30 +821,32 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		types1.removeAll(typeIntersection);
 		types2.removeAll(typeIntersection);
 		
-		Set<String> creations1 = new LinkedHashSet<String>(statement1.getCreationMap().keySet());
-		Set<String> creations2 = new LinkedHashSet<String>(statement2.getCreationMap().keySet());
+		Map<String, ObjectCreation> creationMap1 = statement1.getCreationMap();
+		Map<String, ObjectCreation> creationMap2 = statement2.getCreationMap();
+		Set<String> creations1 = new LinkedHashSet<String>(creationMap1.keySet());
+		Set<String> creations2 = new LinkedHashSet<String>(creationMap2.keySet());
 		ObjectCreation creationCoveringTheEntireStatement1 = null;
 		ObjectCreation creationCoveringTheEntireStatement2 = null;
 		//remove objectCreation covering the entire statement
-		for(String objectCreation1 : statement1.getCreationMap().keySet()) {
+		for(String objectCreation1 : creationMap1.keySet()) {
 			if((objectCreation1 + ";\n").equals(statement1.getString()) || objectCreation1.equals(statement1.getString()) ||
 					("return " + objectCreation1 + ";\n").equals(statement1.getString()) ||
 					("throw " + objectCreation1 + ";\n").equals(statement1.getString())) {
 				creations1.remove(objectCreation1);
-				creationCoveringTheEntireStatement1 = statement1.getCreationMap().get(objectCreation1);
+				creationCoveringTheEntireStatement1 = creationMap1.get(objectCreation1);
 			}
-			if(statement1.getCreationMap().get(objectCreation1).getAnonymousClassDeclaration() != null) {
+			if(creationMap1.get(objectCreation1).getAnonymousClassDeclaration() != null) {
 				creations1.remove(objectCreation1);
 			}
 		}
-		for(String objectCreation2 : statement2.getCreationMap().keySet()) {
+		for(String objectCreation2 : creationMap2.keySet()) {
 			if((objectCreation2 + ";\n").equals(statement2.getString()) || objectCreation2.equals(statement2.getString()) ||
 					("return " + objectCreation2 + ";\n").equals(statement2.getString()) ||
 					("throw " + objectCreation2 + ";\n").equals(statement2.getString())) {
 				creations2.remove(objectCreation2);
-				creationCoveringTheEntireStatement2 = statement2.getCreationMap().get(objectCreation2);
+				creationCoveringTheEntireStatement2 = creationMap2.get(objectCreation2);
 			}
-			if(statement2.getCreationMap().get(objectCreation2).getAnonymousClassDeclaration() != null) {
+			if(creationMap2.get(objectCreation2).getAnonymousClassDeclaration() != null) {
 				creations2.remove(objectCreation2);
 			}
 		}
@@ -1200,7 +1202,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		//object creation has only changes in the arguments
 		if(!creations1.isEmpty() && creationCoveringTheEntireStatement2 != null) {
 			for(String creation1 : creations1) {
-				ObjectCreation objectCreation1 = statement1.getCreationMap().get(creation1);
+				ObjectCreation objectCreation1 = creationMap1.get(creation1);
 				if(objectCreation1.getType().equals(creationCoveringTheEntireStatement2.getType()) &&
 						!objectCreation1.getArguments().equals(creationCoveringTheEntireStatement2.getArguments()) &&
 						objectCreation1.getArguments().size() != creationCoveringTheEntireStatement2.getArguments().size()) {
@@ -1214,10 +1216,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				//check if the argument lists are identical after replacements
-				if(objectCreation1.getType().equals(creationCoveringTheEntireStatement2.getType()) &&
-						s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).equals(s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"))) &&
-						s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).length() > 0) {
-					return replacements;
+				if(objectCreation1.getType().equals(creationCoveringTheEntireStatement2.getType())) {
+					if(objectCreation1.isArray() && creationCoveringTheEntireStatement2.isArray() &&
+							s1.substring(s1.indexOf("[")+1, s1.lastIndexOf("]")).equals(s2.substring(s2.indexOf("[")+1, s2.lastIndexOf("]"))) &&
+							s1.substring(s1.indexOf("[")+1, s1.lastIndexOf("]")).length() > 0) {
+						return replacements;
+					}
+					if(!objectCreation1.isArray() && !creationCoveringTheEntireStatement2.isArray() &&
+							s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).equals(s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"))) &&
+							s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).length() > 0) {
+						return replacements;
+					}
 				}
 			}
 		}

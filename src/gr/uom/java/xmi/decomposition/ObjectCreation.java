@@ -60,6 +60,10 @@ public class ObjectCreation {
 		return arguments;
 	}
 
+	public boolean isArray() {
+		return isArray;
+	}
+
 	public String getAnonymousClassDeclaration() {
 		return anonymousClassDeclaration;
 	}

@@ -760,12 +760,42 @@ public class UMLModelDiff {
                   UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap1, parameterToArgumentMap2);
                   operationBodyMapper.getMappings();
                   int mappings = operationBodyMapper.mappingsWithoutBlocks();
-                  if(mappings > 0 && mappings > operationBodyMapper.nonMappedElementsT2() &&
-                		  sourceClassImportsTargetClassAfterRefactoring(mapper.getOperation1().getClassName(), addedOperation.getClassName())) {
-                     ExtractAndMoveOperationRefactoring extractOperationRefactoring =
-                           new ExtractAndMoveOperationRefactoring(operationBodyMapper);
-                     refactorings.add(extractOperationRefactoring);
-                     deleteAddedOperation(addedOperation);
+                  if(mappings > 0 && mappings > operationBodyMapper.nonMappedElementsT2()) {
+                	  if(isSubclassOf(mapper.getOperation1().getClassName(), addedOperation.getClassName())) {
+                		  //extract and pull up method
+                		  ExtractAndMoveOperationRefactoring extractOperationRefactoring =
+   	                           new ExtractAndMoveOperationRefactoring(operationBodyMapper);
+   	                      refactorings.add(extractOperationRefactoring);
+   	                      deleteAddedOperation(addedOperation);
+                	  }
+                	  else if(isSubclassOf(addedOperation.getClassName(), mapper.getOperation1().getClassName())) {
+                		  //extract and push down method
+                		  ExtractAndMoveOperationRefactoring extractOperationRefactoring =
+   	                           new ExtractAndMoveOperationRefactoring(operationBodyMapper);
+   	                      refactorings.add(extractOperationRefactoring);
+   	                      deleteAddedOperation(addedOperation);
+                	  }
+                	  else if(addedOperation.getClassName().startsWith(mapper.getOperation1().getClassName() + ".")) {
+                		  //extract and move to inner class
+                		  ExtractAndMoveOperationRefactoring extractOperationRefactoring =
+      	                       new ExtractAndMoveOperationRefactoring(operationBodyMapper);
+      	                  refactorings.add(extractOperationRefactoring);
+      	                  deleteAddedOperation(addedOperation);
+                	  }
+                	  else if(mapper.getOperation1().getClassName().startsWith(addedOperation.getClassName() + ".")) {
+                		  //extract and move to outer class
+                		  ExtractAndMoveOperationRefactoring extractOperationRefactoring =
+      	                       new ExtractAndMoveOperationRefactoring(operationBodyMapper);
+      	                  refactorings.add(extractOperationRefactoring);
+      	                  deleteAddedOperation(addedOperation);
+                	  }
+                	  else if(sourceClassImportsTargetClassAfterRefactoring(mapper.getOperation1().getClassName(), addedOperation.getClassName())) {
+                		  //extract and move
+	                      ExtractAndMoveOperationRefactoring extractOperationRefactoring =
+	                           new ExtractAndMoveOperationRefactoring(operationBodyMapper);
+	                      refactorings.add(extractOperationRefactoring);
+	                      deleteAddedOperation(addedOperation);
+                	  }
                   }
                   else if(addedOperation.getBody() != null && addedOperation.getBody().getCompositeStatement().getLeaves().size() == 1 &&
                           !addedOperation.getClassName().equals(operationBodyMapper.getOperation1().getClassName())) {

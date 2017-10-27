@@ -176,7 +176,7 @@ public class UMLModelASTReader {
     	for(FieldDeclaration fieldDeclaration : fieldDeclarations) {
     		List<UMLAttribute> attributes = processFieldDeclaration(fieldDeclaration/*, bytecodeClass*/);
     		for(UMLAttribute attribute : attributes) {
-    			attribute.setClassName(umlClass.getName());
+    			attribute.setClassOwner(umlClass);
     			umlClass.addAttribute(attribute);
     		}
     	}
@@ -184,7 +184,7 @@ public class UMLModelASTReader {
     	MethodDeclaration[] methodDeclarations = typeDeclaration.getMethods();
     	for(MethodDeclaration methodDeclaration : methodDeclarations) {
     		UMLOperation operation = processMethodDeclaration(methodDeclaration, packageName, className/*, bytecodeClass*/);
-    		operation.setClassName(umlClass.getName());
+    		operation.setClassOwner(umlClass);
     		umlClass.addOperation(operation);
     	}
     	
@@ -317,14 +317,14 @@ public class UMLModelASTReader {
 				FieldDeclaration fieldDeclaration = (FieldDeclaration)bodyDeclaration;
 				List<UMLAttribute> attributes = processFieldDeclaration(fieldDeclaration/*, bytecodeClass*/);
 	    		for(UMLAttribute attribute : attributes) {
-	    			attribute.setClassName(anonymousClass.getName());
+					attribute.setClassOwner(anonymousClass);
 	    			anonymousClass.addAttribute(attribute);
 	    		}
 			}
 			else if(bodyDeclaration instanceof MethodDeclaration) {
 				MethodDeclaration methodDeclaration = (MethodDeclaration)bodyDeclaration;
 				UMLOperation operation = processMethodDeclaration(methodDeclaration, packageName, className/*, bytecodeClass*/);
-				operation.setClassName(anonymousClass.getName());
+				operation.setClassOwner(anonymousClass);
 				anonymousClass.addOperation(operation);
 			}
 		}

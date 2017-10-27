@@ -422,18 +422,18 @@ public class UMLModelDiff {
                   addedAttribute.getType().equals(removedAttribute.getType())) {
                if(isSubclassOf(removedAttribute.getClassName(), addedAttribute.getClassName())) {
                   PullUpAttributeRefactoring pullUpAttribute = new PullUpAttributeRefactoring(addedAttribute,
-                        removedAttribute.getClassName(), addedAttribute.getClassName());
+                        removedAttribute.getClassOwner(), addedAttribute.getClassOwner());
                   refactorings.add(pullUpAttribute);
                }
                else if(isSubclassOf(addedAttribute.getClassName(), removedAttribute.getClassName())) {
                   PushDownAttributeRefactoring pushDownAttribute = new PushDownAttributeRefactoring(addedAttribute,
-                        removedAttribute.getClassName(), addedAttribute.getClassName());
+                        removedAttribute.getClassOwner(), addedAttribute.getClassOwner());
                   refactorings.add(pushDownAttribute);
                }
                else if(sourceClassImportsTargetClassAfterRefactoring(removedAttribute.getClassName(), addedAttribute.getClassName()) ||
             		   targetClassImportsSourceClassBeforeRefactoring(removedAttribute.getClassName(), addedAttribute.getClassName())) {
                   MoveAttributeRefactoring moveAttribute = new MoveAttributeRefactoring(addedAttribute,
-                        removedAttribute.getClassName(), addedAttribute.getClassName());
+                        removedAttribute.getClassOwner(), addedAttribute.getClassOwner());
                   refactorings.add(moveAttribute);
                }
             }
@@ -575,7 +575,7 @@ public class UMLModelDiff {
 				   UMLAttribute removedAttribute = subclassDiff.containsRemovedAttributeWithTheSameSignature(superclassAttribute);
 				   if(removedAttribute != null) {
 					   subclassDiff.getRemovedAttributes().remove(removedAttribute);
-					   this.refactorings.add(new PullUpAttributeRefactoring(superclassAttribute, removedAttribute.getClassName(), superclassAttribute.getClassName()));
+					   this.refactorings.add(new PullUpAttributeRefactoring(superclassAttribute, removedAttribute.getClassOwner(), superclassAttribute.getClassOwner()));
 				   }
 			   }
 		   }
@@ -626,6 +626,7 @@ public class UMLModelDiff {
 	   List<RenamePackageRefactoring> renamePackageRefactorings = new ArrayList<RenamePackageRefactoring>();
 	   List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = new ArrayList<MoveSourceFolderRefactoring>();
 	   for(UMLClassMoveDiff classMoveDiff : classMoveDiffList) {
+
 		   UMLClass originalClass = classMoveDiff.getOriginalClass();
 		   String originalName = originalClass.getName();
 		   UMLClass movedClass = classMoveDiff.getMovedClass();
@@ -635,7 +636,7 @@ public class UMLModelDiff {
 		   String movedPath = movedClass.getSourceFile();
 		   
 		   if (!originalName.equals(movedName)) {
-			   MoveClassRefactoring refactoring = new MoveClassRefactoring(originalName, movedName);
+			   MoveClassRefactoring refactoring = new MoveClassRefactoring(originalClass, movedClass);
 			   RenamePattern renamePattern = refactoring.getRenamePattern();
 			   //check if the the original path is a substring of the moved path and vice versa
 			   if(renamePattern.getOriginalPath().contains(renamePattern.getMovedPath()) ||
@@ -701,7 +702,7 @@ public class UMLModelDiff {
    private List<RenameClassRefactoring> getRenameClassRefactorings() {
       List<RenameClassRefactoring> refactorings = new ArrayList<RenameClassRefactoring>();
       for(UMLClassRenameDiff classRenameDiff : classRenameDiffList) {
-         RenameClassRefactoring refactoring = new RenameClassRefactoring(classRenameDiff.getOriginalClass().getName(), classRenameDiff.getRenamedClass().getName());
+         RenameClassRefactoring refactoring = new RenameClassRefactoring(classRenameDiff.getOriginalClass(), classRenameDiff.getRenamedClass());
          refactorings.add(refactoring);
       }
       return refactorings;

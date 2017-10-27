@@ -1,30 +1,33 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.UMLBaseClass;
+import gr.uom.java.xmi.UMLClass;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 public class MoveClassRefactoring implements Refactoring {
-	private String originalClassName;
-	private String movedClassName;
+
+	private UMLBaseClass originalClass;
+	private UMLBaseClass movedClass;
 	
-	public MoveClassRefactoring(String originalClassName,  String movedClassName) {
-		this.originalClassName = originalClassName;
-		this.movedClassName = movedClassName;
+	public MoveClassRefactoring(UMLBaseClass originalClass,  UMLBaseClass movedClass) {
+		this.originalClass = originalClass;
+		this.movedClass = movedClass;
 	}
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(originalClassName);
+		sb.append(getOriginalClassName());
 		sb.append(" moved to ");
-		sb.append(movedClassName);
+		sb.append(getMovedClassName());
 		return sb.toString();
 	}
 
 	public RenamePattern getRenamePattern() {
-		int separatorPos = separatorPosOfCommonSuffix('.', originalClassName, movedClassName);
-		String originalPath = originalClassName.substring(0, originalClassName.length() - separatorPos);
-		String movedPath = movedClassName.substring(0, movedClassName.length() - separatorPos);
+		int separatorPos = separatorPosOfCommonSuffix('.', getOriginalClassName(), getMovedClassName());
+		String originalPath = getOriginalClassName().substring(0, getOriginalClassName().length() - separatorPos);
+		String movedPath = getMovedClassName().substring(0, getMovedClassName().length() - separatorPos);
 		return new RenamePattern(originalPath, movedPath);
 	}
 
@@ -54,11 +57,19 @@ public class MoveClassRefactoring implements Refactoring {
 	}
 
 	public String getOriginalClassName() {
-		return originalClassName;
+		return originalClass.getName();
 	}
 
 	public String getMovedClassName() {
-		return movedClassName;
+		return movedClass.getName();
 	}
-	
+
+	public UMLBaseClass getOriginalClass() {
+		return originalClass;
+	}
+
+	public UMLBaseClass getMovedClass() {
+		return movedClass;
+	}
+
 }

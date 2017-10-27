@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-public class UMLClass implements Comparable<UMLClass>, Serializable {
+public class UMLClass implements Comparable<UMLClass>, Serializable,UMLBaseClass {
 	private String packageName;
     private String name;
     private String qualifiedName;

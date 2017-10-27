@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.UMLBaseClass;
+import gr.uom.java.xmi.UMLClass;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLAttribute;
@@ -7,8 +9,8 @@ import gr.uom.java.xmi.UMLAttribute;
 public class PullUpAttributeRefactoring extends MoveAttributeRefactoring {
 
 	public PullUpAttributeRefactoring(UMLAttribute movedAttribute,
-			String sourceClassName, String targetClassName) {
-		super(movedAttribute, sourceClassName, targetClassName);
+									  UMLBaseClass sourceClass, UMLBaseClass targetClass) {
+		super(movedAttribute, sourceClass, targetClass);
 	}
 
 	public String toString() {
@@ -16,9 +18,9 @@ public class PullUpAttributeRefactoring extends MoveAttributeRefactoring {
 		sb.append(getName()).append("\t");
 		sb.append(movedAttribute);
 		sb.append(" from class ");
-		sb.append(sourceClassName);
+		sb.append(sourceClass);
 		sb.append(" to class ");
-		sb.append(targetClassName);
+		sb.append(targetClass);
 		return sb.toString();
 	}
 

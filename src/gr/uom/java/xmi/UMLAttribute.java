@@ -5,10 +5,11 @@ import gr.uom.java.xmi.diff.StringDistance;
 import java.io.Serializable;
 
 public class UMLAttribute implements Comparable<UMLAttribute>, Serializable {
+
 	private String name;
 	private UMLType type;
 	private String visibility;
-	private String className;
+	private UMLBaseClass classOwner;
 	private boolean isFinal;
 	private boolean isStatic;
 	private Object value;
@@ -51,11 +52,15 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable {
 	}
 
 	public String getClassName() {
-		return className;
+		return classOwner.getName();
 	}
 
-	public void setClassName(String className) {
-		this.className = className;
+	public UMLBaseClass getClassOwner() {
+		return classOwner;
+	}
+
+	public void setClassOwner(UMLBaseClass classOwner) {
+		this.classOwner = classOwner;
 	}
 
 	public String getName() {

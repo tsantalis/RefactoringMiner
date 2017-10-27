@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.UMLBaseClass;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
@@ -7,6 +8,7 @@ import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLClass;
 
 public class ConvertAnonymousClassToTypeRefactoring implements Refactoring {
+
 	private UMLAnonymousClass anonymousClass;
 	private UMLClass addedClass;
 	
@@ -27,6 +29,14 @@ public class ConvertAnonymousClassToTypeRefactoring implements Refactoring {
 	public String getName() {
 		return this.getRefactoringType().getDisplayName();
 	}
+
+	public UMLBaseClass getAnonymousClass(){
+		return anonymousClass;
+	};
+
+	public UMLBaseClass getAddedClass(){
+		return addedClass;
+	};
 
 	public RefactoringType getRefactoringType() {
 		return RefactoringType.CONVERT_ANONYMOUS_CLASS_TO_TYPE;

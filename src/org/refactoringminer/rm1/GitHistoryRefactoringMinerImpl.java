@@ -97,6 +97,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				
 			} catch (Exception e) {
 				logger.warn(String.format("Ignored revision %s due to error", currentCommit.getId().getName()), e);
+				handler.handleException(currentCommit.getId().getName(),e);
 				errorCommitsCount++;
 			}
 
@@ -140,6 +141,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			refactoringsAtRevision = Collections.emptyList();
 		}
 		handler.handle(commitId, refactoringsAtRevision);
+		handler.handle(currentCommit, refactoringsAtRevision);
+
 		return refactoringsAtRevision;
 	}
 
@@ -172,6 +175,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			handler.handleException(currentCommitId, e);
 		}
 		handler.handle(currentCommitId, refactoringsAtRevision);
+
 		return refactoringsAtRevision;
 	}
 

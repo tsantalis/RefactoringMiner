@@ -142,6 +142,7 @@ public class GitHistoryStructuralDiffAnalyzer {
 		}
 //		}
 		final SDModel model = builder.buildModel();
+		handler.handle(currentCommit.getId().getName(), model);
 		handler.handle(currentCommit, model);
 	}
 

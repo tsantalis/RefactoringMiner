@@ -26,7 +26,8 @@ The code in package **br.ufmg.dcc.labsoft.refactoringanalyzer.*** and **org.refa
 ## API usage guidelines ##
 
 RefactoringMiner can automatically detect refactorings in the entire history of 
-git repositories, or at specified commits.
+git repositories, between specified commits or tags, or at specified commits.
+
 In the code snippet below we demonstrate how to print all refactorings performed
 in the toy project https://github.com/danilofes/refactoring-toy-example.git.
 
@@ -39,6 +40,32 @@ Repository repo = gitService.cloneIfNotExists(
     "https://github.com/danilofes/refactoring-toy-example.git");
 
 miner.detectAll(repo, "master", new RefactoringHandler() {
+  @Override
+  public void handle(RevCommit commitData, List<Refactoring> refactorings) {
+    System.out.println("Refactorings at " + commitData.getId().getName());
+    for (Refactoring ref : refactorings) {
+      System.out.println(ref.toString());
+    }
+  }
+});
+```
+
+You can also analyze between commits using `detectBetweenCommits` or between tags using `detectBetweenTags`. RefactoringMiner will start from commit or tag as specified and iterate backwards. If the end commit or end tag is not specified, RefactoringMiner will detect until the first beginning.
+
+```java
+miner.detectBetweenCommits(repo, "d4bce13a443cf12da40a77c16c1e591f4f985b47", "dde3ef036bdddae550c4e98373db4c81d77b5043", new RefactoringHandler() {
+  @Override
+  public void handle(RevCommit commitData, List<Refactoring> refactorings) {
+    System.out.println("Refactorings at " + commitData.getId().getName());
+    for (Refactoring ref : refactorings) {
+      System.out.println(ref.toString());
+    }
+  }
+});
+```
+
+```java
+miner.detectBetweenTags(repo, "1.1", "1.0", new RefactoringHandler() {
   @Override
   public void handle(RevCommit commitData, List<Refactoring> refactorings) {
     System.out.println("Refactorings at " + commitData.getId().getName());
@@ -90,14 +117,20 @@ the latter uses information from git to better identify moves and renames.
 
 ## Running from the command line ##
 
-When you build a distributable application with `./gradlew distZip`, you can run Refactoring Miner as a command line application. Extract the file under `build/distribution/RefactoringMiner.zip` in the desired location, and cd into the `bin` folder (or include it in your path). Them, run RefactoringMiner using the following syntax:
+When you build a distributable application with `./gradlew distZip`, you can run Refactoring Miner as a command line application. Extract the file under `build/distribution/RefactoringMiner.zip` in the desired location, and cd into the `bin` folder (or include it in your path). Then, run `RefactoringMiner -h` to show its usage:
 
-    > RefactoringMiner <path-to-git-repo> <commit-sha1>
+    > RefactoringMiner -h
 
-For example, supose that you run:
+	-h															Show tips
+	-a <git-repo-folder> <branch>								Detect all refactorings at <branch> for <git-repo-folder>. If <branch> is not specified, commits from all branches are analyzed.
+	-bc <git-repo-folder> <start-commit-sha1> <end-commit-sha1>	Detect refactorings Between <star-commit-sha1> and <end-commit-sha1> for project <git-repo-folder>
+	-bt <git-repo-folder> <start-tag> <end-tag>					Detect refactorings Between <start-tag> and <end-tag> for project <git-repo-folder>
+	-c <git-repo-folder> <commit-sha1>							Detect refactorings at specified commit <commit-sha1> for project <git-repo-folder>
+	
+For example, suppose that you run:
 
     > git clone https://github.com/danilofes/refactoring-toy-example.git refactoring-toy-example
-    > RefactoringMiner refactoring-toy-example 36287f7c3b09eff78395267a3ac0d7da067863fd
+    > RefactoringMiner -c refactoring-toy-example 36287f7c3b09eff78395267a3ac0d7da067863fd
 
 The output would be:
 
@@ -107,6 +140,7 @@ The output would be:
       Pull Up Method        public getAge() : int from class org.animals.Labrador to public getAge() : int from class org.animals.Dog
       Pull Up Method        public getAge() : int from class org.animals.Poodle to public getAge() : int from class org.animals.Dog
 
+When you run Refactoring with `-a`, `-bc`, `-bt`, after all commits are analyzed, a result `csv` file which use semicolon `;` as delimiter will be generated in the repository directory.
 
 ## Research ##
 

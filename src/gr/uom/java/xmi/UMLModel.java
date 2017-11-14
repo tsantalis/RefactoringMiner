@@ -104,6 +104,10 @@ public class UMLModel {
     	return null;
     }
 
+    public UMLModelDiff diff(UMLModel umlModel) {
+    	return this.diff(umlModel, Collections.<String, String>emptyMap());
+    }
+
 	public UMLModelDiff diff(UMLModel umlModel, Map<String, String> renamedFileHints) {
     	UMLModelDiff modelDiff = new UMLModelDiff();
     	for(UMLClass umlClass : classList) {

@@ -486,6 +486,32 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return nonMappedLeafCount + nonMappedInnerNodeCount;
 	}
 
+	public boolean callsRemovedAndAddedOperation(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations) {
+		boolean removedOperationCalled = false;
+		for(OperationInvocation invocation : operation1.getAllOperationInvocations()) {
+			for(UMLOperation operation : removedOperations) {
+				if(invocation.matchesOperation(operation)) {
+					removedOperationCalled = true;
+					break;
+				}
+			}
+			if(removedOperationCalled)
+				break;
+		}
+		boolean addedOperationCalled = false;
+		for(OperationInvocation invocation : operation2.getAllOperationInvocations()) {
+			for(UMLOperation operation : addedOperations) {
+				if(invocation.matchesOperation(operation)) {
+					addedOperationCalled = true;
+					break;
+				}
+			}
+			if(addedOperationCalled)
+				break;
+		}
+		return removedOperationCalled && addedOperationCalled;
+	}
+
 	public int exactMatches() {
 		int count = 0;
 		for(AbstractCodeMapping mapping : getMappings()) {
@@ -537,6 +563,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						replacement instanceof VariableReplacementWithMethodInvocation ||
 						replacement instanceof ArgumentReplacementWithRightHandSideOfAssignmentExpression) {
 					replacements.add(replacement);
+				}
+			}
+		}
+		return replacements;
+	}
+
+	public Set<MethodInvocationRename> getMethodInvocationRenameReplacements() {
+		Set<MethodInvocationRename> replacements = new LinkedHashSet<MethodInvocationRename>();
+		for(AbstractCodeMapping mapping : getMappings()) {
+			for(Replacement replacement : mapping.getReplacements()) {
+				if(replacement instanceof MethodInvocationRename) {
+					replacements.add((MethodInvocationRename)replacement);
 				}
 			}
 		}
@@ -1111,6 +1149,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				(invocationsWithIdenticalExpressions(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
 				invocationsWithIdenticalExpressionsAfterTypeReplacements(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacements)) &&
 				!invocationCoveringTheEntireStatement1.getMethodName().equals(invocationCoveringTheEntireStatement2.getMethodName()) &&
+				invocationCoveringTheEntireStatement1.getArguments().equals(invocationCoveringTheEntireStatement2.getArguments())) {
+			Replacement replacement = new MethodInvocationRename(invocationCoveringTheEntireStatement1.getMethodName(),
+					invocationCoveringTheEntireStatement2.getMethodName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2);
+			replacements.add(replacement);
+			return replacements;
+		}
+		//method invocation has been renamed but the expressions are null and arguments are identical
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+				invocationCoveringTheEntireStatement1.getExpression() == null && invocationCoveringTheEntireStatement2.getExpression() == null &&
+				!invocationCoveringTheEntireStatement1.getMethodName().equals(invocationCoveringTheEntireStatement2.getMethodName()) &&
+				invocationCoveringTheEntireStatement1.normalizedNameDistance(invocationCoveringTheEntireStatement2) <= UMLClassDiff.MAX_OPERATION_NAME_DISTANCE &&
 				invocationCoveringTheEntireStatement1.getArguments().equals(invocationCoveringTheEntireStatement2.getArguments())) {
 			Replacement replacement = new MethodInvocationRename(invocationCoveringTheEntireStatement1.getMethodName(),
 					invocationCoveringTheEntireStatement2.getMethodName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2);

@@ -366,6 +366,10 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     			int index = umlClass.operations.indexOf(operation);
     			UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(operation, umlClass.operations.get(index));
     			classDiff.addOperationBodyMapper(operationBodyMapper);
+    			//map the statements when the method calls a removed operation before refactoring, and an added operation after refactoring
+    			if(operationBodyMapper.callsRemovedAndAddedOperation(classDiff.getRemovedOperations(), classDiff.getAddedOperations())) {
+    				operationBodyMapper.getMappings();
+    			}
     		}
     	}
     	

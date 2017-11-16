@@ -20,7 +20,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 	private String visibility;
 	private boolean isAbstract;
 	private List<UMLParameter> parameters;
-	private String className;
+	private UMLBaseClass classOwner;
+
 	private boolean isConstructor;
 	private boolean isFinal;
 	private boolean isStatic;
@@ -105,11 +106,15 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 	}
 
 	public String getClassName() {
-		return className;
+		return classOwner.getName();
 	}
 
-	public void setClassName(String className) {
-		this.className = className;
+	public UMLBaseClass getClassOwner() {
+		return classOwner;
+	}
+
+	public void setClassOwner(UMLBaseClass classOwner) {
+		this.classOwner = classOwner;
 	}
 
 	public void addParameter(UMLParameter parameter) {
@@ -233,7 +238,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 		
 		if(o instanceof UMLOperation) {
 			UMLOperation operation = (UMLOperation)o;
-			return this.className.equals(operation.className) &&
+			return this.getClassName().equals(operation.getClassName()) &&
 				this.name.equals(operation.name) &&
 				this.visibility.equals(operation.visibility) &&
 				this.isAbstract == operation.isAbstract &&
@@ -245,7 +250,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((className == null) ? 0 : className.hashCode());
+		result = prime * result + ((getClassName() == null) ? 0 : getClassName().hashCode());
 		result = prime * result + (isAbstract ? 1231 : 1237);
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((parameters == null) ? 0 : parameters.hashCode());
@@ -284,7 +289,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 
 	public String getKey() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(className);
+		sb.append(getClassName());
 		sb.append('#');
 		sb.append(name);
 		UMLParameter returnParameter = getReturnParameter();

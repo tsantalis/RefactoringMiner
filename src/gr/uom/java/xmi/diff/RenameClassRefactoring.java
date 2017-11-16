@@ -1,23 +1,26 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.UMLBaseClass;
+import gr.uom.java.xmi.UMLClass;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 public class RenameClassRefactoring implements Refactoring {
-	private String originalClassName;
-	private String renamedClassName;
+
+	private UMLBaseClass originalClass;
+	private UMLBaseClass renamedClass;
 	
-	public RenameClassRefactoring(String originalClassName,  String renamedClassName) {
-		this.originalClassName = originalClassName;
-		this.renamedClassName = renamedClassName;
+	public RenameClassRefactoring(UMLBaseClass originalClass,  UMLBaseClass renamedClass) {
+		this.originalClass = originalClass;
+		this.renamedClass = renamedClass;
 	}
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(originalClassName);
+		sb.append(getOriginalClassName());
 		sb.append(" renamed to ");
-		sb.append(renamedClassName);
+		sb.append(getRenamedClassName());
 		return sb.toString();
 	}
 
@@ -30,11 +33,19 @@ public class RenameClassRefactoring implements Refactoring {
 	}
 
 	public String getOriginalClassName() {
-		return originalClassName;
+		return originalClass.getName();
 	}
 
 	public String getRenamedClassName() {
-		return renamedClassName;
+		return renamedClass.getName();
+	}
+
+	public UMLBaseClass getOriginalClass() {
+		return originalClass;
+	}
+
+	public UMLBaseClass getRenamedClass() {
+		return renamedClass;
 	}
 	
 }

@@ -41,7 +41,7 @@ public class ExtractSuperclassRefactoring implements Refactoring {
 		return extractedClass;
 	}
 
-	public Set<String> getSubclassSet() {
+	public Set<String> getNameOfSubclasses() {
 		Set<String> subclassSet = new LinkedHashSet<String>();
 		for(UMLClass umlClass : this.subclassSet) {
 			subclassSet.add(umlClass.getName());

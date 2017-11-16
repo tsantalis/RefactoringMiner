@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UMLAnonymousClass implements Comparable<UMLAnonymousClass>, Serializable {
+public class UMLAnonymousClass implements Comparable<UMLAnonymousClass>, Serializable, UMLBaseClass {
 	private String packageName;
     private String name;
     private String sourceFile;
@@ -24,12 +24,20 @@ public class UMLAnonymousClass implements Comparable<UMLAnonymousClass>, Seriali
         this.sourceFile = sourceFile;
     }
 
-    public String getName() {
-    	if(packageName.equals(""))
-    		return name;
-    	else
-    		return packageName + "." + name;
-    }
+	public String getSourceFile() {
+		return sourceFile;
+	}
+
+	public String getPackageName() {
+		return this.packageName;
+	}
+
+	public String getName() {
+		if(packageName.equals(""))
+			return name;
+		else
+			return packageName + "." + name;
+	}
 
 	public void addOperation(UMLOperation operation) {
     	this.operations.add(operation);

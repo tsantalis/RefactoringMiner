@@ -15,7 +15,8 @@ import java.util.Set;
 
 import org.refactoringminer.util.AstUtils;
 
-public class UMLOperation implements Comparable<UMLOperation>, Serializable {
+public class UMLOperation implements Comparable<UMLOperation>, Serializable, LocationInfoProvider {
+	private LocationInfo locationInfo;
 	private String name;
 	private String visibility;
 	private boolean isAbstract;
@@ -27,10 +28,15 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable {
 	private boolean emptyBody;
 	private OperationBody operationBody;
 	
-	public UMLOperation(String name) {
+	public UMLOperation(String name, LocationInfo locationInfo) {
+		this.locationInfo = locationInfo;
         this.name = name;
         this.parameters = new ArrayList<UMLParameter>();
     }
+
+	public LocationInfo getLocationInfo() {
+		return locationInfo;
+	}
 
 	public String getName() {
 		return name;

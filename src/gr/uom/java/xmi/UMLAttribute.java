@@ -4,7 +4,8 @@ import gr.uom.java.xmi.diff.StringDistance;
 
 import java.io.Serializable;
 
-public class UMLAttribute implements Comparable<UMLAttribute>, Serializable {
+public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, LocationInfoProvider {
+	private LocationInfo locationInfo;
 	private String name;
 	private UMLType type;
 	private String visibility;
@@ -13,9 +14,14 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable {
 	private boolean isStatic;
 	private Object value;
 
-	public UMLAttribute(String name, UMLType type) {
+	public UMLAttribute(String name, UMLType type, LocationInfo locationInfo) {
+		this.locationInfo = locationInfo;
 		this.name = name;
 		this.type = type;
+	}
+
+	public LocationInfo getLocationInfo() {
+		return locationInfo;
 	}
 
 	public UMLType getType() {

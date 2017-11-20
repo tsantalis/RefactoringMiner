@@ -4,25 +4,25 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UMLAnonymousClass implements Comparable<UMLAnonymousClass>, Serializable {
+public class UMLAnonymousClass implements Comparable<UMLAnonymousClass>, Serializable, LocationInfoProvider {
 	private String packageName;
     private String name;
-    private String sourceFile;
+    private LocationInfo locationInfo;
     
     private List<UMLOperation> operations;
     private List<UMLAttribute> attributes;
     
-    public UMLAnonymousClass(String packageName, String name) {
-    	this(packageName, name, packageName.replace('.', '/') + '/' + name + ".java");
-    }
-    
-    public UMLAnonymousClass(String packageName, String name, String sourceFile) {
+    public UMLAnonymousClass(String packageName, String name, LocationInfo locationInfo) {
     	this.packageName = packageName;
         this.name = name;
         this.operations = new ArrayList<UMLOperation>();
         this.attributes = new ArrayList<UMLAttribute>();
-        this.sourceFile = sourceFile;
+        this.locationInfo = locationInfo;
     }
+
+    public LocationInfo getLocationInfo() {
+		return locationInfo;
+	}
 
     public String getName() {
     	if(packageName.equals(""))
@@ -47,6 +47,10 @@ public class UMLAnonymousClass implements Comparable<UMLAnonymousClass>, Seriali
 		return attributes;
 	}
 
+    public String getSourceFile() {
+		return locationInfo.getFilePath();
+	}
+
     public boolean equals(Object o) {
     	if(this == o) {
     		return true;
@@ -55,7 +59,7 @@ public class UMLAnonymousClass implements Comparable<UMLAnonymousClass>, Seriali
     	if(o instanceof UMLAnonymousClass) {
     		UMLAnonymousClass umlClass = (UMLAnonymousClass)o;
     		return this.packageName.equals(umlClass.packageName) && this.attributes.equals(umlClass.attributes) &&
-    				this.operations.equals(umlClass.operations) && this.sourceFile.equals(umlClass.sourceFile);
+    				this.operations.equals(umlClass.operations) && this.getSourceFile().equals(umlClass.getSourceFile());
     	}
     	return false;
     }

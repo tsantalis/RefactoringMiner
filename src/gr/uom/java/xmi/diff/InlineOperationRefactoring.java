@@ -12,21 +12,21 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
 public class InlineOperationRefactoring implements Refactoring {
 	private UMLOperation inlinedOperation;
-	private UMLOperation inlinedToOperation;
-	private String sourceClassName;
+	private UMLOperation targetOperationAfterInline;
+	private UMLOperation targetOperationBeforeInline;
 	private Set<Replacement> replacements;
 	
-	public InlineOperationRefactoring(UMLOperationBodyMapper bodyMapper) {
+	public InlineOperationRefactoring(UMLOperationBodyMapper bodyMapper, UMLOperation targetOperationBeforeInline) {
 		this.inlinedOperation = bodyMapper.getOperation1();
-		this.inlinedToOperation = bodyMapper.getOperation2();
-		this.sourceClassName = bodyMapper.getOperation2().getClassName();
+		this.targetOperationAfterInline = bodyMapper.getOperation2();
+		this.targetOperationBeforeInline = targetOperationBeforeInline;
 		this.replacements = bodyMapper.getReplacements();
 	}
 
-	public InlineOperationRefactoring(UMLOperation inlinedOperation, UMLOperation inlinedToOperation, String sourceClassName) {
+	public InlineOperationRefactoring(UMLOperation inlinedOperation, UMLOperation targetOperationAfterInline, UMLOperation targetOperationBeforeInline) {
 		this.inlinedOperation = inlinedOperation;
-		this.inlinedToOperation = inlinedToOperation;
-		this.sourceClassName = sourceClassName;
+		this.targetOperationAfterInline = targetOperationAfterInline;
+		this.targetOperationBeforeInline = targetOperationBeforeInline;
 		this.replacements = new LinkedHashSet<Replacement>();
 	}
 
@@ -35,10 +35,14 @@ public class InlineOperationRefactoring implements Refactoring {
 		sb.append(getName()).append("\t");
 		sb.append(inlinedOperation);
 		sb.append(" inlined to ");
-		sb.append(inlinedToOperation);
+		sb.append(targetOperationAfterInline);
 		sb.append(" in class ");
-		sb.append(sourceClassName);
+		sb.append(getClassName());
 		return sb.toString();
+	}
+
+	private String getClassName() {
+		return targetOperationAfterInline.getClassName();
 	}
 
 	public String getName() {
@@ -53,8 +57,12 @@ public class InlineOperationRefactoring implements Refactoring {
 		return inlinedOperation;
 	}
 
-	public UMLOperation getInlinedToOperation() {
-		return inlinedToOperation;
+	public UMLOperation getTargetOperationAfterInline() {
+		return targetOperationAfterInline;
+	}
+
+	public UMLOperation getTargetOperationBeforeInline() {
+		return targetOperationBeforeInline;
 	}
 
 	public Set<Replacement> getReplacements() {

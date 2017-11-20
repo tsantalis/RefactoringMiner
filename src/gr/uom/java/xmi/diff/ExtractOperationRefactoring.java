@@ -12,21 +12,21 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
 public class ExtractOperationRefactoring implements Refactoring {
 	private UMLOperation extractedOperation;
-	private UMLOperation extractedFromOperation;
-	private String sourceClassName;
+	private UMLOperation sourceOperationBeforeExtraction;
+	private UMLOperation sourceOperationAfterExtraction;
 	private Set<Replacement> replacements;
 
-	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper) {
+	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper, UMLOperation sourceOperationAfterExtraction) {
 		this.extractedOperation = bodyMapper.getOperation2();
-		this.extractedFromOperation = bodyMapper.getOperation1();
-		this.sourceClassName = bodyMapper.getOperation1().getClassName();
+		this.sourceOperationBeforeExtraction = bodyMapper.getOperation1();
+		this.sourceOperationAfterExtraction = sourceOperationAfterExtraction;
 		this.replacements = bodyMapper.getReplacements();
 	}
 
-	public ExtractOperationRefactoring(UMLOperation extractedOperation, UMLOperation extractedFromOperation, String sourceClassName) {
+	public ExtractOperationRefactoring(UMLOperation extractedOperation, UMLOperation sourceOperationBeforeExtraction, UMLOperation sourceOperationAfterExtraction) {
 		this.extractedOperation = extractedOperation;
-		this.extractedFromOperation = extractedFromOperation;
-		this.sourceClassName = sourceClassName;
+		this.sourceOperationBeforeExtraction = sourceOperationBeforeExtraction;
+		this.sourceOperationAfterExtraction = sourceOperationAfterExtraction;
 		this.replacements = new LinkedHashSet<Replacement>();
 	}
 
@@ -35,18 +35,26 @@ public class ExtractOperationRefactoring implements Refactoring {
 		sb.append(getName()).append("\t");
 		sb.append(extractedOperation);
 		sb.append(" extracted from ");
-		sb.append(extractedFromOperation);
+		sb.append(sourceOperationBeforeExtraction);
 		sb.append(" in class ");
-		sb.append(sourceClassName);
+		sb.append(getClassName());
 		return sb.toString();
+	}
+
+	private String getClassName() {
+		return getSourceOperationBeforeExtraction().getClassName();
 	}
 
 	public UMLOperation getExtractedOperation() {
 		return extractedOperation;
 	}
 
-	public UMLOperation getExtractedFromOperation() {
-		return extractedFromOperation;
+	public UMLOperation getSourceOperationBeforeExtraction() {
+		return sourceOperationBeforeExtraction;
+	}
+
+	public UMLOperation getSourceOperationAfterExtraction() {
+		return sourceOperationAfterExtraction;
 	}
 
 	public Set<Replacement> getReplacements() {
@@ -60,5 +68,4 @@ public class ExtractOperationRefactoring implements Refactoring {
 	public RefactoringType getRefactoringType() {
 		return RefactoringType.EXTRACT_OPERATION;
 	}
-	
 }

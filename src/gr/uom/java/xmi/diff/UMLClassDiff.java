@@ -682,7 +682,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 						operationBodyMapper.getMappings();
 						int mappings = operationBodyMapper.mappingsWithoutBlocks();
 						if(mappings > 0 && (mappings > operationBodyMapper.nonMappedElementsT1() || operationBodyMapper.exactMatches() > 0)) {
-							InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper);
+							InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getOperation1());
 							refactorings.add(inlineOperationRefactoring);
 							mapper.addAdditionalMapper(operationBodyMapper);
 							operationsToBeRemoved.add(removedOperation);
@@ -744,7 +744,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 							int mappings = operationBodyMapper.mappingsWithoutBlocks();
 							if(mappings > 0 && (mappings > operationBodyMapper.nonMappedElementsT2() || operationBodyMapper.exactMatches() > 0 ||
 									(mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2()))) {
-								ExtractOperationRefactoring extractOperationRefactoring = new ExtractOperationRefactoring(operationBodyMapper);
+								ExtractOperationRefactoring extractOperationRefactoring = new ExtractOperationRefactoring(operationBodyMapper, mapper.getOperation2());
 								refactorings.add(extractOperationRefactoring);
 								mapper.addAdditionalMapper(operationBodyMapper);
 								operationsToBeRemoved.add(addedOperation);

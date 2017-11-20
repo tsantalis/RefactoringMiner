@@ -6,15 +6,12 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLAttribute;
 
 public class MoveAttributeRefactoring implements Refactoring {
+	protected UMLAttribute originalAttribute;
 	protected UMLAttribute movedAttribute;
-	protected String sourceClassName;
-	protected String targetClassName;
 	
-	public MoveAttributeRefactoring(UMLAttribute movedAttribute,
-			String sourceClassName, String targetClassName) {
+	public MoveAttributeRefactoring(UMLAttribute originalAttribute, UMLAttribute movedAttribute) {
+		this.originalAttribute = originalAttribute;
 		this.movedAttribute = movedAttribute;
-		this.sourceClassName = sourceClassName;
-		this.targetClassName = targetClassName;
 	}
 
 	public String toString() {
@@ -22,9 +19,9 @@ public class MoveAttributeRefactoring implements Refactoring {
 		sb.append(getName()).append("\t");
 		sb.append(movedAttribute);
 		sb.append(" from class ");
-		sb.append(sourceClassName);
+		sb.append(getSourceClassName());
 		sb.append(" to class ");
-		sb.append(targetClassName);
+		sb.append(getTargetClassName());
 		return sb.toString();
 	}
 
@@ -36,16 +33,19 @@ public class MoveAttributeRefactoring implements Refactoring {
 		return RefactoringType.MOVE_ATTRIBUTE;
 	}
 
-  public UMLAttribute getMovedAttribute() {
-    return movedAttribute;
-  }
+	public UMLAttribute getOriginalAttribute() {
+		return originalAttribute;
+	}
 
-  public String getSourceClassName() {
-    return sourceClassName;
-  }
+	public UMLAttribute getMovedAttribute() {
+		return movedAttribute;
+	}
 
-  public String getTargetClassName() {
-    return targetClassName;
-  }
+	public String getSourceClassName() {
+		return originalAttribute.getClassName();
+	}
 
+	public String getTargetClassName() {
+		return movedAttribute.getClassName();
+	}
 }

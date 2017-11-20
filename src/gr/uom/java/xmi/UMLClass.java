@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-public class UMLClass implements Comparable<UMLClass>, Serializable {
+public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInfoProvider {
+	private LocationInfo locationInfo;
 	private String packageName;
     private String name;
     private String qualifiedName;
@@ -25,12 +26,9 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     private List<UMLType> implementedInterfaces;
     private List<UMLAnonymousClass> anonymousClassList;
     private List<String> importedTypes;
-
-    public UMLClass(String packageName, String name, boolean topLevel, List<String> importedTypes) {
-    	this(packageName, name, packageName.replace('.', '/') + '/' + name + ".java", topLevel, importedTypes);
-    }
     
-    public UMLClass(String packageName, String name, String sourceFile, boolean topLevel, List<String> importedTypes) {
+    public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<String> importedTypes) {
+    	this.locationInfo = locationInfo;
     	this.packageName = packageName;
         this.name = name;
         if(packageName.equals(""))
@@ -38,7 +36,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     	else
     		this.qualifiedName = packageName + "." + name;
         
-        this.sourceFile = sourceFile;
+        this.sourceFile = getSourceFile();
         this.sourceFolder = "";
         if(packageName.equals("")) {
         	int index = sourceFile.indexOf(name);
@@ -78,7 +76,11 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
         this.importedTypes = importedTypes;
     }
 
-    public void addAnonymousClass(UMLAnonymousClass anonymousClass) {
+    public LocationInfo getLocationInfo() {
+		return locationInfo;
+	}
+
+	public void addAnonymousClass(UMLAnonymousClass anonymousClass) {
     	anonymousClassList.add(anonymousClass);
     }
 
@@ -91,7 +93,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable {
     }
 
     public String getSourceFile() {
-		return sourceFile;
+		return locationInfo.getFilePath();
 	}
 
 	//returns true if the "innerClass" parameter is inner class of this

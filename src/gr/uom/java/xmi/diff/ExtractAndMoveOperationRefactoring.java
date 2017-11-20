@@ -12,19 +12,22 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
 public class ExtractAndMoveOperationRefactoring implements Refactoring {
 	private UMLOperation extractedOperation;
-	private UMLOperation extractedFromOperation;
+	private UMLOperation sourceOperationBeforeExtraction;
+	private UMLOperation sourceOperationAfterExtraction;
 	private Set<Replacement> replacements;
 	
-	public ExtractAndMoveOperationRefactoring(UMLOperationBodyMapper bodyMapper) {
+	public ExtractAndMoveOperationRefactoring(UMLOperationBodyMapper bodyMapper, UMLOperation sourceOperationAfterExtraction) {
 		this.extractedOperation = bodyMapper.getOperation2();
-		this.extractedFromOperation = bodyMapper.getOperation1();
+		this.sourceOperationBeforeExtraction = bodyMapper.getOperation1();
+		this.sourceOperationAfterExtraction = sourceOperationAfterExtraction;
 		this.replacements = bodyMapper.getReplacements();
 	}
 
 	public ExtractAndMoveOperationRefactoring(UMLOperation extractedOperation,
-			UMLOperation extractedFromOperation) {
+			UMLOperation sourceOperationBeforeExtraction, UMLOperation sourceOperationAfterExtraction) {
 		this.extractedOperation = extractedOperation;
-		this.extractedFromOperation = extractedFromOperation;
+		this.sourceOperationBeforeExtraction = sourceOperationBeforeExtraction;
+		this.sourceOperationAfterExtraction = sourceOperationAfterExtraction;
 		this.replacements = new LinkedHashSet<Replacement>();
 	}
 
@@ -33,9 +36,9 @@ public class ExtractAndMoveOperationRefactoring implements Refactoring {
 		sb.append(getName()).append("\t");
 		sb.append(extractedOperation);
 		sb.append(" extracted from ");
-		sb.append(extractedFromOperation);
+		sb.append(sourceOperationBeforeExtraction);
 		sb.append(" in class ");
-		sb.append(extractedFromOperation.getClassName());
+		sb.append(sourceOperationBeforeExtraction.getClassName());
 		sb.append(" & moved to class ");
 		sb.append(extractedOperation.getClassName());
 		return sb.toString();
@@ -53,8 +56,12 @@ public class ExtractAndMoveOperationRefactoring implements Refactoring {
 		return extractedOperation;
 	}
 
-	public UMLOperation getExtractedFromOperation() {
-		return extractedFromOperation;
+	public UMLOperation getSourceOperationBeforeExtraction() {
+		return sourceOperationBeforeExtraction;
+	}
+
+	public UMLOperation getSourceOperationAfterExtraction() {
+		return sourceOperationAfterExtraction;
 	}
 
 	public Set<Replacement> getReplacements() {

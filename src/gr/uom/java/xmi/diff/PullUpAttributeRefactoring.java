@@ -6,9 +6,8 @@ import gr.uom.java.xmi.UMLAttribute;
 
 public class PullUpAttributeRefactoring extends MoveAttributeRefactoring {
 
-	public PullUpAttributeRefactoring(UMLAttribute movedAttribute,
-			String sourceClassName, String targetClassName) {
-		super(movedAttribute, sourceClassName, targetClassName);
+	public PullUpAttributeRefactoring(UMLAttribute originalAttribute, UMLAttribute movedAttribute) {
+		super(originalAttribute, movedAttribute);
 	}
 
 	public String toString() {
@@ -16,9 +15,9 @@ public class PullUpAttributeRefactoring extends MoveAttributeRefactoring {
 		sb.append(getName()).append("\t");
 		sb.append(movedAttribute);
 		sb.append(" from class ");
-		sb.append(sourceClassName);
+		sb.append(getSourceClassName());
 		sb.append(" to class ");
-		sb.append(targetClassName);
+		sb.append(getTargetClassName());
 		return sb.toString();
 	}
 

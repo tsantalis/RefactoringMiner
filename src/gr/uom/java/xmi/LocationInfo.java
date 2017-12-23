@@ -15,37 +15,57 @@ public class LocationInfo {
 		this.startOffset = startOffset;
 		this.endOffset = endOffset;
 		this.length = endOffset - startOffset + 1;
-		if (!"".equals(fileContents)) {
-			if (this.length < fileContents.length()) {			
-				String linesBeforeAndIncludingOffset = fileContents.substring(0, startOffset - 1);
-				this.startLine = getLines(linesBeforeAndIncludingOffset).length;
-				this.startColumn = this.startOffset - getNumberOfCharsForLines(linesBeforeAndIncludingOffset, this.startLine - 1);
-				
-				linesBeforeAndIncludingOffset = fileContents.substring(0, endOffset - 1);
-				this.endLine = getLines(linesBeforeAndIncludingOffset).length;
-				this.endColumn = endOffset - getNumberOfCharsForLines(linesBeforeAndIncludingOffset, this.endLine - 1);
+		if (!"".equals(fileContents) && startOffset >= 0 && endOffset <= fileContents.length() - 1) {
+			if (startOffset == 0) {
+				this.startLine = 0;
+				this.startColumn = 0;
+			} else {
+				String contentsBeforeStartOffset = fileContents.substring(0, startOffset); // The second parameter is endOffset - 1
+				this.startLine = getNumberOfLines(contentsBeforeStartOffset);
+				this.startColumn = this.startOffset - getNumberOfCharsForLines(contentsBeforeStartOffset, this.startLine);
 			}
+			String contentsBeforeEndOffset = fileContents.substring(0, endOffset);
+			this.endLine = getNumberOfLines(contentsBeforeEndOffset);
+			this.endColumn = endOffset - getNumberOfCharsForLines(contentsBeforeEndOffset, this.endLine);
 		}
 	}
 
-	private String[] getLines(String string) {
-		if (string.indexOf("\n") >= 0) {
-			return string.split("\n");
-		} else if (string.indexOf("\r") >= 0) {
-			return string.split("\r");
+	private int getNumberOfLines(String string) {
+		int numberOfLines = 0;
+		int stringLength = string.length();
+		for (int i = 0; i < stringLength; i++) {
+			if (string.charAt(i) == '\r') { // Handle CRLF and old UNIX style files, where CR is the only line feed character
+				if (i + 1 <= string.length() - 1 && string.charAt(i + 1) == '\n') {
+					i++; // Skip the next LF for CRLF
+				}
+				numberOfLines++;
+			} else if (string.charAt(i) == '\n') {
+				numberOfLines++;
+			}
 		}
-		return new String[] { string };
+		return numberOfLines;
 	}
 	
-	private int getNumberOfCharsForLines(String fileContents, int line) {
+	/**
+	 * Returns the number of characters in the first n lines of the given string
+	 * @param string
+	 * @param lines
+	 * @return
+	 */
+	private int getNumberOfCharsForLines(String string, int lines) {
 		int charsBeforeLine = 0;
-		String[] lines = getLines(fileContents);
-		for (int i = 0; i < line && i < lines.length; i++) {
-			charsBeforeLine += lines[i].length() + 1; // 1 for Line Feed character
-		}
-		// Happens when the last char of the document is not a line feed character
-		if (charsBeforeLine > fileContents.length() - 1) {
-			charsBeforeLine = fileContents.length() - 1;
+		int stringLength = string.length();
+		for (int i = 0; i < stringLength && lines > 0; i++) {
+			if (string.charAt(i) == '\r') {
+				if (i + 1 <= string.length() - 1 && string.charAt(i + 1) == '\n') {
+					i++;
+					charsBeforeLine++;
+				}
+				lines--;
+			} else if (string.charAt(i) == '\n') {
+				lines--;
+			}
+			charsBeforeLine++;
 		}
 		return charsBeforeLine;
 	}

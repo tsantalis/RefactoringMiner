@@ -15,7 +15,7 @@ public class LocationInfo {
 		this.startOffset = startOffset;
 		this.endOffset = endOffset;
 		this.length = endOffset - startOffset + 1;
-		if (!"".equals(fileContents) && startOffset >= 0 && endOffset <= fileContents.length() - 1) {
+		if (!"".equals(fileContents) && 0 <= startOffset && startOffset <= endOffset && endOffset <= fileContents.length() - 1) {
 			if (startOffset == 0) {
 				this.startLine = 0;
 				this.startColumn = 0;

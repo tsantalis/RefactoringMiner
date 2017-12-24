@@ -439,6 +439,17 @@ public class UMLModelDiff {
       return refactorings;
    }
 
+   private boolean sourceClassImportsSuperclassOfTargetClassAfterRefactoring(String sourceClassName, String targetClassName) {
+	   UMLClassDiff targetClassDiff = getUMLClassDiff(targetClassName);
+	   if(targetClassDiff != null && targetClassDiff.getSuperclass() != null) {
+		   UMLClassDiff superclassOfTargetClassDiff = getUMLClassDiff(targetClassDiff.getSuperclass());
+		   if(superclassOfTargetClassDiff != null) {
+			   return sourceClassImportsTargetClassAfterRefactoring(sourceClassName, superclassOfTargetClassDiff.getClassName());
+		   }
+	   }
+	   return false;
+   }
+
    private boolean sourceClassImportsTargetClassAfterRefactoring(String sourceClassName, String targetClassName) {
 	   UMLClassDiff classDiff = getUMLClassDiff(sourceClassName);
 	   if(classDiff == null) {
@@ -786,7 +797,8 @@ public class UMLModelDiff {
       	                  refactorings.add(extractOperationRefactoring);
       	                  deleteAddedOperation(addedOperation);
                 	  }
-                	  else if(sourceClassImportsTargetClassAfterRefactoring(mapper.getOperation1().getClassName(), addedOperation.getClassName())) {
+                	  else if(sourceClassImportsTargetClassAfterRefactoring(mapper.getOperation1().getClassName(), addedOperation.getClassName()) ||
+                			  sourceClassImportsSuperclassOfTargetClassAfterRefactoring(mapper.getOperation1().getClassName(), addedOperation.getClassName())) {
                 		  //extract and move
 	                      ExtractAndMoveOperationRefactoring extractOperationRefactoring =
 	                           new ExtractAndMoveOperationRefactoring(operationBodyMapper, mapper.getOperation2());

@@ -22,6 +22,30 @@ public class TestLocationInfo {
 		assertEquals(4, locationInfo.getLength());
 		assertEquals(0, locationInfo.getStartColumn());
 		assertEquals(3, locationInfo.getEndColumn());
+		
+		locationInfo = new LocationInfo(string, "", -1, 3);
+		assertEquals(0, locationInfo.getStartLine());
+		assertEquals(0, locationInfo.getEndLine());
+		assertEquals(0, locationInfo.getStartColumn());
+		assertEquals(0, locationInfo.getEndColumn());
+		
+		locationInfo = new LocationInfo(string, "", 1, -3);
+		assertEquals(0, locationInfo.getStartLine());
+		assertEquals(0, locationInfo.getEndLine());
+		assertEquals(0, locationInfo.getStartColumn());
+		assertEquals(0, locationInfo.getEndColumn());
+		
+		locationInfo = new LocationInfo(string, "", 3, 1);
+		assertEquals(0, locationInfo.getStartLine());
+		assertEquals(0, locationInfo.getEndLine());
+		assertEquals(0, locationInfo.getStartColumn());
+		assertEquals(0, locationInfo.getEndColumn());
+		
+		locationInfo = new LocationInfo(string, "", 3, 1000);
+		assertEquals(0, locationInfo.getStartLine());
+		assertEquals(0, locationInfo.getEndLine());
+		assertEquals(0, locationInfo.getStartColumn());
+		assertEquals(0, locationInfo.getEndColumn());
 	
 		locationInfo = new LocationInfo(string, "", 1, 25);
 		assertEquals(0, locationInfo.getStartLine());

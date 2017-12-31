@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringHandler;
-import org.refactoringminer.rm2.model.refactoring.SDRefactoring;
 
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractSuperclassRefactoring;
@@ -24,10 +23,7 @@ public class RefactoringCollector extends RefactoringHandler {
   @Override
   public void handle(String commitId, List<Refactoring> refactorings) {
     for (Refactoring r : refactorings) {
-      if (r instanceof SDRefactoring) {
-        SDRefactoring sdr = (SDRefactoring) r;
-        rs.add(new RefactoringRelationship(sdr.getRefactoringType(), sdr.getEntityBefore().toString(), sdr.getEntityAfter().toString()));
-      } else if (r instanceof MoveClassRefactoring) {
+      if (r instanceof MoveClassRefactoring) {
         MoveClassRefactoring ref = (MoveClassRefactoring) r;
         rs.add(new RefactoringRelationship(r.getRefactoringType(), ref.getOriginalClassName(), ref.getMovedClassName()));
       } else if (r instanceof RenameClassRefactoring) {

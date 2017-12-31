@@ -130,7 +130,7 @@ public class GitServiceImpl implements GitService {
 	public int countCommits(Repository repository, String branch) throws Exception {
 		RevWalk walk = new RevWalk(repository);
 		try {
-			Ref ref = repository.getRef(REMOTE_REFS_PREFIX + branch);
+			Ref ref = repository.findRef(REMOTE_REFS_PREFIX + branch);
 			ObjectId objectId = ref.getObjectId();
 			RevCommit start = walk.parseCommit(objectId);
 			walk.setRevFilter(RevFilter.NO_MERGES);

@@ -22,6 +22,7 @@ You can also work with the project with Eclipse IDE. First, run `./gradlew eclip
 
 ## Research ##
 If you are using RefactoringMiner in your research, please cite the following paper:
+
 Nikolaos Tsantalis, Matin Mansouri, Laleh Eshkevari, Davood Mazinanian, and Danny Dig, "[Accurate and Efficient Refactoring Detection in Commit History](https://users.encs.concordia.ca/~nikolaos/publications/ICSE_2018.pdf)," *40th International Conference on Software Engineering* (ICSE 2018), Gothenburg, Sweden, May 27 - June 3, 2018.
 
 RefactoringMiner has been used in the following studies:

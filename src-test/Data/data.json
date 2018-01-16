@@ -1340,7 +1340,7 @@
     }, {
         "type": "Move Attribute",
         "description": "Move Attribute private logger : Logger from class org.apache.cassandra.hadoop.ColumnFamilyInputFormat to class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
-        "comment": "<p>The attribute logger is moved form the superclass of ColumnFamilyInputFormat (AbstractColumnFamilyInputFormat) to CqlInputFormat and it is already detected and marked as CTP.</p><p>&nbsp;http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1106365/141</p><p>&nbsp;</p><p>&nbsp;</p>",
+        "comment": "<p>The attribute logger is moved form the superclass of ColumnFamilyInputFormat (AbstractColumnFamilyInputFormat) to CqlInputFormat and it is already detected and marked as CTP.</p><p>&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1106365/141</p><p>&nbsp;</p><p>&nbsp;</p>",
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Laleh"
@@ -7207,28 +7207,28 @@
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method public getActionKey() : String extracted from public getActionKey() : String in class com.jfinal.core.ActionInvocation",
-        "comment": "<p>Extract and Move to other class</p><p>Same as: <small> http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/118/935</small></p>",
+        "comment": "<p>Extract and Move to other class</p><p>Same as: <small> http://refactoring.encs.concordia.ca/oracle/refactoring-details/1118473/935</small></p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Laleh, Automatic"
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method public getControllerKey() : String extracted from public getControllerKey() : String in class com.jfinal.core.ActionInvocation",
-        "comment": "<p>Extract and Move to other class.</p><p>Same as <small>: http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/118/935</small></p>",
+        "comment": "<p>Extract and Move to other class.</p><p>Same as <small>: http://refactoring.encs.concordia.ca/oracle/refactoring-details/1118473/935</small></p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Laleh, Automatic"
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method public getMethod() : Method extracted from public getMethod() : Method in class com.jfinal.core.ActionInvocation",
-        "comment": "<p>Extract and Move to other class.</p><p>Same case as: Same as : http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/118/935</p><p>&nbsp;</p><p>&nbsp;</p>",
+        "comment": "<p>Extract and Move to other class.</p><p>Same case as: Same as : http://refactoring.encs.concordia.ca/oracle/refactoring-details/1118473/935</p><p>&nbsp;</p><p>&nbsp;</p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Laleh, Automatic"
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method public getMethodName() : String extracted from public getMethodName() : String in class com.jfinal.core.ActionInvocation",
-        "comment": "<p>Extract and Move to the inner class.</p><p>Same as : http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/118/935</p><p>&nbsp;</p><p>&nbsp;</p>",
+        "comment": "<p>Extract and Move to the inner class.</p><p>Same as : http://refactoring.encs.concordia.ca/oracle/refactoring-details/1118473/935</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Laleh, Automatic"
@@ -9743,14 +9743,14 @@
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method protected convertToDrel(relNode RelNode) : DrillRel extracted from private convertToDrel(relNode RelNode, schema AbstractSchema, tableName String, partitionColumns List) : DrillRel in class org.apache.drill.exec.planner.sql.handlers.CreateTableHandler",
-        "comment": "<p>Extract and Move to other class.</p><p>The convertToDrel(relNode RelNode)&nbsp; in the parent class (<span class='pl-e'>DefaultSqlHandler</span>) is extratced form convertToDrel(relNode RelNode, schema AbstractSchema, tableName String, partitionColumns List) .</p><p>See refacoting: http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1121732/1073</p><p>So for this class consider it as CTP since it is 'extratc and move to other class'</p>",
+        "comment": "<p>Extract and Move to other class.</p><p>The convertToDrel(relNode RelNode)&nbsp; in the parent class (<span class='pl-e'>DefaultSqlHandler</span>) is extratced form convertToDrel(relNode RelNode, schema AbstractSchema, tableName String, partitionColumns List) .</p><p>See refacoting: http://refactoring.encs.concordia.ca/oracle/refactoring-details/1121732/1073</p><p>So for this class consider it as CTP since it is 'extratc and move to other class'</p>",
         "validation": "CTP",
         "detectionTools": "RefDiff",
         "validators": "Laleh, Automatic"
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method protected validateAndConvert(sqlNode SqlNode) : ConvertedRelNode extracted from public getPlan(node SqlNode) : PhysicalPlan in class org.apache.drill.exec.planner.sql.handlers.ExplainHandler",
-        "comment": "<p>Extratc and Move to other class.</p><p>The validateAndConvert(sqlNode SqlNode) in the parent class (DefaultSqlHandler) is extracted from getPlan(node SqlNode).</p><p>See refactroing:&nbsp;http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1121732/1072</p><p>So for this class we should consider it as Extract and move to other (here parent) class.</p>",
+        "comment": "<p>Extratc and Move to other class.</p><p>The validateAndConvert(sqlNode SqlNode) in the parent class (DefaultSqlHandler) is extracted from getPlan(node SqlNode).</p><p>See refactroing:&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1121732/1072</p><p>So for this class we should consider it as Extract and move to other (here parent) class.</p>",
         "validation": "CTP",
         "detectionTools": "RefDiff",
         "validators": "Laleh, Automatic"
@@ -23605,7 +23605,7 @@
     }, {
         "type": "Move Method",
         "description": "Move Method public getProperties(protocol String) : Map from class org.jboss.as.clustering.jgroups.subsystem.ProtocolDefaultsService.Defaults to public getProperties(protocol String) : Map from class org.infinispan.server.jgroups.subsystem.ProtocolDefaultsBuilder",
-        "comment": "<p>The original class is removed but the map attribute and the corresponding method still exists in the moved/renamed class (see&nbsp;http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2786)</p>",
+        "comment": "<p>The original class is removed but the map attribute and the corresponding method still exists in the moved/renamed class (see&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2786)</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
@@ -23920,7 +23920,7 @@
     }, {
         "type": "Move Method",
         "description": "Move Method private parseTransport(reader XMLExtendedStreamReader, stackAddress PathAddress, operations List) : void from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemXMLReader_1_2 to private parseTransport(reader XMLExtendedStreamReader, stackAddress PathAddress, operations Map) : void from class org.infinispan.server.jgroups.subsystem.JGroupsSubsystemXMLReader",
-        "comment": "<p>It detects moving&nbsp;parseTransport() from multiple classes to&nbsp;JGroupsSubsystemXMLReader&nbsp;</p><p>Similar to&nbsp;http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2844</p>",
+        "comment": "<p>It detects moving&nbsp;parseTransport() from multiple classes to&nbsp;JGroupsSubsystemXMLReader&nbsp;</p><p>Similar to&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2844</p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
@@ -23962,7 +23962,7 @@
     }, {
         "type": "Move Method",
         "description": "Move Method private parseTransport(reader XMLExtendedStreamReader, stackAddress ModelNode, operations List) : void from class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemXMLReader_1_0 to private parseTransport(reader XMLExtendedStreamReader, stackAddress PathAddress, operations Map) : void from class org.infinispan.server.jgroups.subsystem.JGroupsSubsystemXMLReader",
-        "comment": "<p>It detects moving&nbsp;parseTransport() from multiple classes to&nbsp;JGroupsSubsystemXMLReader&nbsp;</p><p>Similar to&nbsp;http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2844</p>",
+        "comment": "<p>It detects moving&nbsp;parseTransport() from multiple classes to&nbsp;JGroupsSubsystemXMLReader&nbsp;</p><p>Similar to&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2844</p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
@@ -23997,7 +23997,7 @@
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method public createDescribeOperation(address PathAddress) : ModelNode extracted from public testDescribeHandler() : void in class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemTestCase",
-        "comment": "<p>Extract and Move to the inner class</p><p>What is being done in the extracted method is different than in the original code. I think this should be FP. This also relates to&nbsp;http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2841, since we did not accept it, this goes for FP.</p>",
+        "comment": "<p>Extract and Move to the inner class</p><p>What is being done in the extracted method is different than in the original code. I think this should be FP. This also relates to&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2841, since we did not accept it, this goes for FP.</p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Davood, Automatic"
@@ -24025,14 +24025,14 @@
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method private parseProtocolAttribute(reader XMLExtendedStreamReader, index int, operation ModelNode) : void extracted from private parseTransport(reader XMLExtendedStreamReader, stackAddress PathAddress, operations List) : void in class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemXMLReader_1_1",
-        "comment": "<p>Extract and Move to the inner class</p><p>This is TP if we accept the move method&nbsp;http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2844</p>",
+        "comment": "<p>Extract and Move to the inner class</p><p>This is TP if we accept the move method&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2844</p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Davood, Automatic"
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method private parseProtocolElement(reader XMLExtendedStreamReader, address PathAddress, operations Map) : void extracted from private parseTransport(reader XMLExtendedStreamReader, stackAddress PathAddress, operations List) : void in class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemXMLReader_1_1",
-        "comment": "<p>Extract and Move to the inner class</p><p>This is TP if we accept the move method as TP http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2844</p>",
+        "comment": "<p>Extract and Move to the inner class</p><p>This is TP if we accept the move method as TP http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2844</p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Davood, Automatic"
@@ -24088,49 +24088,49 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected buildKernelServices() : KernelServices extracted from public testSubsystemReadWriteOperations() : void in class org.jboss.as.clustering.jgroups.subsystem.OperationsTestCase",
-        "comment": "<p>Extract and Move to the inner class</p><p>Similar to&nbsp;http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2876</p>",
+        "comment": "<p>Extract and Move to the inner class</p><p>Similar to&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2876</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood, Automatic"
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected buildKernelServices() : KernelServices extracted from public testProtocolStackAddRemoveAddSequence() : void in class org.jboss.as.clustering.jgroups.subsystem.OperationSequencesTestCase",
-        "comment": "<p>Extract and Move to the inner class</p><p>Note also the move class.</p><p>This is similar to http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2876</p>",
+        "comment": "<p>Extract and Move to the inner class</p><p>Note also the move class.</p><p>This is similar to http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2876</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Automatic"
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected buildKernelServices() : KernelServices extracted from public testTransportReadWriteOperation() : void in class org.jboss.as.clustering.jgroups.subsystem.OperationsTestCase",
-        "comment": "<p>Extract and Move to the inner class</p><p>Similar to&nbsp;http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2876</p>",
+        "comment": "<p>Extract and Move to the inner class</p><p>Similar to&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2876</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood, Automatic"
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected buildKernelServices() : KernelServices extracted from public testProtocolStackRemoveRemoveSequence() : void in class org.jboss.as.clustering.jgroups.subsystem.OperationSequencesTestCase",
-        "comment": "<p>Extract and Move to the inner class</p><p>Note also the move class.</p><p>This is similar to http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2876</p>",
+        "comment": "<p>Extract and Move to the inner class</p><p>Note also the move class.</p><p>This is similar to http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2876</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected buildKernelServices() : KernelServices extracted from public testTransportReadWriteWithParameters() : void in class org.jboss.as.clustering.jgroups.subsystem.OperationsTestCase",
-        "comment": "<p>Extract and Move to the inner class</p><p>Similar to&nbsp;http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2876</p>",
+        "comment": "<p>Extract and Move to the inner class</p><p>Similar to&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2876</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected buildKernelServices() : KernelServices extracted from public testProtocolStackAddRemoveSequenceWithParameters() : void in class org.jboss.as.clustering.jgroups.subsystem.OperationSequencesTestCase",
-        "comment": "<p>Extract and Move to the inner class</p><p>(Note the move class as well)</p><p>This is similar to http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2876</p><p>&nbsp;</p>",
+        "comment": "<p>Extract and Move to the inner class</p><p>(Note the move class as well)</p><p>This is similar to http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2876</p><p>&nbsp;</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Automatic"
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected buildKernelServices() : KernelServices extracted from public testProtocolStackRemoveRollback() : void in class org.jboss.as.clustering.jgroups.subsystem.OperationSequencesTestCase",
-        "comment": "<p>Extract and Move to the inner class</p><p>Note also the move class</p><p>This is similar to&nbsp;http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2876</p>",
+        "comment": "<p>Extract and Move to the inner class</p><p>Note also the move class</p><p>This is similar to&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2876</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood, Automatic"
@@ -24144,14 +24144,14 @@
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method private buildKernelServices() : KernelServices extracted from public testParseAndMarshalModel() : void in class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemTestCase",
-        "comment": "<p>Extract and Move to the inner class</p><p>The method testParseAndMarshalModel() was detected by RefDiff to be moved from&nbsp;JGroupsSubsystemTestCase to SubsystemParsingTestCase (http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2850). That was marked as FP since the two classes are similar so there could be a move/rename class. to be found as move/rename. If we accept this, this can be TP similar to&nbsp;http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2876</p>",
+        "comment": "<p>Extract and Move to the inner class</p><p>The method testParseAndMarshalModel() was detected by RefDiff to be moved from&nbsp;JGroupsSubsystemTestCase to SubsystemParsingTestCase (http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2850). That was marked as FP since the two classes are similar so there could be a move/rename class. to be found as move/rename. If we accept this, this can be TP similar to&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2876</p>",
         "validation": "CTP",
         "detectionTools": "RefDiff",
         "validators": "Davood, Automatic"
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method private buildKernelServices() : KernelServices extracted from public testDescribeHandler() : void in class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemTestCase",
-        "comment": "<p>Extract and Move to the inner class</p><p>The method testParseAndMarshalModel() was detected by RefDiff to be moved from&nbsp;JGroupsSubsystemTestCase to SubsystemParsingTestCase (http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2850). That was marked as FP since the two classes are similar so there could be a move/rename class. to be found as move/rename. If we accept this, this can be TP similar to&nbsp;http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2876</p>",
+        "comment": "<p>Extract and Move to the inner class</p><p>The method testParseAndMarshalModel() was detected by RefDiff to be moved from&nbsp;JGroupsSubsystemTestCase to SubsystemParsingTestCase (http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2850). That was marked as FP since the two classes are similar so there could be a move/rename class. to be found as move/rename. If we accept this, this can be TP similar to&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2876</p>",
         "validation": "CTP",
         "detectionTools": "RefDiff",
         "validators": "Davood, Automatic"
@@ -24165,7 +24165,7 @@
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method package pathElement(name String) : PathElement extracted from private parseTransport(reader XMLExtendedStreamReader, stackAddress PathAddress, operations List) : void in class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemXMLReader_1_1",
-        "comment": "<p>Extract and Move to the inner class</p><p>If we accept&nbsp;http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1142116/2844 as TP, this can be TP</p>",
+        "comment": "<p>Extract and Move to the inner class</p><p>If we accept&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2844 as TP, this can be TP</p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Davood, Automatic"
@@ -28400,7 +28400,7 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method public sanitizeWithoutAnyMatchesWithExpandPaths() : void renamed to public sanitizeWithoutAnyMatches() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest",
-        "comment": "<p>This is similar to&nbsp;http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1151927/3535</p>",
+        "comment": "<p>This is similar to&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1151927/3535</p>",
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
@@ -28428,7 +28428,7 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method public sanitizeWithoutAnyMatchesWithoutExpandPaths() : void renamed to public sanitizeWithoutAnyMatches() : void in class com.facebook.buck.cxx.DebugPathSanitizerTest",
-        "comment": "<p>Matin: FP</p><p>This is similar to&nbsp;http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1151927/3531</p>",
+        "comment": "<p>Matin: FP</p><p>This is similar to&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1151927/3531</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Davood"
@@ -30389,7 +30389,7 @@
     }, {
         "type": "Rename Class",
         "description": "Rename Class io.netty.handler.codec.http.DefaultLastHttpContent.TrailingHttpHeaders.TrailingHttpHeadersNameConverter renamed to io.netty.handler.codec.http.DefaultLastHttpContent.TrailingHttpHeaders.TrailingHttpHeadersNameValidator",
-        "comment": "<p>Matin: FP</p><p>We already accepted the only method of this class to be a rename, so http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1153762/3736</p>",
+        "comment": "<p>Matin: FP</p><p>We already accepted the only method of this class to be a rename, so http://refactoring.encs.concordia.ca/oracle/refactoring-details/1153762/3736</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Davood"
@@ -31268,7 +31268,7 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method public testTriggerMinorCompaction() : void renamed to public testTriggerMinorCompactionSTCSAlterTable() : void in class org.apache.cassandra.db.compaction.CompactionsCQLTest",
-        "comment": "<p>new</p><p>This is more or less similar to&nbsp;http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1156431/3846</p>",
+        "comment": "<p>new</p><p>This is more or less similar to&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1156431/3846</p>",
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Davood"
@@ -34028,14 +34028,14 @@
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public convert(inputData File, outputDirectory File, typeName String, format OgrFormat, crs CoordinateReferenceSystem) : File from class org.geoserver.wfs.response.OGRWrapper to public convert(inputData File, outputDirectory File, typeName String, format Format, crs CoordinateReferenceSystem) : File from class org.geoserver.ogr.core.AbstractToolWrapper",
-        "comment": "<p>We have Extract Superclass refactroing see:</p><p>http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1158913/4182</p><p>Since already the abstract refactoring exists as TP, and RefDiff is able to&nbsp; detect Extract Superclass, thus this is a FP </p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>",
+        "comment": "<p>We have Extract Superclass refactroing see:</p><p>http://refactoring.encs.concordia.ca/oracle/refactoring-details/1158913/4182</p><p>Since already the abstract refactoring exists as TP, and RefDiff is able to&nbsp; detect Extract Superclass, thus this is a FP</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Davood"
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method protected setInputOutput(cmd List, inputData File, outputDirectory File, typeName String, format Format) : String extracted from public convert(inputData File, outputDirectory File, typeName String, format OgrFormat, crs CoordinateReferenceSystem) : File in class org.geoserver.wfs.response.OGRWrapper",
-        "comment": "<p>Extract and Move to other class</p><p>The actual scenario is:</p><p>1- we have an Extrract superclass org.geoserver.ogr.core.AbstractToolWrapper from class org.geoserver.wfs.response.OGRWrapper</p><p>see(http://refactoring.encs.concordia.ca/rm-oracle/refactoring-details/1158913/4182)</p><p>2- then&nbsp; method public convert(inputData File, outputDirectory File, typeName String, format OgrFormat, crs CoordinateReferenceSystem) : File from class org.geoserver.wfs.response.OGRWrapper is pull up to public convert(inputData File, outputDirectory File, typeName String, format Format, crs CoordinateReferenceSystem) : File from class org.geoserver.ogr.core.AbstractToolWrapper</p><p>3- then in the after pull up refactoring we have the current extartc method refactoing. We consider it as CTP</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>",
+        "comment": "<p>Extract and Move to other class</p><p>The actual scenario is:</p><p>1- we have an Extrract superclass org.geoserver.ogr.core.AbstractToolWrapper from class org.geoserver.wfs.response.OGRWrapper</p><p>see(http://refactoring.encs.concordia.ca/oracle/refactoring-details/1158913/4182)</p><p>2- then&nbsp; method public convert(inputData File, outputDirectory File, typeName String, format OgrFormat, crs CoordinateReferenceSystem) : File from class org.geoserver.wfs.response.OGRWrapper is pull up to public convert(inputData File, outputDirectory File, typeName String, format Format, crs CoordinateReferenceSystem) : File from class org.geoserver.ogr.core.AbstractToolWrapper</p><p>3- then in the after pull up refactoring we have the current extartc method refactoing. We consider it as CTP</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>",
         "validation": "CTP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Automatic"

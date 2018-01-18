@@ -5,10 +5,12 @@ import gr.uom.java.xmi.diff.StringDistance;
 public class Replacement {
 	private String before;
 	private String after;
+	private ReplacementType type;
 	
-	public Replacement(String before, String after) {
+	public Replacement(String before, String after, ReplacementType type) {
 		this.before = before;
 		this.after = after;
+		this.type = type;
 	}
 
 	public String getBefore() {
@@ -17,6 +19,10 @@ public class Replacement {
 
 	public String getAfter() {
 		return after;
+	}
+
+	public ReplacementType getType() {
+		return type;
 	}
 
 	@Override
@@ -51,5 +57,18 @@ public class Replacement {
 		int distance = StringDistance.editDistance(s1, s2);
 		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
 		return normalized;
+	}
+	
+	public enum ReplacementType {
+		TYPE, STRING_LITERAL, ANONYMOUS_CLASS_DECLARATION, INFIX_OPERATOR, VARIABLE_NAME,
+		METHOD_INVOCATION,
+		METHOD_INVOCATION_ARGUMENT,
+		METHOD_INVOCATION_NAME,
+		METHOD_INVOCATION_NAME_AND_ARGUMENT,
+		ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION,
+		ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION,
+		VARIABLE_REPLACED_WITH_METHOD_INVOCATION,
+		CLASS_INSTANCE_CREATION,
+		CLASS_INSTANCE_CREATION_ARGUMENT;
 	}
 }

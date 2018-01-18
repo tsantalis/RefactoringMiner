@@ -6,8 +6,10 @@ public class MethodInvocationReplacement extends Replacement {
 	private OperationInvocation invokedOperationBefore;
 	private OperationInvocation invokedOperationAfter;
 	
-	public MethodInvocationReplacement(String before, String after, OperationInvocation invokedOperationBefore, OperationInvocation invokedOperationAfter) {
-		super(before, after);
+	public MethodInvocationReplacement(String before, String after,
+			OperationInvocation invokedOperationBefore, OperationInvocation invokedOperationAfter,
+			ReplacementType type) {
+		super(before, after, type);
 		this.invokedOperationBefore = invokedOperationBefore;
 		this.invokedOperationAfter = invokedOperationAfter;
 	}
@@ -19,5 +21,4 @@ public class MethodInvocationReplacement extends Replacement {
 	public OperationInvocation getInvokedOperationAfter() {
 		return invokedOperationAfter;
 	}
-
 }

@@ -5,7 +5,7 @@ import java.util.Set;
 
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
-import gr.uom.java.xmi.decomposition.replacement.TypeReplacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
 public abstract class AbstractCodeMapping {
 
@@ -57,7 +57,7 @@ public abstract class AbstractCodeMapping {
 
 	public boolean containsTypeReplacement() {
 		for(Replacement replacement : replacements) {
-			if(replacement instanceof TypeReplacement) {
+			if(replacement.getType().equals(ReplacementType.TYPE)) {
 				return true;
 			}
 		}

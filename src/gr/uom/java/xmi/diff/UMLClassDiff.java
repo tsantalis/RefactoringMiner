@@ -9,7 +9,7 @@ import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
-import gr.uom.java.xmi.decomposition.replacement.MethodInvocationRename;
+import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -263,7 +263,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	}
 
 	public void checkForOperationSignatureChanges() {
-		Set<MethodInvocationRename> consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
+		Set<MethodInvocationReplacement> consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
 		int absoluteDifference = Math.abs(removedOperations.size() - addedOperations.size());
 		int maxDifferenceInPosition = absoluteDifference > MAX_OPERATION_POSITION_DIFFERENCE ? absoluteDifference : MAX_OPERATION_POSITION_DIFFERENCE;
 		if(removedOperations.size() <= addedOperations.size()) {
@@ -330,13 +330,13 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		}
 	}
 
-	private Set<MethodInvocationRename> findConsistentMethodInvocationRenames() {
-		Set<MethodInvocationRename> allConsistentMethodInvocationRenames = new LinkedHashSet<MethodInvocationRename>();
-		Set<MethodInvocationRename> allInconsistentMethodInvocationRenames = new LinkedHashSet<MethodInvocationRename>();
+	private Set<MethodInvocationReplacement> findConsistentMethodInvocationRenames() {
+		Set<MethodInvocationReplacement> allConsistentMethodInvocationRenames = new LinkedHashSet<MethodInvocationReplacement>();
+		Set<MethodInvocationReplacement> allInconsistentMethodInvocationRenames = new LinkedHashSet<MethodInvocationReplacement>();
 		for(UMLOperationBodyMapper bodyMapper : operationBodyMapperList) {
-			Set<MethodInvocationRename> methodInvocationRenames = bodyMapper.getMethodInvocationRenameReplacements();
-			for(MethodInvocationRename newRename : methodInvocationRenames) {
-				Set<MethodInvocationRename> inconsistentMethodInvocationRenames = inconsistentMethodInvocationRenames(allConsistentMethodInvocationRenames, newRename);
+			Set<MethodInvocationReplacement> methodInvocationRenames = bodyMapper.getMethodInvocationRenameReplacements();
+			for(MethodInvocationReplacement newRename : methodInvocationRenames) {
+				Set<MethodInvocationReplacement> inconsistentMethodInvocationRenames = inconsistentMethodInvocationRenames(allConsistentMethodInvocationRenames, newRename);
 				if(inconsistentMethodInvocationRenames.isEmpty()) {
 					allConsistentMethodInvocationRenames.add(newRename);
 				}
@@ -350,9 +350,9 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		return allConsistentMethodInvocationRenames;
 	}
 	
-	private Set<MethodInvocationRename> inconsistentMethodInvocationRenames(Set<MethodInvocationRename> currentRenames, MethodInvocationRename newRename) {
-		Set<MethodInvocationRename> inconsistentMethodInvocationRenames = new LinkedHashSet<MethodInvocationRename>();
-		for(MethodInvocationRename rename : currentRenames) {
+	private Set<MethodInvocationReplacement> inconsistentMethodInvocationRenames(Set<MethodInvocationReplacement> currentRenames, MethodInvocationReplacement newRename) {
+		Set<MethodInvocationReplacement> inconsistentMethodInvocationRenames = new LinkedHashSet<MethodInvocationReplacement>();
+		for(MethodInvocationReplacement rename : currentRenames) {
 			if(rename.getBefore().equals(newRename.getBefore()) && !rename.getAfter().equals(newRename.getAfter())) {
 				inconsistentMethodInvocationRenames.add(rename);
 			}
@@ -440,7 +440,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 				nonMappedElementsT1CallingRemovedOperation >= nonMappedElementsT1WithoutThoseCallingRemovedOperation);
 	}
 
-	private UMLOperationBodyMapper findBestMapper(TreeSet<UMLOperationBodyMapper> mapperSet, Set<MethodInvocationRename> consistentMethodInvocationRenames) {
+	private UMLOperationBodyMapper findBestMapper(TreeSet<UMLOperationBodyMapper> mapperSet, Set<MethodInvocationReplacement> consistentMethodInvocationRenames) {
 		List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>(mapperSet);
 		UMLOperationBodyMapper bestMapper = mapperSet.first();
 		for(int i=1; i<mapperList.size(); i++) {
@@ -482,8 +482,8 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		return bestMapper;
 	}
 
-	private boolean matchesConsistentMethodInvocationRename(UMLOperationBodyMapper mapper, Set<MethodInvocationRename> consistentMethodInvocationRenames) {
-		for(MethodInvocationRename rename : consistentMethodInvocationRenames) {
+	private boolean matchesConsistentMethodInvocationRename(UMLOperationBodyMapper mapper, Set<MethodInvocationReplacement> consistentMethodInvocationRenames) {
+		for(MethodInvocationReplacement rename : consistentMethodInvocationRenames) {
 			if(mapper.getOperation1().getName().equals(rename.getBefore()) && mapper.getOperation2().getName().equals(rename.getAfter())) {
 				return true;
 			}
@@ -491,8 +491,8 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		return false;
 	}
 
-	private boolean mismatchesConsistentMethodInvocationRename(UMLOperationBodyMapper mapper, Set<MethodInvocationRename> consistentMethodInvocationRenames) {
-		for(MethodInvocationRename rename : consistentMethodInvocationRenames) {
+	private boolean mismatchesConsistentMethodInvocationRename(UMLOperationBodyMapper mapper, Set<MethodInvocationReplacement> consistentMethodInvocationRenames) {
+		for(MethodInvocationReplacement rename : consistentMethodInvocationRenames) {
 			if(mapper.getOperation1().getName().equals(rename.getBefore()) && !mapper.getOperation2().getName().equals(rename.getAfter())) {
 				return true;
 			}

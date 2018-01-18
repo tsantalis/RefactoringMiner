@@ -932,58 +932,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 		
 		//perform type replacements
-		for(String type1 : types1) {
-			TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
-			int minDistance = replacementInfo.getRawDistance();
-			for(String type2 : types2) {
-				String temp = replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(type1), Matcher.quoteReplacement(type2));
-				int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), minDistance);
-				if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance()) {
-					minDistance = distanceRaw;
-					Replacement replacement = new Replacement(type1, type2, ReplacementType.TYPE);
-					double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), replacementInfo.getArgumentizedString2().length());
-					replacementMap.put(distancenormalized, replacement);
-					if(distanceRaw == 0) {
-						break;
-					}
-				}
-			}
-			if(!replacementMap.isEmpty()) {
-				Replacement replacement = replacementMap.firstEntry().getValue();
-				replacements.add(replacement);
-				replacementInfo.setArgumentizedString1(replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter())));
-				if(replacementMap.firstEntry().getKey() == 0) {
-					break;
-				}
-			}
-		}
+		findReplacements(types1, types2, replacementInfo, replacements, ReplacementType.TYPE);
 		
 		//perform operator replacements
-		for(String infixOperator1 : infixOperators1) {
-			TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
-			int minDistance = replacementInfo.getRawDistance();
-			for(String infixOperator2 : infixOperators2) {
-				String temp = replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(infixOperator1), Matcher.quoteReplacement(infixOperator2));
-				int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), minDistance);
-				if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance()) {
-					minDistance = distanceRaw;
-					Replacement replacement = new Replacement(infixOperator1, infixOperator2, ReplacementType.INFIX_OPERATOR);
-					double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), replacementInfo.getArgumentizedString2().length());
-					replacementMap.put(distancenormalized, replacement);
-					if(distanceRaw == 0) {
-						break;
-					}
-				}
-			}
-			if(!replacementMap.isEmpty()) {
-				Replacement replacement = replacementMap.firstEntry().getValue();
-				replacements.add(replacement);
-				replacementInfo.setArgumentizedString1(replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter())));
-				if(replacementMap.firstEntry().getKey() == 0) {
-					break;
-				}
-			}
-		}
+		findReplacements(infixOperators1, infixOperators2, replacementInfo, replacements, ReplacementType.INFIX_OPERATOR);
 		
 		if (replacementInfo.getRawDistance() > 0) {
 			for(String s1 : variablesAndMethodInvocations1) {
@@ -1033,59 +985,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		
 		//perform creation replacements
-		for(String creation1 : creations1) {
-			TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
-			int minDistance = replacementInfo.getRawDistance();
-			for(String creation2 : creations2) {
-				String temp = replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(creation1), Matcher.quoteReplacement(creation2));
-				int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), minDistance);
-				if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance()) {
-					minDistance = distanceRaw;
-					Replacement replacement = new Replacement(creation1, creation2, ReplacementType.CLASS_INSTANCE_CREATION);
-					double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), replacementInfo.getArgumentizedString2().length());
-					replacementMap.put(distancenormalized, replacement);
-					if(distanceRaw == 0) {
-						break;
-					}
-				}
-			}
-			if(!replacementMap.isEmpty()) {
-				Replacement replacement = replacementMap.firstEntry().getValue();
-				replacements.add(replacement);
-				replacementInfo.setArgumentizedString1(replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter())));
-				if(replacementMap.firstEntry().getKey() == 0) {
-					break;
-				}
-			}
-		}
+		findReplacements(creations1, creations2, replacementInfo, replacements, ReplacementType.CLASS_INSTANCE_CREATION);
 		
 		//perform string literal replacements
 		if(!containsMethodInvocationReplacement(replacements)) {
-			for(String stringLiteral1 : stringLiterals1) {
-				TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
-				int minDistance = replacementInfo.getRawDistance();
-				for(String stringLiteral2 : stringLiterals2) {
-					String temp = replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(stringLiteral1), Matcher.quoteReplacement(stringLiteral2));
-					int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), minDistance);
-					if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance()) {
-						minDistance = distanceRaw;
-						Replacement replacement = new Replacement(stringLiteral1, stringLiteral2, ReplacementType.STRING_LITERAL);
-						double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), replacementInfo.getArgumentizedString2().length());
-						replacementMap.put(distancenormalized, replacement);
-						if(distanceRaw == 0) {
-							break;
-						}
-					}
-				}
-				if(!replacementMap.isEmpty()) {
-					Replacement replacement = replacementMap.firstEntry().getValue();
-					replacements.add(replacement);
-					replacementInfo.setArgumentizedString1(replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter())));
-					if(replacementMap.firstEntry().getKey() == 0) {
-						break;
-					}
-				}
-			}
+			findReplacements(stringLiterals1, stringLiterals2, replacementInfo, replacements, ReplacementType.STRING_LITERAL);
 		}
 		
 		String s1 = preprocessInput1(statement1, statement2);
@@ -1290,6 +1194,34 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private void findReplacements(Set<String> strings1, Set<String> strings2, ReplacementInfo replacementInfo, Set<Replacement> replacements, ReplacementType type) {
+		for(String s1 : strings1) {
+			TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
+			int minDistance = replacementInfo.getRawDistance();
+			for(String s2 : strings2) {
+				String temp = replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(s1), Matcher.quoteReplacement(s2));
+				int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), minDistance);
+				if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance()) {
+					minDistance = distanceRaw;
+					Replacement replacement = new Replacement(s1, s2, type);
+					double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), replacementInfo.getArgumentizedString2().length());
+					replacementMap.put(distancenormalized, replacement);
+					if(distanceRaw == 0) {
+						break;
+					}
+				}
+			}
+			if(!replacementMap.isEmpty()) {
+				Replacement replacement = replacementMap.firstEntry().getValue();
+				replacements.add(replacement);
+				replacementInfo.setArgumentizedString1(replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter())));
+				if(replacementMap.firstEntry().getKey() == 0) {
+					break;
+				}
+			}
+		}
 	}
 
 	private boolean identicalArguments(OperationInvocation invocationCoveringTheEntireStatement1, OperationInvocation invocationCoveringTheEntireStatement2,

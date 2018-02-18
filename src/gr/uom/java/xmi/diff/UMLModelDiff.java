@@ -641,6 +641,8 @@ public class UMLModelDiff {
 		   
 		   String originalPath = originalClass.getSourceFile();
 		   String movedPath = movedClass.getSourceFile();
+		   String originalPathPrefix = originalPath.substring(0, originalPath.lastIndexOf('/'));
+		   String movedPathPrefix = movedPath.substring(0, movedPath.lastIndexOf('/'));
 		   
 		   if (!originalName.equals(movedName)) {
 			   MoveClassRefactoring refactoring = new MoveClassRefactoring(originalName, movedName);
@@ -664,7 +666,7 @@ public class UMLModelDiff {
 					   renamePackageRefactorings.add(new RenamePackageRefactoring(refactoring));
 				   }
 			   }
-		   } else {
+		   } else if(!originalPathPrefix.equals(movedPathPrefix)) {
 			   MovedClassToAnotherSourceFolder refactoring = new MovedClassToAnotherSourceFolder(originalName, originalPath, movedPath);
 			   RenamePattern renamePattern = refactoring.getRenamePattern();
 			   boolean foundInMatchingMoveSourceFolderRefactoring = false;

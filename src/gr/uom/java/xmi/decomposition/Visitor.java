@@ -134,7 +134,17 @@ public class Visitor extends ASTVisitor {
 				methodInvocation = node.toString();
 			}
 		//}
-		methodInvocationMap.put(methodInvocation, new OperationInvocation(node));
+		boolean builderPatternChain = false;
+		for(String key : methodInvocationMap.keySet()) {
+			OperationInvocation invocation = methodInvocationMap.get(key);
+			if(key.startsWith(methodInvocation) && invocation.numberOfSubExpressions() > 15) {
+				builderPatternChain = true;
+				break;
+			}
+		}
+		if(!builderPatternChain) {
+			methodInvocationMap.put(methodInvocation, new OperationInvocation(node));
+		}
 		return super.visit(node);
 	}
 

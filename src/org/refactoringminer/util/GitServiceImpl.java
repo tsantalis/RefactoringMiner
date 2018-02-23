@@ -311,45 +311,49 @@ public class GitServiceImpl implements GitService {
 	
 	@Override
 	public void fileTreeDiff(Repository repository, RevCommit current, List<String> javaFilesBefore, List<String> javaFilesCurrent, Map<String, String> renamedFilesHint, boolean detectRenames) throws Exception {
-        ObjectId oldHead = current.getParent(0).getTree();
-        ObjectId head = current.getTree();
-
-        // prepare the two iterators to compute the diff between
-		ObjectReader reader = repository.newObjectReader();
-		CanonicalTreeParser oldTreeIter = new CanonicalTreeParser();
-		oldTreeIter.reset(reader, oldHead);
-		CanonicalTreeParser newTreeIter = new CanonicalTreeParser();
-		newTreeIter.reset(reader, head);
-		// finally get the list of changed files
-		List<DiffEntry> diffs = new Git(repository).diff()
-		                    .setNewTree(newTreeIter)
-		                    .setOldTree(oldTreeIter)
-		                    .setShowNameAndStatusOnly(true)
-		                    .call();
-		if (detectRenames) {
-		    RenameDetector rd = new RenameDetector(repository);
-		    rd.addAll(diffs);
-		    diffs = rd.compute();
-		}
-		
-        for (DiffEntry entry : diffs) {
-        	ChangeType changeType = entry.getChangeType();
-        	if (changeType != ChangeType.ADD) {
-        		String oldPath = entry.getOldPath();
-        		if (isJavafile(oldPath)) {
-        			javaFilesBefore.add(oldPath);
-        		}
-        	}
-    		if (changeType != ChangeType.DELETE) {
-        		String newPath = entry.getNewPath();
-        		if (isJavafile(newPath)) {
-        			javaFilesCurrent.add(newPath);
-        			if (changeType == ChangeType.RENAME) {
-        				String oldPath = entry.getOldPath();
-        				renamedFilesHint.put(oldPath, newPath);
-        			}
-        		}
-    		}
+        if (current.getParentCount() > 0) {
+			ObjectId oldHead = current.getParent(0).getTree();
+	        ObjectId head = current.getTree();
+	
+	        // prepare the two iterators to compute the diff between
+			ObjectReader reader = repository.newObjectReader();
+			CanonicalTreeParser oldTreeIter = new CanonicalTreeParser();
+			oldTreeIter.reset(reader, oldHead);
+			CanonicalTreeParser newTreeIter = new CanonicalTreeParser();
+			newTreeIter.reset(reader, head);
+			// finally get the list of changed files
+			try (Git git = new Git(repository)) {
+				List<DiffEntry> diffs = git.diff()
+				                    .setNewTree(newTreeIter)
+				                    .setOldTree(oldTreeIter)
+				                    .setShowNameAndStatusOnly(true)
+				                    .call();
+				if (detectRenames) {
+				    RenameDetector rd = new RenameDetector(repository);
+				    rd.addAll(diffs);
+				    diffs = rd.compute();
+				}
+				
+		        for (DiffEntry entry : diffs) {
+		        	ChangeType changeType = entry.getChangeType();
+		        	if (changeType != ChangeType.ADD) {
+		        		String oldPath = entry.getOldPath();
+		        		if (isJavafile(oldPath)) {
+		        			javaFilesBefore.add(oldPath);
+		        		}
+		        	}
+		    		if (changeType != ChangeType.DELETE) {
+		        		String newPath = entry.getNewPath();
+		        		if (isJavafile(newPath)) {
+		        			javaFilesCurrent.add(newPath);
+		        			if (changeType == ChangeType.RENAME) {
+		        				String oldPath = entry.getOldPath();
+		        				renamedFilesHint.put(oldPath, newPath);
+		        			}
+		        		}
+		    		}
+		        }
+			}
         }
 	}
 	

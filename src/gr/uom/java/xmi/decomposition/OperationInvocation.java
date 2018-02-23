@@ -121,6 +121,10 @@ public class OperationInvocation {
 		return arguments;
 	}
 
+    public int numberOfSubExpressions() {
+    	return subExpressions.size();
+    }
+
     public boolean matchesOperation(UMLOperation operation) {
     	return this.methodName.equals(operation.getName()) && (this.typeArguments == operation.getParameterTypeList().size() || this.typeArguments == operation.getNumberOfNonVarargsParameters());
     }

@@ -13,6 +13,9 @@ public class MovedClassToAnotherSourceFolder {
 	
 	public RenamePattern getRenamePattern() {
 		int separatorPos = separatorPosOfCommonSuffix('/', originalPath, movedPath);
+		if (separatorPos == -1) {
+			return new RenamePattern(originalPath, movedPath);
+		}
 		String original = originalPath.substring(0, originalPath.length() - separatorPos);
 		String moved = movedPath.substring(0, movedPath.length() - separatorPos);
 		return new RenamePattern(original, moved);

@@ -23,6 +23,9 @@ public class MoveClassRefactoring implements Refactoring {
 
 	public RenamePattern getRenamePattern() {
 		int separatorPos = separatorPosOfCommonSuffix('.', originalClassName, movedClassName);
+		if (separatorPos == -1) {
+			return new RenamePattern(originalClassName, movedClassName);
+		}
 		String originalPath = originalClassName.substring(0, originalClassName.length() - separatorPos);
 		String movedPath = movedClassName.substring(0, movedClassName.length() - separatorPos);
 		return new RenamePattern(originalPath, movedPath);

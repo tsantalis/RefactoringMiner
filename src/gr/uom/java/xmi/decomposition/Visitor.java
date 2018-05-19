@@ -74,7 +74,7 @@ public class Visitor extends ASTVisitor {
 		}
 		return super.visit(node);
 	}
-	
+
 	public boolean visit(SimpleName node) {
 		if(node.getParent() instanceof FieldAccess && ((FieldAccess)node.getParent()).getExpression() instanceof ThisExpression) {
 			FieldAccess fieldAccess = (FieldAccess)node.getParent();
@@ -184,7 +184,9 @@ public class Visitor extends ASTVisitor {
 
 	public boolean visit(QualifiedName node) {
 		Name qualifier = node.getQualifier();
-		types.add(qualifier.getFullyQualifiedName());
+		if(Character.isUpperCase(qualifier.getFullyQualifiedName().charAt(0))) {
+			types.add(qualifier.getFullyQualifiedName());
+		}
 		return super.visit(node);
 	}
 

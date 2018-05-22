@@ -2154,8 +2154,8 @@
         "type": "Extract Method",
         "description": "Extract Method package parse(string String, tokens Deque) : Node extracted from public parse(contents String, classLoader ClassLoader) : List in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
         "comment": "<p>added</p><p>&nbsp;</p>",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood"
     }, {
         "type": "Extract Method",
@@ -3331,7 +3331,7 @@
         "validators": null
     }, {
         "type": "Extract Method",
-        "description": "Extract Method private load(config Class<?>, environment String[]) : void extracted from public resourceHandlerMappingDisabled() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
+        "description": "Extract Method private load(environment String[]) : void extracted from public resourceHandlerMappingDisabled() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
@@ -3373,7 +3373,7 @@
         "validators": null
     }, {
         "type": "Extract Method",
-        "description": "Extract Method private load(config Class<?>, environment String[]) : void extracted from public faviconMappingDisabled() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
+        "description": "Extract Method private load(environment String[]) : void extracted from public faviconMappingDisabled() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
@@ -3387,7 +3387,7 @@
         "validators": null
     }, {
         "type": "Extract Method",
-        "description": "Extract Method private load(config Class<?>, environment String[]) : void extracted from public customAsyncRequestTimeout() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
+        "description": "Extract Method private load(environment String[]) : void extracted from public customAsyncRequestTimeout() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
@@ -3404,42 +3404,42 @@
         "description": "Extract Method private load(environment String[]) : void extracted from public ignoreDefaultModelOnRedirectIsTrue() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private load(environment String[]) : void extracted from public handerAdaptersCreated() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private load(environment String[]) : void extracted from public handerMappingsCreated() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private load(environment String[]) : void extracted from public resourceHandlerMapping() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private load(environment String[]) : void extracted from public faviconMapping() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private load(environment String[]) : void extracted from public defaultAsyncRequestTimeout() : void in class org.springframework.boot.autoconfigure.web.WebMvcAutoConfigurationTests",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }],
     "refDiffExecutionTime": 2439
@@ -17854,6 +17854,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public addIndex(columnIdent ColumnIdent, indexType ReferenceInfo.IndexType, columns List) : Builder extracted from public addIndex(columnIdent ColumnIdent, indexType ReferenceInfo.IndexType) : Builder in class io.crate.metadata.table.TestingTableInfo.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -25648,7 +25655,7 @@
     "time": "7/20/15 2:41 PM",
     "refactorings": [{
         "type": "Move Method",
-        "description": "Move Method public wcwidth(cs CharSequence) : int from class jline.console.WCWidth to class jline.console.ConsoleReader",
+        "description": "Move Method public wcwidth(cs CharSequence) : int from class jline.console.WCWidth to package wcwidth(str CharSequence, pos int) : int from class jline.console.ConsoleReader",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

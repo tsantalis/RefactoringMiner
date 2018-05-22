@@ -808,21 +808,6 @@ public class UMLModelDiff {
 	                      deleteAddedOperation(addedOperation);
                 	  }
                   }
-                  else if(addedOperation.getBody() != null && addedOperation.getBody().getCompositeStatement().getLeaves().size() == 1 &&
-                          !addedOperation.getClassName().equals(operationBodyMapper.getOperation1().getClassName())) {
-                	  UMLClassDiff classDiff = getUMLClassDiff(operationBodyMapper.getOperation1().getClassName());
-                	  if(classDiff != null && !classDiff.getExtractedDelegateOperations().isEmpty()) {
-                		  for(OperationInvocation operationInvocation : classDiff.getExtractedDelegateOperations().values()) {
-                			  if(operationInvocation.matchesOperation(addedOperation)) {
-                    			  ExtractAndMoveOperationRefactoring extractOperationRefactoring =
-                                        new ExtractAndMoveOperationRefactoring(operationBodyMapper, mapper.getOperation2());
-                                  refactorings.add(extractOperationRefactoring);
-                                  deleteAddedOperation(addedOperation);
-                    			  break;
-                    		  }
-                		  }
-                	  }
-                  }
                }
             }
          }

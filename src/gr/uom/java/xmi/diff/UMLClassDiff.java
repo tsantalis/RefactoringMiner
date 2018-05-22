@@ -34,7 +34,6 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	private List<UMLAttributeDiff> attributeDiffList;
 	private List<UMLOperationDiff> operationDiffList;
 	private List<UMLOperationBodyMapper> operationBodyMapperList;
-	private Map<UMLOperation, OperationInvocation> extractedDelegateOperations;
 	private List<Refactoring> refactorings;
 	private boolean visibilityChanged;
 	private String oldVisibility;
@@ -63,7 +62,6 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		this.attributeDiffList = new ArrayList<UMLAttributeDiff>();
 		this.operationDiffList = new ArrayList<UMLOperationDiff>();
 		this.operationBodyMapperList = new ArrayList<UMLOperationBodyMapper>();
-		this.extractedDelegateOperations = new LinkedHashMap<UMLOperation, OperationInvocation>();
 		this.refactorings = new ArrayList<Refactoring>();
 		this.visibilityChanged = false;
 		this.abstractionChanged = false;
@@ -222,10 +220,6 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 
 	public List<UMLOperationBodyMapper> getOperationBodyMapperList() {
 		return operationBodyMapperList;
-	}
-
-	public Map<UMLOperation, OperationInvocation> getExtractedDelegateOperations() {
-		return extractedDelegateOperations;
 	}
 
 	public List<UMLType> getAddedImplementedInterfaces() {
@@ -739,18 +733,23 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 							}
 						}
 						if(parameterTypesMatch(originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters)) {
-							UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, new LinkedHashMap<String, String>(), parameterToArgumentMap);
+							UMLOperation delegateMethod = findDelegateMethod(addedOperation, mapper, addedOperationInvocation);
+							UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper,
+									delegateMethod != null ? delegateMethod : addedOperation,
+									new LinkedHashMap<String, String>(), parameterToArgumentMap);
 							operationBodyMapper.getMappings();
 							int mappings = operationBodyMapper.mappingsWithoutBlocks();
 							if(mappings > 0 && (mappings > operationBodyMapper.nonMappedElementsT2() || operationBodyMapper.exactMatches() > 0 ||
 									(mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2()))) {
-								ExtractOperationRefactoring extractOperationRefactoring = new ExtractOperationRefactoring(operationBodyMapper, mapper.getOperation2());
+								ExtractOperationRefactoring extractOperationRefactoring = null;
+								if(delegateMethod == null) {
+									extractOperationRefactoring = new ExtractOperationRefactoring(operationBodyMapper, mapper.getOperation2());
+								}
+								else {
+									extractOperationRefactoring = new ExtractOperationRefactoring(addedOperation, mapper.getOperation1(), mapper.getOperation2());
+								}
 								refactorings.add(extractOperationRefactoring);
 								mapper.addAdditionalMapper(operationBodyMapper);
-								operationsToBeRemoved.add(addedOperation);
-							}
-							else if(addedOperation.isDelegate() != null && !mapper.getOperation1().getAllOperationInvocations().contains(addedOperationInvocation)) {
-								extractedDelegateOperations.put(addedOperation, addedOperation.isDelegate());
 								operationsToBeRemoved.add(addedOperation);
 							}
 						}
@@ -759,6 +758,18 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 			}
 		}
 		addedOperations.removeAll(operationsToBeRemoved);
+	}
+
+	private UMLOperation findDelegateMethod(UMLOperation addedOperation, UMLOperationBodyMapper mapper,	OperationInvocation addedOperationInvocation) {
+		OperationInvocation delegateMethodInvocation = addedOperation.isDelegate();
+		if(mapper.getOperation1().isDelegate() == null && delegateMethodInvocation != null && !mapper.getOperation1().getAllOperationInvocations().contains(addedOperationInvocation)) {
+			for(UMLOperation operation : addedOperations) {
+				if(delegateMethodInvocation.matchesOperation(operation)) {
+					return operation;
+				}
+			}
+		}
+		return null;
 	}
 
 	private boolean parameterTypesMatch(Map<UMLParameter, UMLParameter> originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters) {

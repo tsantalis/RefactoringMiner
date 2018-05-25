@@ -776,10 +776,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Set<String> variableIntersection = new LinkedHashSet<String>(variables1);
 		variableIntersection.retainAll(variables2);
 		// ignore the variables in the intersection that also appear with "this." prefix in the sets of variables
+		// ignore the variables in the intersection that are static fields
 		Set<String> variablesToBeRemovedFromTheIntersection = new LinkedHashSet<String>();
 		for(String variable : variableIntersection) {
 			if(!variable.startsWith("this.") && !variableIntersection.contains("this."+variable) &&
 					(variables1.contains("this."+variable) || variables2.contains("this."+variable))) {
+				variablesToBeRemovedFromTheIntersection.add(variable);
+			}
+			if(variable.toUpperCase().equals(variable)) {
 				variablesToBeRemovedFromTheIntersection.add(variable);
 			}
 		}
@@ -789,31 +793,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		variables2.removeAll(variableIntersection);
 		
 		// replace variables with the corresponding arguments
-		for(String parameter : parameterToArgumentMap.keySet()) {
-			String argument = parameterToArgumentMap.get(parameter);
-			if(variables1.contains(parameter)) {
-				variables1.add(argument);
-				if(argument.contains("(") && argument.contains(")")) {
-					int indexOfOpeningParenthesis = argument.indexOf("(");
-					int indexOfClosingParenthesis = argument.lastIndexOf(")");
-					String arguments = argument.substring(indexOfOpeningParenthesis+1, indexOfClosingParenthesis);
-					if(!arguments.isEmpty() && !arguments.contains(",") && !arguments.contains("(") && !arguments.contains(")")) {
-						variables1.add(arguments);
-					}
-				}
-			}
-			if(variables2.contains(parameter)) {
-				variables2.add(argument);
-				if(argument.contains("(") && argument.contains(")")) {
-					int indexOfOpeningParenthesis = argument.indexOf("(");
-					int indexOfClosingParenthesis = argument.lastIndexOf(")");
-					String arguments = argument.substring(indexOfOpeningParenthesis+1, indexOfClosingParenthesis);
-					if(!arguments.isEmpty() && !arguments.contains(",") && !arguments.contains("(") && !arguments.contains(")")) {
-						variables2.add(arguments);
-					}
-				}
-			}
-		}
+		replaceVariablesWithArguments(variables1, parameterToArgumentMap);
+		replaceVariablesWithArguments(variables2, parameterToArgumentMap);
 		
 		Map<String, OperationInvocation> methodInvocationMap1 = new LinkedHashMap<String, OperationInvocation>(statement1.getMethodInvocationMap());
 		Map<String, OperationInvocation> methodInvocationMap2 = new LinkedHashMap<String, OperationInvocation>(statement2.getMethodInvocationMap());
@@ -845,33 +826,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		methodInvocations2.removeAll(methodInvocationIntersection);
 		
 		// replace variables with the corresponding arguments in method invocations
-		for(String parameter : parameterToArgumentMap.keySet()) {
-			String argument = parameterToArgumentMap.get(parameter);
-			if(!parameter.equals(argument)) {
-				Set<String> methodInvocationsToBeAdded1 = new LinkedHashSet<String>();
-				for(String methodInvocation : methodInvocations1) {
-					String methodInvocationAfterReplacement = performReplacement(methodInvocation, parameter, argument);
-					if(!methodInvocation.equals(methodInvocationAfterReplacement)) {
-						methodInvocationsToBeAdded1.add(methodInvocationAfterReplacement);
-						OperationInvocation oldInvocation = methodInvocationMap1.get(methodInvocation);
-						OperationInvocation newInvocation = oldInvocation.update(parameter, argument);
-						methodInvocationMap1.put(methodInvocationAfterReplacement, newInvocation);
-					}
-				}
-				methodInvocations1.addAll(methodInvocationsToBeAdded1);
-				Set<String> methodInvocationsToBeAdded2 = new LinkedHashSet<String>();
-				for(String methodInvocation : methodInvocations2) {
-					String methodInvocationAfterReplacement = performReplacement(methodInvocation, parameter, argument);
-					if(!methodInvocation.equals(methodInvocationAfterReplacement)) {
-						methodInvocationsToBeAdded2.add(methodInvocationAfterReplacement);
-						OperationInvocation oldInvocation = methodInvocationMap2.get(methodInvocation);
-						OperationInvocation newInvocation = oldInvocation.update(parameter, argument);
-						methodInvocationMap2.put(methodInvocationAfterReplacement, newInvocation);
-					}
-				}
-				methodInvocations2.addAll(methodInvocationsToBeAdded2);
-			}
-		}
+		replaceVariablesWithArgumentsInMethodInvocations(methodInvocationMap1, methodInvocations1, parameterToArgumentMap);
+		replaceVariablesWithArgumentsInMethodInvocations(methodInvocationMap2, methodInvocations2, parameterToArgumentMap);
 		
 		Set<String> variablesAndMethodInvocations1 = new LinkedHashSet<String>();
 		variablesAndMethodInvocations1.addAll(methodInvocations1);
@@ -1207,6 +1163,43 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private void replaceVariablesWithArguments(Set<String> variables, Map<String, String> parameterToArgumentMap) {
+		for(String parameter : parameterToArgumentMap.keySet()) {
+			String argument = parameterToArgumentMap.get(parameter);
+			if(variables.contains(parameter)) {
+				variables.add(argument);
+				if(argument.contains("(") && argument.contains(")")) {
+					int indexOfOpeningParenthesis = argument.indexOf("(");
+					int indexOfClosingParenthesis = argument.lastIndexOf(")");
+					String arguments = argument.substring(indexOfOpeningParenthesis+1, indexOfClosingParenthesis);
+					if(!arguments.isEmpty() && !arguments.contains(",") && !arguments.contains("(") && !arguments.contains(")")) {
+						variables.add(arguments);
+					}
+				}
+			}
+		}
+	}
+
+	private void replaceVariablesWithArgumentsInMethodInvocations(Map<String, OperationInvocation> methodInvocationMap,
+			Set<String> methodInvocations, Map<String, String> parameterToArgumentMap) {
+		for(String parameter : parameterToArgumentMap.keySet()) {
+			String argument = parameterToArgumentMap.get(parameter);
+			if(!parameter.equals(argument)) {
+				Set<String> methodInvocationsToBeAdded1 = new LinkedHashSet<String>();
+				for(String methodInvocation : methodInvocations) {
+					String methodInvocationAfterReplacement = performReplacement(methodInvocation, parameter, argument);
+					if(!methodInvocation.equals(methodInvocationAfterReplacement)) {
+						methodInvocationsToBeAdded1.add(methodInvocationAfterReplacement);
+						OperationInvocation oldInvocation = methodInvocationMap.get(methodInvocation);
+						OperationInvocation newInvocation = oldInvocation.update(parameter, argument);
+						methodInvocationMap.put(methodInvocationAfterReplacement, newInvocation);
+					}
+				}
+				methodInvocations.addAll(methodInvocationsToBeAdded1);
+			}
+		}
 	}
 
 	private void findReplacements(Set<String> strings1, Set<String> strings2, ReplacementInfo replacementInfo, ReplacementType type) {

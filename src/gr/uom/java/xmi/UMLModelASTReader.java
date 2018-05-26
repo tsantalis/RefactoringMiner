@@ -1,11 +1,6 @@
 package gr.uom.java.xmi;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -69,30 +64,10 @@ public class UMLModelASTReader {
 			@Override
 			public void acceptAST(String sourceFilePath, CompilationUnit ast) {
 				String relativePath = sourceFilePath.substring(projectRoot.length() + 1).replaceAll(systemFileSeparator, "/");
-				String fileContents = readFileContents(sourceFilePath);
-				processCompilationUnit(fileContents, relativePath, ast);
+				processCompilationUnit(relativePath, ast);
 			}
 		};
 		this.parser.createASTs((String[]) filesArray, null, emptyArray, fileASTRequestor, null);
-	}
-
-	private String readFileContents(String filePath) {
-		try {
-			InputStream in = new FileInputStream(new File(filePath));
-			InputStreamReader isr = new InputStreamReader(in);
-			StringWriter sw = new StringWriter();
-			int DEFAULT_BUFFER_SIZE = 1024 * 4;
-			char[] buffer = new char[DEFAULT_BUFFER_SIZE];
-			int n = 0;
-			while (-1 != (n = isr.read(buffer))) {
-				sw.write(buffer, 0, n);
-			}
-			isr.close();
-			return sw.toString();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return "";
 	}
 
 	private static ASTParser buildAstParser(File srcFolder) {
@@ -110,7 +85,7 @@ public class UMLModelASTReader {
 		return this.umlModel;
 	}
 
-	protected void processCompilationUnit(String fileContents, String sourceFilePath, CompilationUnit compilationUnit) {
+	protected void processCompilationUnit(String sourceFilePath, CompilationUnit compilationUnit) {
 		PackageDeclaration packageDeclaration = compilationUnit.getPackage();
 		String packageName = null;
 		if(packageDeclaration != null)
@@ -127,7 +102,7 @@ public class UMLModelASTReader {
         for(AbstractTypeDeclaration abstractTypeDeclaration : topLevelTypeDeclarations) {
         	if(abstractTypeDeclaration instanceof TypeDeclaration) {
         		TypeDeclaration topLevelTypeDeclaration = (TypeDeclaration)abstractTypeDeclaration;
-        		processTypeDeclaration(fileContents, topLevelTypeDeclaration, packageName, sourceFilePath, importedTypes);
+        		processTypeDeclaration(compilationUnit, topLevelTypeDeclaration, packageName, sourceFilePath, importedTypes);
         	}
         }
 	}
@@ -144,7 +119,7 @@ public class UMLModelASTReader {
 		return typeToString;
 	}
 
-	private void processTypeDeclaration(String fileContents, TypeDeclaration typeDeclaration, String packageName, String sourceFile,
+	private void processTypeDeclaration(CompilationUnit cu, TypeDeclaration typeDeclaration, String packageName, String sourceFile,
 			List<String> importedTypes) {
 		Javadoc javaDoc = typeDeclaration.getJavadoc();
 		if(javaDoc != null) {
@@ -162,7 +137,7 @@ public class UMLModelASTReader {
 			}
 		}
 		String className = typeDeclaration.getName().getFullyQualifiedName();
-		LocationInfo locationInfo = generateLocationInfo(fileContents, sourceFile, typeDeclaration);
+		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, typeDeclaration);
 		UMLClass umlClass = new UMLClass(packageName, className, locationInfo, typeDeclaration.isPackageMemberTypeDeclaration(), importedTypes);
 		
 		if(typeDeclaration.isInterface()) {
@@ -200,7 +175,7 @@ public class UMLModelASTReader {
     	
     	FieldDeclaration[] fieldDeclarations = typeDeclaration.getFields();
     	for(FieldDeclaration fieldDeclaration : fieldDeclarations) {
-    		List<UMLAttribute> attributes = processFieldDeclaration(fileContents, fieldDeclaration, sourceFile);
+    		List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, sourceFile);
     		for(UMLAttribute attribute : attributes) {
     			attribute.setClassName(umlClass.getName());
     			umlClass.addAttribute(attribute);
@@ -209,7 +184,7 @@ public class UMLModelASTReader {
     	
     	MethodDeclaration[] methodDeclarations = typeDeclaration.getMethods();
     	for(MethodDeclaration methodDeclaration : methodDeclarations) {
-    		UMLOperation operation = processMethodDeclaration(fileContents, methodDeclaration, packageName, className, sourceFile);
+    		UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, className, sourceFile);
     		operation.setClassName(umlClass.getName());
     		umlClass.addOperation(operation);
     	}
@@ -229,7 +204,7 @@ public class UMLModelASTReader {
     		if(node.getUserObject() != null) {
     			AnonymousClassDeclaration anonymous = (AnonymousClassDeclaration)node.getUserObject();
     			String anonymousName = getAnonymousName(node);
-    			UMLAnonymousClass anonymousClass = processAnonymousClassDeclaration(fileContents, anonymous, packageName + "." + className, anonymousName, sourceFile);
+    			UMLAnonymousClass anonymousClass = processAnonymousClassDeclaration(cu, anonymous, packageName + "." + className, anonymousName, sourceFile);
     			umlClass.addAnonymousClass(anonymousClass);
     		}
     	}
@@ -238,13 +213,13 @@ public class UMLModelASTReader {
 		
 		TypeDeclaration[] types = typeDeclaration.getTypes();
 		for(TypeDeclaration type : types) {
-			processTypeDeclaration(fileContents, type, umlClass.getName(), sourceFile, importedTypes);
+			processTypeDeclaration(cu, type, umlClass.getName(), sourceFile, importedTypes);
 		}
 	}
 
-	private UMLOperation processMethodDeclaration(String fileContents, MethodDeclaration methodDeclaration, String packageName, String className, String sourceFile) {
+	private UMLOperation processMethodDeclaration(CompilationUnit cu, MethodDeclaration methodDeclaration, String packageName, String className, String sourceFile) {
 		String methodName = methodDeclaration.getName().getFullyQualifiedName();
-		LocationInfo locationInfo = generateLocationInfo(fileContents, sourceFile, methodDeclaration);
+		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, methodDeclaration);
 		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo);
 		//umlOperation.setClassName(umlClass.getName());
 		if(methodDeclaration.isConstructor())
@@ -271,7 +246,7 @@ public class UMLModelASTReader {
 		
 		Block block = methodDeclaration.getBody();
 		if(block != null) {
-			OperationBody body = new OperationBody(block);
+			OperationBody body = new OperationBody(cu, sourceFile, block);
 			umlOperation.setBody(body);
 			if(block.statements().size() == 0) {
 				umlOperation.setEmptyBody(true);
@@ -303,14 +278,14 @@ public class UMLModelASTReader {
 	}
 
 
-	private List<UMLAttribute> processFieldDeclaration(String fileContents, FieldDeclaration fieldDeclaration, String sourceFile) {
+	private List<UMLAttribute> processFieldDeclaration(CompilationUnit cu, FieldDeclaration fieldDeclaration, String sourceFile) {
 		List<UMLAttribute> attributes = new ArrayList<UMLAttribute>();
 		Type fieldType = fieldDeclaration.getType();
 		List<VariableDeclarationFragment> fragments = fieldDeclaration.fragments();
 		for(VariableDeclarationFragment fragment : fragments) {
 			UMLType type = UMLType.extractTypeObject(getTypeName(fieldType, fragment.getExtraDimensions()));
 			String fieldName = fragment.getName().getFullyQualifiedName();
-			LocationInfo locationInfo = generateLocationInfo(fileContents, sourceFile, fragment);
+			LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, fragment);
 			UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo);
 			//umlAttribute.setClassName(umlClass.getName());
 			
@@ -335,15 +310,15 @@ public class UMLModelASTReader {
 		return attributes;
 	}
 	
-	private UMLAnonymousClass processAnonymousClassDeclaration(String fileContents, AnonymousClassDeclaration anonymous, String packageName, String className, String sourceFile) {
+	private UMLAnonymousClass processAnonymousClassDeclaration(CompilationUnit cu, AnonymousClassDeclaration anonymous, String packageName, String className, String sourceFile) {
 		List<BodyDeclaration> bodyDeclarations = anonymous.bodyDeclarations();
-		LocationInfo locationInfo = generateLocationInfo(fileContents, sourceFile, anonymous);
+		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, anonymous);
 		UMLAnonymousClass anonymousClass = new UMLAnonymousClass(packageName, className, locationInfo);
 		
 		for(BodyDeclaration bodyDeclaration : bodyDeclarations) {
 			if(bodyDeclaration instanceof FieldDeclaration) {
 				FieldDeclaration fieldDeclaration = (FieldDeclaration)bodyDeclaration;
-				List<UMLAttribute> attributes = processFieldDeclaration(fileContents, fieldDeclaration, sourceFile);
+				List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, sourceFile);
 	    		for(UMLAttribute attribute : attributes) {
 	    			attribute.setClassName(anonymousClass.getName());
 	    			anonymousClass.addAttribute(attribute);
@@ -351,7 +326,7 @@ public class UMLModelASTReader {
 			}
 			else if(bodyDeclaration instanceof MethodDeclaration) {
 				MethodDeclaration methodDeclaration = (MethodDeclaration)bodyDeclaration;
-				UMLOperation operation = processMethodDeclaration(fileContents, methodDeclaration, packageName, className, sourceFile);
+				UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, className, sourceFile);
 				operation.setClassName(anonymousClass.getName());
 				anonymousClass.addOperation(operation);
 			}
@@ -402,10 +377,7 @@ public class UMLModelASTReader {
 		return false;
 	}
 
-	private LocationInfo generateLocationInfo(String fileContents, String sourceFile, ASTNode node) {
-		int startPosition = node.getStartPosition();
-		int length = node.getLength();
-		int endOffset = startPosition + length - 1;
-		return new LocationInfo(fileContents, sourceFile, startPosition, endOffset);
+	private LocationInfo generateLocationInfo(CompilationUnit cu, String sourceFile, ASTNode node) {
+		return new LocationInfo(cu, sourceFile, node);
 	}
 }

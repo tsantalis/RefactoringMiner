@@ -1,12 +1,18 @@
 package gr.uom.java.xmi.decomposition;
 
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
-public class VariableDeclaration {
+import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.LocationInfoProvider;
+
+public class VariableDeclaration implements LocationInfoProvider {
 	private String variableName;
 	private String initializer;
+	private LocationInfo locationInfo;
 	
-	public VariableDeclaration(VariableDeclarationFragment fragment) {
+	public VariableDeclaration(CompilationUnit cu, String filePath, VariableDeclarationFragment fragment) {
+		this.locationInfo = new LocationInfo(cu, filePath, fragment);
 		this.variableName = fragment.getName().getIdentifier();
 		this.initializer = fragment.getInitializer() != null ? fragment.getInitializer().toString() : null;
 	}
@@ -55,5 +61,9 @@ public class VariableDeclaration {
         	sb.append("=").append(initializer);
         }
         return sb.toString();
+	}
+
+	public LocationInfo getLocationInfo() {
+		return locationInfo;
 	}
 }

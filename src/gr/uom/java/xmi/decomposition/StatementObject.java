@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.IExtendedModifier;
@@ -14,9 +15,12 @@ import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
+import gr.uom.java.xmi.LocationInfo;
+
 public class StatementObject extends AbstractStatement {
 	
 	private String statement;
+	private LocationInfo locationInfo;
 	private List<String> variables;
 	private List<String> types;
 	private List<VariableDeclaration> variableDeclarations;
@@ -26,9 +30,10 @@ public class StatementObject extends AbstractStatement {
 	private Map<String, ObjectCreation> creationMap;
 	private List<String> infixOperators;
 	
-	public StatementObject(Statement statement, int depth) {
+	public StatementObject(CompilationUnit cu, String filePath, Statement statement, int depth) {
 		super();
-		Visitor visitor = new Visitor();
+		this.locationInfo = new LocationInfo(cu, filePath, statement);
+		Visitor visitor = new Visitor(cu, filePath);
 		statement.accept(visitor);
 		this.variables = visitor.getVariables();
 		this.types = visitor.getTypes();
@@ -164,5 +169,9 @@ public class StatementObject extends AbstractStatement {
 	@Override
 	public int statementCount() {
 		return 1;
+	}
+
+	public LocationInfo getLocationInfo() {
+		return locationInfo;
 	}
 }

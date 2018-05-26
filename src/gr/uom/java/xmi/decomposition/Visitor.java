@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.ArrayCreation;
 import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.InfixExpression;
@@ -27,7 +28,8 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.WildcardType;
 
 public class Visitor extends ASTVisitor {
-
+	private CompilationUnit cu;
+	private String filePath;
 	private List<String> allIdentifiers = new ArrayList<String>();
 	private List<String> invokedMethodNames = new ArrayList<String>();
 	private List<String> types = new ArrayList<String>();
@@ -37,24 +39,29 @@ public class Visitor extends ASTVisitor {
 	private List<String> stringLiterals = new ArrayList<String>();
 	private Map<String, ObjectCreation> creationMap = new LinkedHashMap<String, ObjectCreation>();
 	private List<String> infixOperators = new ArrayList<String>();
-	
+
+	public Visitor(CompilationUnit cu, String filePath) {
+		this.cu = cu;
+		this.filePath = filePath;
+	}
+
 	public boolean visit(InfixExpression node) {
 		infixOperators.add(node.getOperator().toString());
 		return super.visit(node);
 	}
 
 	public boolean visit(ClassInstanceCreation node) {
-		creationMap.put(node.toString(), new ObjectCreation(node));
+		creationMap.put(node.toString(), new ObjectCreation(cu, filePath, node));
 		return super.visit(node);
 	}
 
 	public boolean visit(ArrayCreation node) {
-		creationMap.put(node.toString(), new ObjectCreation(node));
+		creationMap.put(node.toString(), new ObjectCreation(cu, filePath, node));
 		return super.visit(node);
 	}
 
 	public boolean visit(VariableDeclarationFragment node) {
-		variableDeclarations.add(new VariableDeclaration(node));
+		variableDeclarations.add(new VariableDeclaration(cu, filePath, node));
 		return super.visit(node);
 	}
 
@@ -143,7 +150,7 @@ public class Visitor extends ASTVisitor {
 			}
 		}
 		if(!builderPatternChain) {
-			methodInvocationMap.put(methodInvocation, new OperationInvocation(node));
+			methodInvocationMap.put(methodInvocation, new OperationInvocation(cu, filePath, node));
 		}
 		return super.visit(node);
 	}
@@ -178,7 +185,7 @@ public class Visitor extends ASTVisitor {
 	
 	public boolean visit(SuperMethodInvocation node) {
 		invokedMethodNames.add(node.getName().getIdentifier());
-		methodInvocationMap.put(node.toString(), new OperationInvocation(node));
+		methodInvocationMap.put(node.toString(), new OperationInvocation(cu, filePath, node));
 		return super.visit(node);
 	}
 

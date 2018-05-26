@@ -5,11 +5,14 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.ArrayCreation;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 
+import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLType;
 
-public class ObjectCreation {
+public class ObjectCreation implements LocationInfoProvider {
 	private UMLType type;
 	private int typeArguments;
 	private String expression;
@@ -17,8 +20,10 @@ public class ObjectCreation {
 	private List<String> arguments;
 	private boolean isArray = false;
 	private volatile int hashCode = 0;
+	private LocationInfo locationInfo;
 	
-	public ObjectCreation(ClassInstanceCreation creation) {
+	public ObjectCreation(CompilationUnit cu, String filePath, ClassInstanceCreation creation) {
+		this.locationInfo = new LocationInfo(cu, filePath, creation);
 		this.type = UMLType.extractTypeObject(creation.getType().toString());
 		this.typeArguments = creation.arguments().size();
 		this.arguments = new ArrayList<String>();
@@ -34,7 +39,8 @@ public class ObjectCreation {
 		}
 	}
 
-	public ObjectCreation(ArrayCreation creation) {
+	public ObjectCreation(CompilationUnit cu, String filePath, ArrayCreation creation) {
+		this.locationInfo = new LocationInfo(cu, filePath, creation);
 		this.isArray = true;
 		this.type = UMLType.extractTypeObject(creation.getType().toString());
 		this.typeArguments = creation.dimensions().size();
@@ -104,4 +110,8 @@ public class ObjectCreation {
     	}
     	return hashCode;
     }
+
+	public LocationInfo getLocationInfo() {
+		return locationInfo;
+	}
 }

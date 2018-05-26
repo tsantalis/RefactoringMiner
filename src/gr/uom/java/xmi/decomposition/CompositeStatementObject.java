@@ -5,18 +5,23 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Statement;
+
+import gr.uom.java.xmi.LocationInfo;
 
 public class CompositeStatementObject extends AbstractStatement {
 
 	private List<AbstractStatement> statementList;
 	private List<AbstractExpression> expressionList;
 	private String type;
+	private LocationInfo locationInfo;
 
-	public CompositeStatementObject(Statement statement, int depth, String type) {
+	public CompositeStatementObject(CompilationUnit cu, String filePath, Statement statement, int depth, String type) {
 		super();
 		this.type = type;
 		this.setDepth(depth);
+		this.locationInfo = new LocationInfo(cu, filePath, statement);
 		this.statementList = new ArrayList<AbstractStatement>();
 		this.expressionList = new ArrayList<AbstractExpression>();
 	}
@@ -191,5 +196,9 @@ public class CompositeStatementObject extends AbstractStatement {
 			count += statement.statementCount();
 		}
 		return count;
+	}
+
+	public LocationInfo getLocationInfo() {
+		return locationInfo;
 	}
 }

@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
+import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.diff.StringDistance;
 
@@ -9,19 +11,22 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 
-public class OperationInvocation {
+public class OperationInvocation implements LocationInfoProvider {
 	private String methodName;
 	private int typeArguments;
 	private String expression;
 	private List<String> arguments;
 	private List<String> subExpressions = new ArrayList<String>();
 	private volatile int hashCode = 0;
+	private LocationInfo locationInfo;
 	
-	public OperationInvocation(MethodInvocation invocation) {
+	public OperationInvocation(CompilationUnit cu, String filePath, MethodInvocation invocation) {
+		this.locationInfo = new LocationInfo(cu, filePath, invocation);
 		this.methodName = invocation.getName().getIdentifier();
 		this.typeArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
@@ -64,7 +69,8 @@ public class OperationInvocation {
 		}
 	}
 
-	public OperationInvocation(SuperMethodInvocation invocation) {
+	public OperationInvocation(CompilationUnit cu, String filePath, SuperMethodInvocation invocation) {
+		this.locationInfo = new LocationInfo(cu, filePath, invocation);
 		this.methodName = invocation.getName().getIdentifier();
 		this.typeArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
@@ -193,4 +199,8 @@ public class OperationInvocation {
     	}
     	return hashCode;
     }
+
+	public LocationInfo getLocationInfo() {
+		return locationInfo;
+	}
 }

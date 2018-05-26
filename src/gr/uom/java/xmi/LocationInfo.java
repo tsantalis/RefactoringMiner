@@ -1,5 +1,8 @@
 package gr.uom.java.xmi;
 
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+
 public class LocationInfo {
 	private String filePath;
 	private int startOffset;
@@ -10,6 +13,19 @@ public class LocationInfo {
 	private int endLine;
 	private int endColumn;
 	
+	public LocationInfo(CompilationUnit cu, String filePath, ASTNode node) {
+		this.filePath = filePath;
+		this.startOffset = node.getStartPosition();
+		this.length = node.getLength();
+		this.endOffset = startOffset + length - 1;
+		
+		this.startLine = cu.getLineNumber(startOffset);
+		this.endLine = cu.getLineNumber(endOffset);
+		this.startColumn = cu.getColumnNumber(startOffset);
+		this.endColumn = cu.getColumnNumber(endOffset);
+	}
+	
+	/*
 	public LocationInfo(String fileContents, String filePath, int startOffset, int endOffset) {
 		this.filePath = filePath;
 		this.startOffset = startOffset;
@@ -46,12 +62,6 @@ public class LocationInfo {
 		return numberOfLines;
 	}
 	
-	/**
-	 * Returns the number of characters in the first n lines of the given string
-	 * @param string
-	 * @param lines
-	 * @return
-	 */
 	private int getNumberOfCharsForLines(String string, int lines) {
 		int charsBeforeLine = 0;
 		int stringLength = string.length();
@@ -69,6 +79,7 @@ public class LocationInfo {
 		}
 		return charsBeforeLine;
 	}
+	*/
 
 	public String getFilePath() {
 		return filePath;
@@ -86,9 +97,6 @@ public class LocationInfo {
 		return length;
 	}
 
-	/**
-	 * @return 0-based start line number
-	 */
 	public int getStartLine() {
 		return startLine;
 	}
@@ -97,9 +105,6 @@ public class LocationInfo {
 		return startColumn;
 	}
 
-	/**
-	 * @return 0-based end line number
-	 */
 	public int getEndLine() {
 		return endLine;
 	}

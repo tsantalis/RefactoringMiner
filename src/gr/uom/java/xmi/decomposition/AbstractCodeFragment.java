@@ -5,7 +5,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class AbstractCodeFragment {
+import gr.uom.java.xmi.LocationInfoProvider;
+
+public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	private int depth;
 	private int index;
 	private String codeFragmentAfterReplacingParametersWithArguments;

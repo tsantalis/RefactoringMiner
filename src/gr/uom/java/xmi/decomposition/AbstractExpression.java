@@ -3,11 +3,15 @@ package gr.uom.java.xmi.decomposition;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
+
+import gr.uom.java.xmi.LocationInfo;
 
 public class AbstractExpression extends AbstractCodeFragment {
 	
 	private String expression;
+	private LocationInfo locationInfo;
 	private CompositeStatementObject owner;
 	private List<String> variables;
 	private List<String> types;
@@ -18,8 +22,9 @@ public class AbstractExpression extends AbstractCodeFragment {
 	private Map<String, ObjectCreation> creationMap;
 	private List<String> infixOperators;
     
-    public AbstractExpression(Expression expression) {
-    	Visitor visitor = new Visitor();
+    public AbstractExpression(CompilationUnit cu, String filePath, Expression expression) {
+    	this.locationInfo = new LocationInfo(cu, filePath, expression);
+    	Visitor visitor = new Visitor(cu, filePath);
     	expression.accept(visitor);
 		this.variables = visitor.getVariables();
 		this.types = visitor.getTypes();
@@ -91,5 +96,9 @@ public class AbstractExpression extends AbstractCodeFragment {
 	@Override
 	public List<String> getInfixOperators() {
 		return infixOperators;
+	}
+
+	public LocationInfo getLocationInfo() {
+		return locationInfo;
 	}
 }

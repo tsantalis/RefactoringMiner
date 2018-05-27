@@ -96,21 +96,13 @@ public class OperationInvocation implements LocationInfoProvider {
 		}
 		newOperationInvocation.arguments = new ArrayList<String>();
 		for(String argument : this.arguments) {
-			if(argument.equals(oldExpression)) {
-				newOperationInvocation.arguments.add(newExpression);
-			}
-			else {
-				newOperationInvocation.arguments.add(argument);
-			}
+			newOperationInvocation.arguments.add(
+				ReplacementUtil.performReplacement(argument, oldExpression, newExpression));
 		}
 		newOperationInvocation.subExpressions = new ArrayList<String>();
 		for(String argument : this.subExpressions) {
-			if(argument.equals(oldExpression)) {
-				newOperationInvocation.subExpressions.add(newExpression);
-			}
-			else {
-				newOperationInvocation.subExpressions.add(argument);
-			}
+			newOperationInvocation.subExpressions.add(
+				ReplacementUtil.performReplacement(argument, oldExpression, newExpression));
 		}
 		return newOperationInvocation;
 	}

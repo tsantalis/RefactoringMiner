@@ -829,23 +829,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		replaceVariablesWithArgumentsInMethodInvocations(methodInvocationMap1, methodInvocations1, parameterToArgumentMap);
 		replaceVariablesWithArgumentsInMethodInvocations(methodInvocationMap2, methodInvocations2, parameterToArgumentMap);
 		
-		OperationInvocation invocationCoveringTheEntireStatement1 = null;
-		OperationInvocation invocationCoveringTheEntireStatement2 = null;
+		OperationInvocation invocationCoveringTheEntireStatement1 = statement1.invocationCoveringEntireFragment();
+		OperationInvocation invocationCoveringTheEntireStatement2 = statement2.invocationCoveringEntireFragment();
 		//remove methodInvocation covering the entire statement
-		for(String methodInvocation1 : methodInvocationMap1.keySet()) {
-			if((methodInvocation1 + ";\n").equals(statement1.getString()) || methodInvocation1.equals(statement1.getString()) ||
-					("return " + methodInvocation1 + ";\n").equals(statement1.getString()) ||
-					expressionIsTheInitializerOfVariableDeclaration(methodInvocation1, variableDeclarations1)) {
-				methodInvocations1.remove(methodInvocation1);
-				invocationCoveringTheEntireStatement1 = methodInvocationMap1.get(methodInvocation1);
+		if(invocationCoveringTheEntireStatement1 != null) {
+			for(String methodInvocation1 : methodInvocationMap1.keySet()) {
+				if(invocationCoveringTheEntireStatement1.getLocationInfo().equals(methodInvocationMap1.get(methodInvocation1).getLocationInfo())) {
+					methodInvocations1.remove(methodInvocation1);
+				}
 			}
 		}
-		for(String methodInvocation2 : methodInvocationMap2.keySet()) {
-			if((methodInvocation2 + ";\n").equals(statement2.getString()) || methodInvocation2.equals(statement2.getString()) ||
-					("return " + methodInvocation2 + ";\n").equals(statement2.getString()) ||
-					expressionIsTheInitializerOfVariableDeclaration(methodInvocation2, variableDeclarations2)) {
-				methodInvocations2.remove(methodInvocation2);
-				invocationCoveringTheEntireStatement2 = methodInvocationMap2.get(methodInvocation2);
+		if(invocationCoveringTheEntireStatement2 != null) {
+			for(String methodInvocation2 : methodInvocationMap2.keySet()) {
+				if(invocationCoveringTheEntireStatement2.getLocationInfo().equals(methodInvocationMap2.get(methodInvocation2).getLocationInfo())) {
+					methodInvocations2.remove(methodInvocation2);
+				}
 			}
 		}
 		Set<String> methodInvocationIntersection = new LinkedHashSet<String>(methodInvocations1);
@@ -1329,21 +1327,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return true;
 	}
 
-	private boolean expressionIsTheInitializerOfVariableDeclaration(String expression, List<VariableDeclaration> variableDeclarations) {
-		if(variableDeclarations.size() == 1 && variableDeclarations.get(0).getInitializer() != null) {
-			String initializer = variableDeclarations.get(0).getInitializer();
-			if(initializer.equals(expression))
-				return true;
-			if(initializer.startsWith("(")) {
-				//ignore casting
-				String initializerWithoutCasting = initializer.substring(initializer.indexOf(")")+1,initializer.length());
-				if(initializerWithoutCasting.equals(expression))
-					return true;
-			}
-		}
-		return false;
-	}
-
 	private boolean equalsIgnoringExtraParenthesis(String s1, String s2) {
 		if(s1.equals(s2))
 			return true;
@@ -1491,6 +1474,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	@Override
 	public int compareTo(UMLOperationBodyMapper operationBodyMapper) {
+		int thisCallChainIntersectionSum = 0;
+		for(AbstractCodeMapping mapping : this.mappings) {
+			if(mapping instanceof LeafMapping) {
+				thisCallChainIntersectionSum += ((LeafMapping)mapping).callChainIntersection().size();
+			}
+		}
+		int otherCallChainIntersectionSum = 0;
+		for(AbstractCodeMapping mapping : operationBodyMapper.mappings) {
+			if(mapping instanceof LeafMapping) {
+				otherCallChainIntersectionSum += ((LeafMapping)mapping).callChainIntersection().size();
+			}
+		}
+		if(thisCallChainIntersectionSum != otherCallChainIntersectionSum) {
+			return -Integer.compare(thisCallChainIntersectionSum, otherCallChainIntersectionSum);
+		}
 		int thisMappings = this.mappingsWithoutBlocks();
 		int otherMappings = operationBodyMapper.mappingsWithoutBlocks();
 		if(thisMappings != otherMappings) {

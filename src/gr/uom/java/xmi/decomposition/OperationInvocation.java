@@ -139,14 +139,44 @@ public class OperationInvocation implements LocationInfoProvider {
     	if(other.expression != null && other.expression.startsWith("new ") && this.expression == null)
     		return false;
     	if(this.subExpressions.size() > 1 || other.subExpressions.size() > 1) {
-    		Set<String> intersection = new LinkedHashSet<String>(this.subExpressions);
-    		intersection.retainAll(other.subExpressions);
+    		Set<String> intersection = subExpressionIntersection(other);
     		int thisUnmatchedSubExpressions = this.subExpressions.size() - intersection.size();
     		int otherUnmatchedSubExpressions = other.subExpressions.size() - intersection.size();
     		if(thisUnmatchedSubExpressions > intersection.size() || otherUnmatchedSubExpressions > intersection.size())
     			return false;
     	}
     	return true;
+    }
+
+    public Set<String> callChainIntersection(OperationInvocation other) {
+    	Set<String> s1 = new LinkedHashSet<String>(this.subExpressions);
+    	s1.add(this.actualString());
+    	Set<String> s2 = new LinkedHashSet<String>(other.subExpressions);
+    	s1.add(other.actualString());
+
+    	Set<String> intersection = new LinkedHashSet<String>(s1);
+    	intersection.retainAll(s2);
+    	return intersection;
+    }
+
+    private String actualString() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append(methodName);
+    	sb.append("(");
+    	int size = arguments.size();
+    	if(size > 0) {
+    		for(int i=0; i<size-1; i++)
+    			sb.append(arguments.get(i)).append(",");
+    		sb.append(arguments.get(size-1));
+    	}
+    	sb.append(")");
+    	return sb.toString();
+    }
+
+    private Set<String> subExpressionIntersection(OperationInvocation other) {
+    	Set<String> intersection = new LinkedHashSet<String>(this.subExpressions);
+    	intersection.retainAll(other.subExpressions);
+    	return intersection;
     }
 
 	public double normalizedNameDistance(OperationInvocation invocation) {

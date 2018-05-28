@@ -4159,7 +4159,7 @@
         "description": "Rename Method protected createGraph(em EncodingManager, is3D boolean) : LevelGraph renamed to protected createGHStorage(em EncodingManager, is3D boolean) : GraphHopperStorage in class com.graphhopper.routing.ch.DijkstraBidirectionCHTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Rename Method",
@@ -4764,15 +4764,8 @@
         "description": "Rename Method public combineCxxPreprocessorInput(params BuildRuleParams, cxxPlatform CxxPlatform, preprocessorFlags ImmutableMultimap<CxxSource.Type,String>, prefixHeaders ImmutableList<SourcePath>, headerSymlinkTrees ImmutableList<SymlinkTree>, frameworkSearchPaths ImmutableList<Path>, cxxPreprocessorInputFromDeps Iterable<CxxPreprocessorInput>) : CxxPreprocessorInput renamed to public collectCxxPreprocessorInput(params BuildRuleParams, cxxPlatform CxxPlatform, preprocessorFlags ImmutableMultimap<CxxSource.Type,String>, prefixHeaders ImmutableList<SourcePath>, headerSymlinkTrees ImmutableList<SymlinkTree>, frameworkSearchPaths ImmutableList<Path>, cxxPreprocessorInputFromDeps Iterable<CxxPreprocessorInput>) : ImmutableList<CxxPreprocessorInput> in class com.facebook.buck.cxx.CxxDescriptionEnhancer",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Rename Method",
-        "description": "Rename Method public combineCxxPreprocessorInput(params BuildRuleParams, cxxPlatform CxxPlatform, preprocessorFlags ImmutableMultimap, prefixHeaders ImmutableList, headerSymlinkTrees ImmutableList, frameworkSearchPaths ImmutableList, cxxPreprocessorInputFromDeps Iterable) : CxxPreprocessorInput renamed to public collectCxxPreprocessorInput(params BuildRuleParams, cxxPlatform CxxPlatform, preprocessorFlags ImmutableMultimap, prefixHeaders ImmutableList, headerSymlinkTrees ImmutableList, frameworkSearchPaths ImmutableList, cxxPreprocessorInputFromDeps Iterable) : ImmutableList in class com.facebook.buck.cxx.CxxDescriptionEnhancer",
-        "comment": null,
-        "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": "Matin"
+        "validators": null
     }],
     "refDiffExecutionTime": 3919
 }, {
@@ -6522,6 +6515,496 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh"
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getDNGData() : CGImagePropertyDNGData in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public hasAlphaChannel() : boolean in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getMakerPentaxData() : CFDictionary in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public getOverflowServiceUUIDs() : NSArray in class org.robovm.apple.corebluetooth.CBAdvertisementData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public isAllowingDuplicates() : boolean in class org.robovm.apple.corebluetooth.CBCentralManagerScanOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getIPTCData() : CGImagePropertyIPTCData in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getRawData() : CFDictionary in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getICCProfile() : String in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public isShowingPowerAlert() : boolean in class org.robovm.apple.corebluetooth.CBPeripheralManagerOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public getPeripherals() : NSArray in class org.robovm.apple.corebluetooth.CBCentralManagerRestoredState",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getPNGData() : CGImagePropertyPNGData in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public isConnectable() : boolean in class org.robovm.apple.corebluetooth.CBAdvertisementData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public isNotifyingOnNotification() : boolean in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getGIFData() : CGImagePropertyGIFData in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public getSolicitedServiceUUIDs() : NSArray in class org.robovm.apple.corebluetooth.CBAdvertisementData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getMakerOlympusData() : CFDictionary in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getExifData() : CGImagePropertyExifData in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public getSolicitedServiceUUIDs() : NSArray in class org.robovm.apple.corebluetooth.CBCentralManagerScanOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public get8BIMData() : CGImageProperty8BIMData in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public isMergingMetadata() : boolean in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getDPIHeight() : long in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public getRestoreIdentifier() : String in class org.robovm.apple.corebluetooth.CBCentralManagerOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getDateTime() : String in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public getLocalName() : String in class org.robovm.apple.corebluetooth.CBAdvertisementData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getMakerFujiData() : CFDictionary in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getPixelHeight() : long in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getBackgroundColor() : CGColor in class org.robovm.apple.imageio.CGImageDestinationProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getLossyCompressionQuality() : double in class org.robovm.apple.imageio.CGImageDestinationProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public shouldCreateThumbnailFromImageIfAbsent() : boolean in class org.robovm.apple.imageio.CGImageSourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public getScanOptions() : CBCentralManagerScanOptions in class org.robovm.apple.corebluetooth.CBCentralManagerRestoredState",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public isEmbeddingThumbnail() : boolean in class org.robovm.apple.imageio.CGImageDestinationProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public shouldAllowFloat() : boolean in class org.robovm.apple.imageio.CGImageSourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public getAdvertisementData() : CBAdvertisementData in class org.robovm.apple.corebluetooth.CBPeripheralManagerRestoredState",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public getTxPowerLevel() : double in class org.robovm.apple.corebluetooth.CBAdvertisementData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public isShowingPowerAlert() : boolean in class org.robovm.apple.corebluetooth.CBCentralManagerOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getMaxPixelSize() : long in class org.robovm.apple.imageio.CGImageDestinationProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public shouldCreateThumbnailWithTransform() : boolean in class org.robovm.apple.imageio.CGImageSourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getDepth() : int in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getGPSData() : CGImagePropertyGPSData in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public isNotifyingOnConnection() : boolean in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getMakerCanonData() : CGImagePropertyCanonData in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getDPIWidth() : long in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public shouldExcludeXMP() : boolean in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public shouldCacheImmediately() : boolean in class org.robovm.apple.imageio.CGImageSourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public getServices() : NSArray in class org.robovm.apple.corebluetooth.CBPeripheralManagerRestoredState",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getThumbnailMaxPixelSize() : long in class org.robovm.apple.imageio.CGImageSourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public getScanServices() : NSArray in class org.robovm.apple.corebluetooth.CBCentralManagerRestoredState",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public isContainingFloatingPointPixels() : boolean in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getCIFFData() : CGImagePropertyCIFFData in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getMetadata() : CGImageMetadata in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public getManufacturerData() : NSData in class org.robovm.apple.corebluetooth.CBAdvertisementData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getTIFFData() : CGImagePropertyTIFFData in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getTypeIdentifierHint() : String in class org.robovm.apple.imageio.CGImageSourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public getServiceUUIDs() : NSArray in class org.robovm.apple.corebluetooth.CBAdvertisementData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public isNotifyingOnDisconnection() : boolean in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getMakerMinoltaData() : CFDictionary in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getPixelWidth() : long in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getExifAuxData() : CGImagePropertyExifAuxData in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getJFIFData() : CGImagePropertyJFIFData in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public isIndexed() : boolean in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getColorModel() : CGImagePropertyColorModel in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key NSString) : NSObject extracted from public getRestoreIdentifier() : String in class org.robovm.apple.corebluetooth.CBPeripheralManagerOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getFileSize() : long in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public shouldExcludeGPS() : boolean in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public shouldCache() : boolean in class org.robovm.apple.imageio.CGImageSourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getOrientation() : CGImagePropertyOrientation in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getMakerNikonData() : CGImagePropertyNikonData in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public isEnumeratingRecursively() : boolean in class org.robovm.apple.imageio.CGImageMetadataEnumerationOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CFString, type Class) : T extracted from public getOrientation() : CGImagePropertyOrientation in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public get(key CGImagePropertyIPTC, type Class) : T extracted from public getContactInfo() : CGImagePropertyIPTCContactInfoData in class org.robovm.apple.imageio.CGImagePropertyIPTCData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 11040
 }, {
@@ -6696,6 +7179,34 @@
     }, {
         "type": "Extract Superclass",
         "description": "Extract Superclass integration.BaseRestTestHelper from class integration.BaseRestTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public getServerUrl() : URL renamed to private getDefaultServerUrl() : URL in class integration.util.graylog.GraylogControl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public containsAllKeys(keys String[]) : ResponseAwareMatcher from class integration.BaseRestTest to public containsAllKeys(keys String[]) : ResponseAwareMatcher from class integration.BaseRestTestHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected jsonResourceForMethod() : byte[] from class integration.BaseRestTest to protected jsonResourceForMethod() : byte[] from class integration.BaseRestTestHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected jsonResource(relativeFileName String) : byte[] from class integration.BaseRestTest to protected jsonResource(relativeFileName String) : byte[] from class integration.BaseRestTestHelper",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -9088,7 +9599,7 @@
         "description": "Extract Method private notifySynchronizeMailboxFailed(account Account, localFolder Folder, exception Exception) : void extracted from public sendPendingMessagesSynchronous(account Account) : void in class com.fsck.k9.controller.MessagingController",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }],
     "refDiffExecutionTime": 1503
@@ -9660,7 +10171,7 @@
         "description": "Extract Method private foldExprShortcut(desc ExprNodeDesc, constants Map<ColumnInfo,ExprNodeDesc>, cppCtx ConstantPropagateProcCtx, op Operator<? extends Serializable>, tag int, propagate boolean) : ExprNodeDesc extracted from private foldExpr(desc ExprNodeDesc, constants Map<ColumnInfo,ExprNodeDesc>, cppCtx ConstantPropagateProcCtx, op Operator<? extends Serializable>, tag int, propagate boolean) : ExprNodeDesc in class org.apache.hadoop.hive.ql.optimizer.ConstantPropagateProcFactory",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh"
     }],
     "refDiffExecutionTime": 10064
@@ -11323,7 +11834,7 @@
         "description": "Extract Method public getPathToResources(target BuildTarget) : Path extracted from protected ReactNativeBundle(ruleParams BuildRuleParams, resolver SourcePathResolver, entryPath SourcePath, isDevMode boolean, bundleName String, jsPackager SourcePath, platform ReactNativePlatform, depsFinder ReactNativeDeps) in class com.facebook.buck.js.ReactNativeBundle",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }],
     "refDiffExecutionTime": 3024
@@ -22318,7 +22829,7 @@
         "description": "Extract Method private fetchRemoteData() : void extracted from public onCreate(savedInstanceState Bundle) : void in class org.wordpress.android.ui.prefs.SiteSettingsFragment",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }],
     "refDiffExecutionTime": 1235
@@ -26895,13 +27406,6 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
-    }, {
-        "type": "Extract And Move Method",
-        "description": "Extract And Move Method package getStatsCache() : StatsCache extracted from public get_aggr_stats_for(dbName String, tblName String, partNames List<String>, colNames List<String>) : AggrStats in class org.apache.hadoop.hive.metastore.hbase.HBaseStore & moved to class org.apache.hadoop.hive.metastore.hbase.HBaseReadWrite",
-        "comment": "<p>added</p><p>To be checked with Nikos</p>",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Davood"
     }],
     "refDiffExecutionTime": 55783
 }, {
@@ -30177,8 +30681,8 @@
         "type": "Rename Method",
         "description": "Rename Method private createObservable() : Observable<Void> renamed to private createOnUnsubscribe() : Action0 in class rx.observables.BlockingObservableTest.InterruptionTests",
         "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
         "validators": null
     }, {
         "type": "Extract Method",
@@ -30186,6 +30690,20 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private createObservable() : Observable<Void> renamed to private createNeverObservable() : Observable<Void> in class rx.observables.BlockingObservableTest.InterruptionTests",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private createOnUnsubscribe() : Action0 extracted from private createObservable() : Observable<Void> in class rx.observables.BlockingObservableTest.InterruptionTests",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 1615
@@ -31279,6 +31797,13 @@
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Davood"
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private getCurrentColumnFamilyStore() : ColumnFamilyStore extracted from public testTriggerMinorCompaction() : void in class org.apache.cassandra.db.compaction.CompactionsCQLTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3975
 }, {

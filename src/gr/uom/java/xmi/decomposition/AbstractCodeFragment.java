@@ -87,4 +87,49 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		}
 		return false;
 	}
+
+	public OperationInvocation invocationCoveringEntireFragment() {
+		Map<String, OperationInvocation> methodInvocationMap = getMethodInvocationMap();
+		String statement = getString();
+		for(String methodInvocation : methodInvocationMap.keySet()) {
+			if((methodInvocation + ";\n").equals(statement) || methodInvocation.equals(statement) ||
+					("return " + methodInvocation + ";\n").equals(statement) ||
+					isCastExpressionCoveringEntireFragment(methodInvocation) ||
+					expressionIsTheInitializerOfVariableDeclaration(methodInvocation)) {
+				return methodInvocationMap.get(methodInvocation);
+			}
+		}
+		return null;
+	}
+
+	private boolean isCastExpressionCoveringEntireFragment(String expression) {
+		String statement = getString();
+		int index = statement.indexOf(expression + ";\n");
+		if(index != -1) {
+			String prefix = statement.substring(0, index);
+			if(prefix.contains("(") && prefix.contains(")")) {
+				String casting = prefix.substring(prefix.indexOf("("), prefix.indexOf(")")+1);
+				if(("return " + casting + expression + ";\n").equals(statement)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean expressionIsTheInitializerOfVariableDeclaration(String expression) {
+		List<VariableDeclaration> variableDeclarations = getVariableDeclarations();
+		if(variableDeclarations.size() == 1 && variableDeclarations.get(0).getInitializer() != null) {
+			String initializer = variableDeclarations.get(0).getInitializer();
+			if(initializer.equals(expression))
+				return true;
+			if(initializer.startsWith("(")) {
+				//ignore casting
+				String initializerWithoutCasting = initializer.substring(initializer.indexOf(")")+1,initializer.length());
+				if(initializerWithoutCasting.equals(expression))
+					return true;
+			}
+		}
+		return false;
+	}
 }

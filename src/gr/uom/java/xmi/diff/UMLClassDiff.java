@@ -746,7 +746,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 									extractOperationRefactoring = new ExtractOperationRefactoring(operationBodyMapper, mapper.getOperation2());
 								}
 								else {
-									extractOperationRefactoring = new ExtractOperationRefactoring(addedOperation, mapper.getOperation1(), mapper.getOperation2());
+									extractOperationRefactoring = new ExtractOperationRefactoring(operationBodyMapper, addedOperation, mapper.getOperation1(), mapper.getOperation2());
 								}
 								refactorings.add(extractOperationRefactoring);
 								mapper.addAdditionalMapper(operationBodyMapper);

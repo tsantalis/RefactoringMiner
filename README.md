@@ -130,6 +130,28 @@ List<Refactoring> refactorings = modelDiff.getRefactorings();
 Note that by doing this you may get different results from the git history analysis, because
 the latter uses information from git to better identify moves and renames.
 
+## Location information for the detected refactorings ##
+All classes implementing the `Refactoring` interface include refactoring-specific location information.
+For example, `ExtractOperationRefactoring` offers the following methods:
+
+`getSourceOperationCodeRangeBeforeExtraction()` : Returns the code range of the source method in the **parent** commit
+
+`getSourceOperationCodeRangeAfterExtraction()` : Returns the code range of the source method in the **child** commit
+
+`getExtractedOperationCodeRange()` : Returns the code range of the extracted method in the **child** commit
+
+`getExtractedCodeRangeFromSourceOperation()` : Returns the code range of the extracted code fragment from the source method in the **parent** commit
+
+`getExtractedOperationInvocationCodeRange()` : Returns the code range of the invocation to the extracted method inside the source method in the **child** commit
+
+Each method returns a `CodeRange` object including the following properties:
+```java
+String filePath
+int startLine
+int endLine
+int startColumn
+int endColumn
+```
 
 ## Running from the command line ##
 

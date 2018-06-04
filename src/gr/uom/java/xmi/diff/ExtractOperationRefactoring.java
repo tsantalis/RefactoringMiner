@@ -10,6 +10,7 @@ import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
@@ -17,13 +18,15 @@ public class ExtractOperationRefactoring implements Refactoring {
 	private UMLOperation extractedOperation;
 	private UMLOperation sourceOperationBeforeExtraction;
 	private UMLOperation sourceOperationAfterExtraction;
+	private OperationInvocation extractedOperationInvocation;
 	private Set<Replacement> replacements;
 	private Set<AbstractCodeFragment> extractedCodeFragments;
 
-	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper, UMLOperation sourceOperationAfterExtraction) {
+	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper, UMLOperation sourceOperationAfterExtraction, OperationInvocation operationInvocation) {
 		this.extractedOperation = bodyMapper.getOperation2();
 		this.sourceOperationBeforeExtraction = bodyMapper.getOperation1();
 		this.sourceOperationAfterExtraction = sourceOperationAfterExtraction;
+		this.extractedOperationInvocation = operationInvocation;
 		this.replacements = bodyMapper.getReplacements();
 		this.extractedCodeFragments = new LinkedHashSet<AbstractCodeFragment>();
 		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
@@ -31,10 +34,12 @@ public class ExtractOperationRefactoring implements Refactoring {
 		}
 	}
 
-	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper, UMLOperation extractedOperation, UMLOperation sourceOperationBeforeExtraction, UMLOperation sourceOperationAfterExtraction) {
+	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper, UMLOperation extractedOperation,
+			UMLOperation sourceOperationBeforeExtraction, UMLOperation sourceOperationAfterExtraction, OperationInvocation operationInvocation) {
 		this.extractedOperation = extractedOperation;
 		this.sourceOperationBeforeExtraction = sourceOperationBeforeExtraction;
 		this.sourceOperationAfterExtraction = sourceOperationAfterExtraction;
+		this.extractedOperationInvocation = operationInvocation;
 		this.replacements = bodyMapper.getReplacements();
 		this.extractedCodeFragments = new LinkedHashSet<AbstractCodeFragment>();
 		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
@@ -69,6 +74,10 @@ public class ExtractOperationRefactoring implements Refactoring {
 		return sourceOperationAfterExtraction;
 	}
 
+	public OperationInvocation getExtractedOperationInvocation() {
+		return extractedOperationInvocation;
+	}
+
 	public Set<Replacement> getReplacements() {
 		return replacements;
 	}
@@ -91,9 +100,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 
 	private CodeRange codeRange(UMLOperation operation) {
 		LocationInfo info = operation.getLocationInfo();
-		return new CodeRange(info.getFilePath(),
-				info.getStartLine(), info.getEndLine(),
-				info.getStartColumn(), info.getEndColumn());
+		return codeRange(info);
 	}
 
 	public CodeRange getExtractedCodeRangeFromSourceOperation() {
@@ -116,6 +123,17 @@ public class ExtractOperationRefactoring implements Refactoring {
 			}
 		}
 		return new CodeRange(filePath, minStartLine, maxEndLine, startColumn, endColumn);
+	}
+
+	public CodeRange getExtractedOperationInvocationCodeRange() {
+		LocationInfo info = extractedOperationInvocation.getLocationInfo();
+		return codeRange(info);
+	}
+
+	private CodeRange codeRange(LocationInfo info) {
+		return new CodeRange(info.getFilePath(),
+				info.getStartLine(), info.getEndLine(),
+				info.getStartColumn(), info.getEndColumn());
 	}
 
 	public String getName() {

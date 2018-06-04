@@ -743,10 +743,11 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 									(mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2()))) {
 								ExtractOperationRefactoring extractOperationRefactoring = null;
 								if(delegateMethod == null) {
-									extractOperationRefactoring = new ExtractOperationRefactoring(operationBodyMapper, mapper.getOperation2());
+									extractOperationRefactoring = new ExtractOperationRefactoring(operationBodyMapper, mapper.getOperation2(), addedOperationInvocation);
 								}
 								else {
-									extractOperationRefactoring = new ExtractOperationRefactoring(operationBodyMapper, addedOperation, mapper.getOperation1(), mapper.getOperation2());
+									extractOperationRefactoring = new ExtractOperationRefactoring(operationBodyMapper, addedOperation,
+											mapper.getOperation1(), mapper.getOperation2(), addedOperationInvocation);
 								}
 								refactorings.add(extractOperationRefactoring);
 								mapper.addAdditionalMapper(operationBodyMapper);

@@ -134,15 +134,11 @@ the latter uses information from git to better identify moves and renames.
 All classes implementing the `Refactoring` interface include refactoring-specific location information.
 For example, `ExtractOperationRefactoring` offers the following methods:
 
-`getSourceOperationCodeRangeBeforeExtraction()` : Returns the code range of the source method in the **parent** commit
-
-`getSourceOperationCodeRangeAfterExtraction()` : Returns the code range of the source method in the **child** commit
-
-`getExtractedOperationCodeRange()` : Returns the code range of the extracted method in the **child** commit
-
-`getExtractedCodeRangeFromSourceOperation()` : Returns the code range of the extracted code fragment from the source method in the **parent** commit
-
-`getExtractedOperationInvocationCodeRange()` : Returns the code range of the invocation to the extracted method inside the source method in the **child** commit
+1. `getSourceOperationCodeRangeBeforeExtraction()` : Returns the code range of the source method in the **parent** commit
+2. `getSourceOperationCodeRangeAfterExtraction()` : Returns the code range of the source method in the **child** commit
+3. `getExtractedOperationCodeRange()` : Returns the code range of the extracted method in the **child** commit
+4. `getExtractedCodeRangeFromSourceOperation()` : Returns the code range of the extracted code fragment from the source method in the **parent** commit
+5. `getExtractedOperationInvocationCodeRange()` : Returns the code range of the invocation to the extracted method inside the source method in the **child** commit
 
 Each method returns a `CodeRange` object including the following properties:
 ```java

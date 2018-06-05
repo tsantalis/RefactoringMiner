@@ -87,20 +87,15 @@ public class ExtractOperationRefactoring implements Refactoring {
 	}
 
 	public CodeRange getSourceOperationCodeRangeBeforeExtraction() {
-		return codeRange(sourceOperationBeforeExtraction);
+		return sourceOperationBeforeExtraction.codeRange();
 	}
 
 	public CodeRange getSourceOperationCodeRangeAfterExtraction() {
-		return codeRange(sourceOperationAfterExtraction);
+		return sourceOperationAfterExtraction.codeRange();
 	}
 
 	public CodeRange getExtractedOperationCodeRange() {
-		return codeRange(extractedOperation);
-	}
-
-	private CodeRange codeRange(UMLOperation operation) {
-		LocationInfo info = operation.getLocationInfo();
-		return codeRange(info);
+		return extractedOperation.codeRange();
 	}
 
 	public CodeRange getExtractedCodeRangeFromSourceOperation() {
@@ -127,13 +122,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 
 	public CodeRange getExtractedOperationInvocationCodeRange() {
 		LocationInfo info = extractedOperationInvocation.getLocationInfo();
-		return codeRange(info);
-	}
-
-	private CodeRange codeRange(LocationInfo info) {
-		return new CodeRange(info.getFilePath(),
-				info.getStartLine(), info.getEndLine(),
-				info.getStartColumn(), info.getEndColumn());
+		return info.codeRange();
 	}
 
 	public String getName() {

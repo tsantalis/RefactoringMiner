@@ -3,6 +3,8 @@ package gr.uom.java.xmi;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
+import gr.uom.java.xmi.diff.CodeRange;
+
 public class LocationInfo {
 	private String filePath;
 	private int startOffset;
@@ -65,5 +67,11 @@ public class LocationInfo {
 
 	public int getEndColumn() {
 		return endColumn;
+	}
+
+	public CodeRange codeRange() {
+		return new CodeRange(getFilePath(),
+				getStartLine(), getEndLine(),
+				getStartColumn(), getEndColumn());
 	}
 }

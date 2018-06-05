@@ -676,7 +676,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 						operationBodyMapper.getMappings();
 						int mappings = operationBodyMapper.mappingsWithoutBlocks();
 						if(mappings > 0 && (mappings > operationBodyMapper.nonMappedElementsT1() || operationBodyMapper.exactMatches() > 0)) {
-							InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getOperation1());
+							InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getOperation1(), removedOperationInvocation);
 							refactorings.add(inlineOperationRefactoring);
 							mapper.addAdditionalMapper(operationBodyMapper);
 							operationsToBeRemoved.add(removedOperation);

@@ -275,7 +275,10 @@ public class UMLModelDiff {
 			   UMLClass addedClass = addedClassIterator.next();
 			   String removedClassSourceFile = removedClass.getSourceFile();
 			   String renamedFile =  renamedFileHints.get(removedClassSourceFile);
-			   String removedClassSourceFolder = removedClassSourceFile.substring(0, removedClassSourceFile.lastIndexOf("/")).replaceAll("/", UMLModelASTReader.systemFileSeparator);
+			   String removedClassSourceFolder = "";
+			   if(removedClassSourceFile.contains("/")) {
+				   removedClassSourceFolder = removedClassSourceFile.substring(0, removedClassSourceFile.lastIndexOf("/")).replaceAll("/", UMLModelASTReader.systemFileSeparator);
+			   }
 			   String removedFileFolderPathAsString = projectRoot + File.separator + removedClassSourceFolder;
 			   File removedFileFolderPath = new File(removedFileFolderPathAsString);
 			   if(!removedFileFolderPath.exists()) {
@@ -641,8 +644,14 @@ public class UMLModelDiff {
 		   
 		   String originalPath = originalClass.getSourceFile();
 		   String movedPath = movedClass.getSourceFile();
-		   String originalPathPrefix = originalPath.substring(0, originalPath.lastIndexOf('/'));
-		   String movedPathPrefix = movedPath.substring(0, movedPath.lastIndexOf('/'));
+		   String originalPathPrefix = "";
+		   if(originalPath.contains("/")) {
+			   originalPathPrefix = originalPath.substring(0, originalPath.lastIndexOf('/'));
+		   }
+		   String movedPathPrefix = "";
+		   if(movedPath.contains("/")) {
+			   movedPathPrefix = movedPath.substring(0, movedPath.lastIndexOf('/'));
+		   }
 		   
 		   if (!originalName.equals(movedName)) {
 			   MoveClassRefactoring refactoring = new MoveClassRefactoring(originalName, movedName);

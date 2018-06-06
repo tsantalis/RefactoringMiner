@@ -209,7 +209,7 @@ public class OperationInvocation extends AbstractCall {
     	return hashCode;
     }
 
-	public boolean identicalNames(AbstractCall call) {
+	public boolean identicalName(AbstractCall call) {
 		return getMethodName().equals(((OperationInvocation)call).getMethodName());
 	}
 }

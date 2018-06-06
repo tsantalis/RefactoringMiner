@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -28,6 +29,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 	}
 
 	public abstract boolean identicalName(AbstractCall call);
+	public abstract double normalizedNameDistance(AbstractCall call);
 
 	public boolean identicalExpression(AbstractCall call, Set<Replacement> replacements) {
 		return identicalExpression(call) ||
@@ -116,10 +118,45 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return replacedArguments > 0 && replacedArguments == arguments1.size();
 	}
 
+	public boolean renamedWithIdenticalExpressionAndArguments(AbstractCall call, Set<Replacement> replacements) {
+		return getExpression() != null && call.getExpression() != null &&
+				identicalExpression(call, replacements) &&
+				!identicalName(call) &&
+				equalArguments(call);
+	}
+
+	public boolean renamedWithIdenticalArgumentsAndNoExpression(AbstractCall call, double distance) {
+		return getExpression() == null && call.getExpression() == null &&
+				!identicalName(call) &&
+				normalizedNameDistance(call) <= distance &&
+				equalArguments(call);
+	}
+
+	public boolean renamedWithIdenticalExpressionAndDifferentNumberOfArguments(AbstractCall call, Set<String> set1, Set<String> set2, Set<Replacement> replacements, double distance) {
+		return getExpression() != null && call.getExpression() != null &&
+				identicalExpression(call, replacements) &&
+				normalizedNameDistance(call) <= distance &&
+				!identicalArguments(call, set1, set2) &&
+				getArguments().size() != call.getArguments().size();
+	}
+
+	public boolean onlyArgumentsChanged(AbstractCall call, Set<String> set1, Set<String> set2, Set<Replacement> replacements) {
+		return identicalExpression(call, replacements) &&
+				identicalName(call) &&
+				!identicalArguments(call, set1, set2) &&
+				getArguments().size() != call.getArguments().size();
+	}
+
 	public boolean identical(AbstractCall call,
 			Set<String> set1, Set<String> set2, Set<Replacement> replacements) {
 		return identicalExpression(call, replacements) &&
 				identicalName(call) &&
 				identicalArguments(call, set1, set2);
+	}
+
+	public Set<String> argumentIntersection(AbstractCall call) {
+		Set<String> argumentIntersection = new LinkedHashSet<String>(getArguments());
+		argumentIntersection.retainAll(call.getArguments());
+		return argumentIntersection;
 	}
 }

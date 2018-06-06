@@ -27,20 +27,20 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return locationInfo;
 	}
 
-	public abstract boolean identicalNames(AbstractCall call);
+	public abstract boolean identicalName(AbstractCall call);
 
-	public boolean identicalExpressions(AbstractCall call, Set<Replacement> replacements) {
-		return identicalExpressions(call) ||
-		identicalExpressionsAfterTypeReplacements(call, replacements);
+	public boolean identicalExpression(AbstractCall call, Set<Replacement> replacements) {
+		return identicalExpression(call) ||
+		identicalExpressionAfterTypeReplacements(call, replacements);
 	}
 
-	public boolean identicalExpressions(AbstractCall call) {
+	public boolean identicalExpression(AbstractCall call) {
 		return (getExpression() != null && call.getExpression() != null &&
 				getExpression().equals(call.getExpression())) ||
 				(getExpression() == null && call.getExpression() == null);
 	}
 
-	public boolean identicalExpressionsAfterTypeReplacements(AbstractCall call, Set<Replacement> replacements) {
+	public boolean identicalExpressionAfterTypeReplacements(AbstractCall call, Set<Replacement> replacements) {
 		if(getExpression() != null && call.getExpression() != null) {
 			String expression1 = getExpression();
 			String expression2 = call.getExpression();
@@ -114,5 +114,12 @@ public abstract class AbstractCall implements LocationInfoProvider {
 			}
 		}
 		return replacedArguments > 0 && replacedArguments == arguments1.size();
+	}
+
+	public boolean identical(AbstractCall call,
+			Set<String> set1, Set<String> set2, Set<Replacement> replacements) {
+		return identicalExpression(call, replacements) &&
+				identicalName(call) &&
+				identicalArguments(call, set1, set2);
 	}
 }

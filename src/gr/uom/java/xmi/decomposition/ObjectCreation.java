@@ -98,7 +98,7 @@ public class ObjectCreation extends AbstractCall {
     	return hashCode;
     }
 
-	public boolean identicalNames(AbstractCall call) {
+	public boolean identicalName(AbstractCall call) {
 		return getType().equals(((ObjectCreation)call).getType());
 	}
 }

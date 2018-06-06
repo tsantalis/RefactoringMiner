@@ -19,12 +19,19 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return expression;
 	}
 
-    public List<String> getArguments() {
+	public List<String> getArguments() {
 		return arguments;
 	}
 
 	public LocationInfo getLocationInfo() {
 		return locationInfo;
+	}
+
+	public abstract boolean identicalNames(AbstractCall call);
+
+	public boolean identicalExpressions(AbstractCall call, Set<Replacement> replacements) {
+		return identicalExpressions(call) ||
+		identicalExpressionsAfterTypeReplacements(call, replacements);
 	}
 
 	public boolean identicalExpressions(AbstractCall call) {
@@ -48,6 +55,10 @@ public abstract class AbstractCall implements LocationInfoProvider {
 			}
 		}
 		return false;
+	}
+
+	public boolean equalArguments(AbstractCall call) {
+		return getArguments().equals(call.getArguments());
 	}
 
 	public boolean identicalArguments(AbstractCall call, Set<String> set1, Set<String> set2) {

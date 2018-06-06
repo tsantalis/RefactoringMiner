@@ -1,7 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
 import gr.uom.java.xmi.LocationInfo;
-import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.diff.StringDistance;
 
@@ -16,14 +15,10 @@ import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 
-public class OperationInvocation implements LocationInfoProvider {
+public class OperationInvocation extends AbstractCall {
 	private String methodName;
-	private int typeArguments;
-	private String expression;
-	private List<String> arguments;
 	private List<String> subExpressions = new ArrayList<String>();
 	private volatile int hashCode = 0;
-	private LocationInfo locationInfo;
 	
 	public OperationInvocation(CompilationUnit cu, String filePath, MethodInvocation invocation) {
 		this.locationInfo = new LocationInfo(cu, filePath, invocation);
@@ -109,14 +104,6 @@ public class OperationInvocation implements LocationInfoProvider {
 
     public String getMethodName() {
 		return methodName;
-	}
-
-	public String getExpression() {
-		return expression;
-	}
-
-    public List<String> getArguments() {
-		return arguments;
 	}
 
     public int numberOfSubExpressions() {
@@ -221,8 +208,4 @@ public class OperationInvocation implements LocationInfoProvider {
     	}
     	return hashCode;
     }
-
-	public LocationInfo getLocationInfo() {
-		return locationInfo;
-	}
 }

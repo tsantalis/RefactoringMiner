@@ -9,18 +9,13 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 
 import gr.uom.java.xmi.LocationInfo;
-import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLType;
 
-public class ObjectCreation implements LocationInfoProvider {
+public class ObjectCreation extends AbstractCall {
 	private UMLType type;
-	private int typeArguments;
-	private String expression;
 	private String anonymousClassDeclaration;
-	private List<String> arguments;
 	private boolean isArray = false;
 	private volatile int hashCode = 0;
-	private LocationInfo locationInfo;
 	
 	public ObjectCreation(CompilationUnit cu, String filePath, ClassInstanceCreation creation) {
 		this.locationInfo = new LocationInfo(cu, filePath, creation);
@@ -56,14 +51,6 @@ public class ObjectCreation implements LocationInfoProvider {
 
 	public UMLType getType() {
 		return type;
-	}
-
-	public String getExpression() {
-		return expression;
-	}
-
-    public List<String> getArguments() {
-		return arguments;
 	}
 
 	public boolean isArray() {
@@ -110,8 +97,4 @@ public class ObjectCreation implements LocationInfoProvider {
     	}
     	return hashCode;
     }
-
-	public LocationInfo getLocationInfo() {
-		return locationInfo;
-	}
 }

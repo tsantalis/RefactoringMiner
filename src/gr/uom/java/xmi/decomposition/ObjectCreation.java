@@ -97,4 +97,8 @@ public class ObjectCreation extends AbstractCall {
     	}
     	return hashCode;
     }
+
+	public boolean identicalNames(AbstractCall call) {
+		return getType().equals(((ObjectCreation)call).getType());
+	}
 }

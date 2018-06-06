@@ -1043,19 +1043,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//method invocation is identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				(invocationsWithIdenticalExpressions(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
-				invocationsWithIdenticalExpressionsAfterTypeReplacements(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) &&
+				(invocationCoveringTheEntireStatement1.identicalExpressions(invocationCoveringTheEntireStatement2) ||
+				invocationCoveringTheEntireStatement1.identicalExpressionsAfterTypeReplacements(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) &&
 				invocationCoveringTheEntireStatement1.getMethodName().equals(invocationCoveringTheEntireStatement2.getMethodName()) &&
-				identicalArguments(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, variablesAndMethodInvocations1, variablesAndMethodInvocations2)) {
+				invocationCoveringTheEntireStatement1.identicalArguments(invocationCoveringTheEntireStatement2, variablesAndMethodInvocations1, variablesAndMethodInvocations2)) {
 			return replacementInfo.getReplacements();
 		}
 		//method invocation is identical if arguments are replaced
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				(invocationsWithIdenticalExpressions(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
-				invocationsWithIdenticalExpressionsAfterTypeReplacements(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) &&
+				(invocationCoveringTheEntireStatement1.identicalExpressions(invocationCoveringTheEntireStatement2) ||
+				invocationCoveringTheEntireStatement1.identicalExpressionsAfterTypeReplacements(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) &&
 				invocationCoveringTheEntireStatement1.getMethodName().equals(invocationCoveringTheEntireStatement2.getMethodName()) ) {
 			for(OperationInvocation invocation2 : methodInvocationMap2.values()) {
-				if(identicalOrReplacedArguments(invocationCoveringTheEntireStatement1, invocation2, replacementInfo.getReplacements())) {
+				if(invocationCoveringTheEntireStatement1.identicalOrReplacedArguments(invocation2, replacementInfo.getReplacements())) {
 					return replacementInfo.getReplacements();
 				}
 			}
@@ -1063,8 +1063,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		//method invocation has been renamed but the expression and arguments are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() != null &&
-				(invocationsWithIdenticalExpressions(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
-				invocationsWithIdenticalExpressionsAfterTypeReplacements(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) &&
+				(invocationCoveringTheEntireStatement1.identicalExpressions(invocationCoveringTheEntireStatement2) ||
+				invocationCoveringTheEntireStatement1.identicalExpressionsAfterTypeReplacements(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) &&
 				!invocationCoveringTheEntireStatement1.getMethodName().equals(invocationCoveringTheEntireStatement2.getMethodName()) &&
 				invocationCoveringTheEntireStatement1.getArguments().equals(invocationCoveringTheEntireStatement2.getArguments())) {
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getMethodName(),
@@ -1086,10 +1086,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		//method invocation has been renamed and arguments changed, but the expressions are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() != null &&
-				(invocationsWithIdenticalExpressions(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
-				invocationsWithIdenticalExpressionsAfterTypeReplacements(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) &&
+				(invocationCoveringTheEntireStatement1.identicalExpressions(invocationCoveringTheEntireStatement2) ||
+				invocationCoveringTheEntireStatement1.identicalExpressionsAfterTypeReplacements(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) &&
 				invocationCoveringTheEntireStatement1.normalizedNameDistance(invocationCoveringTheEntireStatement2) <= UMLClassDiff.MAX_OPERATION_NAME_DISTANCE &&
-				!identicalArguments(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, variablesAndMethodInvocations1, variablesAndMethodInvocations2) &&
+				!invocationCoveringTheEntireStatement1.identicalArguments(invocationCoveringTheEntireStatement2, variablesAndMethodInvocations1, variablesAndMethodInvocations2) &&
 				invocationCoveringTheEntireStatement1.getArguments().size() != invocationCoveringTheEntireStatement2.getArguments().size()) {
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getMethodName(),
 					invocationCoveringTheEntireStatement2.getMethodName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT);
@@ -1098,10 +1098,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//method invocation has only changes in the arguments
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				(invocationsWithIdenticalExpressions(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
-				invocationsWithIdenticalExpressionsAfterTypeReplacements(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) &&
+				(invocationCoveringTheEntireStatement1.identicalExpressions(invocationCoveringTheEntireStatement2) ||
+				invocationCoveringTheEntireStatement1.identicalExpressionsAfterTypeReplacements(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) &&
 				invocationCoveringTheEntireStatement1.getMethodName().equals(invocationCoveringTheEntireStatement2.getMethodName()) &&
-				!identicalArguments(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, variablesAndMethodInvocations1, variablesAndMethodInvocations2) &&
+				!invocationCoveringTheEntireStatement1.identicalArguments(invocationCoveringTheEntireStatement2, variablesAndMethodInvocations1, variablesAndMethodInvocations2) &&
 				invocationCoveringTheEntireStatement1.getArguments().size() != invocationCoveringTheEntireStatement2.getArguments().size()) {
 			Set<String> argumentIntersection = new LinkedHashSet<String>(invocationCoveringTheEntireStatement1.getArguments());
 			argumentIntersection.retainAll(invocationCoveringTheEntireStatement2.getArguments());
@@ -1115,10 +1115,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(!methodInvocations1.isEmpty() && invocationCoveringTheEntireStatement2 != null) {
 			for(String methodInvocation1 : methodInvocations1) {
 				OperationInvocation operationInvocation1 = methodInvocationMap1.get(methodInvocation1);
-				if((invocationsWithIdenticalExpressions(operationInvocation1, invocationCoveringTheEntireStatement2) ||
-					invocationsWithIdenticalExpressionsAfterTypeReplacements(operationInvocation1, invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) &&
+				if((operationInvocation1.identicalExpressions(invocationCoveringTheEntireStatement2) ||
+					operationInvocation1.identicalExpressionsAfterTypeReplacements(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) &&
 						operationInvocation1.getMethodName().equals(invocationCoveringTheEntireStatement2.getMethodName()) &&
-						!identicalArguments(operationInvocation1, invocationCoveringTheEntireStatement2, variablesAndMethodInvocations1, variablesAndMethodInvocations2) &&
+						!operationInvocation1.identicalArguments(invocationCoveringTheEntireStatement2, variablesAndMethodInvocations1, variablesAndMethodInvocations2) &&
 						operationInvocation1.getArguments().size() != invocationCoveringTheEntireStatement2.getArguments().size()) {
 					Set<String> argumentIntersection = new LinkedHashSet<String>(operationInvocation1.getArguments());
 					argumentIntersection.retainAll(invocationCoveringTheEntireStatement2.getArguments());
@@ -1138,7 +1138,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				!invocationCoveringTheEntireStatement1.getMethodName().equals(invocationCoveringTheEntireStatement2.getMethodName()) &&
 				s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).equals(s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"))) &&
 				s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).length() > 0 &&
-				!allArgumentsReplaced(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
+				!invocationCoveringTheEntireStatement1.allArgumentsReplaced(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getMethodName(),
 					invocationCoveringTheEntireStatement2.getMethodName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
 			replacementInfo.addReplacement(replacement);
@@ -1290,43 +1290,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	private boolean identicalOrReplacedArguments(OperationInvocation invocationCoveringTheEntireStatement1, OperationInvocation invocationCoveringTheEntireStatement2,
-			Set<Replacement> replacements) {
-		List<String> arguments1 = invocationCoveringTheEntireStatement1.getArguments();
-		List<String> arguments2 = invocationCoveringTheEntireStatement2.getArguments();
-		if(arguments1.size() != arguments2.size())
-			return false;
-		for(int i=0; i<arguments1.size(); i++) {
-			String argument1 = arguments1.get(i);
-			String argument2 = arguments2.get(i);
-			boolean argumentReplacement = false;
-			for(Replacement replacement : replacements) {
-				if(replacement.getBefore().equals(argument1) &&	replacement.getAfter().equals(argument2)) {
-					argumentReplacement = true;
-					break;
-				}
-			}
-			if(!argument1.equals(argument2) && !argumentReplacement)
-				return false;
-		}
-		return true;
-	}
-
-	private boolean identicalArguments(OperationInvocation invocationCoveringTheEntireStatement1, OperationInvocation invocationCoveringTheEntireStatement2,
-			Set<String> variablesAndMethodInvocations1, Set<String> variablesAndMethodInvocations2) {
-		List<String> arguments1 = invocationCoveringTheEntireStatement1.getArguments();
-		List<String> arguments2 = invocationCoveringTheEntireStatement2.getArguments();
-		if(arguments1.size() != arguments2.size())
-			return false;
-		for(int i=0; i<arguments1.size(); i++) {
-			String argument1 = arguments1.get(i);
-			String argument2 = arguments2.get(i);
-			if(!argument1.equals(argument2) && !variablesAndMethodInvocations1.contains(argument2) && !variablesAndMethodInvocations2.contains(argument1))
-				return false;
-		}
-		return true;
-	}
-
 	private boolean equalsIgnoringExtraParenthesis(String s1, String s2) {
 		if(s1.equals(s2))
 			return true;
@@ -1363,45 +1326,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private boolean containsMethodInvocationReplacement(Set<Replacement> replacements) {
 		for(Replacement replacement : replacements) {
 			if(replacement instanceof MethodInvocationReplacement) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean allArgumentsReplaced(OperationInvocation invocation1, OperationInvocation invocation2, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
-		int replacedArguments = 0;
-		for(int i=0; i<invocation1.getArguments().size(); i++) {
-			String argument1 = invocation1.getArguments().get(i);
-			String argument2 = invocation2.getArguments().get(i);
-			for(Replacement replacement : replacements) {
-				if( (replacement.getBefore().equals(argument1) || replacement.getBefore().equals(parameterToArgumentMap.get(argument1))) &&
-						(replacement.getAfter().equals(argument2) || replacement.getAfter().equals(parameterToArgumentMap.get(argument2))) ) {
-					replacedArguments++;
-					break;
-				}
-			}
-		}
-		return replacedArguments > 0 && replacedArguments == invocation1.getArguments().size();
-	}
-
-	private boolean invocationsWithIdenticalExpressions(OperationInvocation invocation1, OperationInvocation invocation2) {
-		return (invocation1.getExpression() != null && invocation2.getExpression() != null &&
-				invocation1.getExpression().equals(invocation2.getExpression())) ||
-				(invocation1.getExpression() == null && invocation2.getExpression() == null);
-	}
-
-	private boolean invocationsWithIdenticalExpressionsAfterTypeReplacements(OperationInvocation invocation1, OperationInvocation invocation2, Set<Replacement> replacements) {
-		if(invocation1.getExpression() != null && invocation2.getExpression() != null) {
-			String invocationExpression1 = invocation1.getExpression();
-			String invocationExpression2 = invocation2.getExpression();
-			String invocationExpression1AfterReplacements = new String(invocationExpression1);
-			for(Replacement replacement : replacements) {
-				if(replacement.getType().equals(ReplacementType.TYPE)) {
-					invocationExpression1AfterReplacements = ReplacementUtil.performReplacement(invocationExpression1AfterReplacements, replacement.getBefore(), replacement.getAfter());
-				}
-			}
-			if(invocationExpression1AfterReplacements.equals(invocationExpression2)) {
 				return true;
 			}
 		}

@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import gr.uom.java.xmi.LocationInfoProvider;
+import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
 
 public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	private int depth;
@@ -88,15 +89,47 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return false;
 	}
 
+	public ObjectCreation creationCoveringEntireFragment() {
+		Map<String, ObjectCreation> creationMap = getCreationMap();
+		String statement = getString();
+		for(String objectCreation : creationMap.keySet()) {
+			ObjectCreation creation = creationMap.get(objectCreation);
+			if((objectCreation + ";\n").equals(statement) || objectCreation.equals(statement)) {
+				creation.coverage = StatementCoverageType.ONLY_CALL;
+				return creation;
+			}
+			else if(("return " + objectCreation + ";\n").equals(statement)) {
+				creation.coverage = StatementCoverageType.RETURN_CALL;
+				return creation;
+			}
+			else if(("throw " + objectCreation + ";\n").equals(statement)) {
+				creation.coverage = StatementCoverageType.THROW_CALL;
+				return creation;
+			}
+		}
+		return null;
+	}
+
 	public OperationInvocation invocationCoveringEntireFragment() {
 		Map<String, OperationInvocation> methodInvocationMap = getMethodInvocationMap();
 		String statement = getString();
 		for(String methodInvocation : methodInvocationMap.keySet()) {
-			if((methodInvocation + ";\n").equals(statement) || methodInvocation.equals(statement) ||
-					("return " + methodInvocation + ";\n").equals(statement) ||
-					isCastExpressionCoveringEntireFragment(methodInvocation) ||
-					expressionIsTheInitializerOfVariableDeclaration(methodInvocation)) {
-				return methodInvocationMap.get(methodInvocation);
+			OperationInvocation invocation = methodInvocationMap.get(methodInvocation);
+			if((methodInvocation + ";\n").equals(statement) || methodInvocation.equals(statement)) {
+				invocation.coverage = StatementCoverageType.ONLY_CALL;
+				return invocation;
+			}
+			else if(("return " + methodInvocation + ";\n").equals(statement)) {
+				invocation.coverage = StatementCoverageType.RETURN_CALL;
+				return invocation;
+			}
+			else if(isCastExpressionCoveringEntireFragment(methodInvocation)) {
+				invocation.coverage = StatementCoverageType.CAST_CALL;
+				return invocation;
+			}
+			else if(expressionIsTheInitializerOfVariableDeclaration(methodInvocation)) {
+				invocation.coverage = StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL;
+				return invocation;
 			}
 		}
 		return null;

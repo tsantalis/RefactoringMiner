@@ -872,28 +872,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Map<String, ObjectCreation> creationMap2 = statement2.getCreationMap();
 		Set<String> creations1 = new LinkedHashSet<String>(creationMap1.keySet());
 		Set<String> creations2 = new LinkedHashSet<String>(creationMap2.keySet());
-		ObjectCreation creationCoveringTheEntireStatement1 = null;
-		ObjectCreation creationCoveringTheEntireStatement2 = null;
+		ObjectCreation creationCoveringTheEntireStatement1 = statement1.creationCoveringEntireFragment();
+		ObjectCreation creationCoveringTheEntireStatement2 = statement2.creationCoveringEntireFragment();
 		//remove objectCreation covering the entire statement
 		for(String objectCreation1 : creationMap1.keySet()) {
-			if((objectCreation1 + ";\n").equals(statement1.getString()) || objectCreation1.equals(statement1.getString()) ||
-					("return " + objectCreation1 + ";\n").equals(statement1.getString()) ||
-					("throw " + objectCreation1 + ";\n").equals(statement1.getString())) {
+			ObjectCreation creation1 = creationMap1.get(objectCreation1);
+			if(creationCoveringTheEntireStatement1 != null && 
+					creationCoveringTheEntireStatement1.getLocationInfo().equals(creation1.getLocationInfo())) {
 				creations1.remove(objectCreation1);
-				creationCoveringTheEntireStatement1 = creationMap1.get(objectCreation1);
 			}
-			if(creationMap1.get(objectCreation1).getAnonymousClassDeclaration() != null) {
+			if(creation1.getAnonymousClassDeclaration() != null) {
 				creations1.remove(objectCreation1);
 			}
 		}
 		for(String objectCreation2 : creationMap2.keySet()) {
-			if((objectCreation2 + ";\n").equals(statement2.getString()) || objectCreation2.equals(statement2.getString()) ||
-					("return " + objectCreation2 + ";\n").equals(statement2.getString()) ||
-					("throw " + objectCreation2 + ";\n").equals(statement2.getString())) {
+			ObjectCreation creation2 = creationMap2.get(objectCreation2);
+			if(creationCoveringTheEntireStatement2 != null &&
+					creationCoveringTheEntireStatement2.getLocationInfo().equals(creation2.getLocationInfo())) {
 				creations2.remove(objectCreation2);
-				creationCoveringTheEntireStatement2 = creationMap2.get(objectCreation2);
 			}
-			if(creationMap2.get(objectCreation2).getAnonymousClassDeclaration() != null) {
+			if(creation2.getAnonymousClassDeclaration() != null) {
 				creations2.remove(objectCreation2);
 			}
 		}
@@ -1109,6 +1107,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				(invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() == null ||
 				invocationCoveringTheEntireStatement1.getExpression() == null && invocationCoveringTheEntireStatement2.getExpression() != null) &&
+				//invocationCoveringTheEntireStatement1.getCoverage().equals(invocationCoveringTheEntireStatement2.getCoverage()) &&
 				!invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2) &&
 				s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).equals(s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"))) &&
 				s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).length() > 0 &&

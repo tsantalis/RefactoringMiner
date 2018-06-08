@@ -15,6 +15,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 	protected String expression;
 	protected List<String> arguments;
 	protected LocationInfo locationInfo;
+	protected StatementCoverageType coverage = StatementCoverageType.NONE;
 
 	public String getExpression() {
 		return expression;
@@ -26,6 +27,10 @@ public abstract class AbstractCall implements LocationInfoProvider {
 
 	public LocationInfo getLocationInfo() {
 		return locationInfo;
+	}
+
+	public StatementCoverageType getCoverage() {
+		return coverage;
 	}
 
 	public abstract boolean identicalName(AbstractCall call);
@@ -158,5 +163,9 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		Set<String> argumentIntersection = new LinkedHashSet<String>(getArguments());
 		argumentIntersection.retainAll(call.getArguments());
 		return argumentIntersection;
+	}
+
+	public enum StatementCoverageType {
+		NONE, ONLY_CALL, RETURN_CALL, THROW_CALL, CAST_CALL, VARIABLE_DECLARATION_INITIALIZER_CALL;
 	}
 }

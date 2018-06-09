@@ -7392,13 +7392,6 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Inline Method",
-        "description": "Inline Method private removeExistingUserManagedMetrics(metrics List<Metric>) : List<Metric> inlined to package getPluginMetrics() : List<Metric> in class org.sonar.server.startup.RegisterMetrics",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
         "type": "Rename Method",
         "description": "Rename Method public shouldSaveIfNew() : void renamed to public insert_new_metrics() : void in class org.sonar.server.startup.RegisterMetricsTest",
         "comment": null,
@@ -15994,13 +15987,6 @@
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
-        "type": "Rename Method",
-        "description": "Rename Method public uniquenessConstraint(labelId int, propertyKeyId int) : UniquenessConstraintRule renamed to private propertyConstraint(type Class<Rule>, labelId int, propertyKeyId int) : Rule in class org.neo4j.kernel.impl.store.SchemaStorage",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public label() : int from class org.neo4j.kernel.api.constraints.UniquenessConstraint to public label() : int from class org.neo4j.kernel.api.constraints.PropertyConstraint",
         "comment": null,
@@ -16074,8 +16060,8 @@
         "type": "Extract Method",
         "description": "Extract Method private propertyConstraint(type Class, labelId int, propertyKeyId int) : Rule extracted from public uniquenessConstraint(labelId int, propertyKeyId int) : UniquenessConstraintRule in class org.neo4j.kernel.impl.store.SchemaStorage",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Superclass",
@@ -18691,13 +18677,6 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
-    }, {
-        "type": "Rename Method",
-        "description": "Rename Method protected lookupCacheSeconds(urlPath String) : CacheControl renamed to protected lookupCacheControl(urlPath String) : CacheControl in class org.springframework.web.servlet.mvc.WebContentInterceptor",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Rename Method",
@@ -26199,48 +26178,6 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin"
-    }, {
-        "type": "Extract Method",
-        "description": "Extract Method package rawPrint(c int) : void extracted from public redrawLine() : void in class jline.console.ConsoleReader",
-        "comment": "new",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Laleh"
-    }, {
-        "type": "Extract Method",
-        "description": "Extract Method package rawPrint(c int) : void extracted from private drawBuffer(clear int) : void in class jline.console.ConsoleReader",
-        "comment": "new",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Laleh"
-    }, {
-        "type": "Extract Method",
-        "description": "Extract Method package rawPrint(c int) : void extracted from public beep() : void in class jline.console.ConsoleReader",
-        "comment": "new",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Laleh"
-    }, {
-        "type": "Extract Method",
-        "description": "Extract Method package rawPrint(c int) : void extracted from private printAnsiSequence(sequence String) : void in class jline.console.ConsoleReader",
-        "comment": "new",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Laleh"
-    }, {
-        "type": "Extract Method",
-        "description": "Extract Method package rawPrint(c int) : void extracted from public println() : void in class jline.console.ConsoleReader",
-        "comment": "new",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Laleh"
-    }, {
-        "type": "Extract Method",
-        "description": "Extract Method package rawPrint(str String) : void extracted from private drawBuffer(clear int) : void in class jline.console.ConsoleReader",
-        "comment": "new",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Laleh"
     }],
     "refDiffExecutionTime": 460
 }, {

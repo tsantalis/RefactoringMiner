@@ -1103,20 +1103,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		//check if the argument lists are identical after replacements
-		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				(invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() == null ||
-				invocationCoveringTheEntireStatement1.getExpression() == null && invocationCoveringTheEntireStatement2.getExpression() != null) &&
-				//invocationCoveringTheEntireStatement1.getCoverage().equals(invocationCoveringTheEntireStatement2.getCoverage()) &&
-				!invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2) &&
-				s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).equals(s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"))) &&
-				s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).length() > 0 &&
-				!invocationCoveringTheEntireStatement1.allArgumentsReplaced(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
-			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getMethodName(),
-					invocationCoveringTheEntireStatement2.getMethodName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
-			replacementInfo.addReplacement(replacement);
-			return replacementInfo.getReplacements();
-		}
 		//check if the argument of the method call in the first statement is returned in the second statement
 		if(invocationCoveringTheEntireStatement1 != null && replacementInfo.getArgumentizedString2().startsWith("return ") &&
 				invocationCoveringTheEntireStatement1.getArguments().size() == 1 &&

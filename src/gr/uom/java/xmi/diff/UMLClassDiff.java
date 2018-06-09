@@ -8,6 +8,7 @@ import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
+import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 
@@ -359,7 +360,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 
 	private void updateMapperSet(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperation removedOperation, UMLOperation addedOperation, int differenceInPosition) {
 		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
-		operationBodyMapper.getMappings();
+		List<AbstractCodeMapping> totalMappings = operationBodyMapper.getMappings();
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
 		if(mappings > 0) {
 			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
@@ -379,6 +380,14 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 			else if(mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper) &&
 					absoluteDifferenceInPosition <= differenceInPosition &&
 					isPartOfMethodInlined(removedOperation, addedOperation)) {
+				mapperSet.add(operationBodyMapper);
+			}
+		}
+		if(totalMappings.size() > 0) {
+			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
+			if(singleUnmatchedStatementCallsAddedOperation(operationBodyMapper) &&
+					absoluteDifferenceInPosition <= differenceInPosition &&
+					compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition)) {
 				mapperSet.add(operationBodyMapper);
 			}
 		}
@@ -513,7 +522,28 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 		}
 		return false;
 	}
-	
+
+	private boolean singleUnmatchedStatementCallsAddedOperation(UMLOperationBodyMapper operationBodyMapper) {
+		List<StatementObject> nonMappedLeavesT1 = operationBodyMapper.getNonMappedLeavesT1();
+		List<StatementObject> nonMappedLeavesT2 = operationBodyMapper.getNonMappedLeavesT2();
+		if(nonMappedLeavesT1.size() == 1 && nonMappedLeavesT2.size() == 1) {
+			StatementObject statementT2 = nonMappedLeavesT2.get(0);
+			OperationInvocation invocationT2 = statementT2.invocationCoveringEntireFragment();
+			if(invocationT2 != null) {
+				for(UMLOperation addedOperation : addedOperations) {
+					if(invocationT2.matchesOperation(addedOperation)) {
+						StatementObject statementT1 = nonMappedLeavesT1.get(0);
+						OperationInvocation invocationT1 = statementT1.invocationCoveringEntireFragment();
+						if(invocationT1 != null && addedOperation.getAllOperationInvocations().contains(invocationT1)) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	private boolean isPartOfMethodExtracted(UMLOperation removedOperation, UMLOperation addedOperation) {
 		Set<OperationInvocation> removedOperationInvocations = removedOperation.getAllOperationInvocations();
 		Set<OperationInvocation> addedOperationInvocations = addedOperation.getAllOperationInvocations();

@@ -1040,9 +1040,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		//method invocation is identical
-		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.identical(invocationCoveringTheEntireStatement2, variablesAndMethodInvocations1, variablesAndMethodInvocations2, replacementInfo.getReplacements())) {
-			return replacementInfo.getReplacements();
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
+			for(OperationInvocation invocation1 : methodInvocationMap1.values()) {
+				if(invocation1.identical(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
+					return replacementInfo.getReplacements();
+				}
+			}
 		}
 		//method invocation is identical if arguments are replaced
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
@@ -1072,7 +1075,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//method invocation has been renamed and arguments changed, but the expressions are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, variablesAndMethodInvocations1, variablesAndMethodInvocations2, replacementInfo.getReplacements(), UMLClassDiff.MAX_OPERATION_NAME_DISTANCE)) {
+				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), UMLClassDiff.MAX_OPERATION_NAME_DISTANCE)) {
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getMethodName(),
 					invocationCoveringTheEntireStatement2.getMethodName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT);
 			replacementInfo.addReplacement(replacement);
@@ -1080,7 +1083,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//method invocation has only changes in the arguments
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.onlyArgumentsChanged(invocationCoveringTheEntireStatement2, variablesAndMethodInvocations1, variablesAndMethodInvocations2, replacementInfo.getReplacements())) {
+				invocationCoveringTheEntireStatement1.onlyArgumentsChanged(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
 			Set<String> argumentIntersection = invocationCoveringTheEntireStatement1.argumentIntersection(invocationCoveringTheEntireStatement2);
 			if(!argumentIntersection.isEmpty() || invocationCoveringTheEntireStatement1.getArguments().size() == 0 || invocationCoveringTheEntireStatement2.getArguments().size() == 0) {
 				Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getMethodName(),
@@ -1092,7 +1095,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(!methodInvocations1.isEmpty() && invocationCoveringTheEntireStatement2 != null) {
 			for(String methodInvocation1 : methodInvocations1) {
 				OperationInvocation operationInvocation1 = methodInvocationMap1.get(methodInvocation1);
-				if(operationInvocation1.onlyArgumentsChanged(invocationCoveringTheEntireStatement2, variablesAndMethodInvocations1, variablesAndMethodInvocations2, replacementInfo.getReplacements())) {
+				if(operationInvocation1.onlyArgumentsChanged(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
 					Set<String> argumentIntersection = operationInvocation1.argumentIntersection(invocationCoveringTheEntireStatement2);
 					if(!argumentIntersection.isEmpty() || operationInvocation1.getArguments().size() == 0 || invocationCoveringTheEntireStatement2.getArguments().size() == 0) {
 						Replacement replacement = new MethodInvocationReplacement(operationInvocation1.getMethodName(),
@@ -1104,37 +1107,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		//check if the argument of the method call in the first statement is returned in the second statement
-		if(invocationCoveringTheEntireStatement1 != null && replacementInfo.getArgumentizedString2().startsWith("return ") &&
-				invocationCoveringTheEntireStatement1.getArguments().size() == 1 &&
-				//length()-2 to remove ";\n" from the end of the return statement, 7 to remove the prefix "return "
-				equalsIgnoringExtraParenthesis(invocationCoveringTheEntireStatement1.getArguments().get(0), replacementInfo.getArgumentizedString2().substring(7, replacementInfo.getArgumentizedString2().length()-2))) {
-			Replacement replacement = new Replacement(invocationCoveringTheEntireStatement1.getArguments().get(0),
-					replacementInfo.getArgumentizedString2().substring(7, replacementInfo.getArgumentizedString2().length()-2), ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
-			replacementInfo.addReplacement(replacement);
+		Replacement r;
+		if(invocationCoveringTheEntireStatement1 != null && (r = invocationCoveringTheEntireStatement1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {
+			replacementInfo.addReplacement(r);
 			return replacementInfo.getReplacements();
 		}
-		if(!methodInvocations1.isEmpty() && replacementInfo.getArgumentizedString2().startsWith("return ")) {
-			for(String methodInvocation1 : methodInvocations1) {
-				OperationInvocation operationInvocation1 = methodInvocationMap1.get(methodInvocation1);
-				if(statement1.getString().endsWith(methodInvocation1 + ";\n") && operationInvocation1.getArguments().size() == 1 &&
-						//length()-2 to remove ";\n" from the end of the return statement, 7 to remove the prefix "return "
-						equalsIgnoringExtraParenthesis(operationInvocation1.getArguments().get(0), replacementInfo.getArgumentizedString2().substring(7, replacementInfo.getArgumentizedString2().length()-2))) {
-					Replacement replacement = new Replacement(operationInvocation1.getArguments().get(0),
-							replacementInfo.getArgumentizedString2().substring(7, replacementInfo.getArgumentizedString2().length()-2), ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
-					replacementInfo.addReplacement(replacement);
-					return replacementInfo.getReplacements();
-				}
+		for(String methodInvocation1 : methodInvocations1) {
+			OperationInvocation operationInvocation1 = methodInvocationMap1.get(methodInvocation1);
+			if(statement1.getString().endsWith(methodInvocation1 + ";\n") && (r = operationInvocation1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {
+				replacementInfo.addReplacement(r);
+				return replacementInfo.getReplacements();
 			}
 		}
 		//check if the argument of the method call in the second statement is the right hand side of an assignment in the first statement
-		if(invocationCoveringTheEntireStatement2 != null && invocationCoveringTheEntireStatement2.getArguments().size() == 1 &&
-				replacementInfo.getArgumentizedString1().contains("=") && replacementInfo.getArgumentizedString1().endsWith(";\n") &&
-				//length()-2 to remove ";\n" from the end of the assignment statement, indexOf("=")+1 to remove the left hand side of the assignment
-				equalsIgnoringExtraParenthesis(invocationCoveringTheEntireStatement2.getArguments().get(0), replacementInfo.getArgumentizedString1().substring(replacementInfo.getArgumentizedString1().indexOf("=")+1, replacementInfo.getArgumentizedString1().length()-2)) &&
+		if(invocationCoveringTheEntireStatement2 != null &&
+				(r = invocationCoveringTheEntireStatement2.makeReplacementForAssignedArgument(replacementInfo.getArgumentizedString1())) != null &&
 				methodInvocationMap1.containsKey(invocationCoveringTheEntireStatement2.getArguments().get(0))) {
-			Replacement replacement = new Replacement(replacementInfo.getArgumentizedString1().substring(replacementInfo.getArgumentizedString1().indexOf("=")+1, replacementInfo.getArgumentizedString1().length()-2),
-					invocationCoveringTheEntireStatement2.getArguments().get(0), ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION);
-			replacementInfo.addReplacement(replacement);
+			replacementInfo.addReplacement(r);
 			return replacementInfo.getReplacements();
 		}
 		//check if the method call in the second statement is the expression of the method invocation in the first statement
@@ -1247,18 +1236,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-	}
-
-	private boolean equalsIgnoringExtraParenthesis(String s1, String s2) {
-		if(s1.equals(s2))
-			return true;
-		String parenthesizedS1 = "("+s1+")";
-		if(parenthesizedS1.equals(s2))
-			return true;
-		String parenthesizedS2 = "("+s2+")";
-		if(parenthesizedS2.equals(s1))
-			return true;
-		return false;
 	}
 
 	private Replacement variableReplacementWithinMethodInvocations(String s1, String s2, Set<String> variables1, Set<String> variables2) {

@@ -68,20 +68,6 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return getArguments().equals(call.getArguments());
 	}
 
-	public boolean identicalArguments(AbstractCall call, Set<String> set1, Set<String> set2) {
-		List<String> arguments1 = getArguments();
-		List<String> arguments2 = call.getArguments();
-		if(arguments1.size() != arguments2.size())
-			return false;
-		for(int i=0; i<arguments1.size(); i++) {
-			String argument1 = arguments1.get(i);
-			String argument2 = arguments2.get(i);
-			if(!argument1.equals(argument2) && !set1.contains(argument2) && !set2.contains(argument1))
-				return false;
-		}
-		return true;
-	}
-
 	public boolean identicalOrReplacedArguments(AbstractCall call, Set<Replacement> replacements) {
 		List<String> arguments1 = getArguments();
 		List<String> arguments2 = call.getArguments();
@@ -137,32 +123,71 @@ public abstract class AbstractCall implements LocationInfoProvider {
 				equalArguments(call);
 	}
 
-	public boolean renamedWithIdenticalExpressionAndDifferentNumberOfArguments(AbstractCall call, Set<String> set1, Set<String> set2, Set<Replacement> replacements, double distance) {
+	public boolean renamedWithIdenticalExpressionAndDifferentNumberOfArguments(AbstractCall call, Set<Replacement> replacements, double distance) {
 		return getExpression() != null && call.getExpression() != null &&
 				identicalExpression(call, replacements) &&
 				normalizedNameDistance(call) <= distance &&
-				!identicalArguments(call, set1, set2) &&
+				!equalArguments(call) &&
 				getArguments().size() != call.getArguments().size();
 	}
 
-	public boolean onlyArgumentsChanged(AbstractCall call, Set<String> set1, Set<String> set2, Set<Replacement> replacements) {
+	public boolean onlyArgumentsChanged(AbstractCall call, Set<Replacement> replacements) {
 		return identicalExpression(call, replacements) &&
 				identicalName(call) &&
-				!identicalArguments(call, set1, set2) &&
+				!equalArguments(call) &&
 				getArguments().size() != call.getArguments().size();
 	}
 
-	public boolean identical(AbstractCall call,
-			Set<String> set1, Set<String> set2, Set<Replacement> replacements) {
+	public boolean identical(AbstractCall call, Set<Replacement> replacements) {
 		return identicalExpression(call, replacements) &&
 				identicalName(call) &&
-				identicalArguments(call, set1, set2);
+				equalArguments(call);
 	}
 
 	public Set<String> argumentIntersection(AbstractCall call) {
 		Set<String> argumentIntersection = new LinkedHashSet<String>(getArguments());
 		argumentIntersection.retainAll(call.getArguments());
 		return argumentIntersection;
+	}
+
+	private boolean argumentIsReturned(String statement) {
+		return statement.startsWith("return ") && getArguments().size() == 1 &&
+				//length()-2 to remove ";\n" from the end of the return statement, 7 to remove the prefix "return "
+				equalsIgnoringExtraParenthesis(getArguments().get(0), statement.substring(7, statement.length()-2));
+	}
+
+	public Replacement makeReplacementForReturnedArgument(String statement) {
+		if(argumentIsReturned(statement)) {
+			return new Replacement(getArguments().get(0), statement.substring(7, statement.length()-2),
+					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
+		}
+		return null;
+	}
+
+	private boolean argumentIsAssigned(String statement) {
+		return getArguments().size() == 1 && statement.contains("=") && statement.endsWith(";\n") &&
+				//length()-2 to remove ";\n" from the end of the assignment statement, indexOf("=")+1 to remove the left hand side of the assignment
+				equalsIgnoringExtraParenthesis(getArguments().get(0), statement.substring(statement.indexOf("=")+1, statement.length()-2));
+	}
+
+	public Replacement makeReplacementForAssignedArgument(String statement) {
+		if(argumentIsAssigned(statement)) {
+			return new Replacement(statement.substring(statement.indexOf("=")+1, statement.length()-2),
+					getArguments().get(0), ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION);
+		}
+		return null;
+	}
+
+	private static boolean equalsIgnoringExtraParenthesis(String s1, String s2) {
+		if(s1.equals(s2))
+			return true;
+		String parenthesizedS1 = "("+s1+")";
+		if(parenthesizedS1.equals(s2))
+			return true;
+		String parenthesizedS2 = "("+s2+")";
+		if(parenthesizedS2.equals(s1))
+			return true;
+		return false;
 	}
 
 	public enum StatementCoverageType {

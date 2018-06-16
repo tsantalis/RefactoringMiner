@@ -1,6 +1,9 @@
 package org.refactoringminer.test;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -28,7 +31,7 @@ public class RefactoringPopulator {
 	public enum Refactorings {
 		MoveMethod(1), MoveAttribute(2), InlineMethod(4), ExtractMethod(8), PushDownMethod(16), PushDownAttribute(
 				32), PullUpMethod(64), PullUpAttribute(128), ExtractInterface(256), ExtractSuperclass(512), MoveClass(
-						1024), RenamePackage(2048), RenameMethod(4096), ExtractAndMoveMethod(
+						1024), ChangePackage(2048), RenameMethod(4096), ExtractAndMoveMethod(
 								8192), RenameClass(16384), MoveSourceFolder(32768), All(65535);
 		private int value;
 
@@ -51,9 +54,9 @@ public class RefactoringPopulator {
 
 	private static void prepareFSERefactorings(TestBuilder test, int flag)
 			throws JsonParseException, JsonMappingException, IOException {
-		List<Root> refactorings = getFSERefactorings(flag);
-
-		for (Root root : refactorings) {
+		List<Root> roots = getFSERefactorings(flag);
+		
+		for (Root root : roots) {
 			test.project(root.repository, "master").atCommit(root.sha1)
 					.containsOnly(extractRefactorings(root.refactorings));
 		}
@@ -76,6 +79,24 @@ public class RefactoringPopulator {
 		return refactorings;
 	}
 
+	private static List<String> getDeletedCommits() {
+		List<String> deletedCommits = new ArrayList<String>();
+		String file = System.getProperty("user.dir") + "/src-test/Data/deleted_commits.txt";
+		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				String sha1 = line.substring(line.lastIndexOf("/")+1, line.length());
+				deletedCommits.add(sha1);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return deletedCommits;
+	}
+
 	public static List<Root> getFSERefactorings(int flag) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -85,19 +106,21 @@ public class RefactoringPopulator {
 				mapper.getTypeFactory().constructCollectionType(List.class, Root.class));
 
 		List<Root> filtered = new ArrayList<>();
-
+		List<String> deletedCommits = getDeletedCommits();
 		for (Root root : roots) {
-			List<Refactoring> refactorings = new ArrayList<>();
-
-			root.refactorings.forEach((refactoring) -> {
-				if (isAdded(refactoring, flag))
-					refactorings.add(refactoring);
-			});
-
-			if (refactorings.size() > 0) {
-				Root tmp = root;
-				tmp.refactorings = refactorings;
-				filtered.add(tmp);
+			if(!deletedCommits.contains(root.sha1)) {
+				List<Refactoring> refactorings = new ArrayList<>();
+	
+				root.refactorings.forEach((refactoring) -> {
+					if (isAdded(refactoring, flag))
+						refactorings.add(refactoring);
+				});
+	
+				if (refactorings.size() > 0) {
+					Root tmp = root;
+					tmp.refactorings = refactorings;
+					filtered.add(tmp);
+				}
 			}
 		}
 		return filtered;

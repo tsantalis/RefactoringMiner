@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,9 @@ public abstract class AbstractCall implements LocationInfoProvider {
 	}
 
 	public abstract boolean identicalName(AbstractCall call);
+	public abstract String getName();
 	public abstract double normalizedNameDistance(AbstractCall call);
+	public abstract AbstractCall update(String oldExpression, String newExpression);
 
 	public boolean identicalExpression(AbstractCall call, Set<Replacement> replacements) {
 		return identicalExpression(call) ||
@@ -188,6 +191,21 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		if(parenthesizedS2.equals(s1))
 			return true;
 		return false;
+	}
+
+	protected void update(AbstractCall newCall, String oldExpression, String newExpression) {
+		newCall.typeArguments = this.typeArguments;
+		if(this.expression != null && this.expression.equals(oldExpression)) {
+			newCall.expression = newExpression;
+		}
+		else {
+			newCall.expression = this.expression;
+		}
+		newCall.arguments = new ArrayList<String>();
+		for(String argument : this.arguments) {
+			newCall.arguments.add(
+				ReplacementUtil.performReplacement(argument, oldExpression, newExpression));
+		}
 	}
 
 	public enum StatementCoverageType {

@@ -50,6 +50,10 @@ public class ObjectCreation extends AbstractCall {
 		}
 	}
 
+	public String getName() {
+		return getType().toString();
+	}
+
 	public UMLType getType() {
 		return type;
 	}
@@ -60,6 +64,17 @@ public class ObjectCreation extends AbstractCall {
 
 	public String getAnonymousClassDeclaration() {
 		return anonymousClassDeclaration;
+	}
+
+	private ObjectCreation() {
+		
+	}
+
+	public ObjectCreation update(String oldExpression, String newExpression) {
+		ObjectCreation newObjectCreation = new ObjectCreation();
+		newObjectCreation.type = this.type;
+		update(newObjectCreation, oldExpression, newExpression);
+		return newObjectCreation;
 	}
 
 	public boolean equals(Object o) {

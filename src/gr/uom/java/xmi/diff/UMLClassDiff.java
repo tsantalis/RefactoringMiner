@@ -7,10 +7,12 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +20,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -770,7 +773,8 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 							operationBodyMapper.getMappings();
 							int mappings = operationBodyMapper.mappingsWithoutBlocks();
 							if(mappings > 0 && (mappings > operationBodyMapper.nonMappedElementsT2() || operationBodyMapper.exactMatches() > 0 ||
-									(mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2()))) {
+									(mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2())) ||
+									argumentExtractedWithDefaultReturnAdded(operationBodyMapper)) {
 								ExtractOperationRefactoring extractOperationRefactoring = null;
 								if(delegateMethod == null) {
 									extractOperationRefactoring = new ExtractOperationRefactoring(operationBodyMapper, mapper.getOperation2(), addedOperationInvocation);
@@ -789,6 +793,21 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 			}
 		}
 		addedOperations.removeAll(operationsToBeRemoved);
+	}
+
+	public boolean argumentExtractedWithDefaultReturnAdded(UMLOperationBodyMapper operationBodyMapper) {
+		List<AbstractCodeMapping> totalMappings = operationBodyMapper.getMappings();
+		List<CompositeStatementObject> nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>(operationBodyMapper.getNonMappedInnerNodesT2());
+		ListIterator<CompositeStatementObject> iterator = nonMappedInnerNodesT2.listIterator();
+		while(iterator.hasNext()) {
+			if(iterator.next().toString().equals("{")) {
+				iterator.remove();
+			}
+		}
+		List<StatementObject> nonMappedLeavesT2 = operationBodyMapper.getNonMappedLeavesT2();
+		return totalMappings.size() == 1 && totalMappings.get(0).containsReplacement(ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION) &&
+				nonMappedInnerNodesT2.size() == 1 && nonMappedInnerNodesT2.get(0).toString().startsWith("if") &&
+				nonMappedLeavesT2.size() == 1 && nonMappedLeavesT2.get(0).toString().startsWith("return ");
 	}
 
 	private UMLOperation findDelegateMethod(UMLOperation addedOperation, UMLOperationBodyMapper mapper,	OperationInvocation addedOperationInvocation) {

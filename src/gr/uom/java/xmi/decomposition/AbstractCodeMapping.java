@@ -64,6 +64,15 @@ public abstract class AbstractCodeMapping {
 		return false;
 	}
 
+	public boolean containsReplacement(ReplacementType type) {
+		for(Replacement replacement : replacements) {
+			if(replacement.getType().equals(type)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public String toString() {
 		return fragment1.toString() + fragment2.toString();
 	}

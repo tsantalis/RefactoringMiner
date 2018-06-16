@@ -29,7 +29,7 @@ public enum RefactoringType {
 	EXTRACT_AND_MOVE_OPERATION("Extract And Move Method", ".+"),
 	CONVERT_ANONYMOUS_CLASS_TO_TYPE("Convert Anonymous Class to Type", ".+"),
 	INTRODUCE_POLYMORPHISM("Introduce Polymorphism", ".+"),
-	RENAME_PACKAGE("Rename Package", "Rename Package (.+) to (.+)"),
+	RENAME_PACKAGE("Change Package", "Change Package (.+) to (.+)"),
   CHANGE_METHOD_SIGNATURE("Change Method Signature", "Change Method Signature (.+) to (.+) in class (.+)");
 
 	private String displayName;

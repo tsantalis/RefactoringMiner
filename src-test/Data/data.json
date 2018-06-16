@@ -108,7 +108,7 @@
     "time": "6/8/15 11:12 AM",
     "refactorings": [{
         "type": "Change Package",
-        "description": "Rename Package org.sonar.server.custommeasure to org.sonar.server.measure.custom",
+        "description": "Change Package org.sonar.server.custommeasure to org.sonar.server.measure.custom",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -194,7 +194,7 @@
     "time": "6/8/15 10:22 AM",
     "refactorings": [{
         "type": "Change Package",
-        "description": "Rename Package org.sonar.server.notifications to org.sonar.server.notification",
+        "description": "Change Package org.sonar.server.notifications to org.sonar.server.notification",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -1672,7 +1672,7 @@
         "validators": "Matin, Davood"
     }, {
         "type": "Change Package",
-        "description": "Rename Package org.elasticsearch.index.merge.policy to org.elasticsearch.index.shard",
+        "description": "Change Package org.elasticsearch.index.merge.policy to org.elasticsearch.index.shard",
         "comment": "null",
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
@@ -7025,8 +7025,8 @@
         "type": "Inline Method",
         "description": "Inline Method private principal(certs Certificate[]) : Principal inlined to public getPeerPrincipal() : Principal in class io.netty.handler.ssl.OpenSslEngine.OpenSslSession",
         "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 3334
@@ -7107,7 +7107,7 @@
         "description": "Inline Method private sanityOnPaymentInfoPlugin(paymentInfoPlugin PaymentTransactionInfoPlugin) : void inlined to private doOperation() : OperationResult in class org.killbill.billing.payment.core.sm.payments.PaymentOperation",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 1091
@@ -7333,7 +7333,7 @@
     "time": "6/17/15 10:26 AM",
     "refactorings": [{
         "type": "Change Package",
-        "description": "Rename Package org.sufficientlysecure.keychain.util.orbot to org.sufficientlysecure.keychain.util.tor",
+        "description": "Change Package org.sufficientlysecure.keychain.util.orbot to org.sufficientlysecure.keychain.util.tor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -8171,7 +8171,7 @@
         "validators": "Matin"
     }, {
         "type": "Change Package",
-        "description": "Rename Package com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed",
+        "description": "Change Package com.squareup.okhttp.internal.spdy to com.squareup.okhttp.internal.framed",
         "comment": "null",
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
@@ -8946,7 +8946,7 @@
         "validators": null
     }, {
         "type": "Change Package",
-        "description": "Rename Package com.eucalyptus.cloudwatch.domain.absolute to com.eucalyptus.cluster.callback.cloudwatch",
+        "description": "Change Package com.eucalyptus.cloudwatch.domain.absolute to com.eucalyptus.cluster.callback.cloudwatch",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -9928,7 +9928,7 @@
     "time": "6/19/15 7:36 PM",
     "refactorings": [{
         "type": "Change Package",
-        "description": "Rename Package org.opentripplanner.analyst.qbroker to org.opentripplanner.analyst.broker",
+        "description": "Change Package org.opentripplanner.analyst.qbroker to org.opentripplanner.analyst.broker",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -12636,14 +12636,14 @@
     "time": "6/24/15 2:10 PM",
     "refactorings": [{
         "type": "Change Package",
-        "description": "Rename Package org.springframework.data.neo4j.integration.movies to org.springframework.data.neo4j.queries",
+        "description": "Change Package org.springframework.data.neo4j.integration.movies to org.springframework.data.neo4j.queries",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Change Package",
-        "description": "Rename Package org.springframework.data.neo4j.integration.helloworld to org.springframework.data.neo4j.examples.galaxy",
+        "description": "Change Package org.springframework.data.neo4j.integration.helloworld to org.springframework.data.neo4j.examples.galaxy",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -13980,13 +13980,6 @@
     "author": "AWS",
     "time": "6/24/15 8:54 PM",
     "refactorings": [{
-        "type": "Inline Method",
-        "description": "Inline Method private killServer() : void inlined to public cleanUp() : void in class com.amazonaws.util.EC2MetadataUtilsTest",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
         "type": "Extract Method",
         "description": "Extract Method private pause(delay long) : void extracted from private pauseExponentially(retries int) : void in class com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper",
         "comment": null,
@@ -16317,7 +16310,7 @@
     "time": "7/2/15 10:09 PM",
     "refactorings": [{
         "type": "Change Package",
-        "description": "Rename Package org.jboss.as.quickstarts.poh5helloworld to org.jboss.as.quickstarts.html5rest",
+        "description": "Change Package org.jboss.as.quickstarts.poh5helloworld to org.jboss.as.quickstarts.html5rest",
         "comment": "<p>The package renaming is TP</p>",
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -16370,7 +16363,7 @@
         "validators": null
     }, {
         "type": "Change Package",
-        "description": "Rename Package com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache.local",
+        "description": "Change Package com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache.local",
         "comment": null,
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
@@ -17522,14 +17515,14 @@
         "validators": null
     }, {
         "type": "Change Package",
-        "description": "Rename Package org.hibernate.test.bytecode.enhancement.entity.customer to org.hibernate.test.bytecode.enhancement.association",
+        "description": "Change Package org.hibernate.test.bytecode.enhancement.entity.customer to org.hibernate.test.bytecode.enhancement.association",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Change Package",
-        "description": "Rename Package org.hibernate.test.bytecode.enhancement.entity to org.hibernate.test.bytecode.enhancement.dirty",
+        "description": "Change Package org.hibernate.test.bytecode.enhancement.entity to org.hibernate.test.bytecode.enhancement.dirty",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -23511,7 +23504,7 @@
     "time": "7/15/15 8:55 AM",
     "refactorings": [{
         "type": "Change Package",
-        "description": "Rename Package org.docx4j.schemas.microsoft.com.office.word_2006 to org.docx4j.com.microsoft.schemas.office.word.x2006",
+        "description": "Change Package org.docx4j.schemas.microsoft.com.office.word_2006 to org.docx4j.com.microsoft.schemas.office.word.x2006",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -26305,7 +26298,7 @@
         "description": "Inline Method private getModuleFileName() : String inlined to public resolve() : PsiElement in class org.intellij.erlang.psi.impl.ErlangFunctionReferenceImpl",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": null
     }, {
         "type": "Inline Method",
@@ -26737,7 +26730,7 @@
     "time": "7/24/15 8:26 AM",
     "refactorings": [{
         "type": "Change Package",
-        "description": "Rename Package org.robobinding.codegen.presentationmodel.nestedIPMexample to org.robobinding.codegen.presentationmodel.nestedIPM",
+        "description": "Change Package org.robobinding.codegen.presentationmodel.nestedIPMexample to org.robobinding.codegen.presentationmodel.nestedIPM",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -27232,7 +27225,7 @@
     "time": "7/24/15 5:48 AM",
     "refactorings": [{
         "type": "Change Package",
-        "description": "Rename Package org.robovm.compiler.plugin.lambda2 to org.robovm.compiler.plugin.lambda",
+        "description": "Change Package org.robovm.compiler.plugin.lambda2 to org.robovm.compiler.plugin.lambda",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -27761,70 +27754,70 @@
         "description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public getAllRegionBlocks(container IContainer, blocks Set) : void in class jadx.core.utils.RegionUtils",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public isRegionContainsBlock(container IContainer, block BlockNode) : boolean in class jadx.core.utils.RegionUtils",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public getBlockContainer(container IContainer, block BlockNode) : IContainer in class jadx.core.utils.RegionUtils",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public isDominatedBy(dom BlockNode, cont IContainer) : boolean in class jadx.core.utils.RegionUtils",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public hasPathThroughBlock(block BlockNode, cont IContainer) : boolean in class jadx.core.utils.RegionUtils",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public hasExitEdge(container IContainer) : boolean in class jadx.core.utils.RegionUtils",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public getLastInsn(container IContainer) : InsnNode in class jadx.core.utils.RegionUtils",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public hasExitBlock(container IContainer) : boolean in class jadx.core.utils.RegionUtils",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public insnsCount(container IContainer) : int in class jadx.core.utils.RegionUtils",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected unknownContainerType(container IContainer) : String extracted from public notEmpty(container IContainer) : boolean in class jadx.core.utils.RegionUtils",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Move Method",
@@ -30797,7 +30790,7 @@
         "description": "Inline Method private comparator(ignoreCase boolean) : Comparator<CharSequence> inlined to public contains(name CharSequence, value CharSequence, ignoreCase boolean) : boolean in class io.netty.handler.codec.DefaultTextHeaders",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": null
     }, {
         "type": "Rename Method",
@@ -32003,7 +31996,7 @@
     "time": "8/5/15 4:34 AM",
     "refactorings": [{
         "type": "Change Package",
-        "description": "Rename Package com.github.mobile to com.github.pockethub",
+        "description": "Change Package com.github.mobile to com.github.pockethub",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

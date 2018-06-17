@@ -21782,7 +21782,7 @@
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public formParamsDoesNotSetBodyType() : void in class feign.DefaultContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
@@ -21810,7 +21810,7 @@
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public httpMethods() : void in class feign.DefaultContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
@@ -21824,21 +21824,21 @@
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public tooManyBodies() : void in class feign.DefaultContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public customMethodWithoutPath() : void in class feign.DefaultContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public queryParamsInPathExtract() : void in class feign.DefaultContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
@@ -21866,49 +21866,49 @@
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public withPathAndURIParam() : void in class feign.DefaultContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public pathAndQueryParams() : void in class feign.DefaultContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public bodyWithTemplate() : void in class feign.DefaultContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public formParamsParseIntoIndexToName() : void in class feign.DefaultContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public httpMethods() : void in class feign.jaxrs.JAXRSContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public customMethodWithoutPath() : void in class feign.jaxrs.JAXRSContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public queryParamsInPathExtract() : void in class feign.jaxrs.JAXRSContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
@@ -21964,7 +21964,7 @@
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public tooManyBodies() : void in class feign.jaxrs.JAXRSContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
@@ -21985,28 +21985,28 @@
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public pathParamWithSpaces() : void in class feign.jaxrs.JAXRSContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public regexPathOnMethod() : void in class feign.jaxrs.JAXRSContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public withPathAndURIParams() : void in class feign.jaxrs.JAXRSContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public pathAndQueryParams() : void in class feign.jaxrs.JAXRSContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
@@ -22020,14 +22020,14 @@
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public formParamsParseIntoIndexToName() : void in class feign.jaxrs.JAXRSContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public formParamsDoesNotSetBodyType() : void in class feign.jaxrs.JAXRSContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
@@ -22055,35 +22055,35 @@
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public pathsWithoutSlashesParseCorrectly() : void in class feign.jaxrs.JAXRSContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public pathsWithSomeSlashesParseCorrectly() : void in class feign.jaxrs.JAXRSContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public pathsWithSomeOtherSlashesParseCorrectly() : void in class feign.jaxrs.JAXRSContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public classWithRootPathParsesCorrectly() : void in class feign.jaxrs.JAXRSContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private parseAndValidateMetadata(targetType Class, method String, parameterTypes Class[]) : MethodMetadata extracted from public classPathWithTrailingSlashParsesCorrectly() : void in class feign.jaxrs.JAXRSContractTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Inline Method",

@@ -104,7 +104,14 @@ public class OperationInvocation extends AbstractCall {
     }
 
     public boolean matchesOperation(UMLOperation operation) {
-    	return this.methodName.equals(operation.getName()) && (this.typeArguments == operation.getParameterTypeList().size() || this.typeArguments == operation.getNumberOfNonVarargsParameters());
+    	return this.methodName.equals(operation.getName()) && (this.typeArguments == operation.getParameterTypeList().size() || varArgsMatch(operation));
+    }
+
+    private boolean varArgsMatch(UMLOperation operation) {
+    	//0 varargs arguments passed
+    	return this.typeArguments == operation.getNumberOfNonVarargsParameters() ||
+    			//>=1 varargs arguments passed
+    			(operation.hasVarargsParameter() && this.typeArguments > operation.getNumberOfNonVarargsParameters());
     }
 
     public boolean compatibleExpression(OperationInvocation other) {

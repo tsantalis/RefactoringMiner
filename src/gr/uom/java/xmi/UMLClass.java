@@ -26,6 +26,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
     private List<UMLType> implementedInterfaces;
     private List<UMLAnonymousClass> anonymousClassList;
     private List<String> importedTypes;
+    private List<UMLTypeParameter> typeParameters;
     
     public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<String> importedTypes) {
     	this.locationInfo = locationInfo;
@@ -74,11 +75,16 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
         this.implementedInterfaces = new ArrayList<UMLType>();
         this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
         this.importedTypes = importedTypes;
+        this.typeParameters = new ArrayList<UMLTypeParameter>();
     }
 
     public LocationInfo getLocationInfo() {
 		return locationInfo;
 	}
+
+    public void addTypeParameter(UMLTypeParameter typeParameter) {
+    	typeParameters.add(typeParameter);
+    }
 
 	public void addAnonymousClass(UMLAnonymousClass anonymousClass) {
     	anonymousClassList.add(anonymousClass);
@@ -262,9 +268,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
     public boolean hasSameNameAndKind(UMLClass umlClass) {
     	if(!this.name.equals(umlClass.name))
     		return false;
-    	if(this.isAbstract != umlClass.isAbstract)
-    		return false;
-    	if(this.isInterface != umlClass.isInterface)
+    	if(!hasSameKind(umlClass))
     		return false;
     	return true;
     }
@@ -273,8 +277,6 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
     	if(this.attributes.size() != umlClass.attributes.size())
     		return false;
     	if(this.operations.size() != umlClass.operations.size())
-    		return false;
-    	if(this.operations.size() == 0 && this.attributes.size() == 0)
     		return false;
     	for(UMLOperation operation : operations) {
     		if(!umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
@@ -303,6 +305,8 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
     	if(this.isAbstract != umlClass.isAbstract)
     		return false;
     	if(this.isInterface != umlClass.isInterface)
+    		return false;
+    	if(!this.typeParameters.equals(umlClass.typeParameters))
     		return false;
     	return true;
     }

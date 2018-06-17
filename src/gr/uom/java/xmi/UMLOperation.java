@@ -216,6 +216,15 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return counter;
 	}
 
+	public boolean hasVarargsParameter() {
+		for(UMLParameter parameter : parameters) {
+			if(!parameter.getKind().equals("return") && parameter.isVarargs()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public OperationInvocation isDelegate() {
 		if(getBody() != null) {
 			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();

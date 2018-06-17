@@ -34,6 +34,7 @@ import org.eclipse.jdt.core.dom.TagElement;
 import org.eclipse.jdt.core.dom.TextElement;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.TypeParameter;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
 import gr.uom.java.xmi.decomposition.OperationBody;
@@ -157,6 +158,16 @@ public class UMLModelASTReader {
     	else
     		umlClass.setVisibility("package");
 		
+    	List<TypeParameter> typeParameters = typeDeclaration.typeParameters();
+		for(TypeParameter typeParameter : typeParameters) {
+			UMLTypeParameter umlTypeParameter = new UMLTypeParameter(typeParameter.getName().getFullyQualifiedName());
+			List<Type> typeBounds = typeParameter.typeBounds();
+			for(Type type : typeBounds) {
+				umlTypeParameter.addTypeBound(UMLType.extractTypeObject(type.toString()));
+			}
+    		umlClass.addTypeParameter(umlTypeParameter);
+    	}
+    	
     	Type superclassType = typeDeclaration.getSuperclassType();
     	if(superclassType != null) {
     		UMLType umlType = UMLType.extractTypeObject(this.getTypeName(superclassType, 0));

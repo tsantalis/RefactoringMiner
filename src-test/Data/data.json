@@ -19847,7 +19847,7 @@
         "description": "Rename Method private getElement(clazz Class) : TypeElement renamed to protected getElements() : Elements in class com.squareup.javapoet.TypesTest",
         "comment": null,
         "validation": "FP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Laleh, Davood"
     }],
     "refDiffExecutionTime": 0
@@ -23513,36 +23513,36 @@
         "type": "Move Class",
         "description": "Move Class org.docx4j.schemas.microsoft.com.office.word_2006.wordml.CTDocEvents moved to org.docx4j.com.microsoft.schemas.office.word.x2006.wordml.CTDocEvents",
         "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Move Class",
         "description": "Move Class org.docx4j.schemas.microsoft.com.office.word_2006.wordml.CTMcd moved to org.docx4j.com.microsoft.schemas.office.word.x2006.wordml.CTMcd",
         "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Move Class",
         "description": "Move Class org.docx4j.schemas.microsoft.com.office.word_2006.wordml.CTMcds moved to org.docx4j.com.microsoft.schemas.office.word.x2006.wordml.CTMcds",
         "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Move Class",
         "description": "Move Class org.docx4j.schemas.microsoft.com.office.word_2006.wordml.CTVbaSuppData moved to org.docx4j.com.microsoft.schemas.office.word.x2006.wordml.CTVbaSuppData",
         "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Move Class",
         "description": "Move Class org.docx4j.schemas.microsoft.com.office.word_2006.wordml.ObjectFactory moved to org.docx4j.com.microsoft.schemas.office.word.x2006.wordml.ObjectFactory",
         "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }],
     "refDiffExecutionTime": 1725
@@ -26747,7 +26747,7 @@
         "description": "Move Class org.robobinding.codegen.presentationmodel.nestedIPMexample.Item moved to org.robobinding.codegen.presentationmodel.nestedIPM.Item",
         "comment": "<p>added</p><p>Part of the rename package</p>",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood"
     }, {
         "type": "Move Class",
@@ -26775,7 +26775,7 @@
         "description": "Move Class org.robobinding.codegen.presentationmodel.nestedIPMexample.SubItem moved to org.robobinding.codegen.presentationmodel.nestedIPM.SubItem",
         "comment": "<p>added</p><p>Part of the rename package</p>",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood"
     }],
     "refDiffExecutionTime": 0
@@ -29436,7 +29436,7 @@
         "description": "Move Class com.addthis.hydra.job.spawn.SpawnBalancer.HostAndScore moved to com.addthis.hydra.job.spawn.balancer.HostAndScore",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": null
     }, {
         "type": "Move Class",
@@ -29450,7 +29450,7 @@
         "description": "Move Class com.addthis.hydra.job.spawn.SpawnBalancer.HostScore moved to com.addthis.hydra.job.spawn.balancer.HostScore",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": null
     }, {
         "type": "Move Class",
@@ -29478,7 +29478,7 @@
         "description": "Move Class com.addthis.hydra.job.spawn.SpawnBalancer.JobTaskItem moved to com.addthis.hydra.job.spawn.balancer.JobTaskItem",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": null
     }, {
         "type": "Move Class",
@@ -32188,7 +32188,7 @@
         "description": "Move Class com.github.mobile.core.ItemStore moved to com.github.pockethub.core.ItemStore",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood"
     }, {
         "type": "Move Class",
@@ -34101,20 +34101,6 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
-    }, {
-        "type": "Move Class",
-        "description": "Move Class com.github.mobile.core.ItemStore.ItemReferences moved to com.github.pockethub.core.ItemStore.ItemReferences",
-        "comment": "new",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Matin"
-    }, {
-        "type": "Move Class",
-        "description": "Move Class com.github.mobile.core.ItemStore.ItemReference moved to com.github.pockethub.core.ItemStore.ItemReference",
-        "comment": "new",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Matin"
     }],
     "refDiffExecutionTime": 7547
 }, {

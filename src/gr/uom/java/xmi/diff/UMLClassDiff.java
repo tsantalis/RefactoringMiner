@@ -52,7 +52,6 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	private List<UMLAnonymousClass> removedAnonymousClasses;
 	private List<UMLType> addedImplementedInterfaces;
 	private List<UMLType> removedImplementedInterfaces;
-	private static final int MAX_OPERATION_POSITION_DIFFERENCE = 5;
 	public static final double MAX_OPERATION_NAME_DISTANCE = 0.34;
 	
 	public UMLClassDiff(UMLClass originalClass, UMLClass nextClass) {
@@ -262,14 +261,19 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 
 	public void checkForOperationSignatureChanges() {
 		Set<MethodInvocationReplacement> consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
-		int absoluteDifference = Math.abs(removedOperations.size() - addedOperations.size());
-		int maxDifferenceInPosition = absoluteDifference > MAX_OPERATION_POSITION_DIFFERENCE ? absoluteDifference : MAX_OPERATION_POSITION_DIFFERENCE;
 		if(removedOperations.size() <= addedOperations.size()) {
 			for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 				UMLOperation removedOperation = removedOperationIterator.next();
 				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
 				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 					UMLOperation addedOperation = addedOperationIterator.next();
+					int maxDifferenceInPosition;
+					if(removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation()) {
+						maxDifferenceInPosition = Math.abs(removedOperations.size() - addedOperations.size());
+					}
+					else {
+						maxDifferenceInPosition = Math.max(removedOperations.size(), addedOperations.size());
+					}
 					updateMapperSet(mapperSet, removedOperation, addedOperation, maxDifferenceInPosition);
 					List<UMLOperation> operationsInsideAnonymousClass = addedOperation.getOperationsInsideAnonymousClass(this.addedAnonymousClasses);
 					for(UMLOperation operationInsideAnonymousClass : operationsInsideAnonymousClass) {
@@ -301,6 +305,13 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
 				for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 					UMLOperation removedOperation = removedOperationIterator.next();
+					int maxDifferenceInPosition;
+					if(removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation()) {
+						maxDifferenceInPosition = Math.abs(removedOperations.size() - addedOperations.size());
+					}
+					else {
+						maxDifferenceInPosition = Math.max(removedOperations.size(), addedOperations.size());
+					}
 					updateMapperSet(mapperSet, removedOperation, addedOperation, maxDifferenceInPosition);
 					List<UMLOperation> operationsInsideAnonymousClass = addedOperation.getOperationsInsideAnonymousClass(this.addedAnonymousClasses);
 					for(UMLOperation operationInsideAnonymousClass : operationsInsideAnonymousClass) {
@@ -449,6 +460,13 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	private UMLOperationBodyMapper findBestMapper(TreeSet<UMLOperationBodyMapper> mapperSet, Set<MethodInvocationReplacement> consistentMethodInvocationRenames) {
 		List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>(mapperSet);
 		UMLOperationBodyMapper bestMapper = mapperSet.first();
+		UMLOperation bestMapperOperation1 = bestMapper.getOperation1();
+		UMLOperation bestMapperOperation2 = bestMapper.getOperation2();
+		if(bestMapperOperation1.equalReturnParameter(bestMapperOperation2) &&
+				bestMapperOperation1.getName().equals(bestMapperOperation2.getName()) &&
+				bestMapperOperation1.commonParameterTypes(bestMapperOperation2).size() > 0) {
+			return bestMapper;
+		}
 		for(int i=1; i<mapperList.size(); i++) {
 			UMLOperationBodyMapper mapper = mapperList.get(i);
 			UMLOperation operation2 = mapper.getOperation2();

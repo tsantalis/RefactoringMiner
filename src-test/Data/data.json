@@ -5076,7 +5076,7 @@
         "description": "Rename Method public restParams(type Node) : TypeDeclarationNode renamed to private maybeAddType(node Node, type TypeDeclarationNode) : Node in class com.google.javascript.rhino.TypeDeclarationsIR",
         "comment": "<p>Second Opiniton. Seems FP</p><p>Davood: The bodies are quite different</p>",
         "validation": "FP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
     }],
     "refDiffExecutionTime": 3462
@@ -31343,7 +31343,7 @@
         "description": "Rename Method public orderBy(orderBy OrderBy) : TaskQueryBuilder renamed to private getOrderByListId(field OrderBy) : String in class org.jbpm.services.task.impl.TaskQueryBuilderImpl",
         "comment": "<p>The two methods are doing the same thing AFAICS</p>",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood"
     }, {
         "type": "Rename Method",

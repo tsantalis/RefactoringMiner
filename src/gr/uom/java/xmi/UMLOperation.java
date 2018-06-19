@@ -28,6 +28,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	private boolean isStatic;
 	private boolean emptyBody;
 	private OperationBody operationBody;
+	private boolean testAnnotation;
 	
 	public UMLOperation(String name, LocationInfo locationInfo) {
 		this.locationInfo = locationInfo;
@@ -93,6 +94,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 
 	public OperationBody getBody() {
 		return operationBody;
+	}
+
+	public boolean hasTestAnnotation() {
+		return testAnnotation;
+	}
+
+	public void setTestAnnotation(boolean testAnnotation) {
+		this.testAnnotation = testAnnotation;
 	}
 
 	public Set<OperationInvocation> getAllOperationInvocations() {
@@ -186,6 +195,21 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 				params.add(parameter);
 		}
 		return params;
+	}
+
+	public List<UMLType> commonParameterTypes(UMLOperation operation) {
+		List<UMLType> commonParameterTypes = new ArrayList<UMLType>();
+		List<UMLType> thisParameterTypeList = getParameterTypeList();
+		List<UMLType> otherParameterTypeList = operation.getParameterTypeList();
+		int min = Math.min(thisParameterTypeList.size(), otherParameterTypeList.size());
+		for(int i=0; i<min; i++) {
+			UMLType thisParameterType = thisParameterTypeList.get(i);
+			UMLType otherParameterType = otherParameterTypeList.get(i);
+			if(thisParameterType.equals(otherParameterType)) {
+				commonParameterTypes.add(thisParameterType);
+			}
+		}
+		return commonParameterTypes;
 	}
 
 	public List<UMLType> getParameterTypeList() {

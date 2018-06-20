@@ -10637,28 +10637,28 @@
         "description": "Rename Method private rotate(db GraphDatabaseAPI) : void renamed to private rotateAndCheckPoint(db GraphDatabaseAPI) : void in class org.neo4j.backup.BackupServiceIT",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Rename Method",
         "description": "Rename Method private rotateLog(db GraphDatabaseAPI) : void renamed to private rotateLogAndCheckPoint(db GraphDatabaseAPI) : void in class org.neo4j.backup.BackupServiceStressTestingBuilder.RunTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Rename Method",
         "description": "Rename Method private rotateLog() : void renamed to private rotateLogAndCheckPoint() : void in class org.neo4j.index.recovery.UniqueIndexRecoveryTests",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Rename Method",
         "description": "Rename Method private rotateLogs() : void renamed to private rotateLogsAndCheckPoint() : void in class org.neo4j.kernel.api.impl.index.LuceneIndexRecoveryIT",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Rename Method",
@@ -11209,7 +11209,7 @@
         "description": "Rename Method public getVariants() : Object[] renamed to public processResolveVariants(processor GoScopeProcessor) : void in class com.goide.psi.impl.GoVarReference",
         "comment": "<p>getVariants() now has default implementation in the super class (GoCachedReference), and the rename is not observed in the abstract super class.</p>",
         "validation": "FP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": "Davood, Nikos"
     }, {
         "type": "Extract Method",
@@ -18087,13 +18087,6 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin"
-    }, {
-        "type": "Rename Method",
-        "description": "Rename Method public testEnhancement() : void renamed to public testLazy() : void in class org.hibernate.test.bytecode.enhancement.EnhancerTest",
-        "comment": "<p>new</p><p>Nikos: This is a False Positive</p>",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Nikos"
     }, {
         "type": "Move Class",
         "description": "Move Class org.hibernate.test.bytecode.enhancement.entity.customer.Group moved to org.hibernate.test.bytecode.enhancement.association.Group",
@@ -30867,7 +30860,7 @@
         "description": "Rename Method private convertName(name T) : T renamed to private validateName(name T) : void in class io.netty.handler.codec.DefaultHeaders",
         "comment": "<p>Matin: FP&nbsp;</p><p>convertName() used to (indirectly) call validateName(), which does the same thing as validate() which is now callsed in validateName. So this is TP</p>",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Laleh, Davood"
     }, {
         "type": "Rename Method",
@@ -31792,10 +31785,10 @@
     "refactorings": [{
         "type": "Extract Method",
         "description": "Extract Method public depthFirstSearchForFile(statusArray FileStatus[], fileSystem FileSystem, filter PathFilter) : Path extracted from public depthFirstSearchForFile(statusArray FileStatus[], fileSystem FileSystem) : Path in class org.apache.pig.impl.util.Utils",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
+        "comment": "<p>depthFirstSearchForFile(statusArray FileStatus[], fileSystem FileSystem) : Path</p><p>becomes</p><p>depthFirstSearchForFile(statusArray FileStatus[], fileSystem FileSystem, filter PathFilter) : Path</p><p>by adding parameter filter.</p><p>&nbsp;</p><p>Method</p><p>depthFirstSearchForFile(fileStatus FileStatus, fileSystem FileSystem) : Path</p><p>was inlined to</p><p>depthFirstSearchForFile(statusArray FileStatus[], fileSystem FileSystem) : Path</p>",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 2704
 }, {

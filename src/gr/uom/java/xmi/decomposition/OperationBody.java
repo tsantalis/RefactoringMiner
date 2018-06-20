@@ -184,7 +184,7 @@ public class OperationBody {
 		}
 		else if(statement instanceof TryStatement) {
 			TryStatement tryStatement = (TryStatement)statement;
-			CompositeStatementObject child = new CompositeStatementObject(cu, filePath, tryStatement, parent.getDepth()+1, "try");
+			TryStatementObject child = new TryStatementObject(cu, filePath, tryStatement, parent.getDepth()+1);
 			parent.addStatement(child);
 			List<Statement> tryStatements = tryStatement.getBody().statements();
 			for(Statement blockStatement : tryStatements) {
@@ -194,6 +194,7 @@ public class OperationBody {
 			for(CatchClause catchClause : catchClauses) {
 				Block catchClauseBody = catchClause.getBody();
 				CompositeStatementObject catchClauseStatementObject = new CompositeStatementObject(cu, filePath, catchClauseBody, parent.getDepth()+1, "catch");
+				child.addCatchClause(catchClauseStatementObject);
 				parent.addStatement(catchClauseStatementObject);
 				SingleVariableDeclaration variableDeclaration = catchClause.getException();
 				AbstractExpression variableDeclarationName = new AbstractExpression(cu, filePath, variableDeclaration.getName());
@@ -210,6 +211,7 @@ public class OperationBody {
 			Block finallyBlock = tryStatement.getFinally();
 			if(finallyBlock != null) {
 				CompositeStatementObject finallyClauseStatementObject = new CompositeStatementObject(cu, filePath, finallyBlock, parent.getDepth()+1, "finally");
+				child.setFinallyClause(finallyClauseStatementObject);
 				parent.addStatement(finallyClauseStatementObject);
 				List<Statement> blockStatements = finallyBlock.statements();
 				for(Statement blockStatement : blockStatements) {

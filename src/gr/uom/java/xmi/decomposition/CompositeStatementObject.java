@@ -201,4 +201,39 @@ public class CompositeStatementObject extends AbstractStatement {
 	public LocationInfo getLocationInfo() {
 		return locationInfo;
 	}
+
+	protected double compositeChildMatchingScore(CompositeStatementObject other, List<AbstractCodeMapping> mappings) {
+		int childrenSize1 = getStatements().size();
+		int childrenSize2 = other.getStatements().size();
+		
+		int mappedChildrenSize = 0;
+		for(AbstractCodeMapping mapping : mappings) {
+			if(getStatements().contains(mapping.getFragment1()) && other.getStatements().contains(mapping.getFragment2())) {
+				mappedChildrenSize++;
+			}
+		}
+		if(mappedChildrenSize == 0) {
+			List<StatementObject> leaves1 = getLeaves();
+			List<StatementObject> leaves2 = other.getLeaves();
+			int leaveSize1 = leaves1.size();
+			int leaveSize2 = leaves2.size();
+			int mappedLeavesSize = 0;
+			for(AbstractCodeMapping mapping : mappings) {
+				if(leaves1.contains(mapping.getFragment1()) && leaves2.contains(mapping.getFragment2())) {
+					mappedLeavesSize++;
+				}
+			}
+			int max = Math.max(leaveSize1, leaveSize2);
+			if(max == 0)
+				return 0;
+			else
+				return (double)mappedLeavesSize/(double)max;
+		}
+		
+		int max = Math.max(childrenSize1, childrenSize2);
+		if(max == 0)
+			return 0;
+		else
+			return (double)mappedChildrenSize/(double)max;
+	}
 }

@@ -604,7 +604,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			TreeSet<CompositeStatementObjectMapping> mappingSet = new TreeSet<CompositeStatementObjectMapping>();
 			for(ListIterator<CompositeStatementObject> innerNodeIterator2 = innerNodes2.listIterator(); innerNodeIterator2.hasNext();) {
 				CompositeStatementObject statement2 = innerNodeIterator2.next();
-				double score = compositeChildMatchingScore(statement1, statement2);
+				double score = statement1.compositeChildMatchingScore(statement2, mappings);
 				if((statement1.getString().equals(statement2.getString()) || statement1.getArgumentizedString().equals(statement2.getArgumentizedString())) &&
 						statement1.getDepth() == statement2.getDepth() &&
 						(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
@@ -626,7 +626,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			TreeSet<CompositeStatementObjectMapping> mappingSet = new TreeSet<CompositeStatementObjectMapping>();
 			for(ListIterator<CompositeStatementObject> innerNodeIterator2 = innerNodes2.listIterator(); innerNodeIterator2.hasNext();) {
 				CompositeStatementObject statement2 = innerNodeIterator2.next();
-				double score = compositeChildMatchingScore(statement1, statement2);
+				double score = statement1.compositeChildMatchingScore(statement2, mappings);
 				if((statement1.getString().equals(statement2.getString()) || statement1.getArgumentizedString().equals(statement2.getArgumentizedString())) &&
 						(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
 					CompositeStatementObjectMapping mapping = new CompositeStatementObjectMapping(statement1, statement2, operation1, operation2, score);
@@ -649,7 +649,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				CompositeStatementObject statement2 = innerNodeIterator2.next();
 				Set<Replacement> replacements = findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap);
 				
-				double score = compositeChildMatchingScore(statement1, statement2);
+				double score = statement1.compositeChildMatchingScore(statement2, mappings);
 				if(replacements != null &&
 						(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
 					CompositeStatementObjectMapping mapping = new CompositeStatementObjectMapping(statement1, statement2, operation1, operation2, score);
@@ -1307,41 +1307,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private double compositeChildMatchingScore(CompositeStatementObject composite1, CompositeStatementObject composite2) {
-		int childrenSize1 = composite1.getStatements().size();
-		int childrenSize2 = composite2.getStatements().size();
-		
-		int mappedChildrenSize = 0;
-		for(AbstractCodeMapping mapping : mappings) {
-			if(composite1.getStatements().contains(mapping.getFragment1()) && composite2.getStatements().contains(mapping.getFragment2())) {
-				mappedChildrenSize++;
-			}
-		}
-		if(mappedChildrenSize == 0) {
-			List<StatementObject> leaves1 = composite1.getLeaves();
-			List<StatementObject> leaves2 = composite2.getLeaves();
-			int leaveSize1 = leaves1.size();
-			int leaveSize2 = leaves2.size();
-			int mappedLeavesSize = 0;
-			for(AbstractCodeMapping mapping : mappings) {
-				if(leaves1.contains(mapping.getFragment1()) && leaves2.contains(mapping.getFragment2())) {
-					mappedLeavesSize++;
-				}
-			}
-			int max = Math.max(leaveSize1, leaveSize2);
-			if(max == 0)
-				return 0;
-			else
-				return (double)mappedLeavesSize/(double)max;
-		}
-		
-		int max = Math.max(childrenSize1, childrenSize2);
-		if(max == 0)
-			return 0;
-		else
-			return (double)mappedChildrenSize/(double)max;
-	}
-	
 	public boolean isEmpty() {
 		return getNonMappedLeavesT1().isEmpty() && getNonMappedInnerNodesT1().isEmpty() &&
 				getNonMappedLeavesT2().isEmpty() && getNonMappedInnerNodesT2().isEmpty();

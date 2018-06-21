@@ -4166,7 +4166,7 @@
         "description": "Rename Method package createGraph(dir Directory, encodingManager EncodingManager, is3D boolean) : LevelGraph renamed to package createGHStorage(dir Directory, encodingManager EncodingManager, is3D boolean) : GraphHopperStorage in class com.graphhopper.storage.index.LocationIndexTreeForLevelGraphTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Rename Method",
@@ -4180,7 +4180,7 @@
         "description": "Rename Method package createGraph() : LevelGraph renamed to package createGHStorage() : GraphHopperStorage in class com.graphhopper.routing.ch.PrepareContractionHierarchiesTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Rename Method",
@@ -4616,6 +4616,13 @@
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package calcPathViaQuery(graph Graph, fromLat double, fromLon double, toLat double, toLon double) : Path renamed to package calcPathViaQuery_(ghStorage GraphHopperStorage, fromLat double, fromLon double, toLat double, toLon double) : Path in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3012
 }, {
@@ -10898,7 +10905,7 @@
         "description": "Rename Method public deny(requirementNotMet AvailabilityRequirement) : void renamed to public require(requirement AvailabilityRequirement) : void in class org.neo4j.kernel.AvailabilityGuard",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": null
     }, {
         "type": "Rename Method",
@@ -10911,7 +10918,7 @@
         "type": "Rename Method",
         "description": "Rename Method public grant(requirementNowMet AvailabilityRequirement) : void renamed to public fulfill(requirement Object) : void in class org.neo4j.kernel.AvailabilityGuard",
         "comment": null,
-        "validation": "FP",
+        "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
     }, {
@@ -15314,7 +15321,7 @@
         "description": "Rename Method protected validate(input T) : boolean renamed to protected validateAsync(input T, onValidated OperationWithInput) : void in class org.rstudio.core.client.widget.Wizard",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }],
     "refDiffExecutionTime": 3785
@@ -19089,7 +19096,7 @@
         "description": "Rename Method private validateNoUnsupportedFields(function Function, context Context) : String renamed to private rewriteAndValidateFields(function Function, context Context) : Function in class io.crate.lucene.LuceneQueryBuilder.Visitor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": null
     }, {
         "type": "Rename Method",
@@ -31621,7 +31628,7 @@
         "description": "Rename Method private getRequestContentEncodingName(serverSupportedEncodings List) : String renamed to private getRequestContentEncoding(serverSupportedEncodings List) : EncodingType in class com.linkedin.r2.transport.http.client.HttpClientFactory",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood"
     }, {
         "type": "Rename Method",

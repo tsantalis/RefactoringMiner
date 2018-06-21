@@ -52,7 +52,8 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	private List<UMLAnonymousClass> removedAnonymousClasses;
 	private List<UMLType> addedImplementedInterfaces;
 	private List<UMLType> removedImplementedInterfaces;
-	public static final double MAX_OPERATION_NAME_DISTANCE = 0.34;
+	private Set<MethodInvocationReplacement> consistentMethodInvocationRenames;
+	public static final double MAX_OPERATION_NAME_DISTANCE = 0.4;
 	
 	public UMLClassDiff(UMLClass originalClass, UMLClass nextClass) {
 		this.originalClass = originalClass;
@@ -260,7 +261,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	}
 
 	public void checkForOperationSignatureChanges() {
-		Set<MethodInvocationReplacement> consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
+		consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
 		if(removedOperations.size() <= addedOperations.size()) {
 			for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 				UMLOperation removedOperation = removedOperationIterator.next();
@@ -281,7 +282,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 					}
 				}
 				if(!mapperSet.isEmpty()) {
-					UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet, consistentMethodInvocationRenames);
+					UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
 					if(bestMapper != null) {
 						removedOperation = bestMapper.getOperation1();
 						UMLOperation addedOperation = bestMapper.getOperation2();
@@ -319,7 +320,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 					}
 				}
 				if(!mapperSet.isEmpty()) {
-					UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet, consistentMethodInvocationRenames);
+					UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
 					if(bestMapper != null) {
 						UMLOperation removedOperation = bestMapper.getOperation1();
 						addedOperation = bestMapper.getOperation2();
@@ -397,6 +398,15 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 				mapperSet.add(operationBodyMapper);
 			}
 		}
+		else {
+			for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames) {
+				if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation) &&
+						replacement.getInvokedOperationAfter().matchesOperation(addedOperation)) {
+					mapperSet.add(operationBodyMapper);
+					break;
+				}
+			}
+		}
 		if(totalMappings.size() > 0) {
 			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
 			if(singleUnmatchedStatementCallsAddedOperation(operationBodyMapper) &&
@@ -458,7 +468,7 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 				nonMappedElementsT1CallingRemovedOperation >= nonMappedElementsT1WithoutThoseCallingRemovedOperation);
 	}
 
-	private UMLOperationBodyMapper findBestMapper(TreeSet<UMLOperationBodyMapper> mapperSet, Set<MethodInvocationReplacement> consistentMethodInvocationRenames) {
+	private UMLOperationBodyMapper findBestMapper(TreeSet<UMLOperationBodyMapper> mapperSet) {
 		List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>(mapperSet);
 		UMLOperationBodyMapper bestMapper = mapperSet.first();
 		UMLOperation bestMapperOperation1 = bestMapper.getOperation1();

@@ -1155,6 +1155,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		//check if the method call in the first statement is the expression of the method invocation in the second statement
+		if(invocationCoveringTheEntireStatement1 != null) {
+			for(String key2 : methodInvocationMap2.keySet()) {
+				OperationInvocation invocation2 = (OperationInvocation) methodInvocationMap2.get(key2);
+				if(statement2.getString().endsWith(key2 + ";\n") &&
+						methodInvocationMap1.keySet().contains(invocation2.getExpression())) {
+					Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getName(),
+							invocation2.getName(), invocationCoveringTheEntireStatement1, invocation2, ReplacementType.METHOD_INVOCATION);
+					replacementInfo.addReplacement(replacement);
+					return replacementInfo.getReplacements();
+				}
+			}
+		}
 		//object creation has only changes in the arguments
 		if(!creations1.isEmpty() && creationCoveringTheEntireStatement2 != null) {
 			for(String creation1 : creations1) {

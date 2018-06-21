@@ -13891,7 +13891,7 @@
         "description": "Rename Method public settingNoopInjectionsAndQuery() : void renamed to public settingNoOpInjectionsAndQuery() : void in class org.apache.drill.exec.server.TestDrillbitResilience",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": null
     }, {
         "type": "Rename Method",
@@ -26045,8 +26045,8 @@
         "type": "Rename Method",
         "description": "Rename Method public shouldComputeIndexUpdatesOnAnEmptyTxState() : void renamed to public shouldComputeIndexUpdatesForScanOrSeekOnAnEmptyTxState() : void in class org.neo4j.kernel.impl.api.state.TxStateTest",
         "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
         "validators": null
     }, {
         "type": "Rename Method",
@@ -34949,7 +34949,7 @@
         "description": "Extract Method private isSourceOrHeader(file File) : boolean extracted from private buildSources(target ErlangTarget, context CompileContext, compilerOptions ErlangCompilerOptions, holder DirtyFilesHolder, outputConsumer BuildOutputConsumer, outputDir File, isTests boolean) : void in class org.intellij.erlang.jps.builder.ErlangBuilder",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Extract Method",

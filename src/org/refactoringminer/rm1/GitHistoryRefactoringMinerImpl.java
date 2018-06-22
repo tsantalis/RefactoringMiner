@@ -5,10 +5,14 @@ import gr.uom.java.xmi.UMLModelASTReader;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -16,7 +20,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -147,6 +155,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			String parentCommitId = populateWithGitHubAPI(cloneURL, currentCommitId, username, password, filesBefore, filesCurrent, renamedFilesHint);
 			File currentFolder = new File(projectFolder.getParentFile(), projectFolder.getName() + "-" + currentCommitId);
 			File parentFolder = new File(projectFolder.getParentFile(), projectFolder.getName() + "-" + parentCommitId);
+			if (!currentFolder.exists()) {	
+				downloadAndExtractZipFile(projectFolder, cloneURL, currentCommitId);
+			}
+			if (!parentFolder.exists()) {	
+				downloadAndExtractZipFile(projectFolder, cloneURL, parentCommitId);
+			}
 			if (currentFolder.exists() && parentFolder.exists()) {
 				UMLModel currentUMLModel = createModel(currentFolder, filesCurrent);
 				UMLModel parentUMLModel = createModel(parentFolder, filesBefore);
@@ -164,6 +178,35 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		handler.handle(currentCommitId, refactoringsAtRevision);
 
 		return refactoringsAtRevision;
+	}
+
+	private void downloadAndExtractZipFile(File projectFolder, String cloneURL, String commitId)
+			throws IOException {
+		String downloadLink = cloneURL.substring(0, cloneURL.indexOf(".git")) + "/archive/" + commitId + ".zip";
+		File destinationFile = new File(projectFolder.getParentFile(), projectFolder.getName() + "-" + commitId + ".zip");
+		logger.info(String.format("Downloading archive %s", downloadLink));
+		FileUtils.copyURLToFile(new URL(downloadLink), destinationFile, 10000, 10000);
+		logger.info(String.format("Unzipping archive %s", downloadLink));
+		java.util.zip.ZipFile zipFile = new ZipFile(destinationFile);
+		try {
+			Enumeration<? extends ZipEntry> entries = zipFile.entries();
+			while (entries.hasMoreElements()) {
+				ZipEntry entry = entries.nextElement();
+				File entryDestination = new File(projectFolder.getParentFile(),  entry.getName());
+				if (entry.isDirectory()) {
+					entryDestination.mkdirs();
+				} else {
+					entryDestination.getParentFile().mkdirs();
+					InputStream in = zipFile.getInputStream(entry);
+					OutputStream out = new FileOutputStream(entryDestination);
+					IOUtils.copy(in, out);
+					IOUtils.closeQuietly(in);
+					out.close();
+				}
+			}
+		} finally {
+			zipFile.close();
+		}
 	}
 
 	private String populateWithGitHubAPI(String cloneURL, String currentCommitId, String username, String password,

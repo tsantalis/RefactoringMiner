@@ -19,6 +19,10 @@ public class UMLClassRenameDiff implements Comparable<UMLClassRenameDiff> {
 		return renamedClass;
 	}
 
+	public boolean samePackage() {
+		return originalClass.getPackageName().equals(renamedClass.getPackageName());
+	}
+
 	//return true if "classMoveDiff" represents the move of a class that is inner to this.originalClass
 	public boolean isInnerClassMove(UMLClassMoveDiff classMoveDiff) {
 		if(this.originalClass.isInnerClass(classMoveDiff.getOriginalClass()) && this.renamedClass.isInnerClass(classMoveDiff.getMovedClass()))

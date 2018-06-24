@@ -6,8 +6,10 @@ import gr.uom.java.xmi.diff.UMLClassDiff;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
 public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInfoProvider {
 	private LocationInfo locationInfo;
@@ -271,6 +273,47 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
     	if(!hasSameKind(umlClass))
     		return false;
     	return true;
+    }
+
+    public boolean hasCommonAttributesAndOperations(UMLClass umlClass) {
+    	Set<UMLOperation> commonOperations = new LinkedHashSet<UMLOperation>();
+    	int totalOperations = 0;
+    	for(UMLOperation operation : operations) {
+    		if(!operation.isConstructor() && !operation.overridesObject() && !commonOperations.contains(operation)) {
+    			totalOperations++;
+	    		if(umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
+	    			commonOperations.add(operation);
+	    		}
+    		}
+    	}
+    	for(UMLOperation operation : umlClass.operations) {
+    		if(!operation.isConstructor() && !operation.overridesObject() && !commonOperations.contains(operation)) {
+    			totalOperations++;
+	    		if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
+	    			commonOperations.add(operation);
+	    		}
+    		}
+    	}
+    	Set<UMLAttribute> commonAttributes = new LinkedHashSet<UMLAttribute>();
+    	int totalAttributes = 0;
+    	for(UMLAttribute attribute : attributes) {
+    		if(!commonAttributes.contains(attribute)) {
+    			totalAttributes++;
+    			if(umlClass.containsAttributeIgnoringChangedType(attribute)) {
+    				commonAttributes.add(attribute);
+    			}
+    		}
+    	}
+    	for(UMLAttribute attribute : umlClass.attributes) {
+    		if(!commonAttributes.contains(attribute)) {
+    			totalAttributes++;
+	    		if(this.containsAttributeIgnoringChangedType(attribute)) {
+	    			commonAttributes.add(attribute);
+	    		}
+    		}
+    	}
+    	return commonOperations.size() > Math.floor(totalOperations/2.0) &&
+    			commonAttributes.size() > Math.floor(totalAttributes/2.0);
     }
 
     public boolean hasSameAttributesAndOperations(UMLClass umlClass) {

@@ -451,4 +451,34 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		LocationInfo info = getLocationInfo();
 		return info.codeRange();
 	}
+
+	public boolean overridesObject() {
+		return isEquals() || isHashCode() || isToString() || isClone() || isCompareTo();
+	}
+
+	private boolean isEquals() {
+		List<UMLType> parameterTypeList = getParameterTypeList();
+		return getName().equals("equals") && getReturnParameter().getType().equals("boolean") &&
+				parameterTypeList.size() == 1 && parameterTypeList.get(0).getClassType().equals("Object");
+	}
+
+	private boolean isHashCode() {
+		List<UMLType> parameterTypeList = getParameterTypeList();
+		return getName().equals("hashCode") && getReturnParameter().getType().equals("int") && parameterTypeList.size() == 0;
+	}
+
+	private boolean isToString() {
+		List<UMLType> parameterTypeList = getParameterTypeList();
+		return getName().equals("toString") && getReturnParameter().getType().equals("String") && parameterTypeList.size() == 0;
+	}
+
+	private boolean isClone() {
+		List<UMLType> parameterTypeList = getParameterTypeList();
+		return getName().equals("clone") && getReturnParameter().getType().equals("Object") && parameterTypeList.size() == 0;
+	}
+
+	private boolean isCompareTo() {
+		List<UMLType> parameterTypeList = getParameterTypeList();
+		return getName().equals("compareTo") && getReturnParameter().getType().equals("int") && parameterTypeList.size() == 1;
+	}
 }

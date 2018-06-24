@@ -17521,13 +17521,6 @@
     "author": "barreiro",
     "time": "7/6/15 3:34 PM",
     "refactorings": [{
-        "type": "Rename Class",
-        "description": "Rename Class org.hibernate.test.bytecode.enhancement.MostBasicEnhancementTest renamed to org.hibernate.test.bytecode.enhancement.basic.BasicInSessionTest",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
         "type": "Change Package",
         "description": "Change Package org.hibernate.test.bytecode.enhancement.entity.customer to org.hibernate.test.bytecode.enhancement.association",
         "comment": null,

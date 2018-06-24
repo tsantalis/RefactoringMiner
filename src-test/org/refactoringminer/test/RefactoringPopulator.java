@@ -32,7 +32,7 @@ public class RefactoringPopulator {
 		MoveMethod(1), MoveAttribute(2), InlineMethod(4), ExtractMethod(8), PushDownMethod(16), PushDownAttribute(
 				32), PullUpMethod(64), PullUpAttribute(128), ExtractInterface(256), ExtractSuperclass(512), MoveClass(
 						1024), ChangePackage(2048), RenameMethod(4096), ExtractAndMoveMethod(
-								8192), RenameClass(16384), MoveSourceFolder(32768), All(65535);
+								8192), RenameClass(16384), MoveSourceFolder(32768), MoveAndRenameClass(65536), All(131071);
 		private int value;
 
 		private Refactorings(int value) {

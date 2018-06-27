@@ -12632,13 +12632,6 @@
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
-    }, {
-        "type": "Move And Rename Class",
-        "description": "Move And Rename Class org.apache.cassandra.cql3.CreateTableTest moved and renamed to org.apache.cassandra.cql3.validation.entities.DateTypeTest",
-        "comment": "<p>I cannot find a compelling reason to accept this change. The functionalities of the two classes are dissimilar. Git detects another rename TimestampTest.java &rarr; DateTypeTest.java, which seems to be more reasonable (but still I can't vote for accepting that either)&nbsp;</p>",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Davood"
     }],
     "refDiffExecutionTime": 7672
 }, {
@@ -19452,7 +19445,7 @@
         "description": "Move Class com.hazelcast.client.impl.protocol.util.Int2ObjectHashMap.Supplier moved to com.hazelcast.util.function.Supplier",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Rename Method",
@@ -29471,7 +29464,7 @@
         "description": "Move Class com.addthis.hydra.job.spawn.SpawnBalancer.HostAndScore moved to com.addthis.hydra.job.spawn.balancer.HostAndScore",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Move Class",
@@ -29485,7 +29478,7 @@
         "description": "Move Class com.addthis.hydra.job.spawn.SpawnBalancer.HostScore moved to com.addthis.hydra.job.spawn.balancer.HostScore",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Move Class",
@@ -29513,14 +29506,14 @@
         "description": "Move Class com.addthis.hydra.job.spawn.SpawnBalancer.JobTaskItem moved to com.addthis.hydra.job.spawn.balancer.JobTaskItem",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Move Class",
         "description": "Move Class com.addthis.hydra.job.spawn.SpawnBalancer.JobTaskItemByHostMap moved to com.addthis.hydra.job.spawn.balancer.JobTaskItemByHostMap",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Move Method",
@@ -30082,6 +30075,13 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin"
+    }, {
+        "type": "Move Class",
+        "description": "Move Class com.addthis.hydra.job.spawn.SpawnBalancer.AutobalanceTask moved to com.addthis.hydra.job.spawn.balancer.AutobalanceTask",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1974
 }, {

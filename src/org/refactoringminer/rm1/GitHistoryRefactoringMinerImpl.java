@@ -115,7 +115,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		List<String> filesBefore = new ArrayList<String>();
 		List<String> filesCurrent = new ArrayList<String>();
 		Map<String, String> renamedFilesHint = new HashMap<String, String>();
-		gitService.fileTreeDiff(repository, currentCommit, filesBefore, filesCurrent, renamedFilesHint, true);
+		gitService.fileTreeDiff(repository, currentCommit, filesBefore, filesCurrent, renamedFilesHint);
 		// If no java files changed, there is no refactoring. Also, if there are
 		// only ADD's or only REMOVE's there is no refactoring
 		if (!filesBefore.isEmpty() && !filesCurrent.isEmpty() && currentCommit.getParentCount() > 0) {
@@ -145,15 +145,10 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	protected List<Refactoring> detectRefactorings(final RefactoringHandler handler, File projectFolder, String cloneURL, String currentCommitId) {
 		List<Refactoring> refactoringsAtRevision = Collections.emptyList();
 		try {
-			Properties prop = new Properties();
-			InputStream input = new FileInputStream("github-credentials.properties");
-			prop.load(input);
-			String username = prop.getProperty("username");
-			String password = prop.getProperty("password");
 			List<String> filesBefore = new ArrayList<String>();
 			List<String> filesCurrent = new ArrayList<String>();
 			Map<String, String> renamedFilesHint = new HashMap<String, String>();
-			String parentCommitId = populateWithGitHubAPI(cloneURL, currentCommitId, username, password, filesBefore, filesCurrent, renamedFilesHint);
+			String parentCommitId = populateWithGitHubAPI(cloneURL, currentCommitId, filesBefore, filesCurrent, renamedFilesHint);
 			File currentFolder = new File(projectFolder.getParentFile(), projectFolder.getName() + "-" + currentCommitId);
 			File parentFolder = new File(projectFolder.getParentFile(), projectFolder.getName() + "-" + parentCommitId);
 			if (!currentFolder.exists()) {	
@@ -210,8 +205,13 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 	}
 
-	private String populateWithGitHubAPI(String cloneURL, String currentCommitId, String username, String password,
+	private String populateWithGitHubAPI(String cloneURL, String currentCommitId,
 			List<String> filesBefore, List<String> filesCurrent, Map<String, String> renamedFilesHint) throws IOException {
+		Properties prop = new Properties();
+		InputStream input = new FileInputStream("github-credentials.properties");
+		prop.load(input);
+		String username = prop.getProperty("username");
+		String password = prop.getProperty("password");
 		String parentCommitId = null;
 		GitHub gitHub = null;
 		if (username != null && password != null) {

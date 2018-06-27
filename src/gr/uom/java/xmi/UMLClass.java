@@ -308,8 +308,11 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
     			commonAttributes.add(attribute);
     		}
     	}
-    	return commonOperations.size() > Math.floor(totalOperations/2.0) &&
-    			commonAttributes.size() > Math.floor(totalAttributes/2.0);
+    	if(this.isTestClass() && umlClass.isTestClass()) {
+    		return commonOperations.size() > Math.floor(totalOperations/2.0);
+    	}
+    	return (commonOperations.size() > Math.floor(totalOperations/2.0) && commonAttributes.size() > 2) ||
+    			(commonAttributes.size() > Math.floor(totalAttributes/2.0) && commonOperations.size() > 2);
     }
 
     public boolean hasSameAttributesAndOperations(UMLClass umlClass) {
@@ -482,6 +485,15 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
 		for(UMLType type : interfaces) {
 			if(implementedInterfaces.contains(type))
 				return true;
+		}
+		return false;
+	}
+
+	public boolean isTestClass() {
+		for(UMLOperation operation : operations) {
+			if(operation.hasTestAnnotation()) {
+				return true;
+			}
 		}
 		return false;
 	}

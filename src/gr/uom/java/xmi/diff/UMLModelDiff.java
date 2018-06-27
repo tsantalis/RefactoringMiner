@@ -316,7 +316,7 @@ public class UMLModelDiff {
    }
 
    private boolean conflictingMoveOfTopLevelClass(UMLClass removedClass, UMLClass addedClass) {
-	   if(!removedClass.isTopLevel() || !addedClass.isTopLevel()) {
+	   if(!removedClass.isTopLevel() && !addedClass.isTopLevel()) {
 		   //check if classMoveDiffList contains already a move for the outer class to a different target
 		   for(UMLClassMoveDiff diff : classMoveDiffList) {
 			   if((diff.getOriginalClass().getName().equals(removedClass.getPackageName()) &&
@@ -414,6 +414,18 @@ public class UMLModelDiff {
       List<UMLAttribute> addedAttributes = getAddedAttributesInCommonClasses();
       List<UMLAttribute> removedAttributes = getRemovedAttributesInCommonClasses();
       return checkForAttributeMoves(addedAttributes, removedAttributes);
+   }
+
+   private List<MoveAttributeRefactoring> checkForAttributeMovesBetweenRemovedAndAddedClasses() {
+	   List<UMLAttribute> addedAttributes = new ArrayList<UMLAttribute>();
+	   for(UMLClass addedClass : addedClasses) {
+		   addedAttributes.addAll(addedClass.getAttributes());
+	   }
+	   List<UMLAttribute> removedAttributes = new ArrayList<UMLAttribute>();
+	   for(UMLClass removedClass : removedClasses) {
+		   removedAttributes.addAll(removedClass.getAttributes());
+	   }
+	   return checkForAttributeMoves(addedAttributes, removedAttributes);
    }
 
    private List<MoveAttributeRefactoring> checkForAttributeMoves(List<UMLAttribute> addedAttributes, List<UMLAttribute> removedAttributes) {
@@ -746,6 +758,7 @@ public class UMLModelDiff {
       checkForExtractedAndMovedOperations();
       checkForOperationMovesIncludingAddedClasses();
       checkForOperationMovesIncludingRemovedClasses();
+      //checkForOperationMovesBetweenRemovedAndAddedClasses();
       refactorings.addAll(this.refactorings);
       return refactorings;
    }
@@ -856,6 +869,34 @@ public class UMLModelDiff {
       checkForOperationMoves(addedOperations, removedOperations);
    }
 
+   private void checkForOperationMovesBetweenRemovedAndAddedClasses() {
+	   Set<UMLType> interfacesImplementedByAddedClasses = new LinkedHashSet<UMLType>();
+	   for(UMLClass addedClass : addedClasses) {
+		   interfacesImplementedByAddedClasses.addAll(addedClass.getImplementedInterfaces());
+	   }
+	   Set<UMLType> interfacesImplementedByRemovedClasses = new LinkedHashSet<UMLType>();
+	   for(UMLClass removedClass : removedClasses) {
+		   interfacesImplementedByRemovedClasses.addAll(removedClass.getImplementedInterfaces());
+	   }
+	   Set<UMLType> interfaceIntersection = new LinkedHashSet<UMLType>(interfacesImplementedByAddedClasses);
+	   interfaceIntersection.retainAll(interfacesImplementedByRemovedClasses);
+	   List<UMLOperation> addedOperations = new ArrayList<UMLOperation>();
+	   for(UMLClass addedClass : addedClasses) {
+		   if(!addedClass.implementsInterface(interfaceIntersection)) {
+			   addedOperations.addAll(addedClass.getOperations());
+		   }
+	   }
+	   List<UMLOperation> removedOperations = new ArrayList<UMLOperation>();
+	   for(UMLClass removedClass : removedClasses) {
+		   if(!removedClass.implementsInterface(interfaceIntersection)) {
+			   removedOperations.addAll(removedClass.getOperations());
+		   }
+	   }
+	   if(removedOperations.size() <= 100 || addedOperations.size() <= 100) {
+		   checkForOperationMoves(addedOperations, removedOperations);
+	   }
+   }
+
    private void checkForOperationMoves(List<UMLOperation> addedOperations, List<UMLOperation> removedOperations) {
 	   if(addedOperations.size() <= removedOperations.size()) {
 	      for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
@@ -867,7 +908,7 @@ public class UMLModelDiff {
 	            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
 	            operationBodyMapper.getMappings();
 	            int mappings = operationBodyMapper.mappingsWithoutBlocks();
-	            if(mappings > 0 && mappings > operationBodyMapper.nonMappedElementsT1() && mappings > operationBodyMapper.nonMappedElementsT2()) {
+	            if(mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) {
 	               int exactMatches = operationBodyMapper.exactMatches();
 	               if(operationBodyMapperMap.containsKey(exactMatches)) {
 	                  List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
@@ -923,7 +964,7 @@ public class UMLModelDiff {
 	            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
 	            operationBodyMapper.getMappings();
 	            int mappings = operationBodyMapper.mappingsWithoutBlocks();
-	            if(mappings > 0 && mappings > operationBodyMapper.nonMappedElementsT1() && mappings > operationBodyMapper.nonMappedElementsT2()) {
+	            if(mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) {
 	               int exactMatches = operationBodyMapper.exactMatches();
 	               if(operationBodyMapperMap.containsKey(exactMatches)) {
 	                  List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
@@ -970,8 +1011,15 @@ public class UMLModelDiff {
 	      }
       }
    }
-   
-   private boolean movedMethodSignature(UMLOperation removedOperation, UMLOperation addedOperation) {
+
+    private boolean mappedElementsMoreThanNonMappedT1AndT2(int mappings, UMLOperationBodyMapper operationBodyMapper) {
+        int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();
+		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();
+		return (mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
+				(nonMappedElementsT1 == 0 && mappings > Math.floor(nonMappedElementsT2/2.0));
+    }
+
+    private boolean movedMethodSignature(UMLOperation removedOperation, UMLOperation addedOperation) {
 	   if(!addedOperation.isConstructor() &&
 	      !removedOperation.isConstructor() &&
 			   addedOperation.getName().equals(removedOperation.getName()) &&

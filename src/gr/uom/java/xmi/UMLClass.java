@@ -279,7 +279,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
     	Set<UMLOperation> commonOperations = new LinkedHashSet<UMLOperation>();
     	int totalOperations = 0;
     	for(UMLOperation operation : operations) {
-    		if(!operation.isConstructor() && !operation.overridesObject() && !commonOperations.contains(operation)) {
+    		if(!operation.isConstructor() && !operation.overridesObject()) {
     			totalOperations++;
 	    		if(umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
 	    			commonOperations.add(operation);
@@ -287,7 +287,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
     		}
     	}
     	for(UMLOperation operation : umlClass.operations) {
-    		if(!operation.isConstructor() && !operation.overridesObject() && !commonOperations.contains(operation)) {
+    		if(!operation.isConstructor() && !operation.overridesObject()) {
     			totalOperations++;
 	    		if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
 	    			commonOperations.add(operation);
@@ -297,19 +297,15 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
     	Set<UMLAttribute> commonAttributes = new LinkedHashSet<UMLAttribute>();
     	int totalAttributes = 0;
     	for(UMLAttribute attribute : attributes) {
-    		if(!commonAttributes.contains(attribute)) {
-    			totalAttributes++;
-    			if(umlClass.containsAttributeIgnoringChangedType(attribute)) {
-    				commonAttributes.add(attribute);
-    			}
-    		}
+			totalAttributes++;
+			if(umlClass.containsAttributeIgnoringChangedType(attribute)) {
+				commonAttributes.add(attribute);
+			}
     	}
     	for(UMLAttribute attribute : umlClass.attributes) {
-    		if(!commonAttributes.contains(attribute)) {
-    			totalAttributes++;
-	    		if(this.containsAttributeIgnoringChangedType(attribute)) {
-	    			commonAttributes.add(attribute);
-	    		}
+			totalAttributes++;
+    		if(this.containsAttributeIgnoringChangedType(attribute)) {
+    			commonAttributes.add(attribute);
     		}
     	}
     	return commonOperations.size() > Math.floor(totalOperations/2.0) &&
@@ -480,6 +476,14 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
 		int distance = StringDistance.editDistance(s1, s2);
 		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
 		return normalized;
+	}
+
+	public boolean implementsInterface(Set<UMLType> interfaces) {
+		for(UMLType type : interfaces) {
+			if(implementedInterfaces.contains(type))
+				return true;
+		}
+		return false;
 	}
 
 	public boolean importsType(String targetClass) {

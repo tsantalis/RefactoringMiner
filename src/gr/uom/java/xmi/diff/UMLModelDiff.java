@@ -366,7 +366,7 @@ public class UMLModelDiff {
    }
 
    private boolean innerClassWithTheSameName(UMLClass removedClass, UMLClass addedClass) {
-	   if(!removedClass.isTopLevel() || !addedClass.isTopLevel()) {
+	   if(!removedClass.isTopLevel() && !addedClass.isTopLevel()) {
 		   String removedClassName = removedClass.getName();
 		   String removedName = removedClassName.substring(removedClassName.lastIndexOf(".")+1, removedClassName.length());
 		   String addedClassName = addedClass.getName();
@@ -882,19 +882,37 @@ public class UMLModelDiff {
 	   interfaceIntersection.retainAll(interfacesImplementedByRemovedClasses);
 	   List<UMLOperation> addedOperations = new ArrayList<UMLOperation>();
 	   for(UMLClass addedClass : addedClasses) {
-		   if(!addedClass.implementsInterface(interfaceIntersection)) {
+		   if(!addedClass.implementsInterface(interfaceIntersection) && !outerClassMovedOrRenamed(addedClass)) {
 			   addedOperations.addAll(addedClass.getOperations());
 		   }
 	   }
 	   List<UMLOperation> removedOperations = new ArrayList<UMLOperation>();
 	   for(UMLClass removedClass : removedClasses) {
-		   if(!removedClass.implementsInterface(interfaceIntersection)) {
+		   if(!removedClass.implementsInterface(interfaceIntersection) && !outerClassMovedOrRenamed(removedClass)) {
 			   removedOperations.addAll(removedClass.getOperations());
 		   }
 	   }
 	   if(removedOperations.size() <= 100 || addedOperations.size() <= 100) {
 		   checkForOperationMoves(addedOperations, removedOperations);
 	   }
+   }
+
+   private boolean outerClassMovedOrRenamed(UMLClass umlClass) {
+	   if(!umlClass.isTopLevel()) {
+		   for(UMLClassMoveDiff diff : classMoveDiffList) {
+			   if(diff.getOriginalClass().getName().equals(umlClass.getPackageName()) ||
+					   diff.getMovedClass().getName().equals(umlClass.getPackageName())) {
+				   return true;
+			   }
+		   }
+		   for(UMLClassRenameDiff diff : classRenameDiffList) {
+			   if(diff.getOriginalClass().getName().equals(umlClass.getPackageName()) ||
+					   diff.getRenamedClass().getName().equals(umlClass.getPackageName())) {
+				   return true;
+			   }
+		   }
+	   }
+	   return false;
    }
 
    private void checkForOperationMoves(List<UMLOperation> addedOperations, List<UMLOperation> removedOperations) {

@@ -309,7 +309,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
     		}
     	}
     	if(this.isTestClass() && umlClass.isTestClass()) {
-    		return commonOperations.size() > Math.floor(totalOperations/2.0);
+    		return commonOperations.size() > Math.floor(totalOperations/2.0) || commonOperations.containsAll(this.operations);
     	}
     	return (commonOperations.size() > Math.floor(totalOperations/2.0) && commonAttributes.size() > 2) ||
     			(commonAttributes.size() > Math.floor(totalAttributes/2.0) && commonOperations.size() > 2);

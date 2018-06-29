@@ -3289,14 +3289,14 @@
         "type": "Rename Class",
         "description": "Rename Class org.geoserver.importer.transform.PostVectorTransform renamed to org.geoserver.importer.transform.PreTransform",
         "comment": null,
-        "validation": "TP",
+        "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Rename Class",
         "description": "Rename Class org.geoserver.importer.transform.PreVectorTransform renamed to org.geoserver.importer.transform.PostTransform",
         "comment": null,
-        "validation": "TP",
+        "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
     }, {
@@ -12187,220 +12187,220 @@
     }, {
         "type": "Move Method",
         "description": "Move Method public testContainsKeyAndContainsWithIndexOnMapKey() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testContainsKeyAndContainsWithIndexOnMapKey() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-        "comment": "<p>Merge class</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.ContainsRelationTest<br />org.apache.cassandra.cql3.StaticColumnsQueryTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.SelectTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testContainsKeyAndContainsWithIndexOnMapValue() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testContainsKeyAndContainsWithIndexOnMapValue() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-        "comment": "<p>Merge class</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.ContainsRelationTest<br />org.apache.cassandra.cql3.StaticColumnsQueryTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.SelectTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testFilterForContains() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testFilterForContains() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-        "comment": "<p>Merge class</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.ContainsRelationTest<br />org.apache.cassandra.cql3.StaticColumnsQueryTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.SelectTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testIndexLookupWithClusteringPrefix() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testIndexLookupWithClusteringPrefix() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-        "comment": "<p>class ContainsRelationTest is deleted in the base version and class SelectTest is added in the refactored versions. Most of the methods in ContainsRelationTest are moved to class SelectTest. Thus it is more like move and rename class.</p><p>Davood &amp; Matin: It seems to be a merge</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.ContainsRelationTest<br />org.apache.cassandra.cql3.StaticColumnsQueryTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.SelectTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Laleh, Davood"
+        "validators": "Matin, Laleh, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testListContains() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testListContains() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-        "comment": "<p>Merge class</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.ContainsRelationTest<br />org.apache.cassandra.cql3.StaticColumnsQueryTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.SelectTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testListContainsWithFiltering() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testListContainsWithFiltering() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-        "comment": "<p>Merge class</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.ContainsRelationTest<br />org.apache.cassandra.cql3.StaticColumnsQueryTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.SelectTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin"
+        "validators": "Matin, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testMapKeyContains() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testMapKeyContains() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-        "comment": "<p>Merge class</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.ContainsRelationTest<br />org.apache.cassandra.cql3.StaticColumnsQueryTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.SelectTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testMapValueContains() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testMapValueContains() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-        "comment": "<p>Merge class</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.ContainsRelationTest<br />org.apache.cassandra.cql3.StaticColumnsQueryTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.SelectTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testQueryMultipleIndexTypes() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testQueryMultipleIndexTypes() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-        "comment": "<p>Merge class</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.ContainsRelationTest<br />org.apache.cassandra.cql3.StaticColumnsQueryTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.SelectTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testSetContains() : void from class org.apache.cassandra.cql3.ContainsRelationTest to public testSetContains() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-        "comment": "<p>Merge class</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.ContainsRelationTest<br />org.apache.cassandra.cql3.StaticColumnsQueryTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.SelectTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method private removeQuotes(indexName String) : String from class org.apache.cassandra.cql3.CreateIndexStatementTest to private removeQuotes(indexName String) : String from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-        "comment": "Possible move and rename ro merge class",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateIndexStatementTest<br />org.apache.cassandra.cql3.IndexedValuesValidationTest<br />merged to<br />org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testCreateAndDropIndex() : void from class org.apache.cassandra.cql3.CreateIndexStatementTest to public testCreateAndDropIndex() : void from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-        "comment": "Possible move and rename ro merge class",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateIndexStatementTest<br />org.apache.cassandra.cql3.IndexedValuesValidationTest<br />merged to<br />org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testCreateAndDropIndexWithCamelCaseIdentifier() : void from class org.apache.cassandra.cql3.CreateIndexStatementTest to public testCreateAndDropIndexWithCamelCaseIdentifier() : void from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-        "comment": "Possible move and rename ro merge class",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateIndexStatementTest<br />org.apache.cassandra.cql3.IndexedValuesValidationTest<br />merged to<br />org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testCreateAndDropIndexWithQuotedIdentifier() : void from class org.apache.cassandra.cql3.CreateIndexStatementTest to public testCreateAndDropIndexWithQuotedIdentifier() : void from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-        "comment": "Possible move and rename ro merge class",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateIndexStatementTest<br />org.apache.cassandra.cql3.IndexedValuesValidationTest<br />merged to<br />org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testCQL3PartitionKeyOnlyTable() : void from class org.apache.cassandra.cql3.CreateTableTest to public testCQL3PartitionKeyOnlyTable() : void from class org.apache.cassandra.cql3.validation.operations.CreateTest",
-        "comment": "<p>Possible merge</p><p>Nikos: This is a merge of multiple test classes to one.</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateTableTest<br />org.apache.cassandra.cql3.CreateTriggerStatementTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.CreateTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method private assertTriggerExists(name String, clazz Class) : void from class org.apache.cassandra.cql3.CreateTriggerStatementTest to private assertTriggerExists(name String, clazz Class) : void from class org.apache.cassandra.cql3.validation.operations.CreateTest",
-        "comment": "<p>This seems to be a rename class!</p><p>Nikos: This is a merge of multiple test classes to one.</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateTableTest<br />org.apache.cassandra.cql3.CreateTriggerStatementTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.CreateTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testCreateTrigger() : void from class org.apache.cassandra.cql3.CreateTriggerStatementTest to public testCreateTrigger() : void from class org.apache.cassandra.cql3.validation.operations.CreateTest",
-        "comment": "<p>This seems to be a rename class!</p><p>Nikos: This is a merge of multiple test classes to one.</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateTableTest<br />org.apache.cassandra.cql3.CreateTriggerStatementTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.CreateTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testCreateTriggerIfNotExists() : void from class org.apache.cassandra.cql3.CreateTriggerStatementTest to public testCreateTriggerIfNotExists() : void from class org.apache.cassandra.cql3.validation.operations.CreateTest",
-        "comment": "<p>This seems to be a rename class!</p><p>Nikos: This is a merge of multiple test classes to one.</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateTableTest<br />org.apache.cassandra.cql3.CreateTriggerStatementTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.CreateTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testDropTrigger() : void from class org.apache.cassandra.cql3.CreateTriggerStatementTest to public testDropTrigger() : void from class org.apache.cassandra.cql3.validation.operations.CreateTest",
-        "comment": "<p>This seems to be a rename class!</p><p>Nikos: This is a merge of multiple test classes to one.</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateTableTest<br />org.apache.cassandra.cql3.CreateTriggerStatementTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.CreateTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testDropTriggerIfExists() : void from class org.apache.cassandra.cql3.CreateTriggerStatementTest to public testDropTriggerIfExists() : void from class org.apache.cassandra.cql3.validation.operations.CreateTest",
-        "comment": "<p>This seems to be rename class!</p><p>Nikos: This is a merge of multiple test classes to one.</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateTableTest<br />org.apache.cassandra.cql3.CreateTriggerStatementTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.CreateTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public augment(key ByteBuffer, update ColumnFamily) : Collection from class org.apache.cassandra.cql3.CreateTriggerStatementTest.TestTrigger to public augment(key ByteBuffer, update ColumnFamily) : Collection from class org.apache.cassandra.cql3.validation.operations.CreateTest.TestTrigger",
-        "comment": null,
+        "comment": "<p>org.apache.cassandra.cql3.CreateTableTest<br />org.apache.cassandra.cql3.CreateTriggerStatementTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.CreateTest</p><p>Inner class org.apache.cassandra.cql3.CreateTriggerStatementTest.TestTrigger was also merged</p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Move Method",
         "description": "Move Method public failInsert(insertCQL String, args Object[]) : void from class org.apache.cassandra.cql3.IndexedValuesValidationTest to public failInsert(insertCQL String, args Object[]) : void from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-        "comment": "<p>It seems that several classes are merged into&nbsp;SecondaryIndexTest</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateIndexStatementTest<br />org.apache.cassandra.cql3.IndexedValuesValidationTest<br />merged to<br />org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public succeedInsert(insertCQL String, args Object[]) : void from class org.apache.cassandra.cql3.IndexedValuesValidationTest to public succeedInsert(insertCQL String, args Object[]) : void from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-        "comment": "<p>Merge</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateIndexStatementTest<br />org.apache.cassandra.cql3.IndexedValuesValidationTest<br />merged to<br />org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testCompactTableWithValueOver64k() : void from class org.apache.cassandra.cql3.IndexedValuesValidationTest to public testCompactTableWithValueOver64k() : void from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-        "comment": "<p>Merge</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateIndexStatementTest<br />org.apache.cassandra.cql3.IndexedValuesValidationTest<br />merged to<br />org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testIndexOnClusteringColumnInsertPartitionKeyAndClusteringsOver64k() : void from class org.apache.cassandra.cql3.IndexedValuesValidationTest to public testIndexOnClusteringColumnInsertPartitionKeyAndClusteringsOver64k() : void from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-        "comment": "<p>Merge</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateIndexStatementTest<br />org.apache.cassandra.cql3.IndexedValuesValidationTest<br />merged to<br />org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testIndexOnClusteringColumnInsertValueOver64k() : void from class org.apache.cassandra.cql3.IndexedValuesValidationTest to public testIndexOnClusteringColumnInsertValueOver64k() : void from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-        "comment": "<p>Merge</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateIndexStatementTest<br />org.apache.cassandra.cql3.IndexedValuesValidationTest<br />merged to<br />org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testIndexOnCollectionKeyInsertPartitionKeyAndClusteringOver64k() : void from class org.apache.cassandra.cql3.IndexedValuesValidationTest to public testIndexOnCollectionKeyInsertPartitionKeyAndClusteringOver64k() : void from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-        "comment": "<p>Merge</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateIndexStatementTest<br />org.apache.cassandra.cql3.IndexedValuesValidationTest<br />merged to<br />org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testIndexOnCollectionValueInsertPartitionKeyAndCollectionKeyOver64k() : void from class org.apache.cassandra.cql3.IndexedValuesValidationTest to public testIndexOnCollectionValueInsertPartitionKeyAndCollectionKeyOver64k() : void from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-        "comment": "<p>Merge</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateIndexStatementTest<br />org.apache.cassandra.cql3.IndexedValuesValidationTest<br />merged to<br />org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testIndexOnCompositeValueOver64k() : void from class org.apache.cassandra.cql3.IndexedValuesValidationTest to public testIndexOnCompositeValueOver64k() : void from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-        "comment": "<p>Merge</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateIndexStatementTest<br />org.apache.cassandra.cql3.IndexedValuesValidationTest<br />merged to<br />org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testIndexOnFullCollectionEntryInsertCollectionValueOver64k() : void from class org.apache.cassandra.cql3.IndexedValuesValidationTest to public testIndexOnFullCollectionEntryInsertCollectionValueOver64k() : void from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-        "comment": "<p>Merge</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateIndexStatementTest<br />org.apache.cassandra.cql3.IndexedValuesValidationTest<br />merged to<br />org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testIndexOnPartitionKeyInsertValueOver64k() : void from class org.apache.cassandra.cql3.IndexedValuesValidationTest to public testIndexOnPartitionKeyInsertValueOver64k() : void from class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-        "comment": "<p>Merge</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateIndexStatementTest<br />org.apache.cassandra.cql3.IndexedValuesValidationTest<br />merged to<br />org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testTokenFunctionWithCompoundPartitionAndClusteringCols() : void from class org.apache.cassandra.cql3.SelectWithTokenFunctionTest to public testTokenFunctionWithCompoundPartitionAndClusteringCols() : void from class org.apache.cassandra.cql3.validation.operations.SelectOrderedPartitionerTest",
@@ -12467,17 +12467,17 @@
     }, {
         "type": "Move Method",
         "description": "Move Method public testSingleClustering() : void from class org.apache.cassandra.cql3.StaticColumnsQueryTest to public testSingleClustering() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-        "comment": "<p>Merge</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.ContainsRelationTest<br />org.apache.cassandra.cql3.StaticColumnsQueryTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.SelectTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testSingleClusteringReversed() : void from class org.apache.cassandra.cql3.StaticColumnsQueryTest to public testSingleClusteringReversed() : void from class org.apache.cassandra.cql3.validation.operations.SelectTest",
-        "comment": "<p>Merge</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.ContainsRelationTest<br />org.apache.cassandra.cql3.StaticColumnsQueryTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.SelectTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public testNegativeTimestamps() : void from class org.apache.cassandra.cql3.TimestampTest to public testNegativeTimestamps() : void from class org.apache.cassandra.cql3.validation.entities.TimestampTest",
@@ -12600,8 +12600,8 @@
     }, {
         "type": "Move Method",
         "description": "Move Method private assertTriggerDoesNotExists(name String, clazz Class) : void from class org.apache.cassandra.cql3.CreateTriggerStatementTest to private assertTriggerDoesNotExists(name String, clazz Class) : void from class org.apache.cassandra.cql3.validation.operations.CreateTest",
-        "comment": "<p>Seems to be rename class.</p><p>Move method can also be correct, because of&nbsp;Assert.assertFalse in this method</p><p>Nikos: This is a merge of multiple test classes to one.</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateTableTest<br />org.apache.cassandra.cql3.CreateTriggerStatementTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.CreateTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood, Nikos"
     }, {
@@ -12614,10 +12614,10 @@
     }, {
         "type": "Move Attribute",
         "description": "Move Attribute private TOO_BIG : int from class org.apache.cassandra.cql3.IndexedValuesValidationTest to class org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
-        "comment": "<p>Merge class</p>",
-        "validation": "TP",
+        "comment": "<p>org.apache.cassandra.cql3.CreateIndexStatementTest<br />org.apache.cassandra.cql3.IndexedValuesValidationTest<br />merged to<br />org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Class",
         "description": "Move Class org.apache.cassandra.cql3.TupleTypeTest moved to org.apache.cassandra.cql3.validation.entities.TupleTypeTest",
@@ -12632,6 +12632,48 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.apache.cassandra.cql3.TimestampTest moved to org.apache.cassandra.cql3.validation.entities.TimestampTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.apache.cassandra.cql3.CollectionsTest moved to org.apache.cassandra.cql3.validation.entities.CollectionsTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class org.apache.cassandra.cql3.CreateIndexStatementTest moved and renamed to org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest",
+        "comment": "<p>org.apache.cassandra.cql3.CreateIndexStatementTest<br />org.apache.cassandra.cql3.IndexedValuesValidationTest<br />merged to<br />org.apache.cassandra.cql3.validation.entities.SecondaryIndexTest</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class org.apache.cassandra.cql3.CreateTableTest moved and renamed to org.apache.cassandra.cql3.validation.operations.CreateTest",
+        "comment": "<p>org.apache.cassandra.cql3.CreateTableTest<br />org.apache.cassandra.cql3.CreateTriggerStatementTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.CreateTest</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class org.apache.cassandra.cql3.SelectWithTokenFunctionTest moved and renamed to org.apache.cassandra.cql3.validation.operations.SelectOrderedPartitionerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class org.apache.cassandra.cql3.ContainsRelationTest moved and renamed to org.apache.cassandra.cql3.validation.operations.SelectTest",
+        "comment": "<p>org.apache.cassandra.cql3.ContainsRelationTest<br />org.apache.cassandra.cql3.StaticColumnsQueryTest<br />merged to<br />org.apache.cassandra.cql3.validation.operations.SelectTest</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 7672
 }, {

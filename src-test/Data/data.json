@@ -3304,14 +3304,14 @@
         "description": "Pull Up Method package error(tx VectorTransform, e Exception) : void from class org.geoserver.importer.transform.VectorTransformChain to protected error(tx ImportTransform, e Exception) : void from class org.geoserver.importer.transform.TransformChain",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method package filter(transforms List, type Class) : List from class org.geoserver.importer.transform.VectorTransformChain to protected filter(transforms List, type Class) : List from class org.geoserver.importer.transform.TransformChain",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }],
     "refDiffExecutionTime": 6443
@@ -11702,6 +11702,195 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package cHashMap : HashMap from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testHashMapChaining",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package aHeapMin : BinaryHeap.BinaryHeapArray from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testMinHeapArray",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package redBlackTree : BinarySearchTree from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testRedBlackTree",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package avlTree : BinarySearchTree from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testAVLTree",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package linkedQueue : Queue.LinkedQueue from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testLinkedQueue",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package bTree : BTree from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testBTree",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package arrayQueue : Queue.ArrayQueue from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testArrayQueue",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package arrayList : List.ArrayList from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testArrayList",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package tHeapMax : BinaryHeap.BinaryHeapTree from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testMaxHeapTree",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package radixTrie : RadixTrie from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testRadixTrie",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package skipList : SkipList from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testSkipList",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package hamt : HashArrayMappedTrie from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testHAMT",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package treeMap : TreeMap from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testTreeMap",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package trie : Trie from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testTrie",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package javaSkipList : NavigableSet from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testJavaSkipList",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package splayTree : BinarySearchTree from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testSplayTree",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package linkedStack : Stack.LinkedStack from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testLinkedStack",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package pHashMap : HashMap from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testHashMapProbing",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package arrayStack : Stack.ArrayStack from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testArrayStack",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package trieMap : TrieMap from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testTrieMap",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package bst : BinarySearchTree from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testBST",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package aHeapMax : BinaryHeap.BinaryHeapArray from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testMaxHeapArray",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package linkedList : List.LinkedList from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testLinkedList",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package tHeapMin : BinaryHeap.BinaryHeapTree from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testMinHeapTree",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package patriciaTrie : PatriciaTrie from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testPatriciaTrie",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package skipListMap : SkipListMap from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testSkipListMap",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package treap : BinarySearchTree from class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming to class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming.testTreap",
+        "comment": "the target did not exist in the previous revision",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 644
 }, {
@@ -15395,6 +15584,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method package createHashGenerator(hashChannel Optional, partitioningChannels List, types List) : HashGenerator from class com.facebook.presto.operator.HashGenerator to package createHashPartitionGenerator(hashChannel Optional, partitioningChannels List, types List) : PartitionGenerator from class com.facebook.presto.operator.PartitionGenerator",
+        "comment": "<p>Method createHashGenerator is pulled up to new super-interface PartitionGenerator extended by HashGenerator.<br />In addition, the method is renamed and the return type is changed to that of the super-interface PartitionGenerator.</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3382
 }, {

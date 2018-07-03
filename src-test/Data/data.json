@@ -4617,13 +4617,6 @@
         "detectionTools": "RefDiff",
         "validators": "Matin"
     }, {
-        "type": "Extract And Move Method",
-        "description": "Extract And Move Method public setGraphHopperStorage(ghStorage GraphHopperStorage) : void extracted from protected importData() : DataReader in class com.graphhopper.reader.OSMReaderTest.GraphHopperTest & moved to class com.graphhopper.GraphHopper",
-        "comment": "<p>added</p><p>It seems to be a rename method!</p>",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Matin, Davood"
-    }, {
         "type": "Rename Method",
         "description": "Rename Method package calcPathViaQuery(graph Graph, fromLat double, fromLon double, toLat double, toLon double) : Path renamed to package calcPathViaQuery_(ghStorage GraphHopperStorage, fromLat double, fromLon double, toLat double, toLon double) : Path in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
         "comment": null,

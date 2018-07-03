@@ -383,7 +383,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 			for(int i=0; i<thisParameterTypes.size(); i++) {
 				UMLType thisParameterType = thisParameterTypes.get(i);
 				UMLType otherParameterType = otherParameterTypes.get(i);
-				if(thisParameterType.equals(otherParameterType) || (thisParameterType.getClassType().equals(otherParameterType.getClassType()) && thisParameterType.getArrayDimension() == otherParameterType.getArrayDimension())) {
+				if(thisParameterType.equals(otherParameterType) || thisParameterType.equalsWithSubType(otherParameterType) ||
+						(thisParameterType.getClassType().equals(otherParameterType.getClassType()) && thisParameterType.getArrayDimension() == otherParameterType.getArrayDimension())) {
 					commonParameterTypes++;
 				}
 				else {

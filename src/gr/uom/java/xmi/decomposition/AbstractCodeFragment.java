@@ -133,6 +133,10 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return false;
 	}
 
+	public void resetArgumentization() {
+		this.codeFragmentAfterReplacingParametersWithArguments = getString();
+	}
+
 	public ObjectCreation creationCoveringEntireFragment() {
 		Map<String, ObjectCreation> creationMap = getCreationMap();
 		String statement = getString();

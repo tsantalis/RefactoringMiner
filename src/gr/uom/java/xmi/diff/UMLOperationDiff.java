@@ -37,34 +37,7 @@ public class UMLOperationDiff {
 		if(!removedOperation.getParameters().equals(addedOperation.getParameters())) {
 			if(!removedOperation.equalReturnParameter(addedOperation))
 				returnTypeChanged = true;
-			for(UMLParameter parameter1 : removedOperation.getParameters()) {
-				if(!parameter1.getKind().equals("return")) {
-					boolean found = false;
-					for(UMLParameter parameter2 : addedOperation.getParameters()) {
-						if(parameter1.equalsIncludingName(parameter2)) {
-							found = true;
-							break;
-						}
-					}
-					if(!found) {
-						this.removedParameters.add(parameter1);
-					}
-				}
-			}
-			for(UMLParameter parameter1 : addedOperation.getParameters()) {
-				if(!parameter1.getKind().equals("return")) {
-					boolean found = false;
-					for(UMLParameter parameter2 : removedOperation.getParameters()) {
-						if(parameter1.equalsIncludingName(parameter2)) {
-							found = true;
-							break;
-						}
-					}
-					if(!found) {
-						this.addedParameters.add(parameter1);
-					}
-				}
-			}
+			updateAddedRemovedParameters(removedOperation, addedOperation);
 			for(Iterator<UMLParameter> removedParameterIterator = removedParameters.iterator(); removedParameterIterator.hasNext();) {
 				UMLParameter removedParameter = removedParameterIterator.next();
 				for(Iterator<UMLParameter> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
@@ -79,6 +52,41 @@ public class UMLOperationDiff {
 				}
 			}
 		}
+	}
+
+	private void updateAddedRemovedParameters(UMLOperation removedOperation, UMLOperation addedOperation) {
+		for(UMLParameter parameter1 : removedOperation.getParameters()) {
+			if(!parameter1.getKind().equals("return")) {
+				boolean found = false;
+				for(UMLParameter parameter2 : addedOperation.getParameters()) {
+					if(parameter1.equalsIncludingName(parameter2)) {
+						found = true;
+						break;
+					}
+				}
+				if(!found) {
+					this.removedParameters.add(parameter1);
+				}
+			}
+		}
+		for(UMLParameter parameter1 : addedOperation.getParameters()) {
+			if(!parameter1.getKind().equals("return")) {
+				boolean found = false;
+				for(UMLParameter parameter2 : removedOperation.getParameters()) {
+					if(parameter1.equalsIncludingName(parameter2)) {
+						found = true;
+						break;
+					}
+				}
+				if(!found) {
+					this.addedParameters.add(parameter1);
+				}
+			}
+		}
+	}
+
+	public List<UMLParameterDiff> getParameterDiffList() {
+		return parameterDiffList;
 	}
 
 	public UMLOperation getRemovedOperation() {

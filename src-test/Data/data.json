@@ -9495,21 +9495,21 @@
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method public matches(stacks Collection) : RecipeMatch.Match extracted from public matches(stacks ItemStack[]) : RecipeMatch.Match in class tconstruct.library.modifiers.Modifier",
-        "comment": "<p>For me, it is an 'extract class' refactoring. Class RecipeMatchRegistry is extracted from Modifier.</p><p>See that RecipeMatchRegistry is an attribute of class Modifier in the refactored version, and the 3 addItem(..) methods in the refactored version of Modifier are now delegating to the 3 addItem(..) in RecipeMatchRegistry.</p><p>Nikos: This method has been extracted and moved to newly added class <span class='blob-code-inner'><span class='pl-en'>RecipeMatchRegistry. Consider as CTP<br /></span></span></p>",
-        "validation": "CTP",
+        "comment": "<p>For me, it is an 'extract class' refactoring. Class RecipeMatchRegistry is extracted from Modifier.</p><p>See that RecipeMatchRegistry is an attribute of class Modifier in the refactored version, and the 3 addItem(..) methods in the refactored version of Modifier are now delegating to the 3 addItem(..) in RecipeMatchRegistry.</p><p><span class='blob-code-inner'><span class='pl-en'>matches(stacks ItemStack[]) : RecipeMatch.Match<br />has been extracted and moved from Modifier to RecipeMatchRegistry<br /><br />matches(stacks Collection) : RecipeMatch.Match<br />is a newly added method that simply delegates to matches(stacks ItemStack[]) : RecipeMatch.Match<br /></span></span></p><p><span class='blob-code-inner'>  public RecipeMatch.Match matches(Collection&lt;ItemStack&gt; stacks) {<br />  return matches(stacks.toArray(new ItemStack[stacks.size()]));<br />  }</span></p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Laleh, Nikos"
     }, {
         "type": "Move Class",
         "description": "Move Class tconstruct.library.modifiers.RecipeMatch.Match moved to tconstruct.library.mantle.RecipeMatch.Match",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>Outer class RecipeMatch is moved along with inner class Match</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Laleh"
+        "validators": "Laleh, Nikos"
     }, {
         "type": "Extract Method",
         "description": "Extract Method public addItem(oredictItem String) : void extracted from public addItem(item Item) : void in class tconstruct.library.modifiers.Modifier",
-        "comment": "<p>For me, it is an 'extract class' refactoring. Class RecipeMatchRegistry is extracted from Modifier.</p><p>See that RecipeMatchRegistry is an attribute of class Modifier in the refactored version, and the 3 addItem(..) methods in the refactored version of Modifier are now delegating to the 3 addItem(..) in RecipeMatchRegistry.</p><p>Nikos: After refactoring method delegates to {<span class='blob-code-inner'><span class='x x-first'>modifierItems</span><span class='pl-k x x-last'>.</span>addItem(oredictItem String)</span>}<br />Modifier. addItem(oredictItem String) {<span class='blob-code-inner'>addItem(oredictItem<span class='x x-first'>, </span><span class='pl-c1 x x-last'>1</span>);</span> }<br />RecipeMatchRegistry.addItem(item Item) {<span class='blob-code-inner'>addItem(item, <span class='pl-c1'>1</span>, <span class='pl-c1'>1</span>);</span>}</p>",
+        "comment": "<p>For me, it is an 'extract class' refactoring. Class RecipeMatchRegistry is extracted from Modifier.</p><p>See that RecipeMatchRegistry is an attribute of class Modifier in the refactored version, and the 3 addItem(..) methods in the refactored version of Modifier are now delegating to the 3 addItem(..) in RecipeMatchRegistry.</p><p>After refactoring method delegates to&nbsp;<span class='blob-code-inner'><span class='pl-smi x x-first x-last'>RecipeMatchRegistry</span> </span>through field modifierItems {<span class='blob-code-inner'><span class='x x-first'>modifierItems</span><span class='pl-k x x-last'>.</span>addItem(oredictItem String)</span>}<br /><br />Modifier. addItem(oredictItem String) {<span class='blob-code-inner'>addItem(oredictItem<span class='x x-first'>, </span><span class='pl-c1 x x-last'>1</span>);</span> }<br />RecipeMatchRegistry.addItem(item Item) {<span class='blob-code-inner'>addItem(item, <span class='pl-c1'>1</span>, <span class='pl-c1'>1</span>);</span>}</p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Davood, Nikos"
@@ -9530,23 +9530,23 @@
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method public addItem(oredictItem String) : void extracted from public addItem(oredictItem String) : void in class tconstruct.library.modifiers.Modifier",
-        "comment": "<p>For me, it is an 'extract class' refactoring. Class&nbsp;<span class='blob-code-inner'><span class='pl-en'>RecipeMatchRegistry</span></span> is extracted from Modifier.</p><p>See that <span class='blob-code-inner'><span class='pl-smi x x-first x-last'>RecipeMatchRegistry is an attribute of class&nbsp; Modifier in the refactored version, and the&nbsp; 3 </span></span><span class='blob-code-inner'><span class='pl-en'>addItem(..)</span></span><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'> methods in the refactored version of Modifier are now </span></span></span><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>delegating to the 3 addItem(..) in RecipeMatchRegistry.</span></span></span></p><p><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>Nikos: This method has been extracted and moved to newly added class RecipeMatchRegistry. Consider as CTP</span></span></span></p>",
+        "comment": "<p>For me, it is an 'extract class' refactoring. Class&nbsp;<span class='blob-code-inner'><span class='pl-en'>RecipeMatchRegistry</span></span> is extracted from Modifier.</p><p>See that <span class='blob-code-inner'><span class='pl-smi x x-first x-last'>RecipeMatchRegistry is an attribute of class&nbsp; Modifier in the refactored version, and the&nbsp; 3 </span></span><span class='blob-code-inner'><span class='pl-en'>addItem(..)</span></span><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'> methods in the refactored version of Modifier are now </span></span></span><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>delegating to the 3 addItem(..) in RecipeMatchRegistry.</span></span></span></p><p><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>This can be considered as a Move Method, because after refactoring the original method delegates to class RecipeMatchRegistry through field <span class='x x-first'>modifierItems</span><br />{<span class='x x-first'>modifierItems</span><span class='pl-k x x-last'>.</span>addItem(oredictItem);}<br /></span></span></span></p><p><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>- public void addItem(String oredictItem) {<br />- addItem(oredictItem, 1);<br />- }</span></span></span></p><p><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'> public void addItem(String oredictItem) {<br /> addItem(oredictItem, 1, 1);<br /> }</span></span></span></p>",
         "validation": "CTP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Davood, Nikos"
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method public addItem(block Block, amountMatched int) : void extracted from public addItem(block Block, count int) : void in class tconstruct.library.modifiers.Modifier",
-        "comment": "<p>For me, it is an 'extract class' refactoring. Class&nbsp;<span class='blob-code-inner'><span class='pl-en'>RecipeMatchRegistry</span></span> is extracted from Modifier.</p><p>See that <span class='blob-code-inner'><span class='pl-smi x x-first x-last'>RecipeMatchRegistry is an attribute of class&nbsp; Modifier in the refactored version, and the&nbsp; 3 </span></span><span class='blob-code-inner'><span class='pl-en'>addItem(..)</span></span><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'> methods in the refactored version of Modifier are now </span></span></span><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>delegating to the 3 addItem(..) in RecipeMatchRegistry.</span></span></span></p><p><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>Nikos: This method has been extracted and moved to newly added class RecipeMatchRegistry. Consider as CTP</span></span></span></p>",
+        "comment": "<p>For me, it is an 'extract class' refactoring. Class&nbsp;<span class='blob-code-inner'><span class='pl-en'>RecipeMatchRegistry</span></span> is extracted from Modifier.</p><p>See that <span class='blob-code-inner'><span class='pl-smi x x-first x-last'>RecipeMatchRegistry is an attribute of class&nbsp; Modifier in the refactored version, and the&nbsp; 3 </span></span><span class='blob-code-inner'><span class='pl-en'>addItem(..)</span></span><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'> methods in the refactored version of Modifier are now </span></span></span><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>delegating to the 3 addItem(..) in RecipeMatchRegistry.</span></span></span></p><p><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>This can be considered as a Move Method, because after refactoring the original method delegates to class RecipeMatchRegistry through field modifierItems<br />{modifierItems<span class='pl-k'>.</span><span class='x x-first x-last'>addItem(</span>block, count);}<br /></span></span></span></p><p><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>- public void addItem(Block block, int count) {<br />- modifierItems.add(new RecipeMatch.Item(new ItemStack(block), count));<br />- }</span></span></span></p><p><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>  public void addItem(Block block, int amountMatched) {<br />  items.add(new RecipeMatch.Item(new ItemStack(block), 1, amountMatched));<br />  }</span></span></span></p>",
         "validation": "CTP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Davood, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public addItem(oredictItem String, count int) : void from class tconstruct.library.modifiers.Modifier to public addItem(oredictItem String, amountNeeded int, amountMatched int) : void from class tconstruct.library.mantle.RecipeMatchRegistry",
-        "comment": "<p>For me, it is an 'extract class' refactoring. Class&nbsp;<span class='blob-code-inner'><span class='pl-en'>RecipeMatchRegistry</span></span> is extracted from Modifier.</p><p>See that <span class='blob-code-inner'><span class='pl-smi x x-first x-last'>RecipeMatchRegistry is an attribute of class&nbsp; Modifier in the refactored version, and the&nbsp; 3 </span></span><span class='blob-code-inner'><span class='pl-en'>addItem(..)</span></span><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'> methods in the refactored version of Modifier are now </span></span></span><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>delegating to the 3 addItem(..) in RecipeMatchRegistry.</span></span></span></p><p><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>Nikos: This case was considered as Extract and Move Method. Move Method will be considered FP. </span></span></span></p>",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "comment": "<p>For me, it is an 'extract class' refactoring. Class&nbsp;<span class='blob-code-inner'><span class='pl-en'>RecipeMatchRegistry</span></span> is extracted from Modifier.</p><p>See that <span class='blob-code-inner'><span class='pl-smi x x-first x-last'>RecipeMatchRegistry is an attribute of class&nbsp; Modifier in the refactored version, and the&nbsp; 3 </span></span><span class='blob-code-inner'><span class='pl-en'>addItem(..)</span></span><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'> methods in the refactored version of Modifier are now </span></span></span><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>delegating to the 3 addItem(..) in RecipeMatchRegistry.</span></span></span></p><p><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>The method has been moved with the addition of a parameter (amountMatched), which is not used.</span></span></span></p><p><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>- public void addItem(String oredictItem, int count) {<br />- modifierItems.add(new RecipeMatch.Oredict(oredictItem, count));<br />- }</span></span></span></p><p><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>  public void addItem(String oredictItem, int amountNeeded, int amountMatched) {<br />  items.add(new RecipeMatch.Oredict(oredictItem, amountNeeded));<br />  }</span></span></span></p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Laleh, Davood, Nikos"
     }, {
         "type": "Move Attribute",
@@ -9558,8 +9558,8 @@
     }, {
         "type": "Move Method",
         "description": "Move Method public addItem(item Item, count int) : void from class tconstruct.library.modifiers.Modifier to public addItem(item Item, amountNeeded int, amountMatched int) : void from class tconstruct.library.mantle.RecipeMatchRegistry",
-        "comment": "<p>For me, it is an 'extract class' refactoring. Class&nbsp;<span class='blob-code-inner'><span class='pl-en'>RecipeMatchRegistry</span></span> is extracted from Modifier.</p><p>See that <span class='blob-code-inner'><span class='pl-smi x x-first x-last'>RecipeMatchRegistry is an attribute of class&nbsp; Modifier in the refactored version, and the&nbsp; 3 </span></span><span class='blob-code-inner'><span class='pl-en'>addItem(..)</span></span><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'> methods in the refactored version of Modifier are now </span></span></span><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>delegating to the 3 addItem(..) in RecipeMatchRegistry.</span></span></span></p><p><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>Nikos: This case was considered as Extract and Move Method. Move Method will be considered FP.</span></span></span></p>",
-        "validation": "FP",
+        "comment": "<p>For me, it is an 'extract class' refactoring. Class&nbsp;<span class='blob-code-inner'><span class='pl-en'>RecipeMatchRegistry</span></span> is extracted from Modifier.</p><p>See that <span class='blob-code-inner'><span class='pl-smi x x-first x-last'>RecipeMatchRegistry is an attribute of class&nbsp; Modifier in the refactored version, and the&nbsp; 3 </span></span><span class='blob-code-inner'><span class='pl-en'>addItem(..)</span></span><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'> methods in the refactored version of Modifier are now </span></span></span><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>delegating to the 3 addItem(..) in RecipeMatchRegistry.</span></span></span></p><p><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>&nbsp;The method is moved with the addition of a new parameter (amountNeeded), which is not used.<br /></span></span></span></p><p><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>- public void addItem(Item item, int count) {<br />- modifierItems.add(new RecipeMatch.Item(new ItemStack(item), count));<br />- }</span></span></span></p><p><span class='blob-code-inner'><span class='pl-smi x x-first x-last'><span class='pl-en'>  public void addItem(Item item, int amountNeeded, int amountMatched) {<br />  items.add(new RecipeMatch.Item(new ItemStack(item), 1, amountMatched));<br />  }</span></span></span></p>",
+        "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Davood, Nikos"
     }],
@@ -11198,6 +11198,13 @@
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method protected longStackValParitySet(value long) : long from class org.mapdb.StoreDirect to protected longParitySet(value long) : long from class org.mapdb.Store",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected longStackValParityGet(value long) : long from class org.mapdb.StoreDirect to protected longParityGet(value long) : long from class org.mapdb.Store",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -23262,37 +23269,37 @@
         "type": "Pull Up Method",
         "description": "Pull Up Method public getOutputStream() : ServletOutputStream from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public getOutputStream() : ServletOutputStream from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "It is a extract superclass",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": "Matin"
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public getWriter() : PrintWriter from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public getWriter() : PrintWriter from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "It is a extract superclass",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": "Matin"
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public sendError(sc int, msg String) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendError(sc int, msg String) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "It is a extract superclass",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": "Matin"
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public sendRedirect(location String) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendRedirect(location String) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "It is a extract superclass",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": "Matin"
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public flushBuffer() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public flushBuffer() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "It is a extract superclass",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": "Matin"
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Matin, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public checkError() : boolean from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public checkError() : boolean from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",
@@ -23468,13 +23475,6 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin"
-    }, {
-        "type": "Pull Up Method",
-        "description": "Pull Up Method public sendError(sc int) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendError(sc int) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
-        "comment": "new---",
-        "validation": "CTP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Matin, Davood"
     }],
     "refDiffExecutionTime": 4803
 }, {
@@ -23509,37 +23509,37 @@
         "type": "Pull Up Method",
         "description": "Pull Up Method public getOutputStream() : ServletOutputStream from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public getOutputStream() : ServletOutputStream from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "it is a extract super class",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": "Matin"
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public getWriter() : PrintWriter from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public getWriter() : PrintWriter from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "it is a extract super class",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": "Matin"
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public sendError(sc int, msg String) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendError(sc int, msg String) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "it is a extract super class",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": "Matin"
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public sendRedirect(location String) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendRedirect(location String) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "it is a extract super class",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": "Matin"
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public flushBuffer() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public flushBuffer() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "it is a extract super class",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": "Matin"
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Matin, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public checkError() : boolean from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper.SaveContextPrintWriter to public checkError() : boolean from class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextPrintWriter",

@@ -1,12 +1,14 @@
 package gr.uom.java.xmi;
 
 import java.io.Serializable;
+import java.util.regex.Pattern;
 
 public class UMLType implements Serializable {
     private String classType;
     private String genericType;
     private int arrayDimension;
     private volatile int hashCode = 0;
+    private static Pattern pattern = Pattern.compile("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
 
     public UMLType(String type) {
         this.classType = type;
@@ -60,10 +62,9 @@ public class UMLType implements Serializable {
     	return false;
     }
 
-	private boolean lastCamelCaseTokenMatch(String classType1, String classType2) {
-		String regex = "(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])";
-		String[] tokens1 = classType1.split(regex);
-		String[] tokens2 = classType2.split(regex);
+	private static boolean lastCamelCaseTokenMatch(String classType1, String classType2) {
+		String[] tokens1 = pattern.split(classType1);
+		String[] tokens2 = pattern.split(classType2);
 		if(tokens1.length > 0 && tokens2.length > 0) {
 			return tokens1[tokens1.length-1].equals(tokens2[tokens2.length-1]);
 		}

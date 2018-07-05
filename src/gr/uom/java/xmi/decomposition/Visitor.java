@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.ParameterizedType;
+import org.eclipse.jdt.core.dom.PrimitiveType;
 import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.QualifiedType;
 import org.eclipse.jdt.core.dom.SimpleName;
@@ -109,6 +110,11 @@ public class Visitor extends ASTVisitor {
 	}
 	
 	public boolean visit(QualifiedType node) {
+		types.add(node.toString());
+		return false;
+	}
+	
+	public boolean visit(PrimitiveType node) {
 		types.add(node.toString());
 		return false;
 	}

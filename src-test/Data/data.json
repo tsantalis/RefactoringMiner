@@ -1237,7 +1237,7 @@
         "description": "Move Method public getSplits(context JobContext) : List from class org.apache.cassandra.hadoop.AbstractColumnFamilyInputFormat to public getSplits(context JobContext) : List from class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
         "comment": "class AbstractColumnFamilyInputFormat is deleted, thus it does not total comply with the defenition of move method.",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Move Attribute",

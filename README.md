@@ -138,7 +138,8 @@ For example, `ExtractOperationRefactoring` offers the following methods:
 2. `getSourceOperationCodeRangeAfterExtraction()` : Returns the code range of the source method in the **child** commit
 3. `getExtractedOperationCodeRange()` : Returns the code range of the extracted method in the **child** commit
 4. `getExtractedCodeRangeFromSourceOperation()` : Returns the code range of the extracted code fragment from the source method in the **parent** commit
-5. `getExtractedOperationInvocationCodeRange()` : Returns the code range of the invocation to the extracted method inside the source method in the **child** commit
+5. `getExtractedCodeRangeToExtractedOperation()` : Returns the code range of the extracted code fragment to the extracted method in the **child** commit
+6. `getExtractedOperationInvocationCodeRange()` : Returns the code range of the invocation to the extracted method inside the source method in the **child** commit
 
 Each method returns a `CodeRange` object including the following properties:
 ```java

@@ -109,6 +109,16 @@ public class UMLModelDiff {
    }
 
    private boolean isSubclassOf(String subclass, String finalSuperclass) {
+	   return isSubclassOf(subclass, finalSuperclass, new LinkedHashSet<String>());
+   }
+
+   private boolean isSubclassOf(String subclass, String finalSuperclass, Set<String> visitedClasses) {
+	   if(visitedClasses.contains(subclass)) {
+		   return false;
+	   }
+	   else {
+		   visitedClasses.add(subclass);
+	   }
 	   UMLClassDiff subclassDiff = getUMLClassDiff(subclass);
 	   if(subclassDiff == null) {
 		   subclassDiff = getUMLClassDiff(UMLType.extractTypeObject(subclass));
@@ -116,17 +126,17 @@ public class UMLModelDiff {
 	   if(subclassDiff != null) {
 		   UMLType superclass = subclassDiff.getSuperclass();
 		   if(superclass != null) {
-			   return checkInheritanceRelationship(superclass, finalSuperclass);
+			   return checkInheritanceRelationship(superclass, finalSuperclass, visitedClasses);
 		   }
 		   else if(subclassDiff.getOldSuperclass() != null && subclassDiff.getNewSuperclass() != null &&
 				   !subclassDiff.getOldSuperclass().equals(subclassDiff.getNewSuperclass()) && looksLikeAddedClass(subclassDiff.getNewSuperclass()) != null) {
 			   UMLClass addedClass = looksLikeAddedClass(subclassDiff.getNewSuperclass());
 			   if(addedClass.getSuperclass() != null) {
-				   return checkInheritanceRelationship(addedClass.getSuperclass(), finalSuperclass);
+				   return checkInheritanceRelationship(addedClass.getSuperclass(), finalSuperclass, visitedClasses);
 			   }
 		   }
 		   for(UMLType implementedInterface : subclassDiff.getAddedImplementedInterfaces()) {
-			   if(checkInheritanceRelationship(implementedInterface, finalSuperclass)) {
+			   if(checkInheritanceRelationship(implementedInterface, finalSuperclass, visitedClasses)) {
 				   return true;
 			   }
 		   }
@@ -138,10 +148,10 @@ public class UMLModelDiff {
 	   if(addedClass != null) {
 		   UMLType superclass = addedClass.getSuperclass();
 		   if(superclass != null) {
-			   return checkInheritanceRelationship(superclass, finalSuperclass);
+			   return checkInheritanceRelationship(superclass, finalSuperclass, visitedClasses);
 		   }
 		   for(UMLType implementedInterface : addedClass.getImplementedInterfaces()) {
-			   if(checkInheritanceRelationship(implementedInterface, finalSuperclass)) {
+			   if(checkInheritanceRelationship(implementedInterface, finalSuperclass, visitedClasses)) {
 				   return true;
 			   }
 		   }
@@ -153,10 +163,10 @@ public class UMLModelDiff {
 	   if(removedClass != null) {
 		   UMLType superclass = removedClass.getSuperclass();
 		   if(superclass != null) {
-			   return checkInheritanceRelationship(superclass, finalSuperclass);
+			   return checkInheritanceRelationship(superclass, finalSuperclass, visitedClasses);
 		   }
 		   for(UMLType implementedInterface : removedClass.getImplementedInterfaces()) {
-			   if(checkInheritanceRelationship(implementedInterface, finalSuperclass)) {
+			   if(checkInheritanceRelationship(implementedInterface, finalSuperclass, visitedClasses)) {
 				   return true;
 			   }
 		   }
@@ -164,11 +174,11 @@ public class UMLModelDiff {
 	   return false;
    }
 
-   private boolean checkInheritanceRelationship(UMLType superclass, String finalSuperclass) {
+   private boolean checkInheritanceRelationship(UMLType superclass, String finalSuperclass, Set<String> visitedClasses) {
 	   if(looksLikeSameType(superclass.getClassType(), finalSuperclass))
 		   return true;
 	   else
-		   return isSubclassOf(superclass.getClassType(), finalSuperclass);
+		   return isSubclassOf(superclass.getClassType(), finalSuperclass, visitedClasses);
    }
 
    private UMLClass looksLikeAddedClass(UMLType type) {

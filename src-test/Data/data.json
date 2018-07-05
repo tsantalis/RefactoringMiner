@@ -1358,6 +1358,13 @@
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Laleh"
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public getSplits(jobConf JobConf, numSplits int) : InputSplit[] from class org.apache.cassandra.hadoop.AbstractColumnFamilyInputFormat to public getSplits(jobConf JobConf, numSplits int) : InputSplit[] from class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
+        "comment": "<p>Return type is non-qualified after the move</p><p>public org.apache.hadoop.mapred.InputSplit[] getSplits(JobConf jobConf, int numSplits) throws IOException<br />public InputSplit[] getSplits(JobConf jobConf, int numSplits) throws IOException</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 6589
 }, {

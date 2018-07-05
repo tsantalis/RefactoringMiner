@@ -20,7 +20,8 @@ public class ExtractOperationRefactoring implements Refactoring {
 	private UMLOperation sourceOperationAfterExtraction;
 	private OperationInvocation extractedOperationInvocation;
 	private Set<Replacement> replacements;
-	private Set<AbstractCodeFragment> extractedCodeFragments;
+	private Set<AbstractCodeFragment> extractedCodeFragmentsFromSourceOperation;
+	private Set<AbstractCodeFragment> extractedCodeFragmentsToExtractedOperation;
 
 	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper, UMLOperation sourceOperationAfterExtraction, OperationInvocation operationInvocation) {
 		this.extractedOperation = bodyMapper.getOperation2();
@@ -28,9 +29,11 @@ public class ExtractOperationRefactoring implements Refactoring {
 		this.sourceOperationAfterExtraction = sourceOperationAfterExtraction;
 		this.extractedOperationInvocation = operationInvocation;
 		this.replacements = bodyMapper.getReplacements();
-		this.extractedCodeFragments = new LinkedHashSet<AbstractCodeFragment>();
+		this.extractedCodeFragmentsFromSourceOperation = new LinkedHashSet<AbstractCodeFragment>();
+		this.extractedCodeFragmentsToExtractedOperation = new LinkedHashSet<AbstractCodeFragment>();
 		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
-			this.extractedCodeFragments.add(mapping.getFragment1());
+			this.extractedCodeFragmentsFromSourceOperation.add(mapping.getFragment1());
+			this.extractedCodeFragmentsToExtractedOperation.add(mapping.getFragment2());
 		}
 	}
 
@@ -41,9 +44,11 @@ public class ExtractOperationRefactoring implements Refactoring {
 		this.sourceOperationAfterExtraction = sourceOperationAfterExtraction;
 		this.extractedOperationInvocation = operationInvocation;
 		this.replacements = bodyMapper.getReplacements();
-		this.extractedCodeFragments = new LinkedHashSet<AbstractCodeFragment>();
+		this.extractedCodeFragmentsFromSourceOperation = new LinkedHashSet<AbstractCodeFragment>();
+		this.extractedCodeFragmentsToExtractedOperation = new LinkedHashSet<AbstractCodeFragment>();
 		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
-			this.extractedCodeFragments.add(mapping.getFragment1());
+			this.extractedCodeFragmentsFromSourceOperation.add(mapping.getFragment1());
+			this.extractedCodeFragmentsToExtractedOperation.add(mapping.getFragment2());
 		}
 	}
 
@@ -82,8 +87,12 @@ public class ExtractOperationRefactoring implements Refactoring {
 		return replacements;
 	}
 
-	public Set<AbstractCodeFragment> getExtractedCodeFragments() {
-		return extractedCodeFragments;
+	public Set<AbstractCodeFragment> getExtractedCodeFragmentsFromSourceOperation() {
+		return extractedCodeFragmentsFromSourceOperation;
+	}
+
+	public Set<AbstractCodeFragment> getExtractedCodeFragmentsToExtractedOperation() {
+		return extractedCodeFragmentsToExtractedOperation;
 	}
 
 	public CodeRange getSourceOperationCodeRangeBeforeExtraction() {
@@ -99,13 +108,21 @@ public class ExtractOperationRefactoring implements Refactoring {
 	}
 
 	public CodeRange getExtractedCodeRangeFromSourceOperation() {
+		return computeRange(extractedCodeFragmentsFromSourceOperation);
+	}
+
+	public CodeRange getExtractedCodeRangeToExtractedOperation() {
+		return computeRange(extractedCodeFragmentsToExtractedOperation);
+	}
+
+	private CodeRange computeRange(Set<AbstractCodeFragment> codeFragments) {
 		String filePath = null;
 		int minStartLine = 0;
 		int maxEndLine = 0;
 		int startColumn = 0;
 		int endColumn = 0;
 		
-		for(AbstractCodeFragment fragment : extractedCodeFragments) {
+		for(AbstractCodeFragment fragment : codeFragments) {
 			LocationInfo info = fragment.getLocationInfo();
 			filePath = info.getFilePath();
 			if(minStartLine == 0 || info.getStartLine() < minStartLine) {

@@ -7,24 +7,22 @@ import java.util.regex.Pattern;
 
 public class UMLType implements Serializable {
     private String classType;
-    private String genericType;
+    private String nonQualifiedClassType;
+    private String typeArguments;
     private int arrayDimension;
-    private List<String> genericTypeDecomposition;
+    private List<String> typeArgumentDecomposition;
     private volatile int hashCode = 0;
     private static final Pattern CAMEL_CASE_SPLIT_PATTERN = Pattern.compile("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
     private static final Pattern GENERIC_TYPE_SPLIT_PATTERN = Pattern.compile("<|>|,|\\s");
 
     public UMLType(String type) {
         this.classType = type;
-        this.genericTypeDecomposition = new ArrayList<String>();
+        this.nonQualifiedClassType = simpleNameOf(type);
+        this.typeArgumentDecomposition = new ArrayList<String>();
     }
 
     public String getClassType() {
         return classType;
-    }
-
-    public String getGenericType() {
-        return genericType;
     }
 
     public int getArrayDimension() {
@@ -39,22 +37,22 @@ public class UMLType implements Serializable {
         if (o instanceof UMLType) {
         	UMLType typeObject = (UMLType)o;
 
-            if(this.classType.equals(typeObject.classType)) {
-                if(this.genericType == null && typeObject.genericType == null)
+            if(equalClassType(typeObject)) {
+                if(this.typeArguments == null && typeObject.typeArguments == null)
                     return this.arrayDimension == typeObject.arrayDimension;
-                else if(this.genericType != null && typeObject.genericType != null)
-                    return equalGenericType(typeObject) && this.arrayDimension == typeObject.arrayDimension;
+                else if(this.typeArguments != null && typeObject.typeArguments != null)
+                    return equalTypeArguments(typeObject) && this.arrayDimension == typeObject.arrayDimension;
             }
         }
         return false;
     }
 
     public boolean equalsWithSubType(UMLType typeObject) {
-    	if(lastCamelCaseTokenMatch(this.classType, typeObject.classType)) {
-            if(this.genericType == null && typeObject.genericType == null)
+    	if(lastCamelCaseTokenMatch(this.nonQualifiedClassType, typeObject.nonQualifiedClassType)) {
+            if(this.typeArguments == null && typeObject.typeArguments == null)
                 return this.arrayDimension == typeObject.arrayDimension;
-            else if(this.genericType != null && typeObject.genericType != null)
-                return equalGenericType(typeObject) && this.arrayDimension == typeObject.arrayDimension;
+            else if(this.typeArguments != null && typeObject.typeArguments != null)
+                return equalTypeArguments(typeObject) && this.arrayDimension == typeObject.arrayDimension;
         }
     	return false;
     }
@@ -68,29 +66,24 @@ public class UMLType implements Serializable {
 		return false;
 	}
 
-	private boolean equalGenericType(UMLType typeObject) {
-		if((this.genericType.equals("<?>") && typeObject.genericType.startsWith("<? ")) || 
-				(this.genericType.startsWith("<? ") && typeObject.genericType.equals("<?>"))) {
+	private boolean equalClassType(UMLType type) {
+    	return this.nonQualifiedClassType.equals(type.nonQualifiedClassType);
+	}
+
+	private boolean equalTypeArguments(UMLType type) {
+		if((this.typeArguments.equals("<?>") && type.typeArguments.startsWith("<? ")) || 
+				(this.typeArguments.startsWith("<? ") && type.typeArguments.equals("<?>"))) {
 			return true;
 		}
-		if(this.genericTypeDecomposition.size() != typeObject.genericTypeDecomposition.size()) {
+		if(this.typeArgumentDecomposition.size() != type.typeArgumentDecomposition.size()) {
 			return false;
 		}
-		for(int i=0; i<this.genericTypeDecomposition.size(); i++) {
-			String thisComponent = this.genericTypeDecomposition.get(i);
-			String otherComponent = typeObject.genericTypeDecomposition.get(i);
-			int thisLength = thisComponent.length();
-			int otherLength = otherComponent.length();
-			if(thisLength > 1 && otherLength > 1 && !thisComponent.equals(otherComponent)) {
+		for(int i=0; i<this.typeArgumentDecomposition.size(); i++) {
+			String thisComponent = this.typeArgumentDecomposition.get(i);
+			String otherComponent = type.typeArgumentDecomposition.get(i);
+			if(!thisComponent.equals(otherComponent)) {
 				return false;
 			}
-			if(thisLength == 1 && otherLength > 1) {
-				return false;
-			}
-			if(thisLength > 1 && otherLength == 1) {
-				return false;
-			}
-			//type parameter names, such as E, K, N, T, V, S, U, having a length of 1 are always equal
 		}
 		return true;
 	}
@@ -99,8 +92,8 @@ public class UMLType implements Serializable {
     	if(hashCode == 0) {
     		int result = 17;
     		result = 37*result + classType.hashCode();
-    		if(genericType != null)
-    			result = 37*result + genericType.hashCode();
+    		if(typeArguments != null)
+    			result = 37*result + typeArguments.hashCode();
     		result = 37*result + arrayDimension;
     		hashCode = result;
     	}
@@ -109,9 +102,9 @@ public class UMLType implements Serializable {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(simpleNameOf(classType));
-        if(genericType != null)
-            sb.append(genericType);
+        sb.append(nonQualifiedClassType);
+        if(typeArguments != null)
+            sb.append(typeArguments);
         for(int i=0; i<arrayDimension; i++)
         	sb.append("[]");
         return sb.toString();
@@ -133,8 +126,8 @@ public class UMLType implements Serializable {
 
 	public static UMLType extractTypeObject(String qualifiedName) {
 		int arrayDimension = 0;
-		String generic = null;
-		String[] genericTypeDecomposition = {};
+		String typeArguments = null;
+		String[] typeArgumentDecomposition = {};
 		if(qualifiedName.endsWith("[]")) {
 			while(qualifiedName.endsWith("[]")) {
 				qualifiedName = qualifiedName.substring(0, qualifiedName.lastIndexOf("[]"));
@@ -142,15 +135,15 @@ public class UMLType implements Serializable {
 			}
 		}
 		if(qualifiedName.contains("<") && qualifiedName.contains(">")) {
-			generic = qualifiedName.substring(qualifiedName.indexOf("<"), qualifiedName.lastIndexOf(">")+1);
+			typeArguments = qualifiedName.substring(qualifiedName.indexOf("<"), qualifiedName.lastIndexOf(">")+1);
 			qualifiedName = qualifiedName.substring(0, qualifiedName.indexOf("<"));
-			genericTypeDecomposition = GENERIC_TYPE_SPLIT_PATTERN.split(generic);
+			typeArgumentDecomposition = GENERIC_TYPE_SPLIT_PATTERN.split(typeArguments);
 		}
 		UMLType typeObject = new UMLType(qualifiedName);
-		typeObject.genericType = generic;
+		typeObject.typeArguments = typeArguments;
 		typeObject.arrayDimension = arrayDimension;
-		for(String type : genericTypeDecomposition) {
-			typeObject.genericTypeDecomposition.add(simpleNameOf(type));
+		for(String type : typeArgumentDecomposition) {
+			typeObject.typeArgumentDecomposition.add(simpleNameOf(type));
 		}
 		return typeObject;
 	}

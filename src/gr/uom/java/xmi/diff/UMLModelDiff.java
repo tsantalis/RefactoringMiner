@@ -440,27 +440,95 @@ public class UMLModelDiff {
 
    private List<MoveAttributeRefactoring> checkForAttributeMoves(List<UMLAttribute> addedAttributes, List<UMLAttribute> removedAttributes) {
 	   List<MoveAttributeRefactoring> refactorings = new ArrayList<MoveAttributeRefactoring>();
-	   for(UMLAttribute addedAttribute : addedAttributes) {
-         for(UMLAttribute removedAttribute : removedAttributes) {
-            if(addedAttribute.getName().equals(removedAttribute.getName()) &&
-                  addedAttribute.getType().equals(removedAttribute.getType())) {
-               if(isSubclassOf(removedAttribute.getClassName(), addedAttribute.getClassName())) {
-                  PullUpAttributeRefactoring pullUpAttribute = new PullUpAttributeRefactoring(removedAttribute, addedAttribute);
-                  refactorings.add(pullUpAttribute);
-               }
-               else if(isSubclassOf(addedAttribute.getClassName(), removedAttribute.getClassName())) {
-                  PushDownAttributeRefactoring pushDownAttribute = new PushDownAttributeRefactoring(removedAttribute, addedAttribute);
-                  refactorings.add(pushDownAttribute);
-               }
-               else if(sourceClassImportsTargetClassAfterRefactoring(removedAttribute.getClassName(), addedAttribute.getClassName()) ||
-            		   targetClassImportsSourceClassBeforeRefactoring(removedAttribute.getClassName(), addedAttribute.getClassName())) {
-                  MoveAttributeRefactoring moveAttribute = new MoveAttributeRefactoring(removedAttribute, addedAttribute);
-                  refactorings.add(moveAttribute);
-               }
-            }
-         }
-      }
+	   if(addedAttributes.size() <= removedAttributes.size()) {
+		   for(UMLAttribute addedAttribute : addedAttributes) {
+			   List<MoveAttributeRefactoring> candidates = new ArrayList<MoveAttributeRefactoring>();
+			   for(UMLAttribute removedAttribute : removedAttributes) {
+				   MoveAttributeRefactoring candidate = processPairOfAttributes(addedAttribute, removedAttribute);
+				   if(candidate != null) {
+					   candidates.add(candidate);
+				   }
+			   }
+			   processCandidates(candidates, refactorings);
+		   }
+	   }
+	   else {
+		   for(UMLAttribute removedAttribute : removedAttributes) {
+			   List<MoveAttributeRefactoring> candidates = new ArrayList<MoveAttributeRefactoring>();
+			   for(UMLAttribute addedAttribute : addedAttributes) {
+				   MoveAttributeRefactoring candidate = processPairOfAttributes(addedAttribute, removedAttribute);
+				   if(candidate != null) {
+					   candidates.add(candidate);
+				   }
+			   }
+			   processCandidates(candidates, refactorings);
+		   }
+	   }
       return refactorings;
+   }
+
+   private void processCandidates(List<MoveAttributeRefactoring> candidates, List<MoveAttributeRefactoring> refactorings) {
+	   if(candidates.size() > 1) {
+		   TreeMap<Integer, List<MoveAttributeRefactoring>> map = new TreeMap<Integer, List<MoveAttributeRefactoring>>();
+		   for(MoveAttributeRefactoring candidate : candidates) {
+			   int compatibility = computeCompatibility(candidate);
+			   if(map.containsKey(compatibility)) {
+				   map.get(compatibility).add(candidate);
+			   }
+			   else {
+				   List<MoveAttributeRefactoring> refs = new ArrayList<MoveAttributeRefactoring>();
+				   refs.add(candidate);
+				   map.put(compatibility, refs);
+			   }
+		   }
+		   int maxCompatibility = map.lastKey();
+		   refactorings.addAll(map.get(maxCompatibility));
+	   }
+	   else if(candidates.size() == 1) {
+		   refactorings.addAll(candidates);
+	   }
+   }
+
+   private MoveAttributeRefactoring processPairOfAttributes(UMLAttribute addedAttribute, UMLAttribute removedAttribute) {
+	   if(addedAttribute.getName().equals(removedAttribute.getName()) &&
+			   addedAttribute.getType().equals(removedAttribute.getType())) {
+		   if(isSubclassOf(removedAttribute.getClassName(), addedAttribute.getClassName())) {
+			   PullUpAttributeRefactoring pullUpAttribute = new PullUpAttributeRefactoring(removedAttribute, addedAttribute);
+			   return pullUpAttribute;
+		   }
+		   else if(isSubclassOf(addedAttribute.getClassName(), removedAttribute.getClassName())) {
+			   PushDownAttributeRefactoring pushDownAttribute = new PushDownAttributeRefactoring(removedAttribute, addedAttribute);
+			   return pushDownAttribute;
+		   }
+		   else if(sourceClassImportsTargetClassAfterRefactoring(removedAttribute.getClassName(), addedAttribute.getClassName()) ||
+				   targetClassImportsSourceClassBeforeRefactoring(removedAttribute.getClassName(), addedAttribute.getClassName())) {
+			   MoveAttributeRefactoring moveAttribute = new MoveAttributeRefactoring(removedAttribute, addedAttribute);
+			   return moveAttribute;
+		   }
+	   }
+	   return null;
+   }
+
+   private int computeCompatibility(MoveAttributeRefactoring candidate) {
+	   int count = 0;
+	   for(Refactoring ref : refactorings) {
+		   if(ref instanceof MoveOperationRefactoring) {
+			   MoveOperationRefactoring moveRef = (MoveOperationRefactoring)ref;
+			   if(moveRef.compatibleWith(candidate)) {
+				   count++;
+			   }
+		   }
+	   }
+	   UMLClassDiff classDiff = getUMLClassDiff(candidate.getSourceClassName());
+	   if(classDiff != null) {
+		   List<UMLAttribute> addedAttributes = classDiff.getAddedAttributes();
+		   for(UMLAttribute addedAttribute : addedAttributes) {
+			   if(looksLikeSameType(addedAttribute.getType().getClassType(), candidate.getTargetClassName())) {
+				   count++;
+			   }
+		   }
+	   }
+	   return count;
    }
 
    private boolean sourceClassImportsSuperclassOfTargetClassAfterRefactoring(String sourceClassName, String targetClassName) {
@@ -756,10 +824,7 @@ public class UMLModelDiff {
       refactorings.addAll(getMoveClassRefactorings());
       refactorings.addAll(getRenameClassRefactorings());
       refactorings.addAll(identifyConvertAnonymousClassToTypeRefactorings());
-      refactorings.addAll(checkForAttributeMovesBetweenCommonClasses());
       refactorings.addAll(identifyExtractSuperclassRefactorings());
-      refactorings.addAll(checkForAttributeMovesIncludingAddedClasses());
-      refactorings.addAll(checkForAttributeMovesIncludingRemovedClasses());
       
       for(UMLClassDiff classDiff : commonClassDiffList) {
          refactorings.addAll(classDiff.getRefactorings());
@@ -769,6 +834,9 @@ public class UMLModelDiff {
       checkForOperationMovesIncludingAddedClasses();
       checkForOperationMovesIncludingRemovedClasses();
       //checkForOperationMovesBetweenRemovedAndAddedClasses();
+      refactorings.addAll(checkForAttributeMovesBetweenCommonClasses());
+      refactorings.addAll(checkForAttributeMovesIncludingAddedClasses());
+      refactorings.addAll(checkForAttributeMovesIncludingRemovedClasses());
       refactorings.addAll(this.refactorings);
       return refactorings;
    }

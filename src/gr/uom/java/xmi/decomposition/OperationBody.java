@@ -60,6 +60,10 @@ public class OperationBody {
 		return new LinkedHashSet<OperationInvocation>(compositeStatement.getAllMethodInvocations().values());
 	}
 
+	public List<String> getAllVariables() {
+		return new ArrayList<String>(compositeStatement.getAllVariables());
+	}
+
 	private void processStatement(CompilationUnit cu, String filePath, CompositeStatementObject parent, Statement statement) {
 		if(statement instanceof Block) {
 			Block block = (Block)statement;

@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.refactoringminer.api.Refactoring;
@@ -58,5 +59,16 @@ public class MoveOperationRefactoring implements Refactoring {
 
 	public Set<Replacement> getReplacements() {
 		return replacements;
+	}
+
+	public boolean compatibleWith(MoveAttributeRefactoring ref) {
+		if(ref.getMovedAttribute().getClassName().equals(this.movedOperation.getClassName()) &&
+				ref.getOriginalAttribute().getClassName().equals(this.originalOperation.getClassName())) {
+			List<String> originalOperationVariables = this.originalOperation.getAllVariables();
+			List<String> movedOperationVariables = this.movedOperation.getAllVariables();
+			return originalOperationVariables.contains(ref.getOriginalAttribute().getName()) &&
+					movedOperationVariables.contains(ref.getMovedAttribute().getName());
+		}
+		return false;
 	}
 }

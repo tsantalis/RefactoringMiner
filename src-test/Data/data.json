@@ -1283,55 +1283,6 @@
         "validators": "Matin"
     }, {
         "type": "Move Attribute",
-        "description": "Move Attribute private logger : Logger from class WordCount to class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
-        "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Laleh"
-    }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute private logger : Logger from class WordCountSetup to class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
-        "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Laleh"
-    }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute private logger : Logger from class org.apache.cassandra.hadoop.BulkRecordWriter to class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
-        "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Laleh"
-    }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute private keyspace : String from class org.apache.cassandra.hadoop.ColumnFamilyRecordReader to class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
-        "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Laleh"
-    }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute private cfName : String from class org.apache.cassandra.hadoop.ColumnFamilyRecordReader to class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
-        "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Laleh"
-    }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute private logger : Logger from class org.apache.cassandra.hadoop.ColumnFamilyOutputFormat to class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
-        "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Laleh"
-    }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute private logger : Logger from class WordCountCounters to class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
-        "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Laleh"
-    }, {
-        "type": "Move Attribute",
         "description": "Move Attribute public QUEUE_SIZE : String from class org.apache.cassandra.hadoop.ColumnFamilyOutputFormat to class org.apache.cassandra.hadoop.cql3.CqlOutputFormat",
         "comment": "<p>The source class is deleted.</p>",
         "validation": "CTP",
@@ -1342,20 +1293,6 @@
         "description": "Move Attribute public BATCH_THRESHOLD : String from class org.apache.cassandra.hadoop.ColumnFamilyOutputFormat to class org.apache.cassandra.hadoop.cql3.CqlOutputFormat",
         "comment": "<p>The source class is deleted.</p>",
         "validation": "CTP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Laleh"
-    }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute private logger : Logger from class org.apache.cassandra.hadoop.ColumnFamilyInputFormat to class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
-        "comment": "<p>The attribute logger is moved form the superclass of ColumnFamilyInputFormat (AbstractColumnFamilyInputFormat) to CqlInputFormat and it is already detected and marked as CTP.</p><p>&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1106365/141</p><p>&nbsp;</p><p>&nbsp;</p>",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Laleh"
-    }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute private logger : Logger from class org.apache.cassandra.hadoop.ColumnFamilyRecordReader to class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
-        "comment": null,
-        "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Laleh"
     }, {
@@ -10854,7 +10791,7 @@
         "description": "Move Attribute private msgLog : Log from class org.neo4j.kernel.impl.transaction.log.pruning.LogPruning to class org.neo4j.kernel.impl.transaction.log.checkpoint.CheckPointerImpl",
         "comment": "<p>There are&nbsp;different possibilities: The old class has become an interface and a new class implementing the interface is created.</p><p>1) The old class has become an interface and a new class implementing the interface is created. The attribute is pushed down to this new class</p><p>2) The new interface is extracted from the existing class (<span style='background-color: #f6d5d9;'>something&nbsp;</span>like extract super class)</p><p>3) The old class is renamed to the new class and an interface with the same name as the old class is created and the old class is now implementing it</p>",
         "validation": "FP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Move Attribute",
@@ -17329,7 +17266,7 @@
         "description": "Move Attribute private connectionFactory : HazelcastConnectionFactory from class com.hazelcast.jca.AbstractDeploymentTest to class com.hazelcast.jca.ConnectionFactoryImplTest",
         "comment": "Matin: FP",
         "validation": "FP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
     }],
     "refDiffExecutionTime": 2426
@@ -25822,19 +25759,12 @@
         "description": "Move Attribute private delaySeconds : int from class com.hazelcast.internal.monitors.PerformanceMonitor to class com.hazelcast.internal.monitors.HealthMonitor.HealthMonitorThread",
         "comment": null,
         "validation": "FP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Move Attribute",
         "description": "Move Attribute private operationService : InternalOperationService from class com.hazelcast.internal.monitors.HealthMonitor to class com.hazelcast.internal.monitors.PerformanceMonitorTest",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Matin, Davood"
-    }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute private delaySeconds : int from class com.hazelcast.internal.monitors.HealthMonitor to class com.hazelcast.internal.monitors.PerformanceMonitor.MonitorThread",
-        "comment": "<p>The attribute has been moved to&nbsp;HealthMonitorThread</p>",
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin, Davood"

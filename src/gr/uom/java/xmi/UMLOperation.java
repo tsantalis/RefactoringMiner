@@ -110,6 +110,12 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return new LinkedHashSet<OperationInvocation>();
 	}
 
+	public List<String> getAllVariables() {
+		if(operationBody != null)
+			return operationBody.getAllVariables();
+		return new ArrayList<String>();
+	}
+
 	public int statementCount() {
 		if(operationBody != null)
 			return operationBody.statementCount();

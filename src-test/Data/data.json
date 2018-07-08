@@ -16298,13 +16298,6 @@
         "validators": null
     }, {
         "type": "Move Attribute",
-        "description": "Move Attribute private cordova : CordovaInterface from class org.apache.cordova.CordovaWebView to class org.apache.cordova.NativeToJsMessageQueue.LoadUrlBridgeMode",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Move Attribute",
         "description": "Move Attribute private cordova : CordovaInterface from class org.apache.cordova.NativeToJsMessageQueue to class org.apache.cordova.NativeToJsMessageQueue.LoadUrlBridgeMode",
         "comment": null,
         "validation": "TP",
@@ -16331,27 +16324,6 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Automatic"
-    }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute private cordova : CordovaInterface from class org.apache.cordova.CordovaWebViewClient to class org.apache.cordova.NativeToJsMessageQueue.LoadUrlBridgeMode",
-        "comment": "The attribute moved to inner class from outer class",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Matin"
-    }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute private cordova : CordovaInterface from class org.apache.cordova.CordovaChromeClient to class org.apache.cordova.NativeToJsMessageQueue.LoadUrlBridgeMode",
-        "comment": "The attribute moved to inner class from outer class",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Matin"
-    }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute private cordova : CordovaInterface from class org.apache.cordova.CordovaUriHelper to class org.apache.cordova.NativeToJsMessageQueue.LoadUrlBridgeMode",
-        "comment": "The attribute moved to inner class from outer class",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Matin"
     }, {
         "type": "Inline Method",
         "description": "Inline Method public init(webView CordovaWebView, webViewClient CordovaWebViewClient, webChromeClient CordovaChromeClient) : void inlined to protected init() : void in class org.apache.cordova.CordovaActivity",
@@ -17597,10 +17569,10 @@
     }, {
         "type": "Move Attribute",
         "description": "Move Attribute private flowControl : FlowControl from class uk.co.real_logic.aeron.driver.media.SendChannelEndpoint.PublicationAssembly to class uk.co.real_logic.aeron.driver.NetworkPublication",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": "Matin"
+        "comment": "<p>The inner class PublicationAssembly is simply deleted and the outher class SendChannelEndpoint is using the fields<br />private final BiInt2ObjectMap&lt;NetworkPublication&gt; driversPublicationByStreamAndSessionId = new BiInt2ObjectMap&lt;&gt;();<br />private final BiInt2ObjectMap&lt;NetworkPublication&gt; sendersPublicationByStreamAndSessionId = new BiInt2ObjectMap&lt;&gt;();<br />to access the NetworkPublication objects<br />replacing the previous fields<br />private final BiInt2ObjectMap&lt;NetworkPublication&gt; publicationByStreamAndSessionIdMap = new BiInt2ObjectMap&lt;&gt;();<br />private final BiInt2ObjectMap&lt;PublicationAssembly&gt; assemblyByStreamAndSessionIdMap = new BiInt2ObjectMap&lt;&gt;();</p>",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Matin, Nikos"
     }],
     "refDiffExecutionTime": 1188
 }, {

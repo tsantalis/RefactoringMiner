@@ -519,13 +519,32 @@ public class UMLModelDiff {
 			   }
 		   }
 	   }
-	   UMLClassDiff classDiff = getUMLClassDiff(candidate.getSourceClassName());
-	   if(classDiff != null) {
-		   List<UMLAttribute> addedAttributes = classDiff.getAddedAttributes();
+	   UMLClassDiff sourceClassDiff = getUMLClassDiff(candidate.getSourceClassName());
+	   UMLClassDiff targetClassDiff = getUMLClassDiff(candidate.getTargetClassName());
+	   if(sourceClassDiff != null) {
+		   UMLType targetSuperclass = null;
+		   if(targetClassDiff != null) {
+			   targetSuperclass = targetClassDiff.getSuperclass();
+		   }
+		   List<UMLAttribute> addedAttributes = sourceClassDiff.getAddedAttributes();
 		   for(UMLAttribute addedAttribute : addedAttributes) {
 			   if(looksLikeSameType(addedAttribute.getType().getClassType(), candidate.getTargetClassName())) {
 				   count++;
 			   }
+			   if(targetSuperclass != null && looksLikeSameType(addedAttribute.getType().getClassType(), targetSuperclass.getClassType())) {
+				   count++;
+			   }
+		   }
+		   List<UMLAttribute> originalAttributes = sourceClassDiff.originalClassAttributesOfType(candidate.getTargetClassName());
+		   List<UMLAttribute> nextAttributes = sourceClassDiff.nextClassAttributesOfType(candidate.getTargetClassName());
+		   if(targetSuperclass != null) {
+			   originalAttributes.addAll(sourceClassDiff.originalClassAttributesOfType(targetSuperclass.getClassType()));
+			   nextAttributes.addAll(sourceClassDiff.nextClassAttributesOfType(targetSuperclass.getClassType()));
+		   }
+		   Set<UMLAttribute> intersection = new LinkedHashSet<UMLAttribute>(originalAttributes);
+		   intersection.retainAll(nextAttributes);
+		   if(!intersection.isEmpty()) {
+			   count++;
 		   }
 	   }
 	   return count;

@@ -34,6 +34,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private List<CompositeStatementObject> nonMappedInnerNodesT1;
 	private List<CompositeStatementObject> nonMappedInnerNodesT2;
 	private List<UMLOperationBodyMapper> additionalMappers = new ArrayList<UMLOperationBodyMapper>();
+	private static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)");
 	private static final double MAX_ANONYMOUS_CLASS_DECLARATION_DISTANCE = 0.2;
 	
 	public UMLOperationBodyMapper(UMLOperation operation1, UMLOperation operation2) {
@@ -872,6 +873,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		public Set<Replacement> getReplacements() {
 			return replacements;
 		}
+		public List<Replacement> getReplacements(ReplacementType type) {
+			List<Replacement> replacements = new ArrayList<Replacement>();
+			for(Replacement replacement : this.replacements) {
+				if(replacement.getType().equals(type)) {
+					replacements.add(replacement);
+				}
+			}
+			return replacements;
+		}
 	}
 
 	private Set<Replacement> findReplacementsWithExactMatching(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
@@ -1085,7 +1095,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
-		boolean isEqualWithReplacement = s1.equals(s2);
+		boolean isEqualWithReplacement = s1.equals(s2) || (commonConditional(s1, s2) && containsValidOperatorReplacements(replacementInfo));
 		if(isEqualWithReplacement) {
 			if(variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1) {
 				boolean typeReplacement = false, variableRename = false, methodInvocationReplacement = false;
@@ -1294,6 +1304,63 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private boolean containsValidOperatorReplacements(ReplacementInfo replacementInfo) {
+		List<Replacement> operatorReplacements = replacementInfo.getReplacements(ReplacementType.INFIX_OPERATOR);
+		for(Replacement replacement : operatorReplacements) {
+			if(replacement.getBefore().equals("==") && !replacement.getAfter().equals("!="))
+				return false;
+			if(replacement.getBefore().equals("!=") && !replacement.getAfter().equals("=="))
+				return false;
+			if(replacement.getBefore().equals("&&") && !replacement.getAfter().equals("||"))
+				return false;
+			if(replacement.getBefore().equals("||") && !replacement.getAfter().equals("&&"))
+				return false;
+		}
+		return true;
+	}
+
+	private boolean commonConditional(String s1, String s2) {
+		if((s1.contains("||") || s1.contains("&&")) && (s2.contains("||") || s2.contains("&&"))) {
+			String conditional1 = prepareConditional(s1);
+			String conditional2 = prepareConditional(s2);
+			String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
+			String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(conditional2);
+			List<String> subConditionsAsList1 = new ArrayList<String>();
+			for(String s : subConditions1) {
+				subConditionsAsList1.add(s.trim());
+			}
+			List<String> subConditionsAsList2 = new ArrayList<String>();
+			for(String s : subConditions2) {
+				subConditionsAsList2.add(s.trim());
+			}
+			Set<String> intersection = new LinkedHashSet<String>(subConditionsAsList1);
+			intersection.retainAll(subConditionsAsList2);
+			if(!intersection.isEmpty()) {
+				return true;
+			}
+			for(String subCondition1 : subConditionsAsList1) {
+				for(String subCondition2 : subConditionsAsList2) {
+					if(subCondition1.equals("!" + subCondition2))
+						return true;
+					if(subCondition2.equals("!" + subCondition1))
+						return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private String prepareConditional(String s) {
+		String conditional = s;
+		if(s.startsWith("if(") && s.endsWith(")")) {
+			conditional = s.substring(3, s.length()-1);
+		}
+		if(s.startsWith("while(") && s.endsWith(")")) {
+			conditional = s.substring(6, s.length()-1);
+		}
+		return conditional;
 	}
 
 	private void replaceVariablesWithArguments(Set<String> variables, Map<String, String> parameterToArgumentMap) {

@@ -499,9 +499,11 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
 	}
 
 	public boolean importsType(String targetClass) {
+		if(targetClass.startsWith(getPackageName()))
+			return true;
 		for(String importedType : getImportedTypes()) {
 			//importedType.startsWith(targetClass) -> special handling for import static
-			if(importedType.equals(targetClass) || importedType.startsWith(targetClass) || targetClass.startsWith(getPackageName())) {
+			if(importedType.equals(targetClass) || importedType.startsWith(targetClass)) {
 				return true;
 			}
 		}

@@ -135,6 +135,10 @@ public class UMLModelDiff {
 				   return checkInheritanceRelationship(addedClass.getSuperclass(), finalSuperclass, visitedClasses);
 			   }
 		   }
+		   else if(subclassDiff.getOldSuperclass() == null && subclassDiff.getNewSuperclass() != null && looksLikeAddedClass(subclassDiff.getNewSuperclass()) != null) {
+			   UMLClass addedClass = looksLikeAddedClass(subclassDiff.getNewSuperclass());
+			   return checkInheritanceRelationship(UMLType.extractTypeObject(addedClass.getName()), finalSuperclass, visitedClasses);
+		   }
 		   for(UMLType implementedInterface : subclassDiff.getAddedImplementedInterfaces()) {
 			   if(checkInheritanceRelationship(implementedInterface, finalSuperclass, visitedClasses)) {
 				   return true;

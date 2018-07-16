@@ -187,6 +187,14 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
 		return false;
 	}
 
+	public UMLOperation operationWithTheSameSignatureIgnoringChangedTypes(UMLOperation operation) {
+		for(UMLOperation originalOperation : operations) {
+			if(originalOperation.equalSignatureIgnoringChangedTypes(operation))
+				return originalOperation;
+		}
+		return null;
+	}
+
 	public boolean containsOperationWithTheSameSignatureIgnoringChangedTypes(UMLOperation operation) {
 		for(UMLOperation originalOperation : operations) {
 			if(originalOperation.equalSignatureIgnoringChangedTypes(operation))

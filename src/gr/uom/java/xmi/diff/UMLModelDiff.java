@@ -625,6 +625,25 @@ public class UMLModelDiff {
       return addedOperations;
    }
 
+   private List<UMLOperation> getAddedOperationsInMovedClasses() {
+      List<UMLOperation> addedOperations = new ArrayList<UMLOperation>();
+      for(UMLClassMoveDiff classDiff : innerClassMoveDiffList) {
+         addedOperations.addAll(classDiff.getAddedOperations());
+      }
+      for(UMLClassMoveDiff classDiff : classMoveDiffList) {
+         addedOperations.addAll(classDiff.getAddedOperations());
+      }
+      return addedOperations;
+   }
+
+   private List<UMLOperation> getAddedOperationsInRenamedClasses() {
+      List<UMLOperation> addedOperations = new ArrayList<UMLOperation>();
+      for(UMLClassRenameDiff classDiff : classRenameDiffList) {
+         addedOperations.addAll(classDiff.getAddedOperations());
+      }
+      return addedOperations;
+   }
+
    private List<UMLOperation> getRemovedOperationsInCommonClasses() {
       List<UMLOperation> removedOperations = new ArrayList<UMLOperation>();
       for(UMLClassDiff classDiff : commonClassDiffList) {
@@ -853,7 +872,7 @@ public class UMLModelDiff {
          refactorings.addAll(classDiff.getRefactorings());
       }
       checkForOperationMovesBetweenCommonClasses();
-      checkForExtractedAndMovedOperations();
+      checkForExtractedAndMovedOperations(getAddedOperationsInCommonClasses());
       checkForOperationMovesIncludingAddedClasses();
       checkForOperationMovesIncludingRemovedClasses();
       //checkForOperationMovesBetweenRemovedAndAddedClasses();
@@ -864,8 +883,7 @@ public class UMLModelDiff {
       return refactorings;
    }
 
-   private void checkForExtractedAndMovedOperations() {
-      List<UMLOperation> addedOperations = getAddedOperationsInCommonClasses();
+   private void checkForExtractedAndMovedOperations(List<UMLOperation> addedOperations) {
       for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
     	  UMLOperation addedOperation = addedOperationIterator.next();
     	  for(UMLOperationBodyMapper mapper : getOperationBodyMappersInCommonClasses()) {
@@ -892,6 +910,9 @@ public class UMLModelDiff {
             	  Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
             	  for(UMLAttribute attribute : attributes) {
             		  parameterToArgumentMap1.put(attribute.getName() + ".", "");
+            	  }
+            	  if(addedOperationInvocation.getExpression() != null) {
+            		  parameterToArgumentMap1.put(addedOperationInvocation.getExpression() + ".", "");
             	  }
                   UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap1, parameterToArgumentMap2);
                   operationBodyMapper.getMappings();

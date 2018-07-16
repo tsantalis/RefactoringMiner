@@ -2383,11 +2383,11 @@
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Davood"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public add(handle EventFactHandle) : void extracted from public assertFact(context Object, fact InternalFactHandle, pctx PropagationContext, workingMemory InternalWorkingMemory) : boolean in class org.drools.core.rule.SlidingTimeWindow",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public add(handle EventFactHandle) : void extracted from public assertFact(context Object, fact InternalFactHandle, pctx PropagationContext, workingMemory InternalWorkingMemory) : boolean in class org.drools.core.rule.SlidingTimeWindow & moved to class org.drools.core.rule.SlidingTimeWindow.SlidingTimeWindowContext",
         "comment": "It is extract and move since the method is moved to the inner class",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh"
     }, {
         "type": "Extract and Move Method",
@@ -2425,11 +2425,11 @@
         "detectionTools": "RefDiff",
         "validators": "Laleh"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public remove(handle EventFactHandle) : void extracted from public retractFact(context Object, fact InternalFactHandle, pctx PropagationContext, workingMemory InternalWorkingMemory) : void in class org.drools.core.rule.SlidingTimeWindow",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public remove(handle EventFactHandle) : void extracted from public retractFact(context Object, fact InternalFactHandle, pctx PropagationContext, workingMemory InternalWorkingMemory) : void in class org.drools.core.rule.SlidingTimeWindow & moved to class org.drools.core.rule.SlidingTimeWindow.SlidingTimeWindowContext",
         "comment": "It is extract and move since the method is moved to the inner class",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh"
     }, {
         "type": "Extract And Move Method",
@@ -4061,7 +4061,7 @@
         "description": "Rename Method protected newGraph(dir Directory, is3D boolean) : GraphStorage renamed to protected newGHStorage(dir Directory, is3D boolean) : GraphHopperStorage in class com.graphhopper.storage.GraphHopperStorageWithTurnCostsTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": null
     }, {
         "type": "Rename Method",
@@ -14139,11 +14139,11 @@
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Automatic"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public validateControlsString(jsonString String) : void extracted from private validateControlsString(controls String) : void in class org.apache.drill.exec.testing.ControlsInjectionUtil",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public validateControlsString(jsonString String) : void extracted from private validateControlsString(controls String) : void in class org.apache.drill.exec.testing.ControlsInjectionUtil & moved to class org.apache.drill.exec.testing.ExecutionControls",
         "comment": "<p>Extract and Move to other class</p>",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Laleh, Automatic"
     }, {
         "type": "Extract And Move Method",

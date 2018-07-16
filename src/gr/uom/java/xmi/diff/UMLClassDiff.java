@@ -27,17 +27,13 @@ import java.util.TreeSet;
 
 import org.refactoringminer.api.Refactoring;
 
-public class UMLClassDiff implements Comparable<UMLClassDiff> {
-	private UMLClass originalClass;
-	private UMLClass nextClass;
+public class UMLClassDiff extends UMLClassBaseDiff implements Comparable<UMLClassDiff> {
+	
 	private String className;
-	private List<UMLOperation> addedOperations;
-	private List<UMLOperation> removedOperations;
 	private List<UMLAttribute> addedAttributes;
 	private List<UMLAttribute> removedAttributes;
 	private List<UMLAttributeDiff> attributeDiffList;
 	private List<UMLOperationDiff> operationDiffList;
-	private List<UMLOperationBodyMapper> operationBodyMapperList;
 	private List<Refactoring> refactorings;
 	private boolean visibilityChanged;
 	private String oldVisibility;
@@ -56,16 +52,12 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 	public static final double MAX_OPERATION_NAME_DISTANCE = 0.4;
 	
 	public UMLClassDiff(UMLClass originalClass, UMLClass nextClass) {
-		this.originalClass = originalClass;
-		this.nextClass = nextClass;
+		super(originalClass, nextClass);
 		this.className = originalClass.getName();
-		this.addedOperations = new ArrayList<UMLOperation>();
-		this.removedOperations = new ArrayList<UMLOperation>();
 		this.addedAttributes = new ArrayList<UMLAttribute>();
 		this.removedAttributes = new ArrayList<UMLAttribute>();
 		this.attributeDiffList = new ArrayList<UMLAttributeDiff>();
 		this.operationDiffList = new ArrayList<UMLOperationDiff>();
-		this.operationBodyMapperList = new ArrayList<UMLOperationBodyMapper>();
 		this.refactorings = new ArrayList<Refactoring>();
 		this.visibilityChanged = false;
 		this.abstractionChanged = false;
@@ -198,14 +190,6 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 			!visibilityChanged && !abstractionChanged;
 	}
 
-	public List<UMLOperation> getAddedOperations() {
-		return addedOperations;
-	}
-
-	public List<UMLOperation> getRemovedOperations() {
-		return removedOperations;
-	}
-
 	public List<UMLAttribute> getAddedAttributes() {
 		return addedAttributes;
 	}
@@ -220,10 +204,6 @@ public class UMLClassDiff implements Comparable<UMLClassDiff> {
 
 	public List<UMLAnonymousClass> getRemovedAnonymousClasses() {
 		return removedAnonymousClasses;
-	}
-
-	public List<UMLOperationBodyMapper> getOperationBodyMapperList() {
-		return operationBodyMapperList;
 	}
 
 	public List<UMLType> getAddedImplementedInterfaces() {

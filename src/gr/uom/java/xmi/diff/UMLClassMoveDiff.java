@@ -2,28 +2,15 @@ package gr.uom.java.xmi.diff;
 
 import gr.uom.java.xmi.UMLClass;
 
-public class UMLClassMoveDiff implements Comparable<UMLClassMoveDiff> {
-	private UMLClass originalClass;
-	private UMLClass movedClass;
+public class UMLClassMoveDiff extends UMLClassBaseDiff implements Comparable<UMLClassMoveDiff> {
 	
 	public UMLClassMoveDiff(UMLClass originalClass, UMLClass movedClass) {
-		this.originalClass = originalClass;
-		this.movedClass = movedClass;
-	}
-
-	public UMLClass getOriginalClass() {
-		return originalClass;
+		super(originalClass, movedClass);
+		processOperations();
 	}
 
 	public UMLClass getMovedClass() {
-		return movedClass;
-	}
-
-	//return true if "classMoveDiff" represents the move of a class that is inner to this.originalClass
-	public boolean isInnerClassMove(UMLClassMoveDiff classMoveDiff) {
-		if(this.originalClass.isInnerClass(classMoveDiff.originalClass) && this.movedClass.isInnerClass(classMoveDiff.movedClass))
-			return true;
-		return false;
+		return nextClass;
 	}
 
 	public String toString() {
@@ -31,7 +18,7 @@ public class UMLClassMoveDiff implements Comparable<UMLClassMoveDiff> {
 		sb.append("class ");
 		sb.append(originalClass.getName());
 		sb.append(" was moved to ");
-		sb.append(movedClass.getName());
+		sb.append(nextClass.getName());
 		sb.append("\n");
 		return sb.toString();
 	}
@@ -43,7 +30,7 @@ public class UMLClassMoveDiff implements Comparable<UMLClassMoveDiff> {
 		
 		if(o instanceof UMLClassMoveDiff) {
 			UMLClassMoveDiff classMoveDiff = (UMLClassMoveDiff)o;
-			return this.originalClass.equals(classMoveDiff.originalClass) && this.movedClass.equals(classMoveDiff.movedClass);
+			return this.originalClass.equals(classMoveDiff.originalClass) && this.nextClass.equals(classMoveDiff.nextClass);
 		}
 		return false;
 	}

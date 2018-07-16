@@ -3,8 +3,10 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.List;
 
+import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
 public abstract class UMLClassBaseDiff {
@@ -56,6 +58,24 @@ public abstract class UMLClassBaseDiff {
 		return false;
 	}
 
+	public boolean matches(String className) {
+		return this.originalClass.getName().equals(className) ||
+				this.nextClass.getName().equals(className);
+	}
+
+	public boolean matches(UMLType type) {
+		return this.originalClass.getName().endsWith("." + type.getClassType()) ||
+				this.nextClass.getName().endsWith("." + type.getClassType());
+	}
+
+	public String getOriginalClassName() {
+		return originalClass.getName();
+	}
+
+	public String getNextClassName() {
+		return nextClass.getName();
+	}
+
 	public UMLClass getOriginalClass() {
 		return originalClass;
 	}
@@ -77,5 +97,21 @@ public abstract class UMLClassBaseDiff {
 		if(this.originalClass.isInnerClass(classMoveDiff.originalClass) && this.nextClass.isInnerClass(classMoveDiff.nextClass))
 			return true;
 		return false;
+	}
+
+	public boolean nextClassImportsType(String targetClass) {
+		return nextClass.importsType(targetClass);
+	}
+
+	public boolean originalClassImportsType(String targetClass) {
+		return originalClass.importsType(targetClass);
+	}
+
+	public List<UMLAttribute> nextClassAttributesOfType(String targetClass) {
+		return nextClass.attributesOfType(targetClass);
+	}
+
+	public List<UMLAttribute> originalClassAttributesOfType(String targetClass) {
+		return originalClass.attributesOfType(targetClass);
 	}
 }

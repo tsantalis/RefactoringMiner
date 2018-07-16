@@ -68,10 +68,6 @@ public class UMLClassDiff extends UMLClassBaseDiff implements Comparable<UMLClas
 		this.removedImplementedInterfaces = new ArrayList<UMLType>();
 	}
 
-	public String getClassName() {
-		return className;
-	}
-
 	public void reportAddedAnonymousClass(UMLAnonymousClass umlClass) {
 		this.addedAnonymousClasses.add(umlClass);
 	}
@@ -885,19 +881,11 @@ public class UMLClassDiff extends UMLClassBaseDiff implements Comparable<UMLClas
 		return this.className.compareTo(classDiff.className);
 	}
 
-	public boolean nextClassImportsType(String targetClass) {
-		return nextClass.importsType(targetClass);
+	public boolean matches(String className) {
+		return this.className.equals(className);
 	}
 
-	public boolean originalClassImportsType(String targetClass) {
-		return originalClass.importsType(targetClass);
-	}
-
-	public List<UMLAttribute> nextClassAttributesOfType(String targetClass) {
-		return nextClass.attributesOfType(targetClass);
-	}
-
-	public List<UMLAttribute> originalClassAttributesOfType(String targetClass) {
-		return originalClass.attributesOfType(targetClass);
+	public boolean matches(UMLType type) {
+		return this.className.endsWith("." + type.getClassType());
 	}
 }

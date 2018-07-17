@@ -14586,15 +14586,22 @@
         "description": "Move Attribute private tableLoaders : LoadingCache from class org.apache.drill.exec.store.hive.schema.HiveSchemaFactory to class org.apache.drill.exec.store.hive.DrillHiveMetaStoreClient.NonCloseableHiveClientWithCaching",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Move Attribute",
         "description": "Move Attribute private tableNameLoader : LoadingCache from class org.apache.drill.exec.store.hive.schema.HiveSchemaFactory to class org.apache.drill.exec.store.hive.DrillHiveMetaStoreClient.NonCloseableHiveClientWithCaching",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private databases : LoadingCache from class org.apache.drill.exec.store.hive.schema.HiveSchemaFactory to class org.apache.drill.exec.store.hive.DrillHiveMetaStoreClient.NonCloseableHiveClientWithCaching",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2022
 }, {
@@ -25772,6 +25779,13 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Davood, Automatic"
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public getTag() : Object extracted from public getTag() : Object in class com.loopj.android.http.RequestHandle & moved to class com.loopj.android.http.AsyncHttpResponseHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 294
 }, {

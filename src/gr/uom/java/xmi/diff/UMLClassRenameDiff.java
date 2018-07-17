@@ -7,6 +7,7 @@ public class UMLClassRenameDiff extends UMLClassBaseDiff implements Comparable<U
 	public UMLClassRenameDiff(UMLClass originalClass, UMLClass renamedClass) {
 		super(originalClass, renamedClass);
 		processOperations();
+		processAttributes();
 	}
 
 	public UMLClass getRenamedClass() {

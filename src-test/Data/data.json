@@ -16537,20 +16537,6 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Extract Interface",
-        "description": "Extract Interface com.orientechnologies.orient.core.storage.cache.local.OWOWCacheMXBean from class com.orientechnologies.orient.core.storage.cache.local.OWOWCache",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Extract Interface",
-        "description": "Extract Interface com.orientechnologies.orient.core.storage.cache.local.O2QCacheMXBean from class com.orientechnologies.orient.core.storage.cache.local.O2QCache",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
         "type": "Move Class",
         "description": "Move Class com.orientechnologies.orient.core.index.hashindex.local.cache.HashLRUListTest moved to com.orientechnologies.orient.core.storage.cache.local.HashLRUListTest",
         "comment": "Agreement",
@@ -25135,13 +25121,6 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
-    }, {
-        "type": "Extract Interface",
-        "description": "Extract Interface org.infinispan.server.commons.service.Builder from class org.infinispan.server.jgroups.subsystem.ProtocolDefaultsBuilder",
-        "comment": "<p>Builder interface is introduced after the following Move and Rename refactoring<br />server/integration/jgroups/src/main/java/org/jboss/as/clustering/jgroups/subsystem/ProtocolDefaultsService.java &rarr; server/integration/jgroups/src/main/java/org/infinispan/server/jgroups/subsystem/ProtocolDefaultsBuilder.java</p>",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Nikos"
     }, {
         "type": "Move Class",
         "description": "Move Class org.jboss.as.clustering.jgroups.JGroupsLogger moved to org.infinispan.server.jgroups.logging.JGroupsLogger",

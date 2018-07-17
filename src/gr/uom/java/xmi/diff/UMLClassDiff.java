@@ -30,42 +30,22 @@ import org.refactoringminer.api.Refactoring;
 public class UMLClassDiff extends UMLClassBaseDiff implements Comparable<UMLClassDiff> {
 	
 	private String className;
-	private List<UMLAttribute> addedAttributes;
-	private List<UMLAttribute> removedAttributes;
 	private List<UMLAttributeDiff> attributeDiffList;
 	private List<UMLOperationDiff> operationDiffList;
 	private List<Refactoring> refactorings;
-	private boolean visibilityChanged;
-	private String oldVisibility;
-	private String newVisibility;
-	private boolean abstractionChanged;
-	private boolean oldAbstraction;
-	private boolean newAbstraction;
-	private boolean superclassChanged;
-	private UMLType oldSuperclass;
-	private UMLType newSuperclass;
 	private List<UMLAnonymousClass> addedAnonymousClasses;
 	private List<UMLAnonymousClass> removedAnonymousClasses;
-	private List<UMLType> addedImplementedInterfaces;
-	private List<UMLType> removedImplementedInterfaces;
 	private Set<MethodInvocationReplacement> consistentMethodInvocationRenames;
 	public static final double MAX_OPERATION_NAME_DISTANCE = 0.4;
 	
 	public UMLClassDiff(UMLClass originalClass, UMLClass nextClass) {
 		super(originalClass, nextClass);
 		this.className = originalClass.getName();
-		this.addedAttributes = new ArrayList<UMLAttribute>();
-		this.removedAttributes = new ArrayList<UMLAttribute>();
 		this.attributeDiffList = new ArrayList<UMLAttributeDiff>();
 		this.operationDiffList = new ArrayList<UMLOperationDiff>();
 		this.refactorings = new ArrayList<Refactoring>();
-		this.visibilityChanged = false;
-		this.abstractionChanged = false;
-		this.superclassChanged = false;
 		this.addedAnonymousClasses = new ArrayList<UMLAnonymousClass>();
 		this.removedAnonymousClasses = new ArrayList<UMLAnonymousClass>();
-		this.addedImplementedInterfaces = new ArrayList<UMLType>();
-		this.removedImplementedInterfaces = new ArrayList<UMLType>();
 	}
 
 	public void reportAddedAnonymousClass(UMLAnonymousClass umlClass) {
@@ -92,90 +72,8 @@ public class UMLClassDiff extends UMLClassBaseDiff implements Comparable<UMLClas
 		this.removedAttributes.add(umlAttribute);
 	}
 
-	public void reportAddedImplementedInterface(UMLType implementedInterface) {
-		this.addedImplementedInterfaces.add(implementedInterface);
-	}
-
-	public void reportRemovedImplementedInterface(UMLType implementedInterface) {
-		this.removedImplementedInterfaces.add(implementedInterface);
-	}
-
 	public void addOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper) {
 		this.operationBodyMapperList.add(operationBodyMapper);
-	}
-
-	public void setVisibilityChanged(boolean visibilityChanged) {
-		this.visibilityChanged = visibilityChanged;
-	}
-
-	public void setOldVisibility(String oldVisibility) {
-		this.oldVisibility = oldVisibility;
-	}
-
-	public void setNewVisibility(String newVisibility) {
-		this.newVisibility = newVisibility;
-	}
-
-	public void setAbstractionChanged(boolean abstractionChanged) {
-		this.abstractionChanged = abstractionChanged;
-	}
-
-	public void setOldAbstraction(boolean oldAbstraction) {
-		this.oldAbstraction = oldAbstraction;
-	}
-
-	public void setNewAbstraction(boolean newAbstraction) {
-		this.newAbstraction = newAbstraction;
-	}
-
-	public void setSuperclassChanged(boolean superclassChanged) {
-		this.superclassChanged = superclassChanged;
-	}
-
-	public void setOldSuperclass(UMLType oldSuperclass) {
-		this.oldSuperclass = oldSuperclass;
-	}
-
-	public void setNewSuperclass(UMLType newSuperclass) {
-		this.newSuperclass = newSuperclass;
-	}
-
-	public UMLType getSuperclass() {
-		if(!superclassChanged && oldSuperclass != null && newSuperclass != null)
-			return oldSuperclass;
-		return null;
-	}
-
-	public UMLType getOldSuperclass() {
-		return oldSuperclass;
-	}
-
-	public UMLType getNewSuperclass() {
-		return newSuperclass;
-	}
-
-	public boolean containsOperationWithTheSameSignature(UMLOperation operation) {
-		for(UMLOperation originalOperation : originalClass.getOperations()) {
-			if(originalOperation.equalSignature(operation))
-				return true;
-		}
-		return false;
-	}
-
-	public UMLOperation containsRemovedOperationWithTheSameSignature(UMLOperation operation) {
-		for(UMLOperation removedOperation : removedOperations) {
-			if(removedOperation.equalSignature(operation))
-				return removedOperation;
-		}
-		return null;
-	}
-
-	public UMLAttribute containsRemovedAttributeWithTheSameSignature(UMLAttribute attribute) {
-		for(UMLAttribute removedAttribute : removedAttributes) {
-			if(removedAttribute.equalsIgnoringChangedVisibility(attribute))
-				return removedAttribute;
-		}
-		return null;
 	}
 
 	public boolean isEmpty() {
@@ -186,28 +84,12 @@ public class UMLClassDiff extends UMLClassBaseDiff implements Comparable<UMLClas
 			!visibilityChanged && !abstractionChanged;
 	}
 
-	public List<UMLAttribute> getAddedAttributes() {
-		return addedAttributes;
-	}
-
-	public List<UMLAttribute> getRemovedAttributes() {
-		return removedAttributes;
-	}
-
 	public List<UMLAnonymousClass> getAddedAnonymousClasses() {
 		return addedAnonymousClasses;
 	}
 
 	public List<UMLAnonymousClass> getRemovedAnonymousClasses() {
 		return removedAnonymousClasses;
-	}
-
-	public List<UMLType> getAddedImplementedInterfaces() {
-		return addedImplementedInterfaces;
-	}
-
-	public List<UMLType> getRemovedImplementedInterfaces() {
-		return removedImplementedInterfaces;
 	}
 
 	public List<Refactoring> getRefactorings() {

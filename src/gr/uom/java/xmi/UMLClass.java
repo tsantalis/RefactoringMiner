@@ -363,43 +363,6 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
 
     public UMLClassDiff diff(UMLClass umlClass) {
     	UMLClassDiff classDiff = new UMLClassDiff(this, umlClass);
-    	if(!this.visibility.equals(umlClass.visibility)) {
-    		classDiff.setVisibilityChanged(true);
-    		classDiff.setOldVisibility(this.visibility);
-    		classDiff.setNewVisibility(umlClass.visibility);
-    	}
-    	if(!this.isInterface && !umlClass.isInterface) {
-    		if(this.isAbstract != umlClass.isAbstract) {
-    			classDiff.setAbstractionChanged(true);
-    			classDiff.setOldAbstraction(this.isAbstract);
-    			classDiff.setNewAbstraction(umlClass.isAbstract);
-    		}
-    	}
-    	if(this.superclass != null && umlClass.superclass != null) {
-    		if(!this.superclass.equals(umlClass.superclass)) {
-    			classDiff.setSuperclassChanged(true);
-    		}
-    		classDiff.setOldSuperclass(this.superclass);
-    		classDiff.setNewSuperclass(umlClass.superclass);
-    	}
-    	else if(this.superclass != null && umlClass.superclass == null) {
-    		classDiff.setSuperclassChanged(true);
-    		classDiff.setOldSuperclass(this.superclass);
-    		classDiff.setNewSuperclass(umlClass.superclass);
-    	}
-    	else if(this.superclass == null && umlClass.superclass != null) {
-    		classDiff.setSuperclassChanged(true);
-    		classDiff.setOldSuperclass(this.superclass);
-    		classDiff.setNewSuperclass(umlClass.superclass);
-    	}
-    	for(UMLType implementedInterface : this.implementedInterfaces) {
-    		if(!umlClass.implementedInterfaces.contains(implementedInterface))
-    			classDiff.reportRemovedImplementedInterface(implementedInterface);
-    	}
-    	for(UMLType implementedInterface : umlClass.implementedInterfaces) {
-    		if(!this.implementedInterfaces.contains(implementedInterface))
-    			classDiff.reportAddedImplementedInterface(implementedInterface);
-    	}
     	for(UMLOperation operation : this.operations) {
     		if(!umlClass.operations.contains(operation))
     			classDiff.reportRemovedOperation(operation);

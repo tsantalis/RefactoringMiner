@@ -92,8 +92,20 @@ public class UMLModelDiff {
       this.commonClassDiffList.add(classDiff);
    }
 
-   private UMLClassDiff getUMLClassDiff(String className) {
+   private UMLClassBaseDiff getUMLClassDiff(String className) {
       for(UMLClassDiff classDiff : commonClassDiffList) {
+         if(classDiff.matches(className))
+            return classDiff;
+      }
+      for(UMLClassMoveDiff classDiff : classMoveDiffList) {
+         if(classDiff.matches(className))
+            return classDiff;
+      }
+      for(UMLClassMoveDiff classDiff : innerClassMoveDiffList) {
+         if(classDiff.matches(className))
+            return classDiff;
+      }
+      for(UMLClassRenameDiff classDiff : classRenameDiffList) {
          if(classDiff.matches(className))
             return classDiff;
       }
@@ -119,7 +131,7 @@ public class UMLModelDiff {
 	   else {
 		   visitedClasses.add(subclass);
 	   }
-	   UMLClassDiff subclassDiff = getUMLClassDiff(subclass);
+	   UMLClassBaseDiff subclassDiff = getUMLClassDiff(subclass);
 	   if(subclassDiff == null) {
 		   subclassDiff = getUMLClassDiff(UMLType.extractTypeObject(subclass));
 	   }
@@ -523,8 +535,8 @@ public class UMLModelDiff {
 			   }
 		   }
 	   }
-	   UMLClassDiff sourceClassDiff = getUMLClassDiff(candidate.getSourceClassName());
-	   UMLClassDiff targetClassDiff = getUMLClassDiff(candidate.getTargetClassName());
+	   UMLClassBaseDiff sourceClassDiff = getUMLClassDiff(candidate.getSourceClassName());
+	   UMLClassBaseDiff targetClassDiff = getUMLClassDiff(candidate.getTargetClassName());
 	   if(sourceClassDiff != null) {
 		   UMLType targetSuperclass = null;
 		   if(targetClassDiff != null) {
@@ -555,7 +567,7 @@ public class UMLModelDiff {
    }
 
    private boolean sourceClassImportsSuperclassOfTargetClassAfterRefactoring(String sourceClassName, String targetClassName) {
-	   UMLClassDiff targetClassDiff = getUMLClassDiff(targetClassName);
+	   UMLClassBaseDiff targetClassDiff = getUMLClassDiff(targetClassName);
 	   if(targetClassDiff != null && targetClassDiff.getSuperclass() != null) {
 		   UMLClassDiff superclassOfTargetClassDiff = getUMLClassDiff(targetClassDiff.getSuperclass());
 		   if(superclassOfTargetClassDiff != null) {
@@ -566,7 +578,7 @@ public class UMLModelDiff {
    }
 
    private boolean sourceClassImportsTargetClassAfterRefactoring(String sourceClassName, String targetClassName) {
-	   UMLClassDiff classDiff = getUMLClassDiff(sourceClassName);
+	   UMLClassBaseDiff classDiff = getUMLClassDiff(sourceClassName);
 	   if(classDiff == null) {
 		   classDiff = getUMLClassDiff(UMLType.extractTypeObject(sourceClassName));
 	   }
@@ -584,7 +596,7 @@ public class UMLModelDiff {
    }
 
    private boolean targetClassImportsSourceClassBeforeRefactoring(String sourceClassName, String targetClassName) {
-	   UMLClassDiff classDiff = getUMLClassDiff(targetClassName);
+	   UMLClassBaseDiff classDiff = getUMLClassDiff(targetClassName);
 	   if(classDiff == null) {
 		   classDiff = getUMLClassDiff(UMLType.extractTypeObject(targetClassName));
 	   }
@@ -652,11 +664,20 @@ public class UMLModelDiff {
       return removedOperations;
    }
    
-   private List<UMLOperationBodyMapper> getOperationBodyMappersInCommonClasses() {
+   private List<UMLOperationBodyMapper> getAllOperationBodyMappers() {
       List<UMLOperationBodyMapper> mappers = new ArrayList<UMLOperationBodyMapper>();
       for(UMLClassDiff classDiff : commonClassDiffList) {
          mappers.addAll(classDiff.getOperationBodyMapperList());
       }
+      /*for(UMLClassMoveDiff classDiff : classMoveDiffList) {
+         mappers.addAll(classDiff.getOperationBodyMapperList());
+      }
+      for(UMLClassMoveDiff classDiff : innerClassMoveDiffList) {
+         mappers.addAll(classDiff.getOperationBodyMapperList());
+      }
+      for(UMLClassRenameDiff classDiff : classRenameDiffList) {
+         mappers.addAll(classDiff.getOperationBodyMapperList());
+      }*/
       return mappers;
    }
 
@@ -678,7 +699,7 @@ public class UMLModelDiff {
          for(UMLRealization addedRealization : addedRealizations) {
             String supplier = addedRealization.getSupplier();
 			if(looksLikeSameType(supplier, addedClassName) && topLevelOrSameOuterClass(addedClass, addedRealization.getClient()) && getAddedClass(addedRealization.getClient().getName()) == null) {
-               UMLClassDiff clientClassDiff = getUMLClassDiff(addedRealization.getClient().getName());
+               UMLClassBaseDiff clientClassDiff = getUMLClassDiff(addedRealization.getClient().getName());
                boolean implementedInterfaceOperations = true;
                if(clientClassDiff != null) {
                   for(UMLOperation interfaceOperation : addedClass.getOperations()) {
@@ -704,7 +725,7 @@ public class UMLModelDiff {
 	   String parent = addedGeneralization.getParent();
 	   UMLClass subclass = addedGeneralization.getChild();
 	   if(looksLikeSameType(parent, addedClass.getName()) && topLevelOrSameOuterClass(addedClass, subclass) && getAddedClass(subclass.getName()) == null) {
-		   UMLClassDiff subclassDiff = getUMLClassDiff(subclass.getName());
+		   UMLClassBaseDiff subclassDiff = getUMLClassDiff(subclass.getName());
 		   if(subclassDiff != null) {
 			   for(UMLOperation superclassOperation : addedClass.getOperations()) {
 				   UMLOperation removedOperation = subclassDiff.containsRemovedOperationWithTheSameSignature(superclassOperation);
@@ -886,7 +907,7 @@ public class UMLModelDiff {
    private void checkForExtractedAndMovedOperations(List<UMLOperation> addedOperations) {
       for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
     	  UMLOperation addedOperation = addedOperationIterator.next();
-    	  for(UMLOperationBodyMapper mapper : getOperationBodyMappersInCommonClasses()) {
+    	  for(UMLOperationBodyMapper mapper : getAllOperationBodyMappers()) {
     		  if(mapper.nonMappedElementsT1() > 0) {
                Set<OperationInvocation> operationInvocations = mapper.getOperation2().getAllOperationInvocations();
                OperationInvocation addedOperationInvocation = null;
@@ -905,7 +926,7 @@ public class UMLModelDiff {
             	  for(int i=0; i<size; i++) {
             		  parameterToArgumentMap2.put(parameters.get(i), arguments.get(i));
             	  }
-            	  UMLClassDiff umlClassDiff = getUMLClassDiff(mapper.getOperation1().getClassName());
+            	  UMLClassBaseDiff umlClassDiff = getUMLClassDiff(mapper.getOperation1().getClassName());
             	  List<UMLAttribute> attributes = umlClassDiff.originalClassAttributesOfType(addedOperation.getClassName());
             	  Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
             	  for(UMLAttribute attribute : attributes) {
@@ -1205,13 +1226,13 @@ public class UMLModelDiff {
    }
 
    private void deleteRemovedOperation(UMLOperation operation) {
-      UMLClassDiff classDiff = getUMLClassDiff(operation.getClassName());
+      UMLClassBaseDiff classDiff = getUMLClassDiff(operation.getClassName());
       if(classDiff != null)
     	  classDiff.getRemovedOperations().remove(operation);
    }
    
    private void deleteAddedOperation(UMLOperation operation) {
-      UMLClassDiff classDiff = getUMLClassDiff(operation.getClassName());
+      UMLClassBaseDiff classDiff = getUMLClassDiff(operation.getClassName());
       if(classDiff != null)
     	  classDiff.getAddedOperations().remove(operation);
    }

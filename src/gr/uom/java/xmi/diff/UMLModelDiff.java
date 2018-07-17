@@ -926,49 +926,52 @@ public class UMLModelDiff {
             	  for(int i=0; i<size; i++) {
             		  parameterToArgumentMap2.put(parameters.get(i), arguments.get(i));
             	  }
-            	  UMLClassBaseDiff umlClassDiff = getUMLClassDiff(mapper.getOperation1().getClassName());
+            	  String className = mapper.getOperation2().getClassName();
+				  UMLClassBaseDiff umlClassDiff = getUMLClassDiff(className);
             	  List<UMLAttribute> attributes = umlClassDiff.originalClassAttributesOfType(addedOperation.getClassName());
             	  Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
             	  for(UMLAttribute attribute : attributes) {
             		  parameterToArgumentMap1.put(attribute.getName() + ".", "");
+            		  parameterToArgumentMap2.put("this.", "");
             	  }
             	  if(addedOperationInvocation.getExpression() != null) {
             		  parameterToArgumentMap1.put(addedOperationInvocation.getExpression() + ".", "");
+            		  parameterToArgumentMap2.put("this.", "");
             	  }
                   UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap1, parameterToArgumentMap2);
                   operationBodyMapper.getMappings();
                   int mappings = operationBodyMapper.mappingsWithoutBlocks();
                   if(mappings > 0 && mappings > operationBodyMapper.nonMappedElementsT2()) {
-                	  if(isSubclassOf(mapper.getOperation1().getClassName(), addedOperation.getClassName())) {
+                	  if(isSubclassOf(className, addedOperation.getClassName())) {
                 		  //extract and pull up method
                 		  ExtractAndMoveOperationRefactoring extractOperationRefactoring =
    	                           new ExtractAndMoveOperationRefactoring(operationBodyMapper, mapper.getOperation2());
    	                      refactorings.add(extractOperationRefactoring);
    	                      deleteAddedOperation(addedOperation);
                 	  }
-                	  else if(isSubclassOf(addedOperation.getClassName(), mapper.getOperation1().getClassName())) {
+                	  else if(isSubclassOf(addedOperation.getClassName(), className)) {
                 		  //extract and push down method
                 		  ExtractAndMoveOperationRefactoring extractOperationRefactoring =
    	                           new ExtractAndMoveOperationRefactoring(operationBodyMapper, mapper.getOperation2());
    	                      refactorings.add(extractOperationRefactoring);
    	                      deleteAddedOperation(addedOperation);
                 	  }
-                	  else if(addedOperation.getClassName().startsWith(mapper.getOperation1().getClassName() + ".")) {
+                	  else if(addedOperation.getClassName().startsWith(className + ".")) {
                 		  //extract and move to inner class
                 		  ExtractAndMoveOperationRefactoring extractOperationRefactoring =
       	                       new ExtractAndMoveOperationRefactoring(operationBodyMapper, mapper.getOperation2());
       	                  refactorings.add(extractOperationRefactoring);
       	                  deleteAddedOperation(addedOperation);
                 	  }
-                	  else if(mapper.getOperation1().getClassName().startsWith(addedOperation.getClassName() + ".")) {
+                	  else if(className.startsWith(addedOperation.getClassName() + ".")) {
                 		  //extract and move to outer class
                 		  ExtractAndMoveOperationRefactoring extractOperationRefactoring =
       	                       new ExtractAndMoveOperationRefactoring(operationBodyMapper, mapper.getOperation2());
       	                  refactorings.add(extractOperationRefactoring);
       	                  deleteAddedOperation(addedOperation);
                 	  }
-                	  else if(sourceClassImportsTargetClassAfterRefactoring(mapper.getOperation1().getClassName(), addedOperation.getClassName()) ||
-                			  sourceClassImportsSuperclassOfTargetClassAfterRefactoring(mapper.getOperation1().getClassName(), addedOperation.getClassName())) {
+                	  else if(sourceClassImportsTargetClassAfterRefactoring(className, addedOperation.getClassName()) ||
+                			  sourceClassImportsSuperclassOfTargetClassAfterRefactoring(className, addedOperation.getClassName())) {
                 		  //extract and move
 	                      ExtractAndMoveOperationRefactoring extractOperationRefactoring =
 	                           new ExtractAndMoveOperationRefactoring(operationBodyMapper, mapper.getOperation2());

@@ -112,8 +112,20 @@ public class UMLModelDiff {
       return null;
    }
 
-   private UMLClassDiff getUMLClassDiff(UMLType type) {
+   private UMLClassBaseDiff getUMLClassDiff(UMLType type) {
       for(UMLClassDiff classDiff : commonClassDiffList) {
+         if(classDiff.matches(type))
+            return classDiff;
+      }
+      for(UMLClassMoveDiff classDiff : classMoveDiffList) {
+         if(classDiff.matches(type))
+            return classDiff;
+      }
+      for(UMLClassMoveDiff classDiff : innerClassMoveDiffList) {
+         if(classDiff.matches(type))
+            return classDiff;
+      }
+      for(UMLClassRenameDiff classDiff : classRenameDiffList) {
          if(classDiff.matches(type))
             return classDiff;
       }
@@ -569,7 +581,7 @@ public class UMLModelDiff {
    private boolean sourceClassImportsSuperclassOfTargetClassAfterRefactoring(String sourceClassName, String targetClassName) {
 	   UMLClassBaseDiff targetClassDiff = getUMLClassDiff(targetClassName);
 	   if(targetClassDiff != null && targetClassDiff.getSuperclass() != null) {
-		   UMLClassDiff superclassOfTargetClassDiff = getUMLClassDiff(targetClassDiff.getSuperclass());
+		   UMLClassBaseDiff superclassOfTargetClassDiff = getUMLClassDiff(targetClassDiff.getSuperclass());
 		   if(superclassOfTargetClassDiff != null) {
 			   return sourceClassImportsTargetClassAfterRefactoring(sourceClassName, superclassOfTargetClassDiff.getNextClassName());
 		   }

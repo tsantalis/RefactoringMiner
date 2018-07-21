@@ -1,29 +1,22 @@
 package gr.uom.java.xmi;
 
-import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLClassDiff;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
-public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInfoProvider {
-	private LocationInfo locationInfo;
-	private String packageName;
-    private String name;
-    private String qualifiedName;
+public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, Serializable, LocationInfoProvider {
+	private String qualifiedName;
     private String sourceFile;
     private String sourceFolder;
     private String visibility;
 	private boolean isAbstract;
 	private boolean isInterface;
 	private boolean topLevel;
-    private List<UMLOperation> operations;
-    private List<UMLAttribute> attributes;
     private UMLType superclass;
     private List<UMLType> implementedInterfaces;
     private List<UMLAnonymousClass> anonymousClassList;
@@ -31,6 +24,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
     private List<UMLTypeParameter> typeParameters;
     
     public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<String> importedTypes) {
+    	super();
     	this.locationInfo = locationInfo;
     	this.packageName = packageName;
         this.name = name;
@@ -71,18 +65,12 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
         this.isAbstract = false;
         this.isInterface = false;
         this.topLevel = topLevel;
-        this.operations = new ArrayList<UMLOperation>();
-        this.attributes = new ArrayList<UMLAttribute>();
         this.superclass = null;
         this.implementedInterfaces = new ArrayList<UMLType>();
         this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
         this.importedTypes = importedTypes;
         this.typeParameters = new ArrayList<UMLTypeParameter>();
     }
-
-    public LocationInfo getLocationInfo() {
-		return locationInfo;
-	}
 
     public void addTypeParameter(UMLTypeParameter typeParameter) {
     	typeParameters.add(typeParameter);
@@ -100,11 +88,7 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
     	return this.qualifiedName;
     }
 
-    public String getSourceFile() {
-		return locationInfo.getFilePath();
-	}
-
-	//returns true if the "innerClass" parameter is inner class of this
+    //returns true if the "innerClass" parameter is inner class of this
     public boolean isInnerClass(UMLClass innerClass) {
     	if(this.getName().equals(innerClass.packageName))
     		return true;
@@ -155,22 +139,6 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
 		this.implementedInterfaces.add(implementedInterface);
 	}
 
-	public void addOperation(UMLOperation operation) {
-    	this.operations.add(operation);
-    }
-
-    public void addAttribute(UMLAttribute attribute) {
-    	this.attributes.add(attribute);
-    }
-
-    public List<UMLOperation> getOperations() {
-		return operations;
-	}
-
-	public List<UMLAttribute> getAttributes() {
-		return attributes;
-	}
-
 	public List<UMLType> getImplementedInterfaces() {
 		return implementedInterfaces;
 	}
@@ -179,36 +147,8 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
 		return importedTypes;
 	}
 
-	public boolean containsOperationWithTheSameSignature(UMLOperation operation) {
-		for(UMLOperation originalOperation : operations) {
-			if(originalOperation.equalSignature(operation))
-				return true;
-		}
-		return false;
-	}
-
-	public UMLOperation operationWithTheSameSignatureIgnoringChangedTypes(UMLOperation operation) {
-		for(UMLOperation originalOperation : operations) {
-			if(originalOperation.equalSignatureIgnoringChangedTypes(operation))
-				return originalOperation;
-		}
-		return null;
-	}
-
-	public boolean containsOperationWithTheSameSignatureIgnoringChangedTypes(UMLOperation operation) {
-		for(UMLOperation originalOperation : operations) {
-			if(originalOperation.equalSignatureIgnoringChangedTypes(operation))
-				return true;
-		}
-		return false;
-	}
-
-	public boolean containsAttributeIgnoringChangedType(UMLAttribute attribute) {
-		for(UMLAttribute originalAttribute : attributes) {
-			if(originalAttribute.equalsIgnoringChangedType(attribute))
-				return true;
-		}
-		return false;
+	public List<UMLAnonymousClass> getAnonymousClassList() {
+		return anonymousClassList;
 	}
 
     public UMLAttribute matchAttribute(UMLAttribute otherAttribute) {
@@ -283,74 +223,6 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
     	return true;
     }
 
-    public boolean hasCommonAttributesAndOperations(UMLClass umlClass) {
-    	Set<UMLOperation> commonOperations = new LinkedHashSet<UMLOperation>();
-    	int totalOperations = 0;
-    	for(UMLOperation operation : operations) {
-    		if(!operation.isConstructor() && !operation.overridesObject()) {
-    			totalOperations++;
-	    		if(umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
-	    			commonOperations.add(operation);
-	    		}
-    		}
-    	}
-    	for(UMLOperation operation : umlClass.operations) {
-    		if(!operation.isConstructor() && !operation.overridesObject()) {
-    			totalOperations++;
-	    		if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
-	    			commonOperations.add(operation);
-	    		}
-    		}
-    	}
-    	Set<UMLAttribute> commonAttributes = new LinkedHashSet<UMLAttribute>();
-    	int totalAttributes = 0;
-    	for(UMLAttribute attribute : attributes) {
-			totalAttributes++;
-			if(umlClass.containsAttributeIgnoringChangedType(attribute)) {
-				commonAttributes.add(attribute);
-			}
-    	}
-    	for(UMLAttribute attribute : umlClass.attributes) {
-			totalAttributes++;
-    		if(this.containsAttributeIgnoringChangedType(attribute)) {
-    			commonAttributes.add(attribute);
-    		}
-    	}
-    	if(this.isTestClass() && umlClass.isTestClass()) {
-    		return commonOperations.size() > Math.floor(totalOperations/2.0) || commonOperations.containsAll(this.operations);
-    	}
-    	return (commonOperations.size() > Math.floor(totalOperations/2.0) && commonAttributes.size() > 2) ||
-    			(commonAttributes.size() > Math.floor(totalAttributes/2.0) && commonOperations.size() > 2);
-    }
-
-    public boolean hasSameAttributesAndOperations(UMLClass umlClass) {
-    	if(this.attributes.size() != umlClass.attributes.size())
-    		return false;
-    	if(this.operations.size() != umlClass.operations.size())
-    		return false;
-    	for(UMLOperation operation : operations) {
-    		if(!umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
-    			return false;
-    		}
-    	}
-    	for(UMLOperation operation : umlClass.operations) {
-    		if(!this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
-    			return false;
-    		}
-    	}
-    	for(UMLAttribute attribute : attributes) {
-    		if(!umlClass.containsAttributeIgnoringChangedType(attribute)) {
-    			return false;
-    		}
-    	}
-    	for(UMLAttribute attribute : umlClass.attributes) {
-    		if(!this.containsAttributeIgnoringChangedType(attribute)) {
-    			return false;
-    		}
-    	}
-    	return true;
-    }
-
     public boolean hasSameKind(UMLClass umlClass) {
     	if(this.isAbstract != umlClass.isAbstract)
     		return false;
@@ -363,48 +235,6 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
 
     public UMLClassDiff diff(UMLClass umlClass) {
     	UMLClassDiff classDiff = new UMLClassDiff(this, umlClass);
-    	for(UMLOperation operation : this.operations) {
-    		if(!umlClass.operations.contains(operation))
-    			classDiff.reportRemovedOperation(operation);
-    	}
-    	for(UMLOperation operation : umlClass.operations) {
-    		if(!this.operations.contains(operation))
-    			classDiff.reportAddedOperation(operation);
-    	}
-    	for(UMLAttribute attribute : this.attributes) {
-    		if(!umlClass.attributes.contains(attribute))
-    			classDiff.reportRemovedAttribute(attribute);
-    	}
-    	for(UMLAttribute attribute : umlClass.attributes) {
-    		if(!this.attributes.contains(attribute))
-    			classDiff.reportAddedAttribute(attribute);
-    	}
-    	classDiff.checkForAttributeChanges();
-    	for(UMLOperation operation : this.operations) {
-    		if(umlClass.operations.contains(operation)) {
-    			int index = umlClass.operations.indexOf(operation);
-    			UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(operation, umlClass.operations.get(index));
-    			classDiff.addOperationBodyMapper(operationBodyMapper);
-    			//map the statements when the method calls a removed operation before refactoring, and an added operation after refactoring
-    			if(operationBodyMapper.callsRemovedAndAddedOperation(classDiff.getRemovedOperations(), classDiff.getAddedOperations())) {
-    				operationBodyMapper.getMappings();
-    			}
-    		}
-    	}
-    	
-    	for(UMLAnonymousClass umlAnonymousClass : this.anonymousClassList) {
-    		if(!umlClass.anonymousClassList.contains(umlAnonymousClass))
-    			classDiff.reportRemovedAnonymousClass(umlAnonymousClass);
-    	}
-    	for(UMLAnonymousClass umlAnonymousClass : umlClass.anonymousClassList) {
-    		if(!this.anonymousClassList.contains(umlAnonymousClass))
-    			classDiff.reportAddedAnonymousClass(umlAnonymousClass);
-    	}
-    	classDiff.checkForOperationSignatureChanges();
-    	classDiff.checkForInlinedOperations();
-    	classDiff.checkForExtractedOperations();
-    	//classDiff.checkForAttributeRenames();
-    	//classDiff.checkForOperationRenames();
     	return classDiff;
     }
 
@@ -460,15 +290,6 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
 		return false;
 	}
 
-	public boolean isTestClass() {
-		for(UMLOperation operation : operations) {
-			if(operation.hasTestAnnotation()) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public boolean importsType(String targetClass) {
 		String targetClassPackage = targetClass.substring(0, targetClass.lastIndexOf("."));
 		if(targetClass.startsWith(getPackageName()))
@@ -483,14 +304,11 @@ public class UMLClass implements Comparable<UMLClass>, Serializable, LocationInf
 		return false;
 	}
 
-	public List<UMLAttribute> attributesOfType(String targetClass) {
-		List<UMLAttribute> attributesOfType = new ArrayList<UMLAttribute>();
-		for(UMLAttribute attribute : attributes) {
-			if(targetClass.endsWith("." + attribute.getType().getClassType()) ||
-					targetClass.equals(attribute.getType().getClassType())) {
-				attributesOfType.add(attribute);
-			}
+	public boolean containsAnonymousWithSameAttributesAndOperations(UMLAnonymousClass anonymous) {
+		for(UMLAnonymousClass thisAnonymous : anonymousClassList) {
+			if(thisAnonymous.hasSameAttributesAndOperations(anonymous))
+				return true;
 		}
-		return attributesOfType;
+		return false;
 	}
 }

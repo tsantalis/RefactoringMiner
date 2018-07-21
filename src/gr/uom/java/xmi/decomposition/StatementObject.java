@@ -44,7 +44,7 @@ public class StatementObject extends AbstractStatement {
 		this.creationMap = visitor.getCreationMap();
 		this.infixOperators = visitor.getInfixOperators();
 		setDepth(depth);
-		if(statement.toString().matches("!(\\w|\\.)*@\\w*")) {
+		if(Visitor.METHOD_INVOCATION_PATTERN.matcher(statement.toString()).matches()) {
 			if(statement instanceof VariableDeclarationStatement) {
 				VariableDeclarationStatement variableDeclarationStatement = (VariableDeclarationStatement)statement;
 				StringBuilder sb = new StringBuilder();

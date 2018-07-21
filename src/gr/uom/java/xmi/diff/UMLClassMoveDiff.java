@@ -6,8 +6,6 @@ public class UMLClassMoveDiff extends UMLClassBaseDiff implements Comparable<UML
 	
 	public UMLClassMoveDiff(UMLClass originalClass, UMLClass movedClass) {
 		super(originalClass, movedClass);
-		processOperations();
-		processAttributes();
 	}
 
 	public UMLClass getMovedClass() {

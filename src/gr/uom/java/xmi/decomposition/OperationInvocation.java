@@ -2,11 +2,14 @@ package gr.uom.java.xmi.decomposition;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.UMLParameter;
+import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.diff.StringDistance;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
@@ -69,6 +72,8 @@ public class OperationInvocation extends AbstractCall {
 		this.methodName = invocation.getName().getIdentifier();
 		this.typeArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
+		this.expression = "super";
+		this.subExpressions.add("super");
 		List<Expression> args = invocation.arguments();
 		for(Expression argument : args) {
 			this.arguments.add(argument.toString());
@@ -82,6 +87,7 @@ public class OperationInvocation extends AbstractCall {
 	public OperationInvocation update(String oldExpression, String newExpression) {
 		OperationInvocation newOperationInvocation = new OperationInvocation();
 		newOperationInvocation.methodName = this.methodName;
+		newOperationInvocation.locationInfo = this.locationInfo;
 		update(newOperationInvocation, oldExpression, newExpression);
 		newOperationInvocation.subExpressions = new ArrayList<String>();
 		for(String argument : this.subExpressions) {
@@ -211,5 +217,54 @@ public class OperationInvocation extends AbstractCall {
 
 	public boolean identicalName(AbstractCall call) {
 		return getMethodName().equals(((OperationInvocation)call).getMethodName());
+	}
+
+	public boolean typeInferenceMatch(UMLOperation operationToBeMatched, Map<String, UMLType> typeInferenceMapFromContext) {
+		List<UMLParameter> parameters = operationToBeMatched.getParametersWithoutReturnType();
+		if(operationToBeMatched.hasVarargsParameter()) {
+			//we expect arguments to be =(parameters-1), or =parameters, or >parameters
+			if(getArguments().size() < parameters.size()) {
+				int i = 0;
+				for(String argument : getArguments()) {
+					if(typeInferenceMapFromContext.containsKey(argument)) {
+						UMLType argumentType = typeInferenceMapFromContext.get(argument);
+						UMLType paremeterType = parameters.get(i).getType();
+						if(!argumentType.equals(paremeterType))
+							return false;
+					}
+					i++;
+				}
+			}
+			else {
+				int i = 0;
+				for(UMLParameter parameter : parameters) {
+					String argument = getArguments().get(i);
+					if(typeInferenceMapFromContext.containsKey(argument)) {
+						UMLType argumentType = typeInferenceMapFromContext.get(argument);
+						UMLType paremeterType = parameter.isVarargs() ?
+								UMLType.extractTypeObject(parameter.getType().getClassType()) :
+								parameter.getType();
+						if(!argumentType.equals(paremeterType))
+							return false;
+					}
+					i++;
+				}
+			}
+			
+		}
+		else {
+			//we expect an equal number of parameters and arguments
+			int i = 0;
+			for(String argument : getArguments()) {
+				if(typeInferenceMapFromContext.containsKey(argument)) {
+					UMLType argumentType = typeInferenceMapFromContext.get(argument);
+					UMLType paremeterType = parameters.get(i).getType();
+					if(!argumentType.equals(paremeterType))
+						return false;
+				}
+				i++;
+			}
+		}
+		return true;
 	}
 }

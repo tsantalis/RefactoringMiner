@@ -64,6 +64,10 @@ public class OperationBody {
 		return new ArrayList<String>(compositeStatement.getAllVariables());
 	}
 
+	public List<VariableDeclaration> getAllVariableDeclarations() {
+		return new ArrayList<VariableDeclaration>(compositeStatement.getAllVariableDeclarations());
+	}
+
 	private void processStatement(CompilationUnit cu, String filePath, CompositeStatementObject parent, Statement statement) {
 		if(statement instanceof Block) {
 			Block block = (Block)statement;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
@@ -14,6 +15,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.LambdaExpression;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.ParameterizedType;
@@ -22,6 +24,7 @@ import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.QualifiedType;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SimpleType;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.StringLiteral;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 import org.eclipse.jdt.core.dom.ThisExpression;
@@ -29,6 +32,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.WildcardType;
 
 public class Visitor extends ASTVisitor {
+	public static final Pattern METHOD_INVOCATION_PATTERN = Pattern.compile("!(\\w|\\.)*@\\w*");
 	private CompilationUnit cu;
 	private String filePath;
 	private List<String> allIdentifiers = new ArrayList<String>();
@@ -62,6 +66,12 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(VariableDeclarationFragment node) {
+		if(!(node.getParent() instanceof LambdaExpression))
+			variableDeclarations.add(new VariableDeclaration(cu, filePath, node));
+		return super.visit(node);
+	}
+
+	public boolean visit(SingleVariableDeclaration node) {
 		variableDeclarations.add(new VariableDeclaration(cu, filePath, node));
 		return super.visit(node);
 	}
@@ -127,26 +137,13 @@ public class Visitor extends ASTVisitor {
 	
 	public boolean visit(MethodInvocation node) {
 		invokedMethodNames.add(node.getName().getIdentifier());
-		String expression = null;
-		if(node.getExpression() != null)
-			expression = node.getExpression().toString();
 		String methodInvocation = null;
-		/*if(expression != null) {
-			if(expression.matches("!(\\w|\\.)*@\\w*")) {
-				methodInvocation = processMethodInvocation(node);
-			}
-			else {
-				methodInvocation = node.toString().substring(expression.length()+1, node.toString().length());
-			}
-		}*/
-		//else {
-			if(node.toString().matches("!(\\w|\\.)*@\\w*")) {
-				methodInvocation = processMethodInvocation(node);
-			}
-			else {
-				methodInvocation = node.toString();
-			}
-		//}
+		if(METHOD_INVOCATION_PATTERN.matcher(node.toString()).matches()) {
+			methodInvocation = processMethodInvocation(node);
+		}
+		else {
+			methodInvocation = node.toString();
+		}
 		boolean builderPatternChain = false;
 		for(String key : methodInvocationMap.keySet()) {
 			OperationInvocation invocation = methodInvocationMap.get(key);

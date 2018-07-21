@@ -203,6 +203,22 @@ public class CompositeStatementObject extends AbstractStatement {
 		return variables;
 	}
 
+	public List<VariableDeclaration> getAllVariableDeclarations() {
+		List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
+		variableDeclarations.addAll(getVariableDeclarations());
+		for(AbstractStatement statement : statementList) {
+			if(statement instanceof CompositeStatementObject) {
+				CompositeStatementObject composite = (CompositeStatementObject)statement;
+				variableDeclarations.addAll(composite.getAllVariableDeclarations());
+			}
+			else if(statement instanceof StatementObject) {
+				StatementObject statementObject = (StatementObject)statement;
+				variableDeclarations.addAll(statementObject.getVariableDeclarations());
+			}
+		}
+		return variableDeclarations;
+	}
+
 	@Override
 	public int statementCount() {
 		int count = 0;

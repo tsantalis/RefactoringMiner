@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.eclipse.jdt.core.dom.ITypeBinding;
+import org.eclipse.jdt.core.dom.Type;
+
 public class UMLType implements Serializable {
     private String classType;
     private String nonQualifiedClassType;
@@ -109,6 +112,18 @@ public class UMLType implements Serializable {
         	sb.append("[]");
         return sb.toString();
     }
+
+    public static String getTypeName(Type type, int extraDimensions) {
+		ITypeBinding binding = type.resolveBinding();
+		if (binding != null) {
+			return binding.getQualifiedName();
+		}
+		String typeToString = type.toString();
+		for(int i=0; i<extraDimensions; i++) {
+			typeToString += "[]";
+		}
+		return typeToString;
+	}
 
     private static String simpleNameOf(String name) {
     	int numberOfDots = 0;

@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
@@ -8,7 +9,7 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.diff.StringDistance;
-import gr.uom.java.xmi.diff.UMLClassDiff;
+import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
 
@@ -34,7 +35,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private List<CompositeStatementObject> nonMappedInnerNodesT1;
 	private List<CompositeStatementObject> nonMappedInnerNodesT2;
 	private List<UMLOperationBodyMapper> additionalMappers = new ArrayList<UMLOperationBodyMapper>();
-	private static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)");
+	private static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)|(\\?)|(:)");
 	private static final double MAX_ANONYMOUS_CLASS_DECLARATION_DISTANCE = 0.2;
 	
 	public UMLOperationBodyMapper(UMLOperation operation1, UMLOperation operation2) {
@@ -164,6 +165,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(!leaves1.contains(statement)) {
 							leaves1.add(statement);
 							addedLeaves1.add(statement);
+						}
+						if(!statement.getAnonymousClassDeclarations().isEmpty()) {
+							List<UMLAnonymousClass> anonymousList = operationBodyMapper.getOperation1().getAnonymousClassList();
+							for(UMLAnonymousClass anonymous : anonymousList) {
+								if(statement.getLocationInfo().subsumes(anonymous.getLocationInfo())) {
+									for(UMLOperation anonymousOperation : anonymous.getOperations()) {
+										List<StatementObject> anonymousClassLeaves = anonymousOperation.getBody().getCompositeStatement().getLeaves();
+										for(StatementObject anonymousLeaf : anonymousClassLeaves) {
+											if(!leaves1.contains(anonymousLeaf)) {
+												leaves1.add(anonymousLeaf);
+												addedLeaves1.add(anonymousLeaf);
+											}
+										}
+									}
+								}
+							}
 						}
 					}
 				}
@@ -559,7 +576,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return true;
 		}
 		return !statement.equals("{") && !statement.startsWith("catch(") && !statement.startsWith("case ") && !statement.startsWith("default :") &&
-				!statement.startsWith("return true") && !statement.startsWith("return false") && !statement.startsWith("return this") && !statement.startsWith("return null") && !statement.startsWith("return;");
+				!statement.startsWith("return true") && !statement.startsWith("return false") && !statement.startsWith("return this") && !statement.startsWith("return null") && !statement.startsWith("return;") && !statement.startsWith("throw new ");
 	}
 
 	private int editDistance() {
@@ -1165,7 +1182,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//method invocation has been renamed but the expressions are null and arguments are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.renamedWithIdenticalArgumentsAndNoExpression(invocationCoveringTheEntireStatement2, UMLClassDiff.MAX_OPERATION_NAME_DISTANCE)) {
+				invocationCoveringTheEntireStatement1.renamedWithIdenticalArgumentsAndNoExpression(invocationCoveringTheEntireStatement2, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE)) {
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getName(),
 					invocationCoveringTheEntireStatement2.getName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME);
 			replacementInfo.addReplacement(replacement);
@@ -1173,7 +1190,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//method invocation has been renamed and arguments changed, but the expressions are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), UMLClassDiff.MAX_OPERATION_NAME_DISTANCE)) {
+				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE)) {
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getName(),
 					invocationCoveringTheEntireStatement2.getName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT);
 			replacementInfo.addReplacement(replacement);
@@ -1182,7 +1199,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(!methodInvocations1.isEmpty() && invocationCoveringTheEntireStatement2 != null) {
 			for(String methodInvocation1 : methodInvocations1) {
 				OperationInvocation operationInvocation1 = (OperationInvocation) methodInvocationMap1.get(methodInvocation1);
-				if(operationInvocation1.renamedWithIdenticalExpressionAndDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), UMLClassDiff.MAX_OPERATION_NAME_DISTANCE)) {
+				if(operationInvocation1.renamedWithIdenticalExpressionAndDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE)) {
 					Replacement replacement = new MethodInvocationReplacement(operationInvocation1.getName(),
 							invocationCoveringTheEntireStatement2.getName(), operationInvocation1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT);
 					replacementInfo.addReplacement(replacement);
@@ -1359,6 +1376,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		if(s.startsWith("while(") && s.endsWith(")")) {
 			conditional = s.substring(6, s.length()-1);
+		}
+		if(s.startsWith("return ") && s.endsWith(";\n")) {
+			conditional = s.substring(7, s.length()-2);
+		}
+		int indexOfEquals = s.indexOf("=");
+		if(indexOfEquals > -1 && s.charAt(indexOfEquals+1) != '=' && s.endsWith(";\n")) {
+			conditional = s.substring(indexOfEquals+1, s.length()-2);
 		}
 		return conditional;
 	}

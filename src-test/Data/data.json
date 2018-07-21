@@ -2111,10 +2111,10 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method package parse(string String, tokens Deque) : Node extracted from public parse(contents String, classLoader ClassLoader) : List in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
-        "comment": "<p>added</p><p>&nbsp;</p>",
-        "validation": "TP",
+        "comment": "<p>There is a very small number of common statements between the original and the extracted method,<br />while a very big number of new statements in the extracted method.</p><p>&nbsp;</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": "Davood"
+        "validators": "Davood, Nikos"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private readArrayType(string String, tokens Deque, expectedEndToken String) : List extracted from private handleSingleArrayValue(string String, builder PredicateBuilder, tokens Deque, token Token, attributeParser ExchangeAttributeParser, endChar String) : Node in class io.undertow.predicate.PredicateParser",
@@ -2720,7 +2720,7 @@
         "description": "Rename Method public shouldReturnAnAbsentOptionalIfNoTargetDeviceOptionsSet() : void renamed to public shouldReturnAnAbsentOptionalIfNoTargetDeviceCommandLineOptionsSet() : void in class com.facebook.buck.cli.TargetDeviceCommandLineOptionsTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Rename Method",
@@ -7072,10 +7072,10 @@
     "refactorings": [{
         "type": "Extract Method",
         "description": "Extract Method public gatherScannables() : void extracted from public configureScanner() : void in class org.eclipse.jetty.maven.plugin.JettyRunMojo",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
+        "comment": "<p>There is a very small number of common statements between the original and the extracted method,<br />while a very big number of new statements in the extracted method.</p>",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Nikos"
     }, {
         "type": "Extract Method",
         "description": "Extract Method public isScanningEnabled() : boolean extracted from private startScanner() : void in class org.eclipse.jetty.maven.plugin.AbstractJettyMojo",
@@ -8928,7 +8928,7 @@
         "description": "Rename Method private addToPutMetricDataList(putMetricDataList List, cloudWatchSupplier Supplier) : void renamed to private addToQueueItems(queueItems List, cloudWatchSupplier Supplier) : void in class com.eucalyptus.cluster.callback.cloudwatch.CloudWatchHelper",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Move Method",
@@ -10821,6 +10821,13 @@
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public start(logVersion long) : LogPosition extracted from private buildTransactionLogs(storeDir File, config Config, logProvider LogProvider, labelScanStore LabelScanStore, fileSystemAbstraction FileSystemAbstraction, neoStore NeoStore, cacheAccess CacheAccessBackDoor, indexingService IndexingService, indexProviders Iterable) : TransactionLogModule in class org.neo4j.kernel.NeoStoreDataSource & moved to class org.neo4j.kernel.impl.transaction.log.LogPosition",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 11758
 }, {
@@ -16637,30 +16644,30 @@
     }, {
         "type": "Move Class",
         "description": "Move Class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache.PageKey moved to com.orientechnologies.orient.core.storage.cache.local.O2QCache.PageKey",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>Outer class O2QCache is moved<br />http://refactoring.encs.concordia.ca/oracle/refactoring-details/1132674/4679</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Class",
         "description": "Move Class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache.PinnedPage moved to com.orientechnologies.orient.core.storage.cache.local.O2QCache.PinnedPage",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>Outer class O2QCache is moved<br />http://refactoring.encs.concordia.ca/oracle/refactoring-details/1132674/4679</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Move Class",
         "description": "Move Class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache.UpdateCacheResult moved to com.orientechnologies.orient.core.storage.cache.local.O2QCache.UpdateCacheResult",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>Outer class O2QCache is moved<br />http://refactoring.encs.concordia.ca/oracle/refactoring-details/1132674/4679</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Rename Method",
         "description": "Rename Method public getAllocatedPages() : long renamed to public getWriteCacheSize() : long in class com.orientechnologies.orient.core.storage.cache.local.OWOWCache",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Move Method",
@@ -16950,44 +16957,44 @@
         "detectionTools": "RefDiff",
         "validators": "Matin"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public clearCachePointer() : void extracted from private clearCacheContent() : void in class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public clearCachePointer() : void extracted from private clearCacheContent() : void in class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache & moved to class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
         "comment": "<p>Extract and Move to the inner class</p><p><span class='pl-en'>Extract and Move to OCacheEntry</span></p>",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh, Automatic"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public clearCachePointer() : void extracted from private clearPinnedPages() : void in class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public clearCachePointer() : void extracted from private clearPinnedPages() : void in class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache & moved to class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
         "comment": "<p>Extract and Move to other class</p><p>Extract and Move to <span class='pl-en'>OCacheEntry</span></p>",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh, Automatic"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public clearCachePointer() : void extracted from private clearFile(fileId long) : void in class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public clearCachePointer() : void extracted from private clearFile(fileId long) : void in class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache & moved to class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
         "comment": "<p>Extract and Move to other class</p><p>Extract and Move to class <span class='pl-smi'>OCacheEntry</span></p>",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh, Automatic"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public clearCachePointer() : void extracted from private removeColdPagesWithCacheLock() : void in class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public clearCachePointer() : void extracted from private removeColdPagesWithCacheLock() : void in class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache & moved to class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
         "comment": "<p>Extract and Move to other class</p><p>Extract and Move to <span class='blob-code-inner'><span class='pl-smi'>OCacheEntry</span></span></p>",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh, Automatic"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public clearCachePointer() : void extracted from private removeColdPagesWithoutCacheLock() : void in class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public clearCachePointer() : void extracted from private removeColdPagesWithoutCacheLock() : void in class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache & moved to class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
         "comment": "<p>Extract and Move to other class</p><p>Extract and Move to class OCacheEntry</p>",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Laleh, Automatic"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public clearDirty() : void extracted from public release(cacheEntry OCacheEntry, writeCache OWriteCache) : void in class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache",
-        "comment": "<p>Extract and Move to other class</p><p>Extract and Move to class OCacheEntry</p><p>&nbsp;</p><p>&nbsp;</p>",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public clearDirty() : void extracted from public release(cacheEntry OCacheEntry, writeCache OWriteCache) : void in class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache & moved to class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
+        "comment": "<p>Extract and Move to other class</p><p>Extract and Move to class OCacheEntry</p><p>Field isDirty renamed to dirty (overlapping refactoring)</p>",
         "validation": "CTP",
         "detectionTools": "RefDiff",
         "validators": "Laleh, Automatic"
@@ -17110,6 +17117,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin"
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public setCachePointer(cachePointer OCachePointer) : void extracted from private updateCache(fileId long, pageIndex long, addNewPages boolean, writeCache OWriteCache) : UpdateCacheResult in class com.orientechnologies.orient.core.index.hashindex.local.cache.O2QCache & moved to class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 5282
 }, {
@@ -18991,10 +19005,10 @@
         "validators": null
     }, {
         "type": "Extract Method",
-        "description": "Extract Method private updateTextViews() : void extracted from public onCreate(savedInstanceState Bundle) : void in class com.novoda.Encrypt",
+        "description": "Extract Method private updateTextViews() : void extracted from public onCreate(savedInstanceState Bundle) : void in class com.novoda.demo.encryption.EncryptionActivity",
         "comment": "added",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood"
     }],
     "refDiffExecutionTime": 0
@@ -19606,7 +19620,7 @@
         "description": "Rename Method public getOrDefault(key int, supplier Supplier) : V renamed to public computeIfAbsent(key int, mappingFunction IntFunction) : V in class com.hazelcast.util.collection.Int2ObjectHashMap",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }],
     "refDiffExecutionTime": 1599
@@ -19893,10 +19907,10 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method private printNotifyBulkInsert(writer JavaWriter, uri UriContract) : void extracted from public write(filer Filer) : void in class net.simonvt.schematic.compiler.ContentProviderWriter",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
+        "comment": "<p>Two methods <span class='blob-code-inner'><span class='pl-en'>printNotifyInsert</span></span>() and printNotifyBulkInsert() are extracted from method write()<br />Both of them have similar bodies, but only the code corresponding to <span class='blob-code-inner'><span class='pl-en'>printNotifyInsert</span></span>() appears as deleted in the text diff.</p>",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 364
 }, {
@@ -25149,6 +25163,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method protected getSubsystemAddress() : PathAddress extracted from protected getProtocolStackAddress(stackName String) : PathAddress in class org.infinispan.server.jgroups.subsystem.OperationTestCaseBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3908
 }, {
@@ -26666,6 +26687,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public dispose() : void renamed to public shutdown() : void in class org.terasology.engine.subsystem.common.ThreadManagerSubsystem",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2583
 }, {
@@ -27197,7 +27225,7 @@
         "description": "Rename Method package buildUDF(name FunctionName, argNames List, argTypes List, returnType AbstractType, calledOnNullInput boolean, body String) : UDFunction renamed to package JavaBasedUDFunction(name FunctionName, argNames List, argTypes List, returnType AbstractType, calledOnNullInput boolean, body String) in class org.apache.cassandra.cql3.functions.JavaBasedUDFunction",
         "comment": "Matin:TP",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Laleh, Davood"
     }, {
         "type": "Rename Method",
@@ -28573,6 +28601,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method private putPartition(meta MetaPartition) : void inlined to public putPartition(partition Partition) : void in class org.apache.giraph.ooc.DiskBackedPartitionStore",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2713
 }, {
@@ -28695,13 +28730,6 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
-    }, {
-        "type": "Extract Method",
-        "description": "Extract Method protected implicitMatch(rightType JSType, leftType JSType, implicitImplCache ImplCache) : boolean extracted from package isSubtypeHelper(thisType JSType, thatType JSType) : boolean in class com.google.javascript.rhino.jstype.JSType",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Rename Method",
@@ -29125,14 +29153,14 @@
         "description": "Rename Method public testTransactionsLazyNoRetain() : void renamed to public testTransactionsNoRetain() : void in class org.bitcoinj.core.ParseByteCacheTest",
         "comment": "<p>Matin: FP</p><p>Nikos: The method bodies are identical with only one parameter removed.</p>",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Rename Method",
         "description": "Rename Method public testTransactionsLazyRetain() : void renamed to public testTransactionsRetain() : void in class org.bitcoinj.core.ParseByteCacheTest",
         "comment": "<p>Matin: FP</p><p>Nikos: The method bodies are identical with only one parameter removed.</p>",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Inline Method",
@@ -30408,6 +30436,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin"
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public setQuorum(quorum int) : void renamed to public requireQuorum(quorum int) : SingletonServiceBuilder in class org.wildfly.clustering.server.singleton.CacheSingletonServiceBuilder",
+        "comment": "<p>Method becomes Builder pattern setter by adding 'return this;'</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public setElectionPolicy(electionPolicy SingletonElectionPolicy) : void renamed to public electionPolicy(electionPolicy SingletonElectionPolicy) : SingletonServiceBuilder in class org.wildfly.clustering.server.singleton.CacheSingletonServiceBuilder",
+        "comment": "<p>Method becomes Builder pattern setter by adding 'return this;'</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 8243
 }, {
@@ -30503,10 +30545,10 @@
     }, {
         "type": "Move Class",
         "description": "Move Class org.apache.cassandra.AbstractReadCommandBuilder.SinglePartitionBuilder moved to org.apache.cassandra.db.AbstractReadCommandBuilder.SinglePartitionBuilder",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>Outer class AbstractReadCommandBuilder is moved<br />http://refactoring.encs.concordia.ca/oracle/refactoring-details/1153409/3667</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin"
+        "validators": "Matin, Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method private bb(value Object, type AbstractType) : ByteBuffer from class org.apache.cassandra.AbstractReadCommandBuilder to private bb(value Object, type AbstractType) : ByteBuffer from class org.apache.cassandra.db.AbstractReadCommandBuilder",
@@ -31576,6 +31618,20 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Laleh, Automatic"
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public getQueryData() : QueryData renamed to public getQueryWhere() : QueryWhere in class org.jbpm.services.task.commands.TaskQueryWhereCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public setQueryData(queryData QueryData) : void renamed to public setQueryWhere(queryWhere QueryWhere) : void in class org.jbpm.services.task.commands.TaskQueryWhereCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3454
 }, {
@@ -31872,10 +31928,10 @@
         "validators": null
     }, {
         "type": "Extract Method",
-        "description": "Extract Method protected secureConnection(client Client, uc HttpURLConnection) : void extracted from private _apply(request ClientRequest) : ClientResponse in class org.glassfish.jersey.client.HttpUrlConnector",
+        "description": "Extract Method protected secureConnection(client Client, uc HttpURLConnection) : void extracted from private _apply(request ClientRequest) : ClientResponse in class org.glassfish.jersey.client.internal.HttpUrlConnector",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh, Automatic"
     }],
     "refDiffExecutionTime": 5044
@@ -35138,7 +35194,7 @@
         "description": "Extract Method private addFile(sourceDir VirtualFile, relativePath String, content String) : VirtualFile extracted from protected addFile(module Module, relativePath String, content String, toTests boolean) : VirtualFile in class org.intellij.erlang.compilation.ErlangCompilationTestBase",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Extract Method",
@@ -35157,10 +35213,10 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method private isSourceOrHeader(file File) : boolean extracted from protected getDirtyElement(target ErlangTarget, file File, root ErlangSourceRootDescriptor) : String in class org.intellij.erlang.jps.builder.ErlangBuilder$1",
-        "comment": "Extract and Move to the inner class",
-        "validation": "TP",
+        "comment": "<p>This method is extracted from an anonymous class inside method<br />buildSources(target ErlangTarget, context CompileContext, compilerOptions ErlangCompilerOptions, holder DirtyFilesHolder, outputConsumer BuildOutputConsumer, outputDir File, isTests boolean) : void<br />The name of the anonymous class is actually org.intellij.erlang.jps.builder.ErlangBuilder$2<br />http://refactoring.encs.concordia.ca/oracle/refactoring-details/1159409/4224</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Davood"
+        "validators": "Davood, Nikos"
     }],
     "refDiffExecutionTime": 1833
 }, {

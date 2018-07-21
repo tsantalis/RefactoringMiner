@@ -143,9 +143,6 @@ public class UMLModel {
     			UMLClassDiff classDiff = umlClass.diff(umlModel.getClass(umlClass));
     			if(!classDiff.isEmpty())
     				modelDiff.addUMLClassDiff(classDiff);
-    			else {
-//    				modelDiff.addUnchangedClass(umlClass);
-    			}
     		}
     	}
     	modelDiff.checkForMovedClasses(renamedFileHints, umlModel.projectRoot, new UMLClassMatcher.RelaxedMove());

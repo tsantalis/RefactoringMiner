@@ -4,11 +4,13 @@ import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -29,11 +31,13 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	private boolean emptyBody;
 	private OperationBody operationBody;
 	private boolean testAnnotation;
+	private List<UMLAnonymousClass> anonymousClassList;
 	
 	public UMLOperation(String name, LocationInfo locationInfo) {
 		this.locationInfo = locationInfo;
         this.name = name;
         this.parameters = new ArrayList<UMLParameter>();
+        this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
     }
 
 	public LocationInfo getLocationInfo() {
@@ -116,6 +120,24 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return new ArrayList<String>();
 	}
 
+	public List<VariableDeclaration> getAllVariableDeclarations() {
+		if(operationBody != null)
+			return operationBody.getAllVariableDeclarations();
+		return new ArrayList<VariableDeclaration>();
+	}
+
+	public Map<String, UMLType> variableTypeMap() {
+		Map<String, UMLType> variableTypeMap = new LinkedHashMap<String, UMLType>();
+		for(UMLParameter parameter : parameters) {
+			if(!parameter.getKind().equals("return"))
+				variableTypeMap.put(parameter.getName(), parameter.getType());
+		}
+		for(VariableDeclaration declaration : getAllVariableDeclarations()) {
+			variableTypeMap.put(declaration.getVariableName(), declaration.getType());
+		}
+		return variableTypeMap;
+	}
+
 	public int statementCount() {
 		if(operationBody != null)
 			return operationBody.statementCount();
@@ -140,6 +162,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 
 	public List<UMLParameter> getParameters() {
 		return parameters;
+	}
+
+	public void addAnonymousClass(UMLAnonymousClass anonymous) {
+		this.anonymousClassList.add(anonymous);
+	}
+
+	public List<UMLAnonymousClass> getAnonymousClassList() {
+		return anonymousClassList;
 	}
 
 	public UMLParameter getReturnParameter() {

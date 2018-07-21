@@ -64,7 +64,9 @@ public class ExtractOperationRefactoring implements Refactoring {
 	}
 
 	private String getClassName() {
-		return getSourceOperationBeforeExtraction().getClassName();
+		String sourceClassName = getSourceOperationBeforeExtraction().getClassName();
+		String targetClassName = getSourceOperationAfterExtraction().getClassName();
+		return sourceClassName.equals(targetClassName) ? sourceClassName : targetClassName;
 	}
 
 	public UMLOperation getExtractedOperation() {

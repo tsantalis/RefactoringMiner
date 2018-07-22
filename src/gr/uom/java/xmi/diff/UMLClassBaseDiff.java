@@ -786,7 +786,7 @@ public abstract class UMLClassBaseDiff {
 		}
 		int mappingsWithTypeReplacement = 0;
 		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-			if(mapping.containsTypeReplacement()) {
+			if(mapping.containsReplacement(ReplacementType.TYPE)) {
 				mappingsWithTypeReplacement++;
 			}
 		}
@@ -890,9 +890,10 @@ public abstract class UMLClassBaseDiff {
 	private boolean inlineMatchCondition(UMLOperationBodyMapper operationBodyMapper) {
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
 		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();
-		int exactMatches = operationBodyMapper.exactMatches();
+		List<AbstractCodeMapping> exactMatchList = operationBodyMapper.getExactMatches();
+		int exactMatches = exactMatchList.size();
 		return mappings > 0 && (mappings > nonMappedElementsT1 ||
-				(exactMatches == 1 && nonMappedElementsT1-exactMatches < 10) ||
+				(exactMatches == 1 && !exactMatchList.get(0).getFragment1().throwsNewException() && nonMappedElementsT1-exactMatches < 10) ||
 				(exactMatches > 1 && nonMappedElementsT1-exactMatches < 20));
 	}
 
@@ -970,9 +971,10 @@ public abstract class UMLClassBaseDiff {
 	private boolean extractMatchCondition(UMLOperationBodyMapper operationBodyMapper) {
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
 		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();
-		int exactMatches = operationBodyMapper.exactMatches();
+		List<AbstractCodeMapping> exactMatchList = operationBodyMapper.getExactMatches();
+		int exactMatches = exactMatchList.size();
 		return mappings > 0 && (mappings > nonMappedElementsT2 ||
-				(exactMatches == 1 && nonMappedElementsT2-exactMatches < 10) ||
+				(exactMatches == 1 && !exactMatchList.get(0).getFragment1().throwsNewException() && nonMappedElementsT2-exactMatches < 10) ||
 				(exactMatches > 1 && nonMappedElementsT2-exactMatches < 20) ||
 				(mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2())) ||
 				argumentExtractedWithDefaultReturnAdded(operationBodyMapper);

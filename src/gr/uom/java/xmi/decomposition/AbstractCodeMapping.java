@@ -33,14 +33,14 @@ public abstract class AbstractCodeMapping {
 	}
 
 	public boolean isExact() {
-		return fragment1.getArgumentizedString().equals(fragment2.getArgumentizedString()) && !isKeyword();
+		return (fragment1.getArgumentizedString().equals(fragment2.getArgumentizedString()) ||
+				fragment1.getString().equals(fragment2.getString())) && !isKeyword();
 	}
 
 	private boolean isKeyword() {
 		return fragment1.getString().startsWith("return;") ||
 				fragment1.getString().startsWith("break;") ||
-				fragment1.getString().startsWith("continue;") ||
-				fragment1.getString().startsWith("return null;");
+				fragment1.getString().startsWith("continue;");
 	}
 
 	public void addReplacement(Replacement replacement) {
@@ -53,15 +53,6 @@ public abstract class AbstractCodeMapping {
 
 	public Set<Replacement> getReplacements() {
 		return replacements;
-	}
-
-	public boolean containsTypeReplacement() {
-		for(Replacement replacement : replacements) {
-			if(replacement.getType().equals(ReplacementType.TYPE)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public boolean containsReplacement(ReplacementType type) {

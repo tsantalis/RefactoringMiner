@@ -2113,7 +2113,7 @@
         "description": "Extract Method package parse(string String, tokens Deque) : Node extracted from public parse(contents String, classLoader ClassLoader) : List in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
         "comment": "<p>There is a very small number of common statements between the original and the extracted method,<br />while a very big number of new statements in the extracted method.</p><p>&nbsp;</p>",
         "validation": "FP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": "Davood, Nikos"
     }, {
         "type": "Extract Method",
@@ -14900,7 +14900,7 @@
         "description": "Extract Method private getAndroidIdViaService(context Context) : AttributionIdentifiers extracted from private getAndroidId(context Context) : AttributionIdentifiers in class com.facebook.internal.AttributionIdentifiers",
         "comment": null,
         "validation": "FP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
     }],
     "refDiffExecutionTime": 2914

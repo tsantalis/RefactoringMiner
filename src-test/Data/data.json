@@ -2282,6 +2282,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method protected getConnection(channel Channel) : C extracted from public channelWritabilityChanged(ctx ChannelHandlerContext) : void in class io.vertx.core.net.impl.VertxHandler & moved to class io.vertx.core.http.impl.VertxHttpHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method protected getConnection(channel Channel) : C extracted from public channelReadComplete(ctx ChannelHandlerContext) : void in class io.vertx.core.net.impl.VertxHandler & moved to class io.vertx.core.http.impl.VertxHttpHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1710
 }, {
@@ -9171,35 +9185,35 @@
         "description": "Extract And Move Method public setCertificateKeyAlias(certificateKeyAlias String) : void extracted from public setCertificateKeyAlias(certificateKeyAlias String) : void in class org.apache.tomcat.util.net.SSLHostConfig & moved to class org.apache.tomcat.util.net.SSLHostConfigCertificate",
         "comment": "<p>Extract and Move to other class.</p><div><p>Since RefDiff does not detect 'Extract and Move', we consider this one as CTP.</p><p>The method is extracted and moved to class <span class='pl-smi'>SSLHostConfigCertificate.</span></p></div>",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh, Automatic"
     }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method public setCertificateKeystoreFile(certificateKeystoreFile String) : void extracted from public setCertificateKeystoreFile(certificateKeystoreFile String) : void in class org.apache.tomcat.util.net.SSLHostConfig & moved to class org.apache.tomcat.util.net.SSLHostConfigCertificate",
         "comment": "<p>Extract and Move to other class.</p><div><p>Since RefDiff does not detect 'Extract and Move', we consider this one as CTP.</p><p>The method is extracted and moved to class <span class='pl-smi'>SSLHostConfigCertificate.</span></p></div>",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh, Automatic"
     }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method public setCertificateKeystorePassword(certificateKeystorePassword String) : void extracted from public setCertificateKeystorePassword(certificateKeystorePassword String) : void in class org.apache.tomcat.util.net.SSLHostConfig & moved to class org.apache.tomcat.util.net.SSLHostConfigCertificate",
         "comment": "<p>Extract and Move to other class.</p><div><p>Since RefDiff does not detect 'Extract and Move', we consider this one as CTP.</p><p>The method is extracted and moved to class <span class='pl-smi'>SSLHostConfigCertificate.</span></p></div>",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh, Automatic"
     }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method public setCertificateKeystoreProvider(certificateKeystoreProvider String) : void extracted from public setCertificateKeystoreProvider(certificateKeystoreProvider String) : void in class org.apache.tomcat.util.net.SSLHostConfig & moved to class org.apache.tomcat.util.net.SSLHostConfigCertificate",
         "comment": "<p>Extract and Move to other class.</p><div><p>Since RefDiff does not detect 'Extract and Move', we consider this one as CTP.</p><p>The method is extracted and moved to class <span class='pl-smi'>SSLHostConfigCertificate.</span></p></div><p>&nbsp;</p><p style='color: gray;'>&nbsp;</p><p>&nbsp;</p>",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh, Automatic"
     }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method public setCertificateKeystoreType(certificateKeystoreType String) : void extracted from public setCertificateKeystoreType(certificateKeystoreType String) : void in class org.apache.tomcat.util.net.SSLHostConfig & moved to class org.apache.tomcat.util.net.SSLHostConfigCertificate",
         "comment": "<p>Extract and Move to other class.</p><div><p>Since RefDiff does not detect 'Extract and Move', we consider this one as CTP.</p><p>The method is extracted and moved to class <span class='pl-smi'>SSLHostConfigCertificate.</span></p></div>",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh, Automatic"
     }],
     "refDiffExecutionTime": 1133
@@ -11218,7 +11232,7 @@
         "description": "Extract And Move Method public hasGoCheckSupport(module Module) : boolean extracted from public checkConfiguration() : void in class com.goide.runconfig.testing.frameworks.gocheck.GocheckRunConfiguration & moved to class com.goide.runconfig.GoRunUtil",
         "comment": "Extract and Move to the inner class",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Automatic"
     }],
     "refDiffExecutionTime": 917
@@ -31177,13 +31191,6 @@
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Davood"
-    }, {
-        "type": "Inline Method",
-        "description": "Inline Method public contains(name T, value T, keyComparator Comparator, valueComparator Comparator) : boolean inlined to public contains(name T, value T, valueComparator Comparator) : boolean in class io.netty.handler.codec.DefaultHeaders",
-        "comment": "<p>new</p><p>The body of the inlined method is not similar to the statements added instead of the method call</p>",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Matin, Davood"
     }, {
         "type": "Rename Method",
         "description": "Rename Method public setShouldReplacePreviousValues() : void renamed to public setShouldOverWritePreviousValue() : void in class io.netty.handler.codec.DefaultBinaryHeadersTest",

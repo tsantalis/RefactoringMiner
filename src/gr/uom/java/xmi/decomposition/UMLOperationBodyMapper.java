@@ -569,14 +569,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return count;
 	}
 
+	public List<AbstractCodeMapping> getExactMatches() {
+		List<AbstractCodeMapping> exactMatches = new ArrayList<AbstractCodeMapping>();
+		for(AbstractCodeMapping mapping : getMappings()) {
+			if(mapping.isExact() && countableStatement(mapping.getFragment1()) &&
+					!mapping.getFragment1().getString().equals("try"))
+				exactMatches.add(mapping);
+		}
+		return exactMatches;
+	}
+
 	private boolean countableStatement(AbstractCodeFragment fragment) {
 		String statement = fragment.getString();
-		//covers the cases of methods with only one statement in their body, and conditionals with only one statement in their body
-		if(fragment instanceof AbstractStatement && ((AbstractStatement)fragment).getParent().statementCount() == 1) {
+		//covers the cases of methods with only one statement in their body
+		if(fragment instanceof AbstractStatement && ((AbstractStatement)fragment).getParent().statementCount() == 1 && ((AbstractStatement)fragment).getParent().getParent() == null) {
 			return true;
 		}
 		return !statement.equals("{") && !statement.startsWith("catch(") && !statement.startsWith("case ") && !statement.startsWith("default :") &&
-				!statement.startsWith("return true") && !statement.startsWith("return false") && !statement.startsWith("return this") && !statement.startsWith("return null") && !statement.startsWith("return;") && !statement.startsWith("throw new ");
+				!statement.startsWith("return true;") && !statement.startsWith("return false;") && !statement.startsWith("return this;") && !statement.startsWith("return null;") && !statement.startsWith("return;");
 	}
 
 	private int editDistance() {
@@ -1052,7 +1062,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance()) {
 						minDistance = distanceRaw;
 						Replacement replacement = null;
-						if(variables1.contains(s1) && variables2.contains(s2) && variablesStartWithSameCase(s1, s2)) {
+						if(variables1.contains(s1) && variables2.contains(s2) && variablesStartWithSameCase(s1, s2, parameterToArgumentMap)) {
 							replacement = new Replacement(s1, s2, ReplacementType.VARIABLE_NAME);
 						}
 						else if(variables1.contains(s1) && methodInvocations2.contains(s2)) {
@@ -1482,7 +1492,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean variablesStartWithSameCase(String s1, String s2) {
+	private boolean variablesStartWithSameCase(String s1, String s2, Map<String, String> parameterToArgumentMap) {
+		if(parameterToArgumentMap.values().contains(s2)) {
+			return true;
+		}
 		if(s1.length() > 0 && s2.length() > 0) {
 			if(Character.isUpperCase(s1.charAt(0)) && Character.isUpperCase(s2.charAt(0)))
 				return true;

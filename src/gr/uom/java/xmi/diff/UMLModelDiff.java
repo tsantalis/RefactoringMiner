@@ -10,6 +10,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLRealization;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
@@ -915,7 +916,7 @@ public class UMLModelDiff {
       }
       checkForOperationMovesBetweenCommonClasses();
       checkForExtractedAndMovedOperations(getOperationBodyMappersInCommonClasses(), getAddedOperationsInCommonClasses());
-      //checkForExtractedAndMovedOperations(getOperationBodyMappersInMovedAndRenamedClasses(), getAddedOperationsInMovedAndRenamedClasses());
+      checkForExtractedAndMovedOperations(getOperationBodyMappersInMovedAndRenamedClasses(), getAddedOperationsInMovedAndRenamedClasses());
       checkForOperationMovesIncludingAddedClasses();
       checkForOperationMovesIncludingRemovedClasses();
       refactorings.addAll(checkForAttributeMovesBetweenCommonClasses());
@@ -961,8 +962,7 @@ public class UMLModelDiff {
             	  }
                   UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap1, parameterToArgumentMap2);
                   operationBodyMapper.getMappings();
-                  int mappings = operationBodyMapper.mappingsWithoutBlocks();
-                  if(mappings > 0 && mappings > operationBodyMapper.nonMappedElementsT2()) {
+                  if(extractAndMoveMatchCondition(operationBodyMapper)) {
                 	  if(className.equals(addedOperation.getClassName())) {
                 		  //extract inside moved or renamed class
                 		  ExtractOperationRefactoring extractOperationRefactoring =
@@ -1011,6 +1011,17 @@ public class UMLModelDiff {
             }
          }
       }
+   }
+
+   private boolean extractAndMoveMatchCondition(UMLOperationBodyMapper operationBodyMapper) {
+	   int mappings = operationBodyMapper.mappingsWithoutBlocks();
+	   int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();
+	   List<AbstractCodeMapping> exactMatchList = operationBodyMapper.getExactMatches();
+	   int exactMatches = exactMatchList.size();
+	   return mappings > 0 && (mappings > nonMappedElementsT2 ||
+			   (exactMatches == 1 && !exactMatchList.get(0).getFragment1().throwsNewException() && nonMappedElementsT2-exactMatches < 10) ||
+			   (exactMatches > 1 && nonMappedElementsT2-exactMatches < 20) ||
+			   (mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2()));
    }
 
    private void checkForOperationMovesIncludingRemovedClasses() {

@@ -110,6 +110,33 @@ public class OperationInvocation extends AbstractCall {
     }
 
     public boolean matchesOperation(UMLOperation operation) {
+    	List<String> inferredArgumentTypes = new ArrayList<String>();
+    	for(String arg : arguments) {
+    		if(arg.startsWith("\"") && arg.endsWith("\"")) {
+    			inferredArgumentTypes.add("String");
+    		}
+    		else if(arg.endsWith(".class")) {
+    			inferredArgumentTypes.add("Class");
+    		}
+    		else if(arg.equals("true")) {
+    			inferredArgumentTypes.add("boolean");
+    		}
+    		else if(arg.equals("false")) {
+    			inferredArgumentTypes.add("boolean");
+    		}
+    		else {
+    			inferredArgumentTypes.add(null);
+    		}
+    	}
+    	int i=0;
+    	for(UMLType parameterType : operation.getParameterTypeList()) {
+    		if(inferredArgumentTypes.size() > i && inferredArgumentTypes.get(i) != null) {
+    			if(!parameterType.getClassType().equals(inferredArgumentTypes.get(i))) {
+    				return false;
+    			}
+    		}
+    		i++;
+    	}
     	return this.methodName.equals(operation.getName()) && (this.typeArguments == operation.getParameterTypeList().size() || varArgsMatch(operation));
     }
 

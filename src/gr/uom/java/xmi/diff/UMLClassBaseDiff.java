@@ -73,10 +73,9 @@ public abstract class UMLClassBaseDiff {
 		this.operationDiffList = new ArrayList<UMLOperationDiff>();
 		this.attributeDiffList = new ArrayList<UMLAttributeDiff>();
 		this.refactorings = new ArrayList<Refactoring>();
-		processingTemplate();
 	}
 
-	private void processingTemplate() {
+	public void process() {
 		processInheritance();
 		processOperations();
 		processAttributes();

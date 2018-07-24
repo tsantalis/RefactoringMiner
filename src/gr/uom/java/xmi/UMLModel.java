@@ -147,6 +147,7 @@ public class UMLModel {
     	}
     	modelDiff.checkForMovedClasses(renamedFileHints, umlModel.projectRoot, new UMLClassMatcher.RelaxedMove());
     	modelDiff.checkForRenamedClasses(renamedFileHints, new UMLClassMatcher.RelaxedRename());
+    	//modelDiff.checkForMovedClasses(renamedFileHints, umlModel.projectRoot, new UMLClassMatcher.ExtremelyRelaxedMove());
     	return modelDiff;
     }
 }

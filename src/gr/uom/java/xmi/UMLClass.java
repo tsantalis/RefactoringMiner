@@ -235,6 +235,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
     public UMLClassDiff diff(UMLClass umlClass) {
     	UMLClassDiff classDiff = new UMLClassDiff(this, umlClass);
+    	classDiff.process();
     	return classDiff;
     }
 

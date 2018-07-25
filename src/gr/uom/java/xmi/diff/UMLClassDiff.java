@@ -9,7 +9,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class UMLClassDiff extends UMLClassBaseDiff implements Comparable<UMLClassDiff> {
+public class UMLClassDiff extends UMLClassBaseDiff {
 	
 	private String className;
 	public UMLClassDiff(UMLClass originalClass, UMLClass nextClass) {
@@ -94,10 +94,6 @@ public class UMLClassDiff extends UMLClassBaseDiff implements Comparable<UMLClas
 				}
 			}
 		}
-	}
-
-	public int compareTo(UMLClassDiff classDiff) {
-		return this.className.compareTo(classDiff.className);
 	}
 
 	public boolean matches(String className) {

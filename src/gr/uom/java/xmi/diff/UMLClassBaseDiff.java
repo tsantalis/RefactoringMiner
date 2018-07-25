@@ -27,7 +27,7 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
-public abstract class UMLClassBaseDiff {
+public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 
 	public static final double MAX_OPERATION_NAME_DISTANCE = 0.4;
 	protected UMLClass originalClass;
@@ -213,8 +213,8 @@ public abstract class UMLClassBaseDiff {
 	}
 
 	//return true if "classMoveDiff" represents the move of a class that is inner to this.originalClass
-	public boolean isInnerClassMove(UMLClassMoveDiff classMoveDiff) {
-		if(this.originalClass.isInnerClass(classMoveDiff.originalClass) && this.nextClass.isInnerClass(classMoveDiff.nextClass))
+	public boolean isInnerClassMove(UMLClassBaseDiff classDiff) {
+		if(this.originalClass.isInnerClass(classDiff.originalClass) && this.nextClass.isInnerClass(classDiff.nextClass))
 			return true;
 		return false;
 	}
@@ -1062,5 +1062,9 @@ public abstract class UMLClassBaseDiff {
 			sb.append(operationBodyMapper);
 		}
 		return sb.toString();
+	}
+
+	public int compareTo(UMLClassBaseDiff other) {
+		return this.originalClass.getName().compareTo(other.originalClass.getName());
 	}
 }

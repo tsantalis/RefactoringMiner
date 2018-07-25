@@ -2,7 +2,7 @@ package gr.uom.java.xmi.diff;
 
 import gr.uom.java.xmi.UMLClass;
 
-public class UMLClassRenameDiff extends UMLClassBaseDiff implements Comparable<UMLClassRenameDiff> {
+public class UMLClassRenameDiff extends UMLClassBaseDiff {
 	
 	public UMLClassRenameDiff(UMLClass originalClass, UMLClass renamedClass) {
 		super(originalClass, renamedClass);
@@ -24,9 +24,5 @@ public class UMLClassRenameDiff extends UMLClassBaseDiff implements Comparable<U
 		sb.append(nextClass.getName());
 		sb.append("\n");
 		return sb.toString();
-	}
-
-	public int compareTo(UMLClassRenameDiff other) {
-		return this.originalClass.getName().compareTo(other.originalClass.getName());
 	}
 }

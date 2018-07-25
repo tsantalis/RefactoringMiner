@@ -32,6 +32,7 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
+import org.refactoringminer.api.Churn;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
 import org.refactoringminer.api.Refactoring;
@@ -364,5 +365,30 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		} finally {
 			walk.dispose();
 		}
+	}
+
+	@Override
+	public Churn churnAtCommit(Repository repository, String commitId, RefactoringHandler handler) {
+		GitService gitService = new GitServiceImpl();
+		RevWalk walk = new RevWalk(repository);
+		try {
+			RevCommit commit = walk.parseCommit(repository.resolve(commitId));
+			if (commit.getParentCount() > 0) {
+				walk.parseCommit(commit.getParent(0));
+				return gitService.churn(repository, commit);
+			}
+			else {
+				logger.warn(String.format("Ignored revision %s because it has no parent", commitId));
+			}
+		} catch (MissingObjectException moe) {
+			logger.warn(String.format("Ignored revision %s due to missing commit", commitId), moe);
+		} catch (Exception e) {
+			logger.warn(String.format("Ignored revision %s due to error", commitId), e);
+			handler.handleException(commitId, e);
+		} finally {
+			walk.close();
+			walk.dispose();
+		}
+		return null;
 	}
 }

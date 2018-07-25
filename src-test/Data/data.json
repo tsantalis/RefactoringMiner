@@ -4117,7 +4117,7 @@
         "description": "Rename Class com.graphhopper.storage.GraphExtension.NoExtendedStorage renamed to com.graphhopper.storage.GraphExtension.NoOpExtension",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Rename Method",
@@ -10311,7 +10311,7 @@
         "description": "Rename Class org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessorTests.JacksonViewController renamed to org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessorTests.JacksonController",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Extract Superclass",
@@ -21908,6 +21908,20 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin"
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.apache.poi.poifs.dev.POIFSDump moved to org.docx4j.org.apache.poi.poifs.dev.POIFSDump",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.apache.poi.poifs.dev.POIFSHeaderDumper moved to org.docx4j.org.apache.poi.poifs.dev.POIFSHeaderDumper",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 6242
 }, {

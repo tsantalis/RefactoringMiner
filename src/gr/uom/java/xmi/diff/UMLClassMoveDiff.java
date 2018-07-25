@@ -2,7 +2,7 @@ package gr.uom.java.xmi.diff;
 
 import gr.uom.java.xmi.UMLClass;
 
-public class UMLClassMoveDiff extends UMLClassBaseDiff implements Comparable<UMLClassMoveDiff> {
+public class UMLClassMoveDiff extends UMLClassBaseDiff {
 	
 	public UMLClassMoveDiff(UMLClass originalClass, UMLClass movedClass) {
 		super(originalClass, movedClass);
@@ -32,9 +32,5 @@ public class UMLClassMoveDiff extends UMLClassBaseDiff implements Comparable<UML
 			return this.originalClass.equals(classMoveDiff.originalClass) && this.nextClass.equals(classMoveDiff.nextClass);
 		}
 		return false;
-	}
-
-	public int compareTo(UMLClassMoveDiff other) {
-		return this.originalClass.getName().compareTo(other.originalClass.getName());
 	}
 }

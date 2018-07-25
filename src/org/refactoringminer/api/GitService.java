@@ -42,4 +42,6 @@ public interface GitService {
 	RevWalk createRevsWalkBetweenCommits(Repository repository, String startCommitId, String endCommitId) throws Exception;
 
 	void fileTreeDiff(Repository repository, RevCommit currentCommit, List<String> filesBefore, List<String> filesCurrent, Map<String, String> renamedFilesHint) throws Exception;
+
+	Churn churn(Repository repository, RevCommit currentCommit) throws Exception;
 }

@@ -10,12 +10,17 @@ import java.util.Map;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.diff.DiffFormatter;
+import org.eclipse.jgit.diff.Edit;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
+import org.eclipse.jgit.diff.Edit.Type;
 import org.eclipse.jgit.diff.RenameDetector;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryBuilder;
+import org.eclipse.jgit.patch.FileHeader;
+import org.eclipse.jgit.patch.HunkHeader;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.RevWalkUtils;
@@ -23,6 +28,8 @@ import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.TrackingRefUpdate;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.util.io.DisabledOutputStream;
+import org.refactoringminer.api.Churn;
 import org.refactoringminer.api.GitService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -274,10 +281,10 @@ public class GitServiceImpl implements GitService {
 		}
 	}
 
-	public void fileTreeDiff(Repository repository, RevCommit current, List<String> javaFilesBefore, List<String> javaFilesCurrent, Map<String, String> renamedFilesHint) throws Exception {
-        if (current.getParentCount() > 0) {
-        	ObjectId oldTree = current.getParent(0).getTree();
-	        ObjectId newTree = current.getTree();
+	public void fileTreeDiff(Repository repository, RevCommit currentCommit, List<String> javaFilesBefore, List<String> javaFilesCurrent, Map<String, String> renamedFilesHint) throws Exception {
+        if (currentCommit.getParentCount() > 0) {
+        	ObjectId oldTree = currentCommit.getParent(0).getTree();
+	        ObjectId newTree = currentCommit.getTree();
         	final TreeWalk tw = new TreeWalk(repository);
         	tw.setRecursive(true);
         	tw.addTree(oldTree);
@@ -312,5 +319,44 @@ public class GitServiceImpl implements GitService {
 
 	private boolean isJavafile(String path) {
 		return path.endsWith(".java");
+	}
+
+	@Override
+	public Churn churn(Repository repository, RevCommit currentCommit) throws Exception {
+		if (currentCommit.getParentCount() > 0) {
+        	ObjectId oldTree = currentCommit.getParent(0).getTree();
+	        ObjectId newTree = currentCommit.getTree();
+        	final TreeWalk tw = new TreeWalk(repository);
+        	tw.setRecursive(true);
+        	tw.addTree(oldTree);
+        	tw.addTree(newTree);
+        	
+        	List<DiffEntry> diffs = DiffEntry.scan(tw);
+        	DiffFormatter diffFormatter = new DiffFormatter(DisabledOutputStream.INSTANCE);
+    		diffFormatter.setRepository(repository);
+    		diffFormatter.setContext(0);
+    		
+        	int addedLines = 0;
+    		int deletedLines = 0;
+        	for (DiffEntry entry : diffs) {
+    			FileHeader header = diffFormatter.toFileHeader(entry);
+            	List<? extends HunkHeader> hunks = header.getHunks();
+            	for (HunkHeader hunkHeader : hunks) {
+            		for (Edit edit : hunkHeader.toEditList()) {
+    					if (edit.getType() == Type.INSERT) {
+    						addedLines += edit.getLengthB();
+    					} else if (edit.getType() == Type.DELETE) {
+    						deletedLines += edit.getLengthA();
+    					} else if (edit.getType() == Type.REPLACE) {
+    						deletedLines += edit.getLengthA();
+    						addedLines += edit.getLengthB();
+    					}
+    				}
+            	}
+        	}
+        	diffFormatter.close();
+        	return new Churn(addedLines, deletedLines);
+		}
+		return null;
 	}
 }

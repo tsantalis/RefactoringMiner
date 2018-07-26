@@ -106,6 +106,10 @@ miner.detectAtCommit(repo, "https://github.com/danilofes/refactoring-toy-example
   }
 });
 ```
+You can get the churn of a specific commit using `churnAtCommit` as follows:
+```java
+Churn churn = miner.churnAtCommit(repo, "05c1e773878bbacae64112f70964f4f2f7944398", handler);
+```
 
 There is also a lower level API that works comparing the source code from two
 folders that contain the code before and after the code changes:  

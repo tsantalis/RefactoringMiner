@@ -12828,6 +12828,13 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.apache.cassandra.cql3.CreateTriggerStatementTest.TestTrigger moved to org.apache.cassandra.cql3.validation.operations.CreateTest.TestTrigger",
+        "comment": "<p>The inner class TestTrigger was merged along with the outer class CreateTriggerStatementTest in class CreateTest<br />http://refactoring.encs.concordia.ca/oracle/refactoring-details/1123899/4815</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 7672
 }, {

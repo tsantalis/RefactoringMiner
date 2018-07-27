@@ -61,6 +61,20 @@ public class MoveOperationRefactoring implements Refactoring {
 		return replacements;
 	}
 
+	/**
+	 * @return the code range of the source method in the <b>parent</b> commit
+	 */
+	public CodeRange getSourceOperationCodeRangeBeforeMove() {
+		return originalOperation.codeRange();
+	}
+
+	/**
+	 * @return the code range of the target method in the <b>child</b> commit
+	 */
+	public CodeRange getTargetOperationCodeRangeAfterMove() {
+		return movedOperation.codeRange();
+	}
+
 	public boolean compatibleWith(MoveAttributeRefactoring ref) {
 		if(ref.getMovedAttribute().getClassName().equals(this.movedOperation.getClassName()) &&
 				ref.getOriginalAttribute().getClassName().equals(this.originalOperation.getClassName())) {

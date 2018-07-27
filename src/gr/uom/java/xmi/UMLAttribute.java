@@ -1,5 +1,6 @@
 package gr.uom.java.xmi;
 
+import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
 
 import java.io.Serializable;
@@ -83,6 +84,11 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Loc
 		if(this.name.equals(attribute.name) && this.type.equals(attribute.type))
 			return true;
 		return false;
+	}
+
+	public CodeRange codeRange() {
+		LocationInfo info = getLocationInfo();
+		return info.codeRange();
 	}
 
 	public boolean equals(Object o) {

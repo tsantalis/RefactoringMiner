@@ -48,4 +48,18 @@ public class MoveAttributeRefactoring implements Refactoring {
 	public String getTargetClassName() {
 		return movedAttribute.getClassName();
 	}
+
+	/**
+	 * @return the code range of the source attribute in the <b>parent</b> commit
+	 */
+	public CodeRange getSourceAttributeCodeRangeBeforeMove() {
+		return originalAttribute.codeRange();
+	}
+
+	/**
+	 * @return the code range of the target attribute in the <b>child</b> commit
+	 */
+	public CodeRange getTargetAttributeCodeRangeAfterMove() {
+		return movedAttribute.codeRange();
+	}
 }

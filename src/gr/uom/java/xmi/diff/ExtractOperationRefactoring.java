@@ -6,7 +6,6 @@ import java.util.Set;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -97,51 +96,46 @@ public class ExtractOperationRefactoring implements Refactoring {
 		return extractedCodeFragmentsToExtractedOperation;
 	}
 
+	/**
+	 * @return the code range of the source method in the <b>parent</b> commit
+	 */
 	public CodeRange getSourceOperationCodeRangeBeforeExtraction() {
 		return sourceOperationBeforeExtraction.codeRange();
 	}
 
+	/**
+	 * @return the code range of the source method in the <b>child</b> commit
+	 */
 	public CodeRange getSourceOperationCodeRangeAfterExtraction() {
 		return sourceOperationAfterExtraction.codeRange();
 	}
 
+	/**
+	 * @return the code range of the extracted method in the <b>child</b> commit
+	 */
 	public CodeRange getExtractedOperationCodeRange() {
 		return extractedOperation.codeRange();
 	}
 
+	/**
+	 * @return the code range of the extracted code fragment from the source method in the <b>parent</b> commit
+	 */
 	public CodeRange getExtractedCodeRangeFromSourceOperation() {
-		return computeRange(extractedCodeFragmentsFromSourceOperation);
+		return CodeRange.computeRange(extractedCodeFragmentsFromSourceOperation);
 	}
 
+	/**
+	 * @return the code range of the extracted code fragment to the extracted method in the <b>child</b> commit
+	 */
 	public CodeRange getExtractedCodeRangeToExtractedOperation() {
-		return computeRange(extractedCodeFragmentsToExtractedOperation);
+		return CodeRange.computeRange(extractedCodeFragmentsToExtractedOperation);
 	}
 
-	private CodeRange computeRange(Set<AbstractCodeFragment> codeFragments) {
-		String filePath = null;
-		int minStartLine = 0;
-		int maxEndLine = 0;
-		int startColumn = 0;
-		int endColumn = 0;
-		
-		for(AbstractCodeFragment fragment : codeFragments) {
-			LocationInfo info = fragment.getLocationInfo();
-			filePath = info.getFilePath();
-			if(minStartLine == 0 || info.getStartLine() < minStartLine) {
-				minStartLine = info.getStartLine();
-				startColumn = info.getStartColumn();
-			}
-			if(info.getEndLine() > maxEndLine) {
-				maxEndLine = info.getEndLine();
-				endColumn = info.getEndColumn();
-			}
-		}
-		return new CodeRange(filePath, minStartLine, maxEndLine, startColumn, endColumn);
-	}
-
+	/**
+	 * @return the code range of the invocation to the extracted method inside the source method in the <b>child</b> commit
+	 */
 	public CodeRange getExtractedOperationInvocationCodeRange() {
-		LocationInfo info = extractedOperationInvocation.getLocationInfo();
-		return info.codeRange();
+		return extractedOperationInvocation.codeRange();
 	}
 
 	public String getName() {

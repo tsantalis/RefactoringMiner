@@ -386,6 +386,10 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 	}
 
 	public List<Refactoring> getRefactorings() {
+		List<Refactoring> refactorings = new ArrayList<Refactoring>(this.refactorings);
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			refactorings.addAll(mapper.getRefactorings());
+		}
 		return refactorings;
 	}
 
@@ -956,6 +960,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 											mapper.getOperation1(), mapper.getOperation2(), addedOperationInvocation);
 								}
 								refactorings.add(extractOperationRefactoring);
+								refactorings.addAll(operationBodyMapper.getRefactorings());
 								mapper.addAdditionalMapper(operationBodyMapper);
 								operationsToBeRemoved.add(addedOperation);
 							}

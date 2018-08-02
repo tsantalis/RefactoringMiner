@@ -65,7 +65,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			RefactoringType.EXTRACT_SUPERCLASS,
 			RefactoringType.EXTRACT_AND_MOVE_OPERATION,
 			RefactoringType.MOVE_RENAME_CLASS,
-			RefactoringType.RENAME_PACKAGE
+			RefactoringType.RENAME_PACKAGE,
+			RefactoringType.EXTRACT_VARIABLE
 		);
 	}
 

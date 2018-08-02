@@ -8,6 +8,7 @@ import gr.uom.java.xmi.decomposition.replacement.ObjectCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
+import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
@@ -25,6 +26,8 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.refactoringminer.api.Refactoring;
+
 public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper> {
 	private UMLOperation operation1;
 	private UMLOperation operation2;
@@ -34,6 +37,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private List<StatementObject> nonMappedLeavesT2;
 	private List<CompositeStatementObject> nonMappedInnerNodesT1;
 	private List<CompositeStatementObject> nonMappedInnerNodesT2;
+	private Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 	private List<UMLOperationBodyMapper> additionalMappers = new ArrayList<UMLOperationBodyMapper>();
 	private static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)|(\\?)|(:)");
 	private static final double MAX_ANONYMOUS_CLASS_DECLARATION_DISTANCE = 0.2;
@@ -364,6 +368,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return operation2;
 	}
 
+	public Set<Refactoring> getRefactorings() {
+		initialize();
+		return refactorings;
+	}
+
 	public List<AbstractCodeMapping> getMappings() {
 		initialize();
 		return mappings;
@@ -451,6 +460,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				String initializer = declaration.getInitializer();
 				if(variableName.equals(replacement.getAfter()) &&
 						initializer != null && initializer.equals(replacement.getBefore())) {
+					ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation2);
+					if(!refactorings.contains(ref)) {
+						refactorings.add(ref);
+					}
 					return true;
 				}
 			}
@@ -462,6 +475,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(Replacement replacement : getReplacements()) {
 				if(variable.endsWith(replacement.getAfter()) &&
 						initializer.equals(replacement.getBefore())) {
+					ExtractVariableRefactoring ref = new ExtractVariableRefactoring(variable, operation2);
+					if(!refactorings.contains(ref)) {
+						refactorings.add(ref);
+					}
 					return true;
 				}
 			}
@@ -1166,8 +1183,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//method invocation is identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
-			for(AbstractCall invocation1 : methodInvocationMap1.values()) {
-				if(invocation1.identical(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
+			for(String key1 : methodInvocationMap1.keySet()) {
+				AbstractCall invocation1 = methodInvocationMap1.get(key1);
+				if(invocation1.identical(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements()) &&
+						!invocationCoveringTheEntireStatement1.getArguments().contains(key1)) {
 					return replacementInfo.getReplacements();
 				}
 			}

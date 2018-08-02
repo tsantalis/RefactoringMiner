@@ -74,4 +74,19 @@ public class RenameOperationRefactoring implements Refactoring {
 	public Set<Replacement> getReplacements() {
 		return replacements;
 	}
+
+	/**
+	 * @return the code range of the source method in the <b>parent</b> commit
+	 */
+	public CodeRange getSourceOperationCodeRangeBeforeRename() {
+		return originalOperation.codeRange();
+	}
+
+	/**
+	 * @return the code range of the target method in the <b>child</b> commit
+	 */
+	public CodeRange getTargetOperationCodeRangeAfterRename() {
+		return renamedOperation.codeRange();
+	}
+
 }

@@ -7,17 +7,11 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class ExtractVariableRefactoring implements Refactoring {
-	private String variableName;
+	private VariableDeclaration variableDeclaration;
 	private UMLOperation operation;
 
 	public ExtractVariableRefactoring(VariableDeclaration variableDeclaration, UMLOperation operation) {
-		this.variableName = variableDeclaration.getVariableName();
-		this.operation = operation;
-	}
-
-	public ExtractVariableRefactoring(String variableName, UMLOperation operation) {
-		String[] tokens = variableName.split("\\s");
-		this.variableName = tokens[tokens.length-1];
+		this.variableDeclaration = variableDeclaration;
 		this.operation = operation;
 	}
 
@@ -32,7 +26,7 @@ public class ExtractVariableRefactoring implements Refactoring {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(variableName);
+		sb.append(variableDeclaration.getVariableName());
 		sb.append(" in method ");
 		sb.append(operation);
 		sb.append(" from class ");
@@ -40,12 +34,19 @@ public class ExtractVariableRefactoring implements Refactoring {
 		return sb.toString();
 	}
 
+	/**
+	 * @return the code range of the extracted variable declaration in the <b>child</b> commit
+	 */
+	public CodeRange getExtractedVariableDeclarationCodeRange() {
+		return variableDeclaration.codeRange();
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((operation == null) ? 0 : operation.hashCode());
-		result = prime * result + ((variableName == null) ? 0 : variableName.hashCode());
+		result = prime * result + ((variableDeclaration == null) ? 0 : variableDeclaration.hashCode());
 		return result;
 	}
 
@@ -63,10 +64,10 @@ public class ExtractVariableRefactoring implements Refactoring {
 				return false;
 		} else if (!operation.equals(other.operation))
 			return false;
-		if (variableName == null) {
-			if (other.variableName != null)
+		if (variableDeclaration == null) {
+			if (other.variableDeclaration != null)
 				return false;
-		} else if (!variableName.equals(other.variableName))
+		} else if (!variableDeclaration.equals(other.variableDeclaration))
 			return false;
 		return true;
 	}

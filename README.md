@@ -5,15 +5,18 @@ Currently, it supports the detection of the following refactorings:
 
 1. Extract Method
 2. Inline Method
-3. Move Method/Attribute
-4. Pull Up Method/Attribute
-5. Push Down Method/Attribute
-6. Extract Superclass/Interface
-7. Move Class
-8. Rename Class
-9. Rename Method
-10. Extract and Move Method
-11. Change Package (Move, Rename, Split, Merge)
+3. Rename Method
+4. Move Method/Attribute
+5. Pull Up Method/Attribute
+6. Push Down Method/Attribute
+7. Extract Superclass/Interface
+8. Move Class
+9. Rename Class
+10. Move and Rename Class
+11. Extract and Move Method
+12. Move Source Folder
+13. Change Package (Move, Rename, Split, Merge)
+14. Extract Variable
 
 In order to build the project, run `./gradlew jar` (or `gradlew jar`, in Windows) in the project's root directory.
 Alternatively, you can generate a complete distribution zip including all runtime dependencies running `./gradlew distZip`.

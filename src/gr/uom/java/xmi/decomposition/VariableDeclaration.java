@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.diff.CodeRange;
 
 public class VariableDeclaration implements LocationInfoProvider {
 	private String variableName;
@@ -84,6 +85,10 @@ public class VariableDeclaration implements LocationInfoProvider {
 
 	public LocationInfo getLocationInfo() {
 		return locationInfo;
+	}
+
+	public CodeRange codeRange() {
+		return locationInfo.codeRange();
 	}
 
 	private static Type extractType(org.eclipse.jdt.core.dom.VariableDeclaration variableDeclaration) {

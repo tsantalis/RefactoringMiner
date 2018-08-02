@@ -470,16 +470,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		String argumentizedString = statement.getArgumentizedString();
 		if(argumentizedString.contains("=")) {
-			String variable = argumentizedString.substring(0, argumentizedString.indexOf("="));
+			String beforeAssignment = argumentizedString.substring(0, argumentizedString.indexOf("="));
+			String[] tokens = beforeAssignment.split("\\s");
+			String variable = tokens[tokens.length-1];
 			String initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-2);
 			for(Replacement replacement : getReplacements()) {
 				if(variable.endsWith(replacement.getAfter()) &&
 						initializer.equals(replacement.getBefore())) {
-					ExtractVariableRefactoring ref = new ExtractVariableRefactoring(variable, operation2);
-					if(!refactorings.contains(ref)) {
-						refactorings.add(ref);
+					List<VariableDeclaration> variableDeclarations = operation2.getAllVariableDeclarations();
+					for(VariableDeclaration declaration : variableDeclarations) {
+						if(declaration.getVariableName().equals(variable)) {
+							ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation2);
+							if(!refactorings.contains(ref)) {
+								refactorings.add(ref);
+							}
+							return true;
+						}
 					}
-					return true;
 				}
 			}
 		}

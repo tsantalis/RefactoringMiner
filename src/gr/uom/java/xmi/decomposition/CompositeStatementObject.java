@@ -14,6 +14,7 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	private List<AbstractStatement> statementList;
 	private List<AbstractExpression> expressionList;
+	private List<VariableDeclaration> variableDeclarations;
 	private String type;
 	private LocationInfo locationInfo;
 
@@ -24,6 +25,7 @@ public class CompositeStatementObject extends AbstractStatement {
 		this.locationInfo = new LocationInfo(cu, filePath, statement);
 		this.statementList = new ArrayList<AbstractStatement>();
 		this.expressionList = new ArrayList<AbstractExpression>();
+		this.variableDeclarations = new ArrayList<VariableDeclaration>();
 	}
 
 	public void addStatement(AbstractStatement statement) {
@@ -46,6 +48,10 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public List<AbstractExpression> getExpressions() {
 		return expressionList;
+	}
+
+	public void addVariableDeclaration(VariableDeclaration declaration) {
+		this.variableDeclarations.add(declaration);
 	}
 
 	@Override
@@ -104,6 +110,8 @@ public class CompositeStatementObject extends AbstractStatement {
 	@Override
 	public List<VariableDeclaration> getVariableDeclarations() {
 		List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
+		//special handling for enhanced-for formal parameter
+		variableDeclarations.addAll(this.variableDeclarations);
 		for(AbstractExpression expression : expressionList) {
 			variableDeclarations.addAll(expression.getVariableDeclarations());
 		}
@@ -232,6 +240,16 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public LocationInfo getLocationInfo() {
 		return locationInfo;
+	}
+
+	public VariableDeclaration getVariableDeclaration(String variableName) {
+		List<VariableDeclaration> variableDeclarations = getAllVariableDeclarations();
+		for(VariableDeclaration declaration : variableDeclarations) {
+			if(declaration.getVariableName().equals(variableName)) {
+				return declaration;
+			}
+		}
+		return null;
 	}
 
 	protected double compositeChildMatchingScore(CompositeStatementObject other, List<AbstractCodeMapping> mappings) {

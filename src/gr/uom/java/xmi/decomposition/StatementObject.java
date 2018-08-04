@@ -174,4 +174,14 @@ public class StatementObject extends AbstractStatement {
 	public LocationInfo getLocationInfo() {
 		return locationInfo;
 	}
+
+	public VariableDeclaration getVariableDeclaration(String variableName) {
+		List<VariableDeclaration> variableDeclarations = getVariableDeclarations();
+		for(VariableDeclaration declaration : variableDeclarations) {
+			if(declaration.getVariableName().equals(variableName)) {
+				return declaration;
+			}
+		}
+		return null;
+	}
 }

@@ -39,6 +39,7 @@ import org.eclipse.jdt.core.dom.TypeParameter;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
 import gr.uom.java.xmi.decomposition.OperationBody;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class UMLModelASTReader {
 	public static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
@@ -288,6 +289,9 @@ public class UMLModelASTReader {
 			}
 			UMLType type = UMLType.extractTypeObject(typeName);
 			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarargs());
+			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, parameter);
+			variableDeclaration.setParameter(true);
+			umlParameter.setVariableDeclaration(variableDeclaration);
 			umlOperation.addParameter(umlParameter);
 		}
 		return umlOperation;
@@ -303,6 +307,9 @@ public class UMLModelASTReader {
 			String fieldName = fragment.getName().getFullyQualifiedName();
 			LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, fragment);
 			UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo);
+			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, fragment);
+			variableDeclaration.setAttribute(true);
+			umlAttribute.setVariableDeclaration(variableDeclaration);
 			//umlAttribute.setClassName(umlClass.getName());
 			
 			int fieldModifiers = fieldDeclaration.getModifiers();

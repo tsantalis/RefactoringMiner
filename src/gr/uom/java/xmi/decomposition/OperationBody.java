@@ -115,6 +115,8 @@ public class OperationBody {
 			CompositeStatementObject child = new CompositeStatementObject(cu, filePath, enhancedForStatement, parent.getDepth()+1, "for");
 			parent.addStatement(child);
 			SingleVariableDeclaration variableDeclaration = enhancedForStatement.getParameter();
+			VariableDeclaration vd = new VariableDeclaration(cu, filePath, variableDeclaration);
+			child.addVariableDeclaration(vd);
 			AbstractExpression variableDeclarationName = new AbstractExpression(cu, filePath, variableDeclaration.getName());
 			child.addExpression(variableDeclarationName);
 			if(variableDeclaration.getInitializer() != null) {

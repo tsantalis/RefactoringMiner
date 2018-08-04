@@ -11,13 +11,16 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.VariableDeclarationProvider;
 import gr.uom.java.xmi.diff.CodeRange;
 
-public class VariableDeclaration implements LocationInfoProvider {
+public class VariableDeclaration implements LocationInfoProvider, VariableDeclarationProvider {
 	private String variableName;
 	private String initializer;
 	private UMLType type;
 	private LocationInfo locationInfo;
+	private boolean isParameter;
+	private boolean isAttribute;
 	
 	public VariableDeclaration(CompilationUnit cu, String filePath, VariableDeclarationFragment fragment) {
 		this.locationInfo = new LocationInfo(cu, filePath, fragment);
@@ -43,6 +46,22 @@ public class VariableDeclaration implements LocationInfoProvider {
 
 	public UMLType getType() {
 		return type;
+	}
+
+	public boolean isParameter() {
+		return isParameter;
+	}
+
+	public void setParameter(boolean isParameter) {
+		this.isParameter = isParameter;
+	}
+
+	public boolean isAttribute() {
+		return isAttribute;
+	}
+
+	public void setAttribute(boolean isAttribute) {
+		this.isAttribute = isAttribute;
 	}
 
 	public int hashCode() {
@@ -113,5 +132,9 @@ public class VariableDeclaration implements LocationInfoProvider {
 			}
 		}
 		return returnedVariableType;
+	}
+
+	public VariableDeclaration getVariableDeclaration() {
+		return this;
 	}
 }

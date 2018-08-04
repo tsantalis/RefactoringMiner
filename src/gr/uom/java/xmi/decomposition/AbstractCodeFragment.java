@@ -42,6 +42,8 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	public abstract List<String> getStringLiterals();
 	public abstract Map<String, ObjectCreation> getCreationMap();
 	public abstract List<String> getInfixOperators();
+	public abstract VariableDeclaration searchVariableDeclaration(String variableName);
+	public abstract VariableDeclaration getVariableDeclaration(String variableName);
 	
 	public void replaceParametersWithArguments(Map<String, String> parameterToArgumentMap) {
 		String afterReplacements = getString();

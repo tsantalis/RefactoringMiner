@@ -26,6 +26,7 @@ import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
+import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
 
 public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 
@@ -486,32 +487,11 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		Set<MethodInvocationReplacement> allInconsistentMethodInvocationRenames = new LinkedHashSet<MethodInvocationReplacement>();
 		for(UMLOperationBodyMapper bodyMapper : operationBodyMapperList) {
 			Set<MethodInvocationReplacement> methodInvocationRenames = bodyMapper.getMethodInvocationRenameReplacements();
-			for(MethodInvocationReplacement newRename : methodInvocationRenames) {
-				Set<MethodInvocationReplacement> inconsistentMethodInvocationRenames = inconsistentMethodInvocationRenames(allConsistentMethodInvocationRenames, newRename);
-				if(inconsistentMethodInvocationRenames.isEmpty()) {
-					allConsistentMethodInvocationRenames.add(newRename);
-				}
-				else {
-					allInconsistentMethodInvocationRenames.addAll(inconsistentMethodInvocationRenames);
-					allInconsistentMethodInvocationRenames.add(newRename);
-				}
-			}
+			ConsistentReplacementDetector.updateRenames(allConsistentMethodInvocationRenames, allInconsistentMethodInvocationRenames,
+					methodInvocationRenames);
 		}
 		allConsistentMethodInvocationRenames.removeAll(allInconsistentMethodInvocationRenames);
 		return allConsistentMethodInvocationRenames;
-	}
-
-	private Set<MethodInvocationReplacement> inconsistentMethodInvocationRenames(Set<MethodInvocationReplacement> currentRenames, MethodInvocationReplacement newRename) {
-		Set<MethodInvocationReplacement> inconsistentMethodInvocationRenames = new LinkedHashSet<MethodInvocationReplacement>();
-		for(MethodInvocationReplacement rename : currentRenames) {
-			if(rename.getBefore().equals(newRename.getBefore()) && !rename.getAfter().equals(newRename.getAfter())) {
-				inconsistentMethodInvocationRenames.add(rename);
-			}
-			else if(!rename.getBefore().equals(newRename.getBefore()) && rename.getAfter().equals(newRename.getAfter())) {
-				inconsistentMethodInvocationRenames.add(rename);
-			}
-		}
-		return inconsistentMethodInvocationRenames;
 	}
 
 	private void updateMapperSet(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperation removedOperation, UMLOperation addedOperation, int differenceInPosition) {

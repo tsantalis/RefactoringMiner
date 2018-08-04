@@ -2,11 +2,14 @@ package gr.uom.java.xmi;
 
 import java.io.Serializable;
 
-public class UMLParameter implements Serializable {
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
+
+public class UMLParameter implements Serializable, VariableDeclarationProvider {
 	private String name;
 	private UMLType type;
 	private String kind;
 	private boolean varargs;
+	private VariableDeclaration variableDeclaration;
 
 	public UMLParameter(String name, UMLType type, String kind, boolean varargs) {
 		this.name = name;
@@ -19,8 +22,12 @@ public class UMLParameter implements Serializable {
 		return type;
 	}
 
-	public void setType(UMLType type) {
-		this.type = type;
+	public VariableDeclaration getVariableDeclaration() {
+		return variableDeclaration;
+	}
+
+	public void setVariableDeclaration(VariableDeclaration variableDeclaration) {
+		this.variableDeclaration = variableDeclaration;
 	}
 
 	public String getName() {

@@ -3,12 +3,14 @@ package gr.uom.java.xmi.decomposition;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
+import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ObjectCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
+import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
@@ -370,6 +372,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public Set<Refactoring> getRefactorings() {
 		initialize();
+		//refactorings.addAll(findConsistentVariableRenames());
 		return refactorings;
 	}
 
@@ -635,6 +638,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			replacements.addAll(mapping.getReplacements());
 		}
 		return replacements;
+	}
+
+	public Map<Replacement, Integer> getReplacementOccurrenceMap(ReplacementType type) {
+		Map<Replacement, Integer> map = new LinkedHashMap<Replacement, Integer>();
+		for(AbstractCodeMapping mapping : getMappings()) {
+			for(Replacement replacement : mapping.getReplacements()) {
+				if(replacement.getType().equals(type)) {
+					if(map.containsKey(replacement)) {
+						int count = map.get(replacement);
+						map.put(replacement, count+1);
+					}
+					else {
+						map.put(replacement, 1);
+					}
+				}
+			}
+		}
+		return map;
 	}
 
 	public Set<Replacement> getReplacementsInvolvingMethodInvocation() {
@@ -1591,5 +1612,62 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private Set<RenameVariableRefactoring> findConsistentVariableRenames() {
+		Map<Replacement, Integer> replacementOccurrenceMap = getReplacementOccurrenceMap(ReplacementType.VARIABLE_NAME);
+		Set<Replacement> renames = replacementOccurrenceMap.keySet();
+		Set<Replacement> allConsistentRenames = new LinkedHashSet<Replacement>();
+		Set<Replacement> allInconsistentRenames = new LinkedHashSet<Replacement>();
+		ConsistentReplacementDetector.updateRenames(allConsistentRenames, allInconsistentRenames, renames);
+		allConsistentRenames.removeAll(allInconsistentRenames);
+		Set<Replacement> finalConsistentRenames = new LinkedHashSet<Replacement>();
+		for(Replacement replacement : allConsistentRenames) {
+			if(replacementOccurrenceMap.containsKey(replacement) &&
+					(replacementOccurrenceMap.get(replacement) > 1 || potentialParameterRename(replacement))) {
+				finalConsistentRenames.add(replacement);
+			}
+		}
+		Set<RenameVariableRefactoring> variableRenames = new LinkedHashSet<RenameVariableRefactoring>();
+		for(Replacement replacement : finalConsistentRenames) {
+			for(AbstractCodeMapping mapping : getMappings()) {
+				if(mapping.getReplacements().contains(replacement)) {
+					RenameVariableRefactoring ref = createRefactoring(mapping, replacement);
+					variableRenames.add(ref);
+					break;
+				}
+			}
+		}
+		return variableRenames;
+	}
+
+	private RenameVariableRefactoring createRefactoring(AbstractCodeMapping mapping, Replacement replacement) {
+		VariableDeclaration v1 = mapping.getFragment1().searchVariableDeclaration(replacement.getBefore());
+		if(v1 == null) {
+			for(UMLParameter parameter : operation1.getParameters()) {
+				VariableDeclaration vd = parameter.getVariableDeclaration();
+				if(vd != null && vd.getVariableName().equals(replacement.getBefore())) {
+					v1 = vd;
+					break;
+				}
+			}
+		}
+		VariableDeclaration v2 = mapping.getFragment2().searchVariableDeclaration(replacement.getAfter());
+		if(v2 == null) {
+			for(UMLParameter parameter : operation2.getParameters()) {
+				VariableDeclaration vd = parameter.getVariableDeclaration();
+				if(vd != null && vd.getVariableName().equals(replacement.getAfter())) {
+					v2 = vd;
+					break;
+				}
+			}
+		}
+		RenameVariableRefactoring ref = new RenameVariableRefactoring(v1, v2, operation1, operation2);
+		return ref;
+	}
+
+	private boolean potentialParameterRename(Replacement replacement) {
+		return operation1.getParameterNameList().contains(replacement.getBefore()) &&
+				operation2.getParameterNameList().contains(replacement.getAfter());
 	}
 }

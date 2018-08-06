@@ -24,15 +24,31 @@ public class RenameVariableRefactoring implements Refactoring {
 	}
 
 	public RefactoringType getRefactoringType() {
-		if(originalVariable == null || renamedVariable == null)
-			return RefactoringType.RENAME_VARIABLE;
 		if(originalVariable.isParameter() && renamedVariable.isParameter())
 			return RefactoringType.RENAME_PARAMETER;
+		if(!originalVariable.isParameter() && renamedVariable.isParameter())
+			return RefactoringType.PARAMETERIZE_VARIABLE;
 		return RefactoringType.RENAME_VARIABLE;
 	}
 
 	public String getName() {
 		return this.getRefactoringType().getDisplayName();
+	}
+
+	public VariableDeclaration getOriginalVariable() {
+		return originalVariable;
+	}
+
+	public VariableDeclaration getRenamedVariable() {
+		return renamedVariable;
+	}
+
+	public UMLOperation getOperationBefore() {
+		return operationBefore;
+	}
+
+	public UMLOperation getOperationAfter() {
+		return operationAfter;
 	}
 
 	public String toString() {

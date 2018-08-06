@@ -23,10 +23,18 @@ public class ExtractVariableRefactoring implements Refactoring {
 		return this.getRefactoringType().getDisplayName();
 	}
 
+	public VariableDeclaration getVariableDeclaration() {
+		return variableDeclaration;
+	}
+
+	public UMLOperation getOperation() {
+		return operation;
+	}
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(variableDeclaration.getVariableName());
+		sb.append(variableDeclaration);
 		sb.append(" in method ");
 		sb.append(operation);
 		sb.append(" from class ");

@@ -95,10 +95,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-        sb.append(variableName);
-        if(initializer != null) {
-        	sb.append("=").append(initializer);
-        }
+        sb.append(variableName).append(" : ").append(type);
         return sb.toString();
 	}
 

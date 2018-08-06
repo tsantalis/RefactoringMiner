@@ -4926,6 +4926,20 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh"
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable ser : JsonSerializer to valueSer : JsonSerializer in method public serializePolymorphic(gen JsonGenerator, value Object, rootType JavaType, valueSer JsonSerializer, typeSer TypeSerializer) : void in class com.fasterxml.jackson.databind.ser.DefaultSerializerProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter type : JavaType to rootT : JavaType in method private Prefetch(rootT JavaType, baseT JavaType, ser JsonSerializer, typeSer TypeSerializer) in class com.fasterxml.jackson.databind.ObjectWriter.Prefetch",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1433
 }, {
@@ -7815,7 +7829,7 @@
         "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable colName in method public forDbSave(sql StringBuilder, paras List, tableName String, pKeys String[], record Record) : void from class com.jfinal.plugin.activerecord.dialect.OracleDialect",
+        "description": "Extract Variable colName : String in method public forDbSave(sql StringBuilder, paras List, tableName String, pKeys String[], record Record) : void from class com.jfinal.plugin.activerecord.dialect.OracleDialect",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -8372,7 +8386,28 @@
         "validators": "Matin, Davood"
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable globalTransaction in method private verifyRemoteTransaction(ctx RemoteTxInvocationContext, command AbstractTransactionBoundaryCommand) : void from class org.infinispan.interceptors.TxInterceptor",
+        "description": "Extract Variable globalTransaction : GlobalTransaction in method private verifyRemoteTransaction(ctx RemoteTxInvocationContext, command AbstractTransactionBoundaryCommand) : void from class org.infinispan.interceptors.TxInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable k : Object to key : Object in method protected remoteGetBeforeWrite(ctx InvocationContext, command WriteCommand, key Object) : void in class org.infinispan.interceptors.distribution.NonTxDistributionInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable k : Object to key : Object in method protected remoteGetBeforeWrite(ctx InvocationContext, command WriteCommand, key Object) : void in class org.infinispan.interceptors.distribution.TxDistributionInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter recipientGenerator : RecipientGenerator to key : Object in method private handleTxWriteCommand(ctx InvocationContext, command WriteCommand, key Object, skipRemoteGet boolean) : Object in class org.infinispan.interceptors.distribution.TxDistributionInterceptor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -9575,14 +9610,14 @@
         "validators": "Matin, Davood"
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable errorMessage in method private notifySynchronizeMailboxFailed(account Account, localFolder Folder, exception Exception) : void from class com.fsck.k9.controller.MessagingController",
+        "description": "Extract Variable errorMessage : String in method private notifySynchronizeMailboxFailed(account Account, localFolder Folder, exception Exception) : void from class com.fsck.k9.controller.MessagingController",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable folderName in method private notifySynchronizeMailboxFailed(account Account, localFolder Folder, exception Exception) : void from class com.fsck.k9.controller.MessagingController",
+        "description": "Extract Variable folderName : String in method private notifySynchronizeMailboxFailed(account Account, localFolder Folder, exception Exception) : void from class com.fsck.k9.controller.MessagingController",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -9823,6 +9858,13 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method public getPayload() : Object renamed to public getFailure() : Throwable in class org.gradle.internal.progress.BuildOperationInternal",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter payload : Object to failure : Throwable in method public BuildOperationInternal(id Object, parentId Object, operationType BuildOperationType, failure Throwable, startTime long, endTime long) in class org.gradle.internal.progress.BuildOperationInternal",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -10251,6 +10293,34 @@
         "validation": "CTP",
         "detectionTools": "RefDiff",
         "validators": "Laleh, Automatic"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable rel : RelNode to queryRelNode : RelNode in method public getPlan(sqlNode SqlNode) : PhysicalPlan in class org.apache.drill.exec.planner.sql.handlers.DefaultSqlHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable rel : RelNode to queryRelNode : RelNode in method public getPlan(sqlNode SqlNode) : PhysicalPlan in class org.apache.drill.exec.planner.sql.handlers.ExplainHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable queryRowType : RelDataType to validatedRowtype : RelDataType in method public resolveNewTableRel(isNewTableView boolean, tableFieldNames List, validatedRowtype RelDataType, queryRelNode RelNode) : RelNode in class org.apache.drill.exec.planner.sql.handlers.SqlHandlerUtil",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable validatedQueryRelNode : RelNode to queryRelNode : RelNode in method public resolveNewTableRel(isNewTableView boolean, tableFieldNames List, validatedRowtype RelDataType, queryRelNode RelNode) : RelNode in class org.apache.drill.exec.planner.sql.handlers.SqlHandlerUtil",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2598
 }, {
@@ -10357,7 +10427,7 @@
         "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable objectWriter in method protected writeInternal(object Object, type Type, outputMessage HttpOutputMessage) : void from class org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter",
+        "description": "Extract Variable objectWriter : ObjectWriter in method protected writeInternal(object Object, type Type, outputMessage HttpOutputMessage) : void from class org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -14310,7 +14380,98 @@
         "validators": "Matin, Davood"
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable pendingItems in method private doBatchWriteItemWithRetry(batch Map, batchWriteRetryStrategy BatchWriteRetryStrategy) : FailedBatch from class com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper",
+        "description": "Extract Variable pendingItems : Map in method private doBatchWriteItemWithRetry(batch Map, batchWriteRetryStrategy BatchWriteRetryStrategy) : FailedBatch from class com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : Tag to ele : Tag in method public withTags(tags Tag[]) : DescribeTagsResult in class com.amazonaws.services.elasticfilesystem.model.DescribeTagsResult",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : String to ele : String in method public withSecurityGroups(securityGroups String[]) : ModifyMountTargetSecurityGroupsRequest in class com.amazonaws.services.elasticfilesystem.model.ModifyMountTargetSecurityGroupsRequest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : Artifact to ele : Artifact in method public withArtifactList(artifactList Artifact[]) : UpdateJobResult in class com.amazonaws.services.importexport.model.UpdateJobResult",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : String to ele : String in method public withTagKeys(tagKeys String[]) : DeleteTagsRequest in class com.amazonaws.services.elasticfilesystem.model.DeleteTagsRequest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : Artifact to ele : Artifact in method public withArtifactList(artifactList Artifact[]) : CreateJobResult in class com.amazonaws.services.importexport.model.CreateJobResult",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : FileSystemDescription to ele : FileSystemDescription in method public withFileSystems(fileSystems FileSystemDescription[]) : DescribeFileSystemsResult in class com.amazonaws.services.elasticfilesystem.model.DescribeFileSystemsResult",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : Artifact to ele : Artifact in method public withArtifactList(artifactList Artifact[]) : GetStatusResult in class com.amazonaws.services.importexport.model.GetStatusResult",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : String to ele : String in method public withSecurityGroups(securityGroups String[]) : CreateMountTargetRequest in class com.amazonaws.services.elasticfilesystem.model.CreateMountTargetRequest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : String to ele : String in method public withSecurityGroups(securityGroups String[]) : DescribeMountTargetSecurityGroupsResult in class com.amazonaws.services.elasticfilesystem.model.DescribeMountTargetSecurityGroupsResult",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : Tag to ele : Tag in method public withTags(tags Tag[]) : CreateTagsRequest in class com.amazonaws.services.elasticfilesystem.model.CreateTagsRequest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : String to ele : String in method public withJobIds(jobIds String[]) : GetShippingLabelRequest in class com.amazonaws.services.importexport.model.GetShippingLabelRequest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : MountTargetDescription to ele : MountTargetDescription in method public withMountTargets(mountTargets MountTargetDescription[]) : DescribeMountTargetsResult in class com.amazonaws.services.elasticfilesystem.model.DescribeMountTargetsResult",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : Job to ele : Job in method public withJobs(jobs Job[]) : ListJobsResult in class com.amazonaws.services.importexport.model.ListJobsResult",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -14502,6 +14663,20 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable httpGet : HTTPGetAction to action : HTTPGetAction in method private getHTTPGetAction(prefix String, properties Properties) : HTTPGetAction in class io.fabric8.maven.JsonMojo",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable answer : Probe to probe : Probe in method protected getProbe(prefix String) : Probe in class io.fabric8.maven.JsonMojo",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1151
 }, {
@@ -14668,6 +14843,13 @@
     }, {
         "type": "Move Attribute",
         "description": "Move Attribute private databases : LoadingCache from class org.apache.drill.exec.store.hive.schema.HiveSchemaFactory to class org.apache.drill.exec.store.hive.DrillHiveMetaStoreClient.NonCloseableHiveClientWithCaching",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable jobWithFsConf : JobConf to job : JobConf in method private splitInput(properties Properties, sd StorageDescriptor, partition Partition) : void in class org.apache.drill.exec.store.hive.HiveScan",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -15967,6 +16149,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Automatic"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter runner : PlayApplicationRunner to runnerToken : PlayApplicationRunnerToken in method public PlayApplicationDeploymentHandle(id String, runnerToken PlayApplicationRunnerToken) in class org.gradle.play.internal.run.PlayApplicationDeploymentHandle",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 5368
 }, {
@@ -16338,7 +16527,7 @@
         "validators": null
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable constraint in method public uniquePropertyConstraintCreate(state KernelStatement, labelId int, propertyKey int) : UniquenessConstraint from class org.neo4j.kernel.impl.api.DataIntegrityValidatingStatementOperations",
+        "description": "Extract Variable constraint : PropertyConstraint in method public uniquePropertyConstraintCreate(state KernelStatement, labelId int, propertyKey int) : UniquenessConstraint from class org.neo4j.kernel.impl.api.DataIntegrityValidatingStatementOperations",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -17657,6 +17846,27 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable assembly : PublicationAssembly to publication : NetworkPublication in method private onStatusMessage(statusMsg StatusMessageFlyweight, srcAddress InetSocketAddress) : void in class uk.co.real_logic.aeron.driver.media.SendChannelEndpoint",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable assembly : PublicationAssembly to publication : NetworkPublication in method private onNakMessage(nakMsg NakFlyweight) : void in class uk.co.real_logic.aeron.driver.media.SendChannelEndpoint",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter nakMessage : NakFlyweight to nakMsg : NakFlyweight in method private onNakMessage(nakMsg NakFlyweight) : void in class uk.co.real_logic.aeron.driver.media.SendChannelEndpoint",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1188
 }, {
@@ -17698,14 +17908,21 @@
         "validators": null
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable outputIndex in method public flattenRecords(recordCount int, firstOutputIndex int) : int from class org.apache.drill.exec.physical.impl.flatten.FlattenTemplate",
+        "description": "Extract Variable outputIndex : int in method public flattenRecords(recordCount int, firstOutputIndex int) : int from class org.apache.drill.exec.physical.impl.flatten.FlattenTemplate",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable valueIndexLocal in method public flattenRecords(recordCount int, firstOutputIndex int) : int from class org.apache.drill.exec.physical.impl.flatten.FlattenTemplate",
+        "description": "Extract Variable valueIndexLocal : int in method public flattenRecords(recordCount int, firstOutputIndex int) : int from class org.apache.drill.exec.physical.impl.flatten.FlattenTemplate",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable valueSize : int to curSize : int in method private allocateBytes(size long) : void in class org.apache.drill.exec.vector.BitVector",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -19618,7 +19835,7 @@
         "validators": "Matin"
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable callResult in method private queryProperty(id int, fromDock boolean) : long from class android.os.BatteryManager",
+        "description": "Extract Variable callResult : int in method private queryProperty(id int, fromDock boolean) : long from class android.os.BatteryManager",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -20176,6 +20393,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable dummyObject : GraphObjectMap to graphObject : GraphObject in method package handleObject(nodeFactory NodeFactory, relFactory RelationshipFactory, key String, value Object, includeHiddenAndDeleted boolean, publicOnly boolean, level int) : Object in class org.structr.core.graph.CypherQueryCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 2025
@@ -26156,6 +26380,13 @@
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter i : int to slot : int in method public offerItem(slot int, stack ItemStack) : ItemStack in class buildcraft.builders.TileBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2449
 }, {
@@ -26421,7 +26652,7 @@
         "validators": "Davood"
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable propertyKeyId in method private getIndexUpdatesForRangeSeekByPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets from class org.neo4j.kernel.impl.api.state.TxState",
+        "description": "Extract Variable propertyKeyId : int in method private getIndexUpdatesForRangeSeekByPrefix(descriptor IndexDescriptor, prefix String) : ReadableDiffSets from class org.neo4j.kernel.impl.api.state.TxState",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -29277,10 +29508,10 @@
     }, {
         "type": "Inline Method",
         "description": "Inline Method protected parseLite() : void inlined to protected parse() : void in class org.bitcoinj.core.RejectMessage",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>parseLite() in the parent commit and parse() in the child commit have identical method bodies.<br />Method parse() in the parent commit calls parseLite() after conditional '<span class='blob-code-inner blob-code-marker-deletion'><span class='pl-k'>if</span> (length <span class='pl-k'>==</span> <span class='pl-c1'>UNKNOWN_LENGTH</span>)'<br />Ho</span>wever, this if statement is not appearing inside method parse() in the child commit, in order to consider parseLite() as inlined.</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin"
+        "validators": "Matin, Nikos"
     }],
     "refDiffExecutionTime": 1735
 }, {
@@ -30562,6 +30793,160 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.ClusteredCacheBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.StoreBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.DistributedCacheBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.LockingBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.StateTransferBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.StoreWriteBehindBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.CacheContainerBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.GlobalConfigurationBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.BackupForBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.TransactionBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.IndexingBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ResourceDescriptionResolver to descriptor : AddStepHandlerDescriptor in method public AddStepHandler(descriptor AddStepHandlerDescriptor, handler ResourceServiceHandler) in class org.jboss.as.clustering.controller.AddStepHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.BackupsBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.TableBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ResourceDescriptionResolver to descriptor : RemoveStepHandlerDescriptor in method public RemoveStepHandler(descriptor RemoveStepHandlerDescriptor, handler ResourceServiceHandler) in class org.jboss.as.clustering.controller.RemoveStepHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ResourceDescriptionResolver to descriptor : AddStepHandlerDescriptor in method public BoottimeAddStepHandler(descriptor AddStepHandlerDescriptor, handler ResourceServiceHandler) in class org.jboss.as.clustering.controller.BoottimeAddStepHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.EvictionBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ResourceDescriptionResolver to descriptor : AddStepHandlerDescriptor in method public RestartParentAddHandler(descriptor AddStepHandlerDescriptor, builderFactory ResourceServiceBuilderFactory) in class org.jboss.as.clustering.controller.RestartParentAddHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.ExpirationBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ResourceDescriptionResolver to descriptor : RemoveStepHandlerDescriptor in method public RestartParentRemoveHandler(descriptor RemoveStepHandlerDescriptor, builderFactory ResourceServiceBuilderFactory) in class org.jboss.as.clustering.controller.RestartParentRemoveHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.CacheConfigurationBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.JGroupsTransportBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 8243
 }, {
@@ -30936,14 +31321,14 @@
         "validators": "Matin, Davood"
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable batchConsistencyLevel in method public mutateAtomically(mutations Collection, consistency_level ConsistencyLevel, requireQuorumForRemove boolean) : void from class org.apache.cassandra.service.StorageProxy",
+        "description": "Extract Variable batchConsistencyLevel : ConsistencyLevel in method public mutateAtomically(mutations Collection, consistency_level ConsistencyLevel, requireQuorumForRemove boolean) : void from class org.apache.cassandra.service.StorageProxy",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable keyspace in method private wrapBatchResponseHandler(mutation Mutation, consistency_level ConsistencyLevel, batchConsistencyLevel ConsistencyLevel, writeType WriteType, cleanup BatchlogResponseHandler.BatchlogCleanup) : WriteResponseHandlerWrapper from class org.apache.cassandra.service.StorageProxy",
+        "description": "Extract Variable keyspace : Keyspace in method private wrapBatchResponseHandler(mutation Mutation, consistency_level ConsistencyLevel, batchConsistencyLevel ConsistencyLevel, writeType WriteType, cleanup BatchlogResponseHandler.BatchlogCleanup) : WriteResponseHandlerWrapper from class org.apache.cassandra.service.StorageProxy",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -31519,7 +31904,7 @@
         "validators": null
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable statement in method private closeOpenStatements() : void from class com.zaxxer.hikari.proxy.ConnectionProxy",
+        "description": "Extract Variable statement : Statement in method private closeOpenStatements() : void from class com.zaxxer.hikari.proxy.ConnectionProxy",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -31562,6 +31947,132 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public materialize(expr LogicalExpression, batch VectorAccessible, errorCollector ErrorCollector, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter value : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitCastExpression(e CastExpression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter context : QueryContext to optimizerRulesContext : OptimizerRulesContext in method public getFilterOnProjectParquet(optimizerRulesContext OptimizerRulesContext) : RelOptRule in class org.apache.drill.exec.planner.logical.partition.PruneScanRule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitFunctionCall(call FunctionCall, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public convertToNullableType(fromExpr LogicalExpression, toType MinorType, functionLookupContext FunctionLookupContext, errorCollector ErrorCollector) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method private getConvertToNullableExpr(args List, minorType MinorType, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitBooleanOperator(op BooleanOperator, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitIfExpression(ifExpr IfExpression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter qcontext : QueryContext to optimizerRulesContext : OptimizerRulesContext in method public getPhysicalRules(optimizerRulesContext OptimizerRulesContext) : RuleSet in class org.apache.drill.exec.planner.logical.DrillRuleSets",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public materializeAndCheckErrors(expr LogicalExpression, batch VectorAccessible, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public materialize(expr LogicalExpression, batch VectorAccessible, errorCollector ErrorCollector, functionLookupContext FunctionLookupContext, allowComplexWriterExpr boolean) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter value : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitConvertExpression(e ConvertExpression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter context : QueryContext to optimizerContext : OptimizerRulesContext in method private PruneScanRule(operand RelOptRuleOperand, id String, optimizerContext OptimizerRulesContext) in class org.apache.drill.exec.planner.logical.partition.PruneScanRule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter context : QueryContext to optimizerRulesContext : OptimizerRulesContext in method public getFilterOnScanParquet(optimizerRulesContext OptimizerRulesContext) : RelOptRule in class org.apache.drill.exec.planner.logical.partition.PruneScanRule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter context : QueryContext to optimizerRulesContext : OptimizerRulesContext in method public getFilterOnScan(optimizerRulesContext OptimizerRulesContext) : RelOptRule in class org.apache.drill.exec.planner.logical.partition.PruneScanRule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter queryContext : QueryContext to optimizerRulesContext : OptimizerRulesContext in method public getDrillUserConfigurableLogicalRules(optimizerRulesContext OptimizerRulesContext) : RuleSet in class org.apache.drill.exec.planner.logical.DrillRuleSets",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter context : QueryContext to optimizerRulesContext : OptimizerRulesContext in method public getFilterOnProject(optimizerRulesContext OptimizerRulesContext) : RelOptRule in class org.apache.drill.exec.planner.logical.partition.PruneScanRule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public addCastExpression(fromExpr LogicalExpression, toType MajorType, functionLookupContext FunctionLookupContext, errorCollector ErrorCollector) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 3286
@@ -34661,6 +35172,13 @@
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Laleh, Davood, Automatic"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable jobXmlResolverService : JobXmlResolverService to jobXmlResolver : WildFlyJobXmlResolver in method public deploy(phaseContext DeploymentPhaseContext) : void in class org.wildfly.extension.batch.jberet.deployment.BatchDeploymentResourceProcessor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4054
 }, {
@@ -34736,6 +35254,20 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter relativeProjectPath : String to relativeFilePathResolver : RelativeFilePathResolver in method public TransformedModelDslBacking(modelRegistry ModelRegistry, schemaStore ModelSchemaStore, relativeFilePathResolver RelativeFilePathResolver) in class org.gradle.model.dsl.internal.TransformedModelDslBacking",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter path : String to relativeFilePathResolver : RelativeFilePathResolver in method public RelativePathSourceLocationTransformer(relativeFilePathResolver RelativeFilePathResolver) in class org.gradle.model.dsl.internal.TransformedModelDslBacking.RelativePathSourceLocationTransformer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 5181
@@ -34889,6 +35421,13 @@
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public OgrFormat(ogrFormat String, formatName String, fileExtension String, singleFile boolean, mimeType String, type OgrType, options String[]) from class org.geoserver.wfs.response.OgrFormat to public Format(toolFormat String, formatName String, fileExtension String, singleFile boolean, mimeType String, type OutputType, options String[]) from class org.geoserver.ogr.core.Format",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ogrFormat : String to toolFormat : String in method public OgrFormat(toolFormat String, formatName String, fileExtension String, singleFile boolean, mimeType String, options String[]) in class org.geoserver.wfs.response.OgrFormat",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -35343,6 +35882,27 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Davood, Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable moduleDescriptors : List to fileDescriptors : List in method private getErlangModulePaths(target ErlangTarget, context CompileContext, dirtyFilePaths List, isTest boolean) : List in class org.intellij.erlang.jps.builder.ErlangBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable dirtyErlangModulePaths : List to dirtyErlangFilePaths : List in method private buildSources(target ErlangTarget, context CompileContext, compilerOptions ErlangCompilerOptions, holder DirtyFilesHolder, outputConsumer BuildOutputConsumer, outputDir File, isTests boolean) : void in class org.intellij.erlang.jps.builder.ErlangBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter isTestSourceRoot : boolean to rootType : JpsModuleSourceRootType in method private addSourceRoot(module Module, sourceRootName String, rootType JpsModuleSourceRootType) : VirtualFile in class org.intellij.erlang.compilation.ErlangCompilationTestBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1833
 }, {

@@ -69,7 +69,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			RefactoringType.EXTRACT_VARIABLE,
 			RefactoringType.RENAME_VARIABLE,
 			RefactoringType.RENAME_PARAMETER,
-			RefactoringType.RENAME_ATTRIBUTE
+			RefactoringType.RENAME_ATTRIBUTE,
+			RefactoringType.PARAMETERIZE_VARIABLE
 		);
 	}
 

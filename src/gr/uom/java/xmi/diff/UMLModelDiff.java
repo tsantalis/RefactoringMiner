@@ -951,8 +951,22 @@ public class UMLModelDiff {
             		  parameterToArgumentMap2.put(parameters.get(i), arguments.get(i));
             	  }
             	  String className = mapper.getOperation2().getClassName();
-				  UMLClassBaseDiff umlClassDiff = getUMLClassDiff(className);
-            	  List<UMLAttribute> attributes = umlClassDiff.originalClassAttributesOfType(addedOperation.getClassName());
+            	  List<UMLAttribute> attributes = new ArrayList<UMLAttribute>();
+            	  if(className.contains(".") && isNumeric(className.substring(className.lastIndexOf(".")+1, className.length()))) {
+            		  //add enclosing class fields + anonymous class fields
+            		  UMLClassBaseDiff umlClassDiff = getUMLClassDiff(className.substring(0, className.lastIndexOf(".")));
+            		  attributes.addAll(umlClassDiff.originalClassAttributesOfType(addedOperation.getClassName()));
+            		  for(UMLAnonymousClass anonymous : umlClassDiff.getOriginalClass().getAnonymousClassList()) {
+            			  if(anonymous.getName().equals(className)) {
+            				  attributes.addAll(anonymous.attributesOfType(addedOperation.getClassName()));
+            				  break;
+            			  }
+            		  }
+            	  }
+            	  else {
+            		  UMLClassBaseDiff umlClassDiff = getUMLClassDiff(className);
+            		  attributes.addAll(umlClassDiff.originalClassAttributesOfType(addedOperation.getClassName()));
+            	  }
             	  Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
             	  for(UMLAttribute attribute : attributes) {
             		  parameterToArgumentMap1.put(attribute.getName() + ".", "");
@@ -1280,4 +1294,12 @@ public class UMLModelDiff {
       if(classDiff != null)
     	  classDiff.getAddedOperations().remove(operation);
    }
+
+	private static boolean isNumeric(String str) {
+		for(char c : str.toCharArray()) {
+			if(!Character.isDigit(c)) return false;
+		}
+		return true;
+	}
+
 }

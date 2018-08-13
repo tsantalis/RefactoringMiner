@@ -32540,6 +32540,41 @@
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Laleh"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter obj : Object to o : Object in method public equals(o Object) : boolean in class com.linkedin.restli.client.RestliRequestOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter shouldBePresent : boolean to expectedValue : String in method public HeaderCaptureFilter(headerName String, expectedValue String, entityLength int) in class com.linkedin.r2.filter.compression.TestClientCompressionFilter.HeaderCaptureFilter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter shouldBePresent : boolean to expectedValue : String in method public HeaderCaptureFilter(headerName String, expectedValue String) in class com.linkedin.r2.filter.compression.TestClientCompressionFilter.HeaderCaptureFilter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable responseCompression : String to responseAcceptedEncodings : String in method public onRestResponse(res RestResponse, requestContext RequestContext, wireAttrs Map, nextFilter NextFilter) : void in class com.linkedin.r2.filter.compression.ServerCompressionFilter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable responseCompression : String to responseAcceptedEncodings : String in method public onRestRequest(req RestRequest, requestContext RequestContext, wireAttrs Map, nextFilter NextFilter) : void in class com.linkedin.r2.filter.compression.ServerCompressionFilter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3301
 }, {

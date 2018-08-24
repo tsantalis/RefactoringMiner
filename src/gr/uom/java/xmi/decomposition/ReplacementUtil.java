@@ -7,6 +7,15 @@ import java.util.regex.Pattern;
 public class ReplacementUtil {
 	private static final String[] SPECIAL_CHARACTERS = {";", ",", ")", "=", "+", "-", ">", "<", ".", "]"};
 	
+	public static boolean contains(String completeString, String subString) {
+		for(String character : SPECIAL_CHARACTERS) {
+			if(completeString.contains(subString + character)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public static String performReplacement(String completeString, String subString, String replacement) {
 		String temp = new String(completeString);
 		if(completeString.equals(subString)) {

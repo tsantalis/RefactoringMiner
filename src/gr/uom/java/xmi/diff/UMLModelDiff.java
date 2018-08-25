@@ -821,7 +821,7 @@ public class UMLModelDiff {
 		   }
 		   
 		   if (!originalName.equals(movedName)) {
-			   MoveClassRefactoring refactoring = new MoveClassRefactoring(originalName, movedName);
+			   MoveClassRefactoring refactoring = new MoveClassRefactoring(originalClass, movedClass);
 			   RenamePattern renamePattern = refactoring.getRenamePattern();
 			   //check if the the original path is a substring of the moved path and vice versa
 			   if(renamePattern.getOriginalPath().contains(renamePattern.getMovedPath()) ||
@@ -889,9 +889,9 @@ public class UMLModelDiff {
       for(UMLClassRenameDiff classRenameDiff : classRenameDiffList) {
     	  Refactoring refactoring = null;
     	  if(classRenameDiff.samePackage())
-    		  refactoring = new RenameClassRefactoring(classRenameDiff.getOriginalClass().getName(), classRenameDiff.getRenamedClass().getName());
+    		  refactoring = new RenameClassRefactoring(classRenameDiff.getOriginalClass(), classRenameDiff.getRenamedClass());
     	  else
-    		  refactoring = new MoveAndRenameClassRefactoring(classRenameDiff.getOriginalClass().getName(), classRenameDiff.getRenamedClass().getName());
+    		  refactoring = new MoveAndRenameClassRefactoring(classRenameDiff.getOriginalClass(), classRenameDiff.getRenamedClass());
          refactorings.add(refactoring);
       }
       return refactorings;

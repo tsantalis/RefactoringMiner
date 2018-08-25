@@ -1,33 +1,34 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.UMLClass;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 public class MoveClassRefactoring implements Refactoring {
-	private String originalClassName;
-	private String movedClassName;
+	private UMLClass originalClass;
+	private UMLClass movedClass;
 	
-	public MoveClassRefactoring(String originalClassName,  String movedClassName) {
-		this.originalClassName = originalClassName;
-		this.movedClassName = movedClassName;
+	public MoveClassRefactoring(UMLClass originalClass,  UMLClass movedClass) {
+		this.originalClass = originalClass;
+		this.movedClass = movedClass;
 	}
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(originalClassName);
+		sb.append(originalClass.getName());
 		sb.append(" moved to ");
-		sb.append(movedClassName);
+		sb.append(movedClass.getName());
 		return sb.toString();
 	}
 
 	public RenamePattern getRenamePattern() {
-		int separatorPos = separatorPosOfCommonSuffix('.', originalClassName, movedClassName);
+		int separatorPos = separatorPosOfCommonSuffix('.', originalClass.getName(), movedClass.getName());
 		if (separatorPos == -1) {
-			return new RenamePattern(originalClassName, movedClassName);
+			return new RenamePattern(originalClass.getName(), movedClass.getName());
 		}
-		String originalPath = originalClassName.substring(0, originalClassName.length() - separatorPos);
-		String movedPath = movedClassName.substring(0, movedClassName.length() - separatorPos);
+		String originalPath = originalClass.getName().substring(0, originalClass.getName().length() - separatorPos);
+		String movedPath = movedClass.getName().substring(0, movedClass.getName().length() - separatorPos);
 		return new RenamePattern(originalPath, movedPath);
 	}
 
@@ -57,11 +58,18 @@ public class MoveClassRefactoring implements Refactoring {
 	}
 
 	public String getOriginalClassName() {
-		return originalClassName;
+		return originalClass.getName();
 	}
 
 	public String getMovedClassName() {
-		return movedClassName;
+		return movedClass.getName();
 	}
-	
+
+	public UMLClass getOriginalClass() {
+		return originalClass;
+	}
+
+	public UMLClass getMovedClass() {
+		return movedClass;
+	}
 }

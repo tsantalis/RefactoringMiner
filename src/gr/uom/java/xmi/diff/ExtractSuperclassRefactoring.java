@@ -48,4 +48,8 @@ public class ExtractSuperclassRefactoring implements Refactoring {
 		}
 		return subclassSet;
 	}
+
+	public Set<UMLClass> getSubclassUMLSet() {
+		return new LinkedHashSet<>(subclassSet);
+	}
 }

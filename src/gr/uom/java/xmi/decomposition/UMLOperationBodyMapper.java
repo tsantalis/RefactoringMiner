@@ -44,6 +44,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Set<CandidateAttributeRename> candidateAttributeRenames = new LinkedHashSet<CandidateAttributeRename>();
 	private List<UMLOperationBodyMapper> additionalMappers = new ArrayList<UMLOperationBodyMapper>();
 	private static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)|(\\?)|(:)");
+	private static final Pattern DOUBLE_QUOTES = Pattern.compile("\"([^\"]*)\"|(\\S+)");
 	private static final double MAX_ANONYMOUS_CLASS_DECLARATION_DISTANCE = 0.2;
 	private UMLClassBaseDiff classDiff;
 	
@@ -1489,13 +1490,41 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(argument.contains("(") && argument.contains(")")) {
 					int indexOfOpeningParenthesis = argument.indexOf("(");
 					int indexOfClosingParenthesis = argument.lastIndexOf(")");
-					String arguments = argument.substring(indexOfOpeningParenthesis+1, indexOfClosingParenthesis);
-					if(!arguments.isEmpty() && !arguments.contains(",") && !arguments.contains("(") && !arguments.contains(")")) {
-						variables.add(arguments);
+					boolean openingParenthesisInsideSingleQuotes = isInsideSingleQuotes(argument, indexOfOpeningParenthesis);
+					boolean closingParenthesisInsideSingleQuotes = isInsideSingleQuotes(argument, indexOfClosingParenthesis);
+					boolean openingParenthesisInsideDoubleQuotes = isInsideDoubleQuotes(argument, indexOfOpeningParenthesis);
+					boolean closingParenthesisIndideDoubleQuotes = isInsideDoubleQuotes(argument, indexOfClosingParenthesis);
+					if(indexOfOpeningParenthesis < indexOfClosingParenthesis &&
+							!openingParenthesisInsideSingleQuotes && !closingParenthesisInsideSingleQuotes &&
+							!openingParenthesisInsideDoubleQuotes && !closingParenthesisIndideDoubleQuotes) {
+						String arguments = argument.substring(indexOfOpeningParenthesis+1, indexOfClosingParenthesis);
+						if(!arguments.isEmpty() && !arguments.contains(",") && !arguments.contains("(") && !arguments.contains(")")) {
+							variables.add(arguments);
+						}
 					}
 				}
 			}
 		}
+	}
+
+	private static boolean isInsideSingleQuotes(String argument, int indexOfChar) {
+		if(indexOfChar > 0) {
+			return argument.charAt(indexOfChar-1) == '\'' &&
+					argument.charAt(indexOfChar+1) == '\'';
+		}
+		return false;
+	}
+
+	private static boolean isInsideDoubleQuotes(String argument, int indexOfChar) {
+		Matcher m = DOUBLE_QUOTES.matcher(argument);
+		while (m.find()) {
+			if (m.group(1) != null) {
+				if(indexOfChar > m.start() && indexOfChar < m.end()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private void replaceVariablesWithArguments(Map<String, AbstractCall> callMap,

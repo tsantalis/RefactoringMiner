@@ -29,6 +29,7 @@ import java.util.TreeSet;
 import org.refactoringminer.api.Refactoring;
 
 public class UMLModelDiff {
+   private static final int MAXIMUM_NUMBER_OF_COMPARED_METHODS = 100;
    private List<UMLClass> addedClasses;
    private List<UMLClass> removedClasses;
    
@@ -1049,7 +1050,9 @@ public class UMLModelDiff {
       for(UMLClass removedClass : removedClasses) {
     	  removedOperations.addAll(removedClass.getOperations());
       }
-      checkForOperationMoves(addedOperations, removedOperations);
+      if(removedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS || addedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
+    	  checkForOperationMoves(addedOperations, removedOperations);
+      }
    }
 
    private void checkForOperationMovesIncludingAddedClasses() {
@@ -1061,13 +1064,17 @@ public class UMLModelDiff {
       /*for(UMLClass removedClass : removedClasses) {
     	  removedOperations.addAll(removedClass.getOperations());
       }*/
-      checkForOperationMoves(addedOperations, removedOperations);
+      if(removedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS || addedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
+    	  checkForOperationMoves(addedOperations, removedOperations);
+      }
    }
 
    private void checkForOperationMovesBetweenCommonClasses() {
       List<UMLOperation> addedOperations = getAddedOperationsInCommonClasses();
       List<UMLOperation> removedOperations = getRemovedOperationsInCommonClasses();
-      checkForOperationMoves(addedOperations, removedOperations);
+      if(removedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS || addedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
+    	  checkForOperationMoves(addedOperations, removedOperations);
+      }
    }
 
    private void checkForOperationMovesBetweenRemovedAndAddedClasses() {
@@ -1093,7 +1100,7 @@ public class UMLModelDiff {
 			   removedOperations.addAll(removedClass.getOperations());
 		   }
 	   }
-	   if(removedOperations.size() <= 100 || addedOperations.size() <= 100) {
+	   if(removedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS || addedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
 		   checkForOperationMoves(addedOperations, removedOperations);
 	   }
    }

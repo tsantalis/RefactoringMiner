@@ -18,6 +18,7 @@ import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.LambdaExpression;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.NumberLiteral;
 import org.eclipse.jdt.core.dom.ParameterizedType;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 import org.eclipse.jdt.core.dom.QualifiedName;
@@ -42,6 +43,7 @@ public class Visitor extends ASTVisitor {
 	private List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
 	private List<String> anonymousClassDeclarations = new ArrayList<String>();
 	private List<String> stringLiterals = new ArrayList<String>();
+	private List<String> numberLiterals = new ArrayList<String>();
 	private Map<String, ObjectCreation> creationMap = new LinkedHashMap<String, ObjectCreation>();
 	private List<String> infixOperators = new ArrayList<String>();
 
@@ -83,6 +85,11 @@ public class Visitor extends ASTVisitor {
 
 	public boolean visit(StringLiteral node) {
 		stringLiterals.add(node.toString());
+		return super.visit(node);
+	}
+
+	public boolean visit(NumberLiteral node) {
+		numberLiterals.add(node.toString());
 		return super.visit(node);
 	}
 
@@ -218,6 +225,10 @@ public class Visitor extends ASTVisitor {
 
 	public List<String> getStringLiterals() {
 		return stringLiterals;
+	}
+
+	public List<String> getNumberLiterals() {
+		return numberLiterals;
 	}
 
 	public Map<String, ObjectCreation> getCreationMap() {

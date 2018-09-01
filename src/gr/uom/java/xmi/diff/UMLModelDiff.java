@@ -1150,9 +1150,19 @@ public class UMLModelDiff {
 	         if(!operationBodyMapperMap.isEmpty()) {
 	            List<UMLOperationBodyMapper> firstMappers = operationBodyMapperMap.get(operationBodyMapperMap.lastKey());
 	            addedOperationIterator.remove();
+	            boolean sameSourceAndTargetClass = sameSourceAndTargetClass(firstMappers);
+	            if(sameSourceAndTargetClass) {
+	            	TreeSet<UMLOperationBodyMapper> set = new TreeSet<UMLOperationBodyMapper>();
+	            	set.addAll(firstMappers);
+	            	UMLOperationBodyMapper bestMapper = set.first();
+	            	firstMappers.clear();
+	            	firstMappers.add(bestMapper);
+	            }
 	            for(UMLOperationBodyMapper firstMapper : firstMappers) {
 	               UMLOperation removedOperation = firstMapper.getOperation1();
-	               //removedOperations.remove(removedOperation);
+	               if(sameSourceAndTargetClass) {
+	                  removedOperations.remove(removedOperation);
+	               }
 	
 	               Refactoring refactoring = null;
 	               if(removedOperation.getClassName().equals(addedOperation.getClassName())) {
@@ -1206,9 +1216,19 @@ public class UMLModelDiff {
 	         if(!operationBodyMapperMap.isEmpty()) {
 	            List<UMLOperationBodyMapper> firstMappers = operationBodyMapperMap.get(operationBodyMapperMap.lastKey());
 	            removedOperationIterator.remove();
+	            boolean sameSourceAndTargetClass = sameSourceAndTargetClass(firstMappers);
+	            if(sameSourceAndTargetClass) {
+	            	TreeSet<UMLOperationBodyMapper> set = new TreeSet<UMLOperationBodyMapper>();
+	            	set.addAll(firstMappers);
+	            	UMLOperationBodyMapper bestMapper = set.first();
+	            	firstMappers.clear();
+	            	firstMappers.add(bestMapper);
+	            }
 	            for(UMLOperationBodyMapper firstMapper : firstMappers) {
 	               UMLOperation addedOperation = firstMapper.getOperation2();
-	               //addedOperations.remove(addedOperation);
+	               if(sameSourceAndTargetClass) {
+	                  addedOperations.remove(addedOperation);
+	               }
 
 	               Refactoring refactoring = null;
 	               if(removedOperation.getClassName().equals(addedOperation.getClassName())) {
@@ -1238,14 +1258,39 @@ public class UMLModelDiff {
       }
    }
 
-    private boolean mappedElementsMoreThanNonMappedT1AndT2(int mappings, UMLOperationBodyMapper operationBodyMapper) {
+   private boolean sameSourceAndTargetClass(List<UMLOperationBodyMapper> mappers) {
+	   if(mappers.size() == 1) {
+		   return false;
+	   }
+	   String sourceClassName = null;
+	   String targetClassName = null;
+	   for (UMLOperationBodyMapper mapper : mappers) {
+		   String mapperSourceClassName = mapper.getOperation1().getClassName();
+		   if(sourceClassName == null) {
+			   sourceClassName = mapperSourceClassName;
+		   }
+		   else if(!mapperSourceClassName.equals(sourceClassName)) {
+			   return false;
+		   }
+		   String mapperTargetClassName = mapper.getOperation2().getClassName();
+		   if(targetClassName == null) {
+			   targetClassName = mapperTargetClassName;
+		   }
+		   else if(!mapperTargetClassName.equals(targetClassName)) {
+			   return false;
+		   }
+	   }
+	   return true;
+   }
+
+   private boolean mappedElementsMoreThanNonMappedT1AndT2(int mappings, UMLOperationBodyMapper operationBodyMapper) {
         int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();
 		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();
 		return (mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 				(nonMappedElementsT1 == 0 && mappings > Math.floor(nonMappedElementsT2/2.0));
-    }
+   }
 
-    private boolean movedMethodSignature(UMLOperation removedOperation, UMLOperation addedOperation) {
+   private boolean movedMethodSignature(UMLOperation removedOperation, UMLOperation addedOperation) {
 	   if(!addedOperation.isConstructor() &&
 	      !removedOperation.isConstructor() &&
 			   addedOperation.getName().equals(removedOperation.getName()) &&

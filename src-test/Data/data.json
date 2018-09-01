@@ -9819,13 +9819,6 @@
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public instantiateObject(className String, args Object[]) : Object extracted from public instantiateObject(className String) : Object in class org.drools.core.util.ClassUtils",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
         "type": "Rename Class",
         "description": "Rename Class org.drools.core.base.ClassFieldAccessorCache.ByteArrayClassLoader renamed to org.drools.core.base.ClassFieldAccessorCache.DefaultByteArrayClassLoader",
         "comment": null,

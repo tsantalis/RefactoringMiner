@@ -27,6 +27,7 @@ public class StatementObject extends AbstractStatement {
 	private Map<String, OperationInvocation> methodInvocationMap;
 	private List<String> anonymousClassDeclarations;
 	private List<String> stringLiterals;
+	private List<String> numberLiterals;
 	private Map<String, ObjectCreation> creationMap;
 	private List<String> infixOperators;
 	
@@ -41,6 +42,7 @@ public class StatementObject extends AbstractStatement {
 		this.methodInvocationMap = visitor.getMethodInvocationMap();
 		this.anonymousClassDeclarations = visitor.getAnonymousClassDeclarations();
 		this.stringLiterals = visitor.getStringLiterals();
+		this.numberLiterals = visitor.getNumberLiterals();
 		this.creationMap = visitor.getCreationMap();
 		this.infixOperators = visitor.getInfixOperators();
 		setDepth(depth);
@@ -154,6 +156,11 @@ public class StatementObject extends AbstractStatement {
 	@Override
 	public List<String> getStringLiterals() {
 		return stringLiterals;
+	}
+
+	@Override
+	public List<String> getNumberLiterals() {
+		return numberLiterals;
 	}
 
 	@Override

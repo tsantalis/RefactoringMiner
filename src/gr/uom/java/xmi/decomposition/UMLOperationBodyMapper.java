@@ -1117,6 +1117,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		stringLiterals1.removeAll(stringLiteralIntersection);
 		stringLiterals2.removeAll(stringLiteralIntersection);
 		
+		Set<String> numberLiterals1 = new LinkedHashSet<String>(statement1.getNumberLiterals());
+		Set<String> numberLiterals2 = new LinkedHashSet<String>(statement2.getNumberLiterals());
+		Set<String> numberLiteralIntersection = new LinkedHashSet<String>(numberLiterals1);
+		numberLiteralIntersection.retainAll(numberLiterals2);
+		// remove common string literals from the two sets
+		numberLiterals1.removeAll(numberLiteralIntersection);
+		numberLiterals2.removeAll(numberLiteralIntersection);
+		
 		Set<String> infixOperators1 = new LinkedHashSet<String>(statement1.getInfixOperators());
 		Set<String> infixOperators2 = new LinkedHashSet<String>(statement2.getInfixOperators());
 		Set<String> infixOperatorIntersection = new LinkedHashSet<String>(infixOperators1);
@@ -1185,9 +1193,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		//perform creation replacements
 		findReplacements(creations1, creations2, replacementInfo, ReplacementType.CLASS_INSTANCE_CREATION);
 		
-		//perform string literal replacements
+		//perform literal replacements
 		if(!containsMethodInvocationReplacement(replacementInfo.getReplacements())) {
 			findReplacements(stringLiterals1, stringLiterals2, replacementInfo, ReplacementType.STRING_LITERAL);
+			findReplacements(numberLiterals1, numberLiterals2, replacementInfo, ReplacementType.NUMBER_LITERAL);
 		}
 		
 		String s1 = preprocessInput1(statement1, statement2);
@@ -1205,7 +1214,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
-		boolean isEqualWithReplacement = s1.equals(s2) || (commonConditional(s1, s2) && containsValidOperatorReplacements(replacementInfo));
+		boolean isEqualWithReplacement = s1.equals(s2) || differOnlyInCastExpression(s1, s2) ||
+				(commonConditional(s1, s2) && containsValidOperatorReplacements(replacementInfo));
 		if(isEqualWithReplacement) {
 			if(variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1) {
 				boolean typeReplacement = false, variableRename = false, methodInvocationReplacement = false;
@@ -1416,6 +1426,44 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private boolean differOnlyInCastExpression(String s1, String s2) {
+		String commonPrefix = longestCommonPrefix(s1, s2);
+		String commonSuffix = longestCommonSuffix(s1, s2);
+		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
+			int beginIndexS1 = s1.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS1 = s1.lastIndexOf(commonSuffix);
+			String diff1 = beginIndexS1 > endIndexS1 ? "" :	s1.substring(beginIndexS1, endIndexS1);
+			int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS2 = s2.lastIndexOf(commonSuffix);
+			String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
+			if (diff1.isEmpty() && diff2.startsWith("(") && diff2.endsWith(")")) {
+				return true;
+			}
+			if (diff2.isEmpty() && diff1.startsWith("(") && diff1.endsWith(")")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static String longestCommonPrefix(String s1, String s2) {
+		int minLength = Math.min(s1.length(), s2.length());
+		int i = 0;
+		while (i < minLength && s1.charAt(i) == s2.charAt(i)) {
+			i++;
+		}
+		return s1.substring(0, i);
+	}
+	
+	private static String longestCommonSuffix(String s1, String s2) {
+		int minLength = Math.min(s1.length(), s2.length());
+		int i = 0;
+		while (i<minLength && s1.charAt(s1.length() - i - 1) == s2.charAt(s2.length() - i - 1)) {
+			i++;
+		}
+		return s1.substring(s1.length() - i, s1.length());
 	}
 
 	private boolean containsValidOperatorReplacements(ReplacementInfo replacementInfo) {

@@ -1139,6 +1139,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable annotateClass : Class to annotatedClass : Class in method public AnnotationMetadataSourceProcessorImpl(sources MetadataSources, rootMetadataBuildingContext MetadataBuildingContextRootImpl, jandexView IndexView) in class org.hibernate.boot.model.source.internal.annotations.AnnotationMetadataSourceProcessorImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable clazz : Class to annotatedClass : Class in method public AnnotationMetadataSourceProcessorImpl(sources MetadataSources, rootMetadataBuildingContext MetadataBuildingContextRootImpl, jandexView IndexView) in class org.hibernate.boot.model.source.internal.annotations.AnnotationMetadataSourceProcessorImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable annotateClass : Class to annotatedClass : Class in method private categorizeAnnotatedClass(annotatedClass Class, attributeConverterManager AttributeConverterManager) : void in class org.hibernate.boot.model.source.internal.annotations.AnnotationMetadataSourceProcessorImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 6112
 }, {
@@ -2540,6 +2561,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable object : Object to item : Object in method private flatten(properties Properties, input Map, path String) : void in class org.springframework.boot.cloudfoundry.VcapApplicationListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4633
 }, {
@@ -2785,6 +2813,13 @@
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter buckConfig : BuckConfig to restartAdbOnFailure : boolean in method public AdbHelper(adbOptions AdbOptions, deviceOptions TargetDeviceOptions, context ExecutionContext, console Console, buckEventBus BuckEventBus, restartAdbOnFailure boolean) in class com.facebook.buck.android.AdbHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 11495
 }, {
@@ -4720,6 +4755,13 @@
         "validation": "CTP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable publishAndCheck : Runnable to asynchronousPublication : Runnable in method public testExceptionInHandlerInvocation() : void in class net.engio.mbassy.SyncAsyncTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -7869,6 +7911,293 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method private buildCacheName(inv Invocation, controller Controller) : String in class com.jfinal.plugin.ehcache.CacheInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.plugin.ehcache.EvictInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.ext.interceptor.POST",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.ext.interceptor.NotAction",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter id : Object to idValue : Object in method public deleteById(tableName String, primaryKey String, idValue Object[]) : boolean in class com.jfinal.plugin.activerecord.Db",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.plugin.activerecord.tx.TxByMethods",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.aop.PrototypeInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method private buildCacheName(inv Invocation) : String in class com.jfinal.plugin.ehcache.EvictInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter actionInvocation : ActionInvocation to invocation : Invocation in method package InvocationWrapper(invocation Invocation, inters Interceptor[]) in class com.jfinal.aop.InvocationWrapper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.ext.interceptor.SessionInViewInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.plugin.activerecord.tx.TxByActionKeys",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.ext.interceptor.GET",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.ext.interceptor.Restful",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public getConfigWithTxConfig(inv Invocation) : Config in class com.jfinal.plugin.activerecord.tx.Tx",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.plugin.activerecord.tx.Tx",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.plugin.ehcache.CacheInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.aop.InterceptorStack",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method private buildCacheKey(inv Invocation, controller Controller) : String in class com.jfinal.plugin.ehcache.CacheInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter id : Object to idValue : Object in method public deleteById(tableName String, idValue Object) : boolean in class com.jfinal.plugin.activerecord.DbPro",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter id : Object to idValue : Object in method public deleteById(tableName String, primaryKey String, idValue Object[]) : boolean in class com.jfinal.plugin.activerecord.DbPro",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.plugin.activerecord.tx.TxByRegex",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter id : Object to idValue : Object in method public deleteById(tableName String, idValue Object) : boolean in class com.jfinal.plugin.activerecord.Db",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter globalInterceptor : Interceptor to globalActionInterceptor : Interceptor in method public add(globalActionInterceptor Interceptor) : Interceptors in class com.jfinal.config.Interceptors",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter invocation : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.ext.interceptor.NoUrlPara",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter id : Object to idValue : Object in method public deleteById(idValue Object) : boolean in class com.jfinal.plugin.activerecord.Model",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter id : Object to idValues : Object[] in method public findByIdLoadColumns(idValues Object[], columns String) : M in class com.jfinal.plugin.activerecord.Model",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter id : Object to idValues : Object in method private deleteById(table Table, idValues Object[]) : boolean in class com.jfinal.plugin.activerecord.Model",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable columnsArray : String[] to arr : String[] in method public forModelFindById(table Table, columns String) : String in class com.jfinal.plugin.activerecord.dialect.MysqlDialect",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable columnsArray : String[] to arr : String[] in method public forModelFindById(table Table, columns String) : String in class com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable pKey : String to pKeys : String[] in method public forModelDeleteById(table Table) : String in class com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable pKey : String to pKeys : String[] in method public forModelDeleteById(table Table) : String in class com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable primaryKey : String to pKeys : String[] in method public forModelDeleteById(table Table) : String in class com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable pKey : String to pKeys : String[] in method public forModelDeleteById(table Table) : String in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable primaryKey : String to pKeys : String[] in method public forModelDeleteById(table Table) : String in class com.jfinal.plugin.activerecord.dialect.MysqlDialect",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable columnsArray : String[] to pKeys : String[] in method public forModelFindById(table Table, columns String) : String in class com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable columnsArray : String[] to pKeys : String[] in method public forModelFindById(table Table, columns String) : String in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable columnsArray : String[] to pKeys : String[] in method public forModelFindById(table Table, columns String) : String in class com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable pKey : String to pKeys : String[] in method public forModelSave(table Table, attrs Map, sql StringBuilder, paras List) : void in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable id : Object to ids : Object[] in method public delete() : boolean in class com.jfinal.plugin.activerecord.Model",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable id : Object to ids : Object[] in method package update(config Config, conn Connection, tableName String, primaryKey String, record Record) : boolean in class com.jfinal.plugin.activerecord.DbPro",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable cause : Throwable to t : Throwable in method public invoke() : void in class com.jfinal.aop.Invocation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1822
 }, {
@@ -9119,6 +9448,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable putMetricDataList : List to queueItems : List in method private processCloudWatchStats(msg DescribeSensorsResponse) : void in class com.eucalyptus.cluster.callback.DescribeSensorCallback",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable putMetricDataType : PutMetricDataType to queueItem : AbsoluteMetricQueueItem in method private withMetric(namespace String, name String, dimensionName String, dimensionValue String) : Predicate in class com.eucalyptus.cluster.callback.cloudwatch.CloudWatchHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable putMetricDataList : ArrayList to absoluteMetricQueueItems : ArrayList in method public collectMetricData(msg DescribeSensorsResponse) : List in class com.eucalyptus.cluster.callback.cloudwatch.CloudWatchHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2499
 }, {
@@ -9190,6 +9540,13 @@
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Laleh"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable labelPanel : HorizontalPanel to nameAndOutputGrid : Grid in method public ChunkOptionsPopupPanel() in class org.rstudio.studio.client.workbench.views.source.editors.text.ChunkOptionsPopupPanel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1522
 }, {
@@ -9914,6 +10271,13 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter payload : Object to failure : Throwable in method public BuildOperationInternal(id Object, parentId Object, operationType BuildOperationType, failure Throwable, startTime long, endTime long) in class org.gradle.internal.progress.BuildOperationInternal",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable result : Object to failure : Throwable in method private adaptResult(source BuildOperationInternal) : AbstractOperationResult in class org.gradle.tooling.internal.provider.runner.ClientForwardingBuildListener",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -11038,6 +11402,41 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable logRotationControl : LogRotationControl to storeFlusher : StoreFlusher in method public shouldVisitLogFile() : void in class org.neo4j.kernel.impl.transaction.log.PhysicalLogFileTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable logRotationControl : LogRotationControl to storeFlusher : StoreFlusher in method public stop() : void in class org.neo4j.kernel.NeoStoreDataSource",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable logRotationControl : LogRotationControl to storeFlusher : StoreFlusher in method private storeCopyRequest(originalDir File, original GraphDatabaseAPI) : StoreCopyClient.StoreCopyRequester in class org.neo4j.com.storecopy.StoreCopyClientTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable recoveryVersion : long to recoveryPosition : LogPosition in method public init() : void in class org.neo4j.kernel.recovery.Recovery",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable logRotationControl : LogRotationControl to storeFlusher : StoreFlusher in method public shouldOpenInFreshDirectoryAndFinallyAddHeader() : void in class org.neo4j.kernel.impl.transaction.log.PhysicalLogFileTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 11758
 }, {
@@ -11373,6 +11772,20 @@
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method protected longStackValParityGet(value long) : long from class org.mapdb.StoreDirect to protected longParityGet(value long) : long from class org.mapdb.Store",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable plus : int to headSize : int in method public preallocate() : long in class org.mapdb.StoreAppend",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable plus : int to headSize : int in method protected delete2(recid long, serializer Serializer) : void in class org.mapdb.StoreAppend",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -12059,13 +12472,6 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
-    }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable value : Integer to item : T in method private testJavaCollection(collection Collection, type Class, name String, _unsorted Integer[], _sorted Integer[], input String) : boolean in class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
     }],
     "refDiffExecutionTime": 644
 }, {
@@ -12177,6 +12583,13 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter filterStrings : boolean to enableStringWhitelisting : boolean in method package FilterResourcesStep(inResDirToOutResDirMap ImmutableBiMap, filterDrawables boolean, enableStringWhitelisting boolean, whitelistedStringDirs ImmutableSet, locales ImmutableSet, filteredDirectoryCopier FilteredDirectoryCopier, targetDensities Set, drawableFinder DrawableFinder, imageScaler ImageScaler) in class com.facebook.buck.android.FilterResourcesStep",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2754
 }, {
@@ -14390,6 +14803,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Automatic"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable jsonString : String to controls : String in method public pauseOnSpecificBit() : void in class org.apache.drill.exec.testing.TestPauseInjection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable jsonString : String to controls : String in method public pauseInjected() : void in class org.apache.drill.exec.testing.TestPauseInjection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable jsonString : String to controls : String in method public latchInjected() : void in class org.apache.drill.exec.testing.TestCountDownLatchInjection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2963
 }, {
@@ -14577,6 +15011,69 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : Job to ele : Job in method public withJobs(jobs Job[]) : ListJobsResult in class com.amazonaws.services.importexport.model.ListJobsResult",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : String to maxItems : String in method public marshall(describeMountTargetsRequest DescribeMountTargetsRequest) : Request in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetsRequestMarshaller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : String to maxItems : String in method public marshall(describeFileSystemsRequest DescribeFileSystemsRequest) : Request in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : String to fileSystemId : String in method public marshall(describeFileSystemsRequest DescribeFileSystemsRequest) : Request in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : String to fileSystemId : String in method public marshall(describeMountTargetsRequest DescribeMountTargetsRequest) : Request in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetsRequestMarshaller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : String to marker : String in method public marshall(describeTagsRequest DescribeTagsRequest) : Request in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeTagsRequestMarshaller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : String to marker : String in method public marshall(describeMountTargetsRequest DescribeMountTargetsRequest) : Request in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetsRequestMarshaller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : String to creationToken : String in method public marshall(describeFileSystemsRequest DescribeFileSystemsRequest) : Request in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : String to marker : String in method public marshall(describeFileSystemsRequest DescribeFileSystemsRequest) : Request in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : String to maxItems : String in method public marshall(describeTagsRequest DescribeTagsRequest) : Request in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeTagsRequestMarshaller",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -14778,10 +15275,10 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method private getExecAction(prefix String, properties Properties) : ExecAction extracted from protected getProbe(prefix String) : Probe in class io.fabric8.maven.JsonMojo",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>This is newly added code.</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private getTCPSocketAction(prefix String, properties Properties) : TCPSocketAction extracted from protected getProbe(prefix String) : Probe in class io.fabric8.maven.JsonMojo",
@@ -14799,6 +15296,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable answer : Probe to probe : Probe in method protected getProbe(prefix String) : Probe in class io.fabric8.maven.JsonMojo",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable httpGet : HTTPGetAction to httpGetAction : HTTPGetAction in method protected getProbe(prefix String) : Probe in class io.fabric8.maven.JsonMojo",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -14969,13 +15473,6 @@
     }, {
         "type": "Move Attribute",
         "description": "Move Attribute private databases : LoadingCache from class org.apache.drill.exec.store.hive.schema.HiveSchemaFactory to class org.apache.drill.exec.store.hive.DrillHiveMetaStoreClient.NonCloseableHiveClientWithCaching",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable jobWithFsConf : JobConf to job : JobConf in method private splitInput(properties Properties, sd StorageDescriptor, partition Partition) : void in class org.apache.drill.exec.store.hive.HiveScan",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -17931,6 +18428,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable mpd : MPD to status : MPDStatus in method protected onHandleIntent(intent Intent) : void in class com.namelessdev.mpdroid.widgets.WidgetHelperService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 374
 }, {
@@ -18077,6 +18581,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable valueSize : int to curSize : int in method private allocateBytes(size long) : void in class org.apache.drill.exec.vector.BitVector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable valueSize : int to size : int in method public allocateNew(valueCount int) : void in class org.apache.drill.exec.vector.BitVector",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -20736,6 +21247,20 @@
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter address : Address to remoteEndpoint : Address in method public registerConnection(remoteEndpoint Address, connection Connection) : boolean in class com.hazelcast.test.TestNodeRegistry.MockConnectionManager",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter addresses : Address[] to ioService : IOService in method package MockConnectionManager(ioService IOService, nodes ConcurrentMap, node Node, joinerLock Object) in class com.hazelcast.test.TestNodeRegistry.MockConnectionManager",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4170
 }, {
@@ -24457,6 +24982,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable ruleByDestinationBuilder : ImmutableSetMultimap.Builder to ruleByDestinationSpecBuilder : ImmutableSetMultimap.Builder in method private generateCopyFilesBuildPhases(target PBXNativeTarget, copiedNodes Iterable) : void in class com.facebook.buck.apple.ProjectGenerator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable optionalDestination : Optional to optionalDestinationSpec : Optional in method private generateCopyFilesBuildPhases(target PBXNativeTarget, copiedNodes Iterable) : void in class com.facebook.buck.apple.ProjectGenerator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4819
 }, {
@@ -26272,6 +26811,41 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter input : DoubleProbe to function : DoubleProbeFunction in method public register(source S, name String, function DoubleProbeFunction) : void in class com.hazelcast.internal.metrics.impl.MetricsRegistryImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter input : Object to function : ProbeFunction in method package registerInternal(source S, name String, function ProbeFunction) : void in class com.hazelcast.internal.metrics.impl.MetricsRegistryImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter input : LongProbe to function : LongProbeFunction in method public register(source S, name String, function LongProbeFunction) : void in class com.hazelcast.internal.metrics.impl.MetricsRegistryImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable gauge : GaugeImpl to probeInstance : ProbeInstance in method public deregister(source S) : void in class com.hazelcast.internal.metrics.impl.MetricsRegistryImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable gauge : GaugeImpl to probeInstance : ProbeInstance in method package registerInternal(source S, name String, function ProbeFunction) : void in class com.hazelcast.internal.metrics.impl.MetricsRegistryImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 5604
 }, {
@@ -26934,6 +27508,20 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable pos : int to cursorPos : int in method private drawBuffer(clear int) : void in class jline.console.ConsoleReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable screenCursorCol : int to pos : int in method private clearAhead(num int, pos int) : void in class jline.console.ConsoleReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 460
 }, {
@@ -29252,6 +29840,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable isNotDone : boolean to partitionInMemory : boolean in method private getPartition(meta MetaPartition) : void in class org.apache.giraph.ooc.DiskBackedPartitionStore",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable partitionId : int to partitionIds : List in method private testMultiThreaded() : void in class org.apache.giraph.partition.TestPartitionStores",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2713
 }, {
@@ -29563,6 +30165,48 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter joinRequest : JoinMessage to joinMessage : JoinMessage in method package shouldMerge(joinMessage JoinMessage) : boolean in class com.hazelcast.cluster.impl.AbstractJoiner",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter memberCount : int to memberAddresses : Collection in method public JoinMessage(packetVersion byte, buildNumber int, address Address, uuid String, configCheck ConfigCheck, memberAddresses Collection) in class com.hazelcast.cluster.impl.JoinMessage",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter joinRequest : JoinRequest to joinMessage : JoinMessage in method private checkIfJoinRequestFromAnExistingMember(joinMessage JoinMessage, connection Connection) : boolean in class com.hazelcast.cluster.impl.ClusterServiceImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter joinRequest : JoinRequest to request : JoinMessage in method public JoinCheckOperation(request JoinMessage) in class com.hazelcast.cluster.impl.operations.JoinCheckOperation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable possibleAddress : Address to address : Address in method public searchForOtherClusters() : void in class com.hazelcast.cluster.impl.TcpIpJoiner",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable colPossibleAddresses : Collection to possibleAddresses : Collection in method public searchForOtherClusters() : void in class com.hazelcast.cluster.impl.TcpIpJoiner",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3496
 }, {
@@ -32003,6 +32647,48 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable e : HeaderEntry to value : Object in method public get(name T) : T in class io.netty.handler.codec.DefaultHeaders",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable e : HeaderEntry to value : Object in method public getAll(name T) : List in class io.netty.handler.codec.DefaultHeaders",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable v : T to value : T in method public set(name T, values Iterable) : Headers in class io.netty.handler.codec.DefaultHeaders",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable pseudoHeader : Http2Headers.PseudoHeaderName to header : Entry in method public encodeHeaders(headers Http2Headers, buffer ByteBuf) : void in class io.netty.handler.codec.http2.DefaultHttp2HeadersEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable visitor : Http2ToHttpHeaderTranslator to translator : Http2ToHttpHeaderTranslator in method public addHttp2ToHttpHeaders(streamId int, sourceHeaders Http2Headers, destinationMessage FullHttpMessage, addToTrailer boolean) : void in class io.netty.handler.codec.http2.HttpUtil",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable values : List to all : List in method public getAllAndRemove(name T) : List in class io.netty.handler.codec.DefaultHeaders",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2532
 }, {
@@ -32883,6 +33569,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable other : RestliRequestOptions to that : RestliRequestOptions in method public equals(o Object) : boolean in class com.linkedin.restli.client.RestliRequestOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable requestContentEncodingName : String to requestContentEncoding : EncodingType in method private getClient(properties Map, sslContext SSLContext, sslParameters SSLParameters) : TransportClient in class com.linkedin.r2.transport.http.client.HttpClientFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3301
 }, {
@@ -33105,6 +33805,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable intervalHistogram : EncodableHistogram to histogram : EncodableHistogram in method private getIntervalHistogram() : EncodableHistogram in class org.HdrHistogram.HistogramLogProcessor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 147
@@ -36256,6 +36963,13 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter isTestSourceRoot : boolean to rootType : JpsModuleSourceRootType in method private addSourceRoot(module Module, sourceRootName String, rootType JpsModuleSourceRootType) : VirtualFile in class org.intellij.erlang.compilation.ErlangCompilationTestBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable modulesCollector : Processor to filesCollector : Processor in method private addErlangFiles(module Module, onlyTestModules boolean, erlangModules Collection, type ErlangFileType) : Collection in class org.intellij.erlang.utils.ErlangModulesUtil",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

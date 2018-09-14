@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
@@ -21,12 +22,26 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private LocationInfo locationInfo;
 	private boolean isParameter;
 	private boolean isAttribute;
+	private VariableDeclarationType variableDeclarationType;
+	private VariableScope scope;
 	
 	public VariableDeclaration(CompilationUnit cu, String filePath, VariableDeclarationFragment fragment) {
 		this.locationInfo = new LocationInfo(cu, filePath, fragment);
 		this.variableName = fragment.getName().getIdentifier();
 		this.initializer = fragment.getInitializer() != null ? fragment.getInitializer().toString() : null;
 		this.type = UMLType.extractTypeObject(UMLType.getTypeName(extractType(fragment), fragment.getExtraDimensions()));
+		this.variableDeclarationType = extractVariableDeclarationType(fragment);
+		ASTNode scopeNode = getScopeNode(fragment);
+		int startOffset = 0;
+		if(variableDeclarationType.equals(VariableDeclarationType.FIELD_DECLARATION)) {
+			//field declarations have the entire type declaration as scope, regardless of the location they are declared
+			startOffset = scopeNode.getStartPosition();
+		}
+		else {
+			startOffset = fragment.getStartPosition();
+		}
+		int endOffset = scopeNode.getStartPosition() + scopeNode.getLength();
+		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
 	}
 
 	public VariableDeclaration(CompilationUnit cu, String filePath, SingleVariableDeclaration fragment) {
@@ -34,6 +49,11 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.variableName = fragment.getName().getIdentifier();
 		this.initializer = fragment.getInitializer() != null ? fragment.getInitializer().toString() : null;
 		this.type = UMLType.extractTypeObject(UMLType.getTypeName(extractType(fragment), fragment.getExtraDimensions()));
+		this.variableDeclarationType = extractVariableDeclarationType(fragment);
+		int startOffset = fragment.getStartPosition();
+		ASTNode scopeNode = getScopeNode(fragment);
+		int endOffset = scopeNode.getStartPosition() + scopeNode.getLength();
+		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
 	}
 
 	public String getVariableName() {
@@ -46,6 +66,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public UMLType getType() {
 		return type;
+	}
+
+	public VariableScope getScope() {
+		return scope;
 	}
 
 	public boolean isParameter() {
@@ -64,14 +88,16 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.isAttribute = isAttribute;
 	}
 
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((initializer == null) ? 0 : initializer.hashCode());
+		result = prime * result + ((scope == null) ? 0 : scope.hashCode());
 		result = prime * result + ((variableName == null) ? 0 : variableName.hashCode());
 		return result;
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -80,10 +106,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		if (getClass() != obj.getClass())
 			return false;
 		VariableDeclaration other = (VariableDeclaration) obj;
-		if (initializer == null) {
-			if (other.initializer != null)
+		if (scope == null) {
+			if (other.scope != null)
 				return false;
-		} else if (!initializer.equals(other.initializer))
+		} else if (!scope.equals(other.scope))
 			return false;
 		if (variableName == null) {
 			if (other.variableName != null)
@@ -105,6 +131,35 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public CodeRange codeRange() {
 		return locationInfo.codeRange();
+	}
+
+	private static ASTNode getScopeNode(org.eclipse.jdt.core.dom.VariableDeclaration variableDeclaration) {
+		if(variableDeclaration instanceof SingleVariableDeclaration) {
+			return variableDeclaration.getParent();
+		}
+		else if(variableDeclaration instanceof VariableDeclarationFragment) {
+			return variableDeclaration.getParent().getParent();
+		}
+		return null;
+	}
+
+	private static VariableDeclarationType extractVariableDeclarationType(org.eclipse.jdt.core.dom.VariableDeclaration variableDeclaration) {
+		if(variableDeclaration instanceof SingleVariableDeclaration) {
+			return VariableDeclarationType.SINGLE_VARIABLE_DECLARATION;
+		}
+		else if(variableDeclaration instanceof VariableDeclarationFragment) {
+			VariableDeclarationFragment fragment = (VariableDeclarationFragment)variableDeclaration;
+			if(fragment.getParent() instanceof VariableDeclarationStatement) {
+				return VariableDeclarationType.VARIABLE_DECLARATION_STATEMENT;
+			}
+			else if(fragment.getParent() instanceof VariableDeclarationExpression) {
+				return VariableDeclarationType.VARIABLE_DECLARATION_EXPRESSION;
+			}
+			else if(fragment.getParent() instanceof FieldDeclaration) {
+				return VariableDeclarationType.FIELD_DECLARATION;
+			}
+		}
+		return null;
 	}
 
 	private static Type extractType(org.eclipse.jdt.core.dom.VariableDeclaration variableDeclaration) {
@@ -131,7 +186,18 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		return returnedVariableType;
 	}
 
+	public boolean equalVariableDeclarationType(VariableDeclaration other) {
+		return this.variableDeclarationType.equals(other.variableDeclarationType);
+	}
+
 	public VariableDeclaration getVariableDeclaration() {
 		return this;
+	}
+
+	private enum VariableDeclarationType {
+		SINGLE_VARIABLE_DECLARATION,
+		VARIABLE_DECLARATION_STATEMENT,
+		VARIABLE_DECLARATION_EXPRESSION,
+		FIELD_DECLARATION;
 	}
 }

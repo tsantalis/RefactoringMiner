@@ -476,13 +476,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(Replacement replacement : getReplacements()) {
 				String variableName = declaration.getVariableName();
 				String initializer = declaration.getInitializer();
-				if(variableName.equals(replacement.getAfter()) &&
-						initializer != null && initializer.equals(replacement.getBefore())) {
-					ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation2);
-					if(!refactorings.contains(ref)) {
-						refactorings.add(ref);
+				if(replacement.getAfter().startsWith(variableName + ".")) {
+					String suffixAfter = replacement.getAfter().substring(variableName.length(), replacement.getAfter().length());
+					if(replacement.getBefore().endsWith(suffixAfter)) {
+						String prefixBefore = replacement.getBefore().substring(0, replacement.getBefore().indexOf(suffixAfter));
+						if(initializer != null) {
+							String longestCommonSuffix = longestCommonSuffix(initializer, prefixBefore);
+							if(initializer.equals(prefixBefore) || (!longestCommonSuffix.isEmpty() && longestCommonSuffix.startsWith("."))) {
+								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation2);
+								if(!refactorings.contains(ref)) {
+									refactorings.add(ref);
+								}
+								return true;
+							}
+						}
 					}
-					return true;
+				}
+				if(variableName.equals(replacement.getAfter()) && initializer != null) {
+					String longestCommonSuffix = longestCommonSuffix(initializer, replacement.getBefore());
+					if(initializer.equals(replacement.getBefore()) || (!longestCommonSuffix.isEmpty() && longestCommonSuffix.startsWith("."))) {
+						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation2);
+						if(!refactorings.contains(ref)) {
+							refactorings.add(ref);
+						}
+						return true;
+					}
 				}
 			}
 		}
@@ -1301,7 +1319,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					return replacementInfo.getReplacements();
 				}
 			}
-		}	
+		}
+		//method invocation is identical if arguments are wrapped
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+				invocationCoveringTheEntireStatement1.identicalExpression(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements()) &&
+				invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2) ) {
+			for(AbstractCall invocation2 : methodInvocationMap2.values()) {
+				if(invocationCoveringTheEntireStatement1.identicalOrWrappedArguments(invocation2)) {
+					Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getName(),
+							invocationCoveringTheEntireStatement2.getName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_ARGUMENT_WRAPPED);
+					replacementInfo.addReplacement(replacement);
+					return replacementInfo.getReplacements();
+				}
+			}
+		}
 		//method invocation has been renamed but the expression and arguments are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
@@ -1337,7 +1368,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		//method invocation has only changes in the arguments
+		//method invocation has only changes in the arguments (different number of arguments)
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				invocationCoveringTheEntireStatement1.onlyArgumentsChanged(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
 			Set<String> argumentIntersection = invocationCoveringTheEntireStatement1.argumentIntersection(invocationCoveringTheEntireStatement2);

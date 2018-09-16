@@ -2632,6 +2632,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable member : String to addr : InetSocketAddress in method public isInMembersList(sender IpAddress) : boolean in class org.jgroups.auth.FixedMembershipToken",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1121
 }, {
@@ -3269,6 +3276,13 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Laleh"
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable cacheTopology : CacheTopology in method protected waitForCacheToStabilize(cache Cache, cacheConfig Configuration) : void from class org.infinispan.commands.CreateCacheCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 7285
 }, {
@@ -4661,6 +4675,167 @@
     }, {
         "type": "Move Class",
         "description": "Move Class com.graphhopper.storage.GraphHopperStorage.AllEdgeIterator moved to com.graphhopper.storage.BaseGraph.AllEdgeIterator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable graph : Graph to ghStorage : GraphHopperStorage in method public testCalcShortestPath() : void in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable graph : Graph to ghStorage : GraphHopperStorage in method public testWeightLimit() : void in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable graph : Graph to ghStorage : GraphHopperStorage in method public testViaEdges_FromEqualsTo() : void in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable graphShortest : Graph to ghStorage : GraphHopperStorage in method public testCalcFootPath() : void in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable graph : Graph to ghStorage : GraphHopperStorage in method public testViaEdges_WithCoordinates() : void in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable graph : Graph to ghStorage : GraphHopperStorage in method public testWikipediaShortestPath() : void in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter g : Graph to ghStorage : GraphHopperStorage in method protected createAlgo(ghStorage GraphHopperStorage, opts AlgorithmOptions) : RoutingAlgorithm in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter graph : Graph to ghStorage : GraphHopperStorage in method package calcPath(ghStorage GraphHopperStorage, fromNode1 int, fromNode2 int, toNode1 int, toNode2 int) : Path in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter graph : Graph to ghStorage : GraphHopperStorage in method package calcPathViaQuery_(weighting String, ghStorage GraphHopperStorage, fromLat double, fromLon double, toLat double, toLon double) : Path in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable g : LevelGraphStorage to lg : LevelGraphImpl in method public testGetWeightIfAdvancedEncoder() : void in class com.graphhopper.storage.GraphHopperStorageCHTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable g : LevelGraphStorage to storage : GraphHopperStorage in method public testPriosWhileDeleting() : void in class com.graphhopper.storage.GraphHopperStorageCHTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable lg : LevelGraph to ghStorage : GraphHopperStorage in method public getMatrixGraph() : GraphHopperStorage in class com.graphhopper.routing.ch.DijkstraBidirectionCHTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable g : Graph to ghStorage : GraphHopperStorage in method public testBaseGraph() : void in class com.graphhopper.routing.ch.DijkstraBidirectionCHTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter g : Graph to ghStorage : GraphHopperStorage in method public createFactory(ghStorage GraphHopperStorage, opts AlgorithmOptions) : RoutingAlgorithmFactory in class com.graphhopper.routing.ch.DijkstraBidirectionCHTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter tmpGraph : GraphStorage to ghStorage : GraphHopperStorage in method protected createReader(ghStorage GraphHopperStorage) : DataReader in class com.graphhopper.GraphHopper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter graph : GraphStorage to ghStorage : GraphHopperStorage in method public setGraphHopperStorage(ghStorage GraphHopperStorage) : void in class com.graphhopper.GraphHopper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable graph : GraphHopperStorage to storage : GraphHopperStorage in method public internalDisconnect() : void in class com.graphhopper.storage.GraphHopperStorageTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable lg : LevelGraphStorage to g : GraphHopperStorage in method public testLevelGraphBug() : void in class com.graphhopper.storage.index.LocationIndexTreeForLevelGraphTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter g : LevelGraph to baseGraph : Graph in method public PrepareContractionHierarchies(dir Directory, baseGraph Graph, levelGraph LevelGraph, encoder FlagEncoder, weighting Weighting, traversalMode TraversalMode) in class com.graphhopper.routing.ch.PrepareContractionHierarchies",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable graph : GraphStorage to ghStorage : GraphHopperStorage in method public testEstimatedCenter() : void in class com.graphhopper.reader.OSMReaderTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter g : GraphStorage to graph : GraphHopperStorage in method public TarjansStronglyConnectedComponentsAlgorithm(graph GraphHopperStorage, edgeFilter EdgeFilter) in class com.graphhopper.routing.util.TarjansStronglyConnectedComponentsAlgorithm",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable graph : GraphStorage to ghStorage : GraphHopperStorage in method public testGetRestrictionAsEntries() : void in class com.graphhopper.reader.OSMTurnRelationTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter g : GraphStorage to ghStorage : GraphHopperStorage in method public PrepareRoutingSubnetworks(ghStorage GraphHopperStorage, em EncodingManager) in class com.graphhopper.routing.util.PrepareRoutingSubnetworks",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -12590,6 +12765,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable input : Path to path : Path in method private doExecute(context ExecutionContext) : int in class com.facebook.buck.android.FilterResourcesStep",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2754
 }, {
@@ -14617,6 +14799,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable actualNumber : Number to actual : Number in method public matches(object Object) : boolean in class org.mockito.internal.matchers.EqualsWithDelta",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1564
 }, {
@@ -16712,6 +16901,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin, Laleh"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter name : String to connectionRef : ConnectionRef in method public getConstraint(connectionRef ConnectionRef) : Constraint in class org.jbpm.workflow.core.node.StateNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1802
 }, {
@@ -19620,6 +19816,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin, Davood, Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter normalizedFilter : BooleanExpr to query : BooleanExpr in method public addFilter(queryString String, query BooleanExpr, projection List, sortFields List, callback FilterCallback, eventTypes Object[]) : FilterSubscriptionImpl in class org.infinispan.objectfilter.impl.FilterRegistry",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter queryString : String to jpqlString : String in method private transformJpaToLucene(isCompatMode boolean, serCtx SerializationContext, jpqlString String, searchFactory SearchIntegrator) : LuceneQueryParsingResult in class org.infinispan.query.remote.QueryFacadeImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 6361
 }, {
@@ -24780,6 +24990,20 @@
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable eliminationTag : Tag to child : Tag in method public visitOptimizerTagsOfLastTask(member IMetaMember, visitable IJournalVisitable) : void in class org.adoptopenjdk.jitwatch.journal.JournalUtil",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable line : LineAnnotation to lines : List in method private checkLine(result Map, index int, annotation String, colour Color) : void in class org.adoptopenjdk.jitwatch.test.TestBytecodeAnnotationBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 686
 }, {
@@ -24992,6 +25216,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable optionalDestination : Optional to optionalDestinationSpec : Optional in method private generateCopyFilesBuildPhases(target PBXNativeTarget, copiedNodes Iterable) : void in class com.facebook.buck.apple.ProjectGenerator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable ruleByDestination : ImmutableSetMultimap to ruleByDestinationSpec : ImmutableSetMultimap in method private generateCopyFilesBuildPhases(target PBXNativeTarget, copiedNodes Iterable) : void in class com.facebook.buck.apple.ProjectGenerator",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -26216,6 +26447,125 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected getSubsystemAddress() : PathAddress extracted from protected getProtocolStackAddress(stackName String) : PathAddress in class org.infinispan.server.jgroups.subsystem.OperationTestCaseBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable servicesA : KernelServices to services : KernelServices in method public testProtocolStackAddRemoveAddSequence() : void in class org.infinispan.server.jgroups.subsystem.OperationSequencesTestCase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable compositeOp : ModelNode to operation : ModelNode in method public testProtocolStackRemoveRollback() : void in class org.infinispan.server.jgroups.subsystem.OperationSequencesTestCase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable servicesA : KernelServices to services : KernelServices in method public testProtocolStackAddRemoveSequenceWithParameters() : void in class org.infinispan.server.jgroups.subsystem.OperationSequencesTestCase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable servicesA : KernelServices to services : KernelServices in method public testProtocolStackRemoveRollback() : void in class org.infinispan.server.jgroups.subsystem.OperationSequencesTestCase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable compositeOp : ModelNode to operation : ModelNode in method public testProtocolStackRemoveRemoveSequence() : void in class org.infinispan.server.jgroups.subsystem.OperationSequencesTestCase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable servicesA : KernelServices to services : KernelServices in method public testProtocolStackRemoveRemoveSequence() : void in class org.infinispan.server.jgroups.subsystem.OperationSequencesTestCase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable compositeOp : ModelNode to operation : ModelNode in method public testProtocolStackAddRemoveAddSequence() : void in class org.infinispan.server.jgroups.subsystem.OperationSequencesTestCase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable servicesA : KernelServices to services : KernelServices in method public testTransportReadWriteOperation() : void in class org.infinispan.server.jgroups.subsystem.OperationsTestCase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable servicesA : KernelServices to services : KernelServices in method public testProtocolReadWriteOperation() : void in class org.infinispan.server.jgroups.subsystem.OperationsTestCase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable servicesA : KernelServices to services : KernelServices in method public testSubsystemReadWriteOperations() : void in class org.infinispan.server.jgroups.subsystem.OperationsTestCase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable servicesA : KernelServices to services : KernelServices in method public testProtocolPropertyReadWriteOperation() : void in class org.infinispan.server.jgroups.subsystem.OperationsTestCase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable servicesA : KernelServices to services : KernelServices in method public testTransportReadWriteWithParameters() : void in class org.infinispan.server.jgroups.subsystem.OperationsTestCase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable servicesA : KernelServices to services : KernelServices in method public testTransportPropertyReadWriteOperation() : void in class org.infinispan.server.jgroups.subsystem.OperationsTestCase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable servicesA : KernelServices to services : KernelServices in method public testParseAndMarshalModel() : void in class org.infinispan.server.jgroups.subsystem.SubsystemParsingTestCase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable describeOp : ModelNode to operation : ModelNode in method public testDescribeHandler() : void in class org.infinispan.server.jgroups.subsystem.SubsystemParsingTestCase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter operations : int to expectedOperationCount : int in method public SubsystemParsingTestCase(schema JGroupsSchema, expectedOperationCount int) in class org.infinispan.server.jgroups.subsystem.SubsystemParsingTestCase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter format : String to msg : String in method public error(msg String, args Object[]) : void in class org.infinispan.server.jgroups.LogFactory.LogAdapter",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -30207,6 +30557,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable member : Member to address : Address in method package shouldMerge(joinMessage JoinMessage) : boolean in class com.hazelcast.cluster.impl.AbstractJoiner",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3496
 }, {
@@ -33259,6 +33616,83 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method public setQueryData(queryData QueryData) : void renamed to public setQueryWhere(queryWhere QueryWhere) : void in class org.jbpm.services.task.commands.TaskQueryWhereCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter queryData : QueryData to queryWhere : QueryWhere in method public AuditNodeInstanceLogQueryCommand(queryWhere QueryWhere) in class org.jbpm.process.audit.command.AuditNodeInstanceLogQueryCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter queryData : QueryData to queryWhere : QueryWhere in method public AuditProcessInstanceLogQueryCommand(queryWhere QueryWhere) in class org.jbpm.process.audit.command.AuditProcessInstanceLogQueryCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter queryData : QueryData to queryWhere : QueryWhere in method public AuditVariableInstanceLogQueryCommand(queryWhere QueryWhere) in class org.jbpm.process.audit.command.AuditVariableInstanceLogQueryCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter orderBy : OrderBy to field : OrderBy in method private getOrderByListId(field OrderBy) : String in class org.jbpm.services.task.impl.TaskQueryBuilderImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter queryData : QueryData to queryWhere : QueryWhere in method public setQueryWhere(queryWhere QueryWhere) : void in class org.jbpm.services.task.commands.TaskQueryWhereCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter queryParameters : QueryWhere to queryWhere : QueryWhere in method public QueryWhere(queryWhere QueryWhere) in class org.jbpm.query.jpa.data.QueryWhere",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter deadlineSummaryImpl : DeadlineSummaryImpl to deadlineSummary : DeadlineSummary in method private executedeadLine(ctx TaskContext, persistenceContext TaskPersistenceContext, task Task, deadlineSummary DeadlineSummary, taskData TaskData) : Void in class org.jbpm.services.task.commands.ExecuteReminderCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter data : QueryData to queryWhere : QueryWhere in method public TaskQueryWhereCommand(queryWhere QueryWhere) in class org.jbpm.services.task.commands.TaskQueryWhereCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable deadlineSummaryImpl : DeadlineSummaryImpl to deadlineSummary : DeadlineSummary in method public execute(context Context) : Void in class org.jbpm.services.task.commands.ExecuteReminderCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable newCriteriaGroupParent : Object to grandparent : Object in method public endGroup() : void in class org.jbpm.query.jpa.data.QueryWhere",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable queryData : QueryData to queryWhere : QueryWhere in method public build() : ParametrizedQuery in class org.jbpm.services.task.impl.TaskQueryBuilderImpl",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

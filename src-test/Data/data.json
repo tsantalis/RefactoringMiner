@@ -1684,6 +1684,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter mergePolicyProvider : MergePolicyProvider to mergePolicy : MergePolicy in method public EngineConfig(shardId ShardId, threadPool ThreadPool, indexingService ShardIndexingService, indexSettingsService IndexSettingsService, warmer IndicesWarmer, store Store, deletionPolicy SnapshotDeletionPolicy, mergePolicy MergePolicy, mergeScheduler MergeSchedulerProvider, analyzer Analyzer, similarity Similarity, codecService CodecService, failedEngineListener Engine.FailedEngineListener, translogRecoveryPerformer TranslogRecoveryPerformer, filterCache QueryCache, filterCachingPolicy QueryCachingPolicy, translogConfig TranslogConfig) in class org.elasticsearch.index.engine.EngineConfig",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 8239
 }, {
@@ -1699,6 +1706,34 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter value : long[] to values : long[] in method public writeLongArray(values long[]) : void in class org.elasticsearch.common.io.stream.StreamOutput",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter value : float[] to values : float[] in method public writeFloatArray(values float[]) : void in class org.elasticsearch.common.io.stream.StreamOutput",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter value : double[] to values : double[] in method public writeDoubleArray(values double[]) : void in class org.elasticsearch.common.io.stream.StreamOutput",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter value : int[] to values : int[] in method public writeIntArray(values int[]) : void in class org.elasticsearch.common.io.stream.StreamOutput",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 7383
@@ -7236,6 +7271,300 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyPNG to key : CGImagePropertyPNG in method public get(key CGImagePropertyPNG, type Class) : T in class org.robovm.apple.imageio.CGImagePropertyPNGData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyNikon to key : CGImagePropertyNikon in method public get(key CGImagePropertyNikon, type Class) : T in class org.robovm.apple.imageio.CGImagePropertyNikonData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyCanon to key : CGImagePropertyCanon in method public has(key CGImagePropertyCanon) : boolean in class org.robovm.apple.imageio.CGImagePropertyCanonData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyJFIF to key : CGImagePropertyJFIF in method public get(key CGImagePropertyJFIF, type Class) : T in class org.robovm.apple.imageio.CGImagePropertyJFIFData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyJFIF to key : CGImagePropertyJFIF in method public set(key CGImagePropertyJFIF, value NativeObject) : CGImagePropertyJFIFData in class org.robovm.apple.imageio.CGImagePropertyJFIFData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyIPTCContactInfo to key : CGImagePropertyIPTCContactInfo in method public has(key CGImagePropertyIPTCContactInfo) : boolean in class org.robovm.apple.imageio.CGImagePropertyIPTCContactInfoData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyIPTC to key : CGImagePropertyIPTC in method public get(key CGImagePropertyIPTC, type Class) : T in class org.robovm.apple.imageio.CGImagePropertyIPTCData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyCanon to key : CGImagePropertyCanon in method public set(key CGImagePropertyCanon, value NativeObject) : CGImagePropertyCanonData in class org.robovm.apple.imageio.CGImagePropertyCanonData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyGPS to key : CGImagePropertyGPS in method public set(key CGImagePropertyGPS, value NativeObject) : CGImagePropertyGPSData in class org.robovm.apple.imageio.CGImagePropertyGPSData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyDNG to key : CGImagePropertyDNG in method public set(key CGImagePropertyDNG, value NativeObject) : CGImagePropertyDNGData in class org.robovm.apple.imageio.CGImagePropertyDNGData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyCIFF to key : CGImagePropertyCIFF in method public has(key CGImagePropertyCIFF) : boolean in class org.robovm.apple.imageio.CGImagePropertyCIFFData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyGIF to key : CGImagePropertyGIF in method public get(key CGImagePropertyGIF, type Class) : T in class org.robovm.apple.imageio.CGImagePropertyGIFData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyExif to key : CGImagePropertyExif in method public get(key CGImagePropertyExif, type Class) : T in class org.robovm.apple.imageio.CGImagePropertyExifData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyExifAux to key : CGImagePropertyExifAux in method public get(key CGImagePropertyExifAux, type Class) : T in class org.robovm.apple.imageio.CGImagePropertyExifAuxData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyIPTCContactInfo to key : CGImagePropertyIPTCContactInfo in method public get(key CGImagePropertyIPTCContactInfo, type Class) : T in class org.robovm.apple.imageio.CGImagePropertyIPTCContactInfoData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyIPTC to key : CGImagePropertyIPTC in method public set(key CGImagePropertyIPTC, value NativeObject) : CGImagePropertyIPTCData in class org.robovm.apple.imageio.CGImagePropertyIPTCData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyGPS to key : CGImagePropertyGPS in method public has(key CGImagePropertyGPS) : boolean in class org.robovm.apple.imageio.CGImagePropertyGPSData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyPNG to key : CGImagePropertyPNG in method public has(key CGImagePropertyPNG) : boolean in class org.robovm.apple.imageio.CGImagePropertyPNGData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyGIF to key : CGImagePropertyGIF in method public set(key CGImagePropertyGIF, value NativeObject) : CGImagePropertyGIFData in class org.robovm.apple.imageio.CGImagePropertyGIFData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyCanon to key : CGImagePropertyCanon in method public get(key CGImagePropertyCanon, type Class) : T in class org.robovm.apple.imageio.CGImagePropertyCanonData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImageProperty8BIM to key : CGImageProperty8BIM in method public get(key CGImageProperty8BIM, type Class) : T in class org.robovm.apple.imageio.CGImageProperty8BIMData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyIPTCContactInfo to key : CGImagePropertyIPTCContactInfo in method public set(key CGImagePropertyIPTCContactInfo, value NativeObject) : CGImagePropertyIPTCContactInfoData in class org.robovm.apple.imageio.CGImagePropertyIPTCContactInfoData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyCIFF to key : CGImagePropertyCIFF in method public get(key CGImagePropertyCIFF, type Class) : T in class org.robovm.apple.imageio.CGImagePropertyCIFFData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyNikon to key : CGImagePropertyNikon in method public set(key CGImagePropertyNikon, value NativeObject) : CGImagePropertyNikonData in class org.robovm.apple.imageio.CGImagePropertyNikonData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyGPS to key : CGImagePropertyGPS in method public get(key CGImagePropertyGPS, type Class) : T in class org.robovm.apple.imageio.CGImagePropertyGPSData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyExifAux to key : CGImagePropertyExifAux in method public has(key CGImagePropertyExifAux) : boolean in class org.robovm.apple.imageio.CGImagePropertyExifAuxData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyExif to key : CGImagePropertyExif in method public has(key CGImagePropertyExif) : boolean in class org.robovm.apple.imageio.CGImagePropertyExifData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImageProperty8BIM to key : CGImageProperty8BIM in method public set(key CGImageProperty8BIM, value NativeObject) : CGImageProperty8BIMData in class org.robovm.apple.imageio.CGImageProperty8BIMData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyNikon to key : CGImagePropertyNikon in method public has(key CGImagePropertyNikon) : boolean in class org.robovm.apple.imageio.CGImagePropertyNikonData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyTIFF to key : CGImagePropertyTIFF in method public set(key CGImagePropertyTIFF, value NativeObject) : CGImagePropertyTIFFData in class org.robovm.apple.imageio.CGImagePropertyTIFFData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyDNG to key : CGImagePropertyDNG in method public get(key CGImagePropertyDNG, type Class) : T in class org.robovm.apple.imageio.CGImagePropertyDNGData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyCIFF to key : CGImagePropertyCIFF in method public set(key CGImagePropertyCIFF, value NativeObject) : CGImagePropertyCIFFData in class org.robovm.apple.imageio.CGImagePropertyCIFFData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyJFIF to key : CGImagePropertyJFIF in method public has(key CGImagePropertyJFIF) : boolean in class org.robovm.apple.imageio.CGImagePropertyJFIFData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyTIFF to key : CGImagePropertyTIFF in method public get(key CGImagePropertyTIFF, type Class) : T in class org.robovm.apple.imageio.CGImagePropertyTIFFData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyTIFF to key : CGImagePropertyTIFF in method public has(key CGImagePropertyTIFF) : boolean in class org.robovm.apple.imageio.CGImagePropertyTIFFData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyDNG to key : CGImagePropertyDNG in method public has(key CGImagePropertyDNG) : boolean in class org.robovm.apple.imageio.CGImagePropertyDNGData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImageProperty8BIM to key : CGImageProperty8BIM in method public has(key CGImageProperty8BIM) : boolean in class org.robovm.apple.imageio.CGImageProperty8BIMData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyGIF to key : CGImagePropertyGIF in method public has(key CGImagePropertyGIF) : boolean in class org.robovm.apple.imageio.CGImagePropertyGIFData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyExifAux to key : CGImagePropertyExifAux in method public set(key CGImagePropertyExifAux, value NativeObject) : CGImagePropertyExifAuxData in class org.robovm.apple.imageio.CGImagePropertyExifAuxData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyIPTC to key : CGImagePropertyIPTC in method public has(key CGImagePropertyIPTC) : boolean in class org.robovm.apple.imageio.CGImagePropertyIPTCData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyExif to key : CGImagePropertyExif in method public set(key CGImagePropertyExif, value NativeObject) : CGImagePropertyExifData in class org.robovm.apple.imageio.CGImagePropertyExifData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter property : CGImagePropertyPNG to key : CGImagePropertyPNG in method public set(key CGImagePropertyPNG, value NativeObject) : CGImagePropertyPNGData in class org.robovm.apple.imageio.CGImagePropertyPNGData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 11040
 }, {
@@ -7324,6 +7653,34 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Laleh"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter insertFromSubQueryAnalyzedStatement : InsertFromSubQueryAnalyzedStatement to statement : InsertFromSubQueryAnalyzedStatement in method public visitInsertFromQuery(statement InsertFromSubQueryAnalyzedStatement, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.InsertFromSubQueryConsumer.Visitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable analyzedRelation : PlannedAnalyzedRelation to plannedSubQuery : PlannedAnalyzedRelation in method public visitInsertFromQuery(statement InsertFromSubQueryAnalyzedStatement, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.InsertFromSubQueryConsumer.Visitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter rootRelation : AnalyzedRelation to relation : AnalyzedRelation in method public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.QueryThenFetchConsumer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable plannedAnalyzedRelation : PlannedAnalyzedRelation in method public plan(relation AnalyzedRelation, consumerContext ConsumerContext) : PlannedAnalyzedRelation from class io.crate.planner.consumer.ConsumingPlanner",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3234
 }, {
@@ -12964,6 +13321,20 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable f : File to file : File in method private init() : void in class org.glassfish.jersey.server.internal.scanning.FilesScanner",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable s : String to scheme : String in method private add(uriSchemeResourceFinderFactory UriSchemeResourceFinderFactory) : void in class org.glassfish.jersey.server.internal.scanning.PackageNamesScanner",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 6782
 }, {
@@ -16606,6 +16977,13 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable hashFunctions : List to partitionFunctions : Collection in method public PartitionFunction(sharedBuffer SharedBuffer, sourceTypes List, outputBuffers OutputBuffers) in class com.facebook.presto.operator.PartitionedOutputOperator.PartitionFunction",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3382
 }, {
@@ -19990,6 +20368,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter function : Model to layer : Model in method public BackTrackLineSearch(layer Model, stepFunction StepFunction, optimizer ConvexOptimizer) in class org.deeplearning4j.optimize.solvers.BackTrackLineSearch",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable l : OutputLayer to layer : OutputLayer in method public testLineSearch() : void in class org.deeplearning4j.optimize.solver.BackTrackLineSearchTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable d : DataSet to data : DataSet in method public testLineSearch() : void in class org.deeplearning4j.optimize.solver.BackTrackLineSearchTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 997
 }, {
@@ -21013,6 +21412,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable processorDefinition : ProcessorDefinition to other : OtherAttributesAware in method public resolvePropertyPlaceholders(camelContext CamelContext, definition Object) : void in class org.apache.camel.model.ProcessorDefinitionHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 6877
@@ -27372,6 +27778,34 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter types : Collection to elements : Collection in method private listElements(logMsgBuilder StringBuilder, elements Collection) : StringBuilder in class org.glassfish.jersey.ext.cdi1x.internal.CdiComponentProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable isJaxRsProvider : boolean to isJaxRsResource : boolean in method public bind(clazz Class, providerContracts Set) : boolean in class org.glassfish.jersey.ext.cdi1x.internal.CdiComponentProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable extScopesFound : boolean to extScopeBound : boolean in method private initialize(componentProviders Iterable) : ServerRuntime in class org.glassfish.jersey.server.ApplicationHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter extensionBean : Bean to bean : Bean in method package getBeanReference(clazz Class, bean Bean, beanManager BeanManager) : T in class org.glassfish.jersey.ext.cdi1x.internal.CdiUtil",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 5816
 }, {
@@ -27985,6 +28419,20 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Davood, Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable e : Element to element : Element in method public cut(line String) : List in class org.ansj.app.crf.SplitWord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable split : String[] to fragments : String[] in method public TempFeature(input String, tagNum int) in class org.ansj.app.crf.CrfppModelParser.TempFeature",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -29104,6 +29552,20 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable metadata : ConnectorMetadata to entry : ConnectorMetadataEntry in method public getLayout(session Session, handle TableLayoutHandle) : TableLayout in class com.facebook.presto.metadata.MetadataManager",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable metadata : ConnectorMetadata to entry : ConnectorMetadataEntry in method public getLayouts(session Session, table TableHandle, constraint Constraint, desiredColumns Optional) : List in class com.facebook.presto.metadata.MetadataManager",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 9866
 }, {
@@ -31012,6 +31474,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Davood"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter parseRetain : boolean to setSerializer : MessageSerializer in method public ChildMessage(params NetworkParameters, payload byte[], offset int, protocolVersion int, parent Message, setSerializer MessageSerializer, length int) in class org.bitcoinj.core.ChildMessage",
+        "comment": "<p>boolean parameters <span class='blob-code-inner blob-code-marker-deletion'><span class='pl-v x'>parseLazy</span><span class='x'>, </span><span class='pl-v x x-last'>parseRetain</span> are merged into setSerializer<br /></span></p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter parseLazy : boolean to serializer : MessageSerializer in method package Message(params NetworkParameters, payload byte[], offset int, protocolVersion int, serializer MessageSerializer, length int) in class org.bitcoinj.core.Message",
+        "comment": "<p>boolean fields and parameters <span class='blob-code-inner blob-code-marker-deletion'><span class='pl-v x'>parseLazy</span><span class='x'>, </span><span class='pl-v x x-last'>parseRetain</span> are merged into serializer</span></p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3030
 }, {

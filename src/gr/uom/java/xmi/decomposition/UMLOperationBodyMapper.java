@@ -419,6 +419,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public int mappingsWithoutBlocks() {
 		int count = 0;
 		for(AbstractCodeMapping mapping : getMappings()) {
+			temporaryVariableAssignment(mapping);
 			if(countableStatement(mapping.getFragment1()))
 				count++;
 		}
@@ -469,6 +470,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				nonMappedLeafCount++;
 		}
 		return nonMappedLeafCount;
+	}
+
+	private void temporaryVariableAssignment(AbstractCodeMapping mapping) {
+		if(mapping instanceof LeafMapping && mapping.getFragment1() instanceof AbstractExpression
+				&& mapping.getFragment2() instanceof StatementObject) {
+			StatementObject statement = (StatementObject) mapping.getFragment2();
+			List<VariableDeclaration> variableDeclarations = statement.getVariableDeclarations();
+			boolean validReplacements = true;
+			for(Replacement replacement : mapping.getReplacements()) {
+				if(replacement instanceof MethodInvocationReplacement || replacement instanceof ObjectCreationReplacement) {
+					validReplacements = false;
+					break;
+				}
+			}
+			if(variableDeclarations.size() == 1 && validReplacements) {
+				VariableDeclaration variableDeclaration = variableDeclarations.get(0);
+				ExtractVariableRefactoring ref = new ExtractVariableRefactoring(variableDeclaration, operation2);
+				if(!refactorings.contains(ref)) {
+					refactorings.add(ref);
+				}
+			}
+		}
 	}
 
 	private boolean isTemporaryVariableAssignment(StatementObject statement) {

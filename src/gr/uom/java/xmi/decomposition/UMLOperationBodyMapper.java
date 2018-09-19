@@ -1874,6 +1874,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeMapping mapping : getMappings()) {
 			if(mapping.getReplacements().contains(replacement)) {
 				v2 = mapping.getFragment2().searchVariableDeclaration(replacement.getAfter());
+				break;
 			}
 		}
 		return v1 != null && v2 != null &&
@@ -1966,6 +1967,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeMapping mapping : getMappings()) {
 			if(mapping.getReplacements().contains(replacement)) {
 				v2 = mapping.getFragment2().searchVariableDeclaration(replacement.getAfter());
+				break;
 			}
 		}
 		if(v2 == null) {

@@ -261,7 +261,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					expressionsT1.add(expression);
 				}
 			}
+			int numberOfMappings = mappings.size();
 			processLeaves(expressionsT1, leaves2, parameterToArgumentMap2);
+			for(int i = numberOfMappings; i < mappings.size(); i++) {
+				temporaryVariableAssignment(mappings.get(i));
+			}
 			// TODO remove non-mapped inner nodes from T1 corresponding to mapped expressions
 			
 			//remove the leaves that were mapped with replacement, if they are not mapped again for a second time
@@ -419,7 +423,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public int mappingsWithoutBlocks() {
 		int count = 0;
 		for(AbstractCodeMapping mapping : getMappings()) {
-			temporaryVariableAssignment(mapping);
 			if(countableStatement(mapping.getFragment1()))
 				count++;
 		}
@@ -1816,7 +1819,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(Replacement replacement : allConsistentRenames) {
 			VariableDeclaration v1 = getVariableDeclaration1(replacement);
 			VariableDeclaration v2 = getVariableDeclaration2(replacement);
-			if((replacementOccurrenceMap.get(replacement) > 1 && !inconsistentVariableDeclarationMapping(v1, v2)) ||
+			if((replacementOccurrenceMap.get(replacement) > 1 && !inconsistentVariableMapping(v1, v2)) ||
 					potentialParameterRename(replacement) ||
 					v1 == null || v2 == null ||
 					(replacementOccurrenceMap.get(replacement) == 1 && replacementInLocalVariableDeclaration(replacement))) {
@@ -1826,7 +1829,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(Replacement replacement : allConsistentVariableDeclarationRenames) {
 			VariableDeclarationReplacement vdReplacement = (VariableDeclarationReplacement)replacement;
 			Replacement variableNameReplacement = vdReplacement.getVariableNameReplacement();
-			if((variableDeclarationReplacementOccurrenceMap.get(vdReplacement) > 1 && !inconsistentVariableDeclarationMapping(vdReplacement.getVariableDeclaration1(), vdReplacement.getVariableDeclaration2())) ||
+			if((variableDeclarationReplacementOccurrenceMap.get(vdReplacement) > 1 && !inconsistentVariableMapping(vdReplacement.getVariableDeclaration1(), vdReplacement.getVariableDeclaration2())) ||
 					(variableDeclarationReplacementOccurrenceMap.get(vdReplacement) == 1 && replacementInLocalVariableDeclaration(variableNameReplacement))) {
 				finalConsistentRenames.add(variableNameReplacement);
 			}
@@ -1878,10 +1881,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				!containsVariableDeclarationWithName(operation1.getAllVariableDeclarations(), replacement.getAfter()) &&
 				!containsVariableDeclarationWithName(operation2.getAllVariableDeclarations(), replacement.getBefore()) &&
 				!variableAppearsOnlyInExtractedMethod(v1) &&
-				!inconsistentVariableDeclarationMapping(v1, v2);
+				!inconsistentVariableMapping(v1, v2);
 	}
 
-	private boolean inconsistentVariableDeclarationMapping(VariableDeclaration v1, VariableDeclaration v2) {
+	private boolean inconsistentVariableMapping(VariableDeclaration v1, VariableDeclaration v2) {
 		if(v1 != null && v2 != null) {
 			for(AbstractCodeMapping mapping : getMappings()) {
 				List<VariableDeclaration> variableDeclarations1 = mapping.getFragment1().getVariableDeclarations();
@@ -1896,9 +1899,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						!variableDeclarations1.contains(v1)) {
 					return true;
 				}
+				if(mapping.isExact() && (bothFragmentsUseVariable(v1, mapping) || bothFragmentsUseVariable(v2, mapping))) {
+					return true;
+				}
 			}
 		}
 		return false;
+	}
+
+	private boolean bothFragmentsUseVariable(VariableDeclaration v1, AbstractCodeMapping mapping) {
+		return mapping.getFragment1().getVariables().contains(v1.getVariableName()) &&
+				mapping.getFragment2().getVariables().contains(v1.getVariableName());
 	}
 
 	private boolean variableAppearsOnlyInExtractedMethod(VariableDeclaration v) {

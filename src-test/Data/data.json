@@ -4786,13 +4786,6 @@
         "validators": null
     }, {
         "type": "Rename Variable",
-        "description": "Rename Variable g : LevelGraphStorage to storage : GraphHopperStorage in method public testPriosWhileDeleting() : void in class com.graphhopper.storage.GraphHopperStorageCHTest",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Rename Variable",
         "description": "Rename Variable lg : LevelGraph to ghStorage : GraphHopperStorage in method public getMatrixGraph() : GraphHopperStorage in class com.graphhopper.routing.ch.DijkstraBidirectionCHTest",
         "comment": null,
         "validation": "TP",
@@ -4822,20 +4815,6 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter graph : GraphStorage to ghStorage : GraphHopperStorage in method public setGraphHopperStorage(ghStorage GraphHopperStorage) : void in class com.graphhopper.GraphHopper",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable graph : GraphHopperStorage to storage : GraphHopperStorage in method public internalDisconnect() : void in class com.graphhopper.storage.GraphHopperStorageTest",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable lg : LevelGraphStorage to g : GraphHopperStorage in method public testLevelGraphBug() : void in class com.graphhopper.storage.index.LocationIndexTreeForLevelGraphTest",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -15170,13 +15149,6 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin"
-    }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable actualNumber : Number to actual : Number in method public matches(object Object) : boolean in class org.mockito.internal.matchers.EqualsWithDelta",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
     }],
     "refDiffExecutionTime": 1564
 }, {
@@ -17337,6 +17309,48 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter udf : UDAggregate to uda : UDAggregate in method public updateAggregate(uda UDAggregate) : void in class org.apache.cassandra.config.Schema",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter udf : UDAggregate to uda : UDAggregate in method public addAggregate(uda UDAggregate) : void in class org.apache.cassandra.config.Schema",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter udf : UDAggregate to uda : UDAggregate in method public dropAggregate(uda UDAggregate) : void in class org.apache.cassandra.config.Schema",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter aggregateName : String to functionName : String in method private onDropFunctionInternal(ksName String, functionName String, argTypes List) : void in class org.apache.cassandra.cql3.QueryProcessor.MigrationSubscriber",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter aggregateName : String to functionName : String in method private onCreateFunctionInternal(ksName String, functionName String, argTypes List) : void in class org.apache.cassandra.cql3.QueryProcessor.MigrationSubscriber",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable references : List to referrers : Collection in method public announceMigration(isLocalOnly boolean) : boolean in class org.apache.cassandra.cql3.statements.DropFunctionStatement",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 8203
 }, {
@@ -17935,13 +17949,6 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood"
-    }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable type : TypeName to javaType : TypeName in method private fieldInitializer(type ProtoTypeName, value Object) : CodeBlock in class com.squareup.wire.java.TypeWriter",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -19833,6 +19840,13 @@
     }, {
         "type": "Move Class",
         "description": "Move Class org.hibernate.test.bytecode.enhancement.entity.customer.Customer moved to org.hibernate.test.bytecode.enhancement.association.Customer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable set : Set to groups : Set in method public addGroup(group Group) : void in class org.hibernate.test.bytecode.enhancement.association.User",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -25728,13 +25742,6 @@
         "validators": "Matin, Davood"
     }, {
         "type": "Rename Variable",
-        "description": "Rename Variable responseData : AugmentedRestLiResponseData to response : CollectionResponseEnvelope in method public buildResponse(routingResult RoutingResult, responseData RestLiResponseEnvelope) : PartialRestResponse in class com.linkedin.restli.internal.server.methods.response.CollectionResponseBuilder",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Rename Variable",
         "description": "Rename Variable statuses : List to collectionCreateList : List in method public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, result Object, headers Map) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.BatchCreateResponseBuilder",
         "comment": null,
         "validation": "TP",
@@ -29952,6 +29959,13 @@
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable metrics : DroppedMessageMetrics to droppedMessages : DroppedMessages in method private incrementRejectedMessages(verb Verb) : void in class org.apache.cassandra.net.MessagingService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4492
 }, {
@@ -33107,6 +33121,20 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable keyspace : Keyspace in method private wrapBatchResponseHandler(mutation Mutation, consistency_level ConsistencyLevel, batchConsistencyLevel ConsistencyLevel, writeType WriteType, cleanup BatchlogResponseHandler.BatchlogCleanup) : WriteResponseHandlerWrapper from class org.apache.cassandra.service.StorageProxy",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable selfWithIndexes : Iterable to selfWithAuxiliaryCfs : Iterable in method public runWithCompactionsDisabled(callable Callable, interruptValidation boolean, interruptViews boolean) : V in class org.apache.cassandra.db.ColumnFamilyStore",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable builder : ColumnFilter.Builder to filter : ColumnFilter.Builder in method protected makeColumnFilter() : ColumnFilter in class org.apache.cassandra.db.AbstractReadCommandBuilder",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

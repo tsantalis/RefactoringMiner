@@ -149,6 +149,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			nonMappedLeavesT2.addAll(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
 			nonMappedInnerNodesT2.addAll(innerNodes2);
+			
+			for(StatementObject statement : getNonMappedLeavesT2()) {
+				temporaryVariableAssignment(statement);
+			}
 		}
 	}
 
@@ -276,6 +280,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			nonMappedLeavesT2.addAll(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
 			nonMappedInnerNodesT2.addAll(innerNodes2);
+			
+			for(StatementObject statement : getNonMappedLeavesT2()) {
+				temporaryVariableAssignment(statement);
+			}
 		}
 	}
 
@@ -475,6 +483,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return nonMappedLeafCount;
 	}
 
+	private boolean isTemporaryVariableAssignment(StatementObject statement) {
+		for(Refactoring refactoring : refactorings) {
+			if(refactoring instanceof ExtractVariableRefactoring) {
+				ExtractVariableRefactoring extractVariable = (ExtractVariableRefactoring)refactoring;
+				if(statement.getVariableDeclarations().contains(extractVariable.getVariableDeclaration())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private void temporaryVariableAssignment(AbstractCodeMapping mapping) {
 		if(mapping instanceof LeafMapping && mapping.getFragment1() instanceof AbstractExpression
 				&& mapping.getFragment2() instanceof StatementObject) {
@@ -497,7 +517,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	private boolean isTemporaryVariableAssignment(StatementObject statement) {
+	private void temporaryVariableAssignment(StatementObject statement) {
 		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
 			for(Replacement replacement : getReplacements()) {
 				String variableName = declaration.getVariableName();
@@ -508,24 +528,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						String prefixBefore = replacement.getBefore().substring(0, replacement.getBefore().indexOf(suffixAfter));
 						if(initializer != null) {
 							String longestCommonSuffix = longestCommonSuffix(initializer, prefixBefore);
-							if(initializer.equals(prefixBefore) || (!longestCommonSuffix.isEmpty() && longestCommonSuffix.startsWith("."))) {
+							if(initializer.equals(prefixBefore) ||
+									initializer.equals(applyOverlappingExtractVariable(prefixBefore)) ||
+									(!longestCommonSuffix.isEmpty() && longestCommonSuffix.startsWith("."))) {
 								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation2);
 								if(!refactorings.contains(ref)) {
 									refactorings.add(ref);
 								}
-								return true;
 							}
 						}
 					}
 				}
 				if(variableName.equals(replacement.getAfter()) && initializer != null) {
 					String longestCommonSuffix = longestCommonSuffix(initializer, replacement.getBefore());
-					if(initializer.equals(replacement.getBefore()) || (!longestCommonSuffix.isEmpty() && longestCommonSuffix.startsWith("."))) {
+					if(initializer.equals(replacement.getBefore()) ||
+							initializer.equals(applyOverlappingExtractVariable(replacement.getBefore())) ||
+							(!longestCommonSuffix.isEmpty() && longestCommonSuffix.startsWith("."))) {
 						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation2);
 						if(!refactorings.contains(ref)) {
 							refactorings.add(ref);
 						}
-						return true;
 					}
 				}
 			}
@@ -546,13 +568,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(!refactorings.contains(ref)) {
 								refactorings.add(ref);
 							}
-							return true;
 						}
 					}
 				}
 			}
 		}
-		return false;
+	}
+
+	private String applyOverlappingExtractVariable(String input) {
+		String output = input;
+		for(Refactoring ref : this.refactorings) {
+			if(ref instanceof ExtractVariableRefactoring) {
+				ExtractVariableRefactoring extractVariable = (ExtractVariableRefactoring)ref;
+				VariableDeclaration declaration = extractVariable.getVariableDeclaration();
+				if(declaration.getInitializer() != null && input.contains(declaration.getInitializer())) {
+					output = output.replace(declaration.getInitializer(), declaration.getVariableName());
+				}
+			}
+		}
+		return output;
 	}
 
 	public int nonMappedElementsT2CallingAddedOperation(List<UMLOperation> addedOperations) {

@@ -5125,6 +5125,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable receiveChannelEndpoint : ReceiveChannelEndpoint in method public shouldTimeoutSubscription() : void from class uk.co.real_logic.aeron.driver.DriverConductorTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable receiveChannelEndpoint : ReceiveChannelEndpoint in method public shouldNotTimeoutSubscriptionOnKeepAlive() : void from class uk.co.real_logic.aeron.driver.DriverConductorTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 764
 }, {
@@ -5323,6 +5337,55 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable stringKey2 : Node to p2 : Node in method public testConvertVariableParameters() : void in class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable stringKey1 : Node to p2 : Node in method public testConvertFunctionType() : void in class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable stringKey : Node to p1 : Node in method public testConvertFunctionType() : void in class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable parameters : LinkedHashMap to requiredParams : LinkedHashMap in method public testConvertOptionalFunctionParameters() : void in class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable stringKey1 : Node to p1 : Node in method public testConvertFunctionNewType() : void in class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable stringKey1 : Node to p1 : Node in method public testConvertVariableParameters() : void in class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable stringKey1 : Node to p1 : Node in method public testConvertFunctionThisType() : void in class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3462
 }, {
@@ -9317,6 +9380,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable reporter : String in method private getIssueUsersByLogin(issue Issue) : Map from class org.sonar.server.issue.InternalRubyIssueService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable assignee : String in method private getIssueUsersByLogin(issue Issue) : Map from class org.sonar.server.issue.InternalRubyIssueService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2767
 }, {
@@ -11356,6 +11433,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable type : MediaType to mediaType : MediaType in method protected addDefaultHeaders(headers HttpHeaders, t T, contentType MediaType) : void in class org.springframework.http.converter.AbstractHttpMessageConverter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3276
 }, {
@@ -11497,6 +11581,13 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable message : String in method public onApplicationEvent(event SpringApplicationEvent) : void from class org.springframework.boot.actuate.system.ApplicationPidFileWriter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1721
 }, {
@@ -11592,6 +11683,13 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter resourceIds : long[] to resourceId : long in method public LocalDeadlockDetectedException(lockClient Locks.Client, lockManager Locks, resourceType Locks.ResourceType, resourceId long, type LockType) in class org.neo4j.kernel.ha.lock.LocalDeadlockDetectedException",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable next : int in method public describeWaitList() : String from class org.neo4j.kernel.ha.lock.forseti.ForsetiClient",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -11944,6 +12042,27 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable logRotationControl : LogRotationControl to storeFlusher : StoreFlusher in method public shouldOpenInFreshDirectoryAndFinallyAddHeader() : void in class org.neo4j.kernel.impl.transaction.log.PhysicalLogFileTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable recoverer : Visitor in method public init() : void from class org.neo4j.kernel.recovery.Recovery",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable currentLogVersion : long in method private writeTransactionsToActiveLogFile(storeDir File, response Response) : void from class org.neo4j.com.storecopy.StoreCopyClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable currentLogFile : File in method private writeTransactionsToActiveLogFile(storeDir File, response Response) : void from class org.neo4j.com.storecopy.StoreCopyClient",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -12605,6 +12724,13 @@
     "refactorings": [{
         "type": "Move Attribute",
         "description": "Move Attribute private stopped : boolean from class org.infinispan.persistence.async.State to class org.infinispan.persistence.async.AsyncCacheWriter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable shouldStop : boolean in method public run() : void from class org.infinispan.persistence.async.AsyncCacheWriter.AsyncStoreCoordinator",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -15705,6 +15831,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable label : Label in method public CheckBox(text String, style CheckBoxStyle) from class com.badlogic.gdx.scenes.scene2d.ui.CheckBox",
+        "comment": "<p>Although the variable declaration <span class='blob-code-inner blob-code-marker-context'><span class='pl-smi'>Label</span> label <span class='pl-k'>=</span> <strong>getLabel()</strong>;<br />appears in the inline method <span class='blob-code-inner blob-code-marker-deletion'><span class='pl-en'>setCheckBoxRight</span></span>()<br />this is considered a true positive because statement<br /><span class='blob-code-inner blob-code-marker-deletion'>getLabel()<span class='pl-k'>.</span>setAlignment(<span class='pl-smi'>Align</span><span class='pl-k'>.</span>left);</span><br />changed to<br /><span class='blob-code-inner blob-code-marker-addition'>label<span class='pl-k'>.</span>setAlignment(<span class='pl-smi'>Align</span><span class='pl-k'>.</span>left);</span><br />in the constructor<br /></span></p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 2425
 }, {
@@ -15761,6 +15894,13 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter config : KeyStoreInformation to ksInfo : KeyStoreInformation in method private createSslConnectionFactory(ksInfo KeyStoreInformation) : SslConnectionFactory in class org.neo4j.server.security.ssl.SslSocketConnectorFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable scheduler : JobScheduler in method public newKernelExtension(dependencies Dependencies) : Lifecycle from class org.neo4j.ext.NDPKernelExtension",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -16005,6 +16145,20 @@
     }, {
         "type": "Move Attribute",
         "description": "Move Attribute private databases : LoadingCache from class org.apache.drill.exec.store.hive.schema.HiveSchemaFactory to class org.apache.drill.exec.store.hive.DrillHiveMetaStoreClient.NonCloseableHiveClientWithCaching",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable value : String in method public HiveSchemaFactory(plugin HiveStoragePlugin, name String, hiveConfigOverride Map) from class org.apache.drill.exec.store.hive.schema.HiveSchemaFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable property : String in method public HiveSchemaFactory(plugin HiveStoragePlugin, name String, hiveConfigOverride Map) from class org.apache.drill.exec.store.hive.schema.HiveSchemaFactory",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -16380,6 +16534,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable virtualFile : VirtualFile in method private write(revision byte[]) : void from class com.intellij.openapi.vcs.history.FileHistoryPanelImpl.MyGetVersionAction",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable virtualFile : VirtualFile in method protected executeAction(e AnActionEvent) : void from class com.intellij.openapi.vcs.history.FileHistoryPanelImpl.MyGetVersionAction",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 18389
 }, {
@@ -16709,6 +16877,13 @@
         "type": "Extract Method",
         "description": "Extract Method private unionTester(ws Schema, rs Schema, record GenericData.Record) : ResultPair extracted from private unionTester(s Schema, record GenericData.Record) : ResultPair in class org.apache.hadoop.hive.serde2.avro.TestAvroDeserializer",
         "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter s : Schema to ws : Schema in method private unionTester(ws Schema, rs Schema, record GenericData.Record) : ResultPair in class org.apache.hadoop.hive.serde2.avro.TestAvroDeserializer",
+        "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
@@ -19851,6 +20026,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable cl : ClassLoader in method private generateCtClassForAnEntity(entityClassToEnhance Class) : CtClass from class org.hibernate.test.bytecode.enhancement.EnhancerTestUtils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3179
 }, {
@@ -20426,6 +20608,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable templateLitNode : Node in method package processTemplateLiteral(tree TemplateLiteralExpressionTree) : Node from class com.google.javascript.jscomp.parsing.IRFactory.TransformDispatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2970
 }, {
@@ -20477,6 +20666,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable cacheControl : CacheControl to cacheSeconds : Integer in method protected lookupCacheSeconds(urlPath String) : Integer in class org.springframework.web.servlet.mvc.WebContentInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2657
 }, {
@@ -20499,6 +20695,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable hasMore : boolean in method private fetchOneRow(tag byte) : void from class org.apache.hadoop.hive.ql.exec.CommonMergeJoinOperator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 4288
@@ -21002,6 +21205,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable params : Bundle in method public createAppCall(content ShareContent) : AppCall from class com.facebook.share.widget.ShareDialog.FeedHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 1748
@@ -21706,6 +21916,20 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable dummyObject : GraphObjectMap to graphObject : GraphObject in method package handleObject(nodeFactory NodeFactory, relFactory RelationshipFactory, key String, value Object, includeHiddenAndDeleted boolean, publicOnly boolean, level int) : Object in class org.structr.core.graph.CypherQueryCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable type : Class in method public instantiate(node Node) : T from class org.structr.core.graph.NodeFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable type : Class in method public instantiate(relationship Relationship) : T from class org.structr.core.graph.RelationshipFactory",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -23942,6 +24166,20 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin"
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable onResource : ZLResource in method protected ZLCheckBoxPreference(context Context, resource ZLResource) from class org.geometerplus.android.fbreader.preferences.ZLCheckBoxPreference",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable offResource : ZLResource in method protected ZLCheckBoxPreference(context Context, resource ZLResource) from class org.geometerplus.android.fbreader.preferences.ZLCheckBoxPreference",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1636
 }, {
@@ -28300,15 +28538,15 @@
         "detectionTools": "RefDiff",
         "validators": "Matin"
     }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable pos : int to cursorPos : int in method private drawBuffer(clear int) : void in class jline.console.ConsoleReader",
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable screenCursorCol : int to pos : int in method private clearAhead(num int, pos int) : void in class jline.console.ConsoleReader",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Parameterize Variable",
-        "description": "Parameterize Variable screenCursorCol : int to pos : int in method private clearAhead(num int, pos int) : void in class jline.console.ConsoleReader",
+        "type": "Extract Variable",
+        "description": "Extract Variable cursorPos : int in method private drawBuffer(clear int) : void from class jline.console.ConsoleReader",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -29499,6 +29737,41 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable statsDesc : ColumnStatisticsDesc to csd : ColumnStatisticsDesc in method package getPartitionStatistics(dbName String, tblName String, partNames List, partVals List, colNames List) : List in class org.apache.hadoop.hive.metastore.hbase.HBaseReadWrite",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable colKeys : byte[][] to colNameBytes : byte[][] in method package getPartitionStatistics(dbName String, tblName String, partNames List, partVals List, colNames List) : List in class org.apache.hadoop.hive.metastore.hbase.HBaseReadWrite",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable cOff : int to j : int in method package getPartitionStatistics(dbName String, tblName String, partNames List, partVals List, colNames List) : List in class org.apache.hadoop.hive.metastore.hbase.HBaseReadWrite",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable partitionStats : ColumnStatistics to colStats : ColumnStatistics in method package getPartitionStatistics(dbName String, tblName String, partNames List, partVals List, colNames List) : List in class org.apache.hadoop.hive.metastore.hbase.HBaseReadWrite",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable pOff : int to i : int in method package getPartitionStatistics(dbName String, tblName String, partNames List, partVals List, colNames List) : List in class org.apache.hadoop.hive.metastore.hbase.HBaseReadWrite",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 55783
 }, {
@@ -30263,6 +30536,13 @@
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable resolver : DependencyResolver in method public shouldContainTransactionsThatHappenDuringBackupProcess() : void from class org.neo4j.backup.BackupServiceIT",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4635
 }, {
@@ -30680,6 +30960,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable partitionId : int in method private offloadPartition(meta MetaPartition) : void from class org.apache.giraph.ooc.DiskBackedPartitionStore",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2713
 }, {
@@ -31040,6 +31327,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable now : long in method private resetMemberMasterConfirmations() : void from class com.hazelcast.cluster.impl.ClusterServiceImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3496
 }, {
@@ -31105,6 +31399,13 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected printJoinType(joinType JoinType) : void extracted from public visit(x SQLJoinTableSource) : boolean in class com.alibaba.druid.sql.dialect.odps.visitor.OdpsOutputVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable preSelectItem : SQLSelectItem in method protected printSelectList(selectList List) : void from class com.alibaba.druid.sql.dialect.odps.visitor.OdpsOutputVisitor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -32778,6 +33079,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable returnType : Type in method public doEmitStatic(fn ObjExpr, cv ClassVisitor) : void from class clojure.lang.Compiler.FnMethod",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -33135,6 +33443,20 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable builder : ColumnFilter.Builder to filter : ColumnFilter.Builder in method protected makeColumnFilter() : ColumnFilter in class org.apache.cassandra.db.AbstractReadCommandBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable newCfs : ColumnFamilyStore in method public initCf(cfId UUID, cfName String, loadSSTables boolean) : void from class org.apache.cassandra.db.Keyspace",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable reader : SSTableReader in method public run() : void from class org.apache.cassandra.streaming.StreamReceiveTask.OnCompletionRunnable",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -34845,6 +35167,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable filename : String in method package resourceToFile(context Context, resourceName String) : File from class com.joanzapata.android.iconify.Utils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 189
@@ -37789,6 +38118,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable numRules : int in method protected getAllRulesInternal(buildFile Path) : List from class com.facebook.buck.json.ProjectBuildFileParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2848
 }, {
@@ -37951,6 +38287,20 @@
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter responseContent : String to content : String in method public assertValue(content String, expectedValue Object) : void in class org.springframework.test.util.JsonPathExpectationsHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable actualValue : Object to value : Object in method public assertValueIsArray(content String) : void in class org.springframework.test.util.JsonPathExpectationsHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4367
 }, {

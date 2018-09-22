@@ -318,6 +318,28 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return false;
 	}
 
+	public boolean equalsQualified(UMLOperation operation) {
+		if(this.className.equals(operation.className) &&
+				this.name.equals(operation.name) &&
+				this.visibility.equals(operation.visibility) &&
+				this.isAbstract == operation.isAbstract) {
+			List<UMLType> thisParameterTypeList = this.getParameterTypeList();
+			List<UMLType> otherParameterTypeList = operation.getParameterTypeList();
+			if(thisParameterTypeList.size() != otherParameterTypeList.size()) {
+				return false;
+			}
+			for(int i=0; i<thisParameterTypeList.size(); i++) {
+				UMLType thisParameterType = thisParameterTypeList.get(i);
+				UMLType otherParameterType = otherParameterTypeList.get(i);
+				if(!thisParameterType.equalsQualified(otherParameterType)) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

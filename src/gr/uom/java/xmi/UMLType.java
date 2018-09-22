@@ -50,6 +50,16 @@ public class UMLType implements Serializable {
         return false;
     }
 
+	public boolean equalsQualified(UMLType typeObject) {
+		if(this.classType.equals(typeObject.classType)) {
+            if(this.typeArguments == null && typeObject.typeArguments == null)
+                return this.arrayDimension == typeObject.arrayDimension;
+            else if(this.typeArguments != null && typeObject.typeArguments != null)
+                return equalTypeArguments(typeObject) && this.arrayDimension == typeObject.arrayDimension;
+        }
+		return false;
+	}
+
     public boolean equalsWithSubType(UMLType typeObject) {
     	if(lastCamelCaseTokenMatch(this.nonQualifiedClassType, typeObject.nonQualifiedClassType)) {
             if(this.typeArguments == null && typeObject.typeArguments == null)

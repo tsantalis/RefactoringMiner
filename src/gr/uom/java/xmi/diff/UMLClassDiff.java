@@ -70,7 +70,13 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 		for(UMLOperation operation : originalClass.getOperations()) {
     		if(nextClass.getOperations().contains(operation)) {
     			int index = nextClass.getOperations().indexOf(operation);
-    			UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(operation, nextClass.getOperations().get(index), this);
+    			int lastIndex = nextClass.getOperations().lastIndexOf(operation);
+    			int finalIndex = index;
+    			if(index != lastIndex) {
+    				if(operation.equalsQualified(nextClass.getOperations().get(lastIndex)))
+    					finalIndex = lastIndex;
+    			}
+    			UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(operation, nextClass.getOperations().get(finalIndex), this);
     			this.addOperationBodyMapper(operationBodyMapper);
     			//map the statements when the method calls a removed operation before refactoring, and an added operation after refactoring
     			if(operationBodyMapper.callsRemovedAndAddedOperation(getRemovedOperations(), getAddedOperations())) {

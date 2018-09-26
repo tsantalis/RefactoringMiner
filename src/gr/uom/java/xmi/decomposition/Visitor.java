@@ -204,6 +204,9 @@ public class Visitor extends ASTVisitor {
 		if(Character.isUpperCase(qualifier.getFullyQualifiedName().charAt(0))) {
 			types.add(qualifier.getFullyQualifiedName());
 		}
+		if(node.getName().getIdentifier().equals("length")) {
+			allIdentifiers.add(node.toString());
+		}
 		return super.visit(node);
 	}
 

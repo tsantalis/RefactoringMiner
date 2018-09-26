@@ -11,7 +11,6 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.VariableDeclarationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.diff.CandidateAttributeRename;
-import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
@@ -1915,7 +1914,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				v1.equalVariableDeclarationType(v2) &&
 				!containsVariableDeclarationWithName(operation1.getAllVariableDeclarations(), replacement.getAfter()) &&
 				!containsVariableDeclarationWithName(operation2.getAllVariableDeclarations(), replacement.getBefore()) &&
-				!variableAppearsOnlyInExtractedMethod(v1) &&
+				!variableAppearsInExtractedMethod(v1) &&
 				!inconsistentVariableMapping(v1, v2);
 	}
 
@@ -1947,19 +1946,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				mapping.getFragment2().getVariables().contains(v1.getVariableName());
 	}
 
-	private boolean variableAppearsOnlyInExtractedMethod(VariableDeclaration v) {
-		if(this.classDiff != null) {
-			for(Refactoring ref : this.classDiff.getRefactoringsBeforePostProcessing()) {
-				if(ref instanceof ExtractOperationRefactoring) {
-					ExtractOperationRefactoring refactoring = (ExtractOperationRefactoring)ref;
-					UMLOperation sourceOperationBeforeRefactoring = refactoring.getSourceOperationBeforeExtraction();
-					UMLOperation sourceOperationAfterRefactoring = refactoring.getSourceOperationAfterExtraction();
-					UMLOperation extractedOperation = refactoring.getExtractedOperation();
-					if(sourceOperationBeforeRefactoring.equals(this.operation1) && sourceOperationAfterRefactoring.equals(this.operation2)) {
-						if(containsVariableDeclarationWithName(extractedOperation.getAllVariableDeclarations(), v.getVariableName()) &&
-								!containsVariableDeclarationWithName(sourceOperationAfterRefactoring.getAllVariableDeclarations(), v.getVariableName())) {
-							return true;
-						}
+	private boolean variableAppearsInExtractedMethod(VariableDeclaration v) {
+		if(v != null) {
+			for(UMLOperationBodyMapper mapper : additionalMappers) {
+				for(AbstractCodeMapping mapping : mapper.getMappings()) {
+					if(mapping.getFragment1().getVariableDeclarations().contains(v)) {
+						return true;
 					}
 				}
 			}

@@ -97,6 +97,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter document : Document to position : XSourcePosition in method public runToCursor(position XSourcePosition, ignoreBreakpoints boolean) : void in class com.intellij.debugger.impl.DebuggerSession",
+        "comment": "<p>Parameters <span class='blob-code-inner blob-code-marker-deletion'><span class='pl-smi x x-first'>Document</span> <span class='pl-v x'>document</span><span class='x'>, </span><span class='pl-k x'>int</span> <span class='pl-v x x-last'>line</span></span> are merged into <span class='blob-code-inner blob-code-marker-addition'><span class='pl-smi x'>XSourcePosition</span> <span class='pl-v x x-last'>position</span></span></p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 37410
 }, {
@@ -1464,6 +1471,13 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable entry : Map.Entry to loggingComponent : LoggingHandlerBase in method public getChildren() : Collection in class com.intellij.remoteServer.impl.runtime.ui.tree.ServersTreeStructure.DeploymentNodeImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 14854
 }, {
@@ -1523,6 +1537,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable persisComponent : PersisComponent to persistComponentExecutor : PersistComponentExecutor in method public execute() : void in class org.sonar.server.computation.step.PersistComponentsStep",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 2491
@@ -9100,6 +9121,48 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin, Davood, Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable spdyConnection : SpdyConnection to framedConnection : FramedConnection in method private serveConnection(raw Socket) : void in class com.squareup.okhttp.mockwebserver.MockWebServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable spdySocketHandler : SpdySocketHandler to framedSocketHandler : FramedSocketHandler in method private serveConnection(raw Socket) : void in class com.squareup.okhttp.mockwebserver.MockWebServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable spdyHeaders : List to streamHeaders : List in method private readRequest(stream FramedStream) : RecordedRequest in class com.squareup.okhttp.mockwebserver.MockWebServer.FramedSocketHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable spdyConnection : SpdyConnection to framedConnection : FramedConnection in method private run() : void in class com.squareup.okhttp.internal.framed.FramedServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable spdyStream : SpdyStream to framedStream : FramedStream in method public goAway(lastGoodStreamId int, errorCode ErrorCode, debugData ByteString) : void in class com.squareup.okhttp.internal.framed.FramedConnection.Reader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter spdyConnection : SpdyConnection to framedConnection : FramedConnection in method public FramedTransport(httpEngine HttpEngine, framedConnection FramedConnection) in class com.squareup.okhttp.internal.http.FramedTransport",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -9191,6 +9254,20 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable url : String to itemURL : String in method public openPostInReaderOrInAppWebview(ctx Context, remoteBlogID String, remoteItemID String, itemType String, itemURL String) : void in class org.wordpress.android.ui.stats.StatsUtils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable postType : String to itemType : String in method public openPostInReaderOrInAppWebview(ctx Context, remoteBlogID String, remoteItemID String, itemType String, itemURL String) : void in class org.wordpress.android.ui.stats.StatsUtils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 1502
@@ -10408,6 +10485,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable loc : float to locDist : float in method private addPreviousToActionPoints(lastProjection Location, routeNodes List, DISTANCE_ACTION double, prevFinishPoint int, routePoint int, loc Location) : void in class net.osmand.plus.views.RouteLayer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable ls : Location to loc : Location in method private calculateActionPoints(topLatitude double, leftLongitude double, bottomLatitude double, rightLongitude double, lastProjection Location, routeNodes List, cd int, it Iterator, zoom int) : void in class net.osmand.plus.views.RouteLayer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable i : int to routePoint : int in method private calculateActionPoints(topLatitude double, leftLongitude double, bottomLatitude double, rightLongitude double, lastProjection Location, routeNodes List, cd int, it Iterator, zoom int) : void in class net.osmand.plus.views.RouteLayer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1993
 }, {
@@ -10619,6 +10717,20 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable folderName : String in method private notifySynchronizeMailboxFailed(account Account, localFolder Folder, exception Exception) : void from class com.fsck.k9.controller.MessagingController",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable possibleSend : boolean to entireMessageSent : boolean in method private sendMessageTo(addresses List, message Message) : void in class com.fsck.k9.mail.transport.SmtpTransport",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable l : MessagingListener to listener : MessagingListener in method private notifySynchronizeMailboxFailed(account Account, localFolder Folder, exception Exception) : void in class com.fsck.k9.controller.MessagingController",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -11179,6 +11291,34 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter taskBodies : Collection to tasks : Collection in method public enqueueTasks(queuePath QueuePath, tasks Collection) : void in class org.opentripplanner.analyst.broker.Broker",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable taskBody : String to task : AnalystClusterRequest in method public enqueueTasks(queuePath QueuePath, tasks Collection) : void in class org.opentripplanner.analyst.broker.Broker",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable taskBodies : List to tasks : List in method public service(request Request, response Response) : void in class org.opentripplanner.analyst.broker.BrokerHttpHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable requests : Map to tasks : List in method public run() : void in class org.opentripplanner.analyst.cluster.AnalystWorker",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -16442,6 +16582,13 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter uiName : String to contextName : String in method public AppEvent(contextName String, eventName String, valueToSum Double, parameters Bundle, isImplicitlyLogged boolean) in class com.facebook.appevents.AppEventsLogger.AppEvent",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2914
 }, {
@@ -18086,6 +18233,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter left : Object to iLeft : Object in method public execute(iLeft Object, iRight Object) : boolean in class com.orientechnologies.orient.core.sql.parser.OEqualsCompareOperator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 2618
@@ -20427,6 +20581,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter operand : Expression to expr : Expression in method private getOperatorFunctionModifier(expr Expression) : String in class com.google.devtools.j2objc.translate.Autoboxer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1926
 }, {
@@ -20699,6 +20860,13 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable hasMore : boolean in method private fetchOneRow(tag byte) : void from class org.apache.hadoop.hive.ql.exec.CommonMergeJoinOperator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable i : int to pos : byte in method private doFirstFetchIfNeeded() : void in class org.apache.hadoop.hive.ql.exec.CommonMergeJoinOperator",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -21360,6 +21528,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable param : String to compilerArg : String in method private addAnnotationProcessorOption(compilerArg String, optionsMap Map) : void in class org.jetbrains.idea.maven.project.MavenProject",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 15481
@@ -23770,6 +23945,20 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable baos : ByteArrayOutputStream to bos : ByteArrayOutputStream in method protected marshallEncryptionDocument(ed EncryptionDocument, os LittleEndianByteArrayOutputStream) : void in class org.docx4j.org.apache.poi.poifs.crypt.agile.AgileEncryptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable sbat : BlockList to sbatReader : BlockAllocationTableReader in method public viewFile(filename String) : void in class org.docx4j.org.apache.poi.poifs.dev.POIFSHeaderDumper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 6242
 }, {
@@ -25025,6 +25214,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable description : String to text : String in method package checkReferenceTypeUsedAsTypeArgument(typeElement PsiTypeElement, level LanguageLevel) : HighlightInfo in class com.intellij.codeInsight.daemon.impl.analysis.GenericsHighlightUtil",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 37767
 }, {
@@ -25055,6 +25251,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable description : String to text : String in method package checkReferenceTypeUsedAsTypeArgument(typeElement PsiTypeElement, level LanguageLevel) : HighlightInfo in class com.intellij.codeInsight.daemon.impl.analysis.GenericsHighlightUtil",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 18156
 }, {
@@ -25295,6 +25498,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Parameter arg0 : String to s : String in method public print(s String) : void in class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextServletOutputStream",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4803
 }, {
@@ -25535,6 +25745,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter arg0 : String to s : String in method public print(s String) : void in class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextServletOutputStream",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 764
 }, {
@@ -28172,6 +28389,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable requestFound : StackRequest to req : StackRequest in method private getOrderFromRequestingStation(station DockingStation, take boolean) : StackRequest in class buildcraft.robotics.ai.AIRobotSearchStackRequest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable request : StackRequest to requestStack : ItemStack in method public getRequest(slot int) : ItemStack in class buildcraft.builders.TileBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2449
 }, {
@@ -28351,6 +28582,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable msg : Message to messageList : List in method public onEvent(event MessageEvent) : void in class org.graylog2.shared.buffers.processors.ProcessBufferProcessor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 870
@@ -28678,6 +28916,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable i : int to fIdx : int in method public loadModel(inputStream InputStream) : Model in class org.ansj.app.crf.Model",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable t : Template to tmpl : Template in method private computeTagScore(elements List, index int) : void in class org.ansj.app.crf.SplitWord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -28881,6 +29133,41 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method public dispose() : void renamed to public shutdown() : void in class org.terasology.engine.subsystem.common.ThreadManagerSubsystem",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable disposeIter : Iterator to preshutdownIter : Iterator in method private cleanup() : void in class org.terasology.engine.TerasologyEngine",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable lwjglCustomViewPort : LwjglCustomViewPort to lwjglPortlet : LwjglPortlet in method public run() : void in class org.terasology.editor.TeraEd",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable te : TerasologyEngine to display : DisplayDevice in method public fullscreen() : String in class org.terasology.logic.console.commands.CoreCommands",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter newContext : Context to rootContext : Context in method public initialise(rootContext Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglGraphics",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter context : Context to rootContext : Context in method public postInitialise(rootContext Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglInput",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -31379,6 +31666,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter v : View to view : View in method public showItemPopupOptionsMenu(point FavouritePoint, view View) : void in class net.osmand.plus.activities.FavoritesTreeFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 2032

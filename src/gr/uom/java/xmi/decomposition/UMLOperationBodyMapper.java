@@ -324,7 +324,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					for(VariableDeclaration variableDeclaration : variableDeclarations) {
 						for(String parameter : parameterToArgumentMap.keySet()) {
 							String argument = parameterToArgumentMap.get(parameter);
-							if(argument.equals(variableDeclaration.getInitializer())) {
+							if(variableDeclaration.getInitializer() != null && argument.equals(variableDeclaration.getInitializer().toString())) {
 								parameterToArgumentMap.put(parameter, variableDeclaration.getVariableName());
 							}
 						}
@@ -520,15 +520,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
 			for(Replacement replacement : getReplacements()) {
 				String variableName = declaration.getVariableName();
-				String initializer = declaration.getInitializer();
+				AbstractExpression initializer = declaration.getInitializer();
 				if(replacement.getAfter().startsWith(variableName + ".")) {
 					String suffixAfter = replacement.getAfter().substring(variableName.length(), replacement.getAfter().length());
 					if(replacement.getBefore().endsWith(suffixAfter)) {
 						String prefixBefore = replacement.getBefore().substring(0, replacement.getBefore().indexOf(suffixAfter));
 						if(initializer != null) {
-							String longestCommonSuffix = longestCommonSuffix(initializer, prefixBefore);
-							if(initializer.equals(prefixBefore) ||
-									initializer.equals(applyOverlappingExtractVariable(prefixBefore)) ||
+							String longestCommonSuffix = longestCommonSuffix(initializer.toString(), prefixBefore);
+							if(initializer.toString().equals(prefixBefore) ||
+									initializer.toString().equals(applyOverlappingExtractVariable(prefixBefore)) ||
 									(!longestCommonSuffix.isEmpty() && longestCommonSuffix.startsWith("."))) {
 								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation2);
 								if(!refactorings.contains(ref)) {
@@ -539,9 +539,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				if(variableName.equals(replacement.getAfter()) && initializer != null) {
-					String longestCommonSuffix = longestCommonSuffix(initializer, replacement.getBefore());
-					if(initializer.equals(replacement.getBefore()) ||
-							initializer.equals(applyOverlappingExtractVariable(replacement.getBefore())) ||
+					String longestCommonSuffix = longestCommonSuffix(initializer.toString(), replacement.getBefore());
+					if(initializer.toString().equals(replacement.getBefore()) ||
+							initializer.toString().equals(applyOverlappingExtractVariable(replacement.getBefore())) ||
 							(!longestCommonSuffix.isEmpty() && longestCommonSuffix.startsWith("."))) {
 						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation2);
 						if(!refactorings.contains(ref)) {
@@ -580,8 +580,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(ref instanceof ExtractVariableRefactoring) {
 				ExtractVariableRefactoring extractVariable = (ExtractVariableRefactoring)ref;
 				VariableDeclaration declaration = extractVariable.getVariableDeclaration();
-				if(declaration.getInitializer() != null && input.contains(declaration.getInitializer())) {
-					output = output.replace(declaration.getInitializer(), declaration.getVariableName());
+				if(declaration.getInitializer() != null && input.contains(declaration.getInitializer().toString())) {
+					output = output.replace(declaration.getInitializer().toString(), declaration.getVariableName());
 				}
 			}
 		}
@@ -1852,7 +1852,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(Replacement replacement : allConsistentRenames) {
 			VariableDeclaration v1 = getVariableDeclaration1(replacement);
 			VariableDeclaration v2 = getVariableDeclaration2(replacement);
-			if((replacementOccurrenceMap.get(replacement) > 1 && !inconsistentVariableMapping(v1, v2)) ||
+			if((replacementOccurrenceMap.get(replacement) > 1 && consistencyCheck(v1, v2)) ||
 					potentialParameterRename(replacement) ||
 					v1 == null || v2 == null ||
 					(replacementOccurrenceMap.get(replacement) == 1 && replacementInLocalVariableDeclaration(replacement))) {
@@ -1862,7 +1862,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(Replacement replacement : allConsistentVariableDeclarationRenames) {
 			VariableDeclarationReplacement vdReplacement = (VariableDeclarationReplacement)replacement;
 			Replacement variableNameReplacement = vdReplacement.getVariableNameReplacement();
-			if((variableDeclarationReplacementOccurrenceMap.get(vdReplacement) > 1 && !inconsistentVariableMapping(vdReplacement.getVariableDeclaration1(), vdReplacement.getVariableDeclaration2())) ||
+			if((variableDeclarationReplacementOccurrenceMap.get(vdReplacement) > 1 && consistencyCheck(vdReplacement.getVariableDeclaration1(), vdReplacement.getVariableDeclaration2())) ||
 					(variableDeclarationReplacementOccurrenceMap.get(vdReplacement) == 1 && replacementInLocalVariableDeclaration(variableNameReplacement))) {
 				finalConsistentRenames.add(variableNameReplacement);
 			}
@@ -1914,7 +1914,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				v1.equalVariableDeclarationType(v2) &&
 				!containsVariableDeclarationWithName(operation1.getAllVariableDeclarations(), replacement.getAfter()) &&
 				!containsVariableDeclarationWithName(operation2.getAllVariableDeclarations(), replacement.getBefore()) &&
-				!variableAppearsInExtractedMethod(v1) &&
+				consistencyCheck(v1, v2);
+	}
+
+	private boolean consistencyCheck(VariableDeclaration v1, VariableDeclaration v2) {
+		return !variableAppearsInExtractedMethod(v1, v2) &&
 				!inconsistentVariableMapping(v1, v2);
 	}
 
@@ -1946,11 +1950,36 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				mapping.getFragment2().getVariables().contains(v1.getVariableName());
 	}
 
-	private boolean variableAppearsInExtractedMethod(VariableDeclaration v) {
-		if(v != null) {
+	private boolean variableAppearsInExtractedMethod(VariableDeclaration v1, VariableDeclaration v2) {
+		if(v1 != null) {
 			for(UMLOperationBodyMapper mapper : additionalMappers) {
 				for(AbstractCodeMapping mapping : mapper.getMappings()) {
-					if(mapping.getFragment1().getVariableDeclarations().contains(v)) {
+					if(mapping.getFragment1().getVariableDeclarations().contains(v1)) {
+						if(v2 != null && v2.getInitializer() != null) {
+							UMLOperation extractedMethod = mapper.getOperation2();
+							Map<String, OperationInvocation> methodInvocationMap = v2.getInitializer().getMethodInvocationMap();
+							for(OperationInvocation invocation : methodInvocationMap.values()) {
+								if(invocation.matchesOperation(extractedMethod)) {
+									return false;
+								}
+								else {
+									//check if the extracted method is called in the initializer of a variable used in the initializer of v2
+									List<String> initializerVariables = v2.getInitializer().getVariables();
+									for(String variable : initializerVariables) {
+										for(VariableDeclaration declaration : operation2.getAllVariableDeclarations()) {
+											if(declaration.getVariableName().equals(variable) && declaration.getInitializer() != null) {
+												Map<String, OperationInvocation> methodInvocationMap2 = declaration.getInitializer().getMethodInvocationMap();
+												for(OperationInvocation invocation2 : methodInvocationMap2.values()) {
+													if(invocation2.matchesOperation(extractedMethod)) {
+														return false;
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
 						return true;
 					}
 				}

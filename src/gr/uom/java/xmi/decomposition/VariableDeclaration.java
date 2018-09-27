@@ -17,7 +17,7 @@ import gr.uom.java.xmi.diff.CodeRange;
 
 public class VariableDeclaration implements LocationInfoProvider, VariableDeclarationProvider {
 	private String variableName;
-	private String initializer;
+	private AbstractExpression initializer;
 	private UMLType type;
 	private LocationInfo locationInfo;
 	private boolean isParameter;
@@ -28,7 +28,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	public VariableDeclaration(CompilationUnit cu, String filePath, VariableDeclarationFragment fragment) {
 		this.locationInfo = new LocationInfo(cu, filePath, fragment);
 		this.variableName = fragment.getName().getIdentifier();
-		this.initializer = fragment.getInitializer() != null ? fragment.getInitializer().toString() : null;
+		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer()) : null;
 		this.type = UMLType.extractTypeObject(UMLType.getTypeName(extractType(fragment), fragment.getExtraDimensions()));
 		this.variableDeclarationType = extractVariableDeclarationType(fragment);
 		ASTNode scopeNode = getScopeNode(fragment);
@@ -47,7 +47,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	public VariableDeclaration(CompilationUnit cu, String filePath, SingleVariableDeclaration fragment) {
 		this.locationInfo = new LocationInfo(cu, filePath, fragment);
 		this.variableName = fragment.getName().getIdentifier();
-		this.initializer = fragment.getInitializer() != null ? fragment.getInitializer().toString() : null;
+		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer()) : null;
 		this.type = UMLType.extractTypeObject(UMLType.getTypeName(extractType(fragment), fragment.getExtraDimensions()));
 		this.variableDeclarationType = extractVariableDeclarationType(fragment);
 		int startOffset = fragment.getStartPosition();
@@ -60,7 +60,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		return variableName;
 	}
 
-	public String getInitializer() {
+	public AbstractExpression getInitializer() {
 		return initializer;
 	}
 

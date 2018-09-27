@@ -204,7 +204,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	private boolean expressionIsTheInitializerOfVariableDeclaration(String expression) {
 		List<VariableDeclaration> variableDeclarations = getVariableDeclarations();
 		if(variableDeclarations.size() == 1 && variableDeclarations.get(0).getInitializer() != null) {
-			String initializer = variableDeclarations.get(0).getInitializer();
+			String initializer = variableDeclarations.get(0).getInitializer().toString();
 			if(initializer.equals(expression))
 				return true;
 			if(initializer.startsWith("(")) {

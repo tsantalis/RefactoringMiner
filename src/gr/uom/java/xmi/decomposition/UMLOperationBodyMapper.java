@@ -1316,7 +1316,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
-		boolean isEqualWithReplacement = s1.equals(s2) || differOnlyInCastExpression(s1, s2) ||
+		boolean isEqualWithReplacement = s1.equals(s2) || differOnlyInCastExpression(s1, s2) || oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2) ||
 				(commonConditional(s1, s2) && containsValidOperatorReplacements(replacementInfo));
 		if(isEqualWithReplacement) {
 			if(variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1) {
@@ -1365,7 +1365,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				AbstractCall invocation1 = methodInvocationMap1.get(key1);
 				if(invocation1.identical(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements()) &&
 						!invocationCoveringTheEntireStatement1.getArguments().contains(key1)) {
-					return replacementInfo.getReplacements();
+					String expression1 = invocationCoveringTheEntireStatement1.getExpression();
+					if(expression1 == null || !expression1.contains(key1)) {
+						return replacementInfo.getReplacements();
+					}
 				}
 			}
 		}
@@ -1541,6 +1544,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private boolean oneIsVariableDeclarationTheOtherIsVariableAssignment(String s1, String s2) {
+		String commonSuffix = longestCommonSuffix(s1, s2);
+		if(s1.contains("=") && s2.contains("=") && (s1.equals(commonSuffix) || s2.equals(commonSuffix))) {
+			return true;
+		}
+		return false;
 	}
 
 	private boolean differOnlyInCastExpression(String s1, String s2) {

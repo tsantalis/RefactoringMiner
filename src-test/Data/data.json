@@ -74,6 +74,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable useDt : boolean to anchorPresent : boolean in method protected getParseSettings(url String) : ParseSettings in class com.intellij.codeInsight.documentation.AbstractExternalFilter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 28911
 }, {
@@ -19482,13 +19489,6 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Extract Variable",
-        "description": "Extract Variable valueIndexLocal : int in method public flattenRecords(recordCount int, firstOutputIndex int) : int from class org.apache.drill.exec.physical.impl.flatten.FlattenTemplate",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
         "type": "Rename Variable",
         "description": "Rename Variable valueSize : int to curSize : int in method private allocateBytes(size long) : void in class org.apache.drill.exec.vector.BitVector",
         "comment": null,
@@ -22087,13 +22087,6 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
-    }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable dummyObject : GraphObjectMap to graphObject : GraphObject in method package handleObject(nodeFactory NodeFactory, relFactory RelationshipFactory, key String, value Object, includeHiddenAndDeleted boolean, publicOnly boolean, level int) : Object in class org.structr.core.graph.CypherQueryCommand",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Extract Variable",
@@ -29287,6 +29280,13 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable component : RepositoryMetadataManager in method public reset() : void from class org.jetbrains.idea.maven.server.Maven30ServerEmbedderImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 18395
 }, {
@@ -29356,6 +29356,13 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Davood"
+    }, {
+        "type": "Inline Method",
+        "description": "Inline Method protected drawValue(c Canvas, value String, xPos float, yPos float) : void inlined to public drawValues(c Canvas) : void in class com.github.mikephil.charting.renderer.HorizontalBarChartRenderer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -31235,13 +31242,6 @@
         "validators": null
     }, {
         "type": "Rename Variable",
-        "description": "Rename Variable isNotDone : boolean to partitionInMemory : boolean in method private getPartition(meta MetaPartition) : void in class org.apache.giraph.ooc.DiskBackedPartitionStore",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Rename Variable",
         "description": "Rename Variable partitionId : int to partitionIds : List in method private testMultiThreaded() : void in class org.apache.giraph.partition.TestPartitionStores",
         "comment": null,
         "validation": "TP",
@@ -31542,7 +31542,7 @@
         "description": "Extract And Move Method package sendSplitBrainJoinMessage(target Address) : JoinMessage extracted from public searchForOtherClusters() : void in class com.hazelcast.cluster.impl.TcpIpJoiner & moved to class com.hazelcast.cluster.impl.AbstractJoiner",
         "comment": "Extract and Move to the inner class",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Automatic"
     }, {
         "type": "Extract and Move Method",
@@ -31617,6 +31617,13 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable now : long in method private resetMemberMasterConfirmations() : void from class com.hazelcast.cluster.impl.ClusterServiceImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable clusterService : ClusterServiceImpl in method package shouldMerge(joinMessage JoinMessage) : boolean from class com.hazelcast.cluster.impl.AbstractJoiner",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -34162,6 +34169,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable values : List to all : List in method public getAllAndRemove(name T) : List in class io.netty.handler.codec.DefaultHeaders",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable h2 : DefaultHeaders to other : DefaultHeaders in method public equals(o Object) : boolean in class io.netty.handler.codec.DefaultHeaders",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

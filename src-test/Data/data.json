@@ -8800,6 +8800,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable defaultInters : Interceptor[] to globalInters : Interceptor[] in method package buildActionMapping() : void in class com.jfinal.core.ActionMapping",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1822
 }, {
@@ -10137,6 +10144,20 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable putMetricDataList : ArrayList to absoluteMetricQueueItems : ArrayList in method public collectMetricData(msg DescribeSensorsResponse) : List in class com.eucalyptus.cluster.callback.cloudwatch.CloudWatchHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable metricDatums : ArrayList to queueItems : List in method private buildInstanceStatusPut(instanceId String) : List in class com.eucalyptus.cluster.callback.cloudwatch.CloudWatchHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable putMetricData : PutMetricDataType to queueItem : AbsoluteMetricQueueItem in method private buildInstanceStatusPut(instanceId String) : List in class com.eucalyptus.cluster.callback.cloudwatch.CloudWatchHelper",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -20864,13 +20885,6 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
-    }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable i : int to pos : byte in method private doFirstFetchIfNeeded() : void in class org.apache.hadoop.hive.ql.exec.CommonMergeJoinOperator",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
     }],
     "refDiffExecutionTime": 4288
 }, {
@@ -21851,6 +21865,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable newPut : boolean to oldRecord : R in method public put(key K, value V) : void in class com.hazelcast.cache.impl.nearcache.impl.store.AbstractNearCacheRecordStore",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2034
 }, {
@@ -21935,6 +21956,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable newIntent : Intent to intent : Intent in method private openLoginInBrowser(client ApiClient) : void in class com.github.mobile.accounts.LoginActivity",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 539
@@ -28686,13 +28714,6 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
-    }, {
-        "type": "Rename Method",
-        "description": "Rename Method private addToIndex(labelId int, propertyKeyId int, nodeIds long[]) : void renamed to public withStringProperties(nodesWithValues Collection<Pair<Long,String>>) : void in class org.neo4j.kernel.impl.api.state.TxStateTest",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Extract Method",

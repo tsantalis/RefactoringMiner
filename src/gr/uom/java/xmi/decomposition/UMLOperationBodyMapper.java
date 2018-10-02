@@ -1257,6 +1257,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						Replacement replacement = null;
 						if(variables1.contains(s1) && variables2.contains(s2) && variablesStartWithSameCase(s1, s2, parameterToArgumentMap)) {
 							replacement = new Replacement(s1, s2, ReplacementType.VARIABLE_NAME);
+							if(s1.startsWith("(") && s2.startsWith("(") && s1.contains(")") && s2.contains(")")) {
+								String prefix1 = s1.substring(0, s1.indexOf(")")+1);
+								String prefix2 = s2.substring(0, s2.indexOf(")")+1);
+								if(prefix1.equals(prefix2)) {
+									String suffix1 = s1.substring(prefix1.length(), s1.length());
+									String suffix2 = s2.substring(prefix2.length(), s2.length());
+									replacement = new Replacement(suffix1, suffix2, ReplacementType.VARIABLE_NAME);
+								}
+							}
+							VariableDeclaration v1 = statement1.searchVariableDeclaration(s1);
+							VariableDeclaration v2 = statement2.searchVariableDeclaration(s2);
+							if(inconsistentVariableMappingCount(v1, v2) > 1) {
+								replacement = null;
+							}
 						}
 						else if(variables1.contains(s1) && methodInvocations2.contains(s2)) {
 							replacement = new VariableReplacementWithMethodInvocation(s1, s2, (OperationInvocation) methodInvocationMap2.get(s2));
@@ -1790,6 +1804,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return true;
 			if(s1.charAt(0) == '_' && s2.charAt(0) == '_')
 				return true;
+			if(s1.charAt(0) == '(' || s2.charAt(0) == '(')
+				return true;
 		}
 		return false;
 	}
@@ -1933,6 +1949,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				!inconsistentVariableMapping(v1, v2);
 	}
 
+	private int inconsistentVariableMappingCount(VariableDeclaration v1, VariableDeclaration v2) {
+		int count = 0;
+		if(v1 != null && v2 != null) {
+			for(AbstractCodeMapping mapping : mappings) {
+				List<VariableDeclaration> variableDeclarations1 = mapping.getFragment1().getVariableDeclarations();
+				List<VariableDeclaration> variableDeclarations2 = mapping.getFragment2().getVariableDeclarations();
+				if(variableDeclarations1.contains(v1) &&
+						variableDeclarations2.size() > 0 &&
+						!variableDeclarations2.contains(v2)) {
+					count++;
+				}
+				if(variableDeclarations2.contains(v2) &&
+						variableDeclarations1.size() > 0 &&
+						!variableDeclarations1.contains(v1)) {
+					count++;
+				}
+				if(mapping.isExact() && (bothFragmentsUseVariable(v1, mapping) || bothFragmentsUseVariable(v2, mapping))) {
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+
 	private boolean inconsistentVariableMapping(VariableDeclaration v1, VariableDeclaration v2) {
 		if(v1 != null && v2 != null) {
 			for(AbstractCodeMapping mapping : getMappings()) {
@@ -1956,7 +1996,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean bothFragmentsUseVariable(VariableDeclaration v1, AbstractCodeMapping mapping) {
+	private static boolean bothFragmentsUseVariable(VariableDeclaration v1, AbstractCodeMapping mapping) {
 		return mapping.getFragment1().getVariables().contains(v1.getVariableName()) &&
 				mapping.getFragment2().getVariables().contains(v1.getVariableName());
 	}

@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.ArrayCreation;
 import org.eclipse.jdt.core.dom.ArrayType;
+import org.eclipse.jdt.core.dom.CastExpression;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
@@ -205,6 +206,14 @@ public class Visitor extends ASTVisitor {
 			types.add(qualifier.getFullyQualifiedName());
 		}
 		if(node.getName().getIdentifier().equals("length")) {
+			allIdentifiers.add(node.toString());
+		}
+		return super.visit(node);
+	}
+
+	public boolean visit(CastExpression node) {
+		Expression castExpression = node.getExpression();
+		if(castExpression instanceof SimpleName) {
 			allIdentifiers.add(node.toString());
 		}
 		return super.visit(node);

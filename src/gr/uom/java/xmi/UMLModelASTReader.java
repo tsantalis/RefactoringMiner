@@ -199,9 +199,9 @@ public class UMLModelASTReader {
     		insertNode(anonymous, root);
     	}
     	
-    	Enumeration<DefaultMutableTreeNode> enumeration = root.preorderEnumeration();
+    	Enumeration enumeration = root.preorderEnumeration();
     	while(enumeration.hasMoreElements()) {
-    		DefaultMutableTreeNode node = enumeration.nextElement();
+    		DefaultMutableTreeNode node = (DefaultMutableTreeNode)enumeration.nextElement();
     		if(node.getUserObject() != null) {
     			AnonymousClassDeclaration anonymous = (AnonymousClassDeclaration)node.getUserObject();
     			String anonymousName = getAnonymousName(node);

@@ -355,6 +355,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable keyPair : PEMKeyPair to pemKeyPair : PEMKeyPair in method private convertPemKeyPair(pemKeyPair PEMKeyPair) : KeyPair in class org.crsh.auth.FilePublicKeyProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 417
 }, {
@@ -1365,6 +1372,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable got : ColumnOrSuperColumn to row : Row in method private getColumnValue(ks String, cf String, colName String, key String, validator String) : String in class org.apache.cassandra.pig.ThriftColumnFamilyTest",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 6589
 }, {
@@ -1481,6 +1495,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable entry : Map.Entry to loggingComponent : LoggingHandlerBase in method public getChildren() : Collection in class com.intellij.remoteServer.impl.runtime.ui.tree.ServersTreeStructure.DeploymentNodeImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable handler : LoggingHandlerImpl to loggingHandler : LoggingHandlerBase in method private addAdditionalLoggingHandler(loggingHandler LoggingHandlerBase) : void in class com.intellij.remoteServer.impl.runtime.log.DeploymentLogManagerImpl",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -3104,6 +3125,13 @@
         "type": "Extract Method",
         "description": "Extract Method protected onRemoteStatusChanged(oldStatus InstanceInfo.InstanceStatus, newStatus InstanceInfo.InstanceStatus) : void extracted from private updateInstanceRemoteStatus() : void in class com.netflix.discovery.DiscoveryClient",
         "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable currentRemoteInstanceStatus : InstanceInfo.InstanceStatus to newStatus : InstanceInfo.InstanceStatus in method protected onRemoteStatusChanged(oldStatus InstanceInfo.InstanceStatus, newStatus InstanceInfo.InstanceStatus) : void in class com.netflix.discovery.DiscoveryClient",
+        "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
@@ -4920,6 +4948,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable st : long to currTimeMillis : long in method private throttle(currTimeMillis long) : void in class com.yahoo.ycsb.ClientThread",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 320
@@ -9971,6 +10006,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable map : Map to attributes : Map in method private assertMissingTextAttribute(attributes Map) : void in class org.springframework.core.annotation.AnnotationUtilsTests",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 5439
 }, {
@@ -10534,6 +10576,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable ls : Location to loc : Location in method private addPreviousToActionPoints(lastProjection Location, routeNodes List, DISTANCE_ACTION double, prevFinishPoint int, routePoint int, loc Location) : void in class net.osmand.plus.views.RouteLayer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable i : int to routePoint : int in method private addPreviousToActionPoints(lastProjection Location, routeNodes List, DISTANCE_ACTION double, prevFinishPoint int, routePoint int, loc Location) : void in class net.osmand.plus.views.RouteLayer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1993
 }, {
@@ -10785,6 +10841,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable buckFiles : Map to buckFilesData : Map in method private createBuckFiles(buckFilesData Map) : void in class com.facebook.buck.maven.Resolver",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 1910
@@ -12235,6 +12298,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable currentLogVersion : long to upToLogVersion : long in method public prune(upToLogVersion long) : void in class org.neo4j.kernel.impl.transaction.log.pruning.ThresholdBasedPruneStrategy",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter meta : long to number : long in method private createResult(number long, meta long[]) : long[] in class org.neo4j.kernel.impl.util.ArrayQueueOutOfOrderSequence",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 11758
 }, {
@@ -12857,6 +12934,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable intercepted : boolean to listener : TcpListener in method private sendToChannel(message Message) : void in class org.springframework.integration.ip.tcp.connection.TcpNioConnection",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2231
 }, {
@@ -13432,6 +13516,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable buildTarget : BuildTarget to target : BuildTarget in method public getPathToResources(target BuildTarget) : Path in class com.facebook.buck.js.ReactNativeBundle",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable buildTarget : BuildTarget to target : BuildTarget in method public getPathToJSBundleDir(target BuildTarget) : Path in class com.facebook.buck.js.ReactNativeBundle",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3024
 }, {
@@ -20609,6 +20707,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable lhs : Expression to expr : Expression in method private getOperatorFunctionModifier(expr Expression) : String in class com.google.devtools.j2objc.translate.Autoboxer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1926
 }, {
@@ -21546,6 +21651,13 @@
     }, {
         "type": "Parameterize Variable",
         "description": "Parameterize Variable param : String to compilerArg : String in method private addAnnotationProcessorOption(compilerArg String, optionsMap Map) : void in class org.jetbrains.idea.maven.project.MavenProject",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable res : Map to optionsMap : Map in method private addAnnotationProcessorOption(compilerArg String, optionsMap Map) : void in class org.jetbrains.idea.maven.project.MavenProject",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -28412,13 +28524,6 @@
         "validators": null
     }, {
         "type": "Rename Variable",
-        "description": "Rename Variable requestFound : StackRequest to req : StackRequest in method private getOrderFromRequestingStation(station DockingStation, take boolean) : StackRequest in class buildcraft.robotics.ai.AIRobotSearchStackRequest",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Rename Variable",
         "description": "Rename Variable request : StackRequest to requestStack : ItemStack in method public getRequest(slot int) : ItemStack in class buildcraft.builders.TileBuilder",
         "comment": null,
         "validation": "TP",
@@ -28607,6 +28712,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable msg : Message to messageList : List in method public onEvent(event MessageEvent) : void in class org.graylog2.shared.buffers.processors.ProcessBufferProcessor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable message : Message to messages : List in method private processMessage(raw RawMessage) : List in class org.graylog2.shared.buffers.processors.DecodingProcessor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -29323,6 +29435,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable targetPath : String to path : String in method public findPsiFile(project Project, path String) : PsiFile in class com.jetbrains.lang.dart.resolve.DartResolver",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 1957
@@ -30083,6 +30202,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable pOff : int to i : int in method package getPartitionStatistics(dbName String, tblName String, partNames List, partVals List, colNames List) : List in class org.apache.hadoop.hive.metastore.hbase.HBaseReadWrite",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable stats : AggrStats to oneCol : AggrStats in method public get_aggr_stats_for(dbName String, tblName String, partNames List, colNames List) : AggrStats in class org.apache.hadoop.hive.metastore.hbase.HBaseStore",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -31273,6 +31399,20 @@
         "description": "Extract Variable partitionId : int in method private offloadPartition(meta MetaPartition) : void from class org.apache.giraph.ooc.DiskBackedPartitionStore",
         "comment": null,
         "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable numVertices : long to partitionId : int in method private getPartition(meta MetaPartition) : void in class org.apache.giraph.ooc.DiskBackedPartitionStore",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable numInputThreads : int to userMaxNumPartitions : int in method public DiskBackedPartitionStore(conf ImmutableClassesGiraphConfiguration, context Mapper, serviceWorker CentralizedServiceWorker) in class org.apache.giraph.ooc.DiskBackedPartitionStore",
+        "comment": null,
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -34189,13 +34329,6 @@
         "validators": null
     }, {
         "type": "Rename Variable",
-        "description": "Rename Variable values : List to all : List in method public getAllAndRemove(name T) : List in class io.netty.handler.codec.DefaultHeaders",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Rename Variable",
         "description": "Rename Variable h2 : DefaultHeaders to other : DefaultHeaders in method public equals(o Object) : boolean in class io.netty.handler.codec.DefaultHeaders",
         "comment": null,
         "validation": "TP",
@@ -35172,6 +35305,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable get : HttpGet to getMessage : HttpGet in method public addCompressionHeaders(getMessage HttpGet, acceptEncoding String) : void in class com.linkedin.restli.examples.TestCompressionServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3301
 }, {
@@ -35202,6 +35342,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh, Automatic"
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable computedUseSetMethodWorkaround : boolean to setMethodWorkaround : boolean in method protected createHttpUrlConnector(client Client, connectionFactory ConnectionFactory, chunkSize int, fixLengthStreaming boolean, setMethodWorkaround boolean) : Connector in class org.glassfish.jersey.client.HttpUrlConnectorProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable computedUseFixedLengthStreaming : boolean to fixLengthStreaming : boolean in method protected createHttpUrlConnector(client Client, connectionFactory ConnectionFactory, chunkSize int, fixLengthStreaming boolean, setMethodWorkaround boolean) : Connector in class org.glassfish.jersey.client.HttpUrlConnectorProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable computedChunkSize : int to chunkSize : int in method protected createHttpUrlConnector(client Client, connectionFactory ConnectionFactory, chunkSize int, fixLengthStreaming boolean, setMethodWorkaround boolean) : Connector in class org.glassfish.jersey.client.HttpUrlConnectorProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 5044
 }, {
@@ -35500,6 +35661,13 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable filename : String in method package resourceToFile(context Context, resourceName String) : File from class com.joanzapata.android.iconify.Utils",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable outPath : File to outputFile : File in method private copy(inputStream InputStream, outputFile File) : void in class com.joanzapata.android.iconify.Utils",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -38224,6 +38392,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable heapBuffer : byte[] to buffer : byte[] in method private unpackRawBytesInto(buffer byte[], offset int, size int) : void in class org.neo4j.packstream.PackStream.Unpacker",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3709
 }, {
@@ -38573,6 +38748,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable modulesCollector : Processor to filesCollector : Processor in method private addErlangFiles(module Module, onlyTestModules boolean, erlangModules Collection, type ErlangFileType) : Collection in class org.intellij.erlang.utils.ErlangModulesUtil",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable modulesCollector : Processor to filesCollector : Processor in method private collectFiles(module Module, onlyTestModules boolean, filesCollector Processor) : void in class org.intellij.erlang.utils.ErlangModulesUtil",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

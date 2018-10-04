@@ -736,7 +736,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Map<Replacement, Integer> map = new LinkedHashMap<Replacement, Integer>();
 		for(AbstractCodeMapping mapping : getMappings()) {
 			for(Replacement replacement : mapping.getReplacements()) {
-				if(replacement.getType().equals(type)) {
+				if(replacement.getType().equals(type) && !returnVariableMapping(mapping, replacement)) {
 					if(map.containsKey(replacement)) {
 						int count = map.get(replacement);
 						map.put(replacement, count+1);
@@ -754,7 +754,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Map<Replacement, Integer> map = new LinkedHashMap<Replacement, Integer>();
 		for(AbstractCodeMapping mapping : getMappings()) {
 			for(Replacement replacement : mapping.getReplacements()) {
-				if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
+				if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) && !returnVariableMapping(mapping, replacement)) {
 					VariableDeclaration v1 = getVariableDeclaration1(replacement);
 					VariableDeclaration v2 = getVariableDeclaration2(replacement);
 					if(v1 != null && v2 != null) {
@@ -771,6 +771,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return map;
+	}
+
+	private static boolean returnVariableMapping(AbstractCodeMapping mapping, Replacement replacement) {
+		return mapping.getFragment1().getString().equals("return " + replacement.getBefore() + ";\n") &&
+				mapping.getFragment2().getString().equals("return " + replacement.getAfter() + ";\n");
 	}
 
 	public Set<Replacement> getReplacementsInvolvingMethodInvocation() {
@@ -1883,6 +1888,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					potentialParameterRename(replacement) ||
 					v1 == null || v2 == null ||
 					(replacementOccurrenceMap.get(replacement) == 1 && replacementInLocalVariableDeclaration(replacement))) {
+				finalConsistentRenames.add(replacement);
+			}
+			if(v1 != null && !v1.isParameter() && v2 != null && v2.isParameter() && consistencyCheck(v1, v2) &&
+					!operation1.getParameterNameList().contains(v2.getVariableName())) {
 				finalConsistentRenames.add(replacement);
 			}
 		}

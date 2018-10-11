@@ -421,9 +421,12 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 						break;
 					}
 				}
-				RenameAttributeRefactoring ref = new RenameAttributeRefactoring(v1, v2,
-						getOriginalClassName(), getNextClassName(), map.get(pattern));
-				refactorings.add(ref);
+				if(!originalClass.containsAttributeWithName(pattern.getMovedPath()) &&
+						!nextClass.containsAttributeWithName(pattern.getOriginalPath())) {
+					RenameAttributeRefactoring ref = new RenameAttributeRefactoring(v1, v2,
+							getOriginalClassName(), getNextClassName(), map.get(pattern));
+					refactorings.add(ref);
+				}
 			}*/
 		}
 		return refactorings;
@@ -989,10 +992,12 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 
 	private boolean extractMatchCondition(UMLOperationBodyMapper operationBodyMapper) {
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
+		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();
 		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();
 		List<AbstractCodeMapping> exactMatchList = operationBodyMapper.getExactMatches();
 		int exactMatches = exactMatchList.size();
 		return mappings > 0 && (mappings > nonMappedElementsT2 ||
+				(exactMatches == mappings && nonMappedElementsT1 == 0) ||
 				(exactMatches == 1 && !exactMatchList.get(0).getFragment1().throwsNewException() && nonMappedElementsT2-exactMatches < 10) ||
 				(exactMatches > 1 && nonMappedElementsT2-exactMatches < 20) ||
 				(mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2())) ||

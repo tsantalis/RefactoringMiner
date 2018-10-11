@@ -573,6 +573,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute targetType : TypeDescription to levelType : TypeDescription in class net.bytebuddy.dynamic.scaffold.inline.InlineInstrumentedTypeTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4590
 }, {
@@ -4910,6 +4917,34 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute graph : GraphStorage to ghStorage : GraphHopperStorage in class com.graphhopper.GraphHopper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute graphStorage : GraphStorage to graph : Graph in class com.graphhopper.reader.OSMReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute g : GraphStorage to graph : GraphHopperStorage in class com.graphhopper.routing.util.TarjansStronglyConnectedComponentsAlgorithm",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute g : GraphStorage to baseGraph : GraphHopperStorage in class com.graphhopper.routing.util.PrepareRoutingSubnetworks",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3012
 }, {
@@ -8842,6 +8877,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute actionInvocation : ActionInvocation to invocation : Invocation in class com.jfinal.aop.InvocationWrapper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute controller : Controller to target : Object in class com.jfinal.aop.Invocation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1822
 }, {
@@ -11096,6 +11145,13 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Automatic"
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute stringSwitchCases_1htk8d_a0a0jb : String[] to stringSwitchCases_1htk8d_a0a0kb : String[] in class jetbrains.mps.lang.textGen.structure.StructureAspectDescriptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 25438
 }, {
@@ -12312,6 +12368,20 @@
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute logRotationControl : LogRotationControl to storeFlusher : StoreFlusher in class org.neo4j.com.storecopy.StoreCopyServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute logRotationControlSupplier : LogRotationControl to storeFlusher : StoreFlusher in class org.neo4j.kernel.ha.cluster.DefaultMasterImplSPI",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 11758
 }, {
@@ -12373,6 +12443,20 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable val : int to count : int in method private availability() : Availability in class org.neo4j.kernel.AvailabilityGuard",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute blockingComponents : List to blockingRequirements : Set in class org.neo4j.kernel.AvailabilityGuard",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute available : AtomicInteger to requirementCount : AtomicInteger in class org.neo4j.kernel.AvailabilityGuard",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -13486,6 +13570,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute filterStrings : boolean to enableStringWhitelisting : boolean in class com.facebook.buck.android.FilterResourcesStep.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2754
 }, {
@@ -13526,6 +13617,13 @@
     }, {
         "type": "Parameterize Variable",
         "description": "Parameterize Variable buildTarget : BuildTarget to target : BuildTarget in method public getPathToJSBundleDir(target BuildTarget) : Path in class com.facebook.buck.js.ReactNativeBundle",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute jsOutput : Path to jsOutputDir : Path in class com.facebook.buck.js.ReactNativeBundle",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -13702,6 +13800,34 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable s : String to scheme : String in method private add(uriSchemeResourceFinderFactory UriSchemeResourceFinderFactory) : void in class org.glassfish.jersey.server.internal.scanning.PackageNamesScanner",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute resourceFinderStack : ResourceFinderStack to compositeResourceFinder : CompositeResourceFinder in class org.glassfish.jersey.server.internal.scanning.PackageNamesScanner",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute resourceFinderStack : ResourceFinderStack to compositeResourceFinder : CompositeResourceFinder in class org.glassfish.jersey.servlet.WebAppResourcesScanner",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute resourceFinderStack : ResourceFinderStack to compositeResourceFinder : CompositeResourceFinder in class org.glassfish.jersey.server.internal.scanning.FilesScanner",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute resourceFinderStack : ResourceFinderStack to compositeResourceFinder : CompositeResourceFinder in class org.glassfish.jersey.server.internal.scanning.FileSchemeResourceFinderFactory.FileSchemeScanner",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -16002,6 +16128,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute server : ServerSocket to SERVER : EC2MetadataUtilsServer in class com.amazonaws.util.EC2MetadataUtilsTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -16167,6 +16300,13 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable scheduler : JobScheduler in method public newKernelExtension(dependencies Dependencies) : Lifecycle from class org.neo4j.ext.NDPKernelExtension",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute workerGroup : EventLoopGroup to selectorGroup : EventLoopGroup in class org.neo4j.ndp.transport.socket.NettyServer",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -16425,6 +16565,13 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable property : String in method public HiveSchemaFactory(plugin HiveStoragePlugin, name String, hiveConfigOverride Map) from class org.apache.drill.exec.store.hive.schema.HiveSchemaFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute conf : Configuration to dfsConf : Configuration in class org.apache.drill.exec.impersonation.BaseTestImpersonation",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -17051,6 +17198,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute spewRunnable : Runnable to sendCachedDataRunnable : Runnable in class com.koushikdutta.async.http.cache.ResponseCacheMiddleware.CachedBodyEmitter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 570
 }, {
@@ -17400,6 +17554,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable hashFunctions : List to partitionFunctions : Collection in method public PartitionFunction(sharedBuffer SharedBuffer, sourceTypes List, outputBuffers OutputBuffers) in class com.facebook.presto.operator.PartitionedOutputOperator.PartitionFunction",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute hashGenerator : HashGenerator to partitionGenerator : PartitionGenerator in class com.facebook.presto.operator.PartitionedOutputOperator.PartitionFunction",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -18208,6 +18369,13 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable constraint : PropertyConstraint in method public uniquePropertyConstraintCreate(state KernelStatement, labelId int, propertyKey int) : UniquenessConstraint from class org.neo4j.kernel.impl.api.DataIntegrityValidatingStatementOperations",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute UNIQUENESS_CONSTRAINT_TO_RULE : Function to RULE_TO_CONSTRAINT : Function in class org.neo4j.kernel.impl.api.store.DiskLayer",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -19267,6 +19435,27 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Automatic"
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute rect : Rect to newRect : Rect in class org.thoughtcrime.securesms.components.KeyboardAwareLinearLayout",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute emojiDrawer : Optional to emojiPopup : Optional in class org.thoughtcrime.securesms.ConversationActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute composeText : EmojiEditText to listener : EmojiEventListener in class org.thoughtcrime.securesms.components.emoji.EmojiDrawer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1255
 }, {
@@ -19561,6 +19750,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute publicationByStreamAndSessionIdMap : BiInt2ObjectMap to driversPublicationByStreamAndSessionId : BiInt2ObjectMap in class uk.co.real_logic.aeron.driver.media.SendChannelEndpoint",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute assemblyByStreamAndSessionIdMap : BiInt2ObjectMap to sendersPublicationByStreamAndSessionId : BiInt2ObjectMap in class uk.co.real_logic.aeron.driver.media.SendChannelEndpoint",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1188
 }, {
@@ -19617,6 +19820,20 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable valueSize : int to size : int in method public allocateNew(valueCount int) : void in class org.apache.drill.exec.vector.BitVector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute allocationValueCount : int to allocationSizeInBytes : int in class org.apache.drill.exec.vector.BitVector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute childIndexWithinCurrGroup : int to innerValueIndex : int in class org.apache.drill.exec.physical.impl.flatten.FlattenTemplate",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -21632,6 +21849,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute mBatteryController : BatteryController to mBatteryStateRegistar : BatteryStateRegistar in class com.android.systemui.BatteryLevelTextView",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 11400
 }, {
@@ -22043,8 +22267,8 @@
         "type": "Extract Method",
         "description": "Extract Method private printNotifyBulkInsert(writer JavaWriter, uri UriContract) : void extracted from public write(filer Filer) : void in class net.simonvt.schematic.compiler.ContentProviderWriter",
         "comment": "<p>Two methods <span class='blob-code-inner'><span class='pl-en'>printNotifyInsert</span></span>() and printNotifyBulkInsert() are extracted from method write()<br />Both of them have similar bodies, but only the code corresponding to <span class='blob-code-inner'><span class='pl-en'>printNotifyInsert</span></span>() appears as deleted in the text diff.</p>",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Nikos"
     }],
     "refDiffExecutionTime": 364
@@ -22537,6 +22761,13 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method public teardown() : void renamed to public tearDown() : void in class org.neo4j.kernel.impl.store.StoreFactoryTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute neostore : NeoStore to neoStore : NeoStore in class org.neo4j.kernel.impl.store.StoreFactoryTest",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -25269,7 +25500,7 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method public addJarsToRootsAndImportClass(jarPaths List, libraryName String, currentModule Module, editor Editor, reference PsiReference, className String) : void extracted from public invoke(project Project, editor Editor, file PsiFile) : void in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix$1",
-        "comment": "<p>I believe it is a false positive</p><p><span class='blob-code-inner'>Nikos: addJarsToRootsAndImportClass() has been extracted from <span class='pl-en'>addBundledJarToRoots</span>(), which is the previously called method, and the call has been updated to addJarsToRootsAndImportClass(), which is the newly extracted method</span></p>",
+        "comment": "<p>This refactoring correponds to http://refactoring.encs.concordia.ca/oracle/refactoring-details/1140956/3016<br />but reports the extract method from method invoke() of an anonymous class inside method registerFixes()</p><p><span class='blob-code-inner'>&nbsp;</span></p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Nikos"
@@ -25283,9 +25514,9 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method private getJUnit4JarPaths() : List extracted from public registerFixes(registrar QuickFixActionRegistrar, reference PsiReference) : List in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
-        "comment": "<p>I believe it is a false positive</p><p>Nikos: <span class='blob-code-inner'><span class='pl-en'>getJUnit4JarPaths</span>()</span> has been extracted from <span class='blob-code-inner'><span class='pl-en'>addJUnit4Library</span>(</span>), which is the previously called method, <span class='blob-code-inner'>and the call has been updated to <span class='pl-en'>getJUnit4JarPaths</span>(), which is the newly extracted method</span></p>",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Extract Method",
@@ -25297,7 +25528,7 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method private getJUnit4JarPaths() : List extracted from public invoke(project Project, editor Editor, file PsiFile) : void in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix$1",
-        "comment": "<p>I believe it is a false positive</p><p>Nikos: getJUnit4JarPaths() has been extracted from addJUnit4Library(), which is the previously called method, and the call has been updated to getJUnit4JarPaths(), which is the newly extracted method</p>",
+        "comment": "<p>This refactoring correponds to http://refactoring.encs.concordia.ca/oracle/refactoring-details/1140956/3019<br />but reports the extract method from method invoke() of an anonymous class inside method registerFixes()</p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Nikos"
@@ -28197,6 +28428,48 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute lastHandle : long to lastReadTime : long in class com.hazelcast.nio.tcp.ReadHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute lastHandle : long to lastWriteTime : long in class com.hazelcast.nio.tcp.WriteHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute metrics : ConcurrentMap to probeInstances : ConcurrentMap in class com.hazelcast.internal.metrics.impl.MetricsRegistryImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute executedOperationsCount : AtomicLong to completedOperationsCount : AtomicLong in class com.hazelcast.spi.impl.operationservice.impl.OperationServiceImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute PERFORMANCE_MONITORING_ENABLED : GroupProperty to PERFORMANCE_MONITOR_ENABLED : GroupProperty in class com.hazelcast.instance.GroupProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute PERFORMANCE_MONITORING_DELAY_SECONDS : GroupProperty to PERFORMANCE_MONITOR_DELAY_SECONDS : GroupProperty in class com.hazelcast.instance.GroupProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 5604
 }, {
@@ -28397,6 +28670,13 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter extensionBean : Bean to bean : Bean in method package getBeanReference(clazz Class, bean Bean, beanManager BeanManager) : T in class org.glassfish.jersey.ext.cdi1x.internal.CdiUtil",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute jaxRsProvidersCache : Cache to jaxRsResourceCache : Cache in class org.glassfish.jersey.ext.cdi1x.internal.CdiComponentProvider",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -30680,6 +30960,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute droppedMessages : Map to droppedMessagesMap : Map in class org.apache.cassandra.net.MessagingService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4492
 }, {
@@ -30790,6 +31077,13 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter cls : JavaClass to node : JavaNode in method public CodePosition(node JavaNode, line int, offset int) in class jadx.api.CodePosition",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute cls : JavaClass to node : JavaNode in class jadx.api.CodePosition",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -31413,6 +31707,13 @@
         "description": "Rename Variable numInputThreads : int to userMaxNumPartitions : int in method public DiskBackedPartitionStore(conf ImmutableClassesGiraphConfiguration, context Mapper, serviceWorker CentralizedServiceWorker) in class org.apache.giraph.ooc.DiskBackedPartitionStore",
         "comment": null,
         "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute NUM_OF_VERTEXES_PER_THREAD : int to NUM_OF_VERTEXES_PER_PARTITION : int in class org.apache.giraph.partition.TestPartitionStores",
+        "comment": null,
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -33548,6 +33849,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute isStatic : boolean to canBeDirect : boolean in class clojure.lang.Compiler.ObjExpr",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -34713,6 +35021,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute context : QueryContext to optimizerContext : OptimizerRulesContext in class org.apache.drill.exec.planner.logical.partition.PruneScanRule",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3286
 }, {
@@ -34981,6 +35296,27 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable queryData : QueryData to queryWhere : QueryWhere in method public build() : ParametrizedQuery in class org.jbpm.services.task.impl.TaskQueryBuilderImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute currentGroupParents : Stack to ancestry : Stack in class org.jbpm.query.jpa.data.QueryWhere",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute currentGroupCriteria : List to currentCriteria : List in class org.jbpm.query.jpa.data.QueryWhere",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute queryData : QueryData to queryWhere : QueryWhere in class org.jbpm.services.task.commands.TaskQueryWhereCommand",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -37989,6 +38325,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable jobXmlResolverService : JobXmlResolverService to jobXmlResolver : WildFlyJobXmlResolver in method public deploy(phaseContext DeploymentPhaseContext) : void in class org.wildfly.extension.batch.jberet.deployment.BatchDeploymentResourceProcessor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute cachedJobInfo : Map to resolvedJobs : Map in class org.wildfly.extension.batch.jberet.deployment.WildFlyJobXmlResolver",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

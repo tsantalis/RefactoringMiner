@@ -93,6 +93,14 @@ public abstract class UMLAbstractClass {
 		return false;
 	}
 
+	public boolean containsAttributeWithName(String attributeName) {
+		for(UMLAttribute originalAttribute : attributes) {
+			if(originalAttribute.getName().equals(attributeName))
+				return true;
+		}
+		return false;
+	}
+
 	public boolean hasAttributesAndOperationsWithCommonNames(UMLAbstractClass umlClass) {
 		Set<UMLOperation> commonOperations = new LinkedHashSet<UMLOperation>();
 		int totalOperations = 0;

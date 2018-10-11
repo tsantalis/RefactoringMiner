@@ -85,4 +85,8 @@ public class VariableScope {
 		sb.append(endLine).append(":").append(endColumn);
 		return sb.toString();
 	}
+
+	public boolean equalParent(VariableScope other) {
+		return this.endLine == other.endLine && this.endColumn == other.endColumn;
+	}
 }

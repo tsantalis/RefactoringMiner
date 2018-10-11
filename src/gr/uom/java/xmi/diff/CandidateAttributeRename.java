@@ -7,16 +7,19 @@ public class CandidateAttributeRename {
 	private String renamedVariableName;
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
+	private int occurrences;
 
 	public CandidateAttributeRename(
 			String originalVariableName,
 			String renamedVariableName,
 			UMLOperation operationBefore,
-			UMLOperation operationAfter) {
+			UMLOperation operationAfter,
+			int occurrences) {
 		this.originalVariableName = originalVariableName;
 		this.renamedVariableName = renamedVariableName;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+		this.occurrences = occurrences;
 	}
 
 	public String getOriginalVariableName() {
@@ -25,6 +28,10 @@ public class CandidateAttributeRename {
 
 	public String getRenamedVariableName() {
 		return renamedVariableName;
+	}
+
+	public int getOccurrences() {
+		return occurrences;
 	}
 
 	public String toString() {

@@ -1915,7 +1915,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			else {
 				CandidateAttributeRename candidate = new CandidateAttributeRename(
-						replacement.getBefore(), replacement.getAfter(), operation1, operation2);
+						replacement.getBefore(), replacement.getAfter(), operation1, operation2,
+						replacementOccurrenceMap.get(replacement));
 				this.candidateAttributeRenames.add(candidate);
 			}
 		}

@@ -45,10 +45,10 @@ public class RenamePackageRefactoring implements Refactoring {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		String originalPath = pattern.getOriginalPath().endsWith(".") ? pattern.getOriginalPath().substring(0, pattern.getOriginalPath().length()-1) : pattern.getOriginalPath();
+		String originalPath = pattern.getBefore().endsWith(".") ? pattern.getBefore().substring(0, pattern.getBefore().length()-1) : pattern.getBefore();
 		sb.append(originalPath);
 		sb.append(" to ");
-		String movedPath = pattern.getMovedPath().endsWith(".") ? pattern.getMovedPath().substring(0, pattern.getMovedPath().length()-1) : pattern.getMovedPath();
+		String movedPath = pattern.getAfter().endsWith(".") ? pattern.getAfter().substring(0, pattern.getAfter().length()-1) : pattern.getAfter();
 		sb.append(movedPath);
 		return sb.toString();
 	}

@@ -825,8 +825,8 @@ public class UMLModelDiff {
 			   MoveClassRefactoring refactoring = new MoveClassRefactoring(originalClass, movedClass);
 			   RenamePattern renamePattern = refactoring.getRenamePattern();
 			   //check if the the original path is a substring of the moved path and vice versa
-			   if(renamePattern.getOriginalPath().contains(renamePattern.getMovedPath()) ||
-					   renamePattern.getMovedPath().contains(renamePattern.getOriginalPath()) ||
+			   if(renamePattern.getBefore().contains(renamePattern.getAfter()) ||
+					   renamePattern.getAfter().contains(renamePattern.getBefore()) ||
 					   !originalClass.isTopLevel() || !movedClass.isTopLevel()) {
 				   refactorings.add(refactoring);
 			   }
@@ -874,7 +874,7 @@ public class UMLModelDiff {
 
    private boolean isSourcePackageDeleted(RenamePackageRefactoring renamePackageRefactoring) {
 	   for(String deletedFolderPath : deletedFolderPaths) {
-		   String originalPath = renamePackageRefactoring.getPattern().getOriginalPath();
+		   String originalPath = renamePackageRefactoring.getPattern().getBefore();
 		   //remove last .
 		   String trimmedOriginalPath = originalPath.endsWith(".") ? originalPath.substring(0, originalPath.length()-1) : originalPath;
 		   String convertedPackageToFilePath = trimmedOriginalPath.replaceAll("\\.", UMLModelASTReader.systemFileSeparator);

@@ -11466,6 +11466,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.opentripplanner.analyst.qbroker.Job moved to org.opentripplanner.analyst.broker.Job",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -27802,6 +27809,41 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.jboss.as.clustering.jgroups.subsystem.ProtocolResourceDefinition moved to org.infinispan.server.jgroups.subsystem.ProtocolResourceDefinition",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.jboss.as.clustering.jgroups.subsystem.TransportResourceDefinition moved to org.infinispan.server.jgroups.subsystem.TransportResourceDefinition",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceRegistration : ManagementResourceRegistration to registration : ManagementResourceRegistration in method public registerAttributes(registration ManagementResourceRegistration) : void in class org.infinispan.server.jgroups.subsystem.TransportResourceDefinition",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceRegistration : ManagementResourceRegistration to registration : ManagementResourceRegistration in method public registerAttributes(registration ManagementResourceRegistration) : void in class org.infinispan.server.jgroups.subsystem.ProtocolResourceDefinition",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.jboss.as.clustering.jgroups.SaslConfiguration moved to org.infinispan.server.jgroups.spi.SaslConfiguration",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3908
 }, {
@@ -33510,13 +33552,6 @@
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
-        "type": "Move And Rename Class",
-        "description": "Move And Rename Class org.wildfly.clustering.infinispan.spi.service.CacheContainerServiceNameFactory moved and renamed to org.wildfly.clustering.service.SubGroupServiceNameFactory",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
         "type": "Extract Interface",
         "description": "Extract Interface org.wildfly.clustering.singleton.SingletonServiceBuilderFactory from class org.wildfly.clustering.server.singleton.LocalSingletonServiceBuilderFactory",
         "comment": null,
@@ -33799,6 +33834,13 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder in class org.jboss.as.clustering.infinispan.subsystem.JGroupsTransportBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class org.wildfly.clustering.infinispan.spi.service.CacheServiceNameFactory moved and renamed to org.wildfly.clustering.service.SubGroupServiceNameFactory",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -34477,10 +34519,10 @@
     }, {
         "type": "Rename Class",
         "description": "Rename Class io.netty.handler.codec.DefaultTextHeaders.DefaultTextValueTypeConverter renamed to io.netty.handler.codec.DefaultTextHeaders.CharSequenceConverter",
-        "comment": "<p>Matin: FP&nbsp;</p><p>The classes don't seem to be used similarly.</p>",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
-        "validators": "Matin, Laleh, Davood"
+        "comment": "<p>All methods are common between the two classes. CharSequenceConverter declares an additional field<br />public static final CharSequenceConverter INSTANCE = new CharSequenceConverter();</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": "Matin, Laleh, Davood, Nikos"
     }, {
         "type": "Rename Class",
         "description": "Rename Class io.netty.handler.codec.http.DefaultHttpHeaders.HttpHeadersValidationConverter renamed to io.netty.handler.codec.http.DefaultHttpHeaders.HeaderValueConverterAndValidator",

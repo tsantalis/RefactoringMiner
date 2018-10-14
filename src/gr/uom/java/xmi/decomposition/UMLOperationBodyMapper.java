@@ -31,6 +31,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.util.PrefixSuffixUtils;
 
 public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper> {
 	private UMLOperation operation1;
@@ -526,7 +527,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(replacement.getBefore().endsWith(suffixAfter)) {
 						String prefixBefore = replacement.getBefore().substring(0, replacement.getBefore().indexOf(suffixAfter));
 						if(initializer != null) {
-							String longestCommonSuffix = longestCommonSuffix(initializer.toString(), prefixBefore);
+							String longestCommonSuffix = PrefixSuffixUtils.longestCommonSuffix(initializer.toString(), prefixBefore);
 							if(initializer.toString().equals(prefixBefore) ||
 									initializer.toString().equals(applyOverlappingExtractVariable(prefixBefore)) ||
 									(!longestCommonSuffix.isEmpty() && longestCommonSuffix.startsWith("."))) {
@@ -539,7 +540,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				if(variableName.equals(replacement.getAfter()) && initializer != null) {
-					String longestCommonSuffix = longestCommonSuffix(initializer.toString(), replacement.getBefore());
+					String longestCommonSuffix = PrefixSuffixUtils.longestCommonSuffix(initializer.toString(), replacement.getBefore());
 					if(initializer.toString().equals(replacement.getBefore()) ||
 							initializer.toString().equals(applyOverlappingExtractVariable(replacement.getBefore())) ||
 							(!longestCommonSuffix.isEmpty() && longestCommonSuffix.startsWith("."))) {
@@ -1566,7 +1567,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean oneIsVariableDeclarationTheOtherIsVariableAssignment(String s1, String s2) {
-		String commonSuffix = longestCommonSuffix(s1, s2);
+		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(s1.contains("=") && s2.contains("=") && (s1.equals(commonSuffix) || s2.equals(commonSuffix))) {
 			return true;
 		}
@@ -1574,8 +1575,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean differOnlyInCastExpression(String s1, String s2) {
-		String commonPrefix = longestCommonPrefix(s1, s2);
-		String commonSuffix = longestCommonSuffix(s1, s2);
+		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
+		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
 			int beginIndexS1 = s1.indexOf(commonPrefix) + commonPrefix.length();
 			int endIndexS1 = s1.lastIndexOf(commonSuffix);
@@ -1591,24 +1592,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return false;
-	}
-
-	private static String longestCommonPrefix(String s1, String s2) {
-		int minLength = Math.min(s1.length(), s2.length());
-		int i = 0;
-		while (i < minLength && s1.charAt(i) == s2.charAt(i)) {
-			i++;
-		}
-		return s1.substring(0, i);
-	}
-	
-	private static String longestCommonSuffix(String s1, String s2) {
-		int minLength = Math.min(s1.length(), s2.length());
-		int i = 0;
-		while (i<minLength && s1.charAt(s1.length() - i - 1) == s2.charAt(s2.length() - i - 1)) {
-			i++;
-		}
-		return s1.substring(s1.length() - i, s1.length());
 	}
 
 	private boolean containsValidOperatorReplacements(ReplacementInfo replacementInfo) {

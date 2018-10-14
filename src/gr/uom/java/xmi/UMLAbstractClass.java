@@ -5,6 +5,10 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.refactoringminer.util.PrefixSuffixUtils;
+
+import gr.uom.java.xmi.diff.RenamePattern;
+
 public abstract class UMLAbstractClass {
 	protected LocationInfo locationInfo;
 	protected String packageName;
@@ -69,6 +73,20 @@ public abstract class UMLAbstractClass {
 		return false;
 	}
 
+	public boolean containsOperationWithTheSameRenamePattern(UMLOperation operation, RenamePattern pattern) {
+		if(pattern == null)
+			return false;
+		for(UMLOperation originalOperation : operations) {
+			String originalOperationName = originalOperation.getName();
+			if(originalOperationName.contains(pattern.getBefore())) {
+				String originalOperationNameAfterReplacement = originalOperationName.replace(pattern.getBefore(), pattern.getAfter());
+				if(originalOperationNameAfterReplacement.equals(operation.getName()))
+					return true;
+			}
+		}
+		return false;
+	}
+
 	public UMLAttribute attributeWithTheSameNameIgnoringChangedType(UMLAttribute attribute) {
 		for(UMLAttribute originalAttribute : attributes) {
 			if(originalAttribute.equalsIgnoringChangedType(attribute))
@@ -89,6 +107,20 @@ public abstract class UMLAbstractClass {
 		for(UMLAttribute originalAttribute : attributes) {
 			if(originalAttribute.getName().equals(attribute.getName()))
 				return true;
+		}
+		return false;
+	}
+
+	public boolean containsAttributeWithTheSameRenamePattern(UMLAttribute attribute, RenamePattern pattern) {
+		if(pattern == null)
+			return false;
+		for(UMLAttribute originalAttribute : attributes) {
+			String originalAttributeName = originalAttribute.getName();
+			if(originalAttributeName.contains(pattern.getBefore())) {
+				String originalAttributeNameAfterReplacement = originalAttributeName.replace(pattern.getBefore(), pattern.getAfter());
+				if(originalAttributeNameAfterReplacement.equals(attribute.getName()))
+					return true;
+			}
 		}
 		return false;
 	}
@@ -137,18 +169,35 @@ public abstract class UMLAbstractClass {
 		if(this.isTestClass() && umlClass.isTestClass()) {
 			return commonOperations.size() > Math.floor(totalOperations/2.0) || commonOperations.containsAll(this.operations);
 		}
+		if(this.isSingleAbstractMethodInterface() && umlClass.isSingleAbstractMethodInterface()) {
+			return commonOperations.size() == totalOperations;
+		}
 		return (commonOperations.size() >= Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0)) ||
 				(commonAttributes.size() >= Math.floor(totalAttributes/2.0) && (commonOperations.size() > 2 || totalOperations == 0)) ||
-				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && this.attributes.size() == umlClass.attributes.size());
+				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && this.attributes.size() == umlClass.attributes.size()) ||
+				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && totalAttributes == 1);
 	}
 
 	public boolean hasCommonAttributesAndOperations(UMLAbstractClass umlClass) {
+		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(this.name, umlClass.name);
+		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(this.name, umlClass.name);
+		RenamePattern pattern = null;
+		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
+			int beginIndexS1 = this.name.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS1 = this.name.lastIndexOf(commonSuffix);
+			String diff1 = beginIndexS1 > endIndexS1 ? "" :	this.name.substring(beginIndexS1, endIndexS1);
+			int beginIndexS2 = umlClass.name.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS2 = umlClass.name.lastIndexOf(commonSuffix);
+			String diff2 = beginIndexS2 > endIndexS2 ? "" :	umlClass.name.substring(beginIndexS2, endIndexS2);
+			pattern = new RenamePattern(diff1, diff2);
+		}
 		Set<UMLOperation> commonOperations = new LinkedHashSet<UMLOperation>();
 		int totalOperations = 0;
 		for(UMLOperation operation : operations) {
 			if(!operation.isConstructor() && !operation.overridesObject()) {
 				totalOperations++;
-	    		if(umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
+	    		if(umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
+	    				(pattern != null && umlClass.containsOperationWithTheSameRenamePattern(operation, pattern.reverse()))) {
 	    			commonOperations.add(operation);
 	    		}
 			}
@@ -156,7 +205,8 @@ public abstract class UMLAbstractClass {
 		for(UMLOperation operation : umlClass.operations) {
 			if(!operation.isConstructor() && !operation.overridesObject()) {
 				totalOperations++;
-	    		if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
+	    		if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
+	    				(pattern != null && this.containsOperationWithTheSameRenamePattern(operation, pattern))) {
 	    			commonOperations.add(operation);
 	    		}
 			}
@@ -165,22 +215,28 @@ public abstract class UMLAbstractClass {
 		int totalAttributes = 0;
 		for(UMLAttribute attribute : attributes) {
 			totalAttributes++;
-			if(umlClass.containsAttributeWithTheSameNameIgnoringChangedType(attribute)) {
+			if(umlClass.containsAttributeWithTheSameNameIgnoringChangedType(attribute) ||
+    				(pattern != null && umlClass.containsAttributeWithTheSameRenamePattern(attribute, pattern.reverse()))) {
 				commonAttributes.add(attribute);
 			}
 		}
 		for(UMLAttribute attribute : umlClass.attributes) {
 			totalAttributes++;
-			if(this.containsAttributeWithTheSameNameIgnoringChangedType(attribute)) {
+			if(this.containsAttributeWithTheSameNameIgnoringChangedType(attribute) ||
+    				(pattern != null && this.containsAttributeWithTheSameRenamePattern(attribute, pattern))) {
 				commonAttributes.add(attribute);
 			}
 		}
 		if(this.isTestClass() && umlClass.isTestClass()) {
 			return commonOperations.size() > Math.floor(totalOperations/2.0) || commonOperations.containsAll(this.operations);
 		}
+		if(this.isSingleAbstractMethodInterface() && umlClass.isSingleAbstractMethodInterface()) {
+			return commonOperations.size() == totalOperations;
+		}
 		return (commonOperations.size() > Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0)) ||
 				(commonAttributes.size() > Math.floor(totalAttributes/2.0) && (commonOperations.size() > 2 || totalOperations == 0)) ||
-				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && this.attributes.size() == umlClass.attributes.size());
+				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && this.attributes.size() == umlClass.attributes.size()) ||
+				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && totalAttributes == 1);
 	}
 
 	public boolean hasSameAttributesAndOperations(UMLAbstractClass umlClass) {
@@ -230,6 +286,8 @@ public abstract class UMLAbstractClass {
 		}
 		return attributesOfType;
 	}
+
+	public abstract boolean isSingleAbstractMethodInterface();
 
 	public String getSourceFile() {
 		return locationInfo.getFilePath();

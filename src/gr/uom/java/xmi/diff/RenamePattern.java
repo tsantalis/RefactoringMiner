@@ -1,24 +1,24 @@
 package gr.uom.java.xmi.diff;
 
 public class RenamePattern {
-	private String originalPath;
-	private String movedPath;
+	private String before;
+	private String after;
 	
 	public RenamePattern(String originalPath, String movedPath) {
-		this.originalPath = originalPath;
-		this.movedPath = movedPath;
+		this.before = originalPath;
+		this.after = movedPath;
 	}
 
-	public String getOriginalPath() {
-		return originalPath;
+	public String getBefore() {
+		return before;
 	}
 
-	public String getMovedPath() {
-		return movedPath;
+	public String getAfter() {
+		return after;
 	}
 
 	public String toString() {
-		return originalPath + "\t->\t" + movedPath;
+		return before + "\t->\t" + after;
 	}
 	
 	public boolean equals(Object o) {
@@ -27,15 +27,19 @@ public class RenamePattern {
     	}
     	if(o instanceof RenamePattern) {
     		RenamePattern pattern = (RenamePattern)o;
-    		return this.originalPath.equals(pattern.originalPath) && this.movedPath.equals(pattern.movedPath);
+    		return this.before.equals(pattern.before) && this.after.equals(pattern.after);
     	}
     	return false;
 	}
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((movedPath == null) ? 0 : movedPath.hashCode());
-		result = prime * result + ((originalPath == null) ? 0 : originalPath.hashCode());
+		result = prime * result + ((after == null) ? 0 : after.hashCode());
+		result = prime * result + ((before == null) ? 0 : before.hashCode());
 		return result;
+	}
+	
+	public RenamePattern reverse() {
+		return new RenamePattern(after, before);
 	}
 }

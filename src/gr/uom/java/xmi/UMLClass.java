@@ -292,14 +292,19 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	}
 
 	public boolean importsType(String targetClass) {
-		String targetClassPackage = targetClass.substring(0, targetClass.lastIndexOf("."));
 		if(targetClass.startsWith(getPackageName()))
 			return true;
 		for(String importedType : getImportedTypes()) {
 			//importedType.startsWith(targetClass) -> special handling for import static
 			//importedType.equals(targetClassPackage) -> special handling for import with asterisk (*) wildcard
-			if(importedType.equals(targetClass) || importedType.equals(targetClassPackage) || importedType.startsWith(targetClass)) {
+			if(importedType.equals(targetClass) || importedType.startsWith(targetClass)) {
 				return true;
+			}
+			if(targetClass.contains(".")) {
+				String targetClassPackage = targetClass.substring(0, targetClass.lastIndexOf("."));
+				if(importedType.equals(targetClassPackage)) {
+					return true;
+				}
 			}
 		}
 		return false;

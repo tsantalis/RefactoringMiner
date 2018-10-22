@@ -31,6 +31,14 @@ public class RenameAttributeRefactoring implements Refactoring {
 		return this.getRefactoringType().getDisplayName();
 	}
 
+	public VariableDeclaration getOriginalAttribute() {
+		return originalAttribute;
+	}
+
+	public VariableDeclaration getRenamedAttribute() {
+		return renamedAttribute;
+	}
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");

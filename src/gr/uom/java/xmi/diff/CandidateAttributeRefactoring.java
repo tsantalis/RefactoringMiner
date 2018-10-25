@@ -1,15 +1,18 @@
 package gr.uom.java.xmi.diff;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class CandidateAttributeRename {
+public class CandidateAttributeRefactoring {
 	private String originalVariableName;
 	private String renamedVariableName;
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
 	private int occurrences;
+	private VariableDeclaration originalVariableDeclaration;
+	private VariableDeclaration renamedVariableDeclaration;
 
-	public CandidateAttributeRename(
+	public CandidateAttributeRefactoring(
 			String originalVariableName,
 			String renamedVariableName,
 			UMLOperation operationBefore,
@@ -32,6 +35,22 @@ public class CandidateAttributeRename {
 
 	public int getOccurrences() {
 		return occurrences;
+	}
+
+	public VariableDeclaration getOriginalVariableDeclaration() {
+		return originalVariableDeclaration;
+	}
+
+	public void setOriginalVariableDeclaration(VariableDeclaration originalVariableDeclaration) {
+		this.originalVariableDeclaration = originalVariableDeclaration;
+	}
+
+	public VariableDeclaration getRenamedVariableDeclaration() {
+		return renamedVariableDeclaration;
+	}
+
+	public void setRenamedVariableDeclaration(VariableDeclaration renamedVariableDeclaration) {
+		this.renamedVariableDeclaration = renamedVariableDeclaration;
 	}
 
 	public String toString() {
@@ -65,7 +84,7 @@ public class CandidateAttributeRename {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CandidateAttributeRename other = (CandidateAttributeRename) obj;
+		CandidateAttributeRefactoring other = (CandidateAttributeRefactoring) obj;
 		if (operationAfter == null) {
 			if (other.operationAfter != null)
 				return false;

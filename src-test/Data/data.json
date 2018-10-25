@@ -4945,6 +4945,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute level : boolean to levelGraph : boolean in class com.graphhopper.storage.GraphBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute graphStorage : GraphStorage to ghStorage : GraphStorage in class com.graphhopper.reader.OSMReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3012
 }, {
@@ -8891,6 +8905,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute interceptorList : List to globalActionInterceptor : List in class com.jfinal.config.Interceptors",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1822
 }, {
@@ -9257,6 +9278,34 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter spdyConnection : SpdyConnection to framedConnection : FramedConnection in method public FramedTransport(httpEngine HttpEngine, framedConnection FramedConnection) in class com.squareup.okhttp.internal.http.FramedTransport",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute openSpdyConnections : Set to openFramedConnections : Set in class com.squareup.okhttp.mockwebserver.MockWebServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute spdyConnection : SpdyConnection to framedConnection : FramedConnection in class com.squareup.okhttp.Connection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute spdyProtocols : List to framedProtocols : List in class com.squareup.okhttp.internal.framed.FramedServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute spdyConnection : SpdyConnection to framedConnection : FramedConnection in class com.squareup.okhttp.internal.http.FramedTransport",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -13025,13 +13074,6 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
-    }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable intercepted : boolean to listener : TcpListener in method private sendToChannel(message Message) : void in class org.springframework.integration.ip.tcp.connection.TcpNioConnection",
-        "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
     }],
     "refDiffExecutionTime": 2231
 }, {
@@ -13106,6 +13148,13 @@
     "refactorings": [{
         "type": "Move Attribute",
         "description": "Move Attribute private uniqueCounter : int from class org.apache.hadoop.hive.ql.optimizer.calcite.translator.HiveOpConverterPostProc to class org.apache.hadoop.hive.ql.optimizer.calcite.translator.HiveOpConverter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute aliasToOpInfo : Map to aliasToJoinOpInfo : Map in class org.apache.hadoop.hive.ql.optimizer.calcite.translator.HiveOpConverterPostProc",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -16318,6 +16367,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute sslCertificateFactory : SslCertificateFactory to certFactory : Certificates in class org.neo4j.server.security.ssl.KeyStoreFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 7200
 }, {
@@ -16865,6 +16921,13 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter uiName : String to contextName : String in method public AppEvent(contextName String, eventName String, valueToSum Double, parameters Bundle, isImplicitlyLogged boolean) in class com.facebook.appevents.AppEventsLogger.AppEvent",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute uiName : String to contextName : String in class com.facebook.appevents.AppEventsLogger",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -19245,6 +19308,41 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute writePages : ConcurrentSkipListSet to exclusiveWritePages : ConcurrentSkipListSet in class com.orientechnologies.orient.core.storage.cache.local.OWOWCache",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute isDirty : boolean to dirty : boolean in class com.orientechnologies.orient.core.storage.cache.OCacheEntry",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute writeCacheSize : ODistributedCounter to exclusiveWriteCacheSize : ODistributedCounter in class com.orientechnologies.orient.core.storage.cache.local.OWOWCache",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute cachePages : ConcurrentSkipListMap to writeCachePages : ConcurrentSkipListMap in class com.orientechnologies.orient.core.storage.cache.local.OWOWCache",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute cacheSize : ODistributedCounter to writeCacheSize : ODistributedCounter in class com.orientechnologies.orient.core.storage.cache.local.OWOWCache",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 5282
 }, {
@@ -21180,6 +21278,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable cacheControl : CacheControl to cacheSeconds : Integer in method protected lookupCacheSeconds(urlPath String) : Integer in class org.springframework.web.servlet.mvc.WebContentInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute cacheMappings : Map to cacheControlMappings : Map in class org.springframework.web.servlet.mvc.WebContentInterceptor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -25428,6 +25533,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute mSaveItem : MenuItem to mUndoItem : MenuItem in class org.wordpress.android.ui.prefs.SiteSettingsFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute mVisibilityPreference : ListPreference to mPrivacyPreference : ListPreference in class org.wordpress.android.ui.prefs.SiteSettingsFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1235
 }, {
@@ -27844,6 +27963,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute PROTOCOL_ATTRIBUTES : AttributeDefinition[] to ATTRIBUTES : AttributeDefinition[] in class org.infinispan.server.jgroups.subsystem.ProtocolResourceDefinition",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute TRANSPORT_ATTRIBUTES : AttributeDefinition[] to ATTRIBUTES : AttributeDefinition[] in class org.infinispan.server.jgroups.subsystem.TransportResourceDefinition",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute operations : int to expectedOperationCount : int in class org.infinispan.server.jgroups.subsystem.SubsystemParsingTestCase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3908
 }, {
@@ -29620,6 +29760,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute subsystems : Deque to allSubsystems : Deque in class org.terasology.engine.TerasologyEngine",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute context : Context to config : RenderingConfig in class org.terasology.engine.subsystem.lwjgl.LwjglDisplayDevice",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute context : Context to rootContext : Context in class org.terasology.engine.TerasologyEngine",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2583
 }, {
@@ -30531,6 +30692,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable stats : AggrStats to oneCol : AggrStats in method public get_aggr_stats_for(dbName String, tblName String, partNames List, colNames List) : AggrStats in class org.apache.hadoop.hive.metastore.hbase.HBaseStore",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute aggrStatsCache : AggregateStatsCache to statsCache : StatsCache in class org.apache.hadoop.hive.metastore.hbase.HBaseReadWrite",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -31758,6 +31926,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute isSticky : boolean to isProcessed : boolean in class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2713
 }, {
@@ -31887,6 +32062,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute usesImplicitMatch : boolean to isStructuralInterface : boolean in class com.google.javascript.rhino.jstype.FunctionType",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 3978
@@ -32128,6 +32310,13 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable clusterService : ClusterServiceImpl in method package shouldMerge(joinMessage JoinMessage) : boolean from class com.hazelcast.cluster.impl.AbstractJoiner",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute joinRequest : JoinRequest to request : JoinMessage in class com.hazelcast.cluster.impl.operations.JoinCheckOperation",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -33845,6 +34034,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute container : ServiceRegistry to registry : ServiceRegistry in class org.wildfly.clustering.server.singleton.CacheSingletonServiceBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 8243
 }, {
@@ -35359,6 +35555,13 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute queryData : QueryData to queryWhere : QueryWhere in class org.jbpm.services.task.commands.TaskQueryWhereCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute queryData : QueryData to queryWhere : QueryWhere in class org.jbpm.query.jpa.builder.impl.AbstractQueryBuilderImpl",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -38464,6 +38667,13 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter path : String to relativeFilePathResolver : RelativeFilePathResolver in method public RelativePathSourceLocationTransformer(relativeFilePathResolver RelativeFilePathResolver) in class org.gradle.model.dsl.internal.TransformedModelDslBacking.RelativePathSourceLocationTransformer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute relativeDirectoryPath : String to baseDirFileResolver : FileResolver in class org.gradle.api.internal.project.AbstractProject",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

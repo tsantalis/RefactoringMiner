@@ -21,4 +21,8 @@ public class MethodInvocationReplacement extends Replacement {
 	public OperationInvocation getInvokedOperationAfter() {
 		return invokedOperationAfter;
 	}
+
+	public boolean differentExpressionNameAndArguments() {
+		return invokedOperationBefore.differentExpressionNameAndArguments(invokedOperationAfter);
+	}
 }

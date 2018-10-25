@@ -10,7 +10,7 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.VariableDeclarationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
-import gr.uom.java.xmi.diff.CandidateAttributeRename;
+import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
@@ -43,7 +43,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private List<CompositeStatementObject> nonMappedInnerNodesT1;
 	private List<CompositeStatementObject> nonMappedInnerNodesT2;
 	private Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
-	private Set<CandidateAttributeRename> candidateAttributeRenames = new LinkedHashSet<CandidateAttributeRename>();
+	private Set<CandidateAttributeRefactoring> candidateAttributeRenames = new LinkedHashSet<CandidateAttributeRefactoring>();
 	private List<UMLOperationBodyMapper> additionalMappers = new ArrayList<UMLOperationBodyMapper>();
 	private static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)|(\\?)|(:)");
 	private static final Pattern DOUBLE_QUOTES = Pattern.compile("\"([^\"]*)\"|(\\S+)");
@@ -399,7 +399,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return refactorings;
 	}
 
-	public Set<CandidateAttributeRename> getCandidateAttributeRenames() {
+	public Set<CandidateAttributeRefactoring> getCandidateAttributeRenames() {
 		return candidateAttributeRenames;
 	}
 
@@ -737,7 +737,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Map<Replacement, Integer> map = new LinkedHashMap<Replacement, Integer>();
 		for(AbstractCodeMapping mapping : getMappings()) {
 			for(Replacement replacement : mapping.getReplacements()) {
-				if(replacement.getType().equals(type) && !returnVariableMapping(mapping, replacement)) {
+				if(replacement.getType().equals(type) && !returnVariableMapping(mapping, replacement) &&
+						!containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(mapping.getReplacements())) {
 					if(map.containsKey(replacement)) {
 						int count = map.get(replacement);
 						map.put(replacement, count+1);
@@ -755,7 +756,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Map<Replacement, Integer> map = new LinkedHashMap<Replacement, Integer>();
 		for(AbstractCodeMapping mapping : getMappings()) {
 			for(Replacement replacement : mapping.getReplacements()) {
-				if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) && !returnVariableMapping(mapping, replacement)) {
+				if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) && !returnVariableMapping(mapping, replacement) &&
+						!containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(mapping.getReplacements())) {
 					VariableDeclaration v1 = getVariableDeclaration1(replacement);
 					VariableDeclaration v2 = getVariableDeclaration2(replacement);
 					if(v1 != null && v2 != null) {
@@ -1781,6 +1783,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
+	private boolean containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(Set<Replacement> replacements) {
+		for(Replacement replacement : replacements) {
+			if(replacement instanceof MethodInvocationReplacement) {
+				MethodInvocationReplacement r = (MethodInvocationReplacement)replacement;
+				if(r.differentExpressionNameAndArguments())
+					return true;
+			}
+		}
+		return false;
+	}
+
 	private boolean variablesStartWithSameCase(String s1, String s2, Map<String, String> parameterToArgumentMap) {
 		if(parameterToArgumentMap.values().contains(s2)) {
 			return true;
@@ -1896,14 +1909,41 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					variableRenames.add(ref);
 				}
 			}
-			else {
-				CandidateAttributeRename candidate = new CandidateAttributeRename(
+			else if(!normalize(replacement.getBefore()).equals(normalize(replacement.getAfter())) &&
+					(!operation1.getAllVariables().contains(replacement.getAfter()) || cyclicRename(finalConsistentRenames, replacement)) &&
+					(!operation2.getAllVariables().contains(replacement.getBefore()) || cyclicRename(finalConsistentRenames, replacement))) {
+				CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
 						replacement.getBefore(), replacement.getAfter(), operation1, operation2,
 						replacementOccurrenceMap.get(replacement));
+				if(v1 != null)
+					candidate.setOriginalVariableDeclaration(v1);
+				if(v2 != null)
+					candidate.setRenamedVariableDeclaration(v2);
 				this.candidateAttributeRenames.add(candidate);
 			}
 		}
 		return variableRenames;
+	}
+
+	private static String normalize(String input) {
+		String output = null;
+		if(input.startsWith("this.")) {
+			output = input.substring(5, input.length());
+		}
+		else {
+			output = input;
+		}
+		return output;
+	}
+
+	private static boolean cyclicRename(Set<Replacement> finalConsistentRenames, Replacement replacement) {
+		for(Replacement r : finalConsistentRenames) {
+			if(replacement.getAfter().equals(r.getBefore()))
+				return true;
+			if(replacement.getBefore().equals(r.getAfter()))
+				return true;
+		}
+		return false;
 	}
 
 	private Set<Replacement> allConsistentRenames(Map<Replacement, Integer> replacementOccurrenceMap) {

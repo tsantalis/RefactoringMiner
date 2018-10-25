@@ -24,6 +24,7 @@ import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
@@ -55,6 +56,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 	protected List<UMLAttributeDiff> attributeDiffList;
 	private List<Refactoring> refactorings;
 	private Set<MethodInvocationReplacement> consistentMethodInvocationRenames;
+	private Set<CandidateAttributeRefactoring> candidateAttributeRenames = new LinkedHashSet<CandidateAttributeRefactoring>();
 
 	public UMLClassBaseDiff(UMLClass originalClass, UMLClass nextClass) {
 		this.originalClass = originalClass;
@@ -318,6 +320,10 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		return removedAnonymousClasses;
 	}
 
+	public Set<CandidateAttributeRefactoring> getCandidateAttributeRenames() {
+		return candidateAttributeRenames;
+	}
+
 	public boolean containsOperationWithTheSameSignature(UMLOperation operation) {
 		for(UMLOperation originalOperation : originalClass.getOperations()) {
 			if(originalOperation.equalSignature(operation))
@@ -392,44 +398,94 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 
 	public List<Refactoring> getRefactorings() {
 		List<Refactoring> refactorings = new ArrayList<Refactoring>(this.refactorings);
+		Map<RenamePattern, Set<CandidateAttributeRefactoring>> map = new LinkedHashMap<RenamePattern, Set<CandidateAttributeRefactoring>>();
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 			refactorings.addAll(mapper.getRefactorings());
-			/*Map<RenamePattern, Set<CandidateAttributeRename>> map = new LinkedHashMap<RenamePattern, Set<CandidateAttributeRename>>();
-			for(CandidateAttributeRename candidate : mapper.getCandidateAttributeRenames()) {
-				RenamePattern renamePattern = new RenamePattern(candidate.getOriginalVariableName(), candidate.getRenamedVariableName());
+			for(CandidateAttributeRefactoring candidate : mapper.getCandidateAttributeRenames()) {
+				String before = normalize(candidate.getOriginalVariableName());
+				String after = normalize(candidate.getRenamedVariableName());
+				RenamePattern renamePattern = new RenamePattern(before, after);
 				if(map.containsKey(renamePattern)) {
 					map.get(renamePattern).add(candidate);
 				}
 				else {
-					Set<CandidateAttributeRename> set = new LinkedHashSet<CandidateAttributeRename>();
+					Set<CandidateAttributeRefactoring> set = new LinkedHashSet<CandidateAttributeRefactoring>();
 					set.add(candidate);
 					map.put(renamePattern, set);
 				}
 			}
-			for(RenamePattern pattern : map.keySet()) {
-				VariableDeclaration v1 = null;
-				for(UMLAttribute attribute : originalClass.getAttributes()) {
-					if(attribute.getName().equals(pattern.getOriginalPath())) {
-						v1 = attribute.getVariableDeclaration();
-						break;
+		}
+		for(RenamePattern pattern : map.keySet()) {
+			VariableDeclaration v1 = null;
+			for(UMLAttribute attribute : originalClass.getAttributes()) {
+				if(attribute.getName().equals(pattern.getBefore())) {
+					v1 = attribute.getVariableDeclaration();
+					break;
+				}
+			}
+			VariableDeclaration v2 = null;
+			for(UMLAttribute attribute : nextClass.getAttributes()) {
+				if(attribute.getName().equals(pattern.getAfter())) {
+					v2 = attribute.getVariableDeclaration();
+					break;
+				}
+			}
+			Set<CandidateAttributeRefactoring> set = map.get(pattern);
+			for(CandidateAttributeRefactoring candidate : set) {
+				if(candidate.getOriginalVariableDeclaration() == null && candidate.getRenamedVariableDeclaration() == null) {
+					if(v1 != null && v2 != null) {
+						if((!originalClass.containsAttributeWithName(pattern.getAfter()) || cyclicRename(map, pattern)) &&
+								(!nextClass.containsAttributeWithName(pattern.getBefore()) || cyclicRename(map, pattern))) {
+							RenameAttributeRefactoring ref = new RenameAttributeRefactoring(v1, v2,
+									getOriginalClassName(), getNextClassName(), set);
+							if(!refactorings.contains(ref)) {
+								refactorings.add(ref);
+							}
+						}
+					}
+					else {
+						candidate.setOriginalVariableDeclaration(v1);
+						candidate.setRenamedVariableDeclaration(v2);
+						candidateAttributeRenames.add(candidate);
 					}
 				}
-				VariableDeclaration v2 = null;
-				for(UMLAttribute attribute : nextClass.getAttributes()) {
-					if(attribute.getName().equals(pattern.getMovedPath())) {
-						v2 = attribute.getVariableDeclaration();
-						break;
-					}
+				else if(candidate.getOriginalVariableDeclaration() != null) {
+					//extract field
 				}
-				if(!originalClass.containsAttributeWithName(pattern.getMovedPath()) &&
-						!nextClass.containsAttributeWithName(pattern.getOriginalPath())) {
-					RenameAttributeRefactoring ref = new RenameAttributeRefactoring(v1, v2,
-							getOriginalClassName(), getNextClassName(), map.get(pattern));
-					refactorings.add(ref);
+				else if(candidate.getRenamedVariableDeclaration() != null) {
+					//inline field
 				}
-			}*/
+			}
 		}
 		return refactorings;
+	}
+
+	private static boolean cyclicRename(Map<RenamePattern, Set<CandidateAttributeRefactoring>> renames, RenamePattern rename) {
+		for(RenamePattern r : renames.keySet()) {
+			if((rename.getAfter().equals(r.getBefore()) || rename.getBefore().equals(r.getAfter())) &&
+					(totalOccurrences(renames.get(rename)) > 1 || totalOccurrences(renames.get(r)) > 1))
+			return true;
+		}
+		return false;
+	}
+
+	private static int totalOccurrences(Set<CandidateAttributeRefactoring> candidates) {
+		int totalCount = 0;
+		for(CandidateAttributeRefactoring candidate : candidates) {
+			totalCount += candidate.getOccurrences();
+		}
+		return totalCount;
+	}
+
+	private static String normalize(String input) {
+		String output = null;
+		if(input.startsWith("this.")) {
+			output = input.substring(5, input.length());
+		}
+		else {
+			output = input;
+		}
+		return output;
 	}
 
 	private int computeAbsoluteDifferenceInPositionWithinClass(UMLOperation removedOperation, UMLOperation addedOperation) {

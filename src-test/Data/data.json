@@ -5063,6 +5063,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute PublicationError : String to PublicationErrorHandlers : String in class net.engio.mbassy.bus.common.Properties.Handler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -5280,6 +5287,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute UKKNOWN : ImageHandle to UNKNOWN : ImageHandle in class melnorme.lang.ide.ui.LangElementImages",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 902
@@ -12801,6 +12815,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable plus : int to headSize : int in method protected delete2(recid long, serializer Serializer) : void in class org.mapdb.StoreAppend",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute PACK_LONG_BIDI_MASK : long to PACK_LONG_RESULT_MASK : long in class org.mapdb.DataIO",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -28652,6 +28673,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute THRESHOLD : double to THRESHOLD_PERCENTAGE : double in class com.hazelcast.internal.monitors.HealthMonitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 5604
 }, {
@@ -34041,6 +34069,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute DEFAULT_CACHE : String to DEFAULT_SUB_GROUP : String in class org.wildfly.clustering.service.SubGroupServiceNameFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 8243
 }, {
@@ -35562,6 +35597,13 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute queryData : QueryData to queryWhere : QueryWhere in class org.jbpm.query.jpa.builder.impl.AbstractQueryBuilderImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute queryData : QueryData to queryWhere : QueryWhere in class org.jbpm.process.audit.command.AuditNodeInstanceLogQueryCommand",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -39350,6 +39392,20 @@
     }, {
         "type": "Parameterize Variable",
         "description": "Parameterize Variable modulesCollector : Processor to filesCollector : Processor in method private collectFiles(module Module, onlyTestModules boolean, filesCollector Processor) : void in class org.intellij.erlang.utils.ErlangModulesUtil",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute myOrderedErlangModulePaths : List to myOrderedErlangFilePaths : List in class org.intellij.erlang.jps.builder.ErlangModuleBuildOrderDescriptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute myOrderedErlangTestModulePaths : List to myOrderedErlangTestFilePaths : List in class org.intellij.erlang.jps.builder.ErlangModuleBuildOrderDescriptor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
@@ -193,6 +194,10 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 
 	public UMLClass getOriginalClass() {
 		return originalClass;
+	}
+
+	public UMLClass getNextClass() {
+		return nextClass;
 	}
 
 	public List<UMLOperationBodyMapper> getOperationBodyMapperList() {
@@ -402,8 +407,8 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 			refactorings.addAll(mapper.getRefactorings());
 			for(CandidateAttributeRefactoring candidate : mapper.getCandidateAttributeRenames()) {
-				String before = normalize(candidate.getOriginalVariableName());
-				String after = normalize(candidate.getRenamedVariableName());
+				String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
+				String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
 				RenamePattern renamePattern = new RenamePattern(before, after);
 				if(map.containsKey(renamePattern)) {
 					map.get(renamePattern).add(candidate);
@@ -416,20 +421,8 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 			}
 		}
 		for(RenamePattern pattern : map.keySet()) {
-			VariableDeclaration v1 = null;
-			for(UMLAttribute attribute : originalClass.getAttributes()) {
-				if(attribute.getName().equals(pattern.getBefore())) {
-					v1 = attribute.getVariableDeclaration();
-					break;
-				}
-			}
-			VariableDeclaration v2 = null;
-			for(UMLAttribute attribute : nextClass.getAttributes()) {
-				if(attribute.getName().equals(pattern.getAfter())) {
-					v2 = attribute.getVariableDeclaration();
-					break;
-				}
-			}
+			VariableDeclaration v1 = findAttributeInOriginalClass(pattern);
+			VariableDeclaration v2 = findAttributeInNextClass(pattern);
 			Set<CandidateAttributeRefactoring> set = map.get(pattern);
 			for(CandidateAttributeRefactoring candidate : set) {
 				if(candidate.getOriginalVariableDeclaration() == null && candidate.getRenamedVariableDeclaration() == null) {
@@ -460,6 +453,24 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		return refactorings;
 	}
 
+	public VariableDeclaration findAttributeInOriginalClass(RenamePattern pattern) {
+		for(UMLAttribute attribute : originalClass.getAttributes()) {
+			if(attribute.getName().equals(pattern.getBefore())) {
+				return attribute.getVariableDeclaration();
+			}
+		}
+		return null;
+	}
+
+	public VariableDeclaration findAttributeInNextClass(RenamePattern pattern) {
+		for(UMLAttribute attribute : nextClass.getAttributes()) {
+			if(attribute.getName().equals(pattern.getAfter())) {
+				return attribute.getVariableDeclaration();
+			}
+		}
+		return null;
+	}
+
 	private static boolean cyclicRename(Map<RenamePattern, Set<CandidateAttributeRefactoring>> renames, RenamePattern rename) {
 		for(RenamePattern r : renames.keySet()) {
 			if((rename.getAfter().equals(r.getBefore()) || rename.getBefore().equals(r.getAfter())) &&
@@ -475,17 +486,6 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 			totalCount += candidate.getOccurrences();
 		}
 		return totalCount;
-	}
-
-	private static String normalize(String input) {
-		String output = null;
-		if(input.startsWith("this.")) {
-			output = input.substring(5, input.length());
-		}
-		else {
-			output = input;
-		}
-		return output;
 	}
 
 	private int computeAbsoluteDifferenceInPositionWithinClass(UMLOperation removedOperation, UMLOperation addedOperation) {

@@ -36,4 +36,15 @@ public class PrefixSuffixUtils {
 		}
 		return separatorPos;
 	}
+
+	public static String normalize(String input) {
+		String output = null;
+		if(input.startsWith("this.")) {
+			output = input.substring(5, input.length());
+		}
+		else {
+			output = input;
+		}
+		return output;
+	}
 }

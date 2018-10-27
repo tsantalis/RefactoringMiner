@@ -1909,7 +1909,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					variableRenames.add(ref);
 				}
 			}
-			else if(!normalize(replacement.getBefore()).equals(normalize(replacement.getAfter())) &&
+			else if(!PrefixSuffixUtils.normalize(replacement.getBefore()).equals(PrefixSuffixUtils.normalize(replacement.getAfter())) &&
 					(!operation1.getAllVariables().contains(replacement.getAfter()) || cyclicRename(finalConsistentRenames, replacement)) &&
 					(!operation2.getAllVariables().contains(replacement.getBefore()) || cyclicRename(finalConsistentRenames, replacement))) {
 				CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
@@ -1923,17 +1923,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return variableRenames;
-	}
-
-	private static String normalize(String input) {
-		String output = null;
-		if(input.startsWith("this.")) {
-			output = input.substring(5, input.length());
-		}
-		else {
-			output = input;
-		}
-		return output;
 	}
 
 	private static boolean cyclicRename(Set<Replacement> finalConsistentRenames, Replacement replacement) {

@@ -13,6 +13,7 @@ import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.util.PrefixSuffixUtils;
 
 public class UMLModelDiff {
    private static final int MAXIMUM_NUMBER_OF_COMPARED_METHODS = 100;
@@ -129,6 +131,30 @@ public class UMLModelDiff {
       }
       for(UMLClassRenameDiff classDiff : classRenameDiffList) {
          if(classDiff.matches(type))
+            return classDiff;
+      }
+      return null;
+   }
+
+   private UMLClassBaseDiff getUMLClassDiff(RenamePattern pattern) {
+      for(UMLClassDiff classDiff : commonClassDiffList) {
+         if(classDiff.findAttributeInOriginalClass(pattern) != null &&
+        		 classDiff.findAttributeInNextClass(pattern) != null)
+            return classDiff;
+      }
+      for(UMLClassMoveDiff classDiff : classMoveDiffList) {
+         if(classDiff.findAttributeInOriginalClass(pattern) != null &&
+        		 classDiff.findAttributeInNextClass(pattern) != null)
+            return classDiff;
+      }
+      for(UMLClassMoveDiff classDiff : innerClassMoveDiffList) {
+         if(classDiff.findAttributeInOriginalClass(pattern) != null &&
+        		 classDiff.findAttributeInNextClass(pattern) != null)
+            return classDiff;
+      }
+      for(UMLClassRenameDiff classDiff : classRenameDiffList) {
+         if(classDiff.findAttributeInOriginalClass(pattern) != null &&
+        		 classDiff.findAttributeInNextClass(pattern) != null)
             return classDiff;
       }
       return null;
@@ -904,9 +930,22 @@ public class UMLModelDiff {
       refactorings.addAll(getRenameClassRefactorings());
       refactorings.addAll(identifyConvertAnonymousClassToTypeRefactorings());
       refactorings.addAll(identifyExtractSuperclassRefactorings());
-      
+      Map<RenamePattern, Set<CandidateAttributeRefactoring>> map = new LinkedHashMap<RenamePattern, Set<CandidateAttributeRefactoring>>();
       for(UMLClassDiff classDiff : commonClassDiffList) {
          refactorings.addAll(classDiff.getRefactorings());
+		 for(CandidateAttributeRefactoring candidate : classDiff.getCandidateAttributeRenames()) {
+			 String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
+			 String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
+			 RenamePattern renamePattern = new RenamePattern(before, after);
+			 if(map.containsKey(renamePattern)) {
+				 map.get(renamePattern).add(candidate);
+			 }
+			 else {
+				 Set<CandidateAttributeRefactoring> set = new LinkedHashSet<CandidateAttributeRefactoring>();
+				 set.add(candidate);
+				 map.put(renamePattern, set);
+			 }
+		 }
       }
       for(UMLClassMoveDiff classDiff : classMoveDiffList) {
          refactorings.addAll(classDiff.getRefactorings());
@@ -917,6 +956,22 @@ public class UMLModelDiff {
       for(UMLClassRenameDiff classDiff : classRenameDiffList) {
          refactorings.addAll(classDiff.getRefactorings());
       }
+	  for(RenamePattern pattern : map.keySet()) {
+		 UMLClassBaseDiff diff = getUMLClassDiff(pattern);
+		 if(diff != null) {
+			 VariableDeclaration v1 = diff.findAttributeInOriginalClass(pattern);
+			 VariableDeclaration v2 = diff.findAttributeInNextClass(pattern);
+			 Set<CandidateAttributeRefactoring> set = map.get(pattern);
+			 if(!diff.getOriginalClass().containsAttributeWithName(pattern.getAfter()) &&
+						!diff.getNextClass().containsAttributeWithName(pattern.getBefore())) {
+				 RenameAttributeRefactoring ref = new RenameAttributeRefactoring(v1, v2,
+						 diff.getOriginalClassName(), diff.getNextClassName(), set);
+				 if(!refactorings.contains(ref)) {
+					 refactorings.add(ref);
+				 }
+			 }
+		 }
+	  }
       checkForOperationMovesBetweenCommonClasses();
       checkForExtractedAndMovedOperations(getOperationBodyMappersInCommonClasses(), getAddedOperationsInCommonClasses());
       checkForExtractedAndMovedOperations(getOperationBodyMappersInMovedAndRenamedClasses(), getAddedOperationsInMovedAndRenamedClasses());
@@ -1355,5 +1410,4 @@ public class UMLModelDiff {
 		}
 		return true;
 	}
-
 }

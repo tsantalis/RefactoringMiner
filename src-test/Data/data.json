@@ -24456,6 +24456,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute jcXmlDSig : JAXBContext to jcEncryption : JAXBContext in class org.docx4j.jaxb.Context",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 6242
 }, {

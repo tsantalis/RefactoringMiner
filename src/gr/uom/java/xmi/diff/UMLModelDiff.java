@@ -933,28 +933,19 @@ public class UMLModelDiff {
       Map<RenamePattern, Set<CandidateAttributeRefactoring>> map = new LinkedHashMap<RenamePattern, Set<CandidateAttributeRefactoring>>();
       for(UMLClassDiff classDiff : commonClassDiffList) {
          refactorings.addAll(classDiff.getRefactorings());
-		 for(CandidateAttributeRefactoring candidate : classDiff.getCandidateAttributeRenames()) {
-			 String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
-			 String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
-			 RenamePattern renamePattern = new RenamePattern(before, after);
-			 if(map.containsKey(renamePattern)) {
-				 map.get(renamePattern).add(candidate);
-			 }
-			 else {
-				 Set<CandidateAttributeRefactoring> set = new LinkedHashSet<CandidateAttributeRefactoring>();
-				 set.add(candidate);
-				 map.put(renamePattern, set);
-			 }
-		 }
+		 extractRenamePatterns(classDiff, map);
       }
       for(UMLClassMoveDiff classDiff : classMoveDiffList) {
          refactorings.addAll(classDiff.getRefactorings());
+		 extractRenamePatterns(classDiff, map);
       }
       for(UMLClassMoveDiff classDiff : innerClassMoveDiffList) {
          refactorings.addAll(classDiff.getRefactorings());
+		 extractRenamePatterns(classDiff, map);
       }
       for(UMLClassRenameDiff classDiff : classRenameDiffList) {
          refactorings.addAll(classDiff.getRefactorings());
+		 extractRenamePatterns(classDiff, map);
       }
 	  for(RenamePattern pattern : map.keySet()) {
 		 UMLClassBaseDiff diff = getUMLClassDiff(pattern);
@@ -982,6 +973,22 @@ public class UMLModelDiff {
       refactorings.addAll(checkForAttributeMovesIncludingRemovedClasses());
       refactorings.addAll(this.refactorings);
       return refactorings;
+   }
+
+   private void extractRenamePatterns(UMLClassBaseDiff classDiff, Map<RenamePattern, Set<CandidateAttributeRefactoring>> map) {
+	  for(CandidateAttributeRefactoring candidate : classDiff.getCandidateAttributeRenames()) {
+		 String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
+		 String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
+		 RenamePattern renamePattern = new RenamePattern(before, after);
+		 if(map.containsKey(renamePattern)) {
+			 map.get(renamePattern).add(candidate);
+		 }
+		 else {
+			 Set<CandidateAttributeRefactoring> set = new LinkedHashSet<CandidateAttributeRefactoring>();
+			 set.add(candidate);
+			 map.put(renamePattern, set);
+		 }
+	  }
    }
 
    private void checkForExtractedAndMovedOperations(List<UMLOperationBodyMapper> mappers, List<UMLOperation> addedOperations) {

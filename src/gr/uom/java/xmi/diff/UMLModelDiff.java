@@ -14,6 +14,8 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.decomposition.replacement.Replacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -136,7 +138,7 @@ public class UMLModelDiff {
       return null;
    }
 
-   private UMLClassBaseDiff getUMLClassDiff(RenamePattern pattern) {
+   private UMLClassBaseDiff getUMLClassDiff(Replacement pattern) {
       for(UMLClassDiff classDiff : commonClassDiffList) {
          if(classDiff.findAttributeInOriginalClass(pattern) != null &&
         		 classDiff.findAttributeInNextClass(pattern) != null)
@@ -930,7 +932,7 @@ public class UMLModelDiff {
       refactorings.addAll(getRenameClassRefactorings());
       refactorings.addAll(identifyConvertAnonymousClassToTypeRefactorings());
       refactorings.addAll(identifyExtractSuperclassRefactorings());
-      Map<RenamePattern, Set<CandidateAttributeRefactoring>> map = new LinkedHashMap<RenamePattern, Set<CandidateAttributeRefactoring>>();
+      Map<Replacement, Set<CandidateAttributeRefactoring>> map = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();
       for(UMLClassDiff classDiff : commonClassDiffList) {
          refactorings.addAll(classDiff.getRefactorings());
 		 extractRenamePatterns(classDiff, map);
@@ -947,7 +949,7 @@ public class UMLModelDiff {
          refactorings.addAll(classDiff.getRefactorings());
 		 extractRenamePatterns(classDiff, map);
       }
-	  for(RenamePattern pattern : map.keySet()) {
+	  for(Replacement pattern : map.keySet()) {
 		 UMLClassBaseDiff diff = getUMLClassDiff(pattern);
 		 if(diff != null) {
 			 VariableDeclaration v1 = diff.findAttributeInOriginalClass(pattern);
@@ -975,11 +977,11 @@ public class UMLModelDiff {
       return refactorings;
    }
 
-   private void extractRenamePatterns(UMLClassBaseDiff classDiff, Map<RenamePattern, Set<CandidateAttributeRefactoring>> map) {
+   private void extractRenamePatterns(UMLClassBaseDiff classDiff, Map<Replacement, Set<CandidateAttributeRefactoring>> map) {
 	  for(CandidateAttributeRefactoring candidate : classDiff.getCandidateAttributeRenames()) {
 		 String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
 		 String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
-		 RenamePattern renamePattern = new RenamePattern(before, after);
+		 Replacement renamePattern = new Replacement(before, after, ReplacementType.VARIABLE_NAME);
 		 if(map.containsKey(renamePattern)) {
 			 map.get(renamePattern).add(candidate);
 		 }

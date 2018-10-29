@@ -5,8 +5,10 @@ import gr.uom.java.xmi.diff.UMLClassDiff;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.Set;
 
 public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, Serializable, LocationInfoProvider {
@@ -320,5 +322,17 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public boolean isSingleAbstractMethodInterface() {
 		return isInterface && operations.size() == 1;
+	}
+
+	public Map<String, Set<String>> aliasedAttributes() {
+		for(UMLOperation operation : getOperations()) {
+			if(operation.isConstructor()) {
+				Map<String, Set<String>> aliased = operation.aliasedAttributes();
+				if(!aliased.isEmpty()) {
+					return aliased;
+				}
+			}
+		}
+		return new LinkedHashMap<String, Set<String>>();
 	}
 }

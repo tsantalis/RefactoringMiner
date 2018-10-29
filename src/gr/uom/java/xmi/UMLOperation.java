@@ -553,4 +553,22 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	public boolean compatibleSignature(UMLOperation removedOperation) {
 		return equalParameterTypes(removedOperation) || overloadedParameterTypes(removedOperation) || replacedParameterTypes(removedOperation) || equalParameterNames(removedOperation);
 	}
+
+	public Map<String, Set<String>> aliasedAttributes() {
+		if(operationBody != null && isConstructor) {
+			List<String> parameterNames = getParameterNameList();
+			Map<String, Set<String>> map = operationBody.aliasedAttributes();
+			Set<String> keysToBeRemoved = new LinkedHashSet<String>();
+			for(String key : map.keySet()) {
+				if(!parameterNames.contains(key)) {
+					keysToBeRemoved.add(key);
+				}
+			}
+			for(String key : keysToBeRemoved) {
+				map.remove(key);
+			}
+			return map;
+		}
+		return new LinkedHashMap<String, Set<String>>();
+	}
 }

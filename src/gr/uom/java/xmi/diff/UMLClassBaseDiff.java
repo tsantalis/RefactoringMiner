@@ -27,6 +27,7 @@ import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
 
@@ -403,13 +404,13 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 
 	public List<Refactoring> getRefactorings() {
 		List<Refactoring> refactorings = new ArrayList<Refactoring>(this.refactorings);
-		Map<RenamePattern, Set<CandidateAttributeRefactoring>> map = new LinkedHashMap<RenamePattern, Set<CandidateAttributeRefactoring>>();
+		Map<Replacement, Set<CandidateAttributeRefactoring>> map = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 			refactorings.addAll(mapper.getRefactorings());
 			for(CandidateAttributeRefactoring candidate : mapper.getCandidateAttributeRenames()) {
 				String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
 				String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
-				RenamePattern renamePattern = new RenamePattern(before, after);
+				Replacement renamePattern = new Replacement(before, after, ReplacementType.VARIABLE_NAME);
 				if(map.containsKey(renamePattern)) {
 					map.get(renamePattern).add(candidate);
 				}
@@ -420,7 +421,13 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 				}
 			}
 		}
-		for(RenamePattern pattern : map.keySet()) {
+		Set<Replacement> renames = map.keySet();
+		Set<Replacement> allConsistentRenames = new LinkedHashSet<Replacement>();
+		Set<Replacement> allInconsistentRenames = new LinkedHashSet<Replacement>();
+		ConsistentReplacementDetector.updateRenames(allConsistentRenames, allInconsistentRenames, renames,
+				originalClass.aliasedAttributes(), nextClass.aliasedAttributes());
+		allConsistentRenames.removeAll(allInconsistentRenames);
+		for(Replacement pattern : allConsistentRenames) {
 			VariableDeclaration v1 = findAttributeInOriginalClass(pattern);
 			VariableDeclaration v2 = findAttributeInNextClass(pattern);
 			Set<CandidateAttributeRefactoring> set = map.get(pattern);
@@ -453,7 +460,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		return refactorings;
 	}
 
-	public VariableDeclaration findAttributeInOriginalClass(RenamePattern pattern) {
+	public VariableDeclaration findAttributeInOriginalClass(Replacement pattern) {
 		for(UMLAttribute attribute : originalClass.getAttributes()) {
 			if(attribute.getName().equals(pattern.getBefore())) {
 				return attribute.getVariableDeclaration();
@@ -462,7 +469,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		return null;
 	}
 
-	public VariableDeclaration findAttributeInNextClass(RenamePattern pattern) {
+	public VariableDeclaration findAttributeInNextClass(Replacement pattern) {
 		for(UMLAttribute attribute : nextClass.getAttributes()) {
 			if(attribute.getName().equals(pattern.getAfter())) {
 				return attribute.getVariableDeclaration();
@@ -471,8 +478,8 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		return null;
 	}
 
-	private static boolean cyclicRename(Map<RenamePattern, Set<CandidateAttributeRefactoring>> renames, RenamePattern rename) {
-		for(RenamePattern r : renames.keySet()) {
+	private static boolean cyclicRename(Map<Replacement, Set<CandidateAttributeRefactoring>> renames, Replacement rename) {
+		for(Replacement r : renames.keySet()) {
 			if((rename.getAfter().equals(r.getBefore()) || rename.getBefore().equals(r.getAfter())) &&
 					(totalOccurrences(renames.get(rename)) > 1 || totalOccurrences(renames.get(r)) > 1))
 			return true;

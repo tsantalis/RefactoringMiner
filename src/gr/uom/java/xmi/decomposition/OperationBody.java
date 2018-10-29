@@ -3,6 +3,7 @@ package gr.uom.java.xmi.decomposition;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.AssertStatement;
@@ -259,5 +260,9 @@ public class OperationBody {
 			StatementObject child = new StatementObject(cu, filePath, emptyStatement, parent.getDepth()+1);
 			parent.addStatement(child);
 		}
+	}
+
+	public Map<String, Set<String>> aliasedAttributes() {
+		return compositeStatement.aliasedAttributes();
 	}
 }

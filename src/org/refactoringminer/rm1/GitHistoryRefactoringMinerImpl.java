@@ -59,6 +59,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			RefactoringType.PULL_UP_OPERATION,
 			RefactoringType.PUSH_DOWN_OPERATION,
 			RefactoringType.MOVE_ATTRIBUTE,
+			RefactoringType.MOVE_RENAME_ATTRIBUTE,
+			RefactoringType.REPLACE_ATTRIBUTE,
 			RefactoringType.PULL_UP_ATTRIBUTE,
 			RefactoringType.PUSH_DOWN_ATTRIBUTE,
 			RefactoringType.EXTRACT_INTERFACE,
@@ -70,6 +72,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			RefactoringType.RENAME_VARIABLE,
 			RefactoringType.RENAME_PARAMETER,
 			RefactoringType.RENAME_ATTRIBUTE,
+			RefactoringType.REPLACE_VARIABLE_WITH_ATTRIBUTE,
 			RefactoringType.PARAMETERIZE_VARIABLE
 		);
 	}

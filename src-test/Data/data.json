@@ -9430,6 +9430,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute blogId : String to mRemoteBlogID : String in method private refreshStats() : void in class org.wordpress.android.ui.stats.StatsSingleItemDetailsActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute remotePostID : String to mRemoteItemID : String in method private refreshStats() : void in class org.wordpress.android.ui.stats.StatsSingleItemDetailsActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute mRemotePostItem : PostModel to mRemoteItemType : String in class org.wordpress.android.ui.stats.StatsSingleItemDetailsActivity",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1502
 }, {
@@ -12678,6 +12699,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute mdbb : ModemDBBuilder to m_mdbb : ModemDBBuilder in method public start() : void in class org.openhab.binding.insteonplm.internal.driver.Port",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3517
 }, {
@@ -12822,6 +12850,13 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute PACK_LONG_BIDI_MASK : long to PACK_LONG_RESULT_MASK : long in class org.mapdb.DataIO",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Attribute",
+        "description": "Replace Attribute protected indexPageCRC : boolean from class org.mapdb.StoreDirect with protected checksum : boolean from class org.mapdb.Store",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -13094,6 +13129,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute singleUseConnection : boolean to isSingleUse : boolean in method protected handleRequestMessage(requestMessage Message) : Object in class org.springframework.integration.ip.tcp.TcpOutboundGateway",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 2231
@@ -15760,6 +15802,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute MSORT_BATCH_MAXSIZE : int to desiredRecordBatchCount : int in method public setup(context FragmentContext, allocator BufferAllocator, vector4 SelectionVector4, hyperBatch VectorContainer) : void in class org.apache.drill.exec.physical.impl.xsort.MSortTemplate",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 952
 }, {
@@ -16391,6 +16440,20 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute sslCertificateFactory : SslCertificateFactory to certFactory : Certificates in class org.neo4j.server.security.ssl.KeyStoreFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute server : Jetty9WebServer to webServer : Jetty9WebServer in method public shouldBeAbleToRestart() : void in class org.neo4j.server.web.TestJetty9WebServer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute testBootstrapper : WrappingNeoServerBootstrapper to server : CommunityNeoServer in method public shouldDisallowDirectoryListings() : void in class org.neo4j.server.web.TestJetty9WebServer",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -18550,6 +18613,27 @@
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh"
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute view : CordovaWebView to app : CordovaWebView in method public onReceivedHttpAuthRequest(view CordovaWebView, handler ICordovaHttpAuthHandler, host String, realm String) : boolean in class org.apache.cordova.PluginManager",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute view : CordovaWebView to app : CordovaWebView in method public onReceivedClientCertRequest(view CordovaWebView, request ICordovaClientCertRequest) : boolean in class org.apache.cordova.PluginManager",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute callback : CordovaPlugin to cordovaInterface : CordovaInterfaceImpl in method protected onActivityResult(requestCode int, resultCode int, intent Intent) : void in class org.apache.cordova.CordovaActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2163
 }, {
@@ -19964,6 +20048,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute childIndex : int to currentInnerValueIndex : int in class org.apache.drill.exec.physical.impl.flatten.FlattenTemplate",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -21160,6 +21251,34 @@
     }, {
         "type": "Pull Up Attribute",
         "description": "Pull Up Attribute protected mArtistAlbums : ConcurrentHashMap<Artist,Set<Album>> from class org.tomahawk.libtomahawk.collection.NativeCollection to class org.tomahawk.libtomahawk.collection.Collection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Attribute",
+        "description": "Move And Rename Attribute private mCachedAlbumArtists : Set renamed to protected mAlbumArtists : Set and moved from class org.tomahawk.libtomahawk.collection.ScriptResolverCollection to class org.tomahawk.libtomahawk.collection.Collection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Attribute",
+        "description": "Move And Rename Attribute private mCachedQueries : Set renamed to protected mQueries : Set and moved from class org.tomahawk.libtomahawk.collection.ScriptResolverCollection to class org.tomahawk.libtomahawk.collection.Collection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Attribute",
+        "description": "Move And Rename Attribute private mCachedArtists : Set renamed to protected mArtists : Set and moved from class org.tomahawk.libtomahawk.collection.ScriptResolverCollection to class org.tomahawk.libtomahawk.collection.Collection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Attribute",
+        "description": "Move And Rename Attribute private mCachedAlbums : Set renamed to protected mAlbums : Set and moved from class org.tomahawk.libtomahawk.collection.ScriptResolverCollection to class org.tomahawk.libtomahawk.collection.Collection",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -29338,6 +29457,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute labelId : int to labelId1 : int in method public shouldAddAndGetByLabel() : void in class org.neo4j.kernel.impl.api.state.TxStateTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute rule : IndexDescriptor to indexOn_1_1 : IndexDescriptor in method public shouldAddAndGetByLabel() : void in class org.neo4j.kernel.impl.api.state.TxStateTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute rule : IndexDescriptor to indexOn_1_1 : IndexDescriptor in method public shouldAddAndGetByRuleId() : void in class org.neo4j.kernel.impl.api.state.TxStateTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4473
 }, {
@@ -34671,6 +34811,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Davood, Nikos"
+    }, {
+        "type": "Move And Rename Attribute",
+        "description": "Move And Rename Attribute private allTasksAreFinished : boolean renamed to protected allChildrenFinished : boolean and moved from class cascading.stats.tez.TezNodeStats to class cascading.stats.hadoop.BaseHadoopNodeStats",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1441
 }, {
@@ -34918,6 +35065,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable h2 : DefaultHeaders to other : DefaultHeaders in method public equals(o Object) : boolean in class io.netty.handler.codec.DefaultHeaders",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute entries : IntObjectMap to map : Map in class io.netty.handler.codec.DefaultHeaders",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

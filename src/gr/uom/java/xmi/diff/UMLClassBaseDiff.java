@@ -25,7 +25,6 @@ import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
-import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
@@ -428,15 +427,15 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 				originalClass.aliasedAttributes(), nextClass.aliasedAttributes());
 		allConsistentRenames.removeAll(allInconsistentRenames);
 		for(Replacement pattern : allConsistentRenames) {
-			VariableDeclaration v1 = findAttributeInOriginalClass(pattern);
-			VariableDeclaration v2 = findAttributeInNextClass(pattern);
+			UMLAttribute a1 = findAttributeInOriginalClass(pattern.getBefore());
+			UMLAttribute a2 = findAttributeInNextClass(pattern.getAfter());
 			Set<CandidateAttributeRefactoring> set = map.get(pattern);
 			for(CandidateAttributeRefactoring candidate : set) {
 				if(candidate.getOriginalVariableDeclaration() == null && candidate.getRenamedVariableDeclaration() == null) {
-					if(v1 != null && v2 != null) {
+					if(a1 != null && a2 != null) {
 						if((!originalClass.containsAttributeWithName(pattern.getAfter()) || cyclicRename(map, pattern)) &&
 								(!nextClass.containsAttributeWithName(pattern.getBefore()) || cyclicRename(map, pattern))) {
-							RenameAttributeRefactoring ref = new RenameAttributeRefactoring(v1, v2,
+							RenameAttributeRefactoring ref = new RenameAttributeRefactoring(a1.getVariableDeclaration(), a2.getVariableDeclaration(),
 									getOriginalClassName(), getNextClassName(), set);
 							if(!refactorings.contains(ref)) {
 								refactorings.add(ref);
@@ -444,13 +443,28 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 						}
 					}
 					else {
-						candidate.setOriginalVariableDeclaration(v1);
-						candidate.setRenamedVariableDeclaration(v2);
+						candidate.setOriginalAttribute(a1);
+						candidate.setRenamedAttribute(a2);
+						if(a1 != null)
+							candidate.setOriginalVariableDeclaration(a1.getVariableDeclaration());
+						if(a2 != null)
+							candidate.setRenamedVariableDeclaration(a2.getVariableDeclaration());
 						candidateAttributeRenames.add(candidate);
 					}
 				}
 				else if(candidate.getOriginalVariableDeclaration() != null) {
-					//extract field
+					if(a2 != null) {
+						RenameVariableRefactoring ref = new RenameVariableRefactoring(
+								candidate.getOriginalVariableDeclaration(), a2.getVariableDeclaration(),
+								candidate.getOperationBefore(), candidate.getOperationAfter());
+						if(!refactorings.contains(ref)) {
+							refactorings.add(ref);
+						}
+					}
+					else {
+						//field is declared in a superclass or outer class
+						candidateAttributeRenames.add(candidate);
+					}
 				}
 				else if(candidate.getRenamedVariableDeclaration() != null) {
 					//inline field
@@ -460,19 +474,19 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		return refactorings;
 	}
 
-	public VariableDeclaration findAttributeInOriginalClass(Replacement pattern) {
+	public UMLAttribute findAttributeInOriginalClass(String attributeName) {
 		for(UMLAttribute attribute : originalClass.getAttributes()) {
-			if(attribute.getName().equals(pattern.getBefore())) {
-				return attribute.getVariableDeclaration();
+			if(attribute.getName().equals(attributeName)) {
+				return attribute;
 			}
 		}
 		return null;
 	}
 
-	public VariableDeclaration findAttributeInNextClass(Replacement pattern) {
+	public UMLAttribute findAttributeInNextClass(String attributeName) {
 		for(UMLAttribute attribute : nextClass.getAttributes()) {
-			if(attribute.getName().equals(pattern.getAfter())) {
-				return attribute.getVariableDeclaration();
+			if(attribute.getName().equals(attributeName)) {
+				return attribute;
 			}
 		}
 		return null;

@@ -4959,6 +4959,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute edges : DataAccess to chGraph : LevelGraphImpl in class com.graphhopper.storage.GraphHopperStorage",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3012
 }, {
@@ -35065,13 +35072,6 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable h2 : DefaultHeaders to other : DefaultHeaders in method public equals(o Object) : boolean in class io.netty.handler.codec.DefaultHeaders",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Rename Attribute",
-        "description": "Rename Attribute entries : IntObjectMap to map : Map in class io.netty.handler.codec.DefaultHeaders",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

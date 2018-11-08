@@ -17,8 +17,13 @@ Currently, it supports the detection of the following refactorings:
 12. Move Source Folder
 13. Change Package (Move, Rename, Split, Merge)
 14. Extract Variable
-15. Parameterize Variable
-16. Rename Variable/Parameter
+15. Inline Variable
+16. Parameterize Variable
+17. Rename Variable/Parameter
+18. Rename Attribute
+19. Move and Rename Attribute
+20. Replace Variable with Attribute
+21. Replace Attribute (with Attribute)
 
 In order to build the project, run `./gradlew jar` (or `gradlew jar`, in Windows) in the project's root directory.
 Alternatively, you can generate a complete distribution zip including all runtime dependencies running `./gradlew distZip`.

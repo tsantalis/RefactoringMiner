@@ -2659,6 +2659,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable map : Map in method private flatten(properties Properties, input Map, path String) : void from class org.springframework.boot.cloudfoundry.VcapApplicationListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4633
 }, {
@@ -8933,6 +8940,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable uploadedFileSaveDirectory : String in method private initOreillyCos() : void from class com.jfinal.core.JFinal",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable ct : Constants in method private initOreillyCos() : void from class com.jfinal.core.JFinal",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1822
 }, {
@@ -9623,6 +9644,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable cache : Cache in method private channel(i int) : Channel from class org.infinispan.partitionhandling.BasePartitionHandlingTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable lockManager : LockManager in method protected checkLocked(cache Cache, key Object) : boolean from class org.infinispan.test.AbstractCacheTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 7011
 }, {
@@ -10149,6 +10184,20 @@
     }, {
         "type": "Parameterize Variable",
         "description": "Parameterize Variable map : Map to attributes : Map in method private assertMissingTextAttribute(attributes Map) : void in class org.springframework.core.annotation.AnnotationUtilsTests",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable transactionManagerName : String in method package retrieveConfigurationAttributes(testContext TestContext) : TransactionConfigurationAttributes from class org.springframework.test.context.transaction.TransactionalTestExecutionListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable defaultRollback : boolean in method package retrieveConfigurationAttributes(testContext TestContext) : TransactionConfigurationAttributes from class org.springframework.test.context.transaction.TransactionalTestExecutionListener",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -21865,6 +21914,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable allocateBytes : long in method package RemoteBlockOutStream(file TachyonFile, opType WriteType, blockIndex int, initialBytes long, tachyonConf TachyonConf) from class tachyon.client.RemoteBlockOutStream",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 771
 }, {
@@ -22721,6 +22777,20 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable type : Class in method public instantiate(relationship Relationship) : T from class org.structr.core.graph.RelationshipFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable graphDb : GraphDatabaseService in method public getRelationshipById(uuid String) : RelationshipInterface from class org.structr.core.app.StructrApp",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable graphDb : GraphDatabaseService in method public getNodeById(uuid String) : NodeInterface from class org.structr.core.app.StructrApp",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -29986,6 +30056,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable name : String in method public prepareDataFormat(log Log, project MavenProject, projectHelper MavenProjectHelper, dataFormatOutDir File, schemaOutDir File, buildContext BuildContext) : void from class org.apache.camel.maven.packaging.PackageDataFormatMojo",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable name : String in method public prepareLanguage(log Log, project MavenProject, projectHelper MavenProjectHelper, languageOutDir File, schemaOutDir File, buildContext BuildContext) : void from class org.apache.camel.maven.packaging.PackageLanguageMojo",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 5459
 }, {
@@ -35072,6 +35156,20 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable h2 : DefaultHeaders to other : DefaultHeaders in method public equals(o Object) : boolean in class io.netty.handler.codec.DefaultHeaders",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable value : ByteString in method public encodeHeaders(headers Http2Headers, buffer ByteBuf) : void from class io.netty.handler.codec.http2.DefaultHttp2HeadersEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable name : ByteString in method public encodeHeaders(headers Http2Headers, buffer ByteBuf) : void from class io.netty.handler.codec.http2.DefaultHttp2HeadersEncoder",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

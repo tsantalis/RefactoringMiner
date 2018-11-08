@@ -12,6 +12,7 @@ import gr.uom.java.xmi.decomposition.replacement.VariableDeclarationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
+import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
@@ -153,6 +154,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(StatementObject statement : getNonMappedLeavesT2()) {
 				temporaryVariableAssignment(statement);
 			}
+			for(StatementObject statement : getNonMappedLeavesT1()) {
+				inlinedVariableAssignment(statement);
+			}
 		}
 	}
 
@@ -283,6 +287,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			
 			for(StatementObject statement : getNonMappedLeavesT2()) {
 				temporaryVariableAssignment(statement);
+			}
+			for(StatementObject statement : getNonMappedLeavesT1()) {
+				inlinedVariableAssignment(statement);
 			}
 		}
 	}
@@ -493,6 +500,64 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return false;
+	}
+
+	private void inlinedVariableAssignment(StatementObject statement) {
+		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
+			for(Replacement replacement : getReplacements()) {
+				String variableName = declaration.getVariableName();
+				AbstractExpression initializer = declaration.getInitializer();
+				if(replacement.getBefore().startsWith(variableName + ".")) {
+					String suffixBefore = replacement.getBefore().substring(variableName.length(), replacement.getBefore().length());
+					if(replacement.getAfter().endsWith(suffixBefore)) {
+						String prefixAfter = replacement.getAfter().substring(0, replacement.getAfter().indexOf(suffixBefore));
+						if(initializer != null) {
+							String longestCommonSuffix = PrefixSuffixUtils.longestCommonSuffix(initializer.toString(), prefixAfter);
+							if(initializer.toString().equals(prefixAfter) ||
+									initializer.toString().equals(applyOverlappingExtractVariable(prefixAfter)) ||
+									(!longestCommonSuffix.isEmpty() && longestCommonSuffix.startsWith("."))) {
+								InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1);
+								if(!refactorings.contains(ref)) {
+									refactorings.add(ref);
+								}
+							}
+						}
+					}
+				}
+				if(variableName.equals(replacement.getBefore()) && initializer != null) {
+					String longestCommonSuffix = PrefixSuffixUtils.longestCommonSuffix(initializer.toString(), replacement.getAfter());
+					if(initializer.toString().equals(replacement.getAfter()) ||
+							initializer.toString().equals(applyOverlappingExtractVariable(replacement.getAfter())) ||
+							(!longestCommonSuffix.isEmpty() && longestCommonSuffix.startsWith("."))) {
+						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1);
+						if(!refactorings.contains(ref)) {
+							refactorings.add(ref);
+						}
+					}
+				}
+			}
+		}
+		String argumentizedString = statement.getArgumentizedString();
+		if(argumentizedString.contains("=")) {
+			String beforeAssignment = argumentizedString.substring(0, argumentizedString.indexOf("="));
+			String[] tokens = beforeAssignment.split("\\s");
+			String variable = tokens[tokens.length-1];
+			String initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-2);
+			for(Replacement replacement : getReplacements()) {
+				if(variable.endsWith(replacement.getBefore()) &&
+						initializer.equals(replacement.getAfter())) {
+					List<VariableDeclaration> variableDeclarations = operation1.getAllVariableDeclarations();
+					for(VariableDeclaration declaration : variableDeclarations) {
+						if(declaration.getVariableName().equals(variable)) {
+							InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1);
+							if(!refactorings.contains(ref)) {
+								refactorings.add(ref);
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	private void temporaryVariableAssignment(AbstractCodeMapping mapping) {

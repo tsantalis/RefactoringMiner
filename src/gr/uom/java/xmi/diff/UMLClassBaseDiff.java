@@ -1019,6 +1019,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 						if(inlineMatchCondition(operationBodyMapper)) {
 							InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getOperation1(), removedOperationInvocation);
 							refactorings.add(inlineOperationRefactoring);
+							refactorings.addAll(operationBodyMapper.getRefactorings());
 							mapper.addAdditionalMapper(operationBodyMapper);
 							operationsToBeRemoved.add(removedOperation);
 						}

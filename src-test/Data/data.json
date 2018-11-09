@@ -1151,6 +1151,20 @@
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Laleh"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable notInstrumented : boolean to ok : boolean in method public checkInstrumentation() : boolean in class co.paralleluniverse.fibers.Fiber",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable classInstrumented : boolean in method public checkInstrumentation() : boolean from class co.paralleluniverse.fibers.Fiber",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 970
 }, {
@@ -11258,6 +11272,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable result : Object to failure : Throwable in method private adaptResult(source BuildOperationInternal) : AbstractOperationResult in class org.gradle.tooling.internal.provider.runner.ClientForwardingBuildListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter result : BuildResult to source : BuildOperationInternal in method private adaptResult(source BuildOperationInternal) : AbstractOperationResult in class org.gradle.tooling.internal.provider.runner.ClientForwardingBuildListener",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -30029,6 +30050,13 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute context : Context to rootContext : Context in class org.terasology.engine.TerasologyEngine",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter context : Context to rootContext : Context in method public initialise(rootContext Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglAudio",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

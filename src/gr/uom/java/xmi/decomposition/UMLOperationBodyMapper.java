@@ -389,6 +389,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			nonMappedLeavesT2.addAll(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
 			nonMappedInnerNodesT2.addAll(innerNodes2);
+			
+			for(StatementObject statement : getNonMappedLeavesT2()) {
+				temporaryVariableAssignment(statement);
+			}
+			for(StatementObject statement : getNonMappedLeavesT1()) {
+				inlinedVariableAssignment(statement);
+			}
 		}
 	}
 

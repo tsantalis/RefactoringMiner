@@ -40,6 +40,23 @@ public abstract class AbstractCall implements LocationInfoProvider {
 	public abstract double normalizedNameDistance(AbstractCall call);
 	public abstract AbstractCall update(String oldExpression, String newExpression);
 
+	public String actualString() {
+		StringBuilder sb = new StringBuilder();
+		if(expression != null) {
+			sb.append(expression).append(".");
+		}
+		sb.append(getName());
+		sb.append("(");
+		int size = arguments.size();
+		if(size > 0) {
+			for(int i=0; i<size-1; i++)
+				sb.append(arguments.get(i)).append(",");
+			sb.append(arguments.get(size-1));
+		}
+		sb.append(")");
+		return sb.toString();
+	}
+
 	public boolean identicalExpression(AbstractCall call, Set<Replacement> replacements) {
 		return identicalExpression(call) ||
 		identicalExpressionAfterTypeReplacements(call, replacements);
@@ -171,6 +188,19 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		Set<String> argumentIntersection = new LinkedHashSet<String>(getArguments());
 		argumentIntersection.retainAll(call.getArguments());
 		return argumentIntersection;
+	}
+
+	public int argumentIntersectionSize(AbstractCall call, Map<String, String> parameterToArgumentMap) {
+		Set<String> argumentIntersection = argumentIntersection(call);
+		int argumentIntersectionSize = argumentIntersection.size();
+		for(String parameter : parameterToArgumentMap.keySet()) {
+			String argument = parameterToArgumentMap.get(parameter);
+			if(getArguments().contains(argument) &&
+					call.getArguments().contains(parameter)) {
+				argumentIntersectionSize++;
+			}
+		}
+		return argumentIntersectionSize;
 	}
 
 	private boolean argumentIsEqual(String statement) {

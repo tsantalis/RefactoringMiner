@@ -30,6 +30,7 @@ public class StatementObject extends AbstractStatement {
 	private List<String> numberLiterals;
 	private Map<String, ObjectCreation> creationMap;
 	private List<String> infixOperators;
+	private List<String> arguments;
 	
 	public StatementObject(CompilationUnit cu, String filePath, Statement statement, int depth) {
 		super();
@@ -45,6 +46,7 @@ public class StatementObject extends AbstractStatement {
 		this.numberLiterals = visitor.getNumberLiterals();
 		this.creationMap = visitor.getCreationMap();
 		this.infixOperators = visitor.getInfixOperators();
+		this.arguments = visitor.getArguments();
 		setDepth(depth);
 		if(Visitor.METHOD_INVOCATION_PATTERN.matcher(statement.toString()).matches()) {
 			if(statement instanceof VariableDeclarationStatement) {
@@ -171,6 +173,11 @@ public class StatementObject extends AbstractStatement {
 	@Override
 	public List<String> getInfixOperators() {
 		return infixOperators;
+	}
+
+	@Override
+	public List<String> getArguments() {
+		return arguments;
 	}
 
 	@Override

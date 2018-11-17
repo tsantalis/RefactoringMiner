@@ -179,20 +179,6 @@ public class OperationInvocation extends AbstractCall {
     	return intersection;
     }
 
-    private String actualString() {
-    	StringBuilder sb = new StringBuilder();
-    	sb.append(methodName);
-    	sb.append("(");
-    	int size = arguments.size();
-    	if(size > 0) {
-    		for(int i=0; i<size-1; i++)
-    			sb.append(arguments.get(i)).append(",");
-    		sb.append(arguments.get(size-1));
-    	}
-    	sb.append(")");
-    	return sb.toString();
-    }
-
     private Set<String> subExpressionIntersection(OperationInvocation other) {
     	Set<String> intersection = new LinkedHashSet<String>(this.subExpressions);
     	intersection.retainAll(other.subExpressions);

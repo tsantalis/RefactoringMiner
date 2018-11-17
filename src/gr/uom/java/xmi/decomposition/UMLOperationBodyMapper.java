@@ -1210,9 +1210,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Set<String> methodInvocations1 = new LinkedHashSet<String>(methodInvocationMap1.keySet());
 		Set<String> methodInvocations2 = new LinkedHashSet<String>(methodInvocationMap2.keySet());
 		
+		ReplacementInfo replacementInfo = new ReplacementInfo(
+				preprocessInput1(statement1, statement2),
+				preprocessInput2(statement1, statement2));
+		
+		Set<String> arguments1 = new LinkedHashSet<String>(statement1.getArguments());
+		Set<String> arguments2 = new LinkedHashSet<String>(statement2.getArguments());
+		Set<String> argIntersection = new LinkedHashSet<String>(arguments1);
+		argIntersection.retainAll(arguments2);
+		// remove common arguments from the two sets
+		arguments1.removeAll(argIntersection);
+		arguments2.removeAll(argIntersection);
+		
+		findReplacements(arguments1, variables2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_VARIABLE);
+		
+		Map<String, String> map = new LinkedHashMap<String, String>();
+		for(Replacement r : replacementInfo.getReplacements()) {
+			map.put(r.getBefore(), r.getAfter());
+		}
+		
 		// replace variables with the corresponding arguments in method invocations
 		replaceVariablesWithArguments(methodInvocationMap1, methodInvocations1, parameterToArgumentMap);
 		replaceVariablesWithArguments(methodInvocationMap2, methodInvocations2, parameterToArgumentMap);
+		
+		replaceVariablesWithArguments(methodInvocationMap1, methodInvocations1, map);
 		
 		OperationInvocation invocationCoveringTheEntireStatement1 = statement1.invocationCoveringEntireFragment();
 		OperationInvocation invocationCoveringTheEntireStatement2 = statement2.invocationCoveringEntireFragment();
@@ -1261,6 +1282,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		// replace variables with the corresponding arguments in object creations
 		replaceVariablesWithArguments(creationMap1, creations1, parameterToArgumentMap);
 		replaceVariablesWithArguments(creationMap2, creations2, parameterToArgumentMap);
+		
+		replaceVariablesWithArguments(creationMap1, creations1, map);
 		
 		ObjectCreation creationCoveringTheEntireStatement1 = statement1.creationCoveringEntireFragment();
 		ObjectCreation creationCoveringTheEntireStatement2 = statement2.creationCoveringEntireFragment();
@@ -1314,10 +1337,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		// remove common infix operators from the two sets
 		infixOperators1.removeAll(infixOperatorIntersection);
 		infixOperators2.removeAll(infixOperatorIntersection);
-		
-		ReplacementInfo replacementInfo = new ReplacementInfo(
-				preprocessInput1(statement1, statement2),
-				preprocessInput2(statement1, statement2));
 		
 		//perform type replacements
 		findReplacements(types1, types2, replacementInfo, ReplacementType.TYPE);
@@ -1410,7 +1429,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
-		boolean isEqualWithReplacement = s1.equals(s2) || differOnlyInCastExpression(s1, s2) || oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2) ||
+		boolean isEqualWithReplacement = s1.equals(s2) || differOnlyInCastExpression(s1, s2) || oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, replacementInfo) ||
 				(commonConditional(s1, s2) && containsValidOperatorReplacements(replacementInfo));
 		if(isEqualWithReplacement) {
 			if(variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1) {
@@ -1527,8 +1546,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		//method invocation has only changes in the arguments (different number of arguments)
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				invocationCoveringTheEntireStatement1.onlyArgumentsChanged(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
-			Set<String> argumentIntersection = invocationCoveringTheEntireStatement1.argumentIntersection(invocationCoveringTheEntireStatement2);
-			if(!argumentIntersection.isEmpty() || invocationCoveringTheEntireStatement1.getArguments().size() == 0 || invocationCoveringTheEntireStatement2.getArguments().size() == 0) {
+			int argumentIntersectionSize = invocationCoveringTheEntireStatement1.argumentIntersectionSize(invocationCoveringTheEntireStatement2, parameterToArgumentMap);
+			if(argumentIntersectionSize > 0 || invocationCoveringTheEntireStatement1.getArguments().size() == 0 || invocationCoveringTheEntireStatement2.getArguments().size() == 0) {
 				Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getName(),
 						invocationCoveringTheEntireStatement2.getName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_ARGUMENT);
 				replacementInfo.addReplacement(replacement);
@@ -1539,8 +1558,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(String methodInvocation1 : methodInvocations1) {
 				OperationInvocation operationInvocation1 = (OperationInvocation) methodInvocationMap1.get(methodInvocation1);
 				if(operationInvocation1.onlyArgumentsChanged(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
-					Set<String> argumentIntersection = operationInvocation1.argumentIntersection(invocationCoveringTheEntireStatement2);
-					if(!argumentIntersection.isEmpty() || operationInvocation1.getArguments().size() == 0 || invocationCoveringTheEntireStatement2.getArguments().size() == 0) {
+					int argumentIntersectionSize = operationInvocation1.argumentIntersectionSize(invocationCoveringTheEntireStatement2, parameterToArgumentMap);
+					if(argumentIntersectionSize > 0 || operationInvocation1.getArguments().size() == 0 || invocationCoveringTheEntireStatement2.getArguments().size() == 0) {
 						Replacement replacement = new MethodInvocationReplacement(operationInvocation1.getName(),
 								invocationCoveringTheEntireStatement2.getName(), operationInvocation1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_ARGUMENT);
 						replacementInfo.addReplacement(replacement);
@@ -1595,16 +1614,65 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		//object creation is identical
+		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null &&
+				creationCoveringTheEntireStatement1.identical(creationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
+			return replacementInfo.getReplacements();
+		}
 		//object creation has only changes in the arguments
+		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null &&
+				creationCoveringTheEntireStatement1.onlyArgumentsChanged(creationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
+			int argumentIntersectionSize = creationCoveringTheEntireStatement1.argumentIntersectionSize(creationCoveringTheEntireStatement2, parameterToArgumentMap);
+			if(argumentIntersectionSize > 0 || creationCoveringTheEntireStatement1.getArguments().size() == 0 || creationCoveringTheEntireStatement2.getArguments().size() == 0) {
+				Replacement replacement = new ObjectCreationReplacement(creationCoveringTheEntireStatement1.getName(),
+						creationCoveringTheEntireStatement2.getName(), creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);
+				replacementInfo.addReplacement(replacement);
+				return replacementInfo.getReplacements();
+			}
+		}
+		//check if the argument lists are identical after replacements
+		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null &&
+				creationCoveringTheEntireStatement1.identicalName(creationCoveringTheEntireStatement2) &&
+				creationCoveringTheEntireStatement1.identicalExpression(creationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
+			if(creationCoveringTheEntireStatement1.isArray() && creationCoveringTheEntireStatement2.isArray() &&
+					s1.substring(s1.indexOf("[")+1, s1.lastIndexOf("]")).equals(s2.substring(s2.indexOf("[")+1, s2.lastIndexOf("]"))) &&
+					s1.substring(s1.indexOf("[")+1, s1.lastIndexOf("]")).length() > 0) {
+				return replacementInfo.getReplacements();
+			}
+			if(!creationCoveringTheEntireStatement1.isArray() && !creationCoveringTheEntireStatement2.isArray() &&
+					s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).equals(s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"))) &&
+					s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).length() > 0) {
+				return replacementInfo.getReplacements();
+			}
+		}
+		//check if array creation is replaced with data structure creation
+		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null &&
+				variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1) {
+			VariableDeclaration v1 = variableDeclarations1.get(0);
+			VariableDeclaration v2 = variableDeclarations2.get(0);
+			if(v1.getType().getArrayDimension() == 1 && v2.getType().getTypeArguments().contains(v1.getType().getClassType()) &&
+					creationCoveringTheEntireStatement1.isArray() && !creationCoveringTheEntireStatement2.isArray() &&
+					s1.substring(s1.indexOf("[")+1, s1.lastIndexOf("]")).equals(s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")")))) {
+				r = new ObjectCreationReplacement(v1.getInitializer().getString(), v2.getInitializer().getString(),
+						creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.ARRAY_CREATION_REPLACED_WITH_DATA_STRUCTURE_CREATION);
+				replacementInfo.addReplacement(r);
+				return replacementInfo.getReplacements();
+			}
+			if(v2.getType().getArrayDimension() == 1 && v1.getType().getTypeArguments().contains(v2.getType().getClassType()) &&
+					!creationCoveringTheEntireStatement1.isArray() && creationCoveringTheEntireStatement2.isArray() &&
+					s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).equals(s2.substring(s2.indexOf("[")+1, s2.lastIndexOf("]")))) {
+				r = new ObjectCreationReplacement(v1.getInitializer().getString(), v2.getInitializer().getString(),
+						creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.ARRAY_CREATION_REPLACED_WITH_DATA_STRUCTURE_CREATION);
+				replacementInfo.addReplacement(r);
+				return replacementInfo.getReplacements();
+			}
+		}
 		if(!creations1.isEmpty() && creationCoveringTheEntireStatement2 != null) {
 			for(String creation1 : creations1) {
 				ObjectCreation objectCreation1 = (ObjectCreation) creationMap1.get(creation1);
-				if(objectCreation1.identicalName(creationCoveringTheEntireStatement2) &&
-						!objectCreation1.equalArguments(creationCoveringTheEntireStatement2) &&
-						objectCreation1.getArguments().size() != creationCoveringTheEntireStatement2.getArguments().size()) {
-					Set<String> argumentIntersection = new LinkedHashSet<String>(objectCreation1.getArguments());
-					argumentIntersection.retainAll(creationCoveringTheEntireStatement2.getArguments());
-					if(!argumentIntersection.isEmpty() || objectCreation1.getArguments().size() == 0 || creationCoveringTheEntireStatement2.getArguments().size() == 0) {
+				if(objectCreation1.onlyArgumentsChanged(creationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
+					int argumentIntersectionSize = objectCreation1.argumentIntersectionSize(creationCoveringTheEntireStatement2, parameterToArgumentMap);
+					if(argumentIntersectionSize > 0 || objectCreation1.getArguments().size() == 0 || creationCoveringTheEntireStatement2.getArguments().size() == 0) {
 						Replacement replacement = new ObjectCreationReplacement(objectCreation1.getName(),
 								creationCoveringTheEntireStatement2.getName(), objectCreation1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT);
 						replacementInfo.addReplacement(replacement);
@@ -1612,7 +1680,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				//check if the argument lists are identical after replacements
-				if(objectCreation1.identicalName(creationCoveringTheEntireStatement2)) {
+				if(objectCreation1.identicalName(creationCoveringTheEntireStatement2) &&
+						objectCreation1.identicalExpression(creationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
 					if(objectCreation1.isArray() && creationCoveringTheEntireStatement2.isArray() &&
 							s1.substring(s1.indexOf("[")+1, s1.lastIndexOf("]")).equals(s2.substring(s2.indexOf("[")+1, s2.lastIndexOf("]"))) &&
 							s1.substring(s1.indexOf("[")+1, s1.lastIndexOf("]")).length() > 0) {
@@ -1640,9 +1709,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return null;
 	}
 
-	private boolean oneIsVariableDeclarationTheOtherIsVariableAssignment(String s1, String s2) {
+	private boolean oneIsVariableDeclarationTheOtherIsVariableAssignment(String s1, String s2, ReplacementInfo replacementInfo) {
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(s1.contains("=") && s2.contains("=") && (s1.equals(commonSuffix) || s2.equals(commonSuffix))) {
+			if(replacementInfo.getReplacements().size() == 2) {
+				StringBuilder sb = new StringBuilder();
+				int counter = 0;
+				for(Replacement r : replacementInfo.getReplacements()) {
+					sb.append(r.getAfter());
+					if(counter == 0) {
+						sb.append("=");
+					}
+					else if(counter == 1) {
+						sb.append(";\n");
+					}
+					counter++;
+				}
+				if(commonSuffix.equals(sb.toString())) {
+					return false;
+				}
+			}
 			return true;
 		}
 		return false;

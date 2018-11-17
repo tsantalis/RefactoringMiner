@@ -28,6 +28,10 @@ public class UMLType implements Serializable {
         return classType;
     }
 
+    public List<String> getTypeArguments() {
+    	return typeArgumentDecomposition;
+    }
+
     public int getArrayDimension() {
     	return this.arrayDimension;
     }
@@ -168,7 +172,9 @@ public class UMLType implements Serializable {
 		typeObject.typeArguments = typeArguments;
 		typeObject.arrayDimension = arrayDimension;
 		for(String type : typeArgumentDecomposition) {
-			typeObject.typeArgumentDecomposition.add(simpleNameOf(type));
+			if(!type.equals("")) {
+				typeObject.typeArgumentDecomposition.add(simpleNameOf(type));
+			}
 		}
 		return typeObject;
 	}

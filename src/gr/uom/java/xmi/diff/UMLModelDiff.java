@@ -1124,7 +1124,6 @@ public class UMLModelDiff {
             		  parameterToArgumentMap2.put("this.", "");
             	  }
                   UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap1, parameterToArgumentMap2);
-                  operationBodyMapper.getMappings();
                   if(extractAndMoveMatchCondition(operationBodyMapper)) {
                 	  if(className.equals(addedOperation.getClassName())) {
                 		  //extract inside moved or renamed class

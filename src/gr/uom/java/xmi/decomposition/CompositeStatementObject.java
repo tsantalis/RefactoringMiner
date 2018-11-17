@@ -167,6 +167,15 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	@Override
+	public List<String> getArguments() {
+		List<String> arguments = new ArrayList<String>();
+		for(AbstractExpression expression : expressionList) {
+			arguments.addAll(expression.getArguments());
+		}
+		return arguments;
+	}
+
+	@Override
 	public Map<String, ObjectCreation> getCreationMap() {
 		Map<String, ObjectCreation> creationMap = new LinkedHashMap<String, ObjectCreation>();
 		for(AbstractExpression expression : expressionList) {

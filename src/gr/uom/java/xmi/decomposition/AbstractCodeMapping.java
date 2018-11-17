@@ -34,7 +34,7 @@ public abstract class AbstractCodeMapping {
 
 	public boolean isExact() {
 		return (fragment1.getArgumentizedString().equals(fragment2.getArgumentizedString()) ||
-				fragment1.getString().equals(fragment2.getString())) && !isKeyword();
+				fragment1.getString().equals(fragment2.getString()) || isExactAfterAbstraction()) && !isKeyword();
 	}
 
 	private boolean isKeyword() {
@@ -43,6 +43,19 @@ public abstract class AbstractCodeMapping {
 				fragment1.getString().startsWith("continue;");
 	}
 
+	private boolean isExactAfterAbstraction() {
+		OperationInvocation invocation1 = fragment1.invocationCoveringEntireFragment();
+		OperationInvocation invocation2 = fragment2.invocationCoveringEntireFragment();
+		if(invocation1 != null && invocation2 != null) {
+			return invocation1.actualString().equals(invocation2.actualString());
+		}
+		ObjectCreation creation1 = fragment1.creationCoveringEntireFragment();
+		ObjectCreation creation2 = fragment2.creationCoveringEntireFragment();
+		if(creation1 != null && creation2 != null) {
+			return creation1.actualString().equals(creation2.actualString());
+		}
+		return false;
+	}
 	public void addReplacement(Replacement replacement) {
 		this.replacements.add(replacement);
 	}

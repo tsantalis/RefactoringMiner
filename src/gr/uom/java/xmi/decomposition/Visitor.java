@@ -47,6 +47,7 @@ public class Visitor extends ASTVisitor {
 	private List<String> numberLiterals = new ArrayList<String>();
 	private Map<String, ObjectCreation> creationMap = new LinkedHashMap<String, ObjectCreation>();
 	private List<String> infixOperators = new ArrayList<String>();
+	private List<String> arguments = new ArrayList<String>();
 
 	public Visitor(CompilationUnit cu, String filePath) {
 		this.cu = cu;
@@ -59,6 +60,10 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(ClassInstanceCreation node) {
+		List<Expression> arguments = node.arguments();
+		for(Expression argument : arguments) {
+			processArgument(argument);
+		}
 		creationMap.put(node.toString(), new ObjectCreation(cu, filePath, node));
 		return super.visit(node);
 	}
@@ -145,6 +150,10 @@ public class Visitor extends ASTVisitor {
 	
 	public boolean visit(MethodInvocation node) {
 		invokedMethodNames.add(node.getName().getIdentifier());
+		List<Expression> arguments = node.arguments();
+		for(Expression argument : arguments) {
+			processArgument(argument);
+		}
 		String methodInvocation = null;
 		if(METHOD_INVOCATION_PATTERN.matcher(node.toString()).matches()) {
 			methodInvocation = processMethodInvocation(node);
@@ -196,8 +205,21 @@ public class Visitor extends ASTVisitor {
 	
 	public boolean visit(SuperMethodInvocation node) {
 		invokedMethodNames.add(node.getName().getIdentifier());
+		List<Expression> arguments = node.arguments();
+		for(Expression argument : arguments) {
+			processArgument(argument);
+		}
 		methodInvocationMap.put(node.toString(), new OperationInvocation(cu, filePath, node));
 		return super.visit(node);
+	}
+
+	private void processArgument(Expression argument) {
+		if(argument instanceof MethodInvocation ||
+				argument instanceof SuperMethodInvocation ||
+				argument instanceof Name ||
+				argument instanceof StringLiteral)
+			return;
+		this.arguments.add(argument.toString());
 	}
 
 	public boolean visit(QualifiedName node) {
@@ -249,6 +271,10 @@ public class Visitor extends ASTVisitor {
 
 	public List<String> getInfixOperators() {
 		return infixOperators;
+	}
+
+	public List<String> getArguments() {
+		return this.arguments;
 	}
 
 	public List<String> getVariables() {

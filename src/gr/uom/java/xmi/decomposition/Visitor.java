@@ -217,7 +217,8 @@ public class Visitor extends ASTVisitor {
 		if(argument instanceof MethodInvocation ||
 				argument instanceof SuperMethodInvocation ||
 				argument instanceof Name ||
-				argument instanceof StringLiteral)
+				argument instanceof StringLiteral ||
+				(argument instanceof FieldAccess && ((FieldAccess)argument).getExpression() instanceof ThisExpression))
 			return;
 		this.arguments.add(argument.toString());
 	}

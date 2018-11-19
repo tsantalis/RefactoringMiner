@@ -1326,9 +1326,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Set<String> numberLiterals2 = new LinkedHashSet<String>(statement2.getNumberLiterals());
 		Set<String> numberLiteralIntersection = new LinkedHashSet<String>(numberLiterals1);
 		numberLiteralIntersection.retainAll(numberLiterals2);
-		// remove common string literals from the two sets
+		// remove common number literals from the two sets
 		numberLiterals1.removeAll(numberLiteralIntersection);
 		numberLiterals2.removeAll(numberLiteralIntersection);
+		
+		Set<String> booleanLiterals1 = new LinkedHashSet<String>(statement1.getBooleanLiterals());
+		Set<String> booleanLiterals2 = new LinkedHashSet<String>(statement2.getBooleanLiterals());
+		Set<String> booleanLiteralIntersection = new LinkedHashSet<String>(booleanLiterals1);
+		booleanLiteralIntersection.retainAll(booleanLiterals2);
+		// remove common boolean literals from the two sets
+		booleanLiterals1.removeAll(booleanLiteralIntersection);
+		booleanLiterals2.removeAll(booleanLiteralIntersection);
 		
 		Set<String> infixOperators1 = new LinkedHashSet<String>(statement1.getInfixOperators());
 		Set<String> infixOperators2 = new LinkedHashSet<String>(statement2.getInfixOperators());
@@ -1412,6 +1420,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(!containsMethodInvocationReplacement(replacementInfo.getReplacements())) {
 			findReplacements(stringLiterals1, stringLiterals2, replacementInfo, ReplacementType.STRING_LITERAL);
 			findReplacements(numberLiterals1, numberLiterals2, replacementInfo, ReplacementType.NUMBER_LITERAL);
+		}
+		if(!statement1.getString().endsWith("=true;\n") && !statement1.getString().endsWith("=false;\n")) {
+			findReplacements(booleanLiterals1, variables2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_VARIABLE);
 		}
 		
 		String s1 = preprocessInput1(statement1, statement2);

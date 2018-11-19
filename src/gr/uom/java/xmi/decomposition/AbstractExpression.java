@@ -20,6 +20,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 	private List<String> anonymousClassDeclarations;
 	private List<String> stringLiterals;
 	private List<String> numberLiterals;
+	private List<String> booleanLiterals;
 	private Map<String, ObjectCreation> creationMap;
 	private List<String> infixOperators;
 	private List<String> arguments;
@@ -35,6 +36,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.anonymousClassDeclarations = visitor.getAnonymousClassDeclarations();
 		this.stringLiterals = visitor.getStringLiterals();
 		this.numberLiterals = visitor.getNumberLiterals();
+		this.booleanLiterals = visitor.getBooleanLiterals();
 		this.creationMap = visitor.getCreationMap();
 		this.infixOperators = visitor.getInfixOperators();
 		this.arguments = visitor.getArguments();
@@ -95,6 +97,11 @@ public class AbstractExpression extends AbstractCodeFragment {
 	@Override
 	public List<String> getNumberLiterals() {
 		return numberLiterals;
+	}
+
+	@Override
+	public List<String> getBooleanLiterals() {
+		return booleanLiterals;
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.ArrayCreation;
 import org.eclipse.jdt.core.dom.ArrayType;
+import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.CastExpression;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -45,6 +46,7 @@ public class Visitor extends ASTVisitor {
 	private List<String> anonymousClassDeclarations = new ArrayList<String>();
 	private List<String> stringLiterals = new ArrayList<String>();
 	private List<String> numberLiterals = new ArrayList<String>();
+	private List<String> booleanLiterals = new ArrayList<String>();
 	private Map<String, ObjectCreation> creationMap = new LinkedHashMap<String, ObjectCreation>();
 	private List<String> infixOperators = new ArrayList<String>();
 	private List<String> arguments = new ArrayList<String>();
@@ -96,6 +98,11 @@ public class Visitor extends ASTVisitor {
 
 	public boolean visit(NumberLiteral node) {
 		numberLiterals.add(node.toString());
+		return super.visit(node);
+	}
+
+	public boolean visit(BooleanLiteral node) {
+		booleanLiterals.add(node.toString());
 		return super.visit(node);
 	}
 
@@ -218,6 +225,7 @@ public class Visitor extends ASTVisitor {
 				argument instanceof SuperMethodInvocation ||
 				argument instanceof Name ||
 				argument instanceof StringLiteral ||
+				argument instanceof BooleanLiteral ||
 				(argument instanceof FieldAccess && ((FieldAccess)argument).getExpression() instanceof ThisExpression))
 			return;
 		this.arguments.add(argument.toString());
@@ -264,6 +272,10 @@ public class Visitor extends ASTVisitor {
 
 	public List<String> getNumberLiterals() {
 		return numberLiterals;
+	}
+
+	public List<String> getBooleanLiterals() {
+		return booleanLiterals;
 	}
 
 	public Map<String, ObjectCreation> getCreationMap() {

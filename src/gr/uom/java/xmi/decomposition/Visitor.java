@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
+import org.eclipse.jdt.core.dom.ArrayAccess;
 import org.eclipse.jdt.core.dom.ArrayCreation;
 import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
@@ -226,7 +227,9 @@ public class Visitor extends ASTVisitor {
 				argument instanceof Name ||
 				argument instanceof StringLiteral ||
 				argument instanceof BooleanLiteral ||
-				(argument instanceof FieldAccess && ((FieldAccess)argument).getExpression() instanceof ThisExpression))
+				(argument instanceof FieldAccess && ((FieldAccess)argument).getExpression() instanceof ThisExpression) ||
+				(argument instanceof ArrayAccess && invalidArrayAccess((ArrayAccess)argument)) ||
+				(argument instanceof InfixExpression && invalidInfix((InfixExpression)argument)))
 			return;
 		this.arguments.add(argument.toString());
 	}
@@ -295,5 +298,17 @@ public class Visitor extends ASTVisitor {
 		variables.removeAll(this.invokedMethodNames);
 		variables.removeAll(this.types);
 		return variables;
+	}
+
+	private static boolean invalidArrayAccess(ArrayAccess e) {
+		return e.getArray() instanceof SimpleName && simpleNameOrNumberLiteral(e.getIndex());
+	}
+
+	private static boolean invalidInfix(InfixExpression e) {
+		return simpleNameOrNumberLiteral(e.getLeftOperand()) && simpleNameOrNumberLiteral(e.getRightOperand());
+	}
+
+	private static boolean simpleNameOrNumberLiteral(Expression e) {
+		return e instanceof SimpleName || e instanceof NumberLiteral;
 	}
 }

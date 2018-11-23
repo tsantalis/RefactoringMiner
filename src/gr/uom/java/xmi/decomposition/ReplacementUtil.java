@@ -53,5 +53,23 @@ public class ReplacementUtil {
 		return temp;
 	}
 
+	public static int indexOf(String completeString, String subString) {
+		for(String character : SPECIAL_CHARACTERS) {
+			int index = completeString.indexOf(subString + character);
+			if(index != -1) {
+				return index;
+			}
+		}
+		return -1;
+	}
 
+	public static int lastIndexOf(String completeString, String subString) {
+		for(String character : SPECIAL_CHARACTERS) {
+			int index = completeString.lastIndexOf(subString + character);
+			if(index != -1) {
+				return index;
+			}
+		}
+		return -1;
+	}
 }

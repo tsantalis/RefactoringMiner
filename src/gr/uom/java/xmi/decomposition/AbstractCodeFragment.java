@@ -42,6 +42,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	public abstract List<String> getStringLiterals();
 	public abstract List<String> getNumberLiterals();
 	public abstract List<String> getBooleanLiterals();
+	public abstract List<String> getTypeLiterals();
 	public abstract Map<String, ObjectCreation> getCreationMap();
 	public abstract List<String> getInfixOperators();
 	public abstract List<String> getArguments();

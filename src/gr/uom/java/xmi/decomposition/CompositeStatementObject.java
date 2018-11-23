@@ -167,6 +167,15 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	@Override
+	public List<String> getTypeLiterals() {
+		List<String> typeLiterals = new ArrayList<String>();
+		for(AbstractExpression expression : expressionList) {
+			typeLiterals.addAll(expression.getTypeLiterals());
+		}
+		return typeLiterals;
+	}
+
+	@Override
 	public List<String> getInfixOperators() {
 		List<String> infixOperators = new ArrayList<String>();
 		for(AbstractExpression expression : expressionList) {

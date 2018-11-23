@@ -9535,13 +9535,6 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
-    }, {
-        "type": "Rename Attribute",
-        "description": "Rename Attribute mRemotePostItem : PostModel to mRemoteItemType : String in class org.wordpress.android.ui.stats.StatsSingleItemDetailsActivity",
-        "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
     }],
     "refDiffExecutionTime": 1502
 }, {
@@ -11328,13 +11321,6 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable result : Object to failure : Throwable in method private adaptResult(source BuildOperationInternal) : AbstractOperationResult in class org.gradle.tooling.internal.provider.runner.ClientForwardingBuildListener",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Rename Parameter",
-        "description": "Rename Parameter result : BuildResult to source : BuildOperationInternal in method private adaptResult(source BuildOperationInternal) : AbstractOperationResult in class org.gradle.tooling.internal.provider.runner.ClientForwardingBuildListener",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -21628,13 +21614,6 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable cacheControl : CacheControl to cacheSeconds : Integer in method protected lookupCacheSeconds(urlPath String) : Integer in class org.springframework.web.servlet.mvc.WebContentInterceptor",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Rename Attribute",
-        "description": "Rename Attribute cacheMappings : Map to cacheControlMappings : Map in class org.springframework.web.servlet.mvc.WebContentInterceptor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

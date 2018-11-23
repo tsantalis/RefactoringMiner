@@ -32,6 +32,7 @@ import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.StringLiteral;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 import org.eclipse.jdt.core.dom.ThisExpression;
+import org.eclipse.jdt.core.dom.TypeLiteral;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.WildcardType;
 
@@ -48,6 +49,7 @@ public class Visitor extends ASTVisitor {
 	private List<String> stringLiterals = new ArrayList<String>();
 	private List<String> numberLiterals = new ArrayList<String>();
 	private List<String> booleanLiterals = new ArrayList<String>();
+	private List<String> typeLiterals = new ArrayList<String>();
 	private Map<String, ObjectCreation> creationMap = new LinkedHashMap<String, ObjectCreation>();
 	private List<String> infixOperators = new ArrayList<String>();
 	private List<String> arguments = new ArrayList<String>();
@@ -104,6 +106,11 @@ public class Visitor extends ASTVisitor {
 
 	public boolean visit(BooleanLiteral node) {
 		booleanLiterals.add(node.toString());
+		return super.visit(node);
+	}
+
+	public boolean visit(TypeLiteral node) {
+		typeLiterals.add(node.toString());
 		return super.visit(node);
 	}
 
@@ -227,6 +234,7 @@ public class Visitor extends ASTVisitor {
 				argument instanceof Name ||
 				argument instanceof StringLiteral ||
 				argument instanceof BooleanLiteral ||
+				argument instanceof TypeLiteral ||
 				(argument instanceof FieldAccess && ((FieldAccess)argument).getExpression() instanceof ThisExpression) ||
 				(argument instanceof ArrayAccess && invalidArrayAccess((ArrayAccess)argument)) ||
 				(argument instanceof InfixExpression && invalidInfix((InfixExpression)argument)))
@@ -279,6 +287,10 @@ public class Visitor extends ASTVisitor {
 
 	public List<String> getBooleanLiterals() {
 		return booleanLiterals;
+	}
+
+	public List<String> getTypeLiterals() {
+		return typeLiterals;
 	}
 
 	public Map<String, ObjectCreation> getCreationMap() {

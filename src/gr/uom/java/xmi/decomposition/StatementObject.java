@@ -29,6 +29,7 @@ public class StatementObject extends AbstractStatement {
 	private List<String> stringLiterals;
 	private List<String> numberLiterals;
 	private List<String> booleanLiterals;
+	private List<String> typeLiterals;
 	private Map<String, ObjectCreation> creationMap;
 	private List<String> infixOperators;
 	private List<String> arguments;
@@ -46,6 +47,7 @@ public class StatementObject extends AbstractStatement {
 		this.stringLiterals = visitor.getStringLiterals();
 		this.numberLiterals = visitor.getNumberLiterals();
 		this.booleanLiterals = visitor.getBooleanLiterals();
+		this.typeLiterals = visitor.getTypeLiterals();
 		this.creationMap = visitor.getCreationMap();
 		this.infixOperators = visitor.getInfixOperators();
 		this.arguments = visitor.getArguments();
@@ -170,6 +172,11 @@ public class StatementObject extends AbstractStatement {
 	@Override
 	public List<String> getBooleanLiterals() {
 		return booleanLiterals;
+	}
+
+	@Override
+	public List<String> getTypeLiterals() {
+		return typeLiterals;
 	}
 
 	@Override

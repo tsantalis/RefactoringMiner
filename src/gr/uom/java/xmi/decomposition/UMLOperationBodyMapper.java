@@ -1338,6 +1338,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		booleanLiterals1.removeAll(booleanLiteralIntersection);
 		booleanLiterals2.removeAll(booleanLiteralIntersection);
 		
+		Set<String> typeLiterals1 = new LinkedHashSet<String>(statement1.getTypeLiterals());
+		Set<String> typeLiterals2 = new LinkedHashSet<String>(statement2.getTypeLiterals());
+		Set<String> typeLiteralIntersection = new LinkedHashSet<String>(typeLiterals1);
+		typeLiteralIntersection.retainAll(typeLiterals2);
+		// remove common boolean literals from the two sets
+		typeLiterals1.removeAll(typeLiteralIntersection);
+		typeLiterals2.removeAll(typeLiteralIntersection);
+		
 		Set<String> infixOperators1 = new LinkedHashSet<String>(statement1.getInfixOperators());
 		Set<String> infixOperators2 = new LinkedHashSet<String>(statement2.getInfixOperators());
 		Set<String> infixOperatorIntersection = new LinkedHashSet<String>(infixOperators1);
@@ -1351,6 +1359,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		
 		//perform operator replacements
 		findReplacements(infixOperators1, infixOperators2, replacementInfo, ReplacementType.INFIX_OPERATOR);
+
+		//findReplacements(typeLiterals1, variables2, replacementInfo, ReplacementType.TYPE_LITERAL_REPLACED_WITH_VARIABLE);
 		
 		if (replacementInfo.getRawDistance() > 0) {
 			for(String s1 : variablesAndMethodInvocations1) {
@@ -1359,7 +1369,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(String s2 : variablesAndMethodInvocations2) {
 					String temp = ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), s1, s2, variablesAndMethodInvocations1, variablesAndMethodInvocations2);
 					int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), minDistance);
-					if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance()) {
+					if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance() &&
+							syntaxAwareReplacement(s1, s2, replacementInfo)) {
 						minDistance = distanceRaw;
 						Replacement replacement = null;
 						if(variables1.contains(s1) && variables2.contains(s2) && variablesStartWithSameCase(s1, s2, parameterToArgumentMap)) {
@@ -1901,7 +1912,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(String s2 : strings2) {
 				String temp = replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(s1), Matcher.quoteReplacement(s2));
 				int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), minDistance);
-				if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance()) {
+				if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance() &&
+						syntaxAwareReplacement(s1, s2, replacementInfo)) {
 					minDistance = distanceRaw;
 					Replacement replacement = new Replacement(s1, s2, type);
 					double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), replacementInfo.getArgumentizedString2().length());
@@ -1920,6 +1932,73 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private boolean syntaxAwareReplacement(String s1, String s2, ReplacementInfo replacementInfo) {
+		int smallStringLength = 2;
+		int firstIndex1 = s1.length() < smallStringLength ? ReplacementUtil.indexOf(replacementInfo.getArgumentizedString1(), s1) : replacementInfo.getArgumentizedString1().indexOf(s1);
+		int lastIndex1 = s1.length() < smallStringLength ? ReplacementUtil.lastIndexOf(replacementInfo.getArgumentizedString1(), s1) : replacementInfo.getArgumentizedString1().lastIndexOf(s1);
+		int length1 = replacementInfo.getArgumentizedString1().length();
+		String firstCharacterBefore1 = null;
+		String firstCharacterAfter1 = null;
+		String lastCharacterBefore1 = null;
+		String lastCharacterAfter1 = null;
+		if(firstIndex1 != -1) {
+			firstCharacterBefore1 = firstIndex1 == 0 ? "" : Character.toString(replacementInfo.getArgumentizedString1().charAt(firstIndex1-1));
+			firstCharacterAfter1 = firstIndex1 + s1.length() == length1 ? "" : Character.toString(replacementInfo.getArgumentizedString1().charAt(firstIndex1 + s1.length()));
+			if(lastIndex1 != firstIndex1) {
+				lastCharacterBefore1 = lastIndex1 == 0 ? "" : Character.toString(replacementInfo.getArgumentizedString1().charAt(lastIndex1-1));
+				lastCharacterAfter1 = lastIndex1 + s1.length() == length1 ? "" : Character.toString(replacementInfo.getArgumentizedString1().charAt(lastIndex1 + s1.length()));
+			}
+		}
+		
+		int firstIndex2 = s2.length() < smallStringLength ? ReplacementUtil.indexOf(replacementInfo.getArgumentizedString2(), s2) : replacementInfo.getArgumentizedString2().indexOf(s2);
+		int lastIndex2 = s2.length() < smallStringLength ? ReplacementUtil.lastIndexOf(replacementInfo.getArgumentizedString2(), s2) : replacementInfo.getArgumentizedString2().lastIndexOf(s2);
+		int length2 = replacementInfo.getArgumentizedString2().length();
+		String firstCharacterBefore2 = null;
+		String firstCharacterAfter2 = null;
+		String lastCharacterBefore2 = null;
+		String lastCharacterAfter2 = null;
+		if(firstIndex2 != -1) {
+			firstCharacterBefore2 = firstIndex2 == 0 ? "" : Character.toString(replacementInfo.getArgumentizedString2().charAt(firstIndex2-1));
+			firstCharacterAfter2 = firstIndex2 + s2.length() == length2 ? "" : Character.toString(replacementInfo.getArgumentizedString2().charAt(firstIndex2 + s2.length()));
+			if(lastIndex2 != firstIndex2) {
+				lastCharacterBefore2 = lastIndex2 == 0 ? "" : Character.toString(replacementInfo.getArgumentizedString2().charAt(lastIndex2-1));
+				lastCharacterAfter2 = lastIndex2 + s2.length() == length2 ? "" : Character.toString(replacementInfo.getArgumentizedString2().charAt(lastIndex2 + s2.length()));
+			}
+		}
+		return (compatibleCharacterBeforeMatch(firstCharacterBefore1, firstCharacterBefore2) && compatibleCharacterAfterMatch(firstCharacterAfter1, firstCharacterAfter2)) ||
+				(compatibleCharacterBeforeMatch(firstCharacterBefore1, lastCharacterBefore2) && compatibleCharacterAfterMatch(firstCharacterAfter1, lastCharacterAfter2)) ||
+				(compatibleCharacterBeforeMatch(lastCharacterBefore1, firstCharacterBefore2) && compatibleCharacterAfterMatch(lastCharacterAfter1, firstCharacterAfter2)) ||
+				(compatibleCharacterBeforeMatch(lastCharacterBefore1, lastCharacterBefore2) && compatibleCharacterAfterMatch(lastCharacterAfter1, lastCharacterAfter2));
+	}
+
+	private boolean compatibleCharacterBeforeMatch(String characterBefore1, String characterBefore2) {
+		if(characterBefore1 != null && characterBefore2 != null) {
+			if(characterBefore1.equals(characterBefore2))
+				return true;
+			if(characterBefore1.equals(",") && characterBefore2.equals("("))
+				return true;
+			if(characterBefore1.equals("(") && characterBefore2.equals(","))
+				return true;
+			if(characterBefore1.equals(" ") && characterBefore2.equals(""))
+				return true;
+			if(characterBefore1.equals("") && characterBefore2.equals(" "))
+				return true;
+		}
+		return false;
+	}
+
+	private boolean compatibleCharacterAfterMatch(String characterAfter1, String characterAfter2) {
+		if(characterAfter1 != null && characterAfter2 != null) {
+			if(characterAfter1.equals(characterAfter2))
+				return true;
+			if(characterAfter1.equals(",") && characterAfter2.equals(")"))
+				return true;
+			if(characterAfter1.equals(")") && characterAfter2.equals(","))
+				return true;
+		}
+		return false;
 	}
 
 	private Replacement variableReplacementWithinMethodInvocations(String s1, String s2, Set<String> variables1, Set<String> variables2) {

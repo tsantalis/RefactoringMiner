@@ -38,6 +38,7 @@ import org.eclipse.jdt.core.dom.WildcardType;
 
 public class Visitor extends ASTVisitor {
 	public static final Pattern METHOD_INVOCATION_PATTERN = Pattern.compile("!(\\w|\\.)*@\\w*");
+	public static final Pattern METHOD_SIGNATURE_PATTERN = Pattern.compile("(public|protected|private|static|\\s) +[\\w\\<\\>\\[\\]]+\\s+(\\w+) *\\([^\\)]*\\) *(\\{?|[^;])");
 	private CompilationUnit cu;
 	private String filePath;
 	private List<String> allIdentifiers = new ArrayList<String>();
@@ -111,6 +112,7 @@ public class Visitor extends ASTVisitor {
 
 	public boolean visit(TypeLiteral node) {
 		typeLiterals.add(node.toString());
+		allIdentifiers.add(node.toString());
 		return super.visit(node);
 	}
 

@@ -551,8 +551,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			String variable = tokens[tokens.length-1];
 			String initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-2);
 			for(Replacement replacement : getReplacements()) {
-				if(variable.endsWith(replacement.getBefore()) &&
-						initializer.equals(replacement.getAfter())) {
+				if(variable.endsWith(replacement.getBefore()) && initializer.equals(replacement.getAfter())) {
 					List<VariableDeclaration> variableDeclarations = operation1.getAllVariableDeclarations();
 					for(VariableDeclaration declaration : variableDeclarations) {
 						if(declaration.getVariableName().equals(variable)) {
@@ -631,8 +630,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			String variable = tokens[tokens.length-1];
 			String initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-2);
 			for(Replacement replacement : getReplacements()) {
-				if(variable.endsWith(replacement.getAfter()) &&
-						initializer.equals(replacement.getBefore())) {
+				if(variable.endsWith(replacement.getAfter()) &&	initializer.equals(replacement.getBefore())) {
 					List<VariableDeclaration> variableDeclarations = operation2.getAllVariableDeclarations();
 					for(VariableDeclaration declaration : variableDeclarations) {
 						if(declaration.getVariableName().equals(variable)) {
@@ -810,7 +808,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeMapping mapping : getMappings()) {
 			for(Replacement replacement : mapping.getReplacements()) {
 				if(replacement.getType().equals(type) && !returnVariableMapping(mapping, replacement) &&
-						!containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(mapping.getReplacements())) {
+						!containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(mapping.getReplacements()) &&
+						replacementNotInsideMethodSignatureOfAnonymousClass(mapping, replacement)) {
 					if(map.containsKey(replacement)) {
 						int count = map.get(replacement);
 						map.put(replacement, count+1);
@@ -829,7 +828,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeMapping mapping : getMappings()) {
 			for(Replacement replacement : mapping.getReplacements()) {
 				if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) && !returnVariableMapping(mapping, replacement) &&
-						!containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(mapping.getReplacements())) {
+						!containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(mapping.getReplacements()) &&
+						replacementNotInsideMethodSignatureOfAnonymousClass(mapping, replacement)) {
 					VariableDeclaration v1 = getVariableDeclaration1(replacement);
 					VariableDeclaration v2 = getVariableDeclaration2(replacement);
 					if(v1 != null && v2 != null) {
@@ -1338,14 +1338,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		booleanLiterals1.removeAll(booleanLiteralIntersection);
 		booleanLiterals2.removeAll(booleanLiteralIntersection);
 		
-		Set<String> typeLiterals1 = new LinkedHashSet<String>(statement1.getTypeLiterals());
-		Set<String> typeLiterals2 = new LinkedHashSet<String>(statement2.getTypeLiterals());
-		Set<String> typeLiteralIntersection = new LinkedHashSet<String>(typeLiterals1);
-		typeLiteralIntersection.retainAll(typeLiterals2);
-		// remove common boolean literals from the two sets
-		typeLiterals1.removeAll(typeLiteralIntersection);
-		typeLiterals2.removeAll(typeLiteralIntersection);
-		
 		Set<String> infixOperators1 = new LinkedHashSet<String>(statement1.getInfixOperators());
 		Set<String> infixOperators2 = new LinkedHashSet<String>(statement2.getInfixOperators());
 		Set<String> infixOperatorIntersection = new LinkedHashSet<String>(infixOperators1);
@@ -1359,8 +1351,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		
 		//perform operator replacements
 		findReplacements(infixOperators1, infixOperators2, replacementInfo, ReplacementType.INFIX_OPERATOR);
-
-		//findReplacements(typeLiterals1, variables2, replacementInfo, ReplacementType.TYPE_LITERAL_REPLACED_WITH_VARIABLE);
 		
 		if (replacementInfo.getRawDistance() > 0) {
 			for(String s1 : variablesAndMethodInvocations1) {
@@ -2029,6 +2019,45 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return false;
+	}
+
+	private boolean replacementNotInsideMethodSignatureOfAnonymousClass(AbstractCodeMapping mapping, Replacement replacement) {
+		AbstractCodeFragment fragment1 = mapping.getFragment1();
+		AbstractCodeFragment fragment2 = mapping.getFragment2();
+		List<String> anonymousClassDeclarations1 = fragment1.getAnonymousClassDeclarations();
+		List<String> anonymousClassDeclarations2 = fragment2.getAnonymousClassDeclarations();
+		if(anonymousClassDeclarations1.size() > 0 && anonymousClassDeclarations2.size() > 0) {
+			boolean replacementBeforeNotFoundInMethodSignature = false;
+			String[] lines1 = fragment1.getString().split("\\n");
+			for(String line : lines1) {
+				line = line.trim();
+				if(line.startsWith("@Override")) {
+					line = line.substring(9, line.length());
+					line = line.trim();
+				}
+				if(!Visitor.METHOD_SIGNATURE_PATTERN.matcher(line).matches() &&
+						ReplacementUtil.contains(line, replacement.getBefore())) {
+					replacementBeforeNotFoundInMethodSignature = true;
+					break;
+				}
+			}
+			boolean replacementAfterNotFoundInMethodSignature = false;
+			String[] lines2 = fragment2.getString().split("\\n");
+			for(String line : lines2) {
+				line = line.trim();
+				if(line.startsWith("@Override")) {
+					line = line.substring(9, line.length());
+					line = line.trim();
+				}
+				if(!Visitor.METHOD_SIGNATURE_PATTERN.matcher(line).matches() &&
+						ReplacementUtil.contains(line, replacement.getAfter())) {
+					replacementAfterNotFoundInMethodSignature = true;
+					break;
+				}
+			}
+			return replacementBeforeNotFoundInMethodSignature && replacementAfterNotFoundInMethodSignature;
+		}
+		return true;
 	}
 
 	private boolean containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(Set<Replacement> replacements) {

@@ -112,7 +112,6 @@ public class Visitor extends ASTVisitor {
 
 	public boolean visit(TypeLiteral node) {
 		typeLiterals.add(node.toString());
-		allIdentifiers.add(node.toString());
 		return super.visit(node);
 	}
 
@@ -231,12 +230,10 @@ public class Visitor extends ASTVisitor {
 	}
 
 	private void processArgument(Expression argument) {
-		if(argument instanceof MethodInvocation ||
-				argument instanceof SuperMethodInvocation ||
+		if(argument instanceof SuperMethodInvocation ||
 				argument instanceof Name ||
 				argument instanceof StringLiteral ||
 				argument instanceof BooleanLiteral ||
-				argument instanceof TypeLiteral ||
 				(argument instanceof FieldAccess && ((FieldAccess)argument).getExpression() instanceof ThisExpression) ||
 				(argument instanceof ArrayAccess && invalidArrayAccess((ArrayAccess)argument)) ||
 				(argument instanceof InfixExpression && invalidInfix((InfixExpression)argument)))

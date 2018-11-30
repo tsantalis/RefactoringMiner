@@ -1896,29 +1896,74 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private void findReplacements(Set<String> strings1, Set<String> strings2, ReplacementInfo replacementInfo, ReplacementType type) {
-		for(String s1 : strings1) {
-			TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
-			int minDistance = replacementInfo.getRawDistance();
-			for(String s2 : strings2) {
-				String temp = replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(s1), Matcher.quoteReplacement(s2));
-				int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), minDistance);
-				if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance() &&
-						syntaxAwareReplacement(s1, s2, replacementInfo)) {
-					minDistance = distanceRaw;
-					Replacement replacement = new Replacement(s1, s2, type);
-					double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), replacementInfo.getArgumentizedString2().length());
-					replacementMap.put(distancenormalized, replacement);
-					if(distanceRaw == 0) {
+		TreeMap<Double, Replacement> globalReplacementMap = new TreeMap<Double, Replacement>();
+		if(strings1.size() <= strings2.size()) {
+			for(String s1 : strings1) {
+				TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
+				int minDistance = replacementInfo.getRawDistance();
+				for(String s2 : strings2) {
+					String temp = replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(s1), Matcher.quoteReplacement(s2));
+					int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), minDistance);
+					if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance() &&
+							syntaxAwareReplacement(s1, s2, replacementInfo)) {
+						minDistance = distanceRaw;
+						Replacement replacement = new Replacement(s1, s2, type);
+						double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), replacementInfo.getArgumentizedString2().length());
+						replacementMap.put(distancenormalized, replacement);
+						if(distanceRaw == 0) {
+							break;
+						}
+					}
+				}
+				if(!replacementMap.isEmpty()) {
+					Double distancenormalized = replacementMap.firstEntry().getKey();
+					Replacement replacement = replacementMap.firstEntry().getValue();
+					globalReplacementMap.put(distancenormalized, replacement);
+					if(distancenormalized == 0) {
 						break;
 					}
 				}
 			}
-			if(!replacementMap.isEmpty()) {
-				Replacement replacement = replacementMap.firstEntry().getValue();
+		}
+		else {
+			for(String s2 : strings2) {
+				TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
+				int minDistance = replacementInfo.getRawDistance();
+				for(String s1 : strings1) {
+					String temp = replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(s1), Matcher.quoteReplacement(s2));
+					int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), minDistance);
+					if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance() &&
+							syntaxAwareReplacement(s1, s2, replacementInfo)) {
+						minDistance = distanceRaw;
+						Replacement replacement = new Replacement(s1, s2, type);
+						double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), replacementInfo.getArgumentizedString2().length());
+						replacementMap.put(distancenormalized, replacement);
+						if(distanceRaw == 0) {
+							break;
+						}
+					}
+				}
+				if(!replacementMap.isEmpty()) {
+					Double distancenormalized = replacementMap.firstEntry().getKey();
+					Replacement replacement = replacementMap.firstEntry().getValue();
+					globalReplacementMap.put(distancenormalized, replacement);
+					if(replacementMap.firstEntry().getKey() == 0) {
+						break;
+					}
+				}
+			}
+		}
+		if(!globalReplacementMap.isEmpty()) {
+			Double distancenormalized = globalReplacementMap.firstEntry().getKey();
+			if(distancenormalized == 0) {
+				Replacement replacement = globalReplacementMap.firstEntry().getValue();
 				replacementInfo.addReplacement(replacement);
-				replacementInfo.setArgumentizedString1(replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(replacement.getBefore()), Matcher.quoteReplacement(replacement.getAfter())));
-				if(replacementMap.firstEntry().getKey() == 0) {
-					break;
+				replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacement.getBefore(), replacement.getAfter()));
+			}
+			else {
+				for(Replacement replacement : globalReplacementMap.values()) {
+					replacementInfo.addReplacement(replacement);
+					replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacement.getBefore(), replacement.getAfter()));
 				}
 			}
 		}

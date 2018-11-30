@@ -3488,6 +3488,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable fileList : File[] in method public prepare(m ProgressMonitor) : void from class org.geoserver.importer.Directory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 6443
 }, {
@@ -5004,6 +5011,13 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable ghStorage : GraphHopperStorage in method public testRelation() : void from class com.graphhopper.reader.OSMReaderTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable ghStorage : GraphHopperStorage in method public testTurnFlagCombination() : void from class com.graphhopper.reader.OSMReaderTest",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -12599,6 +12613,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable startEntry : LogEntryStart in method public visit(transaction CommittedTransactionRepresentation) : boolean from class org.neo4j.kernel.impl.transaction.state.RecoveryVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 11758
 }, {
@@ -13305,13 +13326,6 @@
     "refactorings": [{
         "type": "Move Attribute",
         "description": "Move Attribute private stopped : boolean from class org.infinispan.persistence.async.State to class org.infinispan.persistence.async.AsyncCacheWriter",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Extract Variable",
-        "description": "Extract Variable shouldStop : boolean in method public run() : void from class org.infinispan.persistence.async.AsyncCacheWriter.AsyncStoreCoordinator",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -16508,6 +16522,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable enclosingType : JDeclaredType in method private rescue(method JMethod) : void from class com.google.gwt.dev.jjs.impl.ControlFlowAnalyzer.RescueVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 6656
 }, {
@@ -18444,6 +18465,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable jFileChooser : JFileChooser to fileChooser : JFileChooser in method private fileSelection() : File in class org.neo4j.desktop.ui.BrowseForDatabaseActionListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable location : String in method public MainWindow(databaseActions DatabaseActions, model DesktopModel) from class org.neo4j.desktop.ui.MainWindow",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -30583,6 +30611,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable pathToReplace : String in method public sanitize(workingDir Optional, contents String, expandPaths boolean) : String from class com.facebook.buck.cxx.DebugPathSanitizer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 6724

@@ -20,6 +20,7 @@ import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -1222,7 +1223,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		arguments1.removeAll(argIntersection);
 		arguments2.removeAll(argIntersection);
 		
-		findReplacements(arguments1, variables2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_VARIABLE);
+		if(!argumentsWithIdenticalMethodCalls(arguments1, arguments2, variables1, variables2)) {
+			findReplacements(arguments1, variables2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_VARIABLE);
+		}
 		
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		for(Replacement r : replacementInfo.getReplacements()) {
@@ -1719,6 +1722,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private boolean argumentsWithIdenticalMethodCalls(Set<String> arguments1, Set<String> arguments2,
+			Set<String> variables1, Set<String> variables2) {
+		int identicalMethodCalls = 0;
+		if(arguments1.size() == arguments2.size()) {
+			Iterator<String> it1 = arguments1.iterator();
+			Iterator<String> it2 = arguments2.iterator();
+			while(it1.hasNext() && it2.hasNext()) {
+				String arg1 = it1.next();
+				String arg2 = it2.next();
+				if(arg1.contains("(") && arg2.contains("(")) {
+					String s1 = arg1.substring(0, arg1.indexOf("("));
+					String s2 = arg2.substring(0, arg2.indexOf("("));
+					if(s1.equals(s2) && s1.length() > 0) {
+						String args1 = arg1.substring(arg1.indexOf("(")+1, arg1.indexOf(")"));
+						String args2 = arg2.substring(arg2.indexOf("(")+1, arg2.indexOf(")"));
+						if(variables1.contains(args1) && variables2.contains(args2)) {
+							identicalMethodCalls++;
+						}
+					}
+				}
+			}
+		}
+		return identicalMethodCalls == arguments1.size() && arguments1.size() > 0;
 	}
 
 	private boolean oneIsVariableDeclarationTheOtherIsVariableAssignment(String s1, String s2, ReplacementInfo replacementInfo) {

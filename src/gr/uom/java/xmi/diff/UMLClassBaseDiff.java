@@ -1154,12 +1154,28 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();
 		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();
 		List<AbstractCodeMapping> exactMatchList = new ArrayList<AbstractCodeMapping>(operationBodyMapper.getExactMatches());
+		boolean exceptionHandlingExactMatch = false;
+		boolean throwsNewExceptionExactMatch = false;
+		if(exactMatchList.size() == 1) {
+			AbstractCodeMapping mapping = exactMatchList.get(0);
+			if(mapping.getFragment1() instanceof StatementObject && mapping.getFragment2() instanceof StatementObject) {
+				StatementObject statement1 = (StatementObject)mapping.getFragment1();
+				StatementObject statement2 = (StatementObject)mapping.getFragment2();
+				if(statement1.getParent().getString().startsWith("catch(") &&
+						statement2.getParent().getString().startsWith("catch(")) {
+					exceptionHandlingExactMatch = true;
+				}
+			}
+			if(mapping.getFragment1().throwsNewException() && mapping.getFragment2().throwsNewException()) {
+				throwsNewExceptionExactMatch = true;
+			}
+		}
 		exactMatchList.addAll(additionalExactMatches);
 		int exactMatches = exactMatchList.size();
 		return mappings > 0 && (mappings > nonMappedElementsT2 ||
 				(exactMatches >= mappings && nonMappedElementsT1 == 0) ||
-				(exactMatches == 1 && !exactMatchList.get(0).getFragment1().throwsNewException() && nonMappedElementsT2-exactMatches < 10) ||
-				(exactMatches > 1 && additionalExactMatches.size() < exactMatches && nonMappedElementsT2-exactMatches < 20) ||
+				(exactMatches == 1 && !throwsNewExceptionExactMatch && nonMappedElementsT2-exactMatches < 10) ||
+				(!exceptionHandlingExactMatch && exactMatches > 1 && additionalExactMatches.size() < exactMatches && nonMappedElementsT2-exactMatches < 20) ||
 				(mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2())) ||
 				argumentExtractedWithDefaultReturnAdded(operationBodyMapper);
 	}

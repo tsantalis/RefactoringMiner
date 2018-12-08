@@ -10919,18 +10919,18 @@
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method package setPassword(user User, session Session, password Expression) : void extracted from public update() : int in class org.lealone.command.ddl.AlterUser",
-        "comment": "<p>Extract and Move to other&nbsp; class.</p><p>&nbsp;setPassword is in class <span class='blob-code-inner'><span class='pl-smi'>CreateUser.</span></span></p>",
-        "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method package setPassword(user User, session Session, password Expression) : void extracted from public update() : int in class org.lealone.command.ddl.AlterUser & moved to class org.lealone.command.ddl.CreateUser",
+        "comment": "<p>Extract and Move to other class. setPassword is in class <span class='blob-code-inner'><span class='pl-smi'>CreateUser.</span></span></p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh, Automatic"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method package setSaltAndHash(user User, session Session, salt Expression, hash Expression) : void extracted from public update() : int in class org.lealone.command.ddl.AlterUser",
-        "comment": "<p>Extract and Move to other&nbsp; class.</p><p>setSaltAndHash(..) is in class <span class='blob-code-inner'><span class='pl-smi'>CreateUser.</span></span></p>",
-        "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method package setSaltAndHash(user User, session Session, salt Expression, hash Expression) : void extracted from public update() : int in class org.lealone.command.ddl.AlterUser & moved to class org.lealone.command.ddl.CreateUser",
+        "comment": "<p>Extract and Move to other class. setSaltAndHash(..) is in class <span class='blob-code-inner'><span class='pl-smi'>CreateUser.</span></span></p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh, Automatic"
     }],
     "refDiffExecutionTime": 638
@@ -11794,16 +11794,16 @@
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method protected convertToDrel(relNode RelNode) : DrillRel extracted from private convertToDrel(relNode RelNode, schema AbstractSchema, tableName String, partitionColumns List) : DrillRel in class org.apache.drill.exec.planner.sql.handlers.CreateTableHandler",
-        "comment": "<p>Extract and Move to other class.</p><p>The convertToDrel(relNode RelNode)&nbsp; in the parent class (<span class='pl-e'>DefaultSqlHandler</span>) is extratced form convertToDrel(relNode RelNode, schema AbstractSchema, tableName String, partitionColumns List) .</p><p>See refacoting: http://refactoring.encs.concordia.ca/oracle/refactoring-details/1121732/1073</p><p>So for this class consider it as CTP since it is 'extratc and move to other class'</p>",
+        "comment": "<p>Extract and Move to other class.</p><p>The convertToDrel(relNode RelNode)&nbsp; in the parent class (<span class='pl-e'>DefaultSqlHandler</span>) is extratced form convertToDrel(relNode RelNode, schema AbstractSchema, tableName String, partitionColumns List) .</p><p>See refactoring: http://refactoring.encs.concordia.ca/oracle/refactoring-details/1121732/1073</p><p>So for this class consider it as CTP since it is 'extract and move to other class'</p>",
         "validation": "CTP",
         "detectionTools": "RefDiff",
         "validators": "Laleh, Automatic"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method protected validateAndConvert(sqlNode SqlNode) : ConvertedRelNode extracted from public getPlan(node SqlNode) : PhysicalPlan in class org.apache.drill.exec.planner.sql.handlers.ExplainHandler",
-        "comment": "<p>Extratc and Move to other class.</p><p>The validateAndConvert(sqlNode SqlNode) in the parent class (DefaultSqlHandler) is extracted from getPlan(node SqlNode).</p><p>See refactroing:&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1121732/1072</p><p>So for this class we should consider it as Extract and move to other (here parent) class.</p>",
-        "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method protected validateAndConvert(sqlNode SqlNode) : ConvertedRelNode extracted from public getPlan(node SqlNode) : PhysicalPlan in class org.apache.drill.exec.planner.sql.handlers.ExplainHandler & moved to class org.apache.drill.exec.planner.sql.handlers.DefaultSqlHandler",
+        "comment": "<p>Extract and Move to other class.</p><p>The validateAndConvert(sqlNode SqlNode) in the parent class (DefaultSqlHandler) is extracted from getPlan(node SqlNode).</p><p>See refactoring:&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1121732/1072</p><p>So for this class we should consider it as Extract and move to other (here parent) class.</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh, Automatic"
     }, {
         "type": "Rename Variable",
@@ -13971,39 +13971,39 @@
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public newSha256Digest() : MessageDigest extracted from public hash(contents byte[]) : Sha256Hash in class org.bitcoinj.core.Sha256Hash",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public newSha256Digest() : MessageDigest extracted from public hash(contents byte[]) : Sha256Hash in class org.bitcoinj.core.Sha256Hash & moved to class org.bitcoinj.core.Utils",
         "comment": "<p>Extract and Move to other class</p>",
-        "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Laleh, Automatic"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public newSha256Digest() : MessageDigest extracted from private readBinary(inputStream InputStream) : Sha256Hash in class org.bitcoinj.core.CheckpointManager",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public newSha256Digest() : MessageDigest extracted from private readBinary(inputStream InputStream) : Sha256Hash in class org.bitcoinj.core.CheckpointManager & moved to class org.bitcoinj.core.Utils",
         "comment": "<p>Extract and Move to other class</p>",
-        "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Laleh, Automatic"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public newSha256Digest() : MessageDigest extracted from public executeScript(txContainingThis Transaction, index long, script Script, stack LinkedList, enforceNullDummy boolean) : void in class org.bitcoinj.script.Script",
-        "comment": "<p>Extract and Move to other&nbsp; class</p>",
-        "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public newSha256Digest() : MessageDigest extracted from public executeScript(txContainingThis Transaction, index long, script Script, stack LinkedList, enforceNullDummy boolean) : void in class org.bitcoinj.script.Script & moved to class org.bitcoinj.core.Utils",
+        "comment": "<p>Extract and Move to other class</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Laleh, Automatic"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public newSha256Digest() : MessageDigest extracted from public MnemonicCode(wordstream InputStream, wordListDigest String) in class org.bitcoinj.crypto.MnemonicCode",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public newSha256Digest() : MessageDigest extracted from public MnemonicCode(wordstream InputStream, wordListDigest String) in class org.bitcoinj.crypto.MnemonicCode & moved to class org.bitcoinj.core.Utils",
         "comment": "<p>Extract and Move to other class</p>",
-        "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Laleh, Automatic"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public newSha256Digest() : MessageDigest extracted from private writeBinaryCheckpoints(checkpoints TreeMap, file File) : void in class org.bitcoinj.tools.BuildCheckpoints",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public newSha256Digest() : MessageDigest extracted from private writeBinaryCheckpoints(checkpoints TreeMap, file File) : void in class org.bitcoinj.tools.BuildCheckpoints & moved to class org.bitcoinj.core.Utils",
         "comment": "<p>Extract and Move to other class</p>",
-        "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Laleh, Automatic"
     }],
     "refDiffExecutionTime": 1994
@@ -16106,11 +16106,11 @@
         "detectionTools": "RefDiff",
         "validators": "Laleh, Automatic"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public setSessionOption(drillClient DrillClient, option String, value String) : void extracted from private setSessionOption(option String, value String) : void in class org.apache.drill.exec.server.TestDrillbitResilience",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public setSessionOption(drillClient DrillClient, option String, value String) : void extracted from private setSessionOption(option String, value String) : void in class org.apache.drill.exec.server.TestDrillbitResilience & moved to class org.apache.drill.exec.testing.ControlsInjectionUtil",
         "comment": "<p>Detected&nbsp; as Extract and Move to other class.&nbsp;</p>",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Laleh, Automatic"
     }, {
         "type": "Extract And Move Method",
@@ -18080,45 +18080,45 @@
     }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method private createUser(id String) : User extracted from public testForwardFromReserved() : void in class org.jbpm.services.task.LifeCycleBaseTest & moved to class org.jbpm.services.task.wih.util.PeopleAssignmentHelperTest",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
+        "comment": "<p>The method is extracted localy in LifeCycleBaseTest</p>",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Nikos"
     }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method private createUser(id String) : User extracted from public testDelegateFromReserved() : void in class org.jbpm.services.task.LifeCycleBaseTest & moved to class org.jbpm.services.task.wih.util.PeopleAssignmentHelperTest",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
+        "comment": "<p>The method is extracted localy in LifeCycleBaseTest</p>",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Nikos"
     }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method private createUser(id String) : User extracted from public testNominateOnOtherThanCreated() : void in class org.jbpm.services.task.LifeCycleBaseTest & moved to class org.jbpm.services.task.wih.util.PeopleAssignmentHelperTest",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
+        "comment": "<p>The method is extracted localy in LifeCycleBaseTest</p>",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Nikos"
     }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method private createUser(id String) : User extracted from public testForwardFromReservedWithIncorrectUser() : void in class org.jbpm.services.task.LifeCycleBaseTest & moved to class org.jbpm.services.task.wih.util.PeopleAssignmentHelperTest",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
+        "comment": "<p>The method is extracted localy in LifeCycleBaseTest</p>",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Nikos"
     }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method private createUser(id String) : User extracted from public testRemoveNotInRecipientList() : void in class org.jbpm.services.task.LifeCycleBaseTest & moved to class org.jbpm.services.task.wih.util.PeopleAssignmentHelperTest",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
+        "comment": "<p>The method is extracted localy in LifeCycleBaseTest</p>",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Nikos"
     }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method private createUser(id String) : User extracted from public testNominateWithIncorrectUser() : void in class org.jbpm.services.task.LifeCycleBaseTest & moved to class org.jbpm.services.task.wih.util.PeopleAssignmentHelperTest",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
+        "comment": "<p>The method is extracted localy in LifeCycleBaseTest</p>",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Nikos"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private createUser(id String) : User extracted from public testNominateToUser() : void in class org.jbpm.services.task.LifeCycleBaseTest",
@@ -18129,10 +18129,10 @@
     }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method private createUser(id String) : User extracted from public testDelegateFromReady() : void in class org.jbpm.services.task.LifeCycleBaseTest & moved to class org.jbpm.services.task.wih.util.PeopleAssignmentHelperTest",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
+        "comment": "<p>The method is extracted localy in LifeCycleBaseTest</p>",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Nikos"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private createUser(id String) : User extracted from public testCompleteWithComments() : void in class org.jbpm.services.task.LifeCycleBaseTest",
@@ -18143,10 +18143,10 @@
     }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method private createUser(id String) : User extracted from public testDelegateFromReservedWithIncorrectUser() : void in class org.jbpm.services.task.LifeCycleBaseTest & moved to class org.jbpm.services.task.wih.util.PeopleAssignmentHelperTest",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
+        "comment": "<p>The method is extracted localy in LifeCycleBaseTest</p>",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
+        "validators": "Nikos"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private createUser(id String) : User extracted from public testForwardFromReserved() : void in class org.jbpm.services.task.LifeCycleBaseTest",
@@ -27833,10 +27833,10 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected buildKernelServices() : KernelServices extracted from public testProtocolReadWriteOperation() : void in class org.jboss.as.clustering.jgroups.subsystem.OperationsTestCase",
-        "comment": "<p>Extract and Move to the inner class</p><p>(Note the move class as well)</p><p><span class='blob-code-inner'><span class='pl-c1'>super</span><span class='pl-k'>.</span>installInController(subsystemXml) used to do this:</span></p><p>https://github.com/wildfly/wildfly-core/commit/7331c7bd5dfa29540ff67b2c7c9b4585deef0ee6&nbsp;</p><p>And now what is being done in the extracted method is the same</p><p>&nbsp;</p><p>&nbsp;</p>",
+        "comment": "<p>Extract and Move to the superclass</p><p><span class='blob-code-inner'><span class='pl-c1'>super</span><span class='pl-k'>.</span>installInController(subsystemXml) used to do this:</span></p><p><span class='blob-code-inner'>https://github.com/wildfly/wildfly-core/commit/7331c7bd5dfa29540ff67b2c7c9b4585deef0ee6#diff-818a73e27c9ada5c4f27af373f62de8cL263</span></p><p>KernelServices installInController(AdditionalInitialization additionalInit, String subsystemXml) throws Exception {<br /> return createKernelServicesBuilder(additionalInit).setSubsystemXml(subsystemXml).build();<br /> }</p><p>And now what is being done in the extracted method is the same</p><p>======================================================================</p><p>EXTRACTED METHOD<br />protected KernelServices buildKernelServices() throws XMLStreamException, IOException, Exception {<br /> return createKernelServicesBuilder(AdditionalInitialization.MANAGEMENT).setSubsystemXml(this.getSubsystemXml()).build();<br /> }</p><p>EXTRACTED CODE<br />String subsystemXml = getSubsystemXml() ;<br /> KernelServices servicesA = super.installInController(subsystemXml) ;</p><p>&nbsp;</p><p>&nbsp;</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
-        "validators": "Davood, Automatic"
+        "validators": "Davood, Nikos"
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method private buildKernelServices() : KernelServices extracted from public testParseAndMarshalModel() : void in class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemTestCase",
@@ -33141,18 +33141,18 @@
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public makeBlock(payloadBytes byte[], length int) : Block extracted from public getBlocksToTest(runBarelyExpensiveTests boolean, runExpensiveTests boolean, blockStorageFile File) : RuleList in class org.bitcoinj.core.FullBlockTestGenerator",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public makeBlock(payloadBytes byte[], length int) : Block extracted from public getBlocksToTest(runBarelyExpensiveTests boolean, runExpensiveTests boolean, blockStorageFile File) : RuleList in class org.bitcoinj.core.FullBlockTestGenerator & moved to class org.bitcoinj.core.BitcoinSerializer",
         "comment": "<p>Extract and Move to the inner class</p><p>Why didn't&nbsp;RefactoringMiner find this one?</p>",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood, Automatic"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public makeBlock(payloadBytes byte[], length int) : Block extracted from package parse() : void in class org.bitcoinj.core.HeadersMessage",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public makeBlock(payloadBytes byte[], length int) : Block extracted from package parse() : void in class org.bitcoinj.core.HeadersMessage & moved to class org.bitcoinj.core.BitcoinSerializer",
         "comment": "<p>Extract and Move to the inner class</p><p>Why didn't RefactoringMiner detect this case?</p>",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood, Automatic"
     }, {
         "type": "Extract Method",

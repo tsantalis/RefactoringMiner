@@ -2478,4 +2478,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		int index2 = operation2.getParameterNameList().indexOf(replacement.getAfter());
 		return index1 >= 0 && index1 == index2;
 	}
+
+	public boolean containsExtractOperationRefactoring(UMLOperation extractedOperation) {
+		if(classDiff != null) {
+			return classDiff.containsExtractOperationRefactoring(operation1, extractedOperation);
+		}
+		return false;
+	}
 }

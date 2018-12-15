@@ -1093,11 +1093,11 @@ public class UMLModelDiff {
       for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
     	  UMLOperation addedOperation = addedOperationIterator.next();
     	  for(UMLOperationBodyMapper mapper : mappers) {
-    		  if(mapper.nonMappedElementsT1() > 0 && !mapper.containsExtractOperationRefactoring(addedOperation)) {
+    		  if((mapper.nonMappedElementsT1() > 0 || !mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) && !mapper.containsExtractOperationRefactoring(addedOperation)) {
                Set<OperationInvocation> operationInvocations = mapper.getOperation2().getAllOperationInvocations();
                OperationInvocation addedOperationInvocation = null;
                for(OperationInvocation invocation : operationInvocations) {
-                  if(invocation.matchesOperation(addedOperation)) {
+                  if(invocation.matchesOperation(addedOperation, mapper.getOperation2().variableTypeMap())) {
                      addedOperationInvocation = invocation;
                      break;
                   }
@@ -1138,7 +1138,9 @@ public class UMLModelDiff {
             		  parameterToArgumentMap2.put("this.", "");
             	  }
                   UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap1, parameterToArgumentMap2);
-                  if(extractAndMoveMatchCondition(operationBodyMapper)) {
+                  if(!anotherAddedMethodExistsWithBetterMatchingInvocationExpression(addedOperationInvocation, addedOperation, addedOperations) &&
+                		  !conflictingExpression(addedOperationInvocation, addedOperation, mapper.getOperation2().variableTypeMap()) &&
+                		  extractAndMoveMatchCondition(operationBodyMapper, mapper)) {
                 	  if(className.equals(addedOperation.getClassName())) {
                 		  //extract inside moved or renamed class
                 		  ExtractOperationRefactoring extractOperationRefactoring =
@@ -1189,7 +1191,51 @@ public class UMLModelDiff {
       }
    }
 
-   private boolean extractAndMoveMatchCondition(UMLOperationBodyMapper operationBodyMapper) {
+   private boolean conflictingExpression(OperationInvocation invocation, UMLOperation addedOperation, Map<String, UMLType> variableTypeMap) {
+	   String expression = invocation.getExpression();
+	   if(expression != null && variableTypeMap.containsKey(expression)) {
+		   UMLType type = variableTypeMap.get(expression);
+		   UMLClassBaseDiff classDiff = getUMLClassDiff(addedOperation.getClassName());
+		   boolean superclassRelationship = false;
+		   if(classDiff != null && classDiff.getNewSuperclass() != null &&
+				   classDiff.getNewSuperclass().equals(type)) {
+			   superclassRelationship = true;
+		   }
+		   if(!addedOperation.getNonQualifiedClassName().equals(type.getClassType()) && !superclassRelationship) {
+			   return true;
+		   }
+	   }
+	   return false;
+   }
+
+   private boolean anotherAddedMethodExistsWithBetterMatchingInvocationExpression(OperationInvocation invocation, UMLOperation addedOperation, List<UMLOperation> addedOperations) {
+	   String expression = invocation.getExpression();
+	   if(expression != null) {
+		   int originalDistance = StringDistance.editDistance(expression, addedOperation.getNonQualifiedClassName());
+		   for(UMLOperation operation : addedOperations) {
+			   UMLClassBaseDiff classDiff = getUMLClassDiff(operation.getClassName());
+			   boolean isInterface = classDiff != null ? classDiff.nextClass.isInterface() : false;
+			   if(!operation.equals(addedOperation) && addedOperation.equalSignature(operation) && !operation.isAbstract() && !isInterface) {
+				   int newDistance = StringDistance.editDistance(expression, operation.getNonQualifiedClassName());
+				   if(newDistance < originalDistance) {
+					   return true;
+				   }
+			   }
+		   }
+	   }
+	   return false;
+   }
+
+   private boolean extractAndMoveMatchCondition(UMLOperationBodyMapper operationBodyMapper, UMLOperationBodyMapper parentMapper) {
+	   List<AbstractCodeMapping> mappingList = operationBodyMapper.getMappings();
+	   if(operationBodyMapper.getOperation2().isGetter() && mappingList.size() == 1) {
+		   List<AbstractCodeMapping> parentMappingList = parentMapper.getMappings();
+		   for(AbstractCodeMapping mapping : parentMappingList) {
+			   if(mapping.getFragment1().equals(mappingList.get(0).getFragment1())) {
+				   return false;
+			   }
+		   }
+	   }
 	   int mappings = operationBodyMapper.mappingsWithoutBlocks();
 	   int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();
 	   int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();

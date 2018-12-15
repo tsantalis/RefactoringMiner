@@ -765,7 +765,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 			Set<OperationInvocation> operationInvocations2 = operation2.getAllOperationInvocations();
 			boolean anotherMapperCallsOperation2OfTheBestMapper = false;
 			for(OperationInvocation invocation : operationInvocations2) {
-				if(invocation.matchesOperation(bestMapper.getOperation2()) && !invocation.matchesOperation(bestMapper.getOperation1()) &&
+				if(invocation.matchesOperation(bestMapper.getOperation2(), operation2.variableTypeMap()) && !invocation.matchesOperation(bestMapper.getOperation1(), operation2.variableTypeMap()) &&
 						!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, removedOperations)) {
 					anotherMapperCallsOperation2OfTheBestMapper = true;
 					break;
@@ -775,7 +775,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 			Set<OperationInvocation> operationInvocations1 = operation1.getAllOperationInvocations();
 			boolean anotherMapperCallsOperation1OfTheBestMapper = false;
 			for(OperationInvocation invocation : operationInvocations1) {
-				if(invocation.matchesOperation(bestMapper.getOperation1()) && !invocation.matchesOperation(bestMapper.getOperation2()) &&
+				if(invocation.matchesOperation(bestMapper.getOperation1(), operation1.variableTypeMap()) && !invocation.matchesOperation(bestMapper.getOperation2(), operation1.variableTypeMap()) &&
 						!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, addedOperations)) {
 					anotherMapperCallsOperation1OfTheBestMapper = true;
 					break;
@@ -844,7 +844,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 			OperationInvocation invocationT2 = statementT2.invocationCoveringEntireFragment();
 			if(invocationT2 != null) {
 				for(UMLOperation addedOperation : addedOperations) {
-					if(invocationT2.matchesOperation(addedOperation)) {
+					if(invocationT2.matchesOperation(addedOperation, operationBodyMapper.getOperation2().variableTypeMap())) {
 						StatementObject statementT1 = nonMappedLeavesT1.get(0);
 						OperationInvocation invocationT1 = statementT1.invocationCoveringEntireFragment();
 						if(invocationT1 != null && addedOperation.getAllOperationInvocations().contains(invocationT1)) {
@@ -869,7 +869,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 			if(!intersection.contains(addedOperationInvocation)) {
 				for(UMLOperation operation : addedOperations) {
 					if(!operation.equals(addedOperation) && operation.getBody() != null) {
-						if(addedOperationInvocation.matchesOperation(operation)) {
+						if(addedOperationInvocation.matchesOperation(operation, addedOperation.variableTypeMap())) {
 							//addedOperation calls another added method
 							operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllOperationInvocations());
 						}
@@ -907,7 +907,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 			if(!intersection.contains(removedOperationInvocation)) {
 				for(UMLOperation operation : removedOperations) {
 					if(!operation.equals(removedOperation) && operation.getBody() != null) {
-						if(removedOperationInvocation.matchesOperation(operation)) {
+						if(removedOperationInvocation.matchesOperation(operation, removedOperation.variableTypeMap())) {
 							//removedOperation calls another removed method
 							operationInvocationsInMethodsCalledByRemovedOperation.addAll(operation.getAllOperationInvocations());
 						}
@@ -999,8 +999,8 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 				if(!mapper.getNonMappedLeavesT2().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty() ||
 					!mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
 					Set<OperationInvocation> operationInvocations = mapper.getOperation1().getAllOperationInvocations();
-					OperationInvocation removedOperationInvocation = matchingInvocation(removedOperation, operationInvocations);
-					if(removedOperationInvocation != null && !invocationMatchesWithAddedOperation(removedOperationInvocation, mapper.getOperation2().getAllOperationInvocations())) {
+					OperationInvocation removedOperationInvocation = matchingInvocation(removedOperation, operationInvocations, mapper.getOperation1().variableTypeMap());
+					if(removedOperationInvocation != null && !invocationMatchesWithAddedOperation(removedOperationInvocation, mapper.getOperation1().variableTypeMap(), mapper.getOperation2().getAllOperationInvocations())) {
 						List<String> arguments = removedOperationInvocation.getArguments();
 						List<String> parameters = removedOperation.getParameterNameList();
 						Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
@@ -1034,10 +1034,10 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 				(exactMatches > 1 && nonMappedElementsT1-exactMatches < 20));
 	}
 
-	private boolean invocationMatchesWithAddedOperation(OperationInvocation removedOperationInvocation, Set<OperationInvocation> operationInvocationsInNewMethod) {
+	private boolean invocationMatchesWithAddedOperation(OperationInvocation removedOperationInvocation, Map<String, UMLType> variableTypeMap, Set<OperationInvocation> operationInvocationsInNewMethod) {
 		if(operationInvocationsInNewMethod.contains(removedOperationInvocation)) {
 			for(UMLOperation addedOperation : addedOperations) {
-				if(removedOperationInvocation.matchesOperation(addedOperation)) {
+				if(removedOperationInvocation.matchesOperation(addedOperation, variableTypeMap)) {
 					return true;
 				}
 			}
@@ -1053,7 +1053,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 				if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
 					!mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
 					Set<OperationInvocation> operationInvocations = mapper.getOperation2().getAllOperationInvocations();
-					OperationInvocation addedOperationInvocation = matchingInvocation(addedOperation, operationInvocations);
+					OperationInvocation addedOperationInvocation = matchingInvocation(addedOperation, operationInvocations, mapper.getOperation2().variableTypeMap());
 					if(addedOperationInvocation != null) {
 						CallTreeNode root = new CallTreeNode(mapper.getOperation1(), addedOperation, addedOperationInvocation);
 						CallTree callTree = new CallTree(root);
@@ -1064,7 +1064,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 							List<CallTreeNode> nodesInBreadthFirstOrder = callTree.getNodesInBreadthFirstOrder();
 							for(int i=1; i<nodesInBreadthFirstOrder.size(); i++) {
 								CallTreeNode node = nodesInBreadthFirstOrder.get(i);
-								if(matchingInvocation(node.getInvokedOperation(), operationInvocations) == null) {
+								if(matchingInvocation(node.getInvokedOperation(), operationInvocations, mapper.getOperation2().variableTypeMap()) == null) {
 									UMLOperationBodyMapper nestedMapper = createMapperForExtractedMethod(mapper, node.getOriginalOperation(), node.getInvokedOperation(), node.getInvocation());
 									if(nestedMapper != null) {
 										additionalExactMatches.addAll(nestedMapper.getExactMatches());
@@ -1095,10 +1095,10 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 	}
 
 	private OperationInvocation matchingInvocation(UMLOperation addedOperation,
-			Set<OperationInvocation> operationInvocations) {
+			Set<OperationInvocation> operationInvocations, Map<String, UMLType> variableTypeMap) {
 		OperationInvocation addedOperationInvocation = null;
 		for(OperationInvocation invocation : operationInvocations) {
-			if(invocation.matchesOperation(addedOperation)) {
+			if(invocation.matchesOperation(addedOperation, variableTypeMap)) {
 				addedOperationInvocation = invocation;
 				break;
 			}
@@ -1110,7 +1110,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		Set<OperationInvocation> invocations = operation.getAllOperationInvocations();
 		for(UMLOperation addedOperation : addedOperations) {
 			for(OperationInvocation invocation : invocations) {
-				if(invocation.matchesOperation(addedOperation)) {
+				if(invocation.matchesOperation(addedOperation, operation.variableTypeMap())) {
 					if(!callTree.contains(addedOperation)) {
 						CallTreeNode node = new CallTreeNode(operation, addedOperation, invocation);
 						parent.addChild(node);
@@ -1199,7 +1199,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		OperationInvocation delegateMethodInvocation = addedOperation.isDelegate();
 		if(originalOperation.isDelegate() == null && delegateMethodInvocation != null && !originalOperation.getAllOperationInvocations().contains(addedOperationInvocation)) {
 			for(UMLOperation operation : addedOperations) {
-				if(delegateMethodInvocation.matchesOperation(operation)) {
+				if(delegateMethodInvocation.matchesOperation(operation, addedOperation.variableTypeMap())) {
 					return operation;
 				}
 			}

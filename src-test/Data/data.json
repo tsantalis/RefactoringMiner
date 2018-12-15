@@ -1427,8 +1427,8 @@
         "type": "Move Method",
         "description": "Move Method public addDependency(project Project, configurationName String, group String, name String, version String, classifier String) : Dependency from class com.liferay.gradle.plugins.poshi.runner.util.GradleUtil to public addDependency(project Project, configurationName String, group String, name String, version String, classifier String, transitive boolean) : Dependency from class com.liferay.gradle.util.GradleUtil",
         "comment": "class GradleUtil is deleted,  thus it does not total comply with the defenition of move method.",
-        "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh"
     }],
     "refDiffExecutionTime": 10416
@@ -9027,6 +9027,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable modelClass : Class to c : Class in method private getUsefulClass() : Class in class com.jfinal.plugin.activerecord.Model",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method protected getDatePattern() : String extracted from protected validateDate(field String, min Date, max Date, errorKey String, errorMessage String) : void in class com.jfinal.validate.Validator",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -21798,13 +21805,6 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
-    }, {
-        "type": "Extract Method",
-        "description": "Extract Method public migration(dao Dao, packageName String, add boolean, del boolean, nameTable String) : void extracted from public migration(dao Dao, packageName String, add boolean, del boolean) : void in class org.nutz.dao.util.Daos",
-        "comment": "<p>The method&nbsp;migration() used to be called in the same place even in the past!</p>",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Davood, Nikos"
     }],
     "refDiffExecutionTime": 1121
 }, {
@@ -26040,15 +26040,15 @@
         "type": "Extract Method",
         "description": "Extract Method private getJUnit4JarPaths() : List extracted from public registerFixes(registrar QuickFixActionRegistrar, reference PsiReference) : List in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
         "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private getJUnit4JarPaths() : List extracted from public addJUnit4Library(inTests boolean, currentModule Module) : void in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
@@ -26764,6 +26764,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable line : LineAnnotation to lines : List in method private checkLine(result Map, index int, annotation String, colour Color) : void in class org.adoptopenjdk.jitwatch.test.TestBytecodeAnnotationBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable annotation : LineAnnotation to annotationList : List in method private createLabel(instruction BytecodeInstruction, maxOffset int, line int, annotations Map, member IMetaMember, lineIndex int) : BytecodeLabel in class org.adoptopenjdk.jitwatch.ui.triview.bytecode.ViewerBytecode",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -29097,13 +29104,6 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Davood, Automatic"
-    }, {
-        "type": "Extract And Move Method",
-        "description": "Extract And Move Method public getTag() : Object extracted from public getTag() : Object in class com.loopj.android.http.RequestHandle & moved to class com.loopj.android.http.AsyncHttpResponseHandler",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
     }],
     "refDiffExecutionTime": 294
 }, {
@@ -29980,7 +29980,7 @@
         "description": "Inline Method private getModuleFileName() : String inlined to public resolve() : PsiElement in class org.intellij.erlang.psi.impl.ErlangFunctionReferenceImpl",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Inline Method",
@@ -32426,6 +32426,13 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute isSticky : boolean to isProcessed : boolean in class org.apache.giraph.ooc.DiskBackedPartitionStore.MetaPartition",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public moveEdgesToVertices() : void extracted from public setup() : FinishedSuperstepStats in class org.apache.giraph.worker.BspServiceWorker & moved to class org.apache.giraph.partition.SimplePartitionStore",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -35310,24 +35317,24 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method private isList(value Object) : boolean extracted from public get(name T) : T in class io.netty.handler.codec.DefaultHeaders",
-        "comment": "Matin: FP",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
-        "validators": "Matin, Laleh, Davood"
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": "Matin, Laleh, Davood, Nikos"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private isList(value Object) : boolean extracted from public getAndRemove(name T) : T in class io.netty.handler.codec.DefaultHeaders",
-        "comment": "Matin: FP",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
-        "validators": "Matin, Laleh, Davood"
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": "Matin, Laleh, Davood, Nikos"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private isList(value Object) : boolean extracted from public getAll(name T) : List in class io.netty.handler.codec.DefaultHeaders",
-        "comment": "Matin: FP",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
-        "validators": "Matin, Laleh, Davood"
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": "Matin, Laleh, Davood, Nikos"
     }, {
         "type": "Inline Method",
         "description": "Inline Method private setAllVisitor() : EntryVisitor inlined to public setAll(headers Headers) : Headers in class io.netty.handler.codec.DefaultHeaders",

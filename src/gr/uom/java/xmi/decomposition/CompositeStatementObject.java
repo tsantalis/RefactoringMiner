@@ -11,7 +11,6 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Statement;
 
 import gr.uom.java.xmi.LocationInfo;
-import gr.uom.java.xmi.UMLOperation;
 
 public class CompositeStatementObject extends AbstractStatement {
 
@@ -289,65 +288,6 @@ public class CompositeStatementObject extends AbstractStatement {
 			}
 		}
 		return null;
-	}
-
-	protected double compositeChildMatchingScore(CompositeStatementObject other, List<AbstractCodeMapping> mappings,
-			List<UMLOperation> removedOperations, List<UMLOperation> addedOperations) {
-		int childrenSize1 = getStatements().size();
-		int childrenSize2 = other.getStatements().size();
-		
-		int mappedChildrenSize = 0;
-		for(AbstractCodeMapping mapping : mappings) {
-			if(getStatements().contains(mapping.getFragment1()) && other.getStatements().contains(mapping.getFragment2())) {
-				mappedChildrenSize++;
-			}
-		}
-		if(mappedChildrenSize == 0) {
-			List<StatementObject> leaves1 = getLeaves();
-			List<StatementObject> leaves2 = other.getLeaves();
-			int leaveSize1 = leaves1.size();
-			int leaveSize2 = leaves2.size();
-			int mappedLeavesSize = 0;
-			for(AbstractCodeMapping mapping : mappings) {
-				if(leaves1.contains(mapping.getFragment1()) && leaves2.contains(mapping.getFragment2())) {
-					mappedLeavesSize++;
-				}
-			}
-			if(mappedLeavesSize == 0) {
-				//check for possible extract or inline
-				if(leaveSize2 == 1) {
-					OperationInvocation invocation = leaves2.get(0).invocationCoveringEntireFragment();
-					if(invocation != null && matchesOperation(invocation, addedOperations)) {
-						mappedLeavesSize++;
-					}
-				}
-				else if(leaveSize1 == 1) {
-					OperationInvocation invocation = leaves1.get(0).invocationCoveringEntireFragment();
-					if(invocation != null && matchesOperation(invocation, removedOperations)) {
-						mappedLeavesSize++;
-					}
-				}
-			}
-			int max = Math.max(leaveSize1, leaveSize2);
-			if(max == 0)
-				return 0;
-			else
-				return (double)mappedLeavesSize/(double)max;
-		}
-		
-		int max = Math.max(childrenSize1, childrenSize2);
-		if(max == 0)
-			return 0;
-		else
-			return (double)mappedChildrenSize/(double)max;
-	}
-	
-	private static boolean matchesOperation(OperationInvocation invocation, List<UMLOperation> operations) {
-		for(UMLOperation operation : operations) {
-			if(invocation.matchesOperation(operation))
-				return true;
-		}
-		return false;
 	}
 
 	public Map<String, Set<String>> aliasedAttributes() {

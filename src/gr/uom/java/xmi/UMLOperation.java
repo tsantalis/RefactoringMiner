@@ -148,6 +148,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		this.operationBody = body;
 	}
 
+	public String getNonQualifiedClassName() {
+		return className.contains(".") ? className.substring(className.lastIndexOf(".")+1, className.length()) : className;
+	}
+
 	public String getClassName() {
 		return className;
 	}
@@ -293,13 +297,26 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 				Map<String, OperationInvocation> operationInvocationMap = statement.getMethodInvocationMap();
 				for(String key : operationInvocationMap.keySet()) {
 					OperationInvocation operationInvocation = operationInvocationMap.get(key);
-					if(operationInvocation.matchesOperation(this) || operationInvocation.getMethodName().equals(this.getName())) {
+					if(operationInvocation.matchesOperation(this, this.variableTypeMap()) || operationInvocation.getMethodName().equals(this.getName())) {
 						return operationInvocation;
 					}
 				}
 			}
 		}
 		return null;
+	}
+
+	public boolean isGetter() {
+		if(getBody() != null) {
+			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
+			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
+				StatementObject statement = (StatementObject)statements.get(0);
+				if(statement.getString().startsWith("return ") && statement.containsOnlyOneVariableAccess()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public boolean equals(Object o) {

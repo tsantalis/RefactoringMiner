@@ -70,6 +70,10 @@ public class UMLType implements Serializable {
                 return this.arrayDimension == typeObject.arrayDimension;
             else if(this.typeArguments != null && typeObject.typeArguments != null)
                 return equalTypeArguments(typeObject) && this.arrayDimension == typeObject.arrayDimension;
+            else if(this.typeArguments != null && this.typeArguments.equals("<?>") && typeObject.typeArguments == null)
+            	return this.arrayDimension == typeObject.arrayDimension;
+            else if(this.typeArguments == null && typeObject.typeArguments != null && typeObject.typeArguments.equals("<?>"))
+            	return this.arrayDimension == typeObject.arrayDimension;
         }
     	return false;
     }

@@ -1457,7 +1457,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
 		boolean isEqualWithReplacement = s1.equals(s2) || differOnlyInCastExpression(s1, s2) || oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, replacementInfo) ||
-				(commonConditional(s1, s2) && containsValidOperatorReplacements(replacementInfo));
+				(commonConditional(s1, s2, replacementInfo) && containsValidOperatorReplacements(replacementInfo));
 		if(isEqualWithReplacement) {
 			if(variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1) {
 				boolean typeReplacement = false, variableRename = false, methodInvocationReplacement = false;
@@ -1733,7 +1733,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return replacementInfo.getReplacements();
 			}
 		}
-		if(variableDeclarationWithArrayInitializer1 != null && invocationCoveringTheEntireStatement2 != null) {
+		if(variableDeclarationWithArrayInitializer1 != null && invocationCoveringTheEntireStatement2 != null && variableDeclarations2.isEmpty()) {
 			String args1 = s1.substring(s1.indexOf("{")+1, s1.lastIndexOf("}"));
 			String args2 = s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"));
 			if(args1.equals(args2)) {
@@ -1742,7 +1742,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return replacementInfo.getReplacements();
 			}
 		}
-		if(variableDeclarationWithArrayInitializer2 != null && invocationCoveringTheEntireStatement1 != null) {
+		if(variableDeclarationWithArrayInitializer2 != null && invocationCoveringTheEntireStatement1 != null && variableDeclarations1.isEmpty()) {
 			String args1 = s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")"));
 			String args2 = s2.substring(s2.indexOf("{")+1, s2.lastIndexOf("}"));
 			if(args1.equals(args2)) {
@@ -1849,7 +1849,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return true;
 	}
 
-	private boolean commonConditional(String s1, String s2) {
+	private boolean commonConditional(String s1, String s2, ReplacementInfo info) {
 		if((s1.contains("||") || s1.contains("&&") || s2.contains("||") || s2.contains("&&")) &&
 				!containsMethodSignatureOfAnonymousClass(s1) && !containsMethodSignatureOfAnonymousClass(s2)) {
 			String conditional1 = prepareConditional(s1);
@@ -1867,7 +1867,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Set<String> intersection = new LinkedHashSet<String>(subConditionsAsList1);
 			intersection.retainAll(subConditionsAsList2);
 			if(!intersection.isEmpty()) {
-				return true;
+				int matches = 0;
+				for(String element : intersection) {
+					boolean replacementFound = false;
+					for(Replacement r : info.getReplacements()) {
+						if(ReplacementUtil.contains(element, r.getAfter()) && element.startsWith(r.getAfter()) && element.endsWith(" != null")) {
+							replacementFound = true;
+							break;
+						}
+					}
+					if(!replacementFound) {
+						matches++;
+					}
+				}
+				if(matches > 0)
+					return true;
 			}
 			for(String subCondition1 : subConditionsAsList1) {
 				for(String subCondition2 : subConditionsAsList2) {

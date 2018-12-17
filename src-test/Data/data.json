@@ -26768,13 +26768,6 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
-    }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable annotation : LineAnnotation to annotationList : List in method private createLabel(instruction BytecodeInstruction, maxOffset int, line int, annotations Map, member IMetaMember, lineIndex int) : BytecodeLabel in class org.adoptopenjdk.jitwatch.ui.triview.bytecode.ViewerBytecode",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
     }],
     "refDiffExecutionTime": 686
 }, {

@@ -1871,7 +1871,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(String element : intersection) {
 					boolean replacementFound = false;
 					for(Replacement r : info.getReplacements()) {
-						if(ReplacementUtil.contains(element, r.getAfter()) && element.startsWith(r.getAfter()) && element.endsWith(" != null")) {
+						if(ReplacementUtil.contains(element, r.getAfter()) && element.startsWith(r.getAfter()) &&
+								(element.endsWith(" != null") || element.endsWith(" == null"))) {
 							replacementFound = true;
 							break;
 						}

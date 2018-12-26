@@ -2054,7 +2054,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean syntaxAwareReplacement(String s1, String s2, ReplacementInfo replacementInfo) {
-		int smallStringLength = 2;
+		int smallStringLength = 4;
 		int firstIndex1 = s1.length() < smallStringLength ? ReplacementUtil.indexOf(replacementInfo.getArgumentizedString1(), s1) : replacementInfo.getArgumentizedString1().indexOf(s1);
 		int lastIndex1 = s1.length() < smallStringLength ? ReplacementUtil.lastIndexOf(replacementInfo.getArgumentizedString1(), s1) : replacementInfo.getArgumentizedString1().lastIndexOf(s1);
 		int length1 = replacementInfo.getArgumentizedString1().length();

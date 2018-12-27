@@ -9,7 +9,7 @@ Currently, it supports the detection of the following refactorings:
 4. Move Method/Attribute
 5. Pull Up Method/Attribute
 6. Push Down Method/Attribute
-7. Extract Superclass/Interface
+7. Extract Class/Subclass/Superclass/Interface
 8. Move Class
 9. Rename Class
 10. Move and Rename Class

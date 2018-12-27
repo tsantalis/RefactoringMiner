@@ -844,6 +844,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
+    }, {
+        "type": "Extract Subclass",
+        "description": "Extract Subclass org.gradle.api.internal.artifacts.DefaultResolverResults from class org.gradle.api.internal.artifacts.ResolverResults",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 9978
 }, {
@@ -2949,6 +2956,13 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter buckConfig : BuckConfig to restartAdbOnFailure : boolean in method public AdbHelper(adbOptions AdbOptions, deviceOptions TargetDeviceOptions, context ExecutionContext, console Console, buckEventBus BuckEventBus, restartAdbOnFailure boolean) in class com.facebook.buck.android.AdbHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class com.facebook.buck.android.AdbOptions from class com.facebook.buck.cli.AdbCommandLineOptions",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -7810,6 +7824,209 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.corebluetooth.CBAdvertisementData.Keys from class org.robovm.apple.corebluetooth.CBAdvertisementData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImagePropertyDNG.Values from class org.robovm.apple.imageio.CGImagePropertyDNG",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImagePropertyIPTCContactInfo.Values from class org.robovm.apple.imageio.CGImagePropertyIPTCContactInfo",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImagePropertyCanon.Values from class org.robovm.apple.imageio.CGImagePropertyCanon",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImageMetadataNamespace.Values from class org.robovm.apple.imageio.CGImageMetadataNamespace",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImagePropertyIPTC.Values from class org.robovm.apple.imageio.CGImagePropertyIPTC",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.corebluetooth.CBUUIDIdentifier.Values from class org.robovm.apple.corebluetooth.CBUUIDIdentifier",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImageMetadataPrefix.Values from class org.robovm.apple.imageio.CGImageMetadataPrefix",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions.Keys from class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImagePropertyExifAux.Values from class org.robovm.apple.imageio.CGImagePropertyExifAux",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImageProperties.Keys from class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.corebluetooth.CBPeripheralManagerRestoredState.Keys from class org.robovm.apple.corebluetooth.CBPeripheralManagerRestoredState",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.corebluetooth.CBCentralManagerOptions.Keys from class org.robovm.apple.corebluetooth.CBCentralManagerOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImageSourceOptions.Keys from class org.robovm.apple.imageio.CGImageSourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImagePropertyGPS.Values from class org.robovm.apple.imageio.CGImagePropertyGPS",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImageProperty8BIM.Values from class org.robovm.apple.imageio.CGImageProperty8BIM",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImagePropertyPNG.Values from class org.robovm.apple.imageio.CGImagePropertyPNG",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.corebluetooth.CBCentralManagerScanOptions.Keys from class org.robovm.apple.corebluetooth.CBCentralManagerScanOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImagePropertyTIFF.Values from class org.robovm.apple.imageio.CGImagePropertyTIFF",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions.Keys from class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImagePropertyCIFF.Values from class org.robovm.apple.imageio.CGImagePropertyCIFF",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImagePropertyExif.Values from class org.robovm.apple.imageio.CGImagePropertyExif",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImagePropertyColorModel.Values from class org.robovm.apple.imageio.CGImagePropertyColorModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImagePropertyJFIF.Values from class org.robovm.apple.imageio.CGImagePropertyJFIF",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImagePropertyGIF.Values from class org.robovm.apple.imageio.CGImagePropertyGIF",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.corebluetooth.CBPeripheralManagerOptions.Keys from class org.robovm.apple.corebluetooth.CBPeripheralManagerOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImagePropertyNikon.Values from class org.robovm.apple.imageio.CGImagePropertyNikon",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.corebluetooth.CBCentralManagerRestoredState.Keys from class org.robovm.apple.corebluetooth.CBCentralManagerRestoredState",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.robovm.apple.imageio.CGImageDestinationProperties.Keys from class org.robovm.apple.imageio.CGImageDestinationProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 11040
 }, {
@@ -7993,6 +8210,13 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin"
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.eclipse.jetty.maven.plugin.ScanPattern from class org.eclipse.jetty.maven.plugin.ScanTargetPattern",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 7248
 }, {
@@ -10470,6 +10694,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue from class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2499
 }, {
@@ -11305,10 +11536,17 @@
     }, {
         "type": "Push Down Attribute",
         "description": "Push Down Attribute private projectClassLoader : ProjectClassLoader from class org.drools.core.common.ProjectClassLoader.InternalTypesClassLoader to class org.drools.core.common.ProjectClassLoader.DefaultInternalTypesClassLoader",
+        "comment": "<p>InternalTypesClassLoader renamed to DefaultInternalTypesClassLoader. a new interface is added which is called InternalTypesClassLoader</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": "Matin, Davood, Nikos"
+    }, {
+        "type": "Extract Subclass",
+        "description": "Extract Subclass org.drools.core.common.ProjectClassLoader.DefaultInternalTypesClassLoader from class org.drools.core.common.ProjectClassLoader.InternalTypesClassLoader",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2686
 }, {
@@ -12623,6 +12861,27 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable startEntry : LogEntryStart in method public visit(transaction CommittedTransactionRepresentation) : boolean from class org.neo4j.kernel.impl.transaction.state.RecoveryVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Subclass",
+        "description": "Extract Subclass org.neo4j.kernel.impl.transaction.log.pruning.LogPruningImpl from class org.neo4j.kernel.impl.transaction.log.pruning.LogPruning",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.neo4j.kernel.impl.transaction.log.PhysicalTransactionCursor.Marker from class org.neo4j.kernel.impl.transaction.log.PhysicalTransactionCursor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.neo4j.kernel.impl.transaction.log.LogEntryCursor from class org.neo4j.kernel.impl.transaction.log.PhysicalTransactionCursor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -16450,6 +16709,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class com.amazonaws.util.EC2MetadataUtilsServer from class com.amazonaws.util.EC2MetadataUtilsTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -17827,6 +18093,13 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcConfiguration from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3535
 }, {
@@ -23042,6 +23315,13 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.springframework.boot.cli.compiler.MavenSettingsReader from class org.springframework.boot.cli.compiler.grape.SettingsXmlRepositorySystemSessionAutoConfiguration",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2343
 }, {
@@ -26917,6 +27197,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.antlr.v4.gui.Trees from class org.antlr.v4.runtime.tree.Trees",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2828
 }, {
@@ -28678,6 +28965,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.jetbrains.jps.cmdline.LogSetup from class org.jetbrains.jps.cmdline.BuildMain",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 15639
 }, {
@@ -29058,6 +29352,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class com.hazelcast.internal.monitors.PerformanceMonitor.MonitorThread from class com.hazelcast.internal.monitors.PerformanceMonitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class com.hazelcast.internal.monitors.HealthMonitor.HealthMonitorThread from class com.hazelcast.internal.monitors.HealthMonitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class com.hazelcast.internal.metrics.Gauge renamed to com.hazelcast.internal.metrics.LongGauge",
+        "comment": "<p>Class com.hazelcast.internal.metrics.Gauge is actually split into two new classes:<br />com.hazelcast.internal.metrics.LongGauge<br />com.hazelcast.internal.metrics.DoubleGauge<br /><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>Method long</span> <span class='pl-en'>readLong</span>()</span> becomes long read() in LongGauge<br />Method double readDouble() becomes double read() in DoubleGauge</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 5604
 }, {
@@ -30930,6 +31245,20 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.apache.cassandra.cql3.functions.JavaUDF from class org.apache.cassandra.cql3.functions.UDFunction",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.apache.cassandra.cql3.validation.entities.UFPureScriptTest from class org.apache.cassandra.cql3.validation.entities.UFTest",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3887
 }, {
@@ -34559,6 +34888,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.jboss.as.clustering.controller.ResourceDescriptor from class org.jboss.as.clustering.controller.BoottimeAddStepHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.jboss.as.clustering.controller.ResourceDescriptor from class org.jboss.as.clustering.controller.RestartParentAddHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.jboss.as.clustering.controller.ResourceDescriptor from class org.jboss.as.clustering.controller.AddStepHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 8243
 }, {
@@ -34990,6 +35340,13 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable reader : SSTableReader in method public run() : void from class org.apache.cassandra.streaming.StreamReceiveTask.OnCompletionRunnable",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.apache.cassandra.cql3.statements.CFProperties from class org.apache.cassandra.cql3.statements.CreateTableStatement.RawStatement",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -39585,6 +39942,27 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method public shouldSerializePath() : void renamed to public shouldSerializePaths() : void in class org.neo4j.ndp.messaging.v1.MessageFormatTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.neo4j.ndp.messaging.v1.Neo4jPack.Unpacker from class org.neo4j.ndp.messaging.v1.PackStreamMessageFormatV1.Reader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.neo4j.ndp.messaging.v1.Neo4jPack.Packer from class org.neo4j.ndp.messaging.v1.PackStreamMessageFormatV1.Writer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.neo4j.ndp.messaging.v1.Neo4jPack from class org.neo4j.ndp.messaging.v1.PackStreamMessageFormatV1",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

@@ -28670,6 +28670,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemRemove.OriginalSubsystemRemoveHandler moved and renamed to org.infinispan.server.jgroups.subsystem.JGroupsSubsystemAddHandler",
+        "comment": "<p>Methods from class JGroupsSubsystemRemove.OriginalSubsystemRemoveHandler<br /><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-en'>performRuntime</span>(<span class='pl-smi'>OperationContext</span> <span class='pl-v'>context</span>, <span class='pl-smi'>ModelNode</span> <span class='pl-v'>operation</span>, <span class='pl-smi'>ModelNode</span> <span class='pl-v'>model</span>)</span><br /><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-en'>removeRuntimeServices</span>(<span class='pl-smi'>OperationContext</span> <span class='pl-v'>context</span>, <span class='pl-smi'>ModelNode</span> <span class='pl-v'>operation</span>, <span class='pl-smi'>ModelNode</span> <span class='pl-v'>model</span>)<br />appear in class JGroupsSubsystemAddHandler, where method<br /></span><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-en'>installRuntimeServices</span>(<span class='pl-smi'>OperationContext</span> <span class='pl-v'>context</span>, <span class='pl-smi'>ModelNode</span> <span class='pl-v'>operation</span>, <span class='pl-smi'>ModelNode</span> <span class='pl-v'>model</span>)<br />has been extracted from <span class='pl-en'>performRuntime</span>()<br />Class <span class='pl-en'>JGroupsSubsystemRemoveHandler</span> contains method<br /><span class='pl-en'>performRemove</span>(<span class='pl-k'>final</span> <span class='pl-smi'>OperationContext</span> <span class='pl-v'>context</span>, <span class='pl-k'>final</span> <span class='pl-smi'>ModelNode</span> <span class='pl-v'>operation</span>, <span class='pl-k'>final</span> <span class='pl-smi'>ModelNode</span> <span class='pl-v'>model</span>)<br />was moved from class <span class='pl-en'>JGroupsSubsystemRemove</span>, and methods<br />performRuntime() and <span class='pl-en'>recoverServices</span>() delegate to class <span class='pl-smi'>JGroupsSubsystemAddHandler</span><br />calling removeRuntimeServices() and installRuntimeServices() respectively.<br /></span></p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3908
 }, {

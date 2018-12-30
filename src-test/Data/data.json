@@ -1107,6 +1107,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter newMaxSimultaneousRequests : int to newValue : int in method public setNewConnectionThreshold(distance HostDistance, newValue int) : PoolingOptions in class com.datastax.driver.core.PoolingOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -1974,6 +1981,48 @@
         "description": "Extract Superclass tachyon.worker.block.meta.BlockMetaBase from class tachyon.worker.block.meta.TempBlockMeta",
         "comment": null,
         "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getParentDir() : StorageDir from class tachyon.worker.block.meta.BlockMeta to public getParentDir() : StorageDir from class tachyon.worker.block.meta.BlockMetaBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getBlockId() : long from class tachyon.worker.block.meta.BlockMeta to public getBlockId() : long from class tachyon.worker.block.meta.BlockMetaBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getBlockSize() : long from class tachyon.worker.block.meta.BlockMeta to public getBlockSize() : long from class tachyon.worker.block.meta.BlockMetaBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected mDir : StorageDir from class tachyon.worker.block.meta.BlockMeta to class tachyon.worker.block.meta.BlockMetaBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected mBlockSize : long from class tachyon.worker.block.meta.BlockMeta to class tachyon.worker.block.meta.BlockMetaBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected mBlockId : long from class tachyon.worker.block.meta.BlockMeta to class tachyon.worker.block.meta.BlockMetaBase",
+        "comment": null,
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -3365,7 +3414,7 @@
         "validators": null
     }, {
         "type": "Move Method",
-        "description": "Move Method public public rightMergeNode() : MergeNode from class io.crate.planner.node.dql.join.NestedLoop to public rightMergeNode() : MergeNode from class io.crate.planner.node.dql.join.NestedLoopNode",
+        "description": "Move Method public rightMergeNode() : MergeNode from class io.crate.planner.node.dql.join.NestedLoop to public rightMergeNode() : MergeNode from class io.crate.planner.node.dql.join.NestedLoopNode",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -5493,6 +5542,258 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected newInstanceInfoBuilder(renewalIntervalInSecs int) : InstanceInfo.Builder from class com.netflix.discovery.AbstractDiscoveryClientTester to protected newInstanceInfoBuilder(renewalIntervalInSecs int) : InstanceInfo.Builder from class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private createRemoteApps() : List from class com.netflix.discovery.AbstractDiscoveryClientTester to protected createRemoteApps() : List from class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private createInstance(appName String, vipAddress String, instanceHostName String, zone String) : InstanceInfo from class com.netflix.discovery.AbstractDiscoveryClientTester to protected createInstance(appName String, vipAddress String, instanceHostName String, zone String) : InstanceInfo from class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private populateRemoteRegistryAtStartup() : void from class com.netflix.discovery.AbstractDiscoveryClientTester to protected populateRemoteRegistryAtStartup() : void from class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private createLocalApps() : List from class com.netflix.discovery.AbstractDiscoveryClientTester to protected createLocalApps() : List from class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private getAmazonInfo(availabilityZone String, instanceHostName String) : AmazonInfo from class com.netflix.discovery.AbstractDiscoveryClientTester to protected getAmazonInfo(availabilityZone String, instanceHostName String) : AmazonInfo from class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected setupDiscoveryClient(renewalIntervalInSecs int) : void from class com.netflix.discovery.AbstractDiscoveryClientTester to protected setupDiscoveryClient(renewalIntervalInSecs int) : void from class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected setupProperties() : void from class com.netflix.discovery.AbstractDiscoveryClientTester to protected setupProperties() : void from class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private createRemoteAppsDelta() : List from class com.netflix.discovery.AbstractDiscoveryClientTester to protected createRemoteAppsDelta() : List from class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private populateLocalRegistryAtStartup() : void from class com.netflix.discovery.AbstractDiscoveryClientTester to protected populateLocalRegistryAtStartup() : void from class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private createLocalAppsDelta() : List from class com.netflix.discovery.AbstractDiscoveryClientTester to protected createLocalAppsDelta() : List from class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected addLocalAppDelta() : void from class com.netflix.discovery.AbstractDiscoveryClientTester to protected addLocalAppDelta() : void from class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected shutdownDiscoveryClient() : void from class com.netflix.discovery.AbstractDiscoveryClientTester to protected shutdownDiscoveryClient() : void from class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public REMOTE_REGION_APP2_INSTANCE1_HOSTNAME : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public REMOTE_ZONE : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public LOCAL_REGION_APP1_NAME : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public ALL_REGIONS_VIP3_ADDR : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public REMOTE_REGION : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public REMOTE_REGION_APP1_INSTANCE2_HOSTNAME : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public REMOTE_REGION_APP2_INSTANCE2_HOSTNAME : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public REMOTE_REGION_APP1_INSTANCE1_HOSTNAME : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public REMOTE_REGION_APP1_NAME : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public ALL_REGIONS_VIP2_ADDR : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public LOCAL_REGION_APP3_NAME : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public LOCAL_REGION_APP1_INSTANCE2_HOSTNAME : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected client : EurekaClient from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public REMOTE_REGION_APP2_NAME : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public mockLocalEurekaServer : MockRemoteEurekaServer from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public LOCAL_REGION_APP2_INSTANCE2_HOSTNAME : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public ALL_REGIONS_VIP1_ADDR : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public LOCAL_REGION_APP1_INSTANCE1_HOSTNAME : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public LOCAL_REGION_APP2_INSTANCE1_HOSTNAME : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public LOCAL_REGION_APP2_NAME : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public LOCAL_REGION_APP3_INSTANCE1_HOSTNAME : String from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute public CLIENT_REFRESH_RATE : int from class com.netflix.discovery.AbstractDiscoveryClientTester to class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected setupDiscoveryClient() : void from class com.netflix.discovery.AbstractDiscoveryClientTester to protected setupDiscoveryClient() : void from class com.netflix.discovery.BaseDiscoveryClientTester",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 766
@@ -8251,21 +8552,21 @@
         "type": "Pull Up Method",
         "description": "Pull Up Method public containsAllKeys(keys String[]) : ResponseAwareMatcher from class integration.BaseRestTest to public containsAllKeys(keys String[]) : ResponseAwareMatcher from class integration.BaseRestTestHelper",
         "comment": null,
-        "validation": "TP",
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method protected jsonResourceForMethod() : byte[] from class integration.BaseRestTest to protected jsonResourceForMethod() : byte[] from class integration.BaseRestTestHelper",
         "comment": null,
-        "validation": "TP",
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method protected jsonResource(relativeFileName String) : byte[] from class integration.BaseRestTest to protected jsonResource(relativeFileName String) : byte[] from class integration.BaseRestTestHelper",
         "comment": null,
-        "validation": "TP",
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -8393,6 +8694,20 @@
         "description": "Change Package org.sufficientlysecure.keychain.util.orbot to org.sufficientlysecure.keychain.util.tor",
         "comment": null,
         "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.sufficientlysecure.keychain.util.orbot.TorServiceUtils moved to org.sufficientlysecure.keychain.util.tor.TorServiceUtils",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.sufficientlysecure.keychain.util.orbot.OrbotHelper moved to org.sufficientlysecure.keychain.util.tor.OrbotHelper",
+        "comment": null,
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -10065,22 +10380,71 @@
         "type": "Pull Up Attribute",
         "description": "Pull Up Attribute protected reader : IndexReader from class org.neo4j.kernel.api.impl.index.LuceneUniqueIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Pull Up Attribute",
         "description": "Pull Up Attribute protected terms : TermEnum from class org.neo4j.kernel.api.impl.index.LuceneIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Pull Up Attribute",
         "description": "Pull Up Attribute protected searcher : IndexSearcher from class org.neo4j.kernel.api.impl.index.LuceneIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected documentLogic : LuceneDocumentStructure from class org.neo4j.kernel.api.impl.index.LuceneIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected documentLogic : LuceneDocumentStructure from class org.neo4j.kernel.api.impl.index.LuceneUniqueIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected closeable : Closeable from class org.neo4j.kernel.api.impl.index.LuceneIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected BUFFER_SIZE_LIMIT : int from class org.neo4j.kernel.api.impl.index.LuceneIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected reader : IndexReader from class org.neo4j.kernel.api.impl.index.LuceneIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected closeable : Closeable from class org.neo4j.kernel.api.impl.index.LuceneUniqueIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected searcher : IndexSearcher from class org.neo4j.kernel.api.impl.index.LuceneUniqueIndexAccessorReaderTest to class org.neo4j.kernel.api.impl.index.AbstractLuceneIndexAccessorReaderTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 8600
@@ -10432,6 +10796,20 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method private reserveSpace(size long) : void extracted from public addTempBlockMeta(tempBlockMeta TempBlockMeta) : boolean in class tachyon.worker.block.meta.StorageDir",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public resizeTempBlockMeta(tempBlockMeta TempBlockMeta, newSize long) : void extracted from private requestSpaceNoLock(userId long, blockId long, moreBytes long) : boolean in class tachyon.worker.block.TieredBlockStore & moved to class tachyon.worker.block.meta.StorageDir",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable blockSize : long to size : long in method private reserveSpace(size long) : void in class tachyon.worker.block.meta.StorageDir",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -10985,6 +11363,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private handleMessage(message Message) : void renamed to private handleResult(result ImportKeyResult) : void in class org.sufficientlysecure.keychain.ui.ImportKeysActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable operationInput : ImportKeyringParcel to keyserver : String in method public importKeys() : void in class org.sufficientlysecure.keychain.ui.ImportKeysActivity",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -11041,6 +11433,55 @@
         "description": "Extract Superclass com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest from class com.querydsl.sql.types.JSR310OffsetDateTimeTypeTest",
         "comment": null,
         "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected UTC : Calendar from class com.querydsl.sql.types.JSR310LocalDateTimeTypeTest to class com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected UTC : Calendar from class com.querydsl.sql.types.JSR310LocalTimeTypeTest to class com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected UTC : Calendar from class com.querydsl.sql.types.JSR310ZonedDateTimeTypeTest to class com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected UTC : Calendar from class com.querydsl.sql.types.JSR310LocalDateTypeTest to class com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected UTC : Calendar from class com.querydsl.sql.types.JSR310InstantTypeTest to class com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected UTC : Calendar from class com.querydsl.sql.types.JSR310OffsetTimeTypeTest to class com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected UTC : Calendar from class com.querydsl.sql.types.JSR310OffsetDateTimeTypeTest to class com.querydsl.sql.types.AbstractJSR310DateTimeTypeTest",
+        "comment": null,
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -11271,6 +11712,692 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public filter(array E[]) : Filters from class org.assertj.core.api.Assertions to public filter(array E[]) : Filters from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual boolean) : AbstractBooleanAssert from class org.assertj.core.api.Assertions to public assertThat(actual boolean) : AbstractBooleanAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThatThrownBy(shouldRaiseThrowable ThrowingCallable) : AbstractThrowableAssert from class org.assertj.core.api.Assertions to public assertThatThrownBy(shouldRaiseThrowable ThrowingCallable) : AbstractThrowableAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public shouldHaveThrown(exceptionClass Class) : void from class org.assertj.core.api.Assertions to public shouldHaveThrown(exceptionClass Class) : void from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public withinPercentage(value Double) : Percentage from class org.assertj.core.api.Assertions to public withinPercentage(value Double) : Percentage from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(optionalDouble OptionalDouble) : OptionalDoubleAssert from class org.assertj.core.api.Assertions to public assertThat(optionalDouble OptionalDouble) : OptionalDoubleAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual byte) : AbstractByteAssert from class org.assertj.core.api.Assertions to public assertThat(actual byte) : AbstractByteAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public filter(iterableToFilter Iterable) : Filters from class org.assertj.core.api.Assertions to public filter(iterableToFilter Iterable) : Filters from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual Integer) : AbstractIntegerAssert from class org.assertj.core.api.Assertions to public assertThat(actual Integer) : AbstractIntegerAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual T[]) : AbstractObjectArrayAssert from class org.assertj.core.api.Assertions to public assertThat(actual T[]) : AbstractObjectArrayAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public extractProperty(propertyName String) : Properties from class org.assertj.core.api.Assertions to public extractProperty(propertyName String) : Properties from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual Throwable) : AbstractThrowableAssert from class org.assertj.core.api.Assertions to public assertThat(actual Throwable) : AbstractThrowableAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public linesOf(url URL) : List from class org.assertj.core.api.Assertions to public linesOf(url URL) : List from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public entry(key K, value V) : MapEntry from class org.assertj.core.api.Assertions to public entry(key K, value V) : MapEntry from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public contentOf(url URL, charsetName String) : String from class org.assertj.core.api.Assertions to public contentOf(url URL, charsetName String) : String from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public anyOf(conditions Condition[]) : Condition from class org.assertj.core.api.Assertions to public anyOf(conditions Condition[]) : Condition from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public contentOf(url URL, charset Charset) : String from class org.assertj.core.api.Assertions to public contentOf(url URL, charset Charset) : String from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public contentOf(file File, charset Charset) : String from class org.assertj.core.api.Assertions to public contentOf(file File, charset Charset) : String from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual int) : AbstractIntegerAssert from class org.assertj.core.api.Assertions to public assertThat(actual int) : AbstractIntegerAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public setAllowComparingPrivateFields(allowComparingPrivateFields boolean) : void from class org.assertj.core.api.Assertions to public setAllowComparingPrivateFields(allowComparingPrivateFields boolean) : void from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual float) : AbstractFloatAssert from class org.assertj.core.api.Assertions to public assertThat(actual float) : AbstractFloatAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public failBecauseExceptionWasNotThrown(exceptionClass Class) : void from class org.assertj.core.api.Assertions to public failBecauseExceptionWasNotThrown(exceptionClass Class) : void from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public offset(value Float) : Offset from class org.assertj.core.api.Assertions to public offset(value Float) : Offset from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public within(value Integer) : Offset from class org.assertj.core.api.Assertions to public within(value Integer) : Offset from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public allOf(conditions Condition[]) : Condition from class org.assertj.core.api.Assertions to public allOf(conditions Condition[]) : Condition from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public tuple(values Object[]) : Tuple from class org.assertj.core.api.Assertions to public tuple(values Object[]) : Tuple from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual short[]) : AbstractShortArrayAssert from class org.assertj.core.api.Assertions to public assertThat(actual short[]) : AbstractShortArrayAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual short) : AbstractShortAssert from class org.assertj.core.api.Assertions to public assertThat(actual short) : AbstractShortAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual boolean[]) : AbstractBooleanArrayAssert from class org.assertj.core.api.Assertions to public assertThat(actual boolean[]) : AbstractBooleanArrayAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public setAllowExtractingPrivateFields(allowExtractingPrivateFields boolean) : void from class org.assertj.core.api.Assertions to public setAllowExtractingPrivateFields(allowExtractingPrivateFields boolean) : void from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual byte[]) : AbstractByteArrayAssert from class org.assertj.core.api.Assertions to public assertThat(actual byte[]) : AbstractByteArrayAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public useDefaultDateFormatsOnly() : void from class org.assertj.core.api.Assertions to public useDefaultDateFormatsOnly() : void from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(optionalLong OptionalLong) : OptionalLongAssert from class org.assertj.core.api.Assertions to public assertThat(optionalLong OptionalLong) : OptionalLongAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public registerCustomDateFormat(userCustomDateFormat DateFormat) : void from class org.assertj.core.api.Assertions to public registerCustomDateFormat(userCustomDateFormat DateFormat) : void from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public linesOf(file File, charsetName String) : List from class org.assertj.core.api.Assertions to public linesOf(file File, charsetName String) : List from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual char[]) : AbstractCharArrayAssert from class org.assertj.core.api.Assertions to public assertThat(actual char[]) : AbstractCharArrayAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public atIndex(index int) : Index from class org.assertj.core.api.Assertions to public atIndex(index int) : Index from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public extractProperty(propertyName String, propertyType Class) : Properties from class org.assertj.core.api.Assertions to public extractProperty(propertyName String, propertyType Class) : Properties from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public setLenientDateParsing(value boolean) : void from class org.assertj.core.api.Assertions to public setLenientDateParsing(value boolean) : void from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual URL) : AbstractUrlAssert from class org.assertj.core.api.Assertions to public assertThat(actual URL) : AbstractUrlAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public contentOf(file File) : String from class org.assertj.core.api.Assertions to public contentOf(file File) : String from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual long[]) : AbstractLongArrayAssert from class org.assertj.core.api.Assertions to public assertThat(actual long[]) : AbstractLongArrayAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual String) : AbstractCharSequenceAssert from class org.assertj.core.api.Assertions to public assertThat(actual String) : AbstractCharSequenceAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public within(value Short) : Offset from class org.assertj.core.api.Assertions to public within(value Short) : Offset from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public fail(failureMessage String) : void from class org.assertj.core.api.Assertions to public fail(failureMessage String) : void from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual File) : AbstractFileAssert from class org.assertj.core.api.Assertions to public assertThat(actual File) : AbstractFileAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual double) : AbstractDoubleAssert from class org.assertj.core.api.Assertions to public assertThat(actual double) : AbstractDoubleAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(optionalInt OptionalInt) : OptionalIntAssert from class org.assertj.core.api.Assertions to public assertThat(optionalInt OptionalInt) : OptionalIntAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public doesNotHave(condition Condition) : DoesNotHave from class org.assertj.core.api.Assertions to public doesNotHave(condition Condition) : DoesNotHave from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(localDate LocalDate) : AbstractLocalDateAssert from class org.assertj.core.api.Assertions to public assertThat(localDate LocalDate) : AbstractLocalDateAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public contentOf(url URL) : String from class org.assertj.core.api.Assertions to public contentOf(url URL) : String from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(localDateTime LocalDateTime) : AbstractLocalDateTimeAssert from class org.assertj.core.api.Assertions to public assertThat(localDateTime LocalDateTime) : AbstractLocalDateTimeAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public withinPercentage(value Integer) : Percentage from class org.assertj.core.api.Assertions to public withinPercentage(value Integer) : Percentage from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public registerCustomDateFormat(userCustomDateFormatPattern String) : void from class org.assertj.core.api.Assertions to public registerCustomDateFormat(userCustomDateFormatPattern String) : void from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public offset(value Double) : Offset from class org.assertj.core.api.Assertions to public offset(value Double) : Offset from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual double[]) : AbstractDoubleArrayAssert from class org.assertj.core.api.Assertions to public assertThat(actual double[]) : AbstractDoubleArrayAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(offsetTime OffsetTime) : AbstractOffsetTimeAssert from class org.assertj.core.api.Assertions to public assertThat(offsetTime OffsetTime) : AbstractOffsetTimeAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual URI) : AbstractUriAssert from class org.assertj.core.api.Assertions to public assertThat(actual URI) : AbstractUriAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public within(value Double) : Offset from class org.assertj.core.api.Assertions to public within(value Double) : Offset from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual BigDecimal) : AbstractBigDecimalAssert from class org.assertj.core.api.Assertions to public assertThat(actual BigDecimal) : AbstractBigDecimalAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public catchThrowable(shouldRaiseThrowable ThrowingCallable) : Throwable from class org.assertj.core.api.Assertions to public catchThrowable(shouldRaiseThrowable ThrowingCallable) : Throwable from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public contentOf(file File, charsetName String) : String from class org.assertj.core.api.Assertions to public contentOf(file File, charsetName String) : String from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public setMaxLengthForSingleLineDescription(maxLengthForSingleLineDescription int) : void from class org.assertj.core.api.Assertions to public setMaxLengthForSingleLineDescription(maxLengthForSingleLineDescription int) : void from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual int[]) : AbstractIntArrayAssert from class org.assertj.core.api.Assertions to public assertThat(actual int[]) : AbstractIntArrayAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public within(value Byte) : Offset from class org.assertj.core.api.Assertions to public within(value Byte) : Offset from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public fail(failureMessage String, realCause Throwable) : void from class org.assertj.core.api.Assertions to public fail(failureMessage String, realCause Throwable) : void from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public not(condition Condition) : Not from class org.assertj.core.api.Assertions to public not(condition Condition) : Not from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public notIn(valuesNotToMatch Object[]) : NotInFilter from class org.assertj.core.api.Assertions to public notIn(valuesNotToMatch Object[]) : NotInFilter from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public within(value Long) : Offset from class org.assertj.core.api.Assertions to public within(value Long) : Offset from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public linesOf(file File) : List from class org.assertj.core.api.Assertions to public linesOf(file File) : List from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public anyOf(conditions Iterable) : Condition from class org.assertj.core.api.Assertions to public anyOf(conditions Iterable) : Condition from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public linesOf(url URL, charsetName String) : List from class org.assertj.core.api.Assertions to public linesOf(url URL, charsetName String) : List from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public linesOf(file File, charset Charset) : List from class org.assertj.core.api.Assertions to public linesOf(file File, charset Charset) : List from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual OffsetDateTime) : AbstractOffsetDateTimeAssert from class org.assertj.core.api.Assertions to public assertThat(actual OffsetDateTime) : AbstractOffsetDateTimeAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public within(value BigDecimal) : Offset from class org.assertj.core.api.Assertions to public within(value BigDecimal) : Offset from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual Character) : AbstractCharacterAssert from class org.assertj.core.api.Assertions to public assertThat(actual Character) : AbstractCharacterAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(date ZonedDateTime) : AbstractZonedDateTimeAssert from class org.assertj.core.api.Assertions to public assertThat(date ZonedDateTime) : AbstractZonedDateTimeAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual Class) : AbstractClassAssert from class org.assertj.core.api.Assertions to public assertThat(actual Class) : AbstractClassAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(optional Optional) : OptionalAssert from class org.assertj.core.api.Assertions to public assertThat(optional Optional) : OptionalAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public in(values Object[]) : InFilter from class org.assertj.core.api.Assertions to public in(values Object[]) : InFilter from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public withinPercentage(value Long) : Percentage from class org.assertj.core.api.Assertions to public withinPercentage(value Long) : Percentage from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual long) : AbstractLongAssert from class org.assertj.core.api.Assertions to public assertThat(actual long) : AbstractLongAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public not(valueNotToMatch Object) : NotFilter from class org.assertj.core.api.Assertions to public not(valueNotToMatch Object) : NotFilter from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual Date) : AbstractDateAssert from class org.assertj.core.api.Assertions to public assertThat(actual Date) : AbstractDateAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public setRemoveAssertJRelatedElementsFromStackTrace(removeAssertJRelatedElementsFromStackTrace boolean) : void from class org.assertj.core.api.Assertions to public setRemoveAssertJRelatedElementsFromStackTrace(removeAssertJRelatedElementsFromStackTrace boolean) : void from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public allOf(conditions Iterable) : Condition from class org.assertj.core.api.Assertions to public allOf(conditions Iterable) : Condition from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual char) : AbstractCharacterAssert from class org.assertj.core.api.Assertions to public assertThat(actual char) : AbstractCharacterAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public linesOf(url URL, charset Charset) : List from class org.assertj.core.api.Assertions to public linesOf(url URL, charset Charset) : List from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual float[]) : AbstractFloatArrayAssert from class org.assertj.core.api.Assertions to public assertThat(actual float[]) : AbstractFloatArrayAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public within(value Float) : Offset from class org.assertj.core.api.Assertions to public within(value Float) : Offset from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual InputStream) : AbstractInputStreamAssert from class org.assertj.core.api.Assertions to public assertThat(actual InputStream) : AbstractInputStreamAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual LocalTime) : AbstractLocalTimeAssert from class org.assertj.core.api.Assertions to public assertThat(actual LocalTime) : AbstractLocalTimeAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual Boolean) : AbstractBooleanAssert from class org.assertj.core.api.Assertions to public assertThat(actual Boolean) : AbstractBooleanAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual Double) : AbstractDoubleAssert from class org.assertj.core.api.Assertions to public assertThat(actual Double) : AbstractDoubleAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual Float) : AbstractFloatAssert from class org.assertj.core.api.Assertions to public assertThat(actual Float) : AbstractFloatAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual Short) : AbstractShortAssert from class org.assertj.core.api.Assertions to public assertThat(actual Short) : AbstractShortAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual Byte) : AbstractByteAssert from class org.assertj.core.api.Assertions to public assertThat(actual Byte) : AbstractByteAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual Long) : AbstractLongAssert from class org.assertj.core.api.Assertions to public assertThat(actual Long) : AbstractLongAssert from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 0
@@ -11635,6 +12762,328 @@
         "description": "Rename Method private hasRequiredPosTag(posTagsToFind Collection<String>, tokenReadings AnalyzedTokenReadings) : boolean renamed to private getReadingWithVidmPosTag(posTagsToFind Collection<String>, tokenReadings AnalyzedTokenReadings) : boolean in class org.languagetool.rules.uk.TokenAgreementRule",
         "comment": null,
         "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.languagetool.tagging.uk.CompoundTagger from class org.languagetool.tagging.uk.UkrainianTagger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private DEBUG_COMPOUNDS_PROPERTY : String from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private NOUN_V_NAZ_REGEX : Pattern from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private stdNounTagRegex : Pattern from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private cityAvenue : Set from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private stdNounTagLen : int from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private MNP_ZNA_REGEX : Pattern from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private stdNounTag : String from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private LEFT_O_ADJ : List from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private MNP_ROD_REGEX : Pattern from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private EXTRA_TAGS : Pattern from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private TAG_ANIM : String from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private ADJ_TAG_FOR_PO_ADV_MIS : String from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private O_ADJ_PATTERN : Pattern from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private compoundTaggedDebugWriter : BufferedWriter from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private SING_REGEX_F : Pattern from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private slaveSet : Set from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private NOUN_SING_V_ROD_REGEX : Pattern from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private compoundUnknownDebugWriter : BufferedWriter from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private NV_TAG : String from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private MNP_NAZ_REGEX : Pattern from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private rightPartsWithLeftTagMap : Map from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private dashPrefixes : Set from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private NUMR_ENDING_MAP : Map from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private COMPB_TAG : String from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private ADJ_TAG_FOR_PO_ADV_NAZ : String from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private leftMasterSet : Set from class org.languagetool.tagging.uk.UkrainianTagger to class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private isMinMax(rightToken String) : boolean from class org.languagetool.tagging.uk.UkrainianTagger to private isMinMax(rightToken String) : boolean from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private tryAnimInanim(leftPosTag String, rightPosTag String, leftLemma String, rightLemma String, leftNv boolean, rightNv boolean) : String from class org.languagetool.tagging.uk.UkrainianTagger to private tryAnimInanim(leftPosTag String, rightPosTag String, leftLemma String, rightLemma String, leftNv boolean, rightNv boolean) : String from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private isSameAnimStatus(leftPosTag String, rightPosTag String) : boolean from class org.languagetool.tagging.uk.UkrainianTagger to private isSameAnimStatus(leftPosTag String, rightPosTag String) : boolean from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private debug_tagged_write(analyzedTokens List, writer BufferedWriter) : void from class org.languagetool.tagging.uk.UkrainianTagger to private debug_tagged_write(analyzedTokens List, writer BufferedWriter) : void from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private capitalize(word String) : String from class org.languagetool.tagging.uk.UkrainianTagger to private capitalize(word String) : String from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private tagMatch(word String, leftAnalyzedTokens List, rightAnalyzedTokens List) : List from class org.languagetool.tagging.uk.UkrainianTagger to private tagMatch(word String, leftAnalyzedTokens List, rightAnalyzedTokens List) : List from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private tagBothCases(leftWord String) : List from class org.languagetool.tagging.uk.UkrainianTagger to private tagBothCases(leftWord String) : List from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private isPlural(posTag String) : boolean from class org.languagetool.tagging.uk.UkrainianTagger to private isPlural(posTag String) : boolean from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private getNumAgreedPosTag(leftPosTag String, rightPosTag String, leftNv boolean) : String from class org.languagetool.tagging.uk.UkrainianTagger to private getNumAgreedPosTag(leftPosTag String, rightPosTag String, leftNv boolean) : String from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private debug_compound_unknown_write(word String) : void from class org.languagetool.tagging.uk.UkrainianTagger to private debug_compound_unknown_write(word String) : void from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private poAdvMatch(word String, analyzedTokens List, adjTag String) : List from class org.languagetool.tagging.uk.UkrainianTagger to private poAdvMatch(word String, analyzedTokens List, adjTag String) : List from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private oToYj(leftWord String) : String from class org.languagetool.tagging.uk.UkrainianTagger to private oToYj(leftWord String) : String from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private getAgreedPosTag(leftPosTag String, rightPosTag String, leftNv boolean) : String from class org.languagetool.tagging.uk.UkrainianTagger to private getAgreedPosTag(leftPosTag String, rightPosTag String, leftNv boolean) : String from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private cityAvenueMatch(word String, leftAnalyzedTokens List) : List from class org.languagetool.tagging.uk.UkrainianTagger to private cityAvenueMatch(word String, leftAnalyzedTokens List) : List from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private loadSet(path String) : Set from class org.languagetool.tagging.uk.UkrainianTagger to private loadSet(path String) : Set from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private getNvPrefixNounMatch(word String, analyzedTokens List, leftWord String) : List from class org.languagetool.tagging.uk.UkrainianTagger to private getNvPrefixNounMatch(word String, analyzedTokens List, leftWord String) : List from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private debug_compound_tagged_write(guessedCompoundTags List) : void from class org.languagetool.tagging.uk.UkrainianTagger to private debug_compound_tagged_write(guessedCompoundTags List) : void from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private debugCompounds() : void from class org.languagetool.tagging.uk.UkrainianTagger to private debugCompounds() : void from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private oAdjMatch(word String, analyzedTokens List, leftWord String) : List from class org.languagetool.tagging.uk.UkrainianTagger to private oAdjMatch(word String, analyzedTokens List, leftWord String) : List from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -13066,6 +14515,195 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private webLogicWsPresent : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected logger : Log from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private supportedProtocols : List from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private requestUpgradeStrategy : RequestUpgradeStrategy from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private tomcatWsPresent : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private glassFishWsPresent : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private undertowWsPresent : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private UTF8_CHARSET : Charset from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private running : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private jettyWsPresent : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected isWebSocketVersionSupported(httpHeaders WebSocketHttpHeaders) : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected isWebSocketVersionSupported(httpHeaders WebSocketHttpHeaders) : boolean from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected getSupportedVersions() : String[] from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected getSupportedVersions() : String[] from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected determineHandlerSupportedProtocols(handler WebSocketHandler) : List from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected determineHandlerSupportedProtocols(handler WebSocketHandler) : List from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public stop() : void from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to public stop() : void from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected determineUser(request ServerHttpRequest, wsHandler WebSocketHandler, attributes Map) : Principal from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected determineUser(request ServerHttpRequest, wsHandler WebSocketHandler, attributes Map) : Principal from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getSupportedProtocols() : String[] from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to public getSupportedProtocols() : String[] from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public isRunning() : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to public isRunning() : boolean from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public setSupportedProtocols(protocols String[]) : void from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to public setSupportedProtocols(protocols String[]) : void from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected handleInvalidConnectHeader(request ServerHttpRequest, response ServerHttpResponse) : void from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected handleInvalidConnectHeader(request ServerHttpRequest, response ServerHttpResponse) : void from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public start() : void from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to public start() : void from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public doHandshake(request ServerHttpRequest, response ServerHttpResponse, wsHandler WebSocketHandler, attributes Map) : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to public doHandshake(request ServerHttpRequest, response ServerHttpResponse, wsHandler WebSocketHandler, attributes Map) : boolean from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected handleWebSocketVersionNotSupported(request ServerHttpRequest, response ServerHttpResponse) : void from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected handleWebSocketVersionNotSupported(request ServerHttpRequest, response ServerHttpResponse) : void from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private initRequestUpgradeStrategy() : RequestUpgradeStrategy from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to private initRequestUpgradeStrategy() : RequestUpgradeStrategy from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected filterRequestedExtensions(request ServerHttpRequest, requestedExtensions List, supportedExtensions List) : List from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected filterRequestedExtensions(request ServerHttpRequest, requestedExtensions List, supportedExtensions List) : List from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected isValidOrigin(request ServerHttpRequest) : boolean from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected isValidOrigin(request ServerHttpRequest) : boolean from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected handleInvalidUpgradeHeader(request ServerHttpRequest, response ServerHttpResponse) : void from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected handleInvalidUpgradeHeader(request ServerHttpRequest, response ServerHttpResponse) : void from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected selectProtocol(requestedProtocols List, webSocketHandler WebSocketHandler) : String from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected selectProtocol(requestedProtocols List, webSocketHandler WebSocketHandler) : String from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2473
 }, {
@@ -13677,6 +15315,20 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method private getRecipientDetails(context Context, number String) : RecipientDetails renamed to private getIndividualRecipientDetails(context Context, number String) : RecipientDetails in class org.thoughtcrime.securesms.recipients.RecipientProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.thoughtcrime.securesms.contacts.ContactPhotoFactory moved to org.thoughtcrime.securesms.contacts.avatars.ContactPhotoFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable avatar : Drawable to contactPhoto : ContactPhoto in method private getGroupRecipientDetails(context Context, groupId String) : RecipientDetails in class org.thoughtcrime.securesms.recipients.RecipientProvider",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -17549,7 +19201,7 @@
         "validators": null
     }, {
         "type": "Extract Method",
-        "description": "Extract Method private retry(retryCurrent boolean, newConsistencyLevel ConsistencyLevel, connection Connection, response Response) : void extracted from private retry(retryCurrent boolean, newConsistencyLevel ConsistencyLevel) : void in class com.datastax.driver.core.RequestHandler.SpeculativeExecution",
+        "description": "Extract Method private retry(retryCurrent boolean, newConsistencyLevel ConsistencyLevel, connection Connection, response Message.Response) : void extracted from private retry(retryCurrent boolean, newConsistencyLevel ConsistencyLevel) : void in class com.datastax.driver.core.RequestHandler.SpeculativeExecution",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -17725,6 +19377,293 @@
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method private cleanupWriterSocket(pwriter PrintWriter) : void from class org.apache.zookeeper.server.NettyServerCnxn to public cleanupWriterSocket(pwriter PrintWriter) : void from class org.apache.zookeeper.server.ServerCnxn",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class org.apache.zookeeper.server.command.FourLetterCommands from class org.apache.zookeeper.server.ServerCnxn",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public consCmd : int from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public wchcCmd : int from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public dumpCmd : int from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public getTraceMaskCmd : int from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public setTraceMaskCmd : int from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public wchsCmd : int from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public cmd2String : HashMap from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public srstCmd : int from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public enviCmd : int from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public ruokCmd : int from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public wchpCmd : int from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public srvrCmd : int from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public confCmd : int from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public statCmd : int from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public mntrCmd : int from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public isroCmd : int from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public crstCmd : int from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute public telnetCloseCmd : int from class org.apache.zookeeper.server.ServerCnxn to class org.apache.zookeeper.server.command.FourLetterCommands",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute protected ZK_NOT_SERVING : String from class org.apache.zookeeper.server.NIOServerCnxn to class org.apache.zookeeper.server.command.AbstractFourLetterCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute protected ZK_NOT_SERVING : String from class org.apache.zookeeper.server.NettyServerCnxn to class org.apache.zookeeper.server.command.AbstractFourLetterCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.apache.zookeeper.server.NIOServerCnxn.ConsCommand moved to org.apache.zookeeper.server.command.ConsCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.apache.zookeeper.server.NIOServerCnxn.StatResetCommand moved to org.apache.zookeeper.server.command.StatResetCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.apache.zookeeper.server.NIOServerCnxn.RuokCommand moved to org.apache.zookeeper.server.command.RuokCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.apache.zookeeper.server.NIOServerCnxn.TraceMaskCommand moved to org.apache.zookeeper.server.command.TraceMaskCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.apache.zookeeper.server.NIOServerCnxn.ConfCommand moved to org.apache.zookeeper.server.command.ConfCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.apache.zookeeper.server.NIOServerCnxn.DumpCommand moved to org.apache.zookeeper.server.command.DumpCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.apache.zookeeper.server.NIOServerCnxn.IsroCommand moved to org.apache.zookeeper.server.command.IsroCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.apache.zookeeper.server.NIOServerCnxn.CnxnStatResetCommand moved to org.apache.zookeeper.server.command.CnxnStatResetCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.apache.zookeeper.server.NIOServerCnxn.EnvCommand moved to org.apache.zookeeper.server.command.EnvCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class org.apache.zookeeper.server.NIOServerCnxn.MonitorCommand moved to org.apache.zookeeper.server.command.MonitorCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Superclass",
+        "description": "Extract Superclass org.apache.zookeeper.server.command.AbstractFourLetterCommand from class org.apache.zookeeper.server.command.EnvCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Superclass",
+        "description": "Extract Superclass org.apache.zookeeper.server.command.AbstractFourLetterCommand from class org.apache.zookeeper.server.command.DumpCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Superclass",
+        "description": "Extract Superclass org.apache.zookeeper.server.command.AbstractFourLetterCommand from class org.apache.zookeeper.server.command.MonitorCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Superclass",
+        "description": "Extract Superclass org.apache.zookeeper.server.command.AbstractFourLetterCommand from class org.apache.zookeeper.server.command.ConfCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Superclass",
+        "description": "Extract Superclass org.apache.zookeeper.server.command.AbstractFourLetterCommand from class org.apache.zookeeper.server.command.CnxnStatResetCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Superclass",
+        "description": "Extract Superclass org.apache.zookeeper.server.command.AbstractFourLetterCommand from class org.apache.zookeeper.server.command.StatResetCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Superclass",
+        "description": "Extract Superclass org.apache.zookeeper.server.command.AbstractFourLetterCommand from class org.apache.zookeeper.server.command.RuokCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Superclass",
+        "description": "Extract Superclass org.apache.zookeeper.server.command.AbstractFourLetterCommand from class org.apache.zookeeper.server.command.ConsCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Superclass",
+        "description": "Extract Superclass org.apache.zookeeper.server.command.AbstractFourLetterCommand from class org.apache.zookeeper.server.command.IsroCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Superclass",
+        "description": "Extract Superclass org.apache.zookeeper.server.command.AbstractFourLetterCommand from class org.apache.zookeeper.server.command.TraceMaskCommand",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -18186,6 +20125,34 @@
         "description": "Rename Attribute hashGenerator : HashGenerator to partitionGenerator : PartitionGenerator in class com.facebook.presto.operator.PartitionedOutputOperator.PartitionFunction",
         "comment": null,
         "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getPartition() : int from class com.facebook.presto.HashPagePartitionFunction to public getPartition() : int from class com.facebook.presto.PartitionedPagePartitionFunction",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getPartitionCount() : int from class com.facebook.presto.HashPagePartitionFunction to public getPartitionCount() : int from class com.facebook.presto.PartitionedPagePartitionFunction",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected partitionCount : int from class com.facebook.presto.HashPagePartitionFunction to class com.facebook.presto.PartitionedPagePartitionFunction",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected partition : int from class com.facebook.presto.HashPagePartitionFunction to class com.facebook.presto.PartitionedPagePartitionFunction",
+        "comment": null,
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -18909,65 +20876,65 @@
         "type": "Pull Up Method",
         "description": "Pull Up Method public label() : int from class org.neo4j.kernel.api.constraints.UniquenessConstraint to public label() : int from class org.neo4j.kernel.api.constraints.PropertyConstraint",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public equals(obj Object) : boolean from class org.neo4j.kernel.api.constraints.UniquenessConstraint to public equals(obj Object) : boolean from class org.neo4j.kernel.api.constraints.PropertyConstraint",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public propertyKeyId() : int from class org.neo4j.kernel.api.constraints.UniquenessConstraint to public propertyKeyId() : int from class org.neo4j.kernel.api.constraints.PropertyConstraint",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public hashCode() : int from class org.neo4j.kernel.api.constraints.UniquenessConstraint to public hashCode() : int from class org.neo4j.kernel.api.constraints.PropertyConstraint",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public userDescription(tokenNameLookup TokenNameLookup) : String from class org.neo4j.kernel.api.constraints.UniquenessConstraint to public userDescription(tokenNameLookup TokenNameLookup) : String from class org.neo4j.kernel.api.constraints.PropertyConstraint",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Pull Up Attribute",
         "description": "Pull Up Attribute private propertyKeyId : int from class org.neo4j.kernel.api.constraints.UniquenessConstraint to class org.neo4j.kernel.api.constraints.PropertyConstraint",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Pull Up Attribute",
         "description": "Pull Up Attribute private labelId : int from class org.neo4j.kernel.api.constraints.UniquenessConstraint to class org.neo4j.kernel.api.constraints.PropertyConstraint",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Rename Method",
         "description": "Rename Method public visitAddedConstraint(element UniquenessConstraint) : void renamed to public visitAddedMandatoryPropertyConstraint(element MandatoryPropertyConstraint) : void in class org.neo4j.kernel.api.txstate.TxStateVisitor.Adapter",
-        "comment": "renamed in the Interface",
-        "validation": "TP",
+        "comment": "<p>Two methods<br />void visitAddedConstraint( UniquenessConstraint element );<br />void visitRemovedConstraint( UniquenessConstraint element );<br />replaced by four methods<br />void visitAddedUniquePropertyConstraint( UniquenessConstraint element );<br />void visitRemovedUniquePropertyConstraint( UniquenessConstraint element );<br /> void visitAddedMandatoryPropertyConstraint( MandatoryPropertyConstraint element );<br /> void visitRemovedMandatoryPropertyConstraint( MandatoryPropertyConstraint element );<br /><br /><br /></p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Rename Method",
         "description": "Rename Method public visitRemovedConstraint(element UniquenessConstraint) : void renamed to public visitAddedUniquePropertyConstraint(element UniquenessConstraint) : void in class org.neo4j.kernel.api.txstate.TxStateVisitor.Adapter",
-        "comment": "renamed in the Interface",
-        "validation": "TP",
+        "comment": "<p>Two methods<br />void visitAddedConstraint( UniquenessConstraint element );<br />void visitRemovedConstraint( UniquenessConstraint element );<br />replaced by four methods<br />void visitAddedUniquePropertyConstraint( UniquenessConstraint element );<br />void visitRemovedUniquePropertyConstraint( UniquenessConstraint element );<br /> void visitAddedMandatoryPropertyConstraint( MandatoryPropertyConstraint element );<br /> void visitRemovedMandatoryPropertyConstraint( MandatoryPropertyConstraint element );</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public equals(labelId int, propertyKeyId int) : boolean from class org.neo4j.kernel.api.constraints.UniquenessConstraint to public equals(type ConstraintType, labelId int, propertyKeyId int) : boolean from class org.neo4j.kernel.api.constraints.PropertyConstraint",
@@ -19008,6 +20975,13 @@
         "description": "Rename Attribute UNIQUENESS_CONSTRAINT_TO_RULE : Function to RULE_TO_CONSTRAINT : Function in class org.neo4j.kernel.impl.api.store.DiskLayer",
         "comment": null,
         "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public toString() : String from class org.neo4j.kernel.api.constraints.UniquenessConstraint to public toString() : String from class org.neo4j.kernel.api.constraints.PropertyConstraint",
+        "comment": null,
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -20466,6 +22440,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable augmentor : JpaSoftDeleteQueryAugmentor to jpaAugmentor : JpaSoftDeleteQueryAugmentor in method public setUp() : void in class org.springframework.data.jpa.repository.support.SoftDeleteIntegrationTests",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -21613,6 +23594,76 @@
         "description": "Extract Variable metadataAdapter : MetadataAdapter in method public getObjectFilter(jpaQuery String) : ObjectFilter from class org.infinispan.objectfilter.impl.BaseMatcher",
         "comment": null,
         "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public list() : List from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to public list() : List from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private listInternal() : List from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to private listInternal() : List from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getResultSize() : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to public getResultSize() : int from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private ensureAccessPermissions(cache AdvancedCache) : void from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to private ensureAccessPermissions(cache AdvancedCache) : void from class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private INITIAL_CAPACITY : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected startOffset : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected cache : AdvancedCache from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private results : List from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private resultSize : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected maxResults : int from class org.infinispan.query.dsl.embedded.impl.EmbeddedQuery to class org.infinispan.query.dsl.embedded.impl.BaseEmbeddedQuery",
+        "comment": null,
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -23146,6 +25197,139 @@
         "validation": "FP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Laleh, Davood"
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public parameterizedType() : void from class com.squareup.javapoet.TypesTest to public parameterizedType() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public arrayType() : void from class com.squareup.javapoet.TypesTest to public arrayType() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getParameterizedTypeMirror() : void from class com.squareup.javapoet.TypesTest to public getParameterizedTypeMirror() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public wildcardMirrorExtendsType() : void from class com.squareup.javapoet.TypesTest to public wildcardMirrorExtendsType() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getVoidTypeMirror() : void from class com.squareup.javapoet.TypesTest to public getVoidTypeMirror() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getNullTypeMirror() : void from class com.squareup.javapoet.TypesTest to public getNullTypeMirror() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public unbox() : void from class com.squareup.javapoet.TypesTest to public unbox() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public wildcardExtendsObject() : void from class com.squareup.javapoet.TypesTest to public wildcardExtendsObject() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public wildcardExtendsType() : void from class com.squareup.javapoet.TypesTest to public wildcardExtendsType() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public typeVariable() : void from class com.squareup.javapoet.TypesTest to public typeVariable() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private getMirror(clazz Class) : TypeMirror from class com.squareup.javapoet.TypesTest to private getMirror(clazz Class) : TypeMirror from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getTypeVariableTypeMirror() : void from class com.squareup.javapoet.TypesTest to public getTypeVariableTypeMirror() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getPrimitiveTypeMirror() : void from class com.squareup.javapoet.TypesTest to public getPrimitiveTypeMirror() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public wildcardSuperType() : void from class com.squareup.javapoet.TypesTest to public wildcardSuperType() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public wildcardMirrorSuperType() : void from class com.squareup.javapoet.TypesTest to public wildcardMirrorSuperType() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public wildcardMirrorNoBounds() : void from class com.squareup.javapoet.TypesTest to public wildcardMirrorNoBounds() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getBasicTypeMirror() : void from class com.squareup.javapoet.TypesTest to public getBasicTypeMirror() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public box() : void from class com.squareup.javapoet.TypesTest to public box() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getArrayTypeMirror() : void from class com.squareup.javapoet.TypesTest to public getArrayTypeMirror() : void from class com.squareup.javapoet.AbstractTypesTest",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -29584,6 +31768,41 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getEffectiveLocator() : ServiceLocator from class org.glassfish.jersey.ext.cdi1x.servlet.internal.ServletHk2LocatorManager to public getEffectiveLocator() : ServiceLocator from class org.glassfish.jersey.ext.cdi1x.internal.GenericHk2LocatorManager",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public registerLocator(locator ServiceLocator) : void from class org.glassfish.jersey.ext.cdi1x.servlet.internal.ServletHk2LocatorManager to public registerLocator(locator ServiceLocator) : void from class org.glassfish.jersey.ext.cdi1x.internal.GenericHk2LocatorManager",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public notify(target Hk2InjectedTarget) : void from class org.glassfish.jersey.ext.cdi1x.servlet.internal.ServletHk2LocatorManager to public notify(target Hk2InjectedTarget) : void from class org.glassfish.jersey.ext.cdi1x.internal.GenericHk2LocatorManager",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private multipleLocators : boolean from class org.glassfish.jersey.ext.cdi1x.servlet.internal.ServletHk2LocatorManager to class org.glassfish.jersey.ext.cdi1x.internal.GenericHk2LocatorManager",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private locator : ServiceLocator from class org.glassfish.jersey.ext.cdi1x.servlet.internal.ServletHk2LocatorManager to class org.glassfish.jersey.ext.cdi1x.internal.GenericHk2LocatorManager",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 5816
 }, {
@@ -30722,6 +32941,13 @@
     "refactorings": [{
         "type": "Move Method",
         "description": "Move Method private escapeLiteral(str String) : String from class com.querydsl.jpa.JPQLSerializer to private escapeLiteral(str String) : String from class com.querydsl.jpa.JPQLTemplates",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public asLiteral(constant Object) : String extracted from public visitLiteral(constant Object) : void in class com.querydsl.jpa.JPQLSerializer & moved to class com.querydsl.jpa.JPQLTemplates",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -31905,7 +34131,266 @@
         "type": "Pull Up Method",
         "description": "Pull Up Method protected normalize(vector Map) : void from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to protected normalize(vector Map) : double from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
         "comment": null,
-        "validation": "TP",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public setMaxIterations(maxIterations int) : void from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to public setMaxIterations(maxIterations int) : void from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getCentrality(node Node) : Double from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to public getCentrality(node Node) : Double from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getMaxIterations() : int from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to public getMaxIterations() : int from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public reset() : void from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to public reset() : void from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected processRelationship(newValues Map, relationship Relationship, backwards boolean) : void from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to protected processRelationship(newValues Map, relationship Relationship, backwards boolean) : void from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public calculate() : void from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to public calculate() : void from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getMaxIterations() : int from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to public getMaxIterations() : int from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public reset() : void from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to public reset() : void from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public runIterations(maxNrIterations int) : int from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to public runIterations(maxNrIterations int) : int from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getTotalIterations() : int from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to public getTotalIterations() : int from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public setMaxIterations(maxIterations int) : void from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to public setMaxIterations(maxIterations int) : void from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public runIterations(maxNrIterations int) : int from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to public runIterations(maxNrIterations int) : int from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private timeToStop(oldValues Map, newValues Map) : boolean from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to private timeToStop(oldValues Map, newValues Map) : boolean from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getTotalIterations() : int from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to public getTotalIterations() : int from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getCentrality(node Node) : Double from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to public getCentrality(node Node) : Double from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public calculate() : void from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to public calculate() : void from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private timeToStop(oldValues Map, newValues Map) : boolean from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to private timeToStop(oldValues Map, newValues Map) : boolean from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected processRelationship(newValues Map, relationship Relationship, backwards boolean) : void from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to protected processRelationship(newValues Map, relationship Relationship, backwards boolean) : void from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method protected normalize(vector Map) : double from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to protected normalize(vector Map) : double from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected relationDirection : Direction from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected relationshipSet : Set from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected nodeSet : Set from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected values : Map from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected nodeSet : Set from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected relationshipSet : Set from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected doneCalculation : boolean from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected totalIterations : int from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected costEvaluator : CostEvaluator from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected precision : double from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected relationDirection : Direction from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected totalIterations : int from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected costEvaluator : CostEvaluator from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected maxIterations : int from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected maxIterations : int from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected values : Map from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected precision : double from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected doneCalculation : boolean from class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
+        "comment": null,
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -34992,6 +37477,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable key : String to definition : Entry in method private fillRepresentations(swagger Swagger, contract Contract) : void in class org.restlet.ext.apispark.internal.conversion.swagger.v2_0.Swagger2Reader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -36509,6 +39001,69 @@
         "description": "Push Down Method public descending() : T from class org.jbpm.query.jpa.builder.impl.AbstractQueryBuilderImpl to public ascending(field OrderBy) : T from class org.jbpm.process.audit.query.AbstractAuditQueryBuilderImpl",
         "comment": null,
         "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private getEntityManager() : EntityManager from class org.jbpm.process.audit.JPAAuditLogService to protected getEntityManager() : EntityManager from class org.jbpm.process.audit.JPAService",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private closeEntityManager(em EntityManager, transaction Object) : void from class org.jbpm.process.audit.JPAAuditLogService to protected closeEntityManager(em EntityManager, transaction Object) : void from class org.jbpm.process.audit.JPAService",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private executeQuery(query Query, em EntityManager, type Class) : List from class org.jbpm.process.audit.JPAAuditLogService to public executeQuery(query Query, em EntityManager, type Class) : List from class org.jbpm.process.audit.JPAService",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public dispose() : void from class org.jbpm.process.audit.JPAAuditLogService to public dispose() : void from class org.jbpm.process.audit.JPAService",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public setPersistenceUnitName(persistenceUnitName String) : void from class org.jbpm.process.audit.JPAAuditLogService to public setPersistenceUnitName(persistenceUnitName String) : void from class org.jbpm.process.audit.JPAService",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method private joinTransaction(em EntityManager) : Object from class org.jbpm.process.audit.JPAAuditLogService to protected joinTransaction(em EntityManager) : Object from class org.jbpm.process.audit.JPAService",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getPersistenceUnitName() : String from class org.jbpm.process.audit.JPAAuditLogService to public getPersistenceUnitName() : String from class org.jbpm.process.audit.JPAService",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected persistenceUnitName : String from class org.jbpm.process.audit.JPAAuditLogService to class org.jbpm.process.audit.JPAService",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected persistenceStrategy : PersistenceStrategy from class org.jbpm.process.audit.JPAAuditLogService to class org.jbpm.process.audit.JPAService",
+        "comment": null,
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -39685,43 +42240,43 @@
         "type": "Pull Up Method",
         "description": "Pull Up Method public onApplicationEvent(event ContextClosedEvent) : void from class org.geoserver.wfs.response.Ogr2OgrConfigurator to public onApplicationEvent(event ContextClosedEvent) : void from class org.geoserver.ogr.core.AbstractToolConfigurator",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public loadConfiguration() : void from class org.geoserver.wfs.response.Ogr2OgrConfigurator to public loadConfiguration() : void from class org.geoserver.ogr.core.AbstractToolConfigurator",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Pull Up Attribute",
         "description": "Pull Up Attribute private LOGGER : Logger from class org.geoserver.wfs.response.Ogr2OgrConfigurator to class org.geoserver.ogr.core.AbstractToolConfigurator",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Pull Up Attribute",
         "description": "Pull Up Attribute private singleFile : boolean from class org.geoserver.wfs.response.OgrFormat to class org.geoserver.ogr.core.Format",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Pull Up Attribute",
         "description": "Pull Up Attribute protected listener : ResourceListener from class org.geoserver.wfs.response.Ogr2OgrConfigurator to class org.geoserver.ogr.core.AbstractToolConfigurator",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Pull Up Attribute",
         "description": "Pull Up Attribute protected configFile : Resource from class org.geoserver.wfs.response.Ogr2OgrConfigurator to class org.geoserver.ogr.core.AbstractToolConfigurator",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Move And Rename Class",
@@ -39734,8 +42289,8 @@
         "type": "Pull Up Method",
         "description": "Pull Up Method package run(cmd List, sb StringBuilder) : int from class org.geoserver.wfs.response.OGRWrapper to protected run(cmd List, sb StringBuilder) : int from class org.geoserver.ogr.core.AbstractToolWrapper",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Pull Up Method",
@@ -39791,6 +42346,27 @@
         "description": "Rename Attribute gdalData : String to environment : Map in class org.geoserver.wfs.response.Ogr2OgrOutputFormat",
         "comment": null,
         "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private fileExtension : String from class org.geoserver.wfs.response.OgrFormat to class org.geoserver.ogr.core.Format",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private options : List from class org.geoserver.wfs.response.OgrFormat to class org.geoserver.ogr.core.Format",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private mimeType : String from class org.geoserver.wfs.response.OgrFormat to class org.geoserver.ogr.core.Format",
+        "comment": null,
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],

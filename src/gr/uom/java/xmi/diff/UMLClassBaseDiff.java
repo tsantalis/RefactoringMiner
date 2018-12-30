@@ -943,8 +943,28 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		return addedOperation.compatibleSignature(removedOperation) ||
 		(
 		(absoluteDifferenceInPosition == 0 || operationsBeforeAndAfterMatch(removedOperation, addedOperation)) &&
+		!gettersWithDifferentReturnType(removedOperation, addedOperation) &&
 		(addedOperation.getParameterTypeList().equals(removedOperation.getParameterTypeList()) || addedOperation.normalizedNameDistance(removedOperation) <= MAX_OPERATION_NAME_DISTANCE)
 		);
+	}
+
+	private boolean gettersWithDifferentReturnType(UMLOperation removedOperation, UMLOperation addedOperation) {
+		if(removedOperation.isGetter() && addedOperation.isGetter()) {
+			UMLType type1 = removedOperation.getReturnParameter().getType();
+			UMLType type2 = addedOperation.getReturnParameter().getType();
+			if(!removedOperation.equalReturnParameter(addedOperation) &&
+					!type1.getClassType().equals(type2.getClassType()) &&
+					!type1.getClassType().equals("Object") &&
+					!type2.getClassType().equals("Object") &&
+					!type1.getClassType().startsWith(type2.getClassType()) &&
+					!type2.getClassType().startsWith(type1.getClassType()) &&
+					!type1.getTypeArguments().contains(type2.getClassType()) &&
+					!type2.getTypeArguments().contains(type1.getClassType()) &&
+					!type1.commonTokenInClassType(type2)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean operationsBeforeAndAfterMatch(UMLOperation removedOperation, UMLOperation addedOperation) {

@@ -109,6 +109,19 @@ public class UMLType implements Serializable {
 		return true;
 	}
 
+	public boolean commonTokenInClassType(UMLType type) {
+		String[] tokens1 = CAMEL_CASE_SPLIT_PATTERN.split(this.nonQualifiedClassType);
+		String[] tokens2 = CAMEL_CASE_SPLIT_PATTERN.split(type.nonQualifiedClassType);
+		for(String token1 : tokens1) {
+			for(String token2 : tokens2) {
+				if(token1.equals(token2)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
     public int hashCode() {
     	if(hashCode == 0) {
     		int result = 17;

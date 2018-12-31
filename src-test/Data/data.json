@@ -1531,8 +1531,8 @@
         "type": "Pull Up Method",
         "description": "Pull Up Method public dispose() : void from class com.intellij.remoteServer.impl.runtime.log.LoggingHandlerImpl to public dispose() : void from class com.intellij.remoteServer.impl.runtime.log.LoggingHandlerBase",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -8569,6 +8569,34 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class integration.RestAssuredSetupRule from class integration.BaseRestTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Class",
+        "description": "Extract Class integration.RequiredVersionRule from class integration.BaseRestTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private log : Logger from class integration.BaseRestTest to class integration.RequiredVersionRule",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute private serverUnderTestVersion : Version from class integration.BaseRestTest to class integration.RestAssuredSetupRule",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -10536,6 +10564,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable notifMgr : NotificationManager to notificationManager : NotificationManager in method public notifyAccountCancel(context Context, account Account) : void in class com.fsck.k9.controller.MessagingController",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -11176,6 +11211,13 @@
     "refactorings": [{
         "type": "Move Attribute",
         "description": "Move Attribute private m_framework : Framework from class org.voltdb.importer.ImportProcessor.BundleWrapper to class org.voltdb.importer.ImportProcessor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable o : Object in method public addProcessorConfig(properties Properties) : void from class org.voltdb.importer.ImportProcessor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -18853,6 +18895,48 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getName() : String from class org.broadleafcommerce.openadmin.dto.override.FieldMetadataOverride to public getName() : String from class org.broadleafcommerce.openadmin.dto.override.MetadataOverride",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public getOrder() : Integer from class org.broadleafcommerce.openadmin.dto.override.FieldMetadataOverride to public getOrder() : Integer from class org.broadleafcommerce.openadmin.dto.override.MetadataOverride",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public setName(name String) : void from class org.broadleafcommerce.openadmin.dto.override.FieldMetadataOverride to public setName(name String) : void from class org.broadleafcommerce.openadmin.dto.override.MetadataOverride",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public setOrder(order Integer) : void from class org.broadleafcommerce.openadmin.dto.override.FieldMetadataOverride to public setOrder(order Integer) : void from class org.broadleafcommerce.openadmin.dto.override.MetadataOverride",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected order : Integer from class org.broadleafcommerce.openadmin.dto.override.FieldMetadataOverride to class org.broadleafcommerce.openadmin.dto.override.MetadataOverride",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute protected name : String from class org.broadleafcommerce.openadmin.dto.override.FieldMetadataOverride to class org.broadleafcommerce.openadmin.dto.override.MetadataOverride",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -19172,6 +19256,41 @@
     "refactorings": [{
         "type": "Extract Method",
         "description": "Extract Method public hasSize(size int) : SymbolTableAssert extracted from public isEmpty() : SymbolTableAssert in class org.voltdb.sqlparser.symtab.SymbolTableAssert",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public hasName(aTypeName String) : TypeAssert from class org.voltdb.sqlparser.matchers.TypeAssert to public hasName(aTypeName String) : TypeAssert from class org.voltdb.sqlparser.symtab.TypeAssert",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public hasNominalSize(aNominalSize int) : TypeAssert from class org.voltdb.sqlparser.matchers.TypeAssert to public hasNominalSize(aNominalSize int) : TypeAssert from class org.voltdb.sqlparser.symtab.TypeAssert",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public hasMaxSize(aMaxSize int) : TypeAssert from class org.voltdb.sqlparser.matchers.TypeAssert to public hasMaxSize(aMaxSize int) : TypeAssert from class org.voltdb.sqlparser.symtab.TypeAssert",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public definesType(aTypeName String) : TypeAssert from class org.voltdb.sqlparser.matchers.SymbolTableAssert to public definesType(aTypeName String) : TypeAssert from class org.voltdb.sqlparser.symtab.SymbolTableAssert",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter actual : Type to aActual : Type in method protected TypeAssert(aActual Type) in class org.voltdb.sqlparser.symtab.TypeAssert",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -21979,14 +22098,7 @@
         "validators": null
     }, {
         "type": "Move Class",
-        "description": "Move Class exportbenchmark.ExportBenchmark.ExportCallback moved to exportbenchmark2.client.exportbenchmark.ExportBenchmark.ExportCallback",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Move Class",
-        "description": "Move Class exportbenchmark.ExportBenchmark.ExportBenchConfig moved to exportbenchmark2.client.exportbenchmark.ExportBenchmark.ExportBenchConfig",
+        "description": "Move Class exportbenchmark.ExportBenchmark moved to exportbenchmark2.client.exportbenchmark.ExportBenchmark",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -24809,6 +24921,13 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method private process(validElements ImmutableSetMultimap<Class<? extends Annotation>,Element>) : void extracted from public process(annotations Set<? extends TypeElement>, roundEnv RoundEnvironment) : boolean in class com.google.auto.common.BasicAnnotationProcessor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable elementsByAnnotationBuilder : ImmutableSetMultimap.Builder to validElements : ImmutableSetMultimap.Builder in method private validElements(deferredElements ImmutableMap, roundEnv RoundEnvironment) : ImmutableSetMultimap in class com.google.auto.common.BasicAnnotationProcessor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -28645,36 +28764,36 @@
         "type": "Pull Up Method",
         "description": "Pull Up Method public getOutputStream() : ServletOutputStream from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public getOutputStream() : ServletOutputStream from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "It is a extract superclass",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public getWriter() : PrintWriter from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public getWriter() : PrintWriter from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "It is a extract superclass",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public sendError(sc int, msg String) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendError(sc int, msg String) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "It is a extract superclass",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public sendRedirect(location String) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendRedirect(location String) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "It is a extract superclass",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public flushBuffer() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public flushBuffer() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "It is a extract superclass",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Move Method",
@@ -28852,6 +28971,13 @@
         "detectionTools": "RefactoringMiner",
         "validators": "Matin"
     }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public sendError(sc int) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendError(sc int) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
+        "comment": "<p>Part of Extract Superclass refactoring</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Matin, Davood"
+    }, {
         "type": "Rename Variable",
         "description": "Rename Parameter arg0 : String to s : String in method public print(s String) : void in class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextServletOutputStream",
         "comment": null,
@@ -28892,36 +29018,36 @@
         "type": "Pull Up Method",
         "description": "Pull Up Method public getOutputStream() : ServletOutputStream from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public getOutputStream() : ServletOutputStream from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "it is a extract super class",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public getWriter() : PrintWriter from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public getWriter() : PrintWriter from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "it is a extract super class",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public sendError(sc int, msg String) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendError(sc int, msg String) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "it is a extract super class",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public sendRedirect(location String) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendRedirect(location String) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "it is a extract super class",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public flushBuffer() : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public flushBuffer() : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "it is a extract super class",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Move Method",
@@ -29103,6 +29229,13 @@
         "description": "Rename Parameter arg0 : String to s : String in method public print(s String) : void in class org.springframework.security.web.context.OnCommittedResponseWrapper.SaveContextServletOutputStream",
         "comment": null,
         "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public sendError(sc int) : void from class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper to public sendError(sc int) : void from class org.springframework.security.web.context.OnCommittedResponseWrapper",
+        "comment": null,
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -31064,6 +31197,27 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method package fromURIs(uris Set<URI>) : Set<ChannelSpec> renamed to package asSpecs(uris Set<URI>) : Set<ChannelSpec> in class org.voltdb.importer.TestChannelDistributer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public registerCallback(importer String, callback ChannelChangeCallback) : void from class org.voltdb.importer.ChannelChangeNotifier to public registerCallback(importer String, callback ChannelChangeCallback) : void from class org.voltdb.importer.ChannelDistributer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method package mapByImporter(specs Set) : SetMultimap from class org.voltdb.importer.ChannelChangeNotifier to private mapByImporter(specs Set) : SetMultimap from class org.voltdb.importer.ChannelAssignment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Attribute",
+        "description": "Move Attribute package m_callbacks : CallbacksRef from class org.voltdb.importer.ChannelChangeNotifier to class org.voltdb.importer.ChannelDistributer",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -34629,6 +34783,34 @@
         "type": "Extract Method",
         "description": "Extract Method private createSchema(config VoltDB.Configuration, ddl String, sitesPerHost int, hostCount int, replication int) : void extracted from public testCreateDropIndexonView() : void in class org.voltdb.TestAdhocCreateDropIndex",
         "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable pathToCatalog : String in method public testCreateDropIndexonView() : void from class org.voltdb.TestAdhocCreateDropIndex",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable pathToCatalog : String in method public testBasicCreateIndex() : void from class org.voltdb.TestAdhocCreateDropIndex",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable pathToDeployment : String in method public testCreateDropIndexonView() : void from class org.voltdb.TestAdhocCreateDropIndex",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable pathToDeployment : String in method public testBasicCreateIndex() : void from class org.voltdb.TestAdhocCreateDropIndex",
+        "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
@@ -42404,6 +42586,20 @@
     "refactorings": [{
         "type": "Extract Method",
         "description": "Extract Method private resetLeader() : void extracted from public run() : void in class org.voltdb.importclient.kafka.KafkaStreamImporter.TopicPartitionFetcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable i : int to attempts : int in method public getOffsetCoordinator() : void in class org.voltdb.importclient.kafka.KafkaStreamImporter.TopicPartitionFetcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute consumer : SimpleConsumer to m_consumer : SimpleConsumer in method public run() : void in class org.voltdb.importclient.kafka.KafkaStreamImporter.TopicPartitionFetcher",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

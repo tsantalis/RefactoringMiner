@@ -793,7 +793,7 @@ public class UMLModelDiff {
 		   UMLType addedClassSuperType = addedClass.getSuperclass();
 		   if(!addedClass.isInterface()) {
 			   for(UMLClassBaseDiff classDiff : classDiffs) {
-				   UMLType classDiffSuperType = classDiff.getSuperclass();
+				   UMLType classDiffSuperType = classDiff.getNewSuperclass();
 				   boolean commonSuperType = addedClassSuperType != null && classDiffSuperType != null &&
 						   addedClassSuperType.getClassType().equals(classDiffSuperType.getClassType());
 				   boolean commonInterface = false;

@@ -3433,6 +3433,97 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter killPlan : KillPlan to plan : KillPlan in method public visitKillPlan(plan KillPlan, context C) : R in class io.crate.planner.PlanVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter node : QueryThenFetch to plan : QueryThenFetch in method public visitQueryThenFetch(plan QueryThenFetch, context C) : R in class io.crate.planner.PlanVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter countPlan : CountPlan to plan : CountPlan in method public visitCountPlan(plan CountPlan, context C) : R in class io.crate.planner.PlanVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter node : QueryAndFetch to plan : QueryAndFetch in method public visitQueryAndFetch(plan QueryAndFetch, context C) : R in class io.crate.planner.PlanVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter node : InsertFromSubQuery to plan : InsertFromSubQuery in method public visitInsertByQuery(plan InsertFromSubQuery, context C) : R in class io.crate.planner.PlanVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter node : Upsert to plan : Upsert in method public visitUpsert(plan Upsert, context C) : R in class io.crate.planner.PlanVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter node : DistributedGroupBy to plan : DistributedGroupBy in method public visitDistributedGroupBy(plan DistributedGroupBy, context C) : R in class io.crate.planner.PlanVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter node : NonDistributedGroupBy to plan : NonDistributedGroupBy in method public visitNonDistributedGroupBy(plan NonDistributedGroupBy, context C) : R in class io.crate.planner.PlanVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter nestedLoop : NestedLoop to plan : NestedLoop in method public visitNestedLoop(plan NestedLoop, context C) : R in class io.crate.planner.PlanVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter nestedLoopNode : NestedLoopNode to node : NestedLoopNode in method public visitNestedLoopNode(node NestedLoopNode, context C) : R in class io.crate.planner.node.ExecutionNodeVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter countNode : CountNode to node : CountNode in method public visitCountNode(node CountNode, context PreparerContext) : Void in class io.crate.action.job.ContextPreparer.InnerPreparer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter countNode : CountNode to node : CountNode in method public visitCountNode(node CountNode, context C) : R in class io.crate.planner.node.ExecutionNodeVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute mergeNodes : List to finalMergeNodes : List in class io.crate.executor.transport.ExecutionNodesTask",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

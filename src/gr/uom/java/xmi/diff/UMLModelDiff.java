@@ -1467,13 +1467,16 @@ public class UMLModelDiff {
 	            		  // Methods in the same class with similar body but different signature
 	            	  }
 	               }
-	               else if(isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation)) {
+	               else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
+	            		   isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation)) {
 	                  refactoring = new PullUpOperationRefactoring(firstMapper);
 	               }
-	               else if(isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation)) {
+	               else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
+	            		   isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation)) {
 	                  refactoring = new PushDownOperationRefactoring(firstMapper);
 	               }
-	               else if(movedMethodSignature(removedOperation, addedOperation) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
+	               else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
+	            		   movedMethodSignature(removedOperation, addedOperation) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
 	                  refactoring = new MoveOperationRefactoring(firstMapper);
 	               }
 	               if(refactoring != null) {
@@ -1533,13 +1536,16 @@ public class UMLModelDiff {
 	            		  // Methods in the same class with similar body but different signature
 	            	  }
 	               }
-	               else if(isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation)) {
+	               else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
+	            		   isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation)) {
 	                  refactoring = new PullUpOperationRefactoring(firstMapper);
 	               }
-	               else if(isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation)) {
+	               else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
+	            		   isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation)) {
 	                  refactoring = new PushDownOperationRefactoring(firstMapper);
 	               }
-	               else if(movedMethodSignature(removedOperation, addedOperation) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
+	               else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
+	            		   movedMethodSignature(removedOperation, addedOperation) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
 	                  refactoring = new MoveOperationRefactoring(firstMapper);
 	               }
 	               if(refactoring != null) {

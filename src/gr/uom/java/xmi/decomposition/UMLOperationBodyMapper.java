@@ -1460,16 +1460,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				(commonConditional(s1, s2, replacementInfo) && containsValidOperatorReplacements(replacementInfo));
 		if(isEqualWithReplacement) {
 			if(variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1) {
-				boolean typeReplacement = false, variableRename = false, methodInvocationReplacement = false;
+				boolean typeReplacement = false, variableRename = false, methodInvocationReplacement = false, nullInitializer = false;
+				UMLType type1 = variableDeclarations1.get(0).getType();
+				UMLType type2 = variableDeclarations2.get(0).getType();
+				AbstractExpression initializer1 = variableDeclarations1.get(0).getInitializer();
+				AbstractExpression initializer2 = variableDeclarations2.get(0).getInitializer();
+				if(initializer1 == null && initializer2 == null) {
+					nullInitializer = true;
+				}
+				else if(initializer1 != null && initializer2 != null) {
+					nullInitializer = initializer1.getExpression().equals("null") && initializer2.getExpression().equals("null");
+				}
 				for(Replacement replacement : replacementInfo.getReplacements()) {
 					if(replacement.getType().equals(ReplacementType.TYPE))
 						typeReplacement = true;
-					else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME))
+					else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
+							variableDeclarations1.get(0).getVariableName().equals(replacement.getBefore()) &&
+							variableDeclarations2.get(0).getVariableName().equals(replacement.getAfter()))
 						variableRename = true;
-					else if(replacement instanceof MethodInvocationReplacement)
+					else if(replacement instanceof MethodInvocationReplacement  &&
+							initializer1 != null && initializer1.getExpression().equals(replacement.getBefore()) &&
+							initializer2 != null && initializer2.getExpression().equals(replacement.getAfter()))
 						methodInvocationReplacement = true;
 				}
-				if(typeReplacement && variableRename && methodInvocationReplacement) {
+				if(typeReplacement && !type1.compatibleTypes(type2) && variableRename && (methodInvocationReplacement || nullInitializer)) {
 					return null;
 				}
 			}

@@ -952,15 +952,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		if(removedOperation.isGetter() && addedOperation.isGetter()) {
 			UMLType type1 = removedOperation.getReturnParameter().getType();
 			UMLType type2 = addedOperation.getReturnParameter().getType();
-			if(!removedOperation.equalReturnParameter(addedOperation) &&
-					!type1.getClassType().equals(type2.getClassType()) &&
-					!type1.getClassType().equals("Object") &&
-					!type2.getClassType().equals("Object") &&
-					!type1.getClassType().startsWith(type2.getClassType()) &&
-					!type2.getClassType().startsWith(type1.getClassType()) &&
-					!type1.getTypeArguments().contains(type2.getClassType()) &&
-					!type2.getTypeArguments().contains(type1.getClassType()) &&
-					!type1.commonTokenInClassType(type2)) {
+			if(!removedOperation.equalReturnParameter(addedOperation) && !type1.compatibleTypes(type2)) {
 				return true;
 			}
 		}

@@ -11503,13 +11503,6 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
-    }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable operationInput : ImportKeyringParcel to keyserver : String in method public importKeys() : void in class org.sufficientlysecure.keychain.ui.ImportKeysActivity",
-        "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

@@ -109,7 +109,18 @@ public class UMLType implements Serializable {
 		return true;
 	}
 
-	public boolean commonTokenInClassType(UMLType type) {
+	public boolean compatibleTypes(UMLType type) {
+		return this.getClassType().equals(type.getClassType()) ||
+				this.getClassType().equals("Object") ||
+				type.getClassType().equals("Object") ||
+				this.getClassType().startsWith(type.getClassType()) ||
+				type.getClassType().startsWith(this.getClassType()) ||
+				this.getTypeArguments().contains(type.getClassType()) ||
+				type.getTypeArguments().contains(this.getClassType()) ||
+				this.commonTokenInClassType(type);
+	}
+
+	private boolean commonTokenInClassType(UMLType type) {
 		String[] tokens1 = CAMEL_CASE_SPLIT_PATTERN.split(this.nonQualifiedClassType);
 		String[] tokens2 = CAMEL_CASE_SPLIT_PATTERN.split(type.nonQualifiedClassType);
 		for(String token1 : tokens1) {
@@ -144,7 +155,7 @@ public class UMLType implements Serializable {
         return sb.toString();
     }
 
-    public static String getTypeName(Type type, int extraDimensions) {
+	public static String getTypeName(Type type, int extraDimensions) {
 		ITypeBinding binding = type.resolveBinding();
 		if (binding != null) {
 			return binding.getQualifiedName();

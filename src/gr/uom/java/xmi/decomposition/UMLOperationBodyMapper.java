@@ -1691,18 +1691,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1) {
 			VariableDeclaration v1 = variableDeclarations1.get(0);
 			VariableDeclaration v2 = variableDeclarations2.get(0);
+			String initializer1 = v1.getInitializer() != null ? v1.getInitializer().getString() : null;
+			String initializer2 = v2.getInitializer() != null ? v2.getInitializer().getString() : null;
 			if(v1.getType().getArrayDimension() == 1 && v2.getType().getTypeArguments().contains(v1.getType().getClassType()) &&
 					creationCoveringTheEntireStatement1.isArray() && !creationCoveringTheEntireStatement2.isArray() &&
-					s1.substring(s1.indexOf("[")+1, s1.lastIndexOf("]")).equals(s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")")))) {
-				r = new ObjectCreationReplacement(v1.getInitializer().getString(), v2.getInitializer().getString(),
+					initializer1 != null && initializer2 != null &&
+					initializer1.substring(initializer1.indexOf("[")+1, initializer1.lastIndexOf("]")).equals(initializer2.substring(initializer2.indexOf("(")+1, initializer2.lastIndexOf(")")))) {
+				r = new ObjectCreationReplacement(initializer1, initializer2,
 						creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.ARRAY_CREATION_REPLACED_WITH_DATA_STRUCTURE_CREATION);
 				replacementInfo.addReplacement(r);
 				return replacementInfo.getReplacements();
 			}
 			if(v2.getType().getArrayDimension() == 1 && v1.getType().getTypeArguments().contains(v2.getType().getClassType()) &&
 					!creationCoveringTheEntireStatement1.isArray() && creationCoveringTheEntireStatement2.isArray() &&
-					s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")")).equals(s2.substring(s2.indexOf("[")+1, s2.lastIndexOf("]")))) {
-				r = new ObjectCreationReplacement(v1.getInitializer().getString(), v2.getInitializer().getString(),
+					initializer1 != null && initializer2 != null &&
+					initializer1.substring(initializer1.indexOf("(")+1, initializer1.lastIndexOf(")")).equals(initializer2.substring(initializer2.indexOf("[")+1, initializer2.lastIndexOf("]")))) {
+				r = new ObjectCreationReplacement(initializer1, initializer2,
 						creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.ARRAY_CREATION_REPLACED_WITH_DATA_STRUCTURE_CREATION);
 				replacementInfo.addReplacement(r);
 				return replacementInfo.getReplacements();

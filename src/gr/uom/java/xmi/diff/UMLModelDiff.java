@@ -12,7 +12,9 @@ import gr.uom.java.xmi.UMLRealization;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
+import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
@@ -1587,7 +1589,20 @@ public class UMLModelDiff {
    private boolean mappedElementsMoreThanNonMappedT1AndT2(int mappings, UMLOperationBodyMapper operationBodyMapper) {
         int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();
 		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();
-		return (mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
+		int nonMappedStatementsDeclaringSameVariable = 0;
+		for(StatementObject s1 : operationBodyMapper.getNonMappedLeavesT1()) {
+			for(StatementObject s2 : operationBodyMapper.getNonMappedLeavesT2()) {
+				if(s1.getVariableDeclarations().size() == 1 && s2.getVariableDeclarations().size() == 1) {
+					VariableDeclaration v1 = s1.getVariableDeclarations().get(0);
+					VariableDeclaration v2 = s2.getVariableDeclarations().get(0);
+					if(v1.getVariableName().equals(v2.getVariableName()) && v1.getType().equals(v2.getType())) {
+						nonMappedStatementsDeclaringSameVariable++;
+					}
+				}
+			}
+		}
+		return (mappings > nonMappedElementsT1-nonMappedStatementsDeclaringSameVariable &&
+				mappings > nonMappedElementsT2-nonMappedStatementsDeclaringSameVariable) ||
 				(nonMappedElementsT1 == 0 && mappings > Math.floor(nonMappedElementsT2/2.0));
    }
 

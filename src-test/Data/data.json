@@ -14830,6 +14830,20 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method protected doStop() : void extracted from public stop() : void in class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method protected doStart() : void extracted from public start() : void in class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2473
 }, {
@@ -34340,16 +34354,16 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method public runIterations(maxNrIterations int) : int renamed to public runInternalIteration() : int in class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower",
-        "comment": "Matin: TP",
-        "validation": "TP",
+        "comment": "<p>This method is pulled up to EigenvectorCentralityBase</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Davood"
+        "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Extract Method",
-        "description": "Extract Method protected changeSignBasedOnFirstNoneZeroValue() : void extracted from public runIterations(maxNrIterations int) : int in class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi",
+        "description": "Extract Method protected changeSignBasedOnFirstNoneZeroValue() : void extracted from public runIterations(maxNrIterations int) : int in class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
         "comment": "<p>Extract and Move to the inner class</p><p>Note also the pull-up method. The extracted method have some additional statements as well.</p>",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood, Automatic"
     }, {
         "type": "Extract Method",

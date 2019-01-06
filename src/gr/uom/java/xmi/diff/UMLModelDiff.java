@@ -923,6 +923,8 @@ public class UMLModelDiff {
 				   if(removedOperation != null) {
 					   subclassDiff.getRemovedOperations().remove(removedOperation);
 					   this.refactorings.add(new PullUpOperationRefactoring(removedOperation, superclassOperation));
+					   UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, superclassOperation);
+					   checkForExtractedOperationsWithinMovedMethod(mapper, addedClass);
 				   }
 			   }
 			   for(UMLAttribute superclassAttribute : addedClass.getAttributes()) {
@@ -934,6 +936,29 @@ public class UMLModelDiff {
 			   }
 		   }
 		   subclassSet.add(subclass);
+	   }
+   }
+
+   private void checkForExtractedOperationsWithinMovedMethod(UMLOperationBodyMapper movedMethodMapper, UMLClass addedClass) {
+	   UMLOperation removedOperation = movedMethodMapper.getOperation1();
+	   UMLOperation addedOperation = movedMethodMapper.getOperation2();
+	   Set<OperationInvocation> removedInvocations = removedOperation.getAllOperationInvocations();
+	   Set<OperationInvocation> addedInvocations = addedOperation.getAllOperationInvocations();
+	   Set<OperationInvocation> intersection = new LinkedHashSet<OperationInvocation>(removedInvocations);
+	   intersection.retainAll(addedInvocations);
+	   Set<OperationInvocation> newInvocations = new LinkedHashSet<OperationInvocation>(addedInvocations);
+	   newInvocations.removeAll(intersection);
+	   for(OperationInvocation newInvocation : newInvocations) {
+		   for(UMLOperation operation : addedClass.getOperations()) {
+			   if(!operation.isAbstract() && !operation.hasEmptyBody() &&
+					   newInvocation.matchesOperation(operation, addedOperation.variableTypeMap())) {
+				   ExtractOperationDetection detection = new ExtractOperationDetection(addedClass.getOperations());
+				   ExtractOperationRefactoring refactoring = detection.check(movedMethodMapper, operation);
+				   if(refactoring != null) {
+					  this.refactorings.add(refactoring);
+				   }
+			   }
+		   }
 	   }
    }
 
@@ -1485,6 +1510,10 @@ public class UMLModelDiff {
 	                  deleteRemovedOperation(removedOperation);
 	                  deleteAddedOperation(addedOperation);
 	                  refactorings.add(refactoring);
+	                  UMLClass addedClass = getAddedClass(addedOperation.getClassName());
+	                  if(addedClass != null) {
+	                	  checkForExtractedOperationsWithinMovedMethod(firstMapper, addedClass);
+	                  }
 	               }
 	            }
 	         }

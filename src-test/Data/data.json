@@ -2999,8 +2999,8 @@
         "type": "Move Method",
         "description": "Move Method public getAdbThreadCount() : int from class com.facebook.buck.cli.AdbOptions to public getAdbThreadCount() : int from class com.facebook.buck.android.AdbOptions",
         "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Rename Parameter",
@@ -3014,6 +3014,13 @@
         "description": "Extract Class com.facebook.buck.android.AdbOptions from class com.facebook.buck.cli.AdbCommandLineOptions",
         "comment": null,
         "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public isMultiInstallModeEnabled() : boolean from class com.facebook.buck.cli.AdbOptions to public isMultiInstallModeEnabled() : boolean from class com.facebook.buck.android.AdbOptions",
+        "comment": null,
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -8419,6 +8426,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method protected IsConnectable() : NSString from class org.robovm.apple.corebluetooth.CBAdvertisementData to public IsConnectable() : NSString from class org.robovm.apple.corebluetooth.CBAdvertisementData.Keys",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 11040
 }, {
@@ -11140,14 +11154,14 @@
         "description": "Move Attribute private EBS_ABSOLUTE_METRICS : Map from class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to class com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue",
         "comment": "It is an extract class since RefDiff cannot detect these refactorings consider as TP",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Move Attribute",
         "description": "Move Attribute private EC2_ABSOLUTE_METRICS : Map from class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to class com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue",
         "comment": "It is an extract class since RefDiff cannot detect these refactorings consider as TP",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Rename Parameter",
@@ -12734,8 +12748,8 @@
         "type": "Push Down Method",
         "description": "Push Down Method protected loadClass(name String, resolve boolean) : Class from class org.drools.core.common.ProjectClassLoader.InternalTypesClassLoader to protected loadClass(name String, resolve boolean) : Class from class org.drools.core.common.ProjectClassLoader.DefaultInternalTypesClassLoader",
         "comment": "InternalTypesClassLoader renamed to DefaultInternalTypesClassLoader. a new interface is added which is called InternalTypesClassLoader ",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Extract Method",
@@ -12759,31 +12773,17 @@
         "detectionTools": "RefDiff",
         "validators": "Matin"
     }, {
-        "type": "Move Method",
-        "description": "Move Method private loadType(name String, resolve boolean) : Class from class org.drools.core.common.ProjectClassLoader.InternalTypesClassLoader to public loadType(name String, resolve boolean) : Class from class org.drools.core.common.ProjectClassLoader.DefaultInternalTypesClassLoader",
+        "type": "Push Down Method",
+        "description": "Push Down Method private loadType(name String, resolve boolean) : Class from class org.drools.core.common.ProjectClassLoader.InternalTypesClassLoader to public loadType(name String, resolve boolean) : Class from class org.drools.core.common.ProjectClassLoader.DefaultInternalTypesClassLoader",
         "comment": null,
-        "validation": "TP",
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin"
     }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute private projectClassLoader : ProjectClassLoader from class org.drools.core.common.ProjectClassLoader.InternalTypesClassLoader to class org.drools.core.common.ProjectClassLoader.DefaultInternalTypesClassLoader",
+        "type": "Push Down Method",
+        "description": "Push Down Method public defineClass(name String, bytecode byte[]) : Class from class org.drools.core.common.ProjectClassLoader.InternalTypesClassLoader to public defineClass(name String, bytecode byte[]) : Class from class org.drools.core.common.ProjectClassLoader.DefaultInternalTypesClassLoader",
         "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Matin"
-    }, {
-        "type": "Move Method",
-        "description": "Move Method protected loadClass(name String, resolve boolean) : Class from class org.drools.core.common.ProjectClassLoader.InternalTypesClassLoader to protected loadClass(name String, resolve boolean) : Class from class org.drools.core.common.ProjectClassLoader.DefaultInternalTypesClassLoader",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Matin"
-    }, {
-        "type": "Move Method",
-        "description": "Move Method public defineClass(name String, bytecode byte[]) : Class from class org.drools.core.common.ProjectClassLoader.InternalTypesClassLoader to public defineClass(name String, bytecode byte[]) : Class from class org.drools.core.common.ProjectClassLoader.DefaultInternalTypesClassLoader",
-        "comment": null,
-        "validation": "TP",
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin"
     }, {
@@ -13210,6 +13210,20 @@
         "description": "Move Method private oAdjMatch(word String, analyzedTokens List, leftWord String) : List from class org.languagetool.tagging.uk.UkrainianTagger to private oAdjMatch(word String, analyzedTokens List, leftWord String) : List from class org.languagetool.tagging.uk.CompoundTagger",
         "comment": null,
         "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private guessCompoundTag(word String) : List from class org.languagetool.tagging.uk.UkrainianTagger to public guessCompoundTag(word String) : List from class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private doGuessCompoundTag(word String) : List extracted from private guessCompoundTag(word String) : List in class org.languagetool.tagging.uk.CompoundTagger",
+        "comment": null,
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -14284,7 +14298,7 @@
         "description": "Move Attribute private channel : T from class org.neo4j.kernel.impl.transaction.log.PhysicalTransactionCursor to class org.neo4j.kernel.impl.transaction.log.PhysicalTransactionCursor.Marker",
         "comment": "<p>channel appears now in two new classes,&nbsp;LogEntryCursor and Maker. Both of them are now used in the source class, and the old channel (coming from the ctor's param) is passed to both of them</p><p>Davood &amp; Laleh: The places where channel is used in PhysicalTransactionCursor do not relate to the places where Marker is used in the new version</p>",
         "validation": "FP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Davood"
     }, {
         "type": "Push Down Method",
@@ -14443,13 +14457,6 @@
     }, {
         "type": "Extract Subclass",
         "description": "Extract Subclass org.neo4j.kernel.impl.transaction.log.pruning.LogPruningImpl from class org.neo4j.kernel.impl.transaction.log.pruning.LogPruning",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Extract Class",
-        "description": "Extract Class org.neo4j.kernel.impl.transaction.log.PhysicalTransactionCursor.Marker from class org.neo4j.kernel.impl.transaction.log.PhysicalTransactionCursor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -20140,13 +20147,6 @@
     }, {
         "type": "Move Attribute",
         "description": "Move Attribute private SERVLET_RESOURCE_LOCATIONS : String[] from class org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration to class org.springframework.boot.autoconfigure.web.ResourceProperties",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute private managementServerProperties : ManagementServerProperties from class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration to class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcChildContextConfiguration",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -42757,14 +42757,14 @@
         "type": "Move Method",
         "description": "Move Method private packRawMap(map Map) : void from class org.neo4j.ndp.messaging.v1.PackStreamMessageFormatV1.Writer to public packRawMap(map Map) : void from class org.neo4j.ndp.messaging.v1.Neo4jPack.Packer",
         "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefDiff",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Move Method",
         "description": "Move Method private unpackRawMap() : Map from class org.neo4j.ndp.messaging.v1.PackStreamMessageFormatV1.Reader to public unpackRawMap() : Map from class org.neo4j.ndp.messaging.v1.Neo4jPack.Unpacker",
         "comment": null,
-        "validation": "TP",
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
@@ -42778,21 +42778,21 @@
         "type": "Move Attribute",
         "description": "Move Attribute public NODE : byte from class org.neo4j.ndp.messaging.v1.PackStreamMessageFormatV1 to class org.neo4j.ndp.messaging.v1.Neo4jPack",
         "comment": null,
-        "validation": "TP",
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin"
     }, {
         "type": "Move Attribute",
         "description": "Move Attribute public RELATIONSHIP : byte from class org.neo4j.ndp.messaging.v1.PackStreamMessageFormatV1 to class org.neo4j.ndp.messaging.v1.Neo4jPack",
         "comment": null,
-        "validation": "TP",
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin"
     }, {
         "type": "Move Attribute",
         "description": "Move Attribute public PATH : byte from class org.neo4j.ndp.messaging.v1.PackStreamMessageFormatV1 to class org.neo4j.ndp.messaging.v1.Neo4jPack",
         "comment": "new",
-        "validation": "TP",
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin, Davood"
     }, {

@@ -25,6 +25,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 	private Map<String, ObjectCreation> creationMap;
 	private List<String> infixOperators;
 	private List<String> arguments;
+	private List<TernaryOperatorExpression> ternaryOperatorExpressions;
     
     public AbstractExpression(CompilationUnit cu, String filePath, Expression expression) {
     	this.locationInfo = new LocationInfo(cu, filePath, expression);
@@ -42,6 +43,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.creationMap = visitor.getCreationMap();
 		this.infixOperators = visitor.getInfixOperators();
 		this.arguments = visitor.getArguments();
+		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
     	this.expression = expression.toString();
     	this.owner = null;
     }
@@ -124,6 +126,11 @@ public class AbstractExpression extends AbstractCodeFragment {
 	@Override
 	public List<String> getArguments() {
 		return arguments;
+	}
+
+	@Override
+	public List<TernaryOperatorExpression> getTernaryOperatorExpressions() {
+		return ternaryOperatorExpressions;
 	}
 
 	public LocationInfo getLocationInfo() {

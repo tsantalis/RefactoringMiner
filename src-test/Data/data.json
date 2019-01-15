@@ -11517,6 +11517,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable keys : ArrayList to keyList : ArrayList in method public importKeys() : void in class org.sufficientlysecure.keychain.ui.ImportKeysActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -12763,14 +12770,14 @@
         "description": "Extract Method private makeClassLoader() : ClassLoader extracted from public onAdd(registry DialectRuntimeRegistry, rootClassLoader ClassLoader) : void in class org.drools.core.rule.JavaDialectRuntimeData",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private makeClassLoader() : ClassLoader extracted from public reload() : void in class org.drools.core.rule.JavaDialectRuntimeData",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Push Down Method",
@@ -32773,7 +32780,7 @@
         "description": "Inline Method private getModuleFileName() : String inlined to public multiResolve(incompleteCode boolean) : ResolveResult[] in class org.intellij.erlang.psi.impl.ErlangFunctionReferenceImpl",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood"
     }],
     "refDiffExecutionTime": 964

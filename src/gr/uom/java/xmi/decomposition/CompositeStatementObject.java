@@ -193,6 +193,15 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	@Override
+	public List<TernaryOperatorExpression> getTernaryOperatorExpressions() {
+		List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
+		for(AbstractExpression expression : expressionList) {
+			ternaryOperatorExpressions.addAll(expression.getTernaryOperatorExpressions());
+		}
+		return ternaryOperatorExpressions;
+	}
+
+	@Override
 	public Map<String, ObjectCreation> getCreationMap() {
 		Map<String, ObjectCreation> creationMap = new LinkedHashMap<String, ObjectCreation>();
 		for(AbstractExpression expression : expressionList) {

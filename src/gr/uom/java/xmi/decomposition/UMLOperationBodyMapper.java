@@ -1459,33 +1459,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		boolean isEqualWithReplacement = s1.equals(s2) || differOnlyInCastExpression(s1, s2) || oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, replacementInfo) ||
 				(commonConditional(s1, s2, replacementInfo) && containsValidOperatorReplacements(replacementInfo));
 		if(isEqualWithReplacement) {
-			if(variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1) {
-				boolean typeReplacement = false, variableRename = false, methodInvocationReplacement = false, nullInitializer = false;
-				UMLType type1 = variableDeclarations1.get(0).getType();
-				UMLType type2 = variableDeclarations2.get(0).getType();
-				AbstractExpression initializer1 = variableDeclarations1.get(0).getInitializer();
-				AbstractExpression initializer2 = variableDeclarations2.get(0).getInitializer();
-				if(initializer1 == null && initializer2 == null) {
-					nullInitializer = true;
-				}
-				else if(initializer1 != null && initializer2 != null) {
-					nullInitializer = initializer1.getExpression().equals("null") && initializer2.getExpression().equals("null");
-				}
-				for(Replacement replacement : replacementInfo.getReplacements()) {
-					if(replacement.getType().equals(ReplacementType.TYPE))
-						typeReplacement = true;
-					else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
-							variableDeclarations1.get(0).getVariableName().equals(replacement.getBefore()) &&
-							variableDeclarations2.get(0).getVariableName().equals(replacement.getAfter()))
-						variableRename = true;
-					else if(replacement instanceof MethodInvocationReplacement  &&
-							initializer1 != null && initializer1.getExpression().equals(replacement.getBefore()) &&
-							initializer2 != null && initializer2.getExpression().equals(replacement.getAfter()))
-						methodInvocationReplacement = true;
-				}
-				if(typeReplacement && !type1.compatibleTypes(type2) && variableRename && (methodInvocationReplacement || nullInitializer)) {
-					return null;
-				}
+			if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo)) {
+				return null;
+			}
+			if(variableAssignmentWithEverythingReplaced(statement1, statement2, replacementInfo)) {
+				return null;
 			}
 			return replacementInfo.getReplacements();
 		}
@@ -1769,7 +1747,134 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return replacementInfo.getReplacements();
 			}
 		}
+		List<TernaryOperatorExpression> ternaryOperatorExpressions1 = statement1.getTernaryOperatorExpressions();
+		List<TernaryOperatorExpression> ternaryOperatorExpressions2 = statement2.getTernaryOperatorExpressions();
+		if(ternaryOperatorExpressions1.isEmpty() && ternaryOperatorExpressions2.size() == 1) {
+			TernaryOperatorExpression ternary = ternaryOperatorExpressions2.get(0);
+			for(String creation : creationIntersection) {
+				if(ternary.getElseExpression().getString().equals(creation)) {
+					r = new Replacement(creation, ternary.getExpression(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
+					replacementInfo.addReplacement(r);
+					return replacementInfo.getReplacements();
+				}
+				if(ternary.getThenExpression().getString().equals(creation)) {
+					r = new Replacement(creation, ternary.getExpression(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+					replacementInfo.addReplacement(r);
+					return replacementInfo.getReplacements();
+				}
+			}
+			for(String methodInvocation : methodInvocationIntersection) {
+				if(ternary.getElseExpression().getString().equals(methodInvocation)) {
+					r = new Replacement(methodInvocation, ternary.getExpression(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
+					replacementInfo.addReplacement(r);
+					return replacementInfo.getReplacements();
+				}
+				if(ternary.getThenExpression().getString().equals(methodInvocation)) {
+					r = new Replacement(methodInvocation, ternary.getExpression(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+					replacementInfo.addReplacement(r);
+					return replacementInfo.getReplacements();
+				}
+			}
+		}
+		if(ternaryOperatorExpressions1.size() == 1 && ternaryOperatorExpressions2.isEmpty()) {
+			TernaryOperatorExpression ternary = ternaryOperatorExpressions1.get(0);
+			for(String creation : creationIntersection) {
+				if(ternary.getElseExpression().getString().equals(creation)) {
+					r = new Replacement(ternary.getExpression(), creation, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
+					replacementInfo.addReplacement(r);
+					return replacementInfo.getReplacements();
+				}
+				if(ternary.getThenExpression().getString().equals(creation)) {
+					r = new Replacement(ternary.getExpression(), creation, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+					replacementInfo.addReplacement(r);
+					return replacementInfo.getReplacements();
+				}
+			}
+			for(String methodInvocation : methodInvocationIntersection) {
+				if(ternary.getElseExpression().getString().equals(methodInvocation)) {
+					r = new Replacement(ternary.getExpression(), methodInvocation, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
+					replacementInfo.addReplacement(r);
+					return replacementInfo.getReplacements();
+				}
+				if(ternary.getThenExpression().getString().equals(methodInvocation)) {
+					r = new Replacement(ternary.getExpression(), methodInvocation, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+					replacementInfo.addReplacement(r);
+					return replacementInfo.getReplacements();
+				}
+			}
+		}
 		return null;
+	}
+
+	private boolean variableAssignmentWithEverythingReplaced(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
+			ReplacementInfo replacementInfo) {
+		if(statement1.getString().contains("=") && statement1.getString().endsWith(";\n") &&
+				statement2.getString().contains("=") && statement2.getString().endsWith(";\n")) {
+			boolean typeReplacement = false, compatibleTypes = false, variableRename = false, classInstanceVreationReplacement = false;
+			UMLType type1 = null, type2 = null;
+			if(statement1.getCreationMap().size() == 1) {
+				type1 = statement1.getCreationMap().values().iterator().next().getType();
+			}
+			if(statement2.getCreationMap().size() == 1) {
+				type2 = statement2.getCreationMap().values().iterator().next().getType();
+			}
+			if(type1 != null && type2 != null) {
+				compatibleTypes = type1.compatibleTypes(type2);
+			}
+			String variableName1 = statement1.getString().substring(0, statement1.getString().indexOf("="));
+			String variableName2 = statement2.getString().substring(0, statement2.getString().indexOf("="));
+			String assignment1 = statement1.getString().substring(statement1.getString().indexOf("=")+1, statement1.getString().lastIndexOf(";\n"));
+			String assignment2 = statement2.getString().substring(statement2.getString().indexOf("=")+1, statement2.getString().lastIndexOf(";\n"));
+			for(Replacement replacement : replacementInfo.getReplacements()) {
+				if(replacement.getType().equals(ReplacementType.TYPE))
+					typeReplacement = true;
+				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
+						variableName1.equals(replacement.getBefore()) &&
+						variableName2.equals(replacement.getAfter()))
+					variableRename = true;
+				else if(replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION) &&
+						assignment1.equals(replacement.getBefore()) &&
+						assignment2.equals(replacement.getAfter()))
+					classInstanceVreationReplacement = true;
+			}
+			if(typeReplacement && !compatibleTypes && variableRename && classInstanceVreationReplacement) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean variableDeclarationsWithEverythingReplaced(List<VariableDeclaration> variableDeclarations1,
+			List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {
+		if(variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1) {
+			boolean typeReplacement = false, variableRename = false, methodInvocationReplacement = false, nullInitializer = false;
+			UMLType type1 = variableDeclarations1.get(0).getType();
+			UMLType type2 = variableDeclarations2.get(0).getType();
+			AbstractExpression initializer1 = variableDeclarations1.get(0).getInitializer();
+			AbstractExpression initializer2 = variableDeclarations2.get(0).getInitializer();
+			if(initializer1 == null && initializer2 == null) {
+				nullInitializer = true;
+			}
+			else if(initializer1 != null && initializer2 != null) {
+				nullInitializer = initializer1.getExpression().equals("null") && initializer2.getExpression().equals("null");
+			}
+			for(Replacement replacement : replacementInfo.getReplacements()) {
+				if(replacement.getType().equals(ReplacementType.TYPE))
+					typeReplacement = true;
+				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
+						variableDeclarations1.get(0).getVariableName().equals(replacement.getBefore()) &&
+						variableDeclarations2.get(0).getVariableName().equals(replacement.getAfter()))
+					variableRename = true;
+				else if((replacement instanceof MethodInvocationReplacement || replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION)) &&
+						initializer1 != null && initializer1.getExpression().equals(replacement.getBefore()) &&
+						initializer2 != null && initializer2.getExpression().equals(replacement.getAfter()))
+					methodInvocationReplacement = true;
+			}
+			if(typeReplacement && !type1.compatibleTypes(type2) && variableRename && (methodInvocationReplacement || nullInitializer)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private VariableDeclaration declarationWithArrayInitializer(List<VariableDeclaration> declarations) {

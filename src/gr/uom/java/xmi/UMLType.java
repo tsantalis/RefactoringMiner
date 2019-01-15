@@ -125,7 +125,7 @@ public class UMLType implements Serializable {
 		String[] tokens2 = CAMEL_CASE_SPLIT_PATTERN.split(type.nonQualifiedClassType);
 		for(String token1 : tokens1) {
 			for(String token2 : tokens2) {
-				if(token1.equals(token2)) {
+				if(token1.equals(token2) || token1.equals(token2 + "s") || token2.equals(token1 + "s")) {
 					return true;
 				}
 			}

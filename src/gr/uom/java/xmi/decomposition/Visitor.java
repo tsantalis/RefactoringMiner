@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.CastExpression;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.InfixExpression;
@@ -54,10 +55,16 @@ public class Visitor extends ASTVisitor {
 	private Map<String, ObjectCreation> creationMap = new LinkedHashMap<String, ObjectCreation>();
 	private List<String> infixOperators = new ArrayList<String>();
 	private List<String> arguments = new ArrayList<String>();
+	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 
 	public Visitor(CompilationUnit cu, String filePath) {
 		this.cu = cu;
 		this.filePath = filePath;
+	}
+
+	public boolean visit(ConditionalExpression node) {
+		ternaryOperatorExpressions.add(new TernaryOperatorExpression(cu, filePath, node));
+		return super.visit(node);
 	}
 
 	public boolean visit(InfixExpression node) {
@@ -302,6 +309,10 @@ public class Visitor extends ASTVisitor {
 
 	public List<String> getArguments() {
 		return this.arguments;
+	}
+
+	public List<TernaryOperatorExpression> getTernaryOperatorExpressions() {
+		return ternaryOperatorExpressions;
 	}
 
 	public List<String> getVariables() {

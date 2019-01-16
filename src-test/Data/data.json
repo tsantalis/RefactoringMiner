@@ -12763,7 +12763,7 @@
         "description": "Extract Method private makeClassLoader() : InternalTypesClassLoader extracted from private defineType(name String, bytecode byte[]) : Class in class org.drools.core.common.ProjectClassLoader",
         "comment": "<p>There is only one class instance creation statement in the extracted method which exists in the place where the method is also extracted. It&nbsp;<strong>can be</strong>&nbsp;extract method then.</p>",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Extract Method",
@@ -25033,6 +25033,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable elementsByAnnotationBuilder : ImmutableSetMultimap.Builder to validElements : ImmutableSetMultimap.Builder in method private validElements(deferredElements ImmutableMap, roundEnv RoundEnvironment) : ImmutableSetMultimap in class com.google.auto.common.BasicAnnotationProcessor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable deferredElementsBuilder : ImmutableMap.Builder to deferredElements : ImmutableMap.Builder in method private deferredElements() : ImmutableMap in class com.google.auto.common.BasicAnnotationProcessor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

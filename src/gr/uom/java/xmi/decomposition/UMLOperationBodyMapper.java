@@ -1775,6 +1775,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					return replacementInfo.getReplacements();
 				}
 			}
+			for(String creation2 : creations2) {
+				if(ternary.getElseExpression().getString().equals(creation2)) {
+					ObjectCreation c2 = (ObjectCreation)creationMap2.get(creation2);
+					for(String creation1 : creations1) {
+						ObjectCreation c1 = (ObjectCreation)creationMap1.get(creation1);
+						if(c1.getType().compatibleTypes(c2.getType()) && c1.equalArguments(c2)) {
+							r = new Replacement(creation1, ternary.getExpression(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
+							replacementInfo.addReplacement(r);
+							return replacementInfo.getReplacements();
+						}
+					}
+				}
+				if(ternary.getThenExpression().getString().equals(creation2)) {
+					ObjectCreation c2 = (ObjectCreation)creationMap2.get(creation2);
+					for(String creation1 : creations1) {
+						ObjectCreation c1 = (ObjectCreation)creationMap1.get(creation1);
+						if(c1.getType().compatibleTypes(c2.getType()) && c1.equalArguments(c2)) {
+							r = new Replacement(creation1, ternary.getExpression(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+							replacementInfo.addReplacement(r);
+							return replacementInfo.getReplacements();
+						}
+					}
+				}
+			}
 		}
 		if(ternaryOperatorExpressions1.size() == 1 && ternaryOperatorExpressions2.isEmpty()) {
 			TernaryOperatorExpression ternary = ternaryOperatorExpressions1.get(0);
@@ -1800,6 +1824,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					r = new Replacement(ternary.getExpression(), methodInvocation, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
 					replacementInfo.addReplacement(r);
 					return replacementInfo.getReplacements();
+				}
+			}
+			for(String creation1 : creations1) {
+				if(ternary.getElseExpression().getString().equals(creation1)) {
+					ObjectCreation c1 = (ObjectCreation)creationMap1.get(creation1);
+					for(String creation2 : creations2) {
+						ObjectCreation c2 = (ObjectCreation)creationMap2.get(creation2);
+						if(c1.getType().compatibleTypes(c2.getType()) && c1.equalArguments(c2)) {
+							r = new Replacement(ternary.getExpression(), creation2, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
+							replacementInfo.addReplacement(r);
+							return replacementInfo.getReplacements();
+						}
+					}
+				}
+				if(ternary.getThenExpression().getString().equals(creation1)) {
+					ObjectCreation c1 = (ObjectCreation)creationMap1.get(creation1);
+					for(String creation2 : creations2) {
+						ObjectCreation c2 = (ObjectCreation)creationMap2.get(creation2);
+						if(c1.getType().compatibleTypes(c2.getType()) && c1.equalArguments(c2)) {
+							r = new Replacement(ternary.getExpression(), creation2, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+							replacementInfo.addReplacement(r);
+							return replacementInfo.getReplacements();
+						}
+					}
 				}
 			}
 		}

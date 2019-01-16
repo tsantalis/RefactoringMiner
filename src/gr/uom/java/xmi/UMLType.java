@@ -115,6 +115,8 @@ public class UMLType implements Serializable {
 				type.getClassType().equals("Object") ||
 				this.getClassType().startsWith(type.getClassType()) ||
 				type.getClassType().startsWith(this.getClassType()) ||
+				this.getClassType().endsWith(type.getClassType()) ||
+				type.getClassType().endsWith(this.getClassType()) ||
 				this.getTypeArguments().contains(type.getClassType()) ||
 				type.getTypeArguments().contains(this.getClassType()) ||
 				this.commonTokenInClassType(type);

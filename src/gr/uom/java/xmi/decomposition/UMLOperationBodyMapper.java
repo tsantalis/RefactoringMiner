@@ -1858,21 +1858,36 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			ReplacementInfo replacementInfo) {
 		if(statement1.getString().contains("=") && statement1.getString().endsWith(";\n") &&
 				statement2.getString().contains("=") && statement2.getString().endsWith(";\n")) {
-			boolean typeReplacement = false, compatibleTypes = false, variableRename = false, classInstanceVreationReplacement = false;
-			UMLType type1 = null, type2 = null;
-			if(statement1.getCreationMap().size() == 1) {
-				type1 = statement1.getCreationMap().values().iterator().next().getType();
-			}
-			if(statement2.getCreationMap().size() == 1) {
-				type2 = statement2.getCreationMap().values().iterator().next().getType();
-			}
-			if(type1 != null && type2 != null) {
-				compatibleTypes = type1.compatibleTypes(type2);
-			}
+			boolean typeReplacement = false, compatibleTypes = false, variableRename = false, classInstanceCreationReplacement = false;
 			String variableName1 = statement1.getString().substring(0, statement1.getString().indexOf("="));
 			String variableName2 = statement2.getString().substring(0, statement2.getString().indexOf("="));
 			String assignment1 = statement1.getString().substring(statement1.getString().indexOf("=")+1, statement1.getString().lastIndexOf(";\n"));
 			String assignment2 = statement2.getString().substring(statement2.getString().indexOf("=")+1, statement2.getString().lastIndexOf(";\n"));
+			UMLType type1 = null, type2 = null;
+			for(String creation1 : statement1.getCreationMap().keySet()) {
+				if(creation1.equals(assignment1)) {
+					type1 = statement1.getCreationMap().get(creation1).getType();
+				}
+			}
+			for(String creation2 : statement2.getCreationMap().keySet()) {
+				if(creation2.equals(assignment2)) {
+					type2 = statement2.getCreationMap().get(creation2).getType();
+				}
+			}
+			if(type1 != null && type2 != null) {
+				compatibleTypes = type1.compatibleTypes(type2);
+			}
+			OperationInvocation inv1 = null, inv2 = null;
+			for(String invocation1 : statement1.getMethodInvocationMap().keySet()) {
+				if(invocation1.equals(assignment1)) {
+					inv1 = statement1.getMethodInvocationMap().get(invocation1);
+				}
+			}
+			for(String invocation2 : statement2.getMethodInvocationMap().keySet()) {
+				if(invocation2.equals(assignment2)) {
+					inv2 = statement2.getMethodInvocationMap().get(invocation2);
+				}
+			}
 			for(Replacement replacement : replacementInfo.getReplacements()) {
 				if(replacement.getType().equals(ReplacementType.TYPE))
 					typeReplacement = true;
@@ -1883,9 +1898,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				else if(replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION) &&
 						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()))
-					classInstanceVreationReplacement = true;
+					classInstanceCreationReplacement = true;
 			}
-			if(typeReplacement && !compatibleTypes && variableRename && classInstanceVreationReplacement) {
+			if(typeReplacement && !compatibleTypes && variableRename && classInstanceCreationReplacement) {
+				return true;
+			}
+			if(variableRename && inv1 != null && inv2 != null && inv1.differentExpressionNameAndArguments(inv2)) {
+				if(inv1.getArguments().size() > inv2.getArguments().size()) {
+					for(String argument : inv1.getArguments()) {
+						OperationInvocation argumentInvocation = statement1.getMethodInvocationMap().get(argument);
+						if(argumentInvocation != null && !argumentInvocation.differentExpressionNameAndArguments(inv2)) {
+							return false;
+						}
+					}
+				}
+				else if(inv1.getArguments().size() < inv2.getArguments().size()) {
+					for(String argument : inv2.getArguments()) {
+						OperationInvocation argumentInvocation = statement2.getMethodInvocationMap().get(argument);
+						if(argumentInvocation != null && !inv1.differentExpressionNameAndArguments(argumentInvocation)) {
+							return false;
+						}
+					}
+				}
 				return true;
 			}
 		}

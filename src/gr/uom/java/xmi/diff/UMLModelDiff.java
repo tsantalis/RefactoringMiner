@@ -1504,7 +1504,7 @@ public class UMLModelDiff {
 	            }
 	         }
 	         if(!operationBodyMapperMap.isEmpty()) {
-	            List<UMLOperationBodyMapper> firstMappers = operationBodyMapperMap.get(operationBodyMapperMap.lastKey());
+	            List<UMLOperationBodyMapper> firstMappers = firstMappers(operationBodyMapperMap);
 	            addedOperationIterator.remove();
 	            boolean sameSourceAndTargetClass = sameSourceAndTargetClass(firstMappers);
 	            if(sameSourceAndTargetClass) {
@@ -1577,7 +1577,7 @@ public class UMLModelDiff {
 	            }
 	         }
 	         if(!operationBodyMapperMap.isEmpty()) {
-	            List<UMLOperationBodyMapper> firstMappers = operationBodyMapperMap.get(operationBodyMapperMap.lastKey());
+	            List<UMLOperationBodyMapper> firstMappers = firstMappers(operationBodyMapperMap);
 	            removedOperationIterator.remove();
 	            boolean sameSourceAndTargetClass = sameSourceAndTargetClass(firstMappers);
 	            if(sameSourceAndTargetClass) {
@@ -1623,6 +1623,38 @@ public class UMLModelDiff {
 	      }
       }
    }
+
+	private List<UMLOperationBodyMapper> firstMappers(TreeMap<Integer, List<UMLOperationBodyMapper>> operationBodyMapperMap) {
+		List<UMLOperationBodyMapper> firstMappers = new ArrayList<UMLOperationBodyMapper>(operationBodyMapperMap.get(operationBodyMapperMap.lastKey()));
+		List<UMLOperationBodyMapper> extraMappers = operationBodyMapperMap.get(0);
+		if(extraMappers != null && operationBodyMapperMap.lastKey() != 0) {
+			for(UMLOperationBodyMapper extraMapper : extraMappers) {
+				UMLOperation operation1 = extraMapper.getOperation1();
+				UMLOperation operation2 = extraMapper.getOperation2();
+				if(operation1.equalSignature(operation2)) {
+					List<AbstractCodeMapping> mappings = extraMapper.getMappings();
+					if(mappings.size() == 1) {
+						Set<Replacement> replacements = mappings.get(0).getReplacements();
+						if(replacements.size() == 1) {
+							Replacement replacement = replacements.iterator().next();
+							List<String> parameterNames1 = operation1.getParameterNameList();
+							List<String> parameterNames2 = operation2.getParameterNameList();
+							for(int i=0; i<parameterNames1.size(); i++) {
+								String parameterName1 = parameterNames1.get(i);
+								String parameterName2 = parameterNames2.get(i);
+								if(replacement.getBefore().equals(parameterName1) &&
+										replacement.getAfter().equals(parameterName2)) {
+									firstMappers.add(extraMapper);
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return firstMappers;
+	}
 
    private boolean sameSourceAndTargetClass(List<UMLOperationBodyMapper> mappers) {
 	   if(mappers.size() == 1) {

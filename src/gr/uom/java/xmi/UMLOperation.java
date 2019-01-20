@@ -311,7 +311,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 				Map<String, OperationInvocation> operationInvocationMap = statement.getMethodInvocationMap();
 				for(String key : operationInvocationMap.keySet()) {
 					OperationInvocation operationInvocation = operationInvocationMap.get(key);
-					if(operationInvocation.matchesOperation(this, this.variableTypeMap()) || operationInvocation.getMethodName().equals(this.getName())) {
+					if(operationInvocation.matchesOperation(this, this.variableTypeMap(), null) || operationInvocation.getMethodName().equals(this.getName())) {
 						return operationInvocation;
 					}
 				}
@@ -331,6 +331,17 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 			}
 		}
 		return false;
+	}
+
+	public boolean equalsIgnoringVisibility(UMLOperation operation) {
+		boolean thisEmptyBody = this.getBody() == null || this.hasEmptyBody();
+		boolean otherEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
+		return this.className.equals(operation.className) &&
+				this.name.equals(operation.name) &&
+				this.isAbstract == operation.isAbstract &&
+				thisEmptyBody == otherEmptyBody &&
+				equalReturnParameter(operation) &&
+				this.getParameterTypeList().equals(operation.getParameterTypeList());
 	}
 
 	public boolean equals(Object o) {

@@ -5,6 +5,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.diff.StringDistance;
+import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,10 +111,10 @@ public class OperationInvocation extends AbstractCall {
     	return subExpressions.size();
     }
     public boolean matchesOperation(UMLOperation operation) {
-    	return matchesOperation(operation, new HashMap<String, UMLType>());
+    	return matchesOperation(operation, new HashMap<String, UMLType>(), null);
     }
 
-    public boolean matchesOperation(UMLOperation operation, Map<String, UMLType> variableTypeMap) {
+    public boolean matchesOperation(UMLOperation operation, Map<String, UMLType> variableTypeMap, UMLModelDiff modelDiff) {
     	List<UMLType> inferredArgumentTypes = new ArrayList<UMLType>();
     	for(String arg : arguments) {
     		if(variableTypeMap.containsKey(arg)) {
@@ -141,7 +142,7 @@ public class OperationInvocation extends AbstractCall {
     		if(inferredArgumentTypes.size() > i && inferredArgumentTypes.get(i) != null) {
     			if(!parameterType.getClassType().equals(inferredArgumentTypes.get(i).toString()) &&
     					!parameterType.toString().equals(inferredArgumentTypes.get(i).toString()) &&
-    					!compatibleTypes(parameter, inferredArgumentTypes.get(i))) {
+    					!compatibleTypes(parameter, inferredArgumentTypes.get(i), modelDiff)) {
     				return false;
     			}
     		}
@@ -150,7 +151,7 @@ public class OperationInvocation extends AbstractCall {
     	return this.methodName.equals(operation.getName()) && (this.typeArguments == operation.getParameterTypeList().size() || varArgsMatch(operation));
     }
 
-    private boolean compatibleTypes(UMLParameter parameter, UMLType type) {
+    private boolean compatibleTypes(UMLParameter parameter, UMLType type, UMLModelDiff modelDiff) {
     	String type1 = parameter.getType().toString();
     	String type2 = type.toString();
     	if(type1.equals("int") && type2.equals("long"))
@@ -166,6 +167,9 @@ public class OperationInvocation extends AbstractCall {
     	if(!parameter.getType().getTypeArguments().isEmpty() && !type.getTypeArguments().isEmpty() &&
     			parameter.getType().getClassType().equals(type.getClassType()))
     		return true;
+    	if(modelDiff != null && modelDiff.isSubclassOf(type.getClassType(), parameter.getType().getClassType())) {
+    		return true;
+    	}
     	return false;
     }
 

@@ -1,6 +1,8 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
@@ -12,8 +14,8 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 public class UMLClassDiff extends UMLClassBaseDiff {
 	
 	private String className;
-	public UMLClassDiff(UMLClass originalClass, UMLClass nextClass) {
-		super(originalClass, nextClass);
+	public UMLClassDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
+		super(originalClass, nextClass, modelDiff);
 		this.className = originalClass.getName();
 	}
 
@@ -84,6 +86,24 @@ public class UMLClassDiff extends UMLClassBaseDiff {
     			}
     		}
     	}
+		List<UMLOperation> removedOperationsToBeRemoved = new ArrayList<UMLOperation>();
+		List<UMLOperation> addedOperationsToBeRemoved = new ArrayList<UMLOperation>();
+		for(UMLOperation removedOperation : removedOperations) {
+			for(UMLOperation addedOperation : addedOperations) {
+				if(removedOperation.equalsIgnoringVisibility(addedOperation)) {
+					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
+					this.addOperationBodyMapper(operationBodyMapper);
+					//map the statements when the method calls a removed operation before refactoring, and an added operation after refactoring
+					if(operationBodyMapper.callsRemovedAndAddedOperation(getRemovedOperations(), getAddedOperations())) {
+						operationBodyMapper.getMappings();
+					}
+					removedOperationsToBeRemoved.add(removedOperation);
+					addedOperationsToBeRemoved.add(addedOperation);
+				}
+			}
+		}
+		removedOperations.removeAll(removedOperationsToBeRemoved);
+		addedOperations.removeAll(addedOperationsToBeRemoved);
 	}
 
 	protected void checkForAttributeChanges() {

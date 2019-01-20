@@ -212,7 +212,7 @@ public class UMLModelDiff {
        return null;
    }
 
-   private boolean isSubclassOf(String subclass, String finalSuperclass) {
+   public boolean isSubclassOf(String subclass, String finalSuperclass) {
 	   return isSubclassOf(subclass, finalSuperclass, new LinkedHashSet<String>());
    }
 
@@ -405,7 +405,7 @@ public class UMLModelDiff {
 			   }
 			   if(matcher.match(removedClass, addedClass, renamedFile)) {
 				   if(!conflictingMoveOfTopLevelClass(removedClass, addedClass)) {
-					   UMLClassMoveDiff classMoveDiff = new UMLClassMoveDiff(removedClass, addedClass);
+					   UMLClassMoveDiff classMoveDiff = new UMLClassMoveDiff(removedClass, addedClass, this);
 					   diffSet.add(classMoveDiff);
 				   }
 			   }
@@ -458,7 +458,7 @@ public class UMLModelDiff {
             String renamedFile =  renamedFileHints.get(removedClass.getSourceFile());
             if(matcher.match(removedClass, addedClass, renamedFile)) {
                if(!conflictingMoveOfTopLevelClass(removedClass, addedClass) && !innerClassWithTheSameName(removedClass, addedClass)) {
-            	   UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass);
+            	   UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this);
             	   diffSet.add(classRenameDiff);
                }
             }
@@ -985,8 +985,8 @@ public class UMLModelDiff {
 	   for(OperationInvocation newInvocation : newInvocations) {
 		   for(UMLOperation operation : addedClass.getOperations()) {
 			   if(!operation.isAbstract() && !operation.hasEmptyBody() &&
-					   newInvocation.matchesOperation(operation, addedOperation.variableTypeMap())) {
-				   ExtractOperationDetection detection = new ExtractOperationDetection(addedClass.getOperations());
+					   newInvocation.matchesOperation(operation, addedOperation.variableTypeMap(), this)) {
+				   ExtractOperationDetection detection = new ExtractOperationDetection(addedClass.getOperations(), this);
 				   ExtractOperationRefactoring refactoring = detection.check(movedMethodMapper, operation);
 				   if(refactoring != null) {
 					  this.refactorings.add(refactoring);
@@ -1246,7 +1246,7 @@ public class UMLModelDiff {
                Set<OperationInvocation> operationInvocations = mapper.getOperation2().getAllOperationInvocations();
                OperationInvocation addedOperationInvocation = null;
                for(OperationInvocation invocation : operationInvocations) {
-                  if(invocation.matchesOperation(addedOperation, mapper.getOperation2().variableTypeMap())) {
+                  if(invocation.matchesOperation(addedOperation, mapper.getOperation2().variableTypeMap(), this)) {
                      addedOperationInvocation = invocation;
                      break;
                   }

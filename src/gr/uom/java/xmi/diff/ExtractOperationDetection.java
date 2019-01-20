@@ -20,9 +20,11 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
 public class ExtractOperationDetection {
 	private List<UMLOperation> addedOperations;
+	private UMLModelDiff modelDiff;
 
-	public ExtractOperationDetection(List<UMLOperation> addedOperations) {
+	public ExtractOperationDetection(List<UMLOperation> addedOperations, UMLModelDiff modelDiff) {
 		this.addedOperations = addedOperations;
+		this.modelDiff = modelDiff;
 	}
 
 	public ExtractOperationRefactoring check(UMLOperationBodyMapper mapper, UMLOperation addedOperation) {
@@ -67,7 +69,7 @@ public class ExtractOperationDetection {
 			Set<OperationInvocation> operationInvocations, Map<String, UMLType> variableTypeMap) {
 		OperationInvocation addedOperationInvocation = null;
 		for(OperationInvocation invocation : operationInvocations) {
-			if(invocation.matchesOperation(addedOperation, variableTypeMap)) {
+			if(invocation.matchesOperation(addedOperation, variableTypeMap, modelDiff)) {
 				addedOperationInvocation = invocation;
 				break;
 			}
@@ -79,7 +81,7 @@ public class ExtractOperationDetection {
 		Set<OperationInvocation> invocations = operation.getAllOperationInvocations();
 		for(UMLOperation addedOperation : addedOperations) {
 			for(OperationInvocation invocation : invocations) {
-				if(invocation.matchesOperation(addedOperation, operation.variableTypeMap())) {
+				if(invocation.matchesOperation(addedOperation, operation.variableTypeMap(), modelDiff)) {
 					if(!callTree.contains(addedOperation)) {
 						CallTreeNode node = new CallTreeNode(operation, addedOperation, invocation);
 						parent.addChild(node);
@@ -168,7 +170,7 @@ public class ExtractOperationDetection {
 		OperationInvocation delegateMethodInvocation = addedOperation.isDelegate();
 		if(originalOperation.isDelegate() == null && delegateMethodInvocation != null && !originalOperation.getAllOperationInvocations().contains(addedOperationInvocation)) {
 			for(UMLOperation operation : addedOperations) {
-				if(delegateMethodInvocation.matchesOperation(operation, addedOperation.variableTypeMap())) {
+				if(delegateMethodInvocation.matchesOperation(operation, addedOperation.variableTypeMap(), modelDiff)) {
 					return operation;
 				}
 			}
@@ -179,7 +181,8 @@ public class ExtractOperationDetection {
 	private boolean parameterTypesMatch(Map<UMLParameter, UMLParameter> originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters) {
 		for(UMLParameter key : originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters.keySet()) {
 			UMLParameter value = originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters.get(key);
-			if(!key.getType().equals(value.getType()) && !key.getType().equalsWithSubType(value.getType())) {
+			if(!key.getType().equals(value.getType()) && !key.getType().equalsWithSubType(value.getType()) &&
+					!modelDiff.isSubclassOf(key.getType().getClassType(), value.getType().getClassType())) {
 				return false;
 			}
 		}

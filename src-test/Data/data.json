@@ -8586,7 +8586,7 @@
         "description": "Extract Method public isScanningEnabled() : boolean extracted from private startScanner() : void in class org.eclipse.jetty.maven.plugin.AbstractJettyMojo",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh"
     }, {
         "type": "Extract Method",
@@ -21285,7 +21285,7 @@
         "description": "Inline Method public init(webView CordovaWebView, webViewClient CordovaWebViewClient, webChromeClient CordovaChromeClient) : void inlined to protected init() : void in class org.apache.cordova.CordovaActivity",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Laleh"
     }, {
         "type": "Replace Variable With Attribute",
@@ -33503,11 +33503,11 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public tryParse(string String, radix int) : Long extracted from package tryParse(string String, radix int) : Integer in class com.google.common.primitives.Ints",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public tryParse(string String, radix int) : Long extracted from package tryParse(string String, radix int) : Integer in class com.google.common.primitives.Ints & moved to class com.google.common.primitives.Longs",
         "comment": "<p>Extract and Move to the inner class</p><p>The method delegates to the other method which has been extracted within the same commit.</p>",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood, Automatic"
     }],
     "refDiffExecutionTime": 1248
@@ -36164,20 +36164,6 @@
         "validators": null
     }, {
         "type": "Rename Method",
-        "description": "Rename Method protected parseLite() : void renamed to protected parse() : void in class org.bitcoinj.core.RejectMessage",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Rename Method",
-        "description": "Rename Method protected parseLite() : void renamed to protected parse() : void in class org.bitcoinj.core.TransactionOutput",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Rename Method",
         "description": "Rename Method public testTransactionsLazyNoRetain() : void renamed to public testTransactionsNoRetain() : void in class org.bitcoinj.core.ParseByteCacheTest",
         "comment": "<p>Matin: FP</p><p>Nikos: The method bodies are identical with only one parameter removed.</p>",
         "validation": "TP",
@@ -36194,8 +36180,8 @@
         "type": "Inline Method",
         "description": "Inline Method protected parseLite() : void inlined to protected parse() : void in class org.bitcoinj.core.RejectMessage",
         "comment": "<p>parseLite() in the parent commit and parse() in the child commit have identical method bodies.<br />Method parse() in the parent commit calls parseLite() after conditional '<span class='blob-code-inner blob-code-marker-deletion'><span class='pl-k'>if</span> (length <span class='pl-k'>==</span> <span class='pl-c1'>UNKNOWN_LENGTH</span>)'<br />Ho</span>wever, this if statement is not appearing inside method parse() in the child commit, in order to consider parseLite() as inlined.</p>",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
     }],
     "refDiffExecutionTime": 1735

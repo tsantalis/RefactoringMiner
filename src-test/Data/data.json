@@ -14858,6 +14858,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public DefaultHandshakeHandler() from class org.springframework.web.socket.server.support.DefaultHandshakeHandler to protected AbstractHandshakeHandler() from class org.springframework.web.socket.server.support.AbstractHandshakeHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2473
 }, {
@@ -32193,6 +32200,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable request : StackRequest to requestStack : ItemStack in method public getRequest(slot int) : ItemStack in class buildcraft.builders.TileBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Push Down Method",
+        "description": "Push Down Method protected readFromNBT(nbt NBTTagCompound) : void from class buildcraft.api.robots.ResourceId to protected readFromNBT(nbt NBTTagCompound) : void from class buildcraft.api.robots.ResourceIdBlock",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

@@ -42,6 +42,11 @@ public class InlineVariableRefactoring implements Refactoring {
 		return sb.toString();
 	}
 
+	@Override
+	public String getRefactoredClass () {
+		return operation.getClassName();
+	}
+
 	/**
 	 * @return the code range of the inlined variable declaration in the <b>parent</b> commit
 	 */

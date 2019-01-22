@@ -1025,7 +1025,7 @@ public class UMLModelDiff {
 	         for(UMLClass addedClass : addedClasses) {
 	            if(addedClass.getAttributes().containsAll(anonymousClass.getAttributes()) &&
 	                  addedClass.getOperations().containsAll(anonymousClass.getOperations())) {
-	               ConvertAnonymousClassToTypeRefactoring refactoring = new ConvertAnonymousClassToTypeRefactoring(anonymousClass, addedClass);
+	               ConvertAnonymousClassToTypeRefactoring refactoring = new ConvertAnonymousClassToTypeRefactoring(classDiff.getOriginalClass(), anonymousClass, addedClass);
 	               refactorings.add(refactoring);
 	            }
 	         }

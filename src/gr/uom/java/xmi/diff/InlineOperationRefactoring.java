@@ -48,6 +48,11 @@ public class InlineOperationRefactoring implements Refactoring {
 		return sb.toString();
 	}
 
+	@Override
+	public String getRefactoredClass () {
+		return getClassName();
+	}
+
 	private String getClassName() {
 		return targetOperationAfterInline.getClassName();
 	}

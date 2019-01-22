@@ -23,6 +23,11 @@ public class MoveAndRenameClassRefactoring implements Refactoring {
 		return sb.toString();
 	}
 
+	@Override
+	public String getRefactoredClass () {
+		return getOriginalClassName();
+	}
+
 	public String getName() {
 		return this.getRefactoringType().getDisplayName();
 	}

@@ -22,4 +22,8 @@ public class MovedClassToAnotherSourceFolder {
 		String moved = movedPath.substring(0, movedPath.length() - separatorPos);
 		return new RenamePattern(original, moved);
 	}
+
+	public String getClassName () {
+		return className;
+	}
 }

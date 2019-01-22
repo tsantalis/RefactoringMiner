@@ -34,6 +34,11 @@ public class ExtractClassRefactoring implements Refactoring {
 		return sb.toString();
 	}
 
+	@Override
+	public String getRefactoredClass () {
+		return originalClass.getName();
+	}
+
 	public RefactoringType getRefactoringType() {
 		if(extractedClass.isSubTypeOf(originalClass))
 			return RefactoringType.EXTRACT_SUBCLASS;

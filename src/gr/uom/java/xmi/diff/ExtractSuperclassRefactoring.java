@@ -4,6 +4,7 @@ import gr.uom.java.xmi.UMLClass;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -24,6 +25,11 @@ public class ExtractSuperclassRefactoring implements Refactoring {
 		sb.append(" from classes ");
 		sb.append(subclassSet);
 		return sb.toString();
+	}
+
+	@Override
+	public String getRefactoredClass () {
+		return subclassSet.stream().map(x -> x.getName()).collect(Collectors.joining(","));
 	}
 
 	public String getName() {

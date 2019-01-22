@@ -23,6 +23,11 @@ public class MoveClassRefactoring implements Refactoring {
 		return sb.toString();
 	}
 
+	@Override
+	public String getRefactoredClass () {
+		return originalClass.getName();
+	}
+
 	public RenamePattern getRenamePattern() {
 		int separatorPos = PrefixSuffixUtils.separatorPosOfCommonSuffix('.', originalClass.getName(), movedClass.getName());
 		if (separatorPos == -1) {

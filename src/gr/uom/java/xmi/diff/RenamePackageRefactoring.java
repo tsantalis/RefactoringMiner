@@ -2,6 +2,7 @@ package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -51,5 +52,10 @@ public class RenamePackageRefactoring implements Refactoring {
 		String movedPath = pattern.getAfter().endsWith(".") ? pattern.getAfter().substring(0, pattern.getAfter().length()-1) : pattern.getAfter();
 		sb.append(movedPath);
 		return sb.toString();
+	}
+
+	@Override
+	public String getRefactoredClass () {
+		return moveClassRefactorings.stream().map(x -> x.getMovedClassName()).collect(Collectors.joining(","));
 	}
 }

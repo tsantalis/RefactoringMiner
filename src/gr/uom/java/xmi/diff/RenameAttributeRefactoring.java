@@ -50,6 +50,11 @@ public class RenameAttributeRefactoring implements Refactoring {
 	}
 
 	@Override
+	public String getRefactoredClass () {
+		return classNameAfter;
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

@@ -42,6 +42,11 @@ public class ExtractVariableRefactoring implements Refactoring {
 		return sb.toString();
 	}
 
+	@Override
+	public String getRefactoredClass () {
+		return operation.getClassName();
+	}
+
 	/**
 	 * @return the code range of the extracted variable declaration in the <b>child</b> commit
 	 */

@@ -7,10 +7,12 @@ import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLClass;
 
 public class ConvertAnonymousClassToTypeRefactoring implements Refactoring {
+	private UMLClass baseClass;
 	private UMLAnonymousClass anonymousClass;
 	private UMLClass addedClass;
 	
-	public ConvertAnonymousClassToTypeRefactoring(UMLAnonymousClass anonymousClass, UMLClass addedClass) {
+	public ConvertAnonymousClassToTypeRefactoring(UMLClass baseClass, UMLAnonymousClass anonymousClass, UMLClass addedClass) {
+		this.baseClass = baseClass;
 		this.anonymousClass = anonymousClass;
 		this.addedClass = addedClass;
 	}
@@ -22,6 +24,11 @@ public class ConvertAnonymousClassToTypeRefactoring implements Refactoring {
 		sb.append(" was converted to ");
 		sb.append(addedClass);
 		return sb.toString();
+	}
+
+	@Override
+	public String getRefactoredClass () {
+		return baseClass.getName();
 	}
 
 	public String getName() {

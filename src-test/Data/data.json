@@ -2628,36 +2628,36 @@
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public peek() : EventFactHandle extracted from public assertFact(context Object, fact InternalFactHandle, pctx PropagationContext, workingMemory InternalWorkingMemory) : boolean in class org.drools.core.rule.SlidingTimeWindow",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public peek() : EventFactHandle extracted from public assertFact(context Object, fact InternalFactHandle, pctx PropagationContext, workingMemory InternalWorkingMemory) : boolean in class org.drools.core.rule.SlidingTimeWindow & moved to class org.drools.core.rule.SlidingTimeWindow.SlidingTimeWindowContext",
         "comment": "It is extract and move since the method is moved to the inner class",
         "validation": "CTP",
         "detectionTools": "RefDiff",
         "validators": "Laleh"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public peek() : EventFactHandle extracted from public retractFact(context Object, fact InternalFactHandle, pctx PropagationContext, workingMemory InternalWorkingMemory) : void in class org.drools.core.rule.SlidingTimeWindow",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public peek() : EventFactHandle extracted from public retractFact(context Object, fact InternalFactHandle, pctx PropagationContext, workingMemory InternalWorkingMemory) : void in class org.drools.core.rule.SlidingTimeWindow & moved to class org.drools.core.rule.SlidingTimeWindow.SlidingTimeWindowContext",
         "comment": "It is extract and move since the method is moved to the inner class",
         "validation": "CTP",
         "detectionTools": "RefDiff",
         "validators": "Laleh"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public peek() : EventFactHandle extracted from public expireFacts(context Object, pctx PropagationContext, workingMemory InternalWorkingMemory) : void in class org.drools.core.rule.SlidingTimeWindow",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public peek() : EventFactHandle extracted from public expireFacts(context Object, pctx PropagationContext, workingMemory InternalWorkingMemory) : void in class org.drools.core.rule.SlidingTimeWindow & moved to class org.drools.core.rule.SlidingTimeWindow.SlidingTimeWindowContext",
         "comment": "<p>Extract and Move to the inner class.</p><p>Since RefDiff does not detect 'Extract and Move refactoring' we accept it as CTP.</p>",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh, Automatic"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public poll() : EventFactHandle extracted from public retractFact(context Object, fact InternalFactHandle, pctx PropagationContext, workingMemory InternalWorkingMemory) : void in class org.drools.core.rule.SlidingTimeWindow",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public poll() : EventFactHandle extracted from public retractFact(context Object, fact InternalFactHandle, pctx PropagationContext, workingMemory InternalWorkingMemory) : void in class org.drools.core.rule.SlidingTimeWindow & moved to class org.drools.core.rule.SlidingTimeWindow.SlidingTimeWindowContext",
         "comment": "It is extract and move since the method is moved to the inner class",
         "validation": "CTP",
         "detectionTools": "RefDiff",
         "validators": "Laleh"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public remove() : EventFactHandle extracted from public expireFacts(context Object, pctx PropagationContext, workingMemory InternalWorkingMemory) : void in class org.drools.core.rule.SlidingTimeWindow",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public remove() : EventFactHandle extracted from public expireFacts(context Object, pctx PropagationContext, workingMemory InternalWorkingMemory) : void in class org.drools.core.rule.SlidingTimeWindow & moved to class org.drools.core.rule.SlidingTimeWindow.SlidingTimeWindowContext",
         "comment": "It is extract and move since the method is moved to the inner class",
         "validation": "CTP",
         "detectionTools": "RefDiff",
@@ -3529,6 +3529,13 @@
         "description": "Rename Attribute mergeNodes : List to finalMergeNodes : List in class io.crate.executor.transport.ExecutionNodesTask",
         "comment": null,
         "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public visitGlobalAggregate(plan GlobalAggregate, job Job) : List renamed to protected visitPlan(plan Plan, job Job) : List in class io.crate.executor.transport.TransportExecutor.TaskCollectingVisitor",
+        "comment": null,
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -15494,6 +15501,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable recipient : Recipient to cachedRecipient : Recipient in method package getRecipient(context Context, recipientId long, asynchronous boolean) : Recipient in class org.thoughtcrime.securesms.recipients.RecipientProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -18525,6 +18539,13 @@
     }, {
         "type": "Extract Class",
         "description": "Extract Class com.amazonaws.util.EC2MetadataUtilsServer from class com.amazonaws.util.EC2MetadataUtilsTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method protected constructInstanceInfo() : String extracted from private outputInstanceInfo(output PrintWriter) : void in class com.amazonaws.util.EC2MetadataUtilsServer",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -24883,6 +24904,13 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute mBatteryController : BatteryController to mBatteryStateRegistar : BatteryStateRegistar in class com.android.systemui.BatteryLevelTextView",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method protected getKernelWakelockUpdateVersion() : int extracted from private parseProcWakelocks(wlBuffer byte[], len int, wakeup_sources boolean) : Map in class com.android.internal.os.BatteryStatsImpl",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -31837,6 +31865,13 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public run() : void from class com.hazelcast.internal.monitors.PerformanceMonitor to public run() : void from class com.hazelcast.internal.monitors.PerformanceMonitor.MonitorThread",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 5604
 }, {

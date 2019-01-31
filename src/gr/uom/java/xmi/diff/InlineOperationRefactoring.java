@@ -1,6 +1,8 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.refactoringminer.api.Refactoring;
@@ -124,5 +126,17 @@ public class InlineOperationRefactoring implements Refactoring {
 	 */
 	public CodeRange getInlinedOperationInvocationCodeRange() {
 		return inlinedOperationInvocation.codeRange();
+	}
+
+	public List<String> getInvolvedClassesBeforeRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		classNames.add(getTargetOperationBeforeInline().getClassName());
+		return classNames;
+	}
+
+	public List<String> getInvolvedClassesAfterRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		classNames.add(getTargetOperationAfterInline().getClassName());
+		return classNames;
 	}
 }

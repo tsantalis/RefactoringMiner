@@ -52,4 +52,20 @@ public class RenamePackageRefactoring implements Refactoring {
 		sb.append(movedPath);
 		return sb.toString();
 	}
+
+	public List<String> getInvolvedClassesBeforeRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		for(MoveClassRefactoring ref : moveClassRefactorings) {
+			classNames.add(ref.getOriginalClassName());
+		}
+		return classNames;
+	}
+
+	public List<String> getInvolvedClassesAfterRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		for(MoveClassRefactoring ref : moveClassRefactorings) {
+			classNames.add(ref.getMovedClassName());
+		}
+		return classNames;
+	}
 }

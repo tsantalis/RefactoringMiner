@@ -1,6 +1,8 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.refactoringminer.api.Refactoring;
@@ -89,4 +91,15 @@ public class RenameOperationRefactoring implements Refactoring {
 		return renamedOperation.codeRange();
 	}
 
+	public List<String> getInvolvedClassesBeforeRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		classNames.add(getOriginalOperation().getClassName());
+		return classNames;
+	}
+
+	public List<String> getInvolvedClassesAfterRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		classNames.add(getRenamedOperation().getClassName());
+		return classNames;
+	}
 }

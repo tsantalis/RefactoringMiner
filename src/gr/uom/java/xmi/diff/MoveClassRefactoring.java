@@ -1,6 +1,10 @@
 package gr.uom.java.xmi.diff;
 
 import gr.uom.java.xmi.UMLClass;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
@@ -55,5 +59,17 @@ public class MoveClassRefactoring implements Refactoring {
 
 	public UMLClass getMovedClass() {
 		return movedClass;
+	}
+
+	public List<String> getInvolvedClassesBeforeRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		classNames.add(getOriginalClass().getName());
+		return classNames;
+	}
+
+	public List<String> getInvolvedClassesAfterRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		classNames.add(getMovedClass().getName());
+		return classNames;
 	}
 }

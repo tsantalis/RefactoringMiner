@@ -1,5 +1,8 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
@@ -78,5 +81,17 @@ public class InlineVariableRefactoring implements Refactoring {
 		} else if (!variableDeclaration.equals(other.variableDeclaration))
 			return false;
 		return true;
+	}
+
+	public List<String> getInvolvedClassesBeforeRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		classNames.add(operation.getClassName());
+		return classNames;
+	}
+
+	public List<String> getInvolvedClassesAfterRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		classNames.add(operation.getClassName());
+		return classNames;
 	}
 }

@@ -1,6 +1,10 @@
 package gr.uom.java.xmi.diff;
 
 import gr.uom.java.xmi.UMLClass;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
@@ -45,5 +49,17 @@ public class RenameClassRefactoring implements Refactoring {
 
 	public UMLClass getRenamedClass() {
 		return renamedClass;
+	}
+
+	public List<String> getInvolvedClassesBeforeRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		classNames.add(getOriginalClass().getName());
+		return classNames;
+	}
+
+	public List<String> getInvolvedClassesAfterRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		classNames.add(getRenamedClass().getName());
+		return classNames;
 	}
 }

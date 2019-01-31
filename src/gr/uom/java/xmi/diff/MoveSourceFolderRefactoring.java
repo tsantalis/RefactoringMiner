@@ -51,5 +51,20 @@ public class MoveSourceFolderRefactoring implements Refactoring {
 	public RefactoringType getRefactoringType() {
 		return RefactoringType.MOVE_SOURCE_FOLDER;
 	}
-	
+
+	public List<String> getInvolvedClassesBeforeRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		for(MovedClassToAnotherSourceFolder ref : movedClassesToAnotherSourceFolder) {
+			classNames.add(ref.getClassName());
+		}
+		return classNames;
+	}
+
+	public List<String> getInvolvedClassesAfterRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		for(MovedClassToAnotherSourceFolder ref : movedClassesToAnotherSourceFolder) {
+			classNames.add(ref.getClassName());
+		}
+		return classNames;
+	}
 }

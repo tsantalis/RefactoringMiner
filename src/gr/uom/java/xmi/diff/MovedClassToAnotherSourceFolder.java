@@ -13,6 +13,10 @@ public class MovedClassToAnotherSourceFolder {
 		this.movedPath = movedPath;
 	}
 	
+	public String getClassName() {
+		return className;
+	}
+
 	public RenamePattern getRenamePattern() {
 		int separatorPos = PrefixSuffixUtils.separatorPosOfCommonSuffix('/', originalPath, movedPath);
 		if (separatorPos == -1) {

@@ -1,6 +1,8 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.refactoringminer.api.Refactoring;
@@ -66,5 +68,17 @@ public class ExtractAndMoveOperationRefactoring implements Refactoring {
 
 	public Set<Replacement> getReplacements() {
 		return replacements;
+	}
+
+	public List<String> getInvolvedClassesBeforeRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		classNames.add(getSourceOperationBeforeExtraction().getClassName());
+		return classNames;
+	}
+
+	public List<String> getInvolvedClassesAfterRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		classNames.add(getSourceOperationAfterExtraction().getClassName());
+		return classNames;
 	}
 }

@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.refactoringminer.api.Refactoring;
@@ -62,5 +64,17 @@ public class ExtractClassRefactoring implements Refactoring {
 
 	public UMLAttribute getAttributeOfExtractedClassTypeInOriginalClass() {
 		return attributeOfExtractedClassTypeInOriginalClass;
+	}
+
+	public List<String> getInvolvedClassesBeforeRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		classNames.add(getOriginalClass().getName());
+		return classNames;
+	}
+
+	public List<String> getInvolvedClassesAfterRefactoring() {
+		List<String> classNames = new ArrayList<String>();
+		classNames.add(getExtractedClass().getName());
+		return classNames;
 	}
 }

@@ -24,31 +24,12 @@ repositories {
 }
 
 dependencies {
-	compile 'org.eclipse.jgit:org.eclipse.jgit:5.1.2.201810061102-r'
-	compile 'com.jcabi:jcabi-github:0.17'
+	compile 'org.eclipse.jgit:org.eclipse.jgit:5.2.1.201812262042-r'
 	compile 'org.slf4j:slf4j-log4j12:1.7.7'
-	compile 'com.fasterxml.jackson.core:jackson-core:2.8.4'
-	compile 'com.fasterxml.jackson.core:jackson-databind:2.8.4'
-	compile 'com.fasterxml.jackson.core:jackson-annotations:2.8.4'
 	compile 'junit:junit:4.11'
-	
-	compile files('lib/org.eclipse.core.commands_3.7.0.v20150422-0725.jar')
-	compile files('lib/org.eclipse.core.contenttype_3.5.0.v20150421-2214.jar')
-	compile files('lib/org.eclipse.core.expressions_3.5.0.v20150421-2214.jar')
-	compile files('lib/org.eclipse.core.filesystem_1.5.0.v20150725-1910.jar')
-	compile files('lib/org.eclipse.core.jobs_3.7.0.v20150330-2103.jar')
-	compile files('lib/org.eclipse.core.resources_3.10.1.v20150725-1910.jar')
-	compile files('lib/org.eclipse.core.runtime_3.11.1.v20150903-1804.jar')
-	compile files('lib/org.eclipse.equinox.app_1.3.300.v20150423-1356.jar')
-	compile files('lib/org.eclipse.equinox.common_3.7.0.v20150402-1709.jar')
-	compile files('lib/org.eclipse.equinox.preferences_3.5.300.v20150408-1437.jar')
-	compile files('lib/org.eclipse.equinox.registry_3.6.0.v20150318-1503.jar')
-	compile files('lib/org.eclipse.jdt.core_3.12.1.v20160829-0950.jar')
-	compile files('lib/org.eclipse.osgi_3.10.101.v20150820-1432.jar')
-	compile files('lib/org.eclipse.text_3.5.400.v20150505-1044.jar')
-	compile files('lib/commons-codec-1.10.jar')
-	compile files('lib/commons-lang-2.6.jar')
-	compile files('lib/github-api-1.84.jar')
+	compile 'org.eclipse.jdt:org.eclipse.jdt.core:3.16.0'
+	compile 'org.apache.commons:commons-lang3:3.8.1'
+	compile 'org.kohsuke:github-api:1.95'
 	
 	testCompile 'junit:junit:4.11'
 }

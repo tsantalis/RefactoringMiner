@@ -48,12 +48,30 @@ public class UMLModelASTReader {
 	private String projectRoot;
 	private ASTParser parser;
 
-	public UMLModelASTReader(File rootFolder, List<String> javaFiles) {
-		this(rootFolder, buildAstParser(rootFolder), javaFiles);
+	public UMLModelASTReader(File rootFolder, Map<String, String> javaFileContents, Set<String> repositoryDirectories) {
+		this.umlModel = new UMLModel(repositoryDirectories);
+		this.projectRoot = rootFolder.getPath();
+		this.parser = ASTParser.newParser(AST.JLS11);
+		for(String filePath : javaFileContents.keySet()) {
+			Map<String, String> options = JavaCore.getOptions();
+			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_8);
+			options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_8);
+			options.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_8);
+			parser.setCompilerOptions(options);
+			parser.setResolveBindings(false);
+			parser.setKind(ASTParser.K_COMPILATION_UNIT);
+			parser.setSource(javaFileContents.get(filePath).toCharArray());
+			CompilationUnit compilationUnit = (CompilationUnit)parser.createAST(null);
+			processCompilationUnit(filePath, compilationUnit);
+		}
 	}
 
-	public UMLModelASTReader(File rootFolder, ASTParser parser, List<String> javaFiles) {
-		this.umlModel = new UMLModel(rootFolder.getPath());
+	public UMLModelASTReader(File rootFolder, List<String> javaFiles, Set<String> repositoryDirectories) {
+		this(rootFolder, buildAstParser(rootFolder), javaFiles, repositoryDirectories);
+	}
+
+	public UMLModelASTReader(File rootFolder, ASTParser parser, List<String> javaFiles, Set<String> repositoryDirectories) {
+		this.umlModel = new UMLModel(repositoryDirectories);
 		this.projectRoot = rootFolder.getPath();
 		this.parser = parser;
 		final String[] emptyArray = new String[0];
@@ -74,9 +92,9 @@ public class UMLModelASTReader {
 	}
 
 	private static ASTParser buildAstParser(File srcFolder) {
-		ASTParser parser = ASTParser.newParser(AST.JLS8);
+		ASTParser parser = ASTParser.newParser(AST.JLS11);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
-		Map options = JavaCore.getOptions();
+		Map<String, String> options = JavaCore.getOptions();
 		JavaCore.setComplianceOptions(JavaCore.VERSION_1_8, options);
 		parser.setCompilerOptions(options);
 		parser.setResolveBindings(false);

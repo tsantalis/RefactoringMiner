@@ -5,7 +5,6 @@ import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLClassMatcher;
 import gr.uom.java.xmi.UMLGeneralization;
-import gr.uom.java.xmi.UMLModelASTReader;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLRealization;
@@ -18,7 +17,6 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -386,7 +384,7 @@ public class UMLModelDiff {
       }
    }
 
-   public void checkForMovedClasses(Map<String, String> renamedFileHints, String projectRoot, UMLClassMatcher matcher) {
+   public void checkForMovedClasses(Map<String, String> renamedFileHints, Set<String> repositoryDirectories, UMLClassMatcher matcher) {
 	   for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
 		   UMLClass removedClass = removedClassIterator.next();
 		   TreeSet<UMLClassMoveDiff> diffSet = new TreeSet<UMLClassMoveDiff>(new ClassMoveComparator());
@@ -396,12 +394,10 @@ public class UMLModelDiff {
 			   String renamedFile =  renamedFileHints.get(removedClassSourceFile);
 			   String removedClassSourceFolder = "";
 			   if(removedClassSourceFile.contains("/")) {
-				   removedClassSourceFolder = removedClassSourceFile.substring(0, removedClassSourceFile.lastIndexOf("/")).replaceAll("/", UMLModelASTReader.systemFileSeparator);
+				   removedClassSourceFolder = removedClassSourceFile.substring(0, removedClassSourceFile.lastIndexOf("/"));
 			   }
-			   String removedFileFolderPathAsString = projectRoot + File.separator + removedClassSourceFolder;
-			   File removedFileFolderPath = new File(removedFileFolderPathAsString);
-			   if(!removedFileFolderPath.exists()) {
-				   deletedFolderPaths.add(removedFileFolderPathAsString);
+			   if(!repositoryDirectories.contains(removedClassSourceFolder)) {
+				   deletedFolderPaths.add(removedClassSourceFolder);
 			   }
 			   if(matcher.match(removedClass, addedClass, renamedFile)) {
 				   if(!conflictingMoveOfTopLevelClass(removedClass, addedClass)) {
@@ -1011,9 +1007,7 @@ public class UMLModelDiff {
          return addedClassName.equals(parent.substring(parent.lastIndexOf(".") + 1));
       }
       if (parent.contains(".") && addedClassName.contains(".")) {
-    	  String s1 = parent.substring(parent.lastIndexOf(".") + 1);
-    	  String s2 = addedClassName.substring(addedClassName.lastIndexOf(".") + 1);
-    	  return s1.equals(s2);
+    	  return UMLType.extractTypeObject(parent).equalClassType(UMLType.extractTypeObject(addedClassName));
       }
       return parent.equals(addedClassName);
    }
@@ -1111,7 +1105,7 @@ public class UMLModelDiff {
 		   String originalPath = renamePackageRefactoring.getPattern().getBefore();
 		   //remove last .
 		   String trimmedOriginalPath = originalPath.endsWith(".") ? originalPath.substring(0, originalPath.length()-1) : originalPath;
-		   String convertedPackageToFilePath = trimmedOriginalPath.replaceAll("\\.", UMLModelASTReader.systemFileSeparator);
+		   String convertedPackageToFilePath = trimmedOriginalPath.replaceAll("\\.", "/");
 		   if(deletedFolderPath.endsWith(convertedPackageToFilePath)) {
 			   return true;
 		   }

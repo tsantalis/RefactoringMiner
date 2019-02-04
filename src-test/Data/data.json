@@ -17004,13 +17004,6 @@
         "validators": null
     }, {
         "type": "Move Class",
-        "description": "Move Class org.springframework.data.neo4j.integration.web.domain.Genre moved to org.springframework.data.neo4j.examples.movies.domain.Genre",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Move Class",
         "description": "Move Class org.springframework.data.neo4j.integration.transactions.service.WrapperService moved to org.springframework.data.neo4j.transactions.service.WrapperService",
         "comment": null,
         "validation": "TP",
@@ -17113,13 +17106,6 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
-    }, {
-        "type": "Move Class",
-        "description": "Move Class org.springframework.data.neo4j.integration.movies.domain.Genre moved to org.springframework.data.neo4j.web.domain.Genre",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Move Class",
@@ -17371,7 +17357,7 @@
         "description": "Move Class org.springframework.data.neo4j.integration.web.domain.Genre moved to org.springframework.data.neo4j.web.domain.Genre",
         "comment": "added",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Move Class",
@@ -17511,7 +17497,7 @@
         "description": "Move Class org.springframework.data.neo4j.integration.movies.domain.Genre moved to org.springframework.data.neo4j.examples.movies.domain.Genre",
         "comment": "added",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Move Method",
@@ -21538,7 +21524,7 @@
         "type": "Change Package",
         "description": "Change Package com.orientechnologies.orient.core.index.hashindex.local.cache to com.orientechnologies.orient.core.storage.cache.local",
         "comment": null,
-        "validation": "FP",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {

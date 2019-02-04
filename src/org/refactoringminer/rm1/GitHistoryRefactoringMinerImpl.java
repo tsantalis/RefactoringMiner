@@ -9,26 +9,35 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.treewalk.TreeWalk;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
@@ -124,34 +133,62 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	protected List<Refactoring> detectRefactorings(GitService gitService, Repository repository, final RefactoringHandler handler, File projectFolder, RevCommit currentCommit) throws Exception {
 		List<Refactoring> refactoringsAtRevision;
 		String commitId = currentCommit.getId().getName();
-		List<String> filesBefore = new ArrayList<String>();
-		List<String> filesCurrent = new ArrayList<String>();
+		List<String> filePathsBefore = new ArrayList<String>();
+		List<String> filePathsCurrent = new ArrayList<String>();
 		Map<String, String> renamedFilesHint = new HashMap<String, String>();
-		gitService.fileTreeDiff(repository, currentCommit, filesBefore, filesCurrent, renamedFilesHint);
-		// If no java files changed, there is no refactoring. Also, if there are
-		// only ADD's or only REMOVE's there is no refactoring
-		if (!filesBefore.isEmpty() && !filesCurrent.isEmpty() && currentCommit.getParentCount() > 0) {
-			// Checkout and build model for parent commit
-			String parentCommit = currentCommit.getParent(0).getName();
-			gitService.checkout(repository, parentCommit);
-			UMLModel parentUMLModel = createModel(projectFolder, filesBefore);
-			
-			// Checkout and build model for current commit
-			gitService.checkout(repository, commitId);
-			UMLModel currentUMLModel = createModel(projectFolder, filesCurrent);
-			
-			// Diff between currentModel e parentModel
-			refactoringsAtRevision = parentUMLModel.diff(currentUMLModel, renamedFilesHint).getRefactorings();
-			refactoringsAtRevision = filter(refactoringsAtRevision);
-			
-		} else {
-			//logger.info(String.format("Ignored revision %s with no changes in java files", commitId));
-			refactoringsAtRevision = Collections.emptyList();
-		}
-		handler.handle(commitId, refactoringsAtRevision);
-		handler.handle(currentCommit, refactoringsAtRevision);
+		gitService.fileTreeDiff(repository, currentCommit, filePathsBefore, filePathsCurrent, renamedFilesHint);
+		
+		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		try (RevWalk walk = new RevWalk(repository)) {
+			// If no java files changed, there is no refactoring. Also, if there are
+			// only ADD's or only REMOVE's there is no refactoring
+			if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty() && currentCommit.getParentCount() > 0) {
+				RevCommit parentCommit = currentCommit.getParent(0);
+				populateFileContents(repository, parentCommit, filePathsBefore, fileContentsBefore, repositoryDirectoriesBefore);
+				UMLModel parentUMLModel = createModel(projectFolder, fileContentsBefore, repositoryDirectoriesBefore);
 
+				populateFileContents(repository, currentCommit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
+				UMLModel currentUMLModel = createModel(projectFolder, fileContentsCurrent, repositoryDirectoriesCurrent);
+				
+				refactoringsAtRevision = parentUMLModel.diff(currentUMLModel, renamedFilesHint).getRefactorings();
+				refactoringsAtRevision = filter(refactoringsAtRevision);
+				
+			} else {
+				//logger.info(String.format("Ignored revision %s with no changes in java files", commitId));
+				refactoringsAtRevision = Collections.emptyList();
+			}
+			handler.handle(commitId, refactoringsAtRevision);
+			handler.handle(currentCommit, refactoringsAtRevision);
+			
+			walk.dispose();
+		}
 		return refactoringsAtRevision;
+	}
+
+	private void populateFileContents(Repository repository, RevCommit commit,
+			List<String> filePaths, Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
+		logger.info("Processing {} {} ...", repository.getDirectory().getParent().toString(), commit.getName());
+		RevTree parentTree = commit.getTree();
+		try (TreeWalk treeWalk = new TreeWalk(repository)) {
+			treeWalk.addTree(parentTree);
+			treeWalk.setRecursive(true);
+			while (treeWalk.next()) {
+				String pathString = treeWalk.getPathString();
+				if(filePaths.contains(pathString)) {
+					ObjectId objectId = treeWalk.getObjectId(0);
+					ObjectLoader loader = repository.open(objectId);
+					StringWriter writer = new StringWriter();
+					IOUtils.copy(loader.openStream(), writer);
+					fileContents.put(pathString, writer.toString());
+				}
+				if(pathString.endsWith(".java")) {
+					repositoryDirectories.add(pathString.substring(0, pathString.lastIndexOf("/")));
+				}
+			}
+		}
 	}
 
 	protected List<Refactoring> detectRefactorings(final RefactoringHandler handler, File projectFolder, String cloneURL, String currentCommitId) {
@@ -170,8 +207,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				downloadAndExtractZipFile(projectFolder, cloneURL, parentCommitId);
 			}
 			if (currentFolder.exists() && parentFolder.exists()) {
-				UMLModel currentUMLModel = createModel(currentFolder, filesCurrent);
-				UMLModel parentUMLModel = createModel(parentFolder, filesBefore);
+				UMLModel currentUMLModel = createModel(currentFolder, filesCurrent, repositoryDirectories(currentFolder));
+				UMLModel parentUMLModel = createModel(parentFolder, filesBefore, repositoryDirectories(parentFolder));
 				// Diff between currentModel e parentModel
 				refactoringsAtRevision = parentUMLModel.diff(currentUMLModel, renamedFilesHint).getRefactorings();
 				refactoringsAtRevision = filter(refactoringsAtRevision);
@@ -188,12 +225,26 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return refactoringsAtRevision;
 	}
 
+	private Set<String> repositoryDirectories(File folder) {
+		final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
+		Set<String> repositoryDirectories = new LinkedHashSet<String>();
+		Collection<File> files = FileUtils.listFiles(folder, null, true);
+		for(File file : files) {
+			String path = file.getPath();
+			String relativePath = path.substring(folder.getPath().length()+1, path.length()).replaceAll(systemFileSeparator, "/");
+			if(relativePath.endsWith(".java")) {
+				repositoryDirectories.add(relativePath.substring(0, relativePath.lastIndexOf("/")));
+			}
+		}
+		return repositoryDirectories;
+	}
+
 	private void downloadAndExtractZipFile(File projectFolder, String cloneURL, String commitId)
 			throws IOException {
 		String downloadLink = cloneURL.substring(0, cloneURL.indexOf(".git")) + "/archive/" + commitId + ".zip";
 		File destinationFile = new File(projectFolder.getParentFile(), projectFolder.getName() + "-" + commitId + ".zip");
 		logger.info(String.format("Downloading archive %s", downloadLink));
-		FileUtils.copyURLToFile(new URL(downloadLink), destinationFile, 10000, 10000);
+		FileUtils.copyURLToFile(new URL(downloadLink), destinationFile);
 		logger.info(String.format("Unzipping archive %s", downloadLink));
 		java.util.zip.ZipFile zipFile = new ZipFile(destinationFile);
 		try {
@@ -305,8 +356,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 	}
 
-	protected UMLModel createModel(File projectFolder, List<String> files) throws Exception {
-		return new UMLModelASTReader(projectFolder, files).getUmlModel();
+	protected UMLModel createModel(File projectFolder, Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
+		return new UMLModelASTReader(projectFolder, fileContents, repositoryDirectories).getUmlModel();
+	}
+
+	protected UMLModel createModel(File projectFolder, List<String> filePaths, Set<String> repositoryDirectories) throws Exception {
+		return new UMLModelASTReader(projectFolder, filePaths, repositoryDirectories).getUmlModel();
 	}
 
 	@Override

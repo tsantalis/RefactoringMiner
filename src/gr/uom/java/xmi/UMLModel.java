@@ -8,15 +8,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Set;
 
 public class UMLModel {
-	private String projectRoot;
+	private Set<String> repositoryDirectories;
     private List<UMLClass> classList;
     private List<UMLGeneralization> generalizationList;
     private List<UMLRealization> realizationList;
 
-    public UMLModel(String projectRoot) {
-    	this.projectRoot = projectRoot;
+    public UMLModel(Set<String> repositoryDirectories) {
+    	this.repositoryDirectories = repositoryDirectories;
         classList = new ArrayList<UMLClass>();
         generalizationList = new ArrayList<UMLGeneralization>();
         realizationList = new ArrayList<UMLRealization>();
@@ -118,7 +119,7 @@ public class UMLModel {
     		if(!this.classList.contains(umlClass))
     			modelDiff.reportAddedClass(umlClass);
     	}
-    	modelDiff.checkForMovedClasses(renamedFileHints, umlModel.projectRoot, new UMLClassMatcher.Move());
+    	modelDiff.checkForMovedClasses(renamedFileHints, umlModel.repositoryDirectories, new UMLClassMatcher.Move());
     	modelDiff.checkForRenamedClasses(renamedFileHints, new UMLClassMatcher.Rename());
     	for(UMLGeneralization umlGeneralization : generalizationList) {
     		if(!umlModel.generalizationList.contains(umlGeneralization))
@@ -146,7 +147,7 @@ public class UMLModel {
     				modelDiff.addUMLClassDiff(classDiff);
     		}
     	}
-    	modelDiff.checkForMovedClasses(renamedFileHints, umlModel.projectRoot, new UMLClassMatcher.RelaxedMove());
+    	modelDiff.checkForMovedClasses(renamedFileHints, umlModel.repositoryDirectories, new UMLClassMatcher.RelaxedMove());
     	modelDiff.checkForRenamedClasses(renamedFileHints, new UMLClassMatcher.RelaxedRename());
     	return modelDiff;
     }

@@ -22,9 +22,7 @@ public interface GitHistoryRefactoringMiner {
 	void detectAll(Repository repository, String branch, RefactoringHandler handler) throws Exception;
 
 	/**
-	 * Iterate over commits between two release tags of a git repository and detect refactorings performed
-	 * in the entire repository history. Merge commits are ignored to avoid detecting the same refactoring 
-	 * multiple times.
+	 * Iterate over commits between two release tags of a git repository and detect the performed refactorings.
 	 * 
 	 * @param repository A git repository (from JGit library).
 	 * @param startTag An annotated tag to start the log lookup.
@@ -37,9 +35,7 @@ public interface GitHistoryRefactoringMiner {
 			throws Exception;
 	
 	/**
-	 * Iterate over commits between two commits of a git repository and detect refactorings performed
-	 * in the entire repository history. Merge commits are ignored to avoid detecting the same refactoring 
-	 * multiple times.
+	 * Iterate over commits between two commits of a git repository and detect the performed refactorings.
 	 * 
 	 * @param repository A git repository (from JGit library).
 	 * @param startCommitId The SHA key that identifies the commit to start the log lookup.

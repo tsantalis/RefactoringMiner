@@ -220,39 +220,30 @@ public class GitServiceImpl implements GitService {
 	}
 	
 	@Override
-	public RevWalk createRevsWalkBetweenTags(Repository repository, String startTag, String endTag)
+	public Iterable<RevCommit> createRevsWalkBetweenTags(Repository repository, String startTag, String endTag)
 			throws Exception {
-		RevWalk walk = new RevWalk(repository);
-		
-		Ref startTagRef = repository.findRef(startTag);
-		ObjectId startCommit = startTagRef.getObjectId();
-        walk.markStart(walk.parseCommit(startCommit));
-        
-        if (endTag != null) {
-	    		Ref endTagRef = repository.findRef(endTag);
-	    		ObjectId endCommit = endTagRef.getObjectId();
-            walk.markUninteresting(walk.parseCommit(endCommit));
-        }
-		
-        walk.setRevFilter(commitsFilter);
-		return walk;
+		Ref refFrom = repository.findRef(startTag);
+		Ref refTo = repository.findRef(endTag);
+		try (Git git = new Git(repository)) {
+			return git.log().addRange(getActualRefObjectId(refFrom), getActualRefObjectId(refTo)).call();
+		}
 	}
-	
-	@Override
-	public RevWalk createRevsWalkBetweenCommits(Repository repository, String startCommitId, String endCommitId)
-			throws Exception {
-		RevWalk walk = new RevWalk(repository);
-		
-		ObjectId startCommit = repository.resolve(startCommitId);
-        walk.markStart(walk.parseCommit(startCommit));
 
-        if (endCommitId != null) {
-        		ObjectId endCommit = repository.resolve(endCommitId);  
-            walk.markUninteresting(walk.parseCommit(endCommit));
-        }
-		
-		walk.setRevFilter(commitsFilter);
-		return walk;
+	private ObjectId getActualRefObjectId(Ref ref) {
+		if(ref.getPeeledObjectId() != null) {
+			return ref.getPeeledObjectId();
+		}
+		return ref.getObjectId();
+	}
+
+	@Override
+	public Iterable<RevCommit> createRevsWalkBetweenCommits(Repository repository, String startCommitId, String endCommitId)
+			throws Exception {
+		ObjectId from = repository.resolve(startCommitId);
+		ObjectId to = repository.resolve(endCommitId);
+		try (Git git = new Git(repository)) {
+			return git.log().addRange(from, to).call();
+		}
 	}
 
 	public boolean isCommitAnalyzed(String sha1) {

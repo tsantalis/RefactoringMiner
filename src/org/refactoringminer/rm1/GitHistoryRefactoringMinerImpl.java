@@ -405,13 +405,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			}
 		};
 		
-		RevWalk walk = gitService.createRevsWalkBetweenTags(repository, startTag, endTag);
-
-		try {
-			detect(gitService, repository, handler, walk.iterator());
-		} finally {
-			walk.dispose();
-		}
+		Iterable<RevCommit> walk = gitService.createRevsWalkBetweenTags(repository, startTag, endTag);
+		detect(gitService, repository, handler, walk.iterator());
 	}
 
 	@Override
@@ -424,13 +419,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			}
 		};
 		
-		RevWalk walk = gitService.createRevsWalkBetweenCommits(repository, startCommitId, endCommitId);
-
-		try {
-			detect(gitService, repository, handler, walk.iterator());
-		} finally {
-			walk.dispose();
-		}
+		Iterable<RevCommit> walk = gitService.createRevsWalkBetweenCommits(repository, startCommitId, endCommitId);
+		detect(gitService, repository, handler, walk.iterator());
 	}
 
 	@Override

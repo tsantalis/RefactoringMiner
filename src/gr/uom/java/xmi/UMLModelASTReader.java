@@ -60,6 +60,7 @@ public class UMLModelASTReader {
 			parser.setCompilerOptions(options);
 			parser.setResolveBindings(false);
 			parser.setKind(ASTParser.K_COMPILATION_UNIT);
+			parser.setStatementsRecovery(true);
 			parser.setSource(javaFileContents.get(filePath).toCharArray());
 			CompilationUnit compilationUnit = (CompilationUnit)parser.createAST(null);
 			processCompilationUnit(filePath, compilationUnit);

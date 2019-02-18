@@ -175,7 +175,7 @@ int endColumn
 ## Statement matching information for the detected refactorings ##
 All method-related refactoring (Extract/Inline/Move/Rename/ExtractAndMove Operation) objects come with a `UMLOperationBodyMapper` object, which can be obtained by calling method `getBodyMapper()` on the refactoring object.
 
-![example](https://user-images.githubusercontent.com/1483516/52971087-1f93f280-3384-11e9-82d4-3a3a7ac608bd.png)
+![example|1665x820](https://user-images.githubusercontent.com/1483516/52974463-b0240000-338f-11e9-91e2-966f20be2514.png)
 
 #1. You can use the following code snippet to obtain the **newly added statements** in the extracted method:
 ```java

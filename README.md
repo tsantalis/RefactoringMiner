@@ -177,7 +177,7 @@ All method-related refactoring (Extract/Inline/Move/Rename/ExtractAndMove Operat
 
 ![example](https://user-images.githubusercontent.com/1483516/52971087-1f93f280-3384-11e9-82d4-3a3a7ac608bd.png)
 
-You can use the following code snippet to obtain the **newly added statements** in the extracted method:
+#1. You can use the following code snippet to obtain the **newly added statements** in the extracted method:
 ```java
 ExtractOperationRefactoring refactoring = ...;
 UMLOperationBodyMapper mapper = refactoring.getBodyMapper();
@@ -189,7 +189,7 @@ final String url = pageNumber == 0 ? "courses" : "courses?page=" + String.valueO
 final CoursesContainer coursesContainer = getFromStepic(url,CoursesContainer.class);
 return coursesContainer.meta.containsKey("has_next") && coursesContainer.meta.get("has_next") == Boolean.TRUE;
 ```
-You can use the following code snippet to obtain the **matched statements** between the original and the extracted methods:
+#2. You can use the following code snippet to obtain the **matched statements** between the original and the extracted methods:
 ```java
 ExtractOperationRefactoring refactoring = ...;
 UMLOperationBodyMapper mapper = refactoring.getBodyMapper();
@@ -206,9 +206,10 @@ final List<CourseInfo> courseInfos=getFromStepic("courses",CoursesContainer.clas
 final List<CourseInfo> courseInfos=coursesContainer.courses;
 ```
 Replacement: `getFromStepic("courses",CoursesContainer.class)` -> `coursesContainer`
+
 ReplacementType: VARIABLE_REPLACED_WITH_METHOD_INVOCATION
 
-You can use the following code snippet to obtain the **overlapping refactorings** in the extracted method:
+#3. You can use the following code snippet to obtain the **overlapping refactorings** in the extracted method:
 ```java
 ExtractOperationRefactoring refactoring = ...;
 UMLOperationBodyMapper mapper = refactoring.getBodyMapper();

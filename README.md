@@ -172,6 +172,38 @@ int startColumn
 int endColumn
 ```
 
+## Statement matching information for the detected refactorings ##
+All method-related refactoring (Extract/Inline/Move/Rename/ExtractAndMove Operation) objects come with a `UMLOperationBodyMapper` object, which can be obtained by calling method `getBodyMapper()` on the refactoring object.
+
+![example](https://user-images.githubusercontent.com/1483516/52971087-1f93f280-3384-11e9-82d4-3a3a7ac608bd.png)
+
+You can use the following code snippet to obtain the **newly added statements** in the extracted method:
+```java
+ExtractOperationRefactoring refactoring = ...;
+UMLOperationBodyMapper mapper = refactoring.getBodyMapper();
+List<StatementObject> newStatements = mapper.getNonMappedLeavesT2();
+```
+For the Extract Method Refactoring example shown above `mapper.getNonMappedLeavesT2()` returns the following statements:
+```java
+final String url = pageNumber == 0 ? "courses" : "courses?page=" + String.valueOf(pageNumber);
+final CoursesContainer coursesContainer = getFromStepic(url,CoursesContainer.class);
+return coursesContainer.meta.containsKey("has_next") && coursesContainer.meta.get("has_next") == Boolean.TRUE;
+```
+You can use the following code snippet to obtain the **overlapping refactorings** in the extracted method:
+```java
+Set<Refactoring> overlappingRefactorings = mapper.getRefactorings();
+```
+For the Extract Method Refactoring example shown above `mapper.getRefactorings()` returns the following refactoring:
+
+**Extract Variable** `coursesContainer : CoursesContainer` in method
+`private addCoursesFromStepic(result List<CourseInfo>, pageNumber int) : boolean`
+from class `com.jetbrains.edu.stepic.EduStepicConnector`
+
+because variable `coursesContainer` has been extracted from the following statement of the original method:
+```java
+final List<CourseInfo> courseInfos=getFromStepic("courses",CoursesContainer.class).courses;
+```
+
 ## Running from the command line ##
 
 When you build a distributable application with `./gradlew distZip`, you can run Refactoring Miner as a command line application. Extract the file under `build/distribution/RefactoringMiner.zip` in the desired location, and cd into the `bin` folder (or include it in your path). Then, run `RefactoringMiner -h` to show its usage:

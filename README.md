@@ -199,15 +199,14 @@ for(AbstractCodeMapping mapping : mapper.getMappings()) {
   Set<Replacement> replacements = mapping.getReplacements();
 }
 ```
-For the Extract Method Refactoring example shown above `mapping.getReplacements()` return the following AST node replacement for
-the pair of matched statements:
+For the Extract Method Refactoring example shown above `mapping.getReplacements()` returns the following AST node replacement for the pair of matched statements:
 ```java
 final List<CourseInfo> courseInfos=getFromStepic("courses",CoursesContainer.class).courses;
 final List<CourseInfo> courseInfos=coursesContainer.courses;
 ```
-Replacement: `getFromStepic("courses",CoursesContainer.class)` -> `coursesContainer`
+**Replacement**: `getFromStepic("courses",CoursesContainer.class)` -> `coursesContainer`
 
-ReplacementType: VARIABLE_REPLACED_WITH_METHOD_INVOCATION
+**ReplacementType**: VARIABLE_REPLACED_WITH_METHOD_INVOCATION
 
 #3. You can use the following code snippet to obtain the **overlapping refactorings** in the extracted method:
 ```java

@@ -189,8 +189,29 @@ final String url = pageNumber == 0 ? "courses" : "courses?page=" + String.valueO
 final CoursesContainer coursesContainer = getFromStepic(url,CoursesContainer.class);
 return coursesContainer.meta.containsKey("has_next") && coursesContainer.meta.get("has_next") == Boolean.TRUE;
 ```
+You can use the following code snippet to obtain the **matched statements** between the original and the extracted methods:
+```java
+ExtractOperationRefactoring refactoring = ...;
+UMLOperationBodyMapper mapper = refactoring.getBodyMapper();
+for(AbstractCodeMapping mapping : mapper.getMappings()) {
+  AbstractCodeFragment fragment1 = mapping.getFragment1();
+  AbstractCodeFragment fragment2 = mapping.getFragment2();
+  Set<Replacement> replacements = mapping.getReplacements();
+}
+```
+For the Extract Method Refactoring example shown above `mapping.getReplacements()` return the following AST node replacement for
+the pair of matched statements:
+```java
+final List<CourseInfo> courseInfos=getFromStepic("courses",CoursesContainer.class).courses;
+final List<CourseInfo> courseInfos=coursesContainer.courses;
+```
+Replacement: `getFromStepic("courses",CoursesContainer.class)` -> `coursesContainer`
+ReplacementType: VARIABLE_REPLACED_WITH_METHOD_INVOCATION
+
 You can use the following code snippet to obtain the **overlapping refactorings** in the extracted method:
 ```java
+ExtractOperationRefactoring refactoring = ...;
+UMLOperationBodyMapper mapper = refactoring.getBodyMapper();
 Set<Refactoring> overlappingRefactorings = mapper.getRefactorings();
 ```
 For the Extract Method Refactoring example shown above `mapper.getRefactorings()` returns the following refactoring:

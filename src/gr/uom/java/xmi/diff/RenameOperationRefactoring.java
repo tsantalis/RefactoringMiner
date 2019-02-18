@@ -16,8 +16,10 @@ public class RenameOperationRefactoring implements Refactoring {
 	private UMLOperation originalOperation;
 	private UMLOperation renamedOperation;
 	private Set<Replacement> replacements;
+	private UMLOperationBodyMapper bodyMapper;
 	
 	public RenameOperationRefactoring(UMLOperationBodyMapper bodyMapper) {
+		this.bodyMapper = bodyMapper;
 		this.originalOperation = bodyMapper.getOperation1();
 		this.renamedOperation = bodyMapper.getOperation2();
 		this.replacements = bodyMapper.getReplacements();
@@ -63,6 +65,10 @@ public class RenameOperationRefactoring implements Refactoring {
 
 	public RefactoringType getRefactoringType() {
 		return RefactoringType.RENAME_METHOD;
+	}
+
+	public UMLOperationBodyMapper getBodyMapper() {
+		return bodyMapper;
 	}
 
 	public UMLOperation getOriginalOperation() {

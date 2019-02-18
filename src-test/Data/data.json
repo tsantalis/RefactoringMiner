@@ -51,6 +51,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable coursesContainer : CoursesContainer in method private addCoursesFromStepic(result List<CourseInfo>, pageNumber int) : boolean from class com.jetbrains.edu.stepic.EduStepicConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 27567
 }, {

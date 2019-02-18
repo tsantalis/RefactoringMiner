@@ -17,8 +17,10 @@ public class ExtractAndMoveOperationRefactoring implements Refactoring {
 	private UMLOperation sourceOperationBeforeExtraction;
 	private UMLOperation sourceOperationAfterExtraction;
 	private Set<Replacement> replacements;
+	private UMLOperationBodyMapper bodyMapper;
 	
 	public ExtractAndMoveOperationRefactoring(UMLOperationBodyMapper bodyMapper, UMLOperation sourceOperationAfterExtraction) {
+		this.bodyMapper = bodyMapper;
 		this.extractedOperation = bodyMapper.getOperation2();
 		this.sourceOperationBeforeExtraction = bodyMapper.getOperation1();
 		this.sourceOperationAfterExtraction = sourceOperationAfterExtraction;
@@ -53,7 +55,11 @@ public class ExtractAndMoveOperationRefactoring implements Refactoring {
 	public RefactoringType getRefactoringType() {
 		return RefactoringType.EXTRACT_AND_MOVE_OPERATION;
 	}
-	
+
+	public UMLOperationBodyMapper getBodyMapper() {
+		return bodyMapper;
+	}
+
 	public UMLOperation getExtractedOperation() {
 		return extractedOperation;
 	}

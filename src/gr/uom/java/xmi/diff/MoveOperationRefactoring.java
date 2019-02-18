@@ -16,8 +16,10 @@ public class MoveOperationRefactoring implements Refactoring {
 	protected UMLOperation originalOperation;
 	protected UMLOperation movedOperation;
 	private Set<Replacement> replacements;
+	private UMLOperationBodyMapper bodyMapper;
 
 	public MoveOperationRefactoring(UMLOperationBodyMapper bodyMapper) {
+		this.bodyMapper = bodyMapper;
 		this.originalOperation = bodyMapper.getOperation1();
 		this.movedOperation = bodyMapper.getOperation2();
 		this.replacements = bodyMapper.getReplacements();
@@ -48,6 +50,10 @@ public class MoveOperationRefactoring implements Refactoring {
 
 	public RefactoringType getRefactoringType() {
 		return RefactoringType.MOVE_OPERATION;
+	}
+
+	public UMLOperationBodyMapper getBodyMapper() {
+		return bodyMapper;
 	}
 
 	public UMLOperation getOriginalOperation() {

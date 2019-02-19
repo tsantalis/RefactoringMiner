@@ -209,8 +209,8 @@ for(AbstractCodeMapping mapping : mapper.getMappings()) {
 ```
 For the Extract Method Refactoring example shown above `mapping.getReplacements()` returns the following AST node replacement for the pair of matched statements:
 ```java
-final List<CourseInfo> courseInfos=getFromStepic("courses",CoursesContainer.class).courses;
-final List<CourseInfo> courseInfos=coursesContainer.courses;
+final List<CourseInfo> courseInfos = getFromStepic("courses",CoursesContainer.class).courses;
+final List<CourseInfo> courseInfos = coursesContainer.courses;
 ```
 **Replacement**: `getFromStepic("courses",CoursesContainer.class)` -> `coursesContainer`
 
@@ -228,9 +228,9 @@ For the Extract Method Refactoring example shown above `mapper.getRefactorings()
 `private addCoursesFromStepic(result List<CourseInfo>, pageNumber int) : boolean`
 from class `com.jetbrains.edu.stepic.EduStepicConnector`
 
-because variable `coursesContainer` has been extracted from the following statement of the original method:
+because variable `coursesContainer = getFromStepic(url,CoursesContainer.class)` has been extracted from the following statement of the original method by replacing string literal `"courses"` with variable `url`:
 ```java
-final List<CourseInfo> courseInfos=getFromStepic("courses",CoursesContainer.class).courses;
+final List<CourseInfo> courseInfos = getFromStepic("courses",CoursesContainer.class).courses;
 ```
 
 ## Running from the command line ##

@@ -181,7 +181,10 @@ All method-related refactoring (Extract/Inline/Move/Rename/ExtractAndMove Operat
 ```java
 ExtractOperationRefactoring refactoring = ...;
 UMLOperationBodyMapper mapper = refactoring.getBodyMapper();
-List<StatementObject> newStatements = mapper.getNonMappedLeavesT2();
+List<StatementObject> newLeaves = mapper.getNonMappedLeavesT2(); //newly added leaf statements
+List<CompositeStatementObject> newComposites = mapper.getNonMappedInnerNodesT2(); //newly added composite statements
+List<StatementObject> deletedLeaves = mapper.getNonMappedLeavesT1(); //deleted leaf statements
+List<CompositeStatementObject> deletedComposites = mapper.getNonMappedInnerNodesT1(); //deleted composite statements
 ```
 For the Extract Method Refactoring example shown above `mapper.getNonMappedLeavesT2()` returns the following statements:
 ```java
@@ -197,6 +200,11 @@ for(AbstractCodeMapping mapping : mapper.getMappings()) {
   AbstractCodeFragment fragment1 = mapping.getFragment1();
   AbstractCodeFragment fragment2 = mapping.getFragment2();
   Set<Replacement> replacements = mapping.getReplacements();
+  for(Replacement replacement : replacements) {
+    String valueBefore = replacement.getBefore();
+    String valueAfter = replacement.getAfter();
+    ReplacementType type = replacement.getType();
+  }
 }
 ```
 For the Extract Method Refactoring example shown above `mapping.getReplacements()` returns the following AST node replacement for the pair of matched statements:

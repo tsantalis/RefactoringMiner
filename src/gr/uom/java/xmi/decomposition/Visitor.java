@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.ArrayCreation;
 import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.CastExpression;
+import org.eclipse.jdt.core.dom.CatchClause;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConditionalExpression;
@@ -20,6 +21,8 @@ import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.LambdaExpression;
+import org.eclipse.jdt.core.dom.MarkerAnnotation;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.NumberLiteral;
@@ -144,6 +147,22 @@ public class Visitor extends ASTVisitor {
 		}
 		else if(node.getParent() instanceof Type) {
 			// skip type names
+		}
+		else if(node.getParent() instanceof MarkerAnnotation &&
+				((MarkerAnnotation)node.getParent()).getTypeName().equals(node)) {
+			// skip marker annotation names
+		}
+		else if(node.getParent() instanceof MethodDeclaration &&
+				((MethodDeclaration)node.getParent()).getName().equals(node)) {
+			// skip method declaration names
+		}
+		else if(node.getParent() instanceof SingleVariableDeclaration &&
+				node.getParent().getParent() instanceof MethodDeclaration) {
+			// skip method parameter names
+		}
+		else if(node.getParent() instanceof SingleVariableDeclaration &&
+				node.getParent().getParent() instanceof CatchClause) {
+			// skip catch clause formal parameter names
 		}
 		else {
 			allIdentifiers.add(node.getIdentifier());

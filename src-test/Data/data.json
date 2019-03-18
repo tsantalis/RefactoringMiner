@@ -8447,6 +8447,13 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public set(key CGImagePropertyIPTC, value NativeObject) : CGImagePropertyIPTCData extracted from public setContactInfo(contactInfo CGImagePropertyIPTCContactInfoData) : CGImagePropertyIPTCData in class org.robovm.apple.imageio.CGImagePropertyIPTCData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 11040
 }, {
@@ -14564,6 +14571,13 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute available : AtomicInteger to requirementCount : AtomicInteger in class org.neo4j.kernel.AvailabilityGuard",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable val : int to availability : Availability in method private availability(millis long) : Availability in class org.neo4j.kernel.AvailabilityGuard",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -23904,6 +23918,13 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable projection : String[] in method public buildLuceneQuery(queryFactory QueryFactory, jpqlString String, startOffset long, maxResults int, additionalLuceneQuery Query) : LuceneQuery from class org.infinispan.query.dsl.embedded.impl.QueryEngine",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 6361
 }, {
@@ -32572,13 +32593,6 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
-    }, {
-        "type": "Rename Method",
-        "description": "Rename Method private addToIndex(labelId int, propertyKeyId int, nodeIds long[]) : void renamed to public withStringProperties(nodesWithValues Collection) : void in class org.neo4j.kernel.impl.api.state.TxStateTest",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
     }],
     "refDiffExecutionTime": 4473
 }, {
@@ -32804,6 +32818,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable t : Template to tmpl : Template in method private computeTagScore(elements List, index int) : void in class org.ansj.app.crf.SplitWord",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter str : String to input : String in method public TempFeature(input String, tagNum int) in class org.ansj.app.crf.CrfppModelParser.TempFeature",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

@@ -33,6 +33,7 @@ import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.StringLiteral;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 import org.eclipse.jdt.core.dom.ThisExpression;
+import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeLiteral;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.WildcardType;
@@ -43,7 +44,6 @@ public class Visitor extends ASTVisitor {
 	private CompilationUnit cu;
 	private String filePath;
 	private List<String> allIdentifiers = new ArrayList<String>();
-	private List<String> invokedMethodNames = new ArrayList<String>();
 	private List<String> types = new ArrayList<String>();
 	private Map<String, OperationInvocation> methodInvocationMap = new LinkedHashMap<String, OperationInvocation>();
 	private List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
@@ -134,6 +134,17 @@ public class Visitor extends ASTVisitor {
 			FieldAccess fieldAccess = (FieldAccess)node.getParent();
 			allIdentifiers.add(fieldAccess.toString());
 		}
+		else if(node.getParent() instanceof MethodInvocation &&
+				((MethodInvocation)node.getParent()).getName().equals(node)) {
+			// skip method invocation names
+		}
+		else if(node.getParent() instanceof SuperMethodInvocation &&
+				((SuperMethodInvocation)node.getParent()).getName().equals(node)) {
+			// skip super method invocation names
+		}
+		else if(node.getParent() instanceof Type) {
+			// skip type names
+		}
 		else {
 			allIdentifiers.add(node.getIdentifier());
 		}
@@ -172,7 +183,6 @@ public class Visitor extends ASTVisitor {
 	}
 	
 	public boolean visit(MethodInvocation node) {
-		invokedMethodNames.add(node.getName().getIdentifier());
 		List<Expression> arguments = node.arguments();
 		for(Expression argument : arguments) {
 			processArgument(argument);
@@ -227,7 +237,6 @@ public class Visitor extends ASTVisitor {
 	}
 	
 	public boolean visit(SuperMethodInvocation node) {
-		invokedMethodNames.add(node.getName().getIdentifier());
 		List<Expression> arguments = node.arguments();
 		for(Expression argument : arguments) {
 			processArgument(argument);
@@ -317,8 +326,6 @@ public class Visitor extends ASTVisitor {
 
 	public List<String> getVariables() {
 		List<String> variables = new ArrayList<String>(this.allIdentifiers);
-		variables.removeAll(this.invokedMethodNames);
-		variables.removeAll(this.types);
 		return variables;
 	}
 

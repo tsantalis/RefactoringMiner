@@ -80,4 +80,50 @@ public class LocationInfo {
 				this.startOffset <= other.startOffset &&
 				this.endOffset >= other.endOffset;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + endColumn;
+		result = prime * result + endLine;
+		result = prime * result + endOffset;
+		result = prime * result + ((filePath == null) ? 0 : filePath.hashCode());
+		result = prime * result + length;
+		result = prime * result + startColumn;
+		result = prime * result + startLine;
+		result = prime * result + startOffset;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LocationInfo other = (LocationInfo) obj;
+		if (endColumn != other.endColumn)
+			return false;
+		if (endLine != other.endLine)
+			return false;
+		if (endOffset != other.endOffset)
+			return false;
+		if (filePath == null) {
+			if (other.filePath != null)
+				return false;
+		} else if (!filePath.equals(other.filePath))
+			return false;
+		if (length != other.length)
+			return false;
+		if (startColumn != other.startColumn)
+			return false;
+		if (startLine != other.startLine)
+			return false;
+		if (startOffset != other.startOffset)
+			return false;
+		return true;
+	}
 }

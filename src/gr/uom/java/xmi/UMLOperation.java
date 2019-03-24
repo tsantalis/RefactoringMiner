@@ -1,6 +1,7 @@
 package gr.uom.java.xmi;
 
 import gr.uom.java.xmi.decomposition.AbstractStatement;
+import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
@@ -543,18 +544,11 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	public List<UMLOperation> getOperationsInsideAnonymousClass(List<UMLAnonymousClass> allAddedAnonymousClasses) {
 		List<UMLOperation> operationsInsideAnonymousClass = new ArrayList<UMLOperation>();
 		if(this.operationBody != null) {
-			List<String> anonymousClassDeclarations = this.operationBody.getAllAnonymousClassDeclarations();
-			for(String anonymousClassDeclaration : anonymousClassDeclarations) {
+			List<AnonymousClassDeclarationObject> anonymousClassDeclarations = this.operationBody.getAllAnonymousClassDeclarations();
+			for(AnonymousClassDeclarationObject anonymousClassDeclaration : anonymousClassDeclarations) {
 				for(UMLAnonymousClass anonymousClass : allAddedAnonymousClasses) {
-					int foundOperations = 0;
-					List<UMLOperation> operations = anonymousClass.getOperations();
-					for(UMLOperation operation : operations) {
-						if(anonymousClassDeclaration.contains(operation.getName())) {
-							foundOperations++;
-						}
-					}
-					if(foundOperations == operations.size()) {
-						operationsInsideAnonymousClass.addAll(operations);
+					if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration.getLocationInfo())) {
+						operationsInsideAnonymousClass.addAll(anonymousClass.getOperations());
 					}
 				}
 			}

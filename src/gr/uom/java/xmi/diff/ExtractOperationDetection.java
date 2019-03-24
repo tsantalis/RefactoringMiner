@@ -31,6 +31,9 @@ public class ExtractOperationDetection {
 		if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
 			!mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
 			Set<OperationInvocation> operationInvocations = mapper.getOperation2().getAllOperationInvocations();
+			for(StatementObject statement : mapper.getNonMappedLeavesT2()) {
+				operationInvocations.addAll(statement.getMethodInvocationMap().values());
+			}
 			OperationInvocation addedOperationInvocation = matchingInvocation(addedOperation, operationInvocations, mapper.getOperation2().variableTypeMap());
 			if(addedOperationInvocation != null) {
 				CallTreeNode root = new CallTreeNode(mapper.getOperation1(), addedOperation, addedOperationInvocation);

@@ -50,7 +50,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private List<UMLOperationBodyMapper> additionalMappers = new ArrayList<UMLOperationBodyMapper>();
 	private static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)|(\\?)|(:)");
 	private static final Pattern DOUBLE_QUOTES = Pattern.compile("\"([^\"]*)\"|(\\S+)");
-	private static final double MAX_ANONYMOUS_CLASS_DECLARATION_DISTANCE = 0.2;
 	private UMLClassBaseDiff classDiff;
 	private UMLModelDiff modelDiff;
 	
@@ -1496,25 +1495,55 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			return replacementInfo.getReplacements();
 		}
-		List<String> anonymousClassDeclarations1 = statement1.getAnonymousClassDeclarations();
-		List<String> anonymousClassDeclarations2 = statement2.getAnonymousClassDeclarations();
+		List<AnonymousClassDeclarationObject> anonymousClassDeclarations1 = statement1.getAnonymousClassDeclarations();
+		List<AnonymousClassDeclarationObject> anonymousClassDeclarations2 = statement2.getAnonymousClassDeclarations();
 		if(!anonymousClassDeclarations1.isEmpty() && !anonymousClassDeclarations2.isEmpty() &&
 				anonymousClassDeclarations1.size() == anonymousClassDeclarations2.size()) {
 			for(int i=0; i<anonymousClassDeclarations1.size(); i++) {
-				String anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);
-				String anonymousClassDeclaration2 = anonymousClassDeclarations2.get(i);
-				int indexOfAnonymousClassDeclaration1 = statement1.getString().indexOf(anonymousClassDeclaration1);
-				int indexOfAnonymousClassDeclaration2 = statement2.getString().indexOf(anonymousClassDeclaration2);
+				AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);
+				AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(i);
+				int indexOfAnonymousClassDeclaration1 = statement1.getString().indexOf(anonymousClassDeclaration1.toString());
+				int indexOfAnonymousClassDeclaration2 = statement2.getString().indexOf(anonymousClassDeclaration2.toString());
 				if(indexOfAnonymousClassDeclaration1 != -1 && indexOfAnonymousClassDeclaration2 != -1) {
 					String statementWithoutAnonymous1 = statement1.getString().substring(0, indexOfAnonymousClassDeclaration1);
 					String statementWithoutAnonymous2 = statement2.getString().substring(0, indexOfAnonymousClassDeclaration2);
 					if(statementWithoutAnonymous1.equals(statementWithoutAnonymous2)) {
-						int editDistance = StringDistance.editDistance(anonymousClassDeclaration1, anonymousClassDeclaration2);
-						double distancenormalized = (double)editDistance/(double)Math.max(anonymousClassDeclaration1.length(), anonymousClassDeclaration2.length());
-						if(distancenormalized < MAX_ANONYMOUS_CLASS_DECLARATION_DISTANCE) {
-							Replacement replacement = new Replacement(anonymousClassDeclaration1, anonymousClassDeclaration2, ReplacementType.ANONYMOUS_CLASS_DECLARATION);
-							replacementInfo.addReplacement(replacement);
-							return replacementInfo.getReplacements();
+						UMLAnonymousClass anonymousClass1 = null;
+						UMLAnonymousClass anonymousClass2 = null;
+						for(UMLAnonymousClass anonymousClass : operation1.getAnonymousClassList()) {
+							if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration1.getLocationInfo())) {
+								anonymousClass1 = anonymousClass;
+								break;
+							}
+						}
+						for(UMLAnonymousClass anonymousClass : operation2.getAnonymousClassList()) {
+							if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration2.getLocationInfo())) {
+								anonymousClass2 = anonymousClass;
+								break;
+							}
+						}
+						for(UMLOperation operation1 : anonymousClass1.getOperations()) {
+							for(UMLOperation operation2 : anonymousClass2.getOperations()) {
+								if(operation1.equals(operation2) || operation1.equalSignature(operation2)) {	
+									UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation1, operation2);
+									mapper.getMappings();
+									int mappings = mapper.mappingsWithoutBlocks();
+									if(mappings > 0) {
+										int nonMappedElementsT1 = mapper.nonMappedElementsT1();
+										int nonMappedElementsT2 = mapper.nonMappedElementsT2();
+										if(mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) {
+											this.mappings.addAll(mapper.mappings);
+											this.nonMappedInnerNodesT1.addAll(mapper.nonMappedInnerNodesT1);
+											this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);
+											this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
+											this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
+											Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), anonymousClassDeclaration2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION);
+											replacementInfo.addReplacement(replacement);
+											return replacementInfo.getReplacements();
+										}
+									}
+								}
+							}
 						}
 					}
 				}
@@ -2419,8 +2448,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private boolean replacementNotInsideMethodSignatureOfAnonymousClass(AbstractCodeMapping mapping, Replacement replacement) {
 		AbstractCodeFragment fragment1 = mapping.getFragment1();
 		AbstractCodeFragment fragment2 = mapping.getFragment2();
-		List<String> anonymousClassDeclarations1 = fragment1.getAnonymousClassDeclarations();
-		List<String> anonymousClassDeclarations2 = fragment2.getAnonymousClassDeclarations();
+		List<AnonymousClassDeclarationObject> anonymousClassDeclarations1 = fragment1.getAnonymousClassDeclarations();
+		List<AnonymousClassDeclarationObject> anonymousClassDeclarations2 = fragment2.getAnonymousClassDeclarations();
 		if(anonymousClassDeclarations1.size() > 0 && anonymousClassDeclarations2.size() > 0) {
 			boolean replacementBeforeNotFoundInMethodSignature = false;
 			String[] lines1 = fragment1.getString().split("\\n");

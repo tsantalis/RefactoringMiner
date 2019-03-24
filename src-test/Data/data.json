@@ -28778,14 +28778,14 @@
         "description": "Extract Method public addJarsToRootsAndImportClass(jarPaths List, libraryName String, currentModule Module, editor Editor, reference PsiReference, className String) : void extracted from public addBundledJarToRoots(project Project, editor Editor, currentModule Module, reference PsiReference, className String, libVirtFile String) : void in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private getJUnit4JarPaths() : List extracted from public registerFixes(registrar QuickFixActionRegistrar, reference PsiReference) : List in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Extract Method",
@@ -32593,6 +32593,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method private addToIndex(labelId int, propertyKeyId int, nodeIds long[]) : void renamed to public withStringProperties(nodesWithValues Collection) : void in class org.neo4j.kernel.impl.api.state.TxStateTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4473
 }, {
@@ -32852,6 +32859,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood"
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable moduleName : String in method protected buildErlangVisitor(holder ProblemsHolder, session LocalInspectionToolSession) : ErlangVisitor from class org.intellij.erlang.inspection.ErlangUnresolvedFunctionInspection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 964
 }, {
@@ -33888,6 +33902,13 @@
     }, {
         "type": "Inline Method",
         "description": "Inline Method private setBranch(property BranchJobProperty, branch Branch, project WorkflowJob) : void inlined to public setBranch(project WorkflowJob, branch Branch) : WorkflowJob in class org.jenkinsci.plugins.workflow.multibranch.WorkflowBranchProjectFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable sa : ScriptApproval in method public exactRevision() : void from class org.jenkinsci.plugins.workflow.multibranch.SCMBinderTest",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

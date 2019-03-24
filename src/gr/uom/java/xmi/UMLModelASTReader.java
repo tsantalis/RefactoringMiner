@@ -218,6 +218,7 @@ public class UMLModelASTReader {
     		insertNode(anonymous, root);
     	}
     	
+    	List<UMLAnonymousClass> createdAnonymousClasses = new ArrayList<UMLAnonymousClass>();
     	Enumeration enumeration = root.preorderEnumeration();
     	while(enumeration.hasMoreElements()) {
     		DefaultMutableTreeNode node = (DefaultMutableTreeNode)enumeration.nextElement();
@@ -231,6 +232,14 @@ public class UMLModelASTReader {
     					operation.addAnonymousClass(anonymousClass);
     				}
     			}
+    			for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
+    				for(UMLOperation operation : createdAnonymousClass.getOperations()) {
+        				if(operation.getLocationInfo().subsumes(anonymousClass.getLocationInfo())) {
+        					operation.addAnonymousClass(anonymousClass);
+        				}
+        			}
+    			}
+    			createdAnonymousClasses.add(anonymousClass);
     		}
     	}
     	

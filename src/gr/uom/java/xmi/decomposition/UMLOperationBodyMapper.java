@@ -1507,7 +1507,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(indexOfAnonymousClassDeclaration1 != -1 && indexOfAnonymousClassDeclaration2 != -1) {
 					String statementWithoutAnonymous1 = statement1.getString().substring(0, indexOfAnonymousClassDeclaration1);
 					String statementWithoutAnonymous2 = statement2.getString().substring(0, indexOfAnonymousClassDeclaration2);
-					if(statementWithoutAnonymous1.equals(statementWithoutAnonymous2)) {
+					if(statementWithoutAnonymous1.equals(statementWithoutAnonymous2) ||
+							identicalAfterVariableReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements())) {
 						UMLAnonymousClass anonymousClass1 = null;
 						UMLAnonymousClass anonymousClass2 = null;
 						for(UMLAnonymousClass anonymousClass : operation1.getAnonymousClassList()) {
@@ -1910,6 +1911,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private boolean identicalAfterVariableReplacements(String s1, String s2, Set<Replacement> replacements) {
+		String s1AfterReplacements = new String(s1);
+		for(Replacement replacement : replacements) {
+			if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
+				s1AfterReplacements = ReplacementUtil.performReplacement(s1AfterReplacements, replacement.getBefore(), replacement.getAfter());
+			}
+		}
+		if(s1AfterReplacements.equals(s2)) {
+			return true;
+		}
+		return false;
 	}
 
 	private boolean variableAssignmentWithEverythingReplaced(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
@@ -2454,11 +2468,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			boolean replacementBeforeNotFoundInMethodSignature = false;
 			String[] lines1 = fragment1.getString().split("\\n");
 			for(String line : lines1) {
-				line = line.trim();
-				if(line.startsWith("@Override")) {
-					line = line.substring(9, line.length());
-					line = line.trim();
-				}
+				line = prepareLine(line);
 				if(!Visitor.METHOD_SIGNATURE_PATTERN.matcher(line).matches() &&
 						ReplacementUtil.contains(line, replacement.getBefore())) {
 					replacementBeforeNotFoundInMethodSignature = true;
@@ -2468,11 +2478,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			boolean replacementAfterNotFoundInMethodSignature = false;
 			String[] lines2 = fragment2.getString().split("\\n");
 			for(String line : lines2) {
-				line = line.trim();
-				if(line.startsWith("@Override")) {
-					line = line.substring(9, line.length());
-					line = line.trim();
-				}
+				line = prepareLine(line);
 				if(!Visitor.METHOD_SIGNATURE_PATTERN.matcher(line).matches() &&
 						ReplacementUtil.contains(line, replacement.getAfter())) {
 					replacementAfterNotFoundInMethodSignature = true;
@@ -2487,16 +2493,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private static boolean containsMethodSignatureOfAnonymousClass(String s) {
 		String[] lines = s.split("\\n");
 		for(String line : lines) {
-			line = line.trim();
-			if(line.startsWith("@Override")) {
-				line = line.substring(9, line.length());
-				line = line.trim();
-			}
+			line = prepareLine(line);
 			if(Visitor.METHOD_SIGNATURE_PATTERN.matcher(line).matches()) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	private static String prepareLine(String line) {
+		line = line.trim();
+		if(line.startsWith("@Nullable")) {
+			line = line.substring(9, line.length());
+			line = line.trim();
+		}
+		if(line.startsWith("@Override")) {
+			line = line.substring(9, line.length());
+			line = line.trim();
+		}
+		if(line.contains("throws ")) {
+			line = line.substring(0, line.indexOf("throws "));
+		}
+		return line;
 	}
 
 	private boolean containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(Set<Replacement> replacements) {

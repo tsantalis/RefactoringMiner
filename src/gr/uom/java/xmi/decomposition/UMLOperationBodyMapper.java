@@ -1525,6 +1525,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
+						int matchedOperations = 0;
 						for(UMLOperation operation1 : anonymousClass1.getOperations()) {
 							for(UMLOperation operation2 : anonymousClass2.getOperations()) {
 								if(operation1.equals(operation2) || operation1.equalSignature(operation2)) {	
@@ -1540,13 +1541,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);
 											this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
 											this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
-											Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), anonymousClassDeclaration2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION);
-											replacementInfo.addReplacement(replacement);
-											return replacementInfo.getReplacements();
+											matchedOperations++;
 										}
 									}
 								}
 							}
+						}
+						if(matchedOperations > 0) {
+							Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), anonymousClassDeclaration2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION);
+							replacementInfo.addReplacement(replacement);
+							return replacementInfo.getReplacements();
 						}
 					}
 				}

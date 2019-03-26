@@ -1009,6 +1009,15 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 				if(!mapper.getNonMappedLeavesT2().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty() ||
 					!mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
 					Set<OperationInvocation> operationInvocations = mapper.getOperation1().getAllOperationInvocations();
+					for(StatementObject statement : mapper.getNonMappedLeavesT1()) {
+						for(UMLAnonymousClass anonymousClass : removedAnonymousClasses) {
+							if(statement.getLocationInfo().subsumes(anonymousClass.getLocationInfo())) {
+								for(UMLOperation anonymousOperation : anonymousClass.getOperations()) {
+									operationInvocations.addAll(anonymousOperation.getAllOperationInvocations());
+								}
+							}
+						}
+					}
 					OperationInvocation removedOperationInvocation = matchingInvocation(removedOperation, operationInvocations, mapper.getOperation1().variableTypeMap());
 					if(removedOperationInvocation != null && !invocationMatchesWithAddedOperation(removedOperationInvocation, mapper.getOperation1().variableTypeMap(), mapper.getOperation2().getAllOperationInvocations())) {
 						List<String> arguments = removedOperationInvocation.getArguments();

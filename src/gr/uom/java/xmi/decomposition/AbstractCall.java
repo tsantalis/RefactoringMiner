@@ -171,11 +171,21 @@ public abstract class AbstractCall implements LocationInfoProvider {
 				getArguments().size() != call.getArguments().size();
 	}
 
-	public boolean onlyArgumentsChanged(AbstractCall call, Set<Replacement> replacements) {
+	private boolean onlyArgumentsChanged(AbstractCall call, Set<Replacement> replacements) {
 		return identicalExpression(call, replacements) &&
 				identicalName(call) &&
 				!equalArguments(call) &&
 				getArguments().size() != call.getArguments().size();
+	}
+
+	public boolean identicalWithDifferentNumberOfArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
+		if(onlyArgumentsChanged(call, replacements)) {
+			int argumentIntersectionSize = argumentIntersectionSize(call, parameterToArgumentMap);
+			if(argumentIntersectionSize > 0 || getArguments().size() == 0 || call.getArguments().size() == 0) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public boolean identical(AbstractCall call, Set<Replacement> replacements) {
@@ -184,13 +194,28 @@ public abstract class AbstractCall implements LocationInfoProvider {
 				equalArguments(call);
 	}
 
-	public Set<String> argumentIntersection(AbstractCall call) {
-		Set<String> argumentIntersection = new LinkedHashSet<String>(getArguments());
-		argumentIntersection.retainAll(call.getArguments());
+	private Set<String> argumentIntersection(AbstractCall call) {
+		List<String> args1 = preprocessArguments(getArguments());
+		List<String> args2 = preprocessArguments(call.getArguments());
+		Set<String> argumentIntersection = new LinkedHashSet<String>(args1);
+		argumentIntersection.retainAll(args2);
 		return argumentIntersection;
 	}
 
-	public int argumentIntersectionSize(AbstractCall call, Map<String, String> parameterToArgumentMap) {
+	private List<String> preprocessArguments(List<String> arguments) {
+		List<String> args = new ArrayList<String>();
+		for(String arg : arguments) {
+			if(arg.contains("\n")) {
+				args.add(arg.substring(0, arg.indexOf("\n")));
+			}
+			else {
+				args.add(arg);
+			}
+		}
+		return args;
+	}
+
+	private int argumentIntersectionSize(AbstractCall call, Map<String, String> parameterToArgumentMap) {
 		Set<String> argumentIntersection = argumentIntersection(call);
 		int argumentIntersectionSize = argumentIntersection.size();
 		for(String parameter : parameterToArgumentMap.keySet()) {

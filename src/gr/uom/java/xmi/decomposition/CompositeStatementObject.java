@@ -202,6 +202,15 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	@Override
+	public List<LambdaExpressionObject> getLambdas() {
+		List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
+		for(AbstractExpression expression : expressionList) {
+			lambdas.addAll(expression.getLambdas());
+		}
+		return lambdas;
+	}
+
+	@Override
 	public Map<String, ObjectCreation> getCreationMap() {
 		Map<String, ObjectCreation> creationMap = new LinkedHashMap<String, ObjectCreation>();
 		for(AbstractExpression expression : expressionList) {

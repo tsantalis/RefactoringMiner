@@ -34,6 +34,7 @@ public class StatementObject extends AbstractStatement {
 	private List<String> infixOperators;
 	private List<String> arguments;
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions;
+	private List<LambdaExpressionObject> lambdas;
 	
 	public StatementObject(CompilationUnit cu, String filePath, Statement statement, int depth) {
 		super();
@@ -53,6 +54,7 @@ public class StatementObject extends AbstractStatement {
 		this.infixOperators = visitor.getInfixOperators();
 		this.arguments = visitor.getArguments();
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
+		this.lambdas = visitor.getLambdas();
 		setDepth(depth);
 		if(Visitor.METHOD_INVOCATION_PATTERN.matcher(statement.toString()).matches()) {
 			if(statement instanceof VariableDeclarationStatement) {
@@ -206,6 +208,11 @@ public class StatementObject extends AbstractStatement {
 	@Override
 	public List<TernaryOperatorExpression> getTernaryOperatorExpressions() {
 		return ternaryOperatorExpressions;
+	}
+
+	@Override
+	public List<LambdaExpressionObject> getLambdas() {
+		return lambdas;
 	}
 
 	@Override

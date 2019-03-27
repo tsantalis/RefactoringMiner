@@ -65,6 +65,7 @@ public class Visitor extends ASTVisitor {
 	private List<String> infixOperators = new ArrayList<String>();
 	private List<String> arguments = new ArrayList<String>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
+	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
 	private Set<ASTNode> builderPatternChains = new LinkedHashSet<ASTNode>();
 	private DefaultMutableTreeNode root = new DefaultMutableTreeNode();
 	private DefaultMutableTreeNode current = root;
@@ -187,6 +188,7 @@ public class Visitor extends ASTVisitor {
 			this.arguments.removeAll(anonymous.getArguments());
 			this.ternaryOperatorExpressions.removeAll(anonymous.getTernaryOperatorExpressions());
 			this.anonymousClassDeclarations.removeAll(anonymous.getAnonymousClassDeclarations());
+			this.lambdas.removeAll(anonymous.getLambdas());
 		}
 	}
 
@@ -517,6 +519,16 @@ public class Visitor extends ASTVisitor {
 		return super.visit(node);
 	}
 
+	public boolean visit(LambdaExpression node) {
+		LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, node);
+		lambdas.add(lambda);
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getLambdas().add(lambda);
+		}
+		return super.visit(node);
+	}
+
 	public Map<String, OperationInvocation> getMethodInvocationMap() {
 		return this.methodInvocationMap;
 	}
@@ -567,6 +579,10 @@ public class Visitor extends ASTVisitor {
 
 	public List<String> getVariables() {
 		return variables;
+	}
+
+	public List<LambdaExpressionObject> getLambdas() {
+		return lambdas;
 	}
 
 	private static boolean invalidArrayAccess(ArrayAccess e) {

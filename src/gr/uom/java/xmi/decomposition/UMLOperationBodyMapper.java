@@ -1497,34 +1497,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		List<AnonymousClassDeclarationObject> anonymousClassDeclarations1 = statement1.getAnonymousClassDeclarations();
 		List<AnonymousClassDeclarationObject> anonymousClassDeclarations2 = statement2.getAnonymousClassDeclarations();
-		if(!anonymousClassDeclarations1.isEmpty() && !anonymousClassDeclarations2.isEmpty() &&
-				anonymousClassDeclarations1.size() == anonymousClassDeclarations2.size()) {
+		if(!anonymousClassDeclarations1.isEmpty() && !anonymousClassDeclarations2.isEmpty()) {
 			for(int i=0; i<anonymousClassDeclarations1.size(); i++) {
-				AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);
-				AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(i);
-				int indexOfAnonymousClassDeclaration1 = statement1.getString().indexOf(anonymousClassDeclaration1.toString());
-				int indexOfAnonymousClassDeclaration2 = statement2.getString().indexOf(anonymousClassDeclaration2.toString());
-				if(indexOfAnonymousClassDeclaration1 != -1 && indexOfAnonymousClassDeclaration2 != -1) {
-					String statementWithoutAnonymous1 = statement1.getString().substring(0, indexOfAnonymousClassDeclaration1);
-					String statementWithoutAnonymous2 = statement2.getString().substring(0, indexOfAnonymousClassDeclaration2);
+				for(int j=0; j<anonymousClassDeclarations2.size(); j++) {
+					AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);
+					AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(j);
+					String statementWithoutAnonymous1 = statementWithoutAnonymous(statement1, anonymousClassDeclaration1, operation1);
+					String statementWithoutAnonymous2 = statementWithoutAnonymous(statement2, anonymousClassDeclaration2, operation2);
 					if(statementWithoutAnonymous1.equals(statementWithoutAnonymous2) ||
 							identicalAfterVariableReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements()) ||
 							(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 							invocationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap))) {
-						UMLAnonymousClass anonymousClass1 = null;
-						UMLAnonymousClass anonymousClass2 = null;
-						for(UMLAnonymousClass anonymousClass : operation1.getAnonymousClassList()) {
-							if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration1.getLocationInfo())) {
-								anonymousClass1 = anonymousClass;
-								break;
-							}
-						}
-						for(UMLAnonymousClass anonymousClass : operation2.getAnonymousClassList()) {
-							if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration2.getLocationInfo())) {
-								anonymousClass2 = anonymousClass;
-								break;
-							}
-						}
+						UMLAnonymousClass anonymousClass1 = findAnonymousClass(anonymousClassDeclaration1, operation1);
+						UMLAnonymousClass anonymousClass2 = findAnonymousClass(anonymousClassDeclaration2, operation2);
 						int matchedOperations = 0;
 						for(UMLOperation operation1 : anonymousClass1.getOperations()) {
 							for(UMLOperation operation2 : anonymousClass2.getOperations()) {
@@ -1899,6 +1884,66 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							r = new Replacement(ternary.getExpression(), creation2, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
 							replacementInfo.addReplacement(r);
 							return replacementInfo.getReplacements();
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	private UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration1, UMLOperation operation) {
+		for(UMLAnonymousClass anonymousClass : operation.getAnonymousClassList()) {
+			if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration1.getLocationInfo())) {
+				return anonymousClass;
+			}
+		}
+		return null;
+	}
+
+	private String statementWithoutAnonymous(AbstractCodeFragment statement, AnonymousClassDeclarationObject anonymousClassDeclaration, UMLOperation operation) {
+		int index = statement.getString().indexOf(anonymousClassDeclaration.toString());
+		if(index != -1) {
+			return statement.getString().substring(0, index);
+		}
+		else {
+			for(LambdaExpressionObject lambda : statement.getLambdas()) {
+				OperationBody body = lambda.getBody();
+				if(body != null) {
+					List<StatementObject> leaves = body.getCompositeStatement().getLeaves();
+					for(StatementObject leaf : leaves) {
+						for(AnonymousClassDeclarationObject anonymousObject : leaf.getAnonymousClassDeclarations()) {
+							if(anonymousObject.getLocationInfo().equals(anonymousClassDeclaration.getLocationInfo())) {
+								String statementWithoutAnonymous = statementWithoutAnonymous(leaf, anonymousClassDeclaration, operation);
+								if(statementWithoutAnonymous != null) {
+									return statementWithoutAnonymous;
+								}
+							}
+						}
+					}
+				}
+			}
+			UMLAnonymousClass anonymous = null;
+			for(AnonymousClassDeclarationObject anonymousObject : statement.getAnonymousClassDeclarations()) {
+				for(UMLAnonymousClass anonymousClass : operation.getAnonymousClassList()) {
+					if(anonymousClass.getLocationInfo().equals(anonymousObject.getLocationInfo())) {
+						anonymous = anonymousClass;
+						break;
+					}
+				}
+				if(anonymous != null)
+					break;
+			}
+			for(UMLOperation anonymousOperation : anonymous.getOperations()) {
+				OperationBody body = anonymousOperation.getBody();
+				if(body != null) {
+					List<StatementObject> leaves = body.getCompositeStatement().getLeaves();
+					for(StatementObject leaf : leaves) {
+						for(AnonymousClassDeclarationObject anonymousObject : leaf.getAnonymousClassDeclarations()) {
+							if(anonymousObject.getLocationInfo().equals(anonymousClassDeclaration.getLocationInfo()) ||
+									anonymousObject.getLocationInfo().subsumes(anonymousClassDeclaration.getLocationInfo())) {
+								return statementWithoutAnonymous(leaf, anonymousClassDeclaration, anonymousOperation);
+							}
 						}
 					}
 				}

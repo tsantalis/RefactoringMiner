@@ -11545,6 +11545,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public showDialog() : void extracted from public onCreate(savedInstanceState Bundle) : void in class org.sufficientlysecure.keychain.ui.OrbotRequiredDialogActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable data : Intent to intent : Intent in method public showDialog() : void in class org.sufficientlysecure.keychain.ui.OrbotRequiredDialogActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

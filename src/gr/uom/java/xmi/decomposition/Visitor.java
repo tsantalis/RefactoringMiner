@@ -412,12 +412,14 @@ public class Visitor extends ASTVisitor {
 		else {
 			methodInvocation = node.toString();
 		}
-		if(methodInvocationMap.isEmpty() && node.getExpression() instanceof MethodInvocation) {
+		if(methodInvocationMap.isEmpty() && node.getExpression() instanceof MethodInvocation &&
+				!(node.getName().getIdentifier().equals("length") && node.arguments().size() == 0)) {
 			builderPatternChains.add(node);
 		}
 		for(String key : methodInvocationMap.keySet()) {
 			OperationInvocation invocation = methodInvocationMap.get(key);
-			if(key.startsWith(methodInvocation) && invocation.numberOfSubExpressions() > 0) {
+			if(key.startsWith(methodInvocation) && invocation.numberOfSubExpressions() > 0 &&
+					!(invocation.getName().equals("length") && invocation.getArguments().size() == 0)) {
 				builderPatternChains.add(node);
 			}
 		}

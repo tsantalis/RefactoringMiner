@@ -416,12 +416,19 @@ public class Visitor extends ASTVisitor {
 				!(node.getName().getIdentifier().equals("length") && node.arguments().size() == 0)) {
 			builderPatternChains.add(node);
 		}
+		boolean builderPatternChain = false;
 		for(String key : methodInvocationMap.keySet()) {
 			OperationInvocation invocation = methodInvocationMap.get(key);
 			if(key.startsWith(methodInvocation) && invocation.numberOfSubExpressions() > 0 &&
 					!(invocation.getName().equals("length") && invocation.getArguments().size() == 0)) {
 				builderPatternChains.add(node);
 			}
+			if(key.startsWith(methodInvocation) && invocation.numberOfSubExpressions() > 3 && invocation.containsVeryLongSubExpression()) {
+				builderPatternChain = true;
+			}
+		}
+		if(builderPatternChain) {
+			return false;
 		}
 		OperationInvocation invocation = new OperationInvocation(cu, filePath, node);
 		methodInvocationMap.put(methodInvocation, invocation);

@@ -2529,7 +2529,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return true;
 	}
 
-	private static boolean containsMethodSignatureOfAnonymousClass(String s) {
+	public static boolean containsMethodSignatureOfAnonymousClass(String s) {
 		String[] lines = s.split("\\n");
 		for(String line : lines) {
 			line = prepareLine(line);

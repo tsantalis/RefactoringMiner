@@ -423,7 +423,7 @@ public class Visitor extends ASTVisitor {
 					!(invocation.getName().equals("length") && invocation.getArguments().size() == 0)) {
 				builderPatternChains.add(node);
 			}
-			if(key.startsWith(methodInvocation) && invocation.numberOfSubExpressions() > 3 && invocation.containsVeryLongSubExpression()) {
+			if(key.startsWith(methodInvocation) && complexInvocation(invocation)) {
 				builderPatternChain = true;
 			}
 		}
@@ -437,6 +437,11 @@ public class Visitor extends ASTVisitor {
 			anonymous.getMethodInvocationMap().put(node.toString(), invocation);
 		}
 		return super.visit(node);
+	}
+
+	private boolean complexInvocation(OperationInvocation invocation) {
+		return (invocation.numberOfSubExpressions() > 3 && invocation.containsVeryLongSubExpression()) ||
+				invocation.numberOfSubExpressions() > 15;
 	}
 
 	public static String processMethodInvocation(MethodInvocation node) {

@@ -197,6 +197,11 @@ public class OperationBody {
 			TryStatement tryStatement = (TryStatement)statement;
 			TryStatementObject child = new TryStatementObject(cu, filePath, tryStatement, parent.getDepth()+1);
 			parent.addStatement(child);
+			List<Expression> resources = tryStatement.resources();
+			for(Expression resource : resources) {
+				AbstractExpression expression = new AbstractExpression(cu, filePath, resource);
+				child.addExpression(expression);
+			}
 			List<Statement> tryStatements = tryStatement.getBody().statements();
 			for(Statement blockStatement : tryStatements) {
 				processStatement(cu, filePath, child, blockStatement);

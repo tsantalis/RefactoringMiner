@@ -178,21 +178,12 @@ public class TestBuilder {
 	 */
 	private static String normalizeSingle(String refactoring) {
 		StringBuilder sb = new StringBuilder();
-		int openGenerics = 0;
 		for (int i = 0; i < refactoring.length(); i++) {
 			char c = refactoring.charAt(i);
-			if (c == '<') {
-				openGenerics++;
-			}
 			if (c == '\t') {
 				c = ' ';
 			}
-			if (openGenerics == 0) {
-				sb.append(c);
-			}
-			if (c == '>') {
-				openGenerics--;
-			}
+			sb.append(c);
 		}
 		return sb.toString();
 	}

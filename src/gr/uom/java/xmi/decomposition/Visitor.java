@@ -16,6 +16,7 @@ import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.ArrayAccess;
 import org.eclipse.jdt.core.dom.ArrayCreation;
+import org.eclipse.jdt.core.dom.ArrayInitializer;
 import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.CastExpression;
@@ -114,6 +115,13 @@ public class Visitor extends ASTVisitor {
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 			anonymous.getCreationMap().put(node.toString(), creation);
+		}
+		ArrayInitializer initializer = node.getInitializer();
+		if(initializer != null) {
+			List<Expression> expressions = initializer.expressions();
+			if(expressions.size() > 10) {
+				return false;
+			}
 		}
 		return super.visit(node);
 	}

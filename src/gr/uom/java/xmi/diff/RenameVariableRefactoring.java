@@ -7,6 +7,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class RenameVariableRefactoring implements Refactoring {
@@ -14,16 +15,19 @@ public class RenameVariableRefactoring implements Refactoring {
 	private VariableDeclaration renamedVariable;
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
+	private List<AbstractCodeMapping> mappings;
 
 	public RenameVariableRefactoring(
 			VariableDeclaration originalVariable,
 			VariableDeclaration renamedVariable,
 			UMLOperation operationBefore,
-			UMLOperation operationAfter) {
+			UMLOperation operationAfter,
+			List<AbstractCodeMapping> mappings) {
 		this.originalVariable = originalVariable;
 		this.renamedVariable = renamedVariable;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+		this.mappings = mappings;
 	}
 
 	public RefactoringType getRefactoringType() {
@@ -54,6 +58,10 @@ public class RenameVariableRefactoring implements Refactoring {
 
 	public UMLOperation getOperationAfter() {
 		return operationAfter;
+	}
+
+	public List<AbstractCodeMapping> getMappings() {
+		return mappings;
 	}
 
 	public String toString() {

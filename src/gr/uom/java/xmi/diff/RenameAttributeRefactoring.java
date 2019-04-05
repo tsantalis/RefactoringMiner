@@ -33,6 +33,10 @@ public class RenameAttributeRefactoring implements Refactoring {
 		return renamedAttribute;
 	}
 
+	public Set<CandidateAttributeRefactoring> getAttributeRenames() {
+		return attributeRenames;
+	}
+
 	public RefactoringType getRefactoringType() {
 		return RefactoringType.RENAME_ATTRIBUTE;
 	}

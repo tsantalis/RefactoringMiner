@@ -459,7 +459,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 					if(a2 != null) {
 						RenameVariableRefactoring ref = new RenameVariableRefactoring(
 								candidate.getOriginalVariableDeclaration(), a2.getVariableDeclaration(),
-								candidate.getOperationBefore(), candidate.getOperationAfter());
+								candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getMappings());
 						if(!refactorings.contains(ref)) {
 							refactorings.add(ref);
 						}

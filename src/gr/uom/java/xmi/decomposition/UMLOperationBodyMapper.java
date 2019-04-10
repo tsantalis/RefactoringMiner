@@ -49,6 +49,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private static final Pattern DOUBLE_QUOTES = Pattern.compile("\"([^\"]*)\"|(\\S+)");
 	private UMLClassBaseDiff classDiff;
 	private UMLModelDiff modelDiff;
+	private UMLOperation callSiteOperation;
 	
 	public UMLOperationBodyMapper(UMLOperation operation1, UMLOperation operation2) {
 		this.operation1 = operation1;
@@ -169,6 +170,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public UMLOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper, UMLOperation addedOperation,
 			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2) {
 		this.operation1 = operationBodyMapper.operation1;
+		this.callSiteOperation = operationBodyMapper.operation2;
 		this.operation2 = addedOperation;
 		this.mappings = new ArrayList<AbstractCodeMapping>();
 		this.nonMappedLeavesT1 = new ArrayList<StatementObject>();
@@ -299,6 +301,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Map<String, String> parameterToArgumentMap) {
 		this.operation1 = removedOperation;
 		this.operation2 = operationBodyMapper.operation2;
+		this.callSiteOperation = operationBodyMapper.operation1;
 		this.mappings = new ArrayList<AbstractCodeMapping>();
 		this.nonMappedLeavesT1 = new ArrayList<StatementObject>();
 		this.nonMappedLeavesT2 = new ArrayList<StatementObject>();
@@ -410,7 +413,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public Set<Refactoring> getRefactorings() {
 		initialize();
-		VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(mappings, operation1, operation2, additionalMappers, refactorings);
+		VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(mappings, operation1, operation2, additionalMappers, refactorings, callSiteOperation);
 		refactorings.addAll(analysis.getVariableRenames());
 		candidateAttributeRenames.addAll(analysis.getCandidateAttributeRenames());
 		return refactorings;
@@ -2424,6 +2427,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				String substringBeforeIndex1 = s1.substring(0, startIndex1);
 				String substringAfterIndex1 = s1.substring(startIndex1 + variable1.length(), s1.length());
 				for(String variable2 : variables2) {
+					if(variable2.endsWith(substringAfterIndex1) && substringAfterIndex1.length() > 1) {
+						variable2 = variable2.substring(0, variable2.indexOf(substringAfterIndex1));
+					}
 					if(s2.contains(variable2) && !s2.equals(variable2)) {
 						int startIndex2 = s2.indexOf(variable2);
 						String substringBeforeIndex2 = s2.substring(0, startIndex2);

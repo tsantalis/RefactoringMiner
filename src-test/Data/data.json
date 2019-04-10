@@ -86,7 +86,7 @@
         "description": "Rename Variable useDt : boolean to anchorPresent : boolean in method protected getParseSettings(url String) : ParseSettings in class com.intellij.codeInsight.documentation.AbstractExternalFilter",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 28911
@@ -116,7 +116,7 @@
         "description": "Rename Parameter document : Document to position : XSourcePosition in method public runToCursor(position XSourcePosition, ignoreBreakpoints boolean) : void in class com.intellij.debugger.impl.DebuggerSession",
         "comment": "<p>Parameters <span class='blob-code-inner blob-code-marker-deletion'><span class='pl-smi x x-first'>Document</span> <span class='pl-v x'>document</span><span class='x'>, </span><span class='pl-k x'>int</span> <span class='pl-v x x-last'>line</span></span> are merged into <span class='blob-code-inner blob-code-marker-addition'><span class='pl-smi x'>XSourcePosition</span> <span class='pl-v x x-last'>position</span></span></p>",
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }],
     "refDiffExecutionTime": 37410
@@ -564,7 +564,7 @@
         "description": "Rename Parameter typeList : List<? extends GenericTypeDescription> to typeDescriptions : List<? extends GenericTypeDescription> in method public resolve(typeDescriptions List<? extends GenericTypeDescription>, substitute TypeDescription) : GenericTypeList in class net.bytebuddy.dynamic.TargetType",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -578,14 +578,14 @@
         "description": "Rename Parameter matcher : ElementMatcher<? super TypeDescription> to substitutor : GenericTypeDescription.Visitor<GenericTypeDescription> in method private MethodToken(substitutor GenericTypeDescription.Visitor<GenericTypeDescription>, methodDescription MethodDescription) in class net.bytebuddy.dynamic.scaffold.InstrumentedType.AbstractBase.MethodToken",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute targetType : TypeDescription to levelType : TypeDescription in class net.bytebuddy.dynamic.scaffold.inline.InlineInstrumentedTypeTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 4590
@@ -1177,7 +1177,7 @@
         "description": "Rename Variable notInstrumented : boolean to ok : boolean in method public checkInstrumentation() : boolean in class co.paralleluniverse.fibers.Fiber",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Extract Variable",
@@ -1620,7 +1620,7 @@
         "description": "Rename Variable persisComponent : PersisComponent to persistComponentExecutor : PersistComponentExecutor in method public execute() : void in class org.sonar.server.computation.step.PersistComponentsStep",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 2491
@@ -1787,7 +1787,7 @@
         "description": "Rename Parameter mergePolicyProvider : MergePolicyProvider to mergePolicy : MergePolicy in method public EngineConfig(shardId ShardId, threadPool ThreadPool, indexingService ShardIndexingService, indexSettingsService IndexSettingsService, warmer IndicesWarmer, store Store, deletionPolicy SnapshotDeletionPolicy, mergePolicy MergePolicy, mergeScheduler MergeSchedulerProvider, analyzer Analyzer, similarity Similarity, codecService CodecService, failedEngineListener Engine.FailedEngineListener, translogRecoveryPerformer TranslogRecoveryPerformer, filterCache QueryCache, filterCachingPolicy QueryCachingPolicy, translogConfig TranslogConfig) in class org.elasticsearch.index.engine.EngineConfig",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 8239
@@ -1810,28 +1810,28 @@
         "description": "Rename Parameter value : long[] to values : long[] in method public writeLongArray(values long[]) : void in class org.elasticsearch.common.io.stream.StreamOutput",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter value : float[] to values : float[] in method public writeFloatArray(values float[]) : void in class org.elasticsearch.common.io.stream.StreamOutput",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter value : double[] to values : double[] in method public writeDoubleArray(values double[]) : void in class org.elasticsearch.common.io.stream.StreamOutput",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter value : int[] to values : int[] in method public writeIntArray(values int[]) : void in class org.elasticsearch.common.io.stream.StreamOutput",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 7383
@@ -3452,84 +3452,84 @@
         "description": "Rename Parameter killPlan : KillPlan to plan : KillPlan in method public visitKillPlan(plan KillPlan, context C) : R in class io.crate.planner.PlanVisitor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter node : QueryThenFetch to plan : QueryThenFetch in method public visitQueryThenFetch(plan QueryThenFetch, context C) : R in class io.crate.planner.PlanVisitor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter countPlan : CountPlan to plan : CountPlan in method public visitCountPlan(plan CountPlan, context C) : R in class io.crate.planner.PlanVisitor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter node : QueryAndFetch to plan : QueryAndFetch in method public visitQueryAndFetch(plan QueryAndFetch, context C) : R in class io.crate.planner.PlanVisitor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter node : InsertFromSubQuery to plan : InsertFromSubQuery in method public visitInsertByQuery(plan InsertFromSubQuery, context C) : R in class io.crate.planner.PlanVisitor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter node : Upsert to plan : Upsert in method public visitUpsert(plan Upsert, context C) : R in class io.crate.planner.PlanVisitor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter node : DistributedGroupBy to plan : DistributedGroupBy in method public visitDistributedGroupBy(plan DistributedGroupBy, context C) : R in class io.crate.planner.PlanVisitor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter node : NonDistributedGroupBy to plan : NonDistributedGroupBy in method public visitNonDistributedGroupBy(plan NonDistributedGroupBy, context C) : R in class io.crate.planner.PlanVisitor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter nestedLoop : NestedLoop to plan : NestedLoop in method public visitNestedLoop(plan NestedLoop, context C) : R in class io.crate.planner.PlanVisitor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter nestedLoopNode : NestedLoopNode to node : NestedLoopNode in method public visitNestedLoopNode(node NestedLoopNode, context C) : R in class io.crate.planner.node.ExecutionNodeVisitor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter countNode : CountNode to node : CountNode in method public visitCountNode(node CountNode, context PreparerContext) : Void in class io.crate.action.job.ContextPreparer.InnerPreparer",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter countNode : CountNode to node : CountNode in method public visitCountNode(node CountNode, context C) : R in class io.crate.planner.node.ExecutionNodeVisitor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
@@ -3669,6 +3669,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter task : ImportTask to item : ImportTask in method public pre(item ImportTask, data ImportData) : void in class org.geoserver.importer.transform.TransformChain",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 6443
@@ -4999,14 +5006,14 @@
         "description": "Rename Variable graph : Graph to ghStorage : GraphHopperStorage in method public testCalcShortestPath() : void in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable graph : Graph to ghStorage : GraphHopperStorage in method public testWeightLimit() : void in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -5020,28 +5027,28 @@
         "description": "Rename Variable graphShortest : Graph to ghStorage : GraphHopperStorage in method public testCalcFootPath() : void in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable graph : Graph to ghStorage : GraphHopperStorage in method public testViaEdges_WithCoordinates() : void in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable graph : Graph to ghStorage : GraphHopperStorage in method public testWikipediaShortestPath() : void in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter g : Graph to ghStorage : GraphHopperStorage in method protected createAlgo(ghStorage GraphHopperStorage, opts AlgorithmOptions) : RoutingAlgorithm in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -5069,21 +5076,21 @@
         "description": "Rename Variable lg : LevelGraph to ghStorage : GraphHopperStorage in method public getMatrixGraph() : GraphHopperStorage in class com.graphhopper.routing.ch.DijkstraBidirectionCHTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable g : Graph to ghStorage : GraphHopperStorage in method public testBaseGraph() : void in class com.graphhopper.routing.ch.DijkstraBidirectionCHTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter g : Graph to ghStorage : GraphHopperStorage in method public createFactory(ghStorage GraphHopperStorage, opts AlgorithmOptions) : RoutingAlgorithmFactory in class com.graphhopper.routing.ch.DijkstraBidirectionCHTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -5097,7 +5104,7 @@
         "description": "Rename Parameter graph : GraphStorage to ghStorage : GraphHopperStorage in method public setGraphHopperStorage(ghStorage GraphHopperStorage) : void in class com.graphhopper.GraphHopper",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -5111,35 +5118,35 @@
         "description": "Rename Variable graph : GraphStorage to ghStorage : GraphHopperStorage in method public testEstimatedCenter() : void in class com.graphhopper.reader.OSMReaderTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter g : GraphStorage to graph : GraphHopperStorage in method public TarjansStronglyConnectedComponentsAlgorithm(graph GraphHopperStorage, edgeFilter EdgeFilter) in class com.graphhopper.routing.util.TarjansStronglyConnectedComponentsAlgorithm",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable graph : GraphStorage to ghStorage : GraphHopperStorage in method public testGetRestrictionAsEntries() : void in class com.graphhopper.reader.OSMTurnRelationTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter g : GraphStorage to ghStorage : GraphHopperStorage in method public PrepareRoutingSubnetworks(ghStorage GraphHopperStorage, em EncodingManager) in class com.graphhopper.routing.util.PrepareRoutingSubnetworks",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute graph : GraphStorage to ghStorage : GraphHopperStorage in class com.graphhopper.GraphHopper",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
@@ -5153,28 +5160,28 @@
         "description": "Rename Attribute g : GraphStorage to graph : GraphHopperStorage in class com.graphhopper.routing.util.TarjansStronglyConnectedComponentsAlgorithm",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute g : GraphStorage to baseGraph : GraphHopperStorage in class com.graphhopper.routing.util.PrepareRoutingSubnetworks",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute level : boolean to levelGraph : boolean in class com.graphhopper.storage.GraphBuilder",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute graphStorage : GraphStorage to ghStorage : GraphStorage in class com.graphhopper.reader.OSMReader",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
@@ -5299,7 +5306,7 @@
         "description": "Rename Variable publishAndCheck : Runnable to asynchronousPublication : Runnable in method public testExceptionInHandlerInvocation() : void in class net.engio.mbassy.SyncAsyncTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
@@ -5583,6 +5590,41 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter valueType : JavaType to rootT : JavaType in method private Prefetch(rootT JavaType, baseT JavaType, ser JsonSerializer<Object>, typeSer TypeSerializer) in class com.fasterxml.jackson.databind.ObjectWriter.Prefetch",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter cfg : SerializationConfig to baseT : JavaType in method private Prefetch(rootT JavaType, baseT JavaType, ser JsonSerializer<Object>, typeSer TypeSerializer) in class com.fasterxml.jackson.databind.ObjectWriter.Prefetch",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter type : JavaType to parent : ObjectWriter in method public withBaseType(parent ObjectWriter, newType JavaType) : Prefetch in class com.fasterxml.jackson.databind.ObjectWriter.Prefetch",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter type : JavaType to newType : JavaType in method public withBaseType(parent ObjectWriter, newType JavaType) : Prefetch in class com.fasterxml.jackson.databind.ObjectWriter.Prefetch",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter typeSer : TypeSerializer to prov : DefaultSerializerProvider in method public serialize(gen JsonGenerator, value Object, prov DefaultSerializerProvider) : void in class com.fasterxml.jackson.databind.ObjectWriter.Prefetch",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 1433
@@ -5958,21 +6000,21 @@
         "description": "Rename Variable stringKey2 : Node to p2 : Node in method public testConvertVariableParameters() : void in class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable stringKey1 : Node to p2 : Node in method public testConvertFunctionType() : void in class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable stringKey : Node to p1 : Node in method public testConvertFunctionType() : void in class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -5986,21 +6028,21 @@
         "description": "Rename Variable stringKey1 : Node to p1 : Node in method public testConvertFunctionNewType() : void in class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable stringKey1 : Node to p1 : Node in method public testConvertVariableParameters() : void in class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable stringKey1 : Node to p1 : Node in method public testConvertFunctionThisType() : void in class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Extract Variable",
@@ -7962,7 +8004,7 @@
         "description": "Rename Parameter property : CGImagePropertyCanon to key : CGImagePropertyCanon in method public has(key CGImagePropertyCanon) : boolean in class org.robovm.apple.imageio.CGImagePropertyCanonData",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -7983,7 +8025,7 @@
         "description": "Rename Parameter property : CGImagePropertyIPTCContactInfo to key : CGImagePropertyIPTCContactInfo in method public has(key CGImagePropertyIPTCContactInfo) : boolean in class org.robovm.apple.imageio.CGImagePropertyIPTCContactInfoData",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -8018,7 +8060,7 @@
         "description": "Rename Parameter property : CGImagePropertyCIFF to key : CGImagePropertyCIFF in method public has(key CGImagePropertyCIFF) : boolean in class org.robovm.apple.imageio.CGImagePropertyCIFFData",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -8060,14 +8102,14 @@
         "description": "Rename Parameter property : CGImagePropertyGPS to key : CGImagePropertyGPS in method public has(key CGImagePropertyGPS) : boolean in class org.robovm.apple.imageio.CGImagePropertyGPSData",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter property : CGImagePropertyPNG to key : CGImagePropertyPNG in method public has(key CGImagePropertyPNG) : boolean in class org.robovm.apple.imageio.CGImagePropertyPNGData",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -8123,14 +8165,14 @@
         "description": "Rename Parameter property : CGImagePropertyExifAux to key : CGImagePropertyExifAux in method public has(key CGImagePropertyExifAux) : boolean in class org.robovm.apple.imageio.CGImagePropertyExifAuxData",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter property : CGImagePropertyExif to key : CGImagePropertyExif in method public has(key CGImagePropertyExif) : boolean in class org.robovm.apple.imageio.CGImagePropertyExifData",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -8144,7 +8186,7 @@
         "description": "Rename Parameter property : CGImagePropertyNikon to key : CGImagePropertyNikon in method public has(key CGImagePropertyNikon) : boolean in class org.robovm.apple.imageio.CGImagePropertyNikonData",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -8172,7 +8214,7 @@
         "description": "Rename Parameter property : CGImagePropertyJFIF to key : CGImagePropertyJFIF in method public has(key CGImagePropertyJFIF) : boolean in class org.robovm.apple.imageio.CGImagePropertyJFIFData",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -8186,28 +8228,28 @@
         "description": "Rename Parameter property : CGImagePropertyTIFF to key : CGImagePropertyTIFF in method public has(key CGImagePropertyTIFF) : boolean in class org.robovm.apple.imageio.CGImagePropertyTIFFData",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter property : CGImagePropertyDNG to key : CGImagePropertyDNG in method public has(key CGImagePropertyDNG) : boolean in class org.robovm.apple.imageio.CGImagePropertyDNGData",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter property : CGImageProperty8BIM to key : CGImageProperty8BIM in method public has(key CGImageProperty8BIM) : boolean in class org.robovm.apple.imageio.CGImageProperty8BIMData",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter property : CGImagePropertyGIF to key : CGImagePropertyGIF in method public has(key CGImagePropertyGIF) : boolean in class org.robovm.apple.imageio.CGImagePropertyGIFData",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -8221,7 +8263,7 @@
         "description": "Rename Parameter property : CGImagePropertyIPTC to key : CGImagePropertyIPTC in method public has(key CGImagePropertyIPTC) : boolean in class org.robovm.apple.imageio.CGImagePropertyIPTCData",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -8454,6 +8496,370 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CGImagePropertyTIFFData to tIFFData : CGImagePropertyTIFFData in method public setTIFFData(tIFFData CGImagePropertyTIFFData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CFDictionary to makerMinoltaData : CFDictionary in method public setMakerMinoltaData(makerMinoltaData CFDictionary) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CGImagePropertyJFIFData to jFIFData : CGImagePropertyJFIFData in method public setJFIFData(jFIFData CGImagePropertyJFIFData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CGImagePropertyGPSData to gPSData : CGImagePropertyGPSData in method public setGPSData(gPSData CGImagePropertyGPSData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CFDictionary to makerFujiData : CFDictionary in method public setMakerFujiData(makerFujiData CFDictionary) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CGImagePropertyExifData to exifData : CGImagePropertyExifData in method public setExifData(exifData CGImagePropertyExifData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CGImagePropertyCIFFData to cIFFData : CGImagePropertyCIFFData in method public setCIFFData(cIFFData CGImagePropertyCIFFData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CFDictionary to rawData : CFDictionary in method public setRawData(rawData CFDictionary) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CGImagePropertyPNGData to pNGData : CGImagePropertyPNGData in method public setPNGData(pNGData CGImagePropertyPNGData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CGImagePropertyDNGData to dNGData : CGImagePropertyDNGData in method public setDNGData(dNGData CGImagePropertyDNGData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CGImagePropertyIPTCData to iPTCData : CGImagePropertyIPTCData in method public setIPTCData(iPTCData CGImagePropertyIPTCData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CFDictionary to makerPentaxData : CFDictionary in method public setMakerPentaxData(makerPentaxData CFDictionary) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CGImagePropertyGIFData to gIFData : CGImagePropertyGIFData in method public setGIFData(gIFData CGImagePropertyGIFData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CGImageProperty8BIMData to data : CGImageProperty8BIMData in method public set8BIMData(data CGImageProperty8BIMData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CFDictionary to makerOlympusData : CFDictionary in method public setMakerOlympusData(makerOlympusData CFDictionary) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CGImagePropertyNikonData to makerNikonData : CGImagePropertyNikonData in method public setMakerNikonData(makerNikonData CGImagePropertyNikonData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CGImagePropertyCanonData to makerCanonData : CGImagePropertyCanonData in method public setMakerCanonData(makerCanonData CGImagePropertyCanonData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter metadata : CGImagePropertyExifAuxData to exifAuxData : CGImagePropertyExifAuxData in method public setExifAuxData(exifAuxData CGImagePropertyExifAuxData) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter maxSize : long to thumbnailMaxPixelSize : long in method public setThumbnailMaxPixelSize(thumbnailMaxPixelSize long) : CGImageSourceOptions in class org.robovm.apple.imageio.CGImageSourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter merge : boolean to mergesMetadata : boolean in method public setMergesMetadata(mergesMetadata boolean) : CGImageDestinationCopySourceOptions in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter notify : boolean to notifiesOnDisconnection : boolean in method public setNotifiesOnDisconnection(notifiesOnDisconnection boolean) : CBConnectPeripheralOptions in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter exclude : boolean to shouldExcludeXMP : boolean in method public setShouldExcludeXMP(shouldExcludeXMP boolean) : CGImageDestinationCopySourceOptions in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter uuids : NSArray<CBUUID> to solicitedServiceUUIDs : NSArray<CBUUID> in method public setSolicitedServiceUUIDs(solicitedServiceUUIDs NSArray<CBUUID>) : CBCentralManagerScanOptions in class org.robovm.apple.corebluetooth.CBCentralManagerScanOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter typeIdentifier : String to typeIdentifierHint : String in method public setTypeIdentifierHint(typeIdentifierHint String) : CGImageSourceOptions in class org.robovm.apple.imageio.CGImageSourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter contactInfo : CGImagePropertyIPTCContactInfoData to creatorContactInfo : CGImagePropertyIPTCContactInfoData in method public setCreatorContactInfo(creatorContactInfo CGImagePropertyIPTCContactInfoData) : CGImagePropertyIPTCData in class org.robovm.apple.imageio.CGImagePropertyIPTCData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter transform : boolean to shouldCreateThumbnailWithTransform : boolean in method public setShouldCreateThumbnailWithTransform(shouldCreateThumbnailWithTransform boolean) : CGImageSourceOptions in class org.robovm.apple.imageio.CGImageSourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter notify : boolean to notifiesOnNotification : boolean in method public setNotifiesOnNotification(notifiesOnNotification boolean) : CBConnectPeripheralOptions in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter alphaChannel : boolean to hasAlphaChannel : boolean in method public setHasAlphaChannel(hasAlphaChannel boolean) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter dpi : long to dPIHeight : long in method public setDPIHeight(dPIHeight long) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter allowDuplicates : boolean to allowsDuplicates : boolean in method public setAllowsDuplicates(allowsDuplicates boolean) : CBCentralManagerScanOptions in class org.robovm.apple.corebluetooth.CBCentralManagerScanOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter dpi : long to dPIWidth : long in method public setDPIWidth(dPIWidth long) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter profile : String to iCCProfile : String in method public setICCProfile(iCCProfile String) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter showAlert : boolean to showsPowerAlert : boolean in method public setShowsPowerAlert(showsPowerAlert boolean) : CBCentralManagerOptions in class org.robovm.apple.corebluetooth.CBCentralManagerOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter identifier : String to restoreIdentifier : String in method public setRestoreIdentifier(restoreIdentifier String) : CBPeripheralManagerOptions in class org.robovm.apple.corebluetooth.CBPeripheralManagerOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter exclude : boolean to shouldExcludeGPS : boolean in method public setShouldExcludeGPS(shouldExcludeGPS boolean) : CGImageDestinationCopySourceOptions in class org.robovm.apple.imageio.CGImageDestinationCopySourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter height : long to pixelHeight : long in method public setPixelHeight(pixelHeight long) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter isFloat : boolean to containsFloatingPointPixels : boolean in method public setContainsFloatingPointPixels(containsFloatingPointPixels boolean) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter createThumbnail : boolean to shouldCreateThumbnailFromImageIfAbsent : boolean in method public setShouldCreateThumbnailFromImageIfAbsent(shouldCreateThumbnailFromImageIfAbsent boolean) : CGImageSourceOptions in class org.robovm.apple.imageio.CGImageSourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter showAlert : boolean to showsPowerAlert : boolean in method public setShowsPowerAlert(showsPowerAlert boolean) : CBPeripheralManagerOptions in class org.robovm.apple.corebluetooth.CBPeripheralManagerOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter notify : boolean to notifiesOnConnection : boolean in method public setNotifiesOnConnection(notifiesOnConnection boolean) : CBConnectPeripheralOptions in class org.robovm.apple.corebluetooth.CBConnectPeripheralOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter width : long to pixelWidth : long in method public setPixelWidth(pixelWidth long) : CGImageProperties in class org.robovm.apple.imageio.CGImageProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter color : CGColor to backgroundColor : CGColor in method public setBackgroundColor(backgroundColor CGColor) : CGImageDestinationProperties in class org.robovm.apple.imageio.CGImageDestinationProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter embed : boolean to embedsThumbnail : boolean in method public setEmbedsThumbnail(embedsThumbnail boolean) : CGImageDestinationProperties in class org.robovm.apple.imageio.CGImageDestinationProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter cache : boolean to shouldCache : boolean in method public setShouldCache(shouldCache boolean) : CGImageSourceOptions in class org.robovm.apple.imageio.CGImageSourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter allowFloat : boolean to shouldAllowFloat : boolean in method public setShouldAllowFloat(shouldAllowFloat boolean) : CGImageSourceOptions in class org.robovm.apple.imageio.CGImageSourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter recursive : boolean to enumeratesRecursively : boolean in method public setEnumeratesRecursively(enumeratesRecursively boolean) : CGImageMetadataEnumerationOptions in class org.robovm.apple.imageio.CGImageMetadataEnumerationOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter cache : boolean to shouldCacheImmediately : boolean in method public setShouldCacheImmediately(shouldCacheImmediately boolean) : CGImageSourceOptions in class org.robovm.apple.imageio.CGImageSourceOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter size : long to maxPixelSize : long in method public setMaxPixelSize(maxPixelSize long) : CGImageDestinationProperties in class org.robovm.apple.imageio.CGImageDestinationProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter identifier : String to restoreIdentifier : String in method public setRestoreIdentifier(restoreIdentifier String) : CBCentralManagerOptions in class org.robovm.apple.corebluetooth.CBCentralManagerOptions",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter quality : double to lossyCompressionQuality : double in method public setLossyCompressionQuality(lossyCompressionQuality double) : CGImageDestinationProperties in class org.robovm.apple.imageio.CGImageDestinationProperties",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter allowFloat : boolean to shouldCacheImmediately : boolean in method public setShouldCacheImmediately(shouldCacheImmediately boolean) : CGImageSourceOptions in class org.robovm.apple.imageio.CGImageSourceOptions",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter createThumbnail : boolean to shouldAllowFloat : boolean in method public setShouldAllowFloat(shouldAllowFloat boolean) : CGImageSourceOptions in class org.robovm.apple.imageio.CGImageSourceOptions",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
     }],
     "refDiffExecutionTime": 11040
 }, {
@@ -8547,7 +8953,7 @@
         "description": "Rename Parameter insertFromSubQueryAnalyzedStatement : InsertFromSubQueryAnalyzedStatement to statement : InsertFromSubQueryAnalyzedStatement in method public visitInsertFromQuery(statement InsertFromSubQueryAnalyzedStatement, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.InsertFromSubQueryConsumer.Visitor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -8561,7 +8967,7 @@
         "description": "Rename Parameter rootRelation : AnalyzedRelation to relation : AnalyzedRelation in method public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.QueryThenFetchConsumer",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Extract Variable",
@@ -9386,28 +9792,28 @@
         "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method private buildCacheName(inv Invocation, controller Controller) : String in class com.jfinal.plugin.ehcache.CacheInterceptor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.plugin.ehcache.EvictInterceptor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.ext.interceptor.POST",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.ext.interceptor.NotAction",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -9428,14 +9834,14 @@
         "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.aop.PrototypeInterceptor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method private buildCacheName(inv Invocation) : String in class com.jfinal.plugin.ehcache.EvictInterceptor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -9449,63 +9855,63 @@
         "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.ext.interceptor.SessionInViewInterceptor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.plugin.activerecord.tx.TxByActionKeys",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.ext.interceptor.GET",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.ext.interceptor.Restful",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public getConfigWithTxConfig(inv Invocation) : Config in class com.jfinal.plugin.activerecord.tx.Tx",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.plugin.activerecord.tx.Tx",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.plugin.ehcache.CacheInterceptor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.aop.InterceptorStack",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method private buildCacheKey(inv Invocation, controller Controller) : String in class com.jfinal.plugin.ehcache.CacheInterceptor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -9526,7 +9932,7 @@
         "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.plugin.activerecord.tx.TxByRegex",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -9540,21 +9946,21 @@
         "description": "Rename Parameter globalInterceptor : Interceptor to globalActionInterceptor : Interceptor in method public add(globalActionInterceptor Interceptor) : Interceptors in class com.jfinal.config.Interceptors",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter invocation : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.ext.interceptor.NoUrlPara",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter id : Object to idValue : Object in method public deleteById(idValue Object) : boolean in class com.jfinal.plugin.activerecord.Model",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -9568,21 +9974,21 @@
         "description": "Rename Parameter id : Object to idValues : Object in method private deleteById(table Table, idValues Object[]) : boolean in class com.jfinal.plugin.activerecord.Model",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable columnsArray : String[] to arr : String[] in method public forModelFindById(table Table, columns String) : String in class com.jfinal.plugin.activerecord.dialect.MysqlDialect",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable columnsArray : String[] to arr : String[] in method public forModelFindById(table Table, columns String) : String in class com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -9603,21 +10009,21 @@
         "description": "Rename Variable primaryKey : String to pKeys : String[] in method public forModelDeleteById(table Table) : String in class com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable pKey : String to pKeys : String[] in method public forModelDeleteById(table Table) : String in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable primaryKey : String to pKeys : String[] in method public forModelDeleteById(table Table) : String in class com.jfinal.plugin.activerecord.dialect.MysqlDialect",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -9645,14 +10051,14 @@
         "description": "Rename Variable pKey : String to pKeys : String[] in method public forModelSave(table Table, attrs Map<String,Object>, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable id : Object to ids : Object[] in method public delete() : boolean in class com.jfinal.plugin.activerecord.Model",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -9694,7 +10100,7 @@
         "description": "Rename Attribute interceptorList : List<Interceptor> to globalActionInterceptor : List<Interceptor> in class com.jfinal.config.Interceptors",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Inline Variable",
@@ -10078,7 +10484,7 @@
         "description": "Rename Variable spdyHeaders : List<Header> to streamHeaders : List<Header> in method private readRequest(stream FramedStream) : RecordedRequest in class com.squareup.okhttp.mockwebserver.MockWebServer.FramedSocketHandler",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -10106,14 +10512,14 @@
         "description": "Rename Attribute openSpdyConnections : Set<SpdyConnection> to openFramedConnections : Set<FramedConnection> in class com.squareup.okhttp.mockwebserver.MockWebServer",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute spdyConnection : SpdyConnection to framedConnection : FramedConnection in class com.squareup.okhttp.Connection",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
@@ -10412,7 +10818,7 @@
         "description": "Rename Parameter recipientGenerator : RecipientGenerator to key : Object in method private handleTxWriteCommand(ctx InvocationContext, command WriteCommand, key Object, skipRemoteGet boolean) : Object in class org.infinispan.interceptors.distribution.TxDistributionInterceptor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Inline Variable",
@@ -10695,7 +11101,7 @@
         "description": "Rename Variable notifMgr : NotificationManager to notificationManager : NotificationManager in method public notifyAccountCancel(context Context, account Account) : void in class com.fsck.k9.controller.MessagingController",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 0
@@ -11316,7 +11722,7 @@
         "description": "Rename Variable labelPanel : HorizontalPanel to nameAndOutputGrid : Grid in method public ChunkOptionsPopupPanel() in class org.rstudio.studio.client.workbench.views.source.editors.text.ChunkOptionsPopupPanel",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -11687,21 +12093,21 @@
         "description": "Rename Variable loc : float to locDist : float in method private addPreviousToActionPoints(lastProjection Location, routeNodes List<Location>, DISTANCE_ACTION double, prevFinishPoint int, routePoint int, loc Location) : void in class net.osmand.plus.views.RouteLayer",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable ls : Location to loc : Location in method private calculateActionPoints(topLatitude double, leftLongitude double, bottomLatitude double, rightLongitude double, lastProjection Location, routeNodes List<Location>, cd int, it Iterator<RouteDirectionInfo>, zoom int) : void in class net.osmand.plus.views.RouteLayer",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable i : int to routePoint : int in method private calculateActionPoints(topLatitude double, leftLongitude double, bottomLatitude double, rightLongitude double, lastProjection Location, routeNodes List<Location>, cd int, it Iterator<RouteDirectionInfo>, zoom int) : void in class net.osmand.plus.views.RouteLayer",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Parameterize Variable",
@@ -12623,7 +13029,7 @@
         "description": "Rename Variable possibleSend : boolean to entireMessageSent : boolean in method private sendMessageTo(addresses List<String>, message Message) : void in class com.fsck.k9.mail.transport.SmtpTransport",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -12914,7 +13320,7 @@
         "description": "Rename Attribute stringSwitchCases_1htk8d_a0a0jb : String[] to stringSwitchCases_1htk8d_a0a0kb : String[] in class jetbrains.mps.lang.textGen.structure.StructureAspectDescriptor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 25438
@@ -13564,7 +13970,7 @@
         "description": "Rename Variable requests : Map<Integer,AnalystClusterRequest> to tasks : List<AnalystClusterRequest> in method public run() : void in class org.opentripplanner.analyst.cluster.AnalystWorker",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Move Class",
@@ -13718,21 +14124,21 @@
         "validators": null
     }, {
         "type": "Rename Parameter",
-        "description": "Rename Parameter context : QueryContext to config : SqlHandlerConfig in method public ViewHandler(config SqlHandlerConfig) : null in class org.apache.drill.exec.planner.sql.handlers.ViewHandler",
+        "description": "Rename Parameter context : QueryContext to config : SqlHandlerConfig in method public ViewHandler(config SqlHandlerConfig) in class org.apache.drill.exec.planner.sql.handlers.ViewHandler",
         "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-smi x x-first'>Parameters (Planner</span> <span class='pl-v x'>planner</span><span class='x'>, </span><span class='pl-smi x'>QueryContext</span> <span class='pl-v x x-last'>context) are merged to (<span class='pl-smi x x-first'>SqlHandlerConfig</span> config)<br />QueryContext is wrapped in <span class='pl-smi x x-first'>SqlHandlerConfig</span><br /></span></span></p>",
         "validation": "CTP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
-        "description": "Rename Parameter context : QueryContext to config : SqlHandlerConfig in method public CreateView(config SqlHandlerConfig) : null in class org.apache.drill.exec.planner.sql.handlers.ViewHandler.CreateView",
+        "description": "Rename Parameter context : QueryContext to config : SqlHandlerConfig in method public CreateView(config SqlHandlerConfig) in class org.apache.drill.exec.planner.sql.handlers.ViewHandler.CreateView",
         "comment": "<p>Parameters (Planner planner, QueryContext context) are merged to (SqlHandlerConfig config)</p>",
         "validation": "CTP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
-        "description": "Rename Parameter context : QueryContext to config : SqlHandlerConfig in method public DropView(config SqlHandlerConfig) : null in class org.apache.drill.exec.planner.sql.handlers.ViewHandler.DropView",
+        "description": "Rename Parameter context : QueryContext to config : SqlHandlerConfig in method public DropView(config SqlHandlerConfig) in class org.apache.drill.exec.planner.sql.handlers.ViewHandler.DropView",
         "comment": "<p>Parameters (Planner planner, QueryContext context) are merged to (SqlHandlerConfig config)</p>",
         "validation": "CTP",
         "detectionTools": "GumTreeDiff",
@@ -13867,7 +14273,7 @@
         "description": "Rename Variable type : MediaType to mediaType : MediaType in method protected addDefaultHeaders(headers HttpHeaders, t T, contentType MediaType) : void in class org.springframework.http.converter.AbstractHttpMessageConverter",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 3276
@@ -14114,7 +14520,7 @@
         "description": "Rename Parameter resourceIds : long[] to resourceId : long in method public LocalDeadlockDetectedException(lockClient Locks.Client, lockManager Locks, resourceType Locks.ResourceType, resourceId long, type LockType) in class org.neo4j.kernel.ha.lock.LocalDeadlockDetectedException",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Extract Variable",
@@ -14417,28 +14823,28 @@
         "description": "Rename Parameter logRotationControl : LogRotationControl to storeFlusher : StoreFlusher in method public StoreCopyServer(transactionIdStore TransactionIdStore, dataSource NeoStoreDataSource, storeFlusher StoreFlusher, fileSystem FileSystemAbstraction, storeDirectory File, monitor Monitor) in class org.neo4j.com.storecopy.StoreCopyServer",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter logRotationControlSupplier : LogRotationControl to storeFlusher : StoreFlusher in method public DefaultMasterImplSPI(graphDb GraphDatabaseAPI, fileSystemAbstraction FileSystemAbstraction, monitors Monitors, labels LabelTokenHolder, propertyKeyTokenHolder PropertyKeyTokenHolder, relationshipTypeTokenHolder RelationshipTypeTokenHolder, idGeneratorFactory IdGeneratorFactory, locks Locks, transactionCommitProcess TransactionCommitProcess, storeFlusher StoreFlusher, transactionIdStore TransactionIdStore, logicalTransactionStore LogicalTransactionStore, neoStoreDataSource NeoStoreDataSource, jobScheduler JobScheduler) in class org.neo4j.kernel.ha.cluster.DefaultMasterImplSPI",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable logRotationControl : LogRotationControl to storeFlusher : StoreFlusher in method private buildTransactionLogs(storeDir File, config Config, logProvider LogProvider, labelScanStore LabelScanStore, fileSystemAbstraction FileSystemAbstraction, neoStore NeoStore, cacheAccess CacheAccessBackDoor, indexingService IndexingService, indexProviders Iterable<IndexImplementation>) : TransactionLogModule in class org.neo4j.kernel.NeoStoreDataSource",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter logRotationControlSupplier : Supplier<LogRotationControl> to storeFlusherSupplier : Supplier<StoreFlusher> in method public OnlineBackupKernelExtension(config Config, graphDatabaseAPI GraphDatabaseAPI, logProvider LogProvider, monitors Monitors, neoStoreDataSource NeoStoreDataSource, storeFlusherSupplier Supplier<StoreFlusher>, transactionIdStoreSupplier Supplier<TransactionIdStore>, logicalTransactionStoreSupplier Supplier<LogicalTransactionStore>, logFileInformationSupplier Supplier<LogFileInformation>, fileSystemAbstraction FileSystemAbstraction) in class org.neo4j.backup.OnlineBackupKernelExtension",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -14452,7 +14858,7 @@
         "description": "Rename Variable logRotationControl : LogRotationControl to storeFlusher : StoreFlusher in method public shouldVisitLogFile() : void in class org.neo4j.kernel.impl.transaction.log.PhysicalLogFileTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -14480,7 +14886,7 @@
         "description": "Rename Variable logRotationControl : LogRotationControl to storeFlusher : StoreFlusher in method public shouldOpenInFreshDirectoryAndFinallyAddHeader() : void in class org.neo4j.kernel.impl.transaction.log.PhysicalLogFileTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Extract Variable",
@@ -14522,14 +14928,14 @@
         "description": "Rename Attribute logRotationControl : LogRotationControl to storeFlusher : StoreFlusher in class org.neo4j.com.storecopy.StoreCopyServer",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute logRotationControlSupplier : LogRotationControl to storeFlusher : StoreFlusher in class org.neo4j.kernel.ha.cluster.DefaultMasterImplSPI",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Extract Variable",
@@ -14622,14 +15028,14 @@
         "description": "Rename Attribute blockingComponents : List<AvailabilityRequirement> to blockingRequirements : Set<AvailabilityRequirement> in class org.neo4j.kernel.AvailabilityGuard",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute available : AtomicInteger to requirementCount : AtomicInteger in class org.neo4j.kernel.AvailabilityGuard",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -15141,14 +15547,14 @@
         "description": "Rename Variable plus : int to headSize : int in method public preallocate() : long in class org.mapdb.StoreAppend",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable plus : int to headSize : int in method protected delete2(recid long, serializer Serializer<A>) : void in class org.mapdb.StoreAppend",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
@@ -15516,7 +15922,7 @@
         "description": "Rename Attribute aliasToOpInfo : Map<String,Operator<? extends OperatorDesc>> to aliasToJoinOpInfo : Map<String,Operator<? extends OperatorDesc>> in class org.apache.hadoop.hive.ql.optimizer.calcite.translator.HiveOpConverterPostProc",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 3562
@@ -15576,7 +15982,7 @@
         "description": "Rename Variable avatar : Drawable to contactPhoto : ContactPhoto in method private getGroupRecipientDetails(context Context, groupId String) : RecipientDetails in class org.thoughtcrime.securesms.recipients.RecipientProvider",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -16011,7 +16417,7 @@
         "description": "Rename Attribute filterStrings : boolean to enableStringWhitelisting : boolean in class com.facebook.buck.android.FilterResourcesStep.Builder",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 2754
@@ -16062,7 +16468,7 @@
         "description": "Rename Attribute jsOutput : Path to jsOutputDir : Path in class com.facebook.buck.js.ReactNativeBundle",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 3024
@@ -16231,28 +16637,28 @@
         "description": "Rename Variable f : File to file : File in method private init() : void in class org.glassfish.jersey.server.internal.scanning.FilesScanner",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable s : String to scheme : String in method private add(uriSchemeResourceFinderFactory UriSchemeResourceFinderFactory) : void in class org.glassfish.jersey.server.internal.scanning.PackageNamesScanner",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute resourceFinderStack : ResourceFinderStack to compositeResourceFinder : CompositeResourceFinder in class org.glassfish.jersey.server.internal.scanning.PackageNamesScanner",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute resourceFinderStack : ResourceFinderStack to compositeResourceFinder : CompositeResourceFinder in class org.glassfish.jersey.servlet.WebAppResourcesScanner",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
@@ -16266,7 +16672,7 @@
         "description": "Rename Attribute resourceFinderStack : ResourceFinderStack to compositeResourceFinder : CompositeResourceFinder in class org.glassfish.jersey.server.internal.scanning.FileSchemeResourceFinderFactory.FileSchemeScanner",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 6782
@@ -18415,161 +18821,161 @@
         "description": "Rename Variable value : Tag to ele : Tag in method public withTags(tags Tag[]) : DescribeTagsResult in class com.amazonaws.services.elasticfilesystem.model.DescribeTagsResult",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : String to ele : String in method public withSecurityGroups(securityGroups String[]) : ModifyMountTargetSecurityGroupsRequest in class com.amazonaws.services.elasticfilesystem.model.ModifyMountTargetSecurityGroupsRequest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : Artifact to ele : Artifact in method public withArtifactList(artifactList Artifact[]) : UpdateJobResult in class com.amazonaws.services.importexport.model.UpdateJobResult",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : String to ele : String in method public withTagKeys(tagKeys String[]) : DeleteTagsRequest in class com.amazonaws.services.elasticfilesystem.model.DeleteTagsRequest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : Artifact to ele : Artifact in method public withArtifactList(artifactList Artifact[]) : CreateJobResult in class com.amazonaws.services.importexport.model.CreateJobResult",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : FileSystemDescription to ele : FileSystemDescription in method public withFileSystems(fileSystems FileSystemDescription[]) : DescribeFileSystemsResult in class com.amazonaws.services.elasticfilesystem.model.DescribeFileSystemsResult",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : Artifact to ele : Artifact in method public withArtifactList(artifactList Artifact[]) : GetStatusResult in class com.amazonaws.services.importexport.model.GetStatusResult",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : String to ele : String in method public withSecurityGroups(securityGroups String[]) : CreateMountTargetRequest in class com.amazonaws.services.elasticfilesystem.model.CreateMountTargetRequest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : String to ele : String in method public withSecurityGroups(securityGroups String[]) : DescribeMountTargetSecurityGroupsResult in class com.amazonaws.services.elasticfilesystem.model.DescribeMountTargetSecurityGroupsResult",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : Tag to ele : Tag in method public withTags(tags Tag[]) : CreateTagsRequest in class com.amazonaws.services.elasticfilesystem.model.CreateTagsRequest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : String to ele : String in method public withJobIds(jobIds String[]) : GetShippingLabelRequest in class com.amazonaws.services.importexport.model.GetShippingLabelRequest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : MountTargetDescription to ele : MountTargetDescription in method public withMountTargets(mountTargets MountTargetDescription[]) : DescribeMountTargetsResult in class com.amazonaws.services.elasticfilesystem.model.DescribeMountTargetsResult",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : Job to ele : Job in method public withJobs(jobs Job[]) : ListJobsResult in class com.amazonaws.services.importexport.model.ListJobsResult",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : String to maxItems : String in method public marshall(describeMountTargetsRequest DescribeMountTargetsRequest) : Request<DescribeMountTargetsRequest> in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetsRequestMarshaller",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : String to maxItems : String in method public marshall(describeFileSystemsRequest DescribeFileSystemsRequest) : Request<DescribeFileSystemsRequest> in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : String to fileSystemId : String in method public marshall(describeFileSystemsRequest DescribeFileSystemsRequest) : Request<DescribeFileSystemsRequest> in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : String to fileSystemId : String in method public marshall(describeMountTargetsRequest DescribeMountTargetsRequest) : Request<DescribeMountTargetsRequest> in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetsRequestMarshaller",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : String to marker : String in method public marshall(describeTagsRequest DescribeTagsRequest) : Request<DescribeTagsRequest> in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeTagsRequestMarshaller",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : String to marker : String in method public marshall(describeMountTargetsRequest DescribeMountTargetsRequest) : Request<DescribeMountTargetsRequest> in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetsRequestMarshaller",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : String to creationToken : String in method public marshall(describeFileSystemsRequest DescribeFileSystemsRequest) : Request<DescribeFileSystemsRequest> in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : String to marker : String in method public marshall(describeFileSystemsRequest DescribeFileSystemsRequest) : Request<DescribeFileSystemsRequest> in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable value : String to maxItems : String in method public marshall(describeTagsRequest DescribeTagsRequest) : Request<DescribeTagsRequest> in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeTagsRequestMarshaller",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute server : ServerSocket to SERVER : EC2MetadataUtilsServer in class com.amazonaws.util.EC2MetadataUtilsTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Extract Variable",
@@ -18620,6 +19026,62 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter executorService : ExecutorService to clientConfiguration : com.amazonaws.ClientConfiguration in method public AmazonElasticFileSystemAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": "<p>Reordered constructors</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter clientConfiguration : ClientConfiguration to executorService : java.util.concurrent.ExecutorService in method public AmazonElasticFileSystemAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": "<p>Reordered constructors</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter responseHandler : HttpResponseHandler<AmazonWebServiceResponse<X>> to unmarshaller : Unmarshaller<X,JsonUnmarshallerContext> in method private invoke(request Request<Y>, unmarshaller Unmarshaller<X,JsonUnmarshallerContext>, executionContext ExecutionContext) : Response<X> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemClient",
+        "comment": "<p>responseHandler is instantiated inside invoke() and wraps the unmarshaller<br />JsonResponseHandler&lt;X&gt; responseHandler = new JsonResponseHandler&lt;X&gt;(unmarshaller);</p>",
+        "validation": "TP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable target : String to uriResourcePath : String in method public marshall(describeFileSystemsRequest DescribeFileSystemsRequest) : Request<DescribeFileSystemsRequest> in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeFileSystemsRequestMarshaller",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable target : String to uriResourcePath : String in method public marshall(describeMountTargetsRequest DescribeMountTargetsRequest) : Request<DescribeMountTargetsRequest> in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeMountTargetsRequestMarshaller",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable target : String to uriResourcePath : String in method public marshall(describeTagsRequest DescribeTagsRequest) : Request<DescribeTagsRequest> in class com.amazonaws.services.elasticfilesystem.model.transform.DescribeTagsRequestMarshaller",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter executorService : ExecutorService to clientConfiguration : com.amazonaws.ClientConfiguration in method public AmazonImportExportAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": "<p>Reordered constructors</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter clientConfiguration : ClientConfiguration to executorService : java.util.concurrent.ExecutorService in method public AmazonImportExportAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": "<p>Reordered constructors</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -18697,7 +19159,7 @@
         "description": "Rename Variable dtype : JDeclaredType to declaredType : JDeclaredType in method private rescue(type JReferenceType, isInstantiated boolean) : void in class com.google.gwt.dev.jjs.impl.ControlFlowAnalyzer.RescueVisitor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Extract Variable",
@@ -18780,14 +19242,14 @@
         "description": "Rename Parameter keyStorePath : String to keyStore : KeyStore in method public KeyStoreInformation(keyStore KeyStore, keyStorePassword char[], keyPassword char[]) in class org.neo4j.server.security.ssl.KeyStoreInformation",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter config : KeyStoreInformation to ksInfo : KeyStoreInformation in method private createSslConnectionFactory(ksInfo KeyStoreInformation) : SslConnectionFactory in class org.neo4j.server.security.ssl.SslSocketConnectorFactory",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Extract Variable",
@@ -18801,14 +19263,14 @@
         "description": "Rename Attribute workerGroup : EventLoopGroup to selectorGroup : EventLoopGroup in class org.neo4j.ndp.transport.socket.NettyServer",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute sslCertificateFactory : SslCertificateFactory to certFactory : Certificates in class org.neo4j.server.security.ssl.KeyStoreFactory",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Replace Variable With Attribute",
@@ -18829,7 +19291,7 @@
         "description": "Rename Variable socket : Socket to conn : SecureSocketConnection in method private serverResponds(host String, port int) : boolean in class org.neo4j.ext.NDPExtensionIT",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 7200
@@ -19436,14 +19898,14 @@
         "description": "Rename Parameter uiName : String to contextName : String in method public AppEvent(contextName String, eventName String, valueToSum Double, parameters Bundle, isImplicitlyLogged boolean) in class com.facebook.appevents.AppEventsLogger.AppEvent",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute uiName : String to contextName : String in class com.facebook.appevents.AppEventsLogger",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 2914
@@ -19524,7 +19986,7 @@
         "description": "Rename Parameter actual : Type to aActual : Type in method protected TypeAssert(aActual Type) in class org.voltdb.sqlparser.symtab.TypeAssert",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 0
@@ -20108,7 +20570,7 @@
         "description": "Rename Attribute spewRunnable : Runnable to sendCachedDataRunnable : Runnable in class com.koushikdutta.async.http.cache.ResponseCacheMiddleware.CachedBodyEmitter",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 570
@@ -20217,7 +20679,7 @@
         "description": "Rename Parameter s : Schema to ws : Schema in method private unionTester(ws Schema, rs Schema, record GenericData.Record) : ResultPair in class org.apache.hadoop.hive.serde2.avro.TestAvroDeserializer",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 3223
@@ -20461,14 +20923,14 @@
         "description": "Rename Variable hashFunctions : List<HashPagePartitionFunction> to partitionFunctions : Collection<PagePartitionFunction> in method public PartitionFunction(sharedBuffer SharedBuffer, sourceTypes List<Type>, outputBuffers OutputBuffers) in class com.facebook.presto.operator.PartitionedOutputOperator.PartitionFunction",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute hashGenerator : HashGenerator to partitionGenerator : PartitionGenerator in class com.facebook.presto.operator.PartitionedOutputOperator.PartitionFunction",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Pull Up Method",
@@ -20798,7 +21260,28 @@
         "description": "Rename Parameter name : String to connectionRef : ConnectionRef in method public getConstraint(connectionRef ConnectionRef) : Constraint in class org.jbpm.workflow.core.node.StateNode",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable user : User to task : Task in method public testRemoveNotInRecipientList() : void in class org.jbpm.services.task.LifeCycleBaseTest",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable user : User to task : Task in method public testNominateToUser() : void in class org.jbpm.services.task.LifeCycleBaseTest",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable user : User to task : Task in method public testCompleteWithComments() : void in class org.jbpm.services.task.LifeCycleBaseTest",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 1802
@@ -20856,21 +21339,21 @@
         "description": "Rename Parameter udf : UDAggregate to uda : UDAggregate in method public updateAggregate(uda UDAggregate) : void in class org.apache.cassandra.config.Schema",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter udf : UDAggregate to uda : UDAggregate in method public addAggregate(uda UDAggregate) : void in class org.apache.cassandra.config.Schema",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter udf : UDAggregate to uda : UDAggregate in method public dropAggregate(uda UDAggregate) : void in class org.apache.cassandra.config.Schema",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -20891,7 +21374,7 @@
         "description": "Rename Variable references : List<Function> to referrers : Collection<UDAggregate> in method public announceMigration(isLocalOnly boolean) : boolean in class org.apache.cassandra.cql3.statements.DropFunctionStatement",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 8203
@@ -21064,7 +21547,7 @@
         "description": "Rename Variable jFileChooser : JFileChooser to fileChooser : JFileChooser in method private fileSelection() : File in class org.neo4j.desktop.ui.BrowseForDatabaseActionListener",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Extract Variable",
@@ -21325,7 +21808,7 @@
         "description": "Rename Attribute UNIQUENESS_CONSTRAINT_TO_RULE : Function<UniquenessConstraintRule,UniquenessConstraint> to RULE_TO_CONSTRAINT : Function<PropertyConstraintRule,PropertyConstraint> in class org.neo4j.kernel.impl.api.store.DiskLayer",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Pull Up Method",
@@ -21433,6 +21916,69 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter url : String to newConfig : Configuration in method public onConfigurationChanged(newConfig Configuration) : void in class org.apache.cordova.CordovaActivity",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable p : CordovaPlugin to pm : PluginManager in method public onConfigurationChanged(newConfig Configuration) : void in class org.apache.cordova.CordovaActivity",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter statement : String to statememt : String in method sendJavascript(statememt String) : void in class org.apache.cordova.CordovaWebView",
+        "comment": "<p>Method becomes abstract</p>",
+        "validation": "CTP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter result : PluginResult to cr : PluginResult in method sendPluginResult(cr PluginResult, callbackId String) : void in class org.apache.cordova.CordovaWebView",
+        "comment": "<p>Method becomes abstract</p>",
+        "validation": "CTP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter time : int to b : boolean in method clearCache(b boolean) : void in class org.apache.cordova.CordovaWebView",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter event : String to callback : CustomViewCallback in method showCustomView(view View, callback CustomViewCallback) : void in class org.apache.cordova.CordovaWebView",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute sendMessageMethod : Method to delegate : OnlineEventsBridgeModeDelegate in class org.apache.cordova.NativeToJsMessageQueue.OnlineEventsBridgeMode",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter service : String to url : String in method public shouldAllowRequest(url String) : boolean in class org.apache.cordova.PluginManager",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable urlFilters : List<String> to plugin : CordovaPlugin in method public shouldAllowNavigation(url String) : boolean in class org.apache.cordova.PluginManager",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 2163
@@ -22450,7 +22996,7 @@
         "description": "Rename Attribute emojiDrawer : Optional<EmojiDrawer> to emojiPopup : Optional<EmojiPopup> in class org.thoughtcrime.securesms.ConversationActivity",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
@@ -22788,7 +23334,7 @@
         "description": "Rename Variable augmentor : JpaSoftDeleteQueryAugmentor to jpaAugmentor : JpaSoftDeleteQueryAugmentor in method public setUp() : void in class org.springframework.data.jpa.repository.support.SoftDeleteIntegrationTests",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 0
@@ -22932,6 +23478,20 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter numRecords : int to valueCount : int in method public setInitialCapacity(valueCount int) : void in class org.apache.drill.exec.vector.$",
+        "comment": null,
+        "validation": "UKN",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute allocationTotalByteCount : int to allocationSizeInBytes : int in class org.apache.drill.exec.vector.$",
+        "comment": null,
+        "validation": "UKN",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -23986,14 +24546,14 @@
         "description": "Rename Parameter normalizedFilter : BooleanExpr to query : BooleanExpr in method public addFilter(queryString String, query BooleanExpr, projection List<String>, sortFields List<SortField>, callback FilterCallback, eventTypes Object[]) : FilterSubscriptionImpl<TypeMetadata,AttributeMetadata,AttributeId> in class org.infinispan.objectfilter.impl.FilterRegistry",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter queryString : String to jpqlString : String in method private transformJpaToLucene(isCompatMode boolean, serCtx SerializationContext, jpqlString String, searchFactory SearchIntegrator) : LuceneQueryParsingResult in class org.infinispan.query.remote.QueryFacadeImpl",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Extract Variable",
@@ -24300,7 +24860,7 @@
         "description": "Rename Parameter function : Model to layer : Model in method public BackTrackLineSearch(layer Model, stepFunction StepFunction, optimizer ConvexOptimizer) in class org.deeplearning4j.optimize.solvers.BackTrackLineSearch",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -24315,6 +24875,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute function : Model to layer : Model in class org.deeplearning4j.optimize.solvers.BackTrackLineSearch",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 997
@@ -24402,7 +24969,7 @@
         "description": "Rename Variable cacheControl : CacheControl to cacheSeconds : Integer in method protected lookupCacheSeconds(urlPath String) : Integer in class org.springframework.web.servlet.mvc.WebContentInterceptor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 2657
@@ -25259,14 +25826,14 @@
         "description": "Rename Variable elementsByAnnotationBuilder : ImmutableSetMultimap.Builder<Class<? extends Annotation>,Element> to validElements : ImmutableSetMultimap.Builder<Class<? extends Annotation>,Element> in method private validElements(deferredElements ImmutableMap<String,Optional<? extends Element>>, roundEnv RoundEnvironment) : ImmutableSetMultimap<Class<? extends Annotation>,Element> in class com.google.auto.common.BasicAnnotationProcessor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable deferredElementsBuilder : ImmutableMap.Builder<String,Optional<? extends Element>> to deferredElements : ImmutableMap.Builder<String,Optional<? extends Element>> in method private deferredElements() : ImmutableMap<String,Optional<? extends Element>> in class com.google.auto.common.BasicAnnotationProcessor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 0
@@ -25429,7 +25996,7 @@
         "description": "Rename Variable processorDefinition : ProcessorDefinition<?> to other : OtherAttributesAware in method public resolvePropertyPlaceholders(camelContext CamelContext, definition Object) : void in class org.apache.camel.model.ProcessorDefinitionHelper",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 6877
@@ -25468,7 +26035,7 @@
         "description": "Rename Variable newPut : boolean to oldRecord : R in method public put(key K, value V) : void in class com.hazelcast.cache.impl.nearcache.impl.store.AbstractNearCacheRecordStore",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 2034
@@ -26193,7 +26760,7 @@
         "description": "Rename Attribute neostore : NeoStore to neoStore : NeoStore in class org.neo4j.kernel.impl.store.StoreFactoryTest",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 6884
@@ -27751,7 +28318,7 @@
         "description": "Rename Attribute jcXmlDSig : JAXBContext to jcEncryption : JAXBContext in class org.docx4j.jaxb.Context",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 6242
@@ -29692,14 +30259,14 @@
         "description": "Rename Variable eliminationTag : Tag to child : Tag in method public visitOptimizerTagsOfLastTask(member IMetaMember, visitable IJournalVisitable) : void in class org.adoptopenjdk.jitwatch.journal.JournalUtil",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable line : LineAnnotation to lines : List<LineAnnotation> in method private checkLine(result Map<Integer,List<LineAnnotation>>, index int, annotation String, colour Color) : void in class org.adoptopenjdk.jitwatch.test.TestBytecodeAnnotationBuilder",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 686
@@ -29915,21 +30482,21 @@
         "description": "Rename Variable ruleByDestinationBuilder : ImmutableSetMultimap.Builder<PBXCopyFilesBuildPhase.Destination,TargetNode<?>> to ruleByDestinationSpecBuilder : ImmutableSetMultimap.Builder<CopyFilePhaseDestinationSpec,TargetNode<?>> in method private generateCopyFilesBuildPhases(target PBXNativeTarget, copiedNodes Iterable<TargetNode<?>>) : void in class com.facebook.buck.apple.ProjectGenerator",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable optionalDestination : Optional<PBXCopyFilesBuildPhase.Destination> to optionalDestinationSpec : Optional<CopyFilePhaseDestinationSpec> in method private generateCopyFilesBuildPhases(target PBXNativeTarget, copiedNodes Iterable<TargetNode<?>>) : void in class com.facebook.buck.apple.ProjectGenerator",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable ruleByDestination : ImmutableSetMultimap<PBXCopyFilesBuildPhase.Destination,TargetNode<?>> to ruleByDestinationSpec : ImmutableSetMultimap<CopyFilePhaseDestinationSpec,TargetNode<?>> in method private generateCopyFilesBuildPhases(target PBXNativeTarget, copiedNodes Iterable<TargetNode<?>>) : void in class com.facebook.buck.apple.ProjectGenerator",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 4819
@@ -31954,7 +32521,7 @@
         "description": "Rename Parameter input : DoubleProbe<S> to function : DoubleProbeFunction<S> in method public register(source S, name String, function DoubleProbeFunction<S>) : void in class com.hazelcast.internal.metrics.impl.MetricsRegistryImpl",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -31968,14 +32535,14 @@
         "description": "Rename Parameter input : LongProbe<S> to function : LongProbeFunction<S> in method public register(source S, name String, function LongProbeFunction<S>) : void in class com.hazelcast.internal.metrics.impl.MetricsRegistryImpl",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable gauge : GaugeImpl to probeInstance : ProbeInstance in method public deregister(source S) : void in class com.hazelcast.internal.metrics.impl.MetricsRegistryImpl",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -31989,42 +32556,42 @@
         "description": "Rename Attribute lastHandle : long to lastReadTime : long in class com.hazelcast.nio.tcp.ReadHandler",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute lastHandle : long to lastWriteTime : long in class com.hazelcast.nio.tcp.WriteHandler",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute metrics : ConcurrentMap<String,GaugeImpl> to probeInstances : ConcurrentMap<String,ProbeInstance> in class com.hazelcast.internal.metrics.impl.MetricsRegistryImpl",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute executedOperationsCount : AtomicLong to completedOperationsCount : AtomicLong in class com.hazelcast.spi.impl.operationservice.impl.OperationServiceImpl",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute PERFORMANCE_MONITORING_ENABLED : GroupProperty to PERFORMANCE_MONITOR_ENABLED : GroupProperty in class com.hazelcast.instance.GroupProperties",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute PERFORMANCE_MONITORING_DELAY_SECONDS : GroupProperty to PERFORMANCE_MONITOR_DELAY_SECONDS : GroupProperty in class com.hazelcast.instance.GroupProperties",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
@@ -32235,7 +32802,7 @@
         "description": "Rename Parameter types : Collection<Type> to elements : Collection<? extends Object> in method private listElements(logMsgBuilder StringBuilder, elements Collection<? extends Object>) : StringBuilder in class org.glassfish.jersey.ext.cdi1x.internal.CdiComponentProvider",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -32249,7 +32816,7 @@
         "description": "Rename Variable extScopesFound : boolean to extScopeBound : boolean in method private initialize(componentProviders Iterable<ComponentProvider>) : ServerRuntime in class org.glassfish.jersey.server.ApplicationHandler",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -32419,14 +32986,14 @@
         "description": "Rename Parameter i : int to slot : int in method public offerItem(slot int, stack ItemStack) : ItemStack in class buildcraft.builders.TileBuilder",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable request : StackRequest to requestStack : ItemStack in method public getRequest(slot int) : ItemStack in class buildcraft.builders.TileBuilder",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Push Down Method",
@@ -32435,6 +33002,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter i : int to slot : int in method getRequest(slot int) : ItemStack in class buildcraft.api.robots.IRequestProvider",
+        "comment": "<p>Interface method</p>",
+        "validation": "CTP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter i : int to slot : int in method offerItem(slot int, stack ItemStack) : ItemStack in class buildcraft.api.robots.IRequestProvider",
+        "comment": "<p>Interface method</p>",
+        "validation": "CTP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter i : int to slot : int in method public getRequest(slot int) : ItemStack in class buildcraft.builders.TileBuilder",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>public</span> <span class='pl-smi x x-first'>StackRequest</span> <span class='pl-en x x-last'>getAvailableRequest</span>(<span class='pl-k'>int</span> <span class='pl-v x x-first x-last'>i</span>)</span> renamed to <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-k'>public</span> <span class='pl-smi x x-first'>ItemStack</span> <span class='pl-en x x-last'>getRequest</span>(<span class='pl-k'>int</span> <span class='pl-v x x-first x-last'>slot</span>)</span></p>",
+        "validation": "TP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 2449
 }, {
@@ -32583,14 +33171,14 @@
         "description": "Rename Parameter renderRequest : RenderRequest to portletRequest : PortletRequest in method protected setRequestParameters(portletRequest PortletRequest, portletResponse PortletResponse, oAuthRequest OAuthRequest) : void in class com.liferay.marketplace.store.portlet.RemoteMVCPortlet",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter renderResponse : RenderResponse to portletResponse : PortletResponse in method protected setRequestParameters(portletRequest PortletRequest, portletResponse PortletResponse, oAuthRequest OAuthRequest) : void in class com.liferay.marketplace.store.portlet.RemoteMVCPortlet",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 4798
@@ -32995,7 +33583,7 @@
         "description": "Rename Variable i : int to fIdx : int in method public loadModel(inputStream InputStream) : Model in class org.ansj.app.crf.Model",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -33237,56 +33825,56 @@
         "description": "Rename Variable lwjglCustomViewPort : LwjglCustomViewPort to lwjglPortlet : LwjglPortlet in method public run() : void in class org.terasology.editor.TeraEd",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable te : TerasologyEngine to display : DisplayDevice in method public fullscreen() : String in class org.terasology.logic.console.commands.CoreCommands",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter newContext : Context to rootContext : Context in method public initialise(rootContext Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglGraphics",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter context : Context to rootContext : Context in method public postInitialise(rootContext Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglInput",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute subsystems : Deque<EngineSubsystem> to allSubsystems : Deque<EngineSubsystem> in class org.terasology.engine.TerasologyEngine",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute context : Context to config : RenderingConfig in class org.terasology.engine.subsystem.lwjgl.LwjglDisplayDevice",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute context : Context to rootContext : Context in class org.terasology.engine.TerasologyEngine",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter context : Context to rootContext : Context in method public initialise(rootContext Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglAudio",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 2583
@@ -34324,14 +34912,14 @@
         "description": "Rename Variable metadata : ConnectorMetadata to entry : ConnectorMetadataEntry in method public getLayout(session Session, handle TableLayoutHandle) : TableLayout in class com.facebook.presto.metadata.MetadataManager",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable metadata : ConnectorMetadata to entry : ConnectorMetadataEntry in method public getLayouts(session Session, table TableHandle, constraint Constraint<ColumnHandle>, desiredColumns Optional<Set<ColumnHandle>>) : List<TableLayoutResult> in class com.facebook.presto.metadata.MetadataManager",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 9866
@@ -34543,21 +35131,21 @@
         "description": "Rename Parameter relationshipStore : RelationshipStore to neoStore : NeoStore in method public StoreIteratorRelationshipCursor(relationshipRecord RelationshipRecord, neoStore NeoStore, storeStatement StoreStatement, instanceCache InstanceCache<StoreIteratorRelationshipCursor>) in class org.neo4j.kernel.impl.api.store.StoreIteratorRelationshipCursor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter nodeStore : NodeStore to neoStore : NeoStore in method public StoreIteratorNodeCursor(nodeRecord NodeRecord, neoStore NeoStore, storeStatement StoreStatement, instanceCache Consumer<StoreIteratorNodeCursor>) in class org.neo4j.kernel.impl.api.store.StoreIteratorNodeCursor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter nodeStore : NodeStore to neoStore : NeoStore in method public StoreSingleNodeCursor(nodeRecord NodeRecord, neoStore NeoStore, storeStatement StoreStatement, instanceCache Consumer<StoreSingleNodeCursor>) in class org.neo4j.kernel.impl.api.store.StoreSingleNodeCursor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -34571,28 +35159,28 @@
         "description": "Rename Parameter relationshipStore : RelationshipStore to neoStore : NeoStore in method public StoreSingleRelationshipCursor(relationshipRecord RelationshipRecord, neoStore NeoStore, storeStatement StoreStatement, instanceCache InstanceCache<StoreSingleRelationshipCursor>) in class org.neo4j.kernel.impl.api.store.StoreSingleRelationshipCursor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter nodeStore : NodeStore to neoStore : NeoStore in method public StoreAbstractNodeCursor(nodeRecord NodeRecord, neoStore NeoStore, storeStatement StoreStatement) in class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter startNodeId : long to startNode : NodeItem in method public relationshipCreate(state KernelStatement, relationshipTypeId int, startNode NodeItem, endNode NodeItem) : long in class org.neo4j.kernel.impl.api.LockingStatementOperations",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter endNodeId : long to endNode : NodeItem in method public relationshipCreate(state KernelStatement, relationshipTypeId int, startNode NodeItem, endNode NodeItem) : long in class org.neo4j.kernel.impl.api.LockingStatementOperations",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 15734
@@ -34983,7 +35571,7 @@
         "description": "Rename Variable metrics : DroppedMessageMetrics to droppedMessages : DroppedMessages in method private incrementRejectedMessages(verb Verb) : void in class org.apache.cassandra.net.MessagingService",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
@@ -35111,7 +35699,7 @@
         "description": "Rename Attribute cls : JavaClass to node : JavaNode in class jadx.api.CodePosition",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Extract Variable",
@@ -35788,7 +36376,7 @@
         "description": "Rename Attribute NUM_OF_VERTEXES_PER_THREAD : int to NUM_OF_VERTEXES_PER_PARTITION : int in class org.apache.giraph.partition.TestPartitionStores",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
@@ -35937,6 +36525,13 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute usesImplicitMatch : boolean to isStructuralInterface : boolean in class com.google.javascript.rhino.jstype.FunctionType",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable that : ArrowType to other : JSType in method protected isSubtype(other JSType, implicitImplCache ImplCache) : boolean in class com.google.javascript.rhino.jstype.ArrowType",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -36134,35 +36729,35 @@
         "description": "Rename Parameter memberCount : int to memberAddresses : Collection<Address> in method public JoinMessage(packetVersion byte, buildNumber int, address Address, uuid String, configCheck ConfigCheck, memberAddresses Collection<Address>) in class com.hazelcast.cluster.impl.JoinMessage",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter joinRequest : JoinRequest to joinMessage : JoinMessage in method private checkIfJoinRequestFromAnExistingMember(joinMessage JoinMessage, connection Connection) : boolean in class com.hazelcast.cluster.impl.ClusterServiceImpl",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter joinRequest : JoinRequest to request : JoinMessage in method public JoinCheckOperation(request JoinMessage) in class com.hazelcast.cluster.impl.operations.JoinCheckOperation",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable possibleAddress : Address to address : Address in method public searchForOtherClusters() : void in class com.hazelcast.cluster.impl.TcpIpJoiner",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable colPossibleAddresses : Collection<Address> to possibleAddresses : Collection<Address> in method public searchForOtherClusters() : void in class com.hazelcast.cluster.impl.TcpIpJoiner",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -36190,7 +36785,7 @@
         "description": "Rename Attribute joinRequest : JoinRequest to request : JoinMessage in class com.hazelcast.cluster.impl.operations.JoinCheckOperation",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 3496
@@ -38068,7 +38663,7 @@
         "description": "Rename Attribute isStatic : boolean to canBeDirect : boolean in class clojure.lang.Compiler.ObjExpr",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Extract Variable",
@@ -39645,21 +40240,21 @@
         "description": "Rename Parameter queryData : QueryData to queryWhere : QueryWhere in method public AuditNodeInstanceLogQueryCommand(queryWhere QueryWhere) in class org.jbpm.process.audit.command.AuditNodeInstanceLogQueryCommand",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter queryData : QueryData to queryWhere : QueryWhere in method public AuditProcessInstanceLogQueryCommand(queryWhere QueryWhere) in class org.jbpm.process.audit.command.AuditProcessInstanceLogQueryCommand",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter queryData : QueryData to queryWhere : QueryWhere in method public AuditVariableInstanceLogQueryCommand(queryWhere QueryWhere) in class org.jbpm.process.audit.command.AuditVariableInstanceLogQueryCommand",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -39680,14 +40275,14 @@
         "description": "Rename Parameter queryParameters : QueryWhere to queryWhere : QueryWhere in method public QueryWhere(queryWhere QueryWhere) in class org.jbpm.query.jpa.data.QueryWhere",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter deadlineSummaryImpl : DeadlineSummaryImpl to deadlineSummary : DeadlineSummary in method private executedeadLine(ctx TaskContext, persistenceContext TaskPersistenceContext, task Task, deadlineSummary DeadlineSummary, taskData TaskData) : Void in class org.jbpm.services.task.commands.ExecuteReminderCommand",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -39701,14 +40296,14 @@
         "description": "Rename Variable deadlineSummaryImpl : DeadlineSummaryImpl to deadlineSummary : DeadlineSummary in method public execute(context Context) : Void in class org.jbpm.services.task.commands.ExecuteReminderCommand",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable newCriteriaGroupParent : Object to grandparent : Object in method public endGroup() : void in class org.jbpm.query.jpa.data.QueryWhere",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -39722,14 +40317,14 @@
         "description": "Rename Attribute currentGroupParents : Stack<Object> to ancestry : Stack<Object> in class org.jbpm.query.jpa.data.QueryWhere",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute currentGroupCriteria : List<QueryCriteria> to currentCriteria : List<QueryCriteria> in class org.jbpm.query.jpa.data.QueryWhere",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
@@ -39743,14 +40338,14 @@
         "description": "Rename Attribute queryData : QueryData to queryWhere : QueryWhere in class org.jbpm.query.jpa.builder.impl.AbstractQueryBuilderImpl",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute queryData : QueryData to queryWhere : QueryWhere in class org.jbpm.process.audit.command.AuditNodeInstanceLogQueryCommand",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Push Down Method",
@@ -40105,7 +40700,7 @@
         "description": "Rename Parameter obj : Object to o : Object in method public equals(o Object) : boolean in class com.linkedin.restli.client.RestliRequestOptions",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -40126,14 +40721,14 @@
         "description": "Rename Variable responseCompression : String to responseAcceptedEncodings : String in method public onRestResponse(res RestResponse, requestContext RequestContext, wireAttrs Map<String,String>, nextFilter NextFilter<RestRequest,RestResponse>) : void in class com.linkedin.r2.filter.compression.ServerCompressionFilter",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable responseCompression : String to responseAcceptedEncodings : String in method public onRestRequest(req RestRequest, requestContext RequestContext, wireAttrs Map<String,String>, nextFilter NextFilter<RestRequest,RestResponse>) : void in class com.linkedin.r2.filter.compression.ServerCompressionFilter",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -43116,14 +43711,14 @@
         "description": "Rename Parameter ogrFormat : String to toolFormat : String in method public OgrFormat(toolFormat String, formatName String, fileExtension String, singleFile boolean, mimeType String, options String[]) in class org.geoserver.wfs.response.OgrFormat",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute gdalData : String to environment : Map<String,String> in class org.geoserver.wfs.response.Ogr2OgrOutputFormat",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Pull Up Attribute",
@@ -43145,6 +43740,27 @@
         "comment": null,
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter notify : ResourceNotification to wrapperFactory : ToolWrapperFactory in method public Ogr2OgrConfigurator(format Ogr2OgrOutputFormat, wrapperFactory ToolWrapperFactory) in class org.geoserver.wfs.response.Ogr2OgrConfigurator",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter gdalData : String to environment : Map<String,String> in method public OGRWrapper(ogrExecutable String, environment Map<String,String>) in class org.geoserver.wfs.response.OGRWrapper",
+        "comment": "<p>Attribute initialization inside the constructor is replaced with super() call.</p>",
+        "validation": "CTP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter sb : StringBuilder to format : Format in method public onBeforeRun(cmd List<String>, inputData File, outputDirectory File, typeName String, format Format, crs CoordinateReferenceSystem) : void in class org.geoserver.wfs.response.OGRWrapper",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 3729
@@ -43190,7 +43806,7 @@
         "description": "Rename Variable i : int to attempts : int in method public getOffsetCoordinator() : void in class org.voltdb.importclient.kafka.KafkaStreamImporter.TopicPartitionFetcher",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Replace Variable With Attribute",
@@ -43297,14 +43913,14 @@
         "description": "Rename Parameter input : PackStream.Unpacker to unpacker : Neo4jPack.Unpacker in method public Reader(unpacker Neo4jPack.Unpacker) in class org.neo4j.ndp.messaging.v1.PackStreamMessageFormatV1.Reader",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable size : long to longSize : long in method private unpackBytesHeader() : int in class org.neo4j.packstream.PackStream.Unpacker",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Parameterize Variable",
@@ -43806,6 +44422,13 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter moduleFile : ErlangFile to erlangFile : ErlangFile in method public fun(erlangFile ErlangFile) : String in class org.intellij.erlang.compilation.ErlangPrepareDependenciesCompileTask.ErlangFilesDependencyGraph.getDeclaredIncludePaths.ContainerUtil",
+        "comment": null,
+        "validation": "UKN",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
     }],
     "refDiffExecutionTime": 1833
 }, {
@@ -43850,7 +44473,7 @@
         "description": "Rename Parameter responseContent : String to content : String in method public assertValue(content String, expectedValue Object) : void in class org.springframework.test.util.JsonPathExpectationsHelper",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",

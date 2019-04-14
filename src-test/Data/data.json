@@ -1789,6 +1789,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute mergePolicyProvider : MergePolicyProvider to mergePolicy : MergePolicy in class org.elasticsearch.index.engine.EngineConfig",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
     }],
     "refDiffExecutionTime": 8239
 }, {
@@ -2527,6 +2534,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute server : DatagramSocketImpl to socket : DatagramSocketImpl in class io.vertx.core.datagram.impl.DatagramServerHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute vertx : VertxInternal to connectionMap : Map<Channel,C> in class io.vertx.core.http.impl.VertxHttpHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
     }],
     "refDiffExecutionTime": 1710
 }, {
@@ -3028,6 +3049,13 @@
         "description": "Move Method public isMultiInstallModeEnabled() : boolean from class com.facebook.buck.cli.AdbOptions to public isMultiInstallModeEnabled() : boolean from class com.facebook.buck.android.AdbOptions",
         "comment": null,
         "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute buckConfig : BuckConfig to restartAdbOnFailure : boolean in class com.facebook.buck.android.AdbHelper",
+        "comment": null,
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -10834,6 +10862,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute txCoordinator : TransactionCoordinator to partitionHandlingManager : PartitionHandlingManager in class org.infinispan.interceptors.TxInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
     }],
     "refDiffExecutionTime": 7011
 }, {
@@ -13290,7 +13325,7 @@
         "description": "Rename Attribute payload : Object to failure : Throwable in class org.gradle.internal.progress.BuildOperationInternal",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 4945
@@ -16419,6 +16454,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute filterStrings : boolean to enableStringWhitelisting : boolean in class com.facebook.buck.android.FilterResourcesStep",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
     }],
     "refDiffExecutionTime": 2754
 }, {
@@ -19289,6 +19331,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable socket : Socket to conn : SecureSocketConnection in method private serverResponds(host String, port int) : boolean in class org.neo4j.ext.NDPExtensionIT",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute keyStorePath : String to keyStore : KeyStore in class org.neo4j.server.security.ssl.KeyStoreInformation",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
@@ -35182,6 +35231,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute nodeStore : NodeStore to neoStore : NeoStore in class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
     }],
     "refDiffExecutionTime": 15734
 }, {
@@ -36392,6 +36448,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute partitionId : int to partitionIds : List<Integer> in class org.apache.giraph.partition.TestPartitionStores.Worker",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
     }],
     "refDiffExecutionTime": 2713
 }, {
@@ -36783,6 +36846,13 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute joinRequest : JoinRequest to request : JoinMessage in class com.hazelcast.cluster.impl.operations.JoinCheckOperation",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute memberCount : int to memberAddresses : Collection<Address> in class com.hazelcast.cluster.impl.JoinMessage",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
@@ -38582,35 +38652,35 @@
         "description": "Rename Attribute resolver : ResourceDescriptionResolver to descriptor : AddStepHandlerDescriptor in class org.jboss.as.clustering.controller.AddStepHandler",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute resolver : ResourceDescriptionResolver to descriptor : AddStepHandlerDescriptor in class org.jboss.as.clustering.controller.BoottimeAddStepHandler",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute resolver : ResourceDescriptionResolver to descriptor : RemoveStepHandlerDescriptor in class org.jboss.as.clustering.controller.RemoveStepHandler",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute resolver : ResourceDescriptionResolver to descriptor : AddStepHandlerDescriptor in class org.jboss.as.clustering.controller.RestartParentAddHandler",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute resolver : ResourceDescriptionResolver to descriptor : RemoveStepHandlerDescriptor in class org.jboss.as.clustering.controller.RestartParentRemoveHandler",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 8243
@@ -40424,6 +40494,20 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute queryData : QueryData to queryWhere : QueryWhere in class org.jbpm.process.audit.command.AuditProcessInstanceLogQueryCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute queryData : QueryData to queryWhere : QueryWhere in class org.jbpm.process.audit.command.AuditVariableInstanceLogQueryCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
     }],
     "refDiffExecutionTime": 3454
 }, {
@@ -40751,6 +40835,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute _shouldBePresent : boolean to _expectedValue : String in class com.linkedin.r2.filter.compression.TestClientCompressionFilter.HeaderCaptureFilter",
+        "comment": "<p>The attribute usage replacement takes place only inside the constructors.</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3301
 }, {

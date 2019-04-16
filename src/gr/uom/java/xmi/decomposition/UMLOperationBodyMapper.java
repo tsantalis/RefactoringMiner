@@ -10,6 +10,7 @@ import gr.uom.java.xmi.decomposition.replacement.ObjectCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
+import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
 import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
@@ -416,6 +417,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		initialize();
 		VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(mappings, operation1, operation2, additionalMappers, refactorings, callSiteOperation);
 		refactorings.addAll(analysis.getVariableRenames());
+		refactorings.addAll(analysis.getVariableMerges());
 		candidateAttributeRenames.addAll(analysis.getCandidateAttributeRenames());
 		return refactorings;
 	}
@@ -1378,7 +1380,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 						else if(variables1.contains(s1) && methodInvocations2.contains(s2)) {
-							replacement = new VariableReplacementWithMethodInvocation(s1, s2, (OperationInvocation) methodInvocationMap2.get(s2));
+							replacement = new VariableReplacementWithMethodInvocation(s1, s2, (OperationInvocation) methodInvocationMap2.get(s2), Direction.VARIABLE_TO_INVOCATION);
 						}
 						else if(methodInvocations1.contains(s1) && methodInvocations2.contains(s2)) {
 							OperationInvocation invokedOperationBefore = (OperationInvocation) methodInvocationMap1.get(s1);
@@ -1388,7 +1390,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 						else if(methodInvocations1.contains(s1) && variables2.contains(s2)) {
-							replacement = new VariableReplacementWithMethodInvocation(s1, s2, (OperationInvocation) methodInvocationMap1.get(s1));
+							replacement = new VariableReplacementWithMethodInvocation(s1, s2, (OperationInvocation) methodInvocationMap1.get(s1), Direction.INVOCATION_TO_VARIABLE);
 						}
 						if(replacement != null) {
 							double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), replacementInfo.getArgumentizedString2().length());

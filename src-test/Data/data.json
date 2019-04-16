@@ -115,9 +115,30 @@
         "type": "Rename Parameter",
         "description": "Rename Parameter document : Document to position : XSourcePosition in method public runToCursor(position XSourcePosition, ignoreBreakpoints boolean) : void in class com.intellij.debugger.impl.DebuggerSession",
         "comment": "<p>Parameters <span class='blob-code-inner blob-code-marker-deletion'><span class='pl-smi x x-first'>Document</span> <span class='pl-v x'>document</span><span class='x'>, </span><span class='pl-k x'>int</span> <span class='pl-v x x-last'>line</span></span> are merged into <span class='blob-code-inner blob-code-marker-addition'><span class='pl-smi x'>XSourcePosition</span> <span class='pl-v x x-last'>position</span></span></p>",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [document : Document, line : int] to position : XSourcePosition in method public runToCursor(position XSourcePosition, ignoreBreakpoints boolean) : void in class com.intellij.debugger.impl.DebuggerSession",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [document : Document, lineIndex : int] to position : XSourcePosition in method public addRunToCursorBreakpoint(position XSourcePosition, ignoreBreakpoints boolean) : RunToCursorBreakpoint in class com.intellij.debugger.ui.breakpoints.BreakpointManager",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [document : Document, lineIndex : int] to position : XSourcePosition in method public createRunToCursorCommand(suspendContext SuspendContextImpl, position XSourcePosition, ignoreBreakpoints boolean) : ResumeCommand in class com.intellij.debugger.engine.DebugProcessImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 37410
 }, {
@@ -9407,6 +9428,13 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Nikos"
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [measuresDao : MeasuresDao, conditionDao : QualityGateConditionDao] to dbClient : DbClient in method public RegisterMetrics(dbClient DbClient) in class org.sonar.server.startup.RegisterMetrics",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4571
 }, {
@@ -14161,21 +14189,21 @@
         "type": "Rename Parameter",
         "description": "Rename Parameter context : QueryContext to config : SqlHandlerConfig in method public ViewHandler(config SqlHandlerConfig) in class org.apache.drill.exec.planner.sql.handlers.ViewHandler",
         "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-smi x x-first'>Parameters (Planner</span> <span class='pl-v x'>planner</span><span class='x'>, </span><span class='pl-smi x'>QueryContext</span> <span class='pl-v x x-last'>context) are merged to (<span class='pl-smi x x-first'>SqlHandlerConfig</span> config)<br />QueryContext is wrapped in <span class='pl-smi x x-first'>SqlHandlerConfig</span><br /></span></span></p>",
-        "validation": "CTP",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter context : QueryContext to config : SqlHandlerConfig in method public CreateView(config SqlHandlerConfig) in class org.apache.drill.exec.planner.sql.handlers.ViewHandler.CreateView",
         "comment": "<p>Parameters (Planner planner, QueryContext context) are merged to (SqlHandlerConfig config)</p>",
-        "validation": "CTP",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter context : QueryContext to config : SqlHandlerConfig in method public DropView(config SqlHandlerConfig) in class org.apache.drill.exec.planner.sql.handlers.ViewHandler.DropView",
         "comment": "<p>Parameters (Planner planner, QueryContext context) are merged to (SqlHandlerConfig config)</p>",
-        "validation": "CTP",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
     }, {
@@ -14192,6 +14220,13 @@
         "validation": "CTP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [planner : Planner, context : QueryContext] to config : SqlHandlerConfig in method public CreateView(config SqlHandlerConfig) in class org.apache.drill.exec.planner.sql.handlers.ViewHandler.CreateView",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2598
 }, {
@@ -32174,6 +32209,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [added : Set<URI>, removed : Set<URI>] to assignment : ImporterChannelAssignment in method public onChange(assignment ImporterChannelAssignment) : void in class org.voltdb.importclient.kafka.KafkaStreamImporter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -37313,20 +37355,6 @@
         "detectionTools": "RefactoringMiner",
         "validators": "Davood"
     }, {
-        "type": "Rename Parameter",
-        "description": "Rename Parameter parseRetain : boolean to setSerializer : MessageSerializer in method public ChildMessage(params NetworkParameters, payload byte[], offset int, protocolVersion int, parent Message, setSerializer MessageSerializer, length int) in class org.bitcoinj.core.ChildMessage",
-        "comment": "<p>boolean parameters <span class='blob-code-inner blob-code-marker-deletion'><span class='pl-v x'>parseLazy</span><span class='x'>, </span><span class='pl-v x x-last'>parseRetain</span> are merged into setSerializer<br /></span></p>",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Nikos"
-    }, {
-        "type": "Rename Parameter",
-        "description": "Rename Parameter parseLazy : boolean to serializer : MessageSerializer in method package Message(params NetworkParameters, payload byte[], offset int, protocolVersion int, serializer MessageSerializer, length int) in class org.bitcoinj.core.Message",
-        "comment": "<p>boolean fields and parameters <span class='blob-code-inner blob-code-marker-deletion'><span class='pl-v x'>parseLazy</span><span class='x'>, </span><span class='pl-v x x-last'>parseRetain</span> are merged into serializer</span></p>",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Nikos"
-    }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method public makeBlock(payloadBytes byte[]) : Block extracted from private roundtrip(b2 Block) : Block in class org.bitcoinj.core.ChainSplitTest & moved to class org.bitcoinj.core.BitcoinSerializer",
         "comment": null,
@@ -37334,8 +37362,113 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Rename Attribute",
-        "description": "Rename Attribute parseRetain : boolean to serializer : MessageSerializer in class org.bitcoinj.core.Message",
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [parseLazy : boolean, parseRetain : boolean] to serializer : MessageSerializer in method package Message(params NetworkParameters, payload byte[], offset int, protocolVersion int, serializer MessageSerializer, length int) in class org.bitcoinj.core.Message",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [parseLazy : boolean, parseRetain : boolean] to serializer : MessageSerializer in method package AddressMessage(params NetworkParameters, payload byte[], serializer MessageSerializer, length int) in class org.bitcoinj.core.AddressMessage",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [parseLazy : boolean, parseRetain : boolean] to serializer : MessageSerializer in method public TransactionOutPoint(params NetworkParameters, payload byte[], offset int, parent Message, serializer MessageSerializer) in class org.bitcoinj.core.TransactionOutPoint",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [parseLazy : boolean, parseRetain : boolean] to serializer : MessageSerializer in method public TransactionOutput(params NetworkParameters, parent Transaction, payload byte[], offset int, serializer MessageSerializer) in class org.bitcoinj.core.TransactionOutput",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [parseLazy : boolean, parseRetain : boolean] to serializer : MessageSerializer in method public TransactionInput(params NetworkParameters, parentTransaction Transaction, payload byte[], offset int, serializer MessageSerializer) in class org.bitcoinj.core.TransactionInput",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [parseLazy : boolean, parseRetain : boolean] to serializer : MessageSerializer in method public GetDataMessage(params NetworkParameters, payload byte[], serializer MessageSerializer, length int) in class org.bitcoinj.core.GetDataMessage",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [parseLazy : boolean, parseRetain : boolean] to serializer : MessageSerializer in method package Message(params NetworkParameters, payload byte[], offset int, serializer MessageSerializer, length int) in class org.bitcoinj.core.Message",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [parseLazy : boolean, parseRetain : boolean] to serializer : MessageSerializer in method public InventoryMessage(params NetworkParameters, payload byte[], serializer MessageSerializer, length int) in class org.bitcoinj.core.InventoryMessage",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [parseLazy : boolean, parseRetain : boolean] to serializer : MessageSerializer in method public Block(params NetworkParameters, payloadBytes byte[], serializer MessageSerializer, length int) in class org.bitcoinj.core.Block",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [parseLazy : boolean, parseRetain : boolean] to serializer : MessageSerializer in method public PeerAddress(params NetworkParameters, payload byte[], offset int, protocolVersion int, parent Message, serializer MessageSerializer) in class org.bitcoinj.core.PeerAddress",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [parseLazy : boolean, parseRetain : boolean] to setSerializer : MessageSerializer in method package AddressMessage(params NetworkParameters, payload byte[], offset int, setSerializer MessageSerializer, length int) in class org.bitcoinj.core.AddressMessage",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [parseLazy : boolean, parseRetain : boolean] to setSerializer : MessageSerializer in method public Transaction(params NetworkParameters, payload byte[], parent Message, setSerializer MessageSerializer, length int) in class org.bitcoinj.core.Transaction",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [parseLazy : boolean, parseRetain : boolean] to setSerializer : MessageSerializer in method public ChildMessage(params NetworkParameters, payload byte[], offset int, protocolVersion int, parent Message, setSerializer MessageSerializer, length int) in class org.bitcoinj.core.ChildMessage",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [parseLazy : boolean, parseRetain : boolean] to serializer : MessageSerializer in method public ListMessage(params NetworkParameters, payload byte[], serializer MessageSerializer, length int) in class org.bitcoinj.core.ListMessage",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [parseLazy : boolean, parseRetain : boolean] to setSerializer : MessageSerializer in method public ChildMessage(params NetworkParameters, payload byte[], offset int, parent Message, setSerializer MessageSerializer, length int) in class org.bitcoinj.core.ChildMessage",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [parseLazy : boolean, parseRetain : boolean] to setSerializer : MessageSerializer in method public Transaction(params NetworkParameters, payload byte[], offset int, parent Message, setSerializer MessageSerializer, length int) in class org.bitcoinj.core.Transaction",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -40842,6 +40975,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [contentType : ContentType, acceptTypes : List<AcceptType>, requestCompressionOverride : CompressionOption] to requestOptions : RestliRequestOptions in method private sendRequestImpl(requestContext RequestContext, uri URI, method ResourceMethod, dataMap DataMap, headers Map<String,String>, methodName String, protocolVersion ProtocolVersion, requestOptions RestliRequestOptions, callback Callback<RestResponse>) : void in class com.linkedin.restli.client.RestClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3301
 }, {

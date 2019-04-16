@@ -14,12 +14,16 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
+import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.VariableDeclarationReplacement;
+import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
+import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
+import gr.uom.java.xmi.diff.MergeVariableRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 
 public class VariableReplacementAnalysis {
@@ -30,6 +34,7 @@ public class VariableReplacementAnalysis {
 	private Set<Refactoring> refactorings;
 	private UMLOperation callSiteOperation;
 	private Set<RenameVariableRefactoring> variableRenames = new LinkedHashSet<RenameVariableRefactoring>();
+	private Set<MergeVariableRefactoring> variableMerges = new LinkedHashSet<MergeVariableRefactoring>();
 	private Set<CandidateAttributeRefactoring> candidateAttributeRenames = new LinkedHashSet<CandidateAttributeRefactoring>();
 
 	public VariableReplacementAnalysis(List<AbstractCodeMapping> mappings, UMLOperation operation1, UMLOperation operation2,
@@ -40,6 +45,7 @@ public class VariableReplacementAnalysis {
 		this.additionalMappers = additionalMappers;
 		this.refactorings = refactorings;
 		this.callSiteOperation = callSiteOperation;
+		findVariableMerges();
 		findConsistentVariableRenames();
 	}
 
@@ -47,8 +53,86 @@ public class VariableReplacementAnalysis {
 		return variableRenames;
 	}
 
+	public Set<MergeVariableRefactoring> getVariableMerges() {
+		return variableMerges;
+	}
+
 	public Set<CandidateAttributeRefactoring> getCandidateAttributeRenames() {
 		return candidateAttributeRenames;
+	}
+
+	private void findVariableMerges() {
+		Map<MergeVariableReplacement, List<AbstractCodeMapping>> mergeMap = new LinkedHashMap<MergeVariableReplacement, List<AbstractCodeMapping>>();
+		Map<String, Map<VariableReplacementWithMethodInvocation, List<AbstractCodeMapping>>> variableInvocationExpressionMap = new LinkedHashMap<String, Map<VariableReplacementWithMethodInvocation, List<AbstractCodeMapping>>>();
+		for(AbstractCodeMapping mapping : mappings) {
+			for(Replacement replacement : mapping.getReplacements()) {
+				if(replacement instanceof MergeVariableReplacement) {
+					MergeVariableReplacement merge = (MergeVariableReplacement)replacement;
+					if(mergeMap.containsKey(merge)) {
+						mergeMap.get(merge).add(mapping);
+					}
+					else {
+						List<AbstractCodeMapping> mappings = new ArrayList<AbstractCodeMapping>();
+						mappings.add(mapping);
+						mergeMap.put(merge, mappings);
+					}
+				}
+				else if(replacement instanceof VariableReplacementWithMethodInvocation) {
+					VariableReplacementWithMethodInvocation variableReplacement = (VariableReplacementWithMethodInvocation)replacement;
+					String expression = variableReplacement.getInvokedOperation().getExpression();
+					if(expression != null && variableReplacement.getDirection().equals(Direction.VARIABLE_TO_INVOCATION)) {
+						if(variableInvocationExpressionMap.containsKey(expression)) {
+							Map<VariableReplacementWithMethodInvocation, List<AbstractCodeMapping>> map = variableInvocationExpressionMap.get(expression);
+							if(map.containsKey(variableReplacement)) {
+								map.get(variableReplacement).add(mapping);
+							}
+							else {
+								List<AbstractCodeMapping> mappings = new ArrayList<AbstractCodeMapping>();
+								mappings.add(mapping);
+								map.put(variableReplacement, mappings);
+							}
+						}
+						else {
+							List<AbstractCodeMapping> mappings = new ArrayList<AbstractCodeMapping>();
+							mappings.add(mapping);
+							Map<VariableReplacementWithMethodInvocation, List<AbstractCodeMapping>> map = new LinkedHashMap<VariableReplacementWithMethodInvocation, List<AbstractCodeMapping>>();
+							map.put(variableReplacement, mappings);
+							variableInvocationExpressionMap.put(expression, map);
+						}
+					}
+				}
+			}
+		}
+		for(String key : variableInvocationExpressionMap.keySet()) {
+			Map<VariableReplacementWithMethodInvocation, List<AbstractCodeMapping>> map = variableInvocationExpressionMap.get(key);
+			if(map.size() > 1) {
+				List<AbstractCodeMapping> mappings = new ArrayList<AbstractCodeMapping>();
+				Set<String> mergedVariables = new LinkedHashSet<String>();
+				for(VariableReplacementWithMethodInvocation replacement : map.keySet()) {
+					mergedVariables.add(replacement.getBefore());
+					mappings.addAll(map.get(replacement));
+				}
+				MergeVariableReplacement merge = new MergeVariableReplacement(mergedVariables, key);
+				mergeMap.put(merge, mappings);
+			}
+		}
+		for(MergeVariableReplacement merge : mergeMap.keySet()) {
+			Set<VariableDeclaration> mergedVariables = new LinkedHashSet<VariableDeclaration>();
+			Set<UMLOperation> mergedVariableOperations = new LinkedHashSet<UMLOperation>();
+			for(String variableName : merge.getMergedVariables()) {
+				SimpleEntry<VariableDeclaration,UMLOperation> declaration = getVariableDeclaration1(merge, variableName);
+				if(declaration != null) {
+					mergedVariables.add(declaration.getKey());
+					mergedVariableOperations.add(declaration.getValue());
+				}
+			}
+			SimpleEntry<VariableDeclaration,UMLOperation> newVariable = getVariableDeclaration2(merge);
+			if(mergedVariables.size() == merge.getMergedVariables().size() && newVariable != null) {
+				UMLOperation operationBefore = mergedVariableOperations.iterator().next();
+				MergeVariableRefactoring refactoring = new MergeVariableRefactoring(mergedVariables, newVariable.getKey(), operationBefore, newVariable.getValue(), mergeMap.get(merge));
+				variableMerges.add(refactoring);
+			}
+		}
 	}
 
 	private void findConsistentVariableRenames() {
@@ -86,7 +170,7 @@ public class VariableReplacementAnalysis {
 			SimpleEntry<VariableDeclaration, UMLOperation> v2 = getVariableDeclaration2(replacement);
 			if(v1 != null && v2 != null) {
 				RenameVariableRefactoring ref = new RenameVariableRefactoring(v1.getKey(), v2.getKey(), v1.getValue(), v2.getValue(), finalConsistentRenames.get(replacement));
-				if(!existsConflictingExtractVariableRefactoring(ref)) {
+				if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref)) {
 					variableRenames.add(ref);
 				}
 			}
@@ -324,6 +408,32 @@ public class VariableReplacementAnalysis {
 		return null;
 	}
 
+	private SimpleEntry<VariableDeclaration, UMLOperation> getVariableDeclaration1(MergeVariableReplacement replacement, String variableName) {
+		for(AbstractCodeMapping mapping : mappings) {
+			if(mapping.getReplacements().contains(replacement)) {
+				VariableDeclaration vd = mapping.getFragment1().searchVariableDeclaration(variableName);
+				if(vd != null) {
+					return new SimpleEntry<VariableDeclaration, UMLOperation>(vd, operation1);
+				}
+			}
+		}
+		for(UMLParameter parameter : operation1.getParameters()) {
+			VariableDeclaration vd = parameter.getVariableDeclaration();
+			if(vd != null && vd.getVariableName().equals(variableName)) {
+				return new SimpleEntry<VariableDeclaration, UMLOperation>(vd, operation1);
+			}
+		}
+		if(callSiteOperation != null) {
+			for(UMLParameter parameter : callSiteOperation.getParameters()) {
+				VariableDeclaration vd = parameter.getVariableDeclaration();
+				if(vd != null && vd.getVariableName().equals(variableName)) {
+					return new SimpleEntry<VariableDeclaration, UMLOperation>(vd, callSiteOperation);
+				}
+			}
+		}
+		return null;
+	}
+
 	private SimpleEntry<VariableDeclaration, UMLOperation> getVariableDeclaration2(Replacement replacement) {
 		for(AbstractCodeMapping mapping : mappings) {
 			if(mapping.getReplacements().contains(replacement)) {
@@ -396,6 +506,18 @@ public class VariableReplacementAnalysis {
 						extractVariableRef.getOperation().equals(ref.getOperationAfter())) {
 					return true;
 				}
+			}
+		}
+		return false;
+	}
+
+	private boolean existsConflictingMergeVariableRefactoring(RenameVariableRefactoring ref) {
+		for(MergeVariableRefactoring merge : variableMerges) {
+			if(merge.getOperationBefore().equals(ref.getOperationBefore()) &&
+					merge.getOperationAfter().equals(ref.getOperationAfter()) &&
+					merge.getMergedVariables().contains(ref.getOriginalVariable()) &&
+					merge.getNewVariable().equals(ref.getRenamedVariable())) {
+				return true;
 			}
 		}
 		return false;

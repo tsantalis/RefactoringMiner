@@ -85,7 +85,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			RefactoringType.RENAME_PARAMETER,
 			RefactoringType.RENAME_ATTRIBUTE,
 			RefactoringType.REPLACE_VARIABLE_WITH_ATTRIBUTE,
-			RefactoringType.PARAMETERIZE_VARIABLE
+			RefactoringType.PARAMETERIZE_VARIABLE,
+			RefactoringType.MERGE_PARAMETER
 		);
 	}
 
@@ -155,7 +156,6 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				
 				refactoringsAtRevision = parentUMLModel.diff(currentUMLModel, renamedFilesHint).getRefactorings();
 				refactoringsAtRevision = filter(refactoringsAtRevision);
-				
 			} else {
 				//logger.info(String.format("Ignored revision %s with no changes in java files", commitId));
 				refactoringsAtRevision = Collections.emptyList();

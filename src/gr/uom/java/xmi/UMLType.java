@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Type;
 
+import gr.uom.java.xmi.diff.StringDistance;
+
 public class UMLType implements Serializable {
     private String classType;
     private String nonQualifiedClassType;
@@ -188,6 +190,14 @@ public class UMLType implements Serializable {
     		return name.substring(indexOfFirstUpperCaseCharacterFollowedByDot);
     	}
     	return name;
+	}
+
+	public double normalizedNameDistance(UMLType type) {
+		String s1 = this.toString();
+		String s2 = type.toString();
+		int distance = StringDistance.editDistance(s1, s2);
+		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
+		return normalized;
 	}
 
 	public static UMLType extractTypeObject(String qualifiedName) {

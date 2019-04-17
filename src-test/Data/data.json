@@ -9025,6 +9025,48 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter rootRelation : AnalyzedRelation to relation : AnalyzedRelation in method public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.InsertFromSubQueryConsumer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter rootRelation : AnalyzedRelation to relation : AnalyzedRelation in method public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.QueryAndFetchConsumer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter rootRelation : AnalyzedRelation to relation : AnalyzedRelation in method public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.ReduceOnCollectorGroupByConsumer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter rootRelation : AnalyzedRelation to relation : AnalyzedRelation in method public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.ESGetConsumer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter rootRelation : AnalyzedRelation to relation : AnalyzedRelation in method public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.NonDistributedGroupByConsumer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter rootRelation : AnalyzedRelation to relation : AnalyzedRelation in method public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.DistributedGroupByConsumer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
     }],
     "refDiffExecutionTime": 3234
 }, {

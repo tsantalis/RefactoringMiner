@@ -52,7 +52,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 	private List<UMLAnonymousClass> removedAnonymousClasses;
 	private List<UMLOperationDiff> operationDiffList;
 	protected List<UMLAttributeDiff> attributeDiffList;
-	private List<Refactoring> refactorings;
+	protected List<Refactoring> refactorings;
 	private Set<MethodInvocationReplacement> consistentMethodInvocationRenames;
 	private Set<CandidateAttributeRefactoring> candidateAttributeRenames = new LinkedHashSet<CandidateAttributeRefactoring>();
 	private UMLModelDiff modelDiff;
@@ -404,7 +404,17 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		List<Refactoring> refactorings = new ArrayList<Refactoring>(this.refactorings);
 		Map<Replacement, Set<CandidateAttributeRefactoring>> map = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
-			refactorings.addAll(mapper.getRefactorings());
+			for(Refactoring refactoring : mapper.getRefactorings()) {
+				if(refactorings.contains(refactoring)) {
+					//special handling for replacing rename variable refactorings having statement mapping information
+					int index = refactorings.indexOf(refactoring);
+					refactorings.remove(index);
+					refactorings.add(index, refactoring);
+				}
+				else {
+					refactorings.add(refactoring);
+				}
+			}
 			for(CandidateAttributeRefactoring candidate : mapper.getCandidateAttributeRenames()) {
 				String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
 				String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());

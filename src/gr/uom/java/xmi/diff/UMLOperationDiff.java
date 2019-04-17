@@ -49,6 +49,13 @@ public class UMLOperationDiff {
 						removedParameterIterator.remove();
 						break;
 					}
+					else if(removedParameter.getType().equalsQualified(addedParameter.getType())) {
+						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter);
+						parameterDiffList.add(parameterDiff);
+						addedParameterIterator.remove();
+						removedParameterIterator.remove();
+						break;
+					}
 				}
 			}
 		}

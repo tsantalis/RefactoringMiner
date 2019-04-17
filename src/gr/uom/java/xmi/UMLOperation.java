@@ -369,6 +369,13 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 				this.name.equals(operation.name) &&
 				this.visibility.equals(operation.visibility) &&
 				this.isAbstract == operation.isAbstract) {
+			UMLParameter thisReturnParameter = this.getReturnParameter();
+			UMLParameter otherReturnParameter = operation.getReturnParameter();
+			if(thisReturnParameter != null && otherReturnParameter != null) {
+				if(!thisReturnParameter.getType().equalsQualified(otherReturnParameter.getType())) {
+					return false;
+				}
+			}
 			List<UMLType> thisParameterTypeList = this.getParameterTypeList();
 			List<UMLType> otherParameterTypeList = operation.getParameterTypeList();
 			if(thisParameterTypeList.size() != otherParameterTypeList.size()) {

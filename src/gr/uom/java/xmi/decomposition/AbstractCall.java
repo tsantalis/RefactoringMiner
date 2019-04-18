@@ -209,13 +209,15 @@ public abstract class AbstractCall implements LocationInfoProvider {
 			if(updatedArguments1.equals(call.arguments)) {
 				for(String key : commonVariableReplacementMap.keySet()) {
 					Set<Replacement> r = commonVariableReplacementMap.get(key);
-					replacements.removeAll(r);
-					Set<String> mergedVariables = new LinkedHashSet<String>();
-					for(Replacement replacement : r) {
-						mergedVariables.add(replacement.getBefore());
+					if(r.size() > 1) {
+						replacements.removeAll(r);
+						Set<String> mergedVariables = new LinkedHashSet<String>();
+						for(Replacement replacement : r) {
+							mergedVariables.add(replacement.getBefore());
+						}
+						MergeVariableReplacement merge = new MergeVariableReplacement(mergedVariables, key);
+						replacements.add(merge);
 					}
-					MergeVariableReplacement merge = new MergeVariableReplacement(mergedVariables, key);
-					replacements.add(merge);
 				}
 				return true;
 			}

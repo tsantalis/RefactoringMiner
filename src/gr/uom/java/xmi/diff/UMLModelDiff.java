@@ -950,8 +950,8 @@ public class UMLModelDiff {
 				   if(parameterDiff.isNameChanged()) {
 					   VariableDeclaration originalVariable = parameterDiff.getRemovedParameter().getVariableDeclaration();
 					   VariableDeclaration renamedVariable = parameterDiff.getAddedParameter().getVariableDeclaration();
-					   RenameVariableRefactoring refactoring = new RenameVariableRefactoring(originalVariable, renamedVariable, removedOperation, addedOperation, new ArrayList<AbstractCodeMapping>());
-					   refactorings.add(refactoring);
+					   RenameVariableRefactoring rename = new RenameVariableRefactoring(originalVariable, renamedVariable, removedOperation, addedOperation, new ArrayList<AbstractCodeMapping>());
+					   this.refactorings.add(rename);
 				   }
 			   }
 			   this.refactorings.add(ref);
@@ -1140,7 +1140,6 @@ public class UMLModelDiff {
       refactorings.addAll(getMoveClassRefactorings());
       refactorings.addAll(getRenameClassRefactorings());
       refactorings.addAll(identifyConvertAnonymousClassToTypeRefactorings());
-      refactorings.addAll(identifyExtractSuperclassRefactorings());
       Map<Replacement, Set<CandidateAttributeRefactoring>> map = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();
       for(UMLClassDiff classDiff : commonClassDiffList) {
          refactorings.addAll(classDiff.getRefactorings());
@@ -1209,6 +1208,7 @@ public class UMLModelDiff {
 			 }
 		 }
 	  }
+	  refactorings.addAll(identifyExtractSuperclassRefactorings());
 	  refactorings.addAll(identifyExtractClassRefactorings(commonClassDiffList));
       refactorings.addAll(identifyExtractClassRefactorings(classMoveDiffList));
       refactorings.addAll(identifyExtractClassRefactorings(innerClassMoveDiffList));

@@ -2125,13 +2125,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(s1.equals(s2)) {
 			for(String key : commonVariableReplacementMap.keySet()) {
 				Set<Replacement> replacements = commonVariableReplacementMap.get(key);
-				replacementInfo.getReplacements().removeAll(replacements);
-				Set<String> mergedVariables = new LinkedHashSet<String>();
-				for(Replacement replacement : replacements) {
-					mergedVariables.add(replacement.getBefore());
+				if(replacements.size() > 1) {
+					replacementInfo.getReplacements().removeAll(replacements);
+					Set<String> mergedVariables = new LinkedHashSet<String>();
+					for(Replacement replacement : replacements) {
+						mergedVariables.add(replacement.getBefore());
+					}
+					MergeVariableReplacement merge = new MergeVariableReplacement(mergedVariables, key);
+					replacementInfo.getReplacements().add(merge);
 				}
-				MergeVariableReplacement merge = new MergeVariableReplacement(mergedVariables, key);
-				replacementInfo.getReplacements().add(merge);
 			}
 			return true;
 		}

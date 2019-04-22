@@ -10235,6 +10235,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Merge Variable",
+        "description": "Merge Variable [primaryKey : String, columns : String] to pKeys : String[] in method public findById(tableName String, primaryKey String, idValue Object[]) : Record in class com.jfinal.plugin.activerecord.DbPro",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1822
 }, {
@@ -10938,6 +10945,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Merge Variable",
+        "description": "Merge Variable [localTxCount : int, remoteTxCount : int] to transactionTable : TransactionTable in method protected assertNoTransactions(cacheName String) : void in class org.infinispan.test.MultipleCacheManagersTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 7011
@@ -33865,9 +33879,9 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method public shutdown(config Config) : void renamed to public preShutdown() : void in class org.terasology.engine.subsystem.lwjgl.LwjglGraphics",
-        "comment": "<p>seems FP</p><p>Nikos: preShutdown() is a new method added to interface <span class='blob-code-inner'><span class='pl-en'>EngineSubsystem</span>. Parameter config was removed from <span class='pl-en'>shutdown</span>(<span class='pl-smi'>Config</span> <span class='pl-v'>config</span>);<br />However, the bodies of the methods are almost identical.<br /></span></p>",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "comment": "<p>preShutdown() is a new method added to interface <span class='blob-code-inner'><span class='pl-en'>EngineSubsystem</span>. Parameter config was removed from <span class='pl-en'>shutdown</span>(<span class='pl-smi'>Config</span> <span class='pl-v'>config</span>);<br />However, the bodies of the methods are almost identical.<br /></span></p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Rename Method",
@@ -37536,6 +37550,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Merge Attribute",
+        "description": "Merge Attribute [parseLazy : boolean, parseRetain : boolean] to serializer : MessageSerializer in class org.bitcoinj.core.Message",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3030
 }, {
@@ -38847,15 +38868,15 @@
         "type": "Rename Attribute",
         "description": "Rename Attribute resolver : ResourceDescriptionResolver to descriptor : AddStepHandlerDescriptor in class org.jboss.as.clustering.controller.AddStepHandler",
         "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute resolver : ResourceDescriptionResolver to descriptor : AddStepHandlerDescriptor in class org.jboss.as.clustering.controller.BoottimeAddStepHandler",
         "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
@@ -38868,8 +38889,8 @@
         "type": "Rename Attribute",
         "description": "Rename Attribute resolver : ResourceDescriptionResolver to descriptor : AddStepHandlerDescriptor in class org.jboss.as.clustering.controller.RestartParentAddHandler",
         "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
@@ -38877,6 +38898,27 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Merge Attribute",
+        "description": "Merge Attribute [resolver : ResourceDescriptionResolver, attributes : List<Attribute>] to descriptor : AddStepHandlerDescriptor in class org.jboss.as.clustering.controller.AddStepHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Attribute",
+        "description": "Merge Attribute [resolver : ResourceDescriptionResolver, attributes : List<Attribute>] to descriptor : AddStepHandlerDescriptor in class org.jboss.as.clustering.controller.BoottimeAddStepHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Attribute",
+        "description": "Merge Attribute [resolver : ResourceDescriptionResolver, attributes : List<Attribute>] to descriptor : AddStepHandlerDescriptor in class org.jboss.as.clustering.controller.RestartParentAddHandler",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 8243
@@ -39762,6 +39804,20 @@
     }, {
         "type": "Inline Variable",
         "description": "Inline Variable name : ByteString in method public encodeHeaders(headers Http2Headers, buffer ByteBuf) : void from class io.netty.handler.codec.http2.DefaultHttp2HeadersEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [keyComparator : Comparator<? super UnconvertedType>, valueComparator : Comparator<? super UnconvertedType>] to map : Map<UnconvertedType,Object> in method public DefaultConvertibleHeaders(map Map<UnconvertedType,Object>, nameValidator NameValidator<UnconvertedType>, valueConverter ValueConverter<UnconvertedType>, typeConverter TypeConverter<UnconvertedType,ConvertedType>) in class io.netty.handler.codec.DefaultConvertibleHeaders",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Variable",
+        "description": "Merge Variable [name : ByteString, value : ByteString] to header : Entry<ByteString,ByteString> in method public encodeHeaders(headers Http2Headers, buffer ByteBuf) : void in class io.netty.handler.codec.http2.DefaultHttp2HeadersEncoder",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

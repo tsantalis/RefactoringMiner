@@ -1,24 +1,22 @@
 package gr.uom.java.xmi.diff;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.refactoringminer.api.Refactoring;
-import org.refactoringminer.api.RefactoringType;
-
+import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
-import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class MergeVariableRefactoring implements Refactoring {
-	private Set<VariableDeclaration> mergedVariables;
-	private VariableDeclaration newVariable;
+public class CandidateMergeVariableRefactoring {
+	private Set<String> mergedVariables;
+	private String newVariable;
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
 	private List<AbstractCodeMapping> mappings;
-	
-	public MergeVariableRefactoring(Set<VariableDeclaration> mergedVariables, VariableDeclaration newVariable,
+	private Set<UMLAttribute> mergedAttributes;
+	private UMLAttribute newAttribute;
+
+	public CandidateMergeVariableRefactoring(Set<String> mergedVariables, String newVariable,
 			UMLOperation operationBefore, UMLOperation operationAfter, List<AbstractCodeMapping> mappings) {
 		this.mergedVariables = mergedVariables;
 		this.newVariable = newVariable;
@@ -27,11 +25,11 @@ public class MergeVariableRefactoring implements Refactoring {
 		this.mappings = mappings;
 	}
 
-	public Set<VariableDeclaration> getMergedVariables() {
+	public Set<String> getMergedVariables() {
 		return mergedVariables;
 	}
 
-	public VariableDeclaration getNewVariable() {
+	public String getNewVariable() {
 		return newVariable;
 	}
 
@@ -47,40 +45,25 @@ public class MergeVariableRefactoring implements Refactoring {
 		return mappings;
 	}
 
-	private boolean allVariablesAreParameters() {
-		for(VariableDeclaration declaration : mergedVariables) {
-			if(!declaration.isParameter()) {
-				return false;
-			}
-		}
-		return newVariable.isParameter();
+	public Set<UMLAttribute> getMergedAttributes() {
+		return mergedAttributes;
 	}
 
-	public RefactoringType getRefactoringType() {
-		if(allVariablesAreParameters())
-			return RefactoringType.MERGE_PARAMETER;
-		return RefactoringType.MERGE_VARIABLE;
+	public void setMergedAttributes(Set<UMLAttribute> mergedAttributes) {
+		this.mergedAttributes = mergedAttributes;
 	}
 
-	public String getName() {
-		return this.getRefactoringType().getDisplayName();
+	public UMLAttribute getNewAttribute() {
+		return newAttribute;
 	}
 
-	public List<String> getInvolvedClassesBeforeRefactoring() {
-		List<String> classNames = new ArrayList<String>();
-		classNames.add(operationBefore.getClassName());
-		return classNames;
-	}
-
-	public List<String> getInvolvedClassesAfterRefactoring() {
-		List<String> classNames = new ArrayList<String>();
-		classNames.add(operationAfter.getClassName());
-		return classNames;
+	public void setNewAttribute(UMLAttribute newAttribute) {
+		this.newAttribute = newAttribute;
 	}
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
+		sb.append("Merge Attribute").append("\t");
 		sb.append(mergedVariables);
 		sb.append(" to ");
 		sb.append(newVariable);
@@ -109,7 +92,7 @@ public class MergeVariableRefactoring implements Refactoring {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MergeVariableRefactoring other = (MergeVariableRefactoring) obj;
+		CandidateMergeVariableRefactoring other = (CandidateMergeVariableRefactoring) obj;
 		if (mergedVariables == null) {
 			if (other.mergedVariables != null)
 				return false;

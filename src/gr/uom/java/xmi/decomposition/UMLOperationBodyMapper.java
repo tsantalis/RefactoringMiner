@@ -12,6 +12,7 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
 import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
+import gr.uom.java.xmi.diff.CandidateMergeVariableRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
@@ -46,6 +47,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private List<CompositeStatementObject> nonMappedInnerNodesT2;
 	private Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 	private Set<CandidateAttributeRefactoring> candidateAttributeRenames = new LinkedHashSet<CandidateAttributeRefactoring>();
+	private Set<CandidateMergeVariableRefactoring> candidateAttributeMerges = new LinkedHashSet<CandidateMergeVariableRefactoring>();
 	private List<UMLOperationBodyMapper> additionalMappers = new ArrayList<UMLOperationBodyMapper>();
 	private static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)|(\\?)|(:)");
 	private static final Pattern DOUBLE_QUOTES = Pattern.compile("\"([^\"]*)\"|(\\S+)");
@@ -419,11 +421,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		refactorings.addAll(analysis.getVariableRenames());
 		refactorings.addAll(analysis.getVariableMerges());
 		candidateAttributeRenames.addAll(analysis.getCandidateAttributeRenames());
+		candidateAttributeMerges.addAll(analysis.getCandidateAttributeMerges());
 		return refactorings;
 	}
 
 	public Set<CandidateAttributeRefactoring> getCandidateAttributeRenames() {
 		return candidateAttributeRenames;
+	}
+
+	public Set<CandidateMergeVariableRefactoring> getCandidateAttributeMerges() {
+		return candidateAttributeMerges;
 	}
 
 	public List<AbstractCodeMapping> getMappings() {
@@ -1513,6 +1520,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(expression1 == null || !expression1.contains(key1)) {
 						return replacementInfo.getReplacements();
 					}
+				}
+			}
+		}
+		//method invocation is identical with a difference in the expression call chain
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
+			if(invocationCoveringTheEntireStatement1.identicalWithExpressionCallChainDifference(invocationCoveringTheEntireStatement2)) {
+				AbstractCall invokedOperationBefore = methodInvocationMap1.get(invocationCoveringTheEntireStatement1.getExpression());
+				AbstractCall invokedOperationAfter = methodInvocationMap2.get(invocationCoveringTheEntireStatement2.getExpression());
+				if(invokedOperationBefore != null && invokedOperationAfter != null) {
+					Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getExpression(), invocationCoveringTheEntireStatement2.getExpression(), (OperationInvocation)invokedOperationBefore, (OperationInvocation)invokedOperationAfter, ReplacementType.METHOD_INVOCATION);
+					replacementInfo.addReplacement(replacement);
+					return replacementInfo.getReplacements();
+				}
+				else if(invokedOperationBefore != null) {
+					Replacement replacement = new VariableReplacementWithMethodInvocation(invocationCoveringTheEntireStatement1.getExpression(), invocationCoveringTheEntireStatement2.getExpression(), (OperationInvocation)invokedOperationBefore, Direction.INVOCATION_TO_VARIABLE);
+					replacementInfo.addReplacement(replacement);
+					return replacementInfo.getReplacements();
+				}
+				else if(invokedOperationAfter != null) {
+					Replacement replacement = new VariableReplacementWithMethodInvocation(invocationCoveringTheEntireStatement1.getExpression(), invocationCoveringTheEntireStatement2.getExpression(), (OperationInvocation)invokedOperationAfter, Direction.VARIABLE_TO_INVOCATION);
+					replacementInfo.addReplacement(replacement);
+					return replacementInfo.getReplacements();
 				}
 			}
 		}

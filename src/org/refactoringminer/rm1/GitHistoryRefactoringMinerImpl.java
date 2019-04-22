@@ -86,7 +86,9 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			RefactoringType.RENAME_ATTRIBUTE,
 			RefactoringType.REPLACE_VARIABLE_WITH_ATTRIBUTE,
 			RefactoringType.PARAMETERIZE_VARIABLE,
-			RefactoringType.MERGE_PARAMETER
+			RefactoringType.MERGE_VARIABLE,
+			RefactoringType.MERGE_PARAMETER,
+			RefactoringType.MERGE_ATTRIBUTE
 		);
 	}
 

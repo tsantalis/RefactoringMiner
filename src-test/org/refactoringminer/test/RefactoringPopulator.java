@@ -36,7 +36,8 @@ public class RefactoringPopulator {
 									ExtractVariable(131072), RenameVariable(262144), RenameParameter(524288),
 									RenameAttribute(1048576), ParameterizeVariable(2097152),
 									ReplaceVariableWithAttribute(4194304), MoveAndRenameAttribute(8388608), ReplaceAttribute(16777216),
-									InlineVariable(33554432), ExtractClass(67108864), ExtractSubclass(134217728), MergeParameter(268435456), All(536870911);
+									InlineVariable(33554432), ExtractClass(67108864), ExtractSubclass(134217728),
+									MergeVariable(268435456), MergeParameter(536870912), MergeAttribute(1073741824), All(2147483647);
 		private int value;
 
 		private Refactorings(int value) {

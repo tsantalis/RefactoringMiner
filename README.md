@@ -24,6 +24,8 @@ Currently, it supports the detection of the following refactorings:
 19. Move and Rename Attribute
 20. Replace Variable with Attribute
 21. Replace Attribute (with Attribute)
+22. Merge Variable/Parameter
+23. Merge Attribute
 
 In order to build the project, run `./gradlew jar` (or `gradlew jar`, in Windows) in the project's root directory.
 Alternatively, you can generate a complete distribution zip including all runtime dependencies running `./gradlew distZip`.

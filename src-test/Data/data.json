@@ -33175,7 +33175,7 @@
         "description": "Rename Parameter i : int to slot : int in method public getRequest(slot int) : ItemStack in class buildcraft.builders.TileBuilder",
         "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>public</span> <span class='pl-smi x x-first'>StackRequest</span> <span class='pl-en x x-last'>getAvailableRequest</span>(<span class='pl-k'>int</span> <span class='pl-v x x-first x-last'>i</span>)</span> renamed to <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-k'>public</span> <span class='pl-smi x x-first'>ItemStack</span> <span class='pl-en x x-last'>getRequest</span>(<span class='pl-k'>int</span> <span class='pl-v x x-first x-last'>slot</span>)</span></p>",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }],
     "refDiffExecutionTime": 2449

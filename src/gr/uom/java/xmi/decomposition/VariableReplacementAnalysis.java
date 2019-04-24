@@ -27,6 +27,8 @@ import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.MergeVariableRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
+import gr.uom.java.xmi.diff.UMLOperationDiff;
+import gr.uom.java.xmi.diff.UMLParameterDiff;
 
 public class VariableReplacementAnalysis {
 	private List<AbstractCodeMapping> mappings;
@@ -35,19 +37,21 @@ public class VariableReplacementAnalysis {
 	private List<UMLOperationBodyMapper> additionalMappers;
 	private Set<Refactoring> refactorings;
 	private UMLOperation callSiteOperation;
+	private UMLOperationDiff operationDiff;
 	private Set<RenameVariableRefactoring> variableRenames = new LinkedHashSet<RenameVariableRefactoring>();
 	private Set<MergeVariableRefactoring> variableMerges = new LinkedHashSet<MergeVariableRefactoring>();
 	private Set<CandidateAttributeRefactoring> candidateAttributeRenames = new LinkedHashSet<CandidateAttributeRefactoring>();
 	private Set<CandidateMergeVariableRefactoring> candidateAttributeMerges = new LinkedHashSet<CandidateMergeVariableRefactoring>();
 
 	public VariableReplacementAnalysis(List<AbstractCodeMapping> mappings, UMLOperation operation1, UMLOperation operation2,
-			List<UMLOperationBodyMapper> additionalMappers, Set<Refactoring> refactorings, UMLOperation callSiteOperation) {
+			List<UMLOperationBodyMapper> additionalMappers, Set<Refactoring> refactorings, UMLOperation callSiteOperation, UMLOperationDiff operationDiff) {
 		this.mappings = mappings;
 		this.operation1 = operation1;
 		this.operation2 = operation2;
 		this.additionalMappers = additionalMappers;
 		this.refactorings = refactorings;
 		this.callSiteOperation = callSiteOperation;
+		this.operationDiff = operationDiff;
 		findVariableMerges();
 		findConsistentVariableRenames();
 	}
@@ -246,6 +250,42 @@ public class VariableReplacementAnalysis {
 						}
 					}
 				}
+			}
+		}
+		if(operationDiff != null) {
+			List<UMLParameterDiff> allParameterDiffs = new ArrayList<UMLParameterDiff>();
+			for(UMLParameterDiff parameterDiff : operationDiff.getParameterDiffList()) {
+				if(parameterDiff.isNameChanged()) {
+					allParameterDiffs.add(parameterDiff);
+				}
+			}
+			List<UMLParameterDiff> matchedParameterDiffs = new ArrayList<UMLParameterDiff>();
+			for(UMLParameterDiff parameterDiff : allParameterDiffs) {
+				for(Replacement replacement : map.keySet()) {
+					VariableDeclarationReplacement vdR = (VariableDeclarationReplacement)replacement;
+					if(parameterDiff.getRemovedParameter().getVariableDeclaration().equals(vdR.getVariableDeclaration1()) &&
+							parameterDiff.getAddedParameter().getVariableDeclaration().equals(vdR.getVariableDeclaration2())) {
+						matchedParameterDiffs.add(parameterDiff);
+						break;
+					}
+				}
+			}
+			Set<VariableDeclarationReplacement> keysToBeRemoved = new LinkedHashSet<VariableDeclarationReplacement>();
+			for(UMLParameterDiff parameterDiff : matchedParameterDiffs) {
+				for(Replacement replacement : map.keySet()) {
+					VariableDeclarationReplacement vdR = (VariableDeclarationReplacement)replacement;
+					if(parameterDiff.getRemovedParameter().getVariableDeclaration().equals(vdR.getVariableDeclaration1()) &&
+							!parameterDiff.getAddedParameter().getVariableDeclaration().equals(vdR.getVariableDeclaration2())) {
+						keysToBeRemoved.add(vdR);
+					}
+					else if(!parameterDiff.getRemovedParameter().getVariableDeclaration().equals(vdR.getVariableDeclaration1()) &&
+							parameterDiff.getAddedParameter().getVariableDeclaration().equals(vdR.getVariableDeclaration2())) {
+						keysToBeRemoved.add(vdR);
+					}
+				}
+			}
+			for(VariableDeclarationReplacement key : keysToBeRemoved) {
+				map.remove(key);
 			}
 		}
 		return map;

@@ -93,6 +93,15 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		checkForExtractedOperations();
 	}
 
+	public UMLOperationDiff getOperationDiff(UMLOperation operation1, UMLOperation operation2) {
+		for(UMLOperationDiff diff : operationDiffList) {
+			if(diff.getRemovedOperation().equals(operation1) && diff.getAddedOperation().equals(operation2)) {
+				return diff;
+			}
+		}
+		return null;
+	}
+
 	protected void checkForAttributeChanges() {
 		//optional step
 	}

@@ -1576,6 +1576,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package getLoggingHandler() : LoggingHandlerImpl renamed to package getComponent() : JComponent in class com.intellij.remoteServer.impl.runtime.ui.tree.ServersTreeStructure.LogProvidingNode",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 14854
 }, {
@@ -1591,6 +1598,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter parent : TreePath to path : TreePath in method package removeNode(path TreePath) : void in class com.intellij.util.ui.EditableTreeModel",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 16962
@@ -1991,6 +2005,13 @@
     }, {
         "type": "Push Down Method",
         "description": "Push Down Method public getBlockSize() : long from class tachyon.worker.block.meta.BlockMetaBase to public getBlockSize() : long from class tachyon.worker.block.meta.BlockMeta",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter blockSize : long to initialBlockSize : long in method public TempBlockMeta(userId long, blockId long, initialBlockSize long, dir StorageDir) in class tachyon.worker.block.meta.TempBlockMeta",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -2739,6 +2760,27 @@
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Laleh"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter arg0 : Activation to existing : Activation in method public compare(existing Activation, adding Activation) : int in class org.drools.core.util.BinaryHeapQueueTest.ItemConflictResolver",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter arg1 : Activation to adding : Activation in method public compare(existing Activation, adding Activation) : int in class org.drools.core.util.BinaryHeapQueueTest.ItemConflictResolver",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package requiresImmediateFlushingIfNotFiring() : boolean renamed to package requiresImmediateFlushing() : boolean in class org.drools.core.phreak.PropagationEntry",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 13908
 }, {
@@ -3594,6 +3636,20 @@
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter nodes : Set<String> to downStreamNodes : Set<String> in method public downstreamNodes(downStreamNodes Set<String>) : void in class io.crate.planner.node.dql.AbstractDQLPlanNode",
+        "comment": "<p>Pulled Up method</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter executionNodeId : int to downstreamExecutionNodeId : int in method public downstreamExecutionNodeId(downstreamExecutionNodeId int) : void in class io.crate.planner.node.dql.AbstractDQLPlanNode",
+        "comment": "<p>Pulled Up method</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -5249,6 +5305,27 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable ghStorage : GraphHopperStorage in method public testTurnFlagCombination() : void from class com.graphhopper.reader.OSMReaderTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter bothDirection : boolean to bothDirections : boolean in method public edge(a int, b int, distance double, bothDirections boolean) : EdgeIteratorState in class com.graphhopper.storage.GraphHopperStorage",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter bothDirections : boolean to bothDirection : boolean in method public edge(a int, b int, distance double, bothDirection boolean) : EdgeIteratorState in class com.graphhopper.storage.BaseGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package abstract createGraph(location String, is3D boolean) : GraphStorage renamed to package abstract createGHStorage(location String, is3D boolean) : GraphHopperStorage in class com.graphhopper.storage.AbstractGraphStorageTester",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -9067,6 +9144,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter rootRelation : AnalyzedRelation to relation : AnalyzedRelation in method package consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.Consumer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3234
 }, {
@@ -10242,6 +10326,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter id : Object to idValue : Object in method public findById(idValue Object) : M in class com.jfinal.plugin.activerecord.Model",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1822
 }, {
@@ -10949,6 +11040,13 @@
     }, {
         "type": "Merge Variable",
         "description": "Merge Variable [localTxCount : int, remoteTxCount : int] to transactionTable : TransactionTable in method protected assertNoTransactions(cacheName String) : void in class org.infinispan.test.MultipleCacheManagersTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package removeRecoveryInformationFromCluster(where Collection<Address>, xid Xid, sync boolean, gtx GlobalTransaction) : void renamed to package removeRecoveryInformation(where Collection<Address>, xid Xid, sync boolean, gtx GlobalTransaction, fromCluster boolean) : void in class org.infinispan.transaction.xa.recovery.RecoveryManager",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -14281,7 +14379,7 @@
         "description": "Rename Parameter node : SqlNode to sqlNode : SqlNode in method public getPlan(sqlNode SqlNode) : PhysicalPlan in class org.apache.drill.exec.planner.sql.handlers.ExplainHandler",
         "comment": "<p>Variable declaration <span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-smi'>SqlNode</span> sqlNode <span class='pl-k'>=</span> rewrite(node); is deleted, and variable sqlNode replaces parameter node.<br /></span></p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Merge Parameter",
@@ -15087,6 +15185,13 @@
     }, {
         "type": "Extract Class",
         "description": "Extract Class org.neo4j.kernel.impl.transaction.log.LogEntryCursor from class org.neo4j.kernel.impl.transaction.log.PhysicalTransactionCursor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter currentVersion : long to upToVersion : long in method public pruneLogs(upToVersion long) : void in class org.neo4j.kernel.impl.transaction.log.pruning.LogPruningImpl",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -17490,6 +17595,13 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter clockSeqAndNode : long to nanos : long in method public getTimeUUID(when long, nanos long) : UUID in class org.apache.cassandra.utils.UUIDGen",
+        "comment": "<p>Parameter nanos is added to <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-en'>getTimeUUID</span>(<span class='pl-k'>long</span> <span class='pl-v'>when</span>, <span class='pl-k'>long</span> <span class='pl-v x x-first'>nanos</span><span class='x'>, </span><span class='pl-k x'>long</span> <span class='pl-v'>clockSeqAndNode</span>)</span></p>",
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 7672
 }, {
@@ -18635,6 +18747,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter actual : Object to object : Object in method public matches(object Object) : boolean in class org.mockito.internal.matchers.EqualsWithDelta",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1564
 }, {
@@ -20828,6 +20947,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter s : Schema to ws : Schema in method private unionTester(ws Schema, record GenericData.Record) : ResultPair in class org.apache.hadoop.hive.serde2.avro.TestAvroDeserializer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3223
 }, {
@@ -21964,6 +22090,34 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package visitAddedConstraint(element UniquenessConstraint) : void renamed to package visitAddedUniquePropertyConstraint(element UniquenessConstraint) : void in class org.neo4j.kernel.api.txstate.TxStateVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package visitRemovedConstraint(element UniquenessConstraint) : void renamed to package visitRemovedUniquePropertyConstraint(element UniquenessConstraint) : void in class org.neo4j.kernel.api.txstate.TxStateVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package uniquenessConstraintCreate(labelId int, propertyKeyId int) : UniquenessConstraint renamed to package uniquePropertyConstraintCreate(labelId int, propertyKeyId int) : UniquenessConstraint in class org.neo4j.kernel.api.SchemaWrite",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package uniquenessConstraintCreate(state KernelStatement, labelId int, propertyKeyId int) : UniquenessConstraint renamed to package uniquePropertyConstraintCreate(state KernelStatement, labelId int, propertyKeyId int) : UniquenessConstraint in class org.neo4j.kernel.impl.api.operations.SchemaWriteOperations",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 10145
 }, {
@@ -22199,6 +22353,13 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter left : Object to iLeft : Object in method public execute(iLeft Object, iRight Object) : boolean in class com.orientechnologies.orient.core.sql.parser.OEqualsCompareOperator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter right : Object to iRight : Object in method public execute(iLeft Object, iRight Object) : boolean in class com.orientechnologies.orient.core.sql.parser.OEqualsCompareOperator",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -22941,6 +23102,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package getAllocatedPages() : long renamed to package getExclusiveWriteCachePagesSize() : long in class com.orientechnologies.orient.core.storage.cache.OWriteCache",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 5282
 }, {
@@ -23616,7 +23784,7 @@
         "description": "Rename Parameter numRecords : int to valueCount : int in method public setInitialCapacity(valueCount int) : void in class org.apache.drill.exec.vector.BitVector",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -24800,6 +24968,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter classLoader : ClassLoader to userClassLoader : ClassLoader in method public ReflectionEntityNamesResolver(userClassLoader ClassLoader) in class org.infinispan.objectfilter.impl.hql.ReflectionEntityNamesResolver",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 6361
 }, {
@@ -25339,6 +25514,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter inputFile : Path to file : Path in method public visitFile(file Path, attrs BasicFileAttributes) : FileVisitResult in class net.orfjackal.retrolambda.files.BytecodeFileVisitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 384
 }, {
@@ -25454,6 +25636,34 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ast : DetailAST to literalIf : DetailAST in method public leaveToken(literalIf DetailAST) : void in class com.puppycrawl.tools.checkstyle.checks.coding.NestedIfDepthCheck",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ast : DetailAST to literalTry : DetailAST in method public leaveToken(literalTry DetailAST) : void in class com.puppycrawl.tools.checkstyle.checks.coding.NestedTryDepthCheck",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ast : DetailAST to literalTry : DetailAST in method public visitToken(literalTry DetailAST) : void in class com.puppycrawl.tools.checkstyle.checks.coding.NestedTryDepthCheck",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ast : DetailAST to literalIf : DetailAST in method public visitToken(literalIf DetailAST) : void in class com.puppycrawl.tools.checkstyle.checks.coding.NestedIfDepthCheck",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 1138
@@ -25696,6 +25906,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter launchTime : long to taskLaunch : long in method protected launchTask(request SingularityRequest, deploy SingularityDeploy, taskLaunch long, instanceNo int, initialTaskState TaskState) : SingularityTask in class com.hubspot.singularity.SingularitySchedulerTestBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 838
@@ -26766,6 +26983,13 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter addresses : Address[] to ioService : IOService in method package MockConnectionManager(ioService IOService, nodes ConcurrentMap<Address,NodeEngineImpl>, node Node, joinerLock Object) in class com.hazelcast.test.TestNodeRegistry.MockConnectionManager",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter conn : Connection to connection : Connection in method public destroyConnection(connection Connection) : void in class com.hazelcast.test.TestNodeRegistry.MockConnectionManager",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -28840,6 +29064,20 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Laleh"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter declaring : Class<?> to targetType : Class<?> in method public parseAndValidatateMetadata(targetType Class<?>) : List<MethodMetadata> in class feign.Contract.BaseContract",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter declaring : Class<?> to targetType : Class<?> in method package parseAndValidatateMetadata(targetType Class<?>) : List<MethodMetadata> in class feign.Contract",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 617
 }, {
@@ -29690,6 +29928,13 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter libPath : String to jarPath : String in method public addJarToRoots(jarPath String, module Module, location PsiElement) : void in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 36330
 }, {
@@ -30741,6 +30986,20 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable statuses : List<CreateIdStatus<Object>> to collectionCreateList : List<CreateCollectionResponseEnvelope.CollectionCreateResponseItem> in method public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, result Object, headers Map<String,String>) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.BatchCreateResponseBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package setAugmentedRestLiResponseData(data AugmentedRestLiResponseData) : void renamed to package setRestLiResponseEnvelope(data RestLiResponseEnvelope) : void in class com.linkedin.restli.internal.server.filter.FilterResponseContextInternal",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package getAugmentedRestLiResponseData() : AugmentedRestLiResponseData renamed to package getRestLiResponseEnvelope() : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.filter.FilterResponseContextInternal",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -33158,17 +33417,17 @@
         "validators": null
     }, {
         "type": "Rename Parameter",
-        "description": "Rename Parameter i : int to slot : int in method getRequest(slot int) : ItemStack in class buildcraft.api.robots.IRequestProvider",
+        "description": "Rename Parameter i : int to slot : int in method package getRequest(slot int) : ItemStack in class buildcraft.api.robots.IRequestProvider",
         "comment": "<p>Interface method</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
-        "description": "Rename Parameter i : int to slot : int in method offerItem(slot int, stack ItemStack) : ItemStack in class buildcraft.api.robots.IRequestProvider",
+        "description": "Rename Parameter i : int to slot : int in method package offerItem(slot int, stack ItemStack) : ItemStack in class buildcraft.api.robots.IRequestProvider",
         "comment": "<p>Interface method</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
@@ -33177,6 +33436,34 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package getAvailableRequest(i int) : StackRequest renamed to package getRequest(slot int) : ItemStack in class buildcraft.api.robots.IRequestProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package provideItemsForRequest(i int, stack ItemStack) : ItemStack renamed to package offerItem(slot int, stack ItemStack) : ItemStack in class buildcraft.api.robots.IRequestProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package getNumberOfRequests() : int renamed to package getRequestsCount() : int in class buildcraft.api.robots.IRequestProvider",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public getRequest(index int) : ItemStack renamed to public getRequestTemplate(index int) : ItemStack in class buildcraft.robotics.TileRequester",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2449
 }, {
@@ -33517,6 +33804,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package indexUpdates(index IndexDescriptor, value Object) : ReadableDiffSets<Long> renamed to package indexUpdatesForScanOrSeek(index IndexDescriptor, value Object) : ReadableDiffSets<Long> in class org.neo4j.kernel.api.txstate.ReadableTxState",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package indexUpdatesForPrefix(index IndexDescriptor, prefix String) : ReadableDiffSets<Long> renamed to package indexUpdatesForRangeSeekByPrefix(index IndexDescriptor, prefix String) : ReadableDiffSets<Long> in class org.neo4j.kernel.api.txstate.ReadableTxState",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4473
 }, {
@@ -33601,6 +33902,13 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter cs : CharSequence to str : CharSequence in method package wcwidth(str CharSequence, pos int) : int in class jline.console.ConsoleReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter delta : int to pos : int in method private clearAhead(num int, pos int) : void in class jline.console.ConsoleReader",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -33756,6 +34064,13 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter str : String to input : String in method public TempFeature(input String, tagNum int) in class org.ansj.app.crf.CrfppModelParser.TempFeature",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter modelStream : InputStream to inputStream : InputStream in method public loadModel(inputStream InputStream) : Model in class org.ansj.app.crf.Model",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -34036,6 +34351,41 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter context : Context to rootContext : Context in method package initialise(rootContext Context) : void in class org.terasology.engine.subsystem.EngineSubsystem",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter context : Context to rootContext : Context in method package preInitialise(rootContext Context) : void in class org.terasology.engine.subsystem.EngineSubsystem",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter newContext : Context to rootContext : Context in method public postInitialise(rootContext Context) : void in class org.terasology.engine.subsystem.lwjgl.LwjglGraphics",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package shutdown(config Config) : void renamed to package preShutdown() : void in class org.terasology.engine.subsystem.EngineSubsystem",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package dispose() : void renamed to package shutdown() : void in class org.terasology.engine.subsystem.EngineSubsystem",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 2583
@@ -36718,6 +37068,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter other : JSType to that : JSType in method public isSubtype(that JSType) : boolean in class com.google.javascript.rhino.jstype.ArrowType",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3978
 }, {
@@ -36819,6 +37176,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter key : Data to data : Data in method public calculateDataSize(data Data) : int in class com.hazelcast.client.impl.protocol.util.ParameterUtil",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 1902
@@ -37587,6 +37951,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter definition : String to genericDefinition : String in method public setGenericDefinition(genericDefinition String) : void in class org.springframework.roo.classpath.details.AbstractInvocableMemberMetadataBuilder",
+        "comment": "<p>Pulled Up method</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 1124
 }, {
@@ -39822,6 +40193,41 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter comparator : Comparator<? super T> to valueComparator : Comparator<? super T> in method public contains(name T, value T, valueComparator Comparator<? super T>) : boolean in class io.netty.handler.codec.EmptyHeaders",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ignoreCase : boolean to singleHeaderFields : boolean in method public DefaultTextHeaders(singleHeaderFields boolean) in class io.netty.handler.codec.DefaultTextHeaders",
+        "comment": "<p>Parameter ignoreCase is removed.</p>",
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter comparator : Comparator<? super T> to valueComparator : Comparator<? super T> in method public contains(name T, value T, valueComparator Comparator<? super T>) : boolean in class io.netty.handler.codec.DefaultHeaders",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter comparator : Comparator<? super T> to valueComparator : Comparator<? super T> in method package contains(name T, value T, valueComparator Comparator<? super T>) : boolean in class io.netty.handler.codec.Headers",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method package getInt(name T, defaultValue short) : short renamed to package getShort(name T, defaultValue short) : short in class io.netty.handler.codec.Headers",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2532
 }, {
@@ -39854,6 +40260,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter node : AbstractPlanNode to fragment : AbstractPlanNode in method protected findAllAggPlanNodes(fragment AbstractPlanNode) : List<AbstractPlanNode> in class org.voltdb.planner.PlannerTestCase",
+        "comment": "<p>Pulled Up method</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -44835,6 +45248,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable actualValue : Object to value : Object in method public assertValueIsArray(content String) : void in class org.springframework.test.util.JsonPathExpectationsHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter responseContent : String to content : String in method public assertValueIsArray(content String) : void in class org.springframework.test.util.JsonPathExpectationsHelper",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

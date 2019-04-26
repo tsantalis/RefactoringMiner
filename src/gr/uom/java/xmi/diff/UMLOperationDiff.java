@@ -34,28 +34,26 @@ public class UMLOperationDiff {
 			visibilityChanged = true;
 		if(removedOperation.isAbstract() != addedOperation.isAbstract())
 			abstractionChanged = true;
-		if(!removedOperation.getParameters().equals(addedOperation.getParameters())) {
-			if(!removedOperation.equalReturnParameter(addedOperation))
-				returnTypeChanged = true;
-			updateAddedRemovedParameters(removedOperation, addedOperation);
-			for(Iterator<UMLParameter> removedParameterIterator = removedParameters.iterator(); removedParameterIterator.hasNext();) {
-				UMLParameter removedParameter = removedParameterIterator.next();
-				for(Iterator<UMLParameter> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
-					UMLParameter addedParameter = addedParameterIterator.next();
-					if(removedParameter.getName().equals(addedParameter.getName())) {
-						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter);
-						parameterDiffList.add(parameterDiff);
-						addedParameterIterator.remove();
-						removedParameterIterator.remove();
-						break;
-					}
-					else if(removedParameter.getType().equalsQualified(addedParameter.getType())) {
-						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter);
-						parameterDiffList.add(parameterDiff);
-						addedParameterIterator.remove();
-						removedParameterIterator.remove();
-						break;
-					}
+		if(!removedOperation.equalReturnParameter(addedOperation))
+			returnTypeChanged = true;
+		updateAddedRemovedParameters(removedOperation, addedOperation);
+		for(Iterator<UMLParameter> removedParameterIterator = removedParameters.iterator(); removedParameterIterator.hasNext();) {
+			UMLParameter removedParameter = removedParameterIterator.next();
+			for(Iterator<UMLParameter> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
+				UMLParameter addedParameter = addedParameterIterator.next();
+				if(removedParameter.getName().equals(addedParameter.getName())) {
+					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter);
+					parameterDiffList.add(parameterDiff);
+					addedParameterIterator.remove();
+					removedParameterIterator.remove();
+					break;
+				}
+				else if(removedParameter.getType().equalsQualified(addedParameter.getType())) {
+					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter);
+					parameterDiffList.add(parameterDiff);
+					addedParameterIterator.remove();
+					removedParameterIterator.remove();
+					break;
 				}
 			}
 		}
@@ -110,6 +108,10 @@ public class UMLOperationDiff {
 
 	public List<UMLParameter> getRemovedParameters() {
 		return removedParameters;
+	}
+
+	public boolean isOperationRenamed() {
+		return operationRenamed;
 	}
 
 	public boolean isEmpty() {

@@ -102,6 +102,30 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		return null;
 	}
 
+	public UMLOperationBodyMapper findMapperWithMatchingSignatures(UMLOperation operation1, UMLOperation operation2) {
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			if(mapper.getOperation1().equalSignature(operation1) && mapper.getOperation2().equalSignature(operation2)) {
+				return mapper;
+			}
+		}
+		return null;
+	}
+
+	public UMLOperationBodyMapper findMapperWithMatchingSignature2(UMLOperation operation2) {
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			if(mapper.getOperation2().equalSignature(operation2)) {
+				return mapper;
+			}
+		}
+		return null;
+	}
+
+	public Set<UMLType> nextClassCommonInterfaces(UMLClassBaseDiff other) {
+		Set<UMLType> common = new LinkedHashSet<UMLType>(nextClass.getImplementedInterfaces());
+		common.retainAll(other.nextClass.getImplementedInterfaces());
+		return common;
+	}
+
 	protected void checkForAttributeChanges() {
 		//optional step
 	}
@@ -344,8 +368,16 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		return candidateAttributeMerges;
 	}
 
-	public boolean containsOperationWithTheSameSignature(UMLOperation operation) {
+	public boolean containsOperationWithTheSameSignatureInOriginalClass(UMLOperation operation) {
 		for(UMLOperation originalOperation : originalClass.getOperations()) {
+			if(originalOperation.equalSignature(operation))
+				return true;
+		}
+		return false;
+	}
+
+	public boolean containsOperationWithTheSameSignatureInNextClass(UMLOperation operation) {
+		for(UMLOperation originalOperation : nextClass.getOperations()) {
 			if(originalOperation.equalSignature(operation))
 				return true;
 		}

@@ -74,6 +74,19 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 		for(UMLOperation originalOperation : originalClass.getOperations()) {
 			for(UMLOperation nextOperation : nextClass.getOperations()) {
 				if(originalOperation.equalsQualified(nextOperation)) {
+					if(getModelDiff() != null) {
+						List<UMLOperationBodyMapper> mappers = getModelDiff().findMappersWithMatchingSignature2(nextOperation);
+						if(mappers.size() > 0) {
+							UMLOperation operation1 = mappers.get(0).getOperation1();
+							if(!operation1.equalSignature(originalOperation) &&
+									getModelDiff().commonlyImplementedOperations(operation1, nextOperation, this)) {
+								if(!removedOperations.contains(originalOperation)) {
+									removedOperations.add(originalOperation);
+								}
+								break;
+							}
+						}
+					}
 					UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(originalOperation, nextOperation);
 	    			for(UMLParameterDiff parameterDiff : operationSignatureDiff.getParameterDiffList()) {
 	    				if(parameterDiff.isNameChanged()) {
@@ -93,7 +106,7 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 			}
 		}
 		for(UMLOperation operation : originalClass.getOperations()) {
-			if(!containsMapperForOperation(operation) && nextClass.getOperations().contains(operation)) {
+			if(!containsMapperForOperation(operation) && nextClass.getOperations().contains(operation) && !removedOperations.contains(operation)) {
     			int index = nextClass.getOperations().indexOf(operation);
     			int lastIndex = nextClass.getOperations().lastIndexOf(operation);
     			int finalIndex = index;

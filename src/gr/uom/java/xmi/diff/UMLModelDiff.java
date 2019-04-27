@@ -30,6 +30,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
@@ -401,7 +402,7 @@ public class UMLModelDiff {
       }
    }
 
-   public void checkForMovedClasses(Map<String, String> renamedFileHints, Set<String> repositoryDirectories, UMLClassMatcher matcher) {
+   public void checkForMovedClasses(Map<String, String> renamedFileHints, Set<String> repositoryDirectories, UMLClassMatcher matcher) throws RefactoringMinerTimedOutException {
 	   for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
 		   UMLClass removedClass = removedClassIterator.next();
 		   TreeSet<UMLClassMoveDiff> diffSet = new TreeSet<UMLClassMoveDiff>(new ClassMoveComparator());
@@ -462,7 +463,7 @@ public class UMLModelDiff {
 	   return false;
    }
 
-   public void checkForRenamedClasses(Map<String, String> renamedFileHints, UMLClassMatcher matcher) {
+   public void checkForRenamedClasses(Map<String, String> renamedFileHints, UMLClassMatcher matcher) throws RefactoringMinerTimedOutException {
       for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
          UMLClass removedClass = removedClassIterator.next();
          TreeSet<UMLClassRenameDiff> diffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
@@ -802,7 +803,7 @@ public class UMLModelDiff {
 	   return mappers;
    }
 
-   private List<ExtractClassRefactoring> identifyExtractClassRefactorings(List<? extends UMLClassBaseDiff> classDiffs) {
+   private List<ExtractClassRefactoring> identifyExtractClassRefactorings(List<? extends UMLClassBaseDiff> classDiffs) throws RefactoringMinerTimedOutException {
 	   List<ExtractClassRefactoring> refactorings = new ArrayList<ExtractClassRefactoring>();
 	   for(UMLClass addedClass : addedClasses) {
 		   List<CandidateExtractClassRefactoring> candidates = new ArrayList<CandidateExtractClassRefactoring>();
@@ -895,7 +896,7 @@ public class UMLModelDiff {
 	   return null;
    }
 
-   private List<ExtractSuperclassRefactoring> identifyExtractSuperclassRefactorings() {
+   private List<ExtractSuperclassRefactoring> identifyExtractSuperclassRefactorings() throws RefactoringMinerTimedOutException {
       List<ExtractSuperclassRefactoring> refactorings = new ArrayList<ExtractSuperclassRefactoring>();
       for(UMLClass addedClass : addedClasses) {
          Set<UMLClass> subclassSet = new LinkedHashSet<UMLClass>();
@@ -935,7 +936,7 @@ public class UMLModelDiff {
       return refactorings;
    }
 
-   private void processAddedGeneralization(UMLClass addedClass, Set<UMLClass> subclassSet, UMLGeneralization addedGeneralization) {
+   private void processAddedGeneralization(UMLClass addedClass, Set<UMLClass> subclassSet, UMLGeneralization addedGeneralization) throws RefactoringMinerTimedOutException {
 	   String parent = addedGeneralization.getParent();
 	   UMLClass subclass = addedGeneralization.getChild();
 	   if(looksLikeSameType(parent, addedClass.getName()) && topLevelOrSameOuterClass(addedClass, subclass) && getAddedClass(subclass.getName()) == null) {
@@ -947,7 +948,7 @@ public class UMLModelDiff {
 	   }
    }
 
-   private void detectSubRefactorings(UMLClassBaseDiff classDiff, UMLClass addedClass, RefactoringType parentType) {
+   private void detectSubRefactorings(UMLClassBaseDiff classDiff, UMLClass addedClass, RefactoringType parentType) throws RefactoringMinerTimedOutException {
 	   for(UMLOperation addedOperation : addedClass.getOperations()) {
 		   UMLOperation removedOperation = classDiff.containsRemovedOperationWithTheSameSignature(addedOperation);
 		   if(removedOperation != null) {
@@ -972,7 +973,7 @@ public class UMLModelDiff {
 				   }
 			   }
 			   this.refactorings.add(ref);
-			   UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
+			   UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
 			   checkForExtractedOperationsWithinMovedMethod(mapper, addedClass);
 		   }
 	   }
@@ -995,7 +996,7 @@ public class UMLModelDiff {
 	   }
    }
 
-   private void checkForExtractedOperationsWithinMovedMethod(UMLOperationBodyMapper movedMethodMapper, UMLClass addedClass) {
+   private void checkForExtractedOperationsWithinMovedMethod(UMLOperationBodyMapper movedMethodMapper, UMLClass addedClass) throws RefactoringMinerTimedOutException {
 	   UMLOperation removedOperation = movedMethodMapper.getOperation1();
 	   UMLOperation addedOperation = movedMethodMapper.getOperation2();
 	   Set<OperationInvocation> removedInvocations = removedOperation.getAllOperationInvocations();
@@ -1152,7 +1153,7 @@ public class UMLModelDiff {
       return refactorings;
    }
 
-   public List<Refactoring> getRefactorings() {
+   public List<Refactoring> getRefactorings() throws RefactoringMinerTimedOutException {
       Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
       refactorings.addAll(getMoveClassRefactorings());
       refactorings.addAll(getRenameClassRefactorings());
@@ -1419,7 +1420,7 @@ public class UMLModelDiff {
 	  }
    }
 
-   private void checkForExtractedAndMovedOperations(List<UMLOperationBodyMapper> mappers, List<UMLOperation> addedOperations) {
+   private void checkForExtractedAndMovedOperations(List<UMLOperationBodyMapper> mappers, List<UMLOperation> addedOperations) throws RefactoringMinerTimedOutException {
       for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
     	  UMLOperation addedOperation = addedOperationIterator.next();
     	  for(UMLOperationBodyMapper mapper : mappers) {
@@ -1581,7 +1582,7 @@ public class UMLModelDiff {
 			   (mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2()));
    }
 
-   private void checkForOperationMovesIncludingRemovedClasses() {
+   private void checkForOperationMovesIncludingRemovedClasses() throws RefactoringMinerTimedOutException {
       List<UMLOperation> addedOperations = getAddedAndExtractedOperationsInCommonClasses();
       /*for(UMLClass addedClass : addedClasses) {
     	  addedOperations.addAll(addedClass.getOperations());
@@ -1595,7 +1596,7 @@ public class UMLModelDiff {
       }
    }
 
-   private void checkForOperationMovesIncludingAddedClasses() {
+   private void checkForOperationMovesIncludingAddedClasses() throws RefactoringMinerTimedOutException {
       List<UMLOperation> addedOperations = getAddedOperationsInCommonClasses();
       for(UMLClass addedClass : addedClasses) {
     	  addedOperations.addAll(addedClass.getOperations());
@@ -1609,7 +1610,7 @@ public class UMLModelDiff {
       }
    }
 
-   private void checkForOperationMovesBetweenCommonClasses() {
+   private void checkForOperationMovesBetweenCommonClasses() throws RefactoringMinerTimedOutException {
       List<UMLOperation> addedOperations = getAddedAndExtractedOperationsInCommonClasses();
       List<UMLOperation> removedOperations = getRemovedOperationsInCommonClasses();
       if(removedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS || addedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
@@ -1617,7 +1618,7 @@ public class UMLModelDiff {
       }
    }
 
-   private void checkForOperationMovesBetweenRemovedAndAddedClasses() {
+   private void checkForOperationMovesBetweenRemovedAndAddedClasses() throws RefactoringMinerTimedOutException {
 	   Set<UMLType> interfacesImplementedByAddedClasses = new LinkedHashSet<UMLType>();
 	   for(UMLClass addedClass : addedClasses) {
 		   interfacesImplementedByAddedClasses.addAll(addedClass.getImplementedInterfaces());
@@ -1663,7 +1664,7 @@ public class UMLModelDiff {
 	   return false;
    }
 
-   private void checkForOperationMoves(List<UMLOperation> addedOperations, List<UMLOperation> removedOperations) {
+   private void checkForOperationMoves(List<UMLOperation> addedOperations, List<UMLOperation> removedOperations) throws RefactoringMinerTimedOutException {
 	   if(addedOperations.size() <= removedOperations.size()) {
 	      for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 	         UMLOperation addedOperation = addedOperationIterator.next();
@@ -1671,7 +1672,7 @@ public class UMLModelDiff {
 	         for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 	            UMLOperation removedOperation = removedOperationIterator.next();
 	            
-	            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
+	            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, null);
 	            operationBodyMapper.getMappings();
 	            int mappings = operationBodyMapper.mappingsWithoutBlocks();
 	            if(mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) {
@@ -1753,7 +1754,7 @@ public class UMLModelDiff {
 	         for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 	            UMLOperation addedOperation = addedOperationIterator.next();
 	            
-	            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation);
+	            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, null);
 	            operationBodyMapper.getMappings();
 	            int mappings = operationBodyMapper.mappingsWithoutBlocks();
 	            if(mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) {

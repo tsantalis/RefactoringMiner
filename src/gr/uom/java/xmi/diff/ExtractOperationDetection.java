@@ -8,6 +8,8 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.refactoringminer.api.RefactoringMinerTimedOutException;
+
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
@@ -27,7 +29,7 @@ public class ExtractOperationDetection {
 		this.modelDiff = modelDiff;
 	}
 
-	public ExtractOperationRefactoring check(UMLOperationBodyMapper mapper, UMLOperation addedOperation) {
+	public ExtractOperationRefactoring check(UMLOperationBodyMapper mapper, UMLOperation addedOperation) throws RefactoringMinerTimedOutException {
 		if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
 			!mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
 			Set<OperationInvocation> operationInvocations = mapper.getOperation2().getAllOperationInvocations();
@@ -96,7 +98,7 @@ public class ExtractOperationDetection {
 	}
 
 	private UMLOperationBodyMapper createMapperForExtractedMethod(UMLOperationBodyMapper mapper,
-			UMLOperation originalOperation, UMLOperation addedOperation, OperationInvocation addedOperationInvocation) {
+			UMLOperation originalOperation, UMLOperation addedOperation, OperationInvocation addedOperationInvocation) throws RefactoringMinerTimedOutException {
 		List<UMLParameter> originalMethodParameters = originalOperation.getParametersWithoutReturnType();
 		Map<UMLParameter, UMLParameter> originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters = new LinkedHashMap<UMLParameter, UMLParameter>();
 		List<String> arguments = addedOperationInvocation.getArguments();

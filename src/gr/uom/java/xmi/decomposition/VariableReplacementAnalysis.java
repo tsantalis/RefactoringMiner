@@ -32,6 +32,7 @@ import gr.uom.java.xmi.diff.UMLParameterDiff;
 
 public class VariableReplacementAnalysis {
 	private List<AbstractCodeMapping> mappings;
+	private List<StatementObject> nonMappedLeavesT2;
 	private UMLOperation operation1;
 	private UMLOperation operation2;
 	private List<UMLOperationBodyMapper> additionalMappers;
@@ -43,17 +44,41 @@ public class VariableReplacementAnalysis {
 	private Set<CandidateAttributeRefactoring> candidateAttributeRenames = new LinkedHashSet<CandidateAttributeRefactoring>();
 	private Set<CandidateMergeVariableRefactoring> candidateAttributeMerges = new LinkedHashSet<CandidateMergeVariableRefactoring>();
 
-	public VariableReplacementAnalysis(List<AbstractCodeMapping> mappings, UMLOperation operation1, UMLOperation operation2,
-			List<UMLOperationBodyMapper> additionalMappers, Set<Refactoring> refactorings, UMLOperation callSiteOperation, UMLOperationDiff operationDiff) {
-		this.mappings = mappings;
-		this.operation1 = operation1;
-		this.operation2 = operation2;
-		this.additionalMappers = additionalMappers;
+	public VariableReplacementAnalysis(UMLOperationBodyMapper mapper, Set<Refactoring> refactorings, UMLOperationDiff operationDiff) {
+		this.mappings = mapper.getMappings();
+		this.nonMappedLeavesT2 = mapper.getNonMappedLeavesT2();
+		this.operation1 = mapper.getOperation1();
+		this.operation2 = mapper.getOperation2();
+		this.additionalMappers = mapper.getAdditionalMappers();
 		this.refactorings = refactorings;
-		this.callSiteOperation = callSiteOperation;
+		this.callSiteOperation = mapper.getCallSiteOperation();
 		this.operationDiff = operationDiff;
 		findVariableMerges();
 		findConsistentVariableRenames();
+		findParametersWrappedInLocalVariables();
+	}
+
+	private void findParametersWrappedInLocalVariables() {
+		for(StatementObject statement : nonMappedLeavesT2) {
+			for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
+				AbstractExpression initializer = declaration.getInitializer();
+				if(initializer != null) {
+					for(String key : initializer.getCreationMap().keySet()) {
+						ObjectCreation creation = initializer.getCreationMap().get(key);
+						for(String argument : creation.arguments) {
+							SimpleEntry<VariableDeclaration, UMLOperation> v2 = getVariableDeclaration2(new Replacement("", argument, ReplacementType.VARIABLE_NAME));
+							SimpleEntry<VariableDeclaration, UMLOperation> v1 = getVariableDeclaration1(new Replacement(declaration.getVariableName(), "", ReplacementType.VARIABLE_NAME));
+							if(v2 != null && v1 != null) {
+								RenameVariableRefactoring ref = new RenameVariableRefactoring(v1.getKey(), v2.getKey(), v1.getValue(), v2.getValue(), new ArrayList<AbstractCodeMapping>());
+								if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref)) {
+									variableRenames.add(ref);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public Set<RenameVariableRefactoring> getVariableRenames() {

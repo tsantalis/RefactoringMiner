@@ -3778,10 +3778,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter task : ImportTask to item : ImportTask in method public pre(item ImportTask, data ImportData) : void in class org.geoserver.importer.transform.TransformChain",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>Method pre(item ImportTask, data ImportData) has been pulled up from subclass org.geoserver.importer.transform.VectorTransformChain with the same parameter name for item.</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 6443
 }, {
@@ -19304,7 +19304,7 @@
         "description": "Rename Parameter responseHandler : HttpResponseHandler<AmazonWebServiceResponse<X>> to unmarshaller : Unmarshaller<X,JsonUnmarshallerContext> in method private invoke(request Request<Y>, unmarshaller Unmarshaller<X,JsonUnmarshallerContext>, executionContext ExecutionContext) : Response<X> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemClient",
         "comment": "<p>responseHandler is instantiated inside invoke() and wraps the unmarshaller<br />JsonResponseHandler&lt;X&gt; responseHandler = new JsonResponseHandler&lt;X&gt;(unmarshaller);</p>",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Variable",

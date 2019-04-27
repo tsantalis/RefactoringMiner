@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.UMLAnonymousClass;
@@ -81,7 +82,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		this.modelDiff = modelDiff;
 	}
 
-	public void process() {
+	public void process() throws RefactoringMinerTimedOutException {
 		processInheritance();
 		processOperations();
 		processAttributes();
@@ -130,7 +131,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		//optional step
 	}
 
-	protected void createBodyMappers() {
+	protected void createBodyMappers() throws RefactoringMinerTimedOutException {
 		//optional step
 	}
 
@@ -168,7 +169,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
     	}
 	}
 
-	protected void processOperations() {
+	protected void processOperations() throws RefactoringMinerTimedOutException {
 		for(UMLOperation operation : originalClass.getOperations()) {
     		UMLOperation operationWithTheSameSignature = nextClass.operationWithTheSameSignatureIgnoringChangedTypes(operation);
 			if(operationWithTheSameSignature == null) {
@@ -774,7 +775,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		return Math.abs(index1-index2);
 	}
 
-	private void checkForOperationSignatureChanges() {
+	private void checkForOperationSignatureChanges() throws RefactoringMinerTimedOutException {
 		consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
 		if(removedOperations.size() <= addedOperations.size()) {
 			for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
@@ -868,7 +869,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		return allConsistentMethodInvocationRenames;
 	}
 
-	private void updateMapperSet(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperation removedOperation, UMLOperation addedOperation, int differenceInPosition) {
+	private void updateMapperSet(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperation removedOperation, UMLOperation addedOperation, int differenceInPosition) throws RefactoringMinerTimedOutException {
 		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
 		List<AbstractCodeMapping> totalMappings = operationBodyMapper.getMappings();
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
@@ -912,7 +913,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		}
 	}
 
-	private void updateMapperSet(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperation removedOperation, UMLOperation operationInsideAnonymousClass, UMLOperation addedOperation, int differenceInPosition) {
+	private void updateMapperSet(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperation removedOperation, UMLOperation operationInsideAnonymousClass, UMLOperation addedOperation, int differenceInPosition) throws RefactoringMinerTimedOutException {
 		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, operationInsideAnonymousClass, this);
 		operationBodyMapper.getMappings();
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
@@ -1217,7 +1218,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		return operationsBeforeMatch || operationsAfterMatch;
 	}
 
-	private void checkForInlinedOperations() {
+	private void checkForInlinedOperations() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
 		for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 			UMLOperation removedOperation = removedOperationIterator.next();
@@ -1281,7 +1282,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		return false;
 	}
 
-	private void checkForExtractedOperations() {
+	private void checkForExtractedOperations() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
 		for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 			UMLOperation addedOperation = addedOperationIterator.next();

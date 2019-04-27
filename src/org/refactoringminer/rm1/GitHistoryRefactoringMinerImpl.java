@@ -24,6 +24,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -46,6 +52,7 @@ import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringHandler;
+import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.GitServiceImpl;
 import org.slf4j.Logger;
@@ -383,12 +390,32 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			}
 		} catch (MissingObjectException moe) {
 			this.detectRefactorings(handler, projectFolder, cloneURL, commitId);
+		} catch (RefactoringMinerTimedOutException e) {
+			logger.warn(String.format("Ignored revision %s due to timeout", commitId), e);
 		} catch (Exception e) {
 			logger.warn(String.format("Ignored revision %s due to error", commitId), e);
 			handler.handleException(commitId, e);
 		} finally {
 			walk.close();
 			walk.dispose();
+		}
+	}
+
+	public void detectAtCommit(Repository repository, String cloneURL, String commitId, RefactoringHandler handler, int timeout) {
+		ExecutorService service = Executors.newSingleThreadExecutor();
+		Future<?> f = null;
+		try {
+			Runnable r = () -> detectAtCommit(repository, cloneURL, commitId, handler);
+			f = service.submit(r);
+			f.get(timeout, TimeUnit.SECONDS);
+		} catch (TimeoutException e) {
+			f.cancel(true);
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} finally {
+			service.shutdown();
 		}
 	}
 

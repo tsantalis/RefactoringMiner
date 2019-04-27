@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.refactoringminer.api.RefactoringMinerTimedOutException;
+
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
@@ -70,7 +72,7 @@ public class UMLClassDiff extends UMLClassBaseDiff {
     	}
 	}
 
-	protected void createBodyMappers() {
+	protected void createBodyMappers() throws RefactoringMinerTimedOutException {
 		for(UMLOperation originalOperation : originalClass.getOperations()) {
 			for(UMLOperation nextOperation : nextClass.getOperations()) {
 				if(originalOperation.equalsQualified(nextOperation)) {

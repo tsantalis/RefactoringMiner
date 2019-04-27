@@ -34,12 +34,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper> {
 	private UMLOperation operation1;
 	private UMLOperation operation2;
-	private boolean isInitialized = true;
 	private List<AbstractCodeMapping> mappings;
 	private List<StatementObject> nonMappedLeavesT1;
 	private List<StatementObject> nonMappedLeavesT2;
@@ -55,7 +55,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private UMLModelDiff modelDiff;
 	private UMLOperation callSiteOperation;
 	
-	public UMLOperationBodyMapper(UMLOperation operation1, UMLOperation operation2) {
+	public UMLOperationBodyMapper(UMLOperation operation1, UMLOperation operation2, UMLClassBaseDiff classDiff) throws RefactoringMinerTimedOutException {
+		this.classDiff = classDiff;
+		if(classDiff != null)
+			this.modelDiff = classDiff.getModelDiff();
 		this.operation1 = operation1;
 		this.operation2 = operation2;
 		this.mappings = new ArrayList<AbstractCodeMapping>();
@@ -63,34 +66,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.nonMappedLeavesT2 = new ArrayList<StatementObject>();
 		this.nonMappedInnerNodesT1 = new ArrayList<CompositeStatementObject>();
 		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
-		this.isInitialized = false;
-	}
-
-	public UMLOperationBodyMapper(UMLOperation operation1, UMLOperation operation2, UMLClassBaseDiff classDiff) {
-		this(operation1, operation2);
-		this.classDiff = classDiff;
-		this.modelDiff = classDiff.getModelDiff();
-	}
-
-	public void addAdditionalMapper(UMLOperationBodyMapper mapper) {
-		this.additionalMappers.add(mapper);
-		//TODO add logic to remove the mappings from "this" mapper,
-		//which are less similar than the mappings of the mapper passed as parameter
-	}
-
-	public List<UMLOperationBodyMapper> getAdditionalMappers() {
-		return additionalMappers;
-	}
-
-	public UMLOperation getCallSiteOperation() {
-		return callSiteOperation;
-	}
-
-	private void initialize() {
-		if (this.isInitialized) {
-			return;
-		}
-		this.isInitialized = true;
 		OperationBody body1 = operation1.getBody();
 		OperationBody body2 = operation2.getBody();
 		if(body1 != null && body2 != null) {
@@ -169,6 +144,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
+	public void addAdditionalMapper(UMLOperationBodyMapper mapper) {
+		this.additionalMappers.add(mapper);
+		//TODO add logic to remove the mappings from "this" mapper,
+		//which are less similar than the mappings of the mapper passed as parameter
+	}
+
+	public List<UMLOperationBodyMapper> getAdditionalMappers() {
+		return additionalMappers;
+	}
+
+	public UMLOperation getCallSiteOperation() {
+		return callSiteOperation;
+	}
+
 	private void resetNodes(List<? extends AbstractCodeFragment> nodes) {
 		for(AbstractCodeFragment node : nodes) {
 			node.resetArgumentization();
@@ -176,7 +165,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 	
 	public UMLOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper, UMLOperation addedOperation,
-			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2) {
+			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2) throws RefactoringMinerTimedOutException {
 		this.operation1 = operationBodyMapper.operation1;
 		this.callSiteOperation = operationBodyMapper.operation2;
 		this.operation2 = addedOperation;
@@ -306,7 +295,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public UMLOperationBodyMapper(UMLOperation removedOperation, UMLOperationBodyMapper operationBodyMapper,
-			Map<String, String> parameterToArgumentMap) {
+			Map<String, String> parameterToArgumentMap) throws RefactoringMinerTimedOutException {
 		this.operation1 = removedOperation;
 		this.operation2 = operationBodyMapper.operation2;
 		this.callSiteOperation = operationBodyMapper.operation1;
@@ -420,7 +409,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public Set<Refactoring> getRefactorings() {
-		initialize();
 		UMLOperationDiff operationDiff = classDiff != null ? classDiff.getOperationDiff(operation1, operation2) : null;
 		VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(this, refactorings, operationDiff);
 		refactorings.addAll(analysis.getVariableRenames());
@@ -439,27 +427,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public List<AbstractCodeMapping> getMappings() {
-		initialize();
 		return mappings;
 	}
 
 	public List<StatementObject> getNonMappedLeavesT1() {
-		initialize();
 		return nonMappedLeavesT1;
 	}
 
 	public List<StatementObject> getNonMappedLeavesT2() {
-		initialize();
 		return nonMappedLeavesT2;
 	}
 
 	public List<CompositeStatementObject> getNonMappedInnerNodesT1() {
-		initialize();
 		return nonMappedInnerNodesT1;
 	}
 
 	public List<CompositeStatementObject> getNonMappedInnerNodesT2() {
-		initialize();
 		return nonMappedInnerNodesT2;
 	}
 
@@ -875,7 +858,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public void processInnerNodes(List<CompositeStatementObject> innerNodes1, List<CompositeStatementObject> innerNodes2,
-			Map<String, String> parameterToArgumentMap) {
+			Map<String, String> parameterToArgumentMap) throws RefactoringMinerTimedOutException {
 		List<UMLOperation> removedOperations = classDiff != null ? classDiff.getRemovedOperations() : new ArrayList<UMLOperation>();
 		List<UMLOperation> addedOperations = classDiff != null ? classDiff.getAddedOperations() : new ArrayList<UMLOperation>();
 		//exact string+depth matching - inner nodes
@@ -967,7 +950,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public void processLeaves(List<? extends AbstractCodeFragment> leaves1, List<? extends AbstractCodeFragment> leaves2,
-			Map<String, String> parameterToArgumentMap) {
+			Map<String, String> parameterToArgumentMap) throws RefactoringMinerTimedOutException {
 		if(leaves1.size() <= leaves2.size()) {
 			//exact string+depth matching - leaf nodes
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
@@ -1179,7 +1162,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private Set<Replacement> findReplacementsWithExactMatching(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
-			Map<String, String> parameterToArgumentMap) {
+			Map<String, String> parameterToArgumentMap) throws RefactoringMinerTimedOutException {
 		List<VariableDeclaration> variableDeclarations1 = new ArrayList<VariableDeclaration>(statement1.getVariableDeclarations());
 		List<VariableDeclaration> variableDeclarations2 = new ArrayList<VariableDeclaration>(statement2.getVariableDeclarations());
 		VariableDeclaration variableDeclarationWithArrayInitializer1 = declarationWithArrayInitializer(variableDeclarations1);
@@ -1363,6 +1346,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
 				int minDistance = replacementInfo.getRawDistance();
 				for(String s2 : variablesAndMethodInvocations2) {
+					if(Thread.interrupted()) {
+						throw new RefactoringMinerTimedOutException();
+					}
 					String temp = ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), s1, s2, variablesAndMethodInvocations1, variablesAndMethodInvocations2);
 					int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), minDistance);
 					boolean multipleInstances = ReplacementUtil.countInstances(temp, s2) > 1;
@@ -1488,7 +1474,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						for(UMLOperation operation1 : anonymousClass1.getOperations()) {
 							for(UMLOperation operation2 : anonymousClass2.getOperations()) {
 								if(operation1.equals(operation2) || operation1.equalSignature(operation2)) {	
-									UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation1, operation2);
+									UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation1, operation2, classDiff);
 									mapper.getMappings();
 									int mappings = mapper.mappingsWithoutBlocks();
 									if(mappings > 0) {
@@ -2379,13 +2365,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	private void findReplacements(Set<String> strings1, Set<String> strings2, ReplacementInfo replacementInfo, ReplacementType type) {
+	private void findReplacements(Set<String> strings1, Set<String> strings2, ReplacementInfo replacementInfo, ReplacementType type) throws RefactoringMinerTimedOutException {
 		TreeMap<Double, Replacement> globalReplacementMap = new TreeMap<Double, Replacement>();
 		if(strings1.size() <= strings2.size()) {
 			for(String s1 : strings1) {
 				TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
 				int minDistance = replacementInfo.getRawDistance();
 				for(String s2 : strings2) {
+					if(Thread.interrupted()) {
+						throw new RefactoringMinerTimedOutException();
+					}
 					String temp = replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(s1), Matcher.quoteReplacement(s2));
 					int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), minDistance);
 					if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance() &&
@@ -2414,6 +2403,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
 				int minDistance = replacementInfo.getRawDistance();
 				for(String s1 : strings1) {
+					if(Thread.interrupted()) {
+						throw new RefactoringMinerTimedOutException();
+					}
 					String temp = replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(s1), Matcher.quoteReplacement(s2));
 					int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), minDistance);
 					if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance() &&

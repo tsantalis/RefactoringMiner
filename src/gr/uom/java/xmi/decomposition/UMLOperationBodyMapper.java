@@ -82,6 +82,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return additionalMappers;
 	}
 
+	public UMLOperation getCallSiteOperation() {
+		return callSiteOperation;
+	}
+
 	private void initialize() {
 		if (this.isInitialized) {
 			return;
@@ -418,7 +422,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public Set<Refactoring> getRefactorings() {
 		initialize();
 		UMLOperationDiff operationDiff = classDiff != null ? classDiff.getOperationDiff(operation1, operation2) : null;
-		VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(mappings, operation1, operation2, additionalMappers, refactorings, callSiteOperation, operationDiff);
+		VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(this, refactorings, operationDiff);
 		refactorings.addAll(analysis.getVariableRenames());
 		refactorings.addAll(analysis.getVariableMerges());
 		candidateAttributeRenames.addAll(analysis.getCandidateAttributeRenames());

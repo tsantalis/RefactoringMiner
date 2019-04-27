@@ -487,6 +487,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 				processMerge(mergeMap, merge, candidate);
 			}
 		}
+		refactorings.addAll(inferAttributeMerges(map, refactorings));
 		for(MergeVariableReplacement merge : mergeMap.keySet()) {
 			Set<UMLAttribute> mergedAttributes = new LinkedHashSet<UMLAttribute>();
 			Set<VariableDeclaration> mergedVariables = new LinkedHashSet<VariableDeclaration>();
@@ -571,6 +572,73 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 			}
 		}
 		return refactorings;
+	}
+
+	private Set<Refactoring> inferAttributeMerges(Map<Replacement, Set<CandidateAttributeRefactoring>> map, List<Refactoring> refactorings) {
+		Set<Refactoring> newRefactorings = new LinkedHashSet<Refactoring>();
+		for(Replacement replacement : map.keySet()) {
+			Set<CandidateAttributeRefactoring> candidates = map.get(replacement);
+			for(CandidateAttributeRefactoring candidate : candidates) {
+				String originalAttributeName = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
+				String renamedAttributeName = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
+				UMLOperationBodyMapper candidateMapper = null;
+				for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+					if(mapper.getMappings().containsAll(candidate.getMappings())) {
+						candidateMapper = mapper;
+						break;
+					}
+				}
+				for(Refactoring refactoring : refactorings) {
+					if(refactoring instanceof MergeVariableRefactoring) {
+						MergeVariableRefactoring merge = (MergeVariableRefactoring)refactoring;
+						Set<String> nonMatchingVariableNames = new LinkedHashSet<String>();
+						String matchingVariableName = null;
+						for(VariableDeclaration variableDeclaration : merge.getMergedVariables()) {
+							if(originalAttributeName.equals(variableDeclaration.getVariableName())) {
+								matchingVariableName = variableDeclaration.getVariableName();
+							}
+							else {
+								for(StatementObject statement : candidateMapper.getNonMappedLeavesT1()) {
+									if(statement.getString().startsWith(variableDeclaration.getVariableName() + "=") ||
+											statement.getString().startsWith("this." + variableDeclaration.getVariableName() + "=")) {
+										nonMatchingVariableNames.add(variableDeclaration.getVariableName());
+										break;
+									}
+								}
+							}
+						}
+						if(matchingVariableName != null && renamedAttributeName.equals(merge.getNewVariable().getVariableName()) && nonMatchingVariableNames.size() > 0) {
+							Set<UMLAttribute> mergedAttributes = new LinkedHashSet<UMLAttribute>();
+							Set<VariableDeclaration> mergedVariables = new LinkedHashSet<VariableDeclaration>();
+							Set<String> allMatchingVariables = new LinkedHashSet<String>();
+							if(merge.getMergedVariables().iterator().next().getVariableName().equals(matchingVariableName)) {
+								allMatchingVariables.add(matchingVariableName);
+								allMatchingVariables.addAll(nonMatchingVariableNames);
+							}
+							else {
+								allMatchingVariables.addAll(nonMatchingVariableNames);
+								allMatchingVariables.add(matchingVariableName);
+							}
+							for(String mergedVariable : allMatchingVariables) {
+								UMLAttribute a1 = findAttributeInOriginalClass(mergedVariable);
+								if(a1 != null) {
+									mergedAttributes.add(a1);
+									mergedVariables.add(a1.getVariableDeclaration());
+								}
+							}
+							UMLAttribute a2 = findAttributeInNextClass(renamedAttributeName);
+							if(mergedVariables.size() > 1 && mergedVariables.size() == merge.getMergedVariables().size() && a2 != null) {
+								MergeAttributeRefactoring ref = new MergeAttributeRefactoring(mergedVariables, a2.getVariableDeclaration(), getOriginalClassName(), getNextClassName(), new LinkedHashSet<CandidateMergeVariableRefactoring>());
+								if(!refactorings.contains(ref)) {
+									newRefactorings.add(ref);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return newRefactorings;
 	}
 
 	private boolean attributeMerged(UMLAttribute a1, UMLAttribute a2, List<Refactoring> refactorings) {

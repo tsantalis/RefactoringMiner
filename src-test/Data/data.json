@@ -9561,6 +9561,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Merge Attribute",
+        "description": "Merge Attribute [measuresDao : MeasuresDao, conditionDao : QualityGateConditionDao] to dbClient : DbClient in class org.sonar.server.startup.RegisterMetrics",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4571
 }, {

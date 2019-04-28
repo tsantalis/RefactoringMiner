@@ -1475,7 +1475,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							for(UMLOperation operation2 : anonymousClass2.getOperations()) {
 								if(operation1.equals(operation2) || operation1.equalSignature(operation2)) {	
 									UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation1, operation2, classDiff);
-									mapper.getMappings();
 									int mappings = mapper.mappingsWithoutBlocks();
 									if(mappings > 0) {
 										int nonMappedElementsT1 = mapper.nonMappedElementsT1();

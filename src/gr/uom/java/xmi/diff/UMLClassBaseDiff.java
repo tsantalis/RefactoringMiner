@@ -177,7 +177,6 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
     		}
 			else if(!mapperListContainsOperation(operation, operationWithTheSameSignature)) {
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation, operationWithTheSameSignature, this);
-				mapper.getMappings();
 				this.operationBodyMapperList.add(mapper);
 			}
     	}
@@ -188,7 +187,6 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
     		}
 			else if(!mapperListContainsOperation(operationWithTheSameSignature, operation)) {
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operationWithTheSameSignature, operation, this);
-				mapper.getMappings();
 				this.operationBodyMapperList.add(mapper);
 			}
     	}
@@ -915,7 +913,6 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 
 	private void updateMapperSet(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperation removedOperation, UMLOperation operationInsideAnonymousClass, UMLOperation addedOperation, int differenceInPosition) throws RefactoringMinerTimedOutException {
 		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, operationInsideAnonymousClass, this);
-		operationBodyMapper.getMappings();
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
 		if(mappings > 0) {
 			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);

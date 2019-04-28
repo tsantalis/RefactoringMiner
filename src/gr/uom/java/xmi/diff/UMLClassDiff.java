@@ -100,10 +100,6 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 	    			}
 	    			UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(originalOperation, nextOperation, this);
 	    			this.addOperationBodyMapper(operationBodyMapper);
-	    			//map the statements when the method calls a removed operation before refactoring, and an added operation after refactoring
-	    			if(operationBodyMapper.callsRemovedAndAddedOperation(getRemovedOperations(), getAddedOperations())) {
-	    				operationBodyMapper.getMappings();
-	    			}
 				}
 			}
 		}
@@ -130,10 +126,6 @@ public class UMLClassDiff extends UMLClassBaseDiff {
     			}
     			UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(operation, nextClass.getOperations().get(finalIndex), this);
     			this.addOperationBodyMapper(operationBodyMapper);
-    			//map the statements when the method calls a removed operation before refactoring, and an added operation after refactoring
-    			if(operationBodyMapper.callsRemovedAndAddedOperation(getRemovedOperations(), getAddedOperations())) {
-    				operationBodyMapper.getMappings();
-    			}
     		}
     	}
 		List<UMLOperation> removedOperationsToBeRemoved = new ArrayList<UMLOperation>();
@@ -152,10 +144,6 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 	    			}
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
 					this.addOperationBodyMapper(operationBodyMapper);
-					//map the statements when the method calls a removed operation before refactoring, and an added operation after refactoring
-					if(operationBodyMapper.callsRemovedAndAddedOperation(getRemovedOperations(), getAddedOperations())) {
-						operationBodyMapper.getMappings();
-					}
 					removedOperationsToBeRemoved.add(removedOperation);
 					addedOperationsToBeRemoved.add(addedOperation);
 				}

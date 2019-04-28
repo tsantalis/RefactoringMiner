@@ -1673,7 +1673,6 @@ public class UMLModelDiff {
 	            UMLOperation removedOperation = removedOperationIterator.next();
 	            
 	            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, null);
-	            operationBodyMapper.getMappings();
 	            int mappings = operationBodyMapper.mappingsWithoutBlocks();
 	            if(mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) {
 	               int exactMatches = operationBodyMapper.exactMatches();
@@ -1755,7 +1754,6 @@ public class UMLModelDiff {
 	            UMLOperation addedOperation = addedOperationIterator.next();
 	            
 	            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, null);
-	            operationBodyMapper.getMappings();
 	            int mappings = operationBodyMapper.mappingsWithoutBlocks();
 	            if(mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) {
 	               int exactMatches = operationBodyMapper.exactMatches();

@@ -197,7 +197,32 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	}
 
 	public boolean equalSignature(UMLOperation operation) {
-		return this.name.equals(operation.name) &&	this.getParameterTypeList().equals(operation.getParameterTypeList()) && equalReturnParameter(operation);
+		boolean equalParameterTypes = this.getParameterTypeList().equals(operation.getParameterTypeList());
+		boolean compatibleParameterTypes = false;
+		if(!equalParameterTypes) {
+			List<UMLType> thisParameterTypeList = this.getParameterTypeList();
+			List<UMLType> otherParameterTypeList = operation.getParameterTypeList();
+			if(thisParameterTypeList.size() == otherParameterTypeList.size()) {
+				int compatibleTypes = 0;
+				int equalTypes = 0;
+				for(int i=0; i<thisParameterTypeList.size(); i++) {
+					UMLType thisParameterType = thisParameterTypeList.get(i);
+					UMLType otherParameterType = otherParameterTypeList.get(i);
+					if((thisParameterType.getClassType().endsWith("." + otherParameterType.getClassType()) ||
+							otherParameterType.getClassType().endsWith("." + thisParameterType.getClassType())) &&
+							thisParameterType.getArrayDimension() == otherParameterType.getArrayDimension()) {
+						compatibleTypes++;
+					}
+					else if(thisParameterType.equals(otherParameterType)) {
+						equalTypes++;
+					}
+				}
+				if(equalTypes + compatibleTypes == thisParameterTypeList.size()) {
+					compatibleParameterTypes = true;
+				}
+			}
+		}
+		return this.name.equals(operation.name) && (equalParameterTypes || compatibleParameterTypes) && equalReturnParameter(operation);
 	}
 
 	public boolean equalSignatureIgnoringOperationName(UMLOperation operation) {

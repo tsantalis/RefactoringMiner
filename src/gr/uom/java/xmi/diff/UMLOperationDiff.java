@@ -3,6 +3,7 @@ package gr.uom.java.xmi.diff;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -36,7 +37,9 @@ public class UMLOperationDiff {
 			abstractionChanged = true;
 		if(!removedOperation.equalReturnParameter(addedOperation))
 			returnTypeChanged = true;
-		updateAddedRemovedParameters(removedOperation, addedOperation);
+		List<SimpleEntry<UMLParameter, UMLParameter>> matchedParameters = updateAddedRemovedParameters(removedOperation, addedOperation);
+		int matchedParameterCount = matchedParameters.size()/2;
+		//first round match parameters with the same name
 		for(Iterator<UMLParameter> removedParameterIterator = removedParameters.iterator(); removedParameterIterator.hasNext();) {
 			UMLParameter removedParameter = removedParameterIterator.next();
 			for(Iterator<UMLParameter> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
@@ -48,7 +51,14 @@ public class UMLOperationDiff {
 					removedParameterIterator.remove();
 					break;
 				}
-				else if(removedParameter.getType().equalsQualified(addedParameter.getType())) {
+			}
+		}
+		//second round match parameters with the same type
+		for(Iterator<UMLParameter> removedParameterIterator = removedParameters.iterator(); removedParameterIterator.hasNext();) {
+			UMLParameter removedParameter = removedParameterIterator.next();
+			for(Iterator<UMLParameter> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
+				UMLParameter addedParameter = addedParameterIterator.next();
+				if(removedParameter.getType().equalsQualified(addedParameter.getType())) {
 					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter);
 					parameterDiffList.add(parameterDiff);
 					addedParameterIterator.remove();
@@ -57,14 +67,36 @@ public class UMLOperationDiff {
 				}
 			}
 		}
+		//third round match parameters with different type and name
+		List<UMLParameter> removedParametersWithoutReturnType = removedOperation.getParametersWithoutReturnType();
+		List<UMLParameter> addedParametersWithoutReturnType = addedOperation.getParametersWithoutReturnType();
+		if(matchedParameterCount == removedParametersWithoutReturnType.size()-1 && matchedParameterCount == addedParametersWithoutReturnType.size()-1) {
+			for(Iterator<UMLParameter> removedParameterIterator = removedParameters.iterator(); removedParameterIterator.hasNext();) {
+				UMLParameter removedParameter = removedParameterIterator.next();
+				int indexOfRemovedParameter = removedParametersWithoutReturnType.indexOf(removedParameter);
+				for(Iterator<UMLParameter> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
+					UMLParameter addedParameter = addedParameterIterator.next();
+					int indexOfAddedParameter = addedParametersWithoutReturnType.indexOf(addedParameter);
+					if(indexOfRemovedParameter == indexOfAddedParameter) {
+						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter);
+						parameterDiffList.add(parameterDiff);
+						addedParameterIterator.remove();
+						removedParameterIterator.remove();
+						break;
+					}
+				}
+			}
+		}
 	}
 
-	private void updateAddedRemovedParameters(UMLOperation removedOperation, UMLOperation addedOperation) {
+	private List<SimpleEntry<UMLParameter, UMLParameter>> updateAddedRemovedParameters(UMLOperation removedOperation, UMLOperation addedOperation) {
+		List<SimpleEntry<UMLParameter, UMLParameter>> matchedParameters = new ArrayList<SimpleEntry<UMLParameter, UMLParameter>>();
 		for(UMLParameter parameter1 : removedOperation.getParameters()) {
 			if(!parameter1.getKind().equals("return")) {
 				boolean found = false;
 				for(UMLParameter parameter2 : addedOperation.getParameters()) {
 					if(parameter1.equalsIncludingName(parameter2)) {
+						matchedParameters.add(new SimpleEntry<UMLParameter, UMLParameter>(parameter1, parameter2));
 						found = true;
 						break;
 					}
@@ -79,6 +111,7 @@ public class UMLOperationDiff {
 				boolean found = false;
 				for(UMLParameter parameter2 : removedOperation.getParameters()) {
 					if(parameter1.equalsIncludingName(parameter2)) {
+						matchedParameters.add(new SimpleEntry<UMLParameter, UMLParameter>(parameter2, parameter1));
 						found = true;
 						break;
 					}
@@ -88,6 +121,7 @@ public class UMLOperationDiff {
 				}
 			}
 		}
+		return matchedParameters;
 	}
 
 	public List<UMLParameterDiff> getParameterDiffList() {

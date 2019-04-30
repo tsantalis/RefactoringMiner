@@ -608,6 +608,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter matcher : ElementMatcher<? super TypeDescription> to substitutor : GenericTypeDescription.Visitor<GenericTypeDescription> in method protected ParameterToken(substitutor GenericTypeDescription.Visitor<GenericTypeDescription>, parameterDescription ParameterDescription) in class net.bytebuddy.dynamic.scaffold.InstrumentedType.AbstractBase.MethodToken.ParameterToken",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter matcher : ElementMatcher<? super TypeDescription> to substitutor : GenericTypeDescription.Visitor<GenericTypeDescription> in method private TypeVariableToken(substitutor GenericTypeDescription.Visitor<GenericTypeDescription>, typeVariable GenericTypeDescription) in class net.bytebuddy.dynamic.scaffold.InstrumentedType.AbstractBase.MethodToken.TypeVariableToken",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter matcher : ElementMatcher<? super TypeDescription> to substitutor : GenericTypeDescription.Visitor<GenericTypeDescription> in method private FieldToken(substitutor GenericTypeDescription.Visitor<GenericTypeDescription>, fieldDescription FieldDescription) in class net.bytebuddy.dynamic.scaffold.InstrumentedType.AbstractBase.FieldToken",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4590
 }, {
@@ -3121,6 +3142,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter command : InstallCommand to installViaSd : boolean in method public installApk(installableApk InstallableApk, installViaSd boolean) : boolean in class com.facebook.buck.android.AdbHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter uninstallOptions : UninstallCommand.UninstallOptions to shouldKeepUserData : boolean in method public uninstallApp(packageName String, shouldKeepUserData boolean) : boolean in class com.facebook.buck.android.AdbHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 11495
 }, {
@@ -5330,6 +5365,41 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter graph : Graph to ghStorage : GraphHopperStorage in method package calcPathViaQuery_(ghStorage GraphHopperStorage, fromLat double, fromLon double, toLat double, toLon double) : Path in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter g : Graph to ghStorage : GraphHopperStorage in method public abstract createFactory(ghStorage GraphHopperStorage, opts AlgorithmOptions) : RoutingAlgorithmFactory in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter g : LevelGraph to levelGraph : LevelGraph in method public PrepareContractionHierarchies(dir Directory, baseGraph Graph, levelGraph LevelGraph, encoder FlagEncoder, weighting Weighting, traversalMode TraversalMode) in class com.graphhopper.routing.ch.PrepareContractionHierarchies",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter storage : GraphStorage to ghStorage : GraphHopperStorage in method public OSMReader(ghStorage GraphHopperStorage) in class com.graphhopper.reader.OSMReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter g : Graph to ghStorage : GraphHopperStorage in method package createAlgos(ghStorage GraphHopperStorage, idx LocationIndex, encoder FlagEncoder, withCh boolean, tMode TraversalMode, weighting Weighting, manager EncodingManager) : List<AlgoHelperEntry> in class com.graphhopper.routing.RoutingAlgorithmIT",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3012
 }, {
@@ -6073,6 +6143,13 @@
         "description": "Pull Up Method protected setupDiscoveryClient() : void from class com.netflix.discovery.AbstractDiscoveryClientTester to protected setupDiscoveryClient() : void from class com.netflix.discovery.BaseDiscoveryClientTester",
         "comment": null,
         "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter myInfo : InstanceInfo to applicationInfoManager : ApplicationInfoManager in method package DiscoveryClient(applicationInfoManager ApplicationInfoManager, config EurekaClientConfig, args DiscoveryClientOptionalArgs, backupRegistryProvider Provider<BackupRegistry>) in class com.netflix.discovery.DiscoveryClient",
+        "comment": null,
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -10340,6 +10417,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter field : String to value : String in method private validateStringValue(value String, minLen int, maxLen int, errorKey String, errorMessage String) : void in class com.jfinal.validate.Validator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method package intercept(inv Invocation) : void in class com.jfinal.aop.Interceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.ext.interceptor.LogInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1822
 }, {
@@ -11054,6 +11152,27 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method package removeRecoveryInformationFromCluster(where Collection<Address>, xid Xid, sync boolean, gtx GlobalTransaction) : void renamed to package removeRecoveryInformation(where Collection<Address>, xid Xid, sync boolean, gtx GlobalTransaction, fromCluster boolean) : void in class org.infinispan.transaction.xa.recovery.RecoveryManager",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter keygen : RecipientGenerator to key : Object in method protected remoteGetBeforeWrite(ctx InvocationContext, command WriteCommand, key Object) : void in class org.infinispan.interceptors.distribution.TxDistributionInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter keygen : RecipientGenerator to key : Object in method protected abstract remoteGetBeforeWrite(ctx InvocationContext, command WriteCommand, key Object) : void in class org.infinispan.interceptors.distribution.BaseDistributionInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter keygen : RecipientGenerator to key : Object in method protected remoteGetBeforeWrite(ctx InvocationContext, command WriteCommand, key Object) : void in class org.infinispan.interceptors.distribution.NonTxDistributionInterceptor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -12185,6 +12304,13 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable data : Intent to intent : Intent in method public showDialog() : void in class org.sufficientlysecure.keychain.ui.OrbotRequiredDialogActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter message : Message to result : ImportKeyResult in method private handleResult(result ImportKeyResult) : void in class org.sufficientlysecure.keychain.ui.ImportKeysActivity",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -14774,6 +14900,230 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public tryExclusiveLock(resourceType Locks.ResourceType, resourceId long) : boolean in class org.neo4j.kernel.impl.locking.community.CommunityLockClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public acquireShared(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.impl.locking.community.CommunityLockClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public tryExclusiveLock(resourceType Locks.ResourceType, resourceId long) : boolean in class org.neo4j.kernel.ha.lock.SlaveLocksClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public trySharedLock(resourceType Locks.ResourceType, resourceId long) : boolean in class org.neo4j.kernel.ha.lock.SlaveLocksClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public tryExclusiveLock(resourceType Locks.ResourceType, resourceId long) : boolean in class org.neo4j.kernel.impl.locking.NoOpClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public trySharedLock(resourceType Locks.ResourceType, resourceId long) : boolean in class org.neo4j.kernel.ha.lock.forseti.ForsetiClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public acquireExclusive(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.impl.locking.community.CommunityLockClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public acquireExclusive(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.ha.lock.SlaveLocksClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public releaseShared(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.ha.lock.SlaveLocksClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public releaseExclusive(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.impl.locking.community.CommunityLockClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long[] to resourceId : long in method private constructHelpfulDiagnosticsMessage(client Locks.Client, lockManager Locks, resourceType Locks.ResourceType, resourceId long, type LockType) : String in class org.neo4j.kernel.ha.lock.LocalDeadlockDetectedException",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public acquireShared(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.ha.lock.SlaveLocksClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public releaseExclusive(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.ha.lock.SlaveLocksClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public releaseShared(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.impl.locking.community.CommunityLockClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public trySharedLock(resourceType Locks.ResourceType, resourceId long) : boolean in class org.neo4j.kernel.impl.locking.NoOpClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public acquireExclusive(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.ha.lock.forseti.ForsetiClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public trySharedLock(resourceType Locks.ResourceType, resourceId long) : boolean in class org.neo4j.kernel.impl.locking.community.CommunityLockClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public acquireShared(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.ha.lock.forseti.ForsetiClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public tryExclusiveLock(resourceType Locks.ResourceType, resourceId long) : boolean in class org.neo4j.kernel.ha.lock.forseti.ForsetiClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method package acquireShared(resourceType ResourceType, resourceId long) : void in class org.neo4j.kernel.impl.locking.Locks.Client",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method package acquireExclusive(resourceType ResourceType, resourceId long) : void in class org.neo4j.kernel.impl.locking.Locks.Client",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method package tryExclusiveLock(resourceType ResourceType, resourceId long) : boolean in class org.neo4j.kernel.impl.locking.Locks.Client",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method package trySharedLock(resourceType ResourceType, resourceId long) : boolean in class org.neo4j.kernel.impl.locking.Locks.Client",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method package releaseShared(resourceType ResourceType, resourceId long) : void in class org.neo4j.kernel.impl.locking.Locks.Client",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method package releaseExclusive(resourceType ResourceType, resourceId long) : void in class org.neo4j.kernel.impl.locking.Locks.Client",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public acquireShared(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.impl.locking.NoOpClient",
+        "comment": "<p>Empty body method</p>",
+        "validation": "CTP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public acquireExclusive(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.impl.locking.NoOpClient",
+        "comment": "<p>Empty body method</p>",
+        "validation": "CTP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public releaseShared(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.impl.locking.NoOpClient",
+        "comment": "<p>Empty body method</p>",
+        "validation": "CTP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceIds : long to resourceId : long in method public releaseExclusive(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.impl.locking.NoOpClient",
+        "comment": "<p>Empty body method</p>",
+        "validation": "CTP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable untakenIds : long[] to preExistingLock : AtomicInteger in method public acquireShared(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.ha.lock.SlaveLocksClient",
+        "comment": "<p>The logic changes significantly</p>",
+        "validation": "CTP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable untakenIds : long[] to preExistingLock : AtomicInteger in method public acquireExclusive(resourceType Locks.ResourceType, resourceId long) : void in class org.neo4j.kernel.ha.lock.SlaveLocksClient",
+        "comment": "<p>The logic changes significantly</p>",
+        "validation": "CTP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable size : int to next : int in method public describeWaitList() : String in class org.neo4j.kernel.ha.lock.forseti.ForsetiClient",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 4194
 }, {
@@ -15199,6 +15549,13 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter currentVersion : long to upToVersion : long in method public pruneLogs(upToVersion long) : void in class org.neo4j.kernel.impl.transaction.log.pruning.LogPruningImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter logRotationControl : LogRotationControl to storeFlusher : StoreFlusher in method private buildRecovery(fileSystemAbstraction FileSystemAbstraction, cacheAccess CacheAccessBackDoor, indexingService IndexingService, indexUpdatesValidator IndexUpdatesValidator, labelScanStore LabelScanStore, neoStore NeoStore, recoveryVisitorMonitor RecoveryVisitor.Monitor, recoveryMonitor Recovery.Monitor, logFiles PhysicalLogFiles, storeFlusher StoreFlusher, startupStatistics StartupStatisticsProvider) : void in class org.neo4j.kernel.NeoStoreDataSource",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -21124,6 +21481,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter endpointPaths : String[] to permitAllMatcher : RequestMatcher in method private configureAuthorizeRequests(permitAllMatcher RequestMatcher, requests ExpressionUrlAuthorizationConfigurer<HttpSecurity>) : void in class org.springframework.boot.actuate.autoconfigure.ManagementSecurityAutoConfiguration.ManagementWebSecurityConfigurerAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3535
 }, {
@@ -24982,6 +25346,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter jpaQuery : String to queryString : String in method public ObjectFilterImpl(matcher BaseMatcher<TypeMetadata,AttributeMetadata,AttributeId>, metadataAdapter MetadataAdapter<TypeMetadata,AttributeMetadata,AttributeId>, queryString String, query BooleanExpr, projections List<String>, sortFields List<SortField>) in class org.infinispan.objectfilter.impl.ObjectFilterImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter normalizedFilter : BooleanExpr to query : BooleanExpr in method public ObjectFilterImpl(matcher BaseMatcher<TypeMetadata,AttributeMetadata,AttributeId>, metadataAdapter MetadataAdapter<TypeMetadata,AttributeMetadata,AttributeId>, queryString String, query BooleanExpr, projections List<String>, sortFields List<SortField>) in class org.infinispan.objectfilter.impl.ObjectFilterImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 6361
 }, {
@@ -26146,6 +26524,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter supplier : Supplier<V> to mappingFunction : IntFunction<? extends V> in method public computeIfAbsent(key int, mappingFunction IntFunction<? extends V>) : V in class com.hazelcast.util.collection.Int2ObjectHashMap",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1599
 }, {
@@ -26225,6 +26610,13 @@
     }, {
         "type": "Inline Method",
         "description": "Inline Method package watchDeploymentGroup(out PrintStream, name String, interval int, clients List<TargetAndClient>) : void inlined to package run(options Namespace, client HeliosClient, out PrintStream, json boolean, stdin BufferedReader) : int in class com.spotify.helios.cli.command.DeploymentGroupWatchCommand",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter clients : List<TargetAndClient> to client : HeliosClient in method package run(options Namespace, client HeliosClient, out PrintStream, json boolean, stdin BufferedReader) : int in class com.spotify.helios.cli.command.DeploymentGroupWatchCommand",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -33048,6 +33440,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter input : LongProbe<S> to probe : LongProbeFunction<S> in method package register(source S, name String, probe LongProbeFunction<S>) : void in class com.hazelcast.internal.metrics.MetricsRegistry",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter input : DoubleProbe<S> to probe : DoubleProbeFunction<S> in method package register(source S, name String, probe DoubleProbeFunction<S>) : void in class com.hazelcast.internal.metrics.MetricsRegistry",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 5604
 }, {
@@ -35713,6 +36119,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter relationshipStore : RelationshipStore to neoStore : NeoStore in method public StoreAbstractRelationshipCursor(relationshipRecord RelationshipRecord, neoStore NeoStore, storeStatement StoreStatement) in class org.neo4j.kernel.impl.api.store.StoreAbstractRelationshipCursor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 15734
@@ -39212,14 +39625,14 @@
         "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder<PersistenceConfiguration> in class org.jboss.as.clustering.infinispan.subsystem.NoStoreBuilder",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter resolver : ExpressionResolver to context : OperationContext in method public configure(context OperationContext, model ModelNode) : Builder<AsyncStoreConfiguration> in class org.jboss.as.clustering.infinispan.subsystem.StoreWriteThroughBuilder",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
@@ -39354,6 +39767,13 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable v : Var in method public InvokeExpr(source String, line int, column int, tag Symbol, fexpr Expr, args IPersistentVector, tailPosition boolean) from class clojure.lang.Compiler.InvokeExpr",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter isStatic : boolean to rettag : Object in method package parse(objx ObjExpr, form ISeq, rettag Object) : FnMethod in class clojure.lang.Compiler.FnMethod",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -40633,147 +41053,147 @@
         "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitUnknown(e LogicalExpression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitLongConstant(intExpr LongExpression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitDateConstant(intExpr DateExpression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitTimeConstant(intExpr TimeExpression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitTimeStampConstant(intExpr TimeStampExpression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitIntervalYearConstant(intExpr IntervalYearExpression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitIntervalDayConstant(intExpr IntervalDayExpression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitDecimal9Constant(decExpr Decimal9Expression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitDecimal18Constant(decExpr Decimal18Expression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitDecimal28Constant(decExpr Decimal28Expression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitDecimal38Constant(decExpr Decimal38Expression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitDoubleConstant(dExpr DoubleExpression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitBooleanConstant(e BooleanExpression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter registry : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitQuotedStringConstant(e QuotedString, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter value : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitFunctionHolderExpression(holder FunctionHolderExpression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter value : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitSchemaPath(path SchemaPath, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter value : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitIntConstant(intExpr IntExpression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter value : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitFloatConstant(fExpr FloatExpression, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter value : FunctionImplementationRegistry to functionLookupContext : FunctionLookupContext in method public visitNullConstant(nullConstant TypedNullConstant, functionLookupContext FunctionLookupContext) : LogicalExpression in class org.apache.drill.exec.expr.ExpressionTreeMaterializer.MaterializeVisitor",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter context : QueryContext to optimizerRulesContext : OptimizerRulesContext in method public getDrillBasicRules(optimizerRulesContext OptimizerRulesContext) : RuleSet in class org.apache.drill.exec.planner.logical.DrillRuleSets",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter context : QueryContext to optimizerRulesContext : OptimizerRulesContext in method public getJoinPermRules(optimizerRulesContext OptimizerRulesContext) : RuleSet in class org.apache.drill.exec.planner.logical.DrillRuleSets",
         "comment": "<p>Parameter is not used inside method body</p>",
         "validation": "CTP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3286

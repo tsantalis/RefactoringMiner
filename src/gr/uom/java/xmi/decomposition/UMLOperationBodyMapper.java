@@ -1219,9 +1219,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		
 		Map<String, String> map = new LinkedHashMap<String, String>();
+		Set<Replacement> replacementsToBeRemoved = new LinkedHashSet<Replacement>();
+		Set<Replacement> replacementsToBeAdded = new LinkedHashSet<Replacement>();
 		for(Replacement r : replacementInfo.getReplacements()) {
 			map.put(r.getBefore(), r.getAfter());
+			if(methodInvocationMap1.containsKey(r.getBefore())) {
+				Replacement replacement = new VariableReplacementWithMethodInvocation(r.getBefore(), r.getAfter(), (OperationInvocation)methodInvocationMap1.get(r.getBefore()), Direction.INVOCATION_TO_VARIABLE);
+				replacementsToBeAdded.add(replacement);
+				replacementsToBeRemoved.add(r);
+			}
 		}
+		replacementInfo.getReplacements().removeAll(replacementsToBeRemoved);
+		replacementInfo.getReplacements().addAll(replacementsToBeAdded);
 		
 		// replace variables with the corresponding arguments in method invocations
 		replaceVariablesWithArguments(methodInvocationMap1, methodInvocations1, parameterToArgumentMap);
@@ -1428,8 +1437,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		
 		String s1 = preprocessInput1(statement1, statement2);
 		String s2 = preprocessInput2(statement1, statement2);
-		Set<Replacement> replacementsToBeRemoved = new LinkedHashSet<Replacement>();
-		Set<Replacement> replacementsToBeAdded = new LinkedHashSet<Replacement>();
+		replacementsToBeRemoved = new LinkedHashSet<Replacement>();
+		replacementsToBeAdded = new LinkedHashSet<Replacement>();
 		for(Replacement replacement : replacementInfo.getReplacements()) {
 			s1 = ReplacementUtil.performReplacement(s1, s2, replacement.getBefore(), replacement.getAfter(), variablesAndMethodInvocations1, variablesAndMethodInvocations2);
 			//find variable replacements within method invocation replacements
@@ -2369,16 +2378,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(strings1.size() <= strings2.size()) {
 			for(String s1 : strings1) {
 				TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
-				int minDistance = replacementInfo.getRawDistance();
 				for(String s2 : strings2) {
 					if(Thread.interrupted()) {
 						throw new RefactoringMinerTimedOutException();
 					}
 					String temp = replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(s1), Matcher.quoteReplacement(s2));
-					int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), minDistance);
+					int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2());
 					if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance() &&
 							ReplacementUtil.syntaxAwareReplacement(s1, s2, replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2())) {
-						minDistance = distanceRaw;
 						Replacement replacement = new Replacement(s1, s2, type);
 						double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), replacementInfo.getArgumentizedString2().length());
 						replacementMap.put(distancenormalized, replacement);
@@ -2400,16 +2407,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		else {
 			for(String s2 : strings2) {
 				TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
-				int minDistance = replacementInfo.getRawDistance();
 				for(String s1 : strings1) {
 					if(Thread.interrupted()) {
 						throw new RefactoringMinerTimedOutException();
 					}
 					String temp = replacementInfo.getArgumentizedString1().replaceAll(Pattern.quote(s1), Matcher.quoteReplacement(s2));
-					int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), minDistance);
+					int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2());
 					if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance() &&
 							ReplacementUtil.syntaxAwareReplacement(s1, s2, replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2())) {
-						minDistance = distanceRaw;
 						Replacement replacement = new Replacement(s1, s2, type);
 						double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), replacementInfo.getArgumentizedString2().length());
 						replacementMap.put(distancenormalized, replacement);

@@ -1,5 +1,6 @@
 package org.refactoringminer.test;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -37,7 +38,7 @@ public class TestBuilder {
 	private static final int TN = 3;
 	private static final int UNK = 4;
 
-	private int refactoringFilter;
+	private BigInteger refactoringFilter;
 
 	public TestBuilder(GitHistoryRefactoringMiner detector, String tempDir) {
 		this.map = new HashMap<String, ProjectMatcher>();
@@ -47,7 +48,7 @@ public class TestBuilder {
 		this.aggregate = false;
 	}
 
-	public TestBuilder(GitHistoryRefactoringMiner detector, String tempDir, int refactorings) {
+	public TestBuilder(GitHistoryRefactoringMiner detector, String tempDir, BigInteger refactorings) {
 		this(detector, tempDir);
 
 		this.refactoringFilter = refactorings;
@@ -305,8 +306,8 @@ public class TestBuilder {
 			List<Refactoring> filteredRefactorings = new ArrayList<>();
 
 			for (Refactoring refactoring : refactorings) {
-				if (((Enum.valueOf(Refactorings.class, refactoring.getName().replace(" ", "")).getValue()
-						& refactoringFilter) > 0)) {
+				BigInteger value = Enum.valueOf(Refactorings.class, refactoring.getName().replace(" ", "")).getValue();
+				if (value.and(refactoringFilter).compareTo(BigInteger.ZERO) == 1) {
 					filteredRefactorings.add(refactoring);
 				}
 			}

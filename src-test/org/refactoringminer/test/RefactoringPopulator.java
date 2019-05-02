@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -29,27 +30,52 @@ public class RefactoringPopulator {
 	}
 
 	public enum Refactorings {
-		MoveMethod(1), MoveAttribute(2), InlineMethod(4), ExtractMethod(8), PushDownMethod(16), PushDownAttribute(
-				32), PullUpMethod(64), PullUpAttribute(128), ExtractInterface(256), ExtractSuperclass(512), MoveClass(
-						1024), ChangePackage(2048), RenameMethod(4096), ExtractAndMoveMethod(
-								8192), RenameClass(16384), MoveSourceFolder(32768), MoveAndRenameClass(65536),
-									ExtractVariable(131072), RenameVariable(262144), RenameParameter(524288),
-									RenameAttribute(1048576), ParameterizeVariable(2097152),
-									ReplaceVariableWithAttribute(4194304), MoveAndRenameAttribute(8388608), ReplaceAttribute(16777216),
-									InlineVariable(33554432), ExtractClass(67108864), ExtractSubclass(134217728),
-									MergeVariable(268435456), MergeParameter(536870912), MergeAttribute(1073741824), All(2147483647);
-		private int value;
+		MoveMethod(new BigInteger("1")),
+		MoveAttribute(new BigInteger("2")),
+		InlineMethod(new BigInteger("4")),
+		ExtractMethod(new BigInteger("8")),
+		PushDownMethod(new BigInteger("16")),
+		PushDownAttribute(new BigInteger("32")),
+		PullUpMethod(new BigInteger("64")),
+		PullUpAttribute(new BigInteger("128")),
+		ExtractInterface(new BigInteger("256")),
+		ExtractSuperclass(new BigInteger("512")),
+		MoveClass(new BigInteger("1024")),
+		ChangePackage(new BigInteger("2048")),
+		RenameMethod(new BigInteger("4096")),
+		ExtractAndMoveMethod(new BigInteger("8192")), 
+		RenameClass(new BigInteger("16384")), 
+		MoveSourceFolder(new BigInteger("32768")), 
+		MoveAndRenameClass(new BigInteger("65536")),
+		ExtractVariable(new BigInteger("131072")), 
+		RenameVariable(new BigInteger("262144")), 
+		RenameParameter(new BigInteger("524288")),
+		RenameAttribute(new BigInteger("1048576")), 
+		ParameterizeVariable(new BigInteger("2097152")),
+		ReplaceVariableWithAttribute(new BigInteger("4194304")), 
+		MoveAndRenameAttribute(new BigInteger("8388608")), 
+		ReplaceAttribute(new BigInteger("16777216")),
+		InlineVariable(new BigInteger("33554432")), 
+		ExtractClass(new BigInteger("67108864")), 
+		ExtractSubclass(new BigInteger("134217728")),
+		MergeVariable(new BigInteger("268435456")), 
+		MergeParameter(new BigInteger("536870912")), 
+		MergeAttribute(new BigInteger("1073741824")),
+		SplitVariable(new BigInteger("2147483648")), 
+		SplitParameter(new BigInteger("4294967296")), 
+		All(new BigInteger("8589934591"));
+		private BigInteger value;
 
-		private Refactorings(int value) {
+		private Refactorings(BigInteger value) {
 			this.value = value;
 		}
 
-		public int getValue() {
+		public BigInteger getValue() {
 			return value;
 		}
 	}
 
-	public static void feedRefactoringsInstances(int refactoringsFlag, int systemsFlag, TestBuilder test)
+	public static void feedRefactoringsInstances(BigInteger refactoringsFlag, int systemsFlag, TestBuilder test)
 			throws JsonParseException, JsonMappingException, IOException {
 
 		if ((systemsFlag & Systems.FSE.getValue()) > 0) {
@@ -57,7 +83,7 @@ public class RefactoringPopulator {
 		}
 	}
 
-	private static void prepareFSERefactorings(TestBuilder test, int flag)
+	private static void prepareFSERefactorings(TestBuilder test, BigInteger flag)
 			throws JsonParseException, JsonMappingException, IOException {
 		List<Root> roots = getFSERefactorings(flag);
 		
@@ -102,7 +128,7 @@ public class RefactoringPopulator {
 		return deletedCommits;
 	}
 
-	public static List<Root> getFSERefactorings(int flag) throws JsonParseException, JsonMappingException, IOException {
+	public static List<Root> getFSERefactorings(BigInteger flag) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 
 		String jsonFile = System.getProperty("user.dir") + "/src-test/Data/data.json";
@@ -131,16 +157,17 @@ public class RefactoringPopulator {
 		return filtered;
 	}
 
-	private static boolean isAdded(Refactoring refactoring, int flag) {
+	private static boolean isAdded(Refactoring refactoring, BigInteger flag) {
 		try {
-			return ((Enum.valueOf(Refactorings.class, refactoring.type.replace(" ", "")).getValue() & flag) > 0);
+			BigInteger value = Enum.valueOf(Refactorings.class, refactoring.type.replace(" ", "")).getValue();
+			return value.and(flag).compareTo(BigInteger.ZERO) == 1;
 
 		} catch (Exception e) {
 			return false;
 		}
 	}
 
-	public static void printRefDiffResults(int flag) {
+	public static void printRefDiffResults(BigInteger flag) {
 		Hashtable<String, Tuple> result = new Hashtable<>();
 		try {
 			List<Root> roots = getFSERefactorings(flag);

@@ -10,9 +10,8 @@ public class TestAllRefactorings {
 
 	@Test
 	public void testAllRefactorings() throws Exception {
-		int refactoring = Refactorings.All.getValue();
-		TestBuilder test = new TestBuilder(new GitHistoryRefactoringMinerImpl(), "tmp1", refactoring);
-		RefactoringPopulator.feedRefactoringsInstances(refactoring, Systems.FSE.getValue(), test);
+		TestBuilder test = new TestBuilder(new GitHistoryRefactoringMinerImpl(), "tmp1", Refactorings.All.getValue());
+		RefactoringPopulator.feedRefactoringsInstances(Refactorings.All.getValue(), Systems.FSE.getValue(), test);
 		test.assertExpectations();
 	}
 }

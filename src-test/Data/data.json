@@ -16114,6 +16114,13 @@
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Davood"
+    }, {
+        "type": "Split Parameter",
+        "description": "Split Parameter locations : String[] to [directories : String[], classNames : String[]] in method public FilterFileManagerConfig(directories String[], classNames String[], pollingIntervalSeconds int) in class com.netflix.zuul.FilterFileManager.FilterFileManagerConfig",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 312
 }, {
@@ -25360,6 +25367,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Split Parameter",
+        "description": "Split Parameter parsingResult : FilterParsingResult<TypeMetadata> to [sortFields : List<SortField>, projections : List<String>] in method public ObjectFilterImpl(matcher BaseMatcher<TypeMetadata,AttributeMetadata,AttributeId>, metadataAdapter MetadataAdapter<TypeMetadata,AttributeMetadata,AttributeId>, queryString String, query BooleanExpr, projections List<String>, sortFields List<SortField>) in class org.infinispan.objectfilter.impl.ObjectFilterImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Split Parameter",
+        "description": "Split Parameter request : QueryRequest to [jpqlString : String, maxResults : int, startOffset : long] in method private buildLuceneQuery(cache AdvancedCache<?,?>, isCompatMode boolean, serCtx SerializationContext, jpqlString String, startOffset long, maxResults int) : Query in class org.infinispan.query.remote.QueryFacadeImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable projection : String[] in method private buildLuceneQuery(cache AdvancedCache<?,?>, isCompatMode boolean, serCtx SerializationContext, jpqlString String, startOffset long, maxResults int) : Query from class org.infinispan.query.remote.QueryFacadeImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 6361
 }, {
@@ -25730,6 +25758,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable icon : Icon in method private setConfigurationIcon(presentation Presentation, settings RunnerAndConfigurationSettings, project Project) : void from class com.intellij.execution.actions.RunConfigurationsComboBoxAction",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 22095
@@ -34513,7 +34548,7 @@
         "validators": "Davood"
     }, {
         "type": "Inline Variable",
-        "description": "Inline Variable moduleName : String in method protected buildErlangVisitor(holder ProblemsHolder, session LocalInspectionToolSession) : ErlangVisitor from class org.intellij.erlang.inspection.ErlangUnresolvedFunctionInspection",
+        "description": "Inline Variable moduleName : String in method public visitFunctionCallExpression(o ErlangFunctionCallExpression) : void from class org.intellij.erlang.inspection.ErlangUnresolvedFunctionInspection.1",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -35602,7 +35637,7 @@
         "validators": null
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable sa : ScriptApproval in method public exactRevision() : void from class org.jenkinsci.plugins.workflow.multibranch.SCMBinderTest",
+        "description": "Extract Variable sa : ScriptApproval in method public evaluate() : void from class org.jenkinsci.plugins.workflow.multibranch.SCMBinderTest.3",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -36881,6 +36916,13 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable resolver : DependencyResolver in method public shouldContainTransactionsThatHappenDuringBackupProcess() : void from class org.neo4j.backup.BackupServiceIT",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable resolver : DependencyResolver in method public run() : void from class org.neo4j.backup.BackupServiceIT.4",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -45625,6 +45667,13 @@
         "comment": null,
         "validation": "UKN",
         "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable outputFile : File in method private lastOutputModificationTime(module Module, sourceFile VirtualFile) : long from class org.intellij.erlang.compilation.ErlangModuleCompilationTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 1833

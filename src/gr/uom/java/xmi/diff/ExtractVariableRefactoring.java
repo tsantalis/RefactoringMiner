@@ -1,21 +1,30 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class ExtractVariableRefactoring implements Refactoring {
 	private VariableDeclaration variableDeclaration;
 	private UMLOperation operation;
+	private Set<AbstractCodeMapping> references;
 
 	public ExtractVariableRefactoring(VariableDeclaration variableDeclaration, UMLOperation operation) {
 		this.variableDeclaration = variableDeclaration;
 		this.operation = operation;
+		this.references = new LinkedHashSet<AbstractCodeMapping>();
+	}
+
+	public void addReference(AbstractCodeMapping mapping) {
+		references.add(mapping);
 	}
 
 	public RefactoringType getRefactoringType() {
@@ -32,6 +41,10 @@ public class ExtractVariableRefactoring implements Refactoring {
 
 	public UMLOperation getOperation() {
 		return operation;
+	}
+
+	public Set<AbstractCodeMapping> getReferences() {
+		return references;
 	}
 
 	public String toString() {

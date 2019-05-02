@@ -8,17 +8,18 @@ import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ObjectCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
+import gr.uom.java.xmi.decomposition.replacement.SplitVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
 import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.CandidateMergeVariableRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
-import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
+import gr.uom.java.xmi.diff.UMLParameterDiff;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -136,10 +137,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			nonMappedInnerNodesT2.addAll(innerNodes2);
 			
 			for(StatementObject statement : getNonMappedLeavesT2()) {
-				temporaryVariableAssignment(statement);
+				temporaryVariableAssignment(statement, nonMappedLeavesT2);
 			}
 			for(StatementObject statement : getNonMappedLeavesT1()) {
-				inlinedVariableAssignment(statement);
+				inlinedVariableAssignment(statement, nonMappedLeavesT2);
 			}
 		}
 	}
@@ -272,7 +273,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			int numberOfMappings = mappings.size();
 			processLeaves(expressionsT1, leaves2, parameterToArgumentMap2);
 			for(int i = numberOfMappings; i < mappings.size(); i++) {
-				temporaryVariableAssignment(mappings.get(i));
+				mappings.get(i).temporaryVariableAssignment(refactorings);
 			}
 			// TODO remove non-mapped inner nodes from T1 corresponding to mapped expressions
 			
@@ -286,10 +287,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			nonMappedInnerNodesT2.addAll(innerNodes2);
 			
 			for(StatementObject statement : getNonMappedLeavesT2()) {
-				temporaryVariableAssignment(statement);
+				temporaryVariableAssignment(statement, nonMappedLeavesT2);
 			}
 			for(StatementObject statement : getNonMappedLeavesT1()) {
-				inlinedVariableAssignment(statement);
+				inlinedVariableAssignment(statement, nonMappedLeavesT2);
 			}
 		}
 	}
@@ -392,10 +393,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			nonMappedInnerNodesT2.addAll(innerNodes2);
 			
 			for(StatementObject statement : getNonMappedLeavesT2()) {
-				temporaryVariableAssignment(statement);
+				temporaryVariableAssignment(statement, nonMappedLeavesT2);
 			}
 			for(StatementObject statement : getNonMappedLeavesT1()) {
-				inlinedVariableAssignment(statement);
+				inlinedVariableAssignment(statement, nonMappedLeavesT2);
 			}
 		}
 	}
@@ -413,6 +414,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(this, refactorings, operationDiff);
 		refactorings.addAll(analysis.getVariableRenames());
 		refactorings.addAll(analysis.getVariableMerges());
+		refactorings.addAll(analysis.getVariableSplits());
 		candidateAttributeRenames.addAll(analysis.getCandidateAttributeRenames());
 		candidateAttributeMerges.addAll(analysis.getCandidateAttributeMerges());
 		return refactorings;
@@ -513,177 +515,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private void inlinedVariableAssignment(StatementObject statement) {
-		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
-			for(Replacement replacement : getReplacements()) {
-				String variableName = declaration.getVariableName();
-				AbstractExpression initializer = declaration.getInitializer();
-				if(replacement.getBefore().startsWith(variableName + ".")) {
-					String suffixBefore = replacement.getBefore().substring(variableName.length(), replacement.getBefore().length());
-					if(replacement.getAfter().endsWith(suffixBefore)) {
-						String prefixAfter = replacement.getAfter().substring(0, replacement.getAfter().indexOf(suffixBefore));
-						if(initializer != null) {
-							if(initializer.toString().equals(prefixAfter) ||
-									overlappingExtractVariable(initializer, prefixAfter)) {
-								InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1);
-								if(!refactorings.contains(ref)) {
-									refactorings.add(ref);
-								}
-							}
-						}
-					}
-				}
-				if(variableName.equals(replacement.getBefore()) && initializer != null) {
-					if(initializer.toString().equals(replacement.getAfter()) ||
-							overlappingExtractVariable(initializer, replacement.getAfter())) {
-						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1);
-						if(!refactorings.contains(ref)) {
-							refactorings.add(ref);
-						}
-					}
-				}
-			}
-		}
-		String argumentizedString = statement.getArgumentizedString();
-		if(argumentizedString.contains("=")) {
-			String beforeAssignment = argumentizedString.substring(0, argumentizedString.indexOf("="));
-			String[] tokens = beforeAssignment.split("\\s");
-			String variable = tokens[tokens.length-1];
-			String initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-2);
-			for(Replacement replacement : getReplacements()) {
-				if(variable.endsWith(replacement.getBefore()) && initializer.equals(replacement.getAfter())) {
-					List<VariableDeclaration> variableDeclarations = operation1.getAllVariableDeclarations();
-					for(VariableDeclaration declaration : variableDeclarations) {
-						if(declaration.getVariableName().equals(variable)) {
-							InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1);
-							if(!refactorings.contains(ref)) {
-								refactorings.add(ref);
-							}
-						}
-					}
-				}
-			}
+	private void inlinedVariableAssignment(StatementObject statement, List<StatementObject> nonMappedLeavesT2) {
+		for(AbstractCodeMapping mapping : getMappings()) {
+			mapping.inlinedVariableAssignment(statement, nonMappedLeavesT2, refactorings);
 		}
 	}
 
-	private void temporaryVariableAssignment(AbstractCodeMapping mapping) {
-		if(mapping instanceof LeafMapping && mapping.getFragment1() instanceof AbstractExpression
-				&& mapping.getFragment2() instanceof StatementObject) {
-			StatementObject statement = (StatementObject) mapping.getFragment2();
-			List<VariableDeclaration> variableDeclarations = statement.getVariableDeclarations();
-			boolean validReplacements = true;
-			for(Replacement replacement : mapping.getReplacements()) {
-				if(replacement instanceof MethodInvocationReplacement || replacement instanceof ObjectCreationReplacement) {
-					validReplacements = false;
-					break;
-				}
-			}
-			if(variableDeclarations.size() == 1 && validReplacements) {
-				VariableDeclaration variableDeclaration = variableDeclarations.get(0);
-				ExtractVariableRefactoring ref = new ExtractVariableRefactoring(variableDeclaration, operation2);
-				if(!refactorings.contains(ref)) {
-					refactorings.add(ref);
-				}
-			}
+	private void temporaryVariableAssignment(StatementObject statement, List<StatementObject> nonMappedLeavesT2) {
+		for(AbstractCodeMapping mapping : getMappings()) {
+			mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, refactorings);
 		}
-	}
-
-	private void temporaryVariableAssignment(StatementObject statement) {
-		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
-			for(Replacement replacement : getReplacements()) {
-				String variableName = declaration.getVariableName();
-				AbstractExpression initializer = declaration.getInitializer();
-				if(replacement.getAfter().startsWith(variableName + ".")) {
-					String suffixAfter = replacement.getAfter().substring(variableName.length(), replacement.getAfter().length());
-					if(replacement.getBefore().endsWith(suffixAfter)) {
-						String prefixBefore = replacement.getBefore().substring(0, replacement.getBefore().indexOf(suffixAfter));
-						if(initializer != null) {
-							if(initializer.toString().equals(prefixBefore) ||
-									overlappingExtractVariable(initializer, prefixBefore)) {
-								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation2);
-								if(!refactorings.contains(ref)) {
-									refactorings.add(ref);
-								}
-							}
-						}
-					}
-				}
-				if(variableName.equals(replacement.getAfter()) && initializer != null) {
-					if(initializer.toString().equals(replacement.getBefore()) ||
-							overlappingExtractVariable(initializer, replacement.getBefore())) {
-						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation2);
-						if(!refactorings.contains(ref)) {
-							refactorings.add(ref);
-						}
-					}
-				}
-			}
-		}
-		String argumentizedString = statement.getArgumentizedString();
-		if(argumentizedString.contains("=")) {
-			String beforeAssignment = argumentizedString.substring(0, argumentizedString.indexOf("="));
-			String[] tokens = beforeAssignment.split("\\s");
-			String variable = tokens[tokens.length-1];
-			String initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-2);
-			for(Replacement replacement : getReplacements()) {
-				if(variable.endsWith(replacement.getAfter()) &&	initializer.equals(replacement.getBefore())) {
-					List<VariableDeclaration> variableDeclarations = operation2.getAllVariableDeclarations();
-					for(VariableDeclaration declaration : variableDeclarations) {
-						if(declaration.getVariableName().equals(variable)) {
-							ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation2);
-							if(!refactorings.contains(ref)) {
-								refactorings.add(ref);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	private boolean overlappingExtractVariable(AbstractExpression initializer, String input) {
-		String output = input;
-		for(Refactoring ref : this.refactorings) {
-			if(ref instanceof ExtractVariableRefactoring) {
-				ExtractVariableRefactoring extractVariable = (ExtractVariableRefactoring)ref;
-				VariableDeclaration declaration = extractVariable.getVariableDeclaration();
-				if(declaration.getInitializer() != null && input.contains(declaration.getInitializer().toString())) {
-					output = output.replace(declaration.getInitializer().toString(), declaration.getVariableName());
-				}
-			}
-		}
-		if(initializer.toString().equals(output)) {
-			return true;
-		}
-		String longestCommonSuffix = PrefixSuffixUtils.longestCommonSuffix(initializer.toString(), input);
-		if(!longestCommonSuffix.isEmpty() && longestCommonSuffix.startsWith(".")) {
-			return true;
-		}
-		String longestCommonPrefix = PrefixSuffixUtils.longestCommonPrefix(initializer.toString(), input);
-		if(!longestCommonSuffix.isEmpty() && !longestCommonPrefix.isEmpty() &&
-				!longestCommonPrefix.equals(initializer.toString()) && !longestCommonPrefix.equals(input) &&
-				!longestCommonSuffix.equals(initializer.toString()) && !longestCommonSuffix.equals(input) &&
-				longestCommonPrefix.length() + longestCommonSuffix.length() < input.length() &&
-				longestCommonPrefix.length() + longestCommonSuffix.length() < initializer.toString().length()) {
-			String s1 = input.substring(longestCommonPrefix.length(), input.lastIndexOf(longestCommonSuffix));
-			String s2 = initializer.toString().substring(longestCommonPrefix.length(), initializer.toString().lastIndexOf(longestCommonSuffix));
-			for(StatementObject statement : nonMappedLeavesT2) {
-				VariableDeclaration variable = statement.getVariableDeclaration(s2);
-				if(variable != null) {
-					if(variable.getInitializer() != null && variable.getInitializer().toString().equals(s1)) {
-						return true;
-					}
-					List<TernaryOperatorExpression> ternaryOperators = statement.getTernaryOperatorExpressions();
-					for(TernaryOperatorExpression ternaryOperator : ternaryOperators) {
-						if(ternaryOperator.getThenExpression().toString().equals(s1) ||
-								ternaryOperator.getElseExpression().toString().equals(s1)) {
-							return true;
-						}
-					}
-				}
-			}
-		}
-		return false;
 	}
 
 	public int nonMappedElementsT2CallingAddedOperation(List<UMLOperation> addedOperations) {
@@ -1005,6 +846,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if (replacements != null) {
 						LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap);
 						mapping.addReplacements(replacements);
+						for(AbstractCodeFragment leaf : leaves2) {
+							if(leaf.equals(leaf2)) {
+								break;
+							}
+							mapping.temporaryVariableAssignment(leaf, leaves2, refactorings);
+						}
 						mappingSet.add(mapping);
 					}
 				}
@@ -1070,6 +917,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if (replacements != null) {
 						LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap);
 						mapping.addReplacements(replacements);
+						for(AbstractCodeFragment leaf : leaves2) {
+							if(leaf.equals(leaf2)) {
+								break;
+							}
+							mapping.temporaryVariableAssignment(leaf, leaves2, refactorings);
+						}
 						mappingSet.add(mapping);
 					}
 				}
@@ -1453,7 +1306,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		boolean isEqualWithReplacement = s1.equals(s2) || differOnlyInCastExpression(s1, s2) || oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2) ||
 				(commonConditional(s1, s2, replacementInfo) && containsValidOperatorReplacements(replacementInfo)) ||
-				equalAfterArgumentMerge(s1, s2, replacementInfo);
+				equalAfterArgumentMerge(s1, s2, replacementInfo) ||
+				equalAfterNewParameterAddition(s1, s2, replacementInfo);
 		if(isEqualWithReplacement) {
 			if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo)) {
 				return null;
@@ -2124,6 +1978,66 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return identicalMethodCalls == arguments1.size() && arguments1.size() > 0;
+	}
+
+	private boolean equalAfterNewParameterAddition(String s1, String s2, ReplacementInfo replacementInfo) {
+		UMLOperationDiff operationDiff = classDiff != null ? classDiff.getOperationDiff(operation1, operation2) : null;
+		if(operationDiff == null) {
+			operationDiff = new UMLOperationDiff(operation1, operation2);
+		}
+		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
+		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
+		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
+			int beginIndexS1 = s1.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS1 = s1.lastIndexOf(commonSuffix);
+			String diff1 = beginIndexS1 > endIndexS1 ? "" :	s1.substring(beginIndexS1, endIndexS1);
+			int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS2 = s2.lastIndexOf(commonSuffix);
+			String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
+			if(beginIndexS1 > endIndexS1) {
+				diff2 = diff2 + commonSuffix.substring(0, beginIndexS1 - endIndexS1);
+			}
+			if(diff1.isEmpty()) {
+				List<UMLParameter> matchingAddedParameters = new ArrayList<UMLParameter>();
+				for(UMLParameter addedParameter : operationDiff.getAddedParameters()) {
+					if(diff2.contains(addedParameter.getName())) {
+						matchingAddedParameters.add(addedParameter);
+					}
+				}
+				if(matchingAddedParameters.size() > 0) {
+					UMLParameterDiff matchingParameterDiff = null;
+					Replacement matchingReplacement = null;
+					for(Replacement replacement : replacementInfo.getReplacements()) {
+						if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
+							for(UMLParameterDiff parameterDiff : operationDiff.getParameterDiffList()) {
+								if(parameterDiff.isNameChanged() &&
+										replacement.getBefore().equals(parameterDiff.getRemovedParameter().getName()) &&
+										replacement.getAfter().equals(parameterDiff.getAddedParameter().getName())) {
+									matchingParameterDiff = parameterDiff;
+									matchingReplacement = replacement;
+									break;
+								}
+							}
+						}
+						if(matchingReplacement != null) {
+							break;
+						}
+					}
+					if(matchingParameterDiff != null) {
+						Set<String> splitVariables = new LinkedHashSet<String>();
+						splitVariables.add(matchingParameterDiff.getAddedParameter().getName());
+						for(UMLParameter addedParameter : matchingAddedParameters) {
+							splitVariables.add(addedParameter.getName());
+						}
+						SplitVariableReplacement split = new SplitVariableReplacement(matchingParameterDiff.getRemovedParameter().getName(), splitVariables);
+						replacementInfo.getReplacements().remove(matchingReplacement);
+						replacementInfo.getReplacements().add(split);
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean equalAfterArgumentMerge(String s1, String s2, ReplacementInfo replacementInfo) {

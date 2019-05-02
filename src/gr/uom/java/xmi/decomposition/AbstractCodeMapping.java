@@ -1,11 +1,19 @@
 package gr.uom.java.xmi.decomposition;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.util.PrefixSuffixUtils;
+
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
+import gr.uom.java.xmi.decomposition.replacement.ObjectCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
+import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
+import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 
 public abstract class AbstractCodeMapping {
 
@@ -14,6 +22,7 @@ public abstract class AbstractCodeMapping {
 	private UMLOperation operation1;
 	private UMLOperation operation2;
 	private Set<Replacement> replacements;
+	private boolean identicalWithExtractedVariable;
 	
 	public AbstractCodeMapping(AbstractCodeFragment fragment1, AbstractCodeFragment fragment2,
 			UMLOperation operation1, UMLOperation operation2) {
@@ -30,6 +39,10 @@ public abstract class AbstractCodeMapping {
 
 	public AbstractCodeFragment getFragment2() {
 		return fragment2;
+	}
+
+	public boolean isIdenticalWithExtractedVariable() {
+		return identicalWithExtractedVariable;
 	}
 
 	public boolean isExact() {
@@ -90,5 +103,211 @@ public abstract class AbstractCodeMapping {
 
 	public String toString() {
 		return fragment1.toString() + fragment2.toString();
+	}
+
+	public void temporaryVariableAssignment(Set<Refactoring> refactorings) {
+		if(this instanceof LeafMapping && getFragment1() instanceof AbstractExpression
+				&& getFragment2() instanceof StatementObject) {
+			StatementObject statement = (StatementObject) getFragment2();
+			List<VariableDeclaration> variableDeclarations = statement.getVariableDeclarations();
+			boolean validReplacements = true;
+			for(Replacement replacement : getReplacements()) {
+				if(replacement instanceof MethodInvocationReplacement || replacement instanceof ObjectCreationReplacement) {
+					validReplacements = false;
+					break;
+				}
+			}
+			if(variableDeclarations.size() == 1 && validReplacements) {
+				VariableDeclaration variableDeclaration = variableDeclarations.get(0);
+				ExtractVariableRefactoring ref = new ExtractVariableRefactoring(variableDeclaration, operation2);
+				processExtractVariableRefactoring(ref, refactorings);
+				identicalWithExtractedVariable = true;
+			}
+		}
+	}
+
+	public void temporaryVariableAssignment(AbstractCodeFragment statement,
+			List<? extends AbstractCodeFragment> nonMappedLeavesT2, Set<Refactoring> refactorings) {
+		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
+			for(Replacement replacement : getReplacements()) {
+				String variableName = declaration.getVariableName();
+				AbstractExpression initializer = declaration.getInitializer();
+				if(replacement.getAfter().startsWith(variableName + ".")) {
+					String suffixAfter = replacement.getAfter().substring(variableName.length(), replacement.getAfter().length());
+					if(replacement.getBefore().endsWith(suffixAfter)) {
+						String prefixBefore = replacement.getBefore().substring(0, replacement.getBefore().indexOf(suffixAfter));
+						if(initializer != null) {
+							if(initializer.toString().equals(prefixBefore) ||
+									overlappingExtractVariable(initializer, prefixBefore, nonMappedLeavesT2, refactorings)) {
+								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation2);
+								processExtractVariableRefactoring(ref, refactorings);
+								if(getReplacements().size() == 1) {
+									identicalWithExtractedVariable = true;
+								}
+							}
+						}
+					}
+				}
+				if(variableName.equals(replacement.getAfter()) && initializer != null) {
+					if(initializer.toString().equals(replacement.getBefore()) ||
+							overlappingExtractVariable(initializer, replacement.getBefore(), nonMappedLeavesT2, refactorings)) {
+						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation2);
+						processExtractVariableRefactoring(ref, refactorings);
+						if(getReplacements().size() == 1) {
+							identicalWithExtractedVariable = true;
+						}
+					}
+				}
+			}
+		}
+		String argumentizedString = statement.getArgumentizedString();
+		if(argumentizedString.contains("=")) {
+			String beforeAssignment = argumentizedString.substring(0, argumentizedString.indexOf("="));
+			String[] tokens = beforeAssignment.split("\\s");
+			String variable = tokens[tokens.length-1];
+			String initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-2);
+			for(Replacement replacement : getReplacements()) {
+				if(variable.endsWith(replacement.getAfter()) &&	initializer.equals(replacement.getBefore())) {
+					List<VariableDeclaration> variableDeclarations = operation2.getAllVariableDeclarations();
+					for(VariableDeclaration declaration : variableDeclarations) {
+						if(declaration.getVariableName().equals(variable)) {
+							ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation2);
+							processExtractVariableRefactoring(ref, refactorings);
+							if(getReplacements().size() == 1) {
+								identicalWithExtractedVariable = true;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public void inlinedVariableAssignment(StatementObject statement,
+			List<StatementObject> nonMappedLeavesT2, Set<Refactoring> refactorings) {
+		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
+			for(Replacement replacement : getReplacements()) {
+				String variableName = declaration.getVariableName();
+				AbstractExpression initializer = declaration.getInitializer();
+				if(replacement.getBefore().startsWith(variableName + ".")) {
+					String suffixBefore = replacement.getBefore().substring(variableName.length(), replacement.getBefore().length());
+					if(replacement.getAfter().endsWith(suffixBefore)) {
+						String prefixAfter = replacement.getAfter().substring(0, replacement.getAfter().indexOf(suffixBefore));
+						if(initializer != null) {
+							if(initializer.toString().equals(prefixAfter) ||
+									overlappingExtractVariable(initializer, prefixAfter, nonMappedLeavesT2, refactorings)) {
+								InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1);
+								processInlineVariableRefactoring(ref, refactorings);
+							}
+						}
+					}
+				}
+				if(variableName.equals(replacement.getBefore()) && initializer != null) {
+					if(initializer.toString().equals(replacement.getAfter()) ||
+							overlappingExtractVariable(initializer, replacement.getAfter(), nonMappedLeavesT2, refactorings)) {
+						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1);
+						processInlineVariableRefactoring(ref, refactorings);
+					}
+				}
+			}
+		}
+		String argumentizedString = statement.getArgumentizedString();
+		if(argumentizedString.contains("=")) {
+			String beforeAssignment = argumentizedString.substring(0, argumentizedString.indexOf("="));
+			String[] tokens = beforeAssignment.split("\\s");
+			String variable = tokens[tokens.length-1];
+			String initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-2);
+			for(Replacement replacement : getReplacements()) {
+				if(variable.endsWith(replacement.getBefore()) && initializer.equals(replacement.getAfter())) {
+					List<VariableDeclaration> variableDeclarations = operation1.getAllVariableDeclarations();
+					for(VariableDeclaration declaration : variableDeclarations) {
+						if(declaration.getVariableName().equals(variable)) {
+							InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1);
+							processInlineVariableRefactoring(ref, refactorings);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private void processInlineVariableRefactoring(InlineVariableRefactoring ref, Set<Refactoring> refactorings) {
+		if(!refactorings.contains(ref)) {
+			ref.addReference(this);
+			refactorings.add(ref);
+		}
+		else {
+			for(Refactoring refactoring : refactorings) {
+				if(refactoring.equals(ref)) {
+					((InlineVariableRefactoring)refactoring).addReference(this);
+					break;
+				}
+			}
+		}
+	}
+
+	private void processExtractVariableRefactoring(ExtractVariableRefactoring ref, Set<Refactoring> refactorings) {
+		if(!refactorings.contains(ref)) {
+			ref.addReference(this);
+			refactorings.add(ref);
+		}
+		else {
+			for(Refactoring refactoring : refactorings) {
+				if(refactoring.equals(ref)) {
+					((ExtractVariableRefactoring)refactoring).addReference(this);
+					break;
+				}
+			}
+		}
+	}
+
+	private boolean overlappingExtractVariable(AbstractExpression initializer, String input, List<? extends AbstractCodeFragment> nonMappedLeavesT2, Set<Refactoring> refactorings) {
+		String output = input;
+		for(Refactoring ref : refactorings) {
+			if(ref instanceof ExtractVariableRefactoring) {
+				ExtractVariableRefactoring extractVariable = (ExtractVariableRefactoring)ref;
+				VariableDeclaration declaration = extractVariable.getVariableDeclaration();
+				if(declaration.getInitializer() != null && input.contains(declaration.getInitializer().toString())) {
+					output = output.replace(declaration.getInitializer().toString(), declaration.getVariableName());
+				}
+			}
+		}
+		if(initializer.toString().equals(output)) {
+			return true;
+		}
+		String longestCommonSuffix = PrefixSuffixUtils.longestCommonSuffix(initializer.toString(), input);
+		if(!longestCommonSuffix.isEmpty() && longestCommonSuffix.startsWith(".")) {
+			String prefix1 = initializer.toString().substring(0, initializer.toString().indexOf(longestCommonSuffix));
+			String prefix2 = input.substring(0, input.indexOf(longestCommonSuffix));
+			//skip static variable prefixes
+			if(prefix1.equals(prefix2) || (!prefix1.toUpperCase().equals(prefix1) && !prefix2.toUpperCase().equals(prefix2))) {
+				return true;
+			}
+		}
+		String longestCommonPrefix = PrefixSuffixUtils.longestCommonPrefix(initializer.toString(), input);
+		if(!longestCommonSuffix.isEmpty() && !longestCommonPrefix.isEmpty() &&
+				!longestCommonPrefix.equals(initializer.toString()) && !longestCommonPrefix.equals(input) &&
+				!longestCommonSuffix.equals(initializer.toString()) && !longestCommonSuffix.equals(input) &&
+				longestCommonPrefix.length() + longestCommonSuffix.length() < input.length() &&
+				longestCommonPrefix.length() + longestCommonSuffix.length() < initializer.toString().length()) {
+			String s1 = input.substring(longestCommonPrefix.length(), input.lastIndexOf(longestCommonSuffix));
+			String s2 = initializer.toString().substring(longestCommonPrefix.length(), initializer.toString().lastIndexOf(longestCommonSuffix));
+			for(AbstractCodeFragment statement : nonMappedLeavesT2) {
+				VariableDeclaration variable = statement.getVariableDeclaration(s2);
+				if(variable != null) {
+					if(variable.getInitializer() != null && variable.getInitializer().toString().equals(s1)) {
+						return true;
+					}
+					List<TernaryOperatorExpression> ternaryOperators = statement.getTernaryOperatorExpressions();
+					for(TernaryOperatorExpression ternaryOperator : ternaryOperators) {
+						if(ternaryOperator.getThenExpression().toString().equals(s1) ||
+								ternaryOperator.getElseExpression().toString().equals(s1)) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

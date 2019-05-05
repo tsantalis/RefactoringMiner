@@ -10956,6 +10956,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Split Attribute",
+        "description": "Split Attribute mRemotePostItem : PostModel to [mRemoteBlogID : String, mRemoteItemID : String, mRemoteItemType : String, mItemURL : String, mItemTitle : String] in class org.wordpress.android.ui.stats.StatsSingleItemDetailsActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1502
 }, {
@@ -16117,6 +16124,13 @@
     }, {
         "type": "Split Parameter",
         "description": "Split Parameter locations : String[] to [directories : String[], classNames : String[]] in method public FilterFileManagerConfig(directories String[], classNames String[], pollingIntervalSeconds int) in class com.netflix.zuul.FilterFileManager.FilterFileManagerConfig",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Split Attribute",
+        "description": "Split Attribute locations : String[] to [directories : String[], classNames : String[]] in class com.netflix.zuul.FilterFileManager.FilterFileManagerConfig",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

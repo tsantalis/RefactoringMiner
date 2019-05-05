@@ -58,7 +58,8 @@ public class UMLOperationDiff {
 			UMLParameter removedParameter = removedParameterIterator.next();
 			for(Iterator<UMLParameter> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
 				UMLParameter addedParameter = addedParameterIterator.next();
-				if(removedParameter.getType().equalsQualified(addedParameter.getType())) {
+				if(removedParameter.getType().equalsQualified(addedParameter.getType()) &&
+						!existsAnotherAddedParameterWithTheSameType(addedParameter)) {
 					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter);
 					parameterDiffList.add(parameterDiff);
 					addedParameterIterator.remove();
@@ -87,6 +88,19 @@ public class UMLOperationDiff {
 				}
 			}
 		}
+	}
+
+	private boolean existsAnotherAddedParameterWithTheSameType(UMLParameter parameter) {
+		if(removedOperation.hasTwoParametersWithTheSameType() && addedOperation.hasTwoParametersWithTheSameType()) {
+			return false;
+		}
+		for(UMLParameter addedParameter : addedParameters) {
+			if(!addedParameter.getName().equals(parameter.getName()) &&
+					addedParameter.getType().equalsQualified(parameter.getType())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private List<SimpleEntry<UMLParameter, UMLParameter>> updateAddedRemovedParameters(UMLOperation removedOperation, UMLOperation addedOperation) {

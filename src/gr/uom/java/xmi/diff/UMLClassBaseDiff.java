@@ -945,14 +945,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 	
 						UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation);
 						operationDiffList.add(operationSignatureDiff);
-						for(UMLParameterDiff parameterDiff : operationSignatureDiff.getParameterDiffList()) {
-		    				if(parameterDiff.isNameChanged()) {
-		    					VariableDeclaration originalVariable = parameterDiff.getRemovedParameter().getVariableDeclaration();
-		    					VariableDeclaration renamedVariable = parameterDiff.getAddedParameter().getVariableDeclaration();
-								RenameVariableRefactoring refactoring = new RenameVariableRefactoring(originalVariable, renamedVariable, removedOperation, addedOperation, new ArrayList<AbstractCodeMapping>());
-								refactorings.add(refactoring);
-		    				}
-		    			}
+						refactorings.addAll(operationSignatureDiff.getRefactorings());
 						if(!removedOperation.getName().equals(addedOperation.getName()) &&
 								!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
 							RenameOperationRefactoring rename = new RenameOperationRefactoring(bestMapper);
@@ -992,14 +985,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 	
 						UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation);
 						operationDiffList.add(operationSignatureDiff);
-						for(UMLParameterDiff parameterDiff : operationSignatureDiff.getParameterDiffList()) {
-		    				if(parameterDiff.isNameChanged()) {
-		    					VariableDeclaration originalVariable = parameterDiff.getRemovedParameter().getVariableDeclaration();
-		    					VariableDeclaration renamedVariable = parameterDiff.getAddedParameter().getVariableDeclaration();
-								RenameVariableRefactoring refactoring = new RenameVariableRefactoring(originalVariable, renamedVariable, removedOperation, addedOperation, new ArrayList<AbstractCodeMapping>());
-								refactorings.add(refactoring);
-		    				}
-		    			}
+						refactorings.addAll(operationSignatureDiff.getRefactorings());
 						if(!removedOperation.getName().equals(addedOperation.getName()) &&
 								!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
 							RenameOperationRefactoring rename = new RenameOperationRefactoring(bestMapper);

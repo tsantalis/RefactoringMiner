@@ -2,11 +2,17 @@ package gr.uom.java.xmi.diff;
 
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
+
+import org.refactoringminer.api.Refactoring;
 
 public class UMLOperationDiff {
 	private UMLOperation removedOperation;
@@ -190,5 +196,18 @@ public class UMLOperationDiff {
 			sb.append(parameterDiff);
 		}
 		return sb.toString();
+	}
+
+	public Set<Refactoring> getRefactorings() {
+		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
+		for(UMLParameterDiff parameterDiff : getParameterDiffList()) {
+			if(parameterDiff.isNameChanged()) {
+				VariableDeclaration originalVariable = parameterDiff.getRemovedParameter().getVariableDeclaration();
+				VariableDeclaration renamedVariable = parameterDiff.getAddedParameter().getVariableDeclaration();
+				RenameVariableRefactoring refactoring = new RenameVariableRefactoring(originalVariable, renamedVariable, removedOperation, addedOperation, new ArrayList<AbstractCodeMapping>());
+				refactorings.add(refactoring);
+			}
+		}
+		return refactorings;
 	}
 }

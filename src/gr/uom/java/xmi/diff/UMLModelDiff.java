@@ -964,14 +964,7 @@ public class UMLModelDiff {
 				   ref = new PushDownOperationRefactoring(removedOperation, addedOperation);
 			   }
 			   UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation);
-			   for(UMLParameterDiff parameterDiff : operationSignatureDiff.getParameterDiffList()) {
-				   if(parameterDiff.isNameChanged()) {
-					   VariableDeclaration originalVariable = parameterDiff.getRemovedParameter().getVariableDeclaration();
-					   VariableDeclaration renamedVariable = parameterDiff.getAddedParameter().getVariableDeclaration();
-					   RenameVariableRefactoring rename = new RenameVariableRefactoring(originalVariable, renamedVariable, removedOperation, addedOperation, new ArrayList<AbstractCodeMapping>());
-					   this.refactorings.add(rename);
-				   }
-			   }
+			   refactorings.addAll(operationSignatureDiff.getRefactorings());
 			   this.refactorings.add(ref);
 			   UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
 			   checkForExtractedOperationsWithinMovedMethod(mapper, addedClass);
@@ -1287,14 +1280,7 @@ public class UMLModelDiff {
     						  RenameOperationRefactoring refactoring = new RenameOperationRefactoring(removedOperation, addedOperation);
     						  refactorings.add(refactoring);
     					  }
-    					  for(UMLParameterDiff parameterDiff : operationSignatureDiff.getParameterDiffList()) {
-    						  if(parameterDiff.isNameChanged()) {
-    							  VariableDeclaration originalVariable = parameterDiff.getRemovedParameter().getVariableDeclaration();
-    							  VariableDeclaration renamedVariable = parameterDiff.getAddedParameter().getVariableDeclaration();
-    							  RenameVariableRefactoring refactoring = new RenameVariableRefactoring(originalVariable, renamedVariable, removedOperation, addedOperation, new ArrayList<AbstractCodeMapping>());
-    							  refactorings.add(refactoring);
-    						  }
-    					  }
+    					  refactorings.addAll(operationSignatureDiff.getRefactorings());
     				  }
     			  }
     		  }
@@ -1310,14 +1296,7 @@ public class UMLModelDiff {
         						  RenameOperationRefactoring refactoring = new RenameOperationRefactoring(removedOperation, addedOperation);
         						  refactorings.add(refactoring);
         					  }
-        					  for(UMLParameterDiff parameterDiff : operationSignatureDiff.getParameterDiffList()) {
-        						  if(parameterDiff.isNameChanged()) {
-        							  VariableDeclaration originalVariable = parameterDiff.getRemovedParameter().getVariableDeclaration();
-        							  VariableDeclaration renamedVariable = parameterDiff.getAddedParameter().getVariableDeclaration();
-        							  RenameVariableRefactoring refactoring = new RenameVariableRefactoring(originalVariable, renamedVariable, removedOperation, addedOperation, new ArrayList<AbstractCodeMapping>());
-        							  refactorings.add(refactoring);
-        						  }
-        					  }
+        					  refactorings.addAll(operationSignatureDiff.getRefactorings());
         				  }
     				  }
     			  }
@@ -1728,14 +1707,7 @@ public class UMLModelDiff {
 	                  deleteRemovedOperation(removedOperation);
 	                  deleteAddedOperation(addedOperation);
 	                  UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation);
-	                  for(UMLParameterDiff parameterDiff : operationSignatureDiff.getParameterDiffList()) {
-	                	  if(parameterDiff.isNameChanged()) {
-	                		  VariableDeclaration originalVariable = parameterDiff.getRemovedParameter().getVariableDeclaration();
-	                		  VariableDeclaration renamedVariable = parameterDiff.getAddedParameter().getVariableDeclaration();
-	                		  RenameVariableRefactoring rename = new RenameVariableRefactoring(originalVariable, renamedVariable, removedOperation, addedOperation, new ArrayList<AbstractCodeMapping>());
-	                		  refactorings.add(rename);
-	                	  }
-	                  }
+	                  refactorings.addAll(operationSignatureDiff.getRefactorings());
 	                  refactorings.add(refactoring);
 	                  UMLClass addedClass = getAddedClass(addedOperation.getClassName());
 	                  if(addedClass != null) {
@@ -1809,14 +1781,7 @@ public class UMLModelDiff {
 	                  deleteRemovedOperation(removedOperation);
 	                  deleteAddedOperation(addedOperation);
 	                  UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation);
-	                  for(UMLParameterDiff parameterDiff : operationSignatureDiff.getParameterDiffList()) {
-	                	  if(parameterDiff.isNameChanged()) {
-	                		  VariableDeclaration originalVariable = parameterDiff.getRemovedParameter().getVariableDeclaration();
-	                		  VariableDeclaration renamedVariable = parameterDiff.getAddedParameter().getVariableDeclaration();
-	                		  RenameVariableRefactoring rename = new RenameVariableRefactoring(originalVariable, renamedVariable, removedOperation, addedOperation, new ArrayList<AbstractCodeMapping>());
-	                		  refactorings.add(rename);
-	                	  }
-	                  }
+	                  refactorings.addAll(operationSignatureDiff.getRefactorings());
 	                  refactorings.add(refactoring);
 	               }
 	            }

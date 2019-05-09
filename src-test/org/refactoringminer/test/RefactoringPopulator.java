@@ -64,7 +64,11 @@ public class RefactoringPopulator {
 		SplitVariable(new BigInteger("2147483648")),
 		SplitParameter(new BigInteger("4294967296")),
 		SplitAttribute(new BigInteger("8589934592")),
-		All(new BigInteger("17179869183"));
+		ChangeReturnType(new BigInteger("17179869184")),
+		ChangeVariableType(new BigInteger("34359738368")),
+		ChangeParameterType(new BigInteger("68719476736")),
+		ChangeAttributeType(new BigInteger("137438953472")),
+		All(new BigInteger("274877906943"));
 
 		private BigInteger value;
 

@@ -98,7 +98,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			RefactoringType.MERGE_ATTRIBUTE,
 			RefactoringType.SPLIT_VARIABLE,
 			RefactoringType.SPLIT_PARAMETER,
-			RefactoringType.SPLIT_ATTRIBUTE
+			RefactoringType.SPLIT_ATTRIBUTE,
+			RefactoringType.CHANGE_RETURN_TYPE,
+			RefactoringType.CHANGE_VARIABLE_TYPE,
+			RefactoringType.CHANGE_PARAMETER_TYPE,
+			RefactoringType.CHANGE_ATTRIBUTE_TYPE
 		);
 	}
 

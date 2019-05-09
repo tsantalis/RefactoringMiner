@@ -201,10 +201,14 @@ public class UMLOperationDiff {
 	public Set<Refactoring> getRefactorings() {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 		for(UMLParameterDiff parameterDiff : getParameterDiffList()) {
+			VariableDeclaration originalVariable = parameterDiff.getRemovedParameter().getVariableDeclaration();
+			VariableDeclaration newVariable = parameterDiff.getAddedParameter().getVariableDeclaration();
 			if(parameterDiff.isNameChanged()) {
-				VariableDeclaration originalVariable = parameterDiff.getRemovedParameter().getVariableDeclaration();
-				VariableDeclaration renamedVariable = parameterDiff.getAddedParameter().getVariableDeclaration();
-				RenameVariableRefactoring refactoring = new RenameVariableRefactoring(originalVariable, renamedVariable, removedOperation, addedOperation, new ArrayList<AbstractCodeMapping>());
+				RenameVariableRefactoring refactoring = new RenameVariableRefactoring(originalVariable, newVariable, removedOperation, addedOperation, new ArrayList<AbstractCodeMapping>());
+				refactorings.add(refactoring);
+			}
+			if(parameterDiff.isTypeChanged()) {
+				ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(originalVariable, newVariable, removedOperation, addedOperation);
 				refactorings.add(refactoring);
 			}
 		}

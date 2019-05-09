@@ -19,6 +19,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private String variableName;
 	private AbstractExpression initializer;
 	private UMLType type;
+	private boolean varargsParameter;
 	private LocationInfo locationInfo;
 	private boolean isParameter;
 	private boolean isAttribute;
@@ -54,6 +55,11 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		ASTNode scopeNode = getScopeNode(fragment);
 		int endOffset = scopeNode.getStartPosition() + scopeNode.getLength();
 		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
+	}
+
+	public VariableDeclaration(CompilationUnit cu, String filePath, SingleVariableDeclaration fragment, boolean varargs) {
+		this(cu, filePath, fragment);
+		this.varargsParameter = varargs;
 	}
 
 	public String getVariableName() {
@@ -122,6 +128,9 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
         sb.append(variableName).append(" : ").append(type);
+        if(varargsParameter) {
+        	sb.append("...");
+        }
         return sb.toString();
 	}
 

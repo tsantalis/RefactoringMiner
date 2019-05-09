@@ -47,7 +47,7 @@ public class ExtractAndMoveOperationRefactoring implements Refactoring {
 		sb.append(extractedOperation.getClassName());
 		return sb.toString();
 	}
-	
+
 	public String getName() {
 		return this.getRefactoringType().getDisplayName();
 	}

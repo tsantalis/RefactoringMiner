@@ -199,7 +199,7 @@ public class UMLModelASTReader {
     	
     	FieldDeclaration[] fieldDeclarations = typeDeclaration.getFields();
     	for(FieldDeclaration fieldDeclaration : fieldDeclarations) {
-    		List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, sourceFile);
+    		List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, umlClass.isInterface(), sourceFile);
     		for(UMLAttribute attribute : attributes) {
     			attribute.setClassName(umlClass.getName());
     			umlClass.addAttribute(attribute);
@@ -208,7 +208,7 @@ public class UMLModelASTReader {
     	
     	MethodDeclaration[] methodDeclarations = typeDeclaration.getMethods();
     	for(MethodDeclaration methodDeclaration : methodDeclarations) {
-    		UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, className, sourceFile);
+    		UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, umlClass.isInterface(), sourceFile);
     		operation.setClassName(umlClass.getName());
     		umlClass.addOperation(operation);
     	}
@@ -255,11 +255,11 @@ public class UMLModelASTReader {
 		}
 	}
 
-	private UMLOperation processMethodDeclaration(CompilationUnit cu, MethodDeclaration methodDeclaration, String packageName, String className, String sourceFile) {
+	private UMLOperation processMethodDeclaration(CompilationUnit cu, MethodDeclaration methodDeclaration, String packageName, boolean isInterfaceMethod, String sourceFile) {
 		String methodName = methodDeclaration.getName().getFullyQualifiedName();
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, methodDeclaration, CodeElementType.METHOD_DECLARATION);
 		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo);
-		//umlOperation.setClassName(umlClass.getName());
+		
 		if(methodDeclaration.isConstructor())
 			umlOperation.setConstructor(true);
 		
@@ -270,6 +270,8 @@ public class UMLModelASTReader {
 			umlOperation.setVisibility("protected");
 		else if((methodModifiers & Modifier.PRIVATE) != 0)
 			umlOperation.setVisibility("private");
+		else if(isInterfaceMethod)
+			umlOperation.setVisibility("public");
 		else
 			umlOperation.setVisibility("package");
 		
@@ -332,7 +334,7 @@ public class UMLModelASTReader {
 	}
 
 
-	private List<UMLAttribute> processFieldDeclaration(CompilationUnit cu, FieldDeclaration fieldDeclaration, String sourceFile) {
+	private List<UMLAttribute> processFieldDeclaration(CompilationUnit cu, FieldDeclaration fieldDeclaration, boolean isInterfaceField, String sourceFile) {
 		List<UMLAttribute> attributes = new ArrayList<UMLAttribute>();
 		Type fieldType = fieldDeclaration.getType();
 		List<VariableDeclarationFragment> fragments = fieldDeclaration.fragments();
@@ -345,7 +347,6 @@ public class UMLModelASTReader {
 			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, fragment);
 			variableDeclaration.setAttribute(true);
 			umlAttribute.setVariableDeclaration(variableDeclaration);
-			//umlAttribute.setClassName(umlClass.getName());
 			
 			int fieldModifiers = fieldDeclaration.getModifiers();
 			if((fieldModifiers & Modifier.PUBLIC) != 0)
@@ -354,6 +355,8 @@ public class UMLModelASTReader {
 				umlAttribute.setVisibility("protected");
 			else if((fieldModifiers & Modifier.PRIVATE) != 0)
 				umlAttribute.setVisibility("private");
+			else if(isInterfaceField)
+				umlAttribute.setVisibility("public");
 			else
 				umlAttribute.setVisibility("package");
 			
@@ -376,7 +379,7 @@ public class UMLModelASTReader {
 		for(BodyDeclaration bodyDeclaration : bodyDeclarations) {
 			if(bodyDeclaration instanceof FieldDeclaration) {
 				FieldDeclaration fieldDeclaration = (FieldDeclaration)bodyDeclaration;
-				List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, sourceFile);
+				List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, false, sourceFile);
 	    		for(UMLAttribute attribute : attributes) {
 	    			attribute.setClassName(anonymousClass.getName());
 	    			anonymousClass.addAttribute(attribute);
@@ -384,7 +387,7 @@ public class UMLModelASTReader {
 			}
 			else if(bodyDeclaration instanceof MethodDeclaration) {
 				MethodDeclaration methodDeclaration = (MethodDeclaration)bodyDeclaration;
-				UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, className, sourceFile);
+				UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, false, sourceFile);
 				operation.setClassName(anonymousClass.getName());
 				anonymousClass.addOperation(operation);
 			}

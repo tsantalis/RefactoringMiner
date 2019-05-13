@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
 import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
@@ -26,7 +27,7 @@ public class OperationInvocation extends AbstractCall {
 	private volatile int hashCode = 0;
 	
 	public OperationInvocation(CompilationUnit cu, String filePath, MethodInvocation invocation) {
-		this.locationInfo = new LocationInfo(cu, filePath, invocation);
+		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.METHOD_INVOCATION);
 		this.methodName = invocation.getName().getIdentifier();
 		this.typeArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
@@ -70,7 +71,7 @@ public class OperationInvocation extends AbstractCall {
 	}
 
 	public OperationInvocation(CompilationUnit cu, String filePath, SuperMethodInvocation invocation) {
-		this.locationInfo = new LocationInfo(cu, filePath, invocation);
+		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.SUPER_METHOD_INVOCATION);
 		this.methodName = invocation.getName().getIdentifier();
 		this.typeArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();

@@ -38,6 +38,7 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.TypeParameter;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
@@ -147,7 +148,7 @@ public class UMLModelASTReader {
 			}
 		}
 		String className = typeDeclaration.getName().getFullyQualifiedName();
-		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, typeDeclaration);
+		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, typeDeclaration, CodeElementType.TYPE_DECLARATION);
 		UMLClass umlClass = new UMLClass(packageName, className, locationInfo, typeDeclaration.isPackageMemberTypeDeclaration(), importedTypes);
 		
 		if(typeDeclaration.isInterface()) {
@@ -172,14 +173,16 @@ public class UMLModelASTReader {
 			UMLTypeParameter umlTypeParameter = new UMLTypeParameter(typeParameter.getName().getFullyQualifiedName());
 			List<Type> typeBounds = typeParameter.typeBounds();
 			for(Type type : typeBounds) {
-				umlTypeParameter.addTypeBound(UMLType.extractTypeObject(type.toString()));
+				umlTypeParameter.addTypeBound(UMLType.extractTypeObject(type.toString(),
+						generateLocationInfo(cu, sourceFile, type, CodeElementType.TYPE)));
 			}
     		umlClass.addTypeParameter(umlTypeParameter);
     	}
     	
     	Type superclassType = typeDeclaration.getSuperclassType();
     	if(superclassType != null) {
-    		UMLType umlType = UMLType.extractTypeObject(UMLType.getTypeName(superclassType, 0));
+    		UMLType umlType = UMLType.extractTypeObject(UMLType.getTypeName(superclassType, 0),
+    				generateLocationInfo(cu, sourceFile, superclassType, CodeElementType.TYPE));
     		UMLGeneralization umlGeneralization = new UMLGeneralization(umlClass, umlType.getClassType());
     		umlClass.setSuperclass(umlType);
     		getUmlModel().addGeneralization(umlGeneralization);
@@ -187,7 +190,8 @@ public class UMLModelASTReader {
     	
     	List<Type> superInterfaceTypes = typeDeclaration.superInterfaceTypes();
     	for(Type interfaceType : superInterfaceTypes) {
-    		UMLType umlType = UMLType.extractTypeObject(UMLType.getTypeName(interfaceType, 0));
+    		UMLType umlType = UMLType.extractTypeObject(UMLType.getTypeName(interfaceType, 0),
+    				generateLocationInfo(cu, sourceFile, interfaceType, CodeElementType.TYPE));
     		UMLRealization umlRealization = new UMLRealization(umlClass, umlType.getClassType());
     		umlClass.addImplementedInterface(umlType);
     		getUmlModel().addRealization(umlRealization);
@@ -253,7 +257,7 @@ public class UMLModelASTReader {
 
 	private UMLOperation processMethodDeclaration(CompilationUnit cu, MethodDeclaration methodDeclaration, String packageName, String className, String sourceFile) {
 		String methodName = methodDeclaration.getName().getFullyQualifiedName();
-		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, methodDeclaration);
+		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, methodDeclaration, CodeElementType.METHOD_DECLARATION);
 		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo);
 		//umlOperation.setClassName(umlClass.getName());
 		if(methodDeclaration.isConstructor())
@@ -303,7 +307,8 @@ public class UMLModelASTReader {
 		
 		Type returnType = methodDeclaration.getReturnType2();
 		if(returnType != null) {
-			UMLType type = UMLType.extractTypeObject(UMLType.getTypeName(returnType, 0));
+			UMLType type = UMLType.extractTypeObject(UMLType.getTypeName(returnType, 0),
+					generateLocationInfo(cu, sourceFile, returnType, CodeElementType.TYPE));
 			UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
 			umlOperation.addParameter(returnParameter);
 		}
@@ -315,7 +320,8 @@ public class UMLModelASTReader {
 			if (parameter.isVarargs()) {
 				typeName = typeName + "[]";
 			}
-			UMLType type = UMLType.extractTypeObject(typeName);
+			UMLType type = UMLType.extractTypeObject(typeName,
+					generateLocationInfo(cu, sourceFile, parameterType, CodeElementType.TYPE));
 			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarargs());
 			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, parameter, parameter.isVarargs());
 			variableDeclaration.setParameter(true);
@@ -331,9 +337,10 @@ public class UMLModelASTReader {
 		Type fieldType = fieldDeclaration.getType();
 		List<VariableDeclarationFragment> fragments = fieldDeclaration.fragments();
 		for(VariableDeclarationFragment fragment : fragments) {
-			UMLType type = UMLType.extractTypeObject(UMLType.getTypeName(fieldType, fragment.getExtraDimensions()));
+			UMLType type = UMLType.extractTypeObject(UMLType.getTypeName(fieldType, fragment.getExtraDimensions()),
+					generateLocationInfo(cu, sourceFile, fieldType, CodeElementType.TYPE));
 			String fieldName = fragment.getName().getFullyQualifiedName();
-			LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, fragment);
+			LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, fragment, CodeElementType.FIELD_DECLARATION);
 			UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo);
 			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, fragment);
 			variableDeclaration.setAttribute(true);
@@ -363,7 +370,7 @@ public class UMLModelASTReader {
 	
 	private UMLAnonymousClass processAnonymousClassDeclaration(CompilationUnit cu, AnonymousClassDeclaration anonymous, String packageName, String className, String sourceFile) {
 		List<BodyDeclaration> bodyDeclarations = anonymous.bodyDeclarations();
-		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, anonymous);
+		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, anonymous, CodeElementType.ANONYMOUS_CLASS_DECLARATION);
 		UMLAnonymousClass anonymousClass = new UMLAnonymousClass(packageName, className, locationInfo);
 		
 		for(BodyDeclaration bodyDeclaration : bodyDeclarations) {
@@ -428,7 +435,7 @@ public class UMLModelASTReader {
 		return false;
 	}
 
-	private LocationInfo generateLocationInfo(CompilationUnit cu, String sourceFile, ASTNode node) {
-		return new LocationInfo(cu, sourceFile, node);
+	private LocationInfo generateLocationInfo(CompilationUnit cu, String sourceFile, ASTNode node, CodeElementType codeElementType) {
+		return new LocationInfo(cu, sourceFile, node, codeElementType);
 	}
 }

@@ -14,9 +14,11 @@ public class LocationInfo {
 	private int startColumn;
 	private int endLine;
 	private int endColumn;
+	private CodeElementType codeElementType;
 	
-	public LocationInfo(CompilationUnit cu, String filePath, ASTNode node) {
+	public LocationInfo(CompilationUnit cu, String filePath, ASTNode node, CodeElementType codeElementType) {
 		this.filePath = filePath;
+		this.codeElementType = codeElementType;
 		this.startOffset = node.getStartPosition();
 		this.length = node.getLength();
 		this.endOffset = startOffset + length;
@@ -67,6 +69,10 @@ public class LocationInfo {
 
 	public int getEndColumn() {
 		return endColumn;
+	}
+
+	public CodeElementType getCodeElementType() {
+		return codeElementType;
 	}
 
 	public CodeRange codeRange() {
@@ -125,5 +131,79 @@ public class LocationInfo {
 		if (startOffset != other.startOffset)
 			return false;
 		return true;
+	}
+	
+	public enum CodeElementType {
+		TYPE_DECLARATION,
+		METHOD_DECLARATION,
+		FIELD_DECLARATION,
+		SINGLE_VARIABLE_DECLARATION,
+		VARIABLE_DECLARATION_STATEMENT,
+		VARIABLE_DECLARATION_EXPRESSION,
+		VARIABLE_DECLARATION_INITIALIZER,
+		ANONYMOUS_CLASS_DECLARATION,
+		LAMBDA_EXPRESSION,
+		LAMBDA_EXPRESSION_BODY,
+		CLASS_INSTANCE_CREATION,
+		ARRAY_CREATION,
+		METHOD_INVOCATION,
+		SUPER_METHOD_INVOCATION,
+		TERNARY_OPERATOR_CONDITION,
+		TERNARY_OPERATOR_THEN_EXPRESSION,
+		TERNARY_OPERATOR_ELSE_EXPRESSION,
+		LABELED_STATEMENT,
+		FOR_STATEMENT("for"),
+		FOR_STATEMENT_CONDITION,
+		FOR_STATEMENT_INITIALIZER,
+		FOR_STATEMENT_UPDATER,
+		ENHANCED_FOR_STATEMENT("for"),
+		ENHANCED_FOR_STATEMENT_PARAMETER_NAME,
+		ENHANCED_FOR_STATEMENT_EXPRESSION,
+		WHILE_STATEMENT("while"),
+		WHILE_STATEMENT_CONDITION,
+		IF_STATEMENT("if"),
+		IF_STATEMENT_CONDITION,
+		DO_STATEMENT("do"),
+		DO_STATEMENT_CONDITION,
+		SWITCH_STATEMENT("switch"),
+		SWITCH_STATEMENT_CONDITION,
+		SYNCHRONIZED_STATEMENT("synchronized"),
+		SYNCHRONIZED_STATEMENT_EXPRESSION,
+		TRY_STATEMENT("try"),
+		TRY_STATEMENT_RESOURCE,
+		CATCH_CLAUSE("catch"),
+		CATCH_CLAUSE_EXCEPTION_NAME,
+		EXPRESSION_STATEMENT,
+		SWITCH_CASE,
+		ASSERT_STATEMENT,
+		RETURN_STATEMENT,
+		THROW_STATEMENT,
+		CONSTRUCTOR_INVOCATION,
+		SUPER_CONSTRUCTOR_INVOCATION,
+		BREAK_STATEMENT,
+		CONTINUE_STATEMENT,
+		EMPTY_STATEMENT,
+		BLOCK("{"),
+		FINALLY_BLOCK("finally"),
+		TYPE;
+		
+		private String name;
+		
+		private CodeElementType() {
+			
+		}
+		
+		private CodeElementType(String name) {
+			this.name = name;
+		}
+
+		public String getName() {
+			return name;
+		}
+		
+		public CodeElementType setName(String name) {
+			this.name = name;
+			return this;
+		}
 	}
 }

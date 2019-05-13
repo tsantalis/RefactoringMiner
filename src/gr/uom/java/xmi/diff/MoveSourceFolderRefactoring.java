@@ -55,7 +55,7 @@ public class MoveSourceFolderRefactoring implements Refactoring {
 	public List<String> getInvolvedClassesBeforeRefactoring() {
 		List<String> classNames = new ArrayList<String>();
 		for(MovedClassToAnotherSourceFolder ref : movedClassesToAnotherSourceFolder) {
-			classNames.add(ref.getClassName());
+			classNames.add(ref.getOriginalClassName());
 		}
 		return classNames;
 	}
@@ -63,8 +63,30 @@ public class MoveSourceFolderRefactoring implements Refactoring {
 	public List<String> getInvolvedClassesAfterRefactoring() {
 		List<String> classNames = new ArrayList<String>();
 		for(MovedClassToAnotherSourceFolder ref : movedClassesToAnotherSourceFolder) {
-			classNames.add(ref.getClassName());
+			classNames.add(ref.getMovedClassName());
 		}
 		return classNames;
+	}
+
+	@Override
+	public List<CodeRange> leftSide() {
+		List<CodeRange> ranges = new ArrayList<CodeRange>();
+		for(MovedClassToAnotherSourceFolder ref : movedClassesToAnotherSourceFolder) {
+			ranges.add(ref.getOriginalClass().codeRange()
+					.setDescription("original type declaration")
+					.setCodeElement(ref.getOriginalClass().getName()));
+		}
+		return ranges;
+	}
+
+	@Override
+	public List<CodeRange> rightSide() {
+		List<CodeRange> ranges = new ArrayList<CodeRange>();
+		for(MovedClassToAnotherSourceFolder ref : movedClassesToAnotherSourceFolder) {
+			ranges.add(ref.getMovedClass().codeRange()
+					.setDescription("moved type declaration")
+					.setCodeElement(ref.getMovedClass().getName()));
+		}
+		return ranges;
 	}
 }

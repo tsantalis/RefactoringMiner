@@ -8,9 +8,11 @@ import java.util.regex.Pattern;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Type;
 
+import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
 
-public class UMLType implements Serializable {
+public class UMLType implements Serializable, LocationInfoProvider {
+	private LocationInfo locationInfo;
     private String classType;
     private String nonQualifiedClassType;
     private String typeArguments;
@@ -26,7 +28,11 @@ public class UMLType implements Serializable {
         this.typeArgumentDecomposition = new ArrayList<String>();
     }
 
-    public String getClassType() {
+    public LocationInfo getLocationInfo() {
+		return locationInfo;
+	}
+
+	public String getClassType() {
         return classType;
     }
 
@@ -224,5 +230,15 @@ public class UMLType implements Serializable {
 			}
 		}
 		return typeObject;
+	}
+
+	public static UMLType extractTypeObject(String qualifiedName, LocationInfo locationInfo) {
+		UMLType type = extractTypeObject(qualifiedName);
+		type.locationInfo = locationInfo;
+		return type;
+	}
+
+	public CodeRange codeRange() {
+		return locationInfo.codeRange();
 	}
 }

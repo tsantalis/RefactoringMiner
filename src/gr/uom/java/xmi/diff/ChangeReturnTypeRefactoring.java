@@ -7,38 +7,36 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLOperation;
-import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.UMLType;
 
-public class ChangeVariableTypeRefactoring implements Refactoring {
-	private VariableDeclaration originalVariable;
-	private VariableDeclaration changedTypeVariable;
+public class ChangeReturnTypeRefactoring implements Refactoring {
+	private UMLType originalType;
+	private UMLType changedType;
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
 
-	public ChangeVariableTypeRefactoring(VariableDeclaration originalVariable, VariableDeclaration changedTypeVariable,
+	public ChangeReturnTypeRefactoring(UMLType originalType, UMLType changedType,
 			UMLOperation operationBefore, UMLOperation operationAfter) {
-		this.originalVariable = originalVariable;
-		this.changedTypeVariable = changedTypeVariable;
+		this.originalType = originalType;
+		this.changedType = changedType;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 	}
 
 	public RefactoringType getRefactoringType() {
-		if(originalVariable.isParameter() && changedTypeVariable.isParameter())
-			return RefactoringType.CHANGE_PARAMETER_TYPE;
-		return RefactoringType.CHANGE_VARIABLE_TYPE;
+		return RefactoringType.CHANGE_RETURN_TYPE;
 	}
 
 	public String getName() {
-		return this.getRefactoringType().getDisplayName();
+		return getRefactoringType().getDisplayName();
 	}
 
-	public VariableDeclaration getOriginalVariable() {
-		return originalVariable;
+	public UMLType getOriginalType() {
+		return originalType;
 	}
 
-	public VariableDeclaration getChangedTypeVariable() {
-		return changedTypeVariable;
+	public UMLType getChangedType() {
+		return changedType;
 	}
 
 	public UMLOperation getOperationBefore() {
@@ -52,9 +50,9 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(originalVariable);
+		sb.append(originalType);
 		sb.append(" to ");
-		sb.append(changedTypeVariable);
+		sb.append(changedType);
 		sb.append(" in method ");
 		sb.append(operationAfter);
 		sb.append(" in class ").append(operationAfter.getClassName());
@@ -65,10 +63,10 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((changedTypeVariable == null) ? 0 : changedTypeVariable.hashCode());
+		result = prime * result + ((changedType == null) ? 0 : changedType.hashCode());
 		result = prime * result + ((operationAfter == null) ? 0 : operationAfter.hashCode());
 		result = prime * result + ((operationBefore == null) ? 0 : operationBefore.hashCode());
-		result = prime * result + ((originalVariable == null) ? 0 : originalVariable.hashCode());
+		result = prime * result + ((originalType == null) ? 0 : originalType.hashCode());
 		return result;
 	}
 
@@ -80,11 +78,11 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ChangeVariableTypeRefactoring other = (ChangeVariableTypeRefactoring) obj;
-		if (changedTypeVariable == null) {
-			if (other.changedTypeVariable != null)
+		ChangeReturnTypeRefactoring other = (ChangeReturnTypeRefactoring) obj;
+		if (changedType == null) {
+			if (other.changedType != null)
 				return false;
-		} else if (!changedTypeVariable.equals(other.changedTypeVariable))
+		} else if (!changedType.equals(other.changedType))
 			return false;
 		if (operationAfter == null) {
 			if (other.operationAfter != null)
@@ -96,10 +94,10 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 				return false;
 		} else if (!operationBefore.equals(other.operationBefore))
 			return false;
-		if (originalVariable == null) {
-			if (other.originalVariable != null)
+		if (originalType == null) {
+			if (other.originalType != null)
 				return false;
-		} else if (!originalVariable.equals(other.originalVariable))
+		} else if (!originalType.equals(other.originalType))
 			return false;
 		return true;
 	}
@@ -116,21 +114,22 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 		return classNames;
 	}
 
+
 	@Override
 	public List<CodeRange> leftSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		ranges.add(originalVariable.codeRange()
-				.setDescription("original variable declaration")
-				.setCodeElement(originalVariable.toString()));
+		ranges.add(originalType.codeRange()
+				.setDescription("original return type")
+				.setCodeElement(originalType.toString()));
 		return ranges;
 	}
 
 	@Override
 	public List<CodeRange> rightSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		ranges.add(changedTypeVariable.codeRange()
-				.setDescription("changed-type variable declaration")
-				.setCodeElement(changedTypeVariable.toString()));
+		ranges.add(changedType.codeRange()
+				.setDescription("changed return type")
+				.setCodeElement(changedType.toString()));
 		return ranges;
 	}
 }

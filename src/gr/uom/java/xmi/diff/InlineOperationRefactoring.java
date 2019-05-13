@@ -145,4 +145,30 @@ public class InlineOperationRefactoring implements Refactoring {
 		classNames.add(getTargetOperationAfterInline().getClassName());
 		return classNames;
 	}
+
+	@Override
+	public List<CodeRange> leftSide() {
+		List<CodeRange> ranges = new ArrayList<CodeRange>();
+		ranges.add(getInlinedOperationCodeRange()
+				.setDescription("inlined method declaration")
+				.setCodeElement(inlinedOperation.toString()));
+		//ranges.add(getInlinedCodeRangeFromInlinedOperation().setDescription("inlined code from inlined method declaration"));
+		ranges.add(getTargetOperationCodeRangeBeforeInline()
+				.setDescription("target method declaration before inline")
+				.setCodeElement(targetOperationBeforeInline.toString()));
+		ranges.add(getInlinedOperationInvocationCodeRange()
+				.setDescription("inlined method invocation")
+				.setCodeElement(inlinedOperationInvocation.actualString()));
+		return ranges;
+	}
+
+	@Override
+	public List<CodeRange> rightSide() {
+		List<CodeRange> ranges = new ArrayList<CodeRange>();
+		ranges.add(getTargetOperationCodeRangeAfterInline()
+				.setDescription("target method declaration after inline")
+				.setCodeElement(targetOperationAfterInline.toString()));
+		//ranges.add(getInlinedCodeRangeInTargetOperation().setDescription("inlined code in target method declaration"));
+		return ranges;
+	}
 }

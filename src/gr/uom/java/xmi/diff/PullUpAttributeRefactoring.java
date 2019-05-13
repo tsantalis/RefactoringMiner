@@ -1,5 +1,8 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLAttribute;
@@ -23,5 +26,14 @@ public class PullUpAttributeRefactoring extends MoveAttributeRefactoring {
 
 	public RefactoringType getRefactoringType() {
 		return RefactoringType.PULL_UP_ATTRIBUTE;
+	}
+
+	@Override
+	public List<CodeRange> rightSide() {
+		List<CodeRange> ranges = new ArrayList<CodeRange>();
+		ranges.add(movedAttribute.codeRange()
+				.setDescription("pulled up attribute declaration")
+				.setCodeElement(movedAttribute.getVariableDeclaration().toString()));
+		return ranges;
 	}
 }

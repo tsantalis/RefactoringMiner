@@ -11,20 +11,20 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Statement;
 
 import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.diff.CodeRange;
 
 public class CompositeStatementObject extends AbstractStatement {
 
 	private List<AbstractStatement> statementList;
 	private List<AbstractExpression> expressionList;
 	private List<VariableDeclaration> variableDeclarations;
-	private String type;
 	private LocationInfo locationInfo;
 
-	public CompositeStatementObject(CompilationUnit cu, String filePath, Statement statement, int depth, String type) {
+	public CompositeStatementObject(CompilationUnit cu, String filePath, Statement statement, int depth, CodeElementType codeElementType) {
 		super();
-		this.type = type;
 		this.setDepth(depth);
-		this.locationInfo = new LocationInfo(cu, filePath, statement);
+		this.locationInfo = new LocationInfo(cu, filePath, statement, codeElementType);
 		this.statementList = new ArrayList<AbstractStatement>();
 		this.expressionList = new ArrayList<AbstractExpression>();
 		this.variableDeclarations = new ArrayList<VariableDeclaration>();
@@ -79,7 +79,7 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(type);
+		sb.append(locationInfo.getCodeElementType().getName());
 		if(expressionList.size() > 0) {
 			sb.append("(");
 			for(int i=0; i<expressionList.size()-1; i++) {
@@ -338,5 +338,9 @@ public class CompositeStatementObject extends AbstractStatement {
 			map.remove(key);
 		}
 		return map;
+	}
+
+	public CodeRange codeRange() {
+		return locationInfo.codeRange();
 	}
 }

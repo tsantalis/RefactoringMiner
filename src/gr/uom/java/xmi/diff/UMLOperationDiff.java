@@ -200,6 +200,14 @@ public class UMLOperationDiff {
 
 	public Set<Refactoring> getRefactorings() {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
+		if(returnTypeChanged) {
+			UMLParameter removedOperationReturnParameter = removedOperation.getReturnParameter();
+			UMLParameter addedOperationReturnParameter = addedOperation.getReturnParameter();
+			if(removedOperationReturnParameter != null && addedOperationReturnParameter != null) {
+				ChangeReturnTypeRefactoring refactoring = new ChangeReturnTypeRefactoring(removedOperationReturnParameter.getType(), addedOperationReturnParameter.getType(), removedOperation, addedOperation);
+				refactorings.add(refactoring);
+			}
+		}
 		for(UMLParameterDiff parameterDiff : getParameterDiffList()) {
 			VariableDeclaration originalVariable = parameterDiff.getRemovedParameter().getVariableDeclaration();
 			VariableDeclaration newVariable = parameterDiff.getAddedParameter().getVariableDeclaration();

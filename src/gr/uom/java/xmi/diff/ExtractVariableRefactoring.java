@@ -107,4 +107,19 @@ public class ExtractVariableRefactoring implements Refactoring {
 		classNames.add(operation.getClassName());
 		return classNames;
 	}
+
+	@Override
+	public List<CodeRange> leftSide() {
+		List<CodeRange> ranges = new ArrayList<CodeRange>();
+		return ranges;
+	}
+
+	@Override
+	public List<CodeRange> rightSide() {
+		List<CodeRange> ranges = new ArrayList<CodeRange>();
+		ranges.add(variableDeclaration.codeRange()
+				.setDescription("extracted variable declaration")
+				.setCodeElement(variableDeclaration.toString()));
+		return ranges;
+	}
 }

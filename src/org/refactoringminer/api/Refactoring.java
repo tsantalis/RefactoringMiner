@@ -3,7 +3,7 @@ package org.refactoringminer.api;
 import java.io.Serializable;
 import java.util.List;
 
-public interface Refactoring extends Serializable {
+public interface Refactoring extends Serializable, CodeRangeProvider {
 
 	public RefactoringType getRefactoringType();
 	

@@ -589,8 +589,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	}
 
 	public CodeRange codeRange() {
-		LocationInfo info = getLocationInfo();
-		return info.codeRange();
+		return locationInfo.codeRange();
 	}
 
 	public boolean overridesObject() {

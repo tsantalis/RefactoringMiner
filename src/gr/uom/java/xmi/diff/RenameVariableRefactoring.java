@@ -130,4 +130,22 @@ public class RenameVariableRefactoring implements Refactoring {
 		classNames.add(operationAfter.getClassName());
 		return classNames;
 	}
+
+	@Override
+	public List<CodeRange> leftSide() {
+		List<CodeRange> ranges = new ArrayList<CodeRange>();
+		ranges.add(originalVariable.codeRange()
+				.setDescription("original variable declaration")
+				.setCodeElement(originalVariable.toString()));
+		return ranges;
+	}
+
+	@Override
+	public List<CodeRange> rightSide() {
+		List<CodeRange> ranges = new ArrayList<CodeRange>();
+		ranges.add(renamedVariable.codeRange()
+				.setDescription("renamed variable declaration")
+				.setCodeElement(renamedVariable.toString()));
+		return ranges;
+	}
 }

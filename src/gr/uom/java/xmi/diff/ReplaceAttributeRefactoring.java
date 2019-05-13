@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.refactoringminer.api.RefactoringType;
@@ -38,5 +40,14 @@ public class ReplaceAttributeRefactoring extends MoveAttributeRefactoring {
 
 	public RefactoringType getRefactoringType() {
 		return RefactoringType.REPLACE_ATTRIBUTE;
+	}
+
+	@Override
+	public List<CodeRange> rightSide() {
+		List<CodeRange> ranges = new ArrayList<CodeRange>();
+		ranges.add(movedAttribute.codeRange()
+				.setDescription("replaced attribute declaration")
+				.setCodeElement(movedAttribute.getVariableDeclaration().toString()));
+		return ranges;
 	}
 }

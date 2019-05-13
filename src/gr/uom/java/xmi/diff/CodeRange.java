@@ -11,6 +11,8 @@ public class CodeRange {
 	private int endLine;
 	private int startColumn;
 	private int endColumn;
+	private String description;
+	private String codeElement;
 
 	public CodeRange(String filePath, int startLine, int endLine,
 			int startColumn, int endColumn) {
@@ -39,6 +41,24 @@ public class CodeRange {
 
 	public int getEndColumn() {
 		return endColumn;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public CodeRange setDescription(String description) {
+		this.description = description;
+		return this;
+	}
+
+	public String getCodeElement() {
+		return codeElement;
+	}
+
+	public CodeRange setCodeElement(String codeElement) {
+		this.codeElement = codeElement;
+		return this;
 	}
 
 	public String toString() {

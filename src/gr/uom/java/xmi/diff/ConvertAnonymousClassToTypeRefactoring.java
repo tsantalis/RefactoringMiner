@@ -54,4 +54,22 @@ public class ConvertAnonymousClassToTypeRefactoring implements Refactoring {
 		classNames.add(getAddedClass().getName());
 		return classNames;
 	}
+
+	@Override
+	public List<CodeRange> leftSide() {
+		List<CodeRange> ranges = new ArrayList<CodeRange>();
+		ranges.add(anonymousClass.codeRange()
+				.setDescription("anonymous class declaration")
+				.setCodeElement(anonymousClass.getName()));
+		return ranges;
+	}
+
+	@Override
+	public List<CodeRange> rightSide() {
+		List<CodeRange> ranges = new ArrayList<CodeRange>();
+		ranges.add(addedClass.codeRange()
+				.setDescription("added type declaration")
+				.setCodeElement(addedClass.getName()));
+		return ranges;
+	}
 }

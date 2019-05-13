@@ -166,4 +166,30 @@ public class ExtractOperationRefactoring implements Refactoring {
 		classNames.add(getSourceOperationAfterExtraction().getClassName());
 		return classNames;
 	}
+
+	@Override
+	public List<CodeRange> leftSide() {
+		List<CodeRange> ranges = new ArrayList<CodeRange>();
+		ranges.add(getSourceOperationCodeRangeBeforeExtraction()
+				.setDescription("source method declaration before extraction")
+				.setCodeElement(sourceOperationBeforeExtraction.toString()));
+		//ranges.add(getExtractedCodeRangeFromSourceOperation().setDescription("extracted code from source method declaration"));
+		return ranges;
+	}
+
+	@Override
+	public List<CodeRange> rightSide() {
+		List<CodeRange> ranges = new ArrayList<CodeRange>();
+		ranges.add(getExtractedOperationCodeRange()
+				.setDescription("extracted method declaration")
+				.setCodeElement(extractedOperation.toString()));
+		//ranges.add(getExtractedCodeRangeToExtractedOperation().setDescription("extracted code to extracted method declaration"));
+		ranges.add(getSourceOperationCodeRangeAfterExtraction()
+				.setDescription("source method declaration after extraction")
+				.setCodeElement(sourceOperationAfterExtraction.toString()));
+		ranges.add(getExtractedOperationInvocationCodeRange()
+				.setDescription("extracted method invocation")
+				.setCodeElement(extractedOperationInvocation.actualString()));
+		return ranges;
+	}
 }

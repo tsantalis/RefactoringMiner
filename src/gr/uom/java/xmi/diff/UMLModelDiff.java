@@ -1092,7 +1092,7 @@ public class UMLModelDiff {
 				   }
 			   }
 		   } else if(!originalPathPrefix.equals(movedPathPrefix)) {
-			   MovedClassToAnotherSourceFolder refactoring = new MovedClassToAnotherSourceFolder(originalName, originalPathPrefix, movedPathPrefix);
+			   MovedClassToAnotherSourceFolder refactoring = new MovedClassToAnotherSourceFolder(originalClass, movedClass, originalPathPrefix, movedPathPrefix);
 			   RenamePattern renamePattern = refactoring.getRenamePattern();
 			   boolean foundInMatchingMoveSourceFolderRefactoring = false;
 			   for(MoveSourceFolderRefactoring moveSourceFolderRefactoring : moveSourceFolderRefactorings) {
@@ -1464,28 +1464,28 @@ public class UMLModelDiff {
                 	  else if(isSubclassOf(className, addedOperation.getClassName())) {
                 		  //extract and pull up method
                 		  ExtractAndMoveOperationRefactoring extractOperationRefactoring =
-   	                           new ExtractAndMoveOperationRefactoring(operationBodyMapper, mapper.getOperation2());
+   	                           new ExtractAndMoveOperationRefactoring(operationBodyMapper, mapper.getOperation2(), addedOperationInvocation);
    	                      refactorings.add(extractOperationRefactoring);
    	                      deleteAddedOperation(addedOperation);
                 	  }
                 	  else if(isSubclassOf(addedOperation.getClassName(), className)) {
                 		  //extract and push down method
                 		  ExtractAndMoveOperationRefactoring extractOperationRefactoring =
-   	                           new ExtractAndMoveOperationRefactoring(operationBodyMapper, mapper.getOperation2());
+   	                           new ExtractAndMoveOperationRefactoring(operationBodyMapper, mapper.getOperation2(), addedOperationInvocation);
    	                      refactorings.add(extractOperationRefactoring);
    	                      deleteAddedOperation(addedOperation);
                 	  }
                 	  else if(addedOperation.getClassName().startsWith(className + ".")) {
                 		  //extract and move to inner class
                 		  ExtractAndMoveOperationRefactoring extractOperationRefactoring =
-      	                       new ExtractAndMoveOperationRefactoring(operationBodyMapper, mapper.getOperation2());
+      	                       new ExtractAndMoveOperationRefactoring(operationBodyMapper, mapper.getOperation2(), addedOperationInvocation);
       	                  refactorings.add(extractOperationRefactoring);
       	                  deleteAddedOperation(addedOperation);
                 	  }
                 	  else if(className.startsWith(addedOperation.getClassName() + ".")) {
                 		  //extract and move to outer class
                 		  ExtractAndMoveOperationRefactoring extractOperationRefactoring =
-      	                       new ExtractAndMoveOperationRefactoring(operationBodyMapper, mapper.getOperation2());
+      	                       new ExtractAndMoveOperationRefactoring(operationBodyMapper, mapper.getOperation2(), addedOperationInvocation);
       	                  refactorings.add(extractOperationRefactoring);
       	                  deleteAddedOperation(addedOperation);
                 	  }
@@ -1493,7 +1493,7 @@ public class UMLModelDiff {
                 			  sourceClassImportsSuperclassOfTargetClassAfterRefactoring(className, addedOperation.getClassName())) {
                 		  //extract and move
 	                      ExtractAndMoveOperationRefactoring extractOperationRefactoring =
-	                           new ExtractAndMoveOperationRefactoring(operationBodyMapper, mapper.getOperation2());
+	                           new ExtractAndMoveOperationRefactoring(operationBodyMapper, mapper.getOperation2(), addedOperationInvocation);
 	                      refactorings.add(extractOperationRefactoring);
 	                      deleteAddedOperation(addedOperation);
                 	  }

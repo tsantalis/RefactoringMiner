@@ -7,6 +7,8 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 
 import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.diff.CodeRange;
 
 public class AbstractExpression extends AbstractCodeFragment {
 	
@@ -28,8 +30,8 @@ public class AbstractExpression extends AbstractCodeFragment {
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions;
 	private List<LambdaExpressionObject> lambdas;
     
-    public AbstractExpression(CompilationUnit cu, String filePath, Expression expression) {
-    	this.locationInfo = new LocationInfo(cu, filePath, expression);
+    public AbstractExpression(CompilationUnit cu, String filePath, Expression expression, CodeElementType codeElementType) {
+    	this.locationInfo = new LocationInfo(cu, filePath, expression, codeElementType);
     	Visitor visitor = new Visitor(cu, filePath);
     	expression.accept(visitor);
 		this.variables = visitor.getVariables();
@@ -163,5 +165,9 @@ public class AbstractExpression extends AbstractCodeFragment {
 			}
 		}
 		return null;
+	}
+
+	public CodeRange codeRange() {
+		return locationInfo.codeRange();
 	}
 }

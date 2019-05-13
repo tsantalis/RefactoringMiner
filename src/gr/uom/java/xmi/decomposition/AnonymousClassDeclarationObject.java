@@ -9,6 +9,8 @@ import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.LocationInfoProvider;
 
 public class AnonymousClassDeclarationObject implements LocationInfoProvider {
@@ -31,7 +33,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
 	
 	public AnonymousClassDeclarationObject(CompilationUnit cu, String filePath, AnonymousClassDeclaration anonymous) {
-		this.locationInfo = new LocationInfo(cu, filePath, anonymous);
+		this.locationInfo = new LocationInfo(cu, filePath, anonymous, CodeElementType.ANONYMOUS_CLASS_DECLARATION);
 		this.astNode = anonymous;
 		this.astNodeString = anonymous.toString();
 	}
@@ -106,5 +108,9 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 
 	public List<LambdaExpressionObject> getLambdas() {
 		return lambdas;
+	}
+
+	public CodeRange codeRange() {
+		return locationInfo.codeRange();
 	}
 }

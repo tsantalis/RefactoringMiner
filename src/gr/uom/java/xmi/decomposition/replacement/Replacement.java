@@ -31,6 +31,7 @@ public class Replacement {
 		int result = 1;
 		result = prime * result + ((after == null) ? 0 : after.hashCode());
 		result = prime * result + ((before == null) ? 0 : before.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -42,7 +43,7 @@ public class Replacement {
 			return false;
 		if(obj instanceof Replacement) {
 			Replacement other = (Replacement)obj;
-			return this.before.equals(other.before) && this.after.equals(other.after);
+			return this.before.equals(other.before) && this.after.equals(other.after) && this.type.equals(other.type);
 		}
 		return false;
 	}

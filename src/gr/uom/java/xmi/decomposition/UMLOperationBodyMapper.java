@@ -38,6 +38,7 @@ import java.util.regex.Pattern;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
+import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper> {
@@ -800,6 +801,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public void processLeaves(List<? extends AbstractCodeFragment> leaves1, List<? extends AbstractCodeFragment> leaves2,
 			Map<String, String> parameterToArgumentMap) throws RefactoringMinerTimedOutException {
+		List<TreeSet<LeafMapping>> postponedMappingSets = new ArrayList<TreeSet<LeafMapping>>();
 		if(leaves1.size() <= leaves2.size()) {
 			//exact string+depth matching - leaf nodes
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
@@ -867,10 +869,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				if(!mappingSet.isEmpty()) {
-					LeafMapping minStatementMapping = mappingSet.first();
-					mappings.add(minStatementMapping);
-					leaves2.remove(minStatementMapping.getFragment2());
-					leafIterator1.remove();
+					if(variableDeclarationMappingsWithSameReplacementTypes(mappingSet)) {
+						//postpone mapping
+						postponedMappingSets.add(mappingSet);
+					}
+					else {
+						LeafMapping minStatementMapping = mappingSet.first();
+						mappings.add(minStatementMapping);
+						leaves2.remove(minStatementMapping.getFragment2());
+						leafIterator1.remove();
+					}
 				}
 			}
 		}
@@ -941,13 +949,77 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				if(!mappingSet.isEmpty()) {
-					LeafMapping minStatementMapping = mappingSet.first();
-					mappings.add(minStatementMapping);
-					leaves1.remove(minStatementMapping.getFragment1());
-					leafIterator2.remove();
+					if(variableDeclarationMappingsWithSameReplacementTypes(mappingSet)) {
+						//postpone mapping
+						postponedMappingSets.add(mappingSet);
+					}
+					else {
+						LeafMapping minStatementMapping = mappingSet.first();
+						mappings.add(minStatementMapping);
+						leaves1.remove(minStatementMapping.getFragment1());
+						leafIterator2.remove();
+					}
 				}
 			}
 		}
+		for(TreeSet<LeafMapping> postponed : postponedMappingSets) {
+			Set<LeafMapping> mappingsToBeAdded = new LinkedHashSet<LeafMapping>();
+			for(LeafMapping variableDeclarationMapping : postponed) {
+				for(AbstractCodeMapping previousMapping : this.mappings) {
+					Set<Replacement> intersection = variableDeclarationMapping.commonReplacements(previousMapping);
+					if(!intersection.isEmpty()) {
+						for(Replacement commonReplacement : intersection) {
+							if(commonReplacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
+									variableDeclarationMapping.getFragment1().getVariableDeclaration(commonReplacement.getBefore()) != null &&
+									variableDeclarationMapping.getFragment2().getVariableDeclaration(commonReplacement.getAfter()) != null) {
+								mappingsToBeAdded.add(variableDeclarationMapping);
+							}
+						}
+					}
+				}
+			}
+			if(mappingsToBeAdded.size() == 1) {
+				LeafMapping minStatementMapping = mappingsToBeAdded.iterator().next();
+				this.mappings.add(minStatementMapping);
+				leaves1.remove(minStatementMapping.getFragment1());
+				leaves2.remove(minStatementMapping.getFragment2());
+			}
+			else {
+				LeafMapping minStatementMapping = postponed.first();
+				this.mappings.add(minStatementMapping);
+				leaves1.remove(minStatementMapping.getFragment1());
+				leaves2.remove(minStatementMapping.getFragment2());
+			}
+		}
+	}
+
+	private boolean variableDeclarationMappingsWithSameReplacementTypes(Set<LeafMapping> mappingSet) {
+		if(mappingSet.size() > 1) {
+			Set<LeafMapping> variableDeclarationMappings = new LinkedHashSet<LeafMapping>();
+			for(LeafMapping mapping : mappingSet) {
+				if(mapping.getFragment1().getVariableDeclarations().size() > 0 &&
+						mapping.getFragment2().getVariableDeclarations().size() > 0) {
+					variableDeclarationMappings.add(mapping);
+				}
+			}
+			if(variableDeclarationMappings.size() == mappingSet.size()) {
+				Set<ReplacementType> replacementTypes = null;
+				Set<LeafMapping> mappingsWithSameReplacementTypes = new LinkedHashSet<LeafMapping>();
+				for(LeafMapping mapping : variableDeclarationMappings) {
+					if(replacementTypes == null) {
+						replacementTypes = mapping.getReplacementTypes();
+						mappingsWithSameReplacementTypes.add(mapping);
+					}
+					else if(mapping.getReplacementTypes().equals(replacementTypes)) {
+						mappingsWithSameReplacementTypes.add(mapping);
+					}
+				}
+				if(mappingsWithSameReplacementTypes.size() == mappingSet.size()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private LeafMapping createLeafMapping(AbstractCodeFragment leaf1, AbstractCodeFragment leaf2, Map<String, String> parameterToArgumentMap) {

@@ -101,6 +101,14 @@ public abstract class AbstractCodeMapping {
 		return false;
 	}
 
+	public Set<ReplacementType> getReplacementTypes() {
+		Set<ReplacementType> types = new LinkedHashSet<ReplacementType>();
+		for(Replacement replacement : replacements) {
+			types.add(replacement.getType());
+		}
+		return types;
+	}
+
 	public String toString() {
 		return fragment1.toString() + fragment2.toString();
 	}
@@ -309,5 +317,11 @@ public abstract class AbstractCodeMapping {
 			}
 		}
 		return false;
+	}
+
+	public Set<Replacement> commonReplacements(AbstractCodeMapping other) {
+		Set<Replacement> intersection = new LinkedHashSet<Replacement>(this.replacements);
+		intersection.retainAll(other.replacements);
+		return intersection;
 	}
 }

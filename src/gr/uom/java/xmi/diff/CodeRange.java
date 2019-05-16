@@ -3,6 +3,7 @@ package gr.uom.java.xmi.diff;
 import java.util.Set;
 
 import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 
 public class CodeRange {
@@ -11,16 +12,18 @@ public class CodeRange {
 	private int endLine;
 	private int startColumn;
 	private int endColumn;
+	private CodeElementType codeElementType;
 	private String description;
 	private String codeElement;
 
 	public CodeRange(String filePath, int startLine, int endLine,
-			int startColumn, int endColumn) {
+			int startColumn, int endColumn, CodeElementType codeElementType) {
 		this.filePath = filePath;
 		this.startLine = startLine;
 		this.endLine = endLine;
 		this.startColumn = startColumn;
 		this.endColumn = endColumn;
+		this.codeElementType = codeElementType;
 	}
 
 	public String getFilePath() {
@@ -41,6 +44,10 @@ public class CodeRange {
 
 	public int getEndColumn() {
 		return endColumn;
+	}
+
+	public CodeElementType getCodeElementType() {
+		return codeElementType;
 	}
 
 	public String getDescription() {
@@ -84,6 +91,6 @@ public class CodeRange {
 				endColumn = info.getEndColumn();
 			}
 		}
-		return new CodeRange(filePath, minStartLine, maxEndLine, startColumn, endColumn);
+		return new CodeRange(filePath, minStartLine, maxEndLine, startColumn, endColumn, CodeElementType.LIST_OF_STATEMENTS);
 	}
 }

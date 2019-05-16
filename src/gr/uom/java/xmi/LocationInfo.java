@@ -78,7 +78,7 @@ public class LocationInfo {
 	public CodeRange codeRange() {
 		return new CodeRange(getFilePath(),
 				getStartLine(), getEndLine(),
-				getStartColumn(), getEndColumn());
+				getStartColumn(), getEndColumn(), getCodeElementType());
 	}
 
 	public boolean subsumes(LocationInfo other) {
@@ -185,7 +185,8 @@ public class LocationInfo {
 		EMPTY_STATEMENT,
 		BLOCK("{"),
 		FINALLY_BLOCK("finally"),
-		TYPE;
+		TYPE,
+		LIST_OF_STATEMENTS;
 		
 		private String name;
 		

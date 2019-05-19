@@ -41,6 +41,14 @@ public abstract class AbstractCodeMapping {
 		return fragment2;
 	}
 
+	public UMLOperation getOperation1() {
+		return operation1;
+	}
+
+	public UMLOperation getOperation2() {
+		return operation2;
+	}
+
 	public boolean isIdenticalWithExtractedVariable() {
 		return identicalWithExtractedVariable;
 	}
@@ -323,5 +331,48 @@ public abstract class AbstractCodeMapping {
 		Set<Replacement> intersection = new LinkedHashSet<Replacement>(this.replacements);
 		intersection.retainAll(other.replacements);
 		return intersection;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((fragment1 == null) ? 0 : fragment1.hashCode());
+		result = prime * result + ((fragment2 == null) ? 0 : fragment2.hashCode());
+		result = prime * result + ((operation1 == null) ? 0 : operation1.hashCode());
+		result = prime * result + ((operation2 == null) ? 0 : operation2.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractCodeMapping other = (AbstractCodeMapping) obj;
+		if (fragment1 == null) {
+			if (other.fragment1 != null)
+				return false;
+		} else if (!fragment1.equals(other.fragment1))
+			return false;
+		if (fragment2 == null) {
+			if (other.fragment2 != null)
+				return false;
+		} else if (!fragment2.equals(other.fragment2))
+			return false;
+		if (operation1 == null) {
+			if (other.operation1 != null)
+				return false;
+		} else if (!operation1.equals(other.operation1))
+			return false;
+		if (operation2 == null) {
+			if (other.operation2 != null)
+				return false;
+		} else if (!operation2.equals(other.operation2))
+			return false;
+		return true;
 	}
 }

@@ -91,17 +91,17 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Trinity<Pattern,Pattern,Boolean> to ParseSettings in method protected getParseSettings(url String) : ParseSettings in class com.intellij.codeInsight.javadoc.JavaDocExternalFilter",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Trinity<Pattern,Pattern,Boolean> to ParseSettings in method protected getParseSettings(url String) : ParseSettings in class com.intellij.codeInsight.documentation.AbstractExternalFilter",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 28911
 }, {
@@ -627,21 +627,21 @@
         "description": "Rename Parameter matcher : ElementMatcher<? super TypeDescription> to substitutor : GenericTypeDescription.Visitor<GenericTypeDescription> in method protected ParameterToken(substitutor GenericTypeDescription.Visitor<GenericTypeDescription>, parameterDescription ParameterDescription) in class net.bytebuddy.dynamic.scaffold.InstrumentedType.AbstractBase.MethodToken.ParameterToken",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter matcher : ElementMatcher<? super TypeDescription> to substitutor : GenericTypeDescription.Visitor<GenericTypeDescription> in method private TypeVariableToken(substitutor GenericTypeDescription.Visitor<GenericTypeDescription>, typeVariable GenericTypeDescription) in class net.bytebuddy.dynamic.scaffold.InstrumentedType.AbstractBase.MethodToken.TypeVariableToken",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter matcher : ElementMatcher<? super TypeDescription> to substitutor : GenericTypeDescription.Visitor<GenericTypeDescription> in method private FieldToken(substitutor GenericTypeDescription.Visitor<GenericTypeDescription>, fieldDescription FieldDescription) in class net.bytebuddy.dynamic.scaffold.InstrumentedType.AbstractBase.FieldToken",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Change Parameter Type",
@@ -716,52 +716,66 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type TypeDescription to GenericTypeDescription in method protected resolveReturnType(instrumentedType TypeDescription) : GenericTypeDescription in class net.bytebuddy.dynamic.DynamicType.Builder.AbstractBase.MethodToken",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<TypeDescription> to List<GenericTypeDescription> in method protected resolveParameterTypes(instrumentedType TypeDescription) : List<GenericTypeDescription> in class net.bytebuddy.dynamic.DynamicType.Builder.AbstractBase.MethodToken",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<TypeDescription> to List<GenericTypeDescription> in method protected resolveExceptionTypes(instrumentedType TypeDescription) : List<GenericTypeDescription> in class net.bytebuddy.dynamic.DynamicType.Builder.AbstractBase.MethodToken",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type TypeDescription to GenericTypeDescription in method public getReturnType() : GenericTypeDescription in class net.bytebuddy.dynamic.DynamicType.Builder.AbstractBase.MethodToken",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<TypeDescription> to List<GenericTypeDescription> in method public getParameterTypes() : List<GenericTypeDescription> in class net.bytebuddy.dynamic.DynamicType.Builder.AbstractBase.MethodToken",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<TypeDescription> to List<GenericTypeDescription> in method public getExceptionTypes() : List<GenericTypeDescription> in class net.bytebuddy.dynamic.DynamicType.Builder.AbstractBase.MethodToken",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type TypeDescription to GenericTypeDescription in method protected resolveFieldType(instrumentedType TypeDescription) : GenericTypeDescription in class net.bytebuddy.dynamic.DynamicType.Builder.AbstractBase.FieldToken",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter substitutionMatcher : ElementMatcher<? super TypeDescription> to typeDescription : GenericTypeDescription in method public resolve(typeDescription GenericTypeDescription, substitute TypeDescription) : GenericTypeDescription in class net.bytebuddy.dynamic.TargetType",
+        "comment": "null",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter matcher : ElementMatcher<? super TypeDescription> to substitutor : GenericTypeDescription.Visitor<GenericTypeDescription> in method private TypeVariableToken(substitutor GenericTypeDescription.Visitor<GenericTypeDescription>, typeVariable GenericTypeDescription) in class net.bytebuddy.dynamic.scaffold.InstrumentedType.AbstractBase.TypeVariableToken",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 4590
 }, {
@@ -1725,10 +1739,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Cassandra.Client to Session in method protected getClient() : Session in class org.apache.cassandra.pig.PigTestBase",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 6589
 }, {
@@ -1866,24 +1880,24 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type value : Pair<LoggingHandlerImpl,String> to value : LoggingHandlerBase in method public DeploymentLogNode(value LoggingHandlerBase, deploymentNode DeploymentNodeImpl) in class com.intellij.remoteServer.impl.runtime.ui.tree.ServersTreeStructure.DeploymentLogNode",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<? extends LogPipe> to List<? extends LogPipeBase> in method public createLogPipes(deploymentName String) : List<? extends LogPipeBase> in class com.intellij.remoteServer.agent.util.log.LogPipeProvider",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Map<String,LoggingHandlerImpl> to List<LoggingHandlerBase> in method public getAdditionalLoggingHandlers() : List<LoggingHandlerBase> in class com.intellij.remoteServer.impl.runtime.log.DeploymentLogManagerImpl",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type LoggingHandlerImpl to JComponent in method public getComponent() : JComponent in class com.intellij.remoteServer.impl.runtime.ui.tree.ServersTreeStructure.DeploymentNodeImpl",
@@ -2221,10 +2235,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type QueryFilterBuilder to FQueryFilterBuilder in method public getBuilderPrototype() : FQueryFilterBuilder in class org.elasticsearch.index.query.FQueryFilterParser",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 7383
 }, {
@@ -2279,10 +2293,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type CompletableFuture<RaftState> to void in method protected transition(state RaftState) : void in class net.kuujo.copycat.raft.state.ActiveState",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 858
 }, {
@@ -2471,10 +2485,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type ODatabase<ORecord> to ODatabaseDocumentInternal in method protected getDatabase() : ODatabaseDocumentInternal in class com.orientechnologies.orient.core.index.OIndexRemote",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 4630
 }, {
@@ -2648,31 +2662,31 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type rawStatus : Measure.QualityGateStatus to rawStatus : QualityGateStatus in method private checkQualityGateStatusChange(project Component, metric Metric, rawStatus QualityGateStatus) : void in class org.sonar.server.computation.step.QualityGateEventsStep",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type rawStatus : Measure.QualityGateStatus to rawStatus : QualityGateStatus in method private checkNewQualityGate(project Component, rawStatus QualityGateStatus) : void in class org.sonar.server.computation.step.QualityGateEventsStep",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type rawStatus : Measure.QualityGateStatus to rawStatus : QualityGateStatus in method private notifyUsers(project Component, label String, rawStatus QualityGateStatus, isNewAlert boolean) : void in class org.sonar.server.computation.step.QualityGateEventsStep",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type newQualityGateStatus : Measure.QualityGateStatus to newQualityGateStatus : QualityGateStatus in method private verify_event_created_if_base_ALERT_STATUS_measure_exists_and_status_has_changed(previousAlertStatus Measure.Level, newQualityGateStatus QualityGateStatus, expectedLabel String) : void in class org.sonar.server.computation.step.QualityGateEventsStepTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 3190
 }, {
@@ -2902,10 +2916,10 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type builder : PredicateBuilder to builder : Token in method private handleSingleArrayValue(string String, builder Token, tokens Deque<Token>, endChar String) : Node in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -2973,7 +2987,7 @@
         "description": "Rename Parameter server : DatagramSocketImpl to socket : DatagramSocketImpl in method package DatagramServerHandler(vertx VertxInternal, socket DatagramSocketImpl) in class io.vertx.core.datagram.impl.DatagramServerHandler",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
@@ -2989,6 +3003,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter connectionMap : Map<Channel,C> to channel : Channel in method protected removeConnection(channel Channel) : C in class io.vertx.core.net.impl.VertxHandler",
+        "comment": "<p>removeConnection() is a newly abstract method</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 1710
 }, {
@@ -3183,17 +3204,17 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type a : Object to a : T in method public compare(a T, b T) : int in class org.drools.core.util.NaturalComparator",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type b : Object to b : T in method public compare(a T, b T) : int in class org.drools.core.util.NaturalComparator",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 13908
 }, {
@@ -3220,10 +3241,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type String[] to Set<String> in method private getPackagesToScan(metadata AnnotationMetadata) : Set<String> in class org.springframework.boot.orm.jpa.EntityScanRegistrar",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 1019
 }, {
@@ -3754,6 +3775,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter conn : ServerConnection to chctx : ChannelHandlerContext in method public channelRead(chctx ChannelHandlerContext, msg Object) : void in class io.vertx.core.http.impl.HttpServerImpl.ServerHandler",
+        "comment": "null",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 783
 }, {
@@ -4108,31 +4136,31 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type tasks : Collection<Task> to tasks : Collection<? extends Task> in method public addTasks(tasks Collection<? extends Task>) : void in class io.crate.executor.Job",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type plan : GlobalAggregate to plan : Plan in method protected visitPlan(plan Plan, job Job) : List<? extends Task> in class io.crate.executor.transport.TransportExecutor.TaskCollectingVisitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<Task> to List<? extends Task> in method public visitUpsert(plan Upsert, job Job) : List<? extends Task> in class io.crate.executor.transport.TransportExecutor.TaskCollectingVisitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<Task> to List<? extends Task> in method public visitInsertByQuery(node InsertFromSubQuery, job Job) : List<? extends Task> in class io.crate.executor.transport.TransportExecutor.TaskCollectingVisitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<Task> to List<? extends Task> in method protected visitPlan(plan Plan, job Job) : List<? extends Task> in class io.crate.executor.transport.TransportExecutor.TaskCollectingVisitor",
@@ -5872,10 +5900,10 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type g : GraphStorage to g : GraphHopperStorage in method protected loadGraph(g GraphHopperStorage) : GraphHopper in class com.graphhopper.GraphHopper",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type graph : GraphStorage to ghStorage : GraphHopperStorage in method public setGraphHopperStorage(ghStorage GraphHopperStorage) : void in class com.graphhopper.GraphHopper",
@@ -5914,45 +5942,45 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type that : GraphHopperStorage to that : BaseGraph in method public GHNodeAccess(that BaseGraph, withElevation boolean) in class com.graphhopper.storage.GHNodeAccess",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type graph : GraphStorage to graph : Graph in method public init(graph Graph, dir Directory) : void in class com.graphhopper.storage.TurnCostExtension",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type tmpGraph : GraphStorage to tmpGraph : GraphHopperStorage in method protected createReader(tmpGraph GraphHopperStorage) : DataReader in class com.graphhopper.reader.OSMReaderTest.GraphHopperTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type prepareGraph : Graph to prepareGraph : GraphHopperStorage in method public createFactory(prepareGraph GraphHopperStorage, prepareOpts AlgorithmOptions) : RoutingAlgorithmFactory in class com.graphhopper.routing.AStarBidirectionTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type prepareGraph : Graph to prepareGraph : GraphHopperStorage in method public createFactory(prepareGraph GraphHopperStorage, prepareOpts AlgorithmOptions) : RoutingAlgorithmFactory in class com.graphhopper.routing.AStarTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type g : Graph to g : GraphHopperStorage in method protected createAlgo(g GraphHopperStorage) : RoutingAlgorithm in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type g : Graph to ghStorage : GraphHopperStorage in method protected createAlgo(ghStorage GraphHopperStorage, opts AlgorithmOptions) : RoutingAlgorithm in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
@@ -5984,24 +6012,24 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type prepareGraph : Graph to prepareGraph : GraphHopperStorage in method public createFactory(prepareGraph GraphHopperStorage, prepareOpts AlgorithmOptions) : RoutingAlgorithmFactory in class com.graphhopper.routing.DijkstraBidirectionRefTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type prepareGraph : Graph to prepareGraph : GraphHopperStorage in method public createFactory(prepareGraph GraphHopperStorage, prepareOpts AlgorithmOptions) : RoutingAlgorithmFactory in class com.graphhopper.routing.DijkstraOneToManyTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type prepareGraph : Graph to prepareGraph : GraphHopperStorage in method public createFactory(prepareGraph GraphHopperStorage, prepareOpts AlgorithmOptions) : RoutingAlgorithmFactory in class com.graphhopper.routing.DijkstraTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type g : Graph to ghStorage : GraphHopperStorage in method package createAlgos(ghStorage GraphHopperStorage, idx LocationIndex, encoder FlagEncoder, withCh boolean, tMode TraversalMode, weighting Weighting, manager EncodingManager) : List<AlgoHelperEntry> in class com.graphhopper.routing.RoutingAlgorithmIT",
@@ -6019,24 +6047,24 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type g : LevelGraphStorage to g : LevelGraph in method package initUnpackingGraph(g LevelGraph, w Weighting) : void in class com.graphhopper.routing.ch.PrepareContractionHierarchiesTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type g : GraphStorage to g : GraphHopperStorage in method private printGraphDetails(g GraphHopperStorage, vehicleStr String) : void in class com.graphhopper.tools.Measurement",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type graph : GraphStorage to graph : Graph in method public init(graph Graph, dir Directory) : void in class com.graphhopper.storage.GraphExtension",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type g : Graph to ghStorage : GraphHopperStorage in method public abstract createFactory(ghStorage GraphHopperStorage, opts AlgorithmOptions) : RoutingAlgorithmFactory in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
@@ -6054,80 +6082,80 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type LevelGraphStorage to LevelGraph in method public levelGraphBuild() : LevelGraph in class com.graphhopper.storage.GraphBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type LevelGraphStorage to LevelGraph in method public levelGraphCreate() : LevelGraph in class com.graphhopper.storage.GraphBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type GraphStorage to GraphHopperStorage in method public build() : GraphHopperStorage in class com.graphhopper.storage.GraphBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type GraphStorage to GraphHopperStorage in method public create() : GraphHopperStorage in class com.graphhopper.storage.GraphBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type GraphStorage to GraphHopperStorage in method public load() : GraphHopperStorage in class com.graphhopper.storage.GraphBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type GraphStorage to GraphHopperStorage in method public create(byteCount long) : GraphHopperStorage in class com.graphhopper.storage.GraphHopperStorage",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type GraphStorage to GraphHopperStorage in method package newGraph(directory String, encodingManager EncodingManager, is3D boolean, turnRestrictionsImport boolean) : GraphHopperStorage in class com.graphhopper.reader.OSMReaderTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Graph to GraphHopperStorage in method protected createWikipediaTestGraph() : GraphHopperStorage in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Graph to GraphHopperStorage in method public getMatrixGraph() : GraphHopperStorage in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Graph to GraphHopperStorage in method public getMatrixAlikeGraph() : GraphHopperStorage in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Graph to GraphHopperStorage in method private createMatrixAlikeGraph() : GraphHopperStorage in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Graph to GraphHopperStorage in method protected createGHStorage(em EncodingManager, is3D boolean) : GraphHopperStorage in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
@@ -6159,10 +6187,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Graph to GraphHopperStorage in method public getMatrixGraph() : GraphHopperStorage in class com.graphhopper.routing.ch.DijkstraBidirectionCHTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type LevelGraph to GraphHopperStorage in method protected createGHStorage(em EncodingManager, is3D boolean) : GraphHopperStorage in class com.graphhopper.routing.ch.DijkstraBidirectionCHTest",
@@ -6173,10 +6201,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type LevelGraph to GraphHopperStorage in method package createExampleGraph() : GraphHopperStorage in class com.graphhopper.routing.ch.PrepareContractionHierarchiesTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type LevelGraph to GraphHopperStorage in method package createGHStorage() : GraphHopperStorage in class com.graphhopper.routing.ch.PrepareContractionHierarchiesTest",
@@ -6449,38 +6477,38 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type includes : CxxHeaders to includes : ImmutableList<CxxHeaders> in method package CxxPreprocessAndCompile(params BuildRuleParams, resolver SourcePathResolver, operation CxxPreprocessAndCompileStep.Operation, preprocessor Optional<Tool>, preprocessorFlags Optional<ImmutableList<String>>, compiler Optional<Tool>, compilerFlags Optional<ImmutableList<String>>, output Path, input SourcePath, inputType CxxSource.Type, includeRoots ImmutableList<Path>, systemIncludeRoots ImmutableList<Path>, frameworkRoots ImmutableList<Path>, includes ImmutableList<CxxHeaders>, sanitizer DebugPathSanitizer) in class com.facebook.buck.cxx.CxxPreprocessAndCompile",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type includes : CxxHeaders to includes : ImmutableList<CxxHeaders> in method public preprocess(params BuildRuleParams, resolver SourcePathResolver, preprocessor Tool, flags ImmutableList<String>, output Path, input SourcePath, inputType CxxSource.Type, includeRoots ImmutableList<Path>, systemIncludeRoots ImmutableList<Path>, frameworkRoots ImmutableList<Path>, includes ImmutableList<CxxHeaders>, sanitizer DebugPathSanitizer) : CxxPreprocessAndCompile in class com.facebook.buck.cxx.CxxPreprocessAndCompile",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type includes : CxxHeaders to includes : ImmutableList<CxxHeaders> in method public preprocessAndCompile(params BuildRuleParams, resolver SourcePathResolver, preprocessor Tool, preprocessorFlags ImmutableList<String>, compiler Tool, compilerFlags ImmutableList<String>, output Path, input SourcePath, inputType CxxSource.Type, includeRoots ImmutableList<Path>, systemIncludeRoots ImmutableList<Path>, frameworkRoots ImmutableList<Path>, includes ImmutableList<CxxHeaders>, sanitizer DebugPathSanitizer, strategy CxxPreprocessMode) : CxxPreprocessAndCompile in class com.facebook.buck.cxx.CxxPreprocessAndCompile",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type cxxPreprocessorInput : CxxPreprocessorInput to cxxPreprocessorInput : ImmutableList<CxxPreprocessorInput> in method public CxxSourceRuleFactory(params BuildRuleParams, resolver BuildRuleResolver, pathResolver SourcePathResolver, cxxPlatform CxxPlatform, cxxPreprocessorInput ImmutableList<CxxPreprocessorInput>, compilerFlags ImmutableList<String>) in class com.facebook.buck.cxx.CxxSourceRuleFactory",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type cxxPreprocessorInput : CxxPreprocessorInput to cxxPreprocessorInput : ImmutableList<CxxPreprocessorInput> in method public requirePreprocessAndCompileRules(params BuildRuleParams, resolver BuildRuleResolver, pathResolver SourcePathResolver, cxxPlatform CxxPlatform, cxxPreprocessorInput ImmutableList<CxxPreprocessorInput>, compilerFlags ImmutableList<String>, strategy CxxPreprocessMode, sources ImmutableMap<String,CxxSource>, pic PicType) : ImmutableMap<CxxPreprocessAndCompile,SourcePath> in class com.facebook.buck.cxx.CxxSourceRuleFactory",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>This was so hard to find. I almost marked it FP.&nbsp; Phew!&nbsp;</p>",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type CxxPreprocessorInput to ImmutableList<CxxPreprocessorInput> in method public collectCxxPreprocessorInput(params BuildRuleParams, cxxPlatform CxxPlatform, preprocessorFlags ImmutableMultimap<CxxSource.Type,String>, prefixHeaders ImmutableList<SourcePath>, headerSymlinkTrees ImmutableList<SymlinkTree>, frameworkSearchPaths ImmutableList<Path>, cxxPreprocessorInputFromDeps Iterable<CxxPreprocessorInput>) : ImmutableList<CxxPreprocessorInput> in class com.facebook.buck.cxx.CxxDescriptionEnhancer",
@@ -6491,10 +6519,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type CxxHeaders to ImmutableList<CxxHeaders> in method public getIncludes() : ImmutableList<CxxHeaders> in class com.facebook.buck.cxx.CxxPreprocessAndCompile",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 3919
 }, {
@@ -6802,10 +6830,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type void to GuiBetterButton in method public setToolTip(tips ToolTip) : GuiBetterButton in class buildcraft.core.lib.gui.buttons.GuiBetterButton",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 1694
 }, {
@@ -7095,7 +7123,7 @@
         "description": "Rename Parameter myInfo : InstanceInfo to applicationInfoManager : ApplicationInfoManager in method package DiscoveryClient(applicationInfoManager ApplicationInfoManager, config EurekaClientConfig, args DiscoveryClientOptionalArgs, backupRegistryProvider Provider<BackupRegistry>) in class com.netflix.discovery.DiscoveryClient",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Change Parameter Type",
@@ -7209,6 +7237,13 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable restType : TypeDeclarationNode in method package processFunctionType(tree FunctionTypeTree) : Node from class com.google.javascript.jscomp.parsing.IRFactory.TransformDispatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Split Variable",
+        "description": "Split Variable parameters : LinkedHashMap<String,TypeDeclarationNode> to [optionalParams : LinkedHashMap<String,TypeDeclarationNode>, requiredParams : LinkedHashMap<String,TypeDeclarationNode>] in method public convertTypeNodeAST(n Node) : TypeDeclarationNode in class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactory",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -10018,17 +10053,17 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type value : String to value : NSString in method public valueOf(value NSString) : CBUUIDIdentifier in class org.robovm.apple.corebluetooth.CBUUIDIdentifier",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type NSArray<CBUUID> to NSArray in method public getServiceUUIDs() : NSArray in class org.robovm.apple.corebluetooth.CBAdvertisementData",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 11040
 }, {
@@ -10197,143 +10232,143 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type context : Context to context : ConsumerContext in method public visitQueriedTable(table QueriedTable, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.DistributedGroupByConsumer.Visitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type context : Context to context : ConsumerContext in method public visitInsertFromQuery(statement InsertFromSubQueryAnalyzedStatement, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.InsertFromSubQueryConsumer.Visitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type context : Context to context : ConsumerContext in method private nonDistributedGroupBy(table QueriedTable, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.NonDistributedGroupByConsumer.Visitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type context : Context to context : ConsumerContext in method private normalSelect(table QueriedTable, whereClause WhereClause, tableRelation TableRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.QueryAndFetchConsumer.Visitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type boolean to PlannedAnalyzedRelation in method public consume(rootRelation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.CountConsumer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type boolean to PlannedAnalyzedRelation in method public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.DistributedGroupByConsumer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AnalyzedRelation to PlannedAnalyzedRelation in method public visitQueriedTable(table QueriedTable, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.DistributedGroupByConsumer.Visitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type boolean to PlannedAnalyzedRelation in method public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.ESGetConsumer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type boolean to PlannedAnalyzedRelation in method public consume(rootRelation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.GlobalAggregateConsumer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type boolean to PlannedAnalyzedRelation in method public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.InsertFromSubQueryConsumer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AnalyzedRelation to PlannedAnalyzedRelation in method public visitInsertFromQuery(statement InsertFromSubQueryAnalyzedStatement, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.InsertFromSubQueryConsumer.Visitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type boolean to PlannedAnalyzedRelation in method public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.NonDistributedGroupByConsumer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AnalyzedRelation to PlannedAnalyzedRelation in method private nonDistributedGroupBy(table QueriedTable, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.NonDistributedGroupByConsumer.Visitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type boolean to PlannedAnalyzedRelation in method public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.QueryAndFetchConsumer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AnalyzedRelation to PlannedAnalyzedRelation in method private normalSelect(table QueriedTable, whereClause WhereClause, tableRelation TableRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.QueryAndFetchConsumer.Visitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type boolean to PlannedAnalyzedRelation in method public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.QueryThenFetchConsumer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type boolean to PlannedAnalyzedRelation in method public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.ReduceOnCollectorGroupByConsumer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AnalyzedRelation to PlannedAnalyzedRelation in method private optimizedReduceOnCollectorGroupBy(table QueriedTable, tableRelation TableRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.ReduceOnCollectorGroupByConsumer.Visitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type boolean to PlannedAnalyzedRelation in method public consume(rootRelation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.UpdateConsumer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type boolean to PlannedAnalyzedRelation in method public consume(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.Consumer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 3234
 }, {
@@ -10411,17 +10446,17 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List to List<String> in method public getIncludes() : List<String> in class org.eclipse.jetty.maven.plugin.ScanTargetPattern",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List to List<String> in method public getExcludes() : List<String> in class org.eclipse.jetty.maven.plugin.ScanTargetPattern",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 7248
 }, {
@@ -11764,24 +11799,24 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Integer to int in method public getMaxPostSize() : int in class com.jfinal.config.Constants",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type String to String[] in method public getPrimaryKey() : String[] in class com.jfinal.plugin.activerecord.Table",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type boolean to void in method package build(tableList List<Table>, config Config) : void in class com.jfinal.plugin.activerecord.TableBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 1822
 }, {
@@ -12112,14 +12147,14 @@
         "validators": "Matin, Davood, Nikos"
     }, {
         "type": "Rename Variable",
-        "description": "Rename Variable spdyConnection : SpdyConnection to framedConnection : FramedConnection in method private serveConnection(raw Socket) : void in class com.squareup.okhttp.mockwebserver.MockWebServer",
+        "description": "Rename Variable spdyConnection : SpdyConnection to framedConnection : FramedConnection in method public processConnection() : void in class com.squareup.okhttp.mockwebserver.MockWebServer.serveConnection.execute",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Rename Variable",
-        "description": "Rename Variable spdySocketHandler : SpdySocketHandler to framedSocketHandler : FramedSocketHandler in method private serveConnection(raw Socket) : void in class com.squareup.okhttp.mockwebserver.MockWebServer",
+        "description": "Rename Variable spdySocketHandler : SpdySocketHandler to framedSocketHandler : FramedSocketHandler in method public processConnection() : void in class com.squareup.okhttp.mockwebserver.MockWebServer.serveConnection.execute",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -12502,7 +12537,7 @@
         "validators": null
     }, {
         "type": "Merge Variable",
-        "description": "Merge Variable [localTxCount : int, remoteTxCount : int] to transactionTable : TransactionTable in method protected assertNoTransactions(cacheName String) : void in class org.infinispan.test.MultipleCacheManagersTest",
+        "description": "Merge Variable [localTxCount : int, remoteTxCount : int] to transactionTable : TransactionTable in method public isSatisfied() : boolean in class org.infinispan.test.MultipleCacheManagersTest.assertNoTransactions.eventually",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -12559,10 +12594,10 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type cache : Cache<Object,Object> to cache : Cache<?,?> in method private channel(cache Cache<?,?>) : Channel in class org.infinispan.partitionhandling.BasePartitionHandlingTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type keygen : RecipientGenerator to key : Object in method protected abstract remoteGetBeforeWrite(ctx InvocationContext, command WriteCommand, key Object) : void in class org.infinispan.interceptors.distribution.BaseDistributionInterceptor",
@@ -12573,17 +12608,17 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<Cache> to List<Cache<K,V>> in method private cachesInThisPartition() : List<Cache<K,V>> in class org.infinispan.partitionhandling.BasePartitionHandlingTest.Partition",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Cache<?,?> to Cache<K,V> in method private getCache(index int, name String) : Cache<K,V> in class org.infinispan.test.MultipleCacheManagersTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 7011
 }, {
@@ -12856,24 +12891,24 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type messages : LinkedList<LocalMessage> to messages : List<? extends Message> in method public isArchiveAllMessagesWearAvaliable(context Context, account Account, messages List<? extends Message>) : boolean in class com.fsck.k9.service.NotificationActionService",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type messages : LinkedList<LocalMessage> to messages : List<? extends Message> in method public isSpamAllMessagesWearAvaliable(context Context, account Account, messages List<? extends Message>) : boolean in class com.fsck.k9.service.NotificationActionService",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type messages : List<LocalMessage> to messages : List<? extends Message> in method private isMovePossible(controller MessagingController, account Account, dstFolder String, messages List<? extends Message>) : boolean in class com.fsck.k9.service.NotificationActionService",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -13744,13 +13779,6 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable data : Intent to intent : Intent in method public showDialog() : void in class org.sufficientlysecure.keychain.ui.OrbotRequiredDialogActivity",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter message : Message to result : ImportKeyResult in method private handleResult(result ImportKeyResult) : void in class org.sufficientlysecure.keychain.ui.ImportKeysActivity",
         "comment": null,
@@ -13764,6 +13792,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable data : Intent to intent : Intent in method public run() : void in class org.sufficientlysecure.keychain.ui.OrbotRequiredDialogActivity.showDialog.runnableRunDelayed",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable data : Intent to intent : Intent in method public run() : void in class org.sufficientlysecure.keychain.ui.OrbotRequiredDialogActivity.showDialog.runnableRunDelayed.run.ignoreTor",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter context : Context to fragmentActivity : FragmentActivity in method public isOrbotInRequiredState(middleButton int, middleButtonRunnable Runnable, proxyPrefs Preferences.ProxyPrefs, fragmentActivity FragmentActivity) : boolean in class org.sufficientlysecure.keychain.util.orbot.OrbotHelper",
+        "comment": "null",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -14796,10 +14845,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AbstractObjectAssert<?,T> to AbstractComparableAssert<?,T> in method public assertThat(actual T) : AbstractComparableAssert<?,T> in class org.assertj.core.api.Assertions",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -15064,31 +15113,31 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type classLoader : PackageClassLoader to classLoader : ClassLoader in method private wireAll(classLoader ClassLoader, invokerLookups Map<String,Object>, wireList List<String>) : void in class org.drools.core.rule.JavaDialectRuntimeData",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type classLoader : PackageClassLoader to classLoader : ClassLoader in method private wire(classLoader ClassLoader, invokerLookups Map<String,Object>, className String) : void in class org.drools.core.rule.JavaDialectRuntimeData",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type classLoader : PackageClassLoader to classLoader : ClassLoader in method private wire(classLoader ClassLoader, className String, invoker Object) : void in class org.drools.core.rule.JavaDialectRuntimeData",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type classLoader : PackageClassLoader to classLoader : ClassLoader in method private WiringExecutor(classLoader ClassLoader, invokerLookups Map<String,Object>, wireList List<String>) in class org.drools.core.rule.JavaDialectRuntimeData.WiringExecutor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 2686
 }, {
@@ -15837,10 +15886,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Map<Integer,AnalystClusterRequest> to List<AnalystClusterRequest> in method public getSomeWork() : List<AnalystClusterRequest> in class org.opentripplanner.analyst.cluster.AnalystWorker",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -16292,6 +16341,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute SYSTEM_PROPERTY_VARIABLES : String[] to FILE_PROPERTIES : List<Property> in class org.springframework.boot.actuate.system.ApplicationPidFileWriter",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-smi'>String</span> override <span class='pl-k'>=</span> <span class='pl-smi x x-first'>SystemProperties</span><span class='pl-k x'>.</span><span class='x'>get(</span><span class='pl-c1 x x-last'>SYSTEM_PROPERTY_VARIABLES</span>);<br /><span class='pl-smi'>String</span> override <span class='pl-k'>=</span> <span class='x x-first'>getProperty(event, </span><span class='pl-c1 x x-last'>FILE_PROPERTIES</span>);<br />https://github.com/spring-projects/spring-boot/commit/becced5f0b7bac8200df7a5706b568687b517b90#diff-c54af771f58ffa22fa23c2d3943beaf9R150<br /></span></p>",
+        "validation": "CTP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 1721
 }, {
@@ -17270,7 +17326,7 @@
         "validators": null
     }, {
         "type": "Rename Variable",
-        "description": "Rename Variable logRotationControl : LogRotationControl to storeFlusher : StoreFlusher in method private storeCopyRequest(originalDir File, original GraphDatabaseAPI) : StoreCopyClient.StoreCopyRequester in class org.neo4j.com.storecopy.StoreCopyClientTest",
+        "description": "Rename Variable logRotationControl : LogRotationControl to storeFlusher : StoreFlusher in method public copyStore(writer StoreWriter) : Response<?> in class org.neo4j.com.storecopy.StoreCopyClientTest.storeCopyRequest.spy",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -17371,7 +17427,7 @@
         "description": "Rename Parameter logRotationControl : LogRotationControl to storeFlusher : StoreFlusher in method private buildRecovery(fileSystemAbstraction FileSystemAbstraction, cacheAccess CacheAccessBackDoor, indexingService IndexingService, indexUpdatesValidator IndexUpdatesValidator, labelScanStore LabelScanStore, neoStore NeoStore, recoveryVisitorMonitor RecoveryVisitor.Monitor, recoveryMonitor Recovery.Monitor, logFiles PhysicalLogFiles, storeFlusher StoreFlusher, startupStatistics StartupStatisticsProvider) : void in class org.neo4j.kernel.NeoStoreDataSource",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Change Parameter Type",
@@ -18070,17 +18126,17 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type BaseFilter to ZuulFilter in method public newInstance(clazz Class) : ZuulFilter in class com.netflix.zuul.DefaultFilterFactory",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type BaseFilter to ZuulFilter in method public newInstance(clazz Class) : ZuulFilter in class com.netflix.zuul.FilterFactory",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 312
 }, {
@@ -18432,10 +18488,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type void to TcpConnection in method protected doWrite(message Message<?>) : TcpConnection in class org.springframework.integration.ip.tcp.TcpSendingMessageHandler",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 2231
 }, {
@@ -18584,31 +18640,31 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type avatar : Drawable to avatar : ContactPhoto in method public RecipientDetails(name String, number String, contactUri Uri, avatar ContactPhoto) in class org.thoughtcrime.securesms.recipients.RecipientProvider.RecipientDetails",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Drawable to ContactPhoto in method public getContactPhoto() : ContactPhoto in class org.thoughtcrime.securesms.recipients.Recipient",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Drawable to ContactPhoto in method public getContactPhoto() : ContactPhoto in class org.thoughtcrime.securesms.recipients.Recipients",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Drawable to ContactPhoto in method public getGroupContactPhoto(avatar byte[]) : ContactPhoto in class org.thoughtcrime.securesms.contacts.avatars.ContactPhotoFactory",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Move   changeType&nbsp;</p>",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -18905,6 +18961,20 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable value : Integer to item : T in method private testJavaCollection(collection Collection<T>, type Class<T>, name String, _unsorted Integer[], _sorted Integer[], input String) : boolean in class com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming",
+        "comment": "<p>Variable item already exists in the original code<br />Integer value = unsorted[i];<br />T item = Utils.parseT(value, type);<br />===================&gt;<br />T item = unsorted[i];</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute mergeInPlaceResults : double[] to mergeResults : double[] in class com.jwetherell.algorithms.sorts.timing.SortsTiming",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'>mergeInPlaceResultsand mergeNotInPlaceResults attributes are merged into attribute mergeResults<br />https://github.com/phishman3579/java-algorithms-implementation/commit/ab98bcacf6e5bf1c3a06f6bcca68f178f880ffc9#diff-19f604c062f25432275863f522a438e2R338<br /></span></p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 644
 }, {
@@ -22209,10 +22279,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type boolean to void in method private rescueArgumentsIfParametersCanBeRead(call JMethodCall) : void in class com.google.gwt.dev.jjs.impl.ControlFlowAnalyzer.RescueVisitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 6656
 }, {
@@ -22378,24 +22448,24 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type classPath : ImmutableList<Path> to classPath : ImmutableList<URL> in method public getClassLoaderForClassPath(parentClassLoader ClassLoader, classPath ImmutableList<URL>) : ClassLoader in class com.facebook.buck.util.ClassLoaderCache",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type classPath : ImmutableList<Path> to classPath : ImmutableList<URL> in method public injectClassLoader(parentClassLoader ClassLoader, classPath ImmutableList<URL>, injectedClassLoader ClassLoader) : void in class com.facebook.buck.util.ClassLoaderCache",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Map<ImmutableList<Path>,ClassLoader> to Map<ImmutableList<URL>,ClassLoader> in method private getCacheForParent(parentClassLoader ClassLoader) : Map<ImmutableList<URL>,ClassLoader> in class com.facebook.buck.util.ClassLoaderCache",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 2467
 }, {
@@ -22666,6 +22736,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Ameya"
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private getSplitsWithUGI() : void extracted from public HiveScan(userName String, hiveReadEntry HiveReadEntry, storagePluginName String, columns List<SchemaPath>, pluginRegistry StoragePluginRegistry) in class org.apache.drill.exec.store.hive.HiveScan",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private getSplitsWithUGI() : void extracted from public HiveScan(userName String, hiveReadEntry HiveReadEntry, storagePlugin HiveStoragePlugin, columns List<SchemaPath>) in class org.apache.drill.exec.store.hive.HiveScan",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2022
 }, {
@@ -22727,17 +22811,17 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Map<String,FieldMetadataOverride> to Map<String,MetadataOverride> in method protected getTargetedOverride(configurationKey String, ceilingEntityFullyQualifiedClassname String) : Map<String,MetadataOverride> in class org.broadleafcommerce.openadmin.server.dao.provider.metadata.AbstractFieldMetadataProvider",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Map<String,FieldMetadataOverride> to Map<String,MetadataOverride> in method protected getTargetedOverride(dynamicEntityDao DynamicEntityDao, configurationKey String, ceilingEntityFullyQualifiedClassname String) : Map<String,MetadataOverride> in class org.broadleafcommerce.openadmin.server.dao.provider.metadata.AbstractFieldMetadataProvider",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -23203,17 +23287,17 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type activity : Activity to activity : BaseActivity in method private addSubscriptionItem(activity BaseActivity, menu Menu, subredditSubscriptionState RedditSubredditSubscriptionManager.SubredditSubscriptionState) : void in class org.quantumbadger.redreader.activities.OptionsMenuUtility",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type activity : Activity to activity : BaseActivity in method private add(activity BaseActivity, menu Menu, option Option, longText boolean) : void in class org.quantumbadger.redreader.activities.OptionsMenuUtility",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 995
 }, {
@@ -23278,9 +23362,9 @@
         "type": "Change Return Type",
         "description": "Change Return Type void to Q in method private applyQueryHints(query Q) : Q in class org.springframework.data.jpa.repository.support.SimpleJpaRepository",
         "comment": null,
-        "validation": "UKN",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -23723,10 +23807,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type FileCollection to Iterable<File> in method public getClasspath() : Iterable<File> in class org.gradle.play.internal.PlayApplicationBinarySpecInternal",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -24057,6 +24141,55 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter delegate : EnvironmentEndpoint to applicationContext : ApplicationContext in method public ManagementContextResolver(applicationContext ApplicationContext) in class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration.ManagementContextResolver",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-en'>ManagementContextResolver</span></span> is a new class</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter delegate : MetricsEndpoint to applicationContext : ApplicationContext in method public setApplicationContext(applicationContext ApplicationContext) : void in class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcAutoConfiguration.ManagementContextResolver",
+        "comment": "<p>ManagementContextResolver is a new class</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter converters : HttpMessageConverters to request : HttpServletRequest in method public getHandler(request HttpServletRequest) : HandlerExecutionChain in class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcChildContextConfiguration.CompositeHandlerMapping",
+        "comment": "<p>CompositeHandlerMapping is a new class</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute mappingCustomizers : List<EndpointHandlerMappingCustomizer> to adapters : List<HandlerAdapter> in class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcChildContextConfiguration.CompositeHandlerAdapter",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'>mappingCustomizers</span> attribute is deleted and the code using it is deleted too.</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable adapter : RequestMappingHandlerAdapter to list : List<HandlerMapping> in method private extractMappings() : List<HandlerMapping> in class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcChildContextConfiguration.CompositeHandlerMapping",
+        "comment": "<p>CompositeHandlerMapping is a new class</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable set : Set<MvcEndpoint> to list : List<HandlerAdapter> in method private extractAdapters() : List<HandlerAdapter> in class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcChildContextConfiguration.CompositeHandlerAdapter",
+        "comment": "<p>CompositeHandlerAdapter is a new class</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Automatic"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable customizer : EndpointHandlerMappingCustomizer to mapping : HandlerAdapter in method public handle(request HttpServletRequest, response HttpServletResponse, handler Object) : ModelAndView in class org.springframework.boot.actuate.autoconfigure.EndpointWebMvcChildContextConfiguration.CompositeHandlerAdapter",
+        "comment": "<p>CompositeHandlerAdapter is a new class</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3535
 }, {
@@ -24183,59 +24316,59 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type partitionBy : List<Symbol> to partitionBy : Optional<List<Symbol>> in method public PlanFragment(id PlanFragmentId, root PlanNode, symbols Map<Symbol,Type>, outputLayout List<Symbol>, distribution PlanDistribution, partitionedSource PlanNodeId, outputPartitioning OutputPartitioning, partitionBy Optional<List<Symbol>>, hash Optional<Symbol>) in class com.facebook.presto.sql.planner.PlanFragment",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type partitionKeys : List<Symbol> to partitionKeys : Optional<List<Symbol>> in method public setPartitionedOutput(partitionKeys Optional<List<Symbol>>, hash Optional<Symbol>) : FragmentProperties in class com.facebook.presto.sql.planner.PlanFragmenter.FragmentProperties",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type partitionKeys : List<Symbol> to partitionKeys : Optional<List<Symbol>> in method public ExchangeNode(id PlanNodeId, type Type, partitionKeys Optional<List<Symbol>>, hashSymbol Optional<Symbol>, sources List<PlanNode>, outputs List<Symbol>, inputs List<List<Symbol>>) in class com.facebook.presto.sql.planner.plan.ExchangeNode",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type partitionKeys : List<Symbol> to partitionKeys : Optional<List<Symbol>> in method public partitionedExchange(id PlanNodeId, child PlanNode, partitionKeys Optional<List<Symbol>>, hashSymbol Optional<Symbol>) : ExchangeNode in class com.facebook.presto.sql.planner.plan.ExchangeNode",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<Integer> to Optional<List<Integer>> in method private getPartitioningChannels(fragment PlanFragment) : Optional<List<Integer>> in class com.facebook.presto.execution.SqlStageExecution",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<Symbol> to Optional<List<Symbol>> in method public getPartitionBy() : Optional<List<Symbol>> in class com.facebook.presto.sql.planner.PlanFragment",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<Symbol> to Optional<List<Symbol>> in method public getPartitionBy() : Optional<List<Symbol>> in class com.facebook.presto.sql.planner.PlanFragmenter.FragmentProperties",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<Symbol> to Optional<List<Symbol>> in method public getPartitionKeys() : Optional<List<Symbol>> in class com.facebook.presto.sql.planner.plan.ExchangeNode",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type HashGenerator to PartitionGenerator in method public createHashPartitionGenerator(hashChannel Optional<Integer>, partitioningChannels List<Integer>, types List<Type>) : PartitionGenerator in class com.facebook.presto.operator.PartitionGenerator",
@@ -24576,10 +24709,10 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type sessionId : Integer to sessionId : Long in method public getTimerJobInstances(sessionId Long) : Collection<TimerJobInstance> in class org.jbpm.persistence.timer.GlobalJPATimerJobFactoryManager",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 1802
 }, {
@@ -25362,325 +25495,325 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetForLabelAndPropertyKey(labelId int, propertyKeyId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.api.SchemaRead",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetForLabel(labelId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.api.SchemaRead",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetAll() : Iterator<PropertyConstraint> in class org.neo4j.kernel.api.SchemaRead",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type UniquenessConstraint to PropertyConstraint in method public constraint() : PropertyConstraint in class org.neo4j.kernel.api.exceptions.schema.CreateConstraintFailureException",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type UniquenessConstraint to PropertyConstraint in method public constraint() : PropertyConstraint in class org.neo4j.kernel.api.exceptions.schema.DropConstraintFailureException",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type ReadableDiffSets<UniquenessConstraint> to ReadableDiffSets<PropertyConstraint> in method public constraintsChanges() : ReadableDiffSets<PropertyConstraint> in class org.neo4j.kernel.api.txstate.ReadableTxState",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type ReadableDiffSets<UniquenessConstraint> to ReadableDiffSets<PropertyConstraint> in method public constraintsChangesForLabel(labelId int) : ReadableDiffSets<PropertyConstraint> in class org.neo4j.kernel.api.txstate.ReadableTxState",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type ReadableDiffSets<UniquenessConstraint> to ReadableDiffSets<PropertyConstraint> in method public constraintsChangesForLabelAndProperty(labelId int, propertyKey int) : ReadableDiffSets<PropertyConstraint> in class org.neo4j.kernel.api.txstate.ReadableTxState",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetForLabelAndPropertyKey(state KernelStatement, labelId int, propertyKeyId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.LockingStatementOperations",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetForLabel(state KernelStatement, labelId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.LockingStatementOperations",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetAll(state KernelStatement) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.LockingStatementOperations",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetForLabelAndPropertyKey(labelId int, propertyKeyId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.OperationsFacade",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetForLabel(labelId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.OperationsFacade",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetAll() : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.OperationsFacade",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetForLabelAndPropertyKey(state KernelStatement, labelId int, propertyKeyId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.StateHandlingStatementOperations",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetForLabel(state KernelStatement, labelId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.StateHandlingStatementOperations",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetAll(state KernelStatement) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.StateHandlingStatementOperations",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method private applyConstraintsDiff(state KernelStatement, constraints Iterator<PropertyConstraint>, labelId int, propertyKeyId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.StateHandlingStatementOperations",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method private applyConstraintsDiff(state KernelStatement, constraints Iterator<PropertyConstraint>, labelId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.StateHandlingStatementOperations",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method private applyConstraintsDiff(state KernelStatement, constraints Iterator<PropertyConstraint>) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.StateHandlingStatementOperations",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetForLabelAndPropertyKey(state KernelStatement, labelId int, propertyKeyId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.operations.SchemaReadOperations",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetForLabel(state KernelStatement, labelId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.operations.SchemaReadOperations",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetAll(state KernelStatement) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.operations.SchemaReadOperations",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type ReadableDiffSets<UniquenessConstraint> to ReadableDiffSets<PropertyConstraint> in method public abstract constraintsChanges() : ReadableDiffSets<PropertyConstraint> in class org.neo4j.kernel.impl.api.state.LabelState",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type ReadableDiffSets<UniquenessConstraint> to ReadableDiffSets<PropertyConstraint> in method public constraintsChanges() : ReadableDiffSets<PropertyConstraint> in class org.neo4j.kernel.impl.api.state.LabelState.Mutable",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type DiffSets<UniquenessConstraint> to DiffSets<PropertyConstraint> in method public getOrCreateConstraintsChanges() : DiffSets<PropertyConstraint> in class org.neo4j.kernel.impl.api.state.LabelState.Mutable",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type DiffSetsVisitor<UniquenessConstraint> to DiffSetsVisitor<PropertyConstraint> in method private constraintsVisitor(visitor TxStateVisitor) : DiffSetsVisitor<PropertyConstraint> in class org.neo4j.kernel.impl.api.state.TxState",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type ReadableDiffSets<UniquenessConstraint> to ReadableDiffSets<PropertyConstraint> in method public constraintsChangesForLabelAndProperty(labelId int, propertyKey int) : ReadableDiffSets<PropertyConstraint> in class org.neo4j.kernel.impl.api.state.TxState",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type ReadableDiffSets<UniquenessConstraint> to ReadableDiffSets<PropertyConstraint> in method public constraintsChangesForLabel(labelId int) : ReadableDiffSets<PropertyConstraint> in class org.neo4j.kernel.impl.api.state.TxState",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type ReadableDiffSets<UniquenessConstraint> to ReadableDiffSets<PropertyConstraint> in method public constraintsChanges() : ReadableDiffSets<PropertyConstraint> in class org.neo4j.kernel.impl.api.state.TxState",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type DiffSets<UniquenessConstraint> to DiffSets<PropertyConstraint> in method private constraintsChangesDiffSets() : DiffSets<PropertyConstraint> in class org.neo4j.kernel.impl.api.state.TxState",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetForLabelAndPropertyKey(labelId int, propertyKeyId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.store.CacheLayer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetForLabel(labelId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.store.CacheLayer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetAll() : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.store.CacheLayer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetForLabelAndPropertyKey(labelId int, propertyKeyId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.store.DiskLayer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetForLabel(labelId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.store.DiskLayer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetAll() : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.store.DiskLayer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraints() : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.store.SchemaCache",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsForLabel(label int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.store.SchemaCache",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsForLabelAndProperty(label int, property int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.store.SchemaCache",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetForLabelAndPropertyKey(labelId int, propertyKeyId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.store.StoreReadLayer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetForLabel(labelId int) : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.store.StoreReadLayer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Iterator<UniquenessConstraint> to Iterator<PropertyConstraint> in method public constraintsGetAll() : Iterator<PropertyConstraint> in class org.neo4j.kernel.impl.api.store.StoreReadLayer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type UniquenessConstraintRule to UniquePropertyConstraintRule in method public uniquenessConstraint(labelId int, propertyKeyId int) : UniquePropertyConstraintRule in class org.neo4j.kernel.impl.store.SchemaStorage",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>public</span> <span class='pl-smi x x-first'>UniquenessConstraintRule</span> <span class='pl-en x x-last'>uniquenessConstraint</span>( <span class='pl-k'>int</span> <span class='pl-v'>labelId</span>, <span class='pl-k'>final</span> <span class='pl-k'>int</span> <span class='pl-v'>propertyKeyId</span> )</span> is mapped to<br /><span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-k'>public</span> <span class='pl-smi'>UniquePropertyConstraintRule</span> <span class='pl-en'>uniquenessConstraint</span>( <span class='pl-k'>int</span> <span class='pl-v'>labelId</span>, <span class='pl-k'>final</span> <span class='pl-k'>int</span> <span class='pl-v'>propertyKeyId</span> )</span><br />Both methods have the same name and parameter names types</p>",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type UniquenessConstraint to PropertyConstraint in method private createConstraint() : PropertyConstraint in class org.neo4j.kernel.impl.api.KernelSchemaStateFlushingTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type UniquenessConstraint to PropertyConstraint in method private createUniqueConstraint(labelId int, pkId int) : PropertyConstraint in class org.neo4j.kernel.impl.util.dbstructure.GraphDbStructureGuideTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 10145
 }, {
@@ -26024,48 +26157,48 @@
         "type": "Change Return Type",
         "description": "Change Return Type List<WireOption> to Options in method public options() : Options in class com.squareup.wire.model.WireEnum",
         "comment": null,
-        "validation": "UKN",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<WireOption> to Options in method public options() : Options in class com.squareup.wire.model.WireEnumConstant",
         "comment": null,
-        "validation": "UKN",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<WireOption> to Options in method public options() : Options in class com.squareup.wire.model.WireField",
         "comment": null,
-        "validation": "UKN",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type WireOption to Object in method public getDefault() : Object in class com.squareup.wire.model.WireField",
         "comment": null,
-        "validation": "UKN",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<WireOption> to Options in method public options() : Options in class com.squareup.wire.model.WireMessage",
         "comment": null,
-        "validation": "UKN",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<WireOption> to Options in method public options() : Options in class com.squareup.wire.model.WireProtoFile",
         "comment": null,
-        "validation": "UKN",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<WireOption> to Options in method public options() : Options in class com.squareup.wire.model.WireRpc",
-        "comment": "null",
+        "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Ameya"
@@ -26073,16 +26206,30 @@
         "type": "Change Return Type",
         "description": "Change Return Type List<WireOption> to Options in method public options() : Options in class com.squareup.wire.model.WireService",
         "comment": null,
-        "validation": "UKN",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<WireOption> to Options in method public abstract options() : Options in class com.squareup.wire.model.WireType",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable option : WireOption to type : WireType in method public link(wireProtoFiles Collection<WireProtoFile>) : void in class com.squareup.wire.model.Linker",
+        "comment": "null",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable option : WireOption to rpc : WireRpc in method package linkOptions(linker Linker) : void in class com.squareup.wire.model.WireService",
+        "comment": "<p>The method linkOptions() is not extracted from <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-en'>link</span></span>() to consider there is a relationship between statements<br /><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>for</span> (<span class='pl-smi'>WireOption</span> option <span class='pl-k'>:</span> options)<br /><span class='pl-k'>for</span> (<span class='pl-smi'>WireRpc</span> rpc <span class='pl-k'>:</span> rpcs)</span><br /><br /></p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -28702,10 +28849,10 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type cache : AdvancedCache<byte[],byte[]> to cache : AdvancedCache<?,?> in method private buildLuceneQuery(cache AdvancedCache<?,?>, isCompatMode boolean, serCtx SerializationContext, jpqlString String, startOffset long, maxResults int) : Query in class org.infinispan.query.remote.QueryFacadeImpl",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type QueryResponse to Query in method private buildLuceneQuery(cache AdvancedCache<?,?>, isCompatMode boolean, serCtx SerializationContext, jpqlString String, startOffset long, maxResults int) : Query in class org.infinispan.query.remote.QueryFacadeImpl",
@@ -28888,45 +29035,52 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Promise<List<Album>,Throwable,Void> to Promise<Set<Album>,Throwable,Void> in method public getArtistAlbums(artist Artist, onlyIfCached boolean) : Promise<Set<Album>,Throwable,Void> in class org.tomahawk.libtomahawk.collection.NativeCollection",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Promise<List<Query>,Throwable,Void> to Promise<Set<Query>,Throwable,Void> in method public getAlbumTracks(album Album, onlyIfCached boolean) : Promise<Set<Query>,Throwable,Void> in class org.tomahawk.libtomahawk.collection.NativeCollection",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Promise<List<Album>,Throwable,Void> to Promise<Set<Album>,Throwable,Void> in method public getArtistAlbums(artist Artist, onlyIfCached boolean) : Promise<Set<Album>,Throwable,Void> in class org.tomahawk.libtomahawk.collection.ScriptResolverCollection",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Promise<List<Query>,Throwable,Void> to Promise<Set<Query>,Throwable,Void> in method public getAlbumTracks(album Album, onlyIfCached boolean) : Promise<Set<Query>,Throwable,Void> in class org.tomahawk.libtomahawk.collection.ScriptResolverCollection",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Promise<List<Album>,Throwable,Void> to Promise<Set<Album>,Throwable,Void> in method public abstract getArtistAlbums(artist Artist, onlyIfCached boolean) : Promise<Set<Album>,Throwable,Void> in class org.tomahawk.libtomahawk.collection.Collection",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Promise<List<Query>,Throwable,Void> to Promise<Set<Query>,Throwable,Void> in method public abstract getAlbumTracks(album Album, onlyIfCached boolean) : Promise<Set<Query>,Throwable,Void> in class org.tomahawk.libtomahawk.collection.Collection",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter addedTimeStamp : long to onlyIfCached : boolean in method public getArtistAlbums(artist Artist, onlyIfCached boolean) : Promise<Set<Album>,Throwable,Void> in class org.tomahawk.libtomahawk.collection.NativeCollection",
+        "comment": "null",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 1144
 }, {
@@ -29076,10 +29230,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type CacheControl to Integer in method protected lookupCacheSeconds(urlPath String) : Integer in class org.springframework.web.servlet.mvc.WebContentInterceptor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 2657
 }, {
@@ -29269,6 +29423,62 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter counterpart : AxolotlAddress to name : String in method public getFingerprintTrust(name String, fingerprint String) : SQLiteAxolotlStore.Trust in class eu.siacs.conversations.crypto.axolotl.AxolotlService",
+        "comment": "null",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter counterpart : AxolotlAddress to name : String in method public setFingerprintTrust(name String, fingerprint String, trust SQLiteAxolotlStore.Trust) : void in class eu.siacs.conversations.crypto.axolotl.AxolotlService",
+        "comment": "null",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter address : AxolotlAddress to name : String in method public getFingerprintTrust(name String, fingerprint String) : Trust in class eu.siacs.conversations.crypto.axolotl.AxolotlService.SQLiteAxolotlStore",
+        "comment": "<p>If we consider <span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>public</span> <span class='pl-k'>boolean</span> <span class='pl-en'>isTrustedSession</span>(<span class='pl-smi'>AxolotlAddress</span> <span class='pl-v'>address</span>)</span> renamed to <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-k'>public</span> <span class='pl-smi'>Trust</span> <span class='pl-en'>getFingerprintTrust</span>(<span class='pl-smi'>String</span> <span class='pl-v'>name</span>, <span class='pl-smi'>String</span> <span class='pl-v'>fingerprint</span>)</span></p>",
+        "validation": "CTP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter address : AxolotlAddress to name : String in method public setFingerprintTrust(name String, fingerprint String, trust Trust) : void in class eu.siacs.conversations.crypto.axolotl.AxolotlService.SQLiteAxolotlStore",
+        "comment": "<p>If we consider <span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>public</span> <span class='pl-k'>void</span> <span class='pl-en'>setTrustedSession</span>(<span class='pl-smi'>AxolotlAddress</span> <span class='pl-v'>address</span>, <span class='pl-k'>boolean</span> <span class='pl-v'>trusted</span>)</span> renamed to <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-k'>public</span> <span class='pl-k'>void</span> <span class='pl-en'>setFingerprintTrust</span>(<span class='pl-smi'>String</span> <span class='pl-v'>name</span>, <span class='pl-smi'>String</span> <span class='pl-v'>fingerprint</span>, <span class='pl-smi'>Trust</span> <span class='pl-v'>trust</span>)</span></p>",
+        "validation": "CTP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter trusted : boolean to trust : Trust in method public setFingerprintTrust(name String, fingerprint String, trust Trust) : void in class eu.siacs.conversations.crypto.axolotl.AxolotlService.SQLiteAxolotlStore",
+        "comment": "<p>If we consider <span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>public</span> <span class='pl-k'>void</span> <span class='pl-en'>setTrustedSession</span>(<span class='pl-smi'>AxolotlAddress</span> <span class='pl-v'>address</span>, <span class='pl-k'>boolean</span> <span class='pl-v'>trusted</span>)</span> renamed to <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-k'>public</span> <span class='pl-k'>void</span> <span class='pl-en'>setFingerprintTrust</span>(<span class='pl-smi'>String</span> <span class='pl-v'>name</span>, <span class='pl-smi'>String</span> <span class='pl-v'>fingerprint</span>, <span class='pl-smi'>Trust</span> <span class='pl-v'>trust</span>)</span></p>",
+        "validation": "CTP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute isTrusted : boolean to fingerprint : String in class eu.siacs.conversations.crypto.axolotl.AxolotlService.XmppAxolotlSession",
+        "comment": "null",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter session : AxolotlService.XmppAxolotlSession to fingerprint : String in method public setAxolotlFingerprint(fingerprint String) : void in class eu.siacs.conversations.entities.Message",
+        "comment": "null",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter contact : AxolotlAddress to fingerprint : String in method private getIdentityKeyCursor(account Account, name String, own boolean, fingerprint String) : Cursor in class eu.siacs.conversations.persistance.DatabaseBackend",
+        "comment": "null",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 1622
 }, {
@@ -29315,6 +29525,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter inputFile : Path to dir : Path in method public preVisitDirectory(dir Path, attrs BasicFileAttributes) : FileVisitResult in class net.orfjackal.retrolambda.files.BytecodeFileVisitor",
+        "comment": "null",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable outputFile : Path to relativePath : Path in method public saveClass(bytecode byte[]) : void in class net.orfjackal.retrolambda.files.ClassSaver",
+        "comment": "null",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 384
 }, {
@@ -30076,6 +30300,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter target : char[] to structure : char[] in method private matchOverflow(structure char[]) : boolean in class org.thymeleaf.templateparser.reader.BlockAwareReader",
+        "comment": "null",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 215
 }, {
@@ -30833,17 +31064,17 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Address[] to List<Address> in method private createAddresses(ports AtomicInteger, count int) : List<Address> in class com.hazelcast.test.TestHazelcastInstanceFactory",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Address[] to List<Address> in method private createAddresses(ports AtomicInteger, addressArray String...) : List<Address> in class com.hazelcast.test.TestHazelcastInstanceFactory",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 4170
 }, {
@@ -33745,10 +33976,10 @@
         "validators": "Matin, Davood"
     }, {
         "type": "Extract Method",
-        "description": "Extract Method public addJarsToRootsAndImportClass(jarPaths List, libraryName String, currentModule Module, editor Editor, reference PsiReference, className String) : void extracted from public registerFixes(registrar QuickFixActionRegistrar, reference PsiReference) : List in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
-        "comment": "<p>I believe it is a false positive</p><p><span class='blob-code-inner'>Nikos: addJarsToRootsAndImportClass() has been extracted from <span class='pl-en'>addBundledJarToRoots</span>(), which is the previously called method, and the call has been updated to addJarsToRootsAndImportClass(), which is the newly extracted method<br /></span></p>",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "description": "Extract Method public addJarsToRootsAndImportClass(jarPaths List<String>, libraryName String, currentModule Module, editor Editor, reference PsiReference, className String) : void extracted from public registerFixes(registrar QuickFixActionRegistrar, reference PsiReference) : List<LocalQuickFix> in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
+        "comment": "<p><span class='blob-code-inner'>Nikos: addJarsToRootsAndImportClass() has been extracted from <span class='pl-en'>addBundledJarToRoots</span>(), which is the previously called method, and the call has been updated to addJarsToRootsAndImportClass(), which is the newly extracted method<br /></span></p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Extract Method",
@@ -33811,10 +34042,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type void to boolean in method private processDots(result StringBuilder, dots int, start int, resolveSymlinksIfNecessary boolean) : boolean in class com.intellij.openapi.util.io.FileUtil",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 17762
 }, {
@@ -34527,45 +34758,45 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type result : Map<Integer,LineAnnotation> to result : Map<Integer,List<LineAnnotation>> in method private buildParseTagAnnotations(parseTag Tag, result Map<Integer,List<LineAnnotation>>, instructions List<BytecodeInstruction>, compilerName CompilerName) : void in class org.adoptopenjdk.jitwatch.model.bytecode.BytecodeAnnotationBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type result : Map<Integer,LineAnnotation> to result : Map<Integer,List<LineAnnotation>> in method private storeAnnotation(bci int, annotation LineAnnotation, result Map<Integer,List<LineAnnotation>>) : void in class org.adoptopenjdk.jitwatch.model.bytecode.BytecodeAnnotationBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type annotations : Map<Integer,LineAnnotation> to annotations : Map<Integer,List<LineAnnotation>> in method private createLabel(instruction BytecodeInstruction, maxOffset int, line int, annotations Map<Integer,List<LineAnnotation>>, member IMetaMember, lineIndex int) : BytecodeLabel in class org.adoptopenjdk.jitwatch.ui.triview.bytecode.ViewerBytecode",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type result : Map<Integer,LineAnnotation> to result : Map<Integer,List<LineAnnotation>> in method private checkLine(result Map<Integer,List<LineAnnotation>>, index int, annotation String, colour Color) : void in class org.adoptopenjdk.jitwatch.test.TestBytecodeAnnotationBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Map<Integer,LineAnnotation> to Map<Integer,List<LineAnnotation>> in method public buildBytecodeAnnotations(member IMetaMember, instructions List<BytecodeInstruction>) : Map<Integer,List<LineAnnotation>> in class org.adoptopenjdk.jitwatch.model.bytecode.BytecodeAnnotationBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Map<Integer,LineAnnotation> to Map<Integer,List<LineAnnotation>> in method private buildAnnotations(member IMetaMember, compiler CompilerName, logLines String[], bytecodeLines String[]) : Map<Integer,List<LineAnnotation>> in class org.adoptopenjdk.jitwatch.test.TestBytecodeAnnotationBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 686
 }, {
@@ -34799,10 +35030,10 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type dstSubfolderSpec : Destination to dstSubfolderSpec : CopyFilePhaseDestinationSpec in method public PBXCopyFilesBuildPhase(dstSubfolderSpec CopyFilePhaseDestinationSpec) in class com.facebook.buck.apple.xcode.xcodeproj.PBXCopyFilesBuildPhase",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Optional<PBXCopyFilesBuildPhase.Destination> to Optional<CopyFilePhaseDestinationSpec> in method private getDestinationSpec(targetNode TargetNode<?>) : Optional<CopyFilePhaseDestinationSpec> in class com.facebook.buck.apple.ProjectGenerator",
@@ -34813,10 +35044,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Destination to CopyFilePhaseDestinationSpec in method public getDstSubfolderSpec() : CopyFilePhaseDestinationSpec in class com.facebook.buck.apple.xcode.xcodeproj.PBXCopyFilesBuildPhase",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 4819
 }, {
@@ -35039,10 +35270,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AugmentedRestLiResponseData to RestLiResponseEnvelope in method package convertExceptionToRestLiResponseData(e Throwable) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.RestLiCallback",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AugmentedRestLiResponseData to RestLiResponseEnvelope in method public getRestLiResponseEnvelope() : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.RestLiCallback.FilterResponseContextAdapter",
@@ -35053,94 +35284,94 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AugmentedRestLiResponseData to RestLiResponseEnvelope in method public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, responseObject Object) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.RestLiResponseHandler",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AugmentedRestLiResponseData to RestLiResponseEnvelope in method public buildExceptionResponseData(request RestRequest, routingResult RoutingResult, object Object, headers Map<String,String>) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.RestLiResponseHandler",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AugmentedRestLiResponseData to RestLiResponseEnvelope in method public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, result Object, headers Map<String,String>) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.ActionResponseBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AugmentedRestLiResponseData to RestLiResponseEnvelope in method public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, result Object, headers Map<String,String>) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.BatchCreateResponseBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AugmentedRestLiResponseData to RestLiResponseEnvelope in method public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, result Object, headers Map<String,String>) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.BatchGetResponseBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AugmentedRestLiResponseData to RestLiResponseEnvelope in method public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, result Object, headers Map<String,String>) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.BatchUpdateResponseBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AugmentedRestLiResponseData to RestLiResponseEnvelope in method public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, object Object, headers Map<String,String>) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.CollectionResponseBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AugmentedRestLiResponseData to RestLiResponseEnvelope in method private buildRestLiResponseData(request RestRequest, routingResult RoutingResult, elements List<? extends RecordTemplate>, pageIncrement PageIncrement, customMetadata RecordTemplate, totalResults Integer, headers Map<String,String>) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.CollectionResponseBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AugmentedRestLiResponseData to RestLiResponseEnvelope in method public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, result Object, headers Map<String,String>) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.CreateResponseBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AugmentedRestLiResponseData to RestLiResponseEnvelope in method public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, object Object, headers Map<String,String>) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.ErrorResponseBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AugmentedRestLiResponseData to RestLiResponseEnvelope in method public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, result Object, headers Map<String,String>) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.GetResponseBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AugmentedRestLiResponseData to RestLiResponseEnvelope in method public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, result Object, headers Map<String,String>) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.RestLiResponseBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AugmentedRestLiResponseData to RestLiResponseEnvelope in method public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, result Object, headers Map<String,String>) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.UpdateResponseBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type AugmentedRestLiResponseData to RestLiResponseEnvelope in method public getRestLiResponseEnvelope() : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.filter.FilterResponseContextInternal",
@@ -36685,17 +36916,17 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Set<ChannelSpec> to Set<URI> in method package getRemoved(expected int) : Set<URI> in class org.voltdb.importer.TestChannelDistributer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Set<ChannelSpec> to Set<URI> in method package getAdded(expected int) : Set<URI> in class org.voltdb.importer.TestChannelDistributer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -37764,7 +37995,7 @@
         "description": "Rename Variable writableBytes : int to maxBytes : int in method package writeBytes(bytes int) : int in class io.netty.handler.codec.http2.DefaultHttp2RemoteFlowController.DefaultState",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 1272
@@ -37889,10 +38120,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Message to List<Message> in method private processMessage(raw RawMessage) : List<Message> in class org.graylog2.shared.buffers.processors.DecodingProcessor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 870
 }, {
@@ -38034,7 +38265,7 @@
         "validators": null
     }, {
         "type": "Rename Method",
-        "description": "Rename Method private addToIndex(labelId int, propertyKeyId int, nodeIds long[]) : void renamed to public withStringProperties(nodesWithValues Collection<Pair<Long,String>>) : void in class org.neo4j.kernel.impl.api.state.TxStateTest",
+        "description": "Rename Method private addToIndex(labelId int, propertyKeyId int, nodeIds long[]) : void renamed to public withStringProperties(nodesWithValues Collection<Pair<Long,String>>) : void in class org.neo4j.kernel.impl.api.state.TxStateTest.addNodesToIndex",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -38335,7 +38566,7 @@
         "validators": "Davood"
     }, {
         "type": "Inline Variable",
-        "description": "Inline Variable moduleName : String in method public visitFunctionCallExpression(o ErlangFunctionCallExpression) : void from class org.intellij.erlang.inspection.ErlangUnresolvedFunctionInspection.1",
+        "description": "Inline Variable moduleName : String in method public visitFunctionCallExpression(o ErlangFunctionCallExpression) : void from class org.intellij.erlang.inspection.ErlangUnresolvedFunctionInspection.buildErlangVisitor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -38981,17 +39212,17 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type dataSetProperty : DataSetPropertyInfoImpl to dataSetProperty : DataSetPropertyInfo in method private removeSetterOfDataSetProperty(dataSetProperty DataSetPropertyInfo) : void in class org.robobinding.codegen.presentationmodel.processor.PresentationModelInfoBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type dataSetProperty : DataSetPropertyInfoImpl to dataSetProperty : DataSetPropertyInfo in method private removeItemPresentationModelFactoryMethod(dataSetProperty DataSetPropertyInfo) : void in class org.robobinding.codegen.presentationmodel.processor.PresentationModelInfoBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -39100,6 +39331,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute _schemaAndNames : Collection<CodeUtil.Pair<DataSchema,String>> to _schemaAndLocations : Collection<CodeUtil.Pair<DataSchema,DataSchemaLocation>> in class com.linkedin.pegasus.generator.DataSchemaParser.ParseResult",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 1281
 }, {
@@ -39459,7 +39697,7 @@
         "validators": null
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable sa : ScriptApproval in method public evaluate() : void from class org.jenkinsci.plugins.workflow.multibranch.SCMBinderTest.3",
+        "description": "Extract Variable sa : ScriptApproval in method public evaluate() : void from class org.jenkinsci.plugins.workflow.multibranch.SCMBinderTest.exactRevision.addStep",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -39566,10 +39804,10 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type val : boolean to val : Boolean in method public stackPush(val Boolean) : void in class org.apache.hive.hplsql.Exec",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 6300
 }, {
@@ -39719,31 +39957,31 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type ConnectorMetadata to ConnectorMetadataEntry in method private lookupConnectorFor(tableHandle TableHandle) : ConnectorMetadataEntry in class com.facebook.presto.metadata.MetadataManager",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type ConnectorMetadata to ConnectorMetadataEntry in method private lookupConnectorFor(tableHandle OutputTableHandle) : ConnectorMetadataEntry in class com.facebook.presto.metadata.MetadataManager",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type ConnectorMetadata to ConnectorMetadataEntry in method private lookupConnectorFor(tableHandle InsertTableHandle) : ConnectorMetadataEntry in class com.facebook.presto.metadata.MetadataManager",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type ConnectorMetadata to ConnectorMetadataEntry in method private getConnectorMetadata(connectorId String) : ConnectorMetadataEntry in class com.facebook.presto.metadata.MetadataManager",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 9866
 }, {
@@ -40674,17 +40912,17 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Object to void in method public attachDefinition(obj LineAttrNode) : void in class jadx.core.codegen.CodeWriter",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Object to void in method public attachAnnotation(obj Object) : void in class jadx.core.codegen.CodeWriter",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 975
 }, {
@@ -40905,7 +41143,7 @@
         "validators": null
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable resolver : DependencyResolver in method public run() : void from class org.neo4j.backup.BackupServiceIT.4",
+        "description": "Extract Variable resolver : DependencyResolver in method public run() : void from class org.neo4j.backup.BackupServiceIT.shouldContainTransactionsThatHappenDuringBackupProcess.execute",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -41408,16 +41646,37 @@
         "type": "Change Return Type",
         "description": "Change Return Type void to boolean in method public abstract addPartition(partition Partition<I,V,E>) : boolean in class org.apache.giraph.partition.PartitionStore",
         "comment": null,
-        "validation": "UKN",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type void to boolean in method public addPartition(partition Partition<I,V,E>) : boolean in class org.apache.giraph.partition.SimplePartitionStore",
         "comment": null,
-        "validation": "UKN",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable partitionId : Integer to partition : Partition<I,V,E> in method public call() : Collection<PartitionStats> in class org.apache.giraph.graph.ComputeCallable",
+        "comment": "<p>The iterations performed look very similar, but there is a statement creating the parition, which is deleted<br />Partition&lt;I, V, E&gt; partition = serviceWorker.getPartitionStore().getOrCreatePartition(partitionId);<br />https://github.com/apache/giraph/commit/03ade425dd5a65d3a713d5e7d85aa7605956fbd2#diff-3646f3af47fee54e69bc629bfb0b2a9cR151</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable partitionId : Integer to partition : Partition<I,V,E> in method public call() : Void in class org.apache.giraph.worker.BspServiceWorker.saveEdges.callableFactory.newCallable",
+        "comment": "<p>The iterations performed look very similar, but there is a statement creating the parition, which is deleted<br />Partition&lt;I, V, E&gt; partition = getPartitionStore().getOrCreatePartition(partitionId);<br />https://github.com/apache/giraph/commit/03ade425dd5a65d3a713d5e7d85aa7605956fbd2#diff-0450a3c6146d06f9fd3ff745d7d31f25R1253</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable partitionId : Integer to partition : Partition<I,V,E> in method public call() : Void in class org.apache.giraph.worker.BspServiceWorker.storeCheckpointVertices.callableFactory.newCallable",
+        "comment": "<p>The iterations performed look very similar, but there is a statement creating the parition, which is deleted<br />Partition&lt;I, V, E&gt; partition = getPartitionStore().getOrCreatePartition(partitionId);<br />https://github.com/apache/giraph/commit/03ade425dd5a65d3a713d5e7d85aa7605956fbd2#diff-0450a3c6146d06f9fd3ff745d7d31f25R1253</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 2713
 }, {
@@ -41681,10 +41940,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type SimpleEntryView to SimpleEntryView<Data,Data> in method public decode(clientMessage ClientMessage) : SimpleEntryView<Data,Data> in class com.hazelcast.client.impl.protocol.codec.EntryViewCodec",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 1902
 }, {
@@ -42439,10 +42698,10 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type bs : BitcoinSerializer to bs : MessageSerializer in method private serDeser(bs MessageSerializer, message Message, sourceBytes byte[], containedBytes byte[], containingBytes byte[]) : void in class org.bitcoinj.core.LazyParseByteCacheTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 3030
 }, {
@@ -43357,24 +43616,24 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type type : SpawnBalancer.RebalanceType to type : RebalanceType in method protected autobalance(type RebalanceType, weight RebalanceWeight) : void in class com.addthis.hydra.job.spawn.Spawn",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type weight : SpawnBalancer.RebalanceWeight to weight : RebalanceWeight in method protected autobalance(type RebalanceType, weight RebalanceWeight) : void in class com.addthis.hydra.job.spawn.Spawn",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type hosts : List<HostState> to hosts : Iterable<HostState> in method public JobTaskItemByHostMap(spawnBalancer SpawnBalancer, hosts Iterable<HostState>, maxPulledFromHost int, maxPushedToHost int) in class com.addthis.hydra.job.spawn.balancer.JobTaskItemByHostMap",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 1974
 }, {
@@ -44121,10 +44380,10 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type tag : Symbol to tag : Object in method package StaticInvokeExpr(target Type, retClass Class, paramclasses Class[], paramtypes Type[], variadic boolean, args IPersistentVector, tag Object) in class clojure.lang.Compiler.StaticInvokeExpr",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type isStatic : boolean to rettag : Object in method package parse(objx ObjExpr, form ISeq, rettag Object) : FnMethod in class clojure.lang.Compiler.FnMethod",
@@ -44524,10 +44783,10 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type handler : AbstractWriteResponseHandler<IMutation> to handler : BatchlogResponseHandler<IMutation> in method package WriteResponseHandlerWrapper(handler BatchlogResponseHandler<IMutation>, mutation Mutation) in class org.apache.cassandra.service.StorageProxy.WriteResponseHandlerWrapper",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 11578
 }, {
@@ -45092,6 +45351,97 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter value : byte to nameValidator : DefaultHeaders.NameValidator<CharSequence> in method protected DefaultHttpHeaders(validate boolean, nameValidator DefaultHeaders.NameValidator<CharSequence>, singleHeaderFields boolean) in class io.netty.handler.codec.http.DefaultHttpHeaders",
+        "comment": null,
+        "validation": "UKN",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter seq : AsciiString to other : Object in method public equals(other Object) : boolean in class io.netty.handler.codec.http.DefaultHttpHeaders",
+        "comment": null,
+        "validation": "UKN",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter seq : CharSequence to value : Object in method public convertObject(value Object) : CharSequence in class io.netty.handler.codec.http.DefaultHttpHeaders.HeaderValueConverterAndValidator",
+        "comment": null,
+        "validation": "UKN",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter c : char to character : char in method private validateValueChar(seq CharSequence, state int, character char) : int in class io.netty.handler.codec.http.DefaultHttpHeaders.HeaderValueConverterAndValidator",
+        "comment": null,
+        "validation": "UKN",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable c : char to character : char in method public validate(name CharSequence) : void in class io.netty.handler.codec.http.DefaultHttpHeaders.HeaderNameValidator",
+        "comment": null,
+        "validation": "UKN",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter entry : Entry<CharSequence,CharSequence> to value : CharSequence in method public encoderHeader(name CharSequence, value CharSequence, buf ByteBuf) : void in class io.netty.handler.codec.http.HttpHeadersEncoder",
+        "comment": null,
+        "validation": "UKN",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter name : ByteString to two : ByteString in method public compare(one ByteString, two ByteString) : int in class io.netty.handler.codec.http2.DefaultHttp2Headers.Http2HeaderNameComparator",
+        "comment": null,
+        "validation": "UKN",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter headers : Http2Headers to str : String in method private bs(str String) : ByteString in class io.netty.handler.codec.http2.DefaultHttp2HeadersTest",
+        "comment": null,
+        "validation": "UKN",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter nameConverter : NameConverter<ByteString> to nameValidator : NameValidator<ByteString> in method public DefaultBinaryHeaders(map Map<ByteString,Object>, nameValidator NameValidator<ByteString>) in class io.netty.handler.codec.DefaultBinaryHeaders",
+        "comment": null,
+        "validation": "UKN",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter keyComparator : Comparator<? super UnconvertedType> to map : Map<UnconvertedType,Object> in method public DefaultConvertibleHeaders(map Map<UnconvertedType,Object>, nameValidator NameValidator<UnconvertedType>, valueConverter ValueConverter<UnconvertedType>, typeConverter TypeConverter<UnconvertedType,ConvertedType>) in class io.netty.handler.codec.DefaultConvertibleHeaders",
+        "comment": "<p>Merge Parameter [keyComparator : Comparator&lt;? super UnconvertedType&gt;, valueComparator : Comparator&lt;? super UnconvertedType&gt;] to map : Map&lt;UnconvertedType,Object&gt;</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter nameConverter : NameConverter<UnconvertedType> to nameValidator : NameValidator<UnconvertedType> in method public DefaultConvertibleHeaders(map Map<UnconvertedType,Object>, nameValidator NameValidator<UnconvertedType>, valueConverter ValueConverter<UnconvertedType>, typeConverter TypeConverter<UnconvertedType,ConvertedType>) in class io.netty.handler.codec.DefaultConvertibleHeaders",
+        "comment": null,
+        "validation": "UKN",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter nameConverter : NameConverter<CharSequence> to map : Map<CharSequence,Object> in method public DefaultTextHeaders(map Map<CharSequence,Object>, nameValidator NameValidator<CharSequence>, valueConverter ValueConverter<CharSequence>, singleHeaderFields boolean) in class io.netty.handler.codec.DefaultTextHeaders",
+        "comment": null,
+        "validation": "UKN",
+        "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter nameConverter : NameConverter<CharSequence> to nameValidator : NameValidator<CharSequence> in method public DefaultTextHeaders(map Map<CharSequence,Object>, nameValidator NameValidator<CharSequence>, valueConverter ValueConverter<CharSequence>, singleHeaderFields boolean) in class io.netty.handler.codec.DefaultTextHeaders",
+        "comment": null,
+        "validation": "UKN",
+        "detectionTools": "GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 2532
@@ -46342,31 +46692,31 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type type : ParameterType to type : QueryCriteriaType in method private QueryCriteria(listId String, type QueryCriteriaType) in class org.jbpm.query.jpa.data.QueryCriteria",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type type : ParameterType to type : QueryCriteriaType in method public QueryCriteria(listId String, union boolean, type QueryCriteriaType, valueListSize int) in class org.jbpm.query.jpa.data.QueryCriteria",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type union : Boolean to union : boolean in method public setUnion(union boolean) : void in class org.jbpm.query.jpa.data.QueryCriteria",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type type : ParameterType to type : QueryCriteriaType in method public setType(type QueryCriteriaType) : void in class org.jbpm.query.jpa.data.QueryCriteria",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type data : QueryData to queryWhere : QueryWhere in method public TaskQueryWhereCommand(queryWhere QueryWhere) in class org.jbpm.services.task.commands.TaskQueryWhereCommand",
@@ -46384,10 +46734,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<DeadlineSummaryImpl> to List<DeadlineSummary> in method private getAlldeadlines(persistenceContext TaskPersistenceContext, taskData TaskData) : List<DeadlineSummary> in class org.jbpm.services.task.commands.ExecuteReminderCommand",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type TaskQueryBuilder to String in method private getOrderByListId(field OrderBy) : String in class org.jbpm.services.task.impl.TaskQueryBuilderImpl",
@@ -46405,24 +46755,24 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Boolean to boolean in method public isUnion() : boolean in class org.jbpm.query.jpa.data.QueryCriteria",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type ParameterType to QueryCriteriaType in method public getType() : QueryCriteriaType in class org.jbpm.query.jpa.data.QueryCriteria",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type ErrorInfoLogDeleteBuilder to ErrorInfoDeleteBuilder in method public errorInfoLogDeleteBuilder() : ErrorInfoDeleteBuilder in class org.jbpm.executor.impl.jpa.ExecutorJPAAuditService",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type QueryData to QueryWhere in method public getQueryWhere() : QueryWhere in class org.jbpm.services.task.commands.TaskQueryWhereCommand",
@@ -46479,10 +46829,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type HBaseImport to void in method package setConnections(rdbms RawStore, hbase RawStore) : void in class org.apache.hadoop.hive.metastore.hbase.HBaseImport",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 6377
 }, {
@@ -46806,6 +47156,48 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter operations : String[] to responseCompressionConfig : CompressionConfig in method public testResponseCompressionRules(responseCompressionConfig CompressionConfig, responseCompressionOverride CompressionOption, expectedAcceptEncoding String, expectedCompressionThreshold String) : void in class com.linkedin.r2.filter.compression.TestClientCompressionFilter",
+        "comment": "<p>testResponseCompressionRules() is a new method</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter compressionConfig : String to expectedCompressionThreshold : String in method public testResponseCompressionRules(responseCompressionConfig CompressionConfig, responseCompressionOverride CompressionOption, expectedAcceptEncoding String, expectedCompressionThreshold String) : void in class com.linkedin.r2.filter.compression.TestClientCompressionFilter",
+        "comment": "<p>testResponseCompressionRules() is a new method</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter requestContentEncodingName : String to requestContentEncoding : EncodingType in method package getRequestCompressionConfig(httpServiceName String, requestContentEncoding EncodingType) : CompressionConfig in class com.linkedin.r2.transport.http.client.HttpClientFactory",
+        "comment": "<p>Method is renamed. Initial name is getCompressionConfig</p>",
+        "validation": "TP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable requestContentEncodingName : String to useResponseCompressionProperty : String in method private getClient(properties Map<String,? extends Object>, sslContext SSLContext, sslParameters SSLParameters) : TransportClient in class com.linkedin.r2.transport.http.client.HttpClientFactory",
+        "comment": "<p>requestContentEncodingName is renamed to requestContentEncoding</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter requestCompressionOverride : CompressionOption to requestOptions : RestliRequestOptions in method private sendRequestImpl(requestContext RequestContext, uri URI, method ResourceMethod, dataMap DataMap, headers Map<String,String>, methodName String, protocolVersion ProtocolVersion, requestOptions RestliRequestOptions, callback Callback<RestResponse>) : void in class com.linkedin.restli.client.RestClient",
+        "comment": "<p>Merge Parameter [contentType : ContentType, acceptTypes : List&lt;AcceptType&gt;, requestCompressionOverride : CompressionOption] to requestOptions : RestliRequestOptions</p>",
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter encoding : EncodingType[] to getMessage : HttpGet in method public addCompressionHeaders(getMessage HttpGet, acceptEncoding String) : void in class com.linkedin.restli.examples.TestCompressionServer",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3301
 }, {
@@ -49375,10 +49767,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type ModuleComponentArtifactMetaData to ModuleDescriptorArtifactMetaData in method private getMetaDataArtifactFor(moduleComponentIdentifier ModuleComponentIdentifier) : ModuleDescriptorArtifactMetaData in class org.gradle.api.internal.artifacts.repositories.resolver.ExternalResourceResolver",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 3736
 }, {
@@ -49855,10 +50247,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<OgrFormat> to List<Format> in method public getFormats() : List<Format> in class org.geoserver.wfs.response.Ogr2OgrOutputFormat",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type String to Map<String,String> in method public getEnvironment() : Map<String,String> in class org.geoserver.wfs.response.Ogr2OgrOutputFormat",
@@ -50677,10 +51069,10 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Class to Class<?> in method public getAuthorizerInterface() : Class<?> in class org.apache.hadoop.hive.ql.session.SessionState",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Ameya"
     }],
     "refDiffExecutionTime": 5541
 }]

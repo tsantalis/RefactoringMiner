@@ -1540,9 +1540,9 @@ public class UMLModelDiff {
    }
 
    private boolean extractAndMoveMatchCondition(UMLOperationBodyMapper operationBodyMapper, UMLOperationBodyMapper parentMapper) {
-	   List<AbstractCodeMapping> mappingList = operationBodyMapper.getMappings();
+	   List<AbstractCodeMapping> mappingList = new ArrayList<AbstractCodeMapping>(operationBodyMapper.getMappings());
 	   if(operationBodyMapper.getOperation2().isGetter() && mappingList.size() == 1) {
-		   List<AbstractCodeMapping> parentMappingList = parentMapper.getMappings();
+		   List<AbstractCodeMapping> parentMappingList = new ArrayList<AbstractCodeMapping>(parentMapper.getMappings());
 		   for(AbstractCodeMapping mapping : parentMappingList) {
 			   if(mapping.getFragment1().equals(mappingList.get(0).getFragment1())) {
 				   return false;
@@ -1798,7 +1798,7 @@ public class UMLModelDiff {
 				UMLOperation operation1 = extraMapper.getOperation1();
 				UMLOperation operation2 = extraMapper.getOperation2();
 				if(operation1.equalSignature(operation2)) {
-					List<AbstractCodeMapping> mappings = extraMapper.getMappings();
+					List<AbstractCodeMapping> mappings = new ArrayList<AbstractCodeMapping>(extraMapper.getMappings());
 					if(mappings.size() == 1) {
 						Set<Replacement> replacements = mappings.get(0).getReplacements();
 						if(replacements.size() == 1) {

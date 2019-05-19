@@ -127,6 +127,12 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return new ArrayList<VariableDeclaration>();
 	}
 
+	public VariableDeclaration getVariableDeclaration(String variableName) {
+		if(operationBody != null)
+			return operationBody.getVariableDeclaration(variableName);
+		return null;
+	}
+
 	public Map<String, UMLType> variableTypeMap() {
 		Map<String, UMLType> variableTypeMap = new LinkedHashMap<String, UMLType>();
 		for(UMLParameter parameter : parameters) {

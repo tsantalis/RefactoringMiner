@@ -38,7 +38,6 @@ import java.util.regex.Pattern;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
-import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper> {
@@ -1459,6 +1458,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
 											this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
 											matchedOperations++;
+											this.refactorings.addAll(mapper.getRefactorings());
 										}
 									}
 								}
@@ -2238,6 +2238,62 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								replacementInfo.getReplacements().add(split);
 								return true;
 							}
+						}
+					}
+				}
+				List<VariableDeclaration> matchingVariableDeclarations = new ArrayList<VariableDeclaration>();
+				for(VariableDeclaration declaration : operation2.getAllVariableDeclarations()) {
+					if(diff2.contains(declaration.getVariableName())) {
+						matchingVariableDeclarations.add(declaration);
+					}
+				}
+				if(matchingVariableDeclarations.size() > 0) {
+					Replacement matchingReplacement = null;
+					for(Replacement replacement : replacementInfo.getReplacements()) {
+						if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
+							if(operation1.getVariableDeclaration(replacement.getBefore()) != null &&
+									operation2.getVariableDeclaration(replacement.getAfter()) != null) {
+								matchingReplacement = replacement;
+								break;
+							}
+						}
+					}
+					if(matchingReplacement != null) {
+						Set<String> splitVariables = new LinkedHashSet<String>();
+						splitVariables.add(matchingReplacement.getAfter());
+						StringBuilder concat = new StringBuilder();
+						int counter = 0;
+						for(VariableDeclaration declaration : matchingVariableDeclarations) {
+							splitVariables.add(declaration.getVariableName());
+							concat.append(declaration.getVariableName());
+							if(counter < matchingVariableDeclarations.size()-1) {
+								concat.append(",");
+							}
+							counter++;
+						}
+						SplitVariableReplacement split = new SplitVariableReplacement(matchingReplacement.getBefore(), splitVariables);
+						if(!split.getSplitVariables().contains(split.getBefore()) && concat.toString().equals(diff2)) {
+							replacementInfo.getReplacements().remove(matchingReplacement);
+							replacementInfo.getReplacements().add(split);
+							return true;
+						}
+					}
+					if(operation1.getVariableDeclaration(diff1) != null) {
+						Set<String> splitVariables = new LinkedHashSet<String>();
+						StringBuilder concat = new StringBuilder();
+						int counter = 0;
+						for(VariableDeclaration declaration : matchingVariableDeclarations) {
+							splitVariables.add(declaration.getVariableName());
+							concat.append(declaration.getVariableName());
+							if(counter < matchingVariableDeclarations.size()-1) {
+								concat.append(",");
+							}
+							counter++;
+						}
+						SplitVariableReplacement split = new SplitVariableReplacement(diff1, splitVariables);
+						if(!split.getSplitVariables().contains(split.getBefore()) && concat.toString().equals(diff2)) {
+							replacementInfo.getReplacements().add(split);
+							return true;
 						}
 					}
 				}

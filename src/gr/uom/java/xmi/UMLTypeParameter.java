@@ -11,7 +11,15 @@ public class UMLTypeParameter {
 		this.name = name;
 		this.typeBounds = new ArrayList<UMLType>();
 	}
-	
+
+	public String getName() {
+		return name;
+	}
+
+	public List<UMLType> getTypeBounds() {
+		return typeBounds;
+	}
+
 	public void addTypeBound(UMLType type) {
 		typeBounds.add(type);
 	}

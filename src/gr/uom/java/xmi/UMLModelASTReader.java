@@ -299,6 +299,17 @@ public class UMLModelASTReader {
 			}
 		}
 		
+		List<TypeParameter> typeParameters = methodDeclaration.typeParameters();
+		for(TypeParameter typeParameter : typeParameters) {
+			UMLTypeParameter umlTypeParameter = new UMLTypeParameter(typeParameter.getName().getFullyQualifiedName());
+			List<Type> typeBounds = typeParameter.typeBounds();
+			for(Type type : typeBounds) {
+				umlTypeParameter.addTypeBound(UMLType.extractTypeObject(type.toString(),
+						generateLocationInfo(cu, sourceFile, type, CodeElementType.TYPE)));
+			}
+			umlOperation.addTypeParameter(umlTypeParameter);
+		}
+		
 		Block block = methodDeclaration.getBody();
 		if(block != null) {
 			OperationBody body = new OperationBody(cu, sourceFile, block);

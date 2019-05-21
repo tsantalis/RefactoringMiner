@@ -28351,6 +28351,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Split Parameter",
+        "description": "Split Parameter persister : EntityPersister to [entityName : String, naturalIdPropertyIndexes : int[], propertyTypes : Type[]] in method public OldNaturalIdCacheKey(naturalIdValues Object[], propertyTypes Type[], naturalIdPropertyIndexes int[], entityName String, session SessionImplementor) in class org.hibernate.cache.internal.OldNaturalIdCacheKey",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4137
 }, {
@@ -28856,6 +28863,13 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type QueryResponse to Query in method private buildLuceneQuery(cache AdvancedCache<?,?>, isCompatMode boolean, serCtx SerializationContext, jpqlString String, startOffset long, maxResults int) : Query in class org.infinispan.query.remote.QueryFacadeImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [totalResults : long, list : List<?>] to q : Query in method private makeResponse(isCompatMode boolean, serCtx SerializationContext, q Query) : QueryResponse in class org.infinispan.query.remote.QueryFacadeImpl",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -45074,10 +45088,10 @@
         "validators": "Matin, Laleh, Davood"
     }, {
         "type": "Rename Method",
-        "description": "Rename Method public visit(entry Entry) : boolean renamed to public encoderHeader(name CharSequence, value CharSequence, buf ByteBuf) : void in class io.netty.handler.codec.http.HttpHeadersEncoder",
+        "description": "Rename Method public visit(entry Entry<CharSequence,CharSequence>) : boolean renamed to public encoderHeader(name CharSequence, value CharSequence, buf ByteBuf) : void in class io.netty.handler.codec.http.HttpHeadersEncoder",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Rename Method",
@@ -45356,65 +45370,65 @@
         "type": "Rename Parameter",
         "description": "Rename Parameter value : byte to nameValidator : DefaultHeaders.NameValidator<CharSequence> in method protected DefaultHttpHeaders(validate boolean, nameValidator DefaultHeaders.NameValidator<CharSequence>, singleHeaderFields boolean) in class io.netty.handler.codec.http.DefaultHttpHeaders",
         "comment": null,
-        "validation": "UKN",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter seq : AsciiString to other : Object in method public equals(other Object) : boolean in class io.netty.handler.codec.http.DefaultHttpHeaders",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>equals() is a new method</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter seq : CharSequence to value : Object in method public convertObject(value Object) : CharSequence in class io.netty.handler.codec.http.DefaultHttpHeaders.HeaderValueConverterAndValidator",
         "comment": null,
-        "validation": "UKN",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter c : char to character : char in method private validateValueChar(seq CharSequence, state int, character char) : int in class io.netty.handler.codec.http.DefaultHttpHeaders.HeaderValueConverterAndValidator",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>private</span> <span class='pl-k'>static</span> <span class='pl-k'>int</span> <span class='pl-en'>validateValueChar</span>(<span class='pl-k'>int</span> <span class='pl-v'>state</span>, <span class='pl-k'>char</span> <span class='pl-v'>c</span>, <span class='pl-smi'>CharSequence</span> <span class='pl-v'>seq</span>)</span> is moved from DefaultHttpHeaders.<span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-en'>HttpHeadersValidationConverter</span> </span> to <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-k'>private</span> <span class='pl-k'>static</span> <span class='pl-k'>int</span> <span class='pl-en'>validateValueChar</span>(<span class='pl-smi'>CharSequence</span> <span class='pl-v'>seq</span>, <span class='pl-k'>int</span> <span class='pl-v'>state</span>, <span class='pl-k'>char</span> <span class='pl-v'>character</span>) in DefaultHttpHeaders.HeaderValueConverterAndValidator<br /></span></p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable c : char to character : char in method public validate(name CharSequence) : void in class io.netty.handler.codec.http.DefaultHttpHeaders.HeaderNameValidator",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Seems that <span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>private</span> <span class='pl-k'>static</span> <span class='pl-k'>void</span> <span class='pl-en'>validateName</span>(<span class='pl-smi'>CharSequence</span> <span class='pl-v'>name</span>) and <span class='pl-k'>private</span> <span class='pl-k'>static</span> <span class='pl-k'>void</span> <span class='pl-en'>validateNameChar</span>(<span class='pl-k'>int</span> <span class='pl-v'>character</span>, <span class='pl-smi'>CharSequence</span> <span class='pl-v'>seq</span>)<br /></span>are merged and moved from DefaultHttpHeaders.<span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-en'>HttpHeadersNameConverter</span> </span> to <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-k'>public</span> <span class='pl-k'>void</span> <span class='pl-en'>validate</span>(<span class='pl-smi'>CharSequence</span> <span class='pl-v'>name</span>)</span> in DefaultHttpHeaders.HeaderNameValidator</p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter entry : Entry<CharSequence,CharSequence> to value : CharSequence in method public encoderHeader(name CharSequence, value CharSequence, buf ByteBuf) : void in class io.netty.handler.codec.http.HttpHeadersEncoder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>Entry&lt;<span class='pl-smi'>CharSequence</span>, <span class='pl-smi'>CharSequence</span>&gt;</span> <span class='pl-v'>entry</span></span> is split to parameters <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-smi'>CharSequence</span> <span class='pl-v'>name</span>, <span class='pl-smi'>CharSequence</span> <span class='pl-v'>value</span></span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter name : ByteString to two : ByteString in method public compare(one ByteString, two ByteString) : int in class io.netty.handler.codec.http2.DefaultHttp2Headers.Http2HeaderNameComparator",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Http2HeaderNameComparator is a new inner class</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter headers : Http2Headers to str : String in method private bs(str String) : ByteString in class io.netty.handler.codec.http2.DefaultHttp2HeadersTest",
         "comment": null,
-        "validation": "UKN",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter nameConverter : NameConverter<ByteString> to nameValidator : NameValidator<ByteString> in method public DefaultBinaryHeaders(map Map<ByteString,Object>, nameValidator NameValidator<ByteString>) in class io.netty.handler.codec.DefaultBinaryHeaders",
         "comment": null,
-        "validation": "UKN",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter keyComparator : Comparator<? super UnconvertedType> to map : Map<UnconvertedType,Object> in method public DefaultConvertibleHeaders(map Map<UnconvertedType,Object>, nameValidator NameValidator<UnconvertedType>, valueConverter ValueConverter<UnconvertedType>, typeConverter TypeConverter<UnconvertedType,ConvertedType>) in class io.netty.handler.codec.DefaultConvertibleHeaders",
@@ -45426,22 +45440,36 @@
         "type": "Rename Parameter",
         "description": "Rename Parameter nameConverter : NameConverter<UnconvertedType> to nameValidator : NameValidator<UnconvertedType> in method public DefaultConvertibleHeaders(map Map<UnconvertedType,Object>, nameValidator NameValidator<UnconvertedType>, valueConverter ValueConverter<UnconvertedType>, typeConverter TypeConverter<UnconvertedType,ConvertedType>) in class io.netty.handler.codec.DefaultConvertibleHeaders",
         "comment": null,
-        "validation": "UKN",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter nameConverter : NameConverter<CharSequence> to map : Map<CharSequence,Object> in method public DefaultTextHeaders(map Map<CharSequence,Object>, nameValidator NameValidator<CharSequence>, valueConverter ValueConverter<CharSequence>, singleHeaderFields boolean) in class io.netty.handler.codec.DefaultTextHeaders",
         "comment": null,
-        "validation": "UKN",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter nameConverter : NameConverter<CharSequence> to nameValidator : NameValidator<CharSequence> in method public DefaultTextHeaders(map Map<CharSequence,Object>, nameValidator NameValidator<CharSequence>, valueConverter ValueConverter<CharSequence>, singleHeaderFields boolean) in class io.netty.handler.codec.DefaultTextHeaders",
         "comment": null,
-        "validation": "UKN",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type boolean to void in method public encoderHeader(name CharSequence, value CharSequence, buf ByteBuf) : void in class io.netty.handler.codec.http.HttpHeadersEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Split Parameter",
+        "description": "Split Parameter entry : Entry<CharSequence,CharSequence> to [name : CharSequence, value : CharSequence] in method public encoderHeader(name CharSequence, value CharSequence, buf ByteBuf) : void in class io.netty.handler.codec.http.HttpHeadersEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 2532
@@ -50950,9 +50978,9 @@
         "type": "Rename Parameter",
         "description": "Rename Parameter moduleFile : ErlangFile to erlangFile : ErlangFile in method public fun(erlangFile ErlangFile) : String in class org.intellij.erlang.compilation.ErlangPrepareDependenciesCompileTask.ErlangFilesDependencyGraph.getDeclaredIncludePaths.ContainerUtil",
         "comment": null,
-        "validation": "UKN",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable outputFile : File in method private lastOutputModificationTime(module Module, sourceFile VirtualFile) : long from class org.intellij.erlang.compilation.ErlangModuleCompilationTest",

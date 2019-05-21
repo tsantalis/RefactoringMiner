@@ -235,4 +235,14 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	public boolean throwsNewException() {
 		return getString().startsWith("throw new ");
 	}
+
+	public boolean countableStatement() {
+		String statement = getString();
+		//covers the cases of methods with only one statement in their body
+		if(this instanceof AbstractStatement && ((AbstractStatement)this).getParent().statementCount() == 1 && ((AbstractStatement)this).getParent().getParent() == null) {
+			return true;
+		}
+		return !statement.equals("{") && !statement.startsWith("catch(") && !statement.startsWith("case ") && !statement.startsWith("default :") &&
+				!statement.startsWith("return true;") && !statement.startsWith("return false;") && !statement.startsWith("return this;") && !statement.startsWith("return null;") && !statement.startsWith("return;");
+	}
 }

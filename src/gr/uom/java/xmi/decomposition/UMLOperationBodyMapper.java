@@ -492,7 +492,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public int mappingsWithoutBlocks() {
 		int count = 0;
 		for(AbstractCodeMapping mapping : getMappings()) {
-			if(countableStatement(mapping.getFragment1()))
+			if(mapping.getFragment1().countableStatement())
 				count++;
 		}
 		return count;
@@ -501,12 +501,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public int nonMappedElementsT1() {
 		int nonMappedInnerNodeCount = 0;
 		for(CompositeStatementObject composite : getNonMappedInnerNodesT1()) {
-			if(countableStatement(composite))
+			if(composite.countableStatement())
 				nonMappedInnerNodeCount++;
 		}
 		int nonMappedLeafCount = 0;
 		for(StatementObject statement : getNonMappedLeavesT1()) {
-			if(countableStatement(statement))
+			if(statement.countableStatement())
 				nonMappedLeafCount++;
 		}
 		return nonMappedLeafCount + nonMappedInnerNodeCount;
@@ -515,7 +515,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public int nonMappedLeafElementsT1() {
 		int nonMappedLeafCount = 0;
 		for(StatementObject statement : getNonMappedLeavesT1()) {
-			if(countableStatement(statement))
+			if(statement.countableStatement())
 				nonMappedLeafCount++;
 		}
 		return nonMappedLeafCount;
@@ -524,12 +524,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public int nonMappedElementsT2() {
 		int nonMappedInnerNodeCount = 0;
 		for(CompositeStatementObject composite : getNonMappedInnerNodesT2()) {
-			if(countableStatement(composite))
+			if(composite.countableStatement())
 				nonMappedInnerNodeCount++;
 		}
 		int nonMappedLeafCount = 0;
 		for(StatementObject statement : getNonMappedLeavesT2()) {
-			if(countableStatement(statement) && !isTemporaryVariableAssignment(statement))
+			if(statement.countableStatement() && !isTemporaryVariableAssignment(statement))
 				nonMappedLeafCount++;
 		}
 		return nonMappedLeafCount + nonMappedInnerNodeCount;
@@ -538,7 +538,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public int nonMappedLeafElementsT2() {
 		int nonMappedLeafCount = 0;
 		for(StatementObject statement : getNonMappedLeavesT2()) {
-			if(countableStatement(statement) && !isTemporaryVariableAssignment(statement))
+			if(statement.countableStatement() && !isTemporaryVariableAssignment(statement))
 				nonMappedLeafCount++;
 		}
 		return nonMappedLeafCount;
@@ -571,7 +571,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public int nonMappedElementsT2CallingAddedOperation(List<UMLOperation> addedOperations) {
 		int nonMappedInnerNodeCount = 0;
 		for(CompositeStatementObject composite : getNonMappedInnerNodesT2()) {
-			if(countableStatement(composite)) {
+			if(composite.countableStatement()) {
 				Map<String, OperationInvocation> methodInvocationMap = composite.getMethodInvocationMap();
 				for(OperationInvocation invocation : methodInvocationMap.values()) {
 					for(UMLOperation operation : addedOperations) {
@@ -585,7 +585,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		int nonMappedLeafCount = 0;
 		for(StatementObject statement : getNonMappedLeavesT2()) {
-			if(countableStatement(statement)) {
+			if(statement.countableStatement()) {
 				Map<String, OperationInvocation> methodInvocationMap = statement.getMethodInvocationMap();
 				for(OperationInvocation invocation : methodInvocationMap.values()) {
 					for(UMLOperation operation : addedOperations) {
@@ -603,7 +603,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public int nonMappedElementsT1CallingRemovedOperation(List<UMLOperation> removedOperations) {
 		int nonMappedInnerNodeCount = 0;
 		for(CompositeStatementObject composite : getNonMappedInnerNodesT1()) {
-			if(countableStatement(composite)) {
+			if(composite.countableStatement()) {
 				Map<String, OperationInvocation> methodInvocationMap = composite.getMethodInvocationMap();
 				for(OperationInvocation invocation : methodInvocationMap.values()) {
 					for(UMLOperation operation : removedOperations) {
@@ -617,7 +617,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		int nonMappedLeafCount = 0;
 		for(StatementObject statement : getNonMappedLeavesT1()) {
-			if(countableStatement(statement)) {
+			if(statement.countableStatement()) {
 				Map<String, OperationInvocation> methodInvocationMap = statement.getMethodInvocationMap();
 				for(OperationInvocation invocation : methodInvocationMap.values()) {
 					for(UMLOperation operation : removedOperations) {
@@ -661,7 +661,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public int exactMatches() {
 		int count = 0;
 		for(AbstractCodeMapping mapping : getMappings()) {
-			if(mapping.isExact() && countableStatement(mapping.getFragment1()) &&
+			if(mapping.isExact() && mapping.getFragment1().countableStatement() &&
 					!mapping.getFragment1().getString().equals("try"))
 				count++;
 		}
@@ -671,21 +671,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public List<AbstractCodeMapping> getExactMatches() {
 		List<AbstractCodeMapping> exactMatches = new ArrayList<AbstractCodeMapping>();
 		for(AbstractCodeMapping mapping : getMappings()) {
-			if(mapping.isExact() && countableStatement(mapping.getFragment1()) &&
+			if(mapping.isExact() && mapping.getFragment1().countableStatement() &&
 					!mapping.getFragment1().getString().equals("try"))
 				exactMatches.add(mapping);
 		}
 		return exactMatches;
-	}
-
-	private boolean countableStatement(AbstractCodeFragment fragment) {
-		String statement = fragment.getString();
-		//covers the cases of methods with only one statement in their body
-		if(fragment instanceof AbstractStatement && ((AbstractStatement)fragment).getParent().statementCount() == 1 && ((AbstractStatement)fragment).getParent().getParent() == null) {
-			return true;
-		}
-		return !statement.equals("{") && !statement.startsWith("catch(") && !statement.startsWith("case ") && !statement.startsWith("default :") &&
-				!statement.startsWith("return true;") && !statement.startsWith("return false;") && !statement.startsWith("return this;") && !statement.startsWith("return null;") && !statement.startsWith("return;");
 	}
 
 	private int editDistance() {

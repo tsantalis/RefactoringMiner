@@ -25,6 +25,7 @@ import gr.uom.java.xmi.decomposition.replacement.SplitVariableReplacement;
 import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.CandidateMergeVariableRefactoring;
 import gr.uom.java.xmi.diff.CandidateSplitVariableRefactoring;
+import gr.uom.java.xmi.diff.ChangeVariableTypeRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.MergeVariableRefactoring;
@@ -80,6 +81,10 @@ public class VariableReplacementAnalysis {
 								RenameVariableRefactoring ref = new RenameVariableRefactoring(v1.getKey(), v2.getKey(), v1.getValue(), v2.getValue(), new ArrayList<AbstractCodeMapping>());
 								if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref) && !existsConflictingSplitVariableRefactoring(ref)) {
 									variableRenames.add(ref);
+									if(!v1.getKey().getType().equals(v2.getKey().getType())) {
+										ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(v1.getKey(), v2.getKey(), v1.getValue(), v2.getValue());
+										refactorings.add(refactoring);
+									}
 								}
 							}
 						}
@@ -343,6 +348,10 @@ public class VariableReplacementAnalysis {
 				RenameVariableRefactoring ref = new RenameVariableRefactoring(vdReplacement.getVariableDeclaration1(), vdReplacement.getVariableDeclaration2(), vdReplacement.getOperation1(), vdReplacement.getOperation2(), list);
 				if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref) && !existsConflictingSplitVariableRefactoring(ref)) {
 					variableRenames.add(ref);
+					if(!vdReplacement.getVariableDeclaration1().getType().equals(vdReplacement.getVariableDeclaration2().getType())) {
+						ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(vdReplacement.getVariableDeclaration1(), vdReplacement.getVariableDeclaration2(), vdReplacement.getOperation1(), vdReplacement.getOperation2());
+						refactorings.add(refactoring);
+					}
 				}
 			}
 		}
@@ -371,6 +380,10 @@ public class VariableReplacementAnalysis {
 				RenameVariableRefactoring ref = new RenameVariableRefactoring(v1.getKey(), v2.getKey(), v1.getValue(), v2.getValue(), finalConsistentRenames.get(replacement));
 				if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref) && !existsConflictingSplitVariableRefactoring(ref)) {
 					variableRenames.add(ref);
+					if(!v1.getKey().getType().equals(v2.getKey().getType())) {
+						ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(v1.getKey(), v2.getKey(), v1.getValue(), v2.getValue());
+						refactorings.add(refactoring);
+					}
 				}
 			}
 			else if(!PrefixSuffixUtils.normalize(replacement.getBefore()).equals(PrefixSuffixUtils.normalize(replacement.getAfter())) &&

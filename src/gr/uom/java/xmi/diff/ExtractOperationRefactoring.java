@@ -173,7 +173,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 		ranges.add(getSourceOperationCodeRangeBeforeExtraction()
 				.setDescription("source method declaration before extraction")
 				.setCodeElement(sourceOperationBeforeExtraction.toString()));
-		//ranges.add(getExtractedCodeRangeFromSourceOperation().setDescription("extracted code from source method declaration"));
+		ranges.add(getExtractedCodeRangeFromSourceOperation().setDescription("extracted code from source method declaration"));
 		return ranges;
 	}
 
@@ -183,7 +183,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 		ranges.add(getExtractedOperationCodeRange()
 				.setDescription("extracted method declaration")
 				.setCodeElement(extractedOperation.toString()));
-		//ranges.add(getExtractedCodeRangeToExtractedOperation().setDescription("extracted code to extracted method declaration"));
+		ranges.add(getExtractedCodeRangeToExtractedOperation().setDescription("extracted code to extracted method declaration"));
 		ranges.add(getSourceOperationCodeRangeAfterExtraction()
 				.setDescription("source method declaration after extraction")
 				.setCodeElement(sourceOperationAfterExtraction.toString()));

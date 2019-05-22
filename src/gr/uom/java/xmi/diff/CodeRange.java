@@ -69,7 +69,38 @@ public class CodeRange {
 	}
 
 	public String toString() {
-		return startLine + "-" + endLine;
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		encodeStringProperty(sb, "filePath", filePath, false);
+		encodeIntProperty(sb, "startLine", startLine, false);
+		encodeIntProperty(sb, "endLine", endLine, false);
+		encodeIntProperty(sb, "startColumn", startColumn, false);
+		encodeIntProperty(sb, "endColumn", endColumn, false);
+		encodeStringProperty(sb, "codeElementType", codeElementType.name(), false);
+		encodeStringProperty(sb, "description", description, false);
+		encodeStringProperty(sb, "codeElement", codeElement, true);
+		sb.append("}");
+		return sb.toString();
+	}
+
+	private void encodeStringProperty(StringBuilder sb, String propertyName, String value, boolean last) {
+		if(value != null)
+			sb.append("\t").append("\"" + propertyName + "\"" + ": " + "\"" + value + "\"");
+		else
+			sb.append("\t").append("\"" + propertyName + "\"" + ": " + value);
+		insertNewLine(sb, last);
+	}
+
+	private void encodeIntProperty(StringBuilder sb, String propertyName, int value, boolean last) {
+		sb.append("\t").append("\"" + propertyName + "\"" + ": " + value);
+		insertNewLine(sb, last);
+	}
+
+	private void insertNewLine(StringBuilder sb, boolean last) {
+		if(last)
+			sb.append("\n");
+		else
+			sb.append(",").append("\n");
 	}
 
 	public static CodeRange computeRange(Set<AbstractCodeFragment> codeFragments) {

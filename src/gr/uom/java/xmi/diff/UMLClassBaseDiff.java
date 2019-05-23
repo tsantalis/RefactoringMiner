@@ -156,6 +156,10 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
     		}
 			else if(!attribute.equals(attributeWithTheSameName) && !attributeDiffListContainsAttribute(attribute, attributeWithTheSameName)) {
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attribute, attributeWithTheSameName);
+				if(attributeDiff.isTypeChanged()) {
+					ChangeAttributeTypeRefactoring ref = new ChangeAttributeTypeRefactoring(attribute.getVariableDeclaration(), attributeWithTheSameName.getVariableDeclaration(), originalClass.getName(), nextClass.getName());
+					refactorings.add(ref);
+				}
 				this.attributeDiffList.add(attributeDiff);
 			}
     	}
@@ -166,6 +170,10 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
     		}
 			else if(!attribute.equals(attributeWithTheSameName) && !attributeDiffListContainsAttribute(attributeWithTheSameName, attribute)) {
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attributeWithTheSameName, attribute);
+				if(attributeDiff.isTypeChanged()) {
+					ChangeAttributeTypeRefactoring ref = new ChangeAttributeTypeRefactoring(attributeWithTheSameName.getVariableDeclaration(), attribute.getVariableDeclaration(), originalClass.getName(), nextClass.getName());
+					refactorings.add(ref);
+				}
 				this.attributeDiffList.add(attributeDiff);
 			}
     	}

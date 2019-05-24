@@ -16,15 +16,15 @@ public class MergeVariableRefactoring implements Refactoring {
 	private VariableDeclaration newVariable;
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
-	private List<AbstractCodeMapping> mappings;
+	private Set<AbstractCodeMapping> variableReferences;
 	
 	public MergeVariableRefactoring(Set<VariableDeclaration> mergedVariables, VariableDeclaration newVariable,
-			UMLOperation operationBefore, UMLOperation operationAfter, List<AbstractCodeMapping> mappings) {
+			UMLOperation operationBefore, UMLOperation operationAfter, Set<AbstractCodeMapping> variableReferences) {
 		this.mergedVariables = mergedVariables;
 		this.newVariable = newVariable;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
-		this.mappings = mappings;
+		this.variableReferences = variableReferences;
 	}
 
 	public Set<VariableDeclaration> getMergedVariables() {
@@ -43,8 +43,8 @@ public class MergeVariableRefactoring implements Refactoring {
 		return operationAfter;
 	}
 
-	public List<AbstractCodeMapping> getMappings() {
-		return mappings;
+	public Set<AbstractCodeMapping> getVariableReferences() {
+		return variableReferences;
 	}
 
 	private boolean allVariablesAreParameters() {

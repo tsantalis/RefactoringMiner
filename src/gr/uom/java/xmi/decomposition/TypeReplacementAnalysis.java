@@ -31,7 +31,8 @@ public class TypeReplacementAnalysis {
 						for(VariableDeclaration declaration2 : declarations2) {
 							if(declaration1.getVariableName().equals(declaration2.getVariableName()) &&
 									!declaration1.getType().equals(declaration2.getType())) {
-								ChangeVariableTypeRefactoring ref = new ChangeVariableTypeRefactoring(declaration1, declaration2, mapping.getOperation1(), mapping.getOperation2());
+								ChangeVariableTypeRefactoring ref = new ChangeVariableTypeRefactoring(declaration1, declaration2, mapping.getOperation1(), mapping.getOperation2(),
+										findReferences(declaration1, declaration2));
 								changedTypes.add(ref);
 								break;
 							}
@@ -40,5 +41,21 @@ public class TypeReplacementAnalysis {
 				}
 			}
 		}
+	}
+	
+	private Set<AbstractCodeMapping> findReferences(VariableDeclaration declaration1, VariableDeclaration declaration2) {
+		Set<AbstractCodeMapping> references = new LinkedHashSet<AbstractCodeMapping>();
+		VariableScope scope1 = declaration1.getScope();
+		VariableScope scope2 = declaration2.getScope();
+		for(AbstractCodeMapping mapping : mappings) {
+			AbstractCodeFragment fragment1 = mapping.getFragment1();
+			AbstractCodeFragment fragment2 = mapping.getFragment2();
+			if(scope1.subsumes(fragment1.getLocationInfo()) && scope2.subsumes(fragment2.getLocationInfo()) &&
+					fragment1.getVariables().contains(declaration1.getVariableName()) &&
+					fragment2.getVariables().contains(declaration2.getVariableName())) {
+				references.add(mapping);
+			}
+		}
+		return references;
 	}
 }

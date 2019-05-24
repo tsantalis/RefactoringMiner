@@ -16,15 +16,15 @@ public class SplitVariableRefactoring implements Refactoring {
 	private VariableDeclaration oldVariable;
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
-	private List<AbstractCodeMapping> mappings;
+	private Set<AbstractCodeMapping> variableReferences;
 	
 	public SplitVariableRefactoring(VariableDeclaration oldVariable, Set<VariableDeclaration> splitVariables,
-			UMLOperation operationBefore, UMLOperation operationAfter, List<AbstractCodeMapping> mappings) {
+			UMLOperation operationBefore, UMLOperation operationAfter, Set<AbstractCodeMapping> variableReferences) {
 		this.splitVariables = splitVariables;
 		this.oldVariable = oldVariable;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
-		this.mappings = mappings;
+		this.variableReferences = variableReferences;
 	}
 
 	public Set<VariableDeclaration> getSplitVariables() {
@@ -43,8 +43,8 @@ public class SplitVariableRefactoring implements Refactoring {
 		return operationAfter;
 	}
 
-	public List<AbstractCodeMapping> getMappings() {
-		return mappings;
+	public Set<AbstractCodeMapping> getVariableReferences() {
+		return variableReferences;
 	}
 
 	private boolean allVariablesAreParameters() {

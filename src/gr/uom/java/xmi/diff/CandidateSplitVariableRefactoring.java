@@ -1,6 +1,5 @@
 package gr.uom.java.xmi.diff;
 
-import java.util.List;
 import java.util.Set;
 
 import gr.uom.java.xmi.UMLAttribute;
@@ -12,17 +11,17 @@ public class CandidateSplitVariableRefactoring {
 	private Set<String> splitVariables;
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
-	private List<AbstractCodeMapping> mappings;
+	private Set<AbstractCodeMapping> variableReferences;
 	private UMLAttribute oldAttribute;
 	private Set<UMLAttribute> splitAttributes;
 
 	public CandidateSplitVariableRefactoring(String oldVariable, Set<String> splitVariables,
-			UMLOperation operationBefore, UMLOperation operationAfter, List<AbstractCodeMapping> mappings) {
+			UMLOperation operationBefore, UMLOperation operationAfter, Set<AbstractCodeMapping> variableReferences) {
 		this.oldVariable = oldVariable;
 		this.splitVariables = splitVariables;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
-		this.mappings = mappings;
+		this.variableReferences = variableReferences;
 	}
 
 	public String getOldVariable() {
@@ -41,8 +40,8 @@ public class CandidateSplitVariableRefactoring {
 		return operationAfter;
 	}
 
-	public List<AbstractCodeMapping> getMappings() {
-		return mappings;
+	public Set<AbstractCodeMapping> getVariableReferences() {
+		return variableReferences;
 	}
 
 	public Set<UMLAttribute> getSplitAttributes() {

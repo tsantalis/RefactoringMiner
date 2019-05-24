@@ -1,6 +1,5 @@
 package gr.uom.java.xmi.diff;
 
-import java.util.List;
 import java.util.Set;
 
 import gr.uom.java.xmi.UMLAttribute;
@@ -12,17 +11,17 @@ public class CandidateMergeVariableRefactoring {
 	private String newVariable;
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
-	private List<AbstractCodeMapping> mappings;
+	private Set<AbstractCodeMapping> variableReferences;
 	private Set<UMLAttribute> mergedAttributes;
 	private UMLAttribute newAttribute;
 
 	public CandidateMergeVariableRefactoring(Set<String> mergedVariables, String newVariable,
-			UMLOperation operationBefore, UMLOperation operationAfter, List<AbstractCodeMapping> mappings) {
+			UMLOperation operationBefore, UMLOperation operationAfter, Set<AbstractCodeMapping> variableReferences) {
 		this.mergedVariables = mergedVariables;
 		this.newVariable = newVariable;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
-		this.mappings = mappings;
+		this.variableReferences = variableReferences;
 	}
 
 	public Set<String> getMergedVariables() {
@@ -41,8 +40,8 @@ public class CandidateMergeVariableRefactoring {
 		return operationAfter;
 	}
 
-	public List<AbstractCodeMapping> getMappings() {
-		return mappings;
+	public Set<AbstractCodeMapping> getVariableReferences() {
+		return variableReferences;
 	}
 
 	public Set<UMLAttribute> getMergedAttributes() {

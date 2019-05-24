@@ -2,8 +2,10 @@ package gr.uom.java.xmi.diff;
 
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.decomposition.VariableScope;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class UMLOperationDiff {
 	private boolean abstractionChanged;
 	private boolean returnTypeChanged;
 	private boolean operationRenamed;
+	private Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
 	
 	public UMLOperationDiff(UMLOperation removedOperation, UMLOperation addedOperation) {
 		this.removedOperation = removedOperation;
@@ -94,6 +97,10 @@ public class UMLOperationDiff {
 				}
 			}
 		}
+	}
+	public UMLOperationDiff(UMLOperation removedOperation, UMLOperation addedOperation, Set<AbstractCodeMapping> mappings) {
+		this(removedOperation, addedOperation);
+		this.mappings = mappings;
 	}
 
 	private boolean existsAnotherAddedParameterWithTheSameType(UMLParameter parameter) {
@@ -211,15 +218,32 @@ public class UMLOperationDiff {
 		for(UMLParameterDiff parameterDiff : getParameterDiffList()) {
 			VariableDeclaration originalVariable = parameterDiff.getRemovedParameter().getVariableDeclaration();
 			VariableDeclaration newVariable = parameterDiff.getAddedParameter().getVariableDeclaration();
+			Set<AbstractCodeMapping> references = findReferences(originalVariable, newVariable);
 			if(parameterDiff.isNameChanged()) {
-				RenameVariableRefactoring refactoring = new RenameVariableRefactoring(originalVariable, newVariable, removedOperation, addedOperation, new ArrayList<AbstractCodeMapping>());
+				RenameVariableRefactoring refactoring = new RenameVariableRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references);
 				refactorings.add(refactoring);
 			}
 			if(parameterDiff.isTypeChanged()) {
-				ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(originalVariable, newVariable, removedOperation, addedOperation);
+				ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references);
 				refactorings.add(refactoring);
 			}
 		}
 		return refactorings;
+	}
+	
+	private Set<AbstractCodeMapping> findReferences(VariableDeclaration declaration1, VariableDeclaration declaration2) {
+		Set<AbstractCodeMapping> references = new LinkedHashSet<AbstractCodeMapping>();
+		VariableScope scope1 = declaration1.getScope();
+		VariableScope scope2 = declaration2.getScope();
+		for(AbstractCodeMapping mapping : mappings) {
+			AbstractCodeFragment fragment1 = mapping.getFragment1();
+			AbstractCodeFragment fragment2 = mapping.getFragment2();
+			if(scope1.subsumes(fragment1.getLocationInfo()) && scope2.subsumes(fragment2.getLocationInfo()) &&
+					fragment1.getVariables().contains(declaration1.getVariableName()) &&
+					fragment2.getVariables().contains(declaration2.getVariableName())) {
+				references.add(mapping);
+			}
+		}
+		return references;
 	}
 }

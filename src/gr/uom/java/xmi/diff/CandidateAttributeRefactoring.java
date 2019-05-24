@@ -1,6 +1,6 @@
 package gr.uom.java.xmi.diff;
 
-import java.util.List;
+import java.util.Set;
 
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
@@ -12,7 +12,7 @@ public class CandidateAttributeRefactoring {
 	private String renamedVariableName;
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
-	private List<AbstractCodeMapping> mappings;
+	private Set<AbstractCodeMapping> attributeReferences;
 	private VariableDeclaration originalVariableDeclaration;
 	private VariableDeclaration renamedVariableDeclaration;
 	private UMLAttribute originalAttribute;
@@ -23,12 +23,12 @@ public class CandidateAttributeRefactoring {
 			String renamedVariableName,
 			UMLOperation operationBefore,
 			UMLOperation operationAfter,
-			List<AbstractCodeMapping> mappings) {
+			Set<AbstractCodeMapping> attributeReferences) {
 		this.originalVariableName = originalVariableName;
 		this.renamedVariableName = renamedVariableName;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
-		this.mappings = mappings;
+		this.attributeReferences = attributeReferences;
 	}
 
 	public String getOriginalVariableName() {
@@ -47,12 +47,12 @@ public class CandidateAttributeRefactoring {
 		return operationAfter;
 	}
 
-	public List<AbstractCodeMapping> getMappings() {
-		return mappings;
+	public Set<AbstractCodeMapping> getAttributeReferences() {
+		return attributeReferences;
 	}
 
 	public int getOccurrences() {
-		return mappings.size();
+		return attributeReferences.size();
 	}
 
 	public VariableDeclaration getOriginalVariableDeclaration() {

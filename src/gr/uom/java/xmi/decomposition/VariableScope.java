@@ -2,6 +2,8 @@ package gr.uom.java.xmi.decomposition;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
+import gr.uom.java.xmi.LocationInfo;
+
 public class VariableScope {
 	private String filePath;
 	private int startOffset;
@@ -86,7 +88,9 @@ public class VariableScope {
 		return sb.toString();
 	}
 
-	public boolean equalParent(VariableScope other) {
-		return this.endLine == other.endLine && this.endColumn == other.endColumn;
+	public boolean subsumes(LocationInfo other) {
+		return this.filePath.equals(other.getFilePath()) &&
+				this.startOffset <= other.getStartOffset() &&
+				this.endOffset >= other.getEndOffset();
 	}
 }

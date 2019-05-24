@@ -963,10 +963,10 @@ public class UMLModelDiff {
 			   else if(parentType.equals(RefactoringType.EXTRACT_SUBCLASS)) {
 				   ref = new PushDownOperationRefactoring(removedOperation, addedOperation);
 			   }
-			   UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation);
-			   refactorings.addAll(operationSignatureDiff.getRefactorings());
 			   this.refactorings.add(ref);
 			   UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
+			   UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation, mapper.getMappings());
+			   refactorings.addAll(operationSignatureDiff.getRefactorings());
 			   checkForExtractedOperationsWithinMovedMethod(mapper, addedClass);
 		   }
 	   }
@@ -1711,7 +1711,7 @@ public class UMLModelDiff {
 	               if(refactoring != null) {
 	                  deleteRemovedOperation(removedOperation);
 	                  deleteAddedOperation(addedOperation);
-	                  UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation);
+	                  UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation, firstMapper.getMappings());
 	                  refactorings.addAll(operationSignatureDiff.getRefactorings());
 	                  refactorings.add(refactoring);
 	                  UMLClass addedClass = getAddedClass(addedOperation.getClassName());
@@ -1785,7 +1785,7 @@ public class UMLModelDiff {
 	               if(refactoring != null) {
 	                  deleteRemovedOperation(removedOperation);
 	                  deleteAddedOperation(addedOperation);
-	                  UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation);
+	                  UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation, firstMapper.getMappings());
 	                  refactorings.addAll(operationSignatureDiff.getRefactorings());
 	                  refactorings.add(refactoring);
 	               }

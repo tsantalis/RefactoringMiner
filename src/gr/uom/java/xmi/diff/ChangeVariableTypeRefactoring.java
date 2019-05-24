@@ -2,11 +2,13 @@ package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class ChangeVariableTypeRefactoring implements Refactoring {
@@ -14,13 +16,15 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 	private VariableDeclaration changedTypeVariable;
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
+	private Set<AbstractCodeMapping> variableReferences;
 
 	public ChangeVariableTypeRefactoring(VariableDeclaration originalVariable, VariableDeclaration changedTypeVariable,
-			UMLOperation operationBefore, UMLOperation operationAfter) {
+			UMLOperation operationBefore, UMLOperation operationAfter, Set<AbstractCodeMapping> variableReferences) {
 		this.originalVariable = originalVariable;
 		this.changedTypeVariable = changedTypeVariable;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+		this.variableReferences = variableReferences;
 	}
 
 	public RefactoringType getRefactoringType() {
@@ -47,6 +51,10 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 
 	public UMLOperation getOperationAfter() {
 		return operationAfter;
+	}
+
+	public Set<AbstractCodeMapping> getVariableReferences() {
+		return variableReferences;
 	}
 
 	public String toString() {

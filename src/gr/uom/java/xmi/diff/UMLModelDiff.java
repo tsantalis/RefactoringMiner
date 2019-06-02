@@ -1151,27 +1151,27 @@ public class UMLModelDiff {
       refactorings.addAll(getMoveClassRefactorings());
       refactorings.addAll(getRenameClassRefactorings());
       refactorings.addAll(identifyConvertAnonymousClassToTypeRefactorings());
-      Map<Replacement, Set<CandidateAttributeRefactoring>> map = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();
+      Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();
       Map<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>> mergeMap = new LinkedHashMap<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>>();
       for(UMLClassDiff classDiff : commonClassDiffList) {
          refactorings.addAll(classDiff.getRefactorings());
          extractMergePatterns(classDiff, mergeMap);
-		 extractRenamePatterns(classDiff, map);
+		 extractRenamePatterns(classDiff, renameMap);
       }
       for(UMLClassMoveDiff classDiff : classMoveDiffList) {
          refactorings.addAll(classDiff.getRefactorings());
          extractMergePatterns(classDiff, mergeMap);
-		 extractRenamePatterns(classDiff, map);
+		 extractRenamePatterns(classDiff, renameMap);
       }
       for(UMLClassMoveDiff classDiff : innerClassMoveDiffList) {
          refactorings.addAll(classDiff.getRefactorings());
          extractMergePatterns(classDiff, mergeMap);
-		 extractRenamePatterns(classDiff, map);
+		 extractRenamePatterns(classDiff, renameMap);
       }
       for(UMLClassRenameDiff classDiff : classRenameDiffList) {
          refactorings.addAll(classDiff.getRefactorings());
          extractMergePatterns(classDiff, mergeMap);
-		 extractRenamePatterns(classDiff, map);
+		 extractRenamePatterns(classDiff, renameMap);
       }
       for(MergeVariableReplacement merge : mergeMap.keySet()) {
     	  UMLClassBaseDiff diff = null;
@@ -1203,9 +1203,9 @@ public class UMLModelDiff {
     		  }
     	  }
       }
-	  for(Replacement pattern : map.keySet()) {
+	  for(Replacement pattern : renameMap.keySet()) {
 		 UMLClassBaseDiff diff = getUMLClassDiffWithAttribute(pattern);
-		 Set<CandidateAttributeRefactoring> set = map.get(pattern);
+		 Set<CandidateAttributeRefactoring> set = renameMap.get(pattern);
 		 for(CandidateAttributeRefactoring candidate : set) {
 			 if(candidate.getOriginalVariableDeclaration() == null && candidate.getRenamedVariableDeclaration() == null) {
 				 if(diff != null) {

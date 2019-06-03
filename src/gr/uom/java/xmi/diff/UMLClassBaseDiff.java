@@ -61,6 +61,9 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 	private Set<CandidateAttributeRefactoring> candidateAttributeRenames = new LinkedHashSet<CandidateAttributeRefactoring>();
 	private Set<CandidateMergeVariableRefactoring> candidateAttributeMerges = new LinkedHashSet<CandidateMergeVariableRefactoring>();
 	private Set<CandidateSplitVariableRefactoring> candidateAttributeSplits = new LinkedHashSet<CandidateSplitVariableRefactoring>();
+	private Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();
+	private Map<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>> mergeMap = new LinkedHashMap<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>>();
+	private Map<SplitVariableReplacement, Set<CandidateSplitVariableRefactoring>> splitMap = new LinkedHashMap<SplitVariableReplacement, Set<CandidateSplitVariableRefactoring>>();
 	private UMLModelDiff modelDiff;
 
 	public UMLClassBaseDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
@@ -463,52 +466,8 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 
 	public List<Refactoring> getRefactorings() {
 		List<Refactoring> refactorings = new ArrayList<Refactoring>(this.refactorings);
-		Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();
-		Map<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>> mergeMap = new LinkedHashMap<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>>();
-		Map<SplitVariableReplacement, Set<CandidateSplitVariableRefactoring>> splitMap = new LinkedHashMap<SplitVariableReplacement, Set<CandidateSplitVariableRefactoring>>();
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
-			for(Refactoring refactoring : mapper.getRefactorings()) {
-				if(refactorings.contains(refactoring)) {
-					//special handling for replacing rename variable refactorings having statement mapping information
-					int index = refactorings.indexOf(refactoring);
-					refactorings.remove(index);
-					refactorings.add(index, refactoring);
-				}
-				else {
-					refactorings.add(refactoring);
-				}
-			}
-			for(CandidateAttributeRefactoring candidate : mapper.getCandidateAttributeRenames()) {
-				String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
-				String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
-				Replacement renamePattern = new Replacement(before, after, ReplacementType.VARIABLE_NAME);
-				if(renameMap.containsKey(renamePattern)) {
-					renameMap.get(renamePattern).add(candidate);
-				}
-				else {
-					Set<CandidateAttributeRefactoring> set = new LinkedHashSet<CandidateAttributeRefactoring>();
-					set.add(candidate);
-					renameMap.put(renamePattern, set);
-				}
-			}
-			for(CandidateMergeVariableRefactoring candidate : mapper.getCandidateAttributeMerges()) {
-				Set<String> before = new LinkedHashSet<String>();
-				for(String mergedVariable : candidate.getMergedVariables()) {
-					before.add(PrefixSuffixUtils.normalize(mergedVariable));
-				}
-				String after = PrefixSuffixUtils.normalize(candidate.getNewVariable());
-				MergeVariableReplacement merge = new MergeVariableReplacement(before, after);
-				processMerge(mergeMap, merge, candidate);
-			}
-			for(CandidateSplitVariableRefactoring candidate : mapper.getCandidateAttributeSplits()) {
-				Set<String> after = new LinkedHashSet<String>();
-				for(String splitVariable : candidate.getSplitVariables()) {
-					after.add(PrefixSuffixUtils.normalize(splitVariable));
-				}
-				String before = PrefixSuffixUtils.normalize(candidate.getOldVariable());
-				SplitVariableReplacement split = new SplitVariableReplacement(before, after);
-				processSplit(splitMap, split, candidate);
-			}
+			processMapperRefactorings(mapper, refactorings);
 		}
 		refactorings.addAll(inferAttributeMergesAndSplits(renameMap, refactorings));
 		for(MergeVariableReplacement merge : mergeMap.keySet()) {
@@ -634,6 +593,51 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		return refactorings;
 	}
 
+	private void processMapperRefactorings(UMLOperationBodyMapper mapper, List<Refactoring> refactorings) {
+		for(Refactoring refactoring : mapper.getRefactorings()) {
+			if(refactorings.contains(refactoring)) {
+				//special handling for replacing rename variable refactorings having statement mapping information
+				int index = refactorings.indexOf(refactoring);
+				refactorings.remove(index);
+				refactorings.add(index, refactoring);
+			}
+			else {
+				refactorings.add(refactoring);
+			}
+		}
+		for(CandidateAttributeRefactoring candidate : mapper.getCandidateAttributeRenames()) {
+			String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
+			String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
+			Replacement renamePattern = new Replacement(before, after, ReplacementType.VARIABLE_NAME);
+			if(renameMap.containsKey(renamePattern)) {
+				renameMap.get(renamePattern).add(candidate);
+			}
+			else {
+				Set<CandidateAttributeRefactoring> set = new LinkedHashSet<CandidateAttributeRefactoring>();
+				set.add(candidate);
+				renameMap.put(renamePattern, set);
+			}
+		}
+		for(CandidateMergeVariableRefactoring candidate : mapper.getCandidateAttributeMerges()) {
+			Set<String> before = new LinkedHashSet<String>();
+			for(String mergedVariable : candidate.getMergedVariables()) {
+				before.add(PrefixSuffixUtils.normalize(mergedVariable));
+			}
+			String after = PrefixSuffixUtils.normalize(candidate.getNewVariable());
+			MergeVariableReplacement merge = new MergeVariableReplacement(before, after);
+			processMerge(mergeMap, merge, candidate);
+		}
+		for(CandidateSplitVariableRefactoring candidate : mapper.getCandidateAttributeSplits()) {
+			Set<String> after = new LinkedHashSet<String>();
+			for(String splitVariable : candidate.getSplitVariables()) {
+				after.add(PrefixSuffixUtils.normalize(splitVariable));
+			}
+			String before = PrefixSuffixUtils.normalize(candidate.getOldVariable());
+			SplitVariableReplacement split = new SplitVariableReplacement(before, after);
+			processSplit(splitMap, split, candidate);
+		}
+	}
+
 	private Set<Refactoring> inferAttributeMergesAndSplits(Map<Replacement, Set<CandidateAttributeRefactoring>> map, List<Refactoring> refactorings) {
 		Set<Refactoring> newRefactorings = new LinkedHashSet<Refactoring>();
 		for(Replacement replacement : map.keySet()) {
@@ -646,6 +650,12 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 					if(mapper.getMappings().containsAll(candidate.getAttributeReferences())) {
 						candidateMapper = mapper;
 						break;
+					}
+					for(UMLOperationBodyMapper nestedMapper : mapper.getAdditionalMappers()) {
+						if(nestedMapper.getMappings().containsAll(candidate.getAttributeReferences())) {
+							candidateMapper = nestedMapper;
+							break;
+						}
 					}
 				}
 				for(Refactoring refactoring : refactorings) {
@@ -887,6 +897,10 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		for(UMLOperationBodyMapper mapper : this.operationBodyMapperList) {
 			List<String> allVariables1 = mapper.getOperation1().getAllVariables();
 			List<String> allVariables2 = mapper.getOperation2().getAllVariables();
+			for(UMLOperationBodyMapper nestedMapper : mapper.getAdditionalMappers()) {
+				allVariables1.addAll(nestedMapper.getOperation1().getAllVariables());
+				allVariables2.addAll(nestedMapper.getOperation2().getAllVariables());
+			}
 			boolean variables1contains = (allVariables1.contains(pattern.getBefore()) &&
 					!mapper.getOperation1().getParameterNameList().contains(pattern.getBefore())) ||
 					allVariables1.contains("this."+pattern.getBefore());
@@ -1450,7 +1464,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 						if(inlineMatchCondition(operationBodyMapper)) {
 							InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getOperation1(), removedOperationInvocation);
 							refactorings.add(inlineOperationRefactoring);
-							refactorings.addAll(operationBodyMapper.getRefactorings());
+							processMapperRefactorings(operationBodyMapper, refactorings);
 							mapper.addAdditionalMapper(operationBodyMapper);
 							operationsToBeRemoved.add(removedOperation);
 						}
@@ -1492,7 +1506,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 				if(refactoring != null) {
 					refactorings.add(refactoring);
 					UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
-					refactorings.addAll(operationBodyMapper.getRefactorings());
+					processMapperRefactorings(operationBodyMapper, refactorings);
 					mapper.addAdditionalMapper(operationBodyMapper);
 					operationsToBeRemoved.add(addedOperation);
 				}

@@ -90,8 +90,11 @@ miner.detectAll(repo, "master", new RefactoringHandler() {
 You can also analyze between commits using `detectBetweenCommits` or between tags using `detectBetweenTags`. RefactoringMiner will start from commit or tag as specified and iterate backwards. If the end commit or end tag is not specified, RefactoringMiner will detect until the first beginning.
 
 ```java
+// first commit: 819b202bfb09d4142dece04d4039f1708735019b
+// last commit: d4bce13a443cf12da40a77c16c1e591f4f985b47
+// detectBetweenCommits() will process merge commits, while detectAll() skips merge commits
 miner.detectBetweenCommits(repo, 
-    "d4bce13a443cf12da40a77c16c1e591f4f985b47", "dde3ef036bdddae550c4e98373db4c81d77b5043",
+    "819b202bfb09d4142dece04d4039f1708735019b", "d4bce13a443cf12da40a77c16c1e591f4f985b47",
     new RefactoringHandler() {
   @Override
   public void handle(RevCommit commitData, List<Refactoring> refactorings) {
@@ -104,7 +107,10 @@ miner.detectBetweenCommits(repo,
 ```
 
 ```java
-miner.detectBetweenTags(repo, "1.1", "1.0", new RefactoringHandler() {
+// first tag: 1.0
+// last tag: 1.1
+// detectBetweenTags() will process merge commits, while detectAll() skips merge commits
+miner.detectBetweenTags(repo, "1.0", "1.1", new RefactoringHandler() {
   @Override
   public void handle(RevCommit commitData, List<Refactoring> refactorings) {
     System.out.println("Refactorings at " + commitData.getId().getName());

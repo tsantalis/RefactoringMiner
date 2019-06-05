@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.Set;
 
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
@@ -32,12 +31,16 @@ public class ExtractOperationDetection {
 	public ExtractOperationRefactoring check(UMLOperationBodyMapper mapper, UMLOperation addedOperation) throws RefactoringMinerTimedOutException {
 		if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
 			!mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
-			Set<OperationInvocation> operationInvocations = mapper.getOperation2().getAllOperationInvocations();
+			List<OperationInvocation> operationInvocations = mapper.getOperation2().getAllOperationInvocations();
 			for(StatementObject statement : mapper.getNonMappedLeavesT2()) {
-				operationInvocations.addAll(statement.getMethodInvocationMap().values());
+				Map<String, List<OperationInvocation>> statementMethodInvocationMap = statement.getMethodInvocationMap();
+				for(String key : statementMethodInvocationMap.keySet()) {
+					operationInvocations.addAll(statementMethodInvocationMap.get(key));
+				}
 			}
-			OperationInvocation addedOperationInvocation = matchingInvocation(addedOperation, operationInvocations, mapper.getOperation2().variableTypeMap());
-			if(addedOperationInvocation != null) {
+			List<OperationInvocation> addedOperationInvocations = matchingInvocations(addedOperation, operationInvocations, mapper.getOperation2().variableTypeMap());
+			if(addedOperationInvocations.size() > 0) {
+				OperationInvocation addedOperationInvocation = addedOperationInvocations.get(0);
 				CallTreeNode root = new CallTreeNode(mapper.getOperation1(), addedOperation, addedOperationInvocation);
 				CallTree callTree = new CallTree(root);
 				generateCallTree(addedOperation, root, callTree);
@@ -47,7 +50,7 @@ public class ExtractOperationDetection {
 					List<CallTreeNode> nodesInBreadthFirstOrder = callTree.getNodesInBreadthFirstOrder();
 					for(int i=1; i<nodesInBreadthFirstOrder.size(); i++) {
 						CallTreeNode node = nodesInBreadthFirstOrder.get(i);
-						if(matchingInvocation(node.getInvokedOperation(), operationInvocations, mapper.getOperation2().variableTypeMap()) == null) {
+						if(matchingInvocations(node.getInvokedOperation(), operationInvocations, mapper.getOperation2().variableTypeMap()).size() == 0) {
 							UMLOperationBodyMapper nestedMapper = createMapperForExtractedMethod(mapper, node.getOriginalOperation(), node.getInvokedOperation(), node.getInvocation());
 							if(nestedMapper != null) {
 								additionalExactMatches.addAll(nestedMapper.getExactMatches());
@@ -57,11 +60,11 @@ public class ExtractOperationDetection {
 					UMLOperation delegateMethod = findDelegateMethod(mapper.getOperation1(), addedOperation, addedOperationInvocation);
 					if(extractMatchCondition(operationBodyMapper, additionalExactMatches)) {
 						if(delegateMethod == null) {
-							return new ExtractOperationRefactoring(operationBodyMapper, mapper.getOperation2(), addedOperationInvocation);
+							return new ExtractOperationRefactoring(operationBodyMapper, mapper.getOperation2(), addedOperationInvocations);
 						}
 						else {
 							return new ExtractOperationRefactoring(operationBodyMapper, addedOperation,
-									mapper.getOperation1(), mapper.getOperation2(), addedOperationInvocation);
+									mapper.getOperation1(), mapper.getOperation2(), addedOperationInvocations);
 						}
 					}
 				}
@@ -70,20 +73,19 @@ public class ExtractOperationDetection {
 		return null;
 	}
 
-	private OperationInvocation matchingInvocation(UMLOperation addedOperation,
-			Set<OperationInvocation> operationInvocations, Map<String, UMLType> variableTypeMap) {
-		OperationInvocation addedOperationInvocation = null;
+	private List<OperationInvocation> matchingInvocations(UMLOperation operation,
+			List<OperationInvocation> operationInvocations, Map<String, UMLType> variableTypeMap) {
+		List<OperationInvocation> addedOperationInvocations = new ArrayList<OperationInvocation>();
 		for(OperationInvocation invocation : operationInvocations) {
-			if(invocation.matchesOperation(addedOperation, variableTypeMap, modelDiff)) {
-				addedOperationInvocation = invocation;
-				break;
+			if(invocation.matchesOperation(operation, variableTypeMap, modelDiff)) {
+				addedOperationInvocations.add(invocation);
 			}
 		}
-		return addedOperationInvocation;
+		return addedOperationInvocations;
 	}
 
 	private void generateCallTree(UMLOperation operation, CallTreeNode parent, CallTree callTree) {
-		Set<OperationInvocation> invocations = operation.getAllOperationInvocations();
+		List<OperationInvocation> invocations = operation.getAllOperationInvocations();
 		for(UMLOperation addedOperation : addedOperations) {
 			for(OperationInvocation invocation : invocations) {
 				if(invocation.matchesOperation(addedOperation, operation.variableTypeMap(), modelDiff)) {

@@ -19,19 +19,19 @@ public class InlineOperationRefactoring implements Refactoring {
 	private UMLOperation inlinedOperation;
 	private UMLOperation targetOperationAfterInline;
 	private UMLOperation targetOperationBeforeInline;
-	private OperationInvocation inlinedOperationInvocation;
+	private List<OperationInvocation> inlinedOperationInvocations;
 	private Set<Replacement> replacements;
 	private Set<AbstractCodeFragment> inlinedCodeFragmentsFromInlinedOperation;
 	private Set<AbstractCodeFragment> inlinedCodeFragmentsInTargetOperation;
 	private UMLOperationBodyMapper bodyMapper;
 	
 	public InlineOperationRefactoring(UMLOperationBodyMapper bodyMapper, UMLOperation targetOperationBeforeInline,
-			OperationInvocation operationInvocation) {
+			List<OperationInvocation> operationInvocations) {
 		this.bodyMapper = bodyMapper;
 		this.inlinedOperation = bodyMapper.getOperation1();
 		this.targetOperationAfterInline = bodyMapper.getOperation2();
 		this.targetOperationBeforeInline = targetOperationBeforeInline;
-		this.inlinedOperationInvocation = operationInvocation;
+		this.inlinedOperationInvocations = operationInvocations;
 		this.replacements = bodyMapper.getReplacements();
 		this.inlinedCodeFragmentsFromInlinedOperation = new LinkedHashSet<AbstractCodeFragment>();
 		this.inlinedCodeFragmentsInTargetOperation = new LinkedHashSet<AbstractCodeFragment>();
@@ -80,8 +80,8 @@ public class InlineOperationRefactoring implements Refactoring {
 		return targetOperationBeforeInline;
 	}
 
-	public OperationInvocation getInlinedOperationInvocation() {
-		return inlinedOperationInvocation;
+	public List<OperationInvocation> getInlinedOperationInvocations() {
+		return inlinedOperationInvocations;
 	}
 
 	public Set<Replacement> getReplacements() {
@@ -128,10 +128,14 @@ public class InlineOperationRefactoring implements Refactoring {
 	}
 
 	/**
-	 * @return the code range of the invocation to the inlined method inside the target method in the <b>parent</b> commit
+	 * @return the code range(s) of the invocation(s) to the inlined method inside the target method in the <b>parent</b> commit
 	 */
-	public CodeRange getInlinedOperationInvocationCodeRange() {
-		return inlinedOperationInvocation.codeRange();
+	public Set<CodeRange> getInlinedOperationInvocationCodeRanges() {
+		Set<CodeRange> codeRanges = new LinkedHashSet<CodeRange>();
+		for(OperationInvocation invocation : inlinedOperationInvocations) {
+			codeRanges.add(invocation.codeRange());
+		}
+		return codeRanges;
 	}
 
 	public List<String> getInvolvedClassesBeforeRefactoring() {
@@ -156,9 +160,11 @@ public class InlineOperationRefactoring implements Refactoring {
 		ranges.add(getTargetOperationCodeRangeBeforeInline()
 				.setDescription("target method declaration before inline")
 				.setCodeElement(targetOperationBeforeInline.toString()));
-		ranges.add(getInlinedOperationInvocationCodeRange()
-				.setDescription("inlined method invocation")
-				.setCodeElement(inlinedOperationInvocation.actualString()));
+		for(OperationInvocation invocation : inlinedOperationInvocations) {
+			ranges.add(invocation.codeRange()
+					.setDescription("inlined method invocation")
+					.setCodeElement(invocation.actualString()));
+		}
 		return ranges;
 	}
 

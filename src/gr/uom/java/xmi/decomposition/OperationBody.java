@@ -1,7 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -60,8 +59,13 @@ public class OperationBody {
 		return new ArrayList<AnonymousClassDeclarationObject>(compositeStatement.getAllAnonymousClassDeclarations());
 	}
 
-	public Set<OperationInvocation> getAllOperationInvocations() {
-		return new LinkedHashSet<OperationInvocation>(compositeStatement.getAllMethodInvocations().values());
+	public List<OperationInvocation> getAllOperationInvocations() {
+		List<OperationInvocation> invocations = new ArrayList<OperationInvocation>();
+		Map<String, List<OperationInvocation>> invocationMap = compositeStatement.getAllMethodInvocations();
+		for(String key : invocationMap.keySet()) {
+			invocations.addAll(invocationMap.get(key));
+		}
+		return invocations;
 	}
 
 	public List<String> getAllVariables() {

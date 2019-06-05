@@ -18,13 +18,13 @@ public class AbstractExpression extends AbstractCodeFragment {
 	private List<String> variables;
 	private List<String> types;
 	private List<VariableDeclaration> variableDeclarations;
-	private Map<String, OperationInvocation> methodInvocationMap;
+	private Map<String, List<OperationInvocation>> methodInvocationMap;
 	private List<AnonymousClassDeclarationObject> anonymousClassDeclarations;
 	private List<String> stringLiterals;
 	private List<String> numberLiterals;
 	private List<String> booleanLiterals;
 	private List<String> typeLiterals;
-	private Map<String, ObjectCreation> creationMap;
+	private Map<String, List<ObjectCreation>> creationMap;
 	private List<String> infixOperators;
 	private List<String> arguments;
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions;
@@ -88,7 +88,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 	}
 
 	@Override
-	public Map<String, OperationInvocation> getMethodInvocationMap() {
+	public Map<String, List<OperationInvocation>> getMethodInvocationMap() {
 		return methodInvocationMap;
 	}
 
@@ -118,7 +118,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 	}
 
 	@Override
-	public Map<String, ObjectCreation> getCreationMap() {
+	public Map<String, List<ObjectCreation>> getCreationMap() {
 		return creationMap;
 	}
 

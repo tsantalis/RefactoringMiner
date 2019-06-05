@@ -19,14 +19,14 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	private String astNodeString;
 	private List<String> variables = new ArrayList<String>();
 	private List<String> types = new ArrayList<String>();
-	private Map<String, OperationInvocation> methodInvocationMap = new LinkedHashMap<String, OperationInvocation>();
+	private Map<String, List<OperationInvocation>> methodInvocationMap = new LinkedHashMap<String, List<OperationInvocation>>();
 	private List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
 	private List<AnonymousClassDeclarationObject> anonymousClassDeclarations = new ArrayList<AnonymousClassDeclarationObject>();
 	private List<String> stringLiterals = new ArrayList<String>();
 	private List<String> numberLiterals = new ArrayList<String>();
 	private List<String> booleanLiterals = new ArrayList<String>();
 	private List<String> typeLiterals = new ArrayList<String>();
-	private Map<String, ObjectCreation> creationMap = new LinkedHashMap<String, ObjectCreation>();
+	private Map<String, List<ObjectCreation>> creationMap = new LinkedHashMap<String, List<ObjectCreation>>();
 	private List<String> infixOperators = new ArrayList<String>();
 	private List<String> arguments = new ArrayList<String>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
@@ -54,7 +54,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 		return astNodeString;
 	}
 
-	public Map<String, OperationInvocation> getMethodInvocationMap() {
+	public Map<String, List<OperationInvocation>> getMethodInvocationMap() {
 		return this.methodInvocationMap;
 	}
 
@@ -86,7 +86,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 		return typeLiterals;
 	}
 
-	public Map<String, ObjectCreation> getCreationMap() {
+	public Map<String, List<ObjectCreation>> getCreationMap() {
 		return creationMap;
 	}
 

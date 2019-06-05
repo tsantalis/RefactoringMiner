@@ -37,13 +37,13 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	public abstract List<String> getVariables();
 	public abstract List<String> getTypes();
 	public abstract List<VariableDeclaration> getVariableDeclarations();
-	public abstract Map<String, OperationInvocation> getMethodInvocationMap();
+	public abstract Map<String, List<OperationInvocation>> getMethodInvocationMap();
 	public abstract List<AnonymousClassDeclarationObject> getAnonymousClassDeclarations();
 	public abstract List<String> getStringLiterals();
 	public abstract List<String> getNumberLiterals();
 	public abstract List<String> getBooleanLiterals();
 	public abstract List<String> getTypeLiterals();
-	public abstract Map<String, ObjectCreation> getCreationMap();
+	public abstract Map<String, List<ObjectCreation>> getCreationMap();
 	public abstract List<String> getInfixOperators();
 	public abstract List<String> getArguments();
 	public abstract List<TernaryOperatorExpression> getTernaryOperatorExpressions();
@@ -152,50 +152,54 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	}
 
 	public ObjectCreation creationCoveringEntireFragment() {
-		Map<String, ObjectCreation> creationMap = getCreationMap();
+		Map<String, List<ObjectCreation>> creationMap = getCreationMap();
 		String statement = getString();
 		for(String objectCreation : creationMap.keySet()) {
-			ObjectCreation creation = creationMap.get(objectCreation);
-			if((objectCreation + ";\n").equals(statement) || objectCreation.equals(statement)) {
-				creation.coverage = StatementCoverageType.ONLY_CALL;
-				return creation;
-			}
-			else if(("return " + objectCreation + ";\n").equals(statement)) {
-				creation.coverage = StatementCoverageType.RETURN_CALL;
-				return creation;
-			}
-			else if(("throw " + objectCreation + ";\n").equals(statement)) {
-				creation.coverage = StatementCoverageType.THROW_CALL;
-				return creation;
-			}
-			else if(expressionIsTheInitializerOfVariableDeclaration(objectCreation)) {
-				creation.coverage = StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL;
-				return creation;
+			List<ObjectCreation> creations = creationMap.get(objectCreation);
+			for(ObjectCreation creation : creations) {
+				if((objectCreation + ";\n").equals(statement) || objectCreation.equals(statement)) {
+					creation.coverage = StatementCoverageType.ONLY_CALL;
+					return creation;
+				}
+				else if(("return " + objectCreation + ";\n").equals(statement)) {
+					creation.coverage = StatementCoverageType.RETURN_CALL;
+					return creation;
+				}
+				else if(("throw " + objectCreation + ";\n").equals(statement)) {
+					creation.coverage = StatementCoverageType.THROW_CALL;
+					return creation;
+				}
+				else if(expressionIsTheInitializerOfVariableDeclaration(objectCreation)) {
+					creation.coverage = StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL;
+					return creation;
+				}
 			}
 		}
 		return null;
 	}
 
 	public OperationInvocation invocationCoveringEntireFragment() {
-		Map<String, OperationInvocation> methodInvocationMap = getMethodInvocationMap();
+		Map<String, List<OperationInvocation>> methodInvocationMap = getMethodInvocationMap();
 		String statement = getString();
 		for(String methodInvocation : methodInvocationMap.keySet()) {
-			OperationInvocation invocation = methodInvocationMap.get(methodInvocation);
-			if((methodInvocation + ";\n").equals(statement) || methodInvocation.equals(statement)) {
-				invocation.coverage = StatementCoverageType.ONLY_CALL;
-				return invocation;
-			}
-			else if(("return " + methodInvocation + ";\n").equals(statement)) {
-				invocation.coverage = StatementCoverageType.RETURN_CALL;
-				return invocation;
-			}
-			else if(isCastExpressionCoveringEntireFragment(methodInvocation)) {
-				invocation.coverage = StatementCoverageType.CAST_CALL;
-				return invocation;
-			}
-			else if(expressionIsTheInitializerOfVariableDeclaration(methodInvocation)) {
-				invocation.coverage = StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL;
-				return invocation;
+			List<OperationInvocation> invocations = methodInvocationMap.get(methodInvocation);
+			for(OperationInvocation invocation : invocations) {
+				if((methodInvocation + ";\n").equals(statement) || methodInvocation.equals(statement)) {
+					invocation.coverage = StatementCoverageType.ONLY_CALL;
+					return invocation;
+				}
+				else if(("return " + methodInvocation + ";\n").equals(statement)) {
+					invocation.coverage = StatementCoverageType.RETURN_CALL;
+					return invocation;
+				}
+				else if(isCastExpressionCoveringEntireFragment(methodInvocation)) {
+					invocation.coverage = StatementCoverageType.CAST_CALL;
+					return invocation;
+				}
+				else if(expressionIsTheInitializerOfVariableDeclaration(methodInvocation)) {
+					invocation.coverage = StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL;
+					return invocation;
+				}
 			}
 		}
 		return null;

@@ -40,7 +40,7 @@ public class VariableReplacementAnalysis {
 	private List<StatementObject> nonMappedLeavesT2;
 	private UMLOperation operation1;
 	private UMLOperation operation2;
-	private List<UMLOperationBodyMapper> additionalMappers;
+	private List<UMLOperationBodyMapper> childMappers;
 	private Set<Refactoring> refactorings;
 	private UMLOperation callSiteOperation;
 	private UMLOperationDiff operationDiff;
@@ -57,7 +57,7 @@ public class VariableReplacementAnalysis {
 		this.nonMappedLeavesT2 = mapper.getNonMappedLeavesT2();
 		this.operation1 = mapper.getOperation1();
 		this.operation2 = mapper.getOperation2();
-		this.additionalMappers = mapper.getAdditionalMappers();
+		this.childMappers = mapper.getChildMappers();
 		this.refactorings = refactorings;
 		this.callSiteOperation = mapper.getCallSiteOperation();
 		this.operationDiff = operationDiff;
@@ -786,7 +786,7 @@ public class VariableReplacementAnalysis {
 
 	private boolean variableAppearsInExtractedMethod(VariableDeclaration v1, VariableDeclaration v2) {
 		if(v1 != null) {
-			for(UMLOperationBodyMapper mapper : additionalMappers) {
+			for(UMLOperationBodyMapper mapper : childMappers) {
 				for(AbstractCodeMapping mapping : mapper.getMappings()) {
 					if(mapping.getFragment1().getVariableDeclarations().contains(v1)) {
 						if(v2 != null && v2.getInitializer() != null) {

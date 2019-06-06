@@ -606,16 +606,18 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 			}
 		}
 		for(CandidateAttributeRefactoring candidate : mapper.getCandidateAttributeRenames()) {
-			String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
-			String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
-			Replacement renamePattern = new Replacement(before, after, ReplacementType.VARIABLE_NAME);
-			if(renameMap.containsKey(renamePattern)) {
-				renameMap.get(renamePattern).add(candidate);
-			}
-			else {
-				Set<CandidateAttributeRefactoring> set = new LinkedHashSet<CandidateAttributeRefactoring>();
-				set.add(candidate);
-				renameMap.put(renamePattern, set);
+			if(!multipleExtractedMethodInvocationsWithDifferentAttributesAsArguments(candidate, refactorings)) {
+				String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
+				String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
+				Replacement renamePattern = new Replacement(before, after, ReplacementType.VARIABLE_NAME);
+				if(renameMap.containsKey(renamePattern)) {
+					renameMap.get(renamePattern).add(candidate);
+				}
+				else {
+					Set<CandidateAttributeRefactoring> set = new LinkedHashSet<CandidateAttributeRefactoring>();
+					set.add(candidate);
+					renameMap.put(renamePattern, set);
+				}
 			}
 		}
 		for(CandidateMergeVariableRefactoring candidate : mapper.getCandidateAttributeMerges()) {
@@ -638,6 +640,38 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		}
 	}
 
+	private boolean multipleExtractedMethodInvocationsWithDifferentAttributesAsArguments(CandidateAttributeRefactoring candidate, List<Refactoring> refactorings) {
+		for(Refactoring refactoring : refactorings) {
+			if(refactoring instanceof ExtractOperationRefactoring) {
+				ExtractOperationRefactoring extractRefactoring = (ExtractOperationRefactoring)refactoring;
+				if(extractRefactoring.getExtractedOperation().equals(candidate.getOperationAfter())) {
+					List<OperationInvocation> extractedInvocations = extractRefactoring.getExtractedOperationInvocations();
+					if(extractedInvocations.size() > 1) {
+						Set<VariableDeclaration> attributesMatchedWithArguments = new LinkedHashSet<VariableDeclaration>();
+						Set<String> attributeNamesMatchedWithArguments = new LinkedHashSet<String>();
+						for(OperationInvocation extractedInvocation : extractedInvocations) {
+							for(String argument : extractedInvocation.getArguments()) {
+								for(UMLAttribute attribute : originalClass.getAttributes()) {
+									if(attribute.getName().equals(argument)) {
+										attributesMatchedWithArguments.add(attribute.getVariableDeclaration());
+										attributeNamesMatchedWithArguments.add(attribute.getName());
+										break;
+									}
+								}
+							}
+						}
+						if((attributeNamesMatchedWithArguments.contains(candidate.getOriginalVariableName()) ||
+								attributeNamesMatchedWithArguments.contains(candidate.getRenamedVariableName())) &&
+								attributesMatchedWithArguments.size() > 1) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	private Set<Refactoring> inferAttributeMergesAndSplits(Map<Replacement, Set<CandidateAttributeRefactoring>> map, List<Refactoring> refactorings) {
 		Set<Refactoring> newRefactorings = new LinkedHashSet<Refactoring>();
 		for(Replacement replacement : map.keySet()) {
@@ -651,7 +685,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 						candidateMapper = mapper;
 						break;
 					}
-					for(UMLOperationBodyMapper nestedMapper : mapper.getAdditionalMappers()) {
+					for(UMLOperationBodyMapper nestedMapper : mapper.getChildMappers()) {
 						if(nestedMapper.getMappings().containsAll(candidate.getAttributeReferences())) {
 							candidateMapper = nestedMapper;
 							break;
@@ -897,7 +931,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		for(UMLOperationBodyMapper mapper : this.operationBodyMapperList) {
 			List<String> allVariables1 = mapper.getOperation1().getAllVariables();
 			List<String> allVariables2 = mapper.getOperation2().getAllVariables();
-			for(UMLOperationBodyMapper nestedMapper : mapper.getAdditionalMappers()) {
+			for(UMLOperationBodyMapper nestedMapper : mapper.getChildMappers()) {
 				allVariables1.addAll(nestedMapper.getOperation1().getAllVariables());
 				allVariables2.addAll(nestedMapper.getOperation2().getAllVariables());
 			}
@@ -1456,7 +1490,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 							InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getOperation1(), removedOperationInvocations);
 							refactorings.add(inlineOperationRefactoring);
 							processMapperRefactorings(operationBodyMapper, refactorings);
-							mapper.addAdditionalMapper(operationBodyMapper);
+							mapper.addChildMapper(operationBodyMapper);
 							operationsToBeRemoved.add(removedOperation);
 						}
 					}
@@ -1517,7 +1551,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 					refactorings.add(refactoring);
 					UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
 					processMapperRefactorings(operationBodyMapper, refactorings);
-					mapper.addAdditionalMapper(operationBodyMapper);
+					mapper.addChildMapper(operationBodyMapper);
 					operationsToBeRemoved.add(addedOperation);
 				}
 			}

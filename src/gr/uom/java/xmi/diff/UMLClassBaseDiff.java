@@ -1439,20 +1439,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
 				if(!mapper.getNonMappedLeavesT2().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty() ||
 					!mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
-					List<OperationInvocation> operationInvocations = mapper.getOperation1().getAllOperationInvocations();
-					for(StatementObject statement : mapper.getNonMappedLeavesT1()) {
-						Map<String, List<OperationInvocation>> statementMethodInvocationMap = statement.getMethodInvocationMap();
-						for(String key : statementMethodInvocationMap.keySet()) {
-							operationInvocations.addAll(statementMethodInvocationMap.get(key));
-						}
-						for(UMLAnonymousClass anonymousClass : removedAnonymousClasses) {
-							if(statement.getLocationInfo().subsumes(anonymousClass.getLocationInfo())) {
-								for(UMLOperation anonymousOperation : anonymousClass.getOperations()) {
-									operationInvocations.addAll(anonymousOperation.getAllOperationInvocations());
-								}
-							}
-						}
-					}
+					List<OperationInvocation> operationInvocations = getInvocationsInTargetOperationBeforeInline(mapper);
 					List<OperationInvocation> removedOperationInvocations = matchingInvocations(removedOperation, operationInvocations, mapper.getOperation1().variableTypeMap());
 					if(removedOperationInvocations.size() > 0 && !invocationMatchesWithAddedOperation(removedOperationInvocations.get(0), mapper.getOperation1().variableTypeMap(), mapper.getOperation2().getAllOperationInvocations())) {
 						OperationInvocation removedOperationInvocation = removedOperationInvocations.get(0);
@@ -1477,6 +1464,25 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 			}
 		}
 		removedOperations.removeAll(operationsToBeRemoved);
+	}
+
+	private List<OperationInvocation> getInvocationsInTargetOperationBeforeInline(UMLOperationBodyMapper mapper) {
+		List<OperationInvocation> operationInvocations = mapper.getOperation1().getAllOperationInvocations();
+		for(StatementObject statement : mapper.getNonMappedLeavesT1()) {
+			ExtractOperationDetection.addStatementInvocations(operationInvocations, statement);
+			for(UMLAnonymousClass anonymousClass : removedAnonymousClasses) {
+				if(statement.getLocationInfo().subsumes(anonymousClass.getLocationInfo())) {
+					for(UMLOperation anonymousOperation : anonymousClass.getOperations()) {
+						for(OperationInvocation anonymousInvocation : anonymousOperation.getAllOperationInvocations()) {
+							if(!ExtractOperationDetection.containsInvocation(operationInvocations, anonymousInvocation)) {
+								operationInvocations.add(anonymousInvocation);
+							}
+						}
+					}
+				}
+			}
+		}
+		return operationInvocations;
 	}
 
 	private boolean inlineMatchCondition(UMLOperationBodyMapper operationBodyMapper) {

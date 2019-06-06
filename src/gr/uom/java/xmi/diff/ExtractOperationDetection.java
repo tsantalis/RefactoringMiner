@@ -31,13 +31,7 @@ public class ExtractOperationDetection {
 	public ExtractOperationRefactoring check(UMLOperationBodyMapper mapper, UMLOperation addedOperation) throws RefactoringMinerTimedOutException {
 		if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
 			!mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
-			List<OperationInvocation> operationInvocations = mapper.getOperation2().getAllOperationInvocations();
-			for(StatementObject statement : mapper.getNonMappedLeavesT2()) {
-				Map<String, List<OperationInvocation>> statementMethodInvocationMap = statement.getMethodInvocationMap();
-				for(String key : statementMethodInvocationMap.keySet()) {
-					operationInvocations.addAll(statementMethodInvocationMap.get(key));
-				}
-			}
+			List<OperationInvocation> operationInvocations = getInvocationsInSourceOperationAfterExtraction(mapper);
 			List<OperationInvocation> addedOperationInvocations = matchingInvocations(addedOperation, operationInvocations, mapper.getOperation2().variableTypeMap());
 			if(addedOperationInvocations.size() > 0) {
 				OperationInvocation addedOperationInvocation = addedOperationInvocations.get(0);
@@ -71,6 +65,34 @@ public class ExtractOperationDetection {
 			}
 		}
 		return null;
+	}
+
+	public static List<OperationInvocation> getInvocationsInSourceOperationAfterExtraction(UMLOperationBodyMapper mapper) {
+		List<OperationInvocation> operationInvocations = mapper.getOperation2().getAllOperationInvocations();
+		for(StatementObject statement : mapper.getNonMappedLeavesT2()) {
+			addStatementInvocations(operationInvocations, statement);
+		}
+		return operationInvocations;
+	}
+
+	public static void addStatementInvocations(List<OperationInvocation> operationInvocations, StatementObject statement) {
+		Map<String, List<OperationInvocation>> statementMethodInvocationMap = statement.getMethodInvocationMap();
+		for(String key : statementMethodInvocationMap.keySet()) {
+			for(OperationInvocation statementInvocation : statementMethodInvocationMap.get(key)) {
+				if(!containsInvocation(operationInvocations, statementInvocation)) {
+					operationInvocations.add(statementInvocation);
+				}
+			}
+		}
+	}
+
+	public static boolean containsInvocation(List<OperationInvocation> operationInvocations, OperationInvocation invocation) {
+		for(OperationInvocation operationInvocation : operationInvocations) {
+			if(operationInvocation.getLocationInfo().equals(invocation.getLocationInfo())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private List<OperationInvocation> matchingInvocations(UMLOperation operation,

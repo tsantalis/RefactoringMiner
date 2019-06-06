@@ -52,7 +52,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Set<CandidateAttributeRefactoring> candidateAttributeRenames = new LinkedHashSet<CandidateAttributeRefactoring>();
 	private Set<CandidateMergeVariableRefactoring> candidateAttributeMerges = new LinkedHashSet<CandidateMergeVariableRefactoring>();
 	private Set<CandidateSplitVariableRefactoring> candidateAttributeSplits = new LinkedHashSet<CandidateSplitVariableRefactoring>();
-	private List<UMLOperationBodyMapper> additionalMappers = new ArrayList<UMLOperationBodyMapper>();
+	private List<UMLOperationBodyMapper> childMappers = new ArrayList<UMLOperationBodyMapper>();
+	private UMLOperationBodyMapper parentMapper;
 	private static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)|(\\?)|(:)");
 	private static final Pattern DOUBLE_QUOTES = Pattern.compile("\"([^\"]*)\"|(\\S+)");
 	private UMLClassBaseDiff classDiff;
@@ -150,14 +151,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	public void addAdditionalMapper(UMLOperationBodyMapper mapper) {
-		this.additionalMappers.add(mapper);
+	public void addChildMapper(UMLOperationBodyMapper mapper) {
+		this.childMappers.add(mapper);
 		//TODO add logic to remove the mappings from "this" mapper,
 		//which are less similar than the mappings of the mapper passed as parameter
 	}
 
-	public List<UMLOperationBodyMapper> getAdditionalMappers() {
-		return additionalMappers;
+	public List<UMLOperationBodyMapper> getChildMappers() {
+		return childMappers;
+	}
+
+	public UMLOperationBodyMapper getParentMapper() {
+		return parentMapper;
 	}
 
 	public UMLOperation getCallSiteOperation() {
@@ -172,6 +177,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	
 	public UMLOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper, UMLOperation addedOperation,
 			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2) throws RefactoringMinerTimedOutException {
+		this.parentMapper = operationBodyMapper;
 		this.operation1 = operationBodyMapper.operation1;
 		this.callSiteOperation = operationBodyMapper.operation2;
 		this.operation2 = addedOperation;
@@ -333,6 +339,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public UMLOperationBodyMapper(UMLOperation removedOperation, UMLOperationBodyMapper operationBodyMapper,
 			Map<String, String> parameterToArgumentMap) throws RefactoringMinerTimedOutException {
+		this.parentMapper = operationBodyMapper;
 		this.operation1 = removedOperation;
 		this.operation2 = operationBodyMapper.operation2;
 		this.callSiteOperation = operationBodyMapper.operation1;

@@ -1409,13 +1409,7 @@ public class UMLModelDiff {
     	  UMLOperation addedOperation = addedOperationIterator.next();
     	  for(UMLOperationBodyMapper mapper : mappers) {
     		  if((mapper.nonMappedElementsT1() > 0 || !mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) && !mapper.containsExtractOperationRefactoring(addedOperation)) {
-               List<OperationInvocation> operationInvocations = mapper.getOperation2().getAllOperationInvocations();
-               for(StatementObject statement : mapper.getNonMappedLeavesT2()) {
-            	  Map<String, List<OperationInvocation>> statementMethodInvocationMap = statement.getMethodInvocationMap();
-            	  for(String key : statementMethodInvocationMap.keySet()) {
-            		  operationInvocations.addAll(statementMethodInvocationMap.get(key));
-            	  }
-               }
+               List<OperationInvocation> operationInvocations = ExtractOperationDetection.getInvocationsInSourceOperationAfterExtraction(mapper);
                List<OperationInvocation> addedOperationInvocations = new ArrayList<OperationInvocation>();
                for(OperationInvocation invocation : operationInvocations) {
                   if(invocation.matchesOperation(addedOperation, mapper.getOperation2().variableTypeMap(), this)) {

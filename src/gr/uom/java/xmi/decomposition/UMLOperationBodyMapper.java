@@ -802,6 +802,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				Set<Replacement> replacements = findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap);
 				
 				double score = computeScore(statement1, statement2, removedOperations, addedOperations);
+				if(score == 0 && replacements != null && replacements.size() == 1 && replacements.iterator().next().getType().equals(ReplacementType.INFIX_OPERATOR)) {
+					//special handling when there is only an infix operator replacement, but no children mapped
+					score = 1;
+				}
 				if(replacements != null &&
 						(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
 					CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);

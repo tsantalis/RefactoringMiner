@@ -15261,10 +15261,10 @@
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method protected createPrepareRpcOptions() : RpcOptions extracted from protected prepareOnAffectedNodes(ctx TxInvocationContext, command PrepareCommand, recipients Collection, ignored boolean) : void in class org.infinispan.interceptors.distribution.VersionedDistributionInterceptor",
-        "comment": "<p>Extract and Move to the other class.</p><p>Moved to class <span class='blob-code-inner'><span class='pl-smi'>org.infinispan.interceptors.distribution</span>.<a class='link-gray-dark' title='core/src/main/java/org/infinispan/interceptors/distribution/TxDistributionInterceptor.java' href='https://github.com/infinispan/infinispan/commit/ce4f6292d6350a2c6b82d995352fdf6d07042c9c#diff-1f89fae5cdc8e35ed85504c05f20d66e'>TxDistributionInterceptor.java</a></span></p>",
-        "validation": "CTP",
+        "comment": "<p>Extract and Move to the other class. Moved to class <span class='blob-code-inner'><span class='pl-smi'>org.infinispan.interceptors.distribution</span>.<a class='link-gray-dark' title='core/src/main/java/org/infinispan/interceptors/distribution/TxDistributionInterceptor.java' href='https://github.com/infinispan/infinispan/commit/ce4f6292d6350a2c6b82d995352fdf6d07042c9c#diff-1f89fae5cdc8e35ed85504c05f20d66e'>TxDistributionInterceptor.java<br /></a></span>The method was locally extracted in TxDistributionInterceptor<br />Extract Method protected createPrepareRpcOptions() : RpcOptions extracted from protected prepareOnAffectedNodes(ctx TxInvocationContext&lt;?&gt;, command PrepareCommand, recipients Collection&lt;Address&gt;, sync boolean) : void in class org.infinispan.interceptors.distribution.TxDistributionInterceptor</p>",
+        "validation": "FP",
         "detectionTools": "RefDiff",
-        "validators": "Matin, Laleh, Automatic"
+        "validators": "Matin, Laleh, Nikos"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private extractJGroupsTransport(transport Transport) : JGroupsTransport extracted from private channel(cache Cache) : Channel in class org.infinispan.partitionhandling.BasePartitionHandlingTest",
@@ -15481,6 +15481,13 @@
         "comment": null,
         "validation": "UKN",
         "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method protected createPrepareRpcOptions() : RpcOptions extracted from protected prepareOnAffectedNodes(ctx TxInvocationContext<?>, command PrepareCommand, recipients Collection<Address>, sync boolean) : void in class org.infinispan.interceptors.distribution.TxDistributionInterceptor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 7011

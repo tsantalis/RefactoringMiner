@@ -3507,7 +3507,7 @@
         "description": "Rename Method public executeIfNotFiring(task Runnable) : boolean renamed to public executeTask(executable ExecutableEntry) : void in class org.drools.reteoo.common.ReteAgenda",
         "comment": "<p>Obvious case</p>",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Rename Method",
@@ -3667,7 +3667,7 @@
         "type": "Rename Parameter",
         "description": "Rename Parameter task : Runnable to executable : ExecutableEntry in method public executeTask(executable ExecutableEntry) : void in class org.drools.core.common.DefaultAgenda",
         "comment": null,
-        "validation": "UKN",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
         "validators": null
     }, {
@@ -3681,15 +3681,50 @@
         "type": "Rename Parameter",
         "description": "Rename Parameter task : Runnable to executable : ExecutableEntry in method public executeTask(executable ExecutableEntry) : void in class org.drools.core.common.InternalAgenda",
         "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter task : Runnable to executable : ExecutableEntry in method public executeTask(executable ExecutableEntry) : void in class org.drools.reteoo.common.ReteAgenda",
         "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public executeIfNotFiring(task Runnable) : boolean renamed to public executeTask(executable ExecutableEntry) : void in class org.drools.core.common.InternalAgenda",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type boolean to void in method public executeTask(executable ExecutableEntry) : void in class org.drools.reteoo.common.ReteAgenda",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type boolean to void in method public executeTask(executable ExecutableEntry) : void in class org.drools.core.common.InternalAgenda",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type task : Runnable to executable : ExecutableEntry in method public executeTask(executable ExecutableEntry) : void in class org.drools.reteoo.common.ReteAgenda",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type task : Runnable to executable : ExecutableEntry in method public executeTask(executable ExecutableEntry) : void in class org.drools.core.common.InternalAgenda",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 13908

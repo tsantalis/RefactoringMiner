@@ -1639,7 +1639,7 @@
         "description": "Rename Method private isNonSuspendable(clazz Class, methodName String) : boolean renamed to private isSuspendable(clazz Class, methodName String) : boolean in class co.paralleluniverse.fibers.Fiber",
         "comment": "The method is name is changed since the functionality is changed | Davood: The method is called in (almost) the same place than the older one, I mark it as TP",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Extract Method",

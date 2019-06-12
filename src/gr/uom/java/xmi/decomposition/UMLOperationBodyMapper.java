@@ -1444,7 +1444,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
-		boolean isEqualWithReplacement = s1.equals(s2) || differOnlyInCastExpression(s1, s2) || oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, replacementInfo) ||
+		boolean isEqualWithReplacement = s1.equals(s2) || differOnlyInCastExpressionOrPrefixOperator(s1, s2) || oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2) ||
 				(commonConditional(s1, s2, replacementInfo) && containsValidOperatorReplacements(replacementInfo)) ||
 				equalAfterArgumentMerge(s1, s2, replacementInfo) ||
@@ -2493,7 +2493,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean differOnlyInCastExpression(String s1, String s2) {
+	private boolean differOnlyInCastExpressionOrPrefixOperator(String s1, String s2) {
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
@@ -2507,6 +2507,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return true;
 			}
 			if (diff2.isEmpty() && diff1.startsWith("(") && diff1.endsWith(")")) {
+				return true;
+			}
+			if(diff1.isEmpty() && (diff2.equals("!") || diff2.equals("~"))) {
+				return true;
+			}
+			if(diff2.isEmpty() && (diff1.equals("!") || diff1.equals("~"))) {
 				return true;
 			}
 		}

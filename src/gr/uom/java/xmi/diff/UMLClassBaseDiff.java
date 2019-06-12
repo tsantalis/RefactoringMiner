@@ -1387,16 +1387,20 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 	}
 
 	private boolean allMappingsAreExactMatches(UMLOperationBodyMapper operationBodyMapper, int mappings) {
-		if(mappings == operationBodyMapper.exactMatches()) {
-			return true;
-		}
+		int tryMappings = 0;
 		int mappingsWithTypeReplacement = 0;
 		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+			if(mapping.getFragment1().getString().equals("try") && mapping.getFragment2().getString().equals("try")) {
+				tryMappings++;
+			}
 			if(mapping.containsReplacement(ReplacementType.TYPE)) {
 				mappingsWithTypeReplacement++;
 			}
 		}
-		if(mappings == operationBodyMapper.exactMatches() + mappingsWithTypeReplacement && mappings > mappingsWithTypeReplacement) {
+		if(mappings == operationBodyMapper.exactMatches() + tryMappings) {
+			return true;
+		}
+		if(mappings == operationBodyMapper.exactMatches() + tryMappings + mappingsWithTypeReplacement && mappings > mappingsWithTypeReplacement) {
 			return true;
 		}
 		return false;

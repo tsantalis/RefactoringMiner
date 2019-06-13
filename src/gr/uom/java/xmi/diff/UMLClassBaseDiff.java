@@ -20,6 +20,7 @@ import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
@@ -1186,33 +1187,43 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 			}
 			else if((operationBodyMapper.nonMappedElementsT1() == 1 || operationBodyMapper.nonMappedElementsT2() == 1) &&
 					operationBodyMapper.getNonMappedInnerNodesT1().size() == 0 && operationBodyMapper.getNonMappedInnerNodesT2().size() == 0) {
-				boolean parameterUsedAsInvoker1 = false;
+				StatementObject statementUsingParameterAsInvoker1 = null;
 				UMLOperation removedOperation = operationBodyMapper.getOperation1();
 				for(StatementObject statement : operationBodyMapper.getNonMappedLeavesT1()) {
 					if(statement.countableStatement()) {
 						for(String parameterName : removedOperation.getParameterNameList()) {
 							OperationInvocation invocation = statement.invocationCoveringEntireFragment();
 							if(invocation != null && invocation.getExpression() != null && invocation.getExpression().equals(parameterName)) {
-								parameterUsedAsInvoker1 = true;
+								statementUsingParameterAsInvoker1 = statement;
 								break;
 							}
 						}
 					}
 				}
-				boolean parameterUsedAsInvoker2 = false;
+				StatementObject statementUsingParameterAsInvoker2 = null;
 				UMLOperation addedOperation = operationBodyMapper.getOperation2();
 				for(StatementObject statement : operationBodyMapper.getNonMappedLeavesT2()) {
 					if(statement.countableStatement()) {
 						for(String parameterName : addedOperation.getParameterNameList()) {
 							OperationInvocation invocation = statement.invocationCoveringEntireFragment();
 							if(invocation != null && invocation.getExpression() != null && invocation.getExpression().equals(parameterName)) {
-								parameterUsedAsInvoker2 = true;
+								statementUsingParameterAsInvoker2 = statement;
 								break;
 							}
 						}
 					}
 				}
-				return parameterUsedAsInvoker1 && parameterUsedAsInvoker2;
+				if(statementUsingParameterAsInvoker1 != null && statementUsingParameterAsInvoker2 != null) {
+					for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+						if(mapping.getFragment1() instanceof CompositeStatementObject && mapping.getFragment2() instanceof CompositeStatementObject) {
+							CompositeStatementObject parent1 = (CompositeStatementObject)mapping.getFragment1();
+							CompositeStatementObject parent2 = (CompositeStatementObject)mapping.getFragment2();
+							if(parent1.getLeaves().contains(statementUsingParameterAsInvoker1) && parent2.getLeaves().contains(statementUsingParameterAsInvoker2)) {
+								return true;
+							}
+						}
+					}
+				}
 			}
 		}
 		return false;

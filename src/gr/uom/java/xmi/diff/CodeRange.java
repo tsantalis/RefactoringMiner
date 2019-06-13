@@ -70,7 +70,7 @@ public class CodeRange {
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("{");
+		sb.append("{").append("\n");
 		encodeStringProperty(sb, "filePath", filePath, false);
 		encodeIntProperty(sb, "startLine", startLine, false);
 		encodeIntProperty(sb, "endLine", endLine, false);
@@ -85,14 +85,14 @@ public class CodeRange {
 
 	private void encodeStringProperty(StringBuilder sb, String propertyName, String value, boolean last) {
 		if(value != null)
-			sb.append("\t").append("\"" + propertyName + "\"" + ": " + "\"" + value + "\"");
+			sb.append("\t").append("\t").append("\"" + propertyName + "\"" + ": " + "\"" + value + "\"");
 		else
-			sb.append("\t").append("\"" + propertyName + "\"" + ": " + value);
+			sb.append("\t").append("\t").append("\"" + propertyName + "\"" + ": " + value);
 		insertNewLine(sb, last);
 	}
 
 	private void encodeIntProperty(StringBuilder sb, String propertyName, int value, boolean last) {
-		sb.append("\t").append("\"" + propertyName + "\"" + ": " + value);
+		sb.append("\t").append("\t").append("\"" + propertyName + "\"" + ": " + value);
 		insertNewLine(sb, last);
 	}
 

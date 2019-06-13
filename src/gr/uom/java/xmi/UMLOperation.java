@@ -388,6 +388,18 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 				this.getParameterTypeList().equals(operation.getParameterTypeList());
 	}
 
+	public boolean equalsIgnoringNameCase(UMLOperation operation) {
+		boolean thisEmptyBody = this.getBody() == null || this.hasEmptyBody();
+		boolean otherEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
+		return this.className.equals(operation.className) &&
+				this.name.equalsIgnoreCase(operation.name) &&
+				this.visibility.equals(operation.visibility) &&
+				this.isAbstract == operation.isAbstract &&
+				thisEmptyBody == otherEmptyBody &&
+				equalReturnParameter(operation) &&
+				this.getParameterTypeList().equals(operation.getParameterTypeList());
+	}
+
 	public boolean equals(Object o) {
 		if(this == o) {
             return true;

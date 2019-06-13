@@ -25315,7 +25315,7 @@
         "description": "Rename Method public settingNoopInjectionsAndQuery() : void renamed to public settingNoOpInjectionsAndQuery() : void in class org.apache.drill.exec.server.TestDrillbitResilience",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Rename Method",
@@ -57764,30 +57764,44 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute entities : PropertyContainer[] to nodes : List<Node> in class org.neo4j.ndp.messaging.v1.infrastructure.ValuePath",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>It seems like PropertyContainer[] entities is split to <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-k'>List&lt;<span class='pl-smi'>Node</span>&gt;</span> nodes</span> and <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-k'>List&lt;<span class='pl-smi'>Relationship</span>&gt;</span> relationships</span>, but there are not many statement mappings to confirm that.</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter entities : PropertyContainer to sequence : List<Integer> in method public ValuePath(nodes List<Node>, relationships List<Relationship>, sequence List<Integer>) in class org.neo4j.ndp.messaging.v1.infrastructure.ValuePath",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute idx : int to i : int in class org.neo4j.ndp.messaging.v1.infrastructure.ValuePath.iterator",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable size : long to longSize : long in method public unpackTextHeader() : int in class org.neo4j.packstream.PackStream.Unpacker",
+        "comment": "<p>If the method pair<br />public byte[] unpackUtf8() throws IOException<br />public int unpackTextHeader() throws IOException<br />is matched, then<br /><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>long</span> size <span class='pl-k'>=</span> unpackUINT32(); becomes <span class='pl-k'>long</span> longSize <span class='pl-k'>=</span> unpackUINT32();<br /></span></p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public unpackTextHeader() : int extracted from public unpackUtf8() : byte[] in class org.neo4j.packstream.PackStream.Unpacker",
         "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public unpackUtf8() : byte[] renamed to public unpackUTF8() : byte[] in class org.neo4j.packstream.PackStream.Unpacker",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 3709

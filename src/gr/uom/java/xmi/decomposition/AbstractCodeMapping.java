@@ -14,6 +14,8 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
+import gr.uom.java.xmi.diff.RenameOperationRefactoring;
+import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 
 public abstract class AbstractCodeMapping {
 
@@ -143,11 +145,11 @@ public abstract class AbstractCodeMapping {
 	}
 
 	public void temporaryVariableAssignment(AbstractCodeFragment statement,
-			List<? extends AbstractCodeFragment> nonMappedLeavesT2, Set<Refactoring> refactorings) {
+			List<? extends AbstractCodeFragment> nonMappedLeavesT2, Set<Refactoring> refactorings, UMLClassBaseDiff classDiff) {
 		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
+			String variableName = declaration.getVariableName();
+			AbstractExpression initializer = declaration.getInitializer();
 			for(Replacement replacement : getReplacements()) {
-				String variableName = declaration.getVariableName();
-				AbstractExpression initializer = declaration.getInitializer();
 				if(replacement.getAfter().startsWith(variableName + ".")) {
 					String suffixAfter = replacement.getAfter().substring(variableName.length(), replacement.getAfter().length());
 					if(replacement.getBefore().endsWith(suffixAfter)) {
@@ -171,6 +173,23 @@ public abstract class AbstractCodeMapping {
 						processExtractVariableRefactoring(ref, refactorings);
 						if(getReplacements().size() == 1) {
 							identicalWithExtractedVariable = true;
+						}
+					}
+				}
+			}
+			if(classDiff != null && initializer != null) {
+				OperationInvocation invocation = initializer.invocationCoveringEntireFragment();
+				if(invocation != null) {
+					for(Refactoring refactoring : classDiff.getRefactoringsBeforePostProcessing()) {
+						if(refactoring instanceof RenameOperationRefactoring) {
+							RenameOperationRefactoring rename = (RenameOperationRefactoring)refactoring;
+							if(invocation.getMethodName().equals(rename.getRenamedOperation().getName())) {
+								String initializerBeforeRename = initializer.getString().replace(rename.getRenamedOperation().getName(), rename.getOriginalOperation().getName());
+								if(getFragment1().getString().contains(initializerBeforeRename) && getFragment2().getString().contains(variableName)) {
+									ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation2);
+									processExtractVariableRefactoring(ref, refactorings);
+								}
+							}
 						}
 					}
 				}

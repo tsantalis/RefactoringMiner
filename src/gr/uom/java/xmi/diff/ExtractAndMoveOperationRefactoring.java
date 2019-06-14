@@ -11,7 +11,9 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
+import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
@@ -157,7 +159,15 @@ public class ExtractAndMoveOperationRefactoring implements Refactoring {
 		ranges.add(getSourceOperationCodeRangeBeforeExtraction()
 				.setDescription("source method declaration before extraction")
 				.setCodeElement(sourceOperationBeforeExtraction.toString()));
-		//ranges.add(getExtractedCodeRangeFromSourceOperation().setDescription("extracted code from source method declaration"));
+		ranges.add(getExtractedCodeRangeFromSourceOperation().setDescription("extracted code from source method declaration"));
+		for(StatementObject statement : bodyMapper.getNonMappedLeavesT1()) {
+			ranges.add(statement.codeRange().
+					setDescription("deleted statement in source method declaration"));
+		}
+		for(CompositeStatementObject statement : bodyMapper.getNonMappedInnerNodesT1()) {
+			ranges.add(statement.codeRange().
+					setDescription("deleted statement in source method declaration"));
+		}
 		return ranges;
 	}
 
@@ -167,7 +177,7 @@ public class ExtractAndMoveOperationRefactoring implements Refactoring {
 		ranges.add(getExtractedOperationCodeRange()
 				.setDescription("extracted method declaration")
 				.setCodeElement(extractedOperation.toString()));
-		//ranges.add(getExtractedCodeRangeToExtractedOperation().setDescription("extracted code to extracted method declaration"));
+		ranges.add(getExtractedCodeRangeToExtractedOperation().setDescription("extracted code to extracted method declaration"));
 		ranges.add(getSourceOperationCodeRangeAfterExtraction()
 				.setDescription("source method declaration after extraction")
 				.setCodeElement(sourceOperationAfterExtraction.toString()));
@@ -175,6 +185,14 @@ public class ExtractAndMoveOperationRefactoring implements Refactoring {
 			ranges.add(invocation.codeRange()
 					.setDescription("extracted method invocation")
 					.setCodeElement(invocation.actualString()));
+		}
+		for(StatementObject statement : bodyMapper.getNonMappedLeavesT2()) {
+			ranges.add(statement.codeRange().
+					setDescription("added statement in extracted method declaration"));
+		}
+		for(CompositeStatementObject statement : bodyMapper.getNonMappedInnerNodesT2()) {
+			ranges.add(statement.codeRange().
+					setDescription("added statement in extracted method declaration"));
 		}
 		return ranges;
 	}

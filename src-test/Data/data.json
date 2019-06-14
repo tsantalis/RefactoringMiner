@@ -1673,15 +1673,22 @@
         "type": "Change Variable Type",
         "description": "Change Variable Type susp : Boolean to susp : boolean in method public collectCodeBlocks() : boolean in class co.paralleluniverse.fibers.instrument.InstrumentMethod",
         "comment": null,
-        "validation": "UKN",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter exc : boolean to currentSteIdx : int in method private isCallSiteInstrumented(stes StackTraceElement[], currentSteIdx int, clazz Class, methodName String, lineNumber int) : Pair<Boolean,int[]> in class co.paralleluniverse.fibers.Fiber",
         "comment": null,
         "validation": "UKN",
         "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable methodInstrumented : boolean in method public checkInstrumentation() : boolean from class co.paralleluniverse.fibers.Fiber",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 970

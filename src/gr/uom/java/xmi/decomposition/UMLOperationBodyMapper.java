@@ -1197,11 +1197,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		
 		Set<String> arguments1 = new LinkedHashSet<String>(statement1.getArguments());
 		Set<String> arguments2 = new LinkedHashSet<String>(statement2.getArguments());
-		Set<String> argIntersection = new LinkedHashSet<String>(arguments1);
-		argIntersection.retainAll(arguments2);
-		// remove common arguments from the two sets
-		arguments1.removeAll(argIntersection);
-		arguments2.removeAll(argIntersection);
+		removeCommonElements(arguments1, arguments2);
 		
 		if(!argumentsWithIdenticalMethodCalls(arguments1, arguments2, variables1, variables2)) {
 			findReplacements(arguments1, variables2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_VARIABLE);
@@ -1264,11 +1260,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		
 		Set<String> types1 = new LinkedHashSet<String>(statement1.getTypes());
 		Set<String> types2 = new LinkedHashSet<String>(statement2.getTypes());
-		Set<String> typeIntersection = new LinkedHashSet<String>(types1);
-		typeIntersection.retainAll(types2);
-		// remove common types from the two sets
-		types1.removeAll(typeIntersection);
-		types2.removeAll(typeIntersection);
+		removeCommonElements(types1, types2);
 		
 		// replace variables with the corresponding arguments in object creations
 		replaceVariablesWithArguments(creationMap1, creations1, parameterToArgumentMap);
@@ -1309,35 +1301,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		
 		Set<String> stringLiterals1 = new LinkedHashSet<String>(statement1.getStringLiterals());
 		Set<String> stringLiterals2 = new LinkedHashSet<String>(statement2.getStringLiterals());
-		Set<String> stringLiteralIntersection = new LinkedHashSet<String>(stringLiterals1);
-		stringLiteralIntersection.retainAll(stringLiterals2);
-		// remove common string literals from the two sets
-		stringLiterals1.removeAll(stringLiteralIntersection);
-		stringLiterals2.removeAll(stringLiteralIntersection);
+		removeCommonElements(stringLiterals1, stringLiterals2);
 		
 		Set<String> numberLiterals1 = new LinkedHashSet<String>(statement1.getNumberLiterals());
 		Set<String> numberLiterals2 = new LinkedHashSet<String>(statement2.getNumberLiterals());
-		Set<String> numberLiteralIntersection = new LinkedHashSet<String>(numberLiterals1);
-		numberLiteralIntersection.retainAll(numberLiterals2);
-		// remove common number literals from the two sets
-		numberLiterals1.removeAll(numberLiteralIntersection);
-		numberLiterals2.removeAll(numberLiteralIntersection);
+		removeCommonElements(numberLiterals1, numberLiterals2);
 		
 		Set<String> booleanLiterals1 = new LinkedHashSet<String>(statement1.getBooleanLiterals());
 		Set<String> booleanLiterals2 = new LinkedHashSet<String>(statement2.getBooleanLiterals());
-		Set<String> booleanLiteralIntersection = new LinkedHashSet<String>(booleanLiterals1);
-		booleanLiteralIntersection.retainAll(booleanLiterals2);
-		// remove common boolean literals from the two sets
-		booleanLiterals1.removeAll(booleanLiteralIntersection);
-		booleanLiterals2.removeAll(booleanLiteralIntersection);
+		removeCommonElements(booleanLiterals1, booleanLiterals2);
 		
 		Set<String> infixOperators1 = new LinkedHashSet<String>(statement1.getInfixOperators());
 		Set<String> infixOperators2 = new LinkedHashSet<String>(statement2.getInfixOperators());
-		Set<String> infixOperatorIntersection = new LinkedHashSet<String>(infixOperators1);
-		infixOperatorIntersection.retainAll(infixOperators2);
-		// remove common infix operators from the two sets
-		infixOperators1.removeAll(infixOperatorIntersection);
-		infixOperators2.removeAll(infixOperatorIntersection);
+		removeCommonElements(infixOperators1, infixOperators2);
+		
+		Set<String> arrayAccesses1 = new LinkedHashSet<String>(statement1.getArrayAccesses());
+		Set<String> arrayAccesses2 = new LinkedHashSet<String>(statement2.getArrayAccesses());
+		removeCommonElements(arrayAccesses1, arrayAccesses2);
+		
+		Set<String> prefixExpressions1 = new LinkedHashSet<String>(statement1.getPrefixExpressions());
+		Set<String> prefixExpressions2 = new LinkedHashSet<String>(statement2.getPrefixExpressions());
+		removeCommonElements(prefixExpressions1, prefixExpressions2);
 		
 		//perform type replacements
 		findReplacements(types1, types2, replacementInfo, ReplacementType.TYPE);
@@ -1424,6 +1408,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(!containsMethodInvocationReplacement(replacementInfo.getReplacements())) {
 			findReplacements(stringLiterals1, stringLiterals2, replacementInfo, ReplacementType.STRING_LITERAL);
 			findReplacements(numberLiterals1, numberLiterals2, replacementInfo, ReplacementType.NUMBER_LITERAL);
+			findReplacements(variables1, arrayAccesses2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS);
+			findReplacements(arrayAccesses1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS);
+			findReplacements(variables1, prefixExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PREFIX_EXPRESSION);
+			findReplacements(prefixExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PREFIX_EXPRESSION);
 		}
 		if(!statement1.getString().endsWith("=true;\n") && !statement1.getString().endsWith("=false;\n")) {
 			findReplacements(booleanLiterals1, variables2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_VARIABLE);
@@ -1941,6 +1929,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private void removeCommonElements(Set<String> strings1, Set<String> strings2) {
+		Set<String> intersection = new LinkedHashSet<String>(strings1);
+		intersection.retainAll(strings2);
+		strings1.removeAll(intersection);
+		strings2.removeAll(intersection);
 	}
 
 	private UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration1, UMLOperation operation) {

@@ -26,6 +26,9 @@ public class AbstractExpression extends AbstractCodeFragment {
 	private List<String> typeLiterals;
 	private Map<String, List<ObjectCreation>> creationMap;
 	private List<String> infixOperators;
+	private List<String> arrayAccesses;
+	private List<String> prefixExpressions;
+	private List<String> postfixExpressions;
 	private List<String> arguments;
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions;
 	private List<LambdaExpressionObject> lambdas;
@@ -45,6 +48,9 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.typeLiterals = visitor.getTypeLiterals();
 		this.creationMap = visitor.getCreationMap();
 		this.infixOperators = visitor.getInfixOperators();
+		this.arrayAccesses = visitor.getArrayAccesses();
+		this.prefixExpressions = visitor.getPrefixExpressions();
+		this.postfixExpressions = visitor.getPostfixExpressions();
 		this.arguments = visitor.getArguments();
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
@@ -125,6 +131,21 @@ public class AbstractExpression extends AbstractCodeFragment {
 	@Override
 	public List<String> getInfixOperators() {
 		return infixOperators;
+	}
+
+	@Override
+	public List<String> getArrayAccesses() {
+		return arrayAccesses;
+	}
+
+	@Override
+	public List<String> getPrefixExpressions() {
+		return prefixExpressions;
+	}
+
+	@Override
+	public List<String> getPostfixExpressions() {
+		return postfixExpressions;
 	}
 
 	@Override

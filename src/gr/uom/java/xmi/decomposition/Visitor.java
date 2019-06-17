@@ -34,6 +34,8 @@ import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.NumberLiteral;
 import org.eclipse.jdt.core.dom.ParameterizedType;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.QualifiedType;
@@ -64,6 +66,9 @@ public class Visitor extends ASTVisitor {
 	private List<String> typeLiterals = new ArrayList<String>();
 	private Map<String, List<ObjectCreation>> creationMap = new LinkedHashMap<String, List<ObjectCreation>>();
 	private List<String> infixOperators = new ArrayList<String>();
+	private List<String> arrayAccesses = new ArrayList<String>();
+	private List<String> prefixExpressions = new ArrayList<String>();
+	private List<String> postfixExpressions = new ArrayList<String>();
 	private List<String> arguments = new ArrayList<String>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
@@ -74,6 +79,33 @@ public class Visitor extends ASTVisitor {
 	public Visitor(CompilationUnit cu, String filePath) {
 		this.cu = cu;
 		this.filePath = filePath;
+	}
+
+	public boolean visit(ArrayAccess node) {
+		arrayAccesses.add(node.toString());
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getArrayAccesses().add(node.toString());
+		}
+		return super.visit(node);
+	}
+
+	public boolean visit(PrefixExpression node) {
+		prefixExpressions.add(node.toString());
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getPrefixExpressions().add(node.toString());
+		}
+		return super.visit(node);
+	}
+
+	public boolean visit(PostfixExpression node) {
+		postfixExpressions.add(node.toString());
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getPostfixExpressions().add(node.toString());
+		}
+		return super.visit(node);
 	}
 
 	public boolean visit(ConditionalExpression node) {
@@ -653,6 +685,18 @@ public class Visitor extends ASTVisitor {
 
 	public List<String> getInfixOperators() {
 		return infixOperators;
+	}
+
+	public List<String> getArrayAccesses() {
+		return arrayAccesses;
+	}
+
+	public List<String> getPrefixExpressions() {
+		return prefixExpressions;
+	}
+
+	public List<String> getPostfixExpressions() {
+		return postfixExpressions;
 	}
 
 	public List<String> getArguments() {

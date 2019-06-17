@@ -13549,38 +13549,38 @@
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type invocation : ActionInvocation to invocation : Invocation in class com.jfinal.validate.Validator",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter ai : ActionInvocation to inv : Invocation in method public doIntercept(inv Invocation) : void in class com.jfinal.aop.PrototypeInterceptor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter i18nResourceBaseName : String to defaultBaseName : String in method public setI18nDefaultBaseName(defaultBaseName String) : void in class com.jfinal.config.Constants",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter i18nResourceBaseName : String to defaultLocale : String in method public setI18nDefaultLocale(defaultLocale String) : void in class com.jfinal.config.Constants",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter defaultValue : String to singletonKey : String in method public enhance(singletonKey String, targetClass Class<T>) : T in class com.jfinal.core.Controller",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>enhance(singletonKey String, targetClass Class&lt;T&gt;) is a new method</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter key : String to singletonKey : String in method public enhance(singletonKey String, targetClass Class<T>, injectInters Interceptor...) : T in class com.jfinal.core.Controller",
@@ -13676,9 +13676,9 @@
         "type": "Rename Variable",
         "description": "Rename Variable keyArr : String[] to arr : String[] in method package setPrimaryKey(primaryKey String) : void in class com.jfinal.plugin.activerecord.Table",
         "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect",
@@ -20822,17 +20822,17 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter requirementNowMet : AvailabilityRequirement to requirement : AvailabilityRequirement in method public require(requirement AvailabilityRequirement) : void in class org.neo4j.kernel.AvailabilityGuard",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>The method is renamed<br />Rename Method public deny(requirementNotMet AvailabilityRequirement) : void renamed to public require(requirement AvailabilityRequirement) : void in class org.neo4j.kernel.AvailabilityGuard</p>",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute REQUIREMENT : AvailabilityGuard.AvailabilityRequirement to REQUIREMENT_1 : AvailabilityGuard.AvailabilityRequirement in class org.neo4j.kernel.AvailabilityGuardTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>REQUIREMENT is replaced with two attributes, namely <span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-c1'>REQUIREMENT</span></span>_1 and <span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-c1'>REQUIREMENT</span></span>_2</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3955
 }, {
@@ -26289,10 +26289,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable socket : Socket to conn : SecureSocketConnection in method private assertEventuallyServerResponds(host String, port int) : void in class org.neo4j.server.Neo4jDataProtocolIT",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 7200
 }, {
@@ -27330,24 +27330,24 @@
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type repo : SimpleJpaRepository<User,Integer> to repo : SimpleJpaRepository<User,Long> in class org.springframework.data.jpa.repository.support.SimpleJpaRepositoryUnitTests",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type id : Integer to id : Long in method public shouldPropagateConfiguredEntityGraphToFindOne() : void in class org.springframework.data.jpa.repository.support.SimpleJpaRepositoryUnitTests",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable countQuery : String to typedQuery : TypedQuery<T> in method public findOne(id ID) : T in class org.springframework.data.jpa.repository.support.SimpleJpaRepository",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -30437,17 +30437,17 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter obj : Object to visitor : ChangeVisitor in method public added(visitor ChangeVisitor) : void in class org.neo4j.kernel.api.constraints.UniquenessConstraint",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter element : UniquenessConstraint to constraint : MandatoryPropertyConstraint in method public visitRemovedMandatoryPropertyConstraint(constraint MandatoryPropertyConstraint) : void in class org.neo4j.kernel.impl.api.state.TxState.ConstraintDiffSetsVisitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 10145
 }, {
@@ -44489,24 +44489,24 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable nodeIds2 : long[] to diffSets : ReadableDiffSets<Long> in method public shouldComputeIndexUpdatesForBetweenRangeSeekByNumberWithUnboundedLowerExcludeLowerAndExcludeUpper() : void in class org.neo4j.kernel.impl.api.state.TxStateTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable nodeIds2 : long[] to diffSets : ReadableDiffSets<Long> in method public shouldComputeIndexUpdatesForBetweenRangeSeekByNumberWithUnboundedUpperIncludeLowerAndExcludeUpper() : void in class org.neo4j.kernel.impl.api.state.TxStateTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable nodeIds2 : long[] to diffSets : ReadableDiffSets<Long> in method public shouldComputeIndexUpdatesForBetweenRangeSeekByNumberWithUnboundedUpperExcludeLowerAndExcludeUpper() : void in class org.neo4j.kernel.impl.api.state.TxStateTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 4473
 }, {
@@ -46090,6 +46090,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable parameterValue : Object in method private resolveParams(parameters Object[]) : Map<String,Object> from class org.springframework.data.neo4j.repository.query.GraphRepositoryQuery",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -46763,45 +46770,45 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter node : NodeItem to startNode : NodeItem in method public relationshipCreate(state KernelStatement, relationshipTypeId int, startNode NodeItem, endNode NodeItem) : long in class org.neo4j.kernel.impl.api.StateHandlingStatementOperations",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter node : NodeItem to endNode : NodeItem in method public relationshipCreate(state KernelStatement, relationshipTypeId int, startNode NodeItem, endNode NodeItem) : long in class org.neo4j.kernel.impl.api.StateHandlingStatementOperations",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter groupStore : RelationshipGroupStore to neoStore : NeoStore in method public StoreNodeRelationshipCursor(relationshipRecord RelationshipRecord, neoStore NeoStore, groupRecord RelationshipGroupRecord, storeStatement StoreStatement, instanceCache Consumer<StoreNodeRelationshipCursor>) in class org.neo4j.kernel.impl.api.store.StoreNodeRelationshipCursor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable relationships : PrimitiveLongIterator to nodeCursor : Cursor<NodeItem> in method private validateNodeRel1(node long, prop1 DefinedProperty, prop2 DefinedProperty, prop3 DefinedProperty, rel1 long, rel2 long, relType1 int, relType2 int) : void in class org.neo4j.kernel.impl.store.TestNeoStore",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-k'>Cursor&lt;<span class='pl-smi'>RelationshipItem</span>&gt;</span> relationships <span class='pl-k'>=</span> nodeCursor<span class='pl-k'>.</span>get()<span class='pl-k'>.</span>relationships( <span class='pl-smi'>Direction</span><span class='pl-c1'><span class='pl-k'>.</span>BOTH</span> )</span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable relationships : PrimitiveLongIterator to nodeCursor : Cursor<NodeItem> in method private validateNodeRel2(node long, prop1 DefinedProperty, prop2 DefinedProperty, prop3 DefinedProperty, rel1 long, rel2 long, relType1 int, relType2 int) : void in class org.neo4j.kernel.impl.store.TestNeoStore",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-k'>Cursor&lt;<span class='pl-smi'>RelationshipItem</span>&gt;</span> relationships <span class='pl-k'>=</span> nodeCursor<span class='pl-k'>.</span>get()<span class='pl-k'>.</span>relationships( <span class='pl-smi'>Direction</span><span class='pl-c1'><span class='pl-k'>.</span>BOTH</span> )</span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable relationships : PrimitiveLongIterator to nodeCursor : Cursor<NodeItem> in method public testRels2() : void in class org.neo4j.kernel.impl.store.TestNeoStore",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-smi'>PrimitiveLongIterator</span> relationships <span class='pl-k'>=</span> nodeCursor<span class='pl-k'>.</span>get()<span class='pl-k'>.</span>getRelationships( <span class='pl-smi'>Direction</span><span class='pl-c1'><span class='pl-k'>.</span>BOTH</span> );</span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 15734
 }, {
@@ -47408,10 +47415,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable jCls : JavaClass to javaNode : JavaNode in method public getDefinitionPosition(line int, offset int) : CodePosition in class jadx.api.JavaClass",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 975
 }, {

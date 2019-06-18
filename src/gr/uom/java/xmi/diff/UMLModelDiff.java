@@ -1285,7 +1285,11 @@ public class UMLModelDiff {
     						  RenameOperationRefactoring refactoring = new RenameOperationRefactoring(removedOperation, addedOperation);
     						  refactorings.add(refactoring);
     					  }
-    					  refactorings.addAll(operationSignatureDiff.getRefactorings());
+    					  Set<Refactoring> signatureRefactorings = operationSignatureDiff.getRefactorings();
+						  refactorings.addAll(signatureRefactorings);
+						  if(signatureRefactorings.isEmpty()) {
+							  inferRefactoringsFromMatchingMappers(mappers, operationSignatureDiff, refactorings);
+						  }
     				  }
     			  }
     		  }
@@ -1301,7 +1305,11 @@ public class UMLModelDiff {
         						  RenameOperationRefactoring refactoring = new RenameOperationRefactoring(removedOperation, addedOperation);
         						  refactorings.add(refactoring);
         					  }
-        					  refactorings.addAll(operationSignatureDiff.getRefactorings());
+        					  Set<Refactoring> signatureRefactorings = operationSignatureDiff.getRefactorings();
+    						  refactorings.addAll(signatureRefactorings);
+    						  if(signatureRefactorings.isEmpty()) {
+    							  inferRefactoringsFromMatchingMappers(mappers, operationSignatureDiff, refactorings);
+    						  }
         				  }
     				  }
     			  }
@@ -1309,6 +1317,61 @@ public class UMLModelDiff {
     	  }
       }
       return new ArrayList<Refactoring>(refactorings);
+   }
+
+   private void inferRefactoringsFromMatchingMappers(List<UMLOperationBodyMapper> mappers, UMLOperationDiff operationSignatureDiff, Set<Refactoring> refactorings) {
+	   for(UMLOperationBodyMapper mapper : mappers) {
+		   for(Refactoring refactoring : mapper.getRefactoringsAfterPostProcessing()) {
+			   if(refactoring instanceof RenameVariableRefactoring) {
+				   RenameVariableRefactoring rename = (RenameVariableRefactoring)refactoring;
+				   UMLParameter matchingRemovedParameter = null;
+				   for(UMLParameter parameter : operationSignatureDiff.getRemovedParameters()) {
+					   if(parameter.getName().equals(rename.getOriginalVariable().getVariableName()) &&
+							   parameter.getType().equals(rename.getOriginalVariable().getType())) {
+						   matchingRemovedParameter = parameter;
+						   break;
+					   }
+				   }
+				   UMLParameter matchingAddedParameter = null;
+				   for(UMLParameter parameter : operationSignatureDiff.getAddedParameters()) {
+					   if(parameter.getName().equals(rename.getRenamedVariable().getVariableName()) &&
+							   parameter.getType().equals(rename.getRenamedVariable().getType())) {
+						   matchingAddedParameter = parameter;
+						   break;
+					   }
+				   }
+				   if(matchingRemovedParameter != null && matchingAddedParameter != null) {
+					   RenameVariableRefactoring newRename = new RenameVariableRefactoring(matchingRemovedParameter.getVariableDeclaration(), matchingAddedParameter.getVariableDeclaration(),
+							   operationSignatureDiff.getRemovedOperation(), operationSignatureDiff.getAddedOperation(), new LinkedHashSet<AbstractCodeMapping>());
+					   refactorings.add(newRename);
+				   }
+			   }
+			   else if(refactoring instanceof ChangeVariableTypeRefactoring) {
+				   ChangeVariableTypeRefactoring changeType = (ChangeVariableTypeRefactoring)refactoring;
+				   UMLParameter matchingRemovedParameter = null;
+				   for(UMLParameter parameter : operationSignatureDiff.getRemovedParameters()) {
+					   if(parameter.getName().equals(changeType.getOriginalVariable().getVariableName()) &&
+							   parameter.getType().equals(changeType.getOriginalVariable().getType())) {
+						   matchingRemovedParameter = parameter;
+						   break;
+					   }
+				   }
+				   UMLParameter matchingAddedParameter = null;
+				   for(UMLParameter parameter : operationSignatureDiff.getAddedParameters()) {
+					   if(parameter.getName().equals(changeType.getChangedTypeVariable().getVariableName()) &&
+							   parameter.getType().equals(changeType.getChangedTypeVariable().getType())) {
+						   matchingAddedParameter = parameter;
+						   break;
+					   }
+				   }
+				   if(matchingRemovedParameter != null && matchingAddedParameter != null) {
+					   ChangeVariableTypeRefactoring newChangeType = new ChangeVariableTypeRefactoring(matchingRemovedParameter.getVariableDeclaration(), matchingAddedParameter.getVariableDeclaration(),
+							   operationSignatureDiff.getRemovedOperation(), operationSignatureDiff.getAddedOperation(), new LinkedHashSet<AbstractCodeMapping>());
+					   refactorings.add(newChangeType);
+				   }
+			   }
+		   }
+	   }
    }
 
    private List<UMLOperationBodyMapper> findMappersWithMatchingSignatures(UMLOperation operation1, UMLOperation operation2) {

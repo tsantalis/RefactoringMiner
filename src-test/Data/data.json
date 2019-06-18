@@ -13521,31 +13521,31 @@
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type maxPostSize : Integer to maxPostSize : int in class com.jfinal.config.Constants",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type interceptorBuilder : InterceptorBuilder to interceptorBuilder : ActionInterceptorBuilder in method package buildActionMapping() : void in class com.jfinal.core.ActionMapping",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type primaryKey : String to primaryKey : String[] in class com.jfinal.plugin.activerecord.Table",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type fileRenamePolicy : DefaultFileRenamePolicy to fileRenamePolicy : FileRenamePolicy in class com.jfinal.upload.MultipartRequest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type invocation : ActionInvocation to invocation : Invocation in class com.jfinal.validate.Validator",
@@ -13689,10 +13689,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable columnsArray : String[] to sql : StringBuilder in method public forDbFindById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect",
@@ -13752,17 +13752,17 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.MysqlDialect",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter id : Object to ids : Object[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.MysqlDialect",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
@@ -13773,10 +13773,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable columnsArray : String[] to sql : StringBuilder in method public forDbFindById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
@@ -13808,17 +13808,17 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter id : Object to ids : Object[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect",
@@ -13829,10 +13829,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable columnsArray : String[] to sql : StringBuilder in method public forDbFindById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect",
@@ -13854,6 +13854,97 @@
         "validation": "UKN",
         "detectionTools": "GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type id : Object to ids : Object[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter id : Object to ids : Object[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type id : Object to ids : Object[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.MysqlDialect",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type id : Object to ids : Object[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter id : Object to ids : Object[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type id : Object to ids : Object[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type id : Object to ids : Object[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter id : Object to ids : Object[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type primaryKey : String to pKeys : String[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type primaryKey : String to pKeys : String[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.MysqlDialect",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type primaryKey : String to pKeys : String[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type primaryKey : String to pKeys : String[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type primaryKey : String to pKeys : String[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 1822
 }, {

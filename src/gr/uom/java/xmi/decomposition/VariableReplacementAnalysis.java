@@ -421,6 +421,51 @@ public class VariableReplacementAnalysis {
 						map.put(replacement, list);
 					}
 				}
+				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS)) {
+					String before = replacement.getBefore().contains("[") ? replacement.getBefore().substring(0, replacement.getBefore().indexOf("[")) : replacement.getBefore();
+					String after = replacement.getAfter().contains("[") ? replacement.getAfter().substring(0, replacement.getAfter().indexOf("[")) : replacement.getAfter();
+					Replacement variableReplacement = new Replacement(before, after, ReplacementType.VARIABLE_NAME);
+					if(!returnVariableMapping(mapping, replacement) &&
+							!containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(mapping.getReplacements()) &&
+							replacementNotInsideMethodSignatureOfAnonymousClass(mapping, replacement)) {
+						if(map.containsKey(variableReplacement)) {
+							map.get(variableReplacement).add(mapping);
+						}
+						else {
+							Set<AbstractCodeMapping> list = new LinkedHashSet<AbstractCodeMapping>();
+							list.add(mapping);
+							map.put(variableReplacement, list);
+						}
+					}
+				}
+				else if(replacement.getType().equals(ReplacementType.METHOD_INVOCATION)) {
+					MethodInvocationReplacement methodInvocationReplacement = (MethodInvocationReplacement)replacement;
+					OperationInvocation invocation1 = methodInvocationReplacement.getInvokedOperationBefore();
+					OperationInvocation invocation2 = methodInvocationReplacement.getInvokedOperationAfter();
+					if(invocation1.getName().equals(invocation2.getName()) && invocation1.getArguments().size() == invocation2.getArguments().size()) {
+						for(int i=0; i<invocation1.getArguments().size(); i++) {
+							String argument1 = invocation1.getArguments().get(i);
+							String argument2 = invocation2.getArguments().get(i);
+							if(argument1.contains("[") || argument2.contains("[")) {
+								String before = argument1.contains("[") ? argument1.substring(0, argument1.indexOf("[")) : argument1;
+								String after = argument2.contains("[") ? argument2.substring(0, argument2.indexOf("[")) : argument2;
+								Replacement variableReplacement = new Replacement(before, after, ReplacementType.VARIABLE_NAME);
+								if(!returnVariableMapping(mapping, replacement) &&
+										!containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(mapping.getReplacements()) &&
+										replacementNotInsideMethodSignatureOfAnonymousClass(mapping, replacement)) {
+									if(map.containsKey(variableReplacement)) {
+										map.get(variableReplacement).add(mapping);
+									}
+									else {
+										Set<AbstractCodeMapping> list = new LinkedHashSet<AbstractCodeMapping>();
+										list.add(mapping);
+										map.put(variableReplacement, list);
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		return map;

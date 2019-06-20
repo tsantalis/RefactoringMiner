@@ -78,9 +78,15 @@ public class CodeRange {
 		encodeIntProperty(sb, "endColumn", endColumn, false);
 		encodeStringProperty(sb, "codeElementType", codeElementType.name(), false);
 		encodeStringProperty(sb, "description", description, false);
-		encodeStringProperty(sb, "codeElement", codeElement, true);
+		encodeStringProperty(sb, "codeElement", removeQuotes(codeElement), true);
 		sb.append("}");
 		return sb.toString();
+	}
+
+	private String removeQuotes(String s) {
+		if(s != null)
+			return s.replace("\"", "");
+		return s;
 	}
 
 	private void encodeStringProperty(StringBuilder sb, String propertyName, String value, boolean last) {

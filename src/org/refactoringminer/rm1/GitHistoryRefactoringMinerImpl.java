@@ -46,6 +46,8 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GHTree;
+import org.kohsuke.github.GHTreeEntry;
 import org.kohsuke.github.GitHub;
 import org.refactoringminer.api.Churn;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
@@ -165,10 +167,10 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty() && currentCommit.getParentCount() > 0) {
 				RevCommit parentCommit = currentCommit.getParent(0);
 				populateFileContents(repository, parentCommit, filePathsBefore, fileContentsBefore, repositoryDirectoriesBefore);
-				UMLModel parentUMLModel = createModel(projectFolder, fileContentsBefore, repositoryDirectoriesBefore);
+				UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
 
 				populateFileContents(repository, currentCommit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
-				UMLModel currentUMLModel = createModel(projectFolder, fileContentsCurrent, repositoryDirectoriesCurrent);
+				UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
 				
 				refactoringsAtRevision = parentUMLModel.diff(currentUMLModel, renamedFilesHint).getRefactorings();
 				refactoringsAtRevision = filter(refactoringsAtRevision);
@@ -372,8 +374,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 	}
 
-	protected UMLModel createModel(File projectFolder, Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
-		return new UMLModelASTReader(projectFolder, fileContents, repositoryDirectories).getUmlModel();
+	protected UMLModel createModel(Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
+		return new UMLModelASTReader(fileContents, repositoryDirectories).getUmlModel();
 	}
 
 	protected UMLModel createModel(File projectFolder, List<String> filePaths, Set<String> repositoryDirectories) throws Exception {
@@ -482,5 +484,164 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			walk.dispose();
 		}
 		return null;
+	}
+
+	@Override
+	public void detectAtCommit(String gitURL, String commitId, RefactoringHandler handler, int timeout) {
+		ExecutorService service = Executors.newSingleThreadExecutor();
+		Future<?> f = null;
+		try {
+			Runnable r = () -> detectRefactorings(handler, gitURL, commitId);
+			f = service.submit(r);
+			f.get(timeout, TimeUnit.SECONDS);
+		} catch (TimeoutException e) {
+			f.cancel(true);
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} finally {
+			service.shutdown();
+		}
+	}
+
+	protected List<Refactoring> detectRefactorings(final RefactoringHandler handler, String gitURL, String currentCommitId) {
+		List<Refactoring> refactoringsAtRevision = Collections.emptyList();
+		try {
+			Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+			Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+			Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+			Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+			Map<String, String> renamedFilesHint = new HashMap<String, String>();
+			populateWithGitHubAPI(gitURL, currentCommitId, fileContentsBefore, fileContentsCurrent, renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent);
+			UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
+			UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
+			//  Diff between currentModel e parentModel
+			refactoringsAtRevision = parentUMLModel.diff(currentUMLModel, renamedFilesHint).getRefactorings();
+			refactoringsAtRevision = filter(refactoringsAtRevision);
+			System.out.println(JSON(gitURL, currentCommitId, refactoringsAtRevision));
+		}
+		catch(RefactoringMinerTimedOutException e) {
+			logger.warn(String.format("Ignored revision %s due to timeout", currentCommitId), e);
+			handler.handleException(currentCommitId, e);
+		}
+		catch (Exception e) {
+			logger.warn(String.format("Ignored revision %s due to error", currentCommitId), e);
+			handler.handleException(currentCommitId, e);
+		}
+		handler.handle(currentCommitId, refactoringsAtRevision);
+
+		return refactoringsAtRevision;
+	}
+
+	private String JSON(String cloneURL, String currentCommitId, List<Refactoring> refactoringsAtRevision) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{").append("\n");
+		sb.append("\"").append("commits").append("\"").append(": ");
+		sb.append("[");
+		sb.append("{");
+		sb.append("\t").append("\"").append("repository").append("\"").append(": ").append("\"").append(cloneURL).append("\"").append(",").append("\n");
+		sb.append("\t").append("\"").append("sha1").append("\"").append(": ").append("\"").append(currentCommitId).append("\"").append(",").append("\n");
+		String url = "https://github.com/" + cloneURL.substring(19, cloneURL.indexOf(".git")) + "/commit/" + currentCommitId;
+		sb.append("\t").append("\"").append("url").append("\"").append(": ").append("\"").append(url).append("\"").append(",").append("\n");
+		sb.append("\t").append("\"").append("refactorings").append("\"").append(": ");
+		sb.append("[");
+		int counter = 0;
+		for(Refactoring refactoring : refactoringsAtRevision) {
+			sb.append(refactoring.toJSON());
+			if(counter < refactoringsAtRevision.size()-1) {
+				sb.append(",");
+			}
+			sb.append("\n");
+			counter++;
+		}
+		sb.append("]");
+		sb.append("}");
+		sb.append("]").append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
+
+	private void populateWithGitHubAPI(String cloneURL, String currentCommitId,
+			Map<String, String> filesBefore, Map<String, String> filesCurrent, Map<String, String> renamedFilesHint,
+			Set<String> repositoryDirectoriesBefore, Set<String> repositoryDirectoriesCurrent) throws IOException {
+		Properties prop = new Properties();
+		InputStream input = new FileInputStream("github-credentials.properties");
+		prop.load(input);
+		String username = prop.getProperty("username");
+		String password = prop.getProperty("password");
+		String parentCommitId = null;
+		GitHub gitHub = null;
+		if (username != null && password != null) {
+			gitHub = GitHub.connectUsingPassword(username, password);
+		}
+		else {
+			gitHub = GitHub.connect();
+		}
+		//https://github.com/ is 19 chars
+		String repoName = cloneURL.substring(19, cloneURL.indexOf(".git"));
+		GHRepository repository = gitHub.getRepository(repoName);
+		GHCommit currentCommit = repository.getCommit(currentCommitId);
+		parentCommitId = currentCommit.getParents().get(0).getSHA1();
+		List<GHCommit.File> commitFiles = currentCommit.getFiles();
+		for (GHCommit.File commitFile : commitFiles) {
+			if (commitFile.getFileName().endsWith(".java")) {
+				if (commitFile.getStatus().equals("modified")) {
+					URL currentRawURL = commitFile.getRawUrl();
+					InputStream currentRawFileInputStream = currentRawURL.openStream();
+					String currentRawFile = IOUtils.toString(currentRawFileInputStream);
+					String rawURLInParentCommit = currentRawURL.toString().replace(currentCommitId, parentCommitId);
+					InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
+					String parentRawFile = IOUtils.toString(parentRawFileInputStream);
+					filesBefore.put(commitFile.getFileName(), parentRawFile);
+					filesCurrent.put(commitFile.getFileName(), currentRawFile);
+				}
+				else if (commitFile.getStatus().equals("added")) {
+					URL currentRawURL = commitFile.getRawUrl();
+					InputStream currentRawFileInputStream = currentRawURL.openStream();
+					String currentRawFile = IOUtils.toString(currentRawFileInputStream);
+					filesCurrent.put(commitFile.getFileName(), currentRawFile);
+				}
+				else if (commitFile.getStatus().equals("removed")) {
+					URL rawURL = commitFile.getRawUrl();
+					InputStream rawFileInputStream = rawURL.openStream();
+					String rawFile = IOUtils.toString(rawFileInputStream);
+					filesBefore.put(commitFile.getFileName(), rawFile);
+				}
+				else if (commitFile.getStatus().equals("renamed")) {
+					URL currentRawURL = commitFile.getRawUrl();
+					InputStream currentRawFileInputStream = currentRawURL.openStream();
+					String currentRawFile = IOUtils.toString(currentRawFileInputStream);
+					String rawURLInParentCommit = currentRawURL.toString().replace(currentCommitId, parentCommitId).replace(commitFile.getFileName(), commitFile.getPreviousFilename());
+					InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
+					String parentRawFile = IOUtils.toString(parentRawFileInputStream);
+					filesBefore.put(commitFile.getPreviousFilename(), parentRawFile);
+					filesCurrent.put(commitFile.getFileName(), currentRawFile);
+					renamedFilesHint.put(commitFile.getPreviousFilename(), commitFile.getFileName());
+				}
+			}
+		}
+		//repositoryDirectories(currentCommit.getTree(), "", repositoryDirectoriesCurrent);
+		//GHCommit parentCommit = repository.getCommit(parentCommitId);
+		//repositoryDirectories(parentCommit.getTree(), "", repositoryDirectoriesBefore);
+	}
+
+	private void repositoryDirectories(GHTree tree, String pathFromRoot, Set<String> repositoryDirectories) throws IOException {
+		for(GHTreeEntry entry : tree.getTree()) {
+			String path = null;
+			if(pathFromRoot.equals("")) {
+				path = entry.getPath();
+			}
+			else {
+				path = pathFromRoot + "/" + entry.getPath();
+			}
+			GHTree asTree = entry.asTree();
+			if(asTree != null) {
+				repositoryDirectories(asTree, path, repositoryDirectories);
+			}
+			else if(path.endsWith(".java")) {
+				repositoryDirectories.add(path.substring(0, path.lastIndexOf("/")));
+			}
+		}
 	}
 }

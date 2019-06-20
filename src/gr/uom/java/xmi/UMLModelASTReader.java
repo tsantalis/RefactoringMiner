@@ -52,9 +52,8 @@ public class UMLModelASTReader {
 	private String projectRoot;
 	private ASTParser parser;
 
-	public UMLModelASTReader(File rootFolder, Map<String, String> javaFileContents, Set<String> repositoryDirectories) {
+	public UMLModelASTReader(Map<String, String> javaFileContents, Set<String> repositoryDirectories) {
 		this.umlModel = new UMLModel(repositoryDirectories);
-		this.projectRoot = rootFolder.getPath();
 		this.parser = ASTParser.newParser(AST.JLS11);
 		for(String filePath : javaFileContents.keySet()) {
 			Map<String, String> options = JavaCore.getOptions();

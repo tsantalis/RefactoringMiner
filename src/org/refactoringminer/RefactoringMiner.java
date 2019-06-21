@@ -37,6 +37,8 @@ public class RefactoringMiner {
 			detectBetweenTags(args);
 		} else if (option.equalsIgnoreCase("-c")) {
 			detectAtCommit(args);
+		} else if (option.equalsIgnoreCase("-gc")) {
+			detectAtGitHubCommit(args);
 		} else {
 			throw argumentException();
 		}
@@ -221,16 +223,68 @@ public class RefactoringMiner {
 		}
 	}
 
+	private static void detectAtGitHubCommit(String[] args) throws Exception {
+		if (args.length != 4) {
+			throw argumentException();
+		}
+		String gitURL = args[1];
+		String commitId = args[2];
+		int timeout = Integer.parseInt(args[3]);
+		GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
+		detector.detectAtCommit(gitURL, commitId, new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				System.out.println(JSON(gitURL, commitId, refactorings));
+			}
+
+			@Override
+			public void handleException(String commit, Exception e) {
+				System.err.println("Error processing commit " + commit);
+				e.printStackTrace(System.err);
+			}
+		}, timeout);
+	}
+
+	private static String JSON(String cloneURL, String currentCommitId, List<Refactoring> refactoringsAtRevision) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{").append("\n");
+		sb.append("\"").append("commits").append("\"").append(": ");
+		sb.append("[");
+		sb.append("{");
+		sb.append("\t").append("\"").append("repository").append("\"").append(": ").append("\"").append(cloneURL).append("\"").append(",").append("\n");
+		sb.append("\t").append("\"").append("sha1").append("\"").append(": ").append("\"").append(currentCommitId).append("\"").append(",").append("\n");
+		String url = "https://github.com/" + cloneURL.substring(19, cloneURL.indexOf(".git")) + "/commit/" + currentCommitId;
+		sb.append("\t").append("\"").append("url").append("\"").append(": ").append("\"").append(url).append("\"").append(",").append("\n");
+		sb.append("\t").append("\"").append("refactorings").append("\"").append(": ");
+		sb.append("[");
+		int counter = 0;
+		for(Refactoring refactoring : refactoringsAtRevision) {
+			sb.append(refactoring.toJSON());
+			if(counter < refactoringsAtRevision.size()-1) {
+				sb.append(",");
+			}
+			sb.append("\n");
+			counter++;
+		}
+		sb.append("]");
+		sb.append("}");
+		sb.append("]").append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
+
 	private static void printTips() {
 		System.out.println("-h\t\t\t\t\t\t\t\tShow tips");
 		System.out.println(
 				"-a <git-repo-folder> <branch>\t\t\t\t\tDetect all refactorings at <branch> for <git-repo-folder>. If <branch> is not specified, commits from all branches are analyzed.");
 		System.out.println(
-				"-bc <git-repo-folder> <start-commit-sha1> <end-commit-sha1>\tDetect refactorings Between <star-commit-sha1> and <end-commit-sha1> for project <git-repo-folder>");
+				"-bc <git-repo-folder> <start-commit-sha1> <end-commit-sha1>\tDetect refactorings Between <start-commit-sha1> and <end-commit-sha1> for project <git-repo-folder>");
 		System.out.println(
 				"-bt <git-repo-folder> <start-tag> <end-tag>\t\t\tDetect refactorings Between <start-tag> and <end-tag> for project <git-repo-folder>");
 		System.out.println(
 				"-c <git-repo-folder> <commit-sha1>\t\t\t\tDetect refactorings at specified commit <commit-sha1> for project <git-repo-folder>");
+		System.out.println(
+				"-gc <git-URL> <commit-sha1> <timeout>\t\t\t\tDetect refactorings at specified commit <commit-sha1> for project <git-URL> within the given <timeout> in seconds. All required information is obtained directly from GitHub using the credentials in github-credentials.properties");
 	}
 
 	private static IllegalArgumentException argumentException() {

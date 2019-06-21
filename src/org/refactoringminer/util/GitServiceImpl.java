@@ -174,7 +174,7 @@ public class GitServiceImpl implements GitService {
 
 	public RevWalk fetchAndCreateNewRevsWalk(Repository repository, String branch) throws Exception {
 		List<ObjectId> currentRemoteRefs = new ArrayList<ObjectId>(); 
-		for (Ref ref : repository.getAllRefs().values()) {
+		for (Ref ref : repository.getRefDatabase().getRefs()) {
 			String refName = ref.getName();
 			if (refName.startsWith(REMOTE_REFS_PREFIX)) {
 				currentRemoteRefs.add(ref.getObjectId());
@@ -202,7 +202,7 @@ public class GitServiceImpl implements GitService {
 
 	public RevWalk createAllRevsWalk(Repository repository, String branch) throws Exception {
 		List<ObjectId> currentRemoteRefs = new ArrayList<ObjectId>(); 
-		for (Ref ref : repository.getAllRefs().values()) {
+		for (Ref ref : repository.getRefDatabase().getRefs()) {
 			String refName = ref.getName();
 			if (refName.startsWith(REMOTE_REFS_PREFIX)) {
 				if (branch == null || refName.endsWith("/" + branch)) {

@@ -297,6 +297,9 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		GitHub gitHub = null;
 		if (username != null && password != null) {
 			gitHub = GitHub.connectUsingPassword(username, password);
+			if(gitHub.isCredentialValid()) {
+				logger.info("Connected to GitHub with account: " + username);
+			}
 		}
 		else {
 			gitHub = GitHub.connect();
@@ -519,7 +522,6 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			//  Diff between currentModel e parentModel
 			refactoringsAtRevision = parentUMLModel.diff(currentUMLModel, renamedFilesHint).getRefactorings();
 			refactoringsAtRevision = filter(refactoringsAtRevision);
-			System.out.println(JSON(gitURL, currentCommitId, refactoringsAtRevision));
 		}
 		catch(RefactoringMinerTimedOutException e) {
 			logger.warn(String.format("Ignored revision %s due to timeout", currentCommitId), e);
@@ -534,34 +536,6 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return refactoringsAtRevision;
 	}
 
-	private String JSON(String cloneURL, String currentCommitId, List<Refactoring> refactoringsAtRevision) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("{").append("\n");
-		sb.append("\"").append("commits").append("\"").append(": ");
-		sb.append("[");
-		sb.append("{");
-		sb.append("\t").append("\"").append("repository").append("\"").append(": ").append("\"").append(cloneURL).append("\"").append(",").append("\n");
-		sb.append("\t").append("\"").append("sha1").append("\"").append(": ").append("\"").append(currentCommitId).append("\"").append(",").append("\n");
-		String url = "https://github.com/" + cloneURL.substring(19, cloneURL.indexOf(".git")) + "/commit/" + currentCommitId;
-		sb.append("\t").append("\"").append("url").append("\"").append(": ").append("\"").append(url).append("\"").append(",").append("\n");
-		sb.append("\t").append("\"").append("refactorings").append("\"").append(": ");
-		sb.append("[");
-		int counter = 0;
-		for(Refactoring refactoring : refactoringsAtRevision) {
-			sb.append(refactoring.toJSON());
-			if(counter < refactoringsAtRevision.size()-1) {
-				sb.append(",");
-			}
-			sb.append("\n");
-			counter++;
-		}
-		sb.append("]");
-		sb.append("}");
-		sb.append("]").append("\n");
-		sb.append("}");
-		return sb.toString();
-	}
-
 	private void populateWithGitHubAPI(String cloneURL, String currentCommitId,
 			Map<String, String> filesBefore, Map<String, String> filesCurrent, Map<String, String> renamedFilesHint,
 			Set<String> repositoryDirectoriesBefore, Set<String> repositoryDirectoriesCurrent) throws IOException {
@@ -574,6 +548,9 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		GitHub gitHub = null;
 		if (username != null && password != null) {
 			gitHub = GitHub.connectUsingPassword(username, password);
+			if(gitHub.isCredentialValid()) {
+				logger.info("Connected to GitHub with account: " + username);
+			}
 		}
 		else {
 			gitHub = GitHub.connect();

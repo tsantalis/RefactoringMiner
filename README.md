@@ -161,8 +161,21 @@ UMLModelDiff modelDiff = model1.diff(model2);
 List<Refactoring> refactorings = modelDiff.getRefactorings();
 ```
 
-Note that by doing this you may get different results from the git history analysis, because
-the latter uses information from git to better identify moves and renames.
+Finally, if you don't want to clone locally the repository, you can use the following code snippet:
+
+```java
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+miner.detectAtCommit("https://github.com/danilofes/refactoring-toy-example.git",
+    "36287f7c3b09eff78395267a3ac0d7da067863fd", new RefactoringHandler() {
+  @Override
+  public void handle(RevCommit commitData, List<Refactoring> refactorings) {
+    for (Refactoring ref : refactorings) {
+      System.out.println(ref.toString());
+    }
+  }
+}, 10);
+```
+Please make sure to provide valid GitHub credentials in the `github-credentials.properties` file.
 
 ## Location information for the detected refactorings ##
 All classes implementing the `Refactoring` interface include refactoring-specific location information.
@@ -255,9 +268,10 @@ When you build a distributable application with `./gradlew distZip`, you can run
 
 	-h															Show tips
 	-a <git-repo-folder> <branch>								Detect all refactorings at <branch> for <git-repo-folder>. If <branch> is not specified, commits from all branches are analyzed.
-	-bc <git-repo-folder> <start-commit-sha1> <end-commit-sha1>	Detect refactorings Between <star-commit-sha1> and <end-commit-sha1> for project <git-repo-folder>
+	-bc <git-repo-folder> <start-commit-sha1> <end-commit-sha1>	Detect refactorings Between <start-commit-sha1> and <end-commit-sha1> for project <git-repo-folder>
 	-bt <git-repo-folder> <start-tag> <end-tag>					Detect refactorings Between <start-tag> and <end-tag> for project <git-repo-folder>
 	-c <git-repo-folder> <commit-sha1>							Detect refactorings at specified commit <commit-sha1> for project <git-repo-folder>
+	-gc <git-URL> <commit-sha1> <timeout>				Detect refactorings at specified commit <commit-sha1> for project <git-URL> within the given <timeout> in seconds. All required information is obtained directly from GitHub using the credentials in github-credentials.properties
 	
 For example, suppose that you run:
 
@@ -273,3 +287,114 @@ The output would be:
       Pull Up Method        public getAge() : int from class org.animals.Poodle to public getAge() : int from class org.animals.Dog
 
 When you run Refactoring with `-a`, `-bc`, `-bt`, after all commits are analyzed, a result `csv` file which use semicolon `;` as delimiter will be generated in the repository directory.
+
+If you don't want to clone locally the repository, run:
+
+    > RefactoringMiner -gc https://github.com/danilofes/refactoring-toy-example.git 36287f7c3b09eff78395267a3ac0d7da067863fd 10
+
+and you will get the output in JSON format:
+
+    {
+	"commits": [{
+		"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+		"sha1": "36287f7c3b09eff78395267a3ac0d7da067863fd",
+		"url": "https://github.com/danilofes/refactoring-toy-example/commit/36287f7c3b09eff78395267a3ac0d7da067863fd",
+		"refactorings": [{
+				"type": "Pull Up Attribute",
+				"description": "Pull Up Attribute private age : int from class org.animals.Labrador to class org.animals.Dog",
+				"leftSideLocations": [{
+					"filePath": "src/org/animals/Labrador.java",
+					"startLine": 5,
+					"endLine": 5,
+					"startColumn": 14,
+					"endColumn": 21,
+					"codeElementType": "FIELD_DECLARATION",
+					"description": "original attribute declaration",
+					"codeElement": "age : int"
+				}],
+				"rightSideLocations": [{
+					"filePath": "src/org/animals/Dog.java",
+					"startLine": 5,
+					"endLine": 5,
+					"startColumn": 14,
+					"endColumn": 21,
+					"codeElementType": "FIELD_DECLARATION",
+					"description": "pulled up attribute declaration",
+					"codeElement": "age : int"
+				}]
+			},
+			{
+				"type": "Pull Up Attribute",
+				"description": "Pull Up Attribute private age : int from class org.animals.Poodle to class org.animals.Dog",
+				"leftSideLocations": [{
+					"filePath": "src/org/animals/Poodle.java",
+					"startLine": 5,
+					"endLine": 5,
+					"startColumn": 14,
+					"endColumn": 21,
+					"codeElementType": "FIELD_DECLARATION",
+					"description": "original attribute declaration",
+					"codeElement": "age : int"
+				}],
+				"rightSideLocations": [{
+					"filePath": "src/org/animals/Dog.java",
+					"startLine": 5,
+					"endLine": 5,
+					"startColumn": 14,
+					"endColumn": 21,
+					"codeElementType": "FIELD_DECLARATION",
+					"description": "pulled up attribute declaration",
+					"codeElement": "age : int"
+				}]
+			},
+			{
+				"type": "Pull Up Method",
+				"description": "Pull Up Method public getAge() : int from class org.animals.Labrador to public getAge() : int from class org.animals.Dog",
+				"leftSideLocations": [{
+					"filePath": "src/org/animals/Labrador.java",
+					"startLine": 7,
+					"endLine": 9,
+					"startColumn": 2,
+					"endColumn": 3,
+					"codeElementType": "METHOD_DECLARATION",
+					"description": "original method declaration",
+					"codeElement": "public getAge() : int"
+				}],
+				"rightSideLocations": [{
+					"filePath": "src/org/animals/Dog.java",
+					"startLine": 7,
+					"endLine": 9,
+					"startColumn": 2,
+					"endColumn": 3,
+					"codeElementType": "METHOD_DECLARATION",
+					"description": "pulled up method declaration",
+					"codeElement": "public getAge() : int"
+				}]
+			},
+			{
+				"type": "Pull Up Method",
+				"description": "Pull Up Method public getAge() : int from class org.animals.Poodle to public getAge() : int from class org.animals.Dog",
+				"leftSideLocations": [{
+					"filePath": "src/org/animals/Poodle.java",
+					"startLine": 7,
+					"endLine": 9,
+					"startColumn": 2,
+					"endColumn": 3,
+					"codeElementType": "METHOD_DECLARATION",
+					"description": "original method declaration",
+					"codeElement": "public getAge() : int"
+				}],
+				"rightSideLocations": [{
+					"filePath": "src/org/animals/Dog.java",
+					"startLine": 7,
+					"endLine": 9,
+					"startColumn": 2,
+					"endColumn": 3,
+					"codeElementType": "METHOD_DECLARATION",
+					"description": "pulled up method declaration",
+					"codeElement": "public getAge() : int"
+				}]
+			}
+		]
+	}]
+	}

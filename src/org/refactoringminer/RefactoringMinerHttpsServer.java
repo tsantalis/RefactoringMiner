@@ -1,10 +1,12 @@
 package org.refactoringminer;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.URI;
+import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +14,12 @@ import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLEngine;
+import javax.net.ssl.SSLParameters;
+import javax.net.ssl.TrustManagerFactory;
 
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.Refactoring;
@@ -21,12 +29,52 @@ import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
+import com.sun.net.httpserver.HttpsConfigurator;
+import com.sun.net.httpserver.HttpsParameters;
+import com.sun.net.httpserver.HttpsServer;
 
-public class RefactoringMinerHttpServer {
+public class RefactoringMinerHttpsServer {
 
 	public static void main(String[] args) throws Exception {
-		HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+		HttpsServer server = HttpsServer.create(new InetSocketAddress(8000), 0);
+		SSLContext sslContext = SSLContext.getInstance("TLS");
+
+		// initialize the keystore
+		char[] password = "password".toCharArray();
+		KeyStore ks = KeyStore.getInstance("JKS");
+		FileInputStream fis = new FileInputStream("keystore.jks");
+		ks.load(fis, password);
+
+		// setup the key manager factory
+		KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
+		kmf.init(ks, password);
+
+		// setup the trust manager factory
+		TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
+		tmf.init(ks);
+
+		// setup the HTTPS context and parameters
+		sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
+		server.setHttpsConfigurator(new HttpsConfigurator(sslContext) {
+			public void configure(HttpsParameters params) {
+				try {
+					// initialize the SSL context
+					SSLContext context = getSSLContext();
+					SSLEngine engine = context.createSSLEngine();
+					params.setNeedClientAuth(false);
+					params.setCipherSuites(engine.getEnabledCipherSuites());
+					params.setProtocols(engine.getEnabledProtocols());
+
+					// Set the SSL parameters
+					SSLParameters sslParameters = context.getSupportedSSLParameters();
+					params.setSSLParameters(sslParameters);
+
+				} catch (Exception ex) {
+					System.out.println("Failed to create HTTPS port");
+				}
+			}
+		});
+		
 		server.createContext("/RefactoringMiner", new MyHandler());
 		server.setExecutor(new ThreadPoolExecutor(4, 8, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(100)));
 		server.start();

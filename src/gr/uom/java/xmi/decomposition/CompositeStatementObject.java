@@ -410,4 +410,31 @@ public class CompositeStatementObject extends AbstractStatement {
 	public CodeRange codeRange() {
 		return locationInfo.codeRange();
 	}
+
+	public CompositeStatementObject loopWithVariables(String currentElementName, String collectionName) {
+		for(CompositeStatementObject innerNode : getInnerNodes()) {
+			if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+				boolean currentElementNameMatched = false;
+				for(VariableDeclaration declaration : innerNode.getVariableDeclarations()) {
+					if(declaration.getVariableName().equals(currentElementName)) {
+						currentElementNameMatched = true;
+						break;
+					}
+				}
+				boolean collectionNameMatched = false;
+				for(AbstractExpression expression : innerNode.getExpressions()) {
+					for(String variableName : expression.getVariables()) {
+						if(variableName.equals(collectionName)) {
+							collectionNameMatched = true;
+							break;
+						}
+					}
+				}
+				if(currentElementNameMatched && collectionNameMatched) {
+					return innerNode;
+				}
+			}
+		}
+		return null;
+	}
 }

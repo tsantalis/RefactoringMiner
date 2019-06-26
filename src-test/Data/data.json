@@ -13654,17 +13654,17 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable pKey : String to pKeys : String[] in method private getGeneratedKey(pst PreparedStatement, table Table, config Config) : void in class com.jfinal.plugin.activerecord.Model",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable pKey : String to pKeys : String[] in method public delete() : boolean in class com.jfinal.plugin.activerecord.Model",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter invocation : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.plugin.activerecord.OneConnectionPerThread",
@@ -13696,17 +13696,17 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable columnsArray : String[] to sql : StringBuilder in method public forDbFindById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable columnsArray : String[] to sql : StringBuilder in method public forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public abstract forDbFindById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.Dialect",
@@ -13787,10 +13787,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable columnsArray : String[] to sql : StringBuilder in method public forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbFindById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect",
@@ -13959,6 +13959,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable pKey : String to pKeys : String[] in method public update() : boolean in class com.jfinal.plugin.activerecord.Model",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type pKey : String to pKeys : String[] in method private getGeneratedKey(pst PreparedStatement, table Table, config Config) : void in class com.jfinal.plugin.activerecord.Model",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type pKey : String to pKeys : String[] in method public update() : boolean in class com.jfinal.plugin.activerecord.Model",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1822
 }, {
@@ -40309,9 +40330,16 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable annotation : LineAnnotation to annotationList : List<LineAnnotation> in method private createLabel(instruction BytecodeInstruction, maxOffset int, line int, annotations Map<Integer,List<LineAnnotation>>, member IMetaMember, lineIndex int) : BytecodeLabel in class org.adoptopenjdk.jitwatch.ui.triview.bytecode.ViewerBytecode",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type annotation : LineAnnotation to annotationList : List<LineAnnotation> in method private createLabel(instruction BytecodeInstruction, maxOffset int, line int, annotations Map<Integer,List<LineAnnotation>>, member IMetaMember, lineIndex int) : BytecodeLabel in class org.adoptopenjdk.jitwatch.ui.triview.bytecode.ViewerBytecode",
         "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 686

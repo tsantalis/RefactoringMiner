@@ -38,6 +38,8 @@ public class VariableReplacementAnalysis {
 	private Set<AbstractCodeMapping> mappings;
 	private List<StatementObject> nonMappedLeavesT1;
 	private List<StatementObject> nonMappedLeavesT2;
+	private List<CompositeStatementObject> nonMappedInnerNodesT1;
+	private List<CompositeStatementObject> nonMappedInnerNodesT2;
 	private UMLOperation operation1;
 	private UMLOperation operation2;
 	private List<UMLOperationBodyMapper> childMappers;
@@ -55,6 +57,8 @@ public class VariableReplacementAnalysis {
 		this.mappings = mapper.getMappings();
 		this.nonMappedLeavesT1 = mapper.getNonMappedLeavesT1();
 		this.nonMappedLeavesT2 = mapper.getNonMappedLeavesT2();
+		this.nonMappedInnerNodesT1 = mapper.getNonMappedInnerNodesT1();
+		this.nonMappedInnerNodesT2 = mapper.getNonMappedInnerNodesT2();
 		this.operation1 = mapper.getOperation1();
 		this.operation2 = mapper.getOperation2();
 		this.childMappers = mapper.getChildMappers();
@@ -633,7 +637,7 @@ public class VariableReplacementAnalysis {
 		return v1 != null && v2 != null &&
 				v1.equalVariableDeclarationType(v2) &&
 				!containsVariableDeclarationWithName(operation1.getAllVariableDeclarations(), v2.getVariableName()) &&
-				!containsVariableDeclarationWithName(operation2.getAllVariableDeclarations(), v1.getVariableName()) &&
+				(!containsVariableDeclarationWithName(operation2.getAllVariableDeclarations(), v1.getVariableName()) || operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) != null) &&
 				consistencyCheck(v1, v2);
 	}
 
@@ -657,7 +661,8 @@ public class VariableReplacementAnalysis {
 						!variableDeclarations1.contains(v1)) {
 					return true;
 				}
-				if(mapping.isExact() && (bothFragmentsUseVariable(v1, mapping) || bothFragmentsUseVariable(v2, mapping))) {
+				if(mapping.isExact() && (bothFragmentsUseVariable(v1, mapping) || bothFragmentsUseVariable(v2, mapping)) &&
+						operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) == null) {
 					return true;
 				}
 			}

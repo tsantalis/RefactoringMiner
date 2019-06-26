@@ -2,6 +2,7 @@ package org.refactoringminer;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -36,13 +38,22 @@ import com.sun.net.httpserver.HttpsServer;
 public class RefactoringMinerHttpsServer {
 
 	public static void main(String[] args) throws Exception {
-		HttpsServer server = HttpsServer.create(new InetSocketAddress(8000), 0);
+		Properties prop = new Properties();
+		InputStream input = new FileInputStream("server.properties");
+		prop.load(input);
+		String hostName = prop.getProperty("hostname");
+		int port = Integer.parseInt(prop.getProperty("port"));
+		String keystore = prop.getProperty("keystore");
+		String keyStorePass = prop.getProperty("keystore-password");
+		
+		InetSocketAddress inetSocketAddress = new InetSocketAddress(InetAddress.getByName(hostName), port);
+		HttpsServer server = HttpsServer.create(inetSocketAddress, 0);
 		SSLContext sslContext = SSLContext.getInstance("TLS");
 
 		// initialize the keystore
-		char[] password = "password".toCharArray();
+		char[] password = keyStorePass.toCharArray();
 		KeyStore ks = KeyStore.getInstance("JKS");
-		FileInputStream fis = new FileInputStream("keystore.jks");
+		FileInputStream fis = new FileInputStream(keystore);
 		ks.load(fis, password);
 
 		// setup the key manager factory

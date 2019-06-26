@@ -1,6 +1,8 @@
 package org.refactoringminer;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -26,7 +29,14 @@ import com.sun.net.httpserver.HttpServer;
 public class RefactoringMinerHttpServer {
 
 	public static void main(String[] args) throws Exception {
-		HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+		Properties prop = new Properties();
+		InputStream input = new FileInputStream("server.properties");
+		prop.load(input);
+		String hostName = prop.getProperty("hostname");
+		int port = Integer.parseInt(prop.getProperty("port"));
+		
+		InetSocketAddress inetSocketAddress = new InetSocketAddress(InetAddress.getByName(hostName), port);
+		HttpServer server = HttpServer.create(inetSocketAddress, 0);
 		server.createContext("/RefactoringMiner", new MyHandler());
 		server.setExecutor(new ThreadPoolExecutor(4, 8, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(100)));
 		server.start();

@@ -423,11 +423,30 @@ public class CompositeStatementObject extends AbstractStatement {
 				}
 				boolean collectionNameMatched = false;
 				for(AbstractExpression expression : innerNode.getExpressions()) {
-					for(String variableName : expression.getVariables()) {
-						if(variableName.equals(collectionName)) {
-							collectionNameMatched = true;
-							break;
-						}
+					if(expression.getVariables().contains(collectionName)) {
+						collectionNameMatched = true;
+						break;
+					}
+				}
+				if(currentElementNameMatched && collectionNameMatched) {
+					return innerNode;
+				}
+			}
+			else if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
+					innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT)) {
+				boolean collectionNameMatched = false;
+				for(AbstractExpression expression : innerNode.getExpressions()) {
+					if(expression.getVariables().contains(collectionName)) {
+						collectionNameMatched = true;
+						break;
+					}
+				}
+				boolean currentElementNameMatched = false;
+				for(StatementObject statement : innerNode.getLeaves()) {
+					VariableDeclaration variableDeclaration = statement.getVariableDeclaration(currentElementName);
+					if(variableDeclaration != null && statement.getVariables().contains(collectionName)) {
+						currentElementNameMatched = true;
+						break;
 					}
 				}
 				if(currentElementNameMatched && collectionNameMatched) {

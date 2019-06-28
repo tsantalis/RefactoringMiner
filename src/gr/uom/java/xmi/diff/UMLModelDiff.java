@@ -416,6 +416,14 @@ public class UMLModelDiff {
 			   }
 			   if(!repositoryDirectories.contains(removedClassSourceFolder)) {
 				   deletedFolderPaths.add(removedClassSourceFolder);
+				   //add deleted sub-directories
+				   String subDirectory = new String(removedClassSourceFolder);
+				   while(subDirectory.contains("/")) {
+					   subDirectory = subDirectory.substring(0, subDirectory.lastIndexOf("/"));
+					   if(!repositoryDirectories.contains(subDirectory)) {
+						   deletedFolderPaths.add(subDirectory);
+					   }
+				   }
 			   }
 			   if(matcher.match(removedClass, addedClass, renamedFile)) {
 				   if(!conflictingMoveOfTopLevelClass(removedClass, addedClass)) {
@@ -1112,9 +1120,9 @@ public class UMLModelDiff {
 		   if(moveClassRefactorings.size() > 1 && isSourcePackageDeleted(renamePackageRefactoring)) {
 			   refactorings.add(renamePackageRefactoring);
 		   }
-		   else {
+		   //else {
 			   refactorings.addAll(moveClassRefactorings);
-		   }
+		   //}
 	   }
 	   refactorings.addAll(moveSourceFolderRefactorings);
 	   return refactorings;

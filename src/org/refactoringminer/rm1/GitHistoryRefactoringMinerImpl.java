@@ -203,7 +203,14 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					fileContents.put(pathString, writer.toString());
 				}
 				if(pathString.endsWith(".java")) {
-					repositoryDirectories.add(pathString.substring(0, pathString.lastIndexOf("/")));
+					String directory = pathString.substring(0, pathString.lastIndexOf("/"));
+					repositoryDirectories.add(directory);
+					//include sub-directories
+					String subDirectory = new String(directory);
+					while(subDirectory.contains("/")) {
+						subDirectory = subDirectory.substring(0, subDirectory.lastIndexOf("/"));
+						repositoryDirectories.add(subDirectory);
+					}
 				}
 			}
 		}
@@ -251,7 +258,14 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			String path = file.getPath();
 			String relativePath = path.substring(folder.getPath().length()+1, path.length()).replaceAll(systemFileSeparator, "/");
 			if(relativePath.endsWith(".java")) {
-				repositoryDirectories.add(relativePath.substring(0, relativePath.lastIndexOf("/")));
+				String directory = relativePath.substring(0, relativePath.lastIndexOf("/"));
+				repositoryDirectories.add(directory);
+				//include sub-directories
+				String subDirectory = new String(directory);
+				while(subDirectory.contains("/")) {
+					subDirectory = subDirectory.substring(0, subDirectory.lastIndexOf("/"));
+					repositoryDirectories.add(subDirectory);
+				}
 			}
 		}
 		return repositoryDirectories;
@@ -627,6 +641,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					repositoryDirectories.add(path);
 				}
 				else {
+					repositoryDirectories.add(path);
 					GHTree asTree = entry.asTree();
 					if(asTree != null) {
 						repositoryDirectories(asTree, path, repositoryDirectories, targetPaths);
@@ -638,7 +653,10 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 	private boolean atLeastOneStartsWith(Set<String> targetPaths, String path) {
 		for(String targetPath : targetPaths) {
-			if(targetPath.startsWith(path)) {
+			if(path.endsWith("/") && targetPath.startsWith(path)) {
+				return true;
+			}
+			else if(!path.endsWith("/") && targetPath.startsWith(path + "/")) {
 				return true;
 			}
 		}

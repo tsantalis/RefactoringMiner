@@ -24380,6 +24380,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Matin"
+    }, {
+        "type": "Change Package",
+        "description": "Change Package org.springframework.data.neo4j.integration to org.springframework.data.neo4j.examples",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -27172,6 +27179,20 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Change Package",
+        "description": "Change Package com.facebook to com.example",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Package",
+        "description": "Change Package com.facebook.samples to com.example",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 2914
@@ -39180,6 +39201,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
+    }, {
+        "type": "Change Package",
+        "description": "Change Package com.amazonaws.service to com.amazonaws.services",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -42381,6 +42409,20 @@
         "description": "Change Attribute Type ATTRIBUTES : SimpleAttributeDefinition[] to ATTRIBUTES : AttributeDefinition[] in class org.infinispan.server.jgroups.subsystem.SaslResourceDefinition",
         "comment": null,
         "validation": "UKN",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Package",
+        "description": "Change Package org.jboss.as.clustering to org.infinispan.server",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Package",
+        "description": "Change Package org.jboss.as.clustering to org.infinispan.server.commons",
+        "comment": null,
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],

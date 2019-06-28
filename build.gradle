@@ -2,6 +2,11 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'eclipse'
 
+apply plugin: "maven"
+
+group = "org.refactoringminer"
+version = "1.0"
+
 sourceSets {
     main {
         java {

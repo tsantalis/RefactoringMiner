@@ -401,14 +401,13 @@ and you will get the output in JSON format:
 
 
 
-# Use as a maven dependency:
+## Use as a maven dependency:
 
+In order to use RefactoringMiner as a maven dependency in your project, run `./gradlew install` and add the following dependency to your project:
 
-In order to use the library in your project, run ./gradlew install and add this dependency to your project:
-
-   <dependency>
+    <dependency>
       <groupId>org.refactoringminer</groupId>
       <artifactId>RefactoringMiner</artifactId>
       <version>1.0</version>
-   </dependency>
+    </dependency>
 

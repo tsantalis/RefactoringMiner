@@ -899,7 +899,7 @@ public class UMLModelDiff {
 	   if(attributeOfExtractedClassType != null)
 		   threshold = 0;
 	   if(commonOperations.size() > threshold || commonAttributes.size() > threshold) {
-		   return new ExtractClassRefactoring(umlClass, classDiff.getNextClass(), commonOperations, commonAttributes, attributeOfExtractedClassType);
+		   return new ExtractClassRefactoring(umlClass, classDiff.getOriginalClass(), commonOperations, commonAttributes, attributeOfExtractedClassType);
 	   }
 	   return null;
    }

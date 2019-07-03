@@ -159,14 +159,19 @@ public class ExtractAndMoveOperationRefactoring implements Refactoring {
 		ranges.add(getSourceOperationCodeRangeBeforeExtraction()
 				.setDescription("source method declaration before extraction")
 				.setCodeElement(sourceOperationBeforeExtraction.toString()));
-		ranges.add(getExtractedCodeRangeFromSourceOperation().setDescription("extracted code from source method declaration"));
+		CodeRange extractedCodeRangeFromSourceOperation = getExtractedCodeRangeFromSourceOperation();
+		ranges.add(extractedCodeRangeFromSourceOperation.setDescription("extracted code from source method declaration"));
 		for(StatementObject statement : bodyMapper.getNonMappedLeavesT1()) {
-			ranges.add(statement.codeRange().
-					setDescription("deleted statement in source method declaration"));
+			if(extractedCodeRangeFromSourceOperation.subsumes(statement.codeRange())) {
+				ranges.add(statement.codeRange().
+						setDescription("deleted statement in source method declaration"));
+			}
 		}
 		for(CompositeStatementObject statement : bodyMapper.getNonMappedInnerNodesT1()) {
-			ranges.add(statement.codeRange().
-					setDescription("deleted statement in source method declaration"));
+			if(extractedCodeRangeFromSourceOperation.subsumes(statement.codeRange())) {
+				ranges.add(statement.codeRange().
+						setDescription("deleted statement in source method declaration"));
+			}
 		}
 		return ranges;
 	}

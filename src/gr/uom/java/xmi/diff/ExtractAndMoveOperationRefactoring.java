@@ -168,7 +168,8 @@ public class ExtractAndMoveOperationRefactoring implements Refactoring {
 			}
 		}
 		for(CompositeStatementObject statement : bodyMapper.getNonMappedInnerNodesT1()) {
-			if(extractedCodeRangeFromSourceOperation.subsumes(statement.codeRange())) {
+			if(extractedCodeRangeFromSourceOperation.subsumes(statement.codeRange()) ||
+					extractedCodeRangeFromSourceOperation.subsumes(statement.getLeaves())) {
 				ranges.add(statement.codeRange().
 						setDescription("deleted statement in source method declaration"));
 			}

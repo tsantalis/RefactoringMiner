@@ -68,6 +68,12 @@ public class CodeRange {
 		return this;
 	}
 
+	public boolean subsumes(CodeRange other) {
+		return this.filePath.equals(other.filePath) &&
+				this.startLine <= other.startLine &&
+				this.endLine >= other.endLine;
+	}
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{").append("\n");

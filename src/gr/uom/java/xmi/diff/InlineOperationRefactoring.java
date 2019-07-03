@@ -193,7 +193,8 @@ public class InlineOperationRefactoring implements Refactoring {
 			}
 		}
 		for(CompositeStatementObject statement : bodyMapper.getNonMappedInnerNodesT2()) {
-			if(inlinedCodeRangeInTargetOperation.subsumes(statement.codeRange())) {
+			if(inlinedCodeRangeInTargetOperation.subsumes(statement.codeRange()) ||
+					inlinedCodeRangeInTargetOperation.subsumes(statement.getLeaves())) {
 				ranges.add(statement.codeRange().
 						setDescription("added statement in target method declaration"));
 			}

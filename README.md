@@ -79,8 +79,8 @@ Repository repo = gitService.cloneIfNotExists(
 
 miner.detectAll(repo, "master", new RefactoringHandler() {
   @Override
-  public void handle(RevCommit commitData, List<Refactoring> refactorings) {
-    System.out.println("Refactorings at " + commitData.getId().getName());
+  public void handle(String commitId, List<Refactoring> refactorings) {
+    System.out.println("Refactorings at " + commitId);
     for (Refactoring ref : refactorings) {
       System.out.println(ref.toString());
     }
@@ -98,8 +98,8 @@ miner.detectBetweenCommits(repo,
     "819b202bfb09d4142dece04d4039f1708735019b", "d4bce13a443cf12da40a77c16c1e591f4f985b47",
     new RefactoringHandler() {
   @Override
-  public void handle(RevCommit commitData, List<Refactoring> refactorings) {
-    System.out.println("Refactorings at " + commitData.getId().getName());
+  public void handle(String commitId, List<Refactoring> refactorings) {
+    System.out.println("Refactorings at " + commitId);
     for (Refactoring ref : refactorings) {
       System.out.println(ref.toString());
     }
@@ -113,8 +113,8 @@ miner.detectBetweenCommits(repo,
 // detectBetweenTags() will process merge commits, while detectAll() skips merge commits
 miner.detectBetweenTags(repo, "1.0", "1.1", new RefactoringHandler() {
   @Override
-  public void handle(RevCommit commitData, List<Refactoring> refactorings) {
-    System.out.println("Refactorings at " + commitData.getId().getName());
+  public void handle(String commitId, List<Refactoring> refactorings) {
+    System.out.println("Refactorings at " + commitId);
     for (Refactoring ref : refactorings) {
       System.out.println(ref.toString());
     }
@@ -129,8 +129,8 @@ is identified by its SHA key, such as in the example below:
 miner.detectAtCommit(repo, "https://github.com/danilofes/refactoring-toy-example.git",
     "05c1e773878bbacae64112f70964f4f2f7944398", new RefactoringHandler() {
   @Override
-  public void handle(RevCommit commitData, List<Refactoring> refactorings) {
-    System.out.println("Refactorings at " + commitData.getId().getName());
+  public void handle(String commitId, List<Refactoring> refactorings) {
+    System.out.println("Refactorings at " + commitId);
     for (Refactoring ref : refactorings) {
       System.out.println(ref.toString());
     }
@@ -169,7 +169,8 @@ GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 miner.detectAtCommit("https://github.com/danilofes/refactoring-toy-example.git",
     "36287f7c3b09eff78395267a3ac0d7da067863fd", new RefactoringHandler() {
   @Override
-  public void handle(RevCommit commitData, List<Refactoring> refactorings) {
+  public void handle(String commitId, List<Refactoring> refactorings) {
+    System.out.println("Refactorings at " + commitId);
     for (Refactoring ref : refactorings) {
       System.out.println(ref.toString());
     }

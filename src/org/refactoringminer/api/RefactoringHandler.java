@@ -2,8 +2,6 @@ package org.refactoringminer.api;
 
 import java.util.List;
 
-import org.eclipse.jgit.revwalk.RevCommit;
-
 /**
  * Handler object that works in conjunction with {@link org.refactoringminer.api.GitHistoryRefactoringMiner}.
  * 
@@ -20,15 +18,6 @@ public abstract class RefactoringHandler {
 	public boolean skipCommit(String commitId) {
 		return false;
 	}
-
-	/**
-	 * This method is called after each commit is analyzed.
-	 * You should override this method to do your custom logic with the list of detected refactorings.
-	 * 
-	 * @param commitData An object (from JGit library) that contains metadata information about the commit such as date, author, etc.
-	 * @param refactorings List of refactorings detected in the commit.
-	 */
-	public void handle(RevCommit commitData, List<Refactoring> refactorings) {}
 
 	/**
 	 * This method is called after each commit is analyzed.

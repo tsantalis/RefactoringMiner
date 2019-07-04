@@ -5,6 +5,7 @@ import gr.uom.java.xmi.UMLModelASTReader;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,10 +47,13 @@ import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.kohsuke.github.GHCommit;
+import org.kohsuke.github.GHPullRequest;
+import org.kohsuke.github.GHPullRequestCommitDetail;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHTree;
 import org.kohsuke.github.GHTreeEntry;
 import org.kohsuke.github.GitHub;
+import org.kohsuke.github.PagedIterable;
 import org.refactoringminer.api.Churn;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
@@ -65,6 +69,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 	Logger logger = LoggerFactory.getLogger(GitHistoryRefactoringMinerImpl.class);
 	private Set<RefactoringType> refactoringTypesToConsider = null;
+	private GitHub gitHub;
 	
 	public GitHistoryRefactoringMinerImpl() {
 		this.setRefactoringTypesToConsider(
@@ -180,7 +185,6 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				refactoringsAtRevision = Collections.emptyList();
 			}
 			handler.handle(commitId, refactoringsAtRevision);
-			handler.handle(currentCommit, refactoringsAtRevision);
 			
 			walk.dispose();
 		}
@@ -303,27 +307,13 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 	private String populateWithGitHubAPI(String cloneURL, String currentCommitId,
 			List<String> filesBefore, List<String> filesCurrent, Map<String, String> renamedFilesHint) throws IOException {
-		Properties prop = new Properties();
-		InputStream input = new FileInputStream("github-credentials.properties");
-		prop.load(input);
-		String username = prop.getProperty("username");
-		String password = prop.getProperty("password");
-		String parentCommitId = null;
-		GitHub gitHub = null;
-		if (username != null && password != null) {
-			gitHub = GitHub.connectUsingPassword(username, password);
-			if(gitHub.isCredentialValid()) {
-				logger.info("Connected to GitHub with account: " + username);
-			}
-		}
-		else {
-			gitHub = GitHub.connect();
-		}
+		logger.info("Processing {} {} ...", cloneURL, currentCommitId);
+		GitHub gitHub = connectToGitHub();
 		//https://github.com/ is 19 chars
 		String repoName = cloneURL.substring(19, cloneURL.indexOf(".git"));
 		GHRepository repository = gitHub.getRepository(repoName);
 		GHCommit commit = repository.getCommit(currentCommitId);
-		parentCommitId = commit.getParents().get(0).getSHA1();
+		String parentCommitId = commit.getParents().get(0).getSHA1();
 		List<GHCommit.File> commitFiles = commit.getFiles();
 		for (GHCommit.File commitFile : commitFiles) {
 			if (commitFile.getFileName().endsWith(".java")) {
@@ -345,6 +335,32 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			}
 		}
 		return parentCommitId;
+	}
+
+	private GitHub connectToGitHub() {
+		if(gitHub == null) {
+			try {
+				Properties prop = new Properties();
+				InputStream input = new FileInputStream("github-credentials.properties");
+				prop.load(input);
+				String username = prop.getProperty("username");
+				String password = prop.getProperty("password");
+				if (username != null && password != null) {
+					gitHub = GitHub.connectUsingPassword(username, password);
+					if(gitHub.isCredentialValid()) {
+						logger.info("Connected to GitHub with account: " + username);
+					}
+				}
+				else {
+					gitHub = GitHub.connect();
+				}
+			} catch(FileNotFoundException e) {
+				logger.warn("File github-credentials.properties was not found in RefactoringMiner's execution directory", e);
+			} catch(IOException ioe) {
+				ioe.printStackTrace();
+			}
+		}
+		return gitHub;
 	}
 
 	protected List<Refactoring> filter(List<Refactoring> refactoringsAtRevision) {
@@ -554,21 +570,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	private void populateWithGitHubAPI(String cloneURL, String currentCommitId,
 			Map<String, String> filesBefore, Map<String, String> filesCurrent, Map<String, String> renamedFilesHint,
 			Set<String> repositoryDirectoriesBefore, Set<String> repositoryDirectoriesCurrent) throws IOException, InterruptedException {
-		Properties prop = new Properties();
-		InputStream input = new FileInputStream("github-credentials.properties");
-		prop.load(input);
-		String username = prop.getProperty("username");
-		String password = prop.getProperty("password");
-		GitHub gitHub = null;
-		if (username != null && password != null) {
-			gitHub = GitHub.connectUsingPassword(username, password);
-			if(gitHub.isCredentialValid()) {
-				logger.info("Connected to GitHub with account: " + username);
-			}
-		}
-		else {
-			gitHub = GitHub.connect();
-		}
+		logger.info("Processing {} {} ...", cloneURL, currentCommitId);
+		GitHub gitHub = connectToGitHub();
 		//https://github.com/ is 19 chars
 		String repoName = cloneURL.substring(19, cloneURL.indexOf(".git"));
 		GHRepository repository = gitHub.getRepository(repoName);
@@ -717,4 +720,17 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 	}
 	*/
+
+	@Override
+	public void detectAtPullRequest(String cloneURL, int pullRequestId, RefactoringHandler handler, int timeout) throws IOException {
+		GitHub gitHub = connectToGitHub();
+		//https://github.com/ is 19 chars
+		String repoName = cloneURL.substring(19, cloneURL.indexOf(".git"));
+		GHRepository repository = gitHub.getRepository(repoName);
+		GHPullRequest pullRequest = repository.getPullRequest(pullRequestId);
+		PagedIterable<GHPullRequestCommitDetail> commits = pullRequest.listCommits();
+		for(GHPullRequestCommitDetail commit : commits) {
+			detectAtCommit(cloneURL, commit.getSha(), handler, timeout);
+		}
+	}
 }

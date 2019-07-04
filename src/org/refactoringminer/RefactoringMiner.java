@@ -39,6 +39,8 @@ public class RefactoringMiner {
 			detectAtCommit(args);
 		} else if (option.equalsIgnoreCase("-gc")) {
 			detectAtGitHubCommit(args);
+		} else if (option.equalsIgnoreCase("-gp")) {
+			detectAtGitHubPullRequest(args);
 		} else {
 			throw argumentException();
 		}
@@ -245,6 +247,35 @@ public class RefactoringMiner {
 		}, timeout);
 	}
 
+	private static void detectAtGitHubPullRequest(String[] args) throws Exception {
+		if (args.length != 4) {
+			throw argumentException();
+		}
+		String gitURL = args[1];
+		int pullId = Integer.parseInt(args[2]);
+		int timeout = Integer.parseInt(args[3]);
+		GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
+		detector.detectAtPullRequest(gitURL, pullId, new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				if (refactorings.isEmpty()) {
+					System.out.println("No refactorings found in commit " + commitId);
+				} else {
+					System.out.println(refactorings.size() + " refactorings found in commit " + commitId + ": ");
+					for (Refactoring ref : refactorings) {
+						System.out.println("  " + ref);
+					}
+				}
+			}
+
+			@Override
+			public void handleException(String commit, Exception e) {
+				System.err.println("Error processing commit " + commit);
+				e.printStackTrace(System.err);
+			}
+		}, timeout);
+	}
+
 	private static String JSON(String cloneURL, String currentCommitId, List<Refactoring> refactoringsAtRevision) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{").append("\n");
@@ -285,6 +316,8 @@ public class RefactoringMiner {
 				"-c <git-repo-folder> <commit-sha1>\t\t\t\tDetect refactorings at specified commit <commit-sha1> for project <git-repo-folder>");
 		System.out.println(
 				"-gc <git-URL> <commit-sha1> <timeout>\t\t\t\tDetect refactorings at specified commit <commit-sha1> for project <git-URL> within the given <timeout> in seconds. All required information is obtained directly from GitHub using the credentials in github-credentials.properties");
+		System.out.println(
+				"-gp <git-URL> <pull-request> <timeout>\t\t\t\tDetect refactorings at specified pull request <pull-request> for project <git-URL> within the given <timeout> in seconds for each commit in the pull request. All required information is obtained directly from GitHub using the credentials in github-credentials.properties");
 	}
 
 	private static IllegalArgumentException argumentException() {

@@ -3,8 +3,10 @@ Table of Contents
 
    * [General info](#general-info)
    * [How to build RefactoringMiner](#how-to-build-refactoringminer)
-   * [How to use RefactoringMiner as a maven dependency:](#how-to-use-refactoringminer-as-a-maven-dependency)
+   * [How to use RefactoringMiner as a maven dependency](#how-to-use-refactoringminer-as-a-maven-dependency)
    * [Research](#research)
+      * [How to cite RefactoringMiner](#how-to-cite-refactoringminer)
+      * [Empirical studies based on RefactoringMiner](#empirical-studies-based-on-refactoringminer)
    * [Contributors](#contributors)
    * [API usage guidelines](#api-usage-guidelines)
       * [With a locally cloned git repository](#with-a-locally-cloned-git-repository)
@@ -52,7 +54,7 @@ Alternatively, you can generate a complete distribution zip including all runtim
 
 You can also work with the project with Eclipse IDE. First, run `./gradlew eclipse` to generate Eclipse project metadata files. Then, import it into Eclipse using the *Import Existing Project* feature.
 
-# How to use RefactoringMiner as a maven dependency:
+# How to use RefactoringMiner as a maven dependency
 
 In order to use RefactoringMiner as a maven dependency in your project, run `./gradlew install` and add the following dependency to your project:
 
@@ -63,10 +65,30 @@ In order to use RefactoringMiner as a maven dependency in your project, run `./g
     </dependency>
 
 # Research
+## How to cite RefactoringMiner
 If you are using RefactoringMiner in your research, please cite the following paper:
 
 Nikolaos Tsantalis, Matin Mansouri, Laleh Eshkevari, Davood Mazinanian, and Danny Dig, "[Accurate and Efficient Refactoring Detection in Commit History](https://users.encs.concordia.ca/~nikolaos/publications/ICSE_2018.pdf)," *40th International Conference on Software Engineering* (ICSE 2018), Gothenburg, Sweden, May 27 - June 3, 2018.
 
+    @inproceedings{Tsantalis:ICSE:2018:RefactoringMiner,
+	author = {Tsantalis, Nikolaos and Mansouri, Matin and Eshkevari, Laleh M. and Mazinanian, Davood and Dig, Danny},
+	title = {Accurate and Efficient Refactoring Detection in Commit History},
+	booktitle = {Proceedings of the 40th International Conference on Software Engineering},
+	series = {ICSE '18},
+	year = {2018},
+	isbn = {978-1-4503-5638-1},
+	location = {Gothenburg, Sweden},
+	pages = {483--494},
+	numpages = {12},
+	url = {http://doi.acm.org/10.1145/3180155.3180206},
+	doi = {10.1145/3180155.3180206},
+	acmid = {3180206},
+	publisher = {ACM},
+	address = {New York, NY, USA},
+	keywords = {Git, Oracle, abstract syntax tree, accuracy, commit, refactoring},
+    }
+
+## Empirical studies based on RefactoringMiner
 RefactoringMiner has been used in the following studies:
 1. Danilo Silva, Nikolaos Tsantalis, and Marco Tulio Valente, "[Why We Refactor? Confessions of GitHub Contributors](https://doi.org/10.1145/2950290.2950305)," *24th ACM SIGSOFT International Symposium on the Foundations of Software Engineering* (FSE 2016), Seattle, WA, USA, November 13-18, 2016.
 2. Diego Cedrim, Alessandro Garcia, Melina Mongiovi, Rohit Gheyi, Leonardo Sousa, Rafael de Mello, Baldoino Fonseca, Márcio Ribeiro, and Alexander Chávez, "[Understanding the impact of refactoring on smells: a longitudinal study of 23 software projects](https://doi.org/10.1145/3106237.3106259)," *11th Joint Meeting on Foundations of Software Engineering* (ESEC/FSE 2017), Paderborn, Germany, September 4-8, 2017.

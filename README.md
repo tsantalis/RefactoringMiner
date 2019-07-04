@@ -1,3 +1,19 @@
+Table of Contents
+=================
+
+   * [General info](#general-info)
+   * [How to build RefactoringMiner](#how-to-build-refactoringminer)
+   * [How to use RefactoringMiner as a maven dependency:](#how-to-use-refactoringminer-as-a-maven-dependency)
+   * [Research](#research)
+   * [Contributors](#contributors)
+   * [API usage guidelines](#api-usage-guidelines)
+      * [With a locally cloned git repository](#with-a-locally-cloned-git-repository)
+      * [With two directories containing Java source code](#with-two-directories-containing-java-source-code)
+      * [With all information fetched directly from GitHub](#with-all-information-fetched-directly-from-github)
+   * [Location information for the detected refactorings](#location-information-for-the-detected-refactorings)
+   * [Statement matching information for the detected refactorings](#statement-matching-information-for-the-detected-refactorings)
+   * [Running RefactoringMiner from the command line](#running-refactoringminer-from-the-command-line)
+
 # General info
 RefactoringMiner is a library/API written in Java that can detect refactorings applied in the history of a Java project.
 
@@ -296,7 +312,7 @@ When you build a distributable application with `./gradlew distZip`, you can run
 
     > RefactoringMiner -h
 
-	-h															Show tips
+	-h								Show tips
 	-a <git-repo-folder> <branch>					Detect all refactorings at <branch> for <git-repo-folder>. If <branch> is not specified, commits from all branches are analyzed.
 	-bc <git-repo-folder> <start-commit-sha1> <end-commit-sha1>	Detect refactorings Between <start-commit-sha1> and <end-commit-sha1> for project <git-repo-folder>
 	-bt <git-repo-folder> <start-tag> <end-tag>			Detect refactorings Between <start-tag> and <end-tag> for project <git-repo-folder>

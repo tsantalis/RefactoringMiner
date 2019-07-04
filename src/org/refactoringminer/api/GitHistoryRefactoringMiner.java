@@ -90,6 +90,17 @@ public interface GitHistoryRefactoringMiner {
 	void detectAtCommit(String gitURL, String commitId, RefactoringHandler handler, int timeout);
 
 	/**
+	 * Detect refactorings performed in the specified pull request. All required information is extracted using the GitHub API.
+	 *
+	 * @param gitURL The git URL of the repository.
+	 * @param pullRequest The pull request ID.
+	 * @param handler A handler object that is responsible to process the detected refactorings.
+	 * @param timeout A timeout, in seconds, per commit in the pull request. When timeout is reached, the operation stops and returns no refactorings.
+	 * @throws Exception propagated from org.kohsuke.github API
+	 */
+	void detectAtPullRequest(String gitURL, int pullRequest, RefactoringHandler handler, int timeout) throws Exception;
+
+	/**
 	 * Detect refactorings performed in the specified commit. 
 	 * 
 	 * @param repository A git repository (from JGit library).

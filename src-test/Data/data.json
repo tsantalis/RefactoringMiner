@@ -4075,7 +4075,7 @@
         "validators": null
     }, {
         "type": "Extract Class",
-        "description": "Extract Class com.facebook.buck.android.AdbOptions from class com.facebook.buck.cli.AdbCommandLineOptions",
+        "description": "Extract Class com.facebook.buck.android.AdbOptions from class com.facebook.buck.cli.AdbOptions",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -13668,10 +13668,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter invocation : ActionInvocation to inv : Invocation in method public intercept(inv Invocation) : void in class com.jfinal.plugin.activerecord.OneConnectionPerThread",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable keyArr : String[] to arr : String[] in method package setPrimaryKey(primaryKey String) : void in class com.jfinal.plugin.activerecord.Table",
@@ -13682,10 +13682,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect",
@@ -13710,17 +13710,17 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public abstract forDbFindById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.Dialect",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public abstract forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.Dialect",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public abstract forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.Dialect",
@@ -13738,17 +13738,17 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbFindById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.MysqlDialect",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.MysqlDialect",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.MysqlDialect",
@@ -13766,10 +13766,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
@@ -13780,10 +13780,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable columnsArray : String[] to sql : StringBuilder in method public forDbFindById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable columnsArray : String[] to sql : StringBuilder in method public forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.OracleDialect",
@@ -13794,17 +13794,17 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbFindById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect",
@@ -13822,10 +13822,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter primaryKey : String to pKeys : String[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect",
@@ -13836,24 +13836,24 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable columnsArray : String[] to sql : StringBuilder in method public forDbFindById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable columnsArray : String[] to sql : StringBuilder in method public forDbDeleteById(tableName String, pKeys String[]) : String in class com.jfinal.plugin.activerecord.dialect.Sqlite3Dialect",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter notBlank : boolean to index : int in method protected validateString(index int, minLen int, maxLen int, errorKey String, errorMessage String) : void in class com.jfinal.validate.Validator",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type id : Object to ids : Object[] in method public forDbUpdate(tableName String, pKeys String[], ids Object[], record Record, sql StringBuilder, paras List<Object>) : void in class com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect",
@@ -48865,24 +48865,24 @@
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type response : JoinRequest to response : JoinMessage in class com.hazelcast.cluster.impl.operations.JoinCheckOperation",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type partitionService : InternalPartitionService to partitionService : InternalPartitionServiceImpl in class com.hazelcast.instance.Node",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute PING_INTERVAL : int to pingIntervalMillis : long in class com.hazelcast.cluster.impl.ClusterServiceImpl",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>if</span> ((now <span class='pl-k'>-</span> member<span class='pl-k'>.</span>getLastRead()) <span class='pl-k'>&gt;=</span> <span class='pl-c1'>PING_INTERVAL</span> <span class='pl-k'>&amp;&amp;</span> (now <span class='pl-k'>-</span> member<span class='pl-k'>.</span>getLastPing()) <span class='pl-k'>&gt;=</span> <span class='pl-c1'>PING_INTERVAL</span>) {<br /></span>becomes<br /><span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-k'>long</span> heartbeatTime <span class='pl-k'>=</span> getHeartbeatTime(member);<br /><span class='pl-k'>if</span> ((now <span class='pl-k'>-</span> heartbeatTime) <span class='pl-k'>&gt;=</span> pingIntervalMillis) {<br /></span></p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3496
 }, {

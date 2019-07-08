@@ -83,7 +83,7 @@ public class VariableReplacementAnalysis {
 								SimpleEntry<VariableDeclaration, UMLOperation> v2 = getVariableDeclaration2(new Replacement("", argument, ReplacementType.VARIABLE_NAME));
 								SimpleEntry<VariableDeclaration, UMLOperation> v1 = getVariableDeclaration1(new Replacement(declaration.getVariableName(), "", ReplacementType.VARIABLE_NAME));
 								if(v2 != null && v1 != null) {
-									Set<AbstractCodeMapping> references = findReferences(v1.getKey(), v2.getKey());
+									Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReferences(v1.getKey(), v2.getKey(), mappings);
 									RenameVariableRefactoring ref = new RenameVariableRefactoring(v1.getKey(), v2.getKey(), v1.getValue(), v2.getValue(), references);
 									if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref) && !existsConflictingSplitVariableRefactoring(ref)) {
 										variableRenames.add(ref);
@@ -983,21 +983,5 @@ public class VariableReplacementAnalysis {
 			}
 		}
 		return null;
-	}
-	
-	private Set<AbstractCodeMapping> findReferences(VariableDeclaration declaration1, VariableDeclaration declaration2) {
-		Set<AbstractCodeMapping> references = new LinkedHashSet<AbstractCodeMapping>();
-		VariableScope scope1 = declaration1.getScope();
-		VariableScope scope2 = declaration2.getScope();
-		for(AbstractCodeMapping mapping : mappings) {
-			AbstractCodeFragment fragment1 = mapping.getFragment1();
-			AbstractCodeFragment fragment2 = mapping.getFragment2();
-			if(scope1.subsumes(fragment1.getLocationInfo()) && scope2.subsumes(fragment2.getLocationInfo()) &&
-					fragment1.getVariables().contains(declaration1.getVariableName()) &&
-					fragment2.getVariables().contains(declaration2.getVariableName())) {
-				references.add(mapping);
-			}
-		}
-		return references;
 	}
 }

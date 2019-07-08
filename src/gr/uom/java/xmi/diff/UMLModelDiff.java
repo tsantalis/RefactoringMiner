@@ -14,6 +14,7 @@ import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
@@ -1228,7 +1229,8 @@ public class UMLModelDiff {
 							 refactorings.add(ref);
 							 if(!a1.getVariableDeclaration().getType().equals(a2.getVariableDeclaration().getType())) {
 									ChangeAttributeTypeRefactoring refactoring = new ChangeAttributeTypeRefactoring(a1.getVariableDeclaration(), a2.getVariableDeclaration(),
-											diff.getOriginalClassName(), diff.getNextClassName());
+											diff.getOriginalClassName(), diff.getNextClassName(),
+											VariableReferenceExtractor.findReferences(a1.getVariableDeclaration(), a2.getVariableDeclaration(), diff.getOperationBodyMapperList()));
 									refactorings.add(refactoring);
 								}
 							 break;//it's not necessary to repeat the same process for all candidates in the set

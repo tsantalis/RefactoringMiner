@@ -2,10 +2,12 @@ package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class ChangeAttributeTypeRefactoring implements Refactoring {
@@ -13,13 +15,15 @@ public class ChangeAttributeTypeRefactoring implements Refactoring {
 	private VariableDeclaration changedTypeAttribute;
 	private String classNameBefore;
 	private String classNameAfter;
+	private Set<AbstractCodeMapping> attributeReferences;
 	
 	public ChangeAttributeTypeRefactoring(VariableDeclaration originalAttribute,
-			VariableDeclaration changedTypeAttribute, String classNameBefore, String classNameAfter) {
+			VariableDeclaration changedTypeAttribute, String classNameBefore, String classNameAfter, Set<AbstractCodeMapping> attributeReferences) {
 		this.originalAttribute = originalAttribute;
 		this.changedTypeAttribute = changedTypeAttribute;
 		this.classNameBefore = classNameBefore;
 		this.classNameAfter = classNameAfter;
+		this.attributeReferences = attributeReferences;
 	}
 
 	public VariableDeclaration getOriginalAttribute() {
@@ -36,6 +40,10 @@ public class ChangeAttributeTypeRefactoring implements Refactoring {
 
 	public String getClassNameAfter() {
 		return classNameAfter;
+	}
+
+	public Set<AbstractCodeMapping> getAttributeReferences() {
+		return attributeReferences;
 	}
 
 	@Override

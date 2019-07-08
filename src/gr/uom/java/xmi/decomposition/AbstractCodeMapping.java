@@ -200,7 +200,13 @@ public abstract class AbstractCodeMapping {
 			String beforeAssignment = argumentizedString.substring(0, argumentizedString.indexOf("="));
 			String[] tokens = beforeAssignment.split("\\s");
 			String variable = tokens[tokens.length-1];
-			String initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-2);
+			String initializer = null;
+			if(argumentizedString.endsWith(";\n")) {
+				initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-2);
+			}
+			else {
+				initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length());
+			}
 			for(Replacement replacement : getReplacements()) {
 				if(variable.endsWith(replacement.getAfter()) &&	initializer.equals(replacement.getBefore())) {
 					List<VariableDeclaration> variableDeclarations = operation2.getAllVariableDeclarations();
@@ -251,7 +257,13 @@ public abstract class AbstractCodeMapping {
 			String beforeAssignment = argumentizedString.substring(0, argumentizedString.indexOf("="));
 			String[] tokens = beforeAssignment.split("\\s");
 			String variable = tokens[tokens.length-1];
-			String initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-2);
+			String initializer = null;
+			if(argumentizedString.endsWith(";\n")) {
+				initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-2);
+			}
+			else {
+				initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length());
+			}
 			for(Replacement replacement : getReplacements()) {
 				if(variable.endsWith(replacement.getBefore()) && initializer.equals(replacement.getAfter())) {
 					List<VariableDeclaration> variableDeclarations = operation1.getAllVariableDeclarations();

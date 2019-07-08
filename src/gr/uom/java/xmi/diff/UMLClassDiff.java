@@ -12,6 +12,7 @@ import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
 
 public class UMLClassDiff extends UMLClassBaseDiff {
 	
@@ -151,7 +152,8 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 				if(removedAttribute.getName().equals(addedAttribute.getName())) {
 					UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute);
 					if(attributeDiff.isTypeChanged()) {
-						ChangeAttributeTypeRefactoring ref = new ChangeAttributeTypeRefactoring(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), originalClass.getName(), nextClass.getName());
+						ChangeAttributeTypeRefactoring ref = new ChangeAttributeTypeRefactoring(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), originalClass.getName(), nextClass.getName(),
+								VariableReferenceExtractor.findReferences(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), getOperationBodyMapperList()));
 						refactorings.add(ref);
 					}
 					addedAttributeIterator.remove();

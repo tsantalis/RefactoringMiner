@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public class VariableReferenceExtractor {
@@ -17,6 +18,14 @@ public class VariableReferenceExtractor {
 					fragment2.getVariables().contains(declaration2.getVariableName())) {
 				references.add(mapping);
 			}
+		}
+		return references;
+	}
+	
+	public static Set<AbstractCodeMapping> findReferences(VariableDeclaration declaration1, VariableDeclaration declaration2, List<UMLOperationBodyMapper> operationBodyMapperList) {
+		Set<AbstractCodeMapping> references = new LinkedHashSet<AbstractCodeMapping>();
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			references.addAll(findReferences(declaration1, declaration2, mapper.getMappings()));
 		}
 		return references;
 	}

@@ -47,7 +47,7 @@ public class MoveAndRenameAttributeRefactoring extends MoveAttributeRefactoring 
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
 		ranges.add(movedAttribute.codeRange()
 				.setDescription("moved and renamed attribute declaration")
-				.setCodeElement(movedAttribute.getVariableDeclaration().toString()));
+				.setCodeElement(movedAttribute.toString()));
 		return ranges;
 	}
 }

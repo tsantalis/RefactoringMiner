@@ -203,7 +203,7 @@ public class RefactoringMiner {
 		GitService gitService = new GitServiceImpl();
 		try (Repository repo = gitService.openRepository(folder)) {
 			GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
-			detector.detectAtCommit(repo, null, commitId, new RefactoringHandler() {
+			detector.detectAtCommit(repo, commitId, new RefactoringHandler() {
 				@Override
 				public void handle(String commitId, List<Refactoring> refactorings) {
 					if (refactorings.isEmpty()) {

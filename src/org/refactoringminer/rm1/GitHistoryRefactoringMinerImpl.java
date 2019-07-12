@@ -417,7 +417,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	@Override
-	public void detectAtCommit(Repository repository, String cloneURL, String commitId, RefactoringHandler handler) {
+	public void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler) {
+		String cloneURL = repository.getConfig().getString("remote", "origin", "url");
 		File metadataFolder = repository.getDirectory();
 		File projectFolder = metadataFolder.getParentFile();
 		GitService gitService = new GitServiceImpl();
@@ -444,11 +445,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 	}
 
-	public void detectAtCommit(Repository repository, String cloneURL, String commitId, RefactoringHandler handler, int timeout) {
+	public void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler, int timeout) {
 		ExecutorService service = Executors.newSingleThreadExecutor();
 		Future<?> f = null;
 		try {
-			Runnable r = () -> detectAtCommit(repository, cloneURL, commitId, handler);
+			Runnable r = () -> detectAtCommit(repository, commitId, handler);
 			f = service.submit(r);
 			f.get(timeout, TimeUnit.SECONDS);
 		} catch (TimeoutException e) {

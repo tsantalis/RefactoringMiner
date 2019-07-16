@@ -4,6 +4,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
+
 public class VariableReferenceExtractor {
 
 	public static Set<AbstractCodeMapping> findReferences(VariableDeclaration declaration1, VariableDeclaration declaration2, Set<AbstractCodeMapping> mappings) {
@@ -26,7 +28,18 @@ public class VariableReferenceExtractor {
 		return variables.contains(declaration.getVariableName()) ||
 				(declaration.isAttribute() && variables.contains("this." + declaration.getVariableName()));
 	}
-	
+
+	public static Set<AbstractCodeMapping> findReturnReferences(Set<AbstractCodeMapping> mappings) {
+		Set<AbstractCodeMapping> references = new LinkedHashSet<AbstractCodeMapping>();
+		for(AbstractCodeMapping mapping : mappings) {
+			if(mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT) &&
+					mapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT)) {
+				references.add(mapping);
+			}
+		}
+		return references;
+	}
+
 	public static Set<AbstractCodeMapping> findReferences(VariableDeclaration declaration1, VariableDeclaration declaration2, List<UMLOperationBodyMapper> operationBodyMapperList) {
 		Set<AbstractCodeMapping> references = new LinkedHashSet<AbstractCodeMapping>();
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {

@@ -411,6 +411,13 @@ public class CompositeStatementObject extends AbstractStatement {
 		return locationInfo.codeRange();
 	}
 
+	public boolean isLoop() {
+		return this.locationInfo.getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
+				this.locationInfo.getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
+				this.locationInfo.getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
+				this.locationInfo.getCodeElementType().equals(CodeElementType.DO_STATEMENT);
+	}
+
 	public CompositeStatementObject loopWithVariables(String currentElementName, String collectionName) {
 		for(CompositeStatementObject innerNode : getInnerNodes()) {
 			if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {

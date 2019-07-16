@@ -10,6 +10,7 @@ import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLRealization;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
@@ -1937,9 +1938,24 @@ public class UMLModelDiff {
 				}
 			}
 		}
-		return (mappings > nonMappedElementsT1-nonMappedStatementsDeclaringSameVariable &&
-				mappings > nonMappedElementsT2-nonMappedStatementsDeclaringSameVariable) ||
-				(nonMappedElementsT1 == 0 && mappings > Math.floor(nonMappedElementsT2/2.0));
+		int nonMappedLoopsIteratingOverSameVariable = 0;
+		for(CompositeStatementObject c1 : operationBodyMapper.getNonMappedInnerNodesT1()) {
+			if(c1.isLoop()) {
+				for(CompositeStatementObject c2 : operationBodyMapper.getNonMappedInnerNodesT2()) {
+					if(c2.isLoop()) {
+						Set<String> intersection = new LinkedHashSet<String>(c1.getVariables());
+						intersection.retainAll(c2.getVariables());
+						if(!intersection.isEmpty()) {
+							nonMappedLoopsIteratingOverSameVariable++;
+						}
+					}
+				}
+			}
+		}
+		return (mappings > nonMappedElementsT1-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable &&
+				mappings > nonMappedElementsT2-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable) ||
+				(nonMappedElementsT1-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable == 0 && mappings > Math.floor(nonMappedElementsT2/2.0)) ||
+				(nonMappedElementsT2-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable == 0 && mappings > Math.floor(nonMappedElementsT1/2.0));
    }
 
    private boolean movedMethodSignature(UMLOperation removedOperation, UMLOperation addedOperation) {
@@ -1952,22 +1968,28 @@ public class UMLModelDiff {
 		   else {
 			   // ignore parameters of types sourceClass and targetClass
 			   List<UMLParameter> oldParameters = new ArrayList<UMLParameter>();
+			   Set<String> oldParameterNames = new LinkedHashSet<String>();
 			   for (UMLParameter oldParameter : removedOperation.getParameters()) {
 				   if (!oldParameter.getKind().equals("return")
 						   && !looksLikeSameType(oldParameter.getType().getClassType(), addedOperation.getClassName())
 						   && !looksLikeSameType(oldParameter.getType().getClassType(), removedOperation.getClassName())) {
 					   oldParameters.add(oldParameter);
+					   oldParameterNames.add(oldParameter.getName());
 				   }
 			   }
 			   List<UMLParameter> newParameters = new ArrayList<UMLParameter>();
+			   Set<String> newParameterNames = new LinkedHashSet<String>();
 			   for (UMLParameter newParameter : addedOperation.getParameters()) {
 				   if (!newParameter.getKind().equals("return") &&
 						   !looksLikeSameType(newParameter.getType().getClassType(), addedOperation.getClassName()) &&
 						   !looksLikeSameType(newParameter.getType().getClassType(), removedOperation.getClassName())) {
 					   newParameters.add(newParameter);
+					   newParameterNames.add(newParameter.getName());
 				   }
 			   }
-			   return oldParameters.equals(newParameters) || oldParameters.containsAll(newParameters) || newParameters.containsAll(oldParameters);
+			   Set<String> intersection = new LinkedHashSet<String>(oldParameterNames);
+			   intersection.retainAll(newParameterNames);
+			   return oldParameters.equals(newParameters) || oldParameters.containsAll(newParameters) || newParameters.containsAll(oldParameters) || intersection.size() > 0;
 		   }
 	   }
 	   return false;

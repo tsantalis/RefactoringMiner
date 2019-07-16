@@ -3286,17 +3286,17 @@
         "validators": "Matin, Laleh"
     }, {
         "type": "Move Method",
-        "description": "Move Method private readArrayType(string String, tokens Deque, paramName Token, builder PredicateBuilder, attributeParser ExchangeAttributeParser, expectedEndToken String) : Object from class io.undertow.predicate.PredicateParser to private readArrayType(string String, paramName String, value ArrayNode, parser ExchangeAttributeParser, type Class) : Object from class io.undertow.server.handlers.builder.PredicatedHandlersParser",
+        "description": "Move Method private readArrayType(string String, tokens Deque<Token>, paramName Token, builder PredicateBuilder, attributeParser ExchangeAttributeParser, expectedEndToken String) : Object from class io.undertow.predicate.PredicateParser to private readArrayType(string String, paramName String, value ArrayNode, parser ExchangeAttributeParser, type Class) : Object from class io.undertow.server.handlers.builder.PredicatedHandlersParser",
         "comment": "<p>added</p><p>&nbsp;</p><p>This is like case refactroing with ID= 4278</p><p>Two methods (with very similar body) with name readArrayType(..) from two different classes PredicateParser and HandlerParser are moved to class PredicatedHandlersParser. We also verified it with Nik.</p>",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Laleh, Davood"
     }, {
         "type": "Move Method",
-        "description": "Move Method private readArrayType(string String, tokens Deque, paramName Token, builder HandlerBuilder, attributeParser ExchangeAttributeParser, expectedEndToken String, last Token) : Object from class io.undertow.server.handlers.builder.HandlerParser to private readArrayType(string String, paramName String, value ArrayNode, parser ExchangeAttributeParser, type Class) : Object from class io.undertow.server.handlers.builder.PredicatedHandlersParser",
+        "description": "Move Method private readArrayType(string String, tokens Deque<Token>, paramName Token, builder HandlerBuilder, attributeParser ExchangeAttributeParser, expectedEndToken String, last Token) : Object from class io.undertow.server.handlers.builder.HandlerParser to private readArrayType(string String, paramName String, value ArrayNode, parser ExchangeAttributeParser, type Class) : Object from class io.undertow.server.handlers.builder.PredicatedHandlersParser",
         "comment": "added",
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Laleh, Davood"
     }, {
         "type": "Extract Method",
@@ -3343,9 +3343,37 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable wrappers : List<PredicatedHandler> to values : List<Object> in method private readArrayType(string String, paramName String, value ArrayNode, parser ExchangeAttributeParser, type Class) : Object in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>method private readArrayType(string String, paramName String, value ArrayNode, parser ExchangeAttributeParser, type Class) is new</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private handleSingleVarArgsValue(string String, builder PredicateBuilder, tokens Deque<Token>, token Token, attributeParser ExchangeAttributeParser, endChar String) : Node from class io.undertow.predicate.PredicateParser to private handleSingleVarArgsValue(string String, expressionName Token, tokens Deque<Token>, endChar String) : Node from class io.undertow.server.handlers.builder.PredicatedHandlersParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter attributeParser : ExchangeAttributeParser to parser : ExchangeAttributeParser in method private readArrayType(string String, paramName String, value ArrayNode, parser ExchangeAttributeParser, type Class) : Object in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter token : Token to expressionName : Token in method private handleSingleVarArgsValue(string String, expressionName Token, tokens Deque<Token>, endChar String) : Node in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type paramName : Token to paramName : String in method private readArrayType(string String, paramName String, value ArrayNode, parser ExchangeAttributeParser, type Class) : Object in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 0
@@ -11986,37 +12014,65 @@
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type scanner : Scanner to scanner : PathWatcher in class org.eclipse.jetty.maven.plugin.AbstractJettyMojo",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable files : List<File> to config : PathWatcher.Config in method public gatherScannables() : void in class org.eclipse.jetty.maven.plugin.JettyRunMojo",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter changes : List to events : List<PathWatchEvent> in method public onPathWatchEvents(events List<PathWatchEvent>) : void in class org.eclipse.jetty.maven.plugin.JettyRunWarExplodedMojo.configureScanner.scanner",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>public</span> <span class='pl-k'>void</span> filesChanged(<span class='pl-smi'>List</span> changes)</span> -&gt; <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-k'>public</span> <span class='pl-k'>void</span> onPathWatchEvents(<span class='pl-k'>List&lt;<span class='pl-smi'>PathWatchEvent</span>&gt;</span> events)</span></p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter changes : List to events : List<PathWatchEvent> in method public onPathWatchEvents(events List<PathWatchEvent>) : void in class org.eclipse.jetty.maven.plugin.JettyRunWarMojo.configureScanner.scanner",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-k'>public void filesChanged(<span class='pl-smi'>List</span> changes) -&gt; public</span> <span class='pl-k'>void</span> onPathWatchEvents(<span class='pl-k'>List&lt;<span class='pl-smi'>PathWatchEvent</span>&gt;</span> events)</span></p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute _includes : List to _pattern : ScanPattern in class org.eclipse.jetty.maven.plugin.ScanTargetPattern",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>_includes has been extracted to <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-smi'>ScanPattern</span></span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public setIncludes(includes List) : void from class org.eclipse.jetty.maven.plugin.ScanTargetPattern to public setIncludes(includes List<String>) : void from class org.eclipse.jetty.maven.plugin.ScanPattern",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public setExcludes(excludes List) : void from class org.eclipse.jetty.maven.plugin.ScanTargetPattern to public setExcludes(excludes List<String>) : void from class org.eclipse.jetty.maven.plugin.ScanPattern",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type includes : List to includes : List<String> in method public setIncludes(includes List<String>) : void in class org.eclipse.jetty.maven.plugin.ScanPattern",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type excludes : List to excludes : List<String> in method public setExcludes(excludes List<String>) : void in class org.eclipse.jetty.maven.plugin.ScanPattern",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 7248

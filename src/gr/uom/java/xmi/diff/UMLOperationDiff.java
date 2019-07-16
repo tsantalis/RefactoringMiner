@@ -2,11 +2,9 @@ package gr.uom.java.xmi.diff;
 
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
-import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
-import gr.uom.java.xmi.decomposition.VariableScope;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
@@ -212,7 +210,9 @@ public class UMLOperationDiff {
 			UMLParameter removedOperationReturnParameter = removedOperation.getReturnParameter();
 			UMLParameter addedOperationReturnParameter = addedOperation.getReturnParameter();
 			if(removedOperationReturnParameter != null && addedOperationReturnParameter != null) {
-				ChangeReturnTypeRefactoring refactoring = new ChangeReturnTypeRefactoring(removedOperationReturnParameter.getType(), addedOperationReturnParameter.getType(), removedOperation, addedOperation);
+				Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReturnReferences(mappings);
+				ChangeReturnTypeRefactoring refactoring = new ChangeReturnTypeRefactoring(removedOperationReturnParameter.getType(), addedOperationReturnParameter.getType(),
+						removedOperation, addedOperation, references);
 				refactorings.add(refactoring);
 			}
 		}

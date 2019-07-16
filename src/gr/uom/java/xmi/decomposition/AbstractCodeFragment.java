@@ -79,7 +79,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 							isInsideStringLiteral = true;
 						}
 					}
-					else if(start == 0) {
+					else if(start == 0 && !afterReplacements.startsWith("return ")) {
 						isArgument = true;
 					}
 					if(isArgument && !isInsideStringLiteral) {

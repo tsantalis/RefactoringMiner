@@ -651,15 +651,23 @@ public class VariableReplacementAnalysis {
 			for(AbstractCodeMapping mapping : mappings) {
 				List<VariableDeclaration> variableDeclarations1 = mapping.getFragment1().getVariableDeclarations();
 				List<VariableDeclaration> variableDeclarations2 = mapping.getFragment2().getVariableDeclarations();
-				if(variableDeclarations1.contains(v1) &&
-						variableDeclarations2.size() > 0 &&
-						!variableDeclarations2.contains(v2)) {
-					return true;
+				if(variableDeclarations1.contains(v1)) {
+					if(variableDeclarations2.size() > 0 && !variableDeclarations2.contains(v2)) {
+						return true;
+					}
+					else if(variableDeclarations2.size() == 0 && v1.getInitializer() != null &&
+							mapping.getFragment2().getString().startsWith(v1.getInitializer().getString())) {
+						return true;
+					}
 				}
-				if(variableDeclarations2.contains(v2) &&
-						variableDeclarations1.size() > 0 &&
-						!variableDeclarations1.contains(v1)) {
-					return true;
+				if(variableDeclarations2.contains(v2)) {
+					if(variableDeclarations1.size() > 0 && !variableDeclarations1.contains(v1)) {
+						return true;
+					}
+					else if(variableDeclarations1.size() == 0 && v2.getInitializer() != null &&
+							mapping.getFragment1().getString().startsWith(v2.getInitializer().getString())) {
+						return true;
+					}
 				}
 				if(mapping.isExact() && (bothFragmentsUseVariable(v1, mapping) || bothFragmentsUseVariable(v2, mapping)) &&
 						operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) == null) {

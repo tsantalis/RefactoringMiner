@@ -177,52 +177,52 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter document : Document to position : XSourcePosition in method public createRunToCursorCommand(suspendContext SuspendContextImpl, position XSourcePosition, ignoreBreakpoints boolean) : ResumeCommand in class com.intellij.debugger.engine.DebugProcessImpl",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter document : Document to position : XSourcePosition in method private RunToCursorCommand(suspendContext SuspendContextImpl, position XSourcePosition, ignoreBreakpoints boolean) in class com.intellij.debugger.engine.DebugProcessImpl.RunToCursorCommand",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter document : Document to position : XSourcePosition in method public addRunToCursorBreakpoint(position XSourcePosition, ignoreBreakpoints boolean) : RunToCursorBreakpoint in class com.intellij.debugger.ui.breakpoints.BreakpointManager",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter document : Document to classType : ReferenceType in method protected acceptLocation(debugProcess DebugProcessImpl, classType ReferenceType, loc Location) : boolean in class com.intellij.debugger.ui.breakpoints.RunToCursorBreakpoint",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>method acceptLocation() is new</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter lineIndex : int to loc : Location in method protected acceptLocation(debugProcess DebugProcessImpl, classType ReferenceType, loc Location) : boolean in class com.intellij.debugger.ui.breakpoints.RunToCursorBreakpoint",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>method acceptLocation() is new</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable virtualFile : VirtualFile to position : SourcePosition in method public compute() : Boolean in class com.intellij.debugger.ui.breakpoints.RunToCursorBreakpoint.acceptLocation.runReadAction",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>method acceptLocation() is new</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable line : int to offset : int in method public getCaretPosition(project Project, context DataContext) : XSourcePosition in class com.intellij.xdebugger.impl.XDebuggerUtilImpl",
         "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 37410
 }, {
@@ -21084,6 +21084,13 @@
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable addr : InetAddress in method private generateFakeEndpoints(tmd TokenMetadata, numOldNodes int, numVNodes int) : void from class org.apache.cassandra.dht.BootStrapperTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 8768
 }, {
@@ -44609,8 +44616,8 @@
         "type": "Rename Method",
         "description": "Rename Method public shouldComputeIndexUpdatesOnAnEmptyTxState() : void renamed to public shouldComputeIndexUpdatesForScanOrSeekOnAnEmptyTxState() : void in class org.neo4j.kernel.impl.api.state.TxStateTest",
         "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
         "type": "Rename Method",
@@ -44738,6 +44745,13 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Replace Variable With Attribute",
+        "description": "Replace Variable With Attribute rule : IndexDescriptor to indexOn_1_1 : IndexDescriptor in method public shouldComputeIndexUpdatesForScanOrSeekOnAnEmptyTxState() : void in class org.neo4j.kernel.impl.api.state.TxStateTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4473
 }, {

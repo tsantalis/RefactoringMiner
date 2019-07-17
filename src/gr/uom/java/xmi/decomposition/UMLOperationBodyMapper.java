@@ -1593,7 +1593,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//method invocation has been renamed but the expression and arguments are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
+				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE)) {
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getName(),
 					invocationCoveringTheEntireStatement2.getName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME);
 			replacementInfo.addReplacement(replacement);
@@ -2672,6 +2672,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private void findReplacements(Set<String> strings1, Set<String> strings2, ReplacementInfo replacementInfo, ReplacementType type) throws RefactoringMinerTimedOutException {
 		TreeMap<Double, Replacement> globalReplacementMap = new TreeMap<Double, Replacement>();
+		TreeMap<Double, Replacement> replacementCache = new TreeMap<Double, Replacement>();
 		if(strings1.size() <= strings2.size()) {
 			for(String s1 : strings1) {
 				TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
@@ -2686,6 +2687,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						Replacement replacement = new Replacement(s1, s2, type);
 						double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), replacementInfo.getArgumentizedString2().length());
 						replacementMap.put(distancenormalized, replacement);
+						replacementCache.put(distancenormalized, replacement);
 						if(distanceRaw == 0) {
 							break;
 						}
@@ -2715,6 +2717,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						Replacement replacement = new Replacement(s1, s2, type);
 						double distancenormalized = (double)distanceRaw/(double)Math.max(temp.length(), replacementInfo.getArgumentizedString2().length());
 						replacementMap.put(distancenormalized, replacement);
+						replacementCache.put(distancenormalized, replacement);
 						if(distanceRaw == 0) {
 							break;
 						}
@@ -2738,9 +2741,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacement.getBefore(), replacement.getAfter()));
 			}
 			else {
+				Set<String> processedBefores = new LinkedHashSet<String>();
 				for(Replacement replacement : globalReplacementMap.values()) {
-					replacementInfo.addReplacement(replacement);
-					replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacement.getBefore(), replacement.getAfter()));
+					if(!processedBefores.contains(replacement.getBefore())) {
+						replacementInfo.addReplacement(replacement);
+						replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacement.getBefore(), replacement.getAfter()));
+						processedBefores.add(replacement.getBefore());
+					}
+					else {
+						//find the next best match for replacement.getAfter() from the replacement cache
+						for(Replacement replacement2 : replacementCache.values()) {
+							if(replacement2.getAfter().equals(replacement.getAfter()) && !replacement2.equals(replacement)) {
+								replacementInfo.addReplacement(replacement2);
+								replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacement2.getBefore(), replacement2.getAfter()));
+								processedBefores.add(replacement2.getBefore());
+								break;
+							}
+						}
+					}
 				}
 			}
 		}

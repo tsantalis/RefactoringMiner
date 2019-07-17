@@ -277,7 +277,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 
 	private static boolean equivalentNames(UMLOperation operation1, UMLOperation operation2) {
 		boolean equalReturn = operation1.equalReturnParameter(operation2) && operation1.getParametersWithoutReturnType().size() > 0 && operation2.getParametersWithoutReturnType().size() > 0;
-		if(operation1.name.startsWith(operation2.name) && !operation2.name.equals("get") && !operation2.name.equals("set")) {
+		if(operation1.name.startsWith(operation2.name) && !operation2.name.equals("get") && !operation2.name.equals("set") && !operation2.name.equals("print")) {
 			String suffix1 = operation1.name.substring(operation2.name.length(), operation1.name.length());
 			String className2 = operation2.className.contains(".") ? operation2.className.substring(operation2.className.lastIndexOf(".")+1, operation2.className.length()) : operation2.className;
 			return operation2.name.length() > operation1.name.length() - operation2.name.length() || equalReturn || className2.contains(suffix1);

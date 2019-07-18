@@ -807,8 +807,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				Set<Replacement> replacements = findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap);
 				
 				double score = computeScore(statement1, statement2, removedOperations, addedOperations);
-				if(score == 0 && replacements != null && replacements.size() == 1 && replacements.iterator().next().getType().equals(ReplacementType.INFIX_OPERATOR)) {
-					//special handling when there is only an infix operator replacement, but no children mapped
+				if(score == 0 && replacements != null && replacements.size() == 1 &&
+						(replacements.iterator().next().getType().equals(ReplacementType.INFIX_OPERATOR) || replacements.iterator().next().getType().equals(ReplacementType.INVERT_CONDITIONAL))) {
+					//special handling when there is only an infix operator or invert conditional replacement, but no children mapped
 					score = 1;
 				}
 				if(replacements != null &&
@@ -2525,26 +2526,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean invertedConditional(String s1, String s2) {
-		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
-		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
-		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
-			int beginIndexS1 = s1.indexOf(commonPrefix) + commonPrefix.length();
-			int endIndexS1 = s1.lastIndexOf(commonSuffix);
-			String diff1 = beginIndexS1 > endIndexS1 ? "" :	s1.substring(beginIndexS1, endIndexS1);
-			int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
-			int endIndexS2 = s2.lastIndexOf(commonSuffix);
-			String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
-			if(diff1.isEmpty() && diff2.equals("!")) {
-				return true;
-			}
-			if(diff2.isEmpty() && diff1.equals("!")) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	private boolean containsValidOperatorReplacements(ReplacementInfo replacementInfo) {
 		List<Replacement> operatorReplacements = replacementInfo.getReplacements(ReplacementType.INFIX_OPERATOR);
 		for(Replacement replacement : operatorReplacements) {
@@ -2952,7 +2933,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<UMLOperation> removedOperations, List<UMLOperation> addedOperations) {
 		int childrenSize1 = comp1.getStatements().size();
 		int childrenSize2 = comp2.getStatements().size();
-		boolean invertedConditional = invertedConditional(comp1.getString(), comp2.getString());
 		
 		int mappedChildrenSize = 0;
 		for(AbstractCodeMapping mapping : mappings) {
@@ -2968,9 +2948,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			int mappedLeavesSize = 0;
 			for(AbstractCodeMapping mapping : mappings) {
 				if(leaves1.contains(mapping.getFragment1()) && leaves2.contains(mapping.getFragment2())) {
-					mappedLeavesSize++;
-				}
-				else if(invertedConditional && (leaves1.contains(mapping.getFragment1()) || leaves2.contains(mapping.getFragment2()))) {
 					mappedLeavesSize++;
 				}
 			}

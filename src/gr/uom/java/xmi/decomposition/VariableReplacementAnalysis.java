@@ -255,6 +255,7 @@ public class VariableReplacementAnalysis {
 	private void findVariableMerges() {
 		Map<MergeVariableReplacement, Set<AbstractCodeMapping>> mergeMap = new LinkedHashMap<MergeVariableReplacement, Set<AbstractCodeMapping>>();
 		Map<String, Map<VariableReplacementWithMethodInvocation, Set<AbstractCodeMapping>>> variableInvocationExpressionMap = new LinkedHashMap<String, Map<VariableReplacementWithMethodInvocation, Set<AbstractCodeMapping>>>();
+		Map<String, Map<Replacement, Set<AbstractCodeMapping>>> variableInvocationVariableMap = new LinkedHashMap<String, Map<Replacement, Set<AbstractCodeMapping>>>();
 		for(AbstractCodeMapping mapping : mappings) {
 			for(Replacement replacement : mapping.getReplacements()) {
 				if(replacement instanceof MergeVariableReplacement) {
@@ -286,6 +287,33 @@ public class VariableReplacementAnalysis {
 							}
 						}
 					}
+					if(replacement.getAfter().contains(".")) {
+						String compositeVariable = replacement.getAfter().substring(0, replacement.getAfter().indexOf("."));
+						if(variableInvocationVariableMap.containsKey(compositeVariable)) {
+							Map<Replacement, Set<AbstractCodeMapping>> map = variableInvocationVariableMap.get(compositeVariable);
+							if(map.containsKey(replacement)) {
+								if(mapping != null) {
+									map.get(replacement).add(mapping);
+								}
+							}
+							else {
+								Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
+								if(mapping != null) {
+									mappings.add(mapping);
+								}
+								map.put(replacement, mappings);
+							}
+						}
+						else {
+							Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
+							if(mapping != null) {
+								mappings.add(mapping);
+							}
+							Map<Replacement, Set<AbstractCodeMapping>> map = new LinkedHashMap<Replacement, Set<AbstractCodeMapping>>();
+							map.put(replacement, mappings);
+							variableInvocationVariableMap.put(compositeVariable, map);
+						}
+					}
 				}
 			}
 		}
@@ -309,6 +337,21 @@ public class VariableReplacementAnalysis {
 			Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
 			Set<String> mergedVariables = new LinkedHashSet<String>();
 			for(VariableReplacementWithMethodInvocation replacement : map.keySet()) {
+				if(!PrefixSuffixUtils.normalize(key).equals(PrefixSuffixUtils.normalize(replacement.getBefore()))) {
+					mergedVariables.add(replacement.getBefore());
+					mappings.addAll(map.get(replacement));
+				}
+			}
+			if(mergedVariables.size() > 0) {
+				MergeVariableReplacement merge = new MergeVariableReplacement(mergedVariables, key);
+				mergeMap.put(merge, mappings);
+			}
+		}
+		for(String key : variableInvocationVariableMap.keySet()) {
+			Map<Replacement, Set<AbstractCodeMapping>> map = variableInvocationVariableMap.get(key);
+			Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
+			Set<String> mergedVariables = new LinkedHashSet<String>();
+			for(Replacement replacement : map.keySet()) {
 				if(!PrefixSuffixUtils.normalize(key).equals(PrefixSuffixUtils.normalize(replacement.getBefore()))) {
 					mergedVariables.add(replacement.getBefore());
 					mappings.addAll(map.get(replacement));

@@ -22238,37 +22238,44 @@
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type contactPhoto : Drawable to contactPhoto : ContactPhoto in class org.thoughtcrime.securesms.recipients.Recipient",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type contactPhoto : Drawable to contactPhoto : ContactPhoto in method private getIndividualRecipientDetails(context Context, number String) : RecipientDetails in class org.thoughtcrime.securesms.recipients.RecipientProvider",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type avatar : Drawable to avatar : ContactPhoto in class org.thoughtcrime.securesms.recipients.RecipientProvider.RecipientDetails",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter name : String to details : RecipientDetails in method package Recipient(recipientId long, details RecipientDetails) in class org.thoughtcrime.securesms.recipients.Recipient",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Parameters: <span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-smi x'>String</span> <span class='pl-v x'>number</span><span class='x x-last'>, </span><span class='pl-k'>long</span> <span class='pl-v'>recipientId</span>, <span class='pl-smi x x-first'>Uri</span> <span class='pl-v x'>contactUri</span><span class='x'>, </span><span class='pl-smi x'>Drawable</span> <span class='pl-v x x-last'>contactPhoto</span></span> were merged to <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-smi x x-first'>RecipientDetails</span> <span class='pl-v x x-last'>details</span></span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter recipientId : long to number : String in method private getRecipientDetailsAsync(context Context, number String) : ListenableFutureTask<RecipientDetails> in class org.thoughtcrime.securesms.recipients.RecipientProvider",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>There is a local variable named number<br /><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>final</span> <span class='pl-smi'>String</span> number <span class='pl-k'>=</span> <span class='pl-smi'>CanonicalAddressDatabase</span><span class='pl-k'>.</span>getInstance(context)<span class='pl-k'>.</span>getAddressFromId(recipientId);</span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Merge Parameter",
+        "description": "Merge Parameter [number : String, contactUri : Uri, name : String, contactPhoto : Drawable] to details : RecipientDetails in method package Recipient(recipientId long, details RecipientDetails) in class org.thoughtcrime.securesms.recipients.Recipient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 0
@@ -25232,185 +25239,185 @@
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type matchers : List<Matcher> to matchers : List<MockitoMatcher> in method private varArgsMatch(invocationMatcher InvocationMatcher, actual Invocation) : boolean in class org.mockito.internal.invocation.ArgumentsComparator",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type m : Matcher to m : MockitoMatcher in method private varArgsMatch(invocationMatcher InvocationMatcher, actual Invocation) : boolean in class org.mockito.internal.invocation.ArgumentsComparator",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type matchers : List<Matcher> to matchers : List<MockitoMatcher> in method public argumentsToMatchers(arguments Object[]) : List<MockitoMatcher> in class org.mockito.internal.invocation.ArgumentsProcessor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type matchers : List<Matcher> to matchers : List<MockitoMatcher> in class org.mockito.internal.invocation.InvocationMatcher",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type m : Matcher to m : MockitoMatcher in method private captureRegularArguments(invocation Invocation) : void in class org.mockito.internal.invocation.InvocationMatcher",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type set : HashSet<Matcher> to set : HashSet<MockitoMatcher> in method private uniqueMatcherSet(indexOfVararg int) : Set<MockitoMatcher> in class org.mockito.internal.invocation.InvocationMatcher",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type matcher : Matcher to matcher : MockitoMatcher in method private uniqueMatcherSet(indexOfVararg int) : Set<MockitoMatcher> in class org.mockito.internal.invocation.InvocationMatcher",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type matchers : List<Matcher> to matchers : List<MockitoMatcher> in class org.mockito.internal.matchers.And",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type ANY_VARARG : Matcher to ANY_VARARG : MockitoMatcher in class org.mockito.internal.matchers.AnyVararg",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type actualMatcher : Matcher to actualMatcher : MockitoMatcher in class org.mockito.internal.matchers.LocalizedMatcher",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type first : Matcher to first : MockitoMatcher in class org.mockito.internal.matchers.Not",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type matchers : List<Matcher> to matchers : List<MockitoMatcher> in class org.mockito.internal.matchers.Or",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type result : List<Matcher> to result : List<MockitoMatcher> in method private popLastArgumentMatchers(count int) : List<MockitoMatcher> in class org.mockito.internal.progress.ArgumentMatcherStorageImpl",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type m : Matcher to m : MockitoMatcher in method public should_to_string_with_matchers() : void in class org.mockito.internal.invocation.InvocationMatcherTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type mTwo : Matcher to mTwo : MockitoMatcher in method public should_to_string_with_matchers() : void in class org.mockito.internal.invocation.InvocationMatcherTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type matchers : List<Matcher> to matchers : List<MockitoMatcher> in method public orToString() : void in class org.mockito.internal.matchers.MatchersToStringTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type matchers : List<Matcher> to matchers : List<MockitoMatcher> in method public andToString() : void in class org.mockito.internal.matchers.MatchersToStringTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type matchers : List<Matcher> to matchers : List<MockitoMatcher> in method public shouldNotFindAnySuspiciousMatchersWhenNumberOfArgumentsDoesntMatch() : void in class org.mockito.internal.verification.argumentmatching.ArgumentMatchingToolTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type matchers : List<Matcher> to matchers : List<MockitoMatcher> in method public shouldNotFindAnySuspiciousMatchersWhenArgumentsMatch() : void in class org.mockito.internal.verification.argumentmatching.ArgumentMatchingToolTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type matchers : List<Matcher> to matchers : List<MockitoMatcher> in method public shouldFindSuspiciousMatchers() : void in class org.mockito.internal.verification.argumentmatching.ArgumentMatchingToolTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type matchers : List<Matcher> to matchers : List<MockitoMatcher> in method public shouldUseMatchersSafely() : void in class org.mockito.internal.verification.argumentmatching.ArgumentMatchingToolTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type matcher : Matcher<Number> to matcher : MockitoMatcher<Number> in method public testEqualsWithDelta_NullExpected() : void in class org.mockitousage.bugs.EqualsWithDeltaTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type matcher : Matcher<Number> to matcher : MockitoMatcher<Number> in method public testEqualsWithDelta_NullActual() : void in class org.mockitousage.bugs.EqualsWithDeltaTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type matcher : Matcher<Number> to matcher : MockitoMatcher<Number> in method public testEqualsWithDelta_NullActualAndExpected() : void in class org.mockitousage.bugs.EqualsWithDeltaTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type matcher : Matcher<Number> to matcher : MockitoMatcher<Number> in method public testEqualsWithDelta_WhenActualAndExpectedAreTheSameObject() : void in class org.mockitousage.bugs.EqualsWithDeltaTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable actualNumber : Number to actual : Number in method public matches(object Object) : boolean in class org.mockito.internal.matchers.EqualsWithDelta",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>This is related to Rename Parameter http://refactoring.encs.concordia.ca/oracle/refactoring-details/1124301/6311</p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 1564
 }, {
@@ -36489,15 +36496,15 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute PORTS : AtomicInteger to ports : AtomicInteger in class com.hazelcast.test.TestHazelcastInstanceFactory",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>This is quite challenging to detect because there an attribute named ports and a parameter named ports at the same time</p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter addresses : Address[] to initialNodeCount : int in method private init(initialNodeCount int) : void in class com.hazelcast.test.TestHazelcastInstanceFactory",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>It is actually addresses.length replaced with initialNodeCount</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": null
     }],
@@ -36563,10 +36570,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter relationshipId : long to relId : long in method protected nextFrom(relId long, type int, startNode long, endNode long) : Long in class org.neo4j.unsafe.batchinsert.BatchInserterImpl.getRelationshipIds.neoStore",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter storeIterator : RelationshipIterator to startNode : long in method protected nextFrom(relId long, type int, startNode long, endNode long) : Long in class org.neo4j.unsafe.batchinsert.BatchInserterImpl.getRelationshipIds.neoStore",
@@ -47688,40 +47695,12 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Inline Variable",
-        "description": "Inline Variable pathToCatalog : String in method public testCreateDropIndexonView() : void from class org.voltdb.TestAdhocCreateDropIndex",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Inline Variable",
-        "description": "Inline Variable pathToCatalog : String in method public testBasicCreateIndex() : void from class org.voltdb.TestAdhocCreateDropIndex",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Inline Variable",
-        "description": "Inline Variable pathToDeployment : String in method public testCreateDropIndexonView() : void from class org.voltdb.TestAdhocCreateDropIndex",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Inline Variable",
-        "description": "Inline Variable pathToDeployment : String in method public testBasicCreateIndex() : void from class org.voltdb.TestAdhocCreateDropIndex",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
         "type": "Rename Variable",
         "description": "Rename Variable pathToCatalog : String to ddl : String in method public testCreateDropIndexonView() : void in class org.voltdb.TestAdhocCreateDropIndex",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -57730,29 +57709,36 @@
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type formats : Map<String,OgrFormat> to formats : Map<String,Format> in class org.geoserver.wfs.response.Ogr2OgrOutputFormat",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type format : OgrFormat to format : Format in method public getMimeType(value Object, operation Operation) : String in class org.geoserver.wfs.response.Ogr2OgrOutputFormat",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type format : OgrFormat to format : Format in method public getAttachmentFileName(value Object, operation Operation) : String in class org.geoserver.wfs.response.Ogr2OgrOutputFormat",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type format : OgrFormat to format : Format in method protected write(featureCollection FeatureCollectionResponse, output OutputStream, getFeature Operation) : void in class org.geoserver.wfs.response.Ogr2OgrOutputFormat",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type parameters : OgrFormat to parameters : Format in method public addFormat(parameters Format) : void in class org.geoserver.wfs.response.Ogr2OgrOutputFormat",
         "comment": null,
-        "validation": "UKN",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],
@@ -58268,20 +58254,6 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
-    }, {
-        "type": "Change Variable Type",
-        "description": "Change Variable Type sdkName : String to allValidCodeSignIdentities : ImmutableSet<CodeSignIdentity> in method public createBuildRule(targetGraph TargetGraph, params BuildRuleParams, resolver BuildRuleResolver, args A) : BuildRule in class com.facebook.buck.apple.AppleTestDescription",
-        "comment": "null",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Nikos"
-    }, {
-        "type": "Replace Variable With Attribute",
-        "description": "Replace Variable With Attribute sdkName : String to allValidCodeSignIdentities : ImmutableSet<CodeSignIdentity> in method public createBuildRule(targetGraph TargetGraph, params BuildRuleParams, resolver BuildRuleResolver, args A) : BuildRule in class com.facebook.buck.apple.AppleTestDescription",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 4629

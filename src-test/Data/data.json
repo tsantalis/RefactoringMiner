@@ -21473,11 +21473,11 @@
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method protected getTargetExecutionCallback() : ExecutionCallback extracted from public invoke() : InternalCompletableFuture in class com.hazelcast.spi.impl.operationservice.impl.InvocationBuilderImpl",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method protected getTargetExecutionCallback() : ExecutionCallback extracted from public invoke() : InternalCompletableFuture in class com.hazelcast.spi.impl.operationservice.impl.InvocationBuilderImpl & moved to class com.hazelcast.spi.InvocationBuilder",
         "comment": "<p>Extract and Move to the parent class</p><p>Since RefDiff does not detects 'Extract and Move', we consider it as CTP. </p>",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh, Automatic"
     }, {
         "type": "Change Parameter Type",
@@ -43849,6 +43849,13 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private renderLoad() : void extracted from public toString() : String in class com.hazelcast.internal.monitors.HealthMonitor.HealthMetrics",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 5604
 }, {
@@ -54697,18 +54704,18 @@
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method public assertUdfsEnabled(language String) : void extracted from public validate(state ClientState) : void in class org.apache.cassandra.cql3.statements.CreateFunctionStatement",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public assertUdfsEnabled(language String) : void extracted from public validate(state ClientState) : void in class org.apache.cassandra.cql3.statements.CreateFunctionStatement & moved to class org.apache.cassandra.cql3.functions.UDFunction",
         "comment": "<p>Extract and Move to other class</p><p>Extract and move to UDFunction</p><p>&nbsp;</p>",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Laleh, Automatic"
     }, {
         "type": "Extract Method",
-        "description": "Extract Method public assertUdfsEnabled(language String) : void extracted from public execute(protocolVersion int, parameters List) : ByteBuffer in class org.apache.cassandra.cql3.functions.UDFunction",
+        "description": "Extract Method public assertUdfsEnabled(language String) : void extracted from public execute(protocolVersion int, parameters List<ByteBuffer>) : ByteBuffer in class org.apache.cassandra.cql3.functions.UDFunction",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood"
     }],
     "refDiffExecutionTime": 3338

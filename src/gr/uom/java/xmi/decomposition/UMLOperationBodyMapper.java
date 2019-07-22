@@ -1664,8 +1664,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(String methodInvocation1 : methodInvocations1) {
 			for(AbstractCall operationInvocation1 : methodInvocationMap1.get(methodInvocation1)) {
 				if(statement1.getString().endsWith(methodInvocation1 + ";\n") && (r = operationInvocation1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {
-					replacementInfo.addReplacement(r);
-					return replacementInfo.getReplacements();
+					if(operationInvocation1.makeReplacementForReturnedArgument(statement2.getString()) != null) {
+						replacementInfo.addReplacement(r);
+						return replacementInfo.getReplacements();
+					}
 				}
 			}
 		}

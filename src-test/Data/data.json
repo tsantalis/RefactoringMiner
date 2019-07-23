@@ -35401,6 +35401,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable v : BatteryMeterView in method public setBatteryController(batteryController BatteryController) : void from class com.android.systemui.statusbar.phone.KeyguardStatusBarView",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable batteryMeterView : BatteryMeterView in method protected makeStatusBarView() : PhoneStatusBarView from class com.android.systemui.statusbar.phone.PhoneStatusBar",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable v : BatteryMeterView in method public setBatteryController(batteryController BatteryController) : void from class com.android.systemui.statusbar.phone.StatusBarHeaderView",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 11400
 }, {
@@ -54579,6 +54600,13 @@
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type requestContentEncodingName : String to requestContentEncoding : EncodingType in method private getClient(properties Map<String,? extends Object>, sslContext SSLContext, sslParameters SSLParameters) : TransportClient in class com.linkedin.r2.transport.http.client.HttpClientFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable builder : RestRequestBuilder in method public addResponseCompressionHeaders(responseCompressionOverride CompressionOption, req RestRequest) : RestRequest from class com.linkedin.r2.filter.compression.ClientCompressionFilter",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

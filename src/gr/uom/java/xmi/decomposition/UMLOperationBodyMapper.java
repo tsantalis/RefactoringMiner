@@ -176,6 +176,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 	
+	private boolean returnWithVariableReplacement(AbstractCodeMapping mapping) {
+		if(mapping.getReplacements().size() == 1) {
+			Replacement r = mapping.getReplacements().iterator().next();
+			if(r.getType().equals(ReplacementType.VARIABLE_NAME)) {
+				String fragment1 = mapping.getFragment1().getString();
+				String fragment2 = mapping.getFragment2().getString();
+				if(fragment1.equals("return " + r.getBefore() + ";\n") && fragment2.equals("return " + r.getAfter() + ";\n")) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public UMLOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper, UMLOperation addedOperation,
 			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2) throws RefactoringMinerTimedOutException {
 		this.parentMapper = operationBodyMapper;
@@ -195,7 +209,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			//adding leaves that were mapped with replacements
 			Set<StatementObject> addedLeaves1 = new LinkedHashSet<StatementObject>();
 			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-				if(!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2())) {
+				if(!returnWithVariableReplacement(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
 					AbstractCodeFragment fragment = mapping.getFragment1();
 					if(fragment instanceof StatementObject) {
 						StatementObject statement = (StatementObject)fragment;
@@ -358,7 +372,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			//adding leaves that were mapped with replacements or are inexact matches
 			Set<StatementObject> addedLeaves2 = new LinkedHashSet<StatementObject>();
 			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-				if(!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2())) {
+				if(!returnWithVariableReplacement(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
 					AbstractCodeFragment fragment = mapping.getFragment2();
 					if(fragment instanceof StatementObject) {
 						StatementObject statement = (StatementObject)fragment;

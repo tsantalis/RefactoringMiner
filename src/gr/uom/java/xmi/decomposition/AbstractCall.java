@@ -320,6 +320,18 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return null;
 	}
 
+	public Replacement makeReplacementForWrappedCall(String statement) {
+		if(argumentIsReturned(statement)) {
+			return new Replacement(statement.substring(7, statement.length()-2), getArguments().get(0),
+					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
+		}
+		else if(argumentIsEqual(statement)) {
+			return new Replacement(statement.substring(0, statement.length()-2), getArguments().get(0),
+					ReplacementType.ARGUMENT_REPLACED_WITH_STATEMENT);
+		}
+		return null;
+	}
+
 	private boolean argumentIsAssigned(String statement) {
 		return getArguments().size() == 1 && statement.contains("=") && statement.endsWith(";\n") &&
 				//length()-2 to remove ";\n" from the end of the assignment statement, indexOf("=")+1 to remove the left hand side of the assignment

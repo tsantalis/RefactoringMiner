@@ -3107,16 +3107,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			if(mappedLeavesSize == 0) {
 				//check for possible extract or inline
-				if(leaveSize2 == 1) {
-					OperationInvocation invocation = leaves2.get(0).invocationCoveringEntireFragment();
-					if(invocation != null && matchesOperation(invocation, addedOperations, operation2.variableTypeMap())) {
-						mappedLeavesSize++;
+				if(leaveSize2 <= 2) {
+					for(StatementObject leaf2 : leaves2) {
+						OperationInvocation invocation = leaf2.invocationCoveringEntireFragment();
+						if(invocation != null && matchesOperation(invocation, addedOperations, operation2.variableTypeMap())) {
+							mappedLeavesSize++;
+						}
 					}
 				}
-				else if(leaveSize1 == 1) {
-					OperationInvocation invocation = leaves1.get(0).invocationCoveringEntireFragment();
-					if(invocation != null && matchesOperation(invocation, removedOperations, operation1.variableTypeMap())) {
-						mappedLeavesSize++;
+				else if(leaveSize1 <= 2) {
+					for(StatementObject leaf1 : leaves1) {
+						OperationInvocation invocation = leaf1.invocationCoveringEntireFragment();
+						if(invocation != null && matchesOperation(invocation, removedOperations, operation1.variableTypeMap())) {
+							mappedLeavesSize++;
+						}
 					}
 				}
 			}

@@ -19141,9 +19141,16 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable taskId : int to task : AnalystClusterRequest in method public run() : void in class org.opentripplanner.analyst.cluster.AnalystWorker",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type taskId : int to task : AnalystClusterRequest in method public run() : void in class org.opentripplanner.analyst.cluster.AnalystWorker",
         "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 0
@@ -40751,8 +40758,15 @@
         "description": "Rename Variable destination : PBXCopyFilesBuildPhase.Destination to destinationSpec : CopyFilePhaseDestinationSpec in method private generateCopyFilesBuildPhases(target PBXNativeTarget, copiedNodes Iterable<TargetNode<?>>) : void in class com.facebook.buck.apple.ProjectGenerator",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Ameya"
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type destination : PBXCopyFilesBuildPhase.Destination to destinationSpec : CopyFilePhaseDestinationSpec in method private generateCopyFilesBuildPhases(target PBXNativeTarget, copiedNodes Iterable<TargetNode<?>>) : void in class com.facebook.buck.apple.ProjectGenerator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4819
 }, {

@@ -2517,7 +2517,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					Replacement matchingReplacement = null;
 					for(Replacement replacement : replacementInfo.getReplacements()) {
 						if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
-							if(operation1.getVariableDeclaration(replacement.getBefore()) != null &&
+							int indexOf1 = s1.indexOf(replacement.getAfter());
+							int indexOf2 = s2.indexOf(replacement.getAfter());
+							boolean isVariableDeclarationReplacement =
+									s1.charAt(indexOf1 + replacement.getAfter().length()) == '=' &&
+									s2.charAt(indexOf2 + replacement.getAfter().length()) == '=';
+							if(!isVariableDeclarationReplacement &&
+									operation1.getVariableDeclaration(replacement.getBefore()) != null &&
 									operation2.getVariableDeclaration(replacement.getAfter()) != null) {
 								matchingReplacement = replacement;
 								break;

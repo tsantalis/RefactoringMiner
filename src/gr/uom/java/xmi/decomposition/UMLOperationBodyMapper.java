@@ -5,6 +5,7 @@ import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.decomposition.replacement.AddVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
@@ -2430,6 +2431,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							return true;
 						}
 					}
+					else if(diff1.isEmpty() && replacementInfo.getReplacements().isEmpty()) {
+						Set<String> addedVariables = new LinkedHashSet<String>();
+						StringBuilder concat = new StringBuilder();
+						int counter = 0;
+						for(UMLParameter addedParameter : matchingAddedParameters) {
+							addedVariables.add(addedParameter.getName());
+							concat.append(addedParameter.getName());
+							if(counter < matchingAddedParameters.size()-1) {
+								concat.append(",");
+							}
+							counter++;
+						}
+						if(concat.toString().equals(diff2)) {
+							AddVariableReplacement r = new AddVariableReplacement(addedVariables);
+							replacementInfo.getReplacements().add(r);
+							return true;
+						}
+					}
 					if(operation1.getParameterNameList().contains(diff1)) {
 						Set<String> splitVariables = new LinkedHashSet<String>();
 						StringBuilder concat = new StringBuilder();
@@ -2484,6 +2503,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(!split.getSplitVariables().contains(split.getBefore()) && concat.toString().equals(diff2)) {
 								replacementInfo.getReplacements().remove(matchingReplacement);
 								replacementInfo.getReplacements().add(split);
+								return true;
+							}
+						}
+						else if(diff1.isEmpty() && replacementInfo.getReplacements().isEmpty()) {
+							Set<String> addedVariables = new LinkedHashSet<String>();
+							StringBuilder concat = new StringBuilder();
+							int counter = 0;
+							for(UMLAttribute attribute : matchingAttributes) {
+								addedVariables.add(attribute.getName());
+								concat.append(attribute.getName());
+								if(counter < matchingAttributes.size()-1) {
+									concat.append(",");
+								}
+								counter++;
+							}
+							if(concat.toString().equals(diff2)) {
+								AddVariableReplacement r = new AddVariableReplacement(addedVariables);
+								replacementInfo.getReplacements().add(r);
 								return true;
 							}
 						}
@@ -2547,6 +2584,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(!split.getSplitVariables().contains(split.getBefore()) && concat.toString().equals(diff2)) {
 							replacementInfo.getReplacements().remove(matchingReplacement);
 							replacementInfo.getReplacements().add(split);
+							return true;
+						}
+					}
+					else if(diff1.isEmpty() && replacementInfo.getReplacements().isEmpty()) {
+						Set<String> addedVariables = new LinkedHashSet<String>();
+						StringBuilder concat = new StringBuilder();
+						int counter = 0;
+						for(VariableDeclaration declaration : matchingVariableDeclarations) {
+							addedVariables.add(declaration.getVariableName());
+							concat.append(declaration.getVariableName());
+							if(counter < matchingVariableDeclarations.size()-1) {
+								concat.append(",");
+							}
+							counter++;
+						}
+						if(concat.toString().equals(diff2)) {
+							AddVariableReplacement r = new AddVariableReplacement(addedVariables);
+							replacementInfo.getReplacements().add(r);
 							return true;
 						}
 					}

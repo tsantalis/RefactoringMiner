@@ -158,7 +158,10 @@ public class InlineOperationRefactoring implements Refactoring {
 		ranges.add(getInlinedOperationCodeRange()
 				.setDescription("inlined method declaration")
 				.setCodeElement(inlinedOperation.toString()));
-		ranges.add(getInlinedCodeRangeFromInlinedOperation().setDescription("inlined code from inlined method declaration"));
+		//ranges.add(getInlinedCodeRangeFromInlinedOperation().setDescription("inlined code from inlined method declaration"));
+		for(AbstractCodeFragment inlinedCodeFragment : inlinedCodeFragmentsFromInlinedOperation) {
+			ranges.add(inlinedCodeFragment.codeRange().setDescription("inlined code from inlined method declaration"));
+		}
 		ranges.add(getTargetOperationCodeRangeBeforeInline()
 				.setDescription("target method declaration before inline")
 				.setCodeElement(targetOperationBeforeInline.toString()));
@@ -184,6 +187,10 @@ public class InlineOperationRefactoring implements Refactoring {
 		ranges.add(getTargetOperationCodeRangeAfterInline()
 				.setDescription("target method declaration after inline")
 				.setCodeElement(targetOperationAfterInline.toString()));
+		for(AbstractCodeFragment inlinedCodeFragment : inlinedCodeFragmentsInTargetOperation) {
+			ranges.add(inlinedCodeFragment.codeRange().setDescription("inlined code in target method declaration"));
+		}
+		/*
 		CodeRange inlinedCodeRangeInTargetOperation = getInlinedCodeRangeInTargetOperation();
 		ranges.add(inlinedCodeRangeInTargetOperation.setDescription("inlined code in target method declaration"));
 		for(StatementObject statement : bodyMapper.getNonMappedLeavesT2()) {
@@ -199,6 +206,7 @@ public class InlineOperationRefactoring implements Refactoring {
 						setDescription("added statement in target method declaration"));
 			}
 		}
+		*/
 		return ranges;
 	}
 }

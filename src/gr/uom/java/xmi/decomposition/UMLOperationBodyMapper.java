@@ -1589,6 +1589,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			List<Replacement> typeReplacements = replacementInfo.getReplacements(ReplacementType.TYPE);
+			if(typeReplacements.size() > 0 && invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
+				for(Replacement typeReplacement : typeReplacements) {
+					if(invocationCoveringTheEntireStatement1.getMethodName().contains(typeReplacement.getBefore()) && invocationCoveringTheEntireStatement2.getMethodName().contains(typeReplacement.getAfter())) {
+						if(invocationCoveringTheEntireStatement1.identicalExpression(invocationCoveringTheEntireStatement2) && invocationCoveringTheEntireStatement1.equalArguments(invocationCoveringTheEntireStatement2)) {
+							Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getName(),
+									invocationCoveringTheEntireStatement2.getName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME);
+							replacementInfo.addReplacement(replacement);
+						}
+						else {
+							Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+									invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
+							replacementInfo.addReplacement(replacement);
+						}
+						break;
+					}
+				}
+			}
 			return replacementInfo.getReplacements();
 		}
 		if(!anonymousClassDeclarations1.isEmpty() && !anonymousClassDeclarations2.isEmpty()) {
@@ -1685,7 +1703,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(invokedOperationsBefore != null && invokedOperationsBefore.size() > 0 && invokedOperationsAfter != null && invokedOperationsAfter.size() > 0) {
 					OperationInvocation invokedOperationBefore = (OperationInvocation)invokedOperationsBefore.get(0);
 					OperationInvocation invokedOperationAfter = (OperationInvocation)invokedOperationsAfter.get(0);
-					Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getExpression(), invocationCoveringTheEntireStatement2.getExpression(), invokedOperationBefore, invokedOperationAfter, ReplacementType.METHOD_INVOCATION);
+					Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getExpression(), invocationCoveringTheEntireStatement2.getExpression(), invokedOperationBefore, invokedOperationAfter, ReplacementType.METHOD_INVOCATION_EXPRESSION);
 					replacementInfo.addReplacement(replacement);
 					return replacementInfo.getReplacements();
 				}

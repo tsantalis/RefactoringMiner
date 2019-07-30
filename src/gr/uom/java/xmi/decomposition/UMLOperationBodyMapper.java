@@ -1559,6 +1559,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		List<AnonymousClassDeclarationObject> anonymousClassDeclarations1 = statement1.getAnonymousClassDeclarations();
 		List<AnonymousClassDeclarationObject> anonymousClassDeclarations2 = statement2.getAnonymousClassDeclarations();
 		if(isEqualWithReplacement) {
+			List<Replacement> typeReplacements = replacementInfo.getReplacements(ReplacementType.TYPE);
+			if(typeReplacements.size() > 0 && invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
+				for(Replacement typeReplacement : typeReplacements) {
+					if(invocationCoveringTheEntireStatement1.getMethodName().contains(typeReplacement.getBefore()) && invocationCoveringTheEntireStatement2.getMethodName().contains(typeReplacement.getAfter())) {
+						if(invocationCoveringTheEntireStatement1.identicalExpression(invocationCoveringTheEntireStatement2) && invocationCoveringTheEntireStatement1.equalArguments(invocationCoveringTheEntireStatement2)) {
+							Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getName(),
+									invocationCoveringTheEntireStatement2.getName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME);
+							replacementInfo.addReplacement(replacement);
+						}
+						else {
+							Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+									invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
+							replacementInfo.addReplacement(replacement);
+						}
+						break;
+					}
+				}
+			}
 			if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo)) {
 				return null;
 			}
@@ -1586,24 +1604,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(replacementInsideAnonymous) {
 							equalAfterNewArgumentAdditions(replacement.getBefore(), replacement.getAfter(), replacementInfo);
 						}
-					}
-				}
-			}
-			List<Replacement> typeReplacements = replacementInfo.getReplacements(ReplacementType.TYPE);
-			if(typeReplacements.size() > 0 && invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
-				for(Replacement typeReplacement : typeReplacements) {
-					if(invocationCoveringTheEntireStatement1.getMethodName().contains(typeReplacement.getBefore()) && invocationCoveringTheEntireStatement2.getMethodName().contains(typeReplacement.getAfter())) {
-						if(invocationCoveringTheEntireStatement1.identicalExpression(invocationCoveringTheEntireStatement2) && invocationCoveringTheEntireStatement1.equalArguments(invocationCoveringTheEntireStatement2)) {
-							Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getName(),
-									invocationCoveringTheEntireStatement2.getName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME);
-							replacementInfo.addReplacement(replacement);
-						}
-						else {
-							Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
-									invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
-							replacementInfo.addReplacement(replacement);
-						}
-						break;
 					}
 				}
 			}

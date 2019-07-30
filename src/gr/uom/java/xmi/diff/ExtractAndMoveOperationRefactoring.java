@@ -159,6 +159,10 @@ public class ExtractAndMoveOperationRefactoring implements Refactoring {
 		ranges.add(getSourceOperationCodeRangeBeforeExtraction()
 				.setDescription("source method declaration before extraction")
 				.setCodeElement(sourceOperationBeforeExtraction.toString()));
+		for(AbstractCodeFragment extractedCodeFragment : extractedCodeFragmentsFromSourceOperation) {
+			ranges.add(extractedCodeFragment.codeRange().setDescription("extracted code from source method declaration"));
+		}
+		/*
 		CodeRange extractedCodeRangeFromSourceOperation = getExtractedCodeRangeFromSourceOperation();
 		ranges.add(extractedCodeRangeFromSourceOperation.setDescription("extracted code from source method declaration"));
 		for(StatementObject statement : bodyMapper.getNonMappedLeavesT1()) {
@@ -174,6 +178,7 @@ public class ExtractAndMoveOperationRefactoring implements Refactoring {
 						setDescription("deleted statement in source method declaration"));
 			}
 		}
+		*/
 		return ranges;
 	}
 
@@ -183,7 +188,10 @@ public class ExtractAndMoveOperationRefactoring implements Refactoring {
 		ranges.add(getExtractedOperationCodeRange()
 				.setDescription("extracted method declaration")
 				.setCodeElement(extractedOperation.toString()));
-		ranges.add(getExtractedCodeRangeToExtractedOperation().setDescription("extracted code to extracted method declaration"));
+		//ranges.add(getExtractedCodeRangeToExtractedOperation().setDescription("extracted code to extracted method declaration"));
+		for(AbstractCodeFragment extractedCodeFragment : extractedCodeFragmentsToExtractedOperation) {
+			ranges.add(extractedCodeFragment.codeRange().setDescription("extracted code to extracted method declaration"));
+		}
 		ranges.add(getSourceOperationCodeRangeAfterExtraction()
 				.setDescription("source method declaration after extraction")
 				.setCodeElement(sourceOperationAfterExtraction.toString()));

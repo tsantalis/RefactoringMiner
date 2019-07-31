@@ -11923,6 +11923,20 @@
         "validation": "UKN",
         "detectionTools": "GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type context : Context to context : ConsumerContext in method public visitQueriedTable(table QueriedTable, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.QueryAndFetchConsumer.Visitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type AnalyzedRelation to PlannedAnalyzedRelation in method public visitQueriedTable(table QueriedTable, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.QueryAndFetchConsumer.Visitor",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3234
 }, {
@@ -25646,6 +25660,20 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable query : String in method public memoryLeaksWhenCancelled() : void from class org.apache.drill.exec.server.TestDrillbitResilience",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable query : String in method public memoryLeaksWhenFailed() : void from class org.apache.drill.exec.server.TestDrillbitResilience",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2963
 }, {
@@ -34792,6 +34820,13 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable selectionString : String in method private getIdentityKeyCursor(account Account, name String, own boolean, fingerprint String) : Cursor from class eu.siacs.conversations.persistance.DatabaseBackend",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1622
 }, {

@@ -1270,12 +1270,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
+	private boolean nonMatchedStatementUsesVariableInArgument(List<? extends AbstractCodeFragment> statements, String variable, String otherArgument) {
+		for(AbstractCodeFragment statement : statements) {
+			OperationInvocation invocation = statement.invocationCoveringEntireFragment();
+			if(invocation != null) {
+				for(String argument : invocation.getArguments()) {
+					String argumentNoWhiteSpace = argument.replaceAll("\\s","");
+					if(argument.contains(variable) && !argument.equals(variable) && !argumentNoWhiteSpace.contains("+" + variable + "+") &&
+							!argumentNoWhiteSpace.contains(variable + "+") && !argumentNoWhiteSpace.contains("+" + variable) && !argument.equals(otherArgument)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	private Set<Replacement> findReplacementsWithExactMatching(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo) throws RefactoringMinerTimedOutException {
 		List<VariableDeclaration> variableDeclarations1 = new ArrayList<VariableDeclaration>(statement1.getVariableDeclarations());
 		List<VariableDeclaration> variableDeclarations2 = new ArrayList<VariableDeclaration>(statement2.getVariableDeclarations());
 		VariableDeclaration variableDeclarationWithArrayInitializer1 = declarationWithArrayInitializer(variableDeclarations1);
 		VariableDeclaration variableDeclarationWithArrayInitializer2 = declarationWithArrayInitializer(variableDeclarations2);
+		OperationInvocation invocationCoveringTheEntireStatement1 = statement1.invocationCoveringEntireFragment();
+		OperationInvocation invocationCoveringTheEntireStatement2 = statement2.invocationCoveringEntireFragment();
 		Set<String> variables1 = new LinkedHashSet<String>(statement1.getVariables());
 		Set<String> variables2 = new LinkedHashSet<String>(statement2.getVariables());
 		Set<String> variableIntersection = new LinkedHashSet<String>(variables1);
@@ -1287,6 +1305,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(!variable.startsWith("this.") && !variableIntersection.contains("this."+variable) &&
 					(variables1.contains("this."+variable) || variables2.contains("this."+variable))) {
 				variablesToBeRemovedFromTheIntersection.add(variable);
+			}
+			if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+					invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2)) {
+				if(!invocationCoveringTheEntireStatement1.getArguments().contains(variable) &&
+						invocationCoveringTheEntireStatement2.getArguments().contains(variable)) {
+					for(String argument : invocationCoveringTheEntireStatement1.getArguments()) {
+						String argumentNoWhiteSpace = argument.replaceAll("\\s","");
+						if(argument.contains(variable) && !argument.equals(variable) && !argumentNoWhiteSpace.contains("+" + variable + "+") &&
+								!argumentNoWhiteSpace.contains(variable + "+") && !argumentNoWhiteSpace.contains("+" + variable) &&
+								!nonMatchedStatementUsesVariableInArgument(replacementInfo.statements1, variable, argument)) {
+							variablesToBeRemovedFromTheIntersection.add(variable);
+						}
+					}
+				}
+				else if(invocationCoveringTheEntireStatement1.getArguments().contains(variable) &&
+						!invocationCoveringTheEntireStatement2.getArguments().contains(variable)) {
+					for(String argument : invocationCoveringTheEntireStatement2.getArguments()) {
+						String argumentNoWhiteSpace = argument.replaceAll("\\s","");
+						if(argument.contains(variable) && !argument.equals(variable) && !argumentNoWhiteSpace.contains("+" + variable + "+") &&
+								!argumentNoWhiteSpace.contains(variable + "+") && !argumentNoWhiteSpace.contains("+" + variable) &&
+								!nonMatchedStatementUsesVariableInArgument(replacementInfo.statements2, variable, argument)) {
+							variablesToBeRemovedFromTheIntersection.add(variable);
+						}
+					}
+				}
 			}
 			if(variable.toUpperCase().equals(variable)) {
 				variablesToBeRemovedFromTheIntersection.add(variable);
@@ -1339,8 +1382,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		
 		replaceVariablesWithArguments(methodInvocationMap1, methodInvocations1, map);
 		
-		OperationInvocation invocationCoveringTheEntireStatement1 = statement1.invocationCoveringEntireFragment();
-		OperationInvocation invocationCoveringTheEntireStatement2 = statement2.invocationCoveringEntireFragment();
 		//remove methodInvocation covering the entire statement
 		if(invocationCoveringTheEntireStatement1 != null) {
 			for(String methodInvocation1 : methodInvocationMap1.keySet()) {

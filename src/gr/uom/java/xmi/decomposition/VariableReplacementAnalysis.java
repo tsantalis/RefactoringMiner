@@ -13,6 +13,7 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
@@ -393,8 +394,8 @@ public class VariableReplacementAnalysis {
 		for(Replacement replacement : allConsistentVariableDeclarationRenames) {
 			VariableDeclarationReplacement vdReplacement = (VariableDeclarationReplacement)replacement;
 			Set<AbstractCodeMapping> set = variableDeclarationReplacementOccurrenceMap.get(vdReplacement);
-			if((set.size() > 1 && consistencyCheck(vdReplacement.getVariableDeclaration1(), vdReplacement.getVariableDeclaration2())) ||
-					(set.size() == 1 && replacementInLocalVariableDeclaration(vdReplacement.getVariableNameReplacement()))) {
+			if((set.size() > 1 && consistencyCheck(vdReplacement.getVariableDeclaration1(), vdReplacement.getVariableDeclaration2(), set)) ||
+					(set.size() == 1 && replacementInLocalVariableDeclaration(vdReplacement.getVariableNameReplacement(), set))) {
 				RenameVariableRefactoring ref = new RenameVariableRefactoring(vdReplacement.getVariableDeclaration1(), vdReplacement.getVariableDeclaration2(), vdReplacement.getOperation1(), vdReplacement.getOperation2(), set);
 				if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref) && !existsConflictingSplitVariableRefactoring(ref)) {
 					variableRenames.add(ref);
@@ -412,13 +413,13 @@ public class VariableReplacementAnalysis {
 			SimpleEntry<VariableDeclaration, UMLOperation> v1 = getVariableDeclaration1(replacement);
 			SimpleEntry<VariableDeclaration, UMLOperation> v2 = getVariableDeclaration2(replacement);
 			Set<AbstractCodeMapping> set = replacementOccurrenceMap.get(replacement);
-			if((set.size() > 1 && v1 != null && v2 != null && consistencyCheck(v1.getKey(), v2.getKey())) ||
+			if((set.size() > 1 && v1 != null && v2 != null && consistencyCheck(v1.getKey(), v2.getKey(), set)) ||
 					potentialParameterRename(replacement) ||
 					v1 == null || v2 == null ||
-					(set.size() == 1 && replacementInLocalVariableDeclaration(replacement))) {
+					(set.size() == 1 && replacementInLocalVariableDeclaration(replacement, set))) {
 				finalConsistentRenames.put(replacement, set);
 			}
-			if(v1 != null && !v1.getKey().isParameter() && v2 != null && v2.getKey().isParameter() && consistencyCheck(v1.getKey(), v2.getKey()) &&
+			if(v1 != null && !v1.getKey().isParameter() && v2 != null && v2.getKey().isParameter() && consistencyCheck(v1.getKey(), v2.getKey(), set) &&
 					!operation1.getParameterNameList().contains(v2.getKey().getVariableName())) {
 				finalConsistentRenames.put(replacement, set);
 			}
@@ -683,7 +684,7 @@ public class VariableReplacementAnalysis {
 		return allConsistentRenames;
 	}
 
-	private boolean replacementInLocalVariableDeclaration(Replacement replacement) {
+	private boolean replacementInLocalVariableDeclaration(Replacement replacement, Set<AbstractCodeMapping> set) {
 		VariableDeclaration v1 = null;
 		for(AbstractCodeMapping mapping : mappings) {
 			if(mapping.getReplacements().contains(replacement)) {
@@ -698,19 +699,37 @@ public class VariableReplacementAnalysis {
 				break;
 			}
 		}
+		Set<VariableDeclaration> allVariableDeclarations1 = new LinkedHashSet<VariableDeclaration>();
+		Set<VariableDeclaration> allVariableDeclarations2 = new LinkedHashSet<VariableDeclaration>();
+		for(AbstractCodeMapping referenceMapping : set) {
+			AbstractCodeFragment statement1 = referenceMapping.getFragment1();
+			AbstractCodeFragment statement2 = referenceMapping.getFragment2();
+			if(statement1 instanceof CompositeStatementObject && statement2 instanceof CompositeStatementObject &&
+					statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+				CompositeStatementObject comp1 = (CompositeStatementObject)statement1;
+				CompositeStatementObject comp2 = (CompositeStatementObject)statement2;
+				allVariableDeclarations1.addAll(comp1.getAllVariableDeclarations());
+				allVariableDeclarations2.addAll(comp2.getAllVariableDeclarations());
+			}
+			else {
+				allVariableDeclarations1.addAll(operation1.getAllVariableDeclarations());
+				allVariableDeclarations2.addAll(operation2.getAllVariableDeclarations());
+				break;
+			}
+		}
 		return v1 != null && v2 != null &&
 				v1.equalVariableDeclarationType(v2) &&
-				!containsVariableDeclarationWithName(operation1.getAllVariableDeclarations(), v2.getVariableName()) &&
-				(!containsVariableDeclarationWithName(operation2.getAllVariableDeclarations(), v1.getVariableName()) || operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) != null) &&
-				consistencyCheck(v1, v2);
+				!containsVariableDeclarationWithName(allVariableDeclarations1, v2.getVariableName()) &&
+				(!containsVariableDeclarationWithName(allVariableDeclarations2, v1.getVariableName()) || operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) != null) &&
+				consistencyCheck(v1, v2, set);
 	}
 
-	private boolean consistencyCheck(VariableDeclaration v1, VariableDeclaration v2) {
+	private boolean consistencyCheck(VariableDeclaration v1, VariableDeclaration v2, Set<AbstractCodeMapping> set) {
 		return !variableAppearsInExtractedMethod(v1, v2) &&
-				!inconsistentVariableMapping(v1, v2);
+				!inconsistentVariableMapping(v1, v2, set);
 	}
 
-	private boolean inconsistentVariableMapping(VariableDeclaration v1, VariableDeclaration v2) {
+	private boolean inconsistentVariableMapping(VariableDeclaration v1, VariableDeclaration v2, Set<AbstractCodeMapping> set) {
 		if(v1 != null && v2 != null) {
 			for(AbstractCodeMapping mapping : mappings) {
 				List<VariableDeclaration> variableDeclarations1 = mapping.getFragment1().getVariableDeclarations();
@@ -733,9 +752,22 @@ public class VariableReplacementAnalysis {
 						return true;
 					}
 				}
-				if(mapping.isExact() && (bothFragmentsUseVariable(v1, mapping) || bothFragmentsUseVariable(v2, mapping)) &&
-						operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) == null) {
-					return true;
+				if(mapping.isExact()) {
+					for(AbstractCodeMapping referenceMapping : set) {
+						AbstractCodeFragment statement1 = referenceMapping.getFragment1();
+						AbstractCodeFragment statement2 = referenceMapping.getFragment2();
+						boolean containsMapping = true;
+						if(statement1 instanceof CompositeStatementObject && statement2 instanceof CompositeStatementObject &&
+								statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+							CompositeStatementObject comp1 = (CompositeStatementObject)statement1;
+							CompositeStatementObject comp2 = (CompositeStatementObject)statement2;
+							containsMapping = comp1.contains(mapping.getFragment1()) && comp2.contains(mapping.getFragment2());
+						}
+						if(containsMapping && (bothFragmentsUseVariable(v1, mapping) || bothFragmentsUseVariable(v2, mapping)) &&
+								operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) == null) {
+							return true;
+						}
+					}
 				}
 			}
 		}
@@ -747,7 +779,7 @@ public class VariableReplacementAnalysis {
 				mapping.getFragment2().getVariables().contains(v1.getVariableName());
 	}
 
-	private static boolean containsVariableDeclarationWithName(List<VariableDeclaration> variableDeclarations, String variableName) {
+	private static boolean containsVariableDeclarationWithName(Set<VariableDeclaration> variableDeclarations, String variableName) {
 		for(VariableDeclaration declaration : variableDeclarations) {
 			if(declaration.getVariableName().equals(variableName)) {
 				return true;

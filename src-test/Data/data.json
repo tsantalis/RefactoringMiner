@@ -38812,7 +38812,7 @@
         "description": "Rename Variable clazz : Class<? extends PersistentObject> to persistentObjectClass : Class<? extends PersistentObject> in method protected flushInserts() : void in class org.activiti.engine.impl.db.DbSqlSession",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Ameya"
     }],
     "refDiffExecutionTime": 2159

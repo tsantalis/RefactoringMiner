@@ -77,6 +77,19 @@ public class CompositeStatementObject extends AbstractStatement {
 		return innerNodes;
 	}
 
+	public boolean contains(AbstractCodeFragment fragment) {
+		if(fragment instanceof StatementObject) {
+			return getLeaves().contains(fragment);
+		}
+		else if(fragment instanceof CompositeStatementObject) {
+			return getInnerNodes().contains(fragment);
+		}
+		else if(fragment instanceof AbstractExpression) {
+			return getExpressions().contains(fragment);
+		}
+		return false;
+	}
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(locationInfo.getCodeElementType().getName());

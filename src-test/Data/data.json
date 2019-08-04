@@ -6616,7 +6616,7 @@
         "description": "Rename Parameter g : Graph to ghStorage : GraphHopperStorage in method public abstract createFactory(ghStorage GraphHopperStorage, opts AlgorithmOptions) : RoutingAlgorithmFactory in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Parameter",
@@ -6637,7 +6637,7 @@
         "description": "Rename Parameter g : Graph to ghStorage : GraphHopperStorage in method package createAlgos(ghStorage GraphHopperStorage, idx LocationIndex, encoder FlagEncoder, withCh boolean, tMode TraversalMode, weighting Weighting, manager EncodingManager) : List<AlgoHelperEntry> in class com.graphhopper.routing.RoutingAlgorithmIT",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Change Parameter Type",
@@ -7657,115 +7657,101 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable queryGraph : QueryGraph to routingGraph : Graph in method protected getPaths(request GHRequest, rsp GHResponse) : List<Path> in class com.graphhopper.GraphHopper",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>queryGraph is composed of routingGraph<br /><span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-smi'>QueryGraph</span> queryGraph <span class='pl-k'>=</span> <span class='pl-k'>new</span> <span class='pl-smi'>QueryGraph</span>(routingGraph);</span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute lg : LevelGraph to listener : InternalGraphEventListener in class com.graphhopper.storage.BaseGraph",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter lg : LevelGraph to listener : InternalGraphEventListener in method public BaseGraph(dir Directory, encodingManager EncodingManager, withElevation boolean, listener InternalGraphEventListener, internalPropAccess InternalGraphPropertyAccess, extendedStorage GraphExtension) in class com.graphhopper.storage.BaseGraph",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter edgeIterState : EdgeIteratorState to from : EdgeIteratorState in method package copyProperties(from EdgeIteratorState, to EdgeIteratorState) : EdgeIteratorState in class com.graphhopper.storage.BaseGraph",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter edgeIterState : EdgeIteratorState to to : EdgeIteratorState in method package copyProperties(from EdgeIteratorState, to EdgeIteratorState) : EdgeIteratorState in class com.graphhopper.storage.BaseGraph",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter list : PointList to pillarNodes : PointList in method public setWayGeometry(pillarNodes PointList) : EdgeIteratorState in class com.graphhopper.storage.BaseGraph.EdgeIterable",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>method&nbsp;setWayGeometry() is moved from&nbsp;GraphHopperStorage to BaseGraph with the same parameter name</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute bitUtil : BitUtil to baseGraph : BaseGraph in class com.graphhopper.storage.GraphHopperStorage",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>GraphHopperStorage has a containment relationship with BaseGraph after refactoring, and bitUtil is moved to BaseGraph</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter sizeInBytes : int to enableCH : boolean in method public GraphHopperStorage(enableCH boolean, dir Directory, encodingManager EncodingManager, withElevation boolean, extendedStorage GraphExtension) in class com.graphhopper.storage.GraphHopperStorage",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter name : String to clazz : Class<T> in method public getGraph(clazz Class<T>) : T in class com.graphhopper.storage.GraphHopperStorage",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter g : Graph to store : GraphHopperStorage in method public newStorage(store GraphHopperStorage) : GraphHopperStorage in class com.graphhopper.util.GHUtility",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
-    }, {
-        "type": "Rename Parameter",
-        "description": "Rename Parameter g : Graph to ghStorage : GraphHopperStorage in method public createFactory(ghStorage GraphHopperStorage, opts AlgorithmOptions) : RoutingAlgorithmFactory in class com.graphhopper.routing.AbstractRoutingAlgorithmTester",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
-    }, {
-        "type": "Rename Parameter",
-        "description": "Rename Parameter g : Graph to ghStorage : GraphHopperStorage in method createAlgos(ghStorage GraphHopperStorage, idx LocationIndex, encoder FlagEncoder, withCh boolean, tMode TraversalMode, weighting Weighting, manager EncodingManager) : List<AlgoHelperEntry> in class com.graphhopper.routing.RoutingAlgorithmIT",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter g : Graph to ghStorage : GraphHopperStorage in method protected getGraph(ghStorage GraphHopperStorage) : LevelGraph in class com.graphhopper.routing.ch.DijkstraBidirectionCHTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>getGraph() is a new method</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable g : LevelGraph to lg : LevelGraph in method public testMoreComplexGraph() : void in class com.graphhopper.routing.ch.PrepareContractionHierarchiesTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>lg is created through g<br /><span class='pl-smi'>LevelGraph</span> lg <span class='pl-k'>=</span> g<span class='pl-k'>.</span>getGraph(<span class='pl-smi'>LevelGraph</span><span class='pl-k'>.</span>class);</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable lg : LevelGraph to g : GraphHopperStorage in method public testSortHighLevelFirst() : void in class com.graphhopper.storage.index.LocationIndexTreeForLevelGraphTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>lg is created through g<br /><span class='pl-k'>final</span> <span class='pl-smi'>LevelGraph</span> lg <span class='pl-k'>=</span> g<span class='pl-k'>.</span>getGraph(<span class='pl-smi'>LevelGraph</span><span class='pl-k'>.</span>class);</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable lg : LevelGraphStorage to g : GraphHopperStorage in method public testLevelGraphBug() : void in class com.graphhopper.storage.index.LocationIndexTreeForLevelGraphTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>lg is created through g<br /><span class='pl-smi'>LevelGraphImpl</span> lg <span class='pl-k'>=</span> (<span class='pl-smi'>LevelGraphImpl</span>) g<span class='pl-k'>.</span>getGraph(<span class='pl-smi'>LevelGraph</span><span class='pl-k'>.</span>class);</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3012
 }, {
@@ -8003,24 +7989,24 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable entry : Map.Entry<Path,SourcePath> to input : CxxPreprocessorInput in method public apply(input CxxPreprocessorInput) : CxxHeaders in class com.facebook.buck.cxx.AbstractCxxPreprocessorInput.GET_INCLUDES",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter value1 : SourcePath to input : CxxPreprocessorInput in method public apply(input CxxPreprocessorInput) : ImmutableList<Path> in class com.facebook.buck.cxx.AbstractCxxPreprocessorInput.GET_SYSTEM_INCLUDE_ROOTS",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter buildTarget : BuildTarget to input : CxxPreprocessorInput in method public apply(input CxxPreprocessorInput) : ImmutableList<Path> in class com.facebook.buck.cxx.AbstractCxxPreprocessorInput.GET_FRAMEWORK_ROOTS",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3919
 }, {
@@ -18111,10 +18097,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable root : Artifact to repoSys : RepositorySystem in method private downloadArtifact(artifactToDownload Artifact, repoSys RepositorySystem, session RepositorySystemSession, buckFiles Map<Path,SortedSet<Prebuilt>>, graph MutableDirectedGraph<Artifact>) : void in class com.facebook.buck.maven.Resolver",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 1910
 }, {
@@ -22829,24 +22815,24 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter resourceDescriptions : Iterable<AppleResourceDescription.Arg> to targetGraph : TargetGraph in method public collectResourceDirsAndFiles(targetGraph TargetGraph, targetNode TargetNode<T>, filesystem ProjectFilesystem, resourceDirs ImmutableSet.Builder<SourcePath>, dirsContainingResourceDirs ImmutableSet.Builder<SourcePath>, resourceFiles ImmutableSet.Builder<SourcePath>) : void in class com.facebook.buck.apple.AppleResources",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>methods <span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-en'>addResourceDirsToBuilder</span></span>() and <span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-en'>addResourceFilesToBuilder</span></span>() are merged to collectResourceDirsAndFiles()</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter resourceDirsBuilder : ImmutableSet.Builder<SourcePath> to resourceDirs : ImmutableSet.Builder<SourcePath> in method public collectResourceDirsAndFiles(targetGraph TargetGraph, targetNode TargetNode<T>, filesystem ProjectFilesystem, resourceDirs ImmutableSet.Builder<SourcePath>, dirsContainingResourceDirs ImmutableSet.Builder<SourcePath>, resourceFiles ImmutableSet.Builder<SourcePath>) : void in class com.facebook.buck.apple.AppleResources",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>methods <span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-en'>addResourceDirsToBuilder</span></span>() and <span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-en'>addResourceFilesToBuilder</span></span>() are merged to collectResourceDirsAndFiles()</p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter resourceFilesBuilder : ImmutableSet.Builder<SourcePath> to resourceFiles : ImmutableSet.Builder<SourcePath> in method public collectResourceDirsAndFiles(targetGraph TargetGraph, targetNode TargetNode<T>, filesystem ProjectFilesystem, resourceDirs ImmutableSet.Builder<SourcePath>, dirsContainingResourceDirs ImmutableSet.Builder<SourcePath>, resourceFiles ImmutableSet.Builder<SourcePath>) : void in class com.facebook.buck.apple.AppleResources",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>methods <span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-en'>addResourceDirsToBuilder</span></span>() and <span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-en'>addResourceFilesToBuilder</span></span>() are merged to collectResourceDirsAndFiles()</p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3024
 }, {
@@ -34651,6 +34637,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable draftType : String in method private getDraftsForCurrentState() : Drafts from class org.thoughtcrime.securesms.ConversationActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1335
 }, {
@@ -36005,6 +35998,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable chooser : Intent to intent : Intent in method private openLoginInBrowser(client ApiClient) : void in class com.github.mobile.accounts.LoginActivity",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 539
@@ -39695,14 +39695,7 @@
         "description": "Rename Variable description : String to text : String in method package checkReferenceTypeUsedAsTypeArgument(typeElement PsiTypeElement, level LanguageLevel) : HighlightInfo in class com.intellij.codeInsight.daemon.impl.analysis.GenericsHighlightUtil",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable description : String to text : String in method checkReferenceTypeUsedAsTypeArgument(typeElement PsiTypeElement, level LanguageLevel) : HighlightInfo in class com.intellij.codeInsight.daemon.impl.analysis.GenericsHighlightUtil",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 37767
@@ -39739,7 +39732,7 @@
         "description": "Rename Variable description : String to text : String in method package checkReferenceTypeUsedAsTypeArgument(typeElement PsiTypeElement, level LanguageLevel) : HighlightInfo in class com.intellij.codeInsight.daemon.impl.analysis.GenericsHighlightUtil",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }],
     "refDiffExecutionTime": 18156
@@ -41999,18 +41992,18 @@
         "detectionTools": "RefDiff",
         "validators": "Davood, Nikos"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method private buildKernelServices() : KernelServices extracted from public testParseAndMarshalModel() : void in class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemTestCase",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method protected buildKernelServices() : KernelServices extracted from public testParseAndMarshalModel() : void in class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemTestCase & moved to class org.infinispan.server.jgroups.subsystem.OperationTestCaseBase",
         "comment": "<p>Extract and Move to the inner class</p><p>The method testParseAndMarshalModel() was detected by RefDiff to be moved from&nbsp;JGroupsSubsystemTestCase to SubsystemParsingTestCase (http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2850). That was marked as FP since the two classes are similar so there could be a move/rename class. to be found as move/rename. If we accept this, this can be TP similar to&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2876</p>",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood, Automatic"
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method private buildKernelServices() : KernelServices extracted from public testDescribeHandler() : void in class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemTestCase",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method protected buildKernelServices() : KernelServices extracted from public testDescribeHandler() : void in class org.jboss.as.clustering.jgroups.subsystem.JGroupsSubsystemTestCase & moved to class org.infinispan.server.jgroups.subsystem.OperationTestCaseBase",
         "comment": "<p>Extract and Move to the inner class</p><p>The method testParseAndMarshalModel() was detected by RefDiff to be moved from&nbsp;JGroupsSubsystemTestCase to SubsystemParsingTestCase (http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2850). That was marked as FP since the two classes are similar so there could be a move/rename class. to be found as move/rename. If we accept this, this can be TP similar to&nbsp;http://refactoring.encs.concordia.ca/oracle/refactoring-details/1142116/2876</p>",
         "validation": "CTP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood, Automatic"
     }, {
         "type": "Extract Method",
@@ -42568,6 +42561,20 @@
     }, {
         "type": "Change Package",
         "description": "Change Package org.jboss.as.clustering to org.infinispan.server.commons",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method protected getSubsystemAddress() : PathAddress extracted from protected getSubsystemReadOperation(name String) : ModelNode in class org.infinispan.server.jgroups.subsystem.OperationTestCaseBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method protected getSubsystemAddress() : PathAddress extracted from protected getSubsystemWriteOperation(name String, value String) : ModelNode in class org.infinispan.server.jgroups.subsystem.OperationTestCaseBase",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -44128,7 +44135,7 @@
         "description": "Rename Parameter extensionBean : Bean to bean : Bean in method package getBeanReference(clazz Class<T>, bean Bean, beanManager BeanManager) : T in class org.glassfish.jersey.ext.cdi1x.internal.CdiUtil",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Attribute",
@@ -44182,13 +44189,6 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter targetClassLoader : ClassLoader to componentClass : Class<?> in method public Hk2InjectedCdiTarget(componentClass Class<?>, delegate InjectionTarget) in class org.glassfish.jersey.ext.cdi1x.internal.CdiComponentProvider.Hk2InjectedCdiTarget",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
-    }, {
-        "type": "Rename Parameter",
-        "description": "Rename Parameter extensionBean : Bean to bean : Bean in method getBeanReference(clazz Class<T>, bean Bean, beanManager BeanManager) : T in class org.glassfish.jersey.ext.cdi1x.internal.CdiUtil",
         "comment": null,
         "validation": "UKN",
         "detectionTools": "GumTreeDiff",
@@ -45894,10 +45894,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter graph : TargetGraph to params : CommandRunnerParams in method public getTestsForTargets(params CommandRunnerParams, targets ImmutableSet<BuildTarget>, enableProfiling boolean) : TreeMultimap<BuildTarget,BuildTarget> in class com.facebook.buck.cli.AuditTestsCommand",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>TargetGraph is constructed through params, but there is no parameter replacement<br />TargetGraph graph = params.getParser().buildTargetGraphForBuildTargets(<br /> targets,<br /> new ParserConfig(params.getBuckConfig()),<br /> params.getBuckEventBus(),<br /> params.getConsole(),<br /> params.getEnvironment(),<br /> enableProfiling);</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3123
 }, {
@@ -52583,6 +52583,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Move And Rename Attribute",
+        "description": "Move And Rename Attribute private NO_VALIDATE_NAME_CONVERTER : HttpHeadersNameConverter renamed to public NO_NAME_VALIDATOR : NameValidator<CharSequence> and moved from class io.netty.handler.codec.http.DefaultHttpHeaders to class io.netty.handler.codec.DefaultTextHeaders",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2532
 }, {
@@ -54049,73 +54056,73 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter queryData : QueryData to queryWhere : QueryWhere in method public queryLogs(queryWhere QueryWhere, queryType Class<T>, resultType Class<R>) : List<R> in class org.jbpm.process.audit.AuditLogService",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>queryNodeInstanceLogs()&nbsp;queryVariableInstanceLogs()&nbsp;queryProcessInstanceLogs() replaced with&nbsp;queryLogs()</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter queryData : QueryData to queryWhere : QueryWhere in method public queryLogs(queryWhere QueryWhere, queryClass Class<T>, resultClass Class<R>) : List<R> in class org.jbpm.process.audit.CommandBasedAuditLogService",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>queryNodeInstanceLogs()&nbsp;queryVariableInstanceLogs()&nbsp;queryProcessInstanceLogs() replaced with&nbsp;queryLogs()</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute persistenceUnitName : String to AUDIT_LOG_PERSISTENCE_UNIT_NAME : String in class org.jbpm.process.audit.JPAAuditLogService",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>persistenceUnitName has been pulled up to JPAService</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter query : Query to queryData : QueryWhere in method public queryLogs(queryData QueryWhere, queryClass Class<T>, resultClass Class<R>) : List<R> in class org.jbpm.process.audit.JPAAuditLogService",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter queryData : QueryData to resultClass : Class<R> in method public queryLogs(queryData QueryWhere, queryClass Class<T>, resultClass Class<R>) : List<R> in class org.jbpm.process.audit.JPAAuditLogService",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>queryNodeInstanceLogs()&nbsp;queryVariableInstanceLogs()&nbsp;queryProcessInstanceLogs() replaced with&nbsp;queryLogs()</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter queryData : QueryData to queryType : Class in method protected getQueryCriteriaUtil(queryType Class) : QueryCriteriaUtil in class org.jbpm.process.audit.JPAAuditLogService",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter interfaceType : Class<I> to queryWhere : QueryWhere in method public doQuery(queryWhere QueryWhere, queryType Class<T>) : List<T> in class org.jbpm.process.audit.JPAAuditLogService",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter type : Class<T> to queryType : Class<T> in method public doQuery(queryWhere QueryWhere, queryType Class<T>) : List<T> in class org.jbpm.process.audit.JPAAuditLogService",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>unrelated methods</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter language : String to description : String in method public description(description String) : TaskQueryBuilder in class org.jbpm.services.task.impl.TaskQueryBuilderImpl",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>unrelated methods</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter orderBy : OrderBy to field : OrderBy in method public ascending(field OrderBy) : TaskQueryBuilder in class org.jbpm.services.task.impl.TaskQueryBuilderImpl",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>orderBy(<span class='pl-smi'>OrderBy</span> <span class='pl-v'>orderBy</span>) has been renamed to getOrderByListId(<span class='pl-smi'>OrderBy</span> <span class='pl-v'>field</span>)</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute queryData : QueryData to queryWhere : QueryWhere in class org.jbpm.services.task.impl.TaskQueryBuilderImpl.build",

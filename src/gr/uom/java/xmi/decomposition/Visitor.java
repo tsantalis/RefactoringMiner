@@ -614,6 +614,11 @@ public class Visitor extends ASTVisitor {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 				anonymous.getTypes().add(qualifier.getFullyQualifiedName());
 			}
+			variables.add(node.toString());
+			if(current.getUserObject() != null) {
+				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+				anonymous.getVariables().add(node.toString());
+			}
 		}
 		else if(qualifier instanceof SimpleName && !(node.getParent() instanceof QualifiedName)) {
 			if(node.getName().getIdentifier().equals("length")) {

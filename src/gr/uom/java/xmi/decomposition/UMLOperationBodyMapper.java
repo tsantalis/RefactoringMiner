@@ -26,6 +26,7 @@ import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
 import gr.uom.java.xmi.diff.UMLParameterDiff;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -1018,9 +1019,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				if(!mappingSet.isEmpty()) {
+					AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
 					if(variableDeclarationMappingsWithSameReplacementTypes(mappingSet)) {
 						//postpone mapping
 						postponedMappingSets.add(mappingSet);
+					}
+					else if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
+						LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
+						mappings.add(bestMapping);
+						leaves2.remove(bestMapping.getFragment1());
+						leafIterator1.remove();
 					}
 					else {
 						LeafMapping minStatementMapping = mappingSet.first();
@@ -1100,9 +1108,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				if(!mappingSet.isEmpty()) {
+					AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
 					if(variableDeclarationMappingsWithSameReplacementTypes(mappingSet)) {
 						//postpone mapping
 						postponedMappingSets.add(mappingSet);
+					}
+					else if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
+						LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
+						mappings.add(bestMapping);
+						leaves1.remove(bestMapping.getFragment1());
+						leafIterator2.remove();
 					}
 					else {
 						LeafMapping minStatementMapping = mappingSet.first();
@@ -1184,6 +1199,90 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return false;
+	}
+
+	private LeafMapping findBestMappingBasedOnMappedSwitchCases(AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry, TreeSet<LeafMapping> mappingSet) {
+		CompositeStatementObject switchParent1 = switchParentEntry.getKey();
+		CompositeStatementObject switchParent2 = switchParentEntry.getValue();
+		AbstractCodeMapping currentSwitchCase = null;
+		for(AbstractCodeMapping mapping : this.mappings) {
+			AbstractCodeFragment fragment1 = mapping.getFragment1();
+			AbstractCodeFragment fragment2 = mapping.getFragment2();
+			if(fragment1 instanceof AbstractStatement && fragment2 instanceof AbstractStatement) {
+				AbstractStatement statement1 = (AbstractStatement)fragment1;
+				AbstractStatement statement2 = (AbstractStatement)fragment2;
+				CompositeStatementObject parent1 = statement1.getParent();
+				CompositeStatementObject parent2 = statement2.getParent();
+				if(parent1 == switchParent1 && parent2 == switchParent2 && mapping.isExact() &&
+						statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_CASE) &&
+						statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_CASE)) {
+					currentSwitchCase = mapping;
+				}
+				else if(parent1 == switchParent1 && parent2 == switchParent2 &&
+						statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.BREAK_STATEMENT) &&
+						statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.BREAK_STATEMENT)) {
+					if(currentSwitchCase != null) {
+						for(LeafMapping leafMapping : mappingSet) {
+							if(leafMapping.getFragment1().getIndex() > currentSwitchCase.getFragment1().getIndex() &&
+									leafMapping.getFragment2().getIndex() > currentSwitchCase.getFragment2().getIndex() &&
+									leafMapping.getFragment1().getIndex() < mapping.getFragment1().getIndex() &&
+									leafMapping.getFragment2().getIndex() < mapping.getFragment2().getIndex()) {
+								return leafMapping;
+							}
+						}
+					}
+				}
+				else if(parent1 == switchParent1 && parent2 == switchParent2 &&
+						statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT) &&
+						statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT)) {
+					if(currentSwitchCase != null) {
+						for(LeafMapping leafMapping : mappingSet) {
+							if(leafMapping.getFragment1().getIndex() > currentSwitchCase.getFragment1().getIndex() &&
+									leafMapping.getFragment2().getIndex() > currentSwitchCase.getFragment2().getIndex() &&
+									leafMapping.getFragment1().getIndex() < mapping.getFragment1().getIndex() &&
+									leafMapping.getFragment2().getIndex() < mapping.getFragment2().getIndex()) {
+								return leafMapping;
+							}
+						}
+					}
+				}
+			}
+		}
+		return mappingSet.first();
+	}
+
+	private AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> multipleMappingsUnderTheSameSwitch(Set<LeafMapping> mappingSet) {
+		CompositeStatementObject switchParent1 = null;
+		CompositeStatementObject switchParent2 = null;
+		if(mappingSet.size() > 1) {
+			for(LeafMapping mapping : mappingSet) {
+				AbstractCodeFragment fragment1 = mapping.getFragment1();
+				AbstractCodeFragment fragment2 = mapping.getFragment2();
+				if(fragment1 instanceof AbstractStatement && fragment2 instanceof AbstractStatement) {
+					AbstractStatement statement1 = (AbstractStatement)fragment1;
+					AbstractStatement statement2 = (AbstractStatement)fragment2;
+					CompositeStatementObject parent1 = statement1.getParent();
+					CompositeStatementObject parent2 = statement2.getParent();
+					if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT) &&
+							parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT)) {
+						if(switchParent1 == null && switchParent2 == null) {
+							switchParent1 = parent1;
+							switchParent2 = parent2;
+						}
+						else if(switchParent1 != parent1 || switchParent2 != parent2) {
+							return null;
+						}
+					}
+					else {
+						return null;
+					}
+				}
+			}
+		}
+		if(switchParent1 != null && switchParent2 != null) {
+			return new AbstractMap.SimpleEntry<>(switchParent1, switchParent2);
+		}
+		return null;
 	}
 
 	private LeafMapping createLeafMapping(AbstractCodeFragment leaf1, AbstractCodeFragment leaf2, Map<String, String> parameterToArgumentMap) {
@@ -1570,6 +1669,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			findReplacements(arrayAccesses1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS);
 			findReplacements(variables1, prefixExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PREFIX_EXPRESSION);
 			findReplacements(prefixExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PREFIX_EXPRESSION);
+			findReplacements(stringLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL);
 		}
 		if(!statement1.getString().endsWith("=true;\n") && !statement1.getString().endsWith("=false;\n")) {
 			findReplacements(booleanLiterals1, variables2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_VARIABLE);

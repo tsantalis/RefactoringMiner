@@ -1607,8 +1607,8 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 			UMLOperation addedOperation = addedOperationIterator.next();
 			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
 				ExtractOperationDetection detection = new ExtractOperationDetection(addedOperations, modelDiff);
-				ExtractOperationRefactoring refactoring = detection.check(mapper, addedOperation);
-				if(refactoring != null) {
+				List<ExtractOperationRefactoring> refs = detection.check(mapper, addedOperation);
+				for(ExtractOperationRefactoring refactoring : refs) {
 					refactorings.add(refactoring);
 					UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
 					processMapperRefactorings(operationBodyMapper, refactorings);

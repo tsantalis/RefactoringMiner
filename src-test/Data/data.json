@@ -119,10 +119,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable popup : JBPopup to imgMatcher : Matcher in method public testImagesInsideJavadocJar() : void in class com.intellij.codeInsight.JavaExternalDocumentationTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 28911
 }, {
@@ -1679,10 +1679,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter exc : boolean to currentSteIdx : int in method private isCallSiteInstrumented(stes StackTraceElement[], currentSteIdx int, clazz Class, methodName String, lineNumber int) : Pair<Boolean,int[]> in class co.paralleluniverse.fibers.Fiber",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable methodInstrumented : boolean in method public checkInstrumentation() : boolean from class co.paralleluniverse.fibers.Fiber",
@@ -1963,10 +1963,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable tr : TTransport to cluster : Cluster in method protected getClient() : Session in class org.apache.cassandra.pig.PigTestBase",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Implementation is completely different, although method name is the same</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 6589
 }, {
@@ -2195,10 +2195,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable loggingHandler : LoggingHandlerImpl to logComponent : JComponent in method private onSelectionChanged() : void in class com.intellij.remoteServer.impl.runtime.ui.ServersToolWindowContent",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'> <span class='pl-smi'>JComponent</span> logComponent <span class='pl-k'>=</span> loggingHandler<span class='pl-k'>.</span>getConsole()<span class='pl-k'>.</span>getComponent();</span>&nbsp; exists in parent commit</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 14854
 }, {
@@ -2499,10 +2499,10 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute mergePolicyProvider : MergePolicyProvider to mergePolicyConfig : MergePolicyConfig in class org.elasticsearch.index.shard.IndexShard",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='x x-first'>mergePolicyProvider is replaced with mergePolicyConfig</span><span class='pl-k x'>.</span><span class='x x-last'>getMergePolicy()<br />MergePolicyConfig contains attribute <span class='pl-k'>private</span> <span class='pl-k'>final</span> <span class='pl-smi'>TieredMergePolicy</span> mergePolicy <span class='pl-k'>=</span> <span class='pl-k'>new</span> <span class='pl-smi'>TieredMergePolicy</span>();<br /></span></span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 8239
 }, {
@@ -2844,24 +2844,24 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter task : TransactionTask to listener : DurableSpUniqueIdListener in method public setSpUniqueIdListener(listener DurableSpUniqueIdListener) : void in class org.voltdb.iv2.SpScheduler",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter pendingTask : TransactionTask to listener : DurableMpUniqueIdListener in method public setMpUniqueIdListener(listener DurableMpUniqueIdListener) : void in class org.voltdb.iv2.SpScheduler",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter lastMpUniqueId : long to uniqueId : long in method public lastSpUniqueIdMadeDurable(uniqueId long) : void in class org.voltdb.iv2.SpScheduler.DurableSpUniqueIdListener",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -3209,7 +3209,7 @@
         "validators": "Matin"
     }, {
         "type": "Extract Method",
-        "description": "Extract Method package parse(string String, tokens Deque) : Node extracted from public parse(contents String, classLoader ClassLoader) : List in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
+        "description": "Extract Method package parse(string String, tokens Deque) : Node extracted from public parse(contents String, classLoader ClassLoader) : List<PredicatedHandler> in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
         "comment": "<p>There is a very small number of common statements between the original and the extracted method,<br />while a very big number of new statements in the extracted method.</p><p>&nbsp;</p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
@@ -3223,7 +3223,7 @@
         "validators": "Davood"
     }, {
         "type": "Extract Method",
-        "description": "Extract Method private loadPredicateBuilders(classLoader ClassLoader) : Map extracted from public parse(contents String, classLoader ClassLoader) : List in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
+        "description": "Extract Method private loadPredicateBuilders(classLoader ClassLoader) : Map extracted from public parse(contents String, classLoader ClassLoader) : List<PredicatedHandler> in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
         "comment": "<p>added</p><p>The method which is reported to be extracted seems to be in the original method being unified as well, but with different name (loadBuilders), so this is false positive.</p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
@@ -3251,14 +3251,14 @@
         "validators": "Davood"
     }, {
         "type": "Inline Method",
-        "description": "Inline Method public parse(string String, tokens Deque, classLoader ClassLoader) : Predicate inlined to public parse(contents String, classLoader ClassLoader) : List in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
+        "description": "Inline Method public parse(string String, tokens Deque, classLoader ClassLoader) : Predicate inlined to public parse(contents String, classLoader ClassLoader) : List<PredicatedHandler> in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
         "comment": "<p>line 97 in the before refactoring version. The method is Inlined from class <span class='blob-code-inner'><span class='pl-en'>PredicateParser.<br /></span></span></p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Laleh"
     }, {
         "type": "Extract Method",
-        "description": "Extract Method private handleNode(contents String, node Node, predicateBuilders Map, handlerBuilders Map, attributeParser ExchangeAttributeParser) : List extracted from public parse(contents String, classLoader ClassLoader) : List in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
+        "description": "Extract Method private handleNode(contents String, node Node, predicateBuilders Map, handlerBuilders Map, attributeParser ExchangeAttributeParser) : List extracted from public parse(contents String, classLoader ClassLoader) : List<PredicatedHandler> in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
         "comment": "<p>added</p><p>DOUBLE CHECK WITH MATIN. This is one of the cases I believe should be FP because the original code does not have anything to do with the extracted code.</p><p>Nikos: The added code is completely new functionality. It has not been extracted from existing code.</p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
@@ -3300,7 +3300,7 @@
         "validators": "Matin, Laleh, Davood"
     }, {
         "type": "Extract Method",
-        "description": "Extract Method private loadHandlerBuilders(classLoader ClassLoader) : Map extracted from public parse(contents String, classLoader ClassLoader) : List in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
+        "description": "Extract Method private loadHandlerBuilders(classLoader ClassLoader) : Map extracted from public parse(contents String, classLoader ClassLoader) : List<PredicatedHandler> in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
         "comment": "added",
         "validation": "FP",
         "detectionTools": "RefDiff",
@@ -3406,6 +3406,13 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private isDeclarationToken(parentType int) : boolean extracted from private processIDENT(ast DetailAST) : void in class com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 2863
@@ -3694,10 +3701,10 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute halt : AtomicBoolean to currentState : ExecutionState in class org.drools.core.common.DefaultAgenda",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>The logic based on halt has been replacement with new logic based on <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-k'>enum</span> <span class='pl-en'>ExecutionState</span></span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter task : Runnable to executable : ExecutableEntry in method public executeTask(executable ExecutableEntry) : void in class org.drools.core.common.DefaultAgenda",
@@ -3708,10 +3715,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter notify : boolean to firing : boolean in method package ExecutionState(firing boolean) in class org.drools.core.common.DefaultAgenda.ExecutionState",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter task : Runnable to executable : ExecutableEntry in method public executeTask(executable ExecutableEntry) : void in class org.drools.core.common.InternalAgenda",
@@ -3913,6 +3920,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Ameya"
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public match(sender IpAddress, addr InetSocketAddress) : boolean extracted from public authenticate(token AuthToken, msg Message) : boolean in class org.jgroups.auth.FixedMembershipToken",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1121
 }, {
@@ -4491,10 +4505,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable rawType : RawNominalType to recvType : JSType in method private visitOtherPropertyDeclaration(getProp Node) : void in class com.google.javascript.jscomp.GlobalTypeInfo.ProcessScope",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker=' '> rawType exists in child commit: <span class='pl-smi'>RawNominalType</span> rawType <span class='pl-k'>=</span> nt<span class='pl-k'>.</span>getRawNominalType();</span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 4222
 }, {
@@ -4836,80 +4850,80 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter mergeNodes : List<MergeNode> to finalMergeNode : MergeNode in method public addFinalMergeNode(finalMergeNode MergeNode) : void in class io.crate.executor.transport.ExecutionNodesTask",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter job : Job to plan : Plan in method public process(plan Plan, job Job) : ExecutionNodesTask in class io.crate.executor.transport.TransportExecutor.ExecutionNodesPlanVisitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter groupedExecutionNodes : List<List<ExecutionNode>> to context : Context in method public visitQueryAndFetch(plan QueryAndFetch, context Context) : Void in class io.crate.executor.transport.TransportExecutor.ExecutionNodesPlanVisitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter job : Job to context : Context in method public visitCollectAndMerge(plan CollectAndMerge, context Context) : Void in class io.crate.executor.transport.TransportExecutor.ExecutionNodesPlanVisitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter job : Job to context : Context in method public visitNestedLoop(plan NestedLoop, context Context) : Void in class io.crate.executor.transport.TransportExecutor.ExecutionNodesPlanVisitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter job : Job to context : Context in method protected visitPlan(plan Plan, context Context) : Void in class io.crate.executor.transport.TransportExecutor.ExecutionNodesPlanVisitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter countPlan : CountPlan to plan : CountPlan in method public visitCountPlan(plan CountPlan, context Context) : Void in class io.crate.executor.transport.TransportExecutor.ExecutionNodesPlanVisitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>The implementation of the methods has changed significantly although they have the same name.</p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter job : Job to executionNodesTask : ExecutionNodesTask in method public Context(executionNodesTask ExecutionNodesTask) in class io.crate.executor.transport.TransportExecutor.ExecutionNodesPlanVisitor.Context",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable numCols : int to numDownStreams : int in method public readFrom(in StreamInput) : void in class io.crate.planner.node.dql.AbstractDQLPlanNode",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>int</span> numCols <span class='pl-k'>=</span> in<span class='pl-k'>.</span>readVInt();</span> has been split to <span class='blob-code-inner blob-code-marker' data-code-marker=' '> <span class='pl-k'>int</span> numInputCols <span class='pl-k'>=</span> in<span class='pl-k'>.</span>readVInt();</span> and <span class='blob-code-inner blob-code-marker' data-code-marker=' '> <span class='pl-k'>int</span> numOutputCols <span class='pl-k'>=</span> in<span class='pl-k'>.</span>readVInt();</span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter leftExecutionNodeId : int to executionNodeId : int in method public NestedLoopNode(executionNodeId int, name String) in class io.crate.planner.node.dql.join.NestedLoopNode",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'>leftExecutionNodeId</span> and <span class='blob-code-inner blob-code-marker' data-code-marker='-'>rightExecutionNodeId merged to executionNodeId</span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter nodes : Set<String> to leftMergeNode : MergeNode in method public leftMergeNode(leftMergeNode MergeNode) : void in class io.crate.planner.node.dql.join.NestedLoopNode",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -8735,44 +8749,58 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable parameters : LinkedHashMap<String,TypeDeclarationNode> to requiredParams : LinkedHashMap<String,TypeDeclarationNode> in method package processFunctionType(tree FunctionTypeTree) : Node in class com.google.javascript.jscomp.parsing.IRFactory.TransformDispatcher",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Split Variable parameters : LinkedHashMap&lt;String,TypeDeclarationNode&gt; to [optionalParams : LinkedHashMap&lt;String,TypeDeclarationNode&gt;, requiredParams : LinkedHashMap&lt;String,TypeDeclarationNode&gt;]</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable parameters : LinkedHashMap<String,TypeDeclarationNode> to optionalParams : LinkedHashMap<String,TypeDeclarationNode> in method public convertTypeNodeAST(n Node) : TypeDeclarationNode in class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactory",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Split Variable parameters : LinkedHashMap&lt;String,TypeDeclarationNode&gt; to [optionalParams : LinkedHashMap&lt;String,TypeDeclarationNode&gt;, requiredParams : LinkedHashMap&lt;String,TypeDeclarationNode&gt;]</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter parameters : LinkedHashMap<String,TypeDeclarationNode> to requiredParams : LinkedHashMap<String,TypeDeclarationNode> in method public functionType(returnType Node, requiredParams LinkedHashMap<String,TypeDeclarationNode>, optionalParams LinkedHashMap<String,TypeDeclarationNode>, restName String, restType TypeDeclarationNode) : TypeDeclarationNode in class com.google.javascript.rhino.TypeDeclarationsIR",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Split Variable parameters : LinkedHashMap&lt;String,TypeDeclarationNode&gt; to [optionalParams : LinkedHashMap&lt;String,TypeDeclarationNode&gt;, requiredParams : LinkedHashMap&lt;String,TypeDeclarationNode&gt;]</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable parameter : Map.Entry<String,TypeDeclarationNode> to param : Map.Entry<String,TypeDeclarationNode> in method public functionType(returnType Node, requiredParams LinkedHashMap<String,TypeDeclarationNode>, optionalParams LinkedHashMap<String,TypeDeclarationNode>, restName String, restType TypeDeclarationNode) : TypeDeclarationNode in class com.google.javascript.rhino.TypeDeclarationsIR",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>a single for loop is split to two loops where both are using param as the current element name</p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable stringKey : Node to name : Node in method public functionType(returnType Node, requiredParams LinkedHashMap<String,TypeDeclarationNode>, optionalParams LinkedHashMap<String,TypeDeclarationNode>, restName String, restType TypeDeclarationNode) : TypeDeclarationNode in class com.google.javascript.rhino.TypeDeclarationsIR",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>a single for loop is split to two loops where in both variable stringKey is replaced with name</p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable parameters : LinkedHashMap<String,TypeDeclarationNode> to optionalParams : LinkedHashMap<String,TypeDeclarationNode> in method public testConvertOptionalFunctionParameters() : void in class com.google.javascript.jscomp.parsing.TypeDeclarationsIRFactoryTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Split Variable parameters : LinkedHashMap&lt;String,TypeDeclarationNode&gt; to [optionalParams : LinkedHashMap&lt;String,TypeDeclarationNode&gt;, requiredParams : LinkedHashMap&lt;String,TypeDeclarationNode&gt;]</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private parseParameter(inTypeExpression boolean) : ParseTree extracted from private parseFormalParameterList() : FormalParameterListTree in class com.google.javascript.jscomp.parsing.parser.Parser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private peekParameter(inTypeExpression boolean) : boolean extracted from private parseFormalParameterList() : FormalParameterListTree in class com.google.javascript.jscomp.parsing.parser.Parser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 3462
@@ -11898,17 +11926,17 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable plan : Plan to plannedAnalyzedRelation : PlannedAnalyzedRelation in method public plan(relation AnalyzedRelation, consumerContext ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.ConsumingPlanner",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>plannedAnalyzedRelation contains plan: <span class='blob-code-inner blob-code-marker' data-code-marker=' '>plannedAnalyzedRelation<span class='pl-k'>.</span>plan();</span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute consumerContext : ConsumerContext to consumingPlanner : ConsumingPlanner in class io.crate.planner.consumer.InsertFromSubQueryConsumer.Visitor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>private</span> <span class='pl-k'>static</span> <span class='pl-k'>class</span> <span class='pl-en'>Context</span></span> does not exist any more.</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type context : Context to context : ConsumerContext in method public visitQueriedTable(table QueriedTable, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.QueryAndFetchConsumer.Visitor",
@@ -12230,10 +12258,10 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute BOOLEAN_CHUNK_OPTIONS : HashMap<String,String> to outputComboBox_ : SelectWidget in class org.rstudio.studio.client.workbench.views.source.editors.text.ChunkOptionsPopupPanel",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 2636
 }, {
@@ -12427,59 +12455,59 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute measuresDao : MeasuresDao to dbClient : DbClient in class org.sonar.server.startup.RegisterMetrics",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Merge Attribute [measuresDao : MeasuresDao, conditionDao : QualityGateConditionDao] to dbClient : DbClient</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter measuresDao : MeasuresDao to dbClient : DbClient in method public RegisterMetrics(dbClient DbClient, metricsRepositories Metrics[]) in class org.sonar.server.startup.RegisterMetrics",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Merge Parameter [measuresDao : MeasuresDao, conditionDao : QualityGateConditionDao] to dbClient : DbClient</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter measuresDao : MeasuresDao to dbClient : DbClient in method public RegisterMetrics(dbClient DbClient) in class org.sonar.server.startup.RegisterMetrics",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Merge Parameter [measuresDao : MeasuresDao, conditionDao : QualityGateConditionDao] to dbClient : DbClient</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter metrics : List<Metric> to metric : Metric in method public apply(metric Metric) : MetricDto in class org.sonar.server.startup.RegisterMetrics.MetricToDto",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable metric1 : Metric to m1 : Metric in method public insert_new_metrics() : void in class org.sonar.server.startup.RegisterMetricsTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable metric2 : Metric to custom : Metric in method public insert_new_metrics() : void in class org.sonar.server.startup.RegisterMetricsTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable synchronizer : RegisterMetrics to register : RegisterMetrics in method public insert_new_metrics() : void in class org.sonar.server.startup.RegisterMetricsTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable synchronizer : RegisterMetrics to register : RegisterMetrics in method public update_non_custom_metrics() : void in class org.sonar.server.startup.RegisterMetricsTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>The functionality of method <span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-en x x-first x-last'>shouldUpdateIfAlreadyExists</span></span>() does not match with update_non_custom_metrics()</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 4571
 }, {
@@ -14369,14 +14397,14 @@
         "description": "Rename Variable spdyConnection : SpdyConnection to framedConnection : FramedConnection in method public processConnection() : void in class com.squareup.okhttp.mockwebserver.MockWebServer.serveConnection.execute",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable spdySocketHandler : SpdySocketHandler to framedSocketHandler : FramedSocketHandler in method public processConnection() : void in class com.squareup.okhttp.mockwebserver.MockWebServer.serveConnection.execute",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Rename Variable",
@@ -15211,20 +15239,6 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Ameya"
-    }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable spdySocketHandler : SpdySocketHandler to framedSocketHandler : FramedSocketHandler in method public processConnection() : void in class com.squareup.okhttp.mockwebserver.MockWebServer.serveConnection.executor",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
-    }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable spdyConnection : SpdyConnection to framedConnection : FramedConnection in method public processConnection() : void in class com.squareup.okhttp.mockwebserver.MockWebServer.serveConnection.executor",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -15688,24 +15702,24 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter txCoordinator : TransactionCoordinator to partitionHandlingManager : PartitionHandlingManager in method public init(txTable TransactionTable, configuration Configuration, rpcManager RpcManager, recoveryManager RecoveryManager, commandsFactory CommandsFactory, cache Cache, partitionHandlingManager PartitionHandlingManager) : void in class org.infinispan.interceptors.TxInterceptor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>There are not replacements of the two variables in the body of the method.</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable k : Object to key : Object in method protected remoteGetBeforeWrite(ctx InvocationContext, command WriteCommand, key Object) : void in class org.infinispan.interceptors.distribution.NonTxDistributionInterceptor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>k is the current element in a for loop and becomes parameter key</p>",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter ctx : TxInvocationContext to context : LocalTxInvocationContext in method protected checkTxCommandResponses(responseMap Map<Address,Response>, command TransactionBoundaryCommand, context LocalTxInvocationContext, recipients Collection<Address>) : void in class org.infinispan.interceptors.distribution.TxDistributionInterceptor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>checkTxCommandResponses(responseMap Map&lt;Address,Response&gt;, command TransactionBoundaryCommand, context LocalTxInvocationContext, recipients Collection&lt;Address&gt;) : void exists with the same parameters in the parent commit</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected createPrepareRpcOptions() : RpcOptions extracted from protected prepareOnAffectedNodes(ctx TxInvocationContext<?>, command PrepareCommand, recipients Collection<Address>, sync boolean) : void in class org.infinispan.interceptors.distribution.TxDistributionInterceptor",
@@ -17117,10 +17131,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable lprevious : Location to lprevious : Location in method private addPreviousToActionPoints(lastProjection Location, routeNodes List<Location>, DISTANCE_ACTION double, prevFinishPoint int, routePoint int, loc Location) : void in class net.osmand.plus.views.RouteLayer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 1993
 }, {
@@ -17200,10 +17214,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter e : Expression to salt : Expression in method setSaltAndHash(user User, session Session, salt Expression, hash Expression) : void in class org.lealone.command.ddl.CreateUser",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 638
 }, {
@@ -18101,6 +18115,48 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private resolveLib(artifact Artifact, repoSys RepositorySystem, session RepositorySystemSession, project Path) : Prebuilt extracted from public resolve(mavenCoords String...) : void in class com.facebook.buck.maven.Resolver",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private downloadSources(artifact Artifact, repoSys RepositorySystem, session RepositorySystemSession, project Path, library Prebuilt) : void extracted from public resolve(mavenCoords String...) : void in class com.facebook.buck.maven.Resolver",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private resolveArtifact(artifact Artifact, repoSys RepositorySystem, session RepositorySystemSession, project Path) : Path extracted from public resolve(mavenCoords String...) : void in class com.facebook.buck.maven.Resolver",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private getProjectName(artifact Artifact) : String extracted from public resolve(mavenCoords String...) : void in class com.facebook.buck.maven.Resolver",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable jar : Artifact to artifact : Artifact in method private resolveArtifact(artifact Artifact, repoSys RepositorySystem, session RepositorySystemSession, project Path) : Path in class com.facebook.buck.maven.Resolver",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable jar : Artifact to artifact : Artifact in method private downloadSources(artifact Artifact, repoSys RepositorySystem, session RepositorySystemSession, project Path, library Prebuilt) : void in class com.facebook.buck.maven.Resolver",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1910
 }, {
@@ -19624,6 +19680,34 @@
         "validation": "CTP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private mockPropertySource(name String, value String) : MockPropertySource extracted from public overridePidFileWithSpring() : void in class org.springframework.boot.actuate.system.ApplicationPidFileWriterTests",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private mockPropertySource(name String, value String) : MockPropertySource extracted from public differentEventTypes() : void in class org.springframework.boot.actuate.system.ApplicationPidFileWriterTests",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private createEnvironment(propName String, propValue String) : ConfigurableEnvironment extracted from public overridePidFileWithSpring() : void in class org.springframework.boot.actuate.system.ApplicationPidFileWriterTests",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private createEnvironment(propName String, propValue String) : ConfigurableEnvironment extracted from public differentEventTypes() : void in class org.springframework.boot.actuate.system.ApplicationPidFileWriterTests",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1721
 }, {
@@ -21117,10 +21201,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter plannerContext : Planner.Context to jobId : UUID in method public collect(jobId UUID, tableInfo TableInfo, plannerContext Planner.Context, whereClause WhereClause, toCollect List<Symbol>, projections ImmutableList<Projection>) : CollectNode in class io.crate.planner.PlanNodeBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -21357,17 +21441,17 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter request : ServerHttpRequest to servletContext : ServletContext in method public setServletContext(servletContext ServletContext) : void in class org.springframework.web.socket.server.support.DefaultHandshakeHandler",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable handlerToCheck : WebSocketHandler to strategy : RequestUpgradeStrategy in method public setServletContext(servletContext ServletContext) : void in class org.springframework.web.socket.server.support.DefaultHandshakeHandler",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 2473
 }, {
@@ -21612,24 +21696,24 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute locations : String[] to classNames : String[] in class com.netflix.zuul.FilterFileManager.FilterFileManagerConfig",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Split Attribute locations : String[] to [directories : String[], classNames : String[]]</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter locations : String[] to classNames : String[] in method public FilterFileManagerConfig(directories String[], classNames String[], pollingIntervalSeconds int, filenameFilter FilenameFilter) in class com.netflix.zuul.FilterFileManager.FilterFileManagerConfig",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Split Parameter locations : String[] to [directories : String[], classNames : String[]]</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter locations : String[] to directories : String[] in method public FilterFileManagerConfig(directories String[], classNames String[], pollingIntervalSeconds int, filenameFilter FilenameFilter) in class com.netflix.zuul.FilterFileManager.FilterFileManagerConfig",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Split Parameter locations : String[] to [directories : String[], classNames : String[]]</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 312
 }, {
@@ -22129,17 +22213,17 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter inputAttr : OpAttr[] to unionRel : HiveUnion in method private extractRelNodeFromUnion(unionRel HiveUnion) : List<RelNode> in class org.apache.hadoop.hive.ql.optimizer.calcite.translator.HiveOpConverter",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable opAlias : String to aliases : Set<String> in method public process(nd Node, stack Stack<Node>, procCtx NodeProcessorCtx, nodeOutputs Object) : Object in class org.apache.hadoop.hive.ql.optimizer.calcite.translator.HiveOpConverterPostProc.JoinAnnotate",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3562
 }, {
@@ -27318,17 +27402,17 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter transactionsModelDao : Iterable<PaymentTransactionModelDao> to curTransactionsModelDao : Iterable<PaymentTransactionModelDao> in method private toPayment(curPaymentModelDao PaymentModelDao, curTransactionsModelDao Iterable<PaymentTransactionModelDao>, pluginTransactions Iterable<PaymentTransactionInfoPlugin>, internalTenantContext InternalTenantContext) : Payment in class org.killbill.billing.payment.core.PaymentProcessor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute janitor : Janitor to isStopped : boolean in class org.killbill.billing.payment.core.janitor.CompletionTaskBase",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 1250
 }, {
@@ -28202,10 +28286,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable tag : int to rsTag : int in method private deserializeUnion(datum Object, fileSchema Schema, recordSchema Schema, columnType UnionTypeInfo) : Object in class org.apache.hadoop.hive.serde2.avro.AvroDeserializer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>tag is replaced with both <span class='blob-code-inner blob-code-marker' data-code-marker=' '>fsTag</span> and rsTag, but tag -&gt; rsTag is more common</p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3223
 }, {
@@ -29107,10 +29191,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter fun : AbstractFunction to seriazliedAggregates : RowIterator in method private createKeyspaceFromSchemaPartitions(serializedKeyspace RowIterator, serializedTables RowIterator, serializedTypes RowIterator, serializedFunctions RowIterator, seriazliedAggregates RowIterator) : KSMetaData in class org.apache.cassandra.schema.LegacySchemaTables",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 8203
 }, {
@@ -30984,17 +31068,17 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter right : Object to iLeft : Object in method public execute(iLeft Object, iRight Object) : boolean in class com.orientechnologies.orient.core.sql.parser.OEqualsCompareOperator",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter left : Object to iRight : Object in method public execute(iLeft Object, iRight Object) : boolean in class com.orientechnologies.orient.core.sql.parser.OEqualsCompareOperator",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 2618
 }, {
@@ -31226,10 +31310,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter cell : EditorCell to editorContext : EditorContext in method private needToComment(editorContext EditorContext) : boolean in class jetbrains.mps.editor.runtime.impl.cellActions.CellAction_Comment",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 13014
 }, {
@@ -33406,24 +33490,24 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter obj : Object to cl : ClassLoader in method private setupClassLoader(cl ClassLoader, classesToLoad Class<?>) : void in class org.hibernate.test.bytecode.enhancement.EnhancerTestUtils",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter name : String to classesToLoad : Class<?> in method private setupClassLoader(cl ClassLoader, classesToLoad Class<?>) : void in class org.hibernate.test.bytecode.enhancement.EnhancerTestUtils",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter name : String to packageName : String in method private getEnhancerClassLoader(packageName String) : ClassLoader in class org.hibernate.test.bytecode.enhancement.EnhancerTestUtils",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3179
 }, {
@@ -33457,10 +33541,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter persister : EntityPersister to entityName : String in method public OldNaturalIdCacheKey(naturalIdValues Object[], propertyTypes Type[], naturalIdPropertyIndexes int[], entityName String, session SessionImplementor) in class org.hibernate.cache.internal.OldNaturalIdCacheKey",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Split Parameter persister : EntityPersister to [entityName : String, naturalIdPropertyIndexes : int[], propertyTypes : Type[]]</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 4137
 }, {
@@ -33994,38 +34078,38 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter parsingResult : FilterParsingResult<TypeMetadata> to projections : List<String> in method public ObjectFilterImpl(matcher BaseMatcher<TypeMetadata,AttributeMetadata,AttributeId>, metadataAdapter MetadataAdapter<TypeMetadata,AttributeMetadata,AttributeId>, queryString String, query BooleanExpr, projections List<String>, sortFields List<SortField>) in class org.infinispan.objectfilter.impl.ObjectFilterImpl",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Split Parameter parsingResult : FilterParsingResult&lt;TypeMetadata&gt; to [sortFields : List&lt;SortField&gt;, projections : List&lt;String&gt;]</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute classLoader : ClassLoader to classLoaders : ClassLoader[] in class org.infinispan.objectfilter.impl.hql.ReflectionEntityNamesResolver",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter cacheConfiguration : Configuration to jpqlString : String in method private buildLuceneQuery(cache AdvancedCache<?,?>, isCompatMode boolean, serCtx SerializationContext, jpqlString String, startOffset long, maxResults int) : Query in class org.infinispan.query.remote.QueryFacadeImpl",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Split Parameter request : QueryRequest to [jpqlString : String, maxResults : int, startOffset : long]</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter request : QueryRequest to startOffset : long in method private buildLuceneQuery(cache AdvancedCache<?,?>, isCompatMode boolean, serCtx SerializationContext, jpqlString String, startOffset long, maxResults int) : Query in class org.infinispan.query.remote.QueryFacadeImpl",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Split Parameter request : QueryRequest to [jpqlString : String, maxResults : int, startOffset : long]</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter list : List<?> to q : org.infinispan.query.dsl.Query in method private makeResponse(isCompatMode boolean, serCtx SerializationContext, q org.infinispan.query.dsl.Query) : QueryResponse in class org.infinispan.query.remote.QueryFacadeImpl",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>[List&lt;?&gt;</span> <span class='pl-v'>list</span>, <span class='pl-k'>int</span> <span class='pl-v'>projSize</span>, <span class='pl-k'>long</span> <span class='pl-v'>totalResults</span>, <span class='pl-k'>int</span> <span class='pl-v'>numResults] merged to q</span></span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 6361
 }, {
@@ -34394,38 +34478,38 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable i : int to child : Node in method visitTaggedTemplateLiteral(t NodeTraversal, n Node) : void in class com.google.javascript.jscomp.Es6TemplateLiterals",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>the implementation of the for loops is very different</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable i : int to child : Node in method private createRawStringArray(n Node) : Node in class com.google.javascript.jscomp.Es6TemplateLiterals",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>the implementation of the for loops is very different</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable i : int to child : Node in method private createCookedStringArray(n Node) : Node in class com.google.javascript.jscomp.Es6TemplateLiterals",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>the implementation of the for loops is very different</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable items : Node[] to array : Node in method private createRawStringArray(n Node) : Node in class com.google.javascript.jscomp.Es6TemplateLiterals",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>return IR.arraylit(items); -&gt; return array;</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable items : Node[] to array : Node in method private createCookedStringArray(n Node) : Node in class com.google.javascript.jscomp.Es6TemplateLiterals",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>return IR.arraylit(items); -&gt; return array;</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 2970
 }, {
@@ -34543,17 +34627,17 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute cacheMappings : Map<String,CacheControl> to cacheControlMappings : Map<String,CacheControl> in class org.springframework.web.servlet.mvc.WebContentInterceptor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>cacheMappings still exists in child commit</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable cacheControl : CacheControl to cacheSeconds : Integer in method public preHandle(request HttpServletRequest, response HttpServletResponse, handler Object) : boolean in class org.springframework.web.servlet.mvc.WebContentInterceptor",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-smi'>CacheControl</span> cacheControl <span class='pl-k'>=</span> lookupCacheControl(lookupPath);</span>&nbsp; still exists in child commit</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 2657
 }, {
@@ -34723,10 +34807,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable sql : Sql to sb : StringBuilder in method public invoke(conn Connection) : void in class org.nutz.dao.util.Daos.migration.dao",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-smi'>sql still exists in child commit: Sql</span> sql <span class='pl-k'>=</span> <span class='pl-smi'>Sqls</span><span class='pl-k'>.</span>create(sb<span class='pl-k'>.</span>toString());</span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 1121
 }, {
@@ -35140,10 +35224,10 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute mOpen : boolean to mClosed : boolean in class tachyon.client.RemoteBlockOutStream",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='x x-first x-last'>mOpen becomes !mClosed and vice versa<br /></span></span></p>",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 771
 }, {
@@ -35258,24 +35342,24 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute TEST_OG_TYPE : String to TEST_OG_OBJECT_TYPE : String in class com.facebook.RequestTests",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>There is only one reference for this replacement<br />https://github.com/facebook/facebook-android-sdk/commit/19d1936c3b07d97d88646aeae30de747715e3248?diff=split#diff-4d432d53d5f796cc5fa2fa622fcabdb6R430</p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable request : GraphRequest to ogObject : JSONObject in method private executePostOpenGraphRequest() : String in class com.facebook.RequestTests",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker=' '> <span class='pl-smi'>GraphRequest</span> request <span class='pl-k'>=</span> <span class='pl-k'>new</span> <span class='pl-smi'>GraphRequest</span>() exists in the child commit<br /></span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable request : GraphRequest to ogObject : JSONObject in method public testUpdateOpenGraphObjectRequest() : void in class com.facebook.RequestTests",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-smi'>GraphRequest</span> request <span class='pl-k'>=</span> <span class='pl-k'>new</span> <span class='pl-smi'>GraphRequest</span>() exists in the child commit</span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 1748
 }, {
@@ -35696,17 +35780,17 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter clients : List<TargetAndClient> to options : Namespace in method package run(options Namespace, client HeliosClient, out PrintStream, json boolean, stdin BufferedReader) : int in class com.spotify.helios.cli.command.DeploymentGroupWatchCommand",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter out : PrintStream to client : HeliosClient in method package run(options Namespace, client HeliosClient, out PrintStream, json boolean, stdin BufferedReader) : int in class com.spotify.helios.cli.command.DeploymentGroupWatchCommand",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -38734,10 +38818,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter name : String to method : String in method private parseAndValidateMetadata(targetType Class<?>, method String, parameterTypes Class<?>) : MethodMetadata in class feign.jaxrs.JAXRSContractTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 617
 }, {
@@ -39501,10 +39585,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter languagueCode : String to newValue : String in method private changeLanguageValue(newValue String) : void in class org.wordpress.android.ui.prefs.SiteSettingsFragment",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 1235
 }, {
@@ -39626,17 +39710,17 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter libPath : String to jarPath : String in method private refreshAndConvertToUrl(jarPath String) : String in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter libPath : String to path : String in method public fun(path String) : String in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix.addJarsToRoots.urls.ContainerUtil",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 36330
 }, {
@@ -40328,10 +40412,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable pipe : Pipe to exception : IOException in method public close() : void in class zmq.Signaler",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -42894,24 +42978,24 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter assigned : Set<URI> to assignment : ImporterChannelAssignment in method public onChange(assignment ImporterChannelAssignment) : void in class org.voltdb.importclient.kafka.KafkaStreamImporter",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'><span class='x x-first'>[Set&lt;</span><span class='pl-smi x'>URI</span><span class='x'>&gt;</span></span> <span class='pl-v x'>added</span><span class='x'>, </span><span class='pl-k'><span class='x'>Set&lt;</span><span class='pl-smi x'>URI</span><span class='x'>&gt;</span></span> <span class='pl-v x'>removed]</span></span> merged to <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-smi x x-first'>ImporterChannelAssignment</span> <span class='pl-v x x-last'>assignment</span></span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter added : Set<URI> to assignment : ImporterChannelAssignment in method public onChange(assignment ImporterChannelAssignment) : void in class org.voltdb.importer.ChannelChangeCallback",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'><span class='x x-first'>[Set&lt;</span><span class='pl-smi x'>URI</span><span class='x'>&gt;</span></span> <span class='pl-v x'>added</span><span class='x'>, </span><span class='pl-k'><span class='x'>Set&lt;</span><span class='pl-smi x'>URI</span><span class='x'>&gt;</span></span> <span class='pl-v x'>removed]</span></span> merged to <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-smi x x-first'>ImporterChannelAssignment</span> <span class='pl-v x x-last'>assignment</span></span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter added : Set<URI> to assignment : ImporterChannelAssignment in method public onChange(assignment ImporterChannelAssignment) : void in class org.voltdb.importer.ImportHandlerProxy",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'><span class='x x-first'>[Set&lt;</span><span class='pl-smi x'>URI</span><span class='x'>&gt;</span></span> <span class='pl-v x'>added</span><span class='x'>, </span><span class='pl-k'><span class='x'>Set&lt;</span><span class='pl-smi x'>URI</span><span class='x'>&gt;</span></span> <span class='pl-v x'>removed]</span></span> merged to <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-smi x x-first'>ImporterChannelAssignment</span> <span class='pl-v x x-last'>assignment</span></span></p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -44189,10 +44273,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter targetClassLoader : ClassLoader to componentClass : Class<?> in method public Hk2InjectedCdiTarget(componentClass Class<?>, delegate InjectionTarget) in class org.glassfish.jersey.ext.cdi1x.internal.CdiComponentProvider.Hk2InjectedCdiTarget",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='x x-first'>componentClass contains targetClassLoader: componentClass</span><span class='pl-k x'>.</span><span class='x x-last'>getClassLoader()</span></span></p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 5816
 }, {
@@ -44941,17 +45025,17 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable c : char to cursorPos : int in method private print(buff CharSequence, start int, end int, cursorPos int) : int in class jline.console.ConsoleReader",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable chars : char[] to nbChars : int in method private drawBuffer(clear int) : void in class jline.console.ConsoleReader",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 460
 }, {
@@ -45117,17 +45201,17 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter path : String to template : Template in method protected Model(template Template, smartForest SmartForest<double[][]>, status double[][]) in class org.ansj.app.crf.Model",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter path : String to outputStream : OutputStream in method public writeModel(model Model, outputStream OutputStream) : void in class org.ansj.app.crf.Model",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>path is wrapped into and OutputStream: <span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>new</span> <span class='pl-smi'>BufferedOutputStream</span>(<span class='pl-k'>new</span> <span class='pl-smi'>GZIPOutputStream</span>(<span class='pl-k'>new</span> <span class='pl-smi'>FileOutputStream</span>(path))), and after refactoring the outputStream is passed directly as a parameter<br /></span></p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -45464,24 +45548,24 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute time : EngineTime to timeSubsystem : TimeSubsystem in class org.terasology.engine.TerasologyEngine",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'>context<span class='pl-k'>.</span>put(<span class='pl-smi'>Game</span><span class='pl-k'>.</span>class, <span class='pl-k'>new</span> <span class='pl-smi'>Game</span>(<span class='pl-c1'>this</span>, time));</span> -&gt; <span class='blob-code-inner blob-code-marker' data-code-marker=' '>rootContext<span class='pl-k'>.</span>put(<span class='pl-smi'>Game</span><span class='pl-k'>.</span>class, <span class='pl-k'>new</span> <span class='pl-smi'>Game</span>(<span class='pl-c1'>this</span>, timeSubsystem<span class='pl-k'>.</span>getEngineTime()));<br /></span>TimeSubSystem contains EngineTime</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter context : Context to rootContext : Context in method preInitialise(rootContext Context) : void in class org.terasology.engine.subsystem.EngineSubsystem",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>interface methods</p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter context : Context to rootContext : Context in method initialise(rootContext Context) : void in class org.terasology.engine.subsystem.EngineSubsystem",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>interface methods</p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 2583
 }, {
@@ -45855,10 +45939,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter dataSetProperty : DataSetPropertyInfoImpl to dataSetProperties : Collection<DataSetPropertyInfoImpl> in method private removeItemPresentationModelFactoryMethod(dataSetProperties Collection<DataSetPropertyInfoImpl>) : void in class org.robobinding.codegen.presentationmodel.processor.PresentationModelInfoBuilder",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>The method exists with the same signature</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -46270,17 +46354,17 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter protocolVersion : int to parameters : List<ByteBuffer> in method private executeAsync(protocolVersion int, parameters List<ByteBuffer>) : ByteBuffer in class org.apache.cassandra.cql3.functions.UDFunction",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter value : ByteBuffer to parameters : List<ByteBuffer> in method private makeEmptyParametersNull(parameters List<ByteBuffer>) : List<ByteBuffer> in class org.apache.cassandra.cql3.functions.UDFunction",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3887
 }, {
@@ -46698,10 +46782,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter domain : Domain to session : Session in method public getJsonPlanSource(plan PlanNode, metadata Metadata, session Session) : String in class com.facebook.presto.sql.planner.PlanPrinter",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 9866
 }, {
@@ -49614,31 +49698,31 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter params : NetworkParameters to payloadBytes : byte[] in method public makeBloomFilter(payloadBytes byte[]) : Message in class org.bitcoinj.core.BitcoinSerializer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter parseLazy : boolean to offset : int in method public Block(params NetworkParameters, payloadBytes byte[], offset int, parent Message, serializer MessageSerializer, length int) : ProtocolException in class org.bitcoinj.core.Block",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter parseRetain : boolean to length : int in method public Block(params NetworkParameters, payloadBytes byte[], offset int, parent Message, serializer MessageSerializer, length int) : ProtocolException in class org.bitcoinj.core.Block",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute parseLazy : boolean to serializer : MessageSerializer in class org.bitcoinj.core.Message",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>Merge Attribute [parseLazy : boolean, parseRetain : boolean] to serializer : MessageSerializer in class org.bitcoinj.core.Message</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3030
 }, {
@@ -51409,6 +51493,20 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public printLambdaCallWithoutBlocks(functionalInterface IMethodBinding, functionalClassName String, newClassName String, methodBinding IMethodBinding, isCapturing boolean) : void extracted from public visit(node LambdaExpression) : boolean in class com.google.devtools.j2objc.gen.StatementGenerator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public printLambdaCallBlocks(functionalInterface IMethodBinding, parameters List<VariableDeclaration>, isCapturing boolean) : void extracted from public visit(node LambdaExpression) : boolean in class com.google.devtools.j2objc.gen.StatementGenerator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 2057
@@ -54126,24 +54224,24 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute queryData : QueryData to queryWhere : QueryWhere in class org.jbpm.services.task.impl.TaskQueryBuilderImpl.build",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter queryData : QueryData to queryObj : Object in method public query(userId String, queryObj Object) : List<TaskSummary> in class org.jbpm.services.task.impl.TaskQueryServiceImpl",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'><span class='pl-k'>public</span> <span class='pl-k'>List&lt;<span class='pl-smi'>TaskSummary</span>&gt;</span> <span class='pl-en'>query</span>( <span class='pl-smi'>String</span> <span class='pl-v'>userId</span>, <span class='pl-smi'>QueryData</span> <span class='pl-v'>queryData</span> )</span> and <span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='pl-k'>public</span> <span class='pl-k'>List&lt;<span class='pl-smi'>TaskSummary</span>&gt;</span> <span class='pl-en'>query</span>( <span class='pl-smi'>String</span> <span class='pl-v'>userId</span>, <span class='pl-smi'>Object</span> <span class='pl-v'>queryObj</span> )</span> have very different method bodies.</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable queryData : QueryData to queryWhere : QueryWhere in method public getTasksByVariousFields(userId String, parameters Map<String,List<?>>, union boolean) : List<TaskSummary> in class org.jbpm.services.task.impl.TaskQueryServiceImpl",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>queryData and queryContext are merged into queryWhere (both variables are replaced with queryWhere, but there are more replacements for queryData -&gt; queryWhere)</p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3454
 }, {
@@ -54214,10 +54312,10 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute tables : List<Table> to partitionedTables : BlockingQueue<Table> in class org.apache.hadoop.hive.metastore.hbase.HBaseImport",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 6377
 }, {
@@ -54850,10 +54948,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter fileStatus : FileStatus to statusArray : FileStatus[] in method public depthFirstSearchForFile(statusArray FileStatus[], fileSystem FileSystem) : Path in class org.apache.pig.impl.util.Utils",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker='-'>fileSystem<span class='pl-k'>.</span>listStatus(fileStatus<span class='pl-k'>.</span>getPath(), <span class='pl-c1'>VISIBLE_FILES</span>) replaced with statusArray<br /></span></p>",
+        "validation": "CTP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 2704
 }, {
@@ -55021,38 +55119,38 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter textViews : TextView to iconFontDescriptor : IconFontDescriptor in method public with(iconFontDescriptor IconFontDescriptor) : IconifyInitializer in class com.joanzapata.android.iconify.Iconify",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter icon : T to iconFontDescriptor : IconFontDescriptor in method private addIconFontDescriptor(iconFontDescriptor IconFontDescriptor) : void in class com.joanzapata.android.iconify.Iconify",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter charSequence : CharSequence to text : CharSequence in method public compute(context Context, text CharSequence) : CharSequence in class com.joanzapata.android.iconify.Iconify",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "<p>The methods have a completely different implementation, although they have the same name</p>",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter ttfFilename : String to iconFontDescriptor : IconFontDescriptor in method public IconifyInitializer(iconFontDescriptor IconFontDescriptor) in class com.joanzapata.android.iconify.Iconify.IconifyInitializer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter value : String to iconFontDescriptor : IconFontDescriptor in method public with(iconFontDescriptor IconFontDescriptor) : IconifyInitializer in class com.joanzapata.android.iconify.Iconify.IconifyInitializer",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 695
 }, {
@@ -58709,17 +58807,17 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter responseContent : String to content : String in method public assertValueIsString(content String) : void in class org.springframework.test.util.JsonPathExpectationsHelper",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable actualValue : Object to value : Object in method public assertValueIsString(content String) : void in class org.springframework.test.util.JsonPathExpectationsHelper",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 4367
 }, {

@@ -4,6 +4,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.StringDistance;
 
 public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafMapping> {
@@ -56,11 +57,50 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			else {
 				int indexDiff1 = Math.abs(this.getFragment1().getIndex() - this.getFragment2().getIndex());
 				int indexDiff2 = Math.abs(o.getFragment1().getIndex() - o.getFragment2().getIndex());
-				return Integer.valueOf(indexDiff1).compareTo(Integer.valueOf(indexDiff2));
+				if(indexDiff1 != indexDiff2) {
+					return Integer.valueOf(indexDiff1).compareTo(Integer.valueOf(indexDiff2));
+				}
+				else {
+					double parentEditDistance1 = this.parentEditDistance();
+					double parentEditDistance2 = o.parentEditDistance();
+					return Double.compare(parentEditDistance1, parentEditDistance2);
+				}
 			}
 		}
 	}
-	
+
+	private double parentEditDistance() {
+		CompositeStatementObject parent1 = getFragment1().getParent();
+		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent1 = parent1.getParent();
+		}
+		CompositeStatementObject parent2 = getFragment2().getParent();
+		while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent2 = parent2.getParent();
+		}
+		if(parent1 == null && parent2 == null) {
+			//method signature is the parent
+			return 0;
+		}
+		else if(parent1 == null && parent2 != null) {
+			String s2 = parent2.getString();
+			int distance = StringDistance.editDistance("{", s2);
+			double normalized = (double)distance/(double)Math.max(1, s2.length());
+			return normalized;
+		}
+		else if(parent1 != null && parent2 == null) {
+			String s1 = parent1.getString();
+			int distance = StringDistance.editDistance(s1, "{");
+			double normalized = (double)distance/(double)Math.max(s1.length(), 1);
+			return normalized;
+		}
+		String s1 = parent1.getString();
+		String s2 = parent2.getString();
+		int distance = StringDistance.editDistance(s1, s2);
+		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
+		return normalized;
+	}
+
 	public Set<String> callChainIntersection() {
 		OperationInvocation invocation1 = this.getFragment1().invocationCoveringEntireFragment();
 		OperationInvocation invocation2 = this.getFragment2().invocationCoveringEntireFragment();

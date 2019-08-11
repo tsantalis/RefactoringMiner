@@ -3166,14 +3166,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(distancenormalized == 0) {
 				Replacement replacement = globalReplacementMap.firstEntry().getValue();
 				replacementInfo.addReplacement(replacement);
-				replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacement.getBefore(), replacement.getAfter()));
+				replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement.getBefore(), replacement.getAfter()));
 			}
 			else {
 				Set<String> processedBefores = new LinkedHashSet<String>();
 				for(Replacement replacement : globalReplacementMap.values()) {
 					if(!processedBefores.contains(replacement.getBefore())) {
 						replacementInfo.addReplacement(replacement);
-						replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacement.getBefore(), replacement.getAfter()));
+						replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement.getBefore(), replacement.getAfter()));
 						processedBefores.add(replacement.getBefore());
 					}
 					else {
@@ -3181,7 +3181,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						for(Replacement replacement2 : replacementCache.values()) {
 							if(replacement2.getAfter().equals(replacement.getAfter()) && !replacement2.equals(replacement)) {
 								replacementInfo.addReplacement(replacement2);
-								replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacement2.getBefore(), replacement2.getAfter()));
+								replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement2.getBefore(), replacement2.getAfter()));
 								processedBefores.add(replacement2.getBefore());
 								break;
 							}

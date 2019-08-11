@@ -2363,13 +2363,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private boolean variableAssignmentWithEverythingReplaced(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			ReplacementInfo replacementInfo) {
-		if(statement1.getString().contains("=") && statement1.getString().endsWith(";\n") &&
-				statement2.getString().contains("=") && statement2.getString().endsWith(";\n")) {
+		String string1 = statement1.getString();
+		String string2 = statement2.getString();
+		if(containsMethodSignatureOfAnonymousClass(string1)) {
+			string1 = string1.substring(0, string1.indexOf("\n"));
+		}
+		if(containsMethodSignatureOfAnonymousClass(string2)) {
+			string2 = string2.substring(0, string2.indexOf("\n"));
+		}
+		if(string1.contains("=") && string1.endsWith(";\n") && string2.contains("=") && string2.endsWith(";\n")) {
 			boolean typeReplacement = false, compatibleTypes = false, variableRename = false, classInstanceCreationReplacement = false;
-			String variableName1 = statement1.getString().substring(0, statement1.getString().indexOf("="));
-			String variableName2 = statement2.getString().substring(0, statement2.getString().indexOf("="));
-			String assignment1 = statement1.getString().substring(statement1.getString().indexOf("=")+1, statement1.getString().lastIndexOf(";\n"));
-			String assignment2 = statement2.getString().substring(statement2.getString().indexOf("=")+1, statement2.getString().lastIndexOf(";\n"));
+			String variableName1 = string1.substring(0, string1.indexOf("="));
+			String variableName2 = string2.substring(0, string2.indexOf("="));
+			String assignment1 = string1.substring(string1.indexOf("=")+1, string1.lastIndexOf(";\n"));
+			String assignment2 = string2.substring(string2.indexOf("=")+1, string2.lastIndexOf(";\n"));
 			UMLType type1 = null, type2 = null;
 			Map<String, List<ObjectCreation>> creationMap1 = statement1.getCreationMap();
 			for(String creation1 : creationMap1.keySet()) {
@@ -2400,11 +2407,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			for(Replacement replacement : replacementInfo.getReplacements()) {
-				if(replacement.getType().equals(ReplacementType.TYPE))
+				if(replacement.getType().equals(ReplacementType.TYPE)) {
 					typeReplacement = true;
+					if(string1.contains("new " + replacement.getBefore() + "(") && string2.contains("new " + replacement.getAfter() + "("))
+						classInstanceCreationReplacement = true;
+				}
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
-						variableName1.equals(replacement.getBefore()) &&
-						variableName2.equals(replacement.getAfter()))
+						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore())) &&
+						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter())))
 					variableRename = true;
 				else if(replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION) &&
 						assignment1.equals(replacement.getBefore()) &&

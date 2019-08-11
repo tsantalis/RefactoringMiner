@@ -1602,7 +1602,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		
 		//apply existing replacements on method invocations
 		for(String methodInvocation1 : methodInvocations1) {
-			String temp = methodInvocation1;
+			String temp = new String(methodInvocation1);
 			for(Replacement replacement : replacementInfo.getReplacements()) {
 				temp = ReplacementUtil.performReplacement(temp, replacement.getBefore(), replacement.getAfter());
 			}
@@ -2352,7 +2352,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		String s1AfterReplacements = new String(s1);
 		for(Replacement replacement : replacements) {
 			if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
-				s1AfterReplacements = ReplacementUtil.performReplacement(s1AfterReplacements, replacement.getBefore(), replacement.getAfter());
+				s1AfterReplacements = ReplacementUtil.performReplacement(s1AfterReplacements, s2, replacement.getBefore(), replacement.getAfter());
 			}
 		}
 		if(s1AfterReplacements.equals(s2)) {

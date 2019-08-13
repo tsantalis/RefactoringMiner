@@ -213,6 +213,17 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 			return false;
 	}
 
+	public boolean equalQualifiedReturnParameter(UMLOperation operation) {
+		UMLParameter thisReturnParameter = this.getReturnParameter();
+		UMLParameter otherReturnParameter = operation.getReturnParameter();
+		if(thisReturnParameter != null && otherReturnParameter != null)
+			return thisReturnParameter.equalsQualified(otherReturnParameter);
+		else if(thisReturnParameter == null && otherReturnParameter == null)
+			return true;
+		else
+			return false;
+	}
+
 	public boolean equalSignature(UMLOperation operation) {
 		boolean equalParameterTypes = this.getParameterTypeList().equals(operation.getParameterTypeList());
 		boolean compatibleParameterTypes = false;
@@ -487,6 +498,35 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		if(returnParameter != null) {
 			sb.append(" : ");
 			sb.append(returnParameter.toString());
+		}
+		return sb.toString();
+	}
+
+	public String toQualifiedString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(visibility);
+		sb.append(" ");
+		if(isAbstract) {
+			sb.append("abstract");
+			sb.append(" ");
+		}
+		sb.append(name);
+		UMLParameter returnParameter = getReturnParameter();
+		List<UMLParameter> parameters = new ArrayList<UMLParameter>(this.parameters);
+		parameters.remove(returnParameter);
+		sb.append("(");
+		for(int i=0; i<parameters.size(); i++) {
+			UMLParameter parameter = parameters.get(i);
+			if(parameter.getKind().equals("in")) {
+				sb.append(parameter.toQualifiedString());
+				if(i < parameters.size()-1)
+					sb.append(", ");
+			}
+		}
+		sb.append(")");
+		if(returnParameter != null) {
+			sb.append(" : ");
+			sb.append(returnParameter.toQualifiedString());
 		}
 		return sb.toString();
 	}

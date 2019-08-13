@@ -1228,7 +1228,7 @@ public class UMLModelDiff {
 								 diff.getOriginalClassName(), diff.getNextClassName(), set);
 						 if(!refactorings.contains(ref)) {
 							 refactorings.add(ref);
-							 if(!a1.getVariableDeclaration().getType().equals(a2.getVariableDeclaration().getType())) {
+							 if(!a1.getVariableDeclaration().getType().equals(a2.getVariableDeclaration().getType()) || !a1.getVariableDeclaration().getType().equalsQualified(a2.getVariableDeclaration().getType())) {
 									ChangeAttributeTypeRefactoring refactoring = new ChangeAttributeTypeRefactoring(a1.getVariableDeclaration(), a2.getVariableDeclaration(),
 											diff.getOriginalClassName(), diff.getNextClassName(),
 											VariableReferenceExtractor.findReferences(a1.getVariableDeclaration(), a2.getVariableDeclaration(), diff.getOperationBodyMapperList()));

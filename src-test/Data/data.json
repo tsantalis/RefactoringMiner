@@ -2023,6 +2023,13 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type org.apache.hadoop.mapred.InputSplit[] to InputSplit[] in method public getSplits(jobConf JobConf, numSplits int) : InputSplit[] in class org.apache.cassandra.hadoop.cql3.CqlInputFormat",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 6589
 }, {
@@ -2572,6 +2579,13 @@
         "comment": "<p><span class='blob-code-inner blob-code-marker' data-code-marker=' '><span class='x x-first'>mergePolicyProvider is replaced with mergePolicyConfig</span><span class='pl-k x'>.</span><span class='x x-last'>getMergePolicy()<br />MergePolicyConfig contains attribute <span class='pl-k'>private</span> <span class='pl-k'>final</span> <span class='pl-smi'>TieredMergePolicy</span> mergePolicy <span class='pl-k'>=</span> <span class='pl-k'>new</span> <span class='pl-smi'>TieredMergePolicy</span>();<br /></span></span></p>",
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type TieredMergePolicy to MergePolicy in method public getMergePolicy() : MergePolicy in class org.elasticsearch.index.shard.MergePolicyConfig",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
     }],
     "refDiffExecutionTime": 8239
@@ -3208,6 +3222,13 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type status : Level to status : Measure.Level in method public QualityGateStatus(status Measure.Level, text String) in class org.sonar.server.computation.measure.QualityGateStatus",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Level to Measure.Level in method public getStatus() : Measure.Level in class org.sonar.server.computation.measure.QualityGateStatus",
         "comment": "null",
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -4367,6 +4388,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Ameya"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type TargetDeviceOptions to TargetDeviceCommandLineOptions in method private buildOptions(args String...) : TargetDeviceCommandLineOptions in class com.facebook.buck.cli.TargetDeviceCommandLineOptionsTest",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 11495
 }, {
@@ -7990,6 +8018,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type LevelGraphStorage to LevelGraph in method public create(bytes long) : LevelGraph in class com.graphhopper.storage.LevelGraphImpl",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3012
 }, {
@@ -15715,6 +15750,76 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type SpdyConnection to FramedConnection in method private sendHttp2SettingsAndCheckForAck(client boolean, settings Settings) : FramedConnection in class com.squareup.okhttp.internal.framed.Http2ConnectionTest",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type SpdyConnection to FramedConnection in method private connection(peer MockSpdyPeer, variant Variant) : FramedConnection in class com.squareup.okhttp.internal.framed.Http2ConnectionTest",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type SpdyConnection to FramedConnection in method private connection(peer MockSpdyPeer, variant Variant) : FramedConnection in class com.squareup.okhttp.internal.framed.Spdy3ConnectionTest",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type SpdyConnection to FramedConnection in method public build() : FramedConnection in class com.squareup.okhttp.internal.framed.FramedConnection.Builder",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type SpdyStream to FramedStream in method package getStream(id int) : FramedStream in class com.squareup.okhttp.internal.framed.FramedConnection",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type SpdyStream to FramedStream in method package removeStream(streamId int) : FramedStream in class com.squareup.okhttp.internal.framed.FramedConnection",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type SpdyStream to FramedStream in method public pushStream(associatedStreamId int, requestHeaders List<Header>, out boolean) : FramedStream in class com.squareup.okhttp.internal.framed.FramedConnection",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type SpdyStream to FramedStream in method public newStream(requestHeaders List<Header>, out boolean, in boolean) : FramedStream in class com.squareup.okhttp.internal.framed.FramedConnection",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type SpdyStream to FramedStream in method private newStream(associatedStreamId int, requestHeaders List<Header>, out boolean, in boolean) : FramedStream in class com.squareup.okhttp.internal.framed.FramedConnection",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type SpdyConnection to FramedConnection in method public getConnection() : FramedConnection in class com.squareup.okhttp.internal.framed.FramedStream",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -17162,6 +17267,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type List<PutMetricDataType> to List<AbsoluteMetricQueueItem> in method public collectMetricData(msg DescribeSensorsResponse) : List<AbsoluteMetricQueueItem> in class com.eucalyptus.cluster.callback.cloudwatch.CloudWatchHelper",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type PutMetricDataType to List<AbsoluteMetricQueueItem> in method private buildInstanceStatusPut(instanceId String) : List<AbsoluteMetricQueueItem> in class com.eucalyptus.cluster.callback.cloudwatch.CloudWatchHelper",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Predicate<PutMetricDataType> to Predicate<AbsoluteMetricQueueItem> in method private withMetric(namespace String, name String, dimensionName String, dimensionValue String) : Predicate<AbsoluteMetricQueueItem> in class com.eucalyptus.cluster.callback.cloudwatch.CloudWatchHelper",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 2499
 }, {
@@ -21601,6 +21727,13 @@
         "validation": "UKN",
         "detectionTools": "GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type LogVersionedStoreChannel to Iterator<LogVersionedStoreChannel> in method public getLogFiles(fromVersion long) : Iterator<LogVersionedStoreChannel> in class org.neo4j.kernel.recovery.Recovery.SPI",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 11758
 }, {
@@ -22998,6 +23131,13 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Drawable to ContactPhoto in method public getContactPhoto(context Context, uri Uri, name String) : ContactPhoto in class org.thoughtcrime.securesms.contacts.avatars.ContactPhotoFactory",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -26812,27 +26952,6 @@
         "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
-        "description": "Change Parameter Type clientConfiguration : ClientConfiguration to clientConfiguration : com.amazonaws.ClientConfiguration in method public AmazonElasticFileSystemAsyncClient(awsCredentials AWSCredentials, clientConfiguration com.amazonaws.ClientConfiguration, executorService ExecutorService) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": "<p>from non-qualified to qualified</p>",
-        "validation": "CTP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Nikos"
-    }, {
-        "type": "Change Parameter Type",
-        "description": "Change Parameter Type clientConfiguration : ClientConfiguration to clientConfiguration : com.amazonaws.ClientConfiguration in method public AmazonElasticFileSystemAsyncClient(awsCredentialsProvider AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": "<p>from non-qualified to qualified</p>",
-        "validation": "CTP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Nikos"
-    }, {
-        "type": "Change Parameter Type",
-        "description": "Change Parameter Type clientConfiguration : ClientConfiguration to clientConfiguration : com.amazonaws.ClientConfiguration in method public AmazonElasticFileSystemAsyncClient(awsCredentialsProvider AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration, executorService ExecutorService) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": "<p>from non-qualified to qualified</p>",
-        "validation": "CTP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Nikos"
-    }, {
-        "type": "Change Parameter Type",
         "description": "Change Parameter Type responseHandler : HttpResponseHandler<AmazonWebServiceResponse<X>> to unmarshaller : Unmarshaller<X,JsonUnmarshallerContext> in method private invoke(request Request<Y>, unmarshaller Unmarshaller<X,JsonUnmarshallerContext>, executionContext ExecutionContext) : Response<X> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemClient",
         "comment": null,
         "validation": "TP",
@@ -26844,27 +26963,6 @@
         "comment": "<p>from non-qualified to qualified</p>",
         "validation": "CTP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
-        "validators": "Nikos"
-    }, {
-        "type": "Change Parameter Type",
-        "description": "Change Parameter Type clientConfiguration : ClientConfiguration to clientConfiguration : com.amazonaws.ClientConfiguration in method public AmazonImportExportAsyncClient(awsCredentials AWSCredentials, clientConfiguration com.amazonaws.ClientConfiguration, executorService ExecutorService) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": "<p>from non-qualified to qualified</p>",
-        "validation": "CTP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Nikos"
-    }, {
-        "type": "Change Parameter Type",
-        "description": "Change Parameter Type clientConfiguration : ClientConfiguration to clientConfiguration : com.amazonaws.ClientConfiguration in method public AmazonImportExportAsyncClient(awsCredentialsProvider AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": "<p>from non-qualified to qualified</p>",
-        "validation": "CTP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Nikos"
-    }, {
-        "type": "Change Parameter Type",
-        "description": "Change Parameter Type clientConfiguration : ClientConfiguration to clientConfiguration : com.amazonaws.ClientConfiguration in method public AmazonImportExportAsyncClient(awsCredentialsProvider AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration, executorService ExecutorService) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": "<p>from non-qualified to qualified</p>",
-        "validation": "CTP",
-        "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
     }, {
         "type": "Change Attribute Type",
@@ -27009,164 +27107,164 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<CreateFileSystemRequest,CreateFileSystemResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<CreateFileSystemRequest,CreateFileSystemResult> in method public createFileSystemAsync(createFileSystemRequest CreateFileSystemRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CreateFileSystemRequest,CreateFileSystemResult>) : java.util.concurrent.Future<CreateFileSystemResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<CreateMountTargetRequest,CreateMountTargetResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<CreateMountTargetRequest,CreateMountTargetResult> in method public createMountTargetAsync(createMountTargetRequest CreateMountTargetRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CreateMountTargetRequest,CreateMountTargetResult>) : java.util.concurrent.Future<CreateMountTargetResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<CreateTagsRequest,Void> to asyncHandler : com.amazonaws.handlers.AsyncHandler<CreateTagsRequest,Void> in method public createTagsAsync(createTagsRequest CreateTagsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CreateTagsRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<DeleteFileSystemRequest,Void> to asyncHandler : com.amazonaws.handlers.AsyncHandler<DeleteFileSystemRequest,Void> in method public deleteFileSystemAsync(deleteFileSystemRequest DeleteFileSystemRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DeleteFileSystemRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<DeleteMountTargetRequest,Void> to asyncHandler : com.amazonaws.handlers.AsyncHandler<DeleteMountTargetRequest,Void> in method public deleteMountTargetAsync(deleteMountTargetRequest DeleteMountTargetRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DeleteMountTargetRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<DeleteTagsRequest,Void> to asyncHandler : com.amazonaws.handlers.AsyncHandler<DeleteTagsRequest,Void> in method public deleteTagsAsync(deleteTagsRequest DeleteTagsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DeleteTagsRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<DescribeFileSystemsRequest,DescribeFileSystemsResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<DescribeFileSystemsRequest,DescribeFileSystemsResult> in method public describeFileSystemsAsync(describeFileSystemsRequest DescribeFileSystemsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DescribeFileSystemsRequest,DescribeFileSystemsResult>) : java.util.concurrent.Future<DescribeFileSystemsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<DescribeMountTargetSecurityGroupsRequest,DescribeMountTargetSecurityGroupsResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<DescribeMountTargetSecurityGroupsRequest,DescribeMountTargetSecurityGroupsResult> in method public describeMountTargetSecurityGroupsAsync(describeMountTargetSecurityGroupsRequest DescribeMountTargetSecurityGroupsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DescribeMountTargetSecurityGroupsRequest,DescribeMountTargetSecurityGroupsResult>) : java.util.concurrent.Future<DescribeMountTargetSecurityGroupsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<DescribeMountTargetsRequest,DescribeMountTargetsResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<DescribeMountTargetsRequest,DescribeMountTargetsResult> in method public describeMountTargetsAsync(describeMountTargetsRequest DescribeMountTargetsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DescribeMountTargetsRequest,DescribeMountTargetsResult>) : java.util.concurrent.Future<DescribeMountTargetsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<DescribeTagsRequest,DescribeTagsResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<DescribeTagsRequest,DescribeTagsResult> in method public describeTagsAsync(describeTagsRequest DescribeTagsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DescribeTagsRequest,DescribeTagsResult>) : java.util.concurrent.Future<DescribeTagsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<ModifyMountTargetSecurityGroupsRequest,Void> to asyncHandler : com.amazonaws.handlers.AsyncHandler<ModifyMountTargetSecurityGroupsRequest,Void> in method public modifyMountTargetSecurityGroupsAsync(modifyMountTargetSecurityGroupsRequest ModifyMountTargetSecurityGroupsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<ModifyMountTargetSecurityGroupsRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type executorService : ExecutorService to executorService : java.util.concurrent.ExecutorService in method public AmazonElasticFileSystemAsyncClient(awsCredentials com.amazonaws.auth.AWSCredentials, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type executorService : ExecutorService to executorService : java.util.concurrent.ExecutorService in method public AmazonElasticFileSystemAsyncClient(awsCredentials com.amazonaws.auth.AWSCredentials, clientConfiguration com.amazonaws.ClientConfiguration, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type executorService : ExecutorService to executorService : java.util.concurrent.ExecutorService in method public AmazonElasticFileSystemAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type clientConfiguration : ClientConfiguration to clientConfiguration : com.amazonaws.ClientConfiguration in method public AmazonElasticFileSystemAsyncClient(awsCredentials com.amazonaws.auth.AWSCredentials, clientConfiguration com.amazonaws.ClientConfiguration, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type clientConfiguration : ClientConfiguration to clientConfiguration : com.amazonaws.ClientConfiguration in method public AmazonElasticFileSystemAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type awsCredentials : AWSCredentials to awsCredentials : com.amazonaws.auth.AWSCredentials in method public AmazonElasticFileSystemAsyncClient(awsCredentials com.amazonaws.auth.AWSCredentials) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type awsCredentials : AWSCredentials to awsCredentials : com.amazonaws.auth.AWSCredentials in method public AmazonElasticFileSystemAsyncClient(awsCredentials com.amazonaws.auth.AWSCredentials, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type awsCredentials : AWSCredentials to awsCredentials : com.amazonaws.auth.AWSCredentials in method public AmazonElasticFileSystemAsyncClient(awsCredentials com.amazonaws.auth.AWSCredentials, clientConfiguration com.amazonaws.ClientConfiguration, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type awsCredentialsProvider : AWSCredentialsProvider to awsCredentialsProvider : com.amazonaws.auth.AWSCredentialsProvider in method public AmazonElasticFileSystemAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type awsCredentialsProvider : AWSCredentialsProvider to awsCredentialsProvider : com.amazonaws.auth.AWSCredentialsProvider in method public AmazonElasticFileSystemAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type awsCredentialsProvider : AWSCredentialsProvider to awsCredentialsProvider : com.amazonaws.auth.AWSCredentialsProvider in method public AmazonElasticFileSystemAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type awsCredentialsProvider : AWSCredentialsProvider to awsCredentialsProvider : com.amazonaws.auth.AWSCredentialsProvider in method public AmazonElasticFileSystemAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type executorService : ExecutorService to clientConfiguration : com.amazonaws.ClientConfiguration in method public AmazonElasticFileSystemAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
@@ -27184,108 +27282,108 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<CreateFileSystemRequest,CreateFileSystemResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<CreateFileSystemRequest,CreateFileSystemResult> in method public createFileSystemAsync(createFileSystemRequest CreateFileSystemRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CreateFileSystemRequest,CreateFileSystemResult>) : java.util.concurrent.Future<CreateFileSystemResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<CreateMountTargetRequest,CreateMountTargetResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<CreateMountTargetRequest,CreateMountTargetResult> in method public createMountTargetAsync(createMountTargetRequest CreateMountTargetRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CreateMountTargetRequest,CreateMountTargetResult>) : java.util.concurrent.Future<CreateMountTargetResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<CreateTagsRequest,Void> to asyncHandler : com.amazonaws.handlers.AsyncHandler<CreateTagsRequest,Void> in method public createTagsAsync(createTagsRequest CreateTagsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CreateTagsRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<DeleteFileSystemRequest,Void> to asyncHandler : com.amazonaws.handlers.AsyncHandler<DeleteFileSystemRequest,Void> in method public deleteFileSystemAsync(deleteFileSystemRequest DeleteFileSystemRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DeleteFileSystemRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<DeleteMountTargetRequest,Void> to asyncHandler : com.amazonaws.handlers.AsyncHandler<DeleteMountTargetRequest,Void> in method public deleteMountTargetAsync(deleteMountTargetRequest DeleteMountTargetRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DeleteMountTargetRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<DeleteTagsRequest,Void> to asyncHandler : com.amazonaws.handlers.AsyncHandler<DeleteTagsRequest,Void> in method public deleteTagsAsync(deleteTagsRequest DeleteTagsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DeleteTagsRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<DescribeFileSystemsRequest,DescribeFileSystemsResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<DescribeFileSystemsRequest,DescribeFileSystemsResult> in method public describeFileSystemsAsync(describeFileSystemsRequest DescribeFileSystemsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DescribeFileSystemsRequest,DescribeFileSystemsResult>) : java.util.concurrent.Future<DescribeFileSystemsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<DescribeMountTargetSecurityGroupsRequest,DescribeMountTargetSecurityGroupsResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<DescribeMountTargetSecurityGroupsRequest,DescribeMountTargetSecurityGroupsResult> in method public describeMountTargetSecurityGroupsAsync(describeMountTargetSecurityGroupsRequest DescribeMountTargetSecurityGroupsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DescribeMountTargetSecurityGroupsRequest,DescribeMountTargetSecurityGroupsResult>) : java.util.concurrent.Future<DescribeMountTargetSecurityGroupsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<DescribeMountTargetsRequest,DescribeMountTargetsResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<DescribeMountTargetsRequest,DescribeMountTargetsResult> in method public describeMountTargetsAsync(describeMountTargetsRequest DescribeMountTargetsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DescribeMountTargetsRequest,DescribeMountTargetsResult>) : java.util.concurrent.Future<DescribeMountTargetsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<DescribeTagsRequest,DescribeTagsResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<DescribeTagsRequest,DescribeTagsResult> in method public describeTagsAsync(describeTagsRequest DescribeTagsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DescribeTagsRequest,DescribeTagsResult>) : java.util.concurrent.Future<DescribeTagsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<ModifyMountTargetSecurityGroupsRequest,Void> to asyncHandler : com.amazonaws.handlers.AsyncHandler<ModifyMountTargetSecurityGroupsRequest,Void> in method public modifyMountTargetSecurityGroupsAsync(modifyMountTargetSecurityGroupsRequest ModifyMountTargetSecurityGroupsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<ModifyMountTargetSecurityGroupsRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<CancelJobRequest,CancelJobResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<CancelJobRequest,CancelJobResult> in method public cancelJobAsync(cancelJobRequest CancelJobRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CancelJobRequest,CancelJobResult>) : java.util.concurrent.Future<CancelJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<CreateJobRequest,CreateJobResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<CreateJobRequest,CreateJobResult> in method public createJobAsync(createJobRequest CreateJobRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CreateJobRequest,CreateJobResult>) : java.util.concurrent.Future<CreateJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<GetShippingLabelRequest,GetShippingLabelResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<GetShippingLabelRequest,GetShippingLabelResult> in method public getShippingLabelAsync(getShippingLabelRequest GetShippingLabelRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<GetShippingLabelRequest,GetShippingLabelResult>) : java.util.concurrent.Future<GetShippingLabelResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<GetStatusRequest,GetStatusResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<GetStatusRequest,GetStatusResult> in method public getStatusAsync(getStatusRequest GetStatusRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<GetStatusRequest,GetStatusResult>) : java.util.concurrent.Future<GetStatusResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<ListJobsRequest,ListJobsResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<ListJobsRequest,ListJobsResult> in method public listJobsAsync(asyncHandler com.amazonaws.handlers.AsyncHandler<ListJobsRequest,ListJobsResult>) : java.util.concurrent.Future<ListJobsResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
@@ -27296,94 +27394,94 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<UpdateJobRequest,UpdateJobResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<UpdateJobRequest,UpdateJobResult> in method public updateJobAsync(updateJobRequest UpdateJobRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<UpdateJobRequest,UpdateJobResult>) : java.util.concurrent.Future<UpdateJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type executorService : ExecutorService to executorService : java.util.concurrent.ExecutorService in method public AmazonImportExportAsyncClient(awsCredentials com.amazonaws.auth.AWSCredentials, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type executorService : ExecutorService to executorService : java.util.concurrent.ExecutorService in method public AmazonImportExportAsyncClient(awsCredentials com.amazonaws.auth.AWSCredentials, clientConfiguration com.amazonaws.ClientConfiguration, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type executorService : ExecutorService to executorService : java.util.concurrent.ExecutorService in method public AmazonImportExportAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type clientConfiguration : ClientConfiguration to clientConfiguration : com.amazonaws.ClientConfiguration in method public AmazonImportExportAsyncClient(awsCredentials com.amazonaws.auth.AWSCredentials, clientConfiguration com.amazonaws.ClientConfiguration, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type clientConfiguration : ClientConfiguration to clientConfiguration : com.amazonaws.ClientConfiguration in method public AmazonImportExportAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type awsCredentials : AWSCredentials to awsCredentials : com.amazonaws.auth.AWSCredentials in method public AmazonImportExportAsyncClient(awsCredentials com.amazonaws.auth.AWSCredentials) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type awsCredentials : AWSCredentials to awsCredentials : com.amazonaws.auth.AWSCredentials in method public AmazonImportExportAsyncClient(awsCredentials com.amazonaws.auth.AWSCredentials, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type awsCredentials : AWSCredentials to awsCredentials : com.amazonaws.auth.AWSCredentials in method public AmazonImportExportAsyncClient(awsCredentials com.amazonaws.auth.AWSCredentials, clientConfiguration com.amazonaws.ClientConfiguration, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type awsCredentialsProvider : AWSCredentialsProvider to awsCredentialsProvider : com.amazonaws.auth.AWSCredentialsProvider in method public AmazonImportExportAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type awsCredentialsProvider : AWSCredentialsProvider to awsCredentialsProvider : com.amazonaws.auth.AWSCredentialsProvider in method public AmazonImportExportAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type awsCredentialsProvider : AWSCredentialsProvider to awsCredentialsProvider : com.amazonaws.auth.AWSCredentialsProvider in method public AmazonImportExportAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type awsCredentialsProvider : AWSCredentialsProvider to awsCredentialsProvider : com.amazonaws.auth.AWSCredentialsProvider in method public AmazonImportExportAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type executorService : ExecutorService to clientConfiguration : com.amazonaws.ClientConfiguration in method public AmazonImportExportAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
@@ -27401,31 +27499,31 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<CancelJobRequest,CancelJobResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<CancelJobRequest,CancelJobResult> in method public cancelJobAsync(cancelJobRequest CancelJobRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CancelJobRequest,CancelJobResult>) : java.util.concurrent.Future<CancelJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<CreateJobRequest,CreateJobResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<CreateJobRequest,CreateJobResult> in method public createJobAsync(createJobRequest CreateJobRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CreateJobRequest,CreateJobResult>) : java.util.concurrent.Future<CreateJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<GetShippingLabelRequest,GetShippingLabelResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<GetShippingLabelRequest,GetShippingLabelResult> in method public getShippingLabelAsync(getShippingLabelRequest GetShippingLabelRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<GetShippingLabelRequest,GetShippingLabelResult>) : java.util.concurrent.Future<GetShippingLabelResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<GetStatusRequest,GetStatusResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<GetStatusRequest,GetStatusResult> in method public getStatusAsync(getStatusRequest GetStatusRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<GetStatusRequest,GetStatusResult>) : java.util.concurrent.Future<GetStatusResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<ListJobsRequest,ListJobsResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<ListJobsRequest,ListJobsResult> in method public listJobsAsync(asyncHandler com.amazonaws.handlers.AsyncHandler<ListJobsRequest,ListJobsResult>) : java.util.concurrent.Future<ListJobsResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
@@ -27436,10 +27534,549 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type asyncHandler : AsyncHandler<UpdateJobRequest,UpdateJobResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<UpdateJobRequest,UpdateJobResult> in method public updateJobAsync(updateJobRequest UpdateJobRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<UpdateJobRequest,UpdateJobResult>) : java.util.concurrent.Future<UpdateJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type executorService : ExecutorService to executorService : java.util.concurrent.ExecutorService in method public AmazonElasticFileSystemAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type asyncHandler : AsyncHandler<ListJobsRequest,ListJobsResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<ListJobsRequest,ListJobsResult> in method public listJobsAsync(listJobsRequest ListJobsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<ListJobsRequest,ListJobsResult>) : java.util.concurrent.Future<ListJobsResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type executorService : ExecutorService to executorService : java.util.concurrent.ExecutorService in method public AmazonImportExportAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, executorService java.util.concurrent.ExecutorService) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type asyncHandler : AsyncHandler<ListJobsRequest,ListJobsResult> to asyncHandler : com.amazonaws.handlers.AsyncHandler<ListJobsRequest,ListJobsResult> in method public listJobsAsync(listJobsRequest ListJobsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<ListJobsRequest,ListJobsResult>) : java.util.concurrent.Future<ListJobsResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<CreateFileSystemResult> to java.util.concurrent.Future<CreateFileSystemResult> in method public createFileSystemAsync(createFileSystemRequest CreateFileSystemRequest) : java.util.concurrent.Future<CreateFileSystemResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
         "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<CreateFileSystemResult> to java.util.concurrent.Future<CreateFileSystemResult> in method public createFileSystemAsync(createFileSystemRequest CreateFileSystemRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CreateFileSystemRequest,CreateFileSystemResult>) : java.util.concurrent.Future<CreateFileSystemResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public deleteMountTargetAsync(deleteMountTargetRequest DeleteMountTargetRequest) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public deleteMountTargetAsync(deleteMountTargetRequest DeleteMountTargetRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DeleteMountTargetRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<DescribeFileSystemsResult> to java.util.concurrent.Future<DescribeFileSystemsResult> in method public describeFileSystemsAsync(describeFileSystemsRequest DescribeFileSystemsRequest) : java.util.concurrent.Future<DescribeFileSystemsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<DescribeFileSystemsResult> to java.util.concurrent.Future<DescribeFileSystemsResult> in method public describeFileSystemsAsync(describeFileSystemsRequest DescribeFileSystemsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DescribeFileSystemsRequest,DescribeFileSystemsResult>) : java.util.concurrent.Future<DescribeFileSystemsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public createTagsAsync(createTagsRequest CreateTagsRequest) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public createTagsAsync(createTagsRequest CreateTagsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CreateTagsRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public deleteFileSystemAsync(deleteFileSystemRequest DeleteFileSystemRequest) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public deleteFileSystemAsync(deleteFileSystemRequest DeleteFileSystemRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DeleteFileSystemRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<DescribeMountTargetsResult> to java.util.concurrent.Future<DescribeMountTargetsResult> in method public describeMountTargetsAsync(describeMountTargetsRequest DescribeMountTargetsRequest) : java.util.concurrent.Future<DescribeMountTargetsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<DescribeMountTargetsResult> to java.util.concurrent.Future<DescribeMountTargetsResult> in method public describeMountTargetsAsync(describeMountTargetsRequest DescribeMountTargetsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DescribeMountTargetsRequest,DescribeMountTargetsResult>) : java.util.concurrent.Future<DescribeMountTargetsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<CreateMountTargetResult> to java.util.concurrent.Future<CreateMountTargetResult> in method public createMountTargetAsync(createMountTargetRequest CreateMountTargetRequest) : java.util.concurrent.Future<CreateMountTargetResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<CreateMountTargetResult> to java.util.concurrent.Future<CreateMountTargetResult> in method public createMountTargetAsync(createMountTargetRequest CreateMountTargetRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CreateMountTargetRequest,CreateMountTargetResult>) : java.util.concurrent.Future<CreateMountTargetResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<DescribeMountTargetSecurityGroupsResult> to java.util.concurrent.Future<DescribeMountTargetSecurityGroupsResult> in method public describeMountTargetSecurityGroupsAsync(describeMountTargetSecurityGroupsRequest DescribeMountTargetSecurityGroupsRequest) : java.util.concurrent.Future<DescribeMountTargetSecurityGroupsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<DescribeMountTargetSecurityGroupsResult> to java.util.concurrent.Future<DescribeMountTargetSecurityGroupsResult> in method public describeMountTargetSecurityGroupsAsync(describeMountTargetSecurityGroupsRequest DescribeMountTargetSecurityGroupsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DescribeMountTargetSecurityGroupsRequest,DescribeMountTargetSecurityGroupsResult>) : java.util.concurrent.Future<DescribeMountTargetSecurityGroupsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public modifyMountTargetSecurityGroupsAsync(modifyMountTargetSecurityGroupsRequest ModifyMountTargetSecurityGroupsRequest) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public modifyMountTargetSecurityGroupsAsync(modifyMountTargetSecurityGroupsRequest ModifyMountTargetSecurityGroupsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<ModifyMountTargetSecurityGroupsRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<DescribeTagsResult> to java.util.concurrent.Future<DescribeTagsResult> in method public describeTagsAsync(describeTagsRequest DescribeTagsRequest) : java.util.concurrent.Future<DescribeTagsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<DescribeTagsResult> to java.util.concurrent.Future<DescribeTagsResult> in method public describeTagsAsync(describeTagsRequest DescribeTagsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DescribeTagsRequest,DescribeTagsResult>) : java.util.concurrent.Future<DescribeTagsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public deleteTagsAsync(deleteTagsRequest DeleteTagsRequest) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public deleteTagsAsync(deleteTagsRequest DeleteTagsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DeleteTagsRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type ExecutorService to java.util.concurrent.ExecutorService in method public getExecutorService() : java.util.concurrent.ExecutorService in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<CreateFileSystemResult> to java.util.concurrent.Future<CreateFileSystemResult> in method public createFileSystemAsync(createFileSystemRequest CreateFileSystemRequest) : java.util.concurrent.Future<CreateFileSystemResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<CreateFileSystemResult> to java.util.concurrent.Future<CreateFileSystemResult> in method public createFileSystemAsync(createFileSystemRequest CreateFileSystemRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CreateFileSystemRequest,CreateFileSystemResult>) : java.util.concurrent.Future<CreateFileSystemResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public deleteMountTargetAsync(deleteMountTargetRequest DeleteMountTargetRequest) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public deleteMountTargetAsync(deleteMountTargetRequest DeleteMountTargetRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DeleteMountTargetRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<DescribeFileSystemsResult> to java.util.concurrent.Future<DescribeFileSystemsResult> in method public describeFileSystemsAsync(describeFileSystemsRequest DescribeFileSystemsRequest) : java.util.concurrent.Future<DescribeFileSystemsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<DescribeFileSystemsResult> to java.util.concurrent.Future<DescribeFileSystemsResult> in method public describeFileSystemsAsync(describeFileSystemsRequest DescribeFileSystemsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DescribeFileSystemsRequest,DescribeFileSystemsResult>) : java.util.concurrent.Future<DescribeFileSystemsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public createTagsAsync(createTagsRequest CreateTagsRequest) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public createTagsAsync(createTagsRequest CreateTagsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CreateTagsRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public deleteFileSystemAsync(deleteFileSystemRequest DeleteFileSystemRequest) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public deleteFileSystemAsync(deleteFileSystemRequest DeleteFileSystemRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DeleteFileSystemRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<DescribeMountTargetsResult> to java.util.concurrent.Future<DescribeMountTargetsResult> in method public describeMountTargetsAsync(describeMountTargetsRequest DescribeMountTargetsRequest) : java.util.concurrent.Future<DescribeMountTargetsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<DescribeMountTargetsResult> to java.util.concurrent.Future<DescribeMountTargetsResult> in method public describeMountTargetsAsync(describeMountTargetsRequest DescribeMountTargetsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DescribeMountTargetsRequest,DescribeMountTargetsResult>) : java.util.concurrent.Future<DescribeMountTargetsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<CreateMountTargetResult> to java.util.concurrent.Future<CreateMountTargetResult> in method public createMountTargetAsync(createMountTargetRequest CreateMountTargetRequest) : java.util.concurrent.Future<CreateMountTargetResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<CreateMountTargetResult> to java.util.concurrent.Future<CreateMountTargetResult> in method public createMountTargetAsync(createMountTargetRequest CreateMountTargetRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CreateMountTargetRequest,CreateMountTargetResult>) : java.util.concurrent.Future<CreateMountTargetResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<DescribeMountTargetSecurityGroupsResult> to java.util.concurrent.Future<DescribeMountTargetSecurityGroupsResult> in method public describeMountTargetSecurityGroupsAsync(describeMountTargetSecurityGroupsRequest DescribeMountTargetSecurityGroupsRequest) : java.util.concurrent.Future<DescribeMountTargetSecurityGroupsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<DescribeMountTargetSecurityGroupsResult> to java.util.concurrent.Future<DescribeMountTargetSecurityGroupsResult> in method public describeMountTargetSecurityGroupsAsync(describeMountTargetSecurityGroupsRequest DescribeMountTargetSecurityGroupsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DescribeMountTargetSecurityGroupsRequest,DescribeMountTargetSecurityGroupsResult>) : java.util.concurrent.Future<DescribeMountTargetSecurityGroupsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public modifyMountTargetSecurityGroupsAsync(modifyMountTargetSecurityGroupsRequest ModifyMountTargetSecurityGroupsRequest) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public modifyMountTargetSecurityGroupsAsync(modifyMountTargetSecurityGroupsRequest ModifyMountTargetSecurityGroupsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<ModifyMountTargetSecurityGroupsRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<DescribeTagsResult> to java.util.concurrent.Future<DescribeTagsResult> in method public describeTagsAsync(describeTagsRequest DescribeTagsRequest) : java.util.concurrent.Future<DescribeTagsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<DescribeTagsResult> to java.util.concurrent.Future<DescribeTagsResult> in method public describeTagsAsync(describeTagsRequest DescribeTagsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DescribeTagsRequest,DescribeTagsResult>) : java.util.concurrent.Future<DescribeTagsResult> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public deleteTagsAsync(deleteTagsRequest DeleteTagsRequest) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<Void> to java.util.concurrent.Future<Void> in method public deleteTagsAsync(deleteTagsRequest DeleteTagsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<DeleteTagsRequest,Void>) : java.util.concurrent.Future<Void> in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<CreateJobResult> to java.util.concurrent.Future<CreateJobResult> in method public createJobAsync(createJobRequest CreateJobRequest) : java.util.concurrent.Future<CreateJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<CreateJobResult> to java.util.concurrent.Future<CreateJobResult> in method public createJobAsync(createJobRequest CreateJobRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CreateJobRequest,CreateJobResult>) : java.util.concurrent.Future<CreateJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<GetShippingLabelResult> to java.util.concurrent.Future<GetShippingLabelResult> in method public getShippingLabelAsync(getShippingLabelRequest GetShippingLabelRequest) : java.util.concurrent.Future<GetShippingLabelResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<GetShippingLabelResult> to java.util.concurrent.Future<GetShippingLabelResult> in method public getShippingLabelAsync(getShippingLabelRequest GetShippingLabelRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<GetShippingLabelRequest,GetShippingLabelResult>) : java.util.concurrent.Future<GetShippingLabelResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<CancelJobResult> to java.util.concurrent.Future<CancelJobResult> in method public cancelJobAsync(cancelJobRequest CancelJobRequest) : java.util.concurrent.Future<CancelJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<CancelJobResult> to java.util.concurrent.Future<CancelJobResult> in method public cancelJobAsync(cancelJobRequest CancelJobRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CancelJobRequest,CancelJobResult>) : java.util.concurrent.Future<CancelJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<GetStatusResult> to java.util.concurrent.Future<GetStatusResult> in method public getStatusAsync(getStatusRequest GetStatusRequest) : java.util.concurrent.Future<GetStatusResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<GetStatusResult> to java.util.concurrent.Future<GetStatusResult> in method public getStatusAsync(getStatusRequest GetStatusRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<GetStatusRequest,GetStatusResult>) : java.util.concurrent.Future<GetStatusResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<ListJobsResult> to java.util.concurrent.Future<ListJobsResult> in method public listJobsAsync(listJobsRequest ListJobsRequest) : java.util.concurrent.Future<ListJobsResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<ListJobsResult> to java.util.concurrent.Future<ListJobsResult> in method public listJobsAsync(listJobsRequest ListJobsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<ListJobsRequest,ListJobsResult>) : java.util.concurrent.Future<ListJobsResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<UpdateJobResult> to java.util.concurrent.Future<UpdateJobResult> in method public updateJobAsync(updateJobRequest UpdateJobRequest) : java.util.concurrent.Future<UpdateJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<UpdateJobResult> to java.util.concurrent.Future<UpdateJobResult> in method public updateJobAsync(updateJobRequest UpdateJobRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<UpdateJobRequest,UpdateJobResult>) : java.util.concurrent.Future<UpdateJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsync",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type ExecutorService to java.util.concurrent.ExecutorService in method public getExecutorService() : java.util.concurrent.ExecutorService in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<CreateJobResult> to java.util.concurrent.Future<CreateJobResult> in method public createJobAsync(createJobRequest CreateJobRequest) : java.util.concurrent.Future<CreateJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<CreateJobResult> to java.util.concurrent.Future<CreateJobResult> in method public createJobAsync(createJobRequest CreateJobRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CreateJobRequest,CreateJobResult>) : java.util.concurrent.Future<CreateJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<GetShippingLabelResult> to java.util.concurrent.Future<GetShippingLabelResult> in method public getShippingLabelAsync(getShippingLabelRequest GetShippingLabelRequest) : java.util.concurrent.Future<GetShippingLabelResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<GetShippingLabelResult> to java.util.concurrent.Future<GetShippingLabelResult> in method public getShippingLabelAsync(getShippingLabelRequest GetShippingLabelRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<GetShippingLabelRequest,GetShippingLabelResult>) : java.util.concurrent.Future<GetShippingLabelResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<CancelJobResult> to java.util.concurrent.Future<CancelJobResult> in method public cancelJobAsync(cancelJobRequest CancelJobRequest) : java.util.concurrent.Future<CancelJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<CancelJobResult> to java.util.concurrent.Future<CancelJobResult> in method public cancelJobAsync(cancelJobRequest CancelJobRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<CancelJobRequest,CancelJobResult>) : java.util.concurrent.Future<CancelJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<GetStatusResult> to java.util.concurrent.Future<GetStatusResult> in method public getStatusAsync(getStatusRequest GetStatusRequest) : java.util.concurrent.Future<GetStatusResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<GetStatusResult> to java.util.concurrent.Future<GetStatusResult> in method public getStatusAsync(getStatusRequest GetStatusRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<GetStatusRequest,GetStatusResult>) : java.util.concurrent.Future<GetStatusResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<ListJobsResult> to java.util.concurrent.Future<ListJobsResult> in method public listJobsAsync(listJobsRequest ListJobsRequest) : java.util.concurrent.Future<ListJobsResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<ListJobsResult> to java.util.concurrent.Future<ListJobsResult> in method public listJobsAsync(listJobsRequest ListJobsRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<ListJobsRequest,ListJobsResult>) : java.util.concurrent.Future<ListJobsResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<UpdateJobResult> to java.util.concurrent.Future<UpdateJobResult> in method public updateJobAsync(updateJobRequest UpdateJobRequest) : java.util.concurrent.Future<UpdateJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type Future<UpdateJobResult> to java.util.concurrent.Future<UpdateJobResult> in method public updateJobAsync(updateJobRequest UpdateJobRequest, asyncHandler com.amazonaws.handlers.AsyncHandler<UpdateJobRequest,UpdateJobResult>) : java.util.concurrent.Future<UpdateJobResult> in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type clientConfiguration : ClientConfiguration to clientConfiguration : com.amazonaws.ClientConfiguration in method public AmazonElasticFileSystemAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration) in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type clientConfiguration : ClientConfiguration to clientConfiguration : com.amazonaws.ClientConfiguration in method public AmazonImportExportAsyncClient(awsCredentialsProvider com.amazonaws.auth.AWSCredentialsProvider, clientConfiguration com.amazonaws.ClientConfiguration) in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type jobIdsList : List<String> to jobIdsList : SdkInternalList<String> in method public marshall(getShippingLabelRequest GetShippingLabelRequest) : Request<GetShippingLabelRequest> in class com.amazonaws.services.importexport.model.transform.GetShippingLabelRequestMarshaller",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -29281,10 +29918,10 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type files : Collection<File> to files : Iterable<File> in method public ListBackedFileSet(files Iterable<File>) in class org.gradle.api.internal.file.collections.ListBackedFileSet",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -32079,6 +32716,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type UniquenessConstraintRule to UniquePropertyConstraintRule in method public uniquenessConstraintRule(id long, labelId int, propertyKeyId int, ownedIndexRule long) : UniquePropertyConstraintRule in class org.neo4j.kernel.impl.store.UniquePropertyConstraintRule",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type UniquenessConstraintRule to UniquePropertyConstraintRule in method public readUniquenessConstraintRule(id long, labelId int, buffer ByteBuffer) : UniquePropertyConstraintRule in class org.neo4j.kernel.impl.store.UniquePropertyConstraintRule",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 10145
 }, {
@@ -37374,6 +38025,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type ByteBuf to ByteString in method public debugData() : ByteString in class io.netty.handler.codec.http2.StreamBufferingEncoder.Http2GoAwayException",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3991
 }, {
@@ -38225,6 +38883,34 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type indexKey : org.neo4j.kernel.impl.store.counts.keys.IndexKey to indexKey : IndexKey in method public equals(other Object) : boolean in class org.neo4j.kernel.impl.store.counts.keys.IndexKey",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type that : org.neo4j.kernel.impl.store.counts.keys.IndexSampleKey to that : IndexSampleKey in method public compareTo(other CountsKey) : int in class org.neo4j.kernel.impl.store.counts.keys.IndexSampleKey",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type that : org.neo4j.kernel.impl.store.counts.keys.RelationshipKey to that : RelationshipKey in method public equals(o Object) : boolean in class org.neo4j.kernel.impl.store.counts.keys.RelationshipKey",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type that : org.neo4j.kernel.impl.store.counts.keys.RelationshipKey to that : RelationshipKey in method public compareTo(other CountsKey) : int in class org.neo4j.kernel.impl.store.counts.keys.RelationshipKey",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
     }],
     "refDiffExecutionTime": 10292
@@ -39929,6 +40615,48 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type blocks : List to blocks : List<SmallDocumentBlock> in method public SmallDocumentBlockList(blocks List<SmallDocumentBlock>) in class org.docx4j.org.apache.poi.poifs.storage.SmallDocumentBlockList",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type com.microsoft.schemas.office.x2006.encryption.CTEncryption to org.docx4j.com.microsoft.schemas.office.x2006.encryption.CTEncryption in method public getEncryption() : org.docx4j.com.microsoft.schemas.office.x2006.encryption.CTEncryption in class org.docx4j.org.apache.poi.poifs.crypt.agile.EncryptionDocument",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type encryption : com.microsoft.schemas.office.x2006.encryption.CTEncryption to encryption : org.docx4j.com.microsoft.schemas.office.x2006.encryption.CTEncryption in method public setEncryption(encryption org.docx4j.com.microsoft.schemas.office.x2006.encryption.CTEncryption) : void in class org.docx4j.org.apache.poi.poifs.crypt.agile.EncryptionDocument",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type com.microsoft.schemas.office.x2006.encryption.CTEncryption to org.docx4j.com.microsoft.schemas.office.x2006.encryption.CTEncryption in method public addNewEncryption() : org.docx4j.com.microsoft.schemas.office.x2006.encryption.CTEncryption in class org.docx4j.org.apache.poi.poifs.crypt.agile.EncryptionDocument",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type hashAlgo : org.apache.poi.poifs.crypt.HashAlgorithm to hashAlgo : org.docx4j.org.apache.poi.poifs.crypt.HashAlgorithm in method public confirmPassword(password String, keySpec byte[], keySalt byte[], verifier byte[], verifierSalt byte[], integritySalt byte[]) : void in class org.docx4j.org.apache.poi.poifs.crypt.binaryrc4.BinaryRC4Encryptor",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type BlockWritable[] to SmallDocumentBlock[] in method public getSmallBlocks() : SmallDocumentBlock[] in class org.docx4j.org.apache.poi.poifs.filesystem.OPOIFSDocument",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type List to List<SmallDocumentBlock> in method public extract(bigBlockSize POIFSBigBlockSize, blocks ListManagedBlock[]) : List<SmallDocumentBlock> in class org.docx4j.org.apache.poi.poifs.storage.SmallDocumentBlock",
         "comment": "null",
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -44196,6 +44924,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type ChannelFactory to Channel in method public getChannel() : Channel in class org.infinispan.server.jgroups.spi.RemoteSiteConfiguration",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3908
 }, {
@@ -50273,6 +51008,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type void to boolean in method public addPartition(partition Partition<I,V,E>) : boolean in class org.apache.giraph.ooc.DiskBackedPartitionStore",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 2713
 }, {
@@ -52615,6 +53357,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type List<JobTask> to Iterable<JobTask> in method private findTasksToMove(host HostState, obeyDontAutobalanceMe boolean) : Iterable<JobTask> in class com.addthis.hydra.job.spawn.balancer.SpawnBalancer",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type List<JobTaskMoveAssignment> to Collection<JobTaskMoveAssignment> in method private balanceActiveJobsOnHost(host HostState, hosts List<HostState>) : Collection<JobTaskMoveAssignment> in class com.addthis.hydra.job.spawn.balancer.SpawnBalancer",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 1974
 }, {
@@ -54704,6 +55460,13 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type AsciiString to CharSequence in method public convertTimeMillis(value long) : CharSequence in class io.netty.handler.codec.DefaultTextHeaders.CharSequenceConverter",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 2532
 }, {
@@ -60028,7 +60791,7 @@
         "description": "Change Parameter Type parameters : OgrFormat to parameters : Format in method public addFormat(parameters Format) : void in class org.geoserver.wfs.response.Ogr2OgrOutputFormat",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Change Parameter Type",
@@ -60046,32 +60809,25 @@
         "validators": null
     }, {
         "type": "Change Parameter Type",
-        "description": "Change Parameter Type parameters : OgrFormat to parameters : Format in method public addFormat(parameters Format...) : void in class org.geoserver.wfs.response.Ogr2OgrOutputFormat",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "GumTreeDiff",
-        "validators": null
-    }, {
-        "type": "Change Parameter Type",
         "description": "Change Parameter Type type : OgrType to type : OutputType in method public OgrFormat(ogrFormat String, formatName String, fileExtension String, singleFile boolean, mimeType String, type OutputType, options String...) in class org.geoserver.wfs.response.OgrFormat",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type f : OgrFormat to f : Format in method public testDescribeProcess() : void in class org.geoserver.wps.ogr.WPSOgrTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type f : OgrFormat to f : Format in method public testConfigurationLoad() : void in class org.geoserver.wps.ogr.WPSOgrTest",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "TP",
         "detectionTools": "GumTreeDiff",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type of : OgrFormat to of : Format in method public getProcessParameterIO() : List<ProcessParameterIO> in class org.geoserver.wps.ogr.Ogr2OgrPPIOFactory",

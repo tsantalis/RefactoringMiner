@@ -136,6 +136,15 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
         return sb.toString();
 	}
 
+	public String toQualifiedString() {
+		StringBuilder sb = new StringBuilder();
+        sb.append(variableName).append(" : ").append(type.toQualifiedString());
+        if(varargsParameter) {
+        	sb.append("...");
+        }
+        return sb.toString();
+	}
+
 	public LocationInfo getLocationInfo() {
 		return locationInfo;
 	}

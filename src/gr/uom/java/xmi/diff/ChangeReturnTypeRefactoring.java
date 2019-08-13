@@ -57,12 +57,13 @@ public class ChangeReturnTypeRefactoring implements Refactoring {
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		boolean qualified = originalType.equals(changedType) && !originalType.equalsQualified(changedType);
 		sb.append(getName()).append("\t");
-		sb.append(originalType);
+		sb.append(qualified ? originalType.toQualifiedString() : originalType.toString());
 		sb.append(" to ");
-		sb.append(changedType);
+		sb.append(qualified ? changedType.toQualifiedString() : changedType.toString());
 		sb.append(" in method ");
-		sb.append(operationAfter);
+		sb.append(qualified ? operationAfter.toQualifiedString() : operationAfter.toString());
 		sb.append(" in class ").append(operationAfter.getClassName());
 		return sb.toString();
 	}

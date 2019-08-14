@@ -156,6 +156,17 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		return anonymousClassList;
 	}
 
+    public UMLAttribute containsAttribute(UMLAttribute otherAttribute) {
+    	ListIterator<UMLAttribute> attributeIt = attributes.listIterator();
+    	while(attributeIt.hasNext()) {
+    		UMLAttribute attribute = attributeIt.next();
+    		if(attribute.equals(otherAttribute)) {
+    			return attribute;
+    		}
+    	}
+    	return null;
+    }
+
     public UMLAttribute matchAttribute(UMLAttribute otherAttribute) {
     	ListIterator<UMLAttribute> attributeIt = attributes.listIterator();
     	while(attributeIt.hasNext()) {

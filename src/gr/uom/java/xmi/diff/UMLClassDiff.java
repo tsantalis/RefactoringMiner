@@ -40,12 +40,34 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 
 	protected void processAttributes() {
 		for(UMLAttribute attribute : originalClass.getAttributes()) {
-    		if(!nextClass.getAttributes().contains(attribute))
+			UMLAttribute matchingAttribute = nextClass.containsAttribute(attribute);
+    		if(matchingAttribute == null) {
     			this.reportRemovedAttribute(attribute);
+    		}
+    		else if(!attribute.equalsQualified(matchingAttribute)) {
+    			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attribute, matchingAttribute);
+				if(attributeDiff.isTypeChanged() || attributeDiff.isQualifiedTypeChanged()) {
+					ChangeAttributeTypeRefactoring ref = new ChangeAttributeTypeRefactoring(attribute.getVariableDeclaration(), matchingAttribute.getVariableDeclaration(), originalClass.getName(), nextClass.getName(),
+							VariableReferenceExtractor.findReferences(attribute.getVariableDeclaration(), matchingAttribute.getVariableDeclaration(), getOperationBodyMapperList()));
+					refactorings.add(ref);
+				}
+				this.attributeDiffList.add(attributeDiff);
+    		}
     	}
     	for(UMLAttribute attribute : nextClass.getAttributes()) {
-    		if(!originalClass.getAttributes().contains(attribute))
+    		UMLAttribute matchingAttribute = originalClass.containsAttribute(attribute);
+    		if(matchingAttribute == null) {
     			this.reportAddedAttribute(attribute);
+    		}
+    		else if(!attribute.equalsQualified(matchingAttribute)) {
+    			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(matchingAttribute, attribute);
+				if(attributeDiff.isTypeChanged() || attributeDiff.isQualifiedTypeChanged()) {
+					ChangeAttributeTypeRefactoring ref = new ChangeAttributeTypeRefactoring(matchingAttribute.getVariableDeclaration(), attribute.getVariableDeclaration(), originalClass.getName(), nextClass.getName(),
+							VariableReferenceExtractor.findReferences(matchingAttribute.getVariableDeclaration(), attribute.getVariableDeclaration(), getOperationBodyMapperList()));
+					refactorings.add(ref);
+				}
+				this.attributeDiffList.add(attributeDiff);
+    		}
     	}
 	}
 

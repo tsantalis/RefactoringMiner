@@ -27078,13 +27078,6 @@
         "validators": "Ameya"
     }, {
         "type": "Change Variable Type",
-        "description": "Change Variable Type jobIdsList : java.util.List<String> to jobIdsList : SdkInternalList<String> in method public marshall(getShippingLabelRequest GetShippingLabelRequest) : Request<GetShippingLabelRequest> in class com.amazonaws.services.importexport.model.transform.GetShippingLabelRequestMarshaller",
-        "comment": "null",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Ameya"
-    }, {
-        "type": "Change Variable Type",
         "description": "Change Variable Type e : BadRequestException to e : InvalidRecordingGroupException in method public unmarshall(json JSONObject) : AmazonServiceException in class com.amazonaws.services.config.model.transform.InvalidRecordingGroupExceptionUnmarshaller",
         "comment": "null",
         "validation": "TP",
@@ -61811,7 +61804,7 @@
     "time": "8/6/15 6:31 PM",
     "refactorings": [{
         "type": "Extract Method",
-        "description": "Extract Method protected validate(titleMap Map<Locale,String>, startTimeJCalendar java.util.Calendar, endTimeJCalendar java.util.Calendar, untilJCalendar java.util.Calendar) : void extracted from protected validate(titleMap Map<Locale,String>, startTimeJCalendar java.util.Calendar, endTimeJCalendar java.util.Calendar) : void in class com.liferay.calendar.service.impl.CalendarBookingLocalServiceImpl",
+        "description": "Extract Method protected validate(titleMap Map<Locale,String>, startTimeJCalendar Calendar, endTimeJCalendar Calendar, untilJCalendar Calendar) : void extracted from protected validate(titleMap Map<Locale,String>, startTimeJCalendar Calendar, endTimeJCalendar Calendar) : void in class com.liferay.calendar.service.impl.CalendarBookingLocalServiceImpl",
         "comment": "null",
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

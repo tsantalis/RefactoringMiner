@@ -28077,6 +28077,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type executorService : ExecutorService to executorService : java.util.concurrent.ExecutorService in class com.amazonaws.services.importexport.AmazonImportExportAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type executorService : ExecutorService to executorService : java.util.concurrent.ExecutorService in class com.amazonaws.services.elasticfilesystem.AmazonElasticFileSystemAsyncClient",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

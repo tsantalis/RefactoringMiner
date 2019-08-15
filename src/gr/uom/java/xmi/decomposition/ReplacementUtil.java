@@ -83,7 +83,7 @@ public class ReplacementUtil {
 				temp = sb.toString();
 			}
 		}
-		if(!replacementOccurred) {
+		if(!replacementOccurred && !UMLOperationBodyMapper.containsMethodSignatureOfAnonymousClass(completeString1) && !UMLOperationBodyMapper.containsMethodSignatureOfAnonymousClass(completeString2)) {
 			for(String character : SPECIAL_CHARACTERS) {
 				if(temp.contains(character + subString1) && completeString2.contains(character + subString2)) {
 					StringBuffer sb = new StringBuffer();

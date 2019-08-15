@@ -8025,6 +8025,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter nodeCount : long to bytes : long in method public create(bytes long) : LevelGraph in class com.graphhopper.storage.LevelGraphImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3012
 }, {
@@ -21734,6 +21741,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter recoveryVersion : long to fromVersion : long in method public getLogFiles(fromVersion long) : Iterator<LogVersionedStoreChannel> in class org.neo4j.kernel.recovery.Recovery.SPI",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 11758
 }, {
@@ -44938,6 +44952,62 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter protocolType : String to type : String in method protected getProtocolAddress(stackName String, type String) : PathAddress in class org.infinispan.server.jgroups.subsystem.OperationTestCaseBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter protocolType : String to protocol : String in method protected getTransportAddOperation(stackName String, protocol String) : ModelNode in class org.infinispan.server.jgroups.subsystem.OperationTestCaseBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter protocolType : String to type : String in method protected getTransportRemoveOperation(stackName String, type String) : ModelNode in class org.infinispan.server.jgroups.subsystem.OperationTestCaseBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter protocolType : String to type : String in method protected getProtocolAddOperation(stackName String, type String) : ModelNode in class org.infinispan.server.jgroups.subsystem.OperationTestCaseBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter protocolType : String to type : String in method protected getProtocolRemoveOperation(stackName String, type String) : ModelNode in class org.infinispan.server.jgroups.subsystem.OperationTestCaseBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter protocolType : String to type : String in method protected getProtocolPropertyAddress(stackName String, type String, propertyName String) : PathAddress in class org.infinispan.server.jgroups.subsystem.OperationTestCaseBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceRegistration : ManagementResourceRegistration to registration : ManagementResourceRegistration in method public registerChildren(registration ManagementResourceRegistration) : void in class org.infinispan.server.jgroups.subsystem.TransportResourceDefinition",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter resourceRegistration : ManagementResourceRegistration to registration : ManagementResourceRegistration in method public registerChildren(registration ManagementResourceRegistration) : void in class org.infinispan.server.jgroups.subsystem.ProtocolResourceDefinition",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3908
 }, {
@@ -54166,6 +54236,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter container : String to group : String in method public getServiceName(group String, subGroup String) : ServiceName in class org.wildfly.clustering.service.SubGroupServiceNameFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter cache : String to subGroup : String in method public getServiceName(group String, subGroup String) : ServiceName in class org.wildfly.clustering.service.SubGroupServiceNameFactory",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 8243
 }, {

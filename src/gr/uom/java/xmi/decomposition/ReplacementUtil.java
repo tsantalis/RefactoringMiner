@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 public class ReplacementUtil {
 	private static final String[] SPECIAL_CHARACTERS = {";", ",", ")", "=", "+", "-", ">", "<", ".", "]", " ", "(", "["};
+	private static final String[] SPECIAL_ARGUMENT_CHARACTERS = {";", ",", ")", "=", "+", "-", ">", "<", ".", "]", " "};
 	
 	public static int countInstances(String completeString, String subString) {
 		for(String character : SPECIAL_CHARACTERS) {
@@ -23,6 +24,16 @@ public class ReplacementUtil {
 			}
 		}
 		return false;
+	}
+
+	public static String performArgumentReplacement(String completeString, String subString, String replacement) {
+		String temp = new String(completeString);
+		for(String character : SPECIAL_ARGUMENT_CHARACTERS) {
+			if(completeString.contains(subString + character)) {
+				temp = temp.replace(subString + character, replacement + character);
+			}
+		}
+		return temp;
 	}
 
 	public static String performReplacement(String completeString, String subString, String replacement) {

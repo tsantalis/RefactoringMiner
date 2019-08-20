@@ -1531,7 +1531,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		
 		Set<String> types1 = new LinkedHashSet<String>(statement1.getTypes());
 		Set<String> types2 = new LinkedHashSet<String>(statement2.getTypes());
-		removeCommonElements(types1, types2);
+		removeCommonTypes(types1, types2, statement1.getTypes(), statement2.getTypes());
 		
 		// replace variables with the corresponding arguments in object creations
 		replaceVariablesWithArguments(creationMap1, creations1, parameterToArgumentMap);
@@ -2286,6 +2286,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		intersection.retainAll(strings2);
 		strings1.removeAll(intersection);
 		strings2.removeAll(intersection);
+	}
+
+	private void removeCommonTypes(Set<String> strings1, Set<String> strings2, List<String> types1, List<String> types2) {
+		if(types1.size() == types2.size()) {
+			Set<String> removeFromIntersection = new LinkedHashSet<String>();
+			for(int i=0; i<types1.size(); i++) {
+				String type1 = types1.get(i);
+				String type2 = types2.get(i);
+				if(!type1.equals(type2)) {
+					removeFromIntersection.add(type1);
+					removeFromIntersection.add(type2);
+				}
+			}
+			Set<String> intersection = new LinkedHashSet<String>(strings1);
+			intersection.retainAll(strings2);
+			intersection.removeAll(removeFromIntersection);
+			strings1.removeAll(intersection);
+			strings2.removeAll(intersection);
+		}
+		else {
+			removeCommonElements(strings1, strings2);
+		}
 	}
 
 	private UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration1, UMLOperation operation) {

@@ -1789,7 +1789,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					String statementWithoutAnonymous1 = statementWithoutAnonymous(statement1, anonymousClassDeclaration1, operation1);
 					String statementWithoutAnonymous2 = statementWithoutAnonymous(statement2, anonymousClassDeclaration2, operation2);
 					if(statementWithoutAnonymous1.equals(statementWithoutAnonymous2) ||
-							identicalAfterVariableReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements()) ||
+							identicalAfterVariableAndTypeReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements()) ||
 							(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 							(invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements()) ||
 							invocationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)))) {
@@ -1798,7 +1798,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						int matchedOperations = 0;
 						for(UMLOperation operation1 : anonymousClass1.getOperations()) {
 							for(UMLOperation operation2 : anonymousClass2.getOperations()) {
-								if(operation1.equals(operation2) || operation1.equalSignature(operation2)) {	
+								if(operation1.equals(operation2) || operation1.equalSignature(operation2) || operation1.equalSignatureIgnoringChangedTypes(operation2)) {	
 									UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation1, operation2, classDiff);
 									int mappings = mapper.mappingsWithoutBlocks();
 									if(mappings > 0) {
@@ -2348,10 +2348,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return null;
 	}
 
-	private boolean identicalAfterVariableReplacements(String s1, String s2, Set<Replacement> replacements) {
+	private boolean identicalAfterVariableAndTypeReplacements(String s1, String s2, Set<Replacement> replacements) {
 		String s1AfterReplacements = new String(s1);
 		for(Replacement replacement : replacements) {
-			if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
+			if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.TYPE)) {
 				s1AfterReplacements = ReplacementUtil.performReplacement(s1AfterReplacements, s2, replacement.getBefore(), replacement.getAfter());
 			}
 		}
@@ -2493,10 +2493,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						variableDeclarations1.get(0).getVariableName().equals(replacement.getBefore()) &&
 						variableDeclarations2.get(0).getVariableName().equals(replacement.getAfter()))
 					variableRename = true;
-				else if((replacement instanceof MethodInvocationReplacement || replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION)) &&
-						initializer1 != null && initializer1.getExpression().equals(replacement.getBefore()) &&
-						initializer2 != null && initializer2.getExpression().equals(replacement.getAfter()))
-					methodInvocationReplacement = true;
+				else if(replacement instanceof MethodInvocationReplacement) {
+					MethodInvocationReplacement invocationReplacement = (MethodInvocationReplacement)replacement;
+					if(initializer1 != null && invocationReplacement.getInvokedOperationBefore().actualString().equals(initializer1.getString()) &&
+							initializer2 != null && invocationReplacement.getInvokedOperationAfter().actualString().equals(initializer2.getString())) {
+						methodInvocationReplacement = true;
+					}
+					if(initializer1 != null && initializer1.getExpression().equals(replacement.getBefore()) &&
+							initializer2 != null && initializer2.getExpression().equals(replacement.getAfter())) {
+						methodInvocationReplacement = true;
+					}
+				}
+				else if(replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION)) {
+					if(initializer1 != null && initializer1.getExpression().equals(replacement.getBefore()) &&
+							initializer2 != null && initializer2.getExpression().equals(replacement.getAfter())) {
+						methodInvocationReplacement = true;
+					}
+				}
 			}
 			if(typeReplacement && !type1.compatibleTypes(type2) && variableRename && (methodInvocationReplacement || nullInitializer || zeroArgumentClassInstantiation || classInstantiationArgumentReplacement)) {
 				return true;

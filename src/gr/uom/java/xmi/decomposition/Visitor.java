@@ -32,6 +32,7 @@ import org.eclipse.jdt.core.dom.MarkerAnnotation;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.NullLiteral;
 import org.eclipse.jdt.core.dom.NumberLiteral;
 import org.eclipse.jdt.core.dom.ParameterizedType;
 import org.eclipse.jdt.core.dom.PostfixExpression;
@@ -62,6 +63,7 @@ public class Visitor extends ASTVisitor {
 	private List<AnonymousClassDeclarationObject> anonymousClassDeclarations = new ArrayList<AnonymousClassDeclarationObject>();
 	private List<String> stringLiterals = new ArrayList<String>();
 	private List<String> numberLiterals = new ArrayList<String>();
+	private List<String> nullLiterals = new ArrayList<String>();
 	private List<String> booleanLiterals = new ArrayList<String>();
 	private List<String> typeLiterals = new ArrayList<String>();
 	private Map<String, List<ObjectCreation>> creationMap = new LinkedHashMap<String, List<ObjectCreation>>();
@@ -338,6 +340,15 @@ public class Visitor extends ASTVisitor {
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 			anonymous.getNumberLiterals().add(node.toString());
+		}
+		return super.visit(node);
+	}
+
+	public boolean visit(NullLiteral node) {
+		nullLiterals.add(node.toString());
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getNullLiterals().add(node.toString());
 		}
 		return super.visit(node);
 	}
@@ -708,6 +719,10 @@ public class Visitor extends ASTVisitor {
 
 	public List<String> getNumberLiterals() {
 		return numberLiterals;
+	}
+
+	public List<String> getNullLiterals() {
+		return nullLiterals;
 	}
 
 	public List<String> getBooleanLiterals() {

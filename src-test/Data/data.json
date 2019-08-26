@@ -54523,77 +54523,77 @@
         "description": "Change Variable Type bs : BitcoinSerializer to bs : MessageSerializer in method public roundTripTransaction(params NetworkParameters, tx Transaction) : Transaction in class org.bitcoinj.testing.FakeTxBuilder",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type bs : BitcoinSerializer to bs : MessageSerializer in method public testAddr() : void in class org.bitcoinj.core.BitcoinSerializerTest",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type bs : BitcoinSerializer to bs : MessageSerializer in method public testLazyParsing() : void in class org.bitcoinj.core.BitcoinSerializerTest",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type bs : BitcoinSerializer to bs : MessageSerializer in method private testCachedParsing(lazy boolean) : void in class org.bitcoinj.core.BitcoinSerializerTest",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type bs : BitcoinSerializer to bs : MessageSerializer in method public testHeaders1() : void in class org.bitcoinj.core.BitcoinSerializerTest",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type bs : BitcoinSerializer to bs : MessageSerializer in method public testHeaders2() : void in class org.bitcoinj.core.BitcoinSerializerTest",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type bs : BitcoinSerializer to bs : MessageSerializer in method public testSerializeUnknownMessage() : void in class org.bitcoinj.core.BitcoinSerializerTest",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type bs : BitcoinSerializer to bs : MessageSerializer in method public setUp() : void in class org.bitcoinj.core.LazyParseByteCacheTest",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type bsRef : BitcoinSerializer to bsRef : MessageSerializer in method public testBlock(blockBytes byte[], isChild boolean, lazy boolean, retain boolean) : void in class org.bitcoinj.core.LazyParseByteCacheTest",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type bsRef : BitcoinSerializer to bsRef : MessageSerializer in method public testTransaction(params NetworkParameters, txBytes byte[], isChild boolean, lazy boolean, retain boolean) : void in class org.bitcoinj.core.LazyParseByteCacheTest",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type serializer : BitcoinSerializer to serializer : MessageSerializer in method public badMessage() : void in class org.bitcoinj.core.PeerTest",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3030

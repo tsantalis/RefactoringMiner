@@ -12840,6 +12840,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type AnalyzedRelation to PlannedAnalyzedRelation in method protected visitAnalyzedRelation(relation AnalyzedRelation, context ConsumerContext) : PlannedAnalyzedRelation in class io.crate.planner.consumer.InsertFromSubQueryConsumer.Visitor",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3234
 }, {

@@ -24,6 +24,7 @@ import org.eclipse.jdt.core.dom.CatchClause;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConditionalExpression;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.InfixExpression;
@@ -659,9 +660,30 @@ public class Visitor extends ASTVisitor {
 						}
 					}
 				}
+				EnhancedForStatement enhancedFor = findParentEnhancedForStatement(node);
+				if(enhancedFor != null) {
+					if(enhancedFor.getParameter().getName().getIdentifier().equals(qualifierIdentifier)) {
+						variables.add(node.toString());
+						if(current.getUserObject() != null) {
+							AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+							anonymous.getVariables().add(node.toString());
+						}
+					}
+				}
 			}
 		}
 		return super.visit(node);
+	}
+
+	private EnhancedForStatement findParentEnhancedForStatement(ASTNode node) {
+		ASTNode parent = node.getParent();
+		while(parent != null) {
+			if(parent instanceof EnhancedForStatement) {
+				return (EnhancedForStatement)parent;
+			}
+			parent = parent.getParent();
+		}
+		return null;
 	}
 
 	private MethodDeclaration findParentMethodDeclaration(ASTNode node) {

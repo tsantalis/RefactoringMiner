@@ -63507,14 +63507,14 @@
         "description": "Change Variable Type f : OgrFormat to f : Format in method public testDescribeProcess() : void in class org.geoserver.wps.ogr.WPSOgrTest",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type f : OgrFormat to f : Format in method public testConfigurationLoad() : void in class org.geoserver.wps.ogr.WPSOgrTest",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",

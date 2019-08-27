@@ -11,6 +11,7 @@ import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethod
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
+import gr.uom.java.xmi.decomposition.replacement.MethodInvocationWithClassInstanceCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ObjectCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.SplitVariableReplacement;
@@ -2063,10 +2064,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(statement2.getString().endsWith(key2 + ";\n") &&
 							creationCoveringTheEntireStatement1.getArguments().contains(invocation2.getExpression())) {
 						Replacement replacement = new ClassInstanceCreationWithMethodInvocationReplacement(creationCoveringTheEntireStatement1.getName(),
-								invocation2.getName(), creationCoveringTheEntireStatement1, (OperationInvocation)invocation2);
+								invocation2.getName(), ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION, creationCoveringTheEntireStatement1, (OperationInvocation)invocation2);
 						replacementInfo.addReplacement(replacement);
 						return replacementInfo.getReplacements();
 					}
+				}
+			}
+		}
+		//builder call chain in the first statement is replaced with class instance creation in the second statement
+		if(invocationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null) {
+			if(invocationCoveringTheEntireStatement1.getName().equals("build")) {
+				int commonArguments = 0;
+				for(String key1 : methodInvocationMap1.keySet()) {
+					if(invocationCoveringTheEntireStatement1.actualString().startsWith(key1)) {
+						for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
+							Set<String> argumentIntersection = invocation1.argumentIntersection(creationCoveringTheEntireStatement2);
+							commonArguments += argumentIntersection.size();
+						}
+					}
+				}
+				if(commonArguments > 0) {
+					Replacement replacement = new MethodInvocationWithClassInstanceCreationReplacement(invocationCoveringTheEntireStatement1.getName(),
+							creationCoveringTheEntireStatement2.getName(), ReplacementType.BUILDER_REPLACED_WITH_CLASS_INSTANCE_CREATION, invocationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2);
+					replacementInfo.addReplacement(replacement);
+					return replacementInfo.getReplacements();
 				}
 			}
 		}

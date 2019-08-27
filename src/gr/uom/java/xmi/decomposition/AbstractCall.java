@@ -262,7 +262,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 				equalArguments(call);
 	}
 
-	private Set<String> argumentIntersection(AbstractCall call) {
+	public Set<String> argumentIntersection(AbstractCall call) {
 		List<String> args1 = preprocessArguments(getArguments());
 		List<String> args2 = preprocessArguments(call.getArguments());
 		Set<String> argumentIntersection = new LinkedHashSet<String>(args1);

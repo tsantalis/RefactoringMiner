@@ -45499,7 +45499,7 @@
         "description": "Change Variable Type responseData : AugmentedRestLiResponseData to responseData : RestLiResponseEnvelope in method public testOnErrorRestLiServiceExceptionNoFilters() : void in class com.linkedin.restli.internal.server.TestRestLiCallback",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Ameya"
     }, {
         "type": "Change Variable Type",
@@ -45513,77 +45513,77 @@
         "description": "Change Variable Type appResponseData : AugmentedRestLiResponseData to appResponseData : RestLiResponseEnvelope in method public testOnSuccessWithFiltersSuccessful() : void in class com.linkedin.restli.internal.server.TestRestLiCallback",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Ameya"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type appResponseData : AugmentedRestLiResponseData to appResponseData : RestLiResponseEnvelope in method public testOnSuccessWithFiltersExceptionFromFirstFilterSecondFilterHandlesEx() : void in class com.linkedin.restli.internal.server.TestRestLiCallback",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Ameya"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type responseErrorData : AugmentedRestLiResponseData to responseErrorData : RestLiResponseEnvelope in method public testOnSuccessWithFiltersExceptionFromFirstFilterSecondFilterHandlesEx() : void in class com.linkedin.restli.internal.server.TestRestLiCallback",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Ameya"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type appResponseData : AugmentedRestLiResponseData to appResponseData : RestLiResponseEnvelope in method public testOnSuccessWithFiltersExceptionFromFirstFilterSecondFilterDoesNotHandleEx() : void in class com.linkedin.restli.internal.server.TestRestLiCallback",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Ameya"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type responseErrorData : AugmentedRestLiResponseData to responseErrorData : RestLiResponseEnvelope in method public testOnSuccessWithFiltersExceptionFromFirstFilterSecondFilterDoesNotHandleEx() : void in class com.linkedin.restli.internal.server.TestRestLiCallback",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Ameya"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type appResponseData : AugmentedRestLiResponseData to appResponseData : RestLiResponseEnvelope in method public testOnSuccessWithFiltersExceptionFromSecondFilter() : void in class com.linkedin.restli.internal.server.TestRestLiCallback",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Ameya"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type filterResponseData : AugmentedRestLiResponseData to filterResponseData : RestLiResponseEnvelope in method public testOnSuccessWithFiltersExceptionFromSecondFilter() : void in class com.linkedin.restli.internal.server.TestRestLiCallback",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Ameya"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type responseData : AugmentedRestLiResponseData to responseData : RestLiResponseEnvelope in method public testOnErrorWithFiltersNotHandlingAppEx() : void in class com.linkedin.restli.internal.server.TestRestLiCallback",
         "comment": "<p>A lot of TP in this commit!</p>",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type responseData : AugmentedRestLiResponseData to responseData : RestLiResponseEnvelope in method public testOnErrorWithFiltersSuccessfulyHandlingAppEx() : void in class com.linkedin.restli.internal.server.TestRestLiCallback",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type responseAppData : AugmentedRestLiResponseData to responseAppData : RestLiResponseEnvelope in method public testOnErrorWithFiltersExceptionFromFirstFilterSecondFilterDoesNotHandle() : void in class com.linkedin.restli.internal.server.TestRestLiCallback",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type responseFilterData : AugmentedRestLiResponseData to responseFilterData : RestLiResponseEnvelope in method public testOnErrorWithFiltersExceptionFromFirstFilterSecondFilterDoesNotHandle() : void in class com.linkedin.restli.internal.server.TestRestLiCallback",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
@@ -45618,7 +45618,7 @@
         "description": "Change Variable Type responseData : AugmentedRestLiResponseData to responseData : RestLiResponseEnvelope in method public testFilterResponseContextAdapter() : void in class com.linkedin.restli.internal.server.TestRestLiCallback",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",
@@ -45632,8 +45632,22 @@
         "description": "Change Variable Type responseData : AugmentedRestLiResponseData to responseData : RestLiResponseEnvelope in method public testConvertExceptionToRestLiResponseData(e Exception, status HttpStatus) : void in class com.linkedin.restli.internal.server.TestRestLiCallback",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type mergedResults : Map<Object,UpdateStatus> to batchResponseMap : Map<Object,BatchResponseEntry> in method public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, result Object, headers Map<String,String>) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.BatchUpdateResponseBuilder",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable mergedResults : Map<Object,UpdateStatus> to batchResponseMap : Map<Object,BatchResponseEntry> in method public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, result Object, headers Map<String,String>) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.BatchUpdateResponseBuilder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2657
 }, {

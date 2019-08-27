@@ -7,9 +7,9 @@ public class ClassInstanceCreationWithMethodInvocationReplacement extends Replac
 	private ObjectCreation objectCreationBefore;
 	private OperationInvocation invokedOperationAfter;
 
-	public ClassInstanceCreationWithMethodInvocationReplacement(String before, String after,
+	public ClassInstanceCreationWithMethodInvocationReplacement(String before, String after, ReplacementType type,
 			ObjectCreation objectCreationBefore, OperationInvocation invokedOperationAfter) {
-		super(before, after, ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION);
+		super(before, after, type);
 		this.objectCreationBefore = objectCreationBefore;
 		this.invokedOperationAfter = invokedOperationAfter;
 	}

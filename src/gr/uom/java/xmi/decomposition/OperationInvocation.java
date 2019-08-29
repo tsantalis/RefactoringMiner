@@ -125,6 +125,9 @@ public class OperationInvocation extends AbstractCall {
     		else if(arg.startsWith("\"") && arg.endsWith("\"")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("String"));
     		}
+    		else if(arg.startsWith("\'") && arg.endsWith("\'")) {
+    			inferredArgumentTypes.add(UMLType.extractTypeObject("char"));
+    		}
     		else if(arg.endsWith(".class")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("Class"));
     		}
@@ -133,6 +136,22 @@ public class OperationInvocation extends AbstractCall {
     		}
     		else if(arg.equals("false")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("boolean"));
+    		}
+    		else if(arg.startsWith("new ") && arg.contains("(")) {
+    			String type = arg.substring(4, arg.indexOf("("));
+    			inferredArgumentTypes.add(UMLType.extractTypeObject(type));
+    		}
+    		else if(arg.startsWith("new ") && !arg.contains("(") && arg.contains("[")) {
+    			String type = arg.substring(4, arg.indexOf("["));
+    			for(int i=0; i<arg.length(); i++) {
+    				if(arg.charAt(i) == '[') {
+    					type = type + "[]";
+    				}
+    				else if(arg.charAt(i) == '\n') {
+    					break;
+    				}
+    			}
+    			inferredArgumentTypes.add(UMLType.extractTypeObject(type));
     		}
     		else {
     			inferredArgumentTypes.add(null);

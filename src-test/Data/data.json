@@ -63349,13 +63349,6 @@
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Davood"
     }, {
-        "type": "Pull Up Method",
-        "description": "Pull Up Method public OgrFormat(ogrFormat String, formatName String, fileExtension String, singleFile boolean, mimeType String, type OgrType, options String...) from class org.geoserver.wfs.response.OgrFormat to public Format(toolFormat String, formatName String, fileExtension String, singleFile boolean, mimeType String, type OutputType, options String...) from class org.geoserver.ogr.core.Format",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter ogrFormat : String to toolFormat : String in method public OgrFormat(toolFormat String, formatName String, fileExtension String, singleFile boolean, mimeType String, options String...) in class org.geoserver.wfs.response.OgrFormat",
         "comment": null,
@@ -63411,20 +63404,6 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": null
-    }, {
-        "type": "Rename Parameter",
-        "description": "Rename Parameter ogrFormat : String to toolFormat : String in method public Format(toolFormat String, formatName String, fileExtension String, singleFile boolean, mimeType String, type OutputType, options String...) in class org.geoserver.ogr.core.Format",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Change Parameter Type",
-        "description": "Change Parameter Type type : OgrType to type : OutputType in method public Format(toolFormat String, formatName String, fileExtension String, singleFile boolean, mimeType String, type OutputType, options String...) in class org.geoserver.ogr.core.Format",
-        "comment": "<p>Format was a new added class, so this should is not a type change<br />Format is an extracted superclass from OgrFormat, and this constructor has been pulled up.</p>",
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Nikos, Ameya"
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type List<OgrFormat> to List<Format> in method public getFormats() : List<Format> in class org.geoserver.wfs.response.Ogr2OgrOutputFormat",
@@ -63500,7 +63479,7 @@
         "description": "Change Parameter Type type : OgrType to type : OutputType in method public OgrFormat(ogrFormat String, formatName String, fileExtension String, singleFile boolean, mimeType String, type OutputType, options String...) in class org.geoserver.wfs.response.OgrFormat",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
     }, {
         "type": "Change Variable Type",

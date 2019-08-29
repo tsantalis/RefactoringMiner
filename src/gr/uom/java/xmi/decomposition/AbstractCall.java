@@ -59,6 +59,16 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return sb.toString();
 	}
 
+	public boolean expressionIsNullOrThis() {
+		if(expression == null) {
+			return true;
+		}
+		else if(expression.equals("this")) {
+			return true;
+		}
+		return false;
+	}
+
 	public boolean identicalExpression(AbstractCall call, Set<Replacement> replacements) {
 		return identicalExpression(call) ||
 		identicalExpressionAfterTypeReplacements(call, replacements);

@@ -104,6 +104,10 @@ public class UMLType implements Serializable, LocationInfoProvider {
 				(this.typeArguments.startsWith("<? ") && type.typeArguments.equals("<?>"))) {
 			return true;
 		}
+		if((this.typeArguments.equals("<Object>") && type.typeArguments.contains("<Object>")) ||
+				(type.typeArguments.equals("<Object>") && this.typeArguments.contains("<Object>"))) {
+			return true;
+		}
 		if(this.typeArgumentDecomposition.size() != type.typeArgumentDecomposition.size()) {
 			return false;
 		}

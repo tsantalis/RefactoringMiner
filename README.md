@@ -21,31 +21,48 @@ RefactoringMiner is a library/API written in Java that can detect refactorings a
 
 Currently, it supports the detection of the following refactorings:
 
+**<ins>supported by RefactoringMiner 1.0 & 2.0</ins>**
+
 1. Extract Method
 2. Inline Method
 3. Rename Method
-4. Move Method/Attribute
-5. Pull Up Method/Attribute
-6. Push Down Method/Attribute
-7. Extract Class/Subclass/Superclass/Interface
-8. Move Class
-9. Rename Class
-10. Move and Rename Class
-11. Extract and Move Method
-12. Move Source Folder
-13. Change Package (Move, Rename, Split, Merge)
-14. Extract Variable
-15. Inline Variable
-16. Parameterize Variable
-17. Rename Variable/Parameter
-18. Rename Attribute
-19. Move and Rename Attribute
-20. Replace Variable with Attribute
-21. Replace Attribute (with Attribute)
-22. Merge Variable/Parameter
-23. Merge Attribute
-24. Split Variable/Parameter
-25. Split Attribute
+4. Move Method
+5. Move Attribute
+6. Pull Up Method
+7. Pull Up Attribute
+8. Push Down Method
+9. Push Down Attribute
+10. Extract Superclass
+11. Extract Interface
+12. Move Class
+13. Rename Class
+14. Extract and Move Method
+15. Change Package (Move, Rename, Split, Merge)
+
+**<ins>supported by RefactoringMiner 2.0</ins>**
+
+16. Move and Rename Class
+17. Extract Class
+18. Extract Subclass
+19. Extract Variable
+20. Inline Variable
+21. Parameterize Variable
+22. Rename Variable
+23. Rename Parameter
+24. Rename Attribute
+25. Move and Rename Attribute
+26. Replace Variable with Attribute
+27. Replace Attribute (with Attribute)
+28. Merge Variable
+29. Merge Parameter
+30. Merge Attribute
+31. Split Variable
+32. Split Parameter
+33. Split Attribute
+34. Change Variable Type
+35. Change Parameter Type
+36. Change Return Type
+37. Change Attribute Type
 
 # How to build RefactoringMiner
 

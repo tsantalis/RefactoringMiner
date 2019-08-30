@@ -34,7 +34,6 @@ import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 import org.eclipse.jdt.core.dom.TagElement;
-import org.eclipse.jdt.core.dom.TextElement;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.TypeParameter;
@@ -132,26 +131,34 @@ public class UMLModelASTReader {
         }
 	}
 
-	private void processTypeDeclaration(CompilationUnit cu, TypeDeclaration typeDeclaration, String packageName, String sourceFile,
-			List<String> importedTypes) {
-		Javadoc javaDoc = typeDeclaration.getJavadoc();
+	private UMLJavadoc generateJavadoc(BodyDeclaration bodyDeclaration) {
+		UMLJavadoc doc = null;
+		Javadoc javaDoc = bodyDeclaration.getJavadoc();
 		if(javaDoc != null) {
+			doc = new UMLJavadoc();
 			List<TagElement> tags = javaDoc.tags();
 			for(TagElement tag : tags) {
+				UMLTagElement tagElement = new UMLTagElement(tag.getTagName());
 				List<IDocElement> fragments = tag.fragments();
 				for(IDocElement docElement : fragments) {
-					if(docElement instanceof TextElement) {
-						TextElement textElement = (TextElement)docElement;
-						if(textElement.getText().contains("Source code generated using FreeMarker template")) {
-							return;
-						}
-					}
+					tagElement.addFragment(docElement.toString());
 				}
+				doc.addTag(tagElement);
 			}
+		}
+		return doc;
+	}
+
+	private void processTypeDeclaration(CompilationUnit cu, TypeDeclaration typeDeclaration, String packageName, String sourceFile,
+			List<String> importedTypes) {
+		UMLJavadoc javadoc = generateJavadoc(typeDeclaration);
+		if(javadoc != null && javadoc.contains("Source code generated using FreeMarker template")) {
+			return;
 		}
 		String className = typeDeclaration.getName().getFullyQualifiedName();
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, typeDeclaration, CodeElementType.TYPE_DECLARATION);
 		UMLClass umlClass = new UMLClass(packageName, className, locationInfo, typeDeclaration.isPackageMemberTypeDeclaration(), importedTypes);
+		umlClass.setJavadoc(javadoc);
 		
 		if(typeDeclaration.isInterface()) {
 			umlClass.setInterface(true);
@@ -259,9 +266,11 @@ public class UMLModelASTReader {
 	}
 
 	private UMLOperation processMethodDeclaration(CompilationUnit cu, MethodDeclaration methodDeclaration, String packageName, boolean isInterfaceMethod, String sourceFile) {
+		UMLJavadoc javadoc = generateJavadoc(methodDeclaration);
 		String methodName = methodDeclaration.getName().getFullyQualifiedName();
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, methodDeclaration, CodeElementType.METHOD_DECLARATION);
 		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo);
+		umlOperation.setJavadoc(javadoc);
 		
 		if(methodDeclaration.isConstructor())
 			umlOperation.setConstructor(true);
@@ -349,6 +358,7 @@ public class UMLModelASTReader {
 
 
 	private List<UMLAttribute> processFieldDeclaration(CompilationUnit cu, FieldDeclaration fieldDeclaration, boolean isInterfaceField, String sourceFile) {
+		UMLJavadoc javadoc = generateJavadoc(fieldDeclaration);
 		List<UMLAttribute> attributes = new ArrayList<UMLAttribute>();
 		Type fieldType = fieldDeclaration.getType();
 		List<VariableDeclarationFragment> fragments = fieldDeclaration.fragments();
@@ -361,6 +371,7 @@ public class UMLModelASTReader {
 			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, fragment);
 			variableDeclaration.setAttribute(true);
 			umlAttribute.setVariableDeclaration(variableDeclaration);
+			umlAttribute.setJavadoc(javadoc);
 			
 			int fieldModifiers = fieldDeclaration.getModifiers();
 			if((fieldModifiers & Modifier.PUBLIC) != 0)

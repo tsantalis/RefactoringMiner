@@ -35,6 +35,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	private boolean testAnnotation;
 	private List<UMLAnonymousClass> anonymousClassList;
 	private List<UMLTypeParameter> typeParameters;
+	private UMLJavadoc javadoc;
 	
 	public UMLOperation(String name, LocationInfo locationInfo) {
 		this.locationInfo = locationInfo;
@@ -118,6 +119,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 
 	public void setTestAnnotation(boolean testAnnotation) {
 		this.testAnnotation = testAnnotation;
+	}
+
+	public UMLJavadoc getJavadoc() {
+		return javadoc;
+	}
+
+	public void setJavadoc(UMLJavadoc javadoc) {
+		this.javadoc = javadoc;
 	}
 
 	public List<OperationInvocation> getAllOperationInvocations() {

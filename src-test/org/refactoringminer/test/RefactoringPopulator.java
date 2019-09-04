@@ -68,7 +68,8 @@ public class RefactoringPopulator {
 		ChangeVariableType(new BigInteger("34359738368")),
 		ChangeParameterType(new BigInteger("68719476736")),
 		ChangeAttributeType(new BigInteger("137438953472")),
-		All(new BigInteger("274877906943"));
+		ExtractAttribute(new BigInteger("274877906944")),
+		All(new BigInteger("549755813887"));
 
 		private BigInteger value;
 

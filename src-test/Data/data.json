@@ -39711,6 +39711,13 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Extract Attribute",
+        "description": "Extract Attribute private DATE_TIME_PATTERN : String in class com.spotify.helios.cli.command.DeploymentGroupWatchCommand",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -40615,6 +40622,13 @@
         "comment": "null",
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
+        "validators": "Nikos"
+    }, {
+        "type": "Extract Attribute",
+        "description": "Extract Attribute private live : boolean in class com.hazelcast.test.TestNodeRegistry.MockConnection",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
     }],
     "refDiffExecutionTime": 4170
@@ -56723,6 +56737,13 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Split Parameter",
+        "description": "Split Parameter node : LambdaExpression to [isCapturing : boolean, parameters : List<VariableDeclaration>] in method public printLambdaCallBlocks(functionalInterface IMethodBinding, parameters List<VariableDeclaration>, isCapturing boolean) : void in class com.google.devtools.j2objc.gen.StatementGenerator",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 2057
 }, {
@@ -60260,6 +60281,13 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Extract Attribute",
+        "description": "Extract Attribute private EMPTY : String in class com.linkedin.r2.filter.compression.ServerCompressionFilter",
+        "comment": "null",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 3301
 }, {

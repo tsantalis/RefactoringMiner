@@ -22,10 +22,12 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
 public class ExtractOperationDetection {
 	private List<UMLOperation> addedOperations;
+	private UMLClassBaseDiff classDiff;
 	private UMLModelDiff modelDiff;
 
-	public ExtractOperationDetection(List<UMLOperation> addedOperations, UMLModelDiff modelDiff) {
+	public ExtractOperationDetection(List<UMLOperation> addedOperations, UMLClassBaseDiff classDiff, UMLModelDiff modelDiff) {
 		this.addedOperations = addedOperations;
+		this.classDiff = classDiff;
 		this.modelDiff = modelDiff;
 	}
 
@@ -167,7 +169,7 @@ public class ExtractOperationDetection {
 			UMLOperation delegateMethod = findDelegateMethod(originalOperation, addedOperation, addedOperationInvocation);
 			return new UMLOperationBodyMapper(mapper,
 					delegateMethod != null ? delegateMethod : addedOperation,
-					new LinkedHashMap<String, String>(), parameterToArgumentMap);
+					new LinkedHashMap<String, String>(), parameterToArgumentMap, classDiff);
 		}
 		return null;
 	}

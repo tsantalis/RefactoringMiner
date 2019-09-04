@@ -14,6 +14,7 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
@@ -27,11 +28,13 @@ import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.CandidateMergeVariableRefactoring;
 import gr.uom.java.xmi.diff.CandidateSplitVariableRefactoring;
 import gr.uom.java.xmi.diff.ChangeVariableTypeRefactoring;
+import gr.uom.java.xmi.diff.ExtractAttributeRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.MergeVariableRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.SplitVariableRefactoring;
+import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
 import gr.uom.java.xmi.diff.UMLParameterDiff;
 
@@ -47,6 +50,7 @@ public class VariableReplacementAnalysis {
 	private Set<Refactoring> refactorings;
 	private UMLOperation callSiteOperation;
 	private UMLOperationDiff operationDiff;
+	private UMLClassBaseDiff classDiff;
 	private Set<RenameVariableRefactoring> variableRenames = new LinkedHashSet<RenameVariableRefactoring>();
 	private Set<MergeVariableRefactoring> variableMerges = new LinkedHashSet<MergeVariableRefactoring>();
 	private Set<SplitVariableRefactoring> variableSplits = new LinkedHashSet<SplitVariableRefactoring>();
@@ -54,7 +58,7 @@ public class VariableReplacementAnalysis {
 	private Set<CandidateMergeVariableRefactoring> candidateAttributeMerges = new LinkedHashSet<CandidateMergeVariableRefactoring>();
 	private Set<CandidateSplitVariableRefactoring> candidateAttributeSplits = new LinkedHashSet<CandidateSplitVariableRefactoring>();
 
-	public VariableReplacementAnalysis(UMLOperationBodyMapper mapper, Set<Refactoring> refactorings, UMLOperationDiff operationDiff) {
+	public VariableReplacementAnalysis(UMLOperationBodyMapper mapper, Set<Refactoring> refactorings, UMLClassBaseDiff classDiff) {
 		this.mappings = mapper.getMappings();
 		this.nonMappedLeavesT1 = mapper.getNonMappedLeavesT1();
 		this.nonMappedLeavesT2 = mapper.getNonMappedLeavesT2();
@@ -65,11 +69,33 @@ public class VariableReplacementAnalysis {
 		this.childMappers = mapper.getChildMappers();
 		this.refactorings = refactorings;
 		this.callSiteOperation = mapper.getCallSiteOperation();
-		this.operationDiff = operationDiff;
+		this.operationDiff = classDiff != null ? classDiff.getOperationDiff(operation1, operation2) : null;
+		this.classDiff = classDiff;
 		findVariableSplits();
 		findVariableMerges();
 		findConsistentVariableRenames();
 		findParametersWrappedInLocalVariables();
+		findAttributeExtractions();
+	}
+
+	private void findAttributeExtractions() {
+		if(classDiff != null) {
+			for(AbstractCodeMapping mapping : mappings) {
+				for(Replacement replacement : mapping.getReplacements()) {
+					if(replacement.involvesVariable()) {
+						for(UMLAttribute addedAttribute : classDiff.getAddedAttributes()) {
+							VariableDeclaration variableDeclaration = addedAttribute.getVariableDeclaration();
+							if(addedAttribute.getName().equals(replacement.getAfter()) && variableDeclaration.getInitializer() != null &&
+									variableDeclaration.getInitializer().getString().equals(replacement.getBefore())) {
+								ExtractAttributeRefactoring refactoring = new ExtractAttributeRefactoring(addedAttribute);
+								refactoring.addReference(mapping);
+								refactorings.add(refactoring);
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	private void findParametersWrappedInLocalVariables() {

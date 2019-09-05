@@ -38,58 +38,80 @@ public class ExtractOperationDetection {
 			List<OperationInvocation> operationInvocations = getInvocationsInSourceOperationAfterExtraction(mapper);
 			List<OperationInvocation> addedOperationInvocations = matchingInvocations(addedOperation, operationInvocations, mapper.getOperation2().variableTypeMap());
 			if(addedOperationInvocations.size() > 0) {
-				OperationInvocation addedOperationInvocation = addedOperationInvocations.get(0);
-				CallTreeNode root = new CallTreeNode(mapper.getOperation1(), addedOperation, addedOperationInvocation);
-				CallTree callTree = new CallTree(root);
-				generateCallTree(addedOperation, root, callTree);
-				UMLOperationBodyMapper operationBodyMapper = createMapperForExtractedMethod(mapper, mapper.getOperation1(), addedOperation, addedOperationInvocation);
-				if(operationBodyMapper != null) {
-					List<AbstractCodeMapping> additionalExactMatches = new ArrayList<AbstractCodeMapping>();
-					List<CallTreeNode> nodesInBreadthFirstOrder = callTree.getNodesInBreadthFirstOrder();
-					for(int i=1; i<nodesInBreadthFirstOrder.size(); i++) {
-						CallTreeNode node = nodesInBreadthFirstOrder.get(i);
-						if(matchingInvocations(node.getInvokedOperation(), operationInvocations, mapper.getOperation2().variableTypeMap()).size() == 0) {
-							UMLOperationBodyMapper nestedMapper = createMapperForExtractedMethod(mapper, node.getOriginalOperation(), node.getInvokedOperation(), node.getInvocation());
-							if(nestedMapper != null) {
-								additionalExactMatches.addAll(nestedMapper.getExactMatches());
-								if(extractMatchCondition(nestedMapper, new ArrayList<AbstractCodeMapping>()) && extractMatchCondition(operationBodyMapper, additionalExactMatches)) {
-									List<OperationInvocation> nestedMatchingInvocations = matchingInvocations(node.getInvokedOperation(), node.getOriginalOperation().getAllOperationInvocations(), node.getOriginalOperation().variableTypeMap());
-									ExtractOperationRefactoring nestedRefactoring = new ExtractOperationRefactoring(nestedMapper, mapper.getOperation2(), nestedMatchingInvocations);
-									refactorings.add(nestedRefactoring);
+				int otherAddedMethodsCalled = 0;
+				for(UMLOperation addedOperation2 : this.addedOperations) {
+					if(!addedOperation.equals(addedOperation2)) {
+						List<OperationInvocation> addedOperationInvocations2 = matchingInvocations(addedOperation2, operationInvocations, mapper.getOperation2().variableTypeMap());
+						if(addedOperationInvocations2.size() > 0) {
+							otherAddedMethodsCalled++;
+						}
+					}
+				}
+				if(otherAddedMethodsCalled == 0) {
+					for(OperationInvocation addedOperationInvocation : addedOperationInvocations) {
+						processAddedOperation(mapper, addedOperation, refactorings, operationInvocations, addedOperationInvocations, addedOperationInvocation);
+					}
+				}
+				else {
+					processAddedOperation(mapper, addedOperation, refactorings, operationInvocations, addedOperationInvocations, addedOperationInvocations.get(0));
+				}
+			}
+		}
+		return refactorings;
+	}
+
+	private void processAddedOperation(UMLOperationBodyMapper mapper, UMLOperation addedOperation,
+			List<ExtractOperationRefactoring> refactorings, List<OperationInvocation> operationInvocations,
+			List<OperationInvocation> addedOperationInvocations, OperationInvocation addedOperationInvocation)
+			throws RefactoringMinerTimedOutException {
+		CallTreeNode root = new CallTreeNode(mapper.getOperation1(), addedOperation, addedOperationInvocation);
+		CallTree callTree = new CallTree(root);
+		generateCallTree(addedOperation, root, callTree);
+		UMLOperationBodyMapper operationBodyMapper = createMapperForExtractedMethod(mapper, mapper.getOperation1(), addedOperation, addedOperationInvocation);
+		if(operationBodyMapper != null) {
+			List<AbstractCodeMapping> additionalExactMatches = new ArrayList<AbstractCodeMapping>();
+			List<CallTreeNode> nodesInBreadthFirstOrder = callTree.getNodesInBreadthFirstOrder();
+			for(int i=1; i<nodesInBreadthFirstOrder.size(); i++) {
+				CallTreeNode node = nodesInBreadthFirstOrder.get(i);
+				if(matchingInvocations(node.getInvokedOperation(), operationInvocations, mapper.getOperation2().variableTypeMap()).size() == 0) {
+					UMLOperationBodyMapper nestedMapper = createMapperForExtractedMethod(mapper, node.getOriginalOperation(), node.getInvokedOperation(), node.getInvocation());
+					if(nestedMapper != null) {
+						additionalExactMatches.addAll(nestedMapper.getExactMatches());
+						if(extractMatchCondition(nestedMapper, new ArrayList<AbstractCodeMapping>()) && extractMatchCondition(operationBodyMapper, additionalExactMatches)) {
+							List<OperationInvocation> nestedMatchingInvocations = matchingInvocations(node.getInvokedOperation(), node.getOriginalOperation().getAllOperationInvocations(), node.getOriginalOperation().variableTypeMap());
+							ExtractOperationRefactoring nestedRefactoring = new ExtractOperationRefactoring(nestedMapper, mapper.getOperation2(), nestedMatchingInvocations);
+							refactorings.add(nestedRefactoring);
+						}
+						//add back to mapper non-exact matches
+						for(AbstractCodeMapping mapping : nestedMapper.getMappings()) {
+							if(!mapping.isExact() || mapping.getFragment1().getString().equals("{")) {
+								AbstractCodeFragment fragment1 = mapping.getFragment1();
+								if(fragment1 instanceof StatementObject) {
+									if(!mapper.getNonMappedLeavesT1().contains(fragment1)) {
+										mapper.getNonMappedLeavesT1().add((StatementObject)fragment1);
+									}
 								}
-								//add back to mapper non-exact matches
-								for(AbstractCodeMapping mapping : nestedMapper.getMappings()) {
-									if(!mapping.isExact() || mapping.getFragment1().getString().equals("{")) {
-										AbstractCodeFragment fragment1 = mapping.getFragment1();
-										if(fragment1 instanceof StatementObject) {
-											if(!mapper.getNonMappedLeavesT1().contains(fragment1)) {
-												mapper.getNonMappedLeavesT1().add((StatementObject)fragment1);
-											}
-										}
-										else if(fragment1 instanceof CompositeStatementObject) {
-											if(!mapper.getNonMappedInnerNodesT1().contains(fragment1)) {
-												mapper.getNonMappedInnerNodesT1().add((CompositeStatementObject)fragment1);
-											}
-										}
+								else if(fragment1 instanceof CompositeStatementObject) {
+									if(!mapper.getNonMappedInnerNodesT1().contains(fragment1)) {
+										mapper.getNonMappedInnerNodesT1().add((CompositeStatementObject)fragment1);
 									}
 								}
 							}
 						}
 					}
-					UMLOperation delegateMethod = findDelegateMethod(mapper.getOperation1(), addedOperation, addedOperationInvocation);
-					if(extractMatchCondition(operationBodyMapper, additionalExactMatches)) {
-						if(delegateMethod == null) {
-							refactorings.add(new ExtractOperationRefactoring(operationBodyMapper, mapper.getOperation2(), addedOperationInvocations));
-						}
-						else {
-							refactorings.add(new ExtractOperationRefactoring(operationBodyMapper, addedOperation,
-									mapper.getOperation1(), mapper.getOperation2(), addedOperationInvocations));
-						}
-					}
+				}
+			}
+			UMLOperation delegateMethod = findDelegateMethod(mapper.getOperation1(), addedOperation, addedOperationInvocation);
+			if(extractMatchCondition(operationBodyMapper, additionalExactMatches)) {
+				if(delegateMethod == null) {
+					refactorings.add(new ExtractOperationRefactoring(operationBodyMapper, mapper.getOperation2(), addedOperationInvocations));
+				}
+				else {
+					refactorings.add(new ExtractOperationRefactoring(operationBodyMapper, addedOperation,
+							mapper.getOperation1(), mapper.getOperation2(), addedOperationInvocations));
 				}
 			}
 		}
-		return refactorings;
 	}
 
 	public static List<OperationInvocation> getInvocationsInSourceOperationAfterExtraction(UMLOperationBodyMapper mapper) {

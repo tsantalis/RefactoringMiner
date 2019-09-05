@@ -63,6 +63,7 @@ Currently, it supports the detection of the following refactorings:
 35. Change Parameter Type
 36. Change Return Type
 37. Change Attribute Type
+38. Extract Attribute
 
 # How to build RefactoringMiner
 

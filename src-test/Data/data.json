@@ -1839,6 +1839,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable clazz : Class to annotatedClass : Class in method private categorizeAnnotatedClass(annotatedClass Class, attributeConverterManager AttributeConverterManager) : void in class org.hibernate.boot.model.source.internal.annotations.AnnotationMetadataSourceProcessorImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 6112
 }, {
@@ -24232,6 +24239,90 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable aShell : long to aInsertion : long in method private runTest(testable Testable, unsorted Integer[], sorted Integer[], results double[], count int) : int in class com.jwetherell.algorithms.sorts.timing.SortsTiming",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable aQuick : long to aInsertion : long in method private runTest(testable Testable, unsorted Integer[], sorted Integer[], results double[], count int) : int in class com.jwetherell.algorithms.sorts.timing.SortsTiming",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable bQuick : long to bInsertion : long in method private runTest(testable Testable, unsorted Integer[], sorted Integer[], results double[], count int) : int in class com.jwetherell.algorithms.sorts.timing.SortsTiming",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable bMerge : long to bInsertion : long in method private runTest(testable Testable, unsorted Integer[], sorted Integer[], results double[], count int) : int in class com.jwetherell.algorithms.sorts.timing.SortsTiming",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable aHeap : long to aInsertion : long in method private runTest(testable Testable, unsorted Integer[], sorted Integer[], results double[], count int) : int in class com.jwetherell.algorithms.sorts.timing.SortsTiming",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable bShell : long to bInsertion : long in method private runTest(testable Testable, unsorted Integer[], sorted Integer[], results double[], count int) : int in class com.jwetherell.algorithms.sorts.timing.SortsTiming",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable aMerge : long to aInsertion : long in method private runTest(testable Testable, unsorted Integer[], sorted Integer[], results double[], count int) : int in class com.jwetherell.algorithms.sorts.timing.SortsTiming",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable aRadix : long to aInsertion : long in method private runTest(testable Testable, unsorted Integer[], sorted Integer[], results double[], count int) : int in class com.jwetherell.algorithms.sorts.timing.SortsTiming",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable aCounting : long to aInsertion : long in method private runTest(testable Testable, unsorted Integer[], sorted Integer[], results double[], count int) : int in class com.jwetherell.algorithms.sorts.timing.SortsTiming",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable bRadix : long to bInsertion : long in method private runTest(testable Testable, unsorted Integer[], sorted Integer[], results double[], count int) : int in class com.jwetherell.algorithms.sorts.timing.SortsTiming",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable bCounting : long to bInsertion : long in method private runTest(testable Testable, unsorted Integer[], sorted Integer[], results double[], count int) : int in class com.jwetherell.algorithms.sorts.timing.SortsTiming",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable bHeap : long to bInsertion : long in method private runTest(testable Testable, unsorted Integer[], sorted Integer[], results double[], count int) : int in class com.jwetherell.algorithms.sorts.timing.SortsTiming",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 644
 }, {
@@ -42958,6 +43049,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Ameya"
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable clazz : Class<? extends PersistentObject> to persistentObjectClass : Class<? extends PersistentObject> in method protected flushPersistentObjects(persistentObjectClass Class<? extends PersistentObject>, persistentObjectsToInsert List<PersistentObject>) : void in class org.activiti.engine.impl.db.DbSqlSession",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2159
 }, {

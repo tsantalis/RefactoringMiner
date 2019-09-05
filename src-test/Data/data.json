@@ -19438,20 +19438,6 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
-    }, {
-        "type": "Parameterize Variable",
-        "description": "Parameterize Variable jar : Artifact to artifact : Artifact in method private resolveArtifact(artifact Artifact, repoSys RepositorySystem, session RepositorySystemSession, project Path) : Path in class com.facebook.buck.maven.Resolver",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Parameterize Variable",
-        "description": "Parameterize Variable jar : Artifact to artifact : Artifact in method private downloadSources(artifact Artifact, repoSys RepositorySystem, session RepositorySystemSession, project Path, library Prebuilt) : void in class com.facebook.buck.maven.Resolver",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
     }],
     "refDiffExecutionTime": 1910
 }, {
@@ -20803,20 +20789,6 @@
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
-        "validators": null
-    }, {
-        "type": "Change Variable Type",
-        "description": "Change Variable Type treeModel : DefaultTreeModel to root : TreeNode in method public actionPerformed(e ActionEvent) : void in class org.languagetool.gui.ConfigurationDialog.getTreeButtonPanel.addActionListener",
-        "comment": "null",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Nikos"
-    }, {
-        "type": "Rename Variable",
-        "description": "Rename Variable treeModel : DefaultTreeModel to root : TreeNode in method public actionPerformed(e ActionEvent) : void in class org.languagetool.gui.ConfigurationDialog.getTreeButtonPanel.addActionListener",
-        "comment": null,
-        "validation": "UKN",
-        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 876

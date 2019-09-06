@@ -21,21 +21,26 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
 public class ExtractOperationDetection {
+	private UMLOperationBodyMapper mapper;
 	private List<UMLOperation> addedOperations;
 	private UMLClassBaseDiff classDiff;
 	private UMLModelDiff modelDiff;
+	private List<OperationInvocation> operationInvocations;
+	private Map<CallTreeNode, CallTree> callTreeMap = new LinkedHashMap<CallTreeNode, CallTree>();
+	private Map<UMLOperation, List<OperationInvocation>> operationInvocationMap = new LinkedHashMap<UMLOperation, List<OperationInvocation>>();
 
-	public ExtractOperationDetection(List<UMLOperation> addedOperations, UMLClassBaseDiff classDiff, UMLModelDiff modelDiff) {
+	public ExtractOperationDetection(UMLOperationBodyMapper mapper, List<UMLOperation> addedOperations, UMLClassBaseDiff classDiff, UMLModelDiff modelDiff) {
+		this.mapper = mapper;
 		this.addedOperations = addedOperations;
 		this.classDiff = classDiff;
 		this.modelDiff = modelDiff;
+		this.operationInvocations = getInvocationsInSourceOperationAfterExtraction(mapper);
 	}
 
-	public List<ExtractOperationRefactoring> check(UMLOperationBodyMapper mapper, UMLOperation addedOperation) throws RefactoringMinerTimedOutException {
+	public List<ExtractOperationRefactoring> check(UMLOperation addedOperation) throws RefactoringMinerTimedOutException {
 		List<ExtractOperationRefactoring> refactorings = new ArrayList<ExtractOperationRefactoring>();
 		if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
 			!mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
-			List<OperationInvocation> operationInvocations = getInvocationsInSourceOperationAfterExtraction(mapper);
 			List<OperationInvocation> addedOperationInvocations = matchingInvocations(addedOperation, operationInvocations, mapper.getOperation2().variableTypeMap());
 			if(addedOperationInvocations.size() > 0) {
 				int otherAddedMethodsCalled = 0;
@@ -49,11 +54,11 @@ public class ExtractOperationDetection {
 				}
 				if(otherAddedMethodsCalled == 0) {
 					for(OperationInvocation addedOperationInvocation : addedOperationInvocations) {
-						processAddedOperation(mapper, addedOperation, refactorings, operationInvocations, addedOperationInvocations, addedOperationInvocation);
+						processAddedOperation(mapper, addedOperation, refactorings, addedOperationInvocations, addedOperationInvocation);
 					}
 				}
 				else {
-					processAddedOperation(mapper, addedOperation, refactorings, operationInvocations, addedOperationInvocations, addedOperationInvocations.get(0));
+					processAddedOperation(mapper, addedOperation, refactorings, addedOperationInvocations, addedOperationInvocations.get(0));
 				}
 			}
 		}
@@ -61,12 +66,19 @@ public class ExtractOperationDetection {
 	}
 
 	private void processAddedOperation(UMLOperationBodyMapper mapper, UMLOperation addedOperation,
-			List<ExtractOperationRefactoring> refactorings, List<OperationInvocation> operationInvocations,
+			List<ExtractOperationRefactoring> refactorings,
 			List<OperationInvocation> addedOperationInvocations, OperationInvocation addedOperationInvocation)
 			throws RefactoringMinerTimedOutException {
 		CallTreeNode root = new CallTreeNode(mapper.getOperation1(), addedOperation, addedOperationInvocation);
-		CallTree callTree = new CallTree(root);
-		generateCallTree(addedOperation, root, callTree);
+		CallTree callTree = null;
+		if(callTreeMap.containsKey(root)) {
+			callTree = callTreeMap.get(root);
+		}
+		else {
+			callTree = new CallTree(root);
+			generateCallTree(addedOperation, root, callTree);
+			callTreeMap.put(root, callTree);
+		}
 		UMLOperationBodyMapper operationBodyMapper = createMapperForExtractedMethod(mapper, mapper.getOperation1(), addedOperation, addedOperationInvocation);
 		if(operationBodyMapper != null) {
 			List<AbstractCodeMapping> additionalExactMatches = new ArrayList<AbstractCodeMapping>();
@@ -144,12 +156,16 @@ public class ExtractOperationDetection {
 
 	private List<OperationInvocation> matchingInvocations(UMLOperation operation,
 			List<OperationInvocation> operationInvocations, Map<String, UMLType> variableTypeMap) {
+		if(operationInvocationMap.containsKey(operation)) {
+			return operationInvocationMap.get(operation);
+		}
 		List<OperationInvocation> addedOperationInvocations = new ArrayList<OperationInvocation>();
 		for(OperationInvocation invocation : operationInvocations) {
 			if(invocation.matchesOperation(operation, variableTypeMap, modelDiff)) {
 				addedOperationInvocations.add(invocation);
 			}
 		}
+		operationInvocationMap.put(operation, addedOperationInvocations);
 		return addedOperationInvocations;
 	}
 

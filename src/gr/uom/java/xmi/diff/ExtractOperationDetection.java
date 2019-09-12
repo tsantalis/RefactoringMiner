@@ -27,7 +27,6 @@ public class ExtractOperationDetection {
 	private UMLModelDiff modelDiff;
 	private List<OperationInvocation> operationInvocations;
 	private Map<CallTreeNode, CallTree> callTreeMap = new LinkedHashMap<CallTreeNode, CallTree>();
-	private Map<UMLOperation, List<OperationInvocation>> operationInvocationMap = new LinkedHashMap<UMLOperation, List<OperationInvocation>>();
 
 	public ExtractOperationDetection(UMLOperationBodyMapper mapper, List<UMLOperation> addedOperations, UMLClassBaseDiff classDiff, UMLModelDiff modelDiff) {
 		this.mapper = mapper;
@@ -156,16 +155,12 @@ public class ExtractOperationDetection {
 
 	private List<OperationInvocation> matchingInvocations(UMLOperation operation,
 			List<OperationInvocation> operationInvocations, Map<String, UMLType> variableTypeMap) {
-		if(operationInvocationMap.containsKey(operation)) {
-			return operationInvocationMap.get(operation);
-		}
 		List<OperationInvocation> addedOperationInvocations = new ArrayList<OperationInvocation>();
 		for(OperationInvocation invocation : operationInvocations) {
 			if(invocation.matchesOperation(operation, variableTypeMap, modelDiff)) {
 				addedOperationInvocations.add(invocation);
 			}
 		}
-		operationInvocationMap.put(operation, addedOperationInvocations);
 		return addedOperationInvocations;
 	}
 

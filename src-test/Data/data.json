@@ -19323,12 +19323,12 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Change Return Type",
-        "description": "Change Return Type AbstractObjectAssert<?,T> to AbstractComparableAssert<?,T> in method public assertThat(actual T) : AbstractComparableAssert<?,T> in class org.assertj.core.api.Assertions",
-        "comment": "null",
-        "validation": "TP",
+        "type": "Pull Up Method",
+        "description": "Pull Up Method public assertThat(actual T) : AbstractObjectAssert<?,T> from class org.assertj.core.api.Assertions to public assertThat(actual T) : AbstractObjectAssert<?,T> from class org.assertj.core.api.StrictAssertions",
+        "comment": null,
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
-        "validators": "Ameya"
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -35823,10 +35823,10 @@
     }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method public setCli(cli CLI) : void extracted from public JdrRunner(protocol String, user String, pass String, host String, port String) in class org.jboss.as.jdr.JdrRunner & moved to class org.jboss.as.jdr.commands.JdrEnvironment",
-        "comment": null,
-        "validation": "UKN",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -56762,6 +56762,13 @@
         "comment": null,
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public createSingletonServiceBuilder(name ServiceName, service Service<T>) : SingletonServiceBuilder<T> from class org.wildfly.clustering.server.singleton.CacheSingletonServiceBuilderFactory to public createSingletonServiceBuilder(name ServiceName, service Service<T>) : SingletonServiceBuilder<T> from class org.wildfly.clustering.server.singleton.LocalSingletonServiceBuilderFactory",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
         "validators": null
     }],
     "refDiffExecutionTime": 8243

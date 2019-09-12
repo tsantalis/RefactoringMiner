@@ -1979,7 +1979,8 @@ public class UMLModelDiff {
    private boolean movedMethodSignature(UMLOperation removedOperation, UMLOperation addedOperation) {
 	   if(addedOperation.getName().equals(removedOperation.getName()) &&
 			   addedOperation.equalReturnParameter(removedOperation) &&
-			   addedOperation.isAbstract() == removedOperation.isAbstract()) {
+			   addedOperation.isAbstract() == removedOperation.isAbstract() &&
+			   addedOperation.getTypeParameters().equals(removedOperation.getTypeParameters())) {
 		   if(addedOperation.getParameters().equals(removedOperation.getParameters())) {
 			   return true;
 		   }

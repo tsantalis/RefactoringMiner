@@ -56763,13 +56763,6 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": null
-    }, {
-        "type": "Move Method",
-        "description": "Move Method public createSingletonServiceBuilder(name ServiceName, service Service<T>) : SingletonServiceBuilder<T> from class org.wildfly.clustering.server.singleton.CacheSingletonServiceBuilderFactory to public createSingletonServiceBuilder(name ServiceName, service Service<T>) : SingletonServiceBuilder<T> from class org.wildfly.clustering.server.singleton.LocalSingletonServiceBuilderFactory",
-        "comment": null,
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
     }],
     "refDiffExecutionTime": 8243
 }, {

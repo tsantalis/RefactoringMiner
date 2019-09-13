@@ -18186,6 +18186,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public killProcessGroup(uid int, pid int) : void extracted from package kill(reason String, noisy boolean) : void in class com.android.server.am.ProcessRecord & moved to class com.android.server.am.ActivityManagerService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 7362
 }, {

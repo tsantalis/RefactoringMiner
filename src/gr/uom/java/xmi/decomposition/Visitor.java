@@ -419,6 +419,13 @@ public class Visitor extends ASTVisitor {
 				node.getParent().getParent() instanceof CatchClause) {
 			// skip catch clause formal parameter names
 		}
+		else if(node.getParent() instanceof QualifiedName &&
+				(node.getParent().getParent() instanceof QualifiedName ||
+				node.getParent().getParent() instanceof MethodInvocation ||
+				node.getParent().getParent() instanceof SuperMethodInvocation ||
+				node.getParent().getParent() instanceof ClassInstanceCreation)) {
+			// skip names being part of qualified names
+		}
 		else {
 			variables.add(node.getIdentifier());
 			if(current.getUserObject() != null) {

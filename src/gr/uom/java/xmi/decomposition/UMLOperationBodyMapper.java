@@ -2396,18 +2396,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			UMLAnonymousClass anonymous = null;
+			List<UMLOperation> anonymousOperations = new ArrayList<UMLOperation>();
 			for(AnonymousClassDeclarationObject anonymousObject : statement.getAnonymousClassDeclarations()) {
 				for(UMLAnonymousClass anonymousClass : operation.getAnonymousClassList()) {
 					if(anonymousClass.getLocationInfo().equals(anonymousObject.getLocationInfo())) {
-						anonymous = anonymousClass;
-						break;
+						anonymousOperations.addAll(anonymousClass.getOperations());
 					}
 				}
-				if(anonymous != null)
-					break;
 			}
-			for(UMLOperation anonymousOperation : anonymous.getOperations()) {
+			for(UMLOperation anonymousOperation : anonymousOperations) {
 				OperationBody body = anonymousOperation.getBody();
 				if(body != null) {
 					List<StatementObject> leaves = body.getCompositeStatement().getLeaves();

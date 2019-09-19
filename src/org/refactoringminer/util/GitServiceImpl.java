@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
@@ -225,7 +228,12 @@ public class GitServiceImpl implements GitService {
 		Ref refFrom = repository.findRef(startTag);
 		Ref refTo = repository.findRef(endTag);
 		try (Git git = new Git(repository)) {
-			return git.log().addRange(getActualRefObjectId(refFrom), getActualRefObjectId(refTo)).call();
+			List<RevCommit> revCommits = StreamSupport.stream(git.log().addRange(getActualRefObjectId(refFrom), getActualRefObjectId(refTo)).call()
+					.spliterator(), false)
+			        .filter(r -> r.getParentCount() == 1)
+			        .collect(Collectors.toList());
+			Collections.reverse(revCommits);
+			return revCommits;
 		}
 	}
 
@@ -242,7 +250,12 @@ public class GitServiceImpl implements GitService {
 		ObjectId from = repository.resolve(startCommitId);
 		ObjectId to = repository.resolve(endCommitId);
 		try (Git git = new Git(repository)) {
-			return git.log().addRange(from, to).call();
+			List<RevCommit> revCommits = StreamSupport.stream(git.log().addRange(from, to).call()
+					.spliterator(), false)
+					.filter(r -> r.getParentCount() == 1)
+			        .collect(Collectors.toList());
+			Collections.reverse(revCommits);
+			return revCommits;
 		}
 	}
 

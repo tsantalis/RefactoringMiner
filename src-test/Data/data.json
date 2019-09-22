@@ -3579,13 +3579,6 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Rename Parameter",
-        "description": "Rename Parameter token : Token to expressionName : Token in method private handleSingleVarArgsValue(string String, expressionName Token, tokens Deque<Token>, endChar String) : Node in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type paramName : Token to paramName : String in method private readArrayType(string String, paramName String, value ArrayNode, parser ExchangeAttributeParser, type Class) : Object in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
         "comment": null,
@@ -47173,7 +47166,7 @@
         "description": "Move Method protected createMainModule(moduleType ModuleType) : Module from class com.intellij.testFramework.LightPlatformTestCase to public createMainModule(project Project) : Module from class com.intellij.testFramework.LightProjectDescriptor",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract and Move Method",

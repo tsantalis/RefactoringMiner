@@ -5,6 +5,8 @@ import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
+import gr.uom.java.xmi.decomposition.replacement.Replacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
@@ -231,15 +233,33 @@ public class UMLOperationDiff {
 			VariableDeclaration originalVariable = parameterDiff.getRemovedParameter().getVariableDeclaration();
 			VariableDeclaration newVariable = parameterDiff.getAddedParameter().getVariableDeclaration();
 			Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReferences(originalVariable, newVariable, mappings);
-			if(parameterDiff.isNameChanged()) {
+			if(parameterDiff.isNameChanged() && !inconsistentReplacement(originalVariable, newVariable)) {
 				RenameVariableRefactoring refactoring = new RenameVariableRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references);
 				refactorings.add(refactoring);
 			}
-			if(parameterDiff.isTypeChanged() || parameterDiff.isQualifiedTypeChanged()) {
+			if((parameterDiff.isTypeChanged() || parameterDiff.isQualifiedTypeChanged()) && !inconsistentReplacement(originalVariable, newVariable)) {
 				ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references);
 				refactorings.add(refactoring);
 			}
 		}
 		return refactorings;
+	}
+	
+	private boolean inconsistentReplacement(VariableDeclaration originalVariable, VariableDeclaration newVariable) {
+		if(removedOperation.isStatic() || addedOperation.isStatic()) {
+			for(AbstractCodeMapping mapping : mappings) {
+				for(Replacement replacement : mapping.getReplacements()) {
+					if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
+						if(replacement.getBefore().equals(originalVariable.getVariableName()) && !replacement.getAfter().equals(newVariable.getVariableName())) {
+							return true;
+						}
+						else if(!replacement.getBefore().equals(originalVariable.getVariableName()) && replacement.getAfter().equals(newVariable.getVariableName())) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

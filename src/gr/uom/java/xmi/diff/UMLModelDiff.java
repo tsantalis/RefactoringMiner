@@ -1242,7 +1242,7 @@ public class UMLModelDiff {
 			 else if(candidate.getOriginalVariableDeclaration() != null) {
 				 List<UMLClassBaseDiff> diffs1 = getUMLClassDiffWithExistingAttributeAfter(pattern);
 				 List<UMLClassBaseDiff> diffs2 = getUMLClassDiffWithNewAttributeAfter(pattern);
-				 if(!diffs1.isEmpty()) {
+				 if(!diffs1.isEmpty() && candidate.getOriginalAttribute() != null) {
 					 UMLClassBaseDiff diff1 = diffs1.get(0);
 					 UMLClassBaseDiff originalClassDiff = getUMLClassDiff(candidate.getOriginalAttribute().getClassName());
 					 if(diffs1.size() > 1) {
@@ -1264,7 +1264,7 @@ public class UMLModelDiff {
 						 }
 					 }
 				 }
-				 else if(!diffs2.isEmpty()) {
+				 else if(!diffs2.isEmpty() && candidate.getOriginalAttribute() != null) {
 					 UMLClassBaseDiff diff2 = diffs2.get(0);
 					 UMLClassBaseDiff originalClassDiff = getUMLClassDiff(candidate.getOriginalAttribute().getClassName());
 					 if(diffs2.size() > 1) {

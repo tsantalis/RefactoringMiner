@@ -239,8 +239,8 @@ public class VariableReplacementAnalysis {
 			}
 			SimpleEntry<VariableDeclaration,UMLOperation> oldVariable = getVariableDeclaration1(split);
 			if(splitVariables.size() > 1 && splitVariables.size() == split.getSplitVariables().size() && oldVariable != null) {
-				UMLOperation operationAfer = splitVariableOperations.iterator().next();
-				SplitVariableRefactoring refactoring = new SplitVariableRefactoring(oldVariable.getKey(), splitVariables, oldVariable.getValue(), operationAfer, splitMap.get(split));
+				UMLOperation operationAfter = splitVariableOperations.iterator().next();
+				SplitVariableRefactoring refactoring = new SplitVariableRefactoring(oldVariable.getKey(), splitVariables, oldVariable.getValue(), operationAfter, splitMap.get(split));
 				//if(!existsConflictingInlineVariableRefactoring(refactoring)) {
 					variableSplits.add(refactoring);
 				//}

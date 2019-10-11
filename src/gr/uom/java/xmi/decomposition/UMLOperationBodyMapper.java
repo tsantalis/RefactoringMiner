@@ -65,8 +65,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private UMLClassBaseDiff classDiff;
 	private UMLModelDiff modelDiff;
 	private UMLOperation callSiteOperation;
-	private Map<AbstractCodeFragment, UMLOperation> codeFragmentOpetionMap1 = new LinkedHashMap<AbstractCodeFragment, UMLOperation>();
-	private Map<AbstractCodeFragment, UMLOperation> codeFragmentOpetionMap2 = new LinkedHashMap<AbstractCodeFragment, UMLOperation>();
+	private Map<AbstractCodeFragment, UMLOperation> codeFragmentOperationMap1 = new LinkedHashMap<AbstractCodeFragment, UMLOperation>();
+	private Map<AbstractCodeFragment, UMLOperation> codeFragmentOperationMap2 = new LinkedHashMap<AbstractCodeFragment, UMLOperation>();
 	
 	public UMLOperationBodyMapper(UMLOperation operation1, UMLOperation operation2, UMLClassBaseDiff classDiff) throws RefactoringMinerTimedOutException {
 		this.classDiff = classDiff;
@@ -233,7 +233,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											if(!leaves1.contains(anonymousLeaf)) {
 												leaves1.add(anonymousLeaf);
 												addedLeaves1.add(anonymousLeaf);
-												codeFragmentOpetionMap1.put(anonymousLeaf, anonymousOperation);
+												codeFragmentOperationMap1.put(anonymousLeaf, anonymousOperation);
 											}
 										}
 									}
@@ -256,13 +256,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								for(StatementObject anonymousLeaf : anonymousClassLeaves) {
 									if(!leaves2.contains(anonymousLeaf)) {
 										addedLeaves2.add(anonymousLeaf);
-										codeFragmentOpetionMap2.put(anonymousLeaf, anonymousOperation);
+										codeFragmentOperationMap2.put(anonymousLeaf, anonymousOperation);
 									}
 								}
 								List<CompositeStatementObject> anonymousClassInnerNodes = anonymousOperation.getBody().getCompositeStatement().getInnerNodes();
 								for(CompositeStatementObject anonymousInnedNode : anonymousClassInnerNodes) {
 									addedInnerNodes2.add(anonymousInnedNode);
-									codeFragmentOpetionMap2.put(anonymousInnedNode, anonymousOperation);
+									codeFragmentOperationMap2.put(anonymousInnedNode, anonymousOperation);
 								}
 							}
 						}
@@ -939,8 +939,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private CompositeStatementObjectMapping createCompositeMapping(CompositeStatementObject statement1,
 			CompositeStatementObject statement2, Map<String, String> parameterToArgumentMap, double score) {
-		UMLOperation operation1 = codeFragmentOpetionMap1.containsKey(statement1) ? codeFragmentOpetionMap1.get(statement1) : this.operation1;
-		UMLOperation operation2 = codeFragmentOpetionMap2.containsKey(statement2) ? codeFragmentOpetionMap2.get(statement2) : this.operation2;
+		UMLOperation operation1 = codeFragmentOperationMap1.containsKey(statement1) ? codeFragmentOperationMap1.get(statement1) : this.operation1;
+		UMLOperation operation2 = codeFragmentOperationMap2.containsKey(statement2) ? codeFragmentOperationMap2.get(statement2) : this.operation2;
 		CompositeStatementObjectMapping mapping = new CompositeStatementObjectMapping(statement1, statement2, operation1, operation2, score);
 		for(String key : parameterToArgumentMap.keySet()) {
 			String value = parameterToArgumentMap.get(key);
@@ -1304,8 +1304,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private LeafMapping createLeafMapping(AbstractCodeFragment leaf1, AbstractCodeFragment leaf2, Map<String, String> parameterToArgumentMap) {
-		UMLOperation operation1 = codeFragmentOpetionMap1.containsKey(leaf1) ? codeFragmentOpetionMap1.get(leaf1) : this.operation1;
-		UMLOperation operation2 = codeFragmentOpetionMap2.containsKey(leaf2) ? codeFragmentOpetionMap2.get(leaf2) : this.operation2;
+		UMLOperation operation1 = codeFragmentOperationMap1.containsKey(leaf1) ? codeFragmentOperationMap1.get(leaf1) : this.operation1;
+		UMLOperation operation2 = codeFragmentOperationMap2.containsKey(leaf2) ? codeFragmentOperationMap2.get(leaf2) : this.operation2;
 		LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1, operation2);
 		for(String key : parameterToArgumentMap.keySet()) {
 			String value = parameterToArgumentMap.get(key);
@@ -2619,17 +2619,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					boolean openingParenthesisInsideSingleQuotes1 = isInsideSingleQuotes(arg1, indexOfOpeningParenthesis1);
 					boolean openingParenthesisInsideDoubleQuotes1 = isInsideDoubleQuotes(arg1, indexOfOpeningParenthesis1);
 					boolean closingParenthesisInsideSingleQuotes1 = isInsideSingleQuotes(arg1, indexOfClosingParenthesis1);
-					boolean closingParenthesisIndideDoubleQuotes1 = isInsideDoubleQuotes(arg1, indexOfClosingParenthesis1);
+					boolean closingParenthesisInsideDoubleQuotes1 = isInsideDoubleQuotes(arg1, indexOfClosingParenthesis1);
 					int indexOfOpeningParenthesis2 = arg2.indexOf("(");
 					int indexOfClosingParenthesis2 = arg2.indexOf(")");
 					boolean openingParenthesisInsideSingleQuotes2 = isInsideSingleQuotes(arg2, indexOfOpeningParenthesis2);
 					boolean openingParenthesisInsideDoubleQuotes2 = isInsideDoubleQuotes(arg2, indexOfOpeningParenthesis2);
 					boolean closingParenthesisInsideSingleQuotes2 = isInsideSingleQuotes(arg2, indexOfClosingParenthesis2);
-					boolean closingParenthesisIndideDoubleQuotes2 = isInsideDoubleQuotes(arg2, indexOfClosingParenthesis2);
+					boolean closingParenthesisInsideDoubleQuotes2 = isInsideDoubleQuotes(arg2, indexOfClosingParenthesis2);
 					if(!openingParenthesisInsideSingleQuotes1 && !closingParenthesisInsideSingleQuotes1 &&
-							!openingParenthesisInsideDoubleQuotes1 && !closingParenthesisIndideDoubleQuotes1 &&
+							!openingParenthesisInsideDoubleQuotes1 && !closingParenthesisInsideDoubleQuotes1 &&
 							!openingParenthesisInsideSingleQuotes2 && !closingParenthesisInsideSingleQuotes2 &&
-							!openingParenthesisInsideDoubleQuotes2 && !closingParenthesisIndideDoubleQuotes2) {
+							!openingParenthesisInsideDoubleQuotes2 && !closingParenthesisInsideDoubleQuotes2) {
 						String s1 = arg1.substring(0, indexOfOpeningParenthesis1);
 						String s2 = arg2.substring(0, indexOfOpeningParenthesis2);
 						if(s1.equals(s2) && s1.length() > 0) {
@@ -3397,9 +3397,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		else {
 			int thisExactMatches = this.exactMatches();
-			int otherExactMateches = operationBodyMapper.exactMatches();
-			if(thisExactMatches != otherExactMateches) {
-				return -Integer.compare(thisExactMatches, otherExactMateches);
+			int otherExactMatches = operationBodyMapper.exactMatches();
+			if(thisExactMatches != otherExactMatches) {
+				return -Integer.compare(thisExactMatches, otherExactMatches);
 			}
 			else {
 				int thisEditDistance = this.editDistance();

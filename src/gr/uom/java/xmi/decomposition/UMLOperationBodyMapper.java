@@ -1722,6 +1722,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(Replacement replacement : replacementInfo.getReplacements()) {
 			s1 = ReplacementUtil.performReplacement(s1, s2, replacement.getBefore(), replacement.getAfter());
 			//find variable replacements within method invocation replacements
+			Set<Replacement> set = replacementsWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), variables1, methodInvocations2, methodInvocationMap2, Direction.VARIABLE_TO_INVOCATION);
+			set.addAll(replacementsWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), methodInvocations1, variables2, methodInvocationMap1, Direction.INVOCATION_TO_VARIABLE));
+			if(!set.isEmpty()) {
+				replacementsToBeRemoved.add(replacement);
+				replacementsToBeAdded.addAll(set);
+			}
 			Replacement r = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), variables1, variables2);
 			if(r != null) {
 				replacementsToBeRemoved.add(replacement);
@@ -3317,6 +3323,41 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private Set<Replacement> replacementsWithinMethodInvocations(String s1, String s2, Set<String> set1, Set<String> set2, Map<String, List<? extends AbstractCall>> methodInvocationMap, Direction direction) {
+		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
+		for(String element1 : set1) {
+			if(s1.contains(element1) && !s1.equals(element1) && !s1.equals("this." + element1) && !s1.equals("_" + element1)) {
+				int startIndex1 = s1.indexOf(element1);
+				String substringBeforeIndex1 = s1.substring(0, startIndex1);
+				String substringAfterIndex1 = s1.substring(startIndex1 + element1.length(), s1.length());
+				for(String element2 : set2) {
+					if(element2.endsWith(substringAfterIndex1) && substringAfterIndex1.length() > 1) {
+						element2 = element2.substring(0, element2.indexOf(substringAfterIndex1));
+					}
+					if(s2.contains(element2) && !s2.equals(element2)) {
+						int startIndex2 = s2.indexOf(element2);
+						String substringBeforeIndex2 = s2.substring(0, startIndex2);
+						String substringAfterIndex2 = s2.substring(startIndex2 + element2.length(), s2.length());
+						List<? extends AbstractCall> methodInvocationList = null;
+						if(direction.equals(Direction.VARIABLE_TO_INVOCATION))
+							methodInvocationList = methodInvocationMap.get(element2);
+						else if(direction.equals(Direction.INVOCATION_TO_VARIABLE))
+							methodInvocationList = methodInvocationMap.get(element1);
+						if(substringBeforeIndex1.equals(substringBeforeIndex2) && !substringAfterIndex1.isEmpty() && !substringAfterIndex2.isEmpty() && methodInvocationList != null) {
+							Replacement r = new VariableReplacementWithMethodInvocation(element1, element2, (OperationInvocation)methodInvocationList.get(0), direction);
+							replacements.add(r);
+						}
+						else if(substringAfterIndex1.equals(substringAfterIndex2) && !substringBeforeIndex1.isEmpty() && !substringBeforeIndex2.isEmpty() && methodInvocationList != null) {
+							Replacement r = new VariableReplacementWithMethodInvocation(element1, element2, (OperationInvocation)methodInvocationList.get(0), direction);
+							replacements.add(r);
+						}
+					}
+				}
+			}
+		}
+		return replacements;
 	}
 
 	private boolean containsMethodInvocationReplacement(Set<Replacement> replacements) {

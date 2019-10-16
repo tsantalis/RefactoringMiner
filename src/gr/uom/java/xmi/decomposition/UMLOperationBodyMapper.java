@@ -1803,6 +1803,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(j);
 					String statementWithoutAnonymous1 = statementWithoutAnonymous(statement1, anonymousClassDeclaration1, operation1);
 					String statementWithoutAnonymous2 = statementWithoutAnonymous(statement2, anonymousClassDeclaration2, operation2);
+					if(statementWithoutAnonymous1 == null || statementWithoutAnonymous2 == null) {
+							continue;
+					}
 					if(statementWithoutAnonymous1.equals(statementWithoutAnonymous2) ||
 							identicalAfterVariableAndTypeReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements()) ||
 							(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&

@@ -3132,6 +3132,13 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Merge Variable",
+        "description": "Merge Variable [value : Object, cm : ColumnMapper<T>] to entry : Map.Entry<ColumnMapper<?>,Object> in method public saveQuery(entity T, options Option...) : Statement in class com.datastax.driver.mapping.Mapper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -9491,6 +9498,13 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method private peekParameter(inTypeExpression boolean) : boolean extracted from private parseFormalParameterList() : FormalParameterListTree in class com.google.javascript.jscomp.parsing.parser.Parser",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable typeStart : SourcePosition in method private parseFormalParameterList() : FormalParameterListTree from class com.google.javascript.jscomp.parsing.parser.Parser",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -37787,7 +37801,7 @@
         "validators": null
     }, {
         "type": "Split Parameter",
-        "description": "Split Parameter request : QueryRequest to [jpqlString : String, maxResults : int, startOffset : long] in method private buildLuceneQuery(cache AdvancedCache<?,?>, isCompatMode boolean, serCtx SerializationContext, jpqlString String, startOffset long, maxResults int) : Query in class org.infinispan.query.remote.QueryFacadeImpl",
+        "description": "Split Parameter request : QueryRequest to [jpqlString : String, startOffset : long, maxResults : int] in method private buildLuceneQuery(cache AdvancedCache<?,?>, isCompatMode boolean, serCtx SerializationContext, jpqlString String, startOffset long, maxResults int) : Query in class org.infinispan.query.remote.QueryFacadeImpl",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -43761,6 +43775,13 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable id : Integer in method public onCreate(savedInstanceState Bundle) : void from class org.wordpress.android.ui.prefs.SiteSettingsFragment",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1235
 }, {
@@ -47537,6 +47558,13 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method package should_include_enumtype_in_accessor_ordinal() : void renamed to public should_allow_enum_as_int_in_accessor_params() : void in class com.datastax.driver.mapping.MapperAccessorParamsTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable variables : ColumnDefinitions in method private validateParameters() : void from class com.datastax.driver.mapping.MethodMapper",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

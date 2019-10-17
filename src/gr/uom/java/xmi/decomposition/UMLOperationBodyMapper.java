@@ -2404,6 +2404,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			Map<String, List<ObjectCreation>> creationMap = statement.getCreationMap();
+			for(String key : creationMap.keySet()) {
+				List<ObjectCreation> objectCreations = creationMap.get(key);
+				for(ObjectCreation creation : objectCreations) {
+					if(creation.getAnonymousClassDeclaration() != null && creation.getAnonymousClassDeclaration().equals(anonymousClassDeclaration.toString()) &&
+							creation.getLocationInfo().subsumes(anonymousClassDeclaration.getLocationInfo())) {
+						return creation.actualString();
+					}
+				}
+			}
 			List<UMLOperation> anonymousOperations = new ArrayList<UMLOperation>();
 			for(AnonymousClassDeclarationObject anonymousObject : statement.getAnonymousClassDeclarations()) {
 				for(UMLAnonymousClass anonymousClass : operation.getAnonymousClassList()) {

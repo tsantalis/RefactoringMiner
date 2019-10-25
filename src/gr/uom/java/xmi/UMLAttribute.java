@@ -1,5 +1,6 @@
 package gr.uom.java.xmi;
 
+import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
@@ -16,11 +17,13 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Loc
 	private boolean isStatic;
 	private VariableDeclaration variableDeclaration;
 	private UMLJavadoc javadoc;
+	private TypeGraph typeGraph;
 
-	public UMLAttribute(String name, UMLType type, LocationInfo locationInfo) {
+	public UMLAttribute(String name, UMLType type, LocationInfo locationInfo, TypeGraph gr) {
 		this.locationInfo = locationInfo;
 		this.name = name;
 		this.type = type;
+		this.typeGraph = gr;
 	}
 
 	public LocationInfo getLocationInfo() {
@@ -160,5 +163,9 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Loc
 		int distance = StringDistance.editDistance(s1, s2);
 		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
 		return normalized;
+	}
+
+	public TypeGraph getTypeGraph() {
+		return typeGraph;
 	}
 }

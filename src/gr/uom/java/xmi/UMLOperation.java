@@ -1,5 +1,6 @@
 package gr.uom.java.xmi;
 
+import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
@@ -21,6 +22,7 @@ import java.util.Set;
 import org.refactoringminer.util.AstUtils;
 
 public class UMLOperation implements Comparable<UMLOperation>, Serializable, LocationInfoProvider {
+
 	private LocationInfo locationInfo;
 	private String name;
 	private String visibility;
@@ -36,13 +38,15 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	private List<UMLAnonymousClass> anonymousClassList;
 	private List<UMLTypeParameter> typeParameters;
 	private UMLJavadoc javadoc;
+	private final Map<String, TypeGraph> fieldTypeMap;
 	
-	public UMLOperation(String name, LocationInfo locationInfo) {
+	public UMLOperation(String name, LocationInfo locationInfo, Map<String, TypeGraph> fieldTypeMap) {
 		this.locationInfo = locationInfo;
         this.name = name;
         this.parameters = new ArrayList<UMLParameter>();
         this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
         this.typeParameters = new ArrayList<UMLTypeParameter>();
+        this.fieldTypeMap = fieldTypeMap;
     }
 
 	public List<UMLTypeParameter> getTypeParameters() {
@@ -161,6 +165,18 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		}
 		for(VariableDeclaration declaration : getAllVariableDeclarations()) {
 			variableTypeMap.put(declaration.getVariableName(), declaration.getType());
+		}
+		return variableTypeMap;
+	}
+
+	public Map<String, TypeGraph> variableTypeGrMap() {
+		Map<String, TypeGraph> variableTypeMap = new LinkedHashMap<>();
+		for(UMLParameter parameter : parameters) {
+			if(!parameter.getKind().equals("return"))
+				variableTypeMap.put(parameter.getName(), parameter.getTypeGraph());
+		}
+		for(VariableDeclaration declaration : getAllVariableDeclarations()) {
+			variableTypeMap.put(declaration.getVariableName(), declaration.getTypeGraph());
 		}
 		return variableTypeMap;
 	}
@@ -751,5 +767,9 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 			return operationBody.loopWithVariables(currentElementName, collectionName);
 		}
 		return null;
+	}
+
+	public Map<String, TypeGraph> getFieldTypeMap() {
+		return fieldTypeMap;
 	}
 }

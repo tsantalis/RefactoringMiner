@@ -2,8 +2,10 @@ package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
@@ -16,6 +18,9 @@ public class ChangeAttributeTypeRefactoring implements Refactoring {
 	private String classNameBefore;
 	private String classNameAfter;
 	private Set<AbstractCodeMapping> attributeReferences;
+	private final TypeGraph typeB4;
+	private final TypeGraph typeAfter;
+
 	
 	public ChangeAttributeTypeRefactoring(VariableDeclaration originalAttribute,
 			VariableDeclaration changedTypeAttribute, String classNameBefore, String classNameAfter, Set<AbstractCodeMapping> attributeReferences) {
@@ -24,6 +29,8 @@ public class ChangeAttributeTypeRefactoring implements Refactoring {
 		this.classNameBefore = classNameBefore;
 		this.classNameAfter = classNameAfter;
 		this.attributeReferences = attributeReferences;
+		this.typeB4 = originalAttribute.getTypeGraph();
+		this.typeAfter = changedTypeAttribute.getTypeGraph();
 	}
 
 	public VariableDeclaration getOriginalAttribute() {
@@ -141,4 +148,13 @@ public class ChangeAttributeTypeRefactoring implements Refactoring {
 				.setCodeElement(changedTypeAttribute.toString()));
 		return ranges;
 	}
+
+	public TypeGraph getTypeB4() {
+		return typeB4;
+	}
+
+	public TypeGraph getTypeAfter() {
+		return typeAfter;
+	}
+
 }

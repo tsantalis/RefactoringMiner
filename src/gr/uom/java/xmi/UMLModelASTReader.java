@@ -44,6 +44,8 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
+import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeGraph;
+
 public class UMLModelASTReader {
 	public static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
 	
@@ -217,7 +219,7 @@ public class UMLModelASTReader {
     	
     	MethodDeclaration[] methodDeclarations = typeDeclaration.getMethods();
     	for(MethodDeclaration methodDeclaration : methodDeclarations) {
-    		UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, umlClass.isInterface(), sourceFile);
+    		UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, sourceFile, umlClass);
     		operation.setClassName(umlClass.getName());
     		umlClass.addOperation(operation);
     	}
@@ -265,11 +267,15 @@ public class UMLModelASTReader {
 		}
 	}
 
-	private UMLOperation processMethodDeclaration(CompilationUnit cu, MethodDeclaration methodDeclaration, String packageName, boolean isInterfaceMethod, String sourceFile) {
+	private static boolean isInterface(UMLAbstractClass umlCls){
+		return umlCls instanceof UMLClass && ((UMLClass) umlCls).isInterface();
+	}
+
+	private UMLOperation processMethodDeclaration(CompilationUnit cu, MethodDeclaration methodDeclaration, String packageName, String sourceFile, UMLAbstractClass umlCls) {
 		UMLJavadoc javadoc = generateJavadoc(methodDeclaration);
 		String methodName = methodDeclaration.getName().getFullyQualifiedName();
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, methodDeclaration, CodeElementType.METHOD_DECLARATION);
-		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo);
+		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo, umlCls.getFieldTypeMap());
 		umlOperation.setJavadoc(javadoc);
 		
 		if(methodDeclaration.isConstructor())
@@ -282,7 +288,7 @@ public class UMLModelASTReader {
 			umlOperation.setVisibility("protected");
 		else if((methodModifiers & Modifier.PRIVATE) != 0)
 			umlOperation.setVisibility("private");
-		else if(isInterfaceMethod)
+		else if(isInterface(umlCls))
 			umlOperation.setVisibility("public");
 		else
 			umlOperation.setVisibility("package");
@@ -334,7 +340,7 @@ public class UMLModelASTReader {
 		if(returnType != null) {
 			UMLType type = UMLType.extractTypeObject(UMLType.getTypeName(returnType, 0),
 					generateLocationInfo(cu, sourceFile, returnType, CodeElementType.TYPE));
-			UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
+			UMLParameter returnParameter = new UMLParameter("return", type, "return", false, getTypeGraph(returnType));
 			umlOperation.addParameter(returnParameter);
 		}
 		List<SingleVariableDeclaration> parameters = methodDeclaration.parameters();
@@ -347,7 +353,7 @@ public class UMLModelASTReader {
 			}
 			UMLType type = UMLType.extractTypeObject(typeName,
 					generateLocationInfo(cu, sourceFile, parameterType, CodeElementType.TYPE));
-			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarargs());
+			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarargs(), getTypeGraph(returnType));
 			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, parameter, parameter.isVarargs());
 			variableDeclaration.setParameter(true);
 			umlParameter.setVariableDeclaration(variableDeclaration);
@@ -367,7 +373,7 @@ public class UMLModelASTReader {
 					generateLocationInfo(cu, sourceFile, fieldType, CodeElementType.TYPE));
 			String fieldName = fragment.getName().getFullyQualifiedName();
 			LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, fragment, CodeElementType.FIELD_DECLARATION);
-			UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo);
+			UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo, getTypeGraph(fieldType));
 			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, fragment);
 			variableDeclaration.setAttribute(true);
 			umlAttribute.setVariableDeclaration(variableDeclaration);
@@ -412,7 +418,7 @@ public class UMLModelASTReader {
 			}
 			else if(bodyDeclaration instanceof MethodDeclaration) {
 				MethodDeclaration methodDeclaration = (MethodDeclaration)bodyDeclaration;
-				UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, false, sourceFile);
+				UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, sourceFile, anonymousClass);
 				operation.setClassName(anonymousClass.getCodePath());
 				anonymousClass.addOperation(operation);
 			}

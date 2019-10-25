@@ -35,6 +35,8 @@ dependencies {
 	compile 'org.eclipse.jdt:org.eclipse.jdt.core:3.16.0'
 	compile 'org.apache.commons:commons-text:1.6'
 	compile 'org.kohsuke:github-api:1.95'
+    compile 'com.google.protobuf:protobuf-java:3.4.0'
+    compile 'com.google.guava:guava:28.0-jre'
 	
 	testCompile 'junit:junit:4.11'
 }

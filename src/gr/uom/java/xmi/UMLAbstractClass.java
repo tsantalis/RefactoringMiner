@@ -1,14 +1,15 @@
 package gr.uom.java.xmi;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
+import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass;
+import gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.RenamePattern;
+
+import static java.util.stream.Collectors.toMap;
 
 public abstract class UMLAbstractClass {
 	protected LocationInfo locationInfo;
@@ -302,6 +303,10 @@ public abstract class UMLAbstractClass {
 			}
 		}
 		return attributesOfType;
+	}
+
+	public Map<String, TypeGraphOuterClass.TypeGraph> getFieldTypeMap(){
+		return attributes.stream().collect(toMap(UMLAttribute::getName, UMLAttribute::getTypeGraph));
 	}
 
 	public abstract boolean isSingleAbstractMethodInterface();

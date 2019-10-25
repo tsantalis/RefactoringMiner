@@ -2,8 +2,10 @@ package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
@@ -17,6 +19,8 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
 	private Set<AbstractCodeMapping> variableReferences;
+	private final TypeGraph typeB4;
+	private final TypeGraph typeAfter;
 
 	public ChangeVariableTypeRefactoring(VariableDeclaration originalVariable, VariableDeclaration changedTypeVariable,
 			UMLOperation operationBefore, UMLOperation operationAfter, Set<AbstractCodeMapping> variableReferences) {
@@ -25,6 +29,9 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.variableReferences = variableReferences;
+		this.typeB4 = originalVariable.getTypeGraph();
+		this.typeAfter = changedTypeVariable.getTypeGraph();
+
 	}
 
 	public RefactoringType getRefactoringType() {
@@ -141,5 +148,29 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 				.setDescription("changed-type variable declaration")
 				.setCodeElement(changedTypeVariable.toString()));
 		return ranges;
+	}
+
+	public TypeGraph getTypeB4() {
+		return typeB4;
+	}
+
+	public TypeGraph getTypeAfter() {
+		return typeAfter;
+	}
+
+	public Map<String,TypeGraph> getFieldTypeMapB4(){
+		return operationBefore.getFieldTypeMap();
+	}
+
+	public Map<String,TypeGraph> getFieldTypeMapAftr(){
+		return operationAfter.getFieldTypeMap();
+	}
+
+	public Map<String,TypeGraph> getVariableTypeMapB4(){
+		return operationBefore.variableTypeGrMap();
+	}
+
+	public Map<String,TypeGraph> getVariableTypeMapAftr(){
+		return operationAfter.variableTypeGrMap();
 	}
 }

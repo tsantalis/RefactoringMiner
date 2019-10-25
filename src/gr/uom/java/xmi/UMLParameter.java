@@ -2,20 +2,23 @@ package gr.uom.java.xmi;
 
 import java.io.Serializable;
 
+import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class UMLParameter implements Serializable, VariableDeclarationProvider {
 	private String name;
 	private UMLType type;
+	private TypeGraph typeGraph;
 	private String kind;
 	private boolean varargs;
 	private VariableDeclaration variableDeclaration;
 
-	public UMLParameter(String name, UMLType type, String kind, boolean varargs) {
+	public UMLParameter(String name, UMLType type, String kind, boolean varargs, TypeGraph tGr) {
 		this.name = name;
 		this.type = type;
 		this.kind = kind;
 		this.varargs = varargs;
+		this.typeGraph = tGr;
 	}
 
 	public UMLType getType() {
@@ -106,5 +109,9 @@ public class UMLParameter implements Serializable, VariableDeclarationProvider {
 				return name + " " + type.toQualifiedString();
 			}
 		}
+	}
+
+	public TypeGraph getTypeGraph() {
+		return typeGraph;
 	}
 }

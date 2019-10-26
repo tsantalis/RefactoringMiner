@@ -9,6 +9,7 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.replacement.AddVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
+import gr.uom.java.xmi.decomposition.replacement.ConcatenationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationWithClassInstanceCreationReplacement;
@@ -30,6 +31,7 @@ import gr.uom.java.xmi.diff.UMLParameterDiff;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -61,6 +63,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private List<UMLOperationBodyMapper> childMappers = new ArrayList<UMLOperationBodyMapper>();
 	private UMLOperationBodyMapper parentMapper;
 	private static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)|(\\?)|(:)");
+	private static final String SPLIT_CONCAT_STRING_PATTERN = "(\\s)*(\\+)(\\s)*";
 	private static final Pattern DOUBLE_QUOTES = Pattern.compile("\"([^\"]*)\"|(\\S+)");
 	private UMLClassBaseDiff classDiff;
 	private UMLModelDiff modelDiff;
@@ -1740,7 +1743,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString()) ||
 				(commonConditional(s1, s2, replacementInfo) && containsValidOperatorReplacements(replacementInfo)) ||
 				equalAfterArgumentMerge(s1, s2, replacementInfo) ||
-				equalAfterNewArgumentAdditions(s1, s2, replacementInfo);
+				equalAfterNewArgumentAdditions(s1, s2, replacementInfo) ||
+				(validStatementForConcatComparison(statement1, statement2) && commonConcat(s1, s2, replacementInfo));
 		List<AnonymousClassDeclarationObject> anonymousClassDeclarations1 = statement1.getAnonymousClassDeclarations();
 		List<AnonymousClassDeclarationObject> anonymousClassDeclarations2 = statement2.getAnonymousClassDeclarations();
 		if(isEqualWithReplacement) {
@@ -2342,6 +2346,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private boolean validStatementForConcatComparison(AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
+		List<VariableDeclaration> variableDeclarations1 = statement1.getVariableDeclarations();
+		List<VariableDeclaration> variableDeclarations2 = statement2.getVariableDeclarations();
+		if(variableDeclarations1.size() == variableDeclarations2.size()) {
+			return true;
+		}
+		else {
+			if(variableDeclarations1.size() > 0 && variableDeclarations2.size() == 0 && statement2.getString().startsWith("return ")) {
+				return true;
+			}
+			else if(variableDeclarations1.size() == 0 && variableDeclarations2.size() > 0 && statement1.getString().startsWith("return ")) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void removeCommonElements(Set<String> strings1, Set<String> strings2) {
@@ -3063,6 +3084,37 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return false;
 		}
 		return true;
+	}
+
+	private boolean commonConcat(String s1, String s2, ReplacementInfo info) {
+		if(s1.contains("+") && s2.contains("+") && !s1.contains("++") && !s2.contains("++") &&
+				!containsMethodSignatureOfAnonymousClass(s1) && !containsMethodSignatureOfAnonymousClass(s2)) {
+			Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(s1.split(SPLIT_CONCAT_STRING_PATTERN)));
+			Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(s2.split(SPLIT_CONCAT_STRING_PATTERN)));
+			Set<String> intersection = new LinkedHashSet<String>(tokens1);
+			intersection.retainAll(tokens2);
+			Set<String> filteredIntersection = new LinkedHashSet<String>();
+			for(String common : intersection) {
+				boolean foundInReplacements = false;
+				for(Replacement r : info.replacements) {
+					if(r.getBefore().contains(common) || r.getAfter().contains(common)) {
+						foundInReplacements = true;
+						break;
+					}
+				}
+				if(!foundInReplacements) {
+					filteredIntersection.add(common);
+				}
+			}
+			int size = filteredIntersection.size();
+			int threshold = Math.max(tokens1.size(), tokens2.size()) - size;
+			if((size > 0 && size > threshold) || (size > 1 && size >= threshold)) {
+				ConcatenationReplacement r = new ConcatenationReplacement(s1, s2, intersection);
+				info.getReplacements().add(r);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean commonConditional(String s1, String s2, ReplacementInfo info) {

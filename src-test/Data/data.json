@@ -8389,6 +8389,13 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method package getCapacity() : long extracted from public getCapacity() : long in class com.graphhopper.storage.GraphHopperStorage & moved to class com.graphhopper.storage.BaseGraph",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3012
 }, {
@@ -63442,10 +63449,10 @@
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public convert(inputData File, outputDirectory File, typeName String, format OgrFormat, crs CoordinateReferenceSystem) : File from class org.geoserver.wfs.response.OGRWrapper to public convert(inputData File, outputDirectory File, typeName String, format Format, crs CoordinateReferenceSystem) : File from class org.geoserver.ogr.core.AbstractToolWrapper",
-        "comment": "<p>We have Extract Superclass refactroing see:</p><p>http://refactoring.encs.concordia.ca/oracle/refactoring-details/1158913/4182</p><p>Since already the abstract refactoring exists as TP, and RefDiff is able to&nbsp; detect Extract Superclass, thus this is a FP</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
-        "validators": "Matin, Laleh, Davood"
+        "comment": "<p>http://refactoring.encs.concordia.ca/oracle/refactoring-details/1158913/4182</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
+        "validators": null
     }, {
         "type": "Extract and Move Method",
         "description": "Extract Method protected setInputOutput(cmd List, inputData File, outputDirectory File, typeName String, format Format) : String extracted from public convert(inputData File, outputDirectory File, typeName String, format OgrFormat, crs CoordinateReferenceSystem) : File in class org.geoserver.wfs.response.OGRWrapper",
@@ -63649,6 +63656,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type format : OgrFormat to format : Format in method public convert(inputData File, outputDirectory File, typeName String, format Format, crs CoordinateReferenceSystem) : File in class org.geoserver.ogr.core.AbstractToolWrapper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3729
 }, {
@@ -64584,7 +64598,7 @@
         "description": "Extract Method private assertExistsAndReturn(content String) : Object extracted from public assertValueIsArray(responseContent String) : void in class org.springframework.test.util.JsonPathExpectationsHelper",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Rename Parameter",
@@ -64621,6 +64635,27 @@
         "validation": "TP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable actualValue : Object to value : Object in method private assertExistsAndReturn(content String) : Object in class org.springframework.test.util.JsonPathExpectationsHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter responseContent : String to content : String in method private assertExistsAndReturn(content String) : Object in class org.springframework.test.util.JsonPathExpectationsHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable reason : String in method private assertExistsAndReturn(content String) : Object from class org.springframework.test.util.JsonPathExpectationsHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 4367
 }, {

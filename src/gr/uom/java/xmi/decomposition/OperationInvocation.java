@@ -125,6 +125,13 @@ public class OperationInvocation extends AbstractCall {
     		else if(arg.startsWith("\"") && arg.endsWith("\"")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("String"));
     		}
+    		else if(arg.contains("+") && !arg.contains("++") && !UMLOperationBodyMapper.containsMethodSignatureOfAnonymousClass(arg)) {
+    			String SPLIT_CONCAT_STRING_PATTERN = "(\\s)*(\\+)(\\s)*";
+    			String[] tokens = arg.split(SPLIT_CONCAT_STRING_PATTERN);
+    			if(tokens[0].startsWith("\"") && tokens[0].endsWith("\"")) {
+    				inferredArgumentTypes.add(UMLType.extractTypeObject("String"));
+    			}
+    		}
     		else if(arg.startsWith("\'") && arg.endsWith("\'")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("char"));
     		}
@@ -152,6 +159,9 @@ public class OperationInvocation extends AbstractCall {
     				}
     			}
     			inferredArgumentTypes.add(UMLType.extractTypeObject(type));
+    		}
+    		else if(arg.endsWith(".getClassLoader()")) {
+    			inferredArgumentTypes.add(UMLType.extractTypeObject("ClassLoader"));
     		}
     		else {
     			inferredArgumentTypes.add(null);

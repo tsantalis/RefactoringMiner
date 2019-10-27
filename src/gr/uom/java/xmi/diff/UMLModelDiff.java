@@ -1571,6 +1571,19 @@ public class UMLModelDiff {
             	  }
             	  else {
             		  UMLClassBaseDiff umlClassDiff = getUMLClassDiff(className);
+            		  if(umlClassDiff == null) {
+            			  for(UMLClassDiff classDiff : commonClassDiffList) {
+            				  for(UMLAnonymousClass anonymousClass : classDiff.getAddedAnonymousClasses()) {
+            					  if(className.equals(anonymousClass.getCodePath())) {
+            						  umlClassDiff = classDiff;
+            						  break;
+            					  }
+            				  }
+            				  if(umlClassDiff != null) {
+            					  break;
+            				  }
+            			  }
+            		  }
             		  attributes.addAll(umlClassDiff.originalClassAttributesOfType(addedOperation.getClassName()));
             	  }
             	  Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();

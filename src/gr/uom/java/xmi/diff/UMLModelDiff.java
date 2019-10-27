@@ -1576,6 +1576,7 @@ public class UMLModelDiff {
             				  for(UMLAnonymousClass anonymousClass : classDiff.getAddedAnonymousClasses()) {
             					  if(className.equals(anonymousClass.getCodePath())) {
             						  umlClassDiff = classDiff;
+            						  attributes.addAll(anonymousClass.attributesOfType(addedOperation.getClassName()));
             						  break;
             					  }
             				  }

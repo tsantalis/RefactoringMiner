@@ -1775,27 +1775,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return null;
 			}
 			if(!anonymousClassDeclarations1.isEmpty() && !anonymousClassDeclarations2.isEmpty()) {
+				Set<Replacement> replacementsInsideAnonymous = new LinkedHashSet<Replacement>();
 				for(Replacement replacement : replacementInfo.getReplacements()) {
 					if(replacement instanceof MethodInvocationReplacement) {
-						boolean replacementInsideAnonymous = false;
 						for(int i=0; i<anonymousClassDeclarations1.size(); i++) {
 							for(int j=0; j<anonymousClassDeclarations2.size(); j++) {
 								AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);
 								AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(j);
 								if(anonymousClassDeclaration1.getMethodInvocationMap().containsKey(replacement.getBefore()) &&
 										anonymousClassDeclaration2.getMethodInvocationMap().containsKey(replacement.getAfter())) {
-									replacementInsideAnonymous = true;
+									replacementsInsideAnonymous.add(replacement);
 									break;
 								}
 							}
-							if(replacementInsideAnonymous) {
+							if(replacementsInsideAnonymous.contains(replacement)) {
 								break;
 							}
 						}
-						if(replacementInsideAnonymous) {
-							equalAfterNewArgumentAdditions(replacement.getBefore(), replacement.getAfter(), replacementInfo);
-						}
 					}
+				}
+				for(Replacement replacement : replacementsInsideAnonymous) {
+					equalAfterNewArgumentAdditions(replacement.getBefore(), replacement.getAfter(), replacementInfo);
 				}
 			}
 			return replacementInfo.getReplacements();

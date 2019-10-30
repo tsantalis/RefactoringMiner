@@ -241,9 +241,9 @@ public class VariableReplacementAnalysis {
 			if(splitVariables.size() > 1 && splitVariables.size() == split.getSplitVariables().size() && oldVariable != null) {
 				UMLOperation operationAfter = splitVariableOperations.iterator().next();
 				SplitVariableRefactoring refactoring = new SplitVariableRefactoring(oldVariable.getKey(), splitVariables, oldVariable.getValue(), operationAfter, splitMap.get(split));
-				//if(!existsConflictingInlineVariableRefactoring(refactoring)) {
+				if(!existsConflictingExtractVariableRefactoring(refactoring) && !existsConflictingParameterRenameInOperationDiff(refactoring)) {
 					variableSplits.add(refactoring);
-				//}
+				}
 			}
 			else {
 				CandidateSplitVariableRefactoring candidate = new CandidateSplitVariableRefactoring(split.getBefore(), split.getSplitVariables(), operation1, operation2, splitMap.get(split));
@@ -408,7 +408,7 @@ public class VariableReplacementAnalysis {
 			if(mergedVariables.size() > 1 && mergedVariables.size() == merge.getMergedVariables().size() && newVariable != null) {
 				UMLOperation operationBefore = mergedVariableOperations.iterator().next();
 				MergeVariableRefactoring refactoring = new MergeVariableRefactoring(mergedVariables, newVariable.getKey(), operationBefore, newVariable.getValue(), mergeMap.get(merge));
-				if(!existsConflictingInlineVariableRefactoring(refactoring)) {
+				if(!existsConflictingInlineVariableRefactoring(refactoring) && !existsConflictingParameterRenameInOperationDiff(refactoring)) {
 					variableMerges.add(refactoring);
 				}
 			}
@@ -1011,6 +1011,32 @@ public class VariableReplacementAnalysis {
 		return false;
 	}
 
+	private boolean existsConflictingParameterRenameInOperationDiff(MergeVariableRefactoring ref) {
+		if(operationDiff != null) {
+			for(UMLParameterDiff parameterDiff : operationDiff.getParameterDiffList()) {
+				if(ref.getMergedVariables().contains(parameterDiff.getRemovedParameter().getVariableDeclaration()) &&
+						ref.getNewVariable().equals(parameterDiff.getAddedParameter().getVariableDeclaration())) {
+					return true;
+					
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean existsConflictingParameterRenameInOperationDiff(SplitVariableRefactoring ref) {
+		if(operationDiff != null) {
+			for(UMLParameterDiff parameterDiff : operationDiff.getParameterDiffList()) {
+				if(ref.getSplitVariables().contains(parameterDiff.getAddedParameter().getVariableDeclaration()) &&
+						ref.getOldVariable().equals(parameterDiff.getRemovedParameter().getVariableDeclaration())) {
+					return true;
+					
+				}
+			}
+		}
+		return false;
+	}
+
 	private boolean existsConflictingExtractVariableRefactoring(RenameVariableRefactoring ref) {
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof ExtractVariableRefactoring) {
@@ -1024,11 +1050,23 @@ public class VariableReplacementAnalysis {
 		return false;
 	}
 
+	private boolean existsConflictingExtractVariableRefactoring(SplitVariableRefactoring ref) {
+		for(Refactoring refactoring : refactorings) {
+			if(refactoring instanceof ExtractVariableRefactoring) {
+				ExtractVariableRefactoring extractVariableRef = (ExtractVariableRefactoring)refactoring;
+				if(ref.getSplitVariables().contains(extractVariableRef.getVariableDeclaration())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private boolean existsConflictingInlineVariableRefactoring(MergeVariableRefactoring ref) {
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof InlineVariableRefactoring) {
-				InlineVariableRefactoring inline = (InlineVariableRefactoring)refactoring;
-				if(ref.getMergedVariables().contains(inline.getVariableDeclaration())) {
+				InlineVariableRefactoring inlineVariableRef = (InlineVariableRefactoring)refactoring;
+				if(ref.getMergedVariables().contains(inlineVariableRef.getVariableDeclaration())) {
 					return true;
 				}
 			}

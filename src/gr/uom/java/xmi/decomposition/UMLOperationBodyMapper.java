@@ -198,6 +198,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
+	private boolean nullLiteralReplacements(AbstractCodeMapping mapping) {
+		int numberOfReplacements = mapping.getReplacements().size();
+		int nullLiteralReplacements = 0;
+		int methodInvocationReplacementsToIgnore = 0;
+		int variableNameReplacementsToIgnore = 0;
+		for(Replacement replacement : mapping.getReplacements()) {
+			if(replacement.getType().equals(ReplacementType.NULL_LITERAL_REPLACED_WITH_CONDITIONAL_EXPRESSION) ||
+					replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_NULL_LITERAL) ||
+					(replacement.getType().equals(ReplacementType.ARGUMENT_REPLACED_WITH_VARIABLE) && (replacement.getBefore().equals("null") || replacement.getAfter().equals("null")))) {
+				nullLiteralReplacements++;
+			}
+			else if(replacement instanceof MethodInvocationReplacement) {
+				MethodInvocationReplacement invocationReplacement = (MethodInvocationReplacement)replacement;
+				if(invocationReplacement.getInvokedOperationBefore().getName().equals(invocationReplacement.getInvokedOperationAfter().getName())) {
+					methodInvocationReplacementsToIgnore++;
+				}
+			}
+			else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
+				variableNameReplacementsToIgnore++;
+			}
+		}
+		return nullLiteralReplacements > 0 && numberOfReplacements == nullLiteralReplacements + methodInvocationReplacementsToIgnore + variableNameReplacementsToIgnore;
+	}
+
 	public UMLOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper, UMLOperation addedOperation,
 			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2, UMLClassBaseDiff classDiff) throws RefactoringMinerTimedOutException {
 		this.parentMapper = operationBodyMapper;
@@ -218,7 +242,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			//adding leaves that were mapped with replacements
 			Set<StatementObject> addedLeaves1 = new LinkedHashSet<StatementObject>();
 			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-				if(!returnWithVariableReplacement(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
+				if(!returnWithVariableReplacement(mapping) && !nullLiteralReplacements(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
 					AbstractCodeFragment fragment = mapping.getFragment1();
 					if(fragment instanceof StatementObject) {
 						StatementObject statement = (StatementObject)fragment;
@@ -382,7 +406,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			//adding leaves that were mapped with replacements or are inexact matches
 			Set<StatementObject> addedLeaves2 = new LinkedHashSet<StatementObject>();
 			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-				if(!returnWithVariableReplacement(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
+				if(!returnWithVariableReplacement(mapping)  && !nullLiteralReplacements(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
 					AbstractCodeFragment fragment = mapping.getFragment2();
 					if(fragment instanceof StatementObject) {
 						StatementObject statement = (StatementObject)fragment;
@@ -1709,6 +1733,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				Set<String> nullLiterals2 = new LinkedHashSet<String>();
 				nullLiterals2.add("null");
 				findReplacements(variables1, nullLiterals2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_NULL_LITERAL);
+			}
+		}
+		if(statement1.getTernaryOperatorExpressions().isEmpty() && !statement2.getTernaryOperatorExpressions().isEmpty()) {
+			if(!statement1.getNullLiterals().isEmpty()) {
+				Set<String> nullLiterals1 = new LinkedHashSet<String>();
+				nullLiterals1.add("null");
+				Set<String> ternaryExpressions2 = new LinkedHashSet<String>();
+				for(TernaryOperatorExpression ternary : statement2.getTernaryOperatorExpressions()) {
+					ternaryExpressions2.add(ternary.getExpression());	
+				}
+				findReplacements(nullLiterals1, ternaryExpressions2, replacementInfo, ReplacementType.NULL_LITERAL_REPLACED_WITH_CONDITIONAL_EXPRESSION);
+			}
+		}
+		else if(!statement1.getTernaryOperatorExpressions().isEmpty() && statement2.getTernaryOperatorExpressions().isEmpty()) {
+			if(!statement2.getNullLiterals().isEmpty()) {
+				Set<String> nullLiterals2 = new LinkedHashSet<String>();
+				nullLiterals2.add("null");
+				Set<String> ternaryExpressions1 = new LinkedHashSet<String>();
+				for(TernaryOperatorExpression ternary : statement1.getTernaryOperatorExpressions()) {
+					ternaryExpressions1.add(ternary.getExpression());	
+				}
+				findReplacements(ternaryExpressions1, nullLiterals2, replacementInfo, ReplacementType.NULL_LITERAL_REPLACED_WITH_CONDITIONAL_EXPRESSION);
 			}
 		}
 		if(!statement1.getString().endsWith("=true;\n") && !statement1.getString().endsWith("=false;\n")) {

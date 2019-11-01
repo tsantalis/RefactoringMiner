@@ -406,7 +406,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			//adding leaves that were mapped with replacements or are inexact matches
 			Set<StatementObject> addedLeaves2 = new LinkedHashSet<StatementObject>();
 			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-				if(!returnWithVariableReplacement(mapping)  && !nullLiteralReplacements(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
+				if(!returnWithVariableReplacement(mapping) && !nullLiteralReplacements(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
 					AbstractCodeFragment fragment = mapping.getFragment2();
 					if(fragment instanceof StatementObject) {
 						StatementObject statement = (StatementObject)fragment;

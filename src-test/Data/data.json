@@ -35841,13 +35841,6 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": null
-    }, {
-        "type": "Extract And Move Method",
-        "description": "Extract And Move Method public setCli(cli CLI) : void extracted from public JdrRunner(protocol String, user String, pass String, host String, port String) in class org.jboss.as.jdr.JdrRunner & moved to class org.jboss.as.jdr.commands.JdrEnvironment",
-        "comment": "null",
-        "validation": "FP",
-        "detectionTools": "RefactoringMiner",
-        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {

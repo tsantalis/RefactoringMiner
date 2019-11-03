@@ -211,7 +211,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			else if(replacement instanceof MethodInvocationReplacement) {
 				MethodInvocationReplacement invocationReplacement = (MethodInvocationReplacement)replacement;
-				if(invocationReplacement.getInvokedOperationBefore().getName().equals(invocationReplacement.getInvokedOperationAfter().getName())) {
+				OperationInvocation invokedOperationBefore = invocationReplacement.getInvokedOperationBefore();
+				OperationInvocation invokedOperationAfter = invocationReplacement.getInvokedOperationAfter();
+				if(invokedOperationBefore.getName().equals(invokedOperationAfter.getName()) &&
+						invokedOperationBefore.getArguments().size() == invokedOperationAfter.getArguments().size()) {
 					methodInvocationReplacementsToIgnore++;
 				}
 			}

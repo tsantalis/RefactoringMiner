@@ -2286,6 +2286,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					return replacementInfo.getReplacements();
 				}
 			}
+			if(invocationCoveringTheEntireStatement1 != null && (r = ternary.makeReplacementWithTernaryOnTheRight(invocationCoveringTheEntireStatement1.actualString())) != null) {
+				replacementInfo.addReplacement(r);
+				return replacementInfo.getReplacements();
+			}
 			for(String creation2 : creations2) {
 				if((r = ternary.makeReplacementWithTernaryOnTheRight(creation2)) != null) {
 					for(AbstractCall c2 : creationMap2.get(creation2)) {
@@ -2314,6 +2318,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					replacementInfo.addReplacement(r);
 					return replacementInfo.getReplacements();
 				}
+			}
+			if(invocationCoveringTheEntireStatement2 != null && (r = ternary.makeReplacementWithTernaryOnTheLeft(invocationCoveringTheEntireStatement2.actualString())) != null) {
+				replacementInfo.addReplacement(r);
+				return replacementInfo.getReplacements();
 			}
 			for(String creation1 : creations1) {
 				if((r = ternary.makeReplacementWithTernaryOnTheLeft(creation1)) != null) {

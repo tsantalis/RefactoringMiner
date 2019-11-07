@@ -3210,6 +3210,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private getOldName() : String extracted from public handleElementRename(newElementName String) : PsiElement in class org.jetbrains.plugins.javaFX.fxml.refs.FxmlReferencesContributor.MyJavaClassReferenceProvider.JavaClassReferenceWrapper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private getOldName() : String extracted from public bindToElement(element PsiElement) : PsiElement in class org.jetbrains.plugins.javaFX.fxml.refs.FxmlReferencesContributor.MyJavaClassReferenceProvider.JavaClassReferenceWrapper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 15192
 }, {
@@ -16680,11 +16694,11 @@
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
-        "type": "Extract and Move Method",
-        "description": "Extract Method protected createPrepareRpcOptions() : RpcOptions extracted from protected prepareOnAffectedNodes(ctx TxInvocationContext, command PrepareCommand, recipients Collection, ignored boolean) : void in class org.infinispan.interceptors.distribution.VersionedDistributionInterceptor",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method protected createPrepareRpcOptions() : RpcOptions extracted from protected prepareOnAffectedNodes(ctx TxInvocationContext<?>, command PrepareCommand, recipients Collection<Address>, ignored boolean) : void in class org.infinispan.interceptors.distribution.VersionedDistributionInterceptor & moved to class org.infinispan.interceptors.distribution.TxDistributionInterceptor",
         "comment": "<p>Extract and Move to the other class. Moved to class <span class='blob-code-inner'><span class='pl-smi'>org.infinispan.interceptors.distribution</span>.<a class='link-gray-dark' title='core/src/main/java/org/infinispan/interceptors/distribution/TxDistributionInterceptor.java' href='https://github.com/infinispan/infinispan/commit/ce4f6292d6350a2c6b82d995352fdf6d07042c9c#diff-1f89fae5cdc8e35ed85504c05f20d66e'>TxDistributionInterceptor.java<br /></a></span>The method was locally extracted in TxDistributionInterceptor<br />Extract Method protected createPrepareRpcOptions() : RpcOptions extracted from protected prepareOnAffectedNodes(ctx TxInvocationContext&lt;?&gt;, command PrepareCommand, recipients Collection&lt;Address&gt;, sync boolean) : void in class org.infinispan.interceptors.distribution.TxDistributionInterceptor</p>",
-        "validation": "FP",
-        "detectionTools": "RefDiff",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin, Laleh, Nikos"
     }, {
         "type": "Extract Method",

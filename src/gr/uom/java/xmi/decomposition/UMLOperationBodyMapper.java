@@ -2275,49 +2275,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(ternaryOperatorExpressions1.isEmpty() && ternaryOperatorExpressions2.size() == 1) {
 			TernaryOperatorExpression ternary = ternaryOperatorExpressions2.get(0);
 			for(String creation : creationIntersection) {
-				if(ternary.getElseExpression().getString().equals(creation)) {
-					r = new Replacement(creation, ternary.getExpression(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
-					replacementInfo.addReplacement(r);
-					return replacementInfo.getReplacements();
-				}
-				if(ternary.getThenExpression().getString().equals(creation)) {
-					r = new Replacement(creation, ternary.getExpression(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+				if((r = ternary.makeReplacementWithTernaryOnTheRight(creation)) != null) {
 					replacementInfo.addReplacement(r);
 					return replacementInfo.getReplacements();
 				}
 			}
 			for(String methodInvocation : methodInvocationIntersection) {
-				if(ternary.getElseExpression().getString().equals(methodInvocation)) {
-					r = new Replacement(methodInvocation, ternary.getExpression(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
-					replacementInfo.addReplacement(r);
-					return replacementInfo.getReplacements();
-				}
-				if(ternary.getThenExpression().getString().equals(methodInvocation)) {
-					r = new Replacement(methodInvocation, ternary.getExpression(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+				if((r = ternary.makeReplacementWithTernaryOnTheRight(methodInvocation)) != null) {
 					replacementInfo.addReplacement(r);
 					return replacementInfo.getReplacements();
 				}
 			}
 			for(String creation2 : creations2) {
-				if(ternary.getElseExpression().getString().equals(creation2)) {
+				if((r = ternary.makeReplacementWithTernaryOnTheRight(creation2)) != null) {
 					for(AbstractCall c2 : creationMap2.get(creation2)) {
 						for(String creation1 : creations1) {
 							for(AbstractCall c1 : creationMap1.get(creation1)) {
 								if(((ObjectCreation)c1).getType().compatibleTypes(((ObjectCreation)c2).getType()) && c1.equalArguments(c2)) {
-									r = new Replacement(creation1, ternary.getExpression(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
-									replacementInfo.addReplacement(r);
-									return replacementInfo.getReplacements();
-								}
-							}
-						}
-					}
-				}
-				if(ternary.getThenExpression().getString().equals(creation2)) {
-					for(AbstractCall c2 : creationMap2.get(creation2)) {
-						for(String creation1 : creations1) {
-							for(AbstractCall c1 : creationMap1.get(creation1)) {
-								if(((ObjectCreation)c1).getType().compatibleTypes(((ObjectCreation)c2).getType()) && c1.equalArguments(c2)) {
-									r = new Replacement(creation1, ternary.getExpression(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
 									replacementInfo.addReplacement(r);
 									return replacementInfo.getReplacements();
 								}
@@ -2330,49 +2304,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(ternaryOperatorExpressions1.size() == 1 && ternaryOperatorExpressions2.isEmpty()) {
 			TernaryOperatorExpression ternary = ternaryOperatorExpressions1.get(0);
 			for(String creation : creationIntersection) {
-				if(ternary.getElseExpression().getString().equals(creation)) {
-					r = new Replacement(ternary.getExpression(), creation, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
-					replacementInfo.addReplacement(r);
-					return replacementInfo.getReplacements();
-				}
-				if(ternary.getThenExpression().getString().equals(creation)) {
-					r = new Replacement(ternary.getExpression(), creation, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+				if((r = ternary.makeReplacementWithTernaryOnTheLeft(creation)) != null) {
 					replacementInfo.addReplacement(r);
 					return replacementInfo.getReplacements();
 				}
 			}
 			for(String methodInvocation : methodInvocationIntersection) {
-				if(ternary.getElseExpression().getString().equals(methodInvocation)) {
-					r = new Replacement(ternary.getExpression(), methodInvocation, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
-					replacementInfo.addReplacement(r);
-					return replacementInfo.getReplacements();
-				}
-				if(ternary.getThenExpression().getString().equals(methodInvocation)) {
-					r = new Replacement(ternary.getExpression(), methodInvocation, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+				if((r = ternary.makeReplacementWithTernaryOnTheLeft(methodInvocation)) != null) {
 					replacementInfo.addReplacement(r);
 					return replacementInfo.getReplacements();
 				}
 			}
 			for(String creation1 : creations1) {
-				if(ternary.getElseExpression().getString().equals(creation1)) {
+				if((r = ternary.makeReplacementWithTernaryOnTheLeft(creation1)) != null) {
 					for(AbstractCall c1 : creationMap1.get(creation1)) {
 						for(String creation2 : creations2) {
 							for(AbstractCall c2 : creationMap2.get(creation2)) {
 								if(((ObjectCreation)c1).getType().compatibleTypes(((ObjectCreation)c2).getType()) && c1.equalArguments(c2)) {
-									r = new Replacement(ternary.getExpression(), creation2, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
-									replacementInfo.addReplacement(r);
-									return replacementInfo.getReplacements();
-								}
-							}
-						}
-					}
-				}
-				if(ternary.getThenExpression().getString().equals(creation1)) {
-					for(AbstractCall c1 : creationMap1.get(creation1)) {
-						for(String creation2 : creations2) {
-							for(AbstractCall c2 : creationMap2.get(creation2)) {
-								if(((ObjectCreation)c1).getType().compatibleTypes(((ObjectCreation)c2).getType()) && c1.equalArguments(c2)) {
-									r = new Replacement(ternary.getExpression(), creation2, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
 									replacementInfo.addReplacement(r);
 									return replacementInfo.getReplacements();
 								}

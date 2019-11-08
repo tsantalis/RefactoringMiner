@@ -8456,6 +8456,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Attribute",
+        "description": "Extract Attribute public DEFAULT_RECORD_COUNT : String in class com.yahoo.ycsb.Client",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 320
 }, {
@@ -57689,23 +57696,23 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method private isList(value Object) : boolean extracted from public get(name T) : T in class io.netty.handler.codec.DefaultHeaders",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "comment": "<p>The code in method isList(value Object) does not exist inside the original method. It seems that the functionality of the method is re-implemented with some new logic.</p>",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Davood, Nikos"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private isList(value Object) : boolean extracted from public getAndRemove(name T) : T in class io.netty.handler.codec.DefaultHeaders",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "comment": "<p>The code in method isList(value Object) does not exist inside the original method. It seems that the functionality of the method is re-implemented with some new logic.</p>",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Davood, Nikos"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private isList(value Object) : boolean extracted from public getAll(name T) : List<T> in class io.netty.handler.codec.DefaultHeaders",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff",
+        "comment": "<p>The code in method isList(value Object) does not exist inside the original method. It seems that the functionality of the method is re-implemented with some new logic.</p>",
+        "validation": "FP",
+        "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Davood, Nikos"
     }, {
         "type": "Inline Method",

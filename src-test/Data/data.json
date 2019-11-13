@@ -2603,7 +2603,7 @@
         "validators": "Laleh"
     }, {
         "type": "Move Attribute",
-        "description": "Move Attribute public INDEX_COMPOUND_FORMAT : String from class org.elasticsearch.index.merge.policy.AbstractMergePolicyProvider to class org.elasticsearch.index.shard.MergePolicyConfig",
+        "description": "Move Attribute public INDEX_COMPOUND_FORMAT : String from class org.elasticsearch.index.merge.policy.AbstractMergePolicyProvider to public INDEX_COMPOUND_FORMAT : String from class org.elasticsearch.index.shard.MergePolicyConfig",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -3475,7 +3475,7 @@
         "validators": "Davood"
     }, {
         "type": "Move Method",
-        "description": "Move Method private handleSingleArrayValue(string String, builder HandlerBuilder, tokens Deque, token Token, attributeParser ExchangeAttributeParser, endChar String, last Token) : HandlerWrapper from class io.undertow.server.handlers.builder.HandlerParser to private handleSingleArrayValue(string String, builder Token, tokens Deque, endChar String) : Node from class io.undertow.server.handlers.builder.PredicatedHandlersParser",
+        "description": "Move Method private handleSingleArrayValue(string String, builder HandlerBuilder, tokens Deque<Token>, token Token, attributeParser ExchangeAttributeParser, endChar String, last Token) : HandlerWrapper from class io.undertow.server.handlers.builder.HandlerParser to private handleSingleArrayValue(string String, builder Token, tokens Deque<Token>, endChar String) : Node from class io.undertow.server.handlers.builder.PredicatedHandlersParser",
         "comment": "<p>added</p><p>There were two&nbsp;handleSingleArrayValue methods, they seem to be unified and moved to the target class, but one is more similar to the handleSingleArrayValue method in the target class. Since <a href='219'>the other one</a> is marked as TP, we should mark this as FP.</p><p>Update: After seeing this case, I understood that we accepted similar cases as TP in both cases.</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -3489,7 +3489,7 @@
         "validators": "Davood"
     }, {
         "type": "Inline Method",
-        "description": "Inline Method public parse(string String, tokens Deque, classLoader ClassLoader) : Predicate inlined to public parse(contents String, classLoader ClassLoader) : List<PredicatedHandler> in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
+        "description": "Inline Method public parse(string String, tokens Deque<Token>, classLoader ClassLoader) : Predicate inlined to public parse(contents String, classLoader ClassLoader) : List<PredicatedHandler> in class io.undertow.server.handlers.builder.PredicatedHandlersParser",
         "comment": "<p>line 97 in the before refactoring version. The method is Inlined from class <span class='blob-code-inner'><span class='pl-en'>PredicateParser.<br /></span></span></p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -3503,7 +3503,7 @@
         "validators": "Davood, Nikos"
     }, {
         "type": "Move Method",
-        "description": "Move Method public tokenize(string String) : Deque from class io.undertow.util.PredicateTokeniser to public tokenize(string String) : Deque from class io.undertow.server.handlers.builder.PredicatedHandlersParser",
+        "description": "Move Method public tokenize(string String) : Deque<Token> from class io.undertow.util.PredicateTokeniser to public tokenize(string String) : Deque<Token> from class io.undertow.server.handlers.builder.PredicatedHandlersParser",
         "comment": "added",
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -3517,7 +3517,7 @@
         "validators": "Matin, Laleh"
     }, {
         "type": "Move Method",
-        "description": "Move Method package parse(string String, tokens Deque, builders Map, attributeParser ExchangeAttributeParser) : Predicate from class io.undertow.predicate.PredicateParser to package parse(string String, tokens Deque, topLevel boolean) : Node from class io.undertow.server.handlers.builder.PredicatedHandlersParser",
+        "description": "Move Method package parse(string String, tokens Deque<Token>, builders Map<String,PredicateBuilder>, attributeParser ExchangeAttributeParser) : Predicate from class io.undertow.predicate.PredicateParser to package parse(string String, tokens Deque<Token>, topLevel boolean) : Node from class io.undertow.server.handlers.builder.PredicatedHandlersParser",
         "comment": "added",
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -4574,21 +4574,21 @@
         "validators": null
     }, {
         "type": "Push Down Attribute",
-        "description": "Push Down Attribute protected ERROR_BACKGROUND_IMAGE_FORMAT : String from class processing.core.PConstants to class processing.core.PGraphics",
+        "description": "Push Down Attribute package ERROR_BACKGROUND_IMAGE_FORMAT : String from class processing.core.PConstants to protected ERROR_BACKGROUND_IMAGE_FORMAT : String from class processing.core.PGraphics",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin"
     }, {
         "type": "Push Down Attribute",
-        "description": "Push Down Attribute protected ERROR_BACKGROUND_IMAGE_SIZE : String from class processing.core.PConstants to class processing.core.PGraphics",
+        "description": "Push Down Attribute package ERROR_BACKGROUND_IMAGE_SIZE : String from class processing.core.PConstants to protected ERROR_BACKGROUND_IMAGE_SIZE : String from class processing.core.PGraphics",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin"
     }, {
         "type": "Push Down Attribute",
-        "description": "Push Down Attribute protected ERROR_TEXTFONT_NULL_PFONT : String from class processing.core.PConstants to class processing.core.PGraphics",
+        "description": "Push Down Attribute package ERROR_TEXTFONT_NULL_PFONT : String from class processing.core.PConstants to protected ERROR_TEXTFONT_NULL_PFONT : String from class processing.core.PGraphics",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -17787,7 +17787,7 @@
         "validators": "Laleh"
     }, {
         "type": "Move Method",
-        "description": "Move Method protected dealWithAbsoluteMetrics(dataBatch List) : List from class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to protected dealWithAbsoluteMetrics(dataBatch List) : List from class com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue",
+        "description": "Move Method protected dealWithAbsoluteMetrics(dataBatch List<MetricQueueItem>) : List<MetricQueueItem> from class com.eucalyptus.cloudwatch.domain.metricdata.MetricDataQueue to protected dealWithAbsoluteMetrics(dataBatch List<AbsoluteMetricQueueItem>) : List<AbsoluteMetricQueueItem> from class com.eucalyptus.cluster.callback.cloudwatch.AbsoluteMetricQueue",
         "comment": "It is an extract class since RefDiff cannot detect these refactorings consider as TP",
         "validation": "CTP",
         "detectionTools": "RefDiff",
@@ -21903,8 +21903,8 @@
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Automatic"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public start(logVersion long) : LogPosition extracted from public getTimestampForVersion(version long) : long in class org.neo4j.kernel.NeoStoreDataSource$10",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public start(logVersion long) : LogPosition extracted from public getTimestampForVersion(version long) : long in class org.neo4j.kernel.NeoStoreDataSource$10 & moved to class org.neo4j.kernel.impl.transaction.log.LogPosition",
         "comment": "<p>Extract and Move to other class</p><p>Since RefDiff does not detect 'Extract and Move' refactoring, we consider it as CTP.</p><p>The extracted method start(logVersion long) is in class <span class='blob-code-inner'><span class='pl-en'>LogPosition.</span></span></p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -22543,7 +22543,7 @@
         "validators": null
     }, {
         "type": "Rename Method",
-        "description": "Rename Method public checkAvailability(millis long, cls Class) : void renamed to public await(millis long) : void in class org.neo4j.kernel.AvailabilityGuard",
+        "description": "Rename Method public checkAvailability(millis long, cls Class<EXCEPTION>) : void renamed to public await(millis long) : void in class org.neo4j.kernel.AvailabilityGuard",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -22564,7 +22564,7 @@
         "validators": "Matin, Davood"
     }, {
         "type": "Extract Method",
-        "description": "Extract Method private checkAvailability() : void extracted from public execute(query String, parameters Map) : Result in class org.neo4j.kernel.impl.factory.GraphDatabaseFacade",
+        "description": "Extract Method private checkAvailability() : void extracted from public execute(query String, parameters Map<String,Object>) : Result in class org.neo4j.kernel.impl.factory.GraphDatabaseFacade",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -27419,14 +27419,14 @@
         "validators": null
     }, {
         "type": "Move Method",
-        "description": "Move Method private createExceptionOnBit(endpoint DrillbitEndpoint, desc String, nSkip int, nFire int, exceptionClass String) : String from class org.apache.drill.exec.testing.TestExceptionInjection to public createExceptionOnBit(siteClass Class, desc String, nSkip int, nFire int, exceptionClass Class, endpoint DrillbitEndpoint) : String from class org.apache.drill.exec.testing.ControlsInjectionUtil",
+        "description": "Move Method private createExceptionOnBit(endpoint DrillbitEndpoint, desc String, nSkip int, nFire int, exceptionClass String) : String from class org.apache.drill.exec.testing.TestExceptionInjection to public createExceptionOnBit(siteClass Class<?>, desc String, nSkip int, nFire int, exceptionClass Class<? extends Throwable>, endpoint DrillbitEndpoint) : String from class org.apache.drill.exec.testing.ControlsInjectionUtil",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
     }, {
         "type": "Move Method",
-        "description": "Move Method private createException(desc String, nSkip int, nFire int, exceptionClass String) : String from class org.apache.drill.exec.testing.TestExceptionInjection to public createException(siteClass Class, desc String, nSkip int, nFire int, exceptionClass Class) : String from class org.apache.drill.exec.testing.ControlsInjectionUtil",
+        "description": "Move Method private createException(desc String, nSkip int, nFire int, exceptionClass String) : String from class org.apache.drill.exec.testing.TestExceptionInjection to public createException(siteClass Class<?>, desc String, nSkip int, nFire int, exceptionClass Class<? extends Throwable>) : String from class org.apache.drill.exec.testing.ControlsInjectionUtil",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -40509,14 +40509,14 @@
         "validators": "Matin"
     }, {
         "type": "Move Method",
-        "description": "Move Method private createProxySelector(proxies List) : ProxySelector from class org.springframework.boot.cli.compiler.grape.SettingsXmlRepositorySystemSessionAutoConfiguration to private createProxySelector(decryptedSettings SettingsDecryptionResult) : ProxySelector from class org.springframework.boot.cli.compiler.MavenSettings",
+        "description": "Move Method private createProxySelector(proxies List<Proxy>) : ProxySelector from class org.springframework.boot.cli.compiler.grape.SettingsXmlRepositorySystemSessionAutoConfiguration to private createProxySelector(decryptedSettings SettingsDecryptionResult) : ProxySelector from class org.springframework.boot.cli.compiler.MavenSettings",
         "comment": "It can be an extract method refactoring",
         "validation": "CTP",
         "detectionTools": "RefDiff",
         "validators": "Matin"
     }, {
         "type": "Move Method",
-        "description": "Move Method private createAuthenticationSelector(servers List) : AuthenticationSelector from class org.springframework.boot.cli.compiler.grape.SettingsXmlRepositorySystemSessionAutoConfiguration to private createAuthenticationSelector(decryptedSettings SettingsDecryptionResult) : AuthenticationSelector from class org.springframework.boot.cli.compiler.MavenSettings",
+        "description": "Move Method private createAuthenticationSelector(servers List<Server>) : AuthenticationSelector from class org.springframework.boot.cli.compiler.grape.SettingsXmlRepositorySystemSessionAutoConfiguration to private createAuthenticationSelector(decryptedSettings SettingsDecryptionResult) : AuthenticationSelector from class org.springframework.boot.cli.compiler.MavenSettings",
         "comment": "It can be an extract method refactoring",
         "validation": "CTP",
         "detectionTools": "RefDiff",
@@ -43867,7 +43867,7 @@
         "validators": "Matin, Nikos"
     }, {
         "type": "Extract Method",
-        "description": "Extract Method public addJarsToRoots(jarPaths List, libraryName String, module Module, location PsiElement) : void extracted from public addJUnit4Library(inTests boolean, currentModule Module) : void in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
+        "description": "Extract Method public addJarsToRoots(jarPaths List<String>, libraryName String, module Module, location PsiElement) : void extracted from public addJUnit4Library(inTests boolean, currentModule Module) : void in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -43881,7 +43881,7 @@
         "validators": "Matin, Nikos"
     }, {
         "type": "Extract Method",
-        "description": "Extract Method public addJarsToRootsAndImportClass(jarPaths List, libraryName String, currentModule Module, editor Editor, reference PsiReference, className String) : void extracted from public invoke(project Project, editor Editor, file PsiFile) : void in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix$1",
+        "description": "Extract Method public addJarsToRootsAndImportClass(jarPaths List<String>, libraryName String, currentModule Module, editor Editor, reference PsiReference, className String) : void extracted from public invoke(project Project, editor Editor, file PsiFile) : void in class com.intellij.codeInsight.daemon.impl.quickfix.OrderEntryFix$1",
         "comment": "<p>This refactoring correponds to http://refactoring.encs.concordia.ca/oracle/refactoring-details/1140956/3016<br />but reports the extract method from method invoke() of an anonymous class inside method registerFixes()</p><p><span class='blob-code-inner'>&nbsp;</span></p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
@@ -44252,8 +44252,8 @@
         "detectionTools": "RefDiff",
         "validators": "Matin"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public disableOnResponseCommitted() : void extracted from public disableSaveOnResponseCommitted() : void in class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public disableOnResponseCommitted() : void extracted from public disableSaveOnResponseCommitted() : void in class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper & moved to class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "<p>Extract and Move to parent class</p><p>Extract and Move to class <span class='blob-code-inner'><span class='pl-en'>OnCommittedResponseWrapper (superType of&nbsp; SaveContextOnUpdateOrErrorResponseWrapper)<br /></span></span></p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -44506,8 +44506,8 @@
         "detectionTools": "RefDiff",
         "validators": "Matin"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public disableOnResponseCommitted() : void extracted from public disableSaveOnResponseCommitted() : void in class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public disableOnResponseCommitted() : void extracted from public disableSaveOnResponseCommitted() : void in class org.springframework.security.web.context.SaveContextOnUpdateOrErrorResponseWrapper & moved to class org.springframework.security.web.context.OnCommittedResponseWrapper",
         "comment": "<p>Extract and Move to the inner class</p><p>Extract and move to super class actually</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -45174,14 +45174,14 @@
         "validators": "Matin, Laleh, Automatic"
     }, {
         "type": "Inline Method",
-        "description": "Inline Method package populateErrors(serviceErrors Map, routingResult RoutingResult, builder ErrorResponseBuilder) : Map inlined to public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, result Object, headers Map) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.BatchUpdateResponseBuilder",
+        "description": "Inline Method package populateErrors(serviceErrors Map<K,RestLiServiceException>, routingResult RoutingResult, builder ErrorResponseBuilder) : Map<K,ErrorResponse> inlined to public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, result Object, headers Map<String,String>) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.BatchUpdateResponseBuilder",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Laleh"
     }, {
         "type": "Inline Method",
-        "description": "Inline Method package populateErrors(serviceErrors Map, routingResult RoutingResult, builder ErrorResponseBuilder) : Map inlined to public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, result Object, headers Map) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.BatchGetResponseBuilder",
+        "description": "Inline Method package populateErrors(serviceErrors Map<K,RestLiServiceException>, routingResult RoutingResult, builder ErrorResponseBuilder) : Map<K,ErrorResponse> inlined to public buildRestLiResponseData(request RestRequest, routingResult RoutingResult, result Object, headers Map<String,String>) : RestLiResponseEnvelope in class com.linkedin.restli.internal.server.methods.response.BatchGetResponseBuilder",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -45202,7 +45202,7 @@
         "validators": "Davood"
     }, {
         "type": "Move Attribute",
-        "description": "Move Attribute private _collectionResponseCustomMetadata : RecordTemplate from class com.linkedin.restli.internal.server.AugmentedRestLiResponseData to class com.linkedin.restli.internal.server.response.CollectionResponseEnvelope",
+        "description": "Move Attribute private _collectionResponseCustomMetadata : RecordTemplate from class com.linkedin.restli.internal.server.AugmentedRestLiResponseData to private _collectionResponseCustomMetadata : RecordTemplate from class com.linkedin.restli.internal.server.response.CollectionResponseEnvelope",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -49012,8 +49012,8 @@
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public setStation(station DockingStation) : void extracted from private getOrderFromRequestingStation(station DockingStation, take boolean) : StackRequest in class buildcraft.robotics.ai.AIRobotSearchStackRequest",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public setStation(station DockingStation) : void extracted from private getOrderFromRequestingStation(station DockingStation, take boolean) : StackRequest in class buildcraft.robotics.ai.AIRobotSearchStackRequest & moved to class buildcraft.robotics.StackRequest",
         "comment": "<p>Extract and Move to the inner class</p><p>This is extract to other class indeed</p><p>There is one statement (setting&nbsp;<span class='blob-code-inner'>station) which is now being extracted as a setter. The setter does other stuff as well.</span></p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -50041,7 +50041,7 @@
         "validators": "Matin, Nikos"
     }, {
         "type": "Rename Method",
-        "description": "Rename Method private createSubsystemList() : Collection renamed to private populateSubsystems(builder TerasologyEngineBuilder) : void in class org.terasology.engine.Terasology",
+        "description": "Rename Method private createSubsystemList() : Collection<EngineSubsystem> renamed to private populateSubsystems(builder TerasologyEngineBuilder) : void in class org.terasology.engine.Terasology",
         "comment": "<p>Seems TP</p><p>Nikos: The call inside main() has been renamed too.<br />Before: <span class='blob-code-inner'><span class='pl-smi'>TerasologyEngine</span> engine <span class='pl-k'>=</span> <span class='pl-k'>new</span> <span class='pl-smi'>TerasologyEngine</span>(createSubsystemList());<br /></span><span class='blob-code-inner'>After: <span class='pl-smi'>TerasologyEngineBuilder</span> builder <span class='pl-k'>=</span> <span class='pl-k'>new</span> <span class='pl-smi'>TerasologyEngineBuilder</span>();&nbsp;&nbsp; populateSubsystems(builder);<br /></span></p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -50096,8 +50096,8 @@
         "detectionTools": "RefDiff",
         "validators": "Matin, Nikos"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public build() : TerasologyEngine extracted from public run() : void in class org.terasology.editor.TeraEd",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public build() : TerasologyEngine extracted from public run() : void in class org.terasology.editor.TeraEd & moved to class org.terasology.engine.TerasologyEngineBuilder",
         "comment": "Extract and Move to the inner class",
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -51718,42 +51718,42 @@
         "validators": "Matin"
     }, {
         "type": "Inline Method",
-        "description": "Inline Method public acquireLabelCursor(labels long[]) : Cursor inlined to public labels() : Cursor in class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor",
+        "description": "Inline Method public acquireLabelCursor(labels long[]) : Cursor<LabelItem> inlined to public labels() : Cursor<LabelItem> in class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Laleh"
     }, {
         "type": "Inline Method",
-        "description": "Inline Method public acquirePropertyCursor(firstPropertyRecordId long) : Cursor inlined to public properties() : Cursor in class org.neo4j.kernel.impl.api.store.StoreAbstractRelationshipCursor",
+        "description": "Inline Method public acquirePropertyCursor(firstPropertyRecordId long) : Cursor<PropertyItem> inlined to public properties() : Cursor<PropertyItem> in class org.neo4j.kernel.impl.api.store.StoreAbstractRelationshipCursor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Laleh"
     }, {
         "type": "Inline Method",
-        "description": "Inline Method public acquirePropertyCursor(firstPropertyRecordId long) : Cursor inlined to public properties() : Cursor in class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor",
+        "description": "Inline Method public acquirePropertyCursor(firstPropertyRecordId long) : Cursor<PropertyItem> inlined to public properties() : Cursor<PropertyItem> in class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Laleh"
     }, {
         "type": "Inline Method",
-        "description": "Inline Method public acquireSingleLabelCursor(labels long[], labelId int) : Cursor inlined to public label(labelId int) : Cursor in class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor",
+        "description": "Inline Method public acquireSingleLabelCursor(labels long[], labelId int) : Cursor<PropertyItem> inlined to public label(labelId int) : Cursor<PropertyItem> in class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor",
         "comment": "<p>acquireSingleLabelCursor(..) is in StoreStatement in the before refactoring version</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Laleh"
     }, {
         "type": "Inline Method",
-        "description": "Inline Method public acquireSinglePropertyCursor(firstPropertyRecordId long, propertyKeyId int) : Cursor inlined to public property(propertyKeyId int) : Cursor in class org.neo4j.kernel.impl.api.store.StoreAbstractRelationshipCursor",
+        "description": "Inline Method public acquireSinglePropertyCursor(firstPropertyRecordId long, propertyKeyId int) : Cursor<PropertyItem> inlined to public property(propertyKeyId int) : Cursor<PropertyItem> in class org.neo4j.kernel.impl.api.store.StoreAbstractRelationshipCursor",
         "comment": "<p>acquireSinglePropertyCursor(..) is in StoreStatement in the before refactoring version</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Laleh"
     }, {
         "type": "Inline Method",
-        "description": "Inline Method public acquireSinglePropertyCursor(firstPropertyRecordId long, propertyKeyId int) : Cursor inlined to public property(propertyKeyId int) : Cursor in class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor",
+        "description": "Inline Method public acquireSinglePropertyCursor(firstPropertyRecordId long, propertyKeyId int) : Cursor<PropertyItem> inlined to public property(propertyKeyId int) : Cursor<PropertyItem> in class org.neo4j.kernel.impl.api.store.StoreAbstractNodeCursor",
         "comment": "<p>acquireSinglePropertyCursor(..) is in StoreStatement in the before refactoring version</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -52048,15 +52048,15 @@
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Davood, Automatic"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method protected incrementTotalIterations() : void extracted from public runIterations(maxNrIterations int) : int in class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method protected incrementTotalIterations() : void extracted from public runIterations(maxNrIterations int) : int in class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityPower & moved to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
         "comment": "<p>Extract and Move to the inner class</p><p>Extract and pull up actually</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood, Automatic"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method protected incrementTotalIterations() : void extracted from protected runInternalArnoldi(iterations int) : int in class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method protected incrementTotalIterations() : void extracted from protected runInternalArnoldi(iterations int) : int in class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityArnoldi & moved to class org.neo4j.graphalgo.impl.centrality.EigenvectorCentralityBase",
         "comment": "<p>Extract and Move to the inner class</p><p>Extract and pull up actually</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -54157,14 +54157,14 @@
         "validators": null
     }, {
         "type": "Extract Method",
-        "description": "Extract Method private computeSourcePreprocessorAndToolDeps(toolOptional Optional, source CxxSource) : ImmutableSortedSet extracted from public createPreprocessBuildRule(resolver BuildRuleResolver, name String, source CxxSource, pic PicType) : CxxPreprocessAndCompile in class com.facebook.buck.cxx.CxxSourceRuleFactory",
+        "description": "Extract Method private computeSourcePreprocessorAndToolDeps(toolOptional Optional<Tool>, source CxxSource) : ImmutableSortedSet<BuildRule> extracted from public createPreprocessBuildRule(resolver BuildRuleResolver, name String, source CxxSource, pic PicType) : CxxPreprocessAndCompile in class com.facebook.buck.cxx.CxxSourceRuleFactory",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
     }, {
         "type": "Extract Method",
-        "description": "Extract Method private computeSourcePreprocessorAndToolDeps(toolOptional Optional, source CxxSource) : ImmutableSortedSet extracted from public createPreprocessAndCompileBuildRule(resolver BuildRuleResolver, name String, source CxxSource, pic PicType, strategy CxxPreprocessMode) : CxxPreprocessAndCompile in class com.facebook.buck.cxx.CxxSourceRuleFactory",
+        "description": "Extract Method private computeSourcePreprocessorAndToolDeps(toolOptional Optional<Tool>, source CxxSource) : ImmutableSortedSet<BuildRule> extracted from public createPreprocessAndCompileBuildRule(resolver BuildRuleResolver, name String, source CxxSource, pic PicType, strategy CxxPreprocessMode) : CxxPreprocessAndCompile in class com.facebook.buck.cxx.CxxSourceRuleFactory",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -54894,106 +54894,106 @@
         "detectionTools": "RefactoringMiner, RefDiff",
         "validators": null
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public fromJson(json JsonObject, obj DatagramSocketOptions) : void extracted from public DatagramSocketOptions(json JsonObject) in class io.vertx.core.datagram.DatagramSocketOptions",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public fromJson(json JsonObject, obj DatagramSocketOptions) : void extracted from public DatagramSocketOptions(json JsonObject) in class io.vertx.core.datagram.DatagramSocketOptions & moved to class io.vertx.core.datagram.DatagramSocketOptionsHelper",
         "comment": "<p>added</p><p>Davood: extract and move method</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public fromJson(json JsonObject, obj HttpClientOptions) : void extracted from public HttpClientOptions(json JsonObject) in class io.vertx.core.http.HttpClientOptions",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public fromJson(json JsonObject, obj HttpClientOptions) : void extracted from public HttpClientOptions(json JsonObject) in class io.vertx.core.http.HttpClientOptions & moved to class io.vertx.core.http.HttpClientOptionsHelper",
         "comment": "<p>added</p><p>The init() method is also reported, which seems to be correct</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public fromJson(json JsonObject, obj HttpServerOptions) : void extracted from public HttpServerOptions(json JsonObject) in class io.vertx.core.http.HttpServerOptions",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public fromJson(json JsonObject, obj HttpServerOptions) : void extracted from public HttpServerOptions(json JsonObject) in class io.vertx.core.http.HttpServerOptions & moved to class io.vertx.core.http.HttpServerOptionsHelper",
         "comment": "added",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public fromJson(json JsonObject, obj ClientOptionsBase) : void extracted from public ClientOptionsBase(json JsonObject) in class io.vertx.core.net.ClientOptionsBase",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public fromJson(json JsonObject, obj ClientOptionsBase) : void extracted from public ClientOptionsBase(json JsonObject) in class io.vertx.core.net.ClientOptionsBase & moved to class io.vertx.core.net.ClientOptionsBaseHelper",
         "comment": "added",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public fromJson(json JsonObject, obj TCPSSLOptions) : void extracted from public TCPSSLOptions(json JsonObject) in class io.vertx.core.net.TCPSSLOptions",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public fromJson(json JsonObject, obj TCPSSLOptions) : void extracted from public TCPSSLOptions(json JsonObject) in class io.vertx.core.net.TCPSSLOptions & moved to class io.vertx.core.net.TCPSSLOptionsHelper",
         "comment": "added",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public fromJson(json JsonObject, obj PemKeyCertOptions) : void extracted from public PemKeyCertOptions(json JsonObject) in class io.vertx.core.net.PemKeyCertOptions",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public fromJson(json JsonObject, obj PemKeyCertOptions) : void extracted from public PemKeyCertOptions(json JsonObject) in class io.vertx.core.net.PemKeyCertOptions & moved to class io.vertx.core.net.PemKeyCertOptionsHelper",
         "comment": "added",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public fromJson(json JsonObject, obj NetServerOptions) : void extracted from public NetServerOptions(json JsonObject) in class io.vertx.core.net.NetServerOptions",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public fromJson(json JsonObject, obj NetServerOptions) : void extracted from public NetServerOptions(json JsonObject) in class io.vertx.core.net.NetServerOptions & moved to class io.vertx.core.net.NetServerOptionsHelper",
         "comment": "added",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public fromJson(json JsonObject, obj JksOptions) : void extracted from public JksOptions(json JsonObject) in class io.vertx.core.net.JksOptions",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public fromJson(json JsonObject, obj JksOptions) : void extracted from public JksOptions(json JsonObject) in class io.vertx.core.net.JksOptions & moved to class io.vertx.core.net.JksOptionsHelper",
         "comment": "added",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public fromJson(json JsonObject, obj PemTrustOptions) : void extracted from public PemTrustOptions(json JsonObject) in class io.vertx.core.net.PemTrustOptions",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public fromJson(json JsonObject, obj PemTrustOptions) : void extracted from public PemTrustOptions(json JsonObject) in class io.vertx.core.net.PemTrustOptions & moved to class io.vertx.core.net.PemTrustOptionsHelper",
         "comment": "added",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public fromJson(json JsonObject, obj VertxOptions) : void extracted from public VertxOptions(json JsonObject) in class io.vertx.core.VertxOptions",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public fromJson(json JsonObject, obj VertxOptions) : void extracted from public VertxOptions(json JsonObject) in class io.vertx.core.VertxOptions & moved to class io.vertx.core.VertxOptionsHelper",
         "comment": "added",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public fromJson(json JsonObject, obj NetworkOptions) : void extracted from public NetworkOptions(json JsonObject) in class io.vertx.core.net.NetworkOptions",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public fromJson(json JsonObject, obj NetworkOptions) : void extracted from public NetworkOptions(json JsonObject) in class io.vertx.core.net.NetworkOptions & moved to class io.vertx.core.net.NetworkOptionsHelper",
         "comment": "added",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public fromJson(json JsonObject, obj NetClientOptions) : void extracted from public NetClientOptions(json JsonObject) in class io.vertx.core.net.NetClientOptions",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public fromJson(json JsonObject, obj NetClientOptions) : void extracted from public NetClientOptions(json JsonObject) in class io.vertx.core.net.NetClientOptions & moved to class io.vertx.core.net.NetClientOptionsHelper",
         "comment": "added",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public fromJson(json JsonObject, obj OpenOptions) : void extracted from public OpenOptions(json JsonObject) in class io.vertx.core.file.OpenOptions",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public fromJson(json JsonObject, obj OpenOptions) : void extracted from public OpenOptions(json JsonObject) in class io.vertx.core.file.OpenOptions & moved to class io.vertx.core.file.OpenOptionsHelper",
         "comment": "added",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public fromJson(json JsonObject, obj MetricsOptions) : void extracted from public MetricsOptions(json JsonObject) in class io.vertx.core.metrics.MetricsOptions",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public fromJson(json JsonObject, obj MetricsOptions) : void extracted from public MetricsOptions(json JsonObject) in class io.vertx.core.metrics.MetricsOptions & moved to class io.vertx.core.metrics.MetricsOptionsHelper",
         "comment": "added",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Davood"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public fromJson(json JsonObject, obj PfxOptions) : void extracted from public PfxOptions(json JsonObject) in class io.vertx.core.net.PfxOptions",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public fromJson(json JsonObject, obj PfxOptions) : void extracted from public PfxOptions(json JsonObject) in class io.vertx.core.net.PfxOptions & moved to class io.vertx.core.net.PfxOptionsHelper",
         "comment": "<p>added</p><p>Davood: extract and move</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -56037,21 +56037,21 @@
         "validators": "Matin, Laleh, Davood"
     }, {
         "type": "Move Method",
-        "description": "Move Method public addAttributes(attributes Attribute[]) : AddStepHandler from class org.jboss.as.clustering.controller.AddStepHandler to public addAttributes(attributes Attribute[]) : ResourceDescriptor from class org.jboss.as.clustering.controller.ResourceDescriptor",
+        "description": "Move Method public addAttributes(attributes Attribute...) : AddStepHandler from class org.jboss.as.clustering.controller.AddStepHandler to public addAttributes(attributes Attribute...) : ResourceDescriptor from class org.jboss.as.clustering.controller.ResourceDescriptor",
         "comment": "<p>same as id:3646</p>",
         "validation": "FP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Davood"
     }, {
         "type": "Move Method",
-        "description": "Move Method public addAttributes(attributes Attribute[]) : BoottimeAddStepHandler from class org.jboss.as.clustering.controller.BoottimeAddStepHandler to public addAttributes(attributes Attribute[]) : ResourceDescriptor from class org.jboss.as.clustering.controller.ResourceDescriptor",
+        "description": "Move Method public addAttributes(attributes Attribute...) : BoottimeAddStepHandler from class org.jboss.as.clustering.controller.BoottimeAddStepHandler to public addAttributes(attributes Attribute...) : ResourceDescriptor from class org.jboss.as.clustering.controller.ResourceDescriptor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin"
     }, {
         "type": "Move Method",
-        "description": "Move Method public addAttributes(attributes Attribute[]) : RestartParentAddHandler from class org.jboss.as.clustering.controller.RestartParentAddHandler to public addAttributes(attributes Attribute[]) : ResourceDescriptor from class org.jboss.as.clustering.controller.ResourceDescriptor",
+        "description": "Move Method public addAttributes(attributes Attribute...) : RestartParentAddHandler<T> from class org.jboss.as.clustering.controller.RestartParentAddHandler to public addAttributes(attributes Attribute...) : ResourceDescriptor from class org.jboss.as.clustering.controller.ResourceDescriptor",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -56065,7 +56065,7 @@
         "validators": "Matin"
     }, {
         "type": "Inline Method",
-        "description": "Inline Method public build(target ServiceTarget, containerName String) : ServiceBuilder inlined to public build(target ServiceTarget) : ServiceBuilder in class org.wildfly.clustering.server.singleton.CacheSingletonServiceBuilder",
+        "description": "Inline Method public build(target ServiceTarget, containerName String) : ServiceBuilder<T> inlined to public build(target ServiceTarget) : ServiceBuilder<T> in class org.wildfly.clustering.server.singleton.CacheSingletonServiceBuilder",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -57493,21 +57493,21 @@
         "validators": null
     }, {
         "type": "Pull Up Method",
-        "description": "Pull Up Method protected logDebug(message String, arguments Object[]) : void from class cascading.stats.tez.TezNodeStats to protected logDebug(message String, arguments Object[]) : void from class cascading.stats.CascadingStats",
+        "description": "Pull Up Method protected logDebug(message String, arguments Object...) : void from class cascading.stats.tez.TezNodeStats to protected logDebug(message String, arguments Object...) : void from class cascading.stats.CascadingStats",
         "comment": "<p>It is a move but couldnt find a hierarchy</p><p>Nikos: TezNodeStats extends BaseHadoopNodeStats extends FlowNodeStats extends CascadingStats<br />but FlowNodeStats does not change in this commit</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
-        "description": "Pull Up Method protected logInfo(message String, arguments Object[]) : void from class cascading.stats.tez.TezNodeStats to protected logInfo(message String, arguments Object[]) : void from class cascading.stats.CascadingStats",
+        "description": "Pull Up Method protected logInfo(message String, arguments Object...) : void from class cascading.stats.tez.TezNodeStats to protected logInfo(message String, arguments Object...) : void from class cascading.stats.CascadingStats",
         "comment": "<p>It is a move but couldnt find a hierarchy</p><p>Nikos: TezNodeStats extends BaseHadoopNodeStats extends FlowNodeStats extends CascadingStats<br />but FlowNodeStats does not change in this commit</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Nikos"
     }, {
         "type": "Pull Up Method",
-        "description": "Pull Up Method protected logWarn(message String, arguments Object[]) : void from class cascading.stats.tez.TezNodeStats to protected logWarn(message String, arguments Object[]) : void from class cascading.stats.CascadingStats",
+        "description": "Pull Up Method protected logWarn(message String, arguments Object...) : void from class cascading.stats.tez.TezNodeStats to protected logWarn(message String, arguments Object...) : void from class cascading.stats.CascadingStats",
         "comment": "<p>It is a move but couldnt find a hierarchy</p><p>Nikos: TezNodeStats extends BaseHadoopNodeStats extends FlowNodeStats extends CascadingStats<br />but FlowNodeStats does not change in this commit</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -57528,7 +57528,7 @@
         "validators": "Matin, Laleh, Automatic"
     }, {
         "type": "Pull Up Attribute",
-        "description": "Pull Up Attribute private prefixID : String from class cascading.stats.tez.TezNodeStats to class cascading.stats.CascadingStats",
+        "description": "Pull Up Attribute private prefixID : String from class cascading.stats.tez.TezNodeStats to private prefixID : String from class cascading.stats.CascadingStats",
         "comment": "<p>It is a move but couldnt find a hierarchy</p><p>Nikos: TezNodeStats extends BaseHadoopNodeStats extends FlowNodeStats extends CascadingStats<br />but FlowNodeStats does not change in this commit</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -59172,7 +59172,7 @@
         "validators": "Davood"
     }, {
         "type": "Rename Method",
-        "description": "Rename Method public queryProcessInstanceLogs(queryData QueryData) : List renamed to public queryLogs(queryData QueryWhere, queryClass Class, resultClass Class) : List in class org.jbpm.process.audit.JPAAuditLogService",
+        "description": "Rename Method public queryProcessInstanceLogs(queryData QueryData) : List<org.kie.api.runtime.manager.audit.ProcessInstanceLog> renamed to public queryLogs(queryData QueryWhere, queryClass Class<T>, resultClass Class<R>) : List<R> in class org.jbpm.process.audit.JPAAuditLogService",
         "comment": "<p>The method is renamed in the interface and in the implementors and the call sites</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -60234,7 +60234,7 @@
         "validators": "Davood"
     }, {
         "type": "Inline Method",
-        "description": "Inline Method public createServer(engine Engine, port int, supportedCompression String, useAsyncServletApi boolean, asyncTimeOut int, requestFilters List, responseFilters List) : HttpServer inlined to public init(requestFilters List, responseFilters List) : void in class com.linkedin.restli.examples.RestLiIntegrationTest",
+        "description": "Inline Method public createServer(engine Engine, port int, supportedCompression String, useAsyncServletApi boolean, asyncTimeOut int, requestFilters List<? extends RequestFilter>, responseFilters List<? extends ResponseFilter>) : HttpServer inlined to public init(requestFilters List<? extends RequestFilter>, responseFilters List<? extends ResponseFilter>) : void in class com.linkedin.restli.examples.RestLiIntegrationTest",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -63180,8 +63180,8 @@
         "detectionTools": "RefDiff",
         "validators": "Matin, Davood"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public of(classLoader ClassLoader, deploymentUnit DeploymentUnit) : WildFlyJobXmlResolver extracted from public deploy(phaseContext DeploymentPhaseContext) : void in class org.wildfly.extension.batch.jberet.deployment.BatchEnvironmentProcessor",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public of(classLoader ClassLoader, deploymentUnit DeploymentUnit) : WildFlyJobXmlResolver extracted from public deploy(phaseContext DeploymentPhaseContext) : void in class org.wildfly.extension.batch.jberet.deployment.BatchEnvironmentProcessor & moved to class org.wildfly.extension.batch.jberet.deployment.WildFlyJobXmlResolver",
         "comment": "<p>Extract and Move to other class</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
@@ -63475,22 +63475,22 @@
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Automatic"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public isSingleFile() : boolean extracted from protected write(featureCollection FeatureCollectionResponse, output OutputStream, getFeature Operation) : void in class org.geoserver.wfs.response.Ogr2OgrOutputFormat",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public isSingleFile() : boolean extracted from protected write(featureCollection FeatureCollectionResponse, output OutputStream, getFeature Operation) : void in class org.geoserver.wfs.response.Ogr2OgrOutputFormat & moved to class org.geoserver.ogr.core.Format",
         "comment": "<p>Extract and Move to other class </p><p>Extract and Move to class Format</p>",
         "validation": "CTP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Davood"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public isSingleFile() : boolean extracted from public getMimeType(value Object, operation Operation) : String in class org.geoserver.wfs.response.Ogr2OgrOutputFormat",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public isSingleFile() : boolean extracted from public getMimeType(value Object, operation Operation) : String in class org.geoserver.wfs.response.Ogr2OgrOutputFormat & moved to class org.geoserver.ogr.core.Format",
         "comment": "<p>Extract and Move to other&nbsp; class</p><p>Extract and Move to class Format</p>",
         "validation": "TP",
         "detectionTools": "RefDiff",
         "validators": "Matin, Laleh, Davood"
     }, {
-        "type": "Extract Method",
-        "description": "Extract Method public isSingleFile() : boolean extracted from public getAttachmentFileName(value Object, operation Operation) : String in class org.geoserver.wfs.response.Ogr2OgrOutputFormat",
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public isSingleFile() : boolean extracted from public getAttachmentFileName(value Object, operation Operation) : String in class org.geoserver.wfs.response.Ogr2OgrOutputFormat & moved to class org.geoserver.ogr.core.Format",
         "comment": "<p>Extract and Move to other class</p><p><span class='blob-code-inner'><span class='pl-smi x x-first x-last'>Extract and Move to class Format</span></span></p>",
         "validation": "TP",
         "detectionTools": "RefDiff",

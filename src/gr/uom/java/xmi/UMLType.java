@@ -73,7 +73,7 @@ public class UMLType implements Serializable, LocationInfoProvider {
 	}
 
     public boolean equalsWithSubType(UMLType typeObject) {
-    	if(lastCamelCaseTokenMatch(this.nonQualifiedClassType, typeObject.nonQualifiedClassType)) {
+    	if(firstOrLastCamelCaseTokenMatch(this.nonQualifiedClassType, typeObject.nonQualifiedClassType)) {
             if(this.typeArguments == null && typeObject.typeArguments == null)
                 return this.arrayDimension == typeObject.arrayDimension;
             else if(this.typeArguments != null && typeObject.typeArguments != null)
@@ -86,11 +86,11 @@ public class UMLType implements Serializable, LocationInfoProvider {
     	return false;
     }
 
-	private static boolean lastCamelCaseTokenMatch(String classType1, String classType2) {
+	private static boolean firstOrLastCamelCaseTokenMatch(String classType1, String classType2) {
 		String[] tokens1 = CAMEL_CASE_SPLIT_PATTERN.split(classType1);
 		String[] tokens2 = CAMEL_CASE_SPLIT_PATTERN.split(classType2);
 		if(tokens1.length > 0 && tokens2.length > 0) {
-			return tokens1[tokens1.length-1].equals(tokens2[tokens2.length-1]);
+			return tokens1[0].equals(tokens2[0]) || tokens1[tokens1.length-1].equals(tokens2[tokens2.length-1]);
 		}
 		return false;
 	}

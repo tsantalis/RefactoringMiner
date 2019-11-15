@@ -35967,14 +35967,14 @@
         "description": "Rename Parameter composeText : EmojiEditText to listener : EmojiEventListener in method public setEmojiEventListener(listener EmojiEventListener) : void in class org.thoughtcrime.securesms.components.emoji.EmojiDrawer",
         "comment": "null",
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": "Ameya"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type composeText : EmojiEditText to listener : EmojiEventListener in method public setEmojiEventListener(listener EmojiEventListener) : void in class org.thoughtcrime.securesms.components.emoji.EmojiDrawer",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Change Return Type",
@@ -36004,6 +36004,13 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public setComposeEditText(composeText EmojiEditText) : void renamed to public setEmojiEventListener(listener EmojiEventListener) : void in class org.thoughtcrime.securesms.components.emoji.EmojiDrawer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1255
 }, {
@@ -39466,7 +39473,7 @@
         "description": "Rename Method public setBatteryController(batteryController BatteryController) : void renamed to public setBatteryStateRegistar(batteryStateRegistar BatteryStateRegistar) : void in class com.android.systemui.BatteryLevelTextView",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff",
+        "detectionTools": "RefactoringMiner, RefDiff",
         "validators": "Matin"
     }, {
         "type": "Extract Variable",
@@ -39501,7 +39508,7 @@
         "description": "Rename Parameter batteryController : BatteryController to batteryStateRegistar : BatteryStateRegistar in method public setBatteryStateRegistar(batteryStateRegistar BatteryStateRegistar) : void in class com.android.systemui.BatteryLevelTextView",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Change Attribute Type",
@@ -39536,7 +39543,7 @@
         "description": "Change Parameter Type batteryController : BatteryController to batteryStateRegistar : BatteryStateRegistar in method public setBatteryStateRegistar(batteryStateRegistar BatteryStateRegistar) : void in class com.android.systemui.BatteryLevelTextView",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "GumTreeDiff",
+        "detectionTools": "RefactoringMiner, GumTreeDiff",
         "validators": null
     }, {
         "type": "Change Attribute Type",
@@ -59856,6 +59863,48 @@
         "validation": "FP",
         "detectionTools": "GumTreeDiff",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public queryNodeInstanceLogs(queryData QueryData) : List<org.kie.api.runtime.manager.audit.NodeInstanceLog> renamed to public queryLogs(queryWhere QueryWhere, queryType Class<T>, resultType Class<R>) : List<R> in class org.jbpm.process.audit.AuditLogService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public queryNodeInstanceLogs(queryData QueryData) : List<org.kie.api.runtime.manager.audit.NodeInstanceLog> renamed to public queryLogs(queryData QueryWhere, queryClass Class<T>, resultClass Class<R>) : List<R> in class org.jbpm.process.audit.JPAAuditLogService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type List<org.kie.api.runtime.manager.audit.NodeInstanceLog> to List<R> in method public queryLogs(queryWhere QueryWhere, queryType Class<T>, resultType Class<R>) : List<R> in class org.jbpm.process.audit.AuditLogService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type List<org.kie.api.runtime.manager.audit.NodeInstanceLog> to List<R> in method public queryLogs(queryData QueryWhere, queryClass Class<T>, resultClass Class<R>) : List<R> in class org.jbpm.process.audit.JPAAuditLogService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type results : List<NodeInstanceLog> to results : List<T> in method public queryLogs(queryData QueryWhere, queryClass Class<T>, resultClass Class<R>) : List<R> in class org.jbpm.process.audit.JPAAuditLogService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type queryData : QueryData to queryData : QueryWhere in method public queryLogs(queryData QueryWhere, queryClass Class<T>, resultClass Class<R>) : List<R> in class org.jbpm.process.audit.JPAAuditLogService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 3454
 }, {

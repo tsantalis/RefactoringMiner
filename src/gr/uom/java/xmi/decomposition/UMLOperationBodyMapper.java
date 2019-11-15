@@ -9,7 +9,7 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.replacement.AddVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
-import gr.uom.java.xmi.decomposition.replacement.ConcatenationReplacement;
+import gr.uom.java.xmi.decomposition.replacement.IntersectionReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationWithClassInstanceCreationReplacement;
@@ -63,7 +63,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private List<UMLOperationBodyMapper> childMappers = new ArrayList<UMLOperationBodyMapper>();
 	private UMLOperationBodyMapper parentMapper;
 	private static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)|(\\?)|(:)");
-	private static final String SPLIT_CONCAT_STRING_PATTERN = "(\\s)*(\\+)(\\s)*";
+	public static final String SPLIT_CONCAT_STRING_PATTERN = "(\\s)*(\\+)(\\s)*";
 	private static final Pattern DOUBLE_QUOTES = Pattern.compile("\"([^\"]*)\"|(\\S+)");
 	private UMLClassBaseDiff classDiff;
 	private UMLModelDiff modelDiff;
@@ -1978,7 +1978,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		//method invocation is identical if arguments are wrapped
+		//method invocation is identical if arguments are wrapped or concatenated
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				invocationCoveringTheEntireStatement1.identicalExpression(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements()) &&
 				invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2) ) {
@@ -1987,6 +1987,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(invocationCoveringTheEntireStatement1.identicalOrWrappedArguments(invocation2)) {
 						Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 								invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_ARGUMENT_WRAPPED);
+						replacementInfo.addReplacement(replacement);
+						return replacementInfo.getReplacements();
+					}
+					if(invocationCoveringTheEntireStatement1.identicalOrConcatenatedArguments(invocation2)) {
+						Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+								invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_ARGUMENT_CONCATENATED);
 						replacementInfo.addReplacement(replacement);
 						return replacementInfo.getReplacements();
 					}
@@ -3149,7 +3155,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			int size = filteredIntersection.size();
 			int threshold = Math.max(tokens1.size(), tokens2.size()) - size;
 			if((size > 0 && size > threshold) || (size > 1 && size >= threshold)) {
-				ConcatenationReplacement r = new ConcatenationReplacement(s1, s2, intersection);
+				IntersectionReplacement r = new IntersectionReplacement(s1, s2, intersection, ReplacementType.CONCATENATION);
 				info.getReplacements().add(r);
 				return true;
 			}
@@ -3197,6 +3203,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						matches++;
 					}
 				}
+			}
+			if(matches > 0) {
+				Replacement r = new IntersectionReplacement(s1, s2, intersection, ReplacementType.CONDITIONAL);
+				info.addReplacement(r);
 			}
 			boolean invertConditionalFound = false;
 			for(String subCondition1 : subConditionsAsList1) {

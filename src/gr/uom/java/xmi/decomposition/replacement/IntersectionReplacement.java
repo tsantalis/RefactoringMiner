@@ -2,10 +2,10 @@ package gr.uom.java.xmi.decomposition.replacement;
 
 import java.util.Set;
 
-public class ConcatenationReplacement extends Replacement {
+public class IntersectionReplacement extends Replacement {
 	private Set<String> commonElements;
-	public ConcatenationReplacement(String before, String after, Set<String> commonElements) {
-		super(before, after, ReplacementType.CONCATENATION);
+	public IntersectionReplacement(String before, String after, Set<String> commonElements, ReplacementType type) {
+		super(before, after, type);
 		this.commonElements = commonElements;
 	}
 	public Set<String> getCommonElements() {

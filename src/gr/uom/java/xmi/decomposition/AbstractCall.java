@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -117,6 +118,32 @@ public abstract class AbstractCall implements LocationInfoProvider {
 				}
 			}
 			if(!argument1.equals(argument2) && !argumentReplacement)
+				return false;
+		}
+		return true;
+	}
+
+	public boolean identicalOrConcatenatedArguments(AbstractCall call) {
+		List<String> arguments1 = getArguments();
+		List<String> arguments2 = call.getArguments();
+		if(arguments1.size() != arguments2.size())
+			return false;
+		for(int i=0; i<arguments1.size(); i++) {
+			String argument1 = arguments1.get(i);
+			String argument2 = arguments2.get(i);
+			boolean argumentConcatenated = false;
+			if((argument1.contains("+") || argument2.contains("+")) && !argument1.contains("++") && !argument2.contains("++")) {
+				Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(argument1.split(UMLOperationBodyMapper.SPLIT_CONCAT_STRING_PATTERN)));
+				Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(argument2.split(UMLOperationBodyMapper.SPLIT_CONCAT_STRING_PATTERN)));
+				Set<String> intersection = new LinkedHashSet<String>(tokens1);
+				intersection.retainAll(tokens2);
+				int size = intersection.size();
+				int threshold = Math.max(tokens1.size(), tokens2.size()) - size;
+				if(size > 0 && size >= threshold) {
+					argumentConcatenated = true;
+				}
+			}
+			if(!argument1.equals(argument2) && !argumentConcatenated)
 				return false;
 		}
 		return true;

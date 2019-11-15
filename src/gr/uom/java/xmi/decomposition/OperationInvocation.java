@@ -25,7 +25,6 @@ public class OperationInvocation extends AbstractCall {
 	private String methodName;
 	private List<String> subExpressions = new ArrayList<String>();
 	private volatile int hashCode = 0;
-	private static final String SPLIT_CONCAT_STRING_PATTERN = "(\\s)*(\\+)(\\s)*";
 	
 	public OperationInvocation(CompilationUnit cu, String filePath, MethodInvocation invocation) {
 		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.METHOD_INVOCATION);
@@ -176,7 +175,7 @@ public class OperationInvocation extends AbstractCall {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("ClassLoader"));
     		}
     		else if(arg.contains("+") && !arg.contains("++") && !UMLOperationBodyMapper.containsMethodSignatureOfAnonymousClass(arg)) {
-    			String[] tokens = arg.split(SPLIT_CONCAT_STRING_PATTERN);
+    			String[] tokens = arg.split(UMLOperationBodyMapper.SPLIT_CONCAT_STRING_PATTERN);
     			if(tokens[0].startsWith("\"") && tokens[0].endsWith("\"")) {
     				inferredArgumentTypes.add(UMLType.extractTypeObject("String"));
     			}

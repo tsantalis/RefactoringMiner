@@ -21,6 +21,7 @@ import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.FileASTRequestor;
 import org.eclipse.jdt.core.dom.IDocElement;
@@ -45,7 +46,8 @@ import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class UMLModelASTReader {
-	public static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
+	private static final String FREE_MARKER_GENERATED = "generated using freemarker";
+	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
 	
 	private UMLModel umlModel;
 	private String projectRoot;
@@ -64,6 +66,9 @@ public class UMLModelASTReader {
 			parser.setKind(ASTParser.K_COMPILATION_UNIT);
 			parser.setStatementsRecovery(true);
 			parser.setSource(javaFileContents.get(filePath).toCharArray());
+			if(javaFileContents.get(filePath).contains(FREE_MARKER_GENERATED)) {
+				return;
+			}
 			CompilationUnit compilationUnit = (CompilationUnit)parser.createAST(null);
 			processCompilationUnit(filePath, compilationUnit);
 		}
@@ -128,6 +133,10 @@ public class UMLModelASTReader {
         		TypeDeclaration topLevelTypeDeclaration = (TypeDeclaration)abstractTypeDeclaration;
         		processTypeDeclaration(compilationUnit, topLevelTypeDeclaration, packageName, sourceFilePath, importedTypes);
         	}
+        	else if(abstractTypeDeclaration instanceof EnumDeclaration) {
+        		EnumDeclaration enumDeclaration = (EnumDeclaration)abstractTypeDeclaration;
+        		processEnumDeclaration(compilationUnit, enumDeclaration, packageName, sourceFilePath, importedTypes);
+        	}
         }
 	}
 
@@ -149,10 +158,57 @@ public class UMLModelASTReader {
 		return doc;
 	}
 
+	private void processEnumDeclaration(CompilationUnit cu, EnumDeclaration enumDeclaration, String packageName, String sourceFile,
+			List<String> importedTypes) {
+		UMLJavadoc javadoc = generateJavadoc(enumDeclaration);
+		if(javadoc != null && javadoc.containsIgnoreCase(FREE_MARKER_GENERATED)) {
+			return;
+		}
+		String className = enumDeclaration.getName().getFullyQualifiedName();
+		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, enumDeclaration, CodeElementType.TYPE_DECLARATION);
+		UMLClass umlClass = new UMLClass(packageName, className, locationInfo, enumDeclaration.isPackageMemberTypeDeclaration(), importedTypes);
+		umlClass.setJavadoc(javadoc);
+		
+		umlClass.setEnum(true);
+		processModifiers(enumDeclaration, umlClass);
+		
+		processBodyDeclarations(cu, enumDeclaration, packageName, sourceFile, importedTypes, umlClass);
+		this.getUmlModel().addClass(umlClass);
+	}
+
+	private void processBodyDeclarations(CompilationUnit cu, AbstractTypeDeclaration abstractTypeDeclaration, String packageName,
+			String sourceFile, List<String> importedTypes, UMLClass umlClass) {
+		List<BodyDeclaration> bodyDeclarations = abstractTypeDeclaration.bodyDeclarations();
+		for(BodyDeclaration bodyDeclaration : bodyDeclarations) {
+			if(bodyDeclaration instanceof FieldDeclaration) {
+				FieldDeclaration fieldDeclaration = (FieldDeclaration)bodyDeclaration;
+				List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, umlClass.isInterface(), sourceFile);
+	    		for(UMLAttribute attribute : attributes) {
+	    			attribute.setClassName(umlClass.getName());
+	    			umlClass.addAttribute(attribute);
+	    		}
+			}
+			else if(bodyDeclaration instanceof MethodDeclaration) {
+				MethodDeclaration methodDeclaration = (MethodDeclaration)bodyDeclaration;
+				UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, umlClass.isInterface(), sourceFile);
+	    		operation.setClassName(umlClass.getName());
+	    		umlClass.addOperation(operation);
+			}
+			else if(bodyDeclaration instanceof TypeDeclaration) {
+				TypeDeclaration typeDeclaration = (TypeDeclaration)bodyDeclaration;
+				processTypeDeclaration(cu, typeDeclaration, umlClass.getName(), sourceFile, importedTypes);
+			}
+			else if(bodyDeclaration instanceof EnumDeclaration) {
+				EnumDeclaration enumDeclaration = (EnumDeclaration)bodyDeclaration;
+				processEnumDeclaration(cu, enumDeclaration, umlClass.getName(), sourceFile, importedTypes);
+			}
+		}
+	}
+
 	private void processTypeDeclaration(CompilationUnit cu, TypeDeclaration typeDeclaration, String packageName, String sourceFile,
 			List<String> importedTypes) {
 		UMLJavadoc javadoc = generateJavadoc(typeDeclaration);
-		if(javadoc != null && javadoc.contains("Source code generated using FreeMarker template")) {
+		if(javadoc != null && javadoc.containsIgnoreCase(FREE_MARKER_GENERATED)) {
 			return;
 		}
 		String className = typeDeclaration.getName().getFullyQualifiedName();
@@ -164,18 +220,7 @@ public class UMLModelASTReader {
 			umlClass.setInterface(true);
     	}
     	
-    	int modifiers = typeDeclaration.getModifiers();
-    	if((modifiers & Modifier.ABSTRACT) != 0)
-    		umlClass.setAbstract(true);
-    	
-    	if((modifiers & Modifier.PUBLIC) != 0)
-    		umlClass.setVisibility("public");
-    	else if((modifiers & Modifier.PROTECTED) != 0)
-    		umlClass.setVisibility("protected");
-    	else if((modifiers & Modifier.PRIVATE) != 0)
-    		umlClass.setVisibility("private");
-    	else
-    		umlClass.setVisibility("package");
+    	processModifiers(typeDeclaration, umlClass);
 		
     	List<TypeParameter> typeParameters = typeDeclaration.typeParameters();
 		for(TypeParameter typeParameter : typeParameters) {
@@ -263,6 +308,29 @@ public class UMLModelASTReader {
 		for(TypeDeclaration type : types) {
 			processTypeDeclaration(cu, type, umlClass.getName(), sourceFile, importedTypes);
 		}
+		
+		List<BodyDeclaration> bodyDeclarations = typeDeclaration.bodyDeclarations();
+		for(BodyDeclaration bodyDeclaration : bodyDeclarations) {
+			if(bodyDeclaration instanceof EnumDeclaration) {
+				EnumDeclaration enumDeclaration = (EnumDeclaration)bodyDeclaration;
+				processEnumDeclaration(cu, enumDeclaration, umlClass.getName(), sourceFile, importedTypes);
+			}
+		}
+	}
+
+	private void processModifiers(AbstractTypeDeclaration typeDeclaration, UMLClass umlClass) {
+		int modifiers = typeDeclaration.getModifiers();
+    	if((modifiers & Modifier.ABSTRACT) != 0)
+    		umlClass.setAbstract(true);
+    	
+    	if((modifiers & Modifier.PUBLIC) != 0)
+    		umlClass.setVisibility("public");
+    	else if((modifiers & Modifier.PROTECTED) != 0)
+    		umlClass.setVisibility("protected");
+    	else if((modifiers & Modifier.PRIVATE) != 0)
+    		umlClass.setVisibility("private");
+    	else
+    		umlClass.setVisibility("package");
 	}
 
 	private UMLOperation processMethodDeclaration(CompilationUnit cu, MethodDeclaration methodDeclaration, String packageName, boolean isInterfaceMethod, String sourceFile) {

@@ -251,6 +251,7 @@ public abstract class UMLAbstractClass {
 			return commonOperations.size() == totalOperations;
 		}
 		return (commonOperations.size() > Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0)) ||
+				(commonOperations.size() > Math.floor(totalOperations/3.0*2.0) && (commonAttributes.size() >= 2 || totalAttributes == 0)) ||
 				(commonAttributes.size() > Math.floor(totalAttributes/2.0) && (commonOperations.size() > 2 || totalOperations == 0)) ||
 				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && this.attributes.size() == umlClass.attributes.size()) ||
 				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && totalAttributes == 1);

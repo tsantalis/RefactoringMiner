@@ -9,6 +9,7 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.RenamePattern;
+import gr.uom.java.xmi.diff.StringDistance;
 
 public abstract class UMLAbstractClass {
 	protected LocationInfo locationInfo;
@@ -59,13 +60,29 @@ public abstract class UMLAbstractClass {
 	}
 
 	public UMLOperation operationWithTheSameSignatureIgnoringChangedTypes(UMLOperation operation) {
+		List<UMLOperation> matchingOperations = new ArrayList<UMLOperation>();
 		for(UMLOperation originalOperation : operations) {
 			if(originalOperation.equalSignatureIgnoringChangedTypes(operation)) {
 				boolean originalOperationEmptyBody = originalOperation.getBody() == null || originalOperation.hasEmptyBody();
 				boolean operationEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
 				if(originalOperationEmptyBody == operationEmptyBody)
-					return originalOperation;
+					matchingOperations.add(originalOperation);
 			}
+		}
+		if(matchingOperations.size() == 1) {
+			return matchingOperations.get(0);
+		}
+		else if(matchingOperations.size() > 1) {
+			int minDistance = StringDistance.editDistance(matchingOperations.get(0).toString(), operation.toString());
+			UMLOperation matchingOperation = matchingOperations.get(0);
+			for(int i=1; i<matchingOperations.size(); i++) {
+				int distance = StringDistance.editDistance(matchingOperations.get(i).toString(), operation.toString());
+				if(distance < minDistance) {
+					minDistance = distance;
+					matchingOperation = matchingOperations.get(i);
+				}
+			}
+			return matchingOperation;
 		}
 		return null;
 	}

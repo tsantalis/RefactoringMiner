@@ -372,6 +372,16 @@ public class CompositeStatementObject extends AbstractStatement {
 		return variableDeclarations;
 	}
 
+	public List<VariableDeclaration> getVariableDeclarationsInScope(LocationInfo location) {
+		List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
+		for(VariableDeclaration variableDeclaration : getAllVariableDeclarations()) {
+			if(variableDeclaration.getScope().subsumes(location)) {
+				variableDeclarations.add(variableDeclaration);
+			}
+		}
+		return variableDeclarations;
+	}
+
 	@Override
 	public int statementCount() {
 		int count = 0;

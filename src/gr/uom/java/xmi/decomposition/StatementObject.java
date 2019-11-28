@@ -131,13 +131,6 @@ public class StatementObject extends AbstractStatement {
 		}
 	}
 
-	public boolean containsOnlyOneVariableAccess() {
-		return variables.size() == 1 && types.size() == 0 && variableDeclarations.size() == 0 &&
-				methodInvocationMap.size() == 0 && anonymousClassDeclarations.size() == 0 && creationMap.size() == 0 &&
-				stringLiterals.size() == 0 && booleanLiterals.size() == 0 && typeLiterals.size() == 0 && numberLiterals.size() == 0 &&
-				infixOperators.size() == 0 && arguments.size() == 0;
-	}
-
 	public List<String> stringRepresentation() {
 		List<String> stringRepresentation = new ArrayList<String>();
 		stringRepresentation.add(this.toString());

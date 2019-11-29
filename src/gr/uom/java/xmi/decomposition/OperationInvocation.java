@@ -17,8 +17,10 @@ import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ConstructorInvocation;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 
 public class OperationInvocation extends AbstractCall {
@@ -77,6 +79,32 @@ public class OperationInvocation extends AbstractCall {
 		this.arguments = new ArrayList<String>();
 		this.expression = "super";
 		this.subExpressions.add("super");
+		List<Expression> args = invocation.arguments();
+		for(Expression argument : args) {
+			this.arguments.add(argument.toString());
+		}
+	}
+
+	public OperationInvocation(CompilationUnit cu, String filePath, SuperConstructorInvocation invocation) {
+		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.SUPER_CONSTRUCTOR_INVOCATION);
+		this.methodName = "super";
+		this.typeArguments = invocation.arguments().size();
+		this.arguments = new ArrayList<String>();
+		List<Expression> args = invocation.arguments();
+		for(Expression argument : args) {
+			this.arguments.add(argument.toString());
+		}
+		if(invocation.getExpression() != null) {
+			this.expression = invocation.getExpression().toString();
+			processExpression(invocation.getExpression(), this.subExpressions);
+		}
+	}
+
+	public OperationInvocation(CompilationUnit cu, String filePath, ConstructorInvocation invocation) {
+		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.CONSTRUCTOR_INVOCATION);
+		this.methodName = "this";
+		this.typeArguments = invocation.arguments().size();
+		this.arguments = new ArrayList<String>();
 		List<Expression> args = invocation.arguments();
 		for(Expression argument : args) {
 			this.arguments.add(argument.toString());

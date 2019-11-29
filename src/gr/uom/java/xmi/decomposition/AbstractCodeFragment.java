@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
 
@@ -203,6 +204,11 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				}
 				else if(expressionIsTheInitializerOfVariableDeclaration(methodInvocation)) {
 					invocation.coverage = StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL;
+					return invocation;
+				}
+				else if(invocation.getLocationInfo().getCodeElementType().equals(CodeElementType.SUPER_CONSTRUCTOR_INVOCATION) ||
+						invocation.getLocationInfo().getCodeElementType().equals(CodeElementType.CONSTRUCTOR_INVOCATION)) {
+					invocation.coverage = StatementCoverageType.ONLY_CALL;
 					return invocation;
 				}
 			}

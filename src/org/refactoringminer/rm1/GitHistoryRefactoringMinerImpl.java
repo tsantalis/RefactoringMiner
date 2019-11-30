@@ -111,7 +111,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			RefactoringType.CHANGE_VARIABLE_TYPE,
 			RefactoringType.CHANGE_PARAMETER_TYPE,
 			RefactoringType.CHANGE_ATTRIBUTE_TYPE,
-			RefactoringType.EXTRACT_ATTRIBUTE
+			RefactoringType.EXTRACT_ATTRIBUTE,
+			RefactoringType.MOVE_AND_RENAME_OPERATION
 		);
 	}
 

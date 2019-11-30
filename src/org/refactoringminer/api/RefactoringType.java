@@ -18,6 +18,7 @@ public enum RefactoringType {
 	RENAME_METHOD("Rename Method", "Rename Method (.+) renamed to (.+) in class (.+)"),
 	INLINE_OPERATION("Inline Method", "Inline Method (.+) inlined to (.+) in class (.+)", 2),
 	MOVE_OPERATION("Move Method", "Move Method (.+) from class (.+) to (.+) from class (.+)"),
+	MOVE_AND_RENAME_OPERATION("Move And Rename Method", "Move And Rename Method (.+) from class (.+) to (.+) from class (.+)"),
 	PULL_UP_OPERATION("Pull Up Method", "Pull Up Method (.+) from class (.+) to (.+) from class (.+)", 1, 2),
 	MOVE_CLASS("Move Class", "Move Class (.+) moved to (.+)"),
 	MOVE_RENAME_CLASS("Move And Rename Class", ".+"),

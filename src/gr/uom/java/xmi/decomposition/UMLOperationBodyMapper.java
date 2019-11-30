@@ -763,7 +763,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return count;
 	}
 
-	private int operationNameEditDistance() {
+	public int operationNameEditDistance() {
 		return StringDistance.editDistance(this.operation1.getName(), this.operation2.getName());
 	}
 
@@ -3570,6 +3570,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
     		return this.operation1.equals(other.operation1) && this.operation2.equals(other.operation2);
     	}
     	return false;
+	}
+
+	public String toString() {
+		return operation1.toString() + " -> " + operation2.toString();
 	}
 
 	@Override

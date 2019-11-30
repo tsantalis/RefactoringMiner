@@ -1664,7 +1664,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(distanceRaw == -1 && multipleInstances) {
 						distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2());
 					}
-					boolean multipleInstanceRule = multipleInstances && Math.abs(s1.length() - s2.length()) == Math.abs(distanceRaw - minDistance);
+					boolean multipleInstanceRule = multipleInstances && Math.abs(s1.length() - s2.length()) == Math.abs(distanceRaw - minDistance) && !s1.equals(s2);
 					if(distanceRaw >= 0 && (distanceRaw < replacementInfo.getRawDistance() || multipleInstanceRule)) {
 						minDistance = distanceRaw;
 						Replacement replacement = null;

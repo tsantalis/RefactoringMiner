@@ -118,6 +118,18 @@ public class ObjectCreation extends AbstractCall {
     	return hashCode;
     }
 
+    public boolean identicalArrayInitializer(ObjectCreation other) {
+    	if(this.isArray && other.isArray) {
+    		if(this.anonymousClassDeclaration != null && other.anonymousClassDeclaration != null) {
+    			return this.anonymousClassDeclaration.equals(other.anonymousClassDeclaration);
+    		}
+    		else if(this.anonymousClassDeclaration == null && other.anonymousClassDeclaration == null) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+
 	public double normalizedNameDistance(AbstractCall call) {
 		String s1 = getType().toString().toLowerCase();
 		String s2 = ((ObjectCreation)call).getType().toString().toLowerCase();

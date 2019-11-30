@@ -2172,7 +2172,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		//object creation is identical
 		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null &&
 				creationCoveringTheEntireStatement1.identical(creationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
-			return replacementInfo.getReplacements();
+			boolean identicalArrayInitializer = true;
+			if(creationCoveringTheEntireStatement1.isArray() && creationCoveringTheEntireStatement2.isArray()) {
+				identicalArrayInitializer = creationCoveringTheEntireStatement1.identicalArrayInitializer(creationCoveringTheEntireStatement2);
+			}
+			if(identicalArrayInitializer) {
+				return replacementInfo.getReplacements();
+			}
 		}
 		//object creation has only changes in the arguments
 		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null) {

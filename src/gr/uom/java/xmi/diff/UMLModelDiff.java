@@ -11,6 +11,7 @@ import gr.uom.java.xmi.UMLRealization;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
@@ -2093,6 +2094,19 @@ public class UMLModelDiff {
 		   if(!(mapper.exactMatches() == mapper.mappingsWithoutBlocks() && mapper.nonMappedElementsT1() == 0 && mapper.nonMappedElementsT2() == 0)) {
 			   return false;
 		   }
+	   }
+	   int exactLeafMappings = 0;
+	   for(AbstractCodeMapping mapping : mapper.getMappings()) {
+		   if(mapping instanceof LeafMapping && mapping.isExact() && !mapping.getFragment1().getString().startsWith("return ")) {
+			   exactLeafMappings++;
+		   }
+	   }
+	   double normalizedEditDistance = mapper.normalizedEditDistance();
+	   if(exactLeafMappings == 0 && normalizedEditDistance > 0.24) {
+		   return false;
+	   }
+	   if(exactLeafMappings == 1 && normalizedEditDistance > 0.5 && (mapper.nonMappedElementsT1() > 0 || mapper.nonMappedElementsT2() > 0)) {
+		   return false;
 	   }
 	   if(addedOperation.equalReturnParameter(removedOperation) &&
 			   addedOperation.isAbstract() == removedOperation.isAbstract() &&

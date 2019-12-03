@@ -252,7 +252,9 @@ public class UMLModelDiff {
 	   if(subclassDiff != null) {
 		   UMLType superclass = subclassDiff.getSuperclass();
 		   if(superclass != null) {
-			   return checkInheritanceRelationship(superclass, finalSuperclass, visitedClasses);
+			   if(checkInheritanceRelationship(superclass, finalSuperclass, visitedClasses)) {
+				   return true;
+			   }
 		   }
 		   else if(subclassDiff.getOldSuperclass() != null && subclassDiff.getNewSuperclass() != null &&
 				   !subclassDiff.getOldSuperclass().equals(subclassDiff.getNewSuperclass()) && looksLikeAddedClass(subclassDiff.getNewSuperclass()) != null) {
@@ -266,6 +268,11 @@ public class UMLModelDiff {
 			   return checkInheritanceRelationship(UMLType.extractTypeObject(addedClass.getName()), finalSuperclass, visitedClasses);
 		   }
 		   for(UMLType implementedInterface : subclassDiff.getAddedImplementedInterfaces()) {
+			   if(checkInheritanceRelationship(implementedInterface, finalSuperclass, visitedClasses)) {
+				   return true;
+			   }
+		   }
+		   for(UMLType implementedInterface : subclassDiff.getNextClass().getImplementedInterfaces()) {
 			   if(checkInheritanceRelationship(implementedInterface, finalSuperclass, visitedClasses)) {
 				   return true;
 			   }

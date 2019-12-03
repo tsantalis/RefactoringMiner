@@ -658,8 +658,8 @@
     "author": "Rafael Winterhalter",
     "time": "6/8/15 12:07 PM",
     "refactorings": [{
-        "type": "Move Attribute",
-        "description": "Move Attribute private ARRAY_MODIFIERS : int from class net.bytebuddy.description.type.TypeDescription.ArrayProjection to public ARRAY_MODIFIERS : int from class net.bytebuddy.description.type.TypeDescription",
+        "type": "Pull Up Attribute",
+        "description": "Pull Up Attribute private ARRAY_MODIFIERS : int from class net.bytebuddy.description.type.TypeDescription.ArrayProjection to public ARRAY_MODIFIERS : int from class net.bytebuddy.description.type.TypeDescription",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -4615,61 +4615,40 @@
     "author": "Ben Fry",
     "time": "6/16/15 10:03 AM",
     "refactorings": [{
-        "type": "Move Attribute",
-        "description": "Move Attribute public ERROR_BACKGROUND_IMAGE_SIZE : String from class processing.core.PConstants to protected ERROR_BACKGROUND_IMAGE_SIZE : String from class processing.core.PGraphics",
+        "type": "Push Down Attribute",
+        "description": "Push Down Attribute public ERROR_BACKGROUND_IMAGE_FORMAT : String from class processing.core.PConstants to protected ERROR_BACKGROUND_IMAGE_FORMAT : String from class processing.core.PGraphics",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
+        "detectionTools": "RefactoringMiner, RefDiff, RD-1x",
+        "validators": "Matin"
     }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute public ERROR_TEXTFONT_NULL_PFONT : String from class processing.core.PConstants to protected ERROR_TEXTFONT_NULL_PFONT : String from class processing.core.PGraphics",
+        "type": "Push Down Attribute",
+        "description": "Push Down Attribute public ERROR_BACKGROUND_IMAGE_SIZE : String from class processing.core.PConstants to protected ERROR_BACKGROUND_IMAGE_SIZE : String from class processing.core.PGraphics",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
+        "detectionTools": "RefactoringMiner, RefDiff, RD-1x",
+        "validators": "Matin"
     }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute public ERROR_BACKGROUND_IMAGE_FORMAT : String from class processing.core.PConstants to protected ERROR_BACKGROUND_IMAGE_FORMAT : String from class processing.core.PGraphics",
+        "type": "Push Down Attribute",
+        "description": "Push Down Attribute public ERROR_TEXTFONT_NULL_PFONT : String from class processing.core.PConstants to protected ERROR_TEXTFONT_NULL_PFONT : String from class processing.core.PGraphics",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
+        "detectionTools": "RefactoringMiner, RefDiff, RD-1x",
+        "validators": "Matin"
     }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute public ERROR_PUSHMATRIX_OVERFLOW : String from class processing.core.PConstants to protected ERROR_PUSHMATRIX_OVERFLOW : String from class processing.core.PGraphics",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner",
-        "validators": null
-    }, {
-        "type": "Move Attribute",
-        "description": "Move Attribute public ERROR_PUSHMATRIX_UNDERFLOW : String from class processing.core.PConstants to protected ERROR_PUSHMATRIX_UNDERFLOW : String from class processing.core.PGraphics",
+        "type": "Push Down Attribute",
+        "description": "Push Down Attribute public ERROR_PUSHMATRIX_UNDERFLOW : String from class processing.core.PConstants to protected ERROR_PUSHMATRIX_UNDERFLOW : String from class processing.core.PGraphics",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Push Down Attribute",
-        "description": "Push Down Attribute package ERROR_BACKGROUND_IMAGE_FORMAT : String from class processing.core.PConstants to protected ERROR_BACKGROUND_IMAGE_FORMAT : String from class processing.core.PGraphics",
+        "description": "Push Down Attribute public ERROR_PUSHMATRIX_OVERFLOW : String from class processing.core.PConstants to protected ERROR_PUSHMATRIX_OVERFLOW : String from class processing.core.PGraphics",
         "comment": null,
         "validation": "TP",
-        "detectionTools": "RefDiff, RD-1x",
-        "validators": "Matin"
-    }, {
-        "type": "Push Down Attribute",
-        "description": "Push Down Attribute package ERROR_BACKGROUND_IMAGE_SIZE : String from class processing.core.PConstants to protected ERROR_BACKGROUND_IMAGE_SIZE : String from class processing.core.PGraphics",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefDiff, RD-1x",
-        "validators": "Matin"
-    }, {
-        "type": "Push Down Attribute",
-        "description": "Push Down Attribute package ERROR_TEXTFONT_NULL_PFONT : String from class processing.core.PConstants to protected ERROR_TEXTFONT_NULL_PFONT : String from class processing.core.PGraphics",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefDiff, RD-1x",
-        "validators": "Matin"
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 1544
 }, {

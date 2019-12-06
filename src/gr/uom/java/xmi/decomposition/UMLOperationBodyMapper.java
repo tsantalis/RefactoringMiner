@@ -3188,70 +3188,139 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean commonConditional(String s1, String s2, ReplacementInfo info) {
-		if((s1.contains("||") || s1.contains("&&") || s2.contains("||") || s2.contains("&&")) &&
-				!containsMethodSignatureOfAnonymousClass(s1) && !containsMethodSignatureOfAnonymousClass(s2)) {
-			String conditional1 = prepareConditional(s1);
-			String conditional2 = prepareConditional(s2);
-			String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
-			String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(conditional2);
-			List<String> subConditionsAsList1 = new ArrayList<String>();
-			for(String s : subConditions1) {
-				subConditionsAsList1.add(s.trim());
-			}
-			List<String> subConditionsAsList2 = new ArrayList<String>();
-			for(String s : subConditions2) {
-				subConditionsAsList2.add(s.trim());
-			}
-			Set<String> intersection = new LinkedHashSet<String>(subConditionsAsList1);
-			intersection.retainAll(subConditionsAsList2);
-			int matches = 0;
-			if(!intersection.isEmpty()) {
-				for(String element : intersection) {
-					boolean replacementFound = false;
-					for(Replacement r : info.getReplacements()) {
-						if(element.equals(r.getAfter()) || element.equals("(" + r.getAfter()) || element.equals(r.getAfter() + ")")) {
-							replacementFound = true;
-							break;
+		if(!containsMethodSignatureOfAnonymousClass(s1) && !containsMethodSignatureOfAnonymousClass(s2)) {
+			if((s1.contains("||") || s1.contains("&&") || s2.contains("||") || s2.contains("&&"))) {
+				String conditional1 = prepareConditional(s1);
+				String conditional2 = prepareConditional(s2);
+				String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
+				String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(conditional2);
+				List<String> subConditionsAsList1 = new ArrayList<String>();
+				for(String s : subConditions1) {
+					subConditionsAsList1.add(s.trim());
+				}
+				List<String> subConditionsAsList2 = new ArrayList<String>();
+				for(String s : subConditions2) {
+					subConditionsAsList2.add(s.trim());
+				}
+				Set<String> intersection = new LinkedHashSet<String>(subConditionsAsList1);
+				intersection.retainAll(subConditionsAsList2);
+				int matches = 0;
+				if(!intersection.isEmpty()) {
+					for(String element : intersection) {
+						boolean replacementFound = false;
+						for(Replacement r : info.getReplacements()) {
+							if(element.equals(r.getAfter()) || element.equals("(" + r.getAfter()) || element.equals(r.getAfter() + ")")) {
+								replacementFound = true;
+								break;
+							}
+							if(r.getType().equals(ReplacementType.INFIX_OPERATOR) && element.contains(r.getAfter())) {
+								replacementFound = true;
+								break;
+							}
+							if(ReplacementUtil.contains(element, r.getAfter()) && element.startsWith(r.getAfter()) &&
+									(element.endsWith(" != null") || element.endsWith(" == null"))) {
+								replacementFound = true;
+								break;
+							}
 						}
-						if(r.getType().equals(ReplacementType.INFIX_OPERATOR) && element.contains(r.getAfter())) {
-							replacementFound = true;
-							break;
+						if(!replacementFound) {
+							matches++;
 						}
-						if(ReplacementUtil.contains(element, r.getAfter()) && element.startsWith(r.getAfter()) &&
-								(element.endsWith(" != null") || element.endsWith(" == null"))) {
-							replacementFound = true;
-							break;
-						}
-					}
-					if(!replacementFound) {
-						matches++;
 					}
 				}
-			}
-			if(matches > 0) {
-				Replacement r = new IntersectionReplacement(s1, s2, intersection, ReplacementType.CONDITIONAL);
-				info.addReplacement(r);
-			}
-			boolean invertConditionalFound = false;
-			for(String subCondition1 : subConditionsAsList1) {
-				for(String subCondition2 : subConditionsAsList2) {
-					if(subCondition1.equals("!" + subCondition2)) {
-						Replacement r = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
-						info.addReplacement(r);
-						invertConditionalFound = true;
-					}
-					if(subCondition2.equals("!" + subCondition1)) {
-						Replacement r = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
-						info.addReplacement(r);
-						invertConditionalFound = true;
+				if(matches > 0) {
+					Replacement r = new IntersectionReplacement(s1, s2, intersection, ReplacementType.CONDITIONAL);
+					info.addReplacement(r);
+				}
+				boolean invertConditionalFound = false;
+				for(String subCondition1 : subConditionsAsList1) {
+					for(String subCondition2 : subConditionsAsList2) {
+						if(subCondition1.equals("!" + subCondition2)) {
+							Replacement r = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
+							info.addReplacement(r);
+							invertConditionalFound = true;
+						}
+						if(subCondition2.equals("!" + subCondition1)) {
+							Replacement r = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
+							info.addReplacement(r);
+							invertConditionalFound = true;
+						}
 					}
 				}
+				if(invertConditionalFound || matches > 0) {
+					return true;
+				}
 			}
-			if(invertConditionalFound || matches > 0) {
-				return true;
+			if(s1.contains(" >= ") && s2.contains(" <= ")) {
+				Replacement r = invertConditionalDirection(s1, s2, " >= ", " <= ");
+				if(r != null) {
+					info.addReplacement(r);
+					return true;
+				}
+			}
+			if(s1.contains(" <= ") && s2.contains(" >= ")) {
+				Replacement r = invertConditionalDirection(s1, s2, " <= ", " >= ");
+				if(r != null) {
+					info.addReplacement(r);
+					return true;
+				}
+			}
+			if(s1.contains(" > ") && s2.contains(" < ")) {
+				Replacement r = invertConditionalDirection(s1, s2, " > ", " < ");
+				if(r != null) {
+					info.addReplacement(r);
+					return true;
+				}
+			}
+			if(s1.contains(" < ") && s2.contains(" > ")) {
+				Replacement r = invertConditionalDirection(s1, s2, " < ", " > ");
+				if(r != null) {
+					info.addReplacement(r);
+					return true;
+				}
 			}
 		}
 		return false;
+	}
+
+	private Replacement invertConditionalDirection(String s1, String s2, String operator1, String operator2) {
+		int indexS1 = s1.indexOf(operator1);
+		int indexS2 = s2.indexOf(operator2);
+		//s1 goes right, s2 goes left
+		int i = indexS1 + operator1.length();
+		int j = indexS2 - 1;
+		StringBuilder sb1 = new StringBuilder();
+		StringBuilder sb2 = new StringBuilder();
+		while(i < s1.length() && j >= 0) {
+			sb1.append(s1.charAt(i));
+			sb2.insert(0, s2.charAt(j));
+			if(sb1.toString().equals(sb2.toString())) {
+				String subCondition1 = operator1 + sb1.toString();
+				String subCondition2 = sb2.toString() + operator2;
+				Replacement r = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
+				return r;
+			}
+			i++;
+			j--;
+		}
+		//s1 goes left, s2 goes right
+		i = indexS1 - 1;
+		j = indexS2 + operator2.length();
+		sb1 = new StringBuilder();
+		sb2 = new StringBuilder();
+		while(i >= 0 && j < s2.length()) {
+			sb1.insert(0, s1.charAt(i));
+			sb2.append(s2.charAt(j));
+			if(sb1.toString().equals(sb2.toString())) {
+				String subCondition1 = sb1.toString() + operator1;
+				String subCondition2 = operator2 + sb2.toString();
+				Replacement r = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
+				return r;
+			}
+			i--;
+			j++;
+		}
+		return null;
 	}
 
 	private String prepareConditional(String s) {

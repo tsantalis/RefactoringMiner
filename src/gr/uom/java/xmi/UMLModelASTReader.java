@@ -173,6 +173,9 @@ public class UMLModelASTReader {
 		processModifiers(enumDeclaration, umlClass);
 		
 		processBodyDeclarations(cu, enumDeclaration, packageName, sourceFile, importedTypes, umlClass);
+		
+		processAnonymousClassDeclarations(cu, enumDeclaration, packageName, sourceFile, className, umlClass);
+		
 		this.getUmlModel().addClass(umlClass);
 	}
 
@@ -267,7 +270,27 @@ public class UMLModelASTReader {
     		umlClass.addOperation(operation);
     	}
     	
-    	AnonymousClassDeclarationVisitor visitor = new AnonymousClassDeclarationVisitor();
+    	processAnonymousClassDeclarations(cu, typeDeclaration, packageName, sourceFile, className, umlClass);
+    	
+    	this.getUmlModel().addClass(umlClass);
+		
+		TypeDeclaration[] types = typeDeclaration.getTypes();
+		for(TypeDeclaration type : types) {
+			processTypeDeclaration(cu, type, umlClass.getName(), sourceFile, importedTypes);
+		}
+		
+		List<BodyDeclaration> bodyDeclarations = typeDeclaration.bodyDeclarations();
+		for(BodyDeclaration bodyDeclaration : bodyDeclarations) {
+			if(bodyDeclaration instanceof EnumDeclaration) {
+				EnumDeclaration enumDeclaration = (EnumDeclaration)bodyDeclaration;
+				processEnumDeclaration(cu, enumDeclaration, umlClass.getName(), sourceFile, importedTypes);
+			}
+		}
+	}
+
+	private void processAnonymousClassDeclarations(CompilationUnit cu, AbstractTypeDeclaration typeDeclaration,
+			String packageName, String sourceFile, String className, UMLClass umlClass) {
+		AnonymousClassDeclarationVisitor visitor = new AnonymousClassDeclarationVisitor();
     	typeDeclaration.accept(visitor);
     	Set<AnonymousClassDeclaration> anonymousClassDeclarations = visitor.getAnonymousClassDeclarations();
     	
@@ -301,21 +324,6 @@ public class UMLModelASTReader {
     			createdAnonymousClasses.add(anonymousClass);
     		}
     	}
-    	
-    	this.getUmlModel().addClass(umlClass);
-		
-		TypeDeclaration[] types = typeDeclaration.getTypes();
-		for(TypeDeclaration type : types) {
-			processTypeDeclaration(cu, type, umlClass.getName(), sourceFile, importedTypes);
-		}
-		
-		List<BodyDeclaration> bodyDeclarations = typeDeclaration.bodyDeclarations();
-		for(BodyDeclaration bodyDeclaration : bodyDeclarations) {
-			if(bodyDeclaration instanceof EnumDeclaration) {
-				EnumDeclaration enumDeclaration = (EnumDeclaration)bodyDeclaration;
-				processEnumDeclaration(cu, enumDeclaration, umlClass.getName(), sourceFile, importedTypes);
-			}
-		}
 	}
 
 	private void processModifiers(AbstractTypeDeclaration typeDeclaration, UMLClass umlClass) {

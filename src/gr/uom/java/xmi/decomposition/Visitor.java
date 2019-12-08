@@ -785,7 +785,7 @@ public class Visitor extends ASTVisitor {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 			anonymous.getLambdas().add(lambda);
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	public Map<String, List<OperationInvocation>> getMethodInvocationMap() {

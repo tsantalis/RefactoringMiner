@@ -280,8 +280,13 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 
 	public boolean countableStatement() {
 		String statement = getString();
+		//covers the cases of lambda expressions having an expression as their body
+		if(this instanceof AbstractExpression) {
+			return true;
+		}
 		//covers the cases of methods with only one statement in their body
-		if(this instanceof AbstractStatement && ((AbstractStatement)this).getParent().statementCount() == 1 && ((AbstractStatement)this).getParent().getParent() == null) {
+		if(this instanceof AbstractStatement && ((AbstractStatement)this).getParent() != null &&
+				((AbstractStatement)this).getParent().statementCount() == 1 && ((AbstractStatement)this).getParent().getParent() == null) {
 			return true;
 		}
 		return !statement.equals("{") && !statement.startsWith("catch(") && !statement.startsWith("case ") && !statement.startsWith("default :") &&

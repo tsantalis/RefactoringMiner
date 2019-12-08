@@ -14,6 +14,7 @@ import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.diff.CodeRange;
+import static gr.uom.java.xmi.diff.UMLClassBaseDiff.allMappingsAreExactMatches;
 
 public abstract class AbstractCall implements LocationInfoProvider {
 	protected int typeArguments;
@@ -216,17 +217,31 @@ public abstract class AbstractCall implements LocationInfoProvider {
 				(equalArguments(call) || (allArgumentsReplaced && normalizedNameDistance(call) <= distance) || (identicalOrReplacedArguments && !allArgumentsReplaced));
 	}
 
-	public boolean renamedWithIdenticalArgumentsAndNoExpression(AbstractCall call, double distance) {
+	public boolean renamedWithIdenticalArgumentsAndNoExpression(AbstractCall call, double distance, List<UMLOperationBodyMapper> lambdaMappers) {
+		boolean allExactLambdaMappers = lambdaMappers.size() > 0;
+		for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
+			if(!allMappingsAreExactMatches(lambdaMapper)) {
+				allExactLambdaMappers = false;
+				break;
+			}
+		}
 		return getExpression() == null && call.getExpression() == null &&
 				!identicalName(call) &&
-				normalizedNameDistance(call) <= distance &&
+				(normalizedNameDistance(call) <= distance || allExactLambdaMappers) &&
 				equalArguments(call);
 	}
 
-	public boolean renamedWithIdenticalExpressionAndDifferentNumberOfArguments(AbstractCall call, Set<Replacement> replacements, double distance) {
+	public boolean renamedWithIdenticalExpressionAndDifferentNumberOfArguments(AbstractCall call, Set<Replacement> replacements, double distance, List<UMLOperationBodyMapper> lambdaMappers) {
+		boolean allExactLambdaMappers = lambdaMappers.size() > 0;
+		for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
+			if(!allMappingsAreExactMatches(lambdaMapper)) {
+				allExactLambdaMappers = false;
+				break;
+			}
+		}
 		return getExpression() != null && call.getExpression() != null &&
 				identicalExpression(call, replacements) &&
-				normalizedNameDistance(call) <= distance &&
+				(normalizedNameDistance(call) <= distance || allExactLambdaMappers) &&
 				!equalArguments(call) &&
 				getArguments().size() != call.getArguments().size();
 	}

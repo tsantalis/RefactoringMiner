@@ -160,6 +160,50 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
+	private UMLOperationBodyMapper(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2, UMLOperationBodyMapper parentMapper) throws RefactoringMinerTimedOutException {
+		this.classDiff = parentMapper.classDiff;
+		if(classDiff != null)
+			this.modelDiff = classDiff.getModelDiff();
+		this.operation1 = parentMapper.operation1;
+		this.operation2 = parentMapper.operation2;
+		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
+		this.nonMappedLeavesT1 = new ArrayList<StatementObject>();
+		this.nonMappedLeavesT2 = new ArrayList<StatementObject>();
+		this.nonMappedInnerNodesT1 = new ArrayList<CompositeStatementObject>();
+		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
+		
+		if(lambda1.getExpression() != null && lambda2.getExpression() != null) {
+			List<AbstractExpression> leaves1 = new ArrayList<AbstractExpression>();
+			leaves1.add(lambda1.getExpression());
+			List<AbstractExpression> leaves2 = new ArrayList<AbstractExpression>();
+			leaves2.add(lambda2.getExpression());
+			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>());
+		}
+		else if(lambda1.getBody() != null && lambda2.getBody() != null) {
+			CompositeStatementObject composite1 = lambda1.getBody().getCompositeStatement();
+			CompositeStatementObject composite2 = lambda2.getBody().getCompositeStatement();
+			List<StatementObject> leaves1 = composite1.getLeaves();
+			List<StatementObject> leaves2 = composite2.getLeaves();
+			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>());
+			
+			List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
+			List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
+			processInnerNodes(innerNodes1, innerNodes2, new LinkedHashMap<String, String>());
+			
+			nonMappedLeavesT1.addAll(leaves1);
+			nonMappedLeavesT2.addAll(leaves2);
+			nonMappedInnerNodesT1.addAll(innerNodes1);
+			nonMappedInnerNodesT2.addAll(innerNodes2);
+			
+			for(StatementObject statement : getNonMappedLeavesT2()) {
+				temporaryVariableAssignment(statement, nonMappedLeavesT2);
+			}
+			for(StatementObject statement : getNonMappedLeavesT1()) {
+				inlinedVariableAssignment(statement, nonMappedLeavesT2);
+			}
+		}
+	}
+
 	public void addChildMapper(UMLOperationBodyMapper mapper) {
 		this.childMappers.add(mapper);
 		//TODO add logic to remove the mappings from "this" mapper,
@@ -1917,6 +1961,32 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		List<LambdaExpressionObject> lambdas1 = statement1.getLambdas();
+		List<LambdaExpressionObject> lambdas2 = statement2.getLambdas();
+		List<UMLOperationBodyMapper> lambdaMappers = new ArrayList<UMLOperationBodyMapper>();
+		if(!lambdas1.isEmpty() && !lambdas2.isEmpty()) {
+			for(int i=0; i<lambdas1.size(); i++) {
+				for(int j=0; j<lambdas2.size(); j++) {
+					LambdaExpressionObject lambda1 = lambdas1.get(i);
+					LambdaExpressionObject lambda2 = lambdas2.get(j);
+					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(lambda1, lambda2, this);
+					int mappings = mapper.mappingsWithoutBlocks();
+					if(mappings > 0) {
+						int nonMappedElementsT1 = mapper.nonMappedElementsT1();
+						int nonMappedElementsT2 = mapper.nonMappedElementsT2();
+						if(mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) {
+							this.mappings.addAll(mapper.mappings);
+							this.nonMappedInnerNodesT1.addAll(mapper.nonMappedInnerNodesT1);
+							this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);
+							this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
+							this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
+							this.refactorings.addAll(mapper.getRefactorings());
+							lambdaMappers.add(mapper);
+						}
+					}
+				}
+			}
+		}
 		OperationInvocation assignmentInvocationCoveringTheEntireStatement1 = invocationCoveringTheEntireStatement1 == null ? statement1.assignmentInvocationCoveringEntireStatement() : invocationCoveringTheEntireStatement1;
 		//method invocation is identical
 		if(assignmentInvocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
@@ -2027,7 +2097,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//method invocation has been renamed but the expressions are null and arguments are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.renamedWithIdenticalArgumentsAndNoExpression(invocationCoveringTheEntireStatement2, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE)) {
+				invocationCoveringTheEntireStatement1.renamedWithIdenticalArgumentsAndNoExpression(invocationCoveringTheEntireStatement2, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers)) {
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getName(),
 					invocationCoveringTheEntireStatement2.getName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME);
 			replacementInfo.addReplacement(replacement);
@@ -2035,7 +2105,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//method invocation has been renamed and arguments changed, but the expressions are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE)) {
+				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers)) {
 			ReplacementType type = invocationCoveringTheEntireStatement1.getName().equals(invocationCoveringTheEntireStatement2.getName()) ? ReplacementType.METHOD_INVOCATION_ARGUMENT : ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT;
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 					invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, type);
@@ -2045,7 +2115,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(!methodInvocations1.isEmpty() && invocationCoveringTheEntireStatement2 != null) {
 			for(String methodInvocation1 : methodInvocations1) {
 				for(AbstractCall operationInvocation1 : methodInvocationMap1.get(methodInvocation1)) {
-					if(operationInvocation1.renamedWithIdenticalExpressionAndDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE) &&
+					if(operationInvocation1.renamedWithIdenticalExpressionAndDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers) &&
 							!isExpressionOfAnotherMethodInvocation(operationInvocation1, methodInvocationMap1)) {
 						ReplacementType type = operationInvocation1.getName().equals(invocationCoveringTheEntireStatement2.getName()) ? ReplacementType.METHOD_INVOCATION_ARGUMENT : ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT;
 						Replacement replacement = new MethodInvocationReplacement(operationInvocation1.actualString(),

@@ -25,6 +25,7 @@ public abstract class AbstractCodeMapping {
 	private UMLOperation operation2;
 	private Set<Replacement> replacements;
 	private boolean identicalWithExtractedVariable;
+	private boolean identicalWithInlinedVariable;
 	
 	public AbstractCodeMapping(AbstractCodeFragment fragment1, AbstractCodeFragment fragment2,
 			UMLOperation operation1, UMLOperation operation2) {
@@ -53,6 +54,10 @@ public abstract class AbstractCodeMapping {
 
 	public boolean isIdenticalWithExtractedVariable() {
 		return identicalWithExtractedVariable;
+	}
+
+	public boolean isIdenticalWithInlinedVariable() {
+		return identicalWithInlinedVariable;
 	}
 
 	public boolean isExact() {
@@ -227,8 +232,8 @@ public abstract class AbstractCodeMapping {
 		}
 	}
 
-	public void inlinedVariableAssignment(StatementObject statement,
-			List<StatementObject> nonMappedLeavesT2, Set<Refactoring> refactorings) {
+	public void inlinedVariableAssignment(AbstractCodeFragment statement,
+			List<? extends AbstractCodeFragment> nonMappedLeavesT2, Set<Refactoring> refactorings) {
 		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
 			for(Replacement replacement : getReplacements()) {
 				String variableName = declaration.getVariableName();
@@ -242,6 +247,9 @@ public abstract class AbstractCodeMapping {
 									overlappingExtractVariable(initializer, prefixAfter, nonMappedLeavesT2, refactorings)) {
 								InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1);
 								processInlineVariableRefactoring(ref, refactorings);
+								if(getReplacements().size() == 1) {
+									identicalWithInlinedVariable = true;
+								}
 							}
 						}
 					}
@@ -251,6 +259,9 @@ public abstract class AbstractCodeMapping {
 							overlappingExtractVariable(initializer, replacement.getAfter(), nonMappedLeavesT2, refactorings)) {
 						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1);
 						processInlineVariableRefactoring(ref, refactorings);
+						if(getReplacements().size() == 1) {
+							identicalWithInlinedVariable = true;
+						}
 					}
 				}
 			}
@@ -274,6 +285,9 @@ public abstract class AbstractCodeMapping {
 						if(declaration.getVariableName().equals(variable)) {
 							InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1);
 							processInlineVariableRefactoring(ref, refactorings);
+							if(getReplacements().size() == 1) {
+								identicalWithInlinedVariable = true;
+							}
 						}
 					}
 				}

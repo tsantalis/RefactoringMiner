@@ -319,6 +319,21 @@ public class CompositeStatementObject extends AbstractStatement {
 						map.put(key, list);
 					}
 				}
+				for(LambdaExpressionObject lambda : statementObject.getLambdas()) {
+					if(lambda.getBody() != null) {
+						Map<String, List<OperationInvocation>> lambdaMap = lambda.getBody().getCompositeStatement().getAllMethodInvocations();
+						for(String key : lambdaMap.keySet()) {
+							if(map.containsKey(key)) {
+								map.get(key).addAll(lambdaMap.get(key));
+							}
+							else {
+								List<OperationInvocation> list = new ArrayList<OperationInvocation>();
+								list.addAll(lambdaMap.get(key));
+								map.put(key, list);
+							}
+						}
+					}
+				}
 			}
 		}
 		return map;
@@ -338,6 +353,22 @@ public class CompositeStatementObject extends AbstractStatement {
 			}
 		}
 		return anonymousClassDeclarations;
+	}
+
+	public List<LambdaExpressionObject> getAllLambdas() {
+		List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
+		lambdas.addAll(getLambdas());
+		for(AbstractStatement statement : statementList) {
+			if(statement instanceof CompositeStatementObject) {
+				CompositeStatementObject composite = (CompositeStatementObject)statement;
+				lambdas.addAll(composite.getAllLambdas());
+			}
+			else if(statement instanceof StatementObject) {
+				StatementObject statementObject = (StatementObject)statement;
+				lambdas.addAll(statementObject.getLambdas());
+			}
+		}
+		return lambdas;
 	}
 
 	public List<String> getAllVariables() {
@@ -367,6 +398,11 @@ public class CompositeStatementObject extends AbstractStatement {
 			else if(statement instanceof StatementObject) {
 				StatementObject statementObject = (StatementObject)statement;
 				variableDeclarations.addAll(statementObject.getVariableDeclarations());
+				for(LambdaExpressionObject lambda : statementObject.getLambdas()) {
+					if(lambda.getBody() != null) {
+						variableDeclarations.addAll(lambda.getBody().getAllVariableDeclarations());
+					}
+				}
 			}
 		}
 		return variableDeclarations;

@@ -3,6 +3,7 @@ package gr.uom.java.xmi;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
@@ -133,6 +134,12 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		if(operationBody != null)
 			return operationBody.getAllOperationInvocations();
 		return new ArrayList<OperationInvocation>();
+	}
+
+	public List<LambdaExpressionObject> getAllLambdas() {
+		if(operationBody != null)
+			return operationBody.getAllLambdas();
+		return new ArrayList<LambdaExpressionObject>();
 	}
 
 	public List<String> getAllVariables() {

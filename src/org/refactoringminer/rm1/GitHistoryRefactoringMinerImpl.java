@@ -343,21 +343,20 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		if(gitHub == null) {
 			try {
 				Properties prop = new Properties();
-				InputStream input = new FileInputStream("github-credentials.properties");
+				InputStream input = new FileInputStream("github-oauth.properties");
 				prop.load(input);
-				String username = prop.getProperty("username");
-				String password = prop.getProperty("password");
-				if (username != null && password != null) {
-					gitHub = GitHub.connectUsingPassword(username, password);
+				String oAuthToken = prop.getProperty("OAuthToken");
+				if (oAuthToken != null) {
+					gitHub = GitHub.connectUsingOAuth(oAuthToken);
 					if(gitHub.isCredentialValid()) {
-						logger.info("Connected to GitHub with account: " + username);
+						logger.info("Connected to GitHub with OAuth token");
 					}
 				}
 				else {
 					gitHub = GitHub.connect();
 				}
 			} catch(FileNotFoundException e) {
-				logger.warn("File github-credentials.properties was not found in RefactoringMiner's execution directory", e);
+				logger.warn("File github-oauth.properties was not found in RefactoringMiner's execution directory", e);
 			} catch(IOException ioe) {
 				ioe.printStackTrace();
 			}

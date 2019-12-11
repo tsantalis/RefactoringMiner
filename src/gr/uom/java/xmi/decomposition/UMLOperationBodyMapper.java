@@ -300,6 +300,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			List<StatementObject> leaves2 = composite2.getLeaves();
+			List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
 			Set<StatementObject> addedLeaves2 = new LinkedHashSet<StatementObject>();
 			Set<CompositeStatementObject> addedInnerNodes2 = new LinkedHashSet<CompositeStatementObject>();
 			for(StatementObject statement : leaves2) {
@@ -316,9 +317,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									}
 								}
 								List<CompositeStatementObject> anonymousClassInnerNodes = anonymousOperation.getBody().getCompositeStatement().getInnerNodes();
-								for(CompositeStatementObject anonymousInnedNode : anonymousClassInnerNodes) {
-									addedInnerNodes2.add(anonymousInnedNode);
-									codeFragmentOperationMap2.put(anonymousInnedNode, anonymousOperation);
+								for(CompositeStatementObject anonymousInnerNode : anonymousClassInnerNodes) {
+									if(!innerNodes2.contains(anonymousInnerNode)) {
+										addedInnerNodes2.add(anonymousInnerNode);
+										codeFragmentOperationMap2.put(anonymousInnerNode, anonymousOperation);
+									}
+								}
+							}
+						}
+					}
+				}
+				if(!statement.getLambdas().isEmpty()) {
+					for(LambdaExpressionObject lambda : statement.getLambdas()) {
+						if(lambda.getBody() != null) {
+							List<StatementObject> lambdaLeaves = lambda.getBody().getCompositeStatement().getLeaves();
+							for(StatementObject lambdaLeaf : lambdaLeaves) {
+								if(!leaves2.contains(lambdaLeaf)) {
+									addedLeaves2.add(lambdaLeaf);
+									codeFragmentOperationMap2.put(lambdaLeaf, operation2);
+								}
+							}
+							List<CompositeStatementObject> lambdaInnerNodes = lambda.getBody().getCompositeStatement().getInnerNodes();
+							for(CompositeStatementObject lambdaInnerNode : lambdaInnerNodes) {
+								if(!innerNodes2.contains(lambdaInnerNode)) {
+									addedInnerNodes2.add(lambdaInnerNode);
+									codeFragmentOperationMap2.put(lambdaInnerNode, operation2);
 								}
 							}
 						}
@@ -356,7 +379,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
 			innerNodes2.remove(composite2);
 			innerNodes2.addAll(addedInnerNodes2);
 			resetNodes(innerNodes1);

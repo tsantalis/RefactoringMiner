@@ -436,6 +436,12 @@ public class VariableReplacementAnalysis {
 					}
 				}
 			}
+			else {
+				RenameVariableRefactoring ref = new RenameVariableRefactoring(vdReplacement.getVariableDeclaration1(), vdReplacement.getVariableDeclaration2(), vdReplacement.getOperation1(), vdReplacement.getOperation2(), set);
+				if(refactorings.contains(ref)) {
+					refactorings.remove(ref);
+				}
+			}
 		}
 		Map<Replacement, Set<AbstractCodeMapping>> replacementOccurrenceMap = getReplacementOccurrenceMap(ReplacementType.VARIABLE_NAME);
 		Set<Replacement> allConsistentRenames = allConsistentRenames(replacementOccurrenceMap);
@@ -1043,6 +1049,25 @@ public class VariableReplacementAnalysis {
 							}
 						}
 						return true;
+					}
+				}
+				for(StatementObject nonMappedStatement : mapper.getNonMappedLeavesT2()) {
+					VariableDeclaration variableDeclaration2 = nonMappedStatement.getVariableDeclaration(v1.getVariableName());
+					if(variableDeclaration2 != null && variableDeclaration2.getType().equals(v1.getType())) {
+						for(AbstractCodeMapping mapping : mapper.getMappings()) {
+							if(mapping.getFragment2().equals(nonMappedStatement.getParent())) {
+								if(mapping.getFragment1() instanceof CompositeStatementObject) {
+									CompositeStatementObject composite1 = (CompositeStatementObject)mapping.getFragment1();
+									List<StatementObject> leaves1 = composite1.getLeaves();
+									for(StatementObject leaf1 : leaves1) {
+										VariableDeclaration variableDeclaration1 = leaf1.getVariableDeclaration(variableDeclaration2.getVariableName());
+										if(variableDeclaration1 != null) {
+											return true;
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 			}

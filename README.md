@@ -133,6 +133,8 @@ Refactorings and Commit Messages," *19th IEEE International Working Conference o
 22. Marcos César de Oliveira, Davi Freitas, Rodrigo Bonifácio, Gustavo Pinto, and David Lo, "[Finding Needles in a Haystack: Leveraging Co-change Dependencies to Recommend Refactorings](https://doi.org/10.1016/j.jss.2019.110420)," Journal of Systems and Software, 2019.
 23. Walter Lucas, Rodrigo Bonifácio, Edna Dias Canedo, Diego Marcílio, and Fernanda Lima, "[Does the Introduction of Lambda Expressions Improve the Comprehension of Java Programs?](https://doi.org/10.1145/3350768.3350791)," *XXXIII Brazilian Symposium on Software Engineering* (SBES 2019), Salvador, Brazil, September 23-27, 2019.
 24. Bo Shen, Wei Zhang, Haiyan Zhao, Guangtai Liang, Zhi Jin, and Qianxiang Wang, "[IntelliMerge: A Refactoring-Aware Software Merging Technique](https://doi.org/10.1145/3360596)," *Proceedings of the ACM on Programming Languages*, vol. 3, OOPSLA, Article 170, October 2019.
+25. Martina Iammarino, Fiorella Zampetti, Lerina Aversano, and Massimiliano Di Penta, "[Self-Admitted Technical Debt Removal and Refactoring Actions: Co-Occurrence or More?](https://doi.org/10.1109/ICSME.2019.00029)," *35th IEEE International Conference on Software Maintenance and Evolution* (ICSME 2019), Cleveland, OH, USA, September 29-October 4, 2019.
+26. Ally S. Nyamawe, Hui Liu, Nan Niu, Qasim Umer, and Zhendong Niu, "[Automated Recommendation of Software Refactorings based on Feature Requests](https://doi.org/10.1109/RE.2019.00029)," *27th IEEE International Requirements Engineering Conference* (RE 2019), Jeju Island, South Korea, September 23-27, 2019.
 
 # Contributors
 The code in package **gr.uom.java.xmi.*** has been developed by [Nikolaos Tsantalis](https://github.com/tsantalis).
@@ -239,6 +241,8 @@ List<Refactoring> refactorings = modelDiff.getRefactorings();
 ```
 ## With all information fetched directly from GitHub
 
+**To use this API, please provide a valid OAuth token in the `github-oauth.properties` file.**
+
 If you don't want to clone locally the repository, you can use the following code snippet:
 
 ```java
@@ -268,7 +272,6 @@ miner.detectAtPullRequest("https://github.com/apache/drill.git", 1807, new Refac
   }
 }, 10);
 ```
-Please make sure to provide valid GitHub credentials in the `github-credentials.properties` file.
 
 # Location information for the detected refactorings
 All classes implementing the `Refactoring` interface include refactoring-specific location information.

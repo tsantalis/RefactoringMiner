@@ -2115,10 +2115,21 @@ public class UMLModelDiff {
 	   if(exactLeafMappings == 1 && normalizedEditDistance > 0.5 && (mapper.nonMappedElementsT1() > 0 || mapper.nonMappedElementsT2() > 0)) {
 		   return false;
 	   }
-	   if(addedOperation.equalReturnParameter(removedOperation) &&
-			   addedOperation.isAbstract() == removedOperation.isAbstract() &&
+	   if(mapper.mappingsWithoutBlocks() == 1) {
+		   for(AbstractCodeMapping mapping : mapper.getMappings()) {
+			   String fragment1 = mapping.getFragment1().getString();
+			   String fragment2 = mapping.getFragment2().getString();
+			   if(fragment1.startsWith("return true;") || fragment1.startsWith("return false;") || fragment1.startsWith("return this;") || fragment1.startsWith("return null;") || fragment1.startsWith("return;") ||
+					   fragment2.startsWith("return true;") || fragment2.startsWith("return false;") || fragment2.startsWith("return this;") || fragment2.startsWith("return null;") || fragment2.startsWith("return;")) {
+				   return false;
+			   }
+		   }
+	   }
+	   if(addedOperation.isAbstract() == removedOperation.isAbstract() &&
 			   addedOperation.getTypeParameters().equals(removedOperation.getTypeParameters())) {
-		   if(addedOperation.getParameters().equals(removedOperation.getParameters())) {
+		   List<UMLType> addedOperationParameterTypeList = addedOperation.getParameterTypeList();
+		   List<UMLType> removedOperationParameterTypeList = removedOperation.getParameterTypeList();
+		   if(addedOperationParameterTypeList.equals(removedOperationParameterTypeList) && addedOperationParameterTypeList.size() > 0) {
 			   return true;
 		   }
 		   else {
@@ -2145,8 +2156,10 @@ public class UMLModelDiff {
 			   }
 			   Set<String> intersection = new LinkedHashSet<String>(oldParameterNames);
 			   intersection.retainAll(newParameterNames);
-			   return oldParameters.equals(newParameters) || oldParameters.containsAll(newParameters) || newParameters.containsAll(oldParameters) || intersection.size() > 0 ||
+			   boolean parameterMatch = oldParameters.equals(newParameters) || oldParameters.containsAll(newParameters) || newParameters.containsAll(oldParameters) || intersection.size() > 0 ||
 					   removedOperation.isStatic() || addedOperation.isStatic();
+			   return (parameterMatch && oldParameters.size() > 0 && newParameters.size() > 0) ||
+					   (parameterMatch && addedOperation.equalReturnParameter(removedOperation) && (oldParameters.size() == 0 || newParameters.size() == 0));
 		   }
 	   }
 	   return false;

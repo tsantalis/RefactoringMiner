@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -2054,14 +2055,36 @@ public class UMLModelDiff {
    private boolean mappedElementsMoreThanNonMappedT1AndT2(int mappings, UMLOperationBodyMapper operationBodyMapper) {
         int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();
 		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();
+		UMLClass addedClass = getAddedClass(operationBodyMapper.getOperation2().getClassName());
 		int nonMappedStatementsDeclaringSameVariable = 0;
-		for(StatementObject s1 : operationBodyMapper.getNonMappedLeavesT1()) {
+		for(ListIterator<StatementObject> leafIterator1 = operationBodyMapper.getNonMappedLeavesT1().listIterator(); leafIterator1.hasNext();) {
+			StatementObject s1 = leafIterator1.next();
 			for(StatementObject s2 : operationBodyMapper.getNonMappedLeavesT2()) {
 				if(s1.getVariableDeclarations().size() == 1 && s2.getVariableDeclarations().size() == 1) {
 					VariableDeclaration v1 = s1.getVariableDeclarations().get(0);
 					VariableDeclaration v2 = s2.getVariableDeclarations().get(0);
 					if(v1.getVariableName().equals(v2.getVariableName()) && v1.getType().equals(v2.getType())) {
 						nonMappedStatementsDeclaringSameVariable++;
+					}
+				}
+			}
+			if(addedClass != null && s1.getVariableDeclarations().size() == 1) {
+				VariableDeclaration v1 = s1.getVariableDeclarations().get(0);
+				for(UMLAttribute attribute : addedClass.getAttributes()) {
+					VariableDeclaration attributeDeclaration = attribute.getVariableDeclaration();
+					if(attributeDeclaration.getInitializer() != null && v1.getInitializer() != null) {
+						String attributeInitializer = attributeDeclaration.getInitializer().getString();
+						String variableInitializer = v1.getInitializer().getString();
+						if(attributeInitializer.equals(variableInitializer) && attribute.getType().equals(v1.getType()) &&
+								(attribute.getName().equals(v1.getVariableName()) ||
+								attribute.getName().toLowerCase().contains(v1.getVariableName().toLowerCase()) ||
+								v1.getVariableName().toLowerCase().contains(attribute.getName().toLowerCase()))) {
+							nonMappedStatementsDeclaringSameVariable++;
+							leafIterator1.remove();
+							LeafMapping mapping = new LeafMapping(v1.getInitializer(), attributeDeclaration.getInitializer(), operationBodyMapper.getOperation1(), operationBodyMapper.getOperation2());
+							operationBodyMapper.getMappings().add(mapping);
+							break;
+						}
 					}
 				}
 			}

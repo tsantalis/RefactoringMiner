@@ -1688,6 +1688,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		Set<String> methodInvocationIntersection = new LinkedHashSet<String>(methodInvocations1);
 		methodInvocationIntersection.retainAll(methodInvocations2);
+		Set<String> methodInvocationsToBeRemovedFromTheIntersection = new LinkedHashSet<String>();
+		for(String methodInvocation : methodInvocationIntersection) {
+			if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+					invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2)) {
+				if(!invocationCoveringTheEntireStatement1.getArguments().contains(methodInvocation) &&
+						invocationCoveringTheEntireStatement2.getArguments().contains(methodInvocation)) {
+					methodInvocationsToBeRemovedFromTheIntersection.add(methodInvocation);
+				}
+				else if(invocationCoveringTheEntireStatement1.getArguments().contains(methodInvocation) &&
+						!invocationCoveringTheEntireStatement2.getArguments().contains(methodInvocation)) {
+					methodInvocationsToBeRemovedFromTheIntersection.add(methodInvocation);
+				}
+			}
+		}
+		methodInvocationIntersection.removeAll(methodInvocationsToBeRemovedFromTheIntersection);
 		// remove common methodInvocations from the two sets
 		methodInvocations1.removeAll(methodInvocationIntersection);
 		methodInvocations2.removeAll(methodInvocationIntersection);

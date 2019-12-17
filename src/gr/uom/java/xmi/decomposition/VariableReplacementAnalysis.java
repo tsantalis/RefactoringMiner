@@ -451,7 +451,7 @@ public class VariableReplacementAnalysis {
 			SimpleEntry<VariableDeclaration, UMLOperation> v2 = getVariableDeclaration2(replacement);
 			Set<AbstractCodeMapping> set = replacementOccurrenceMap.get(replacement);
 			if((set.size() > 1 && v1 != null && v2 != null && consistencyCheck(v1.getKey(), v2.getKey(), set)) ||
-					potentialParameterRename(replacement) ||
+					potentialParameterRename(replacement, set) ||
 					v1 == null || v2 == null ||
 					(set.size() == 1 && replacementInLocalVariableDeclaration(replacement, set))) {
 				finalConsistentRenames.put(replacement, set);
@@ -478,7 +478,8 @@ public class VariableReplacementAnalysis {
 			else if(!PrefixSuffixUtils.normalize(replacement.getBefore()).equals(PrefixSuffixUtils.normalize(replacement.getAfter())) &&
 					(!operation1.getAllVariables().contains(replacement.getAfter()) || cyclicRename(finalConsistentRenames.keySet(), replacement)) &&
 					(!operation2.getAllVariables().contains(replacement.getBefore()) || cyclicRename(finalConsistentRenames.keySet(), replacement)) &&
-					!fieldAssignmentWithPreviouslyExistingParameter(replacementOccurrenceMap.get(replacement))) {
+					!fieldAssignmentWithPreviouslyExistingParameter(replacementOccurrenceMap.get(replacement)) &&
+					!fieldAssignmentToPreviouslyExistingAttribute(replacementOccurrenceMap.get(replacement))) {
 				CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
 						replacement.getBefore(), replacement.getAfter(), operation1, operation2,
 						replacementOccurrenceMap.get(replacement));
@@ -489,6 +490,27 @@ public class VariableReplacementAnalysis {
 				this.candidateAttributeRenames.add(candidate);
 			}
 		}
+	}
+
+	private boolean fieldAssignmentToPreviouslyExistingAttribute(Set<AbstractCodeMapping> mappings) {
+		if(mappings.size() == 1) {
+			AbstractCodeMapping mapping = mappings.iterator().next();
+			String fragment1 = mapping.getFragment1().getString();
+			String fragment2 = mapping.getFragment2().getString();
+			if(fragment1.contains("=") && fragment1.endsWith(";\n") && fragment2.contains("=") && fragment2.endsWith(";\n")) {
+				String value1 = fragment1.substring(fragment1.indexOf("=")+1, fragment1.lastIndexOf(";\n"));
+				String value2 = fragment2.substring(fragment2.indexOf("=")+1, fragment2.lastIndexOf(";\n"));
+				String attribute1 = PrefixSuffixUtils.normalize(fragment1.substring(0, fragment1.indexOf("=")));
+				String attribute2 = PrefixSuffixUtils.normalize(fragment2.substring(0, fragment2.indexOf("=")));
+				if(value1.equals(attribute1) && classDiff.getOriginalClass().containsAttributeWithName(attribute1) && classDiff.getNextClass().containsAttributeWithName(attribute1)) {
+					return true;
+				}
+				if(value2.equals(attribute2) && classDiff.getOriginalClass().containsAttributeWithName(attribute2) && classDiff.getNextClass().containsAttributeWithName(attribute2)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean fieldAssignmentWithPreviouslyExistingParameter(Set<AbstractCodeMapping> mappings) {
@@ -1162,7 +1184,7 @@ public class VariableReplacementAnalysis {
 		return false;
 	}
 
-	private boolean potentialParameterRename(Replacement replacement) {
+	private boolean potentialParameterRename(Replacement replacement, Set<AbstractCodeMapping> set) {
 		int index1 = operation1.getParameterNameList().indexOf(replacement.getBefore());
 		if(index1 == -1 && callSiteOperation != null) {
 			index1 = callSiteOperation.getParameterNameList().indexOf(replacement.getBefore());
@@ -1170,6 +1192,12 @@ public class VariableReplacementAnalysis {
 		int index2 = operation2.getParameterNameList().indexOf(replacement.getAfter());
 		if(index2 == -1 && callSiteOperation != null) {
 			index2 = callSiteOperation.getParameterNameList().indexOf(replacement.getAfter());
+		}
+		if(fieldAssignmentToPreviouslyExistingAttribute(set)) {
+			return false;
+		}
+		if(fieldAssignmentWithPreviouslyExistingParameter(set)) {
+			return false;
 		}
 		return index1 >= 0 && index1 == index2;
 	}

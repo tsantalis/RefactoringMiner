@@ -13,15 +13,15 @@ import gr.uom.java.xmi.UMLOperation;
 
 public class ExtractClassRefactoring implements Refactoring {
 	private UMLClass extractedClass;
-	private UMLClass originalClass;
+	private UMLClassBaseDiff classDiff;
 	private Set<UMLOperation> extractedOperations;
 	private Set<UMLAttribute> extractedAttributes;
 	private UMLAttribute attributeOfExtractedClassTypeInOriginalClass;
 
-	public ExtractClassRefactoring(UMLClass extractedClass, UMLClass originalClass,
+	public ExtractClassRefactoring(UMLClass extractedClass, UMLClassBaseDiff classDiff,
 			Set<UMLOperation> extractedOperations, Set<UMLAttribute> extractedAttributes, UMLAttribute attributeOfExtractedClassType) {
 		this.extractedClass = extractedClass;
-		this.originalClass = originalClass;
+		this.classDiff = classDiff;
 		this.extractedOperations = extractedOperations;
 		this.extractedAttributes = extractedAttributes;
 		this.attributeOfExtractedClassTypeInOriginalClass = attributeOfExtractedClassType;
@@ -32,12 +32,12 @@ public class ExtractClassRefactoring implements Refactoring {
 		sb.append(getName()).append("\t");
 		sb.append(extractedClass);
 		sb.append(" from class ");
-		sb.append(originalClass);
+		sb.append(classDiff.getOriginalClass());
 		return sb.toString();
 	}
 
 	public RefactoringType getRefactoringType() {
-		if(extractedClass.isSubTypeOf(originalClass))
+		if(extractedClass.isSubTypeOf(classDiff.getOriginalClass()) || extractedClass.isSubTypeOf(classDiff.getNextClass()))
 			return RefactoringType.EXTRACT_SUBCLASS;
 		return RefactoringType.EXTRACT_CLASS;
 	}
@@ -51,7 +51,7 @@ public class ExtractClassRefactoring implements Refactoring {
 	}
 
 	public UMLClass getOriginalClass() {
-		return originalClass;
+		return classDiff.getOriginalClass();
 	}
 
 	public Set<UMLOperation> getExtractedOperations() {
@@ -81,9 +81,9 @@ public class ExtractClassRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> leftSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		ranges.add(originalClass.codeRange()
+		ranges.add(classDiff.getOriginalClass().codeRange()
 				.setDescription("original type declaration")
-				.setCodeElement(originalClass.getName()));
+				.setCodeElement(classDiff.getOriginalClass().getName()));
 		return ranges;
 	}
 

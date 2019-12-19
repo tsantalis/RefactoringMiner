@@ -234,6 +234,8 @@ public class OperationBody {
 				child.addCatchClause(catchClauseStatementObject);
 				parent.addStatement(catchClauseStatementObject);
 				SingleVariableDeclaration variableDeclaration = catchClause.getException();
+				VariableDeclaration vd = new VariableDeclaration(cu, filePath, variableDeclaration);
+				catchClauseStatementObject.addVariableDeclaration(vd);
 				AbstractExpression variableDeclarationName = new AbstractExpression(cu, filePath, variableDeclaration.getName(), CodeElementType.CATCH_CLAUSE_EXCEPTION_NAME);
 				catchClauseStatementObject.addExpression(variableDeclarationName);
 				if(variableDeclaration.getInitializer() != null) {

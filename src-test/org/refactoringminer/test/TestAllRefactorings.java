@@ -8,6 +8,8 @@ import org.junit.Test;
 
 public class TestAllRefactorings {
 
+	String s;
+
 	@Test
 	public void testAllRefactorings() throws Exception {
 		TestBuilder test = new TestBuilder(new GitHistoryRefactoringMinerImpl(), "tmp1", Refactorings.All.getValue());

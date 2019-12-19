@@ -1,5 +1,6 @@
 package gr.uom.java.xmi;
 
+import gr.uom.java.xmi.TypeFactMiner.TypFct;
 import gr.uom.java.xmi.diff.StringDistance;
 
 import java.io.Serializable;
@@ -9,8 +10,10 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, Serializable, LocationInfoProvider {
+
 	private String qualifiedName;
     private String sourceFile;
     private String sourceFolder;
@@ -25,8 +28,8 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private List<UMLTypeParameter> typeParameters;
     private UMLJavadoc javadoc;
     
-    public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<String> importedTypes) {
-    	super();
+    public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<String> importedTypes, TypFct.Context context) {
+    	super(context);
     	this.locationInfo = locationInfo;
     	this.packageName = packageName;
         this.name = name;
@@ -378,4 +381,5 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		}
 		return new LinkedHashMap<String, Set<String>>();
 	}
+
 }

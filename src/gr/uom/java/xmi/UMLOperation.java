@@ -1,6 +1,7 @@
 package gr.uom.java.xmi;
 
-import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph;
+import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass;
+import gr.uom.java.xmi.TypeFactMiner.TypFct;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
@@ -18,13 +19,20 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.refactoringminer.util.AstUtils;
+
+import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeFact;
+import static java.util.stream.Collectors.toMap;
 
 public class UMLOperation implements Comparable<UMLOperation>, Serializable, LocationInfoProvider {
 
 	private LocationInfo locationInfo;
 	private String name;
+	private final TypFct.Context c;
 	private String visibility;
 	private boolean isAbstract;
 	private List<UMLParameter> parameters;
@@ -38,15 +46,17 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	private List<UMLAnonymousClass> anonymousClassList;
 	private List<UMLTypeParameter> typeParameters;
 	private UMLJavadoc javadoc;
-	private final Map<String, TypeGraph> fieldTypeMap;
+	private final Map<String, TypFct> fieldTypeMap;
+
 	
-	public UMLOperation(String name, LocationInfo locationInfo, Map<String, TypeGraph> fieldTypeMap) {
+	public UMLOperation(String name, LocationInfo locationInfo, UMLAbstractClass umlCls, TypFct.Context c) {
 		this.locationInfo = locationInfo;
         this.name = name;
-        this.parameters = new ArrayList<UMLParameter>();
-        this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
-        this.typeParameters = new ArrayList<UMLTypeParameter>();
-        this.fieldTypeMap = fieldTypeMap;
+		this.c = c;
+		this.parameters = new ArrayList<>();
+        this.anonymousClassList = new ArrayList<>();
+        this.typeParameters = new ArrayList<>();
+        this.fieldTypeMap = umlCls.getFieldTypeMap();
     }
 
 	public List<UMLTypeParameter> getTypeParameters() {
@@ -169,17 +179,20 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return variableTypeMap;
 	}
 
-	public Map<String, TypeGraph> variableTypeGrMap() {
-		Map<String, TypeGraph> variableTypeMap = new LinkedHashMap<>();
+	public Map<String, TypFct> variableTypeGrMap() {
+		Map<String, TypFct> variableTypeMap = new LinkedHashMap<>();
 		for(UMLParameter parameter : parameters) {
 			if(!parameter.getKind().equals("return"))
-				variableTypeMap.put(parameter.getName(), parameter.getTypeGraph());
+				variableTypeMap.put(parameter.getName(), getTypeFact(parameter.getTypeGraph(), c));
+			else
+				variableTypeMap.put("return", getTypeFact(parameter.getTypeGraph(), c));
 		}
 		for(VariableDeclaration declaration : getAllVariableDeclarations()) {
-			variableTypeMap.put(declaration.getVariableName(), declaration.getTypeGraph());
+			variableTypeMap.put(declaration.getVariableName(), getTypeFact(declaration.getTypeGraph(),c));
 		}
 		return variableTypeMap;
 	}
+
 
 	public int statementCount() {
 		if(operationBody != null)
@@ -769,7 +782,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return null;
 	}
 
-	public Map<String, TypeGraph> getFieldTypeMap() {
+	public Map<String, TypFct> getFieldTypeMap() {
 		return fieldTypeMap;
 	}
 }

@@ -1,12 +1,14 @@
 package gr.uom.java.xmi;
 
+import gr.uom.java.xmi.TypeFactMiner.TypFct;
+
 import java.io.Serializable;
 
 public class UMLAnonymousClass extends UMLAbstractClass implements Comparable<UMLAnonymousClass>, Serializable, LocationInfoProvider {
 	private String codePath;
 	
-	public UMLAnonymousClass(String packageName, String name, String codePath, LocationInfo locationInfo) {
-    	super();
+	public UMLAnonymousClass(String packageName, String name, String codePath, LocationInfo locationInfo, TypFct.Context context) {
+    	super(context);
 		this.packageName = packageName;
         this.name = name;
         this.locationInfo = locationInfo;

@@ -1,16 +1,13 @@
 package gr.uom.java.xmi;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+import gr.uom.java.xmi.TypeFactMiner.TypFct;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -43,16 +40,20 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 
+import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeFact;
 import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeGraph;
+import static java.util.stream.Collectors.*;
 
 public class UMLModelASTReader {
 	public static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
-	
 	private UMLModel umlModel;
 	private String projectRoot;
 	private ASTParser parser;
 
+	// for GitHub API
 	public UMLModelASTReader(Map<String, String> javaFileContents, Set<String> repositoryDirectories) {
 		this.umlModel = new UMLModel(repositoryDirectories);
 		this.parser = ASTParser.newParser(AST.JLS11);
@@ -71,6 +72,25 @@ public class UMLModelASTReader {
 		}
 	}
 
+	// for .git
+	public UMLModelASTReader(Map<String, String> javaFileContents, Set<String> repositoryDirectories, Repository repo, RevCommit commit) {
+		this.umlModel = new UMLModel(repositoryDirectories, repo, commit);
+		this.parser = ASTParser.newParser(AST.JLS11);
+		for(String filePath : javaFileContents.keySet()) {
+			Map<String, String> options = JavaCore.getOptions();
+			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_8);
+			options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_8);
+			options.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_8);
+			parser.setCompilerOptions(options);
+			parser.setResolveBindings(false);
+			parser.setKind(ASTParser.K_COMPILATION_UNIT);
+			parser.setStatementsRecovery(true);
+			parser.setSource(javaFileContents.get(filePath).toCharArray());
+			CompilationUnit compilationUnit = (CompilationUnit)parser.createAST(null);
+			processCompilationUnit(filePath, compilationUnit);
+		}
+	}
+	// for download and analyze
 	public UMLModelASTReader(File rootFolder, List<String> javaFiles, Set<String> repositoryDirectories) {
 		this(rootFolder, buildAstParser(rootFolder), javaFiles, repositoryDirectories);
 	}
@@ -120,10 +140,8 @@ public class UMLModelASTReader {
 			packageName = "";
 		
 		List<ImportDeclaration> imports = compilationUnit.imports();
-		List<String> importedTypes = new ArrayList<String>();
-		for(ImportDeclaration importDeclaration : imports) {
-			importedTypes.add(importDeclaration.getName().getFullyQualifiedName());
-		}
+		List<String> importedTypes = imports.stream().map(z->z.getName().getFullyQualifiedName()).collect(toList());
+
 		List<AbstractTypeDeclaration> topLevelTypeDeclarations = compilationUnit.types();
         for(AbstractTypeDeclaration abstractTypeDeclaration : topLevelTypeDeclarations) {
         	if(abstractTypeDeclaration instanceof TypeDeclaration) {
@@ -151,15 +169,16 @@ public class UMLModelASTReader {
 		return doc;
 	}
 
+
 	private void processTypeDeclaration(CompilationUnit cu, TypeDeclaration typeDeclaration, String packageName, String sourceFile,
-			List<String> importedTypes) {
+										List<String> importedTypes) {
 		UMLJavadoc javadoc = generateJavadoc(typeDeclaration);
 		if(javadoc != null && javadoc.contains("Source code generated using FreeMarker template")) {
 			return;
 		}
 		String className = typeDeclaration.getName().getFullyQualifiedName();
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, typeDeclaration, CodeElementType.TYPE_DECLARATION);
-		UMLClass umlClass = new UMLClass(packageName, className, locationInfo, typeDeclaration.isPackageMemberTypeDeclaration(), importedTypes);
+		UMLClass umlClass = new UMLClass(packageName, className, locationInfo, typeDeclaration.isPackageMemberTypeDeclaration(), importedTypes, new TypFct.Context(cu, Optional.empty()));
 		umlClass.setJavadoc(javadoc);
 		
 		if(typeDeclaration.isInterface()) {
@@ -275,7 +294,7 @@ public class UMLModelASTReader {
 		UMLJavadoc javadoc = generateJavadoc(methodDeclaration);
 		String methodName = methodDeclaration.getName().getFullyQualifiedName();
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, methodDeclaration, CodeElementType.METHOD_DECLARATION);
-		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo, umlCls.getFieldTypeMap());
+		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo, umlCls, new TypFct.Context(cu, Optional.of(methodDeclaration)));
 		umlOperation.setJavadoc(javadoc);
 		
 		if(methodDeclaration.isConstructor())
@@ -353,7 +372,7 @@ public class UMLModelASTReader {
 			}
 			UMLType type = UMLType.extractTypeObject(typeName,
 					generateLocationInfo(cu, sourceFile, parameterType, CodeElementType.TYPE));
-			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarargs(), getTypeGraph(returnType));
+			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarargs(), getTypeGraph(parameterType));
 			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, parameter, parameter.isVarargs());
 			variableDeclaration.setParameter(true);
 			umlParameter.setVariableDeclaration(variableDeclaration);
@@ -405,7 +424,7 @@ public class UMLModelASTReader {
 	private UMLAnonymousClass processAnonymousClassDeclaration(CompilationUnit cu, AnonymousClassDeclaration anonymous, String packageName, String binaryName, String codePath, String sourceFile) {
 		List<BodyDeclaration> bodyDeclarations = anonymous.bodyDeclarations();
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, anonymous, CodeElementType.ANONYMOUS_CLASS_DECLARATION);
-		UMLAnonymousClass anonymousClass = new UMLAnonymousClass(packageName, binaryName, codePath, locationInfo);
+		UMLAnonymousClass anonymousClass = new UMLAnonymousClass(packageName, binaryName, codePath, locationInfo, new TypFct.Context(cu, Optional.empty()));
 		
 		for(BodyDeclaration bodyDeclaration : bodyDeclarations) {
 			if(bodyDeclaration instanceof FieldDeclaration) {

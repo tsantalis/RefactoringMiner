@@ -25,7 +25,7 @@ public final class TypeNodeOuterClass {
     /**
      * <code>optional string name = 1;</code>
      */
-    java.lang.String getName();
+    String getName();
     /**
      * <code>optional string name = 1;</code>
      */
@@ -35,7 +35,7 @@ public final class TypeNodeOuterClass {
     /**
      * <code>repeated string annotations = 4;</code>
      */
-    java.util.List<java.lang.String>
+    java.util.List<String>
         getAnnotationsList();
     /**
      * <code>repeated string annotations = 4;</code>
@@ -44,7 +44,7 @@ public final class TypeNodeOuterClass {
     /**
      * <code>repeated string annotations = 4;</code>
      */
-    java.lang.String getAnnotations(int index);
+    String getAnnotations(int index);
     /**
      * <code>repeated string annotations = 4;</code>
      */
@@ -68,6 +68,15 @@ public final class TypeNodeOuterClass {
      * <code>optional .Models.TypeNode.NameSpace namespacee = 3;</code>
      */
     gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.NameSpace getNamespacee();
+
+    /**
+     * <code>optional .Models.TypeNode.TypeSem typeSem = 5;</code>
+     */
+    boolean hasTypeSem();
+    /**
+     * <code>optional .Models.TypeNode.TypeSem typeSem = 5;</code>
+     */
+    gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeSem getTypeSem();
   }
   /**
    * Protobuf type {@code Models.TypeNode}
@@ -86,9 +95,17 @@ public final class TypeNodeOuterClass {
       annotations_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       kind_ = 1;
       namespacee_ = 1;
+      typeSem_ = 1;
     }
 
-    @java.lang.Override
+    @Override
+    @SuppressWarnings({"unused"})
+    protected Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new TypeNode();
+    }
+
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
@@ -99,7 +116,7 @@ public final class TypeNodeOuterClass {
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException();
       }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -112,13 +129,6 @@ public final class TypeNodeOuterClass {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
@@ -127,6 +137,7 @@ public final class TypeNodeOuterClass {
             }
             case 16: {
               int rawValue = input.readEnum();
+                @SuppressWarnings("deprecation")
               gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeKind value = gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeKind.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(2, rawValue);
@@ -138,6 +149,7 @@ public final class TypeNodeOuterClass {
             }
             case 24: {
               int rawValue = input.readEnum();
+                @SuppressWarnings("deprecation")
               gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.NameSpace value = gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.NameSpace.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(3, rawValue);
@@ -149,11 +161,30 @@ public final class TypeNodeOuterClass {
             }
             case 34: {
               com.google.protobuf.ByteString bs = input.readBytes();
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
                 annotations_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000002;
               }
               annotations_.add(bs);
+              break;
+            }
+            case 40: {
+              int rawValue = input.readEnum();
+                @SuppressWarnings("deprecation")
+              gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeSem value = gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeSem.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(5, rawValue);
+              } else {
+                bitField0_ |= 0x00000008;
+                typeSem_ = rawValue;
+              }
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
               break;
             }
           }
@@ -164,7 +195,7 @@ public final class TypeNodeOuterClass {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((mutable_bitField0_ & 0x00000002) != 0)) {
           annotations_ = annotations_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
@@ -176,6 +207,7 @@ public final class TypeNodeOuterClass {
       return gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.internal_static_Models_TypeNode_descriptor;
     }
 
+    @Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.internal_static_Models_TypeNode_fieldAccessorTable
@@ -255,7 +287,7 @@ public final class TypeNodeOuterClass {
       /**
        * @deprecated Use {@link #forNumber(int)} instead.
        */
-      @java.lang.Deprecated
+      @Deprecated
       public static TypeKind valueOf(int value) {
         return forNumber(value);
       }
@@ -303,7 +335,7 @@ public final class TypeNodeOuterClass {
       public static TypeKind valueOf(
           com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
         if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
+          throw new IllegalArgumentException(
             "EnumValueDescriptor is not for this type.");
         }
         return VALUES[desc.getIndex()];
@@ -340,17 +372,9 @@ public final class TypeNodeOuterClass {
        */
       Internal(4),
       /**
-       * <code>Prmtv = 6;</code>
-       */
-      Prmtv(6),
-      /**
        * <code>DontKnow = 5;</code>
        */
       DontKnow(5),
-      /**
-       * <code>WildCrd = 7;</code>
-       */
-      WildCrd(7),
       ;
 
       /**
@@ -370,17 +394,9 @@ public final class TypeNodeOuterClass {
        */
       public static final int Internal_VALUE = 4;
       /**
-       * <code>Prmtv = 6;</code>
-       */
-      public static final int Prmtv_VALUE = 6;
-      /**
        * <code>DontKnow = 5;</code>
        */
       public static final int DontKnow_VALUE = 5;
-      /**
-       * <code>WildCrd = 7;</code>
-       */
-      public static final int WildCrd_VALUE = 7;
 
 
       public final int getNumber() {
@@ -390,7 +406,7 @@ public final class TypeNodeOuterClass {
       /**
        * @deprecated Use {@link #forNumber(int)} instead.
        */
-      @java.lang.Deprecated
+      @Deprecated
       public static NameSpace valueOf(int value) {
         return forNumber(value);
       }
@@ -401,9 +417,7 @@ public final class TypeNodeOuterClass {
           case 2: return Jdk;
           case 3: return External;
           case 4: return Internal;
-          case 6: return Prmtv;
           case 5: return DontKnow;
-          case 7: return WildCrd;
           default: return null;
         }
       }
@@ -438,7 +452,7 @@ public final class TypeNodeOuterClass {
       public static NameSpace valueOf(
           com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
         if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
+          throw new IllegalArgumentException(
             "EnumValueDescriptor is not for this type.");
         }
         return VALUES[desc.getIndex()];
@@ -453,26 +467,125 @@ public final class TypeNodeOuterClass {
       // @@protoc_insertion_point(enum_scope:Models.TypeNode.NameSpace)
     }
 
+    /**
+     * Protobuf enum {@code Models.TypeNode.TypeSem}
+     */
+    public enum TypeSem
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>Object = 1;</code>
+       */
+      Object(1),
+      /**
+       * <code>Enum = 2;</code>
+       */
+      Enum(2),
+      /**
+       * <code>PrimitiveType = 3;</code>
+       */
+      PrimitiveType(3),
+      ;
+
+      /**
+       * <code>Object = 1;</code>
+       */
+      public static final int Object_VALUE = 1;
+      /**
+       * <code>Enum = 2;</code>
+       */
+      public static final int Enum_VALUE = 2;
+      /**
+       * <code>PrimitiveType = 3;</code>
+       */
+      public static final int PrimitiveType_VALUE = 3;
+
+
+      public final int getNumber() {
+        return value;
+      }
+
+      /**
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @Deprecated
+      public static TypeSem valueOf(int value) {
+        return forNumber(value);
+      }
+
+      public static TypeSem forNumber(int value) {
+        switch (value) {
+          case 1: return Object;
+          case 2: return Enum;
+          case 3: return PrimitiveType;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<TypeSem>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          TypeSem> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<TypeSem>() {
+              public TypeSem findValueByNumber(int number) {
+                return TypeSem.forNumber(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(ordinal());
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.getDescriptor().getEnumTypes().get(2);
+      }
+
+      private static final TypeSem[] VALUES = values();
+
+      public static TypeSem valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int value;
+
+      private TypeSem(int value) {
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:Models.TypeNode.TypeSem)
+    }
+
     private int bitField0_;
     public static final int NAME_FIELD_NUMBER = 1;
-    private volatile java.lang.Object name_;
+    private volatile Object name_;
     /**
      * <code>optional string name = 1;</code>
      */
     public boolean hasName() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional string name = 1;</code>
      */
-    public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getName() {
+      Object ref = name_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
           name_ = s;
         }
@@ -484,11 +597,11 @@ public final class TypeNodeOuterClass {
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
+      Object ref = name_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         name_ = b;
         return b;
       } else {
@@ -514,7 +627,7 @@ public final class TypeNodeOuterClass {
     /**
      * <code>repeated string annotations = 4;</code>
      */
-    public java.lang.String getAnnotations(int index) {
+    public String getAnnotations(int index) {
       return annotations_.get(index);
     }
     /**
@@ -531,12 +644,13 @@ public final class TypeNodeOuterClass {
      * <code>required .Models.TypeNode.TypeKind kind = 2;</code>
      */
     public boolean hasKind() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
+      return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>required .Models.TypeNode.TypeKind kind = 2;</code>
      */
     public gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeKind getKind() {
+      @SuppressWarnings("deprecation")
       gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeKind result = gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeKind.valueOf(kind_);
       return result == null ? gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeKind.Simple : result;
     }
@@ -547,17 +661,36 @@ public final class TypeNodeOuterClass {
      * <code>optional .Models.TypeNode.NameSpace namespacee = 3;</code>
      */
     public boolean hasNamespacee() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      * <code>optional .Models.TypeNode.NameSpace namespacee = 3;</code>
      */
     public gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.NameSpace getNamespacee() {
+      @SuppressWarnings("deprecation")
       gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.NameSpace result = gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.NameSpace.valueOf(namespacee_);
       return result == null ? gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.NameSpace.TypeVariable : result;
     }
 
+    public static final int TYPESEM_FIELD_NUMBER = 5;
+    private int typeSem_;
+    /**
+     * <code>optional .Models.TypeNode.TypeSem typeSem = 5;</code>
+     */
+    public boolean hasTypeSem() {
+      return ((bitField0_ & 0x00000008) != 0);
+    }
+    /**
+     * <code>optional .Models.TypeNode.TypeSem typeSem = 5;</code>
+     */
+    public gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeSem getTypeSem() {
+      @SuppressWarnings("deprecation")
+      gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeSem result = gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeSem.valueOf(typeSem_);
+      return result == null ? gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeSem.Object : result;
+    }
+
     private byte memoizedIsInitialized = -1;
+    @Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -571,36 +704,41 @@ public final class TypeNodeOuterClass {
       return true;
     }
 
+    @Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         output.writeEnum(2, kind_);
       }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((bitField0_ & 0x00000004) != 0)) {
         output.writeEnum(3, namespacee_);
       }
       for (int i = 0; i < annotations_.size(); i++) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 4, annotations_.getRaw(i));
       }
+      if (((bitField0_ & 0x00000008) != 0)) {
+        output.writeEnum(5, typeSem_);
+      }
       unknownFields.writeTo(output);
     }
 
+    @Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(2, kind_);
       }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((bitField0_ & 0x00000004) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(3, namespacee_);
       }
@@ -612,13 +750,17 @@ public final class TypeNodeOuterClass {
         size += dataSize;
         size += 1 * getAnnotationsList().size();
       }
+      if (((bitField0_ & 0x00000008) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(5, typeSem_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
        return true;
       }
@@ -627,27 +769,30 @@ public final class TypeNodeOuterClass {
       }
       gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode other = (gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode) obj;
 
-      boolean result = true;
-      result = result && (hasName() == other.hasName());
+      if (hasName() != other.hasName()) return false;
       if (hasName()) {
-        result = result && getName()
-            .equals(other.getName());
+        if (!getName()
+            .equals(other.getName())) return false;
       }
-      result = result && getAnnotationsList()
-          .equals(other.getAnnotationsList());
-      result = result && (hasKind() == other.hasKind());
+      if (!getAnnotationsList()
+          .equals(other.getAnnotationsList())) return false;
+      if (hasKind() != other.hasKind()) return false;
       if (hasKind()) {
-        result = result && kind_ == other.kind_;
+        if (kind_ != other.kind_) return false;
       }
-      result = result && (hasNamespacee() == other.hasNamespacee());
+      if (hasNamespacee() != other.hasNamespacee()) return false;
       if (hasNamespacee()) {
-        result = result && namespacee_ == other.namespacee_;
+        if (namespacee_ != other.namespacee_) return false;
       }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (hasTypeSem() != other.hasTypeSem()) return false;
+      if (hasTypeSem()) {
+        if (typeSem_ != other.typeSem_) return false;
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -669,6 +814,10 @@ public final class TypeNodeOuterClass {
       if (hasNamespacee()) {
         hash = (37 * hash) + NAMESPACEE_FIELD_NUMBER;
         hash = (53 * hash) + namespacee_;
+      }
+      if (hasTypeSem()) {
+        hash = (37 * hash) + TYPESEM_FIELD_NUMBER;
+        hash = (53 * hash) + typeSem_;
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -745,6 +894,7 @@ public final class TypeNodeOuterClass {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -752,12 +902,13 @@ public final class TypeNodeOuterClass {
     public static Builder newBuilder(gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
@@ -775,6 +926,7 @@ public final class TypeNodeOuterClass {
         return gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.internal_static_Models_TypeNode_descriptor;
       }
 
+      @Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.internal_static_Models_TypeNode_fieldAccessorTable
@@ -797,6 +949,7 @@ public final class TypeNodeOuterClass {
                 .alwaysUseFieldBuilders) {
         }
       }
+      @Override
       public Builder clear() {
         super.clear();
         name_ = "";
@@ -807,18 +960,23 @@ public final class TypeNodeOuterClass {
         bitField0_ = (bitField0_ & ~0x00000004);
         namespacee_ = 1;
         bitField0_ = (bitField0_ & ~0x00000008);
+        typeSem_ = 1;
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
 
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.internal_static_Models_TypeNode_descriptor;
       }
 
+      @Override
       public gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode getDefaultInstanceForType() {
         return gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.getDefaultInstance();
       }
 
+      @Override
       public gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode build() {
         gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode result = buildPartial();
         if (!result.isInitialized()) {
@@ -827,58 +985,70 @@ public final class TypeNodeOuterClass {
         return result;
       }
 
+      @Override
       public gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode buildPartial() {
         gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode result = new gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((from_bitField0_ & 0x00000001) != 0)) {
           to_bitField0_ |= 0x00000001;
         }
         result.name_ = name_;
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((bitField0_ & 0x00000002) != 0)) {
           annotations_ = annotations_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.annotations_ = annotations_;
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+        if (((from_bitField0_ & 0x00000004) != 0)) {
           to_bitField0_ |= 0x00000002;
         }
         result.kind_ = kind_;
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+        if (((from_bitField0_ & 0x00000008) != 0)) {
           to_bitField0_ |= 0x00000004;
         }
         result.namespacee_ = namespacee_;
+        if (((from_bitField0_ & 0x00000010) != 0)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.typeSem_ = typeSem_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
+      @Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+          Object value) {
+        return super.setField(field, value);
       }
+      @Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+          int index, Object value) {
+        return super.setRepeatedField(field, index, value);
       }
+      @Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+          Object value) {
+        return super.addRepeatedField(field, value);
       }
+      @Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode) {
           return mergeFrom((gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode)other);
@@ -911,11 +1081,15 @@ public final class TypeNodeOuterClass {
         if (other.hasNamespacee()) {
           setNamespacee(other.getNamespacee());
         }
+        if (other.hasTypeSem()) {
+          setTypeSem(other.getTypeSem());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
       }
 
+      @Override
       public final boolean isInitialized() {
         if (!hasKind()) {
           return false;
@@ -923,6 +1097,7 @@ public final class TypeNodeOuterClass {
         return true;
       }
 
+      @Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -942,28 +1117,28 @@ public final class TypeNodeOuterClass {
       }
       private int bitField0_;
 
-      private java.lang.Object name_ = "";
+      private Object name_ = "";
       /**
        * <code>optional string name = 1;</code>
        */
       public boolean hasName() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
+        return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional string name = 1;</code>
        */
-      public java.lang.String getName() {
-        java.lang.Object ref = name_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getName() {
+        Object ref = name_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+          String s = bs.toStringUtf8();
           if (bs.isValidUtf8()) {
             name_ = s;
           }
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
@@ -971,11 +1146,11 @@ public final class TypeNodeOuterClass {
        */
       public com.google.protobuf.ByteString
           getNameBytes() {
-        java.lang.Object ref = name_;
+        Object ref = name_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+                  (String) ref);
           name_ = b;
           return b;
         } else {
@@ -986,7 +1161,7 @@ public final class TypeNodeOuterClass {
        * <code>optional string name = 1;</code>
        */
       public Builder setName(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -1020,7 +1195,7 @@ public final class TypeNodeOuterClass {
 
       private com.google.protobuf.LazyStringList annotations_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureAnnotationsIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (!((bitField0_ & 0x00000002) != 0)) {
           annotations_ = new com.google.protobuf.LazyStringArrayList(annotations_);
           bitField0_ |= 0x00000002;
          }
@@ -1041,7 +1216,7 @@ public final class TypeNodeOuterClass {
       /**
        * <code>repeated string annotations = 4;</code>
        */
-      public java.lang.String getAnnotations(int index) {
+      public String getAnnotations(int index) {
         return annotations_.get(index);
       }
       /**
@@ -1055,7 +1230,7 @@ public final class TypeNodeOuterClass {
        * <code>repeated string annotations = 4;</code>
        */
       public Builder setAnnotations(
-          int index, java.lang.String value) {
+          int index, String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -1068,7 +1243,7 @@ public final class TypeNodeOuterClass {
        * <code>repeated string annotations = 4;</code>
        */
       public Builder addAnnotations(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -1081,7 +1256,7 @@ public final class TypeNodeOuterClass {
        * <code>repeated string annotations = 4;</code>
        */
       public Builder addAllAnnotations(
-          java.lang.Iterable<java.lang.String> values) {
+          Iterable<String> values) {
         ensureAnnotationsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
             values, annotations_);
@@ -1116,12 +1291,13 @@ public final class TypeNodeOuterClass {
        * <code>required .Models.TypeNode.TypeKind kind = 2;</code>
        */
       public boolean hasKind() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+        return ((bitField0_ & 0x00000004) != 0);
       }
       /**
        * <code>required .Models.TypeNode.TypeKind kind = 2;</code>
        */
       public gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeKind getKind() {
+        @SuppressWarnings("deprecation")
         gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeKind result = gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeKind.valueOf(kind_);
         return result == null ? gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeKind.Simple : result;
       }
@@ -1152,12 +1328,13 @@ public final class TypeNodeOuterClass {
        * <code>optional .Models.TypeNode.NameSpace namespacee = 3;</code>
        */
       public boolean hasNamespacee() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000008) != 0);
       }
       /**
        * <code>optional .Models.TypeNode.NameSpace namespacee = 3;</code>
        */
       public gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.NameSpace getNamespacee() {
+        @SuppressWarnings("deprecation")
         gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.NameSpace result = gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.NameSpace.valueOf(namespacee_);
         return result == null ? gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.NameSpace.TypeVariable : result;
       }
@@ -1182,11 +1359,50 @@ public final class TypeNodeOuterClass {
         onChanged();
         return this;
       }
+
+      private int typeSem_ = 1;
+      /**
+       * <code>optional .Models.TypeNode.TypeSem typeSem = 5;</code>
+       */
+      public boolean hasTypeSem() {
+        return ((bitField0_ & 0x00000010) != 0);
+      }
+      /**
+       * <code>optional .Models.TypeNode.TypeSem typeSem = 5;</code>
+       */
+      public gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeSem getTypeSem() {
+        @SuppressWarnings("deprecation")
+        gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeSem result = gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeSem.valueOf(typeSem_);
+        return result == null ? gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeSem.Object : result;
+      }
+      /**
+       * <code>optional .Models.TypeNode.TypeSem typeSem = 5;</code>
+       */
+      public Builder setTypeSem(gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeSem value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000010;
+        typeSem_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional .Models.TypeNode.TypeSem typeSem = 5;</code>
+       */
+      public Builder clearTypeSem() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        typeSem_ = 1;
+        onChanged();
+        return this;
+      }
+      @Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
+      @Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -1206,8 +1422,9 @@ public final class TypeNodeOuterClass {
       return DEFAULT_INSTANCE;
     }
 
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<TypeNode>
+    @Deprecated public static final com.google.protobuf.Parser<TypeNode>
         PARSER = new com.google.protobuf.AbstractParser<TypeNode>() {
+      @Override
       public TypeNode parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1220,11 +1437,12 @@ public final class TypeNodeOuterClass {
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<TypeNode> getParserForType() {
       return PARSER;
     }
 
+    @Override
     public gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -1233,7 +1451,7 @@ public final class TypeNodeOuterClass {
 
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_Models_TypeNode_descriptor;
-  private static final 
+  private static final
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_Models_TypeNode_fieldAccessorTable;
 
@@ -1244,37 +1462,31 @@ public final class TypeNodeOuterClass {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
-      "\n\016TypeNode.proto\022\006Models\"\340\002\n\010TypeNode\022\014\n" +
+    String[] descriptorData = {
+      "\n\016TypeNode.proto\022\006Models\"\247\003\n\010TypeNode\022\014\n" +
       "\004name\030\001 \001(\t\022\023\n\013annotations\030\004 \003(\t\022\'\n\004kind" +
       "\030\002 \002(\0162\031.Models.TypeNode.TypeKind\022.\n\nnam" +
       "espacee\030\003 \001(\0162\032.Models.TypeNode.NameSpac" +
-      "e\"n\n\010TypeKind\022\n\n\006Simple\020\001\022\021\n\rParameteriz" +
-      "ed\020\002\022\014\n\010WildCard\020\003\022\t\n\005Union\020\004\022\r\n\tPrimiti" +
-      "ve\020\005\022\020\n\014Intersection\020\006\022\t\n\005Array\020\007\"h\n\tNam" +
-      "eSpace\022\020\n\014TypeVariable\020\001\022\007\n\003Jdk\020\002\022\014\n\010Ext" +
-      "ernal\020\003\022\014\n\010Internal\020\004\022\t\n\005Prmtv\020\006\022\014\n\010Dont" +
-      "Know\020\005\022\013\n\007WildCrd\020\007B&\n$gr.uom.java.xmi.T" +
-      "ypeFactMiner.Models"
+      "e\022)\n\007typeSem\030\005 \001(\0162\030.Models.TypeNode.Typ" +
+      "eSem\"n\n\010TypeKind\022\n\n\006Simple\020\001\022\021\n\rParamete" +
+      "rized\020\002\022\014\n\010WildCard\020\003\022\t\n\005Union\020\004\022\r\n\tPrim" +
+      "itive\020\005\022\020\n\014Intersection\020\006\022\t\n\005Array\020\007\"P\n\t" +
+      "NameSpace\022\020\n\014TypeVariable\020\001\022\007\n\003Jdk\020\002\022\014\n\010" +
+      "External\020\003\022\014\n\010Internal\020\004\022\014\n\010DontKnow\020\005\"2" +
+      "\n\007TypeSem\022\n\n\006Object\020\001\022\010\n\004Enum\020\002\022\021\n\rPrimi" +
+      "tiveType\020\003B&\n$gr.uom.java.xmi.TypeFactMi" +
+      "ner.Models"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
-    com.google.protobuf.Descriptors.FileDescriptor
+    descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        }, assigner);
+        });
     internal_static_Models_TypeNode_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_Models_TypeNode_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Models_TypeNode_descriptor,
-        new java.lang.String[] { "Name", "Annotations", "Kind", "Namespacee", });
+        new String[] { "Name", "Annotations", "Kind", "Namespacee", "TypeSem", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

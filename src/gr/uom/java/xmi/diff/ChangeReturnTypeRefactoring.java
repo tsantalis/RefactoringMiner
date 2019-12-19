@@ -5,22 +5,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import gr.uom.java.xmi.TypeFactMiner.ExtractAndAnalyseTypeChange;
+import gr.uom.java.xmi.TypeFactMiner.Models.GlobalContext;
+import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass;
 import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph;
+import gr.uom.java.xmi.TypeFactMiner.TypFct;
+import io.vavr.Tuple3;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import org.refactoringminer.api.TypeRelatedRefactoring;
 
-public class ChangeReturnTypeRefactoring implements Refactoring {
+import static gr.uom.java.xmi.TypeFactMiner.ExtractAndAnalyseTypeChange.realTypeChange;
+
+public class ChangeReturnTypeRefactoring implements Refactoring, TypeRelatedRefactoring {
 	private UMLType originalType;
 	private UMLType changedType;
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
 	private Set<AbstractCodeMapping> returnReferences;
-	private TypeGraph typeB4;
-	private TypeGraph typeAfter;
+	private TypFct typeB4;
+	private TypFct typeAfter;
+	private List<Tuple3<TypeGraph, TypeGraph, List<String>>> realTypeChanges;
 
 	public ChangeReturnTypeRefactoring(UMLType originalType, UMLType changedType,
 			UMLOperation operationBefore, UMLOperation operationAfter, Set<AbstractCodeMapping> returnReferences) {
@@ -29,6 +38,8 @@ public class ChangeReturnTypeRefactoring implements Refactoring {
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.returnReferences = returnReferences;
+		this.typeB4 = getVariableTypeMapB4().get("return");
+		this.typeAfter = getVariableTypeMapAfter().get("return");
 	}
 
 	public RefactoringType getRefactoringType() {
@@ -146,35 +157,67 @@ public class ChangeReturnTypeRefactoring implements Refactoring {
 		return ranges;
 	}
 
-	public TypeGraph getTypeB4() {
+	@Override
+	public boolean isResolved() {
+		return getTypeB4().isResolved() && getTypeAfter().isResolved();
+	}
+
+	@Override
+	public TypFct getTypeB4() {
 		return typeB4;
 	}
-
-	public TypeGraph getTypeAfter() {
+	@Override
+	public TypFct getTypeAfter() {
 		return typeAfter;
 	}
-
-	public Map<String,TypeGraph> getFieldTypeMapB4(){
+	@Override
+	public Map<String, TypFct> getFieldTypeMapB4(){
 		return operationBefore.getFieldTypeMap();
 	}
-
-	public Map<String,TypeGraph> getFieldTypeMapAftr(){
+	@Override
+	public Map<String, TypFct> getFieldTypeMapAfter(){
 		return operationAfter.getFieldTypeMap();
 	}
-
-	public Map<String,TypeGraph> getVariableTypeMapB4(){
+	@Override
+	public Map<String, TypFct> getVariableTypeMapB4(){
 		return operationBefore.variableTypeGrMap();
 	}
-
-	public Map<String,TypeGraph> getVariableTypeMapAftr(){
+	@Override
+	public Map<String, TypFct> getVariableTypeMapAfter(){
 		return operationAfter.variableTypeGrMap();
 	}
 
-	public void setTypeGraphB4(TypeGraph b4){
-		this.typeB4 = b4;
+	@Override
+	public void updateTypeB4(GlobalContext gc) {
+		typeB4.qualify(gc);
 	}
 
-	public void setTypeGraphAfter(TypeGraph aftr){
-		this.typeAfter = aftr;
+	@Override
+	public void updateTypeAfter(GlobalContext gc) {
+		typeAfter.qualify(gc);
+	}
+
+	@Override
+	public void updateTypeNameSpaceBefore(GlobalContext gc) {
+		typeB4.searchNameSpace(gc);
+	}
+
+	@Override
+	public void updateTypeNameSpaceAfter(GlobalContext gc) {
+		typeAfter.searchNameSpace(gc);
+	}
+
+	@Override
+	public void extractRealTypeChange(GlobalContext gc) {
+		realTypeChanges = realTypeChange(typeB4, typeAfter, gc);
+	}
+
+	public List<Tuple3<TypeGraph, TypeGraph, List<String>>> getRealTypeChanges() {
+		return realTypeChanges;
+	}
+
+	@Override
+	public boolean isTypeRelatedChange(){
+		return true;
 	}
 }

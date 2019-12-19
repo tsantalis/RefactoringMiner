@@ -14,7 +14,9 @@ public interface Refactoring extends Serializable, CodeRangeProvider {
 	public List<String> getInvolvedClassesBeforeRefactoring();
 	
 	public List<String> getInvolvedClassesAfterRefactoring();
-	
+
+	default boolean isTypeRelatedChange(){return false;}
+
 	default public String toJSON() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{").append("\n");

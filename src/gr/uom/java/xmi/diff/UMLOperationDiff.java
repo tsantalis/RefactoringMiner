@@ -226,8 +226,8 @@ public class UMLOperationDiff {
 				Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReturnReferences(mappings);
 				ChangeReturnTypeRefactoring refactoring = new ChangeReturnTypeRefactoring(removedOperationReturnParameter.getType(), addedOperationReturnParameter.getType(),
 						removedOperation, addedOperation, references);
-				refactoring.setTypeGraphB4(removedOperationReturnParameter.getTypeGraph());
-				refactoring.setTypeGraphAfter(addedOperationReturnParameter.getTypeGraph());
+				//refactoring.setTypeGraphB4(removedOperationReturnParameter.getTypeGraph());
+				//refactoring.setTypeGraphAfter(addedOperationReturnParameter.getTypeGraph());
 				refactorings.add(refactoring);
 			}
 		}

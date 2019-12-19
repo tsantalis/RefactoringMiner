@@ -13,12 +13,12 @@ public class UMLParameter implements Serializable, VariableDeclarationProvider {
 	private boolean varargs;
 	private VariableDeclaration variableDeclaration;
 
-	public UMLParameter(String name, UMLType type, String kind, boolean varargs, TypeGraph tGr) {
+	public UMLParameter(String name, UMLType type, String kind, boolean varargs, TypeGraph tg) {
 		this.name = name;
 		this.type = type;
 		this.kind = kind;
 		this.varargs = varargs;
-		this.typeGraph = tGr;
+		this.typeGraph = tg;
 	}
 
 	public UMLType getType() {

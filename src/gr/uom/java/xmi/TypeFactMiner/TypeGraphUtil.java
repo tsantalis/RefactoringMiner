@@ -1,19 +1,71 @@
 package gr.uom.java.xmi.TypeFactMiner;
 
 
+import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass;
 import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph;
 import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph.Builder;
 import gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode;
 import gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeKind;
+import io.vavr.Tuple;
+import io.vavr.Tuple3;
 import org.eclipse.jdt.core.dom.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
+import static gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeKind.*;
 import static java.util.stream.Collectors.*;
 
 public class TypeGraphUtil {
+
+//
+//    public static TypFct getTypeFact(Type t, CompilationUnit cu, Optional<MethodDeclaration> md, Repository repo, RevCommit commit){
+//        return new TypFct(getTypeGraph(t),cu, md, repo, commit);
+//    }
+
+    public static TypFct getTypeFact(Type t, TypFct.Context c){
+        return new TypFct(getTypeGraph(t),c);
+    }
+
+    public static TypFct getTypeGraphStripParam(Type t, CompilationUnit c){
+        return new TypFct(getTypeGraphStripParam(t),new TypFct.Context(c, Optional.empty()));
+    }
+
+    public static TypFct getTypeGraph(Type t, CompilationUnit c){
+        return new TypFct(getTypeGraph(t),new TypFct.Context(c, Optional.empty()));
+    }
+
+    public static TypFct getTypeFact(TypeGraph t, TypFct.Context c){
+        return new TypFct(t,c);
+    }
+
+    public static TypeGraph getTypeGraphStripParam(Type t) {
+        if(t.isQualifiedType())
+            return getTypeGraph((QualifiedType) t);
+        else if(t.isNameQualifiedType())
+            return getTypeGraph((NameQualifiedType) t);
+        else if(t.isSimpleType())
+            return getTypeGraph((SimpleType) t);
+        else if(t.isParameterizedType())
+            return getTypeGraphStripParam((ParameterizedType) t);
+        else if(t.isWildcardType())
+            return getTypeGraphStripParam( (WildcardType) t);
+        else if(t.isPrimitiveType())
+            return getTypeGraph((PrimitiveType) t);
+        else if(t.isArrayType())
+            return getTypeGraphStripParam((ArrayType) t);
+//        else if(t.isIntersectionType())
+//            return getTypeGraph((IntersectionType) t);
+//        else if(t.isUnionType())
+//            return getTypeGraph((UnionType) t);
+        else
+            throw new RuntimeException("Could not figure out type");
+
+    }
+
 
     public static TypeGraph getTypeGraph(Type t) {
         if(t.isQualifiedType())
@@ -40,7 +92,7 @@ public class TypeGraphUtil {
     }
 
     public static String pretty(TypeGraph tg){
-        if(tg.getRoot().getKind().equals(TypeKind.Simple) || tg.getRoot().getKind().equals(TypeKind.Primitive)){
+        if(tg.getRoot().getKind().equals(TypeKind.Simple) || tg.getRoot().getKind().equals(Primitive)){
             return tg.getRoot().getName() + String.join(" ", tg.getRoot().getAnnotationsList());
         }
         else if(tg.getRoot().getKind().equals(TypeKind.Parameterized)){
@@ -52,8 +104,10 @@ public class TypeGraphUtil {
             return pretty(tg.getEdgesMap().get("of")) + "[]";
         }
         else if(tg.getRoot().getKind().equals(TypeKind.WildCard)){
-            if(tg.getEdgesMap().containsKey("of"))
-                return "?" + tg.getRoot().getName() + pretty(tg.getEdgesMap().get("of"));
+            if(tg.getEdgesMap().containsKey("extends")){
+                return "? extends " + pretty(tg.getEdgesMap().get("extends"));
+            }if(tg.getEdgesMap().containsKey("super"))
+                return "? super " + pretty(tg.getEdgesMap().get("super"));
             else return "?";
         }
         else if(tg.getRoot().getKind().equals(TypeKind.Union))
@@ -95,24 +149,33 @@ public class TypeGraphUtil {
                 .build();
     }
 
+    private static TypeGraph getTypeGraphStripParam(ParameterizedType pt){
+        return getTypeGraph(pt.getType());
+    }
+
     private static TypeGraph getTypeGraph(WildcardType wt) {
         final List<Annotation> ann = wt.annotations();
         final List<String> annotation = ann.stream().map(a -> "@" + a.getTypeName().getFullyQualifiedName())
                 .collect(toList());
-        final TypeNode root = getTypeNode(wt.isUpperBound() ? "super" : "extends", annotation, TypeKind.WildCard);
+        final TypeNode root = getTypeNode(TypeKind.WildCard, annotation);
         Builder bldr = of(root).toBuilder();
         if(wt.getBound()!=null){
-            bldr.putEdges("of", getTypeGraph(wt.getBound()));
+            bldr.putEdges(wt.isUpperBound() ? "extends" : "super", getTypeGraph(wt.getBound()));
         }
         return bldr.build();
 
     }
 
+    private static TypeGraph getTypeGraphStripParam(WildcardType wt) {
+        return getTypeGraph(wt.getBound());
+    }
+
+
     private static TypeGraph getTypeGraph(PrimitiveType pt){
         final List<Annotation> ann = pt.annotations();
         final List<String> annotation = ann.stream().map(a -> "@" + a.getTypeName().getFullyQualifiedName())
                 .collect(toList());
-        return of(getTypeNode(pt.getPrimitiveTypeCode().toString(), annotation, TypeKind.Primitive));
+        return of(getTypeNode(pt.getPrimitiveTypeCode().toString(), annotation, Primitive));
     }
 
     private static TypeGraph getTypeGraph(ArrayType at){
@@ -128,6 +191,11 @@ public class TypeGraphUtil {
         return of(root).toBuilder()
                 .putEdges("of", getTypeGraph(at.getElementType())).build();
     }
+
+    private static TypeGraph getTypeGraphStripParam(ArrayType at){
+        return getTypeGraph(at.getElementType());
+    }
+
 
     private static TypeGraph getTypeGraph(IntersectionType it){
         final List<Type> ts = it.types();
@@ -151,7 +219,7 @@ public class TypeGraphUtil {
         final List<String> annotation = ann.stream().map(a -> "@" + a.getTypeName().getFullyQualifiedName())
                 .collect(toList());
         final String name = getTypeGraph(q.getQualifier()).getRoot().getName() +"." + q.getName().getIdentifier();
-        return of(getTypeNode(name, annotation, TypeKind.Simple));
+        return of(getTypeNode(name, annotation, TypeKind.Simple).toBuilder().setNamespacee(TypeNode.NameSpace.DontKnow).build());
     }
 
     private static TypeGraph getTypeGraph(NameQualifiedType nq){
@@ -165,4 +233,9 @@ public class TypeGraphUtil {
     private static TypeGraph of(TypeNode root){
         return TypeGraph.newBuilder().setRoot(root).build();
     }
+
+
+
+
+
 }

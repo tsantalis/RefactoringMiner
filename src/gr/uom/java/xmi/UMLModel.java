@@ -10,20 +10,30 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 public class UMLModel {
+	private Repository repo;
+	private RevCommit commit;
 	private Set<String> repositoryDirectories;
     private List<UMLClass> classList;
     private List<UMLGeneralization> generalizationList;
     private List<UMLRealization> realizationList;
 
-    public UMLModel(Set<String> repositoryDirectories) {
-    	this.repositoryDirectories = repositoryDirectories;
-        classList = new ArrayList<UMLClass>();
-        generalizationList = new ArrayList<UMLGeneralization>();
-        realizationList = new ArrayList<UMLRealization>();
+    public UMLModel(Set<String> repositoryDirectories, Repository repo, RevCommit commit) {
+		this(repositoryDirectories);
+    	this.repo = repo;
+        this.commit = commit;
     }
+
+	public UMLModel(Set<String> repositoryDirectories) {
+		this.repositoryDirectories = repositoryDirectories;
+		classList = new ArrayList<UMLClass>();
+		generalizationList = new ArrayList<UMLGeneralization>();
+		realizationList = new ArrayList<UMLRealization>();
+	}
 
 	public void addClass(UMLClass umlClass) {
         classList.add(umlClass);
@@ -153,4 +163,12 @@ public class UMLModel {
     	modelDiff.checkForRenamedClasses(renamedFileHints, new UMLClassMatcher.RelaxedRename());
     	return modelDiff;
     }
+
+	public Repository getRepo() {
+		return repo;
+	}
+
+	public RevCommit getCommit() {
+		return commit;
+	}
 }

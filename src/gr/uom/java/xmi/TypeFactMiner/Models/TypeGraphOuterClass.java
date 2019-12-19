@@ -39,31 +39,31 @@ public final class TypeGraphOuterClass {
      * <code>map&lt;string, .Models.TypeGraph&gt; edges = 2;</code>
      */
     boolean containsEdges(
-            java.lang.String key);
+            String key);
     /**
      * Use {@link #getEdgesMap()} instead.
      */
-    @java.lang.Deprecated
-    java.util.Map<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph>
+    @Deprecated
+    java.util.Map<String, TypeGraph>
     getEdges();
     /**
      * <code>map&lt;string, .Models.TypeGraph&gt; edges = 2;</code>
      */
-    java.util.Map<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph>
+    java.util.Map<String, TypeGraph>
     getEdgesMap();
     /**
      * <code>map&lt;string, .Models.TypeGraph&gt; edges = 2;</code>
      */
 
     gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph getEdgesOrDefault(
-            java.lang.String key,
+            String key,
             gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph defaultValue);
     /**
      * <code>map&lt;string, .Models.TypeGraph&gt; edges = 2;</code>
      */
 
     gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph getEdgesOrThrow(
-            java.lang.String key);
+            String key);
   }
   /**
    * Protobuf type {@code Models.TypeGraph}
@@ -80,7 +80,14 @@ public final class TypeGraphOuterClass {
     private TypeGraph() {
     }
 
-    @java.lang.Override
+    @Override
+    @SuppressWarnings({"unused"})
+    protected Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new TypeGraph();
+    }
+
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
@@ -91,7 +98,7 @@ public final class TypeGraphOuterClass {
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException();
       }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -104,16 +111,9 @@ public final class TypeGraphOuterClass {
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000001) == 0x00000001)) {
+              if (((bitField0_ & 0x00000001) != 0)) {
                 subBuilder = root_.toBuilder();
               }
               root_ = input.readMessage(gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.PARSER, extensionRegistry);
@@ -125,16 +125,23 @@ public final class TypeGraphOuterClass {
               break;
             }
             case 18: {
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
                 edges_ = com.google.protobuf.MapField.newMapField(
                     EdgesDefaultEntryHolder.defaultEntry);
                 mutable_bitField0_ |= 0x00000002;
               }
-              com.google.protobuf.MapEntry<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph>
+              com.google.protobuf.MapEntry<String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph>
               edges__ = input.readMessage(
                   EdgesDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
               edges_.getMutableMap().put(
                   edges__.getKey(), edges__.getValue());
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
               break;
             }
           }
@@ -155,6 +162,7 @@ public final class TypeGraphOuterClass {
     }
 
     @SuppressWarnings({"rawtypes"})
+    @Override
     protected com.google.protobuf.MapField internalGetMapField(
         int number) {
       switch (number) {
@@ -165,6 +173,7 @@ public final class TypeGraphOuterClass {
               "Invalid map field number: " + number);
       }
     }
+    @Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.internal_static_Models_TypeGraph_fieldAccessorTable
@@ -179,7 +188,7 @@ public final class TypeGraphOuterClass {
      * <code>required .Models.TypeNode root = 1;</code>
      */
     public boolean hasRoot() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>required .Models.TypeNode root = 1;</code>
@@ -197,9 +206,9 @@ public final class TypeGraphOuterClass {
     public static final int EDGES_FIELD_NUMBER = 2;
     private static final class EdgesDefaultEntryHolder {
       static final com.google.protobuf.MapEntry<
-          java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph> defaultEntry =
+          String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph> defaultEntry =
               com.google.protobuf.MapEntry
-              .<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph>newDefaultInstance(
+              .<String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph>newDefaultInstance(
                   gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.internal_static_Models_TypeGraph_EdgesEntry_descriptor,
                   com.google.protobuf.WireFormat.FieldType.STRING,
                   "",
@@ -207,8 +216,8 @@ public final class TypeGraphOuterClass {
                   gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph.getDefaultInstance());
     }
     private com.google.protobuf.MapField<
-        java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph> edges_;
-    private com.google.protobuf.MapField<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph>
+        String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph> edges_;
+    private com.google.protobuf.MapField<String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph>
     internalGetEdges() {
       if (edges_ == null) {
         return com.google.protobuf.MapField.emptyMapField(
@@ -225,22 +234,22 @@ public final class TypeGraphOuterClass {
      */
 
     public boolean containsEdges(
-        java.lang.String key) {
-      if (key == null) { throw new java.lang.NullPointerException(); }
+        String key) {
+      if (key == null) { throw new NullPointerException(); }
       return internalGetEdges().getMap().containsKey(key);
     }
     /**
      * Use {@link #getEdgesMap()} instead.
      */
-    @java.lang.Deprecated
-    public java.util.Map<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph> getEdges() {
+    @Deprecated
+    public java.util.Map<String, TypeGraph> getEdges() {
       return getEdgesMap();
     }
     /**
      * <code>map&lt;string, .Models.TypeGraph&gt; edges = 2;</code>
      */
 
-    public java.util.Map<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph> getEdgesMap() {
+    public java.util.Map<String, TypeGraph> getEdgesMap() {
       return internalGetEdges().getMap();
     }
     /**
@@ -248,10 +257,10 @@ public final class TypeGraphOuterClass {
      */
 
     public gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph getEdgesOrDefault(
-        java.lang.String key,
+        String key,
         gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph defaultValue) {
-      if (key == null) { throw new java.lang.NullPointerException(); }
-      java.util.Map<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph> map =
+      if (key == null) { throw new NullPointerException(); }
+      java.util.Map<String, TypeGraph> map =
           internalGetEdges().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
@@ -260,17 +269,18 @@ public final class TypeGraphOuterClass {
      */
 
     public gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph getEdgesOrThrow(
-        java.lang.String key) {
-      if (key == null) { throw new java.lang.NullPointerException(); }
-      java.util.Map<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph> map =
+        String key) {
+      if (key == null) { throw new NullPointerException(); }
+      java.util.Map<String, TypeGraph> map =
           internalGetEdges().getMap();
       if (!map.containsKey(key)) {
-        throw new java.lang.IllegalArgumentException();
+        throw new IllegalArgumentException();
       }
       return map.get(key);
     }
 
     private byte memoizedIsInitialized = -1;
+    @Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -294,9 +304,10 @@ public final class TypeGraphOuterClass {
       return true;
     }
 
+    @Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         output.writeMessage(1, getRoot());
       }
       com.google.protobuf.GeneratedMessageV3
@@ -308,18 +319,19 @@ public final class TypeGraphOuterClass {
       unknownFields.writeTo(output);
     }
 
+    @Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getRoot());
       }
-      for (java.util.Map.Entry<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph> entry
+      for (java.util.Map.Entry<String, TypeGraph> entry
            : internalGetEdges().getMap().entrySet()) {
-        com.google.protobuf.MapEntry<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph>
+        com.google.protobuf.MapEntry<String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph>
         edges__ = EdgesDefaultEntryHolder.defaultEntry.newBuilderForType()
             .setKey(entry.getKey())
             .setValue(entry.getValue())
@@ -332,8 +344,8 @@ public final class TypeGraphOuterClass {
       return size;
     }
 
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
        return true;
       }
@@ -342,19 +354,18 @@ public final class TypeGraphOuterClass {
       }
       gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph other = (gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph) obj;
 
-      boolean result = true;
-      result = result && (hasRoot() == other.hasRoot());
+      if (hasRoot() != other.hasRoot()) return false;
       if (hasRoot()) {
-        result = result && getRoot()
-            .equals(other.getRoot());
+        if (!getRoot()
+            .equals(other.getRoot())) return false;
       }
-      result = result && internalGetEdges().equals(
-          other.internalGetEdges());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!internalGetEdges().equals(
+          other.internalGetEdges())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -444,6 +455,7 @@ public final class TypeGraphOuterClass {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -451,12 +463,13 @@ public final class TypeGraphOuterClass {
     public static Builder newBuilder(gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
         com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
@@ -496,6 +509,7 @@ public final class TypeGraphOuterClass {
                 "Invalid map field number: " + number);
         }
       }
+      @Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.internal_static_Models_TypeGraph_fieldAccessorTable
@@ -519,6 +533,7 @@ public final class TypeGraphOuterClass {
           getRootFieldBuilder();
         }
       }
+      @Override
       public Builder clear() {
         super.clear();
         if (rootBuilder_ == null) {
@@ -531,15 +546,18 @@ public final class TypeGraphOuterClass {
         return this;
       }
 
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.internal_static_Models_TypeGraph_descriptor;
       }
 
+      @Override
       public gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph getDefaultInstanceForType() {
         return gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph.getDefaultInstance();
       }
 
+      @Override
       public gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph build() {
         gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph result = buildPartial();
         if (!result.isInitialized()) {
@@ -548,17 +566,18 @@ public final class TypeGraphOuterClass {
         return result;
       }
 
+      @Override
       public gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph buildPartial() {
         gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph result = new gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          if (rootBuilder_ == null) {
+            result.root_ = root_;
+          } else {
+            result.root_ = rootBuilder_.build();
+          }
           to_bitField0_ |= 0x00000001;
-        }
-        if (rootBuilder_ == null) {
-          result.root_ = root_;
-        } else {
-          result.root_ = rootBuilder_.build();
         }
         result.edges_ = internalGetEdges();
         result.edges_.makeImmutable();
@@ -567,32 +586,39 @@ public final class TypeGraphOuterClass {
         return result;
       }
 
+      @Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
+      @Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+          Object value) {
+        return super.setField(field, value);
       }
+      @Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
+      @Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
+      @Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+          int index, Object value) {
+        return super.setRepeatedField(field, index, value);
       }
+      @Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+          Object value) {
+        return super.addRepeatedField(field, value);
       }
+      @Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph) {
           return mergeFrom((gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph)other);
@@ -614,6 +640,7 @@ public final class TypeGraphOuterClass {
         return this;
       }
 
+      @Override
       public final boolean isInitialized() {
         if (!hasRoot()) {
           return false;
@@ -629,6 +656,7 @@ public final class TypeGraphOuterClass {
         return true;
       }
 
+      @Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -648,14 +676,14 @@ public final class TypeGraphOuterClass {
       }
       private int bitField0_;
 
-      private gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode root_ = null;
+      private gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode root_;
       private com.google.protobuf.SingleFieldBuilderV3<
           gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode, gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.Builder, gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNodeOrBuilder> rootBuilder_;
       /**
        * <code>required .Models.TypeNode root = 1;</code>
        */
       public boolean hasRoot() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
+        return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>required .Models.TypeNode root = 1;</code>
@@ -702,7 +730,7 @@ public final class TypeGraphOuterClass {
        */
       public Builder mergeRoot(gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode value) {
         if (rootBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) == 0x00000001) &&
+          if (((bitField0_ & 0x00000001) != 0) &&
               root_ != null &&
               root_ != gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.getDefaultInstance()) {
             root_ =
@@ -767,8 +795,8 @@ public final class TypeGraphOuterClass {
       }
 
       private com.google.protobuf.MapField<
-          java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph> edges_;
-      private com.google.protobuf.MapField<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph>
+          String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph> edges_;
+      private com.google.protobuf.MapField<String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph>
       internalGetEdges() {
         if (edges_ == null) {
           return com.google.protobuf.MapField.emptyMapField(
@@ -776,7 +804,7 @@ public final class TypeGraphOuterClass {
         }
         return edges_;
       }
-      private com.google.protobuf.MapField<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph>
+      private com.google.protobuf.MapField<String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph>
       internalGetMutableEdges() {
         onChanged();;
         if (edges_ == null) {
@@ -797,22 +825,22 @@ public final class TypeGraphOuterClass {
        */
 
       public boolean containsEdges(
-          java.lang.String key) {
-        if (key == null) { throw new java.lang.NullPointerException(); }
+          String key) {
+        if (key == null) { throw new NullPointerException(); }
         return internalGetEdges().getMap().containsKey(key);
       }
       /**
        * Use {@link #getEdgesMap()} instead.
        */
-      @java.lang.Deprecated
-      public java.util.Map<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph> getEdges() {
+      @Deprecated
+      public java.util.Map<String, TypeGraph> getEdges() {
         return getEdgesMap();
       }
       /**
        * <code>map&lt;string, .Models.TypeGraph&gt; edges = 2;</code>
        */
 
-      public java.util.Map<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph> getEdgesMap() {
+      public java.util.Map<String, TypeGraph> getEdgesMap() {
         return internalGetEdges().getMap();
       }
       /**
@@ -820,10 +848,10 @@ public final class TypeGraphOuterClass {
        */
 
       public gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph getEdgesOrDefault(
-          java.lang.String key,
+          String key,
           gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph defaultValue) {
-        if (key == null) { throw new java.lang.NullPointerException(); }
-        java.util.Map<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph> map =
+        if (key == null) { throw new NullPointerException(); }
+        java.util.Map<String, TypeGraph> map =
             internalGetEdges().getMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
       }
@@ -832,12 +860,12 @@ public final class TypeGraphOuterClass {
        */
 
       public gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph getEdgesOrThrow(
-          java.lang.String key) {
-        if (key == null) { throw new java.lang.NullPointerException(); }
-        java.util.Map<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph> map =
+          String key) {
+        if (key == null) { throw new NullPointerException(); }
+        java.util.Map<String, TypeGraph> map =
             internalGetEdges().getMap();
         if (!map.containsKey(key)) {
-          throw new java.lang.IllegalArgumentException();
+          throw new IllegalArgumentException();
         }
         return map.get(key);
       }
@@ -852,8 +880,8 @@ public final class TypeGraphOuterClass {
        */
 
       public Builder removeEdges(
-          java.lang.String key) {
-        if (key == null) { throw new java.lang.NullPointerException(); }
+          String key) {
+        if (key == null) { throw new NullPointerException(); }
         internalGetMutableEdges().getMutableMap()
             .remove(key);
         return this;
@@ -861,8 +889,8 @@ public final class TypeGraphOuterClass {
       /**
        * Use alternate mutation accessors instead.
        */
-      @java.lang.Deprecated
-      public java.util.Map<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph>
+      @Deprecated
+      public java.util.Map<String, TypeGraph>
       getMutableEdges() {
         return internalGetMutableEdges().getMutableMap();
       }
@@ -870,10 +898,10 @@ public final class TypeGraphOuterClass {
        * <code>map&lt;string, .Models.TypeGraph&gt; edges = 2;</code>
        */
       public Builder putEdges(
-          java.lang.String key,
+          String key,
           gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph value) {
-        if (key == null) { throw new java.lang.NullPointerException(); }
-        if (value == null) { throw new java.lang.NullPointerException(); }
+        if (key == null) { throw new NullPointerException(); }
+        if (value == null) { throw new NullPointerException(); }
         internalGetMutableEdges().getMutableMap()
             .put(key, value);
         return this;
@@ -883,16 +911,18 @@ public final class TypeGraphOuterClass {
        */
 
       public Builder putAllEdges(
-          java.util.Map<java.lang.String, gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph> values) {
+          java.util.Map<String, TypeGraph> values) {
         internalGetMutableEdges().getMutableMap()
             .putAll(values);
         return this;
       }
+      @Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
+      @Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -912,8 +942,9 @@ public final class TypeGraphOuterClass {
       return DEFAULT_INSTANCE;
     }
 
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<TypeGraph>
+    @Deprecated public static final com.google.protobuf.Parser<TypeGraph>
         PARSER = new com.google.protobuf.AbstractParser<TypeGraph>() {
+      @Override
       public TypeGraph parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -926,11 +957,12 @@ public final class TypeGraphOuterClass {
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<TypeGraph> getParserForType() {
       return PARSER;
     }
 
+    @Override
     public gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -955,7 +987,7 @@ public final class TypeGraphOuterClass {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\017TypeGraph.proto\022\006Models\032\016TypeNode.prot" +
       "o\"\231\001\n\tTypeGraph\022\036\n\004root\030\001 \002(\0132\020.Models.T" +
       "ypeNode\022+\n\005edges\030\002 \003(\0132\034.Models.TypeGrap" +
@@ -963,31 +995,23 @@ public final class TypeGraphOuterClass {
       " \n\005value\030\002 \001(\0132\021.Models.TypeGraph:\0028\001B&\n" +
       "$gr.uom.java.xmi.TypeFactMiner.Models"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
-    com.google.protobuf.Descriptors.FileDescriptor
+    descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.getDescriptor(),
-        }, assigner);
+        });
     internal_static_Models_TypeGraph_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_Models_TypeGraph_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Models_TypeGraph_descriptor,
-        new java.lang.String[] { "Root", "Edges", });
+        new String[] { "Root", "Edges", });
     internal_static_Models_TypeGraph_EdgesEntry_descriptor =
       internal_static_Models_TypeGraph_descriptor.getNestedTypes().get(0);
     internal_static_Models_TypeGraph_EdgesEntry_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Models_TypeGraph_EdgesEntry_descriptor,
-        new java.lang.String[] { "Key", "Value", });
+        new String[] { "Key", "Value", });
     gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.getDescriptor();
   }
 

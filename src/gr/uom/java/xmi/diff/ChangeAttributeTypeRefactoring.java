@@ -1,36 +1,46 @@
 package gr.uom.java.xmi.diff;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
+import gr.uom.java.xmi.TypeFactMiner.Models.GlobalContext;
+import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass;
 import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph;
+import gr.uom.java.xmi.TypeFactMiner.TypFct;
+import io.vavr.Tuple3;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import org.refactoringminer.api.TypeRelatedRefactoring;
 
-public class ChangeAttributeTypeRefactoring implements Refactoring {
+import static gr.uom.java.xmi.TypeFactMiner.ExtractAndAnalyseTypeChange.realTypeChange;
+
+public class ChangeAttributeTypeRefactoring implements Refactoring, TypeRelatedRefactoring {
 	private VariableDeclaration originalAttribute;
 	private VariableDeclaration changedTypeAttribute;
 	private String classNameBefore;
 	private String classNameAfter;
 	private Set<AbstractCodeMapping> attributeReferences;
-	private final TypeGraph typeB4;
-	private final TypeGraph typeAfter;
+	private final TypFct typeB4;
+	private final TypFct typeAfter;
+	private Map<String, TypFct> fieldMapB4;
+	private Map<String, TypFct> fieldMapAfter;
+	private List<Tuple3<TypeGraph, TypeGraph, List<String>>> realTypeChanges;
 
-	
+
 	public ChangeAttributeTypeRefactoring(VariableDeclaration originalAttribute,
-			VariableDeclaration changedTypeAttribute, String classNameBefore, String classNameAfter, Set<AbstractCodeMapping> attributeReferences) {
+										  VariableDeclaration changedTypeAttribute, String classNameBefore, String classNameAfter, Set<AbstractCodeMapping> attributeReferences
+			, Map<String, TypFct> fieldMapB4, Map<String, TypFct> fieldMapAfter) {
 		this.originalAttribute = originalAttribute;
 		this.changedTypeAttribute = changedTypeAttribute;
 		this.classNameBefore = classNameBefore;
 		this.classNameAfter = classNameAfter;
 		this.attributeReferences = attributeReferences;
-		this.typeB4 = originalAttribute.getTypeGraph();
-		this.typeAfter = changedTypeAttribute.getTypeGraph();
+		this.fieldMapB4 = fieldMapB4;
+		this.fieldMapAfter = fieldMapAfter;
+		this.typeB4 = fieldMapB4.get(originalAttribute.getVariableName());
+		this.typeAfter = fieldMapAfter.get(changedTypeAttribute.getVariableName());
 	}
 
 	public VariableDeclaration getOriginalAttribute() {
@@ -149,12 +159,70 @@ public class ChangeAttributeTypeRefactoring implements Refactoring {
 		return ranges;
 	}
 
-	public TypeGraph getTypeB4() {
+	@Override
+	public boolean isResolved() {
+		return getTypeB4().isResolved() && getTypeAfter().isResolved();
+	}
+
+	@Override
+	public TypFct getTypeB4() {
 		return typeB4;
 	}
 
-	public TypeGraph getTypeAfter() {
+	public void updateTypeB4(GlobalContext gc){
+		typeB4.qualify(gc);
+	}
+
+	public void updateTypeAfter(GlobalContext gc){
+		typeAfter.qualify(gc);
+	}
+
+	@Override
+	public TypFct getTypeAfter() {
 		return typeAfter;
+	}
+
+	@Override
+	public Map<String, TypFct> getFieldTypeMapB4() {
+		return fieldMapB4;
+	}
+
+	@Override
+	public Map<String, TypFct> getFieldTypeMapAfter() {
+		return fieldMapAfter;
+	}
+
+	@Override
+	public Map<String, TypFct> getVariableTypeMapB4() {
+		return new HashMap<>();
+	}
+
+	@Override
+	public Map<String, TypFct> getVariableTypeMapAfter() {
+		return new HashMap<>();
+	}
+
+	@Override
+	public void updateTypeNameSpaceBefore(GlobalContext gc) {
+		typeB4.searchNameSpace(gc);
+	}
+
+	@Override
+	public void updateTypeNameSpaceAfter(GlobalContext gc) {
+		typeAfter.searchNameSpace(gc);
+	}
+
+	@Override
+	public void extractRealTypeChange(GlobalContext gc) {
+		realTypeChanges = realTypeChange(typeB4, typeAfter, gc);
+	}
+
+	public List<Tuple3<TypeGraph, TypeGraph, List<String>>> getRealTypeChanges() {
+		return realTypeChanges;
+	}
+	@Override
+	public boolean isTypeRelatedChange(){
+		return true;
 	}
 
 }

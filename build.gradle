@@ -7,6 +7,11 @@ apply plugin: "maven"
 group = "org.refactoringminer"
 version = "1.0"
 
+compileJava {
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
+}
+
 sourceSets {
     main {
         java {
@@ -35,8 +40,13 @@ dependencies {
 	compile 'org.eclipse.jdt:org.eclipse.jdt.core:3.16.0'
 	compile 'org.apache.commons:commons-text:1.6'
 	compile 'org.kohsuke:github-api:1.95'
-    compile 'com.google.protobuf:protobuf-java:3.4.0'
+    compile 'com.google.protobuf:protobuf-java:3.8.0'
     compile 'com.google.guava:guava:28.0-jre'
+    compile 'io.vavr:vavr:0.10.2'
+    compile 'com.jason-goodwin:better-monads:0.4.0'
+    compile 'org.apache.tinkerpop:tinkergraph-gremlin:3.4.4'
+    compile 'org.apache.tinkerpop:gremlin-driver:3.4.4'
+    compile 'org.apache.tinkerpop:gremlin-core:3.4.4'
 	
 	testCompile 'junit:junit:4.11'
 }

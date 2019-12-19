@@ -1,7 +1,11 @@
 package gr.uom.java.xmi.decomposition;
 
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass;
 import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph;
+import gr.uom.java.xmi.TypeFactMiner.TypFct;
 import gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil;
+import org.checkerframework.checker.nullness.Opt;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
@@ -17,6 +21,13 @@ import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationProvider;
 import gr.uom.java.xmi.diff.CodeRange;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+
+import java.util.Optional;
+
+import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeFact;
+import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeGraph;
 
 public class VariableDeclaration implements LocationInfoProvider, VariableDeclarationProvider {
 	private String variableName;
@@ -27,7 +38,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private boolean isParameter;
 	private boolean isAttribute;
 	private VariableScope scope;
-	private final TypeGraph typeGr;
+	private final TypeGraph typeGraph;
 	
 	public VariableDeclaration(CompilationUnit cu, String filePath, VariableDeclarationFragment fragment) {
 		this.locationInfo = new LocationInfo(cu, filePath, fragment, extractVariableDeclarationType(fragment));
@@ -47,7 +58,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 		int endOffset = scopeNode.getStartPosition() + scopeNode.getLength();
 		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
-		this.typeGr = TypeGraphUtil.getTypeGraph(extractType(fragment));
+		this.typeGraph = TypeGraphUtil.getTypeGraph(extractType(fragment));
 	}
 
 	public VariableDeclaration(CompilationUnit cu, String filePath, SingleVariableDeclaration fragment) {
@@ -61,7 +72,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		ASTNode scopeNode = getScopeNode(fragment);
 		int endOffset = scopeNode.getStartPosition() + scopeNode.getLength();
 		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
-		this.typeGr = TypeGraphUtil.getTypeGraph(extractType(fragment));
+		this.typeGraph = TypeGraphUtil.getTypeGraph(extractType(fragment));
 	}
 
 	public VariableDeclaration(CompilationUnit cu, String filePath, SingleVariableDeclaration fragment, boolean varargs) {
@@ -220,6 +231,6 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	}
 
 	public TypeGraph getTypeGraph() {
-		return typeGr;
+		return typeGraph;
 	}
 }

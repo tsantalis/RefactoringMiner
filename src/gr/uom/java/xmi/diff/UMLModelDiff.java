@@ -1231,7 +1231,7 @@ public class UMLModelDiff {
 							 if(!a1.getVariableDeclaration().getType().equals(a2.getVariableDeclaration().getType()) || !a1.getVariableDeclaration().getType().equalsQualified(a2.getVariableDeclaration().getType())) {
 									ChangeAttributeTypeRefactoring refactoring = new ChangeAttributeTypeRefactoring(a1.getVariableDeclaration(), a2.getVariableDeclaration(),
 											diff.getOriginalClassName(), diff.getNextClassName(),
-											VariableReferenceExtractor.findReferences(a1.getVariableDeclaration(), a2.getVariableDeclaration(), diff.getOperationBodyMapperList()));
+											VariableReferenceExtractor.findReferences(a1.getVariableDeclaration(), a2.getVariableDeclaration(), diff.getOperationBodyMapperList()),  diff.originalClass.getFieldTypeMap(), diff.nextClass.getFieldTypeMap());
 									refactorings.add(refactoring);
 								}
 							 break;//it's not necessary to repeat the same process for all candidates in the set

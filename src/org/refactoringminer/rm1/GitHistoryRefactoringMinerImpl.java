@@ -1,5 +1,7 @@
 package org.refactoringminer.rm1;
 
+import com.google.common.collect.Sets;
+import gr.uom.java.xmi.TypeFactMiner.Models.GlobalContext;
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLModelASTReader;
 
@@ -12,19 +14,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
+
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -32,12 +23,18 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import io.vavr.*;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.tinkerpop.gremlin.driver.remote.DriverRemoteConnection;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
@@ -54,23 +51,28 @@ import org.kohsuke.github.GHTree;
 import org.kohsuke.github.GHTreeEntry;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.PagedIterable;
-import org.refactoringminer.api.Churn;
-import org.refactoringminer.api.GitHistoryRefactoringMiner;
-import org.refactoringminer.api.GitService;
-import org.refactoringminer.api.Refactoring;
-import org.refactoringminer.api.RefactoringHandler;
-import org.refactoringminer.api.RefactoringMinerTimedOutException;
-import org.refactoringminer.api.RefactoringType;
+import org.refactoringminer.api.*;
 import org.refactoringminer.util.GitServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static java.util.stream.Collectors.toList;
+import static org.apache.commons.collections.CollectionUtils.*;
+import static org.apache.tinkerpop.gremlin.process.traversal.AnonymousTraversalSource.traversal;
+
 public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMiner {
+
+//	public static List<String> JavaClasses = Try.ofFailable(() -> Files.lines(Paths.get("D:/MyProjects/JavaClasses.txt")))
+//			.onFailure(Throwable::printStackTrace).map(x->x.collect(toList())).orElse(new ArrayList<>());
+//
+//	//
+//	public static List<String> JavaLangClasses = Try.ofFailable(() -> Files.lines(Paths.get("D:/MyProjects/JavaLangClasses.txt")))
+//			.onFailure(Throwable::printStackTrace).map(x->x.collect(toList())).orElse(new ArrayList<>());
 
 	Logger logger = LoggerFactory.getLogger(GitHistoryRefactoringMinerImpl.class);
 	private Set<RefactoringType> refactoringTypesToConsider = null;
 	private GitHub gitHub;
-	
+
 	public GitHistoryRefactoringMinerImpl() {
 		this.setRefactoringTypesToConsider(
 			RefactoringType.RENAME_CLASS,
@@ -163,7 +165,6 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		List<String> filePathsCurrent = new ArrayList<String>();
 		Map<String, String> renamedFilesHint = new HashMap<String, String>();
 		gitService.fileTreeDiff(repository, currentCommit, filePathsBefore, filePathsCurrent, renamedFilesHint);
-		
 		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
 		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
@@ -173,23 +174,134 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			// only ADD's or only REMOVE's there is no refactoring
 			if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty() && currentCommit.getParentCount() > 0) {
 				RevCommit parentCommit = currentCommit.getParent(0);
+
 				populateFileContents(repository, parentCommit, filePathsBefore, fileContentsBefore, repositoryDirectoriesBefore);
-				UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
+				UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore, repository, parentCommit);
 
 				populateFileContents(repository, currentCommit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
-				UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
-				
+				UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent, repository, currentCommit);
+
 				refactoringsAtRevision = parentUMLModel.diff(currentUMLModel, renamedFilesHint).getRefactorings();
 				refactoringsAtRevision = filter(refactoringsAtRevision);
 			} else {
 				//logger.info(String.format("Ignored revision %s with no changes in java files", commitId));
 				refactoringsAtRevision = Collections.emptyList();
 			}
+
+			refactoringsAtRevision = removeFPTypeChanges(refactoringsAtRevision);
+
+			GraphTraversalSource gr = traversal().withRemote(DriverRemoteConnection.using("localhost",8182,"g"));
+			GlobalContext classStructureAfter;
+
+			if (unResolvedTypeChanges(refactoringsAtRevision)){
+
+				GlobalContext classStructureB4 = new GlobalContext(repository, currentCommit.getParent(0), gr);
+				classStructureAfter = new GlobalContext(repository, currentCommit, gr);
+				refactoringsAtRevision = refactoringsAtRevision.stream()
+						.map(x -> resolveTypeChange(classStructureB4, classStructureAfter, x)).collect(Collectors.toList());
+
+				refactoringsAtRevision = refactoringEffect(refactoringsAtRevision);
+
+				if(isDontKnowNameSpace(refactoringsAtRevision)){
+					refactoringsAtRevision = refactoringsAtRevision.stream()
+							.map(x -> populateNameSpacendTypeSem(classStructureB4, classStructureAfter, x))
+							.collect(Collectors.toList());
+				}
+			}
+			else{
+				classStructureAfter = new GlobalContext(repository, currentCommit, gr);
+			}
+			refactoringsAtRevision = refactoringsAtRevision.stream()
+					.map(x -> populateRealTypeChanges(classStructureAfter,x))
+					.collect(toList());
+
 			handler.handle(commitId, refactoringsAtRevision);
-			
+			gr.close();
 			walk.dispose();
 		}
 		return refactoringsAtRevision;
+	}
+
+
+	public static List<Refactoring> removeFPTypeChanges(List<Refactoring> rs){
+		return rs.stream()
+				.filter(x-> !x.isTypeRelatedChange() || ((TypeRelatedRefactoring) x).getTypeB4() != null && ((TypeRelatedRefactoring) x).getTypeAfter() != null)
+				.collect(toList());
+	}
+
+
+	public static Tuple2<Collection<String>, Collection<String>> getAddedRemovedClasses(GlobalContext gcB4, GlobalContext gcAfter){
+		return Tuple.of(subtract(gcB4.getClassesInternal(),gcAfter.getClassesInternal())
+				, subtract(gcB4.getClassesInternal(),gcAfter.getClassesInternal())) ;
+	}
+
+	public static List<Refactoring> refactoringEffect(List<Refactoring> r){
+		Function2<List<Refactoring>,Refactoring, Boolean> isNotDueToOtherRefs = (rs,re) -> {
+			List<Tuple2<List<String>, List<String>>> moveAndRenamedClasses = rs.stream()
+					.filter(x->isClassMoveOrAndRename(x))
+					.map(c -> Tuple.of(c.getInvolvedClassesBeforeRefactoring(), c.getInvolvedClassesAfterRefactoring()))
+					.collect(toList());
+
+			if(re.isTypeRelatedChange()){
+				TypeRelatedRefactoring tr = (TypeRelatedRefactoring) re;
+				boolean mathces = moveAndRenamedClasses.stream()
+						.noneMatch(t -> t._1().stream().anyMatch(c -> tr.getTypeB4().getTypeStr().contains(c))
+								&& t._2().stream().anyMatch(c -> tr.getTypeAfter().getTypeStr().contains(c)));
+				if(mathces){
+					System.out.println("Removed " + tr.getTypeB4().getTypeStr() + " ---> " + tr.getTypeAfter().getTypeStr() + " Due to Rename/&Move Class refactoring");
+				}
+			}
+			return true;
+		};
+
+		Function1<Refactoring, Boolean> filterNonCT = isNotDueToOtherRefs.apply(r);
+		return new ArrayList<>(r.stream().filter(filterNonCT::apply).collect(toList()));
+	}
+
+	public static boolean isClassMoveOrAndRename(Refactoring x) {
+		return x.getRefactoringType().equals(RefactoringType.MOVE_CLASS) || x.getRefactoringType().equals(RefactoringType.RENAME_CLASS)
+				|| x.getRefactoringType().equals(RefactoringType.MOVE_RENAME_CLASS);
+	}
+
+
+	public Refactoring updateTypeRelatedChange(Consumer<TypeRelatedRefactoring> updater, Refactoring r){
+		if(r.isTypeRelatedChange()){
+			updater.accept((TypeRelatedRefactoring)r);
+		}
+		return r;
+	}
+
+	private Refactoring populateRealTypeChanges( GlobalContext gc, Refactoring x) {
+		return updateTypeRelatedChange(tr -> tr.extractRealTypeChange(gc),x);
+	}
+
+	private Refactoring populateNameSpacendTypeSem(GlobalContext gcB4, GlobalContext gcAftr, Refactoring x) {
+		return updateTypeRelatedChange(tr -> {
+			if (!tr.getTypeB4().isKnowsAllNameSpace())    tr.updateTypeNameSpaceBefore(gcB4);
+			if(!tr.getTypeAfter().isKnowsAllNameSpace())  tr.updateTypeNameSpaceAfter(gcAftr);
+		}, x);
+	}
+
+	private Refactoring resolveTypeChange(GlobalContext classStructureB4, GlobalContext classStructureAfter, Refactoring x) {
+		return updateTypeRelatedChange(tr -> {
+			if (!tr.getTypeB4().isResolved())   tr.updateTypeB4(classStructureB4);
+			if(!tr.getTypeAfter().isResolved()) tr.updateTypeAfter(classStructureAfter);
+		},x);
+	}
+
+
+	private static boolean unResolvedTypeChanges(List<Refactoring> refactorings){
+		List<TypeRelatedRefactoring> typeRelatedRefactorings = refactorings.stream().filter(Refactoring::isTypeRelatedChange)
+				.map(x -> (TypeRelatedRefactoring) x)
+				.collect(toList());
+		return typeRelatedRefactorings.stream().anyMatch(x->!x.isResolved());
+	}
+
+	private static boolean isDontKnowNameSpace(List<Refactoring> refactorings){
+		List<TypeRelatedRefactoring> typeRelatedRefactorings = refactorings.stream().filter(Refactoring::isTypeRelatedChange)
+				.map(x -> (TypeRelatedRefactoring) x)
+				.collect(toList());
+		return typeRelatedRefactorings.stream().anyMatch(x->!x.getTypeB4().isKnowsAllNameSpace() || !x.getTypeAfter().isKnowsAllNameSpace());
 	}
 
 	private void populateFileContents(Repository repository, RevCommit commit,
@@ -217,6 +329,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						subDirectory = subDirectory.substring(0, subDirectory.lastIndexOf("/"));
 						repositoryDirectories.add(subDirectory);
 					}
+
 				}
 			}
 		}
@@ -239,7 +352,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			}
 			if (currentFolder.exists() && parentFolder.exists()) {
 				UMLModel currentUMLModel = createModel(currentFolder, filesCurrent, repositoryDirectories(currentFolder));
-				UMLModel parentUMLModel = createModel(parentFolder, filesBefore, repositoryDirectories(parentFolder));
+				UMLModel parentUMLModel = createModel(parentFolder, filesBefore,repositoryDirectories(currentFolder));
 				// Diff between currentModel e parentModel
 				refactoringsAtRevision = parentUMLModel.diff(currentUMLModel, renamedFilesHint).getRefactorings();
 				refactoringsAtRevision = filter(refactoringsAtRevision);
@@ -256,9 +369,10 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return refactoringsAtRevision;
 	}
 
-	private Set<String> repositoryDirectories(File folder) {
+	private  Set<String> repositoryDirectories(File folder) {
 		final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
 		Set<String> repositoryDirectories = new LinkedHashSet<String>();
+
 		Collection<File> files = FileUtils.listFiles(folder, null, true);
 		for(File file : files) {
 			String path = file.getPath();
@@ -409,10 +523,17 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 	}
 
+	// for .git
+	protected UMLModel createModel(Map<String, String> fileContents, Set<String> repositoryDirectories, Repository repo, RevCommit commit) throws Exception {
+		return new UMLModelASTReader(fileContents, repositoryDirectories, repo, commit).getUmlModel();
+	}
+
+	// for GitGub API
 	protected UMLModel createModel(Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
 		return new UMLModelASTReader(fileContents, repositoryDirectories).getUmlModel();
 	}
 
+	// for download and analyze
 	protected UMLModel createModel(File projectFolder, List<String> filePaths, Set<String> repositoryDirectories) throws Exception {
 		return new UMLModelASTReader(projectFolder, filePaths, repositoryDirectories).getUmlModel();
 	}
@@ -434,7 +555,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				logger.warn(String.format("Ignored revision %s because it has no parent", commitId));
 			}
 		} catch (MissingObjectException moe) {
-			this.detectRefactorings(handler, projectFolder, cloneURL, commitId);
+//			this.detectRefactorings(handler, projectFolder, cloneURL, commitId);
 		} catch (RefactoringMinerTimedOutException e) {
 			logger.warn(String.format("Ignored revision %s due to timeout", commitId), e);
 		} catch (Exception e) {
@@ -447,21 +568,22 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	public void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler, int timeout) {
-		ExecutorService service = Executors.newSingleThreadExecutor();
-		Future<?> f = null;
-		try {
-			Runnable r = () -> detectAtCommit(repository, commitId, handler);
-			f = service.submit(r);
-			f.get(timeout, TimeUnit.SECONDS);
-		} catch (TimeoutException e) {
-			f.cancel(true);
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} finally {
-			service.shutdown();
-		}
+		//ExecutorService service = Executors.newSingleThreadExecutor();
+		detectAtCommit(repository, commitId, handler);
+		//Future<?> f = null;
+//		try {
+//			Runnable r = () -> detectAtCommit(repository, commitId, handler);
+//			f = service.submit(r);
+//			f.get(timeout, TimeUnit.SECONDS);
+//		} catch (TimeoutException e) {
+//			f.cancel(true);
+//		} catch (ExecutionException e) {
+//			e.printStackTrace();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		} finally {
+//			service.shutdown();
+//		}
 	}
 
 	@Override

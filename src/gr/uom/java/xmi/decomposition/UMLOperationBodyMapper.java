@@ -859,6 +859,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private int editDistance() {
 		int count = 0;
 		for(AbstractCodeMapping mapping : getMappings()) {
+			if(mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable()) {
+				continue;
+			}
 			String s1 = preprocessInput1(mapping.getFragment1(), mapping.getFragment2());
 			String s2 = preprocessInput2(mapping.getFragment1(), mapping.getFragment2());
 			if(!s1.equals(s2)) {
@@ -872,6 +875,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		double editDistance = 0;
 		double maxLength = 0;
 		for(AbstractCodeMapping mapping : getMappings()) {
+			if(mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable()) {
+				continue;
+			}
 			String s1 = preprocessInput1(mapping.getFragment1(), mapping.getFragment2());
 			String s2 = preprocessInput2(mapping.getFragment1(), mapping.getFragment2());
 			if(!s1.equals(s2)) {
@@ -1876,24 +1882,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		findReplacements(creations1, creations2, replacementInfo, ReplacementType.CLASS_INSTANCE_CREATION);
 		
 		//perform literal replacements
-		if(!containsMethodInvocationReplacement(replacementInfo.getReplacements())) {
-			findReplacements(stringLiterals1, stringLiterals2, replacementInfo, ReplacementType.STRING_LITERAL);
-			findReplacements(numberLiterals1, numberLiterals2, replacementInfo, ReplacementType.NUMBER_LITERAL);
-			findReplacements(variables1, arrayAccesses2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS);
-			findReplacements(arrayAccesses1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS);
-			
-			findReplacements(methodInvocations1, arrayAccesses2, replacementInfo, ReplacementType.ARRAY_ACCESS_REPLACED_WITH_METHOD_INVOCATION);
-			findReplacements(arrayAccesses1, methodInvocations2, replacementInfo, ReplacementType.ARRAY_ACCESS_REPLACED_WITH_METHOD_INVOCATION);
-			
-			findReplacements(variables1, prefixExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PREFIX_EXPRESSION);
-			findReplacements(prefixExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PREFIX_EXPRESSION);
-			findReplacements(stringLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL);
-			if(statement1.getNullLiterals().isEmpty() && !statement2.getNullLiterals().isEmpty()) {
-				Set<String> nullLiterals2 = new LinkedHashSet<String>();
-				nullLiterals2.add("null");
-				findReplacements(variables1, nullLiterals2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_NULL_LITERAL);
-			}
+		findReplacements(stringLiterals1, stringLiterals2, replacementInfo, ReplacementType.STRING_LITERAL);
+		findReplacements(numberLiterals1, numberLiterals2, replacementInfo, ReplacementType.NUMBER_LITERAL);
+		findReplacements(variables1, arrayAccesses2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS);
+		findReplacements(arrayAccesses1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS);
+		
+		findReplacements(methodInvocations1, arrayAccesses2, replacementInfo, ReplacementType.ARRAY_ACCESS_REPLACED_WITH_METHOD_INVOCATION);
+		findReplacements(arrayAccesses1, methodInvocations2, replacementInfo, ReplacementType.ARRAY_ACCESS_REPLACED_WITH_METHOD_INVOCATION);
+		
+		findReplacements(variables1, prefixExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PREFIX_EXPRESSION);
+		findReplacements(prefixExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PREFIX_EXPRESSION);
+		findReplacements(stringLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL);
+		if(statement1.getNullLiterals().isEmpty() && !statement2.getNullLiterals().isEmpty()) {
+			Set<String> nullLiterals2 = new LinkedHashSet<String>();
+			nullLiterals2.add("null");
+			findReplacements(variables1, nullLiterals2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_NULL_LITERAL);
 		}
+
 		if(statement1.getTernaryOperatorExpressions().isEmpty() && !statement2.getTernaryOperatorExpressions().isEmpty()) {
 			if(!statement1.getNullLiterals().isEmpty()) {
 				Set<String> nullLiterals1 = new LinkedHashSet<String>();
@@ -3860,7 +3865,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return -Integer.compare(thisCallChainIntersectionSum, otherCallChainIntersectionSum);
 		}
 		int thisMappings = this.mappingsWithoutBlocks();
+		for(AbstractCodeMapping mapping : this.getMappings()) {
+			if(mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable()) {
+				thisMappings++;
+			}
+		}
 		int otherMappings = operationBodyMapper.mappingsWithoutBlocks();
+		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+			if(mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable()) {
+				otherMappings++;
+			}
+		}
 		if(thisMappings != otherMappings) {
 			return -Integer.compare(thisMappings, otherMappings);
 		}

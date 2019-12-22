@@ -12,6 +12,7 @@ import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ObjectCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
+import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.RenameOperationRefactoring;
@@ -256,6 +257,7 @@ public abstract class AbstractCodeMapping {
 				}
 				if(variableName.equals(replacement.getBefore()) && initializer != null) {
 					if(initializer.toString().equals(replacement.getAfter()) ||
+							reservedTokenMatch(initializer, replacement) ||
 							overlappingExtractVariable(initializer, replacement.getAfter(), nonMappedLeavesT2, refactorings)) {
 						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1);
 						processInlineVariableRefactoring(ref, refactorings);
@@ -293,6 +295,26 @@ public abstract class AbstractCodeMapping {
 				}
 			}
 		}
+	}
+
+	private boolean reservedTokenMatch(AbstractExpression initializer, Replacement replacement) {
+		OperationInvocation initializerInvocation = initializer.invocationCoveringEntireFragment();
+		OperationInvocation replacementInvocation = replacement instanceof VariableReplacementWithMethodInvocation ? ((VariableReplacementWithMethodInvocation)replacement).getInvokedOperation() : null;
+		boolean methodInvocationMatch = true;
+		if(initializerInvocation != null && replacementInvocation != null) {
+			if(!initializerInvocation.getName().equals(replacementInvocation.getName())) {
+				methodInvocationMatch = false;
+			}
+		}
+		else if(initializerInvocation != null && replacementInvocation == null) {
+			methodInvocationMatch = false;
+		}
+		else if(initializerInvocation == null && replacementInvocation != null) {
+			methodInvocationMatch = false;
+		}
+		String initializerReservedTokens = ReplacementUtil.keepReservedTokens(initializer.toString());
+		String replacementReservedTokens = ReplacementUtil.keepReservedTokens(replacement.getAfter());
+		return methodInvocationMatch && !initializerReservedTokens.isEmpty() && !initializerReservedTokens.equals("[]") && initializerReservedTokens.equals(replacementReservedTokens);
 	}
 
 	private void processInlineVariableRefactoring(InlineVariableRefactoring ref, Set<Refactoring> refactorings) {

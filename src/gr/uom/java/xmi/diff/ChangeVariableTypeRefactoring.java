@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -17,6 +18,7 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
 	private Set<AbstractCodeMapping> variableReferences;
+	private Set<Refactoring> relatedRefactorings;
 
 	public ChangeVariableTypeRefactoring(VariableDeclaration originalVariable, VariableDeclaration changedTypeVariable,
 			UMLOperation operationBefore, UMLOperation operationAfter, Set<AbstractCodeMapping> variableReferences) {
@@ -25,6 +27,15 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.variableReferences = variableReferences;
+		this.relatedRefactorings = new LinkedHashSet<Refactoring>();
+	}
+
+	public void addRelatedRefactoring(Refactoring refactoring) {
+		this.relatedRefactorings.add(refactoring);
+	}
+
+	public Set<Refactoring> getRelatedRefactorings() {
+		return relatedRefactorings;
 	}
 
 	public RefactoringType getRefactoringType() {

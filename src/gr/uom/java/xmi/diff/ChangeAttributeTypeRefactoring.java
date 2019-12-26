@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -16,6 +17,7 @@ public class ChangeAttributeTypeRefactoring implements Refactoring {
 	private String classNameBefore;
 	private String classNameAfter;
 	private Set<AbstractCodeMapping> attributeReferences;
+	private Set<Refactoring> relatedRefactorings;
 	
 	public ChangeAttributeTypeRefactoring(VariableDeclaration originalAttribute,
 			VariableDeclaration changedTypeAttribute, String classNameBefore, String classNameAfter, Set<AbstractCodeMapping> attributeReferences) {
@@ -24,6 +26,15 @@ public class ChangeAttributeTypeRefactoring implements Refactoring {
 		this.classNameBefore = classNameBefore;
 		this.classNameAfter = classNameAfter;
 		this.attributeReferences = attributeReferences;
+		this.relatedRefactorings = new LinkedHashSet<Refactoring>();
+	}
+
+	public void addRelatedRefactoring(Refactoring refactoring) {
+		this.relatedRefactorings.add(refactoring);
+	}
+
+	public Set<Refactoring> getRelatedRefactorings() {
+		return relatedRefactorings;
 	}
 
 	public VariableDeclaration getOriginalAttribute() {

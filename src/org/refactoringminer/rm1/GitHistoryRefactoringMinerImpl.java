@@ -209,7 +209,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					IOUtils.copy(loader.openStream(), writer);
 					fileContents.put(pathString, writer.toString());
 				}
-				if(pathString.endsWith(".java")) {
+				if(pathString.endsWith(".java") && pathString.contains("/")) {
 					String directory = pathString.substring(0, pathString.lastIndexOf("/"));
 					repositoryDirectories.add(directory);
 					//include sub-directories

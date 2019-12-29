@@ -4,6 +4,7 @@ Table of Contents
    * [General info](#general-info)
    * [How to build RefactoringMiner](#how-to-build-refactoringminer)
    * [How to use RefactoringMiner as a maven dependency](#how-to-use-refactoringminer-as-a-maven-dependency)
+   * [Chrome extension](#chrome-extension)
    * [Research](#research)
       * [How to cite RefactoringMiner](#how-to-cite-refactoringminer)
       * [Empirical studies based on RefactoringMiner](#empirical-studies-based-on-refactoringminer)
@@ -82,6 +83,14 @@ In order to use RefactoringMiner as a maven dependency in your project, run `./g
       <artifactId>RefactoringMiner</artifactId>
       <version>1.0</version>
     </dependency>
+
+# Chrome Extension
+If you want to get refactoring information when inspecting a commit on GitHub,
+you can install our [Refactoring Aware Commit Review](https://chrome.google.com/webstore/detail/refactoring-aware-commit/lnloiaibmonmmpnfibfjjlfcddoppmgd) Chrome Extension.
+
+The Chrome extension can detect refactorings for **public** projects and commits matching the following URL patterns:
+* `https://github.com/user/project/commit/id`
+* `https://github.com/user/project/pull/id/commits/id`
 
 # Research
 ## How to cite RefactoringMiner

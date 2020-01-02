@@ -32,6 +32,7 @@ public enum RefactoringType {
 	EXTRACT_CLASS("Extract Class", "Extract Class (.+) from class (.+)"),
 	MERGE_OPERATION("Merge Method", ".+"),
 	EXTRACT_AND_MOVE_OPERATION("Extract And Move Method", "Extract And Move Method (.+) extracted from (.+) in class (.+) & moved to class (.+)"),
+	MOVE_AND_INLINE_OPERATION("Move And Inline Method", "Move And Inline Method (.+) moved from class (.+) to class (.+) & inlined to (.+)"),
 	CONVERT_ANONYMOUS_CLASS_TO_TYPE("Convert Anonymous Class to Type", ".+"),
 	INTRODUCE_POLYMORPHISM("Introduce Polymorphism", ".+"),
 	RENAME_PACKAGE("Change Package", "Change Package (.+) to (.+)"),

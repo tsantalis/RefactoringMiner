@@ -412,6 +412,12 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 						if(statement.getString().equals("return " + variable + ";\n") && parameters.size() == 0) {
 							return true;
 						}
+						else if(statement.getString().equals("return " + variable + ".keySet()" + ";\n") && parameters.size() == 0) {
+							return true;
+						}
+						else if(statement.getString().equals("return " + variable + ".values()" + ";\n") && parameters.size() == 0) {
+							return true;
+						}
 					}
 					UMLParameter returnParameter = getReturnParameter();
 					if((name.startsWith("is") || name.startsWith("has")) && parameters.size() == 0 &&

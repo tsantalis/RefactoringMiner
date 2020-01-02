@@ -66,6 +66,7 @@ Currently, it supports the detection of the following refactorings:
 37. Change Attribute Type
 38. Extract Attribute
 39. Move and Rename Method
+40. Move and Inline Method
 
 # How to build RefactoringMiner
 

@@ -1549,7 +1549,12 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 				if(!mapper.getNonMappedLeavesT2().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty() ||
 					!mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
 					List<OperationInvocation> operationInvocations = getInvocationsInTargetOperationBeforeInline(mapper);
-					List<OperationInvocation> removedOperationInvocations = matchingInvocations(removedOperation, operationInvocations, mapper.getOperation1().variableTypeMap());
+					List<OperationInvocation> removedOperationInvocations = new ArrayList<OperationInvocation>();
+					for(OperationInvocation invocation : operationInvocations) {
+						if(invocation.matchesOperation(removedOperation, mapper.getOperation1().variableTypeMap(), modelDiff)) {
+							removedOperationInvocations.add(invocation);
+						}
+					}
 					if(removedOperationInvocations.size() > 0 && !invocationMatchesWithAddedOperation(removedOperationInvocations.get(0), mapper.getOperation1().variableTypeMap(), mapper.getOperation2().getAllOperationInvocations())) {
 						OperationInvocation removedOperationInvocation = removedOperationInvocations.get(0);
 						List<String> arguments = removedOperationInvocation.getArguments();
@@ -1632,17 +1637,6 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 			}
 		}
 		addedOperations.removeAll(operationsToBeRemoved);
-	}
-
-	private List<OperationInvocation> matchingInvocations(UMLOperation operation,
-			List<OperationInvocation> operationInvocations, Map<String, UMLType> variableTypeMap) {
-		List<OperationInvocation> addedOperationInvocations = new ArrayList<OperationInvocation>();
-		for(OperationInvocation invocation : operationInvocations) {
-			if(invocation.matchesOperation(operation, variableTypeMap, modelDiff)) {
-				addedOperationInvocations.add(invocation);
-			}
-		}
-		return addedOperationInvocations;
 	}
 
 	public boolean isEmpty() {

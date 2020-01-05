@@ -822,6 +822,20 @@ public class UMLModelDiff {
       }
       return removedOperations;
    }
+
+   private List<UMLOperation> getRemovedAndInlinedOperationsInCommonClasses() {
+      List<UMLOperation> removedOperations = new ArrayList<UMLOperation>();
+      for(UMLClassDiff classDiff : commonClassDiffList) {
+         removedOperations.addAll(classDiff.getRemovedOperations());
+         for(Refactoring ref : classDiff.getRefactorings()) {
+        	 if(ref instanceof InlineOperationRefactoring) {
+        		 InlineOperationRefactoring extractRef = (InlineOperationRefactoring)ref;
+        		 removedOperations.add(extractRef.getInlinedOperation());
+        	 }
+         }
+      }
+      return removedOperations;
+   }
    
    private List<UMLOperationBodyMapper> getOperationBodyMappersInCommonClasses() {
       List<UMLOperationBodyMapper> mappers = new ArrayList<UMLOperationBodyMapper>();
@@ -1381,7 +1395,7 @@ public class UMLModelDiff {
       checkForOperationMovesIncludingRemovedClasses();
       checkForExtractedAndMovedOperations(getOperationBodyMappersInCommonClasses(), getAddedAndExtractedOperationsInCommonClasses());
       checkForExtractedAndMovedOperations(getOperationBodyMappersInMovedAndRenamedClasses(), getAddedOperationsInMovedAndRenamedClasses());
-      checkForMovedAndInlinedOperations(getOperationBodyMappersInCommonClasses(), getRemovedOperationsInCommonClasses());
+      checkForMovedAndInlinedOperations(getOperationBodyMappersInCommonClasses(), getRemovedAndInlinedOperationsInCommonClasses());
       refactorings.addAll(checkForAttributeMovesBetweenCommonClasses());
       refactorings.addAll(checkForAttributeMovesIncludingAddedClasses());
       refactorings.addAll(checkForAttributeMovesIncludingRemovedClasses());
@@ -1690,8 +1704,15 @@ public class UMLModelDiff {
 				}
 			}
 		}
+		int delegateStatements = 0;
+		for(StatementObject statement : operationBodyMapper.getNonMappedLeavesT1()) {
+			OperationInvocation invocation = statement.invocationCoveringEntireFragment();
+			if(invocation != null && invocation.matchesOperation(operationBodyMapper.getOperation1())) {
+				delegateStatements++;
+			}
+		}
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
-		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();
+		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1()-delegateStatements;
 		List<AbstractCodeMapping> exactMatchList = operationBodyMapper.getExactMatches();
 		int exactMatches = exactMatchList.size();
 		return mappings > 0 && (mappings > nonMappedElementsT1 ||

@@ -1600,8 +1600,15 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 	}
 
 	private boolean inlineMatchCondition(UMLOperationBodyMapper operationBodyMapper) {
+		int delegateStatements = 0;
+		for(StatementObject statement : operationBodyMapper.getNonMappedLeavesT1()) {
+			OperationInvocation invocation = statement.invocationCoveringEntireFragment();
+			if(invocation != null && invocation.matchesOperation(operationBodyMapper.getOperation1())) {
+				delegateStatements++;
+			}
+		}
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
-		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();
+		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1()-delegateStatements;
 		List<AbstractCodeMapping> exactMatchList = operationBodyMapper.getExactMatches();
 		int exactMatches = exactMatchList.size();
 		return mappings > 0 && (mappings > nonMappedElementsT1 ||

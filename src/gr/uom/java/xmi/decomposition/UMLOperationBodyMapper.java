@@ -2795,7 +2795,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		else if(string1.startsWith("return ") && string1.endsWith(";\n") && string2.contains("=") && string2.endsWith(";\n")) {
 			boolean typeReplacement = false, compatibleTypes = false, classInstanceCreationReplacement = false;
 			String assignment1 = string1.substring(7, string1.lastIndexOf(";\n"));
-			String assignment2 = string2.substring(string1.indexOf("=")+1, string2.lastIndexOf(";\n"));
+			String assignment2 = string2.substring(string2.indexOf("=")+1, string2.lastIndexOf(";\n"));
 			UMLType type1 = null, type2 = null;
 			ObjectCreation objectCreation1 = null, objectCreation2 = null;
 			Map<String, String> argumentToParameterMap = new LinkedHashMap<String, String>();

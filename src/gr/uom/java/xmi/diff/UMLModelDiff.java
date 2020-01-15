@@ -972,15 +972,16 @@ public class UMLModelDiff {
 			if(looksLikeSameType(supplier, addedClassName) && topLevelOrSameOuterClass(addedClass, addedRealization.getClient()) && getAddedClass(addedRealization.getClient().getName()) == null) {
                UMLClassBaseDiff clientClassDiff = getUMLClassDiff(addedRealization.getClient().getName());
                int implementedInterfaceOperations = 0;
+               boolean clientImplementsSupplier = false;
                if(clientClassDiff != null) {
                   for(UMLOperation interfaceOperation : addedClass.getOperations()) {
                      if(clientClassDiff.containsOperationWithTheSameSignatureInOriginalClass(interfaceOperation)) {
                         implementedInterfaceOperations++;
                      }
                   }
+                  clientImplementsSupplier = clientClassDiff.getOriginalClass().getImplementedInterfaces().contains(UMLType.extractTypeObject(supplier));
                }
-               if((implementedInterfaceOperations > 0 || addedClass.getOperations().size() == 0) &&
-            		   !clientClassDiff.getOriginalClass().getImplementedInterfaces().contains(UMLType.extractTypeObject(supplier)))
+               if((implementedInterfaceOperations > 0 || addedClass.getOperations().size() == 0) && !clientImplementsSupplier)
                   subclassSet.add(addedRealization.getClient());
             }
          }

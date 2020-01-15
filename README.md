@@ -381,29 +381,19 @@ When you build a distributable application with `./gradlew distZip`, you can run
 	-bc <git-repo-folder> <start-commit-sha1> <end-commit-sha1>	Detect refactorings Between <start-commit-sha1> and <end-commit-sha1> for project <git-repo-folder>
 	-bt <git-repo-folder> <start-tag> <end-tag>			Detect refactorings Between <start-tag> and <end-tag> for project <git-repo-folder>
 	-c <git-repo-folder> <commit-sha1>				Detect refactorings at specified commit <commit-sha1> for project <git-repo-folder>
-	-gc <git-URL> <commit-sha1> <timeout>				Detect refactorings at specified commit <commit-sha1> for project <git-URL> within the given <timeout> in seconds. All required information is obtained directly from GitHub using the credentials in github-credentials.properties
-	-gp <git-URL> <pull-request> <timeout>				Detect refactorings at specified pull request <pull-request> for project <git-URL> within the given <timeout> in seconds for each commit in the pull request. All required information is obtained directly from GitHub using the credentials in github-credentials.properties
+	-gc <git-URL> <commit-sha1> <timeout>				Detect refactorings at specified commit <commit-sha1> for project <git-URL> within the given <timeout> in seconds. All required information is obtained directly from GitHub using the OAuth token in github-oauth.properties
+	-gp <git-URL> <pull-request> <timeout>				Detect refactorings at specified pull request <pull-request> for project <git-URL> within the given <timeout> in seconds for each commit in the pull request. All required information is obtained directly from GitHub using the OAuth token in github-oauth.properties
 	
-For example, suppose that you run:
+With a locally cloned repository, run:
 
     > git clone https://github.com/danilofes/refactoring-toy-example.git refactoring-toy-example
     > ./RefactoringMiner -c refactoring-toy-example 36287f7c3b09eff78395267a3ac0d7da067863fd
-
-The output will be:
-
-    4 refactorings found in commit 36287f7c3b09eff78395267a3ac0d7da067863fd:
-      Pull Up Attribute     private age : int from class org.animals.Labrador to class org.animals.Dog
-      Pull Up Attribute     private age : int from class org.animals.Poodle to class org.animals.Dog
-      Pull Up Method        public getAge() : int from class org.animals.Labrador to public getAge() : int from class org.animals.Dog
-      Pull Up Method        public getAge() : int from class org.animals.Poodle to public getAge() : int from class org.animals.Dog
-
-When you run Refactoring with `-a`, `-bc`, `-bt`, after all commits are analyzed, a result `csv` file which use semicolon `;` as delimiter will be generated in the repository directory.
 
 If you don't want to clone locally the repository, run:
 
     > ./RefactoringMiner -gc https://github.com/danilofes/refactoring-toy-example.git 36287f7c3b09eff78395267a3ac0d7da067863fd 10
 
-and you will get the output in JSON format:
+In both cases, you will get the output in JSON format:
 
     {
 	"commits": [{
@@ -509,69 +499,3 @@ and you will get the output in JSON format:
 		]
 	}]
 	}
-
-If you want to get the refactorings in each commit of a pull request, run:
-
-    > ./RefactoringMiner -gp https://github.com/apache/drill.git 1807 10
-
-and you will get the following output:
-
-    12 refactorings found in commit 21fc7b6d3e6064ff2c28bb1b9920487e7cf995ba: 
-      Move Class	org.apache.drill.exec.store.log.LogRecordReader.ColumnDefn moved to org.apache.drill.exec.store.log.LogBatchReader.ColumnDefn
-      Move Class	org.apache.drill.exec.store.log.LogRecordReader.VarCharDefn moved to org.apache.drill.exec.store.log.LogBatchReader.VarCharDefn
-      Move Class	org.apache.drill.exec.store.log.LogRecordReader.BigIntDefn moved to org.apache.drill.exec.store.log.LogBatchReader.BigIntDefn
-      Move Class	org.apache.drill.exec.store.log.LogRecordReader.SmallIntDefn moved to org.apache.drill.exec.store.log.LogBatchReader.SmallIntDefn
-      Move Class	org.apache.drill.exec.store.log.LogRecordReader.IntDefn moved to org.apache.drill.exec.store.log.LogBatchReader.IntDefn
-      Move Class	org.apache.drill.exec.store.log.LogRecordReader.Float4Defn moved to org.apache.drill.exec.store.log.LogBatchReader.Float4Defn
-      Move Class	org.apache.drill.exec.store.log.LogRecordReader.DoubleDefn moved to org.apache.drill.exec.store.log.LogBatchReader.DoubleDefn
-      Move Class	org.apache.drill.exec.store.log.LogRecordReader.DateDefn moved to org.apache.drill.exec.store.log.LogBatchReader.DateDefn
-      Move Class	org.apache.drill.exec.store.log.LogRecordReader.TimeDefn moved to org.apache.drill.exec.store.log.LogBatchReader.TimeDefn
-      Move Class	org.apache.drill.exec.store.log.LogRecordReader.TimeStampDefn moved to org.apache.drill.exec.store.log.LogBatchReader.TimeStampDefn
-      Rename Parameter	patternIndex : int to fieldIndex : int in method public getDateFormat(fieldIndex int) : String in class org.apache.drill.exec.store.log.LogFormatConfig
-      Move Attribute	private formatConfig : LogFormatConfig from class org.apache.drill.exec.store.log.LogFormatPlugin to class org.apache.drill.exec.store.log.LogBatchReader
-    4 refactorings found in commit 2041aca8887882b6f33a1a4366f44b5f2dac681c: 
-      Rename Method	public testExplicit() : void renamed to public testExplicitProject() : void in class org.apache.drill.exec.store.log.TestLogReader
-      Rename Method	public testMissing() : void renamed to public testMissingColumns() : void in class org.apache.drill.exec.store.log.TestLogReader
-      Change Variable Type	batches : List<QueryDataBatch> to iter : QueryRowSetIterator in method public testWildcardLargeFile() : void in class org.apache.drill.exec.store.log.TestLogReader
-      Rename Variable	batches : List<QueryDataBatch> to iter : QueryRowSetIterator in method public testWildcardLargeFile() : void in class org.apache.drill.exec.store.log.TestLogReader
-    No refactorings found in commit 0d521265e79ac05b33480dd3adb2a078ca28e54b
-    2 refactorings found in commit 02fb0e9945353e187f5eaa8bea6a5763f3f9b9fb: 
-      Change Attribute Type	logger : org.slf4j.Logger to logger : Logger in class org.apache.drill.exec.store.log.LogBatchReader
-      Change Attribute Type	logger : org.slf4j.Logger to logger : Logger in class org.apache.drill.exec.store.log.LogFormatPlugin
-    No refactorings found in commit ab512953b0e097b02fb25e33529bba0e27651fb7
-    4 refactorings found in commit a07936715378f41d7e375be53218d3dfc0a8e45e: 
-      Extract Method	private buildTable(dir File, ws String, tableName String, fileName String, resource String) : String extracted from public testProvidedSchema() : void in class org.apache.drill.exec.store.log.TestLogReader
-      Rename Attribute	testDir : File to schemaAndConfigDir : File in class org.apache.drill.exec.store.log.TestLogReader
-      Rename Method	private defineOutputSchema(capturingGroups int) : TupleMetadata renamed to private defineOutputSchemaFromConfig(capturingGroups int) : TupleMetadata in class org.apache.drill.exec.store.log.LogFormatPlugin
-      Extract Variable	regex : String in method private setupPattern(providedSchema TupleMetadata) : Pattern from class org.apache.drill.exec.store.log.LogFormatPlugin
-    No refactorings found in commit 6320a77caca59b886a50c5ef47cbb1d6461d98fb
-    No refactorings found in commit 6a712ddf7fe4693594805f64692c2677239fbe08
-    No refactorings found in commit a14ebf31d6c924cbe877e1f1f672e211e3207e89
-    No refactorings found in commit e816deba8dfbd937f89c216cc8c74aa6adf01aed
-    14 refactorings found in commit 539bd0edd8348d03df6d17ae4ff2387c10dd10e9: 
-      Inline Method	private defineReaderSchema(outputSchema TupleMetadata) : TupleMetadata inlined to protected frameworkBuilder(options OptionManager, scan EasySubScan) : FileScanBuilder in class org.apache.drill.exec.store.log.LogFormatPlugin
-      Rename Variable	capturingGroups : int to groupCount : int in method protected frameworkBuilder(options OptionManager, scan EasySubScan) : FileScanBuilder in class org.apache.drill.exec.store.log.LogFormatPlugin
-      Extract Method	public hasSchema() : boolean extracted from public getFieldNames() : List<String> in class org.apache.drill.exec.store.log.LogFormatConfig
-      Extract Class	org.apache.drill.exec.store.log.LogBatchReader.LogReaderConfig from class org.apache.drill.exec.store.log.LogBatchReader
-      Move Attribute	public COLUMNS_COL : String from class org.apache.drill.exec.physical.impl.scan.columns.ColumnsArrayManager to class org.apache.drill.exec.physical.impl.scan.columns.ColumnsScanFramework
-      Move Attribute	protected plugin : LogFormatPlugin from class org.apache.drill.exec.store.log.LogFormatPlugin.LogReaderFactory to class org.apache.drill.exec.store.log.LogBatchReader.LogReaderConfig
-      Move Attribute	protected pattern : Pattern from class org.apache.drill.exec.store.log.LogFormatPlugin.LogReaderFactory to class org.apache.drill.exec.store.log.LogBatchReader.LogReaderConfig
-      Move Attribute	protected schema : TupleMetadata from class org.apache.drill.exec.store.log.LogFormatPlugin.LogReaderFactory to class org.apache.drill.exec.store.log.LogBatchReader.LogReaderConfig
-      Move Attribute	protected maxErrors : int from class org.apache.drill.exec.store.log.LogFormatPlugin.LogReaderFactory to class org.apache.drill.exec.store.log.LogBatchReader.LogReaderConfig
-      Move Attribute	protected pattern : Pattern from class org.apache.drill.exec.store.log.LogBatchReader to class org.apache.drill.exec.store.log.LogBatchReader.LogReaderConfig
-      Move Attribute	protected schema : TupleMetadata from class org.apache.drill.exec.store.log.LogBatchReader to class org.apache.drill.exec.store.log.LogBatchReader.LogReaderConfig
-      Move Attribute	protected maxErrors : int from class org.apache.drill.exec.store.log.LogBatchReader to class org.apache.drill.exec.store.log.LogBatchReader.LogReaderConfig
-      Extract And Move Method	public allowOtherCols(flag boolean) : void extracted from protected frameworkBuilder(options OptionManager, scan EasySubScan) : FileScanBuilder in class org.apache.drill.exec.store.log.LogFormatPlugin & moved to class org.apache.drill.exec.physical.impl.scan.columns.ColumnsScanFramework.ColumnsScanBuilder
-      Move Method	private loadVectors(m Matcher, rowWriter RowSetLoader) : void from class org.apache.drill.exec.store.log.LogBatchReader to public loadVectors(m Matcher) : void from class org.apache.drill.exec.store.log.LogBatchReader.ScalarGroupWriter
-    9 refactorings found in commit b1a5446174485c55a162771b1e804a0587eef361: 
-      Change Variable Type	expectedSchema : BatchSchema to expectedSchema : TupleMetadata in method public testStarQueryNoSchema() : void in class org.apache.drill.exec.store.log.TestLogReader
-      Change Variable Type	expectedSchema : BatchSchema to expectedSchema : TupleMetadata in method public testSomeFieldsQueryNoSchema() : void in class org.apache.drill.exec.store.log.TestLogReader
-      Change Variable Type	expectedSchema : BatchSchema to expectedSchema : TupleMetadata in method public testProvidedSchema() : void in class org.apache.drill.exec.store.log.TestLogReader
-      Change Variable Type	expectedSchema : BatchSchema to expectedSchema : TupleMetadata in method public testSchemaOnlyNoCols() : void in class org.apache.drill.exec.store.log.TestLogReader
-      Change Variable Type	expectedSchema : BatchSchema to expectedSchema : TupleMetadata in method public testSchemaOnlyWithCols() : void in class org.apache.drill.exec.store.log.TestLogReader
-      Change Variable Type	expectedSchema : BatchSchema to expectedSchema : TupleMetadata in method public testSchemaOnlyWithMissingCols() : void in class org.apache.drill.exec.store.log.TestLogReader
-      Change Variable Type	expectedSchema : BatchSchema to expectedSchema : TupleMetadata in method public testTableFunction() : void in class org.apache.drill.exec.store.log.TestLogReader
-      Change Variable Type	expectedSchema : BatchSchema to expectedSchema : TupleMetadata in method public testTableFunctionWithSchema() : void in class org.apache.drill.exec.store.log.TestLogReader
-      Change Variable Type	expectedSchema : BatchSchema to expectedSchema : TupleMetadata in method public testTableFunctionWithConfigAndSchema() : void in class org.apache.drill.exec.store.log.TestLogReader
-
-      

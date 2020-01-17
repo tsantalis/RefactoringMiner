@@ -2,7 +2,8 @@ package gr.uom.java.xmi;
 
 import java.io.Serializable;
 
-import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph;
+import com.t2r.common.models.ast.TypeGraphOuterClass;
+import com.t2r.common.models.ast.TypeGraphOuterClass.TypeGraph;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class UMLParameter implements Serializable, VariableDeclarationProvider {

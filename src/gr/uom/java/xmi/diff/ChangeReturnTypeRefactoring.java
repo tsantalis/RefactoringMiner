@@ -5,11 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import gr.uom.java.xmi.TypeFactMiner.ExtractAndAnalyseTypeChange;
-import gr.uom.java.xmi.TypeFactMiner.Models.GlobalContext;
-import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass;
-import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph;
-import gr.uom.java.xmi.TypeFactMiner.TypFct;
+import com.t2r.common.models.ast.GlobalContext;
+import com.t2r.common.models.ast.TypFct;
+import com.t2r.common.models.ast.TypeGraphOuterClass;
+import com.t2r.common.models.ast.TypeGraphOuterClass.TypeGraph;
 import io.vavr.Tuple3;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;

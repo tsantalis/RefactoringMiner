@@ -1,9 +1,9 @@
 package gr.uom.java.xmi.TypeFactMiner;
 
-import gr.uom.java.xmi.TypeFactMiner.Models.GlobalContext;
-import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass;
-import gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode;
-import gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeSem;
+import com.t2r.common.models.ast.TypFct;
+import com.t2r.common.models.ast.TypeNodeOuterClass.TypeNode.TypeKind;
+import com.t2r.common.models.ast.TypeNodeOuterClass.TypeNode.TypeSem;
+import com.t2r.common.models.ast.GlobalContext;
 import io.vavr.*;
 
 import java.util.ArrayList;
@@ -15,21 +15,16 @@ import static gr.uom.java.xmi.TypeFactMiner.HierarchyUtil.HierarchyRelation.NO_H
 import static gr.uom.java.xmi.TypeFactMiner.HierarchyUtil.HierarchyRelation.R_SUPER_T;
 import static gr.uom.java.xmi.TypeFactMiner.HierarchyUtil.HierarchyRelation.T_SUPER_R;
 import static gr.uom.java.xmi.TypeFactMiner.HierarchyUtil.getHierarchyRelation;
-import static gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.*;
-import static gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.NameSpace.TypeVariable;
-import static gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeKind.*;
-import static gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeKind.Primitive;
-import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.pretty;
-import static io.vavr.API.*;
-import static io.vavr.API.$;
-import static io.vavr.Patterns.$Tuple1;
-import static io.vavr.Patterns.$Tuple2;
-import static io.vavr.Predicates.is;
+import static com.t2r.common.models.ast.TypeGraphOuterClass.*;
+import static com.t2r.common.models.ast.TypeNodeOuterClass.TypeNode.NameSpace.TypeVariable;
+import static com.t2r.common.models.ast.TypeNodeOuterClass.TypeNode.TypeKind.*;
+import static com.t2r.common.models.ast.TypeNodeOuterClass.TypeNode.TypeKind.Primitive;
+import static com.t2r.common.utilities.TypeGraphUtil.pretty;
 import static java.util.stream.Collectors.toList;
 
 public class ExtractAndAnalyseTypeChange {
 
-    public static String replaceDescription(TypeNode.TypeKind b4, TypeNode.TypeKind aftr) {
+    public static String replaceDescription(TypeKind b4, TypeKind aftr) {
         if (b4.equals(aftr))
             return "Update " + b4.toString();
         return "Replace " + b4.toString() + " with " + aftr.toString();
@@ -110,6 +105,7 @@ public class ExtractAndAnalyseTypeChange {
 
 
     static List<Tuple3<TypeGraph, TypeGraph, List<String>>> analyzePrimitiveToPrimitive(TypeGraph fromType, TypeGraph toType) {
+
         List<Tuple3<TypeGraph, TypeGraph, List<String>>> typeChangeInfo = new ArrayList<>();
         List<String> replacementInfo = new ArrayList<>();
         replacementInfo.add(replaceDescription(Primitive, Primitive));
@@ -136,6 +132,7 @@ public class ExtractAndAnalyseTypeChange {
     }
 
     static List<Tuple3<TypeGraph, TypeGraph, List<String>>> analyzePrimitiveToSimple(TypeGraph fromType, TypeGraph toType) {
+
         List<Tuple3<TypeGraph, TypeGraph, List<String>>> typeChangeInfo = new ArrayList<>();
         List<String> replacementInfo = new ArrayList<>();
         replacementInfo.add(replaceDescription(Primitive, Simple));
@@ -454,7 +451,7 @@ public class ExtractAndAnalyseTypeChange {
         return typeChangeInfo;
     }
 
-    private static List<Tuple3<TypeGraph, TypeGraph, List<String>>> fromWildCard(TypeGraph fromType, TypeGraph toType, GlobalContext gc, TypeNode.TypeKind typeKind) {
+    private static List<Tuple3<TypeGraph, TypeGraph, List<String>>> fromWildCard(TypeGraph fromType, TypeGraph toType, GlobalContext gc, TypeKind typeKind) {
         List<Tuple3<TypeGraph, TypeGraph, List<String>>> typeChangeInfo = new ArrayList<>();
         List<String> replacementInfo = new ArrayList<>();
         replacementInfo.add(replaceDescription(WildCard, typeKind));

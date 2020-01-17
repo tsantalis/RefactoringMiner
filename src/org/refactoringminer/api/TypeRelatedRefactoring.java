@@ -1,9 +1,8 @@
 package org.refactoringminer.api;
 
-import gr.uom.java.xmi.TypeFactMiner.Models.GlobalContext;
-import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass;
-import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph;
-import gr.uom.java.xmi.TypeFactMiner.TypFct;
+import com.t2r.common.models.ast.GlobalContext;
+import com.t2r.common.models.ast.TypFct;
+import com.t2r.common.models.ast.TypeGraphOuterClass;
 import io.vavr.Tuple3;
 
 import java.util.List;
@@ -22,5 +21,5 @@ public interface TypeRelatedRefactoring {
     void updateTypeNameSpaceBefore(GlobalContext gc);
     void updateTypeNameSpaceAfter(GlobalContext gc);
     void extractRealTypeChange(GlobalContext gc);
-    List<Tuple3<TypeGraph, TypeGraph, List<String>>> getRealTypeChanges();
+    List<Tuple3<TypeGraphOuterClass.TypeGraph, TypeGraphOuterClass.TypeGraph, List<String>>> getRealTypeChanges();
 }

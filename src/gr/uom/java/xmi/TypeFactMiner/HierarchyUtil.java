@@ -1,22 +1,14 @@
 package gr.uom.java.xmi.TypeFactMiner;
 
-import gr.uom.java.xmi.TypeFactMiner.Models.GlobalContext;
-import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass;
-import org.apache.commons.io.IOUtils;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.treewalk.TreeWalk;
+import com.t2r.common.models.ast.TypeGraphOuterClass;
+import com.t2r.common.models.ast.GlobalContext;
 
-import java.io.StringWriter;
 import java.util.*;
 import java.util.stream.Stream;
 
+import static com.t2r.common.models.ast.TypeNodeOuterClass.TypeNode.TypeKind.Simple;
 import static gr.uom.java.xmi.TypeFactMiner.HierarchyUtil.HierarchyRelation.*;
-import static gr.uom.java.xmi.TypeFactMiner.Models.TypeNodeOuterClass.TypeNode.TypeKind.Simple;
-import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.pretty;
+import static com.t2r.common.utilities.TypeGraphUtil.pretty;
 import static java.util.stream.Collectors.toList;
 
 public class HierarchyUtil {

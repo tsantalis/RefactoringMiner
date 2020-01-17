@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
-import gr.uom.java.xmi.TypeFactMiner.TypFct;
+import com.t2r.common.models.ast.TypFct;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -43,8 +43,8 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 
-import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeFact;
-import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeGraph;
+import static com.t2r.common.utilities.TypeGraphUtil.getTypeFact;
+import static com.t2r.common.utilities.TypeGraphUtil.getTypeGraph;
 import static java.util.stream.Collectors.*;
 
 public class UMLModelASTReader {

@@ -1,6 +1,6 @@
 package gr.uom.java.xmi;
 
-import gr.uom.java.xmi.TypeFactMiner.TypFct;
+import com.t2r.common.models.ast.TypFct;
 import gr.uom.java.xmi.diff.StringDistance;
 
 import java.io.Serializable;
@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, Serializable, LocationInfoProvider {
 

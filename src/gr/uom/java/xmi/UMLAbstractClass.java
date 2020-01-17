@@ -2,13 +2,13 @@ package gr.uom.java.xmi;
 
 import java.util.*;
 
-import gr.uom.java.xmi.TypeFactMiner.TypFct;
+import com.t2r.common.models.ast.TypFct;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.RenamePattern;
 
-import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeFact;
+import static com.t2r.common.utilities.TypeGraphUtil.getTypeFact;
 import static java.util.stream.Collectors.toMap;
 
 public abstract class UMLAbstractClass {

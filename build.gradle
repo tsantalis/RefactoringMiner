@@ -32,6 +32,9 @@ sourceSets {
 repositories {
     mavenCentral()
 }
+//dependencies {
+//    implementation files('../lib/Model-1.0-SNAPSHOT.jar')
+//}
 
 dependencies {
 	compile 'org.eclipse.jgit:org.eclipse.jgit:5.2.1.201812262042-r'
@@ -47,7 +50,9 @@ dependencies {
     compile 'org.apache.tinkerpop:tinkergraph-gremlin:3.4.4'
     compile 'org.apache.tinkerpop:gremlin-driver:3.4.4'
     compile 'org.apache.tinkerpop:gremlin-core:3.4.4'
-	
+
+    compile files('../lib/Models-1.0-SNAPSHOT.jar')
+
 	testCompile 'junit:junit:4.11'
 }
 

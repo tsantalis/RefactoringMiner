@@ -1,11 +1,8 @@
 package gr.uom.java.xmi.decomposition;
 
-import com.fasterxml.jackson.databind.type.TypeFactory;
-import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass;
-import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph;
-import gr.uom.java.xmi.TypeFactMiner.TypFct;
-import gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil;
-import org.checkerframework.checker.nullness.Opt;
+import com.t2r.common.models.ast.TypeGraphOuterClass;
+import com.t2r.common.models.ast.TypeGraphOuterClass.TypeGraph;
+import com.t2r.common.utilities.TypeGraphUtil;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
@@ -21,13 +18,9 @@ import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationProvider;
 import gr.uom.java.xmi.diff.CodeRange;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
 
-import java.util.Optional;
-
-import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeFact;
-import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeGraph;
+import static com.t2r.common.utilities.TypeGraphUtil.getTypeFact;
+import static com.t2r.common.utilities.TypeGraphUtil.getTypeGraph;
 
 public class VariableDeclaration implements LocationInfoProvider, VariableDeclarationProvider {
 	private String variableName;

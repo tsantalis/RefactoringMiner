@@ -1,7 +1,6 @@
 package org.refactoringminer.rm1;
 
-import com.google.common.collect.Sets;
-import gr.uom.java.xmi.TypeFactMiner.Models.GlobalContext;
+import com.t2r.common.models.ast.GlobalContext;
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLModelASTReader;
 
@@ -30,7 +29,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import io.vavr.*;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.tinkerpop.gremlin.driver.remote.DriverRemoteConnection;
@@ -200,7 +198,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				refactoringsAtRevision = refactoringsAtRevision.stream()
 						.map(x -> resolveTypeChange(classStructureB4, classStructureAfter, x)).collect(Collectors.toList());
 
-				refactoringsAtRevision = refactoringEffect(refactoringsAtRevision);
+			//	refactoringsAtRevision = refactoringEffect(refactoringsAtRevision);
 
 				if(isDontKnowNameSpace(refactoringsAtRevision)){
 					refactoringsAtRevision = refactoringsAtRevision.stream()
@@ -245,8 +243,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			if(re.isTypeRelatedChange()){
 				TypeRelatedRefactoring tr = (TypeRelatedRefactoring) re;
 				boolean mathces = moveAndRenamedClasses.stream()
-						.noneMatch(t -> t._1().stream().anyMatch(c -> tr.getTypeB4().getTypeStr().contains(c))
-								&& t._2().stream().anyMatch(c -> tr.getTypeAfter().getTypeStr().contains(c)));
+						.noneMatch(t -> t._1().stream().anyMatch(c -> tr.getTypeB4().getTypeStr().endsWith(c))
+								&& t._2().stream().anyMatch(c -> tr.getTypeAfter().getTypeStr().endsWith(c)));
 				if(mathces){
 					System.out.println("Removed " + tr.getTypeB4().getTypeStr() + " ---> " + tr.getTypeAfter().getTypeStr() + " Due to Rename/&Move Class refactoring");
 				}

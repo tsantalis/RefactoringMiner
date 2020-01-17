@@ -1,7 +1,6 @@
 package gr.uom.java.xmi;
 
-import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass;
-import gr.uom.java.xmi.TypeFactMiner.TypFct;
+import com.t2r.common.models.ast.TypFct;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
@@ -19,13 +18,10 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Supplier;
 
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
 import org.refactoringminer.util.AstUtils;
 
-import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeFact;
+import static com.t2r.common.utilities.TypeGraphUtil.getTypeFact;
 import static java.util.stream.Collectors.toMap;
 
 public class UMLOperation implements Comparable<UMLOperation>, Serializable, LocationInfoProvider {

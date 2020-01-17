@@ -1,6 +1,7 @@
 package gr.uom.java.xmi;
 
-import gr.uom.java.xmi.TypeFactMiner.Models.TypeGraphOuterClass.TypeGraph;
+import com.t2r.common.models.ast.TypeGraphOuterClass;
+import com.t2r.common.models.ast.TypeGraphOuterClass.TypeGraph;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;

@@ -10,6 +10,7 @@ import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
+import org.refactoringminer.util.PrefixSuffixUtils;
 
 public class OperationInvocation extends AbstractCall {
 	private String methodName;
@@ -311,21 +313,82 @@ public class OperationInvocation extends AbstractCall {
     	Set<String> subExpressions2 = other.subExpressions();
     	Set<String> intersection = new LinkedHashSet<String>(subExpressions1);
     	intersection.retainAll(subExpressions2);
+    	if(subExpressions1.size() == subExpressions2.size()) {
+    		Iterator<String> it1 = subExpressions1.iterator();
+    		Iterator<String> it2 = subExpressions2.iterator();
+    		while(it1.hasNext()) {
+    			String subExpression1 = it1.next();
+    			String subExpression2 = it2.next();
+    			if(!intersection.contains(subExpression1) && differInThisDot(subExpression1, subExpression2)) {
+    				intersection.add(subExpression1);
+    			}
+    		}
+    	}
     	return intersection;
     }
 
+	private static boolean differInThisDot(String subExpression1, String subExpression2) {
+		if(subExpression1.length() < subExpression2.length()) {
+			String modified = subExpression1;
+			String previousCommonPrefix = "";
+			String commonPrefix = null;
+			while((commonPrefix = PrefixSuffixUtils.longestCommonPrefix(modified, subExpression2)).length() > previousCommonPrefix.length()) {
+				modified = commonPrefix + "this." + modified.substring(commonPrefix.length(), modified.length());
+				if(modified.equals(subExpression2)) {
+					return true;
+				}
+				previousCommonPrefix = commonPrefix;
+			}
+		}
+		else if(subExpression1.length() > subExpression2.length()) {
+			String modified = subExpression2;
+			String previousCommonPrefix = "";
+			String commonPrefix = null;
+			while((commonPrefix = PrefixSuffixUtils.longestCommonPrefix(modified, subExpression1)).length() > previousCommonPrefix.length()) {
+				modified = commonPrefix + "this." + modified.substring(commonPrefix.length(), modified.length());
+				if(modified.equals(subExpression1)) {
+					return true;
+				}
+				previousCommonPrefix = commonPrefix;
+			}
+		}
+		return false;
+	}
+
 	private Set<String> subExpressions() {
 		Set<String> subExpressions = new LinkedHashSet<String>(this.subExpressions);
-    	String thisExpression = this.expression;
+		String thisExpression = this.expression;
 		if(thisExpression != null) {
-			if(thisExpression.contains(".") && !subExpressions.contains(thisExpression.substring(0, thisExpression.indexOf(".")))) {
-				subExpressions.add(thisExpression.substring(0, thisExpression.indexOf(".")));
+			if(thisExpression.contains(".")) {
+				int indexOfDot = thisExpression.indexOf(".");
+				String subString = thisExpression.substring(0, indexOfDot);
+				if(!subExpressions.contains(subString) && !dotInsideArguments(indexOfDot, thisExpression)) {
+					subExpressions.add(subString);
+				}
 			}
-			else if(!thisExpression.contains(".") && !subExpressions.contains(thisExpression)) {
+			else if(!subExpressions.contains(thisExpression)) {
 				subExpressions.add(thisExpression);
 			}
-    	}
+		}
 		return subExpressions;
+	}
+
+	private static boolean dotInsideArguments(int indexOfDot, String thisExpression) {
+		boolean openingParenthesisFound = false;
+		for(int i=indexOfDot; i>=0; i--) {
+			if(thisExpression.charAt(i) == '(') {
+				openingParenthesisFound = true;
+				break;
+			}
+		}
+		boolean closingParenthesisFound = false;
+		for(int i=indexOfDot; i<thisExpression.length(); i++) {
+			if(thisExpression.charAt(i) == ')') {
+				closingParenthesisFound = true;
+				break;
+			}
+		}
+		return openingParenthesisFound && closingParenthesisFound;
 	}
 
 	public double normalizedNameDistance(AbstractCall call) {

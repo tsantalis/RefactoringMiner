@@ -1,12 +1,5 @@
 package gr.uom.java.xmi.decomposition;
 
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.refactoringminer.api.Refactoring;
-import org.refactoringminer.util.PrefixSuffixUtils;
-
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ObjectCreationReplacement;
@@ -16,6 +9,12 @@ import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.RenameOperationRefactoring;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
+import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.util.PrefixSuffixUtils;
+
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 public abstract class AbstractCodeMapping {
 
@@ -32,7 +31,7 @@ public abstract class AbstractCodeMapping {
 		this.fragment2 = fragment2;
 		this.operation1 = operation1;
 		this.operation2 = operation2;
-		this.replacements = new LinkedHashSet<Replacement>();
+		this.replacements = new LinkedHashSet<>();
 	}
 
 	public AbstractCodeFragment getFragment1() {
@@ -57,7 +56,8 @@ public abstract class AbstractCodeMapping {
 
 	public boolean isExact() {
 		return (fragment1.getArgumentizedString().equals(fragment2.getArgumentizedString()) ||
-				fragment1.getString().equals(fragment2.getString()) || isExactAfterAbstraction() || containsIdenticalOrCompositeReplacement()) && !isKeyword();
+				fragment1.getString().equals(fragment2.getString()) || isExactAfterAbstraction()
+				|| containsIdenticalOrCompositeReplacement()) && !isKeyword();
 	}
 
 	private boolean isKeyword() {

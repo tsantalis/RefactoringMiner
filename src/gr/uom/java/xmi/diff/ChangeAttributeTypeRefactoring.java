@@ -1,20 +1,25 @@
 package gr.uom.java.xmi.diff;
 
-import java.util.*;
-
-import com.t2r.common.models.ast.GlobalContext;
-import com.t2r.common.models.ast.TypFct;
-import com.t2r.common.models.ast.TypeGraphOuterClass;
+import gr.uom.java.xmi.TypeFactMiner.GlobalContext;
+import gr.uom.java.xmi.TypeFactMiner.TypFct;
 import com.t2r.common.models.ast.TypeGraphOuterClass.TypeGraph;
-import io.vavr.Tuple3;
-import org.refactoringminer.api.Refactoring;
-import org.refactoringminer.api.RefactoringType;
-
+import com.t2r.common.models.refactorings.ElementKindOuterClass;
+import com.t2r.common.models.refactorings.TypeChangeAnalysisOuterClass.TypeChangeAnalysis.TypeChangeInstance;
+import gr.uom.java.xmi.TypeFactMiner.ExtractSyntacticTypeChange;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import io.vavr.Tuple2;
+import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.api.TypeRelatedRefactoring;
 
-import static gr.uom.java.xmi.TypeFactMiner.ExtractAndAnalyseTypeChange.realTypeChange;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static java.util.stream.Collectors.toList;
+
 
 public class ChangeAttributeTypeRefactoring implements Refactoring, TypeRelatedRefactoring {
 	private VariableDeclaration originalAttribute;
@@ -26,12 +31,13 @@ public class ChangeAttributeTypeRefactoring implements Refactoring, TypeRelatedR
 	private final TypFct typeAfter;
 	private Map<String, TypFct> fieldMapB4;
 	private Map<String, TypFct> fieldMapAfter;
-	private List<Tuple3<TypeGraph, TypeGraph, List<String>>> realTypeChanges;
-
+	private String visibility;
+	private List<Tuple2<TypeGraph, TypeGraph>> realTypeChanges;
+	private TypeChangeInstance typeChangeInstance;
 
 	public ChangeAttributeTypeRefactoring(VariableDeclaration originalAttribute,
 										  VariableDeclaration changedTypeAttribute, String classNameBefore, String classNameAfter, Set<AbstractCodeMapping> attributeReferences
-			, Map<String, TypFct> fieldMapB4, Map<String, TypFct> fieldMapAfter) {
+			, Map<String, TypFct> fieldMapB4, Map<String, TypFct> fieldMapAfter, String visibility) {
 		this.originalAttribute = originalAttribute;
 		this.changedTypeAttribute = changedTypeAttribute;
 		this.classNameBefore = classNameBefore;
@@ -39,6 +45,7 @@ public class ChangeAttributeTypeRefactoring implements Refactoring, TypeRelatedR
 		this.attributeReferences = attributeReferences;
 		this.fieldMapB4 = fieldMapB4;
 		this.fieldMapAfter = fieldMapAfter;
+		this.visibility = visibility;
 		this.typeB4 = fieldMapB4.get(originalAttribute.getVariableName());
 		this.typeAfter = fieldMapAfter.get(changedTypeAttribute.getVariableName());
 	}
@@ -51,9 +58,6 @@ public class ChangeAttributeTypeRefactoring implements Refactoring, TypeRelatedR
 		return changedTypeAttribute;
 	}
 
-	public String getClassNameBefore() {
-		return classNameBefore;
-	}
 
 	public String getClassNameAfter() {
 		return classNameAfter;
@@ -182,47 +186,34 @@ public class ChangeAttributeTypeRefactoring implements Refactoring, TypeRelatedR
 		return typeAfter;
 	}
 
-	@Override
-	public Map<String, TypFct> getFieldTypeMapB4() {
-		return fieldMapB4;
-	}
+
 
 	@Override
-	public Map<String, TypFct> getFieldTypeMapAfter() {
-		return fieldMapAfter;
+	public void extractRealTypeChange() {
+		if(typeB4.isResolved() && typeAfter.isResolved()) {
+			typeChangeInstance = TypeChangeInstance.newBuilder()
+					.setNameB4(originalAttribute.getVariableName()).setNameAfter(changedTypeAttribute.getVariableName())
+					.setB4(typeB4.getType()).setAftr(typeAfter.getType())
+					.setCompilationUnit(classNameBefore).setElementKindAffected(ElementKindOuterClass.ElementKind.Field)
+					.setVisibility(visibility).setSyntacticUpdate(new ExtractSyntacticTypeChange().extract(typeB4, typeAfter))
+					.addAllCodeMapping(attributeReferences.stream().map(this::getCodeMapping).collect(toList()))
+					.build();
+			realTypeChanges = extractRealTypeChange(typeChangeInstance.getSyntacticUpdate());
+		}
 	}
 
-	@Override
-	public Map<String, TypFct> getVariableTypeMapB4() {
-		return new HashMap<>();
-	}
 
-	@Override
-	public Map<String, TypFct> getVariableTypeMapAfter() {
-		return new HashMap<>();
-	}
-
-	@Override
-	public void updateTypeNameSpaceBefore(GlobalContext gc) {
-		typeB4.searchNameSpace(gc);
-	}
-
-	@Override
-	public void updateTypeNameSpaceAfter(GlobalContext gc) {
-		typeAfter.searchNameSpace(gc);
-	}
-
-	@Override
-	public void extractRealTypeChange(GlobalContext gc) {
-		realTypeChanges = realTypeChange(typeB4, typeAfter, gc);
-	}
-
-	public List<Tuple3<TypeGraph, TypeGraph, List<String>>> getRealTypeChanges() {
-		return realTypeChanges;
-	}
 	@Override
 	public boolean isTypeRelatedChange(){
 		return true;
 	}
 
+	@Override
+	public List<Tuple2<TypeGraph, TypeGraph>> getRealTypeChanges() {
+		return realTypeChanges;
+	}
+
+	public TypeChangeInstance getTypeChangeInstance() {
+		return typeChangeInstance;
+	}
 }

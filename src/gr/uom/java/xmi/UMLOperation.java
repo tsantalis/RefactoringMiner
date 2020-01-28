@@ -1,28 +1,15 @@
 package gr.uom.java.xmi;
 
-import com.t2r.common.models.ast.TypFct;
-import gr.uom.java.xmi.decomposition.AbstractStatement;
-import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
-import gr.uom.java.xmi.decomposition.CompositeStatementObject;
-import gr.uom.java.xmi.decomposition.OperationBody;
-import gr.uom.java.xmi.decomposition.OperationInvocation;
-import gr.uom.java.xmi.decomposition.StatementObject;
-import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.TypeFactMiner.TypFct;
+import gr.uom.java.xmi.decomposition.*;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.refactoringminer.util.AstUtils;
 
-import static com.t2r.common.utilities.TypeGraphUtil.getTypeFact;
-import static java.util.stream.Collectors.toMap;
+import java.io.Serializable;
+import java.util.*;
+
+import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeFact;
 
 public class UMLOperation implements Comparable<UMLOperation>, Serializable, LocationInfoProvider {
 
@@ -44,7 +31,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	private UMLJavadoc javadoc;
 	private final Map<String, TypFct> fieldTypeMap;
 
-	
+
+
 	public UMLOperation(String name, LocationInfo locationInfo, UMLAbstractClass umlCls, TypFct.Context c) {
 		this.locationInfo = locationInfo;
         this.name = name;

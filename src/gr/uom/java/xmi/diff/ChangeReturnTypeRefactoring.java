@@ -1,24 +1,25 @@
 package gr.uom.java.xmi.diff;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import com.t2r.common.models.ast.GlobalContext;
-import com.t2r.common.models.ast.TypFct;
-import com.t2r.common.models.ast.TypeGraphOuterClass;
+import gr.uom.java.xmi.TypeFactMiner.GlobalContext;
+import gr.uom.java.xmi.TypeFactMiner.TypFct;
 import com.t2r.common.models.ast.TypeGraphOuterClass.TypeGraph;
-import io.vavr.Tuple3;
-import org.refactoringminer.api.Refactoring;
-import org.refactoringminer.api.RefactoringType;
-
+import com.t2r.common.models.refactorings.TypeChangeAnalysisOuterClass.TypeChangeAnalysis.TypeChangeInstance;
+import gr.uom.java.xmi.TypeFactMiner.ExtractSyntacticTypeChange;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import io.vavr.Tuple2;
+import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.api.TypeRelatedRefactoring;
 
-import static gr.uom.java.xmi.TypeFactMiner.ExtractAndAnalyseTypeChange.realTypeChange;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import static com.t2r.common.models.refactorings.ElementKindOuterClass.ElementKind.Return;
+import static java.util.stream.Collectors.toList;
+
 
 public class ChangeReturnTypeRefactoring implements Refactoring, TypeRelatedRefactoring {
 	private UMLType originalType;
@@ -28,7 +29,14 @@ public class ChangeReturnTypeRefactoring implements Refactoring, TypeRelatedRefa
 	private Set<AbstractCodeMapping> returnReferences;
 	private TypFct typeB4;
 	private TypFct typeAfter;
-	private List<Tuple3<TypeGraph, TypeGraph, List<String>>> realTypeChanges;
+	private List<Tuple2<TypeGraph, TypeGraph>> realTypeChanges;
+
+	@Override
+	public TypeChangeInstance getTypeChangeInstance() {
+		return typeChangeInstance;
+	}
+
+	private TypeChangeInstance typeChangeInstance;
 
 	public ChangeReturnTypeRefactoring(UMLType originalType, UMLType changedType,
 			UMLOperation operationBefore, UMLOperation operationAfter, Set<AbstractCodeMapping> returnReferences) {
@@ -37,8 +45,8 @@ public class ChangeReturnTypeRefactoring implements Refactoring, TypeRelatedRefa
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.returnReferences = returnReferences;
-		this.typeB4 = getVariableTypeMapB4().get("return");
-		this.typeAfter = getVariableTypeMapAfter().get("return");
+		this.typeB4 = operationBefore.variableTypeGrMap().get("return");
+		this.typeAfter = operationAfter.variableTypeGrMap().get("return");
 	}
 
 	public RefactoringType getRefactoringType() {
@@ -169,22 +177,7 @@ public class ChangeReturnTypeRefactoring implements Refactoring, TypeRelatedRefa
 	public TypFct getTypeAfter() {
 		return typeAfter;
 	}
-	@Override
-	public Map<String, TypFct> getFieldTypeMapB4(){
-		return operationBefore.getFieldTypeMap();
-	}
-	@Override
-	public Map<String, TypFct> getFieldTypeMapAfter(){
-		return operationAfter.getFieldTypeMap();
-	}
-	@Override
-	public Map<String, TypFct> getVariableTypeMapB4(){
-		return operationBefore.variableTypeGrMap();
-	}
-	@Override
-	public Map<String, TypFct> getVariableTypeMapAfter(){
-		return operationAfter.variableTypeGrMap();
-	}
+
 
 	@Override
 	public void updateTypeB4(GlobalContext gc) {
@@ -196,22 +189,22 @@ public class ChangeReturnTypeRefactoring implements Refactoring, TypeRelatedRefa
 		typeAfter.qualify(gc);
 	}
 
-	@Override
-	public void updateTypeNameSpaceBefore(GlobalContext gc) {
-		typeB4.searchNameSpace(gc);
-	}
+
 
 	@Override
-	public void updateTypeNameSpaceAfter(GlobalContext gc) {
-		typeAfter.searchNameSpace(gc);
+	public void extractRealTypeChange() {
+		typeChangeInstance = TypeChangeInstance.newBuilder()
+				.setNameB4(operationBefore.getName()).setNameAfter(operationAfter.getName())
+				.setB4(typeB4.getType()).setAftr(typeAfter.getType())
+				.setCompilationUnit(operationBefore.getClassName()).setElementKindAffected(Return)
+				.setVisibility(operationBefore.getVisibility())
+				.addAllCodeMapping(returnReferences.stream().map(this::getCodeMapping).collect(toList()))
+				.setSyntacticUpdate(new ExtractSyntacticTypeChange().extract(typeB4, typeAfter))
+				.build();
+		realTypeChanges = extractRealTypeChange(typeChangeInstance.getSyntacticUpdate());
 	}
 
-	@Override
-	public void extractRealTypeChange(GlobalContext gc) {
-		realTypeChanges = realTypeChange(typeB4, typeAfter, gc);
-	}
-
-	public List<Tuple3<TypeGraph, TypeGraph, List<String>>> getRealTypeChanges() {
+	public List<Tuple2<TypeGraph, TypeGraph>> getRealTypeChanges() {
 		return realTypeChanges;
 	}
 

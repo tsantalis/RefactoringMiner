@@ -1,5 +1,10 @@
 package org.refactoringminer.api;
 
+import com.t2r.common.models.refactorings.CodeStatisticsOuterClass.CodeStatistics;
+import com.t2r.common.models.refactorings.CommitInfoOuterClass.CommitInfo;
+import gr.uom.java.xmi.TypeFactMiner.GlobalContext;
+import io.vavr.Tuple2;
+
 import java.util.List;
 
 /**
@@ -38,6 +43,8 @@ public abstract class RefactoringHandler {
     public void handleException(String commitId, Exception e) {
         throw new RuntimeException(e);
     }
+
+	public void handle(CommitInfo commitId, List<Refactoring> refactorings, Tuple2<GlobalContext, GlobalContext> globalContexts, CodeStatistics cs) {}
 
 	/**
 	 * This method is called after all commits are analyzed.

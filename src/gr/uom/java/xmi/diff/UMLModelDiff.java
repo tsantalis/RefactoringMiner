@@ -1,40 +1,24 @@
 package gr.uom.java.xmi.diff;
 
-import gr.uom.java.xmi.UMLAnonymousClass;
-import gr.uom.java.xmi.UMLAttribute;
-import gr.uom.java.xmi.UMLClass;
-import gr.uom.java.xmi.UMLClassMatcher;
-import gr.uom.java.xmi.UMLGeneralization;
-import gr.uom.java.xmi.UMLOperation;
-import gr.uom.java.xmi.UMLParameter;
-import gr.uom.java.xmi.UMLRealization;
-import gr.uom.java.xmi.UMLType;
-import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
-import gr.uom.java.xmi.decomposition.CompositeStatementObject;
-import gr.uom.java.xmi.decomposition.OperationInvocation;
-import gr.uom.java.xmi.decomposition.StatementObject;
-import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
-import gr.uom.java.xmi.decomposition.VariableDeclaration;
-import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
+import com.t2r.common.models.refactorings.CodeStatisticsOuterClass.CodeStatistics;
+import com.t2r.common.models.refactorings.NameSpaceOuterClass.NameSpace;
+import gr.uom.java.xmi.TypeFactMiner.GlobalContext;
+import gr.uom.java.xmi.*;
+import gr.uom.java.xmi.decomposition.*;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
+
+import java.util.*;
+import java.util.stream.Stream;
+
+import static com.t2r.common.models.refactorings.NameSpaceOuterClass.NameSpace.Internal;
+import static java.util.stream.Collectors.*;
+import static java.util.stream.Stream.concat;
 
 public class UMLModelDiff {
    private static final int MAXIMUM_NUMBER_OF_COMPARED_METHODS = 100;
@@ -54,8 +38,38 @@ public class UMLModelDiff {
    private List<UMLClassRenameDiff> classRenameDiffList;
    private List<Refactoring> refactorings;
    private Set<String> deletedFolderPaths;
-   
-   public UMLModelDiff() {
+
+   public Map<NameSpace, Set<String>> getNamespaceForImports(GlobalContext gc){
+       Map<NameSpace, Set<String>> map = streamMatchedClasses().map(x -> x.originalClass)
+               .flatMap(x -> x.getImportedTypes().stream())
+               .distinct()
+               .collect(groupingBy(x -> getNameSpaceForImportStmt(x, gc), toSet()));
+       if(map.containsKey(Internal))
+           map.get(Internal).addAll(streamMatchedClasses().map(x->x.originalClass.getPackageName()).collect(toList()));
+       return map;
+   }
+
+    private NameSpace getNameSpaceForImportStmt(String importStmt, GlobalContext gc){
+        return gc.getAllInternalPackages()
+                .filter(importStmt::contains).findFirst().map(x-> Internal)
+                .or(() -> gc.javaClassesContainsNameLike(importStmt).map(x-> NameSpace.Jdk))
+                .orElse(NameSpace.External);
+    }
+
+    public CodeStatistics getMatchedCodeStatistic(GlobalContext gc) {
+        Map<NameSpace, Set<String>> classifiedImports = getNamespaceForImports(gc);
+        return streamMatchedClasses()
+                .map(x -> x.getMatchedCodeStatistic(gc, classifiedImports))
+                .reduce(CodeStatistics.newBuilder().build(), (x,y) -> x.toBuilder().mergeFrom(y).build());
+    }
+
+    private Stream<UMLClassBaseDiff> streamMatchedClasses() {
+        return concat(concat(innerClassMoveDiffList.stream(), classRenameDiffList.stream()),
+    concat(commonClassDiffList.stream(), classMoveDiffList.stream()));
+    }
+
+
+    public UMLModelDiff() {
       this.addedClasses = new ArrayList<UMLClass>();
       this.removedClasses = new ArrayList<UMLClass>();
       this.addedGeneralizations = new ArrayList<UMLGeneralization>();
@@ -575,7 +589,7 @@ public class UMLModelDiff {
    }
 
    private List<MoveAttributeRefactoring> checkForAttributeMoves(List<UMLAttribute> addedAttributes, List<UMLAttribute> removedAttributes) {
-	   List<MoveAttributeRefactoring> refactorings = new ArrayList<MoveAttributeRefactoring>();
+	   List<MoveAttributeRefactoring> refactorings = new ArrayList<>();
 	   if(addedAttributes.size() <= removedAttributes.size()) {
 		   for(UMLAttribute addedAttribute : addedAttributes) {
 			   List<MoveAttributeRefactoring> candidates = new ArrayList<MoveAttributeRefactoring>();
@@ -1231,7 +1245,7 @@ public class UMLModelDiff {
 							 if(!a1.getVariableDeclaration().getType().equals(a2.getVariableDeclaration().getType()) || !a1.getVariableDeclaration().getType().equalsQualified(a2.getVariableDeclaration().getType())) {
 									ChangeAttributeTypeRefactoring refactoring = new ChangeAttributeTypeRefactoring(a1.getVariableDeclaration(), a2.getVariableDeclaration(),
 											diff.getOriginalClassName(), diff.getNextClassName(),
-											VariableReferenceExtractor.findReferences(a1.getVariableDeclaration(), a2.getVariableDeclaration(), diff.getOperationBodyMapperList()),  diff.originalClass.getFieldTypeMap(), diff.nextClass.getFieldTypeMap());
+											VariableReferenceExtractor.findReferences(a1.getVariableDeclaration(), a2.getVariableDeclaration(), diff.getOperationBodyMapperList()),  diff.originalClass.getFieldTypeMap(), diff.nextClass.getFieldTypeMap(), a1.getVisibility());
 									refactorings.add(refactoring);
 								}
 							 break;//it's not necessary to repeat the same process for all candidates in the set

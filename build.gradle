@@ -52,6 +52,7 @@ dependencies {
     compile 'org.apache.tinkerpop:gremlin-core:3.4.4'
 
     compile files('../lib/Models-1.0-SNAPSHOT.jar')
+    compile files('../lib/JarAnalyzer-0.0.1-SNAPSHOT-Ameya.jar')
 
 	testCompile 'junit:junit:4.11'
 }

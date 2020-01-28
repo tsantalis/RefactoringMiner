@@ -1,18 +1,13 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.*;
+import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
+import org.refactoringminer.api.RefactoringMinerTimedOutException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.refactoringminer.api.RefactoringMinerTimedOutException;
-
-import gr.uom.java.xmi.UMLAnonymousClass;
-import gr.uom.java.xmi.UMLAttribute;
-import gr.uom.java.xmi.UMLClass;
-import gr.uom.java.xmi.UMLOperation;
-import gr.uom.java.xmi.UMLType;
-import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
-import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
 
 public class UMLClassDiff extends UMLClassBaseDiff {
 	
@@ -48,7 +43,7 @@ public class UMLClassDiff extends UMLClassBaseDiff {
     			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attribute, matchingAttribute);
 				if(attributeDiff.isTypeChanged() || attributeDiff.isQualifiedTypeChanged()) {
 					ChangeAttributeTypeRefactoring ref = new ChangeAttributeTypeRefactoring(attribute.getVariableDeclaration(), matchingAttribute.getVariableDeclaration(), originalClass.getName(), nextClass.getName(),
-							VariableReferenceExtractor.findReferences(attribute.getVariableDeclaration(), matchingAttribute.getVariableDeclaration(), getOperationBodyMapperList()), originalClass.getFieldTypeMap(), nextClass.getFieldTypeMap());
+							VariableReferenceExtractor.findReferences(attribute.getVariableDeclaration(), matchingAttribute.getVariableDeclaration(), getOperationBodyMapperList()), originalClass.getFieldTypeMap(), nextClass.getFieldTypeMap(), attribute.getVisibility());
 					refactorings.add(ref);
 				}
 				this.attributeDiffList.add(attributeDiff);
@@ -63,7 +58,7 @@ public class UMLClassDiff extends UMLClassBaseDiff {
     			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(matchingAttribute, attribute);
 				if(attributeDiff.isTypeChanged() || attributeDiff.isQualifiedTypeChanged()) {
 					ChangeAttributeTypeRefactoring ref = new ChangeAttributeTypeRefactoring(matchingAttribute.getVariableDeclaration(), attribute.getVariableDeclaration(), originalClass.getName(), nextClass.getName(),
-							VariableReferenceExtractor.findReferences(matchingAttribute.getVariableDeclaration(), attribute.getVariableDeclaration(), getOperationBodyMapperList()),  originalClass.getFieldTypeMap(), nextClass.getFieldTypeMap());
+							VariableReferenceExtractor.findReferences(matchingAttribute.getVariableDeclaration(), attribute.getVariableDeclaration(), getOperationBodyMapperList()),  originalClass.getFieldTypeMap(), nextClass.getFieldTypeMap(), matchingAttribute.getVisibility());
 					refactorings.add(ref);
 				}
 				this.attributeDiffList.add(attributeDiff);
@@ -175,7 +170,7 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 					UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute);
 					if(attributeDiff.isTypeChanged() || attributeDiff.isQualifiedTypeChanged()) {
 						ChangeAttributeTypeRefactoring ref = new ChangeAttributeTypeRefactoring(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), originalClass.getName(), nextClass.getName(),
-								VariableReferenceExtractor.findReferences(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), getOperationBodyMapperList()),  originalClass.getFieldTypeMap(), nextClass.getFieldTypeMap());
+								VariableReferenceExtractor.findReferences(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), getOperationBodyMapperList()),  originalClass.getFieldTypeMap(), nextClass.getFieldTypeMap(), removedAttribute.getVisibility());
 						refactorings.add(ref);
 					}
 					addedAttributeIterator.remove();

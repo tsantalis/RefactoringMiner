@@ -1,37 +1,26 @@
 package gr.uom.java.xmi.diff;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
+import com.t2r.common.models.ast.TypeGraphOuterClass;
+import com.t2r.common.models.ast.TypeNodeOuterClass;
+import com.t2r.common.models.refactorings.CodeStatisticsOuterClass.CodeStatistics;
+import com.t2r.common.models.refactorings.NameSpaceOuterClass;
+import gr.uom.java.xmi.TypeFactMiner.GlobalContext;
+import gr.uom.java.xmi.*;
+import gr.uom.java.xmi.decomposition.*;
+import gr.uom.java.xmi.decomposition.replacement.*;
+import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
-import gr.uom.java.xmi.UMLAnonymousClass;
-import gr.uom.java.xmi.UMLAttribute;
-import gr.uom.java.xmi.UMLClass;
-import gr.uom.java.xmi.UMLOperation;
-import gr.uom.java.xmi.UMLType;
-import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
-import gr.uom.java.xmi.decomposition.CompositeStatementObject;
-import gr.uom.java.xmi.decomposition.OperationInvocation;
-import gr.uom.java.xmi.decomposition.StatementObject;
-import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
-import gr.uom.java.xmi.decomposition.VariableDeclaration;
-import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
-import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
-import gr.uom.java.xmi.decomposition.replacement.Replacement;
-import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
-import gr.uom.java.xmi.decomposition.replacement.SplitVariableReplacement;
-import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
-import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
+import java.util.*;
+
+import static com.t2r.common.models.refactorings.ElementKindOuterClass.ElementKind.Field;
+import static com.t2r.common.models.refactorings.NameSpaceOuterClass.NameSpace.*;
+import static com.t2r.common.utilities.PrettyPrinter.pretty;
+import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeFact;
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 
 public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 
@@ -67,6 +56,85 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 	private Map<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>> mergeMap = new LinkedHashMap<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>>();
 	private Map<SplitVariableReplacement, Set<CandidateSplitVariableRefactoring>> splitMap = new LinkedHashMap<SplitVariableReplacement, Set<CandidateSplitVariableRefactoring>>();
 	private UMLModelDiff modelDiff;
+	private Map<String, List<NameSpaceOuterClass.NameSpace>> typeGraphNameSpaceMap = new HashMap<>();
+
+
+	public CodeStatistics getMatchedCodeStatistic(GlobalContext gc, Map<NameSpaceOuterClass.NameSpace, Set<String>> classifiedImports){
+
+		CodeStatistics.Builder cs = CodeStatistics.newBuilder()
+				.addAllElements(originalClass.getAttributes().stream()
+						.map(x -> CodeStatistics.Element.newBuilder().setElemKind(Field)
+								.setName(x.getName())
+								.setType(x.getTypeGraph())
+								.setTypeKind(x.getTypeGraph().getRoot().getKind().name())
+								.setVisibility(x.getVisibility()).build())
+						.collect(toList()))
+				.addAllElements(operationBodyMapperList.stream()
+						.flatMap(x -> x.getMatchedCodeStatistic()
+								.getElementsList().stream()).collect(toList()));
+
+		cs.addAllNamespaces(getTypeFact(cs.getElementsList().stream().map(x -> x.getType()).collect(toList()), originalClass.getContext(), gc)
+				.map(x -> x.map1(f -> approximateNameSpaceFor(f.getType(),classifiedImports)))
+				.flatMap(x -> Collections.nCopies(x._2().intValue(), x._1()).stream().flatMap(ff -> ff.stream()))
+				.collect(toList()));
+
+		return cs.build();
+	}
+
+
+	private  List<NameSpaceOuterClass.NameSpace> approximateNameSpaceFor(TypeGraphOuterClass.TypeGraph resolvedTypeGraph, Map<NameSpaceOuterClass.NameSpace, Set<String>> gc){
+
+		switch (resolvedTypeGraph.getRoot().getKind()) {
+			case Primitive:
+			case Simple:
+				return approximateNameSpace(resolvedTypeGraph.getRoot(), gc);
+
+			case WildCard: {
+				return (resolvedTypeGraph.getEdgesMap().get("extends") != null)
+						? approximateNameSpaceFor(resolvedTypeGraph.getEdgesMap().get("extends"), gc)
+						: ((resolvedTypeGraph.getEdgesMap().get("super") != null)
+						? approximateNameSpaceFor(resolvedTypeGraph.getEdgesMap().get("super"), gc)
+						: asList(TypeVariable));
+			}
+			case Array:
+			case Parameterized:
+			case Intersection:
+			case Union:
+				return resolvedTypeGraph.getEdgesMap().entrySet().stream()
+						.flatMap(x -> approximateNameSpaceFor(x.getValue(), gc).stream()).collect(toList());
+
+			default:
+				return asList(DontKnow);
+		}
+	}
+
+
+	private List<NameSpaceOuterClass.NameSpace> approximateNameSpace(TypeNodeOuterClass.TypeNode tn, Map<NameSpaceOuterClass.NameSpace, Set<String>> groupedNameSpaces) {
+		String ptn = pretty(tn);
+		if(!ptn.isEmpty() && typeGraphNameSpaceMap.containsKey(ptn))
+			return typeGraphNameSpaceMap.get(ptn);
+		NameSpaceOuterClass.NameSpace srch = searchApproxNameSpace(tn, groupedNameSpaces);
+		typeGraphNameSpaceMap.put(ptn, asList(srch));
+		return asList(srch);
+
+	}
+
+	private NameSpaceOuterClass.NameSpace searchApproxNameSpace(TypeNodeOuterClass.TypeNode tn, Map<NameSpaceOuterClass.NameSpace, Set<String>> groupedNameSpaces) {
+		if(tn.getIsTypeVariable())
+			return (TypeVariable);
+		else if(tn.getKind().equals(TypeNodeOuterClass.TypeNode.TypeKind.Primitive))
+			return (Jdk);
+		else if (groupedNameSpaces.containsKey(Internal) && groupedNameSpaces.get(Internal).stream().anyMatch(x -> tn.getName().contains(x)))
+			return (Internal);
+		else if (tn.getName().startsWith("java."))
+			return (Jdk);
+		else if (groupedNameSpaces.containsKey(Jdk) && groupedNameSpaces.get(Jdk).stream().anyMatch(x -> tn.getName().contains(x)))
+			return (Jdk);
+		else if (groupedNameSpaces.containsKey(External) && groupedNameSpaces.get(External).stream().anyMatch(x -> tn.getName().contains(x)))
+			return (External);
+		return DontKnow;
+	}
+
 
 	public UMLClassBaseDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
 		this.originalClass = originalClass;
@@ -74,7 +142,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		this.visibilityChanged = false;
 		this.abstractionChanged = false;
 		this.superclassChanged = false;
-		this.addedOperations = new ArrayList<UMLOperation>();
+		this.addedOperations = new ArrayList<>();
 		this.removedOperations = new ArrayList<UMLOperation>();
 		this.addedAttributes = new ArrayList<UMLAttribute>();
 		this.removedAttributes = new ArrayList<UMLAttribute>();
@@ -163,7 +231,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attribute, attributeWithTheSameName);
 				if(attributeDiff.isTypeChanged() || attributeDiff.isQualifiedTypeChanged()) {
 					ChangeAttributeTypeRefactoring ref = new ChangeAttributeTypeRefactoring(attribute.getVariableDeclaration(), attributeWithTheSameName.getVariableDeclaration(), originalClass.getName(), nextClass.getName(),
-							VariableReferenceExtractor.findReferences(attribute.getVariableDeclaration(), attributeWithTheSameName.getVariableDeclaration(), operationBodyMapperList), originalClass.getFieldTypeMap(), nextClass.getFieldTypeMap());
+							VariableReferenceExtractor.findReferences(attribute.getVariableDeclaration(), attributeWithTheSameName.getVariableDeclaration(), operationBodyMapperList), originalClass.getFieldTypeMap(), nextClass.getFieldTypeMap(),attribute.getVisibility() );
 					refactorings.add(ref);
 				}
 				this.attributeDiffList.add(attributeDiff);
@@ -178,7 +246,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attributeWithTheSameName, attribute);
 				if(attributeDiff.isTypeChanged() || attributeDiff.isQualifiedTypeChanged()) {
 					ChangeAttributeTypeRefactoring ref = new ChangeAttributeTypeRefactoring(attributeWithTheSameName.getVariableDeclaration(), attribute.getVariableDeclaration(), originalClass.getName(), nextClass.getName(),
-							VariableReferenceExtractor.findReferences(attributeWithTheSameName.getVariableDeclaration(), attribute.getVariableDeclaration(), operationBodyMapperList), originalClass.getFieldTypeMap(), nextClass.getFieldTypeMap());
+							VariableReferenceExtractor.findReferences(attributeWithTheSameName.getVariableDeclaration(), attribute.getVariableDeclaration(), operationBodyMapperList), originalClass.getFieldTypeMap(), nextClass.getFieldTypeMap(), attributeWithTheSameName.getVisibility());
 					refactorings.add(ref);
 				}
 				this.attributeDiffList.add(attributeDiff);
@@ -556,7 +624,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 								if(!a1.getVariableDeclaration().getType().equals(a2.getVariableDeclaration().getType()) || !a1.getVariableDeclaration().getType().equalsQualified(a2.getVariableDeclaration().getType())) {
 									ChangeAttributeTypeRefactoring refactoring = new ChangeAttributeTypeRefactoring(a1.getVariableDeclaration(), a2.getVariableDeclaration(),
 											getOriginalClassName(), getNextClassName(),
-											VariableReferenceExtractor.findReferences(a1.getVariableDeclaration(), a2.getVariableDeclaration(), operationBodyMapperList),  originalClass.getFieldTypeMap(), nextClass.getFieldTypeMap());
+											VariableReferenceExtractor.findReferences(a1.getVariableDeclaration(), a2.getVariableDeclaration(), operationBodyMapperList),  originalClass.getFieldTypeMap(), nextClass.getFieldTypeMap(), a1.getVisibility());
 									refactorings.add(refactoring);
 								}
 								break;//it's not necessary to repeat the same process for all candidates in the set

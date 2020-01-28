@@ -1,50 +1,25 @@
 package gr.uom.java.xmi.decomposition;
 
-import gr.uom.java.xmi.UMLAnonymousClass;
-import gr.uom.java.xmi.UMLAttribute;
-import gr.uom.java.xmi.UMLOperation;
-import gr.uom.java.xmi.UMLParameter;
-import gr.uom.java.xmi.UMLType;
+import com.t2r.common.models.refactorings.CodeStatisticsOuterClass;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
-import gr.uom.java.xmi.decomposition.replacement.AddVariableReplacement;
-import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
-import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
-import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
-import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
-import gr.uom.java.xmi.decomposition.replacement.MethodInvocationWithClassInstanceCreationReplacement;
-import gr.uom.java.xmi.decomposition.replacement.ObjectCreationReplacement;
-import gr.uom.java.xmi.decomposition.replacement.Replacement;
-import gr.uom.java.xmi.decomposition.replacement.SplitVariableReplacement;
+import gr.uom.java.xmi.TypeFactMiner.GlobalContext;
+import gr.uom.java.xmi.TypeFactMiner.TypFct;
+import gr.uom.java.xmi.*;
+import gr.uom.java.xmi.decomposition.replacement.*;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
-import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
-import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
-import gr.uom.java.xmi.diff.CandidateMergeVariableRefactoring;
-import gr.uom.java.xmi.diff.CandidateSplitVariableRefactoring;
-import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
-import gr.uom.java.xmi.diff.StringDistance;
-import gr.uom.java.xmi.diff.UMLClassBaseDiff;
-import gr.uom.java.xmi.diff.UMLModelDiff;
-import gr.uom.java.xmi.diff.UMLOperationDiff;
-import gr.uom.java.xmi.diff.UMLParameterDiff;
-
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import gr.uom.java.xmi.diff.*;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.util.PrefixSuffixUtils;
+
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static com.t2r.common.models.refactorings.ElementKindOuterClass.ElementKind.*;
+import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeFact;
+import static java.util.stream.Collectors.toList;
 
 public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper> {
 	private UMLOperation operation1;
@@ -155,6 +130,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				inlinedVariableAssignment(statement, nonMappedLeavesT2);
 			}
 		}
+	}
+
+
+	public CodeStatisticsOuterClass.CodeStatistics getMatchedCodeStatistic() {
+
+		return CodeStatisticsOuterClass.CodeStatistics.newBuilder()
+				.addAllElements(operation1
+						.getParameters().stream()
+						.map(x -> CodeStatisticsOuterClass.CodeStatistics.Element.newBuilder()
+								.setElemKind(x.getName().equals("return") ? Return : Parameter)
+								.setName(x.getName())
+								.setType(x.getTypeGraph())
+								.setTypeKind(x.getTypeGraph().getRoot().getKind().name())
+								.setVisibility(operation1.getVisibility()).build())
+						.collect(toList()))
+				.addAllElements(mappings.stream().flatMap(x -> x.getFragment1().getVariableDeclarations().stream()
+						.map(v -> CodeStatisticsOuterClass.CodeStatistics.Element.newBuilder().setName(v.getVariableName())
+								.setType(v.getTypeGraph())
+								.setTypeKind(v.getTypeGraph().getRoot().getKind().name())
+								.setElemKind(LocalVariable).setVisibility("Block")
+								.build())).collect(toList()))
+				.build();
+
+
 	}
 
 	public void addChildMapper(UMLOperationBodyMapper mapper) {

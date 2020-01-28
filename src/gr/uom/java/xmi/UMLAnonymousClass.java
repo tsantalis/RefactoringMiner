@@ -1,6 +1,6 @@
 package gr.uom.java.xmi;
 
-import com.t2r.common.models.ast.TypFct;
+import gr.uom.java.xmi.TypeFactMiner.TypFct;
 
 import java.io.Serializable;
 

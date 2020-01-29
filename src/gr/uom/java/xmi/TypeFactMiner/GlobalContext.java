@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.TypeFactMiner;
 
 import com.t2r.common.models.refactorings.CommitInfoOuterClass.CommitInfo.JarInfo;
+import com.t2r.common.utilities.GitUtil;
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import org.apache.commons.io.IOUtils;
@@ -8,6 +9,7 @@ import org.apache.tinkerpop.gremlin.process.traversal.TextP;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Repository;
@@ -24,12 +26,13 @@ import static com.t2r.common.utilities.PrettyPrinter.pretty;
 import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeGraph;
 import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeGraphStripParam;
 import static java.util.stream.Collectors.*;
+import static java.util.stream.Stream.concat;
 import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.__;
 import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.has;
 
 public class GlobalContext {
 
-    private Map<String,Set<Information>> classInfomration;
+    private Map<String,List<Information>> classInfomration;
     private Set<JarInfo> requiredJars;
     private Path pathToJars;
     GraphTraversalSource traverser;
@@ -37,15 +40,13 @@ public class GlobalContext {
 
     public  Stream<String> getTypesInPackage(String packageName){
         return Stream.ofNullable(classInfomration.get(packageName)).flatMap(x -> x.stream())
-                .flatMap(x-> Stream.concat(x.typeDecls.stream(), x.enumDecls.stream()));
+                .flatMap(x-> concat(x.typeDecls.stream(), x.enumDecls.stream()));
     }
 
     public  Stream<String> getTypesInternal(){
         return classInfomration.values().stream().flatMap(x -> x.stream())
-                .flatMap(x-> Stream.concat(x.typeDecls.stream(), x.enumDecls.stream()));
+                .flatMap(x-> concat(x.typeDecls.stream(), x.enumDecls.stream()));
     }
-
-
 
     public Stream<String> getAllInternalPackages(){
         return classInfomration.keySet().stream().filter(x -> !x.isEmpty());
@@ -91,12 +92,16 @@ public class GlobalContext {
                 , collectingAndThen(toList(), x->x.stream().flatMap(f->f.getValue().stream()).collect(toList()))));
     }
 
-    public GlobalContext(Repository repository, RevCommit commit, GraphTraversalSource gr, Set<JarInfo> jars, Path pathToDependencies){
+    public  GlobalContext( Git g, RevCommit commit, GraphTraversalSource gr, Set<JarInfo> jars, Path pathToDependencies){
         this.traverser = gr;
         this.requiredJars = jars;
         this.pathToJars = pathToDependencies;
-        this.classInfomration = getFileContents(repository, commit).stream()
-                .map(Information::new).collect(groupingBy(x -> x.packageName,toSet()));
+        this.classInfomration = concat(GitUtil.getFilesAddedRenamedModified(g, commit.getId().getName()).values().stream()
+                , getFileContents(g.getRepository(), commit.getParent(0)).stream())
+                .map(Information::new).collect(groupingBy(x -> x.packageName,toList()));
+
+
+
     }
 
     public static Set<String> getFileContents(Repository repository, RevCommit commit) {

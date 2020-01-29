@@ -17,6 +17,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.tinkerpop.gremlin.driver.remote.DriverRemoteConnection;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
+import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
@@ -34,7 +35,6 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
@@ -120,8 +120,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
         while (i.hasNext()) {
             RevCommit currentCommit = i.next();
             try {
-                List<Refactoring> refactoringsAtRevision = detectRefactorings(gitService, repository, handler, new HashSet<>(), currentCommit, Paths.get("."), null);
-                refactoringsCount += refactoringsAtRevision.size();
+              //  List<Refactoring> refactoringsAtRevision = detectRefactorings(gitService, repository, handler, new HashSet<>(), currentCommit, Paths.get("."), null);
+                //refactoringsCount += refactoringsAtRevision.size();
 
             } catch (Exception e) {
                 logger.warn(String.format("Ignored revision %s due to error", currentCommit.getId().getName()), e);
@@ -155,8 +155,16 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
     }
 
 
-    protected List<Refactoring> detectRefactorings(GitService gitService, Repository repository
+    public static List<String> getSourceClassTypeChange(List<Refactoring> rs){
+        return rs.stream().filter(x -> x.isTypeRelatedChange())
+                .flatMap(x-> x.getInvolvedClassesAfterRefactoring().stream())
+                .collect(toList());
+    }
+
+
+    protected List<Refactoring> detectRefactorings(GitService gitService, Git git
             , final RefactoringHandler handler, Set<JarInfo> jars, RevCommit currentCommit, Path pathToJar, CommitInfo commitInfo) throws Exception {
+        Repository repository = git.getRepository();
         List<Refactoring> refactoringsAtRevision = new ArrayList<>();
         List<String> filePathsBefore = new ArrayList<>();
         List<String> filePathsCurrent = new ArrayList<>();
@@ -167,21 +175,20 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
                 RevCommit parentCommit = currentCommit.getParent(0);
                 GraphTraversalSource gr = traversal().withRemote(DriverRemoteConnection.using("localhost", 8182, "g"));
-                GlobalContext contextAfter = new GlobalContext(repository, currentCommit, gr, jars, pathToJar);
-                GlobalContext contextB4 = new GlobalContext(repository, currentCommit.getParent(0), gr, jars, pathToJar);
+                GlobalContext context = new GlobalContext(git, currentCommit, gr, jars, pathToJar);
 
                 Try<Tuple2<List<Refactoring>, CodeStatistics>> refactorings_stats = getUMLModelAtCommit(repository, parentCommit, filePathsBefore)
                         .flatMap(b4Model -> getUMLModelAtCommit(repository, currentCommit, filePathsCurrent)
                                 .flatMap(afterModel -> Try.of(() -> b4Model.diff(afterModel))
                                         .onFailure(Throwable::printStackTrace)))
                         .flatMap(x -> Try.of(() -> x.getRefactorings())
-                                .map(r -> filterAndResolveRefactorings(filter(r), gr, contextAfter, contextB4))
+                                .map(r -> filterAndResolveRefactorings(filter(r), context))
                                 .filter(r -> !r.isEmpty())
-                                .map(r -> Tuple.of(r, x.getMatchedCodeStatistic(contextB4))))
+                                .map(r -> Tuple.of(r, x.getMatchedCodeStatistic(context,getSourceClassTypeChange(r)))))
                         .onFailure(Throwable::printStackTrace);
 
                 if (refactorings_stats.isSuccess()) {
-                    handler.handle(commitInfo, refactorings_stats.get()._1(), Tuple.of(contextB4, contextAfter), refactorings_stats.get()._2());
+                    handler.handle(commitInfo, refactorings_stats.get()._1(), Tuple.of(context, context), refactorings_stats.get()._2());
                     gr.close();
                     return refactoringsAtRevision;
                 }
@@ -194,9 +201,9 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
         return refactoringsAtRevision;
     }
 
-    private List<Refactoring> filterAndResolveRefactorings(List<Refactoring> refactoringsAtRevision, GraphTraversalSource gr, GlobalContext contextAfter, GlobalContext contextB4) {
+    private List<Refactoring> filterAndResolveRefactorings(List<Refactoring> refactoringsAtRevision, GlobalContext context) {
         if (unResolvedTypeChanges(refactoringsAtRevision))
-            refactoringsAtRevision = handleUnResolvedTypeChanges(refactoringsAtRevision, gr, contextB4, contextAfter);
+            refactoringsAtRevision = handleUnResolvedTypeChanges(refactoringsAtRevision, context);
 
         refactoringsAtRevision = refactoringsAtRevision.stream().map(x -> populateRealTypeChanges(x))
                 .collect(toList());
@@ -206,9 +213,9 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
     }
 
 
-    private List<Refactoring> handleUnResolvedTypeChanges(List<Refactoring> refactoringsAtRevision, GraphTraversalSource gr, GlobalContext classStructureB4, GlobalContext classStructureAfter) {
+    private List<Refactoring> handleUnResolvedTypeChanges(List<Refactoring> refactoringsAtRevision,  GlobalContext context) {
         return refactoringsAtRevision.stream()
-                .map(x -> resolveTypeChange(classStructureB4, classStructureAfter, x))
+                .map(x -> resolveTypeChange(context, x))
                 .map(x -> extractRealTypeChange(x))
                 .collect(toList());
     }
@@ -284,12 +291,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 //		}, x);
 //	}
 
-    private Refactoring resolveTypeChange(GlobalContext classStructureB4, GlobalContext classStructureAfter, Refactoring x) {
+    private Refactoring resolveTypeChange(GlobalContext context, Refactoring x) {
         return updateTypeRelatedChange(tr -> {
             if (!tr.getTypeB4().isResolved())
-                tr.updateTypeB4(classStructureB4);
+                tr.updateTypeB4(context);
             if (!tr.getTypeAfter().isResolved())
-                tr.updateTypeAfter(classStructureAfter);
+                tr.updateTypeAfter(context);
         }, x);
     }
 
@@ -551,15 +558,17 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
             RevCommit commit = walk.parseCommit(repository.resolve(commitId));
             if (commit.getParentCount() > 0) {
                 walk.parseCommit(commit.getParent(0));
-                this.detectRefactorings(gitService, repository, handler, new HashSet<>(), commit, Paths.get("."), null);
+              //  this.detectRefactorings(gitService, repository, handler, new HashSet<>(), commit, Paths.get("."), null);
             } else {
                 logger.warn(String.format("Ignored revision %s because it has no parent", commitId));
             }
         } catch (MissingObjectException moe) {
 //			this.detectRefactorings(handler, projectFolder, cloneURL, commitId);
-        } catch (RefactoringMinerTimedOutException e) {
-            logger.warn(String.format("Ignored revision %s due to timeout", commitId), e);
-        } catch (Exception e) {
+        }
+//        catch (RefactoringMinerTimedOutException e) {
+//            logger.warn(String.format("Ignored revision %s due to timeout", commitId), e);
+//        }
+        catch (Exception e) {
             logger.warn(String.format("Ignored revision %s due to error", commitId), e);
             handler.handleException(commitId, e);
         } finally {
@@ -573,7 +582,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
     }
 
-    public void mineTypeChange(Repository repository, CommitInfo commitId, RefactoringHandler handler, Path pathToJar) {
+    public void mineTypeChange(Git git, CommitInfo commitId, RefactoringHandler handler, Path pathToJar) {
+        Repository repository = git.getRepository();
         GitService gitService = new GitServiceImpl();
         RevWalk walk = new RevWalk(repository);
         try {
@@ -585,15 +595,17 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
                         Stream.concat(commitId.getDependencyUpdate().getRemovedList().stream(), commitId.getDependenciesList().stream()))
                         .collect(Collectors.toSet());
 
-                this.detectRefactorings(gitService, repository, handler, new HashSet<>(allJars), commit, pathToJar, commitId);
+                this.detectRefactorings(gitService, git, handler, new HashSet<>(allJars), commit, pathToJar, commitId);
             } else {
                 logger.warn(String.format("Ignored revision %s because it has no parent", commitId));
             }
         } catch (MissingObjectException moe) {
 //			this.detectRefactorings(handler, projectFolder, cloneURL, commitId);
-        } catch (RefactoringMinerTimedOutException e) {
-            logger.warn(String.format("Ignored revision %s due to timeout", commitId), e);
-        } catch (Exception e) {
+        }
+//        catch (RefactoringMinerTimedOutException e) {
+//            logger.warn(String.format("Ignored revision %s due to timeout", commitId), e);
+//        }
+        catch (Exception e) {
             logger.warn(String.format("Ignored revision %s due to error", commitId), e);
             handler.handleException(commitId.getSha(), e);
         } finally {

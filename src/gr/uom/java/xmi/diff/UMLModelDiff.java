@@ -56,9 +56,10 @@ public class UMLModelDiff {
                 .orElse(NameSpace.External);
     }
 
-    public CodeStatistics getMatchedCodeStatistic(GlobalContext gc) {
+    public CodeStatistics getMatchedCodeStatistic(GlobalContext gc, List<String> classNames) {
         Map<NameSpace, Set<String>> classifiedImports = getNamespaceForImports(gc);
         return streamMatchedClasses()
+                .filter(x -> classNames.stream().anyMatch(c -> c.equals(x.originalClass.getName())))
                 .map(x -> x.getMatchedCodeStatistic(gc, classifiedImports))
                 .reduce(CodeStatistics.newBuilder().build(), (x,y) -> x.toBuilder().mergeFrom(y).build());
     }

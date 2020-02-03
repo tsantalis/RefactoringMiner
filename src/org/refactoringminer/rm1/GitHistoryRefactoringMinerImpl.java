@@ -1,16 +1,20 @@
 package org.refactoringminer.rm1;
 
-import static com.t2r.common.utilities.PrettyPrinter.pretty;
-import static com.t2r.common.utilities.PrettyPrinter.prettyLIST;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
-import static org.apache.commons.collections.CollectionUtils.subtract;
-
 import com.t2r.common.models.refactorings.CodeStatisticsOuterClass.CodeStatistics;
 import com.t2r.common.models.refactorings.CommitInfoOuterClass.CommitInfo;
 import com.t2r.common.models.refactorings.JarInfoOuterClass.JarInfo;
 import com.t2r.common.models.refactorings.TypeChangeAnalysisOuterClass.TypeChangeAnalysis.TypeChangeInstance;
-
+import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.TypeFactMiner.GlobalContext;
+import gr.uom.java.xmi.UMLModel;
+import gr.uom.java.xmi.UMLModelASTReader;
+import gr.uom.java.xmi.diff.MoveAndRenameClassRefactoring;
+import gr.uom.java.xmi.diff.MoveClassRefactoring;
+import gr.uom.java.xmi.diff.RenameClassRefactoring;
+import io.vavr.Function2;
+import io.vavr.Tuple;
+import io.vavr.Tuple2;
+import io.vavr.control.Try;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
@@ -23,57 +27,18 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GHPullRequest;
-import org.kohsuke.github.GHPullRequestCommitDetail;
-import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GHTree;
-import org.kohsuke.github.GHTreeEntry;
-import org.kohsuke.github.GitHub;
-import org.kohsuke.github.PagedIterable;
-import org.refactoringminer.api.Churn;
-import org.refactoringminer.api.GitHistoryRefactoringMiner;
-import org.refactoringminer.api.GitService;
-import org.refactoringminer.api.Refactoring;
-import org.refactoringminer.api.RefactoringHandler;
-import org.refactoringminer.api.RefactoringMinerTimedOutException;
-import org.refactoringminer.api.RefactoringType;
-import org.refactoringminer.api.TypeRelatedRefactoring;
+import org.kohsuke.github.*;
+import org.refactoringminer.api.*;
 import org.refactoringminer.util.GitServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.StringWriter;
+import java.io.*;
 import java.net.URL;
 import java.nio.file.Path;
 import java.security.MessageDigest;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.*;
+import java.util.concurrent.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -81,17 +46,11 @@ import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import gr.uom.java.xmi.LocationInfo;
-import gr.uom.java.xmi.TypeFactMiner.GlobalContext;
-import gr.uom.java.xmi.UMLModel;
-import gr.uom.java.xmi.UMLModelASTReader;
-import gr.uom.java.xmi.diff.MoveAndRenameClassRefactoring;
-import gr.uom.java.xmi.diff.MoveClassRefactoring;
-import gr.uom.java.xmi.diff.RenameClassRefactoring;
-import io.vavr.Function2;
-import io.vavr.Tuple;
-import io.vavr.Tuple2;
-import io.vavr.control.Try;
+import static com.t2r.common.utilities.PrettyPrinter.pretty;
+import static com.t2r.common.utilities.PrettyPrinter.prettyLIST;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
+import static org.apache.commons.collections.CollectionUtils.subtract;
 
 public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMiner {
 
@@ -305,6 +264,17 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
     }
 
     private List<Refactoring> filterAndResolveRefactorings(List<Refactoring> refactoringsAtRevision, GlobalContext context) {
+
+        refactoringsAtRevision = refactoringsAtRevision.stream()
+                .flatMap(x -> {
+                    if(x.isTypeRelatedChange()){
+                        TypeRelatedRefactoring t = (TypeRelatedRefactoring) x;
+                        if(t.getTypeB4() == null || t.getTypeAfter()==null)
+                            return Stream.empty();
+                    }
+                    return Stream.of(x);
+                }).collect(toList());
+
         if (unResolvedTypeChanges(refactoringsAtRevision))
             refactoringsAtRevision = handleUnResolvedTypeChanges(refactoringsAtRevision, context);
 

@@ -1,31 +1,54 @@
 package gr.uom.java.xmi.TypeFactMiner;
 
+import static com.t2r.common.utilities.GitUtil.getFilesAddedRemovedRenamedModified;
+import static com.t2r.common.utilities.PrettyPrinter.pretty;
+import static gr.uom.java.xmi.TypeFactMiner.GlobalContext.FileStatus.After;
+import static gr.uom.java.xmi.TypeFactMiner.GlobalContext.FileStatus.Before;
+import static gr.uom.java.xmi.TypeFactMiner.GlobalContext.FileStatus.Unchanged;
+import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeGraph;
+import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeGraphStripParam;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Stream.concat;
+import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.__;
+import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.has;
+
 import com.t2r.common.models.refactorings.JarInfoOuterClass.JarInfo;
-import gr.uom.java.xmi.TypeFactMiner.Visitors.EnumVisitor;
-import gr.uom.java.xmi.TypeFactMiner.Visitors.UsedTypes;
-import io.vavr.Tuple;
-import io.vavr.Tuple2;
+
 import org.apache.tinkerpop.gremlin.process.traversal.TextP;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.EnumDeclaration;
+import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.Type;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.revwalk.RevCommit;
 
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
-import static com.t2r.common.utilities.GitUtil.getFilesAddedRemovedRenamedModified;
-import static com.t2r.common.utilities.PrettyPrinter.pretty;
-import static gr.uom.java.xmi.TypeFactMiner.GlobalContext.FileStatus.*;
-import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeGraph;
-import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeGraphStripParam;
-import static java.util.stream.Collectors.*;
-import static java.util.stream.Stream.concat;
-import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.__;
-import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.has;
+import gr.uom.java.xmi.TypeFactMiner.Visitors.EnumVisitor;
+import gr.uom.java.xmi.TypeFactMiner.Visitors.UsedTypes;
+import io.vavr.Tuple;
+import io.vavr.Tuple2;
 
 public class GlobalContext {
 
@@ -124,16 +147,17 @@ public class GlobalContext {
                         , collectingAndThen(toList(), x -> x.stream().flatMap(f -> f.getValue().stream()).collect(toList()))));
     }
 
-    public GlobalContext(Git g, RevCommit commit, GraphTraversalSource gr, Set<JarInfo> jars, Path pathToDependencies) {
+    public GlobalContext(Git g, RevCommit commit, GraphTraversalSource gr, Set<JarInfo> jars, Path pathToDependencies) throws Exception{
         this.traverser = gr;
         this.requiredJars = jars;
         this.pathToJars = pathToDependencies;
         var files = getFilesAddedRemovedRenamedModified(g, commit, commit.getParent(0));
         this.classInformation = concat(
-                concat(files._1().values().stream().map(x -> new Information(x, Before))
-                        , files._2().values().stream().map(x -> new Information(x, After)))
-                , files._3().values().stream().map(x -> new Information(x, Unchanged)))
-                .collect(groupingBy(x -> x.packageName, toList()));
+                    concat(files._1().values().stream().map(x -> new Information(x, Before))
+                            , files._2().values().stream().map(x -> new Information(x, After)))
+                    , files._3().values().stream().map(x -> new Information(x, Unchanged)))
+                    .collect(groupingBy(x -> x.packageName, toList()));
+
     }
 
     public Set<JarInfo> getRequiredJars() {

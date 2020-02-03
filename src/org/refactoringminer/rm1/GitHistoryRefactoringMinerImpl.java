@@ -221,7 +221,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
         List<String> filePathsCurrent = new ArrayList<>();
         Map<String, String> renamedFilesHint = new HashMap<>();
         gitService.fileTreeDiff(repository, currentCommit, filePathsBefore, filePathsCurrent, renamedFilesHint);
-        try (RevWalk walk = new RevWalk(repository)) {
+        try  {
+            RevWalk walk = new RevWalk(repository);
             if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty() && currentCommit.getParentCount() > 0) {
 
                 RevCommit parentCommit = currentCommit.getParent(0);
@@ -247,6 +248,9 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
             handler.handle(commitInfo, refactoringsAtRevision, Tuple.of(null, null), null);
             walk.dispose();
+        }catch (Exception e){
+            e.printStackTrace();
+            handler.handleException(commitInfo.getSha(),e);
         }
         return refactoringsAtRevision;
     }

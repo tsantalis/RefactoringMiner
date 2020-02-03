@@ -1,7 +1,7 @@
 package gr.uom.java.xmi.TypeFactMiner;
 
 import com.t2r.common.models.ast.TypeGraphOuterClass;
-import com.t2r.common.models.refactorings.CommitInfoOuterClass.CommitInfo.JarInfo;
+import com.t2r.common.models.refactorings.JarInfoOuterClass.JarInfo;
 
 import java.nio.file.Path;
 import java.util.*;
@@ -16,18 +16,20 @@ import static java.util.stream.Collectors.toMap;
 
 public class HierarchyUtil {
 
-    public static HierarchyRelation getHierarchyRelation(TypeGraphOuterClass.TypeGraph tg1, TypeGraphOuterClass.TypeGraph tg2, GlobalContext gc, Set<JarInfo> jars , Path pathToJars){
+    public static HierarchyRelation getHierarchyRelation(TypeGraphOuterClass.TypeGraph tg1, TypeGraphOuterClass.TypeGraph tg2
+            , GlobalContext gc, Set<JarInfo> jars , Path pathToJars){
         if(tg1.getRoot().getKind().equals(Simple) && tg2.getRoot().getKind().equals(Simple)){
             Map<String, List<String>> classHierarchyRelation = gc.getInternalClassHierarchy();
             Map<String, List<String>> classHierarchyJdk = gc.getSuperTypes().collect(toMap(x->x._1(), x->x._2(), (a,b)->a));
             if(pretty(tg1).contains("CharSequence"))
                 System.out.println();
-            return getHierarchyRelation(pretty(tg1), pretty(tg2),classHierarchyRelation, classHierarchyJdk, jars, pathToJars);
+            return getHierarchyRelation(pretty(tg1), pretty(tg2),classHierarchyRelation, classHierarchyJdk, jars, pathToJars, gc);
         }
         return NO_RELATION;
     }
 
-    public static HierarchyRelation getHierarchyRelation(String from, String to, Map<String, List<String>> internalHieararchyTree, Map<String, List<String>> classHierarchyJdk, Set<JarInfo> jars , Path pathToJars) {
+    public static HierarchyRelation getHierarchyRelation(String from, String to, Map<String, List<String>> internalHieararchyTree
+            , Map<String, List<String>> classHierarchyJdk, Set<JarInfo> jars , Path pathToJars, GlobalContext gc) {
         // MyList < List
         // MyLinkedList < MyList
         // MyArrayList < MyList
@@ -41,6 +43,7 @@ public class HierarchyUtil {
         // MyLinkedList -> MyList
         if(allSuperTypes_From_Internal.contains(to))
             return R_SUPER_T;
+
         // ArrayList -> List
         List<String> allSuperTypes_From_Jdk = dfsHierarchyTree(from, classHierarchyJdk);
         if(allSuperTypes_From_Jdk.contains(to))
@@ -96,7 +99,15 @@ public class HierarchyUtil {
             return SIBLING;
 
 
+        if(allSuperTypes_From_Internal.stream().anyMatch(x -> to.endsWith("."+x))){
+            return R_SUPER_T;
+        }
 
+        if(allSuperTypes_To_Internal.stream().anyMatch(x -> from.endsWith("." + x))){
+            return R_SUPER_T;
+        }
+
+        //allSuperTypes_To_Internal
 
 
         return NO_RELATION;

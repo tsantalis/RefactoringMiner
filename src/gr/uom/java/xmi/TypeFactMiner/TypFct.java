@@ -4,7 +4,7 @@ import ca.concordia.jaranalyzer.Models.JarInformation;
 import com.t2r.common.models.ast.TypeGraphOuterClass.TypeGraph;
 import com.t2r.common.models.ast.TypeNodeOuterClass.TypeNode;
 import com.t2r.common.models.ast.TypeNodeOuterClass.TypeNode.TypeKind;
-import com.t2r.common.models.refactorings.CommitInfoOuterClass.CommitInfo.JarInfo;
+import com.t2r.common.models.refactorings.JarInfoOuterClass.JarInfo;
 import com.t2r.common.models.refactorings.ExternalDepInfoOuterClass.ExternalDepInfo;
 import com.t2r.common.models.refactorings.ExternalDepInfoOuterClass.ExternalDepInfo.TypeNames;
 import com.t2r.common.utilities.ProtoUtil;
@@ -100,10 +100,10 @@ public class TypFct {
     }
 
     private Optional<String> resolveAndQualify(String name, GlobalContext gc) {
-        return qualifyAsJavaLang(name, gc)
-                .or(() -> qualifyFromImports(name, gc.getAllImports(), gc))
+        return  qualifyFromImports(name, gc.getAllImports(), gc)
                 .or(() -> qualifyFromPackage(name, gc))
                 .or(() -> qualifyImportOnDemandJava(name, gc))
+                .or(() -> qualifyAsJavaLang(name, gc))
                 .or(() -> qualifyInternal(name, context.getPackageName(), gc))
                 .or(() -> qualifyInternalBruteForce(name, gc))
                 .or(() -> qualifyExternal(name, gc).map(o -> o._1()));
@@ -224,24 +224,7 @@ public class TypFct {
     }
 
 
-    public static class EnumVisitor extends ASTVisitor {
-        private Set<String> enums = new HashSet<>();
-        private final String parentName;
 
-        public EnumVisitor(String parentName) {
-            this.parentName = parentName;
-        }
-
-        @Override
-        public boolean visit(EnumDeclaration node) {
-            enums.add(parentName + "." + node.getName().toString());
-            return false;
-        }
-
-        public Set<String> getEnums() {
-            return enums;
-        }
-    }
 
     public static Tuple2<Map<String, List<String>>, Set<String>> getTypeDeclAndParam(TypeDeclaration td, String parent) {
         Map<String, List<String>> clsMap = new HashMap<>();
@@ -256,7 +239,7 @@ public class TypFct {
             enums.addAll(te._2());
         }
 
-        EnumVisitor en = new EnumVisitor(parent + "." + td.getName().toString());
+        Visitors.EnumVisitor en = new Visitors.EnumVisitor(parent + "." + td.getName().toString());
         td.accept(en);
         en.getEnums().forEach(x -> enums.add(x));
         return Tuple.of(clsMap, enums);

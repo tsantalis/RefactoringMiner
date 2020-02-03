@@ -22,7 +22,7 @@ public class ExtractSyntacticTypeChange extends AbstractTypeChangeVisitor<TypeRe
 
     public ExtractSyntacticTypeChange() {
         super((t1, t2) -> SyntacticTransformation.newBuilder()
-                .setB4(t1).setAftr(t2).addTransformation(replaceDescription(t1.getRoot().getKind(), t2.getRoot().getKind())).build());
+                .setB4(t1).setAftr(t2).setTransformation(replaceDescription(t1.getRoot().getKind(), t2.getRoot().getKind())).build());
     }
 
     protected ExtractSyntacticTypeChange(BiFunction<TypeGraph, TypeGraph, SyntacticTransformation> defaultCase) {
@@ -46,31 +46,29 @@ public class ExtractSyntacticTypeChange extends AbstractTypeChangeVisitor<TypeRe
     @Override
     public SyntacticTransformation analyzePrimitiveToPrimitive(TypeGraph fromType, TypeGraph toType) {
         return SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(Primitive, Primitive)).build();
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(Primitive, Primitive)).build();
     }
 
 
     @Override
     public SyntacticTransformation analyzePrimitiveToParameterized(TypeGraph fromType, TypeGraph toType) {
         return SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(Primitive, Parameterized)).build();
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(Primitive, Parameterized)).build();
     }
 
     @Override
     public SyntacticTransformation analyzePrimitiveToSimple(TypeGraph fromType, TypeGraph toType) {
         return SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(Primitive, Simple)).build();
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(Primitive, Simple)).build();
     }
 
     @Override
     public SyntacticTransformation analyzePrimitiveToArray(TypeGraph fromType, TypeGraph toType) {
 
         SyntacticTransformation.Builder builder = SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(Primitive, Array));
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(Primitive, Array));
 
-        if (prettyEqual(getOf(toType, "of"), fromType))
-            builder.addTransformation("Convert to Array");
-        else
+        if (!prettyEqual(getOf(toType, "of"), fromType))
             builder.addSubTransformations(extract(fromType, getOf(toType, "of")));
 
         return builder.build();
@@ -79,7 +77,7 @@ public class ExtractSyntacticTypeChange extends AbstractTypeChangeVisitor<TypeRe
     @Override
     public SyntacticTransformation analyzePrimitiveToWildCard(TypeGraph fromType, TypeGraph toType) {
         SyntacticTransformation.Builder builder = SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(Primitive, WildCard));
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(Primitive, WildCard));
 
         if (getOf(toType, "extends") != null)
             builder.addSubTransformations(extract(fromType, getOf(toType, "extends")));
@@ -93,24 +91,22 @@ public class ExtractSyntacticTypeChange extends AbstractTypeChangeVisitor<TypeRe
     @Override
     public SyntacticTransformation analyzeSimpleToPrimitive(TypeGraph fromType, TypeGraph toType) {
         return SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(Simple, Primitive)).build();
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(Simple, Primitive)).build();
     }
 
 
     @Override
     public SyntacticTransformation analyzeSimpleToSimple(TypeGraph fromType, TypeGraph toType) {
         return SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(Simple, Simple)).build();
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(Simple, Simple)).build();
     }
 
     @Override
     public SyntacticTransformation analyzeSimpleToArray(TypeGraph fromType, TypeGraph toType) {
         SyntacticTransformation.Builder builder = SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(Simple, Array));
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(Simple, Array));
 
-        if (prettyEqual(getOf(toType, "of"), fromType))
-            builder.addTransformation("Convert to Array");
-        else
+        if (!prettyEqual(getOf(toType, "of"), fromType))
             builder.addSubTransformations(extract(fromType, getOf(toType, "of")));
 
         return builder.build();
@@ -124,12 +120,12 @@ public class ExtractSyntacticTypeChange extends AbstractTypeChangeVisitor<TypeRe
     @Override
     public SyntacticTransformation analyzeSimpleToParameterized(TypeGraph fromType, TypeGraph toType) {
         SyntacticTransformation.Builder builder = SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(Simple, Parameterized));
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(Simple, Parameterized));
 
         if (prettyEqual(getOf(toType, "of"), fromType))
-            builder.addTransformation("Add Type Parameters");
+            builder.setTransformation("Add Type Parameters");
         else if (toType.getEdgesMap().values().stream().anyMatch(t -> prettyEqual(t, fromType)))
-            builder.addTransformation("Wrap With Parameterized Type");
+            builder.setTransformation("Wrap With Parameterized Type");
 
         return builder.build();
     }
@@ -137,18 +133,18 @@ public class ExtractSyntacticTypeChange extends AbstractTypeChangeVisitor<TypeRe
     @Override
     public SyntacticTransformation analyzeParameterizedToSimple(TypeGraph fromType, TypeGraph toType) {
         SyntacticTransformation.Builder builder = SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(Parameterized, Simple));
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(Parameterized, Simple));
         if (prettyEqual(getOf(fromType, "of"), toType))
-            builder.addTransformation("Remove Type Parameters");
+            builder.setTransformation("Remove Type Parameters");
         else if (fromType.getEdgesMap().values().stream().anyMatch(t -> prettyEqual(t, toType)))
-            builder.addTransformation("UnWrap Parameterized Type");
+            builder.setTransformation("UnWrap Parameterized Type");
         return builder.build();
     }
 
     @Override
     public SyntacticTransformation analyzeParameterizedToParameterized(TypeGraph fromType, TypeGraph toType) {
         SyntacticTransformation.Builder builder = SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(Parameterized, Parameterized));
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(Parameterized, Parameterized));
         if (prettyEqual(getOf(fromType, "of"), getOf(toType, "of"))) {
 
             List<TypeGraph> b4Params = fromType.getEdgesMap().entrySet().stream()
@@ -156,9 +152,9 @@ public class ExtractSyntacticTypeChange extends AbstractTypeChangeVisitor<TypeRe
             List<TypeGraph> afterParams = toType.getEdgesMap().entrySet().stream()
                     .filter(x -> x.getKey().startsWith("Param:")).map(Entry::getValue).collect(toList());
             if (b4Params.size() == afterParams.size()) {
-                builder.addTransformation("Update Type Parameters");
+                builder.setTransformation("Update Type Parameters");
                 if(new HashSet<>(b4Params).equals(new HashSet<>(afterParams))) {
-                    builder.addTransformation("Reorder Type Parameters");
+                    builder.setTransformation("Reorder Type Parameters");
                 } else {
                     for (int i = 0; i < b4Params.size(); i++) {
                         if (!prettyEqual(b4Params.get(i), afterParams.get(i))) {
@@ -167,12 +163,12 @@ public class ExtractSyntacticTypeChange extends AbstractTypeChangeVisitor<TypeRe
                     }
                 }
             }else if(b4Params.size() < afterParams.size()) {
-                builder.addTransformation("Add Type Parameters");
+                builder.setTransformation("Add Type Parameters");
             } else
-                builder.addTransformation("Remove Type Parameters");
+                builder.setTransformation("Remove Type Parameters");
 
         } else {
-            builder.addTransformation("Update Container");
+            builder.setTransformation("Update Container");
             builder.addSubTransformations(extract(getOf(fromType, "of"), getOf(toType, "of")));
         }
         return builder.build();
@@ -184,12 +180,13 @@ public class ExtractSyntacticTypeChange extends AbstractTypeChangeVisitor<TypeRe
 
     @Override
     public SyntacticTransformation analyzeParameterizedToArray(TypeGraph fromType, TypeGraph toType) {
+
         SyntacticTransformation.Builder builder = SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(Parameterized, Array));
-        if (prettyEqual(getOf(toType, "of"), fromType))
-            builder.addTransformation("Convert To Array");
-        else
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(Parameterized, Array));
+
+        if (!prettyEqual(getOf(toType, "of"), fromType))
             builder.addSubTransformations(extract(fromType, getOf(toType, "of")));
+
         return builder.build();
     }
 
@@ -200,17 +197,13 @@ public class ExtractSyntacticTypeChange extends AbstractTypeChangeVisitor<TypeRe
 
     private SyntacticTransformation toWildCard(TypeGraph fromType,TypeKind k, TypeGraph toType) {
         SyntacticTransformation.Builder builder = SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(k, WildCard));
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(k, WildCard));
         if (toType.getEdgesMap().containsKey("extends")) {
-            if (prettyEqual(fromType, getOf(toType, "extends"))) {
-                builder.addTransformation("Convert to WildCard");
-            } else {
+            if (!prettyEqual(fromType, getOf(toType, "extends"))) {
                 builder.addSubTransformations(extract(fromType, getOf(toType, "extends")));
             }
         } else if (toType.getEdgesMap().containsKey("super")) {
-            if (prettyEqual(fromType, getOf(toType, "super"))) {
-                builder.addTransformation("Convert to WildCard");
-            } else {
+            if (!prettyEqual(fromType, getOf(toType, "super"))) {
                 builder.addSubTransformations(extract(fromType, getOf(toType, "super")));
             }
         }
@@ -220,25 +213,26 @@ public class ExtractSyntacticTypeChange extends AbstractTypeChangeVisitor<TypeRe
     @Override
     public SyntacticTransformation analyzeParameterizedToPrimitive(TypeGraph fromType, TypeGraph toType) {
         return SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(Parameterized, Primitive)).build();
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(Parameterized, Primitive)).build();
     }
 
 
     @Override
     public SyntacticTransformation analyzeArrayToPrimitive(TypeGraph fromType, TypeGraph toType) {
+
         SyntacticTransformation.Builder builder = SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(Array, Primitive));
-        if (pretty(getOf(fromType, "of")).equals(pretty(fromType)))
-            builder.addTransformation("Convert From Array");
-        else
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(Array, Primitive));
+
+        if (!pretty(getOf(fromType, "of")).equals(pretty(fromType)))
             builder.addSubTransformations(extract(getOf(fromType, "of"), toType));
+
         return builder.build();
     }
 
     @Override
     public SyntacticTransformation analyzeArrayToArray(TypeGraph fromType, TypeGraph toType) {
         SyntacticTransformation.Builder builder = SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(Array, Array));
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(Array, Array));
         builder.addSubTransformations(extract(getOf(fromType, "of"), getOf(toType, "of")));
         return builder.build();
     }
@@ -250,10 +244,8 @@ public class ExtractSyntacticTypeChange extends AbstractTypeChangeVisitor<TypeRe
 
     public SyntacticTransformation fromArray(TypeGraph fromType, TypeGraph toType) {
         SyntacticTransformation.Builder builder = SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(Array, toType.getRoot().getKind()));
-        if (pretty(getOf(fromType, "of")).equals(pretty(toType)))
-            builder.addTransformation("Convert From Array");
-        else
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(Array, toType.getRoot().getKind()));
+        if (!pretty(getOf(fromType, "of")).equals(pretty(toType)))
             builder.addSubTransformations(extract(getOf(fromType, "of"), toType));
         return builder.build();
     }
@@ -266,19 +258,13 @@ public class ExtractSyntacticTypeChange extends AbstractTypeChangeVisitor<TypeRe
     @Override
     public SyntacticTransformation analyzeArrayToWildCard(TypeGraph fromType, TypeGraph toType) {
         SyntacticTransformation.Builder builder = SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(Array, WildCard));
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(Array, WildCard));
         if (toType.getEdgesMap().containsKey("extends")) {
-            builder.addTransformation("Add upper bound");
-            if (prettyEqual(fromType, getOf(toType, "extends"))) {
-                builder.addTransformation("Convert to WildCard");
-            } else {
+            if (!prettyEqual(fromType, getOf(toType, "extends"))) {
                 builder.addSubTransformations(extract(fromType, getOf(toType, "extends")));
             }
         } else if (toType.getEdgesMap().containsKey("super")) {
-            builder.addTransformation("Add lower bound");
-            if (prettyEqual(fromType, getOf(toType, "super"))) {
-                builder.addTransformation("Convert to WildCard");
-            } else {
+            if (!prettyEqual(fromType, getOf(toType, "super"))) {
                 builder.addSubTransformations(extract(fromType, getOf(toType, "super")));
             }
         }
@@ -289,7 +275,7 @@ public class ExtractSyntacticTypeChange extends AbstractTypeChangeVisitor<TypeRe
     @Override
     public SyntacticTransformation analyzeWildCardToPrimitive(TypeGraph fromType, TypeGraph toType) {
         SyntacticTransformation.Builder builder = SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(WildCard, Primitive));
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(WildCard, Primitive));
         if (getOf(fromType, "extends") != null)
             builder.addSubTransformations(extract(getOf(fromType, "extends"), toType));
         if (getOf(fromType, "super") != null)
@@ -315,46 +301,32 @@ public class ExtractSyntacticTypeChange extends AbstractTypeChangeVisitor<TypeRe
     @Override
     public SyntacticTransformation analyzeWildCardToWildCard(TypeGraph fromType, TypeGraph toType) {
         SyntacticTransformation.Builder builder = SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(WildCard, WildCard));
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(WildCard, WildCard));
         if (fromType.getEdgesMap().containsKey("extends")) {
             if (toType.getEdgesMap().containsKey("extends")) {
                 builder.addSubTransformations(extract(getOf(fromType, "extends"), getOf(toType, "extends")));
             } else if (toType.getEdgesMap().containsKey("super")) {
-                builder.addTransformation("Change upper bound to lower bound");
                 builder.addSubTransformations(extract(getOf(fromType, "extends"), getOf(toType, "super")));
-            } else {
-                builder.addTransformation("Remove upper bound");
             }
         } else if (fromType.getEdgesMap().containsKey("super")) {
             if (toType.getEdgesMap().containsKey("extends")) {
-                builder.addTransformation("Change lower bound to upper bound");
                 builder.addSubTransformations(extract(getOf(fromType, "super"), getOf(toType, "extends")));
             } else if (toType.getEdgesMap().containsKey("super")) {
                 builder.addSubTransformations(extract(getOf(fromType, "super"), getOf(toType, "super")));
-            } else {
-                builder.addTransformation("Remove lower bound");
             }
-        } else if (toType.getEdgesMap().containsKey("extends")) {
-            builder.addTransformation("Introduce upper bound");
-        } else if (toType.getEdgesMap().containsKey("super")) {
-            builder.addTransformation("Remove lower bound");
         }
         return builder.build();
     }
 
     private SyntacticTransformation fromWildCard(TypeGraph fromType, TypeGraph toType, TypeKind typeKind) {
         SyntacticTransformation.Builder builder = SyntacticTransformation.newBuilder()
-                .setB4(fromType).setAftr(toType).addTransformation(replaceDescription(WildCard, typeKind));
+                .setB4(fromType).setAftr(toType).setTransformation(replaceDescription(WildCard, typeKind));
         if (fromType.getEdgesCount() > 0 && fromType.getEdgesMap().containsKey("extends")) {
-            if (prettyEqual(getOf(fromType, "extends"), toType)) {
-                builder.addTransformation("Convert from WildCard");
-            } else {
+            if (!prettyEqual(getOf(fromType, "extends"), toType)) {
                 builder.addSubTransformations(extract(getOf(fromType, "extends"), toType));
             }
         } else if (fromType.getEdgesCount() > 0 && fromType.getEdgesMap().containsKey("super")) {
-            if (prettyEqual(getOf(fromType, "super"), toType)) {
-                builder.addTransformation("Convert from WildCard");
-            } else {
+            if (!prettyEqual(getOf(fromType, "super"), toType)) {
                 builder.addSubTransformations(extract(getOf(fromType, "super"), toType));
             }
         }

@@ -15,10 +15,8 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 
 import java.util.*;
 
-import static com.t2r.common.models.refactorings.ElementKindOuterClass.ElementKind.Field;
 import static com.t2r.common.models.refactorings.NameSpaceOuterClass.NameSpace.*;
 import static com.t2r.common.utilities.PrettyPrinter.pretty;
-import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeFact;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
@@ -59,27 +57,6 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 	private Map<String, List<NameSpaceOuterClass.NameSpace>> typeGraphNameSpaceMap = new HashMap<>();
 
 
-	public CodeStatistics getMatchedCodeStatistic(GlobalContext gc, Map<NameSpaceOuterClass.NameSpace, Set<String>> classifiedImports){
-
-		CodeStatistics.Builder cs = CodeStatistics.newBuilder()
-				.addAllElements(originalClass.getAttributes().stream()
-						.map(x -> CodeStatistics.Element.newBuilder().setElemKind(Field)
-								.setName(x.getName())
-								.setType(x.getTypeGraph())
-								.setTypeKind(x.getTypeGraph().getRoot().getKind().name())
-								.setVisibility(x.getVisibility()).build())
-						.collect(toList()))
-				.addAllElements(operationBodyMapperList.stream()
-						.flatMap(x -> x.getMatchedCodeStatistic()
-								.getElementsList().stream()).collect(toList()));
-
-		cs.addAllNamespaces(getTypeFact(cs.getElementsList().stream().map(x -> x.getType()).collect(toList()), originalClass.getContext(), gc)
-				.map(x -> x.map1(f -> approximateNameSpaceFor(f.getType(),classifiedImports)))
-				.flatMap(x -> Collections.nCopies(x._2().intValue(), x._1()).stream().flatMap(ff -> ff.stream()))
-				.collect(toList()));
-
-		return cs.build();
-	}
 
 
 	private  List<NameSpaceOuterClass.NameSpace> approximateNameSpaceFor(TypeGraphOuterClass.TypeGraph resolvedTypeGraph, Map<NameSpaceOuterClass.NameSpace, Set<String>> gc){

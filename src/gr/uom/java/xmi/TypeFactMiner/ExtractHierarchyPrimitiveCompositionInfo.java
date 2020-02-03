@@ -1,6 +1,6 @@
 package gr.uom.java.xmi.TypeFactMiner;
 
-import com.t2r.common.models.refactorings.CommitInfoOuterClass.CommitInfo.JarInfo;
+import com.t2r.common.models.refactorings.JarInfoOuterClass.JarInfo;
 import com.t2r.common.models.refactorings.TypeChangeAnalysisOuterClass.TypeChangeAnalysis;
 import com.t2r.common.models.refactorings.TypeChangeAnalysisOuterClass.TypeChangeAnalysis.PrimitiveAnalysis;
 
@@ -48,6 +48,7 @@ public class ExtractHierarchyPrimitiveCompositionInfo extends AbstractTypeChange
     @Override
     public TypeChangeAnalysis analyzePrimitiveToSimple(TypeGraph fromType, TypeGraph toType) {
         return TypeChangeAnalysis.newBuilder()
+                .setB4ComposesAfter(getCompositionRelation(fromType, toType, input, jars, pathToJars))
                 .setPrimitiveInfo(PrimitiveAnalysis.newBuilder()
                         .setBoxing(isBoxing(fromType, toType))
                         .build()).build();
@@ -70,6 +71,7 @@ public class ExtractHierarchyPrimitiveCompositionInfo extends AbstractTypeChange
     @Override
     public TypeChangeAnalysis analyzeSimpleToPrimitive(TypeGraph fromType, TypeGraph toType) {
         return TypeChangeAnalysis.newBuilder()
+                .setB4ComposesAfter(getCompositionRelation(fromType, toType, input, jars, pathToJars))
                 .setPrimitiveInfo(PrimitiveAnalysis.newBuilder()
                         .setUnboxing(isUnBoxing(fromType, toType))
                         .build()).build();
@@ -101,6 +103,10 @@ public class ExtractHierarchyPrimitiveCompositionInfo extends AbstractTypeChange
 
     @Override
     public TypeChangeAnalysis analyzeParameterizedToSimple(TypeGraph fromType, TypeGraph toType) {
+        if(getCompositionRelation(fromType, toType, input, jars, pathToJars))
+            return TypeChangeAnalysis.newBuilder()
+                    .setB4ComposesAfter(true)
+                    .build();
         return extract(fromType.getEdgesMap().get("of"), toType);
     }
 

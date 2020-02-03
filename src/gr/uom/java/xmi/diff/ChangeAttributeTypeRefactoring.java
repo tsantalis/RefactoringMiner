@@ -1,13 +1,15 @@
 package gr.uom.java.xmi.diff;
 
-import gr.uom.java.xmi.TypeFactMiner.GlobalContext;
-import gr.uom.java.xmi.TypeFactMiner.TypFct;
 import com.t2r.common.models.ast.TypeGraphOuterClass.TypeGraph;
 import com.t2r.common.models.refactorings.ElementKindOuterClass;
 import com.t2r.common.models.refactorings.TypeChangeAnalysisOuterClass.TypeChangeAnalysis.TypeChangeInstance;
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.TypeFactMiner.ExtractSyntacticTypeChange;
+import gr.uom.java.xmi.TypeFactMiner.GlobalContext;
+import gr.uom.java.xmi.TypeFactMiner.TypFct;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -17,8 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import static java.util.stream.Collectors.toList;
+import java.util.function.Function;
 
 
 public class ChangeAttributeTypeRefactoring implements Refactoring, TypeRelatedRefactoring {
@@ -66,6 +67,7 @@ public class ChangeAttributeTypeRefactoring implements Refactoring, TypeRelatedR
 	public Set<AbstractCodeMapping> getAttributeReferences() {
 		return attributeReferences;
 	}
+
 
 	@Override
 	public RefactoringType getRefactoringType() {
@@ -190,16 +192,16 @@ public class ChangeAttributeTypeRefactoring implements Refactoring, TypeRelatedR
 
 	@Override
 	public void extractRealTypeChange() {
-		if(typeB4.isResolved() && typeAfter.isResolved()) {
+//		if(typeB4.isResolved() && typeAfter.isResolved()) {
 			typeChangeInstance = TypeChangeInstance.newBuilder()
 					.setNameB4(originalAttribute.getVariableName()).setNameAfter(changedTypeAttribute.getVariableName())
 					.setB4(typeB4.getType()).setAftr(typeAfter.getType())
 					.setCompilationUnit(classNameBefore).setElementKindAffected(ElementKindOuterClass.ElementKind.Field)
 					.setVisibility(visibility).setSyntacticUpdate(new ExtractSyntacticTypeChange().extract(typeB4, typeAfter))
-					.addAllCodeMapping(attributeReferences.stream().map(this::getCodeMapping).collect(toList()))
+//					.addAllCodeMapping(attributeReferences.stream().map(this::getCodeMapping).collect(toList()))
 					.build();
 			realTypeChanges = extractRealTypeChange(typeChangeInstance.getSyntacticUpdate());
-		}
+//		}
 	}
 
 
@@ -216,4 +218,19 @@ public class ChangeAttributeTypeRefactoring implements Refactoring, TypeRelatedR
 	public TypeChangeInstance getTypeChangeInstance() {
 		return typeChangeInstance;
 	}
+
+	@Override
+	public Set<AbstractCodeMapping> getReferences() {
+		return getAttributeReferences();
+	}
+
+	@Override
+	public void updateTypeChangeInstance(Function<TypeChangeInstance, TypeChangeInstance> fn) {
+		typeChangeInstance = fn.apply(typeChangeInstance);
+	}
+
+	public Tuple2<LocationInfo, LocationInfo> getLocationOfType(){
+		return Tuple.of(originalAttribute.getType().getLocationInfo(), changedTypeAttribute.getType().getLocationInfo());
+	}
+
 }

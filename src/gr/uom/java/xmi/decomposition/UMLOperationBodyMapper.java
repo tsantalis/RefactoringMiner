@@ -1,9 +1,9 @@
 package gr.uom.java.xmi.decomposition;
 
+import com.t2r.common.models.ast.TypeGraphOuterClass.TypeGraph;
+import com.t2r.common.models.ast.TypeNodeOuterClass;
 import com.t2r.common.models.refactorings.CodeStatisticsOuterClass;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
-import gr.uom.java.xmi.TypeFactMiner.GlobalContext;
-import gr.uom.java.xmi.TypeFactMiner.TypFct;
 import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.decomposition.replacement.*;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
@@ -18,7 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.t2r.common.models.refactorings.ElementKindOuterClass.ElementKind.*;
-import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeFact;
+import static com.t2r.common.utilities.PrettyPrinter.prettyLIST;
 import static java.util.stream.Collectors.toList;
 
 public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper> {
@@ -133,20 +133,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 
-	public CodeStatisticsOuterClass.CodeStatistics getMatchedCodeStatistic() {
-
+	public CodeStatisticsOuterClass.CodeStatistics getMatchedCodeStatistic(Set<String> forTypes) {
 		return CodeStatisticsOuterClass.CodeStatistics.newBuilder()
 				.addAllElements(operation1
 						.getParameters().stream()
+						.filter(x -> isRelevant(forTypes, x.getTypeGraph()))
 						.map(x -> CodeStatisticsOuterClass.CodeStatistics.Element.newBuilder()
 								.setElemKind(x.getName().equals("return") ? Return : Parameter)
-								.setName(x.getName())
 								.setType(x.getTypeGraph())
 								.setTypeKind(x.getTypeGraph().getRoot().getKind().name())
 								.setVisibility(operation1.getVisibility()).build())
 						.collect(toList()))
 				.addAllElements(mappings.stream().flatMap(x -> x.getFragment1().getVariableDeclarations().stream()
-						.map(v -> CodeStatisticsOuterClass.CodeStatistics.Element.newBuilder().setName(v.getVariableName())
+						.filter(v -> isRelevant(forTypes, v.getTypeGraph()))
+						.map(v -> CodeStatisticsOuterClass.CodeStatistics.Element.newBuilder()
 								.setType(v.getTypeGraph())
 								.setTypeKind(v.getTypeGraph().getRoot().getKind().name())
 								.setElemKind(LocalVariable).setVisibility("Block")
@@ -154,6 +154,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				.build();
 
 
+	}
+
+	public static boolean isRelevant(Collection<String> forTypes, TypeGraph type) {
+		if(type.getRoot().getKind().equals(TypeNodeOuterClass.TypeNode.TypeKind.WildCard))
+			System.out.println();
+		return prettyLIST(type).stream()
+				.anyMatch(x -> forTypes.stream().anyMatch(f -> f.endsWith("." + x) || f.endsWith(x) || f.equals(x)));
 	}
 
 	public void addChildMapper(UMLOperationBodyMapper mapper) {

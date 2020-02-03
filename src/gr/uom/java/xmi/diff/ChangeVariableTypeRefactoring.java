@@ -1,14 +1,16 @@
 package gr.uom.java.xmi.diff;
 
-import gr.uom.java.xmi.TypeFactMiner.GlobalContext;
-import gr.uom.java.xmi.TypeFactMiner.TypFct;
 import com.t2r.common.models.ast.TypeGraphOuterClass.TypeGraph;
 import com.t2r.common.models.refactorings.ElementKindOuterClass;
 import com.t2r.common.models.refactorings.TypeChangeAnalysisOuterClass.TypeChangeAnalysis.TypeChangeInstance;
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.TypeFactMiner.ExtractSyntacticTypeChange;
+import gr.uom.java.xmi.TypeFactMiner.GlobalContext;
+import gr.uom.java.xmi.TypeFactMiner.TypFct;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -17,9 +19,9 @@ import org.refactoringminer.api.TypeRelatedRefactoring;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 import static com.t2r.common.models.refactorings.ElementKindOuterClass.ElementKind.LocalVariable;
-import static java.util.stream.Collectors.toList;
 
 
 public class ChangeVariableTypeRefactoring implements Refactoring, TypeRelatedRefactoring {
@@ -35,6 +37,11 @@ public class ChangeVariableTypeRefactoring implements Refactoring, TypeRelatedRe
 	@Override
 	public TypeChangeInstance getTypeChangeInstance() {
 		return typeChangeInstance;
+	}
+
+	@Override
+	public Set<AbstractCodeMapping> getReferences() {
+		return getVariableReferences();
 	}
 
 	private TypeChangeInstance typeChangeInstance;
@@ -200,7 +207,7 @@ public class ChangeVariableTypeRefactoring implements Refactoring, TypeRelatedRe
 				.setNameB4(originalVariable.getVariableName())
 				.setNameAfter(changedTypeVariable.getVariableName())
 				.setB4(typeB4.getType()).setAftr(typeAfter.getType())
-				.addAllCodeMapping(variableReferences.stream().map(this::getCodeMapping).collect(toList()))
+//				.addAllCodeMapping(variableReferences.stream().map(this::getCodeMapping).collect(toList()))
 				.setCompilationUnit(operationBefore.getClassName());
 		if(originalVariable.isParameter() && changedTypeVariable.isParameter()){
 			typeChangeInstanceBldr.setElementKindAffected(ElementKindOuterClass.ElementKind.Parameter)
@@ -219,6 +226,18 @@ public class ChangeVariableTypeRefactoring implements Refactoring, TypeRelatedRe
 
 	public List<Tuple2<TypeGraph, TypeGraph>> getRealTypeChanges() {
 		return realTypeChanges;
+	}
+
+
+	@Override
+	public void updateTypeChangeInstance(Function<TypeChangeInstance, TypeChangeInstance> fn) {
+		typeChangeInstance = fn.apply(typeChangeInstance);
+	}
+
+
+
+	public Tuple2<LocationInfo, LocationInfo> getLocationOfType(){
+		return Tuple.of(originalVariable.getType().getLocationInfo(), changedTypeVariable.getType().getLocationInfo());
 	}
 
 	@Override

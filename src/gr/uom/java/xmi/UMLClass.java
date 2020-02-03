@@ -1,10 +1,20 @@
 package gr.uom.java.xmi;
 
+import com.t2r.common.models.refactorings.CodeStatisticsOuterClass;
+import com.t2r.common.models.refactorings.CodeStatisticsOuterClass.CodeStatistics.Element;
+import gr.uom.java.xmi.TypeFactMiner.GlobalContext;
 import gr.uom.java.xmi.TypeFactMiner.TypFct;
 import gr.uom.java.xmi.diff.StringDistance;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Stream;
+
+import static com.t2r.common.models.refactorings.ElementKindOuterClass.ElementKind.*;
+import static com.t2r.common.models.refactorings.ElementKindOuterClass.ElementKind.LocalVariable;
+import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeFact;
+import static gr.uom.java.xmi.decomposition.UMLOperationBodyMapper.isRelevant;
+import static java.util.stream.Collectors.toList;
 
 public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, Serializable, LocationInfoProvider {
 
@@ -376,6 +386,37 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 			}
 		}
 		return new LinkedHashMap<String, Set<String>>();
+	}
+
+
+	public CodeStatisticsOuterClass.CodeStatistics getMatchedCodeStatistic(GlobalContext gc, Set<String> forTypes){
+
+		CodeStatisticsOuterClass.CodeStatistics.Builder cs =
+				CodeStatisticsOuterClass.CodeStatistics.newBuilder()
+				.addAllElements(getAttributes().stream()
+						.filter(x -> isRelevant(forTypes, x.getTypeGraph()))
+						.map(x -> Element.newBuilder().setElemKind(Field)
+								.setType(getTypeFact(x.getTypeGraph(), getContext(), gc).getType())
+								.setTypeKind(x.getTypeGraph().getRoot().getKind().name())
+								.setVisibility(x.getVisibility()).build())
+						.collect(toList()))
+				.addAllElements(operations.stream().flatMap(o -> o.getParameters().stream()
+								.filter(x -> isRelevant(forTypes, x.getTypeGraph()))
+								.map(x -> Element.newBuilder()
+										.setElemKind(x.getName().equals("return") ? Return : Parameter)
+										.setType(x.getTypeGraph())
+										.setTypeKind(x.getTypeGraph().getRoot().getKind().name())
+										.setVisibility(o.getVisibility()).build())).collect(toList()))
+				.addAllElements(operations.stream().flatMap(x ->
+						Stream.ofNullable(x.getBody()).flatMap(o -> o.getAllVariableDeclarations().stream())
+								.filter(v -> isRelevant(forTypes, v.getTypeGraph()))
+								.map(v -> Element.newBuilder()
+										.setType(v.getTypeGraph())
+										.setTypeKind(v.getTypeGraph().getRoot().getKind().name())
+										.setElemKind(LocalVariable).setVisibility("Block")
+										.build())).collect(toList())
+				);
+		return cs.build();
 	}
 
 	public TypFct.Context getContext() {

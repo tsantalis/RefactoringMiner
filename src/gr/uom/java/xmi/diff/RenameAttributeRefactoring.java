@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -108,6 +109,18 @@ public class RenameAttributeRefactoring implements Refactoring {
 		List<String> classNames = new ArrayList<String>();
 		classNames.add(classNameAfter);
 		return classNames;
+	}
+
+	public Set<String> getInvolvedFilesBeforeRefactoring() {
+		HashSet<String> files = new HashSet<>();
+		files.add(originalAttribute.getLocationInfo().getFilePath());
+		return files;
+	}
+
+	public Set<String> getInvolvedFilesAfterRefactoring() {
+		HashSet<String> files = new HashSet<>();
+		files.add(renamedAttribute.getLocationInfo().getFilePath());
+		return files;
 	}
 
 	@Override

@@ -2,10 +2,8 @@ package gr.uom.java.xmi.diff;
 
 import gr.uom.java.xmi.UMLClass;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -65,6 +63,16 @@ public class ExtractSuperclassRefactoring implements Refactoring {
 		List<String> classNames = new ArrayList<String>();
 		classNames.add(getExtractedClass().getName());
 		return classNames;
+	}
+
+	public Set<String> getInvolvedFilesBeforeRefactoring() {
+		return this.subclassSet.stream().map(x -> x.getLocationInfo().getFilePath()).collect(Collectors.toSet());
+	}
+
+	public Set<String> getInvolvedFilesAfterRefactoring() {
+		HashSet<String> files = new HashSet<>();
+		files.add(getExtractedClass().getLocationInfo().getFilePath());
+		return files;
 	}
 
 	@Override

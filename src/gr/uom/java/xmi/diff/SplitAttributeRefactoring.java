@@ -1,13 +1,11 @@
 package gr.uom.java.xmi.diff;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class SplitAttributeRefactoring implements Refactoring {
 	private VariableDeclaration oldAttribute;
@@ -43,6 +41,16 @@ public class SplitAttributeRefactoring implements Refactoring {
 
 	public String getClassNameAfter() {
 		return classNameAfter;
+	}
+
+	public Set<String> getInvolvedFilesBeforeRefactoring() {
+		return splitAttributes.stream().map(x -> x.getLocationInfo().getFilePath()).collect(Collectors.toSet());
+	}
+
+	public Set<String> getInvolvedFilesAfterRefactoring() {
+		HashSet<String> files = new HashSet<>();
+		files.add(oldAttribute.getLocationInfo().getFilePath());
+		return files;
 	}
 
 	@Override

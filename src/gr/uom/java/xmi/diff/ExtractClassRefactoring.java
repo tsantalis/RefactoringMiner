@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -76,6 +77,18 @@ public class ExtractClassRefactoring implements Refactoring {
 		List<String> classNames = new ArrayList<String>();
 		classNames.add(getExtractedClass().getName());
 		return classNames;
+	}
+
+	public Set<String> getInvolvedFilesBeforeRefactoring() {
+		HashSet<String> files = new HashSet<>();
+		files.add(getOriginalClass().getLocationInfo().getFilePath());
+		return files;
+	}
+
+	public Set<String> getInvolvedFilesAfterRefactoring() {
+		HashSet<String> files = new HashSet<>();
+		files.add(getExtractedClass().getLocationInfo().getFilePath());
+		return files;
 	}
 
 	@Override

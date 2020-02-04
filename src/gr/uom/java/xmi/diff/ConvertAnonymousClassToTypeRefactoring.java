@@ -1,7 +1,9 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -37,6 +39,18 @@ public class ConvertAnonymousClassToTypeRefactoring implements Refactoring {
 
 	public String getName() {
 		return this.getRefactoringType().getDisplayName();
+	}
+
+	public Set<String> getInvolvedFilesBeforeRefactoring() {
+		HashSet<String> files = new HashSet<>();
+		files.add(anonymousClass.getLocationInfo().getFilePath());
+		return files;
+	}
+
+	public Set<String> getInvolvedFilesAfterRefactoring() {
+		HashSet<String> files = new HashSet<>();
+		files.add(addedClass.getLocationInfo().getFilePath());
+		return files;
 	}
 
 	public RefactoringType getRefactoringType() {

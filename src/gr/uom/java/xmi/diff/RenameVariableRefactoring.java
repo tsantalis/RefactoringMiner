@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -63,6 +64,18 @@ public class RenameVariableRefactoring implements Refactoring {
 
 	public Set<AbstractCodeMapping> getVariableReferences() {
 		return variableReferences;
+	}
+
+	public Set<String> getInvolvedFilesBeforeRefactoring() {
+		HashSet<String> files = new HashSet<>();
+		files.add(operationBefore.getLocationInfo().getFilePath());
+		return files;
+	}
+
+	public Set<String> getInvolvedFilesAfterRefactoring() {
+		HashSet<String> files = new HashSet<>();
+		files.add(operationAfter.getLocationInfo().getFilePath());
+		return files;
 	}
 
 	public String toString() {

@@ -1,7 +1,10 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -67,6 +70,15 @@ public class MoveSourceFolderRefactoring implements Refactoring {
 		}
 		return classNames;
 	}
+
+	public Set<String> getInvolvedFilesBeforeRefactoring() {
+		return movedClassesToAnotherSourceFolder.stream().map(x -> x.getOriginalClass().getLocationInfo().getFilePath()).collect(Collectors.toSet());
+	}
+
+	public Set<String> getInvolvedFilesAfterRefactoring() {
+		return movedClassesToAnotherSourceFolder.stream().map(x -> x.getMovedClass().getLocationInfo().getFilePath()).collect(Collectors.toSet());
+	}
+
 
 	@Override
 	public List<CodeRange> leftSide() {

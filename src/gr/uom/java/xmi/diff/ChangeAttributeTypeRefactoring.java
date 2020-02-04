@@ -1,9 +1,6 @@
 package gr.uom.java.xmi.diff;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -51,6 +48,18 @@ public class ChangeAttributeTypeRefactoring implements Refactoring {
 
 	public String getClassNameAfter() {
 		return classNameAfter;
+	}
+
+	public Set<String> getInvolvedFilesBeforeRefactoring() {
+		HashSet<String> files = new HashSet<>();
+		files.add(originalAttribute.getLocationInfo().getFilePath());
+		return files;
+	}
+
+	public Set<String> getInvolvedFilesAfterRefactoring() {
+		HashSet<String> files = new HashSet<>();
+		files.add(changedTypeAttribute.getLocationInfo().getFilePath());
+		return files;
 	}
 
 	public Set<AbstractCodeMapping> getAttributeReferences() {

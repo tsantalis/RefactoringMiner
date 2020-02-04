@@ -2,6 +2,7 @@ package org.refactoringminer.api;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 public interface Refactoring extends Serializable, CodeRangeProvider {
 
@@ -10,7 +11,11 @@ public interface Refactoring extends Serializable, CodeRangeProvider {
 	public String getName();
 
 	public String toString();
-	
+
+	public Set<String> getInvolvedFilesBeforeRefactoring();
+
+	public Set<String> getInvolvedFilesAfterRefactoring();
+
 	public List<String> getInvolvedClassesBeforeRefactoring();
 	
 	public List<String> getInvolvedClassesAfterRefactoring();

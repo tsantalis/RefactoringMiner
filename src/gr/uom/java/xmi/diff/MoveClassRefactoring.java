@@ -3,7 +3,9 @@ package gr.uom.java.xmi.diff;
 import gr.uom.java.xmi.UMLClass;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -71,6 +73,18 @@ public class MoveClassRefactoring implements Refactoring {
 		List<String> classNames = new ArrayList<String>();
 		classNames.add(getMovedClass().getName());
 		return classNames;
+	}
+
+	public Set<String> getInvolvedFilesBeforeRefactoring() {
+		HashSet<String> files = new HashSet<>();
+		files.add(getOriginalClass().getLocationInfo().getFilePath());
+		return files;
+	}
+
+	public Set<String> getInvolvedFilesAfterRefactoring() {
+		HashSet<String> files = new HashSet<>();
+		files.add(getMovedClass().getLocationInfo().getFilePath());
+		return files;
 	}
 
 	@Override

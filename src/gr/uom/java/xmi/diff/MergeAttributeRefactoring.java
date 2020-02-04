@@ -1,8 +1,10 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -116,6 +118,16 @@ public class MergeAttributeRefactoring implements Refactoring {
 		List<String> classNames = new ArrayList<String>();
 		classNames.add(classNameAfter);
 		return classNames;
+	}
+
+	public Set<String> getInvolvedFilesBeforeRefactoring() {
+		return mergedAttributes.stream().map(x -> x.getLocationInfo().getFilePath()).collect(Collectors.toSet());
+	}
+
+	public Set<String> getInvolvedFilesAfterRefactoring() {
+		HashSet<String> files = new HashSet<>();
+		files.add(newAttribute.getLocationInfo().getFilePath());
+		return files;
 	}
 
 	@Override

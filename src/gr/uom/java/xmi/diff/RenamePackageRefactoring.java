@@ -1,8 +1,11 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
@@ -53,20 +56,20 @@ public class RenamePackageRefactoring implements Refactoring {
 		return sb.toString();
 	}
 
-	public List<String> getInvolvedClassesBeforeRefactoring() {
-		List<String> classNames = new ArrayList<String>();
+	public Set<ImmutablePair<String, String>> getInvolvedClassesBeforeRefactoring() {
+		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		for(MoveClassRefactoring ref : moveClassRefactorings) {
-			classNames.add(ref.getOriginalClassName());
+			pairs.add(new ImmutablePair<String, String>(ref.getOriginalClass().getLocationInfo().getFilePath(), ref.getOriginalClassName()));
 		}
-		return classNames;
+		return pairs;
 	}
 
-	public List<String> getInvolvedClassesAfterRefactoring() {
-		List<String> classNames = new ArrayList<String>();
+	public Set<ImmutablePair<String, String>> getInvolvedClassesAfterRefactoring() {
+		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		for(MoveClassRefactoring ref : moveClassRefactorings) {
-			classNames.add(ref.getMovedClassName());
+			pairs.add(new ImmutablePair<String, String>(ref.getMovedClass().getLocationInfo().getFilePath(), ref.getMovedClassName()));
 		}
-		return classNames;
+		return pairs;
 	}
 
 	@Override

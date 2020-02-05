@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
@@ -152,16 +153,16 @@ public class InlineOperationRefactoring implements Refactoring {
 		return codeRanges;
 	}
 
-	public List<String> getInvolvedClassesBeforeRefactoring() {
-		List<String> classNames = new ArrayList<String>();
-		classNames.add(getTargetOperationBeforeInline().getClassName());
-		return classNames;
+	public Set<ImmutablePair<String, String>> getInvolvedClassesBeforeRefactoring() {
+		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
+		pairs.add(new ImmutablePair<String, String>(getTargetOperationBeforeInline().getLocationInfo().getFilePath(), getTargetOperationBeforeInline().getClassName()));
+		return pairs;
 	}
 
-	public List<String> getInvolvedClassesAfterRefactoring() {
-		List<String> classNames = new ArrayList<String>();
-		classNames.add(getTargetOperationAfterInline().getClassName());
-		return classNames;
+	public Set<ImmutablePair<String, String>> getInvolvedClassesAfterRefactoring() {
+		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
+		pairs.add(new ImmutablePair<String, String>(getTargetOperationAfterInline().getLocationInfo().getFilePath(), getTargetOperationAfterInline().getClassName()));
+		return pairs;
 	}
 
 	@Override

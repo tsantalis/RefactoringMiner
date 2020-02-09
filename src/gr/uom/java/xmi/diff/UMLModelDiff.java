@@ -823,6 +823,23 @@ public class UMLModelDiff {
       return removedOperations;
    }
 
+   private List<UMLOperation> getRemovedOperationsInCommonMovedRenamedClasses() {
+      List<UMLOperation> removedOperations = new ArrayList<UMLOperation>();
+      for(UMLClassDiff classDiff : commonClassDiffList) {
+         removedOperations.addAll(classDiff.getRemovedOperations());
+      }
+      for(UMLClassMoveDiff classDiff : classMoveDiffList) {
+    	  removedOperations.addAll(classDiff.getRemovedOperations());
+      }
+      for(UMLClassMoveDiff classDiff : innerClassMoveDiffList) {
+    	  removedOperations.addAll(classDiff.getRemovedOperations());
+      }
+      for(UMLClassRenameDiff classDiff : classRenameDiffList) {
+    	  removedOperations.addAll(classDiff.getRemovedOperations());
+      }
+      return removedOperations;
+   }
+
    private List<UMLOperation> getRemovedAndInlinedOperationsInCommonClasses() {
       List<UMLOperation> removedOperations = new ArrayList<UMLOperation>();
       for(UMLClassDiff classDiff : commonClassDiffList) {
@@ -1945,7 +1962,7 @@ public class UMLModelDiff {
 
    private void checkForOperationMovesBetweenCommonClasses() throws RefactoringMinerTimedOutException {
       List<UMLOperation> addedOperations = getAddedAndExtractedOperationsInCommonClasses();
-      List<UMLOperation> removedOperations = getRemovedOperationsInCommonClasses();
+      List<UMLOperation> removedOperations = getRemovedOperationsInCommonMovedRenamedClasses();
       if(removedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS || addedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
     	  checkForOperationMoves(addedOperations, removedOperations);
       }

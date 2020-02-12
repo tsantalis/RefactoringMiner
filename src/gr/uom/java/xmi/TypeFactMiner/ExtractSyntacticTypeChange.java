@@ -154,15 +154,14 @@ public class ExtractSyntacticTypeChange extends AbstractTypeChangeVisitor<TypeRe
             if (b4Params.size() == afterParams.size()) {
                 builder.setTransformation("Update Type Parameters");
                 if(new HashSet<>(b4Params).equals(new HashSet<>(afterParams))) {
-                    builder.setTransformation("Reorder Type Parameters");
-                } else {
+                    builder.setTransformation("Reorder Type Parameters"); } else {
                     for (int i = 0; i < b4Params.size(); i++) {
                         if (!prettyEqual(b4Params.get(i), afterParams.get(i))) {
                             builder.addSubTransformations(extract(b4Params.get(i), afterParams.get(i)));
                         }
                     }
                 }
-            }else if(b4Params.size() < afterParams.size()) {
+            }else if( b4Params.size() < afterParams.size()) {
                 builder.setTransformation("Add Type Parameters");
             } else
                 builder.setTransformation("Remove Type Parameters");

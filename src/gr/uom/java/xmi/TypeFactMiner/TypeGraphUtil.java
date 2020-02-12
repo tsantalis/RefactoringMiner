@@ -35,13 +35,17 @@ public class TypeGraphUtil {
         return new TypFct(t,c);
     }
 
+    public static TypFct getTypeFactDontResolve(TypeGraph t, Context c){
+        return new TypFct(t,c, true);
+    }
+
     public static TypFct getTypeFact(TypeGraph t, Context c, GlobalContext gc){
         return new TypFct(t,c, gc);
     }
 
     public static Stream<Tuple2<TypFct, Long>> getTypeFact(List<TypeGraph> t, Context c, GlobalContext gc){
         Map<TypeGraph, Long> ts = t.stream().collect(groupingBy(x -> x, counting()));
-        return ts.entrySet().stream().map(x -> Tuple.fromEntry(x))
+        return ts.entrySet().stream().map(Tuple::fromEntry)
                 .map(x -> x.map1(f -> new TypFct(f, c, gc)));
 
 

@@ -23,10 +23,13 @@ public class Visitors {
         public boolean visit(EnumDeclaration node) {
             String name = parentName + "." + node.getName().toString();
             enums.add(name);
-
             UsedTypes ut = new UsedTypes();
             node.accept(ut);
             usedTypes.put(name,ut.typesUsed);
+
+
+
+
             return false;
         }
 
@@ -57,4 +60,6 @@ public class Visitors {
             return true;
         }
     }
+
+
 }

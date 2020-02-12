@@ -28,12 +28,12 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private UMLType superclass;
     private List<UMLType> implementedInterfaces;
     private List<UMLAnonymousClass> anonymousClassList;
-    private List<String> importedTypes;
+    private Map<Boolean, List<String>> importedTypes;
     private List<UMLTypeParameter> typeParameters;
     private UMLJavadoc javadoc;
 	private TypFct.Context context;
 
-	public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<String> importedTypes, TypFct.Context context) {
+	public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, Map<Boolean, List<String>> importedTypes, TypFct.Context context) {
     	super(context);
 		this.context = context;
 		this.locationInfo = locationInfo;
@@ -82,6 +82,11 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.importedTypes = importedTypes;
         this.typeParameters = new ArrayList<UMLTypeParameter>();
     }
+
+
+    public Map<Boolean, List<String>> getImportTypesMap(){
+		return importedTypes;
+	}
 
     public List<UMLTypeParameter> getTypeParameters() {
 		return typeParameters;
@@ -167,7 +172,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	}
 
 	public List<String> getImportedTypes() {
-		return importedTypes;
+		return importedTypes.values().stream().flatMap(x -> x.stream()).collect(toList());
 	}
 
 	public List<UMLAnonymousClass> getAnonymousClassList() {
@@ -385,7 +390,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 				}
 			}
 		}
-		return new LinkedHashMap<String, Set<String>>();
+		return new LinkedHashMap<> ();
 	}
 
 

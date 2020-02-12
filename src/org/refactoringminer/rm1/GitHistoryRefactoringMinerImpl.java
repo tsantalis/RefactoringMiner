@@ -3,9 +3,13 @@ package org.refactoringminer.rm1;
 import com.t2r.common.models.refactorings.CodeStatisticsOuterClass.CodeStatistics;
 import com.t2r.common.models.refactorings.CommitInfoOuterClass.CommitInfo;
 import com.t2r.common.models.refactorings.JarInfoOuterClass.JarInfo;
+import com.t2r.common.models.refactorings.TheWorldOuterClass;
 import com.t2r.common.models.refactorings.TypeChangeAnalysisOuterClass.TypeChangeAnalysis.TypeChangeInstance;
 import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.TypeFactMiner.CodeStatsGlobalContext;
+import gr.uom.java.xmi.TypeFactMiner.CodeStatsInformation;
 import gr.uom.java.xmi.TypeFactMiner.GlobalContext;
+import gr.uom.java.xmi.TypeFactMiner.Information;
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLModelASTReader;
 import gr.uom.java.xmi.diff.MoveAndRenameClassRefactoring;
@@ -212,6 +216,34 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
                 .collect(toSet());
     }
 
+    public TheWorldOuterClass.TheWorld detectCodeStats(GitService gitService, Git git
+            , Set<JarInfo> jars, String currentCommit, Path pathToJar, GraphTraversalSource gr, Set<String> classes) throws Exception {
+        Repository repository = git.getRepository();
+        List<Refactoring> refactoringsAtRevision = new ArrayList<>();
+        List<String> filePathsBefore = new ArrayList<>();
+        List<String> filePathsCurrent = new ArrayList<>();
+        Map<String, String> renamedFilesHint = new HashMap<>();
+        RevWalk walk = new RevWalk(repository);
+        RevCommit commit = walk.parseCommit(repository.resolve(currentCommit));
+        if (commit.getParentCount() > 0) {
+            walk.parseCommit(commit.getParent(0));
+
+            gitService.fileTreeDiff(repository, commit, filePathsBefore, filePathsCurrent, renamedFilesHint);
+            try {
+                if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty()) {
+                    CodeStatsGlobalContext context = new CodeStatsGlobalContext(git, commit, gr, jars, pathToJar, (x, y) -> new CodeStatsInformation(x._2, y, x._1, classes), classes);
+                    return context.prettyPrintStats();
+                }
+                walk.dispose();
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+            return null;
+//        return refactoringsAtRevision;
+        }
+        return null;
+    }
+
 
     protected List<Refactoring> detectRefactorings(GitService gitService, Git git
             , final RefactoringHandler handler, Set<JarInfo> jars, RevCommit currentCommit, Path pathToJar, CommitInfo commitInfo, String cloneUrl, GraphTraversalSource gr) throws Exception {
@@ -227,7 +259,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
                 RevCommit parentCommit = currentCommit.getParent(0);
 
-                GlobalContext context = new GlobalContext(git, currentCommit, gr, jars, pathToJar);
+                GlobalContext context = new GlobalContext(git, currentCommit, gr, jars, pathToJar, (x, y) -> new Information(x._2(),y, x._1()));
+
 
                 Try<Tuple2<List<Refactoring>, CodeStatistics>> refactorings_stats = getUMLModelAtCommit(repository, parentCommit, filePathsBefore)
                         .flatMap(b4Model -> getUMLModelAtCommit(repository, currentCommit, filePathsCurrent)
@@ -440,7 +473,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 //		return typeRelatedRefactorings.stream().anyMatch(x->x.getTypeB4().isDontKnowNameSpace() || x.getTypeAfter().isDontKnowNameSpace());
 //	}
 
-    private void populateFileContents(Repository repository, RevCommit commit,
+    public void populateFileContents(Repository repository, RevCommit commit,
                                       List<String> filePaths, Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
         logger.info("Processing {} {} ...", repository.getDirectory().getParent().toString(), commit.getName());
         RevTree parentTree = commit.getTree();

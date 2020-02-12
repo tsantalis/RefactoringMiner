@@ -1,10 +1,6 @@
 package gr.uom.java.xmi.diff;
 
-import com.t2r.common.models.ast.TypeGraphOuterClass;
-import com.t2r.common.models.ast.TypeNodeOuterClass;
-import com.t2r.common.models.refactorings.CodeStatisticsOuterClass.CodeStatistics;
-import com.t2r.common.models.refactorings.NameSpaceOuterClass;
-import gr.uom.java.xmi.TypeFactMiner.GlobalContext;
+import com.t2r.common.models.refactorings.NameSpaceOuterClass.NameSpace;
 import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.decomposition.*;
 import gr.uom.java.xmi.decomposition.replacement.*;
@@ -14,11 +10,6 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import java.util.*;
-
-import static com.t2r.common.models.refactorings.NameSpaceOuterClass.NameSpace.*;
-import static com.t2r.common.utilities.PrettyPrinter.pretty;
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
 
 public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 
@@ -54,63 +45,12 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 	private Map<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>> mergeMap = new LinkedHashMap<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>>();
 	private Map<SplitVariableReplacement, Set<CandidateSplitVariableRefactoring>> splitMap = new LinkedHashMap<SplitVariableReplacement, Set<CandidateSplitVariableRefactoring>>();
 	private UMLModelDiff modelDiff;
-	private Map<String, List<NameSpaceOuterClass.NameSpace>> typeGraphNameSpaceMap = new HashMap<>();
 
 
 
 
-	private  List<NameSpaceOuterClass.NameSpace> approximateNameSpaceFor(TypeGraphOuterClass.TypeGraph resolvedTypeGraph, Map<NameSpaceOuterClass.NameSpace, Set<String>> gc){
-
-		switch (resolvedTypeGraph.getRoot().getKind()) {
-			case Primitive:
-			case Simple:
-				return approximateNameSpace(resolvedTypeGraph.getRoot(), gc);
-
-			case WildCard: {
-				return (resolvedTypeGraph.getEdgesMap().get("extends") != null)
-						? approximateNameSpaceFor(resolvedTypeGraph.getEdgesMap().get("extends"), gc)
-						: ((resolvedTypeGraph.getEdgesMap().get("super") != null)
-						? approximateNameSpaceFor(resolvedTypeGraph.getEdgesMap().get("super"), gc)
-						: asList(TypeVariable));
-			}
-			case Array:
-			case Parameterized:
-			case Intersection:
-			case Union:
-				return resolvedTypeGraph.getEdgesMap().entrySet().stream()
-						.flatMap(x -> approximateNameSpaceFor(x.getValue(), gc).stream()).collect(toList());
-
-			default:
-				return asList(DontKnow);
-		}
-	}
 
 
-	private List<NameSpaceOuterClass.NameSpace> approximateNameSpace(TypeNodeOuterClass.TypeNode tn, Map<NameSpaceOuterClass.NameSpace, Set<String>> groupedNameSpaces) {
-		String ptn = pretty(tn);
-		if(!ptn.isEmpty() && typeGraphNameSpaceMap.containsKey(ptn))
-			return typeGraphNameSpaceMap.get(ptn);
-		NameSpaceOuterClass.NameSpace srch = searchApproxNameSpace(tn, groupedNameSpaces);
-		typeGraphNameSpaceMap.put(ptn, asList(srch));
-		return asList(srch);
-
-	}
-
-	private NameSpaceOuterClass.NameSpace searchApproxNameSpace(TypeNodeOuterClass.TypeNode tn, Map<NameSpaceOuterClass.NameSpace, Set<String>> groupedNameSpaces) {
-		if(tn.getIsTypeVariable())
-			return (TypeVariable);
-		else if(tn.getKind().equals(TypeNodeOuterClass.TypeNode.TypeKind.Primitive))
-			return (Jdk);
-		else if (groupedNameSpaces.containsKey(Internal) && groupedNameSpaces.get(Internal).stream().anyMatch(x -> tn.getName().contains(x)))
-			return (Internal);
-		else if (tn.getName().startsWith("java."))
-			return (Jdk);
-		else if (groupedNameSpaces.containsKey(Jdk) && groupedNameSpaces.get(Jdk).stream().anyMatch(x -> tn.getName().contains(x)))
-			return (Jdk);
-		else if (groupedNameSpaces.containsKey(External) && groupedNameSpaces.get(External).stream().anyMatch(x -> tn.getName().contains(x)))
-			return (External);
-		return DontKnow;
-	}
 
 
 	public UMLClassBaseDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {

@@ -46,6 +46,33 @@ public class TypFct {
         }
     }
 
+    public TypFct(TypeGraph typeGraph, Context context, boolean dontResilve) {
+
+        this.tg = typeGraph;
+        this.context = context;
+        if(!dontResilve)
+            this.resolvedTypeGraph = qualify();
+        this.isResolved = false;
+        if(!dontResilve) {
+            if (allTypeNodesMatch(resolvedTypeGraph, t -> t.getName().isEmpty() || t.getIsResolved())) {
+                this.context = null;
+                this.tg = null;
+                this.isResolved = true;
+            }
+        }
+    }
+//
+//    public TypFct(TypeNode s, Context context, GlobalContext gc) {
+//        this.context = context;
+//        this.resolvedTypeGraph = qualify(gc);
+//        this.isResolved = false;
+//        if (allTypeNodesMatch(resolvedTypeGraph,t -> t.getName().isEmpty() ||  t.getIsResolved())) {
+//            this.context = null;
+//            this.tg = null;
+//            this.isResolved = true;
+//        }
+//    }
+
     public TypFct(TypeGraph typeGraph, Context context, GlobalContext gc) {
         this.tg = typeGraph;
         this.context = context;
@@ -342,11 +369,47 @@ public class TypFct {
             this.packageName = cu.getPackage() != null ? cu.getPackage().getName().toString() : "";
         }
 
+        public Context(CodeStatsInformation ci){
+             this(ci.getImports(),ci.getM_tp(), ci.getTd_tp(), ci.getEnumDecls(), ci.getPackageName());
+        }
+
+
+        public Context(Map<Boolean, List<String>> importDecl, List<String> methdLevelTypeVars, Map<String, List<String>> td_tp, Set<String> enums, String packageName){
+
+            this.importDecl = importDecl;
+            this.methdLevelTypeVars = methdLevelTypeVars;
+            this.td_tp = td_tp;
+            this.enums = enums;
+            this.packageName = packageName;
+        }
+
+
         public Context(CompilationUnit cu, MethodDeclaration[] md) {
             this.importDecl = ((List<ImportDeclaration>) cu.imports()).stream()
                     .collect(groupingBy(ImportDeclaration::isOnDemand,
                             collectingAndThen(toList(), x -> x.stream().map(z -> z.getName().getFullyQualifiedName()).collect(toList()))));
             this.methdLevelTypeVars = Arrays.stream(md).map(x -> (List<TypeParameter>) x.typeParameters())
+                    .flatMap(x -> x.stream())
+                    .map(x -> x.getName().toString()).collect(toList());
+            Tuple2<Map<String, List<String>>, Set<String>> typeDeclAndEnums = getTypeDeclAndParam(cu);
+            this.td_tp = typeDeclAndEnums._1();
+            this.enums = typeDeclAndEnums._2();
+            this.packageName = cu.getPackage() != null ? cu.getPackage().getName().toString() : "";
+        }
+
+        public Context(CompilationUnit cu) {
+            List<MethodDeclaration> md = new ArrayList<>();
+            cu.accept(new ASTVisitor() {
+                @Override
+                public boolean visit(MethodDeclaration node) {
+                    md.add(node);
+                    return super.visit(node);
+                }
+            });
+            this.importDecl = ((List<ImportDeclaration>) cu.imports()).stream()
+                    .collect(groupingBy(ImportDeclaration::isOnDemand,
+                            collectingAndThen(toList(), x -> x.stream().map(z -> z.getName().getFullyQualifiedName()).collect(toList()))));
+            this.methdLevelTypeVars = md.stream().map(x -> (List<TypeParameter>) x.typeParameters())
                     .flatMap(x -> x.stream())
                     .map(x -> x.getName().toString()).collect(toList());
             Tuple2<Map<String, List<String>>, Set<String>> typeDeclAndEnums = getTypeDeclAndParam(cu);

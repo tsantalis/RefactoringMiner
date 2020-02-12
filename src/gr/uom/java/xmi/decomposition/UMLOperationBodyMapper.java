@@ -1,7 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
 import com.t2r.common.models.ast.TypeGraphOuterClass.TypeGraph;
-import com.t2r.common.models.ast.TypeNodeOuterClass;
 import com.t2r.common.models.refactorings.CodeStatisticsOuterClass;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.*;
@@ -18,7 +17,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.t2r.common.models.refactorings.ElementKindOuterClass.ElementKind.*;
-import static com.t2r.common.utilities.PrettyPrinter.prettyLIST;
 import static java.util.stream.Collectors.toList;
 
 public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper> {
@@ -157,10 +155,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public static boolean isRelevant(Collection<String> forTypes, TypeGraph type) {
-		if(type.getRoot().getKind().equals(TypeNodeOuterClass.TypeNode.TypeKind.WildCard))
-			System.out.println();
-		return prettyLIST(type).stream()
-				.anyMatch(x -> forTypes.stream().anyMatch(f -> f.endsWith("." + x) || f.endsWith(x) || f.equals(x)));
+		return true;
+//		if(type.getRoot().getKind().equals(TypeNodeOuterClass.TypeNode.TypeKind.WildCard))
+//			System.out.println();
+//		return prettyLIST(type).stream()
+//				.anyMatch(x -> forTypes.stream().anyMatch(f -> f.endsWith("." + x) || f.endsWith(x) || f.equals(x)));
 	}
 
 	public void addChildMapper(UMLOperationBodyMapper mapper) {

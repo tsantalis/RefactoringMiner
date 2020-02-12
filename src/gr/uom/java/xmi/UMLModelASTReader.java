@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 
 import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeGraph;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 
 public class UMLModelASTReader {
 	public static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
@@ -111,7 +111,8 @@ public class UMLModelASTReader {
 			packageName = "";
 		
 		List<ImportDeclaration> imports = compilationUnit.imports();
-		List<String> importedTypes = imports.stream().map(z->z.getName().getFullyQualifiedName()).collect(toList());
+		Map<Boolean, List<String>> importedTypes = imports.stream().collect(groupingBy(x -> x.isOnDemand(),
+				collectingAndThen(toList(), l -> l.stream().map(x -> x.getName().getFullyQualifiedName()).collect(toList()))));
 
 		List<AbstractTypeDeclaration> topLevelTypeDeclarations = compilationUnit.types();
         for(AbstractTypeDeclaration abstractTypeDeclaration : topLevelTypeDeclarations) {
@@ -142,7 +143,7 @@ public class UMLModelASTReader {
 
 
 	private void processTypeDeclaration(CompilationUnit cu, TypeDeclaration typeDeclaration, String packageName, String sourceFile,
-										List<String> importedTypes) {
+										Map<Boolean, List<String>> importedTypes) {
 		UMLJavadoc javadoc = generateJavadoc(typeDeclaration);
 		if(javadoc != null && javadoc.contains("Source code generated using FreeMarker template")) {
 			return;

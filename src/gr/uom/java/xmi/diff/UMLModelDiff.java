@@ -42,7 +42,7 @@ public class UMLModelDiff {
 
     public Map<NameSpace, Set<String>> getNamespaceForImports(GlobalContext gc, Set<String> classNames) {
         Map<NameSpace, Set<String>> map = streamOriginalClasses()
-                .flatMap(x -> x.getImportedTypes().stream())
+                .flatMap(x -> x.getImportTypesMap().values().stream().flatMap(Collection::stream))
                 .distinct()
                 .collect(groupingBy(x -> getNameSpaceForImportStmt(x, gc, classNames), toSet()));
         if (map.containsKey(Internal))
@@ -69,7 +69,7 @@ public class UMLModelDiff {
     private Stream<UMLClass> streamOriginalClasses() {
         return concat( removedClasses.stream()
                 , concat(concat(innerClassMoveDiffList.stream(), classRenameDiffList.stream()),
-                        concat(commonClassDiffList.stream(), classMoveDiffList.stream())).distinct().map(x -> x.getOriginalClass()));
+                        concat(commonClassDiffList.stream(), classMoveDiffList.stream())).distinct().map(UMLClassBaseDiff::getOriginalClass));
     }
 
 

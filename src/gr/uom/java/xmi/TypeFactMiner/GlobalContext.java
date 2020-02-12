@@ -1,66 +1,44 @@
 package gr.uom.java.xmi.TypeFactMiner;
 
-import static com.t2r.common.utilities.GitUtil.getFilesAddedRemovedRenamedModified;
-import static com.t2r.common.utilities.PrettyPrinter.pretty;
-import static gr.uom.java.xmi.TypeFactMiner.GlobalContext.FileStatus.After;
-import static gr.uom.java.xmi.TypeFactMiner.GlobalContext.FileStatus.Before;
-import static gr.uom.java.xmi.TypeFactMiner.GlobalContext.FileStatus.Unchanged;
-import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeGraph;
-import static gr.uom.java.xmi.TypeFactMiner.TypeGraphUtil.getTypeGraphStripParam;
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
-import static java.util.stream.Collectors.toSet;
-import static java.util.stream.Stream.concat;
-import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.__;
-import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.has;
-
 import com.t2r.common.models.refactorings.JarInfoOuterClass.JarInfo;
-
+import io.vavr.Tuple;
+import io.vavr.Tuple2;
 import org.apache.tinkerpop.gremlin.process.traversal.TextP;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
-import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.EnumDeclaration;
-import org.eclipse.jdt.core.dom.ImportDeclaration;
-import org.eclipse.jdt.core.dom.Type;
-import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.revwalk.RevCommit;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
-import gr.uom.java.xmi.TypeFactMiner.Visitors.EnumVisitor;
-import gr.uom.java.xmi.TypeFactMiner.Visitors.UsedTypes;
-import io.vavr.Tuple;
-import io.vavr.Tuple2;
+import static com.t2r.common.utilities.GitUtil.filePathDiffAtCommit;
+import static com.t2r.common.utilities.GitUtil.getFilesAddedRemovedRenamedModified;
+import static com.t2r.common.utilities.PrettyPrinter.pretty;
+import static gr.uom.java.xmi.TypeFactMiner.GlobalContext.FileStatus.*;
+import static java.util.stream.Collectors.*;
+import static java.util.stream.Stream.concat;
+import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.__;
+import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.has;
 
 public class GlobalContext {
 
-    private Map<String, List<Information>> classInformation;
-    private Set<JarInfo> requiredJars;
-    private Path pathToJars;
-    GraphTraversalSource traverser;
+    protected RevCommit baseCommit;
+    protected Map<String, List<Information>> classInformation;
+    protected Set<JarInfo> requiredJars;
+    protected Path pathToJars;
+    protected GraphTraversalSource traverser;
 
 
     public Stream<Information> getInformationFor(Set<String> typeNames) {
         return classInformation.entrySet().stream()
-                .filter(x -> typeNames.stream().anyMatch(t ->t.contains(x.getKey())))
+                .filter(x -> typeNames.stream().anyMatch(t -> t.contains(x.getKey())))
                 .flatMap(x -> x.getValue().stream());
     }
 
@@ -141,24 +119,53 @@ public class GlobalContext {
                 .collect(toSet());
     }
 
+    public Map<Boolean, List<String>> getAllImports(Set<String> classes) {
+        return classInformation.values().stream().flatMap(Collection::stream)
+                .filter(x -> x.getTypeDecls().stream().anyMatch(classes::contains))
+                .flatMap(x -> x.imports.entrySet().stream()).collect(groupingBy(Entry::getKey
+                        , collectingAndThen(toList(), x -> x.stream().flatMap(f -> f.getValue().stream()).collect(toList()))));
+    }
+
     public Map<Boolean, List<String>> getAllImports() {
         return classInformation.values().stream().flatMap(Collection::stream)
                 .flatMap(x -> x.imports.entrySet().stream()).collect(groupingBy(Entry::getKey
                         , collectingAndThen(toList(), x -> x.stream().flatMap(f -> f.getValue().stream()).collect(toList()))));
     }
 
-    public GlobalContext(Git g, RevCommit commit, GraphTraversalSource gr, Set<JarInfo> jars, Path pathToDependencies) throws Exception{
+//    public GlobalContext(GlobalContext gc, RevCommit against, Git g, BiFunction<Tuple2<String,String>, FileStatus, Information> fn) throws Exception {
+//        this.baseCommit = against;
+//        this.traverser = gc.traverser;
+//        this.requiredJars = gc.requiredJars;
+//        this.pathToJars = gc.getPathToJars();
+//        var files = getFilesAddedRemovedRenamedModified1(g, against, gc.baseCommit);
+//        this.classInformation = concat(concat(files._1().entrySet().stream()
+//                        .map(x -> gc.classInformation.values().stream().flatMap(c -> c.stream())
+//                                .filter(z -> z.getPath().contains(x.getKey().toString())).findFirst()
+//                                .map(z -> z.updateB4After(Before))
+//                                .orElseGet(() -> fn.apply(Tuple.of(x.getKey().toString(),x.getValue()), Before)))
+//                , files._2().entrySet().stream().map(x -> fn.apply(Tuple.of(x.getKey().toString(),x.getValue()), After)))
+//                , files._3().entrySet().stream()
+//                        .map(x -> gc.classInformation.values().stream().flatMap(c -> c.stream())
+//                                .filter(z -> z.getPath().contains(x.getKey().toString())).findFirst()
+//                                .map(z -> z.updateB4After(Unchanged))
+//                                .orElseGet(() -> fn.apply(Tuple.of(x.getKey().toString(),x.getValue()), Unchanged))))
+//                .collect(groupingBy(x -> x.packageName, toList()));
+//    }
+
+    public GlobalContext(Git g, RevCommit commit, GraphTraversalSource gr, Set<JarInfo> jars, Path pathToDependencies
+            , BiFunction<Tuple2<String,String>, FileStatus, Information> fn) throws Exception {
+        this.baseCommit = commit;
         this.traverser = gr;
         this.requiredJars = jars;
         this.pathToJars = pathToDependencies;
-        var files = getFilesAddedRemovedRenamedModified(g, commit, commit.getParent(0));
-        this.classInformation = concat(
-                    concat(files._1().values().stream().map(x -> new Information(x, Before))
-                            , files._2().values().stream().map(x -> new Information(x, After)))
-                    , files._3().values().stream().map(x -> new Information(x, Unchanged)))
-                    .collect(groupingBy(x -> x.packageName, toList()));
-
+        var files = getFilesAddedRemovedRenamedModified(g.getRepository(), commit,filePathDiffAtCommit(g, commit));
+        this.classInformation = concat(concat(files._1().entrySet().stream().map(x -> fn.apply(Tuple.of(x.getKey().toString(), x.getValue()), Before))
+                , files._2().entrySet().stream().map(x -> fn.apply(Tuple.of(x.getKey().toString(), x.getValue()),After )))
+                , files._3().entrySet().stream().map(x -> fn.apply(Tuple.of(x.getKey().toString(), x.getValue()), Unchanged)))
+                .collect(groupingBy(x -> x.packageName, toList()));
     }
+
+
 
     public Set<JarInfo> getRequiredJars() {
         return requiredJars;
@@ -168,116 +175,6 @@ public class GlobalContext {
         return pathToJars;
     }
 
-
-    public static class Information {
-        private String packageName;
-        private Set<String> typeDecls = new HashSet<>();
-        private Set<String> enumDecls = new HashSet<>();
-        private Map<Boolean, List<String>> imports;
-        private Map<String, List<TypFct>> superTypes = new HashMap<>();
-        private Map<String, List<TypFct>> composes = new HashMap<>();
-        private final FileStatus b4After;
-        private Map<String, Set<String>> usesTypes;
-
-        public boolean containsType(String typeName) {
-            return concat(typeDecls.stream(), enumDecls.stream())
-                    .anyMatch(x -> x.equals(typeName));
-        }
-
-        Information(String content, FileStatus b4After) {
-            this.b4After = b4After;
-            CompilationUnit cu = getCuFor(content);
-            packageName = cu.getPackage() != null ? cu.getPackage().getName().getFullyQualifiedName() : "";
-            imports = ((List<ImportDeclaration>) cu.imports()).stream()
-                    .collect(groupingBy(ImportDeclaration::isOnDemand,
-                            collectingAndThen(toList(), x -> x.stream().map(z -> z.getName().getFullyQualifiedName()).collect(toList()))));
-            usesTypes = new HashMap<>();
-            try {
-                processTypeDeclarations(cu);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        public Optional<String> typeUsesType(String qualifiedName, String className) {
-            if (Stream.ofNullable(imports.get(false)).flatMap(x -> x.stream()).anyMatch(qualifiedName::equals))
-                return Optional.ofNullable(className);
-
-            if (qualifiedName.contains(packageName)
-                    || Stream.ofNullable(imports.get(true)).flatMap(x -> x.stream()).anyMatch(qualifiedName::contains)
-                    || Stream.ofNullable(imports.get(false)).flatMap(x -> x.stream()).anyMatch(qualifiedName::contains))
-                if (Stream.ofNullable(usesTypes.get(className)).flatMap(Collection::stream)
-                        .anyMatch(ut -> qualifiedName.endsWith("." + ut)))
-                    return Optional.of(className);
-
-            return Optional.empty();
-        }
-
-        public List<String> typeUsesType(String qualifiedName) {
-            return typeDecls.stream().flatMap(t -> typeUsesType(qualifiedName, t).stream())
-                    .collect(toList());
-        }
-
-        private void processTypeDeclarations(CompilationUnit cu) {
-            List<AbstractTypeDeclaration> types = cu.types();
-            for (AbstractTypeDeclaration t : types) {
-                if (t instanceof TypeDeclaration) {
-                    try {
-                        typeDecls.addAll(getTypeDeclIn((TypeDeclaration) t, cu.getPackage() != null ? cu.getPackage().getName().getFullyQualifiedName() : "", cu));
-                    } catch (Exception e) {
-                        System.out.println(e.getStackTrace());
-                    }
-                } else if (t instanceof EnumDeclaration) {
-                    try {
-                        enumDecls.add(cu.getPackage() != null ? cu.getPackage().getName().getFullyQualifiedName()
-                                + "." + t.getName().toString() : "");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-        }
-
-        private Set<String> getTypeDeclIn(TypeDeclaration td, String parent, final CompilationUnit cu) {
-            Set<String> clss = new HashSet<>();
-            String name = parent + "." + td.getName().toString();
-            typeDecls.add(name);
-
-            Arrays.stream(td.getTypes()).forEach(x -> getTypeDeclIn(x, name, cu));
-            EnumVisitor en = new EnumVisitor(parent + "." + td.getName().toString());
-            td.accept(en);
-            enumDecls.addAll(en.getEnums());
-            usesTypes.putAll(en.usedTypes);
-
-
-            if (td.getSuperclassType() != null) {
-                ArrayList<TypFct> l = new ArrayList<>();
-                l.add(getTypeGraphStripParam((td.getSuperclassType()), cu));
-                superTypes.put(name, l);
-            }
-
-            if (td.superInterfaceTypes() != null && !(td.superInterfaceTypes().isEmpty())) {
-                List<Type> superInterfaces = td.superInterfaceTypes();
-                if (superTypes.containsKey(name))
-                    superTypes.get(name).addAll(superInterfaces.stream().map(x -> getTypeGraphStripParam(x, cu)).collect(toList()));
-                else
-                    superTypes.put(name, superInterfaces.stream().map(x -> getTypeGraphStripParam(x, cu)).collect(toList()));
-            }
-            if (td.getFields() != null) {
-                composes.put(name, Arrays.stream(td.getFields()).map(x -> getTypeGraph(x.getType(), cu)).collect(toList()));
-            }
-
-            UsedTypes ut = new UsedTypes();
-            td.accept(ut);
-            usesTypes.put(name, ut.typesUsed);
-            return clss;
-        }
-
-        public FileStatus getB4After() {
-            return b4After;
-        }
-    }
 
     public static CompilationUnit getCuFor(String content) {
         ASTParser parser = ASTParser.newParser(AST.JLS11);
@@ -334,6 +231,17 @@ public class GlobalContext {
                 .values("QName")
                 .toStream().findFirst().map(x -> (String) x);
     }
+
+    public Optional<String> qNameContainsJavaPackage(String qName) {
+        return traverser.V()
+                .has("Kind", "Package")
+                .values("Name")
+                .toStream()
+                .map(x -> (String) x)
+                .filter(qName::contains)
+                .findFirst();
+    }
+
 
     public Stream<String> getJavaEnums() {
         return traverser.V()

@@ -13,7 +13,6 @@ import java.io.OutputStream;
 import java.io.StringWriter;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -32,7 +31,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.regex.Matcher;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -240,8 +238,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				downloadAndExtractZipFile(projectFolder, cloneURL, parentCommitId);
 			}
 			if (currentFolder.exists() && parentFolder.exists()) {
-				UMLModel currentUMLModel = createModel(currentFolder, filesCurrent, repositoryDirectories(currentFolder));
-				UMLModel parentUMLModel = createModel(parentFolder, filesBefore, repositoryDirectories(parentFolder));
+				UMLModel currentUMLModel = createModel(currentFolder, filesCurrent);
+				UMLModel parentUMLModel = createModel(parentFolder, filesBefore);
 				// Diff between currentModel e parentModel
 				refactoringsAtRevision = parentUMLModel.diff(currentUMLModel, renamedFilesHint).getRefactorings();
 				refactoringsAtRevision = filter(refactoringsAtRevision);
@@ -256,27 +254,6 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		handler.handle(currentCommitId, refactoringsAtRevision);
 
 		return refactoringsAtRevision;
-	}
-
-	private Set<String> repositoryDirectories(File folder) {
-		final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
-		Set<String> repositoryDirectories = new LinkedHashSet<String>();
-		Collection<File> files = FileUtils.listFiles(folder, null, true);
-		for(File file : files) {
-			String path = file.getPath();
-			String relativePath = path.substring(folder.getPath().length()+1, path.length()).replaceAll(systemFileSeparator, "/");
-			if(relativePath.endsWith(".java")) {
-				String directory = relativePath.substring(0, relativePath.lastIndexOf("/"));
-				repositoryDirectories.add(directory);
-				//include sub-directories
-				String subDirectory = new String(directory);
-				while(subDirectory.contains("/")) {
-					subDirectory = subDirectory.substring(0, subDirectory.lastIndexOf("/"));
-					repositoryDirectories.add(subDirectory);
-				}
-			}
-		}
-		return repositoryDirectories;
 	}
 
 	private void downloadAndExtractZipFile(File projectFolder, String cloneURL, String commitId)
@@ -414,8 +391,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return new UMLModelASTReader(fileContents, repositoryDirectories).getUmlModel();
 	}
 
-	protected UMLModel createModel(File projectFolder, List<String> filePaths, Set<String> repositoryDirectories) throws Exception {
-		return new UMLModelASTReader(projectFolder, filePaths, repositoryDirectories).getUmlModel();
+	protected UMLModel createModel(File projectFolder, List<String> filePaths) throws Exception {
+		return new UMLModelASTReader(projectFolder, filePaths).getUmlModel();
 	}
 
 	@Override

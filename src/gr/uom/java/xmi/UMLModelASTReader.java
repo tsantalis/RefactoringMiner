@@ -2,7 +2,9 @@ package gr.uom.java.xmi;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +13,7 @@ import java.util.regex.Matcher;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -74,11 +77,32 @@ public class UMLModelASTReader {
 		}
 	}
 
-	public UMLModelASTReader(File rootFolder, List<String> javaFiles, Set<String> repositoryDirectories) {
-		this(rootFolder, buildAstParser(rootFolder), javaFiles, repositoryDirectories);
+	public UMLModelASTReader(File rootFolder, List<String> javaFiles) {
+		this(rootFolder, buildAstParser(rootFolder), javaFiles, repositoryDirectories(rootFolder));
 	}
 
-	public UMLModelASTReader(File rootFolder, ASTParser parser, List<String> javaFiles, Set<String> repositoryDirectories) {
+	private static Set<String> repositoryDirectories(File folder) {
+		final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
+		Set<String> repositoryDirectories = new LinkedHashSet<String>();
+		Collection<File> files = FileUtils.listFiles(folder, null, true);
+		for(File file : files) {
+			String path = file.getPath();
+			String relativePath = path.substring(folder.getPath().length()+1, path.length()).replaceAll(systemFileSeparator, "/");
+			if(relativePath.endsWith(".java")) {
+				String directory = relativePath.substring(0, relativePath.lastIndexOf("/"));
+				repositoryDirectories.add(directory);
+				//include sub-directories
+				String subDirectory = new String(directory);
+				while(subDirectory.contains("/")) {
+					subDirectory = subDirectory.substring(0, subDirectory.lastIndexOf("/"));
+					repositoryDirectories.add(subDirectory);
+				}
+			}
+		}
+		return repositoryDirectories;
+	}
+
+	private UMLModelASTReader(File rootFolder, ASTParser parser, List<String> javaFiles, Set<String> repositoryDirectories) {
 		this.umlModel = new UMLModel(repositoryDirectories);
 		this.projectRoot = rootFolder.getPath();
 		this.parser = parser;

@@ -4061,12 +4061,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private double compositeChildMatchingScore(CompositeStatementObject comp1, CompositeStatementObject comp2, Set<AbstractCodeMapping> mappings,
 			List<UMLOperation> removedOperations, List<UMLOperation> addedOperations) {
-		int childrenSize1 = comp1.getStatements().size();
-		int childrenSize2 = comp2.getStatements().size();
+		List<AbstractStatement> compStatements1 = comp1.getStatements();
+		List<AbstractStatement> compStatements2 = comp2.getStatements();
+		int childrenSize1 = compStatements1.size();
+		int childrenSize2 = compStatements2.size();
 		
+		if(parentMapper != null && comp1.getLocationInfo().getCodeElementType().equals(comp2.getLocationInfo().getCodeElementType()) &&
+				childrenSize1 == 1 && childrenSize2 == 1 && !comp1.getString().equals("{") && !comp2.getString().equals("{")) {
+			if(compStatements1.get(0).getString().equals("{") && !compStatements2.get(0).getString().equals("{")) {
+				CompositeStatementObject block = (CompositeStatementObject)compStatements1.get(0);
+				compStatements1.addAll(block.getStatements());
+			}
+			if(!compStatements1.get(0).getString().equals("{") && compStatements2.get(0).getString().equals("{")) {
+				CompositeStatementObject block = (CompositeStatementObject)compStatements2.get(0);
+				compStatements2.addAll(block.getStatements());
+			}
+		}
 		int mappedChildrenSize = 0;
 		for(AbstractCodeMapping mapping : mappings) {
-			if(comp1.getStatements().contains(mapping.getFragment1()) && comp2.getStatements().contains(mapping.getFragment2())) {
+			if(compStatements1.contains(mapping.getFragment1()) && compStatements2.contains(mapping.getFragment2())) {
 				mappedChildrenSize++;
 			}
 		}

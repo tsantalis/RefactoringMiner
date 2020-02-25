@@ -3259,9 +3259,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
 							int indexOf1 = s1.indexOf(replacement.getAfter());
 							int indexOf2 = s2.indexOf(replacement.getAfter());
+							int characterIndex1 = indexOf1 + replacement.getAfter().length();
+							int characterIndex2 = indexOf2 + replacement.getAfter().length();
 							boolean isVariableDeclarationReplacement =
-									s1.charAt(indexOf1 + replacement.getAfter().length()) == '=' &&
-									s2.charAt(indexOf2 + replacement.getAfter().length()) == '=';
+									characterIndex1 < s1.length() && s1.charAt(characterIndex1) == '=' &&
+									characterIndex2 < s2.length() && s2.charAt(characterIndex2) == '=';
 							if(!isVariableDeclarationReplacement &&
 									operation1.getVariableDeclaration(replacement.getBefore()) != null &&
 									operation2.getVariableDeclaration(replacement.getAfter()) != null) {

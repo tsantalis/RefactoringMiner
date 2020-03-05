@@ -1,19 +1,23 @@
 package gr.uom.java.xmi;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
-import org.apache.commons.io.FileUtils;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -77,18 +81,21 @@ public class UMLModelASTReader {
 		}
 	}
 
-	public UMLModelASTReader(File rootFolder, List<String> javaFiles) {
+	public UMLModelASTReader(File rootFolder, List<String> javaFiles) throws IOException {
 		this(rootFolder, buildAstParser(rootFolder), javaFiles, repositoryDirectories(rootFolder));
 	}
 
-	private static Set<String> repositoryDirectories(File folder) {
+	private static Set<String> repositoryDirectories(File folder) throws IOException {
 		final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
 		Set<String> repositoryDirectories = new LinkedHashSet<String>();
-		Collection<File> files = FileUtils.listFiles(folder, null, true);
-		for(File file : files) {
-			String path = file.getPath();
+		Stream<Path> walk = Files.walk(Paths.get(folder.toURI()));
+		List<String> paths = walk.map(x -> x.toString())
+				.filter(f -> f.endsWith(".java"))
+				.collect(Collectors.toList());
+		walk.close();
+		for(String path : paths) {
 			String relativePath = path.substring(folder.getPath().length()+1, path.length()).replaceAll(systemFileSeparator, "/");
-			if(relativePath.endsWith(".java")) {
+			if(relativePath.contains("/")) {
 				String directory = relativePath.substring(0, relativePath.lastIndexOf("/"));
 				repositoryDirectories.add(directory);
 				//include sub-directories

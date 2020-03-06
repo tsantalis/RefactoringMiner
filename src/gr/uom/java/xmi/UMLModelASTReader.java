@@ -31,7 +31,6 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.FileASTRequestor;
-import org.eclipse.jdt.core.dom.IDocElement;
 import org.eclipse.jdt.core.dom.IExtendedModifier;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.Javadoc;
@@ -179,8 +178,8 @@ public class UMLModelASTReader {
 			List<TagElement> tags = javaDoc.tags();
 			for(TagElement tag : tags) {
 				UMLTagElement tagElement = new UMLTagElement(tag.getTagName());
-				List<IDocElement> fragments = tag.fragments();
-				for(IDocElement docElement : fragments) {
+				List fragments = tag.fragments();
+				for(Object docElement : fragments) {
 					tagElement.addFragment(docElement.toString());
 				}
 				doc.addTag(tagElement);

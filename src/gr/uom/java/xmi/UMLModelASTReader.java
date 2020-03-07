@@ -80,29 +80,31 @@ public class UMLModelASTReader {
 		}
 	}
 
-	public UMLModelASTReader(File rootFolder, List<String> javaFiles) throws IOException {
-		this(rootFolder, buildAstParser(rootFolder), javaFiles, repositoryDirectories(rootFolder));
+	public UMLModelASTReader(File rootFolder) throws IOException {
+		this(rootFolder, getJavaFilePaths(rootFolder));
 	}
 
-	private static Set<String> repositoryDirectories(File folder) throws IOException {
-		final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
-		Set<String> repositoryDirectories = new LinkedHashSet<String>();
+	public UMLModelASTReader(File rootFolder, List<String> javaFiles) throws IOException {
+		this(rootFolder, buildAstParser(rootFolder), javaFiles, getDirectories(rootFolder, javaFiles));
+	}
+
+	private static List<String> getJavaFilePaths(File folder) throws IOException {
 		Stream<Path> walk = Files.walk(Paths.get(folder.toURI()));
 		List<String> paths = walk.map(x -> x.toString())
 				.filter(f -> f.endsWith(".java"))
+				.map(x -> x.substring(folder.getPath().length()+1).replaceAll(systemFileSeparator, "/"))
 				.collect(Collectors.toList());
 		walk.close();
+		return paths;
+	}
+
+	private static Set<String> getDirectories(File folder, List<String> paths) {
+		Set<String> repositoryDirectories = new LinkedHashSet<String>();
 		for(String path : paths) {
-			String relativePath = path.substring(folder.getPath().length()+1, path.length()).replaceAll(systemFileSeparator, "/");
-			if(relativePath.contains("/")) {
-				String directory = relativePath.substring(0, relativePath.lastIndexOf("/"));
+			String directory = new String(path);
+			while(directory.contains("/")) {
+				directory = directory.substring(0, directory.lastIndexOf("/"));
 				repositoryDirectories.add(directory);
-				//include sub-directories
-				String subDirectory = new String(directory);
-				while(subDirectory.contains("/")) {
-					subDirectory = subDirectory.substring(0, subDirectory.lastIndexOf("/"));
-					repositoryDirectories.add(subDirectory);
-				}
 			}
 		}
 		return repositoryDirectories;

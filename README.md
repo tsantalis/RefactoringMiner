@@ -234,22 +234,12 @@ Churn churn = miner.churnAtCommit(repo, "05c1e773878bbacae64112f70964f4f2f794439
 ```
 ## With two directories containing Java source code
 
-There is also a lower level API that works comparing the source code from two
-folders that contain the code before and after the code changes:  
+There is also a lower level API that compares the Java files in two directories
+containing the code before and after some changes:  
 
 ```java
-// Assuming you have a List<String> of the changed/added/removed file paths from version1 to version2
-// filename format example: /src/gr/uom/java/xmi/UMLModelASTReader.java
-
-File rootFolder1 = new File("/path/to/version1/");
-File rootFolder2 = new File("/path/to/version2/");
-List<String> filePaths1 = new ArrayList<String>();
-filePaths1.add("/src/package/Foo.java");
-List<String> filePaths2 = new ArrayList<String>();
-filePaths2.add("/src/package/Foo.java");
-
-UMLModel model1 = new UMLModelASTReader(rootFolder1, filePaths1).getUmlModel();
-UMLModel model2 = new UMLModelASTReader(rootFolder2, filePaths2).getUmlModel();
+UMLModel model1 = new UMLModelASTReader(new File("/path/to/version1")).getUmlModel();
+UMLModel model2 = new UMLModelASTReader(new File("/path/to/version2")).getUmlModel();
 UMLModelDiff modelDiff = model1.diff(model2);
 List<Refactoring> refactorings = modelDiff.getRefactorings();
 ```

@@ -2039,7 +2039,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						int matchedOperations = 0;
 						for(UMLOperation operation1 : anonymousClass1.getOperations()) {
 							for(UMLOperation operation2 : anonymousClass2.getOperations()) {
-								if(operation1.equals(operation2) || operation1.equalSignature(operation2) || operation1.equalSignatureIgnoringChangedTypes(operation2)) {	
+								if(operation1.equals(operation2) || operation1.equalSignature(operation2) || operation1.equalSignatureWithIdenticalNameIgnoringChangedTypes(operation2)) {	
 									UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation1, operation2, classDiff);
 									int mappings = mapper.mappingsWithoutBlocks();
 									if(mappings > 0) {

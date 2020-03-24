@@ -31,8 +31,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.variableName = fragment.getName().getIdentifier();
 		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER) : null;
 		Type astType = extractType(fragment);
-		this.type = UMLType.extractTypeObject(UMLType.getTypeName(astType, fragment.getExtraDimensions()),
-				new LocationInfo(cu, filePath, astType, CodeElementType.TYPE));
+		this.type = UMLType.extractTypeObject(astType, fragment.getExtraDimensions(), new LocationInfo(cu, filePath, astType, CodeElementType.TYPE));
 		ASTNode scopeNode = getScopeNode(fragment);
 		int startOffset = 0;
 		if(locationInfo.getCodeElementType().equals(CodeElementType.FIELD_DECLARATION)) {
@@ -51,8 +50,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.variableName = fragment.getName().getIdentifier();
 		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER) : null;
 		Type astType = extractType(fragment);
-		this.type = UMLType.extractTypeObject(UMLType.getTypeName(astType, fragment.getExtraDimensions()),
-				new LocationInfo(cu, filePath, astType, CodeElementType.TYPE));
+		this.type = UMLType.extractTypeObject(astType, fragment.getExtraDimensions(), new LocationInfo(cu, filePath, astType, CodeElementType.TYPE));
 		int startOffset = fragment.getStartPosition();
 		ASTNode scopeNode = getScopeNode(fragment);
 		int endOffset = scopeNode.getStartPosition() + scopeNode.getLength();

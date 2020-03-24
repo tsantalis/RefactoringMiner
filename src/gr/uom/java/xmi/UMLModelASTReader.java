@@ -262,7 +262,7 @@ public class UMLModelASTReader {
 			UMLTypeParameter umlTypeParameter = new UMLTypeParameter(typeParameter.getName().getFullyQualifiedName());
 			List<Type> typeBounds = typeParameter.typeBounds();
 			for(Type type : typeBounds) {
-				umlTypeParameter.addTypeBound(UMLType.extractTypeObject(type.toString(),
+				umlTypeParameter.addTypeBound(UMLType.extractTypeObject(type, 0,
 						generateLocationInfo(cu, sourceFile, type, CodeElementType.TYPE)));
 			}
     		umlClass.addTypeParameter(umlTypeParameter);
@@ -270,7 +270,7 @@ public class UMLModelASTReader {
     	
     	Type superclassType = typeDeclaration.getSuperclassType();
     	if(superclassType != null) {
-    		UMLType umlType = UMLType.extractTypeObject(UMLType.getTypeName(superclassType, 0),
+    		UMLType umlType = UMLType.extractTypeObject(superclassType, 0,
     				generateLocationInfo(cu, sourceFile, superclassType, CodeElementType.TYPE));
     		UMLGeneralization umlGeneralization = new UMLGeneralization(umlClass, umlType.getClassType());
     		umlClass.setSuperclass(umlType);
@@ -279,7 +279,7 @@ public class UMLModelASTReader {
     	
     	List<Type> superInterfaceTypes = typeDeclaration.superInterfaceTypes();
     	for(Type interfaceType : superInterfaceTypes) {
-    		UMLType umlType = UMLType.extractTypeObject(UMLType.getTypeName(interfaceType, 0),
+    		UMLType umlType = UMLType.extractTypeObject(interfaceType, 0,
     				generateLocationInfo(cu, sourceFile, interfaceType, CodeElementType.TYPE));
     		UMLRealization umlRealization = new UMLRealization(umlClass, umlType.getClassType());
     		umlClass.addImplementedInterface(umlType);
@@ -420,7 +420,7 @@ public class UMLModelASTReader {
 			UMLTypeParameter umlTypeParameter = new UMLTypeParameter(typeParameter.getName().getFullyQualifiedName());
 			List<Type> typeBounds = typeParameter.typeBounds();
 			for(Type type : typeBounds) {
-				umlTypeParameter.addTypeBound(UMLType.extractTypeObject(type.toString(),
+				umlTypeParameter.addTypeBound(UMLType.extractTypeObject(type, 0,
 						generateLocationInfo(cu, sourceFile, type, CodeElementType.TYPE)));
 			}
 			umlOperation.addTypeParameter(umlTypeParameter);
@@ -440,7 +440,7 @@ public class UMLModelASTReader {
 		
 		Type returnType = methodDeclaration.getReturnType2();
 		if(returnType != null) {
-			UMLType type = UMLType.extractTypeObject(UMLType.getTypeName(returnType, 0),
+			UMLType type = UMLType.extractTypeObject(returnType, 0,
 					generateLocationInfo(cu, sourceFile, returnType, CodeElementType.TYPE));
 			UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
 			umlOperation.addParameter(returnParameter);
@@ -449,11 +449,7 @@ public class UMLModelASTReader {
 		for(SingleVariableDeclaration parameter : parameters) {
 			Type parameterType = parameter.getType();
 			String parameterName = parameter.getName().getFullyQualifiedName();
-			String typeName = UMLType.getTypeName(parameterType, parameter.getExtraDimensions());
-			if (parameter.isVarargs()) {
-				typeName = typeName + "[]";
-			}
-			UMLType type = UMLType.extractTypeObject(typeName,
+			UMLType type = UMLType.extractTypeObject(parameterType, parameter.getExtraDimensions(),
 					generateLocationInfo(cu, sourceFile, parameterType, CodeElementType.TYPE));
 			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarargs());
 			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, parameter, parameter.isVarargs());
@@ -471,7 +467,7 @@ public class UMLModelASTReader {
 		Type fieldType = fieldDeclaration.getType();
 		List<VariableDeclarationFragment> fragments = fieldDeclaration.fragments();
 		for(VariableDeclarationFragment fragment : fragments) {
-			UMLType type = UMLType.extractTypeObject(UMLType.getTypeName(fieldType, fragment.getExtraDimensions()),
+			UMLType type = UMLType.extractTypeObject(fieldType, fragment.getExtraDimensions(),
 					generateLocationInfo(cu, sourceFile, fieldType, CodeElementType.TYPE));
 			String fieldName = fragment.getName().getFullyQualifiedName();
 			LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, fragment, CodeElementType.FIELD_DECLARATION);

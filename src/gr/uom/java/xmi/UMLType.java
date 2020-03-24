@@ -3,117 +3,84 @@ package gr.uom.java.xmi;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
-import org.eclipse.jdt.core.dom.ITypeBinding;
+import org.eclipse.jdt.core.dom.ArrayType;
+import org.eclipse.jdt.core.dom.IntersectionType;
+import org.eclipse.jdt.core.dom.NameQualifiedType;
+import org.eclipse.jdt.core.dom.ParameterizedType;
+import org.eclipse.jdt.core.dom.QualifiedType;
 import org.eclipse.jdt.core.dom.Type;
+import org.eclipse.jdt.core.dom.UnionType;
+import org.eclipse.jdt.core.dom.WildcardType;
 
+import gr.uom.java.xmi.ListCompositeType.Kind;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
 
-public class UMLType implements Serializable, LocationInfoProvider {
+public abstract class UMLType implements Serializable, LocationInfoProvider {
 	private LocationInfo locationInfo;
-    private String classType;
-    private String nonQualifiedClassType;
-    private String typeArguments;
-    private int arrayDimension;
-    private List<String> typeArgumentDecomposition;
-    private volatile int hashCode = 0;
-    private static final Pattern CAMEL_CASE_SPLIT_PATTERN = Pattern.compile("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
-    private static final Pattern GENERIC_TYPE_SPLIT_PATTERN = Pattern.compile("<|>|,|\\s");
+	private int arrayDimension;
+	private List<UMLType> typeArguments = new ArrayList<UMLType>();
 
-    public UMLType(String type) {
-        this.classType = type;
-        this.nonQualifiedClassType = simpleNameOf(type);
-        this.typeArgumentDecomposition = new ArrayList<String>();
-    }
-
-    public LocationInfo getLocationInfo() {
+	public LocationInfo getLocationInfo() {
 		return locationInfo;
 	}
 
-	public String getClassType() {
-        return classType;
-    }
-
-    public List<String> getTypeArguments() {
-    	return typeArgumentDecomposition;
-    }
-
-    public int getArrayDimension() {
-    	return this.arrayDimension;
-    }
-
-	public boolean equals(Object o) {
-        if(this == o) {
-            return true;
-        }
-
-        if (o instanceof UMLType) {
-        	UMLType typeObject = (UMLType)o;
-
-            if(equalClassType(typeObject)) {
-                if(this.typeArguments == null && typeObject.typeArguments == null)
-                    return this.arrayDimension == typeObject.arrayDimension;
-                else if(this.typeArguments != null && typeObject.typeArguments != null)
-                    return equalTypeArguments(typeObject) && this.arrayDimension == typeObject.arrayDimension;
-            }
-        }
-        return false;
-    }
-
-	public boolean equalsQualified(UMLType typeObject) {
-		if(this.classType.equals(typeObject.classType)) {
-            if(this.typeArguments == null && typeObject.typeArguments == null)
-                return this.arrayDimension == typeObject.arrayDimension;
-            else if(this.typeArguments != null && typeObject.typeArguments != null)
-                return equalTypeArguments(typeObject) && this.arrayDimension == typeObject.arrayDimension;
-        }
-		return false;
+	public int getArrayDimension() {
+		return this.arrayDimension;
 	}
 
-    public boolean equalsWithSubType(UMLType typeObject) {
-    	if(firstOrLastCamelCaseTokenMatch(this.nonQualifiedClassType, typeObject.nonQualifiedClassType)) {
-            if(this.typeArguments == null && typeObject.typeArguments == null)
-                return this.arrayDimension == typeObject.arrayDimension;
-            else if(this.typeArguments != null && typeObject.typeArguments != null)
-                return equalTypeArguments(typeObject) && this.arrayDimension == typeObject.arrayDimension;
-            else if(this.typeArguments != null && this.typeArguments.equals("<?>") && typeObject.typeArguments == null)
-            	return this.arrayDimension == typeObject.arrayDimension;
-            else if(this.typeArguments == null && typeObject.typeArguments != null && typeObject.typeArguments.equals("<?>"))
-            	return this.arrayDimension == typeObject.arrayDimension;
-        }
-    	return false;
-    }
+	public CodeRange codeRange() {
+		return locationInfo.codeRange();
+	}
 
-	private static boolean firstOrLastCamelCaseTokenMatch(String classType1, String classType2) {
-		String[] tokens1 = CAMEL_CASE_SPLIT_PATTERN.split(classType1);
-		String[] tokens2 = CAMEL_CASE_SPLIT_PATTERN.split(classType2);
-		if(tokens1.length > 0 && tokens2.length > 0) {
-			return tokens1[0].equals(tokens2[0]) || tokens1[tokens1.length-1].equals(tokens2[tokens2.length-1]);
+	public void setVarargs() {
+		arrayDimension++;
+	}
+
+	protected String typeArgumentsToString() {
+		StringBuilder sb = new StringBuilder();
+		if(typeArguments.isEmpty()) {
+			sb.append("");
 		}
-		return false;
+		else {
+			sb.append("<");
+			for(int i = 0; i < typeArguments.size(); i++) {
+				sb.append(typeArguments.get(i).toQualifiedString());
+				if(i < typeArguments.size() - 1)
+					sb.append(",");
+			}
+			sb.append(">");
+		}
+		return sb.toString();
 	}
 
-	public boolean equalClassType(UMLType type) {
-    	return this.nonQualifiedClassType.equals(type.nonQualifiedClassType);
+	protected String typeArgumentsAndArrayDimensionToString() {
+		StringBuilder sb = new StringBuilder();
+		if(isParameterized())
+			sb.append(typeArgumentsToString());
+		for(int i=0; i<getArrayDimension(); i++)
+			sb.append("[]");
+		return sb.toString();
 	}
 
 	private boolean equalTypeArguments(UMLType type) {
-		if((this.typeArguments.equals("<?>") && type.typeArguments.startsWith("<? ")) || 
-				(this.typeArguments.startsWith("<? ") && type.typeArguments.equals("<?>"))) {
+		String thisTypeArguments = this.typeArgumentsToString();
+		String otherTypeArguments = type.typeArgumentsToString();
+		if((thisTypeArguments.equals("<?>") && otherTypeArguments.startsWith("<? ")) || 
+				(thisTypeArguments.startsWith("<? ") && otherTypeArguments.equals("<?>"))) {
 			return true;
 		}
-		if((this.typeArguments.equals("<Object>") && type.typeArguments.contains("<Object>")) ||
-				(type.typeArguments.equals("<Object>") && this.typeArguments.contains("<Object>"))) {
+		if((thisTypeArguments.equals("<Object>") && otherTypeArguments.contains("<Object>")) ||
+				(otherTypeArguments.equals("<Object>") && thisTypeArguments.contains("<Object>"))) {
 			return true;
 		}
-		if(this.typeArgumentDecomposition.size() != type.typeArgumentDecomposition.size()) {
+		if(this.typeArguments.size() != type.typeArguments.size()) {
 			return false;
 		}
-		for(int i=0; i<this.typeArgumentDecomposition.size(); i++) {
-			String thisComponent = this.typeArgumentDecomposition.get(i);
-			String otherComponent = type.typeArgumentDecomposition.get(i);
+		for(int i=0; i<this.typeArguments.size(); i++) {
+			UMLType thisComponent = this.typeArguments.get(i);
+			UMLType otherComponent = type.typeArguments.get(i);
 			if(!thisComponent.equals(otherComponent)) {
 				return false;
 			}
@@ -121,95 +88,68 @@ public class UMLType implements Serializable, LocationInfoProvider {
 		return true;
 	}
 
-	public boolean compatibleTypes(UMLType type) {
-		return this.getClassType().equals(type.getClassType()) ||
-				this.getClassType().equals("Object") ||
-				type.getClassType().equals("Object") ||
-				this.getClassType().startsWith(type.getClassType()) ||
-				type.getClassType().startsWith(this.getClassType()) ||
-				this.getClassType().endsWith(type.getClassType()) ||
-				type.getClassType().endsWith(this.getClassType()) ||
-				this.getTypeArguments().contains(type.getClassType()) ||
-				type.getTypeArguments().contains(this.getClassType()) ||
-				this.commonTokenInClassType(type);
+	protected boolean equalTypeArgumentsAndArrayDimension(UMLType typeObject) {
+		if(!this.isParameterized() && !typeObject.isParameterized())
+			return this.arrayDimension == typeObject.arrayDimension;
+		else if(this.isParameterized() && typeObject.isParameterized())
+			return equalTypeArguments(typeObject) && this.arrayDimension == typeObject.arrayDimension;
+		return false;
 	}
 
-	private boolean commonTokenInClassType(UMLType type) {
-		String[] tokens1 = CAMEL_CASE_SPLIT_PATTERN.split(this.nonQualifiedClassType);
-		String[] tokens2 = CAMEL_CASE_SPLIT_PATTERN.split(type.nonQualifiedClassType);
-		for(String token1 : tokens1) {
-			for(String token2 : tokens2) {
-				if((token1.equals(token2) && token1.length() > 1) || token1.equals(token2 + "s") || token2.equals(token1 + "s")) {
-					return true;
-				}
+	protected boolean equalTypeArgumentsAndArrayDimensionForSubType(UMLType typeObject) {
+		if(!this.isParameterized() && !typeObject.isParameterized())
+			return this.arrayDimension == typeObject.arrayDimension;
+		else if(this.isParameterized() && typeObject.isParameterized())
+			return equalTypeArguments(typeObject) && this.arrayDimension == typeObject.arrayDimension;
+		else if(this.isParameterized() && this.typeArgumentsToString().equals("<?>") && !typeObject.isParameterized())
+			return this.arrayDimension == typeObject.arrayDimension;
+		else if(!this.isParameterized() && typeObject.isParameterized() && typeObject.typeArgumentsToString().equals("<?>"))
+			return this.arrayDimension == typeObject.arrayDimension;
+		return false;
+	}
+
+	public boolean containsTypeArgument(String type) {
+		for(UMLType typeArgument : typeArguments) {
+			if(typeArgument.toString().equals(type)) {
+				return true;
 			}
 		}
 		return false;
 	}
 
-    public int hashCode() {
-    	if(hashCode == 0) {
-    		int result = 17;
-    		result = 37*result + classType.hashCode();
-    		if(typeArguments != null)
-    			result = 37*result + typeArguments.hashCode();
-    		result = 37*result + arrayDimension;
-    		hashCode = result;
-    	}
-    	return hashCode;
-    }
-
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(nonQualifiedClassType);
-        if(typeArguments != null)
-            sb.append(typeArguments);
-        for(int i=0; i<arrayDimension; i++)
-        	sb.append("[]");
-        return sb.toString();
-    }
-
-    public String toQualifiedString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(classType);
-        if(typeArguments != null)
-            sb.append(typeArguments);
-        for(int i=0; i<arrayDimension; i++)
-        	sb.append("[]");
-        return sb.toString();
-    }
-
-	public static String getTypeName(Type type, int extraDimensions) {
-		ITypeBinding binding = type.resolveBinding();
-		if (binding != null) {
-			return binding.getQualifiedName();
-		}
-		String typeToString = type.toString();
-		for(int i=0; i<extraDimensions; i++) {
-			typeToString += "[]";
-		}
-		return typeToString;
+	public boolean isParameterized() {
+		return typeArguments.size() > 0;
 	}
 
-    private static String simpleNameOf(String name) {
-    	int numberOfDots = 0;
-    	int indexOfFirstUpperCaseCharacterFollowedByDot = -1;
-    	for (int i = 0; i < name.length(); i++) {
-    		if (name.charAt(i) == '.') {
-    			numberOfDots++;
-    			if(Character.isUpperCase(name.charAt(i+1)) &&
-    					indexOfFirstUpperCaseCharacterFollowedByDot == -1) {
-    				indexOfFirstUpperCaseCharacterFollowedByDot = i+1;
-    			}
-    		}
-    	}
-    	if(numberOfDots == 0 || Character.isUpperCase(name.charAt(0))) {
-    		return name;
-    	}
-    	if(numberOfDots > 1 && indexOfFirstUpperCaseCharacterFollowedByDot != -1) {
-    		return name.substring(indexOfFirstUpperCaseCharacterFollowedByDot);
-    	}
-    	return name;
+	public abstract boolean equals(Object o);
+	public abstract int hashCode();
+	public abstract String toString();
+	public abstract String toQualifiedString();
+	public abstract String getClassType();
+
+	public boolean equalsQualified(UMLType type) {
+		if(this.getClass() == type.getClass()) {
+			return this.equals(type);
+		}
+		return false;
+	}
+	public boolean equalsWithSubType(UMLType type) {
+		if(this.getClass() == type.getClass()) {
+			return this.equals(type);
+		}
+		return false;
+	}
+	public boolean equalClassType(UMLType type) {
+		if(this.getClass() == type.getClass()) {
+			return this.equals(type);
+		}
+		return false;
+	}
+	public boolean compatibleTypes(UMLType type) {
+		if(this.getClass() == type.getClass()) {
+			return this.equals(type);
+		}
+		return false;
 	}
 
 	public double normalizedNameDistance(UMLType type) {
@@ -220,10 +160,9 @@ public class UMLType implements Serializable, LocationInfoProvider {
 		return normalized;
 	}
 
-	public static UMLType extractTypeObject(String qualifiedName) {
+	public static LeafType extractTypeObject(String qualifiedName) {
 		int arrayDimension = 0;
-		String typeArguments = null;
-		String[] typeArgumentDecomposition = {};
+		List<UMLType> typeArgumentDecomposition = new ArrayList<UMLType>();
 		if(qualifiedName.endsWith("[]")) {
 			while(qualifiedName.endsWith("[]")) {
 				qualifiedName = qualifiedName.substring(0, qualifiedName.lastIndexOf("[]"));
@@ -231,28 +170,114 @@ public class UMLType implements Serializable, LocationInfoProvider {
 			}
 		}
 		if(qualifiedName.contains("<") && qualifiedName.contains(">")) {
-			typeArguments = qualifiedName.substring(qualifiedName.indexOf("<"), qualifiedName.lastIndexOf(">")+1);
+			String typeArguments = qualifiedName.substring(qualifiedName.indexOf("<")+1, qualifiedName.lastIndexOf(">"));
+			StringBuilder sb = new StringBuilder();
+			for(int i=0; i<typeArguments.length(); i++) {
+				char charAt = typeArguments.charAt(i);
+				if(charAt != ',') {
+					sb.append(charAt);
+				}
+				else {
+					if(sb.length() > 0 && equalOpeningClosingTags(sb.toString())) {
+						typeArgumentDecomposition.add(extractTypeObject(sb.toString()));
+						sb = new StringBuilder();
+					}
+					else {
+						sb.append(charAt);
+					}
+				}
+			}
+			if(sb.length() > 0) {
+				typeArgumentDecomposition.add(extractTypeObject(sb.toString()));
+			}
 			qualifiedName = qualifiedName.substring(0, qualifiedName.indexOf("<"));
-			typeArgumentDecomposition = GENERIC_TYPE_SPLIT_PATTERN.split(typeArguments);
 		}
-		UMLType typeObject = new UMLType(qualifiedName);
-		typeObject.typeArguments = typeArguments;
+		UMLType typeObject = new LeafType(qualifiedName);
 		typeObject.arrayDimension = arrayDimension;
-		for(String type : typeArgumentDecomposition) {
-			if(!type.equals("")) {
-				typeObject.typeArgumentDecomposition.add(simpleNameOf(type));
+		typeObject.typeArguments = typeArgumentDecomposition;
+		return (LeafType)typeObject;
+	}
+
+	private static boolean equalOpeningClosingTags(String typeArguments) {
+		int openingTags = 0;
+		int closingTags = 0;
+		for(int i=0; i<typeArguments.length(); i++) {
+			if(typeArguments.charAt(i) == '>') {
+				openingTags++;
+			}
+			else if(typeArguments.charAt(i) == '<') {
+				closingTags++;
 			}
 		}
-		return typeObject;
+		return openingTags == closingTags;
 	}
 
-	public static UMLType extractTypeObject(String qualifiedName, LocationInfo locationInfo) {
-		UMLType type = extractTypeObject(qualifiedName);
-		type.locationInfo = locationInfo;
-		return type;
+	public static UMLType extractTypeObject(Type type, int extraDimensions, LocationInfo locationInfo) {
+		UMLType umlType = extractTypeObject(type);
+		umlType.locationInfo = locationInfo;
+		umlType.arrayDimension += extraDimensions;
+		return umlType;
 	}
 
-	public CodeRange codeRange() {
-		return locationInfo.codeRange();
+	private static UMLType extractTypeObject(Type type) {
+		if(type.isPrimitiveType() || type.isSimpleType()) {
+			return LeafType.extractTypeObject(type.toString());
+		}
+		else if(type instanceof QualifiedType) {
+			QualifiedType qualified = (QualifiedType)type;
+			UMLType leftType = extractTypeObject(qualified.getQualifier());
+			LeafType rightType = extractTypeObject(qualified.getName().getFullyQualifiedName());
+			return new CompositeType(leftType, rightType);
+		}
+		else if(type instanceof NameQualifiedType) {
+			NameQualifiedType nameQualified = (NameQualifiedType)type;
+			LeafType leftType = extractTypeObject(nameQualified.getQualifier().getFullyQualifiedName());
+			LeafType rightType = extractTypeObject(nameQualified.getName().getFullyQualifiedName());
+			return new CompositeType(leftType, rightType);
+		}
+		else if(type instanceof WildcardType) {
+			WildcardType wildcard = (WildcardType)type;
+			if(wildcard.getBound() != null) {
+				UMLType bound = extractTypeObject(wildcard.getBound());
+				return new gr.uom.java.xmi.WildcardType(bound, wildcard.isUpperBound());
+			}
+			else {
+				return new gr.uom.java.xmi.WildcardType(null, false);
+			}
+		}
+		else if(type instanceof ArrayType) {
+			ArrayType array = (ArrayType)type;
+			UMLType arrayType = extractTypeObject(array.getElementType());
+			arrayType.arrayDimension = array.getDimensions();
+			return arrayType;
+		}
+		else if(type instanceof ParameterizedType) {
+			ParameterizedType parameterized = (ParameterizedType)type;
+			UMLType container = extractTypeObject(parameterized.getType());
+			List<Type> typeArguments = parameterized.typeArguments();
+			for(Type argument : typeArguments) {
+				container.typeArguments.add(extractTypeObject(argument));
+			}
+			return container;
+		}
+		else if(type instanceof UnionType) {
+			UnionType union = (UnionType)type;
+			List<Type> types = union.types();
+			List<UMLType> umlTypes = new ArrayList<UMLType>();
+			for(Type unionType : types) {
+				umlTypes.add(extractTypeObject(unionType));
+			}
+			return new ListCompositeType(umlTypes, Kind.UNION);
+		}
+		else if(type instanceof IntersectionType) {
+			IntersectionType intersection = (IntersectionType)type;
+			List<Type> types = intersection.types();
+			List<UMLType> umlTypes = new ArrayList<UMLType>();
+			for(Type unionType : types) {
+				umlTypes.add(extractTypeObject(unionType));
+			}
+			return new ListCompositeType(umlTypes, Kind.INTERSECTION);
+		}
+		return null;
 	}
 }

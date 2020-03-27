@@ -612,7 +612,67 @@ public class UMLModelDiff {
 			   processCandidates(candidates, refactorings);
 		   }
 	   }
-      return refactorings;
+	   return filterOutDuplicateRefactorings(refactorings);
+   }
+
+   private List<MoveAttributeRefactoring> filterOutDuplicateRefactorings(List<MoveAttributeRefactoring> refactorings) {
+	   List<MoveAttributeRefactoring> filtered = new ArrayList<MoveAttributeRefactoring>();
+	   Map<String, List<MoveAttributeRefactoring>> map = new LinkedHashMap<String, List<MoveAttributeRefactoring>>();
+	   for(MoveAttributeRefactoring ref : refactorings) {
+		   if(map.containsKey(ref.toString())) {
+			   map.get(ref.toString()).add(ref);
+		   }
+		   else {
+			   List<MoveAttributeRefactoring> refs = new ArrayList<MoveAttributeRefactoring>();
+			   refs.add(ref);
+			   map.put(ref.toString(), refs);
+		   }
+	   }
+	   for(String key : map.keySet()) {
+		   List<MoveAttributeRefactoring> refs = map.get(key);
+		   if(refs.size() == 1) {
+			   filtered.addAll(refs);
+		   }
+		   else {
+			   filtered.addAll(filterOutBasedOnFilePath(refs));
+		   }
+	   }
+	   return filtered;
+   }
+
+   private List<MoveAttributeRefactoring> filterOutBasedOnFilePath(List<MoveAttributeRefactoring> refs) {
+	   List<MoveAttributeRefactoring> filtered = new ArrayList<MoveAttributeRefactoring>();
+	   Map<String, List<MoveAttributeRefactoring>> groupBySourceFilePath = new LinkedHashMap<String, List<MoveAttributeRefactoring>>();
+	   for(MoveAttributeRefactoring ref : refs) {
+		   String sourceFilePath = ref.getOriginalAttribute().getLocationInfo().getFilePath();
+		   if(groupBySourceFilePath.containsKey(sourceFilePath)) {
+			   groupBySourceFilePath.get(sourceFilePath).add(ref);
+		   }
+		   else {
+			   List<MoveAttributeRefactoring> refs2 = new ArrayList<MoveAttributeRefactoring>();
+			   refs2.add(ref);
+			   groupBySourceFilePath.put(sourceFilePath, refs2);
+		   }
+	   }
+	   for(String sourceFilePath : groupBySourceFilePath.keySet()) {
+		   List<MoveAttributeRefactoring> sourceFilePathGroup = groupBySourceFilePath.get(sourceFilePath);
+		   TreeMap<Integer, List<MoveAttributeRefactoring>> groupByLongestCommonSourceFilePath = new TreeMap<Integer, List<MoveAttributeRefactoring>>();
+		   for(MoveAttributeRefactoring ref : sourceFilePathGroup) {
+			   String longestCommonFilePathPrefix = PrefixSuffixUtils.longestCommonPrefix(ref.getOriginalAttribute().getLocationInfo().getFilePath(),
+					   ref.getMovedAttribute().getLocationInfo().getFilePath());
+			   int length = longestCommonFilePathPrefix.length();
+			   if(groupByLongestCommonSourceFilePath.containsKey(length)) {
+				   groupByLongestCommonSourceFilePath.get(length).add(ref);
+			   }
+			   else {
+				   List<MoveAttributeRefactoring> refs2 = new ArrayList<MoveAttributeRefactoring>();
+				   refs2.add(ref);
+				   groupByLongestCommonSourceFilePath.put(length, refs2);
+			   }
+		   }
+		   filtered.addAll(groupByLongestCommonSourceFilePath.lastEntry().getValue());
+	   }
+	   return filtered;
    }
 
    private void processCandidates(List<MoveAttributeRefactoring> candidates, List<MoveAttributeRefactoring> refactorings) {

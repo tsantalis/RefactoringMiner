@@ -440,7 +440,7 @@ public class UMLModelASTReader {
 		
 		Type returnType = methodDeclaration.getReturnType2();
 		if(returnType != null) {
-			UMLType type = UMLType.extractTypeObject(returnType, 0,
+			UMLType type = UMLType.extractTypeObject(returnType, methodDeclaration.getExtraDimensions(),
 					generateLocationInfo(cu, sourceFile, returnType, CodeElementType.TYPE));
 			UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
 			umlOperation.addParameter(returnParameter);

@@ -5,6 +5,8 @@ import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, LocationInfoProvider, VariableDeclarationProvider {
 	private LocationInfo locationInfo;
@@ -16,11 +18,13 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Loc
 	private boolean isStatic;
 	private VariableDeclaration variableDeclaration;
 	private UMLJavadoc javadoc;
+	private List<UMLAnnotation> annotations;
 
 	public UMLAttribute(String name, UMLType type, LocationInfo locationInfo) {
 		this.locationInfo = locationInfo;
 		this.name = name;
 		this.type = type;
+		this.annotations = new ArrayList<UMLAnnotation>();
 	}
 
 	public LocationInfo getLocationInfo() {
@@ -90,6 +94,14 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Loc
 	public void setJavadoc(UMLJavadoc javadoc) {
 		this.javadoc = javadoc;
 	}
+
+    public List<UMLAnnotation> getAnnotations() {
+		return annotations;
+	}
+
+    public void addAnnotation(UMLAnnotation annotation) {
+    	annotations.add(annotation);
+    }
 
 	public boolean equalsIgnoringChangedType(UMLAttribute attribute) {
 		if(this.isStatic != attribute.isStatic)

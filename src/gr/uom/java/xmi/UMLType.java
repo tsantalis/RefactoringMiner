@@ -223,7 +223,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 
 	private static UMLType extractTypeObject(Type type) {
 		if(type.isPrimitiveType() || type.isSimpleType()) {
-			return LeafType.extractTypeObject(type.toString());
+			return extractTypeObject(type.toString());
 		}
 		else if(type instanceof QualifiedType) {
 			QualifiedType qualified = (QualifiedType)type;

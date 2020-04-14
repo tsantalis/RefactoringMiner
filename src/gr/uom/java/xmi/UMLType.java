@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.ArrayType;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.IntersectionType;
 import org.eclipse.jdt.core.dom.NameQualifiedType;
 import org.eclipse.jdt.core.dom.ParameterizedType;
@@ -14,6 +15,7 @@ import org.eclipse.jdt.core.dom.UnionType;
 import org.eclipse.jdt.core.dom.WildcardType;
 
 import gr.uom.java.xmi.ListCompositeType.Kind;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
 
@@ -212,9 +214,9 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		return openingTags == closingTags;
 	}
 
-	public static UMLType extractTypeObject(Type type, int extraDimensions, LocationInfo locationInfo) {
+	public static UMLType extractTypeObject(CompilationUnit cu, String filePath, Type type, int extraDimensions) {
 		UMLType umlType = extractTypeObject(type);
-		umlType.locationInfo = locationInfo;
+		umlType.locationInfo = new LocationInfo(cu, filePath, type, CodeElementType.TYPE);
 		umlType.arrayDimension += extraDimensions;
 		return umlType;
 	}

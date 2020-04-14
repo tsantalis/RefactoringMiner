@@ -33,10 +33,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	private boolean isStatic;
 	private boolean emptyBody;
 	private OperationBody operationBody;
-	private boolean testAnnotation;
 	private List<UMLAnonymousClass> anonymousClassList;
 	private List<UMLTypeParameter> typeParameters;
 	private UMLJavadoc javadoc;
+	private List<UMLAnnotation> annotations;
 	
 	public UMLOperation(String name, LocationInfo locationInfo) {
 		this.locationInfo = locationInfo;
@@ -44,6 +44,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
         this.parameters = new ArrayList<UMLParameter>();
         this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
         this.typeParameters = new ArrayList<UMLTypeParameter>();
+        this.annotations = new ArrayList<UMLAnnotation>();
     }
 
 	public List<UMLTypeParameter> getTypeParameters() {
@@ -52,6 +53,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	
 	public void addTypeParameter(UMLTypeParameter typeParameter) {
 		typeParameters.add(typeParameter);
+	}
+
+	public List<UMLAnnotation> getAnnotations() {
+		return annotations;
+	}
+
+	public void addAnnotation(UMLAnnotation annotation) {
+		annotations.add(annotation);
 	}
 
 	public LocationInfo getLocationInfo() {
@@ -115,11 +124,12 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	}
 
 	public boolean hasTestAnnotation() {
-		return testAnnotation;
-	}
-
-	public void setTestAnnotation(boolean testAnnotation) {
-		this.testAnnotation = testAnnotation;
+		for(UMLAnnotation annotation : annotations) {
+			if(annotation.getTypeName().equals("Test")) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public UMLJavadoc getJavadoc() {

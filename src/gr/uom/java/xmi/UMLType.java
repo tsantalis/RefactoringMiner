@@ -231,7 +231,8 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 	private static UMLType extractTypeObject(CompilationUnit cu, String filePath, Type type) {
 		if(type.isPrimitiveType() || type.isSimpleType()) {
 			LeafType leafType = extractTypeObject(type.toString());
-			List<Annotation> annotations = ((AnnotatableType)type).annotations();
+			AnnotatableType annotatableType = (AnnotatableType)type;
+			List<Annotation> annotations = annotatableType.annotations();
 			for(Annotation annotation : annotations) {
 				leafType.annotations.add(new UMLAnnotation(cu, filePath, annotation));
 			}
@@ -241,7 +242,8 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 			QualifiedType qualified = (QualifiedType)type;
 			UMLType leftType = extractTypeObject(cu, filePath, qualified.getQualifier());
 			LeafType rightType = extractTypeObject(qualified.getName().getFullyQualifiedName());
-			List<Annotation> annotations = ((AnnotatableType)qualified).annotations();
+			AnnotatableType annotatableType = (AnnotatableType)qualified;
+			List<Annotation> annotations = annotatableType.annotations();
 			for(Annotation annotation : annotations) {
 				rightType.annotations.add(new UMLAnnotation(cu, filePath, annotation));
 			}
@@ -251,7 +253,8 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 			NameQualifiedType nameQualified = (NameQualifiedType)type;
 			LeafType leftType = extractTypeObject(nameQualified.getQualifier().getFullyQualifiedName());
 			LeafType rightType = extractTypeObject(nameQualified.getName().getFullyQualifiedName());
-			List<Annotation> annotations = ((AnnotatableType)nameQualified).annotations();
+			AnnotatableType annotatableType = (AnnotatableType)nameQualified;
+			List<Annotation> annotations = annotatableType.annotations();
 			for(Annotation annotation : annotations) {
 				rightType.annotations.add(new UMLAnnotation(cu, filePath, annotation));
 			}
@@ -267,7 +270,8 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 			else {
 				myWildcardType = new gr.uom.java.xmi.WildcardType(null, false);
 			}
-			List<Annotation> annotations = ((AnnotatableType)wildcard).annotations();
+			AnnotatableType annotatableType = (AnnotatableType)wildcard;
+			List<Annotation> annotations = annotatableType.annotations();
 			for(Annotation annotation : annotations) {
 				myWildcardType.annotations.add(new UMLAnnotation(cu, filePath, annotation));
 			}

@@ -18,13 +18,11 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Loc
 	private boolean isStatic;
 	private VariableDeclaration variableDeclaration;
 	private UMLJavadoc javadoc;
-	private List<UMLAnnotation> annotations;
 
 	public UMLAttribute(String name, UMLType type, LocationInfo locationInfo) {
 		this.locationInfo = locationInfo;
 		this.name = name;
 		this.type = type;
-		this.annotations = new ArrayList<UMLAnnotation>();
 	}
 
 	public LocationInfo getLocationInfo() {
@@ -96,11 +94,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Loc
 	}
 
 	public List<UMLAnnotation> getAnnotations() {
-		return annotations;
-	}
-
-	public void addAnnotation(UMLAnnotation annotation) {
-		annotations.add(annotation);
+		return variableDeclaration.getAnnotations();
 	}
 
 	public boolean equalsIgnoringChangedType(UMLAttribute attribute) {

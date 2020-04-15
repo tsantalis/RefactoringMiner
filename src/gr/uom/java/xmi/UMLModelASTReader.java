@@ -468,14 +468,6 @@ public class UMLModelASTReader {
 			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, parameter, parameter.isVarargs());
 			variableDeclaration.setParameter(true);
 			umlParameter.setVariableDeclaration(variableDeclaration);
-			List<IExtendedModifier> parameterExtendedModifiers = parameter.modifiers();
-			for(IExtendedModifier extendedModifier : parameterExtendedModifiers) {
-				if(extendedModifier.isAnnotation()) {
-					Annotation annotation = (Annotation)extendedModifier;
-					umlParameter.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation));
-				}
-			}
-			
 			umlOperation.addParameter(umlParameter);
 		}
 		return umlOperation;
@@ -514,14 +506,6 @@ public class UMLModelASTReader {
 			
 			if((fieldModifiers & Modifier.STATIC) != 0)
 				umlAttribute.setStatic(true);
-			
-			List<IExtendedModifier> extendedModifiers = fieldDeclaration.modifiers();
-			for(IExtendedModifier extendedModifier : extendedModifiers) {
-				if(extendedModifier.isAnnotation()) {
-					Annotation annotation = (Annotation)extendedModifier;
-					umlAttribute.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation));
-				}
-			}
 			
 			attributes.add(umlAttribute);
 		}

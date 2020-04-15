@@ -49,13 +49,13 @@ public class UMLParameter implements Serializable, VariableDeclarationProvider {
 		return varargs;
 	}
 
-    public List<UMLAnnotation> getAnnotations() {
+	public List<UMLAnnotation> getAnnotations() {
 		return annotations;
 	}
 
-    public void addAnnotation(UMLAnnotation annotation) {
-    	annotations.add(annotation);
-    }
+	public void addAnnotation(UMLAnnotation annotation) {
+		annotations.add(annotation);
+	}
 
 	public boolean equalsExcludingType(UMLParameter parameter) {
 		return this.name.equals(parameter.name) &&

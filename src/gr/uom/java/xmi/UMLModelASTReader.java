@@ -264,6 +264,13 @@ public class UMLModelASTReader {
 			for(Type type : typeBounds) {
 				umlTypeParameter.addTypeBound(UMLType.extractTypeObject(cu, sourceFile, type, 0));
 			}
+			List<IExtendedModifier> typeParameterExtendedModifiers = typeParameter.modifiers();
+			for(IExtendedModifier extendedModifier : typeParameterExtendedModifiers) {
+				if(extendedModifier.isAnnotation()) {
+					Annotation annotation = (Annotation)extendedModifier;
+					umlTypeParameter.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation));
+				}
+			}
     		umlClass.addTypeParameter(umlTypeParameter);
     	}
     	
@@ -423,6 +430,13 @@ public class UMLModelASTReader {
 			List<Type> typeBounds = typeParameter.typeBounds();
 			for(Type type : typeBounds) {
 				umlTypeParameter.addTypeBound(UMLType.extractTypeObject(cu, sourceFile, type, 0));
+			}
+			List<IExtendedModifier> typeParameterExtendedModifiers = typeParameter.modifiers();
+			for(IExtendedModifier extendedModifier : typeParameterExtendedModifiers) {
+				if(extendedModifier.isAnnotation()) {
+					Annotation annotation = (Annotation)extendedModifier;
+					umlTypeParameter.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation));
+				}
 			}
 			umlOperation.addTypeParameter(umlTypeParameter);
 		}

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jdt.core.dom.AnnotatableType;
+import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.IntersectionType;
@@ -23,6 +25,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 	private LocationInfo locationInfo;
 	private int arrayDimension;
 	private List<UMLType> typeArguments = new ArrayList<UMLType>();
+	protected List<UMLAnnotation> annotations = new ArrayList<UMLAnnotation>();
 
 	public LocationInfo getLocationInfo() {
 		return locationInfo;
@@ -30,6 +33,10 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 
 	public int getArrayDimension() {
 		return this.arrayDimension;
+	}
+
+	public List<UMLAnnotation> getAnnotations() {
+		return annotations;
 	}
 
 	public CodeRange codeRange() {
@@ -215,50 +222,69 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 	}
 
 	public static UMLType extractTypeObject(CompilationUnit cu, String filePath, Type type, int extraDimensions) {
-		UMLType umlType = extractTypeObject(type);
+		UMLType umlType = extractTypeObject(cu, filePath, type);
 		umlType.locationInfo = new LocationInfo(cu, filePath, type, CodeElementType.TYPE);
 		umlType.arrayDimension += extraDimensions;
 		return umlType;
 	}
 
-	private static UMLType extractTypeObject(Type type) {
+	private static UMLType extractTypeObject(CompilationUnit cu, String filePath, Type type) {
 		if(type.isPrimitiveType() || type.isSimpleType()) {
-			return extractTypeObject(type.toString());
+			LeafType leafType = extractTypeObject(type.toString());
+			List<Annotation> annotations = ((AnnotatableType)type).annotations();
+			for(Annotation annotation : annotations) {
+				leafType.annotations.add(new UMLAnnotation(cu, filePath, annotation));
+			}
+			return leafType;
 		}
 		else if(type instanceof QualifiedType) {
 			QualifiedType qualified = (QualifiedType)type;
-			UMLType leftType = extractTypeObject(qualified.getQualifier());
+			UMLType leftType = extractTypeObject(cu, filePath, qualified.getQualifier());
 			LeafType rightType = extractTypeObject(qualified.getName().getFullyQualifiedName());
+			List<Annotation> annotations = ((AnnotatableType)qualified).annotations();
+			for(Annotation annotation : annotations) {
+				rightType.annotations.add(new UMLAnnotation(cu, filePath, annotation));
+			}
 			return new CompositeType(leftType, rightType);
 		}
 		else if(type instanceof NameQualifiedType) {
 			NameQualifiedType nameQualified = (NameQualifiedType)type;
 			LeafType leftType = extractTypeObject(nameQualified.getQualifier().getFullyQualifiedName());
 			LeafType rightType = extractTypeObject(nameQualified.getName().getFullyQualifiedName());
+			List<Annotation> annotations = ((AnnotatableType)nameQualified).annotations();
+			for(Annotation annotation : annotations) {
+				rightType.annotations.add(new UMLAnnotation(cu, filePath, annotation));
+			}
 			return new CompositeType(leftType, rightType);
 		}
 		else if(type instanceof WildcardType) {
 			WildcardType wildcard = (WildcardType)type;
+			gr.uom.java.xmi.WildcardType myWildcardType = null;
 			if(wildcard.getBound() != null) {
-				UMLType bound = extractTypeObject(wildcard.getBound());
-				return new gr.uom.java.xmi.WildcardType(bound, wildcard.isUpperBound());
+				UMLType bound = extractTypeObject(cu, filePath, wildcard.getBound());
+				myWildcardType = new gr.uom.java.xmi.WildcardType(bound, wildcard.isUpperBound());
 			}
 			else {
-				return new gr.uom.java.xmi.WildcardType(null, false);
+				myWildcardType = new gr.uom.java.xmi.WildcardType(null, false);
 			}
+			List<Annotation> annotations = ((AnnotatableType)wildcard).annotations();
+			for(Annotation annotation : annotations) {
+				myWildcardType.annotations.add(new UMLAnnotation(cu, filePath, annotation));
+			}
+			return myWildcardType;
 		}
 		else if(type instanceof ArrayType) {
 			ArrayType array = (ArrayType)type;
-			UMLType arrayType = extractTypeObject(array.getElementType());
+			UMLType arrayType = extractTypeObject(cu, filePath, array.getElementType());
 			arrayType.arrayDimension = array.getDimensions();
 			return arrayType;
 		}
 		else if(type instanceof ParameterizedType) {
 			ParameterizedType parameterized = (ParameterizedType)type;
-			UMLType container = extractTypeObject(parameterized.getType());
+			UMLType container = extractTypeObject(cu, filePath, parameterized.getType());
 			List<Type> typeArguments = parameterized.typeArguments();
 			for(Type argument : typeArguments) {
-				container.typeArguments.add(extractTypeObject(argument));
+				container.typeArguments.add(extractTypeObject(cu, filePath, argument));
 			}
 			return container;
 		}
@@ -267,7 +293,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 			List<Type> types = union.types();
 			List<UMLType> umlTypes = new ArrayList<UMLType>();
 			for(Type unionType : types) {
-				umlTypes.add(extractTypeObject(unionType));
+				umlTypes.add(extractTypeObject(cu, filePath, unionType));
 			}
 			return new ListCompositeType(umlTypes, Kind.UNION);
 		}
@@ -276,7 +302,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 			List<Type> types = intersection.types();
 			List<UMLType> umlTypes = new ArrayList<UMLType>();
 			for(Type unionType : types) {
-				umlTypes.add(extractTypeObject(unionType));
+				umlTypes.add(extractTypeObject(cu, filePath, unionType));
 			}
 			return new ListCompositeType(umlTypes, Kind.INTERSECTION);
 		}

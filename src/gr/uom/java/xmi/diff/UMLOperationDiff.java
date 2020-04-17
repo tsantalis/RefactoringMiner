@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -29,6 +30,7 @@ public class UMLOperationDiff {
 	private boolean qualifiedReturnTypeChanged;
 	private boolean operationRenamed;
 	private Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
+	private UMLAnnotationListDiff annotationListDiff;
 	
 	public UMLOperationDiff(UMLOperation removedOperation, UMLOperation addedOperation) {
 		this.removedOperation = removedOperation;
@@ -50,6 +52,7 @@ public class UMLOperationDiff {
 			returnTypeChanged = true;
 		else if(!removedOperation.equalQualifiedReturnParameter(addedOperation))
 			qualifiedReturnTypeChanged = true;
+		this.annotationListDiff = new UMLAnnotationListDiff(removedOperation.getAnnotations(), addedOperation.getAnnotations());
 		List<SimpleEntry<UMLParameter, UMLParameter>> matchedParameters = updateAddedRemovedParameters(removedOperation, addedOperation);
 		for(SimpleEntry<UMLParameter, UMLParameter> matchedParameter : matchedParameters) {
 			UMLParameter parameter1 = matchedParameter.getKey();
@@ -189,7 +192,7 @@ public class UMLOperationDiff {
 
 	public boolean isEmpty() {
 		return addedParameters.isEmpty() && removedParameters.isEmpty() && parameterDiffList.isEmpty() &&
-		!visibilityChanged && !abstractionChanged && !returnTypeChanged && !operationRenamed;
+		!visibilityChanged && !abstractionChanged && !returnTypeChanged && !operationRenamed && annotationListDiff.isEmpty();
 	}
 
 	public String toString() {
@@ -213,6 +216,15 @@ public class UMLOperationDiff {
 		}
 		for(UMLParameterDiff parameterDiff : parameterDiffList) {
 			sb.append(parameterDiff);
+		}
+		for(UMLAnnotation annotation : annotationListDiff.getRemovedAnnotations()) {
+			sb.append("\t").append("annotation " + annotation + " removed").append("\n");
+		}
+		for(UMLAnnotation annotation : annotationListDiff.getAddedAnnotations()) {
+			sb.append("\t").append("annotation " + annotation + " added").append("\n");
+		}
+		for(UMLAnnotationDiff annotationDiff : annotationListDiff.getAnnotationDiffList()) {
+			sb.append("\t").append("annotation " + annotationDiff.getRemovedAnnotation() + " modified to " + annotationDiff.getAddedAnnotation()).append("\n");
 		}
 		return sb.toString();
 	}
@@ -245,6 +257,10 @@ public class UMLOperationDiff {
 				}
 				refactorings.add(refactoring);
 			}
+		}
+		for(UMLAnnotation annotation : annotationListDiff.getAddedAnnotations()) {
+			AddMethodAnnotationRefactoring refactoring = new AddMethodAnnotationRefactoring(annotation, removedOperation, addedOperation);
+			refactorings.add(refactoring);
 		}
 		return refactorings;
 	}

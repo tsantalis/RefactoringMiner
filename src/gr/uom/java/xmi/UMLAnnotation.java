@@ -79,7 +79,7 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 					sb.append(", ");
 				i++;
 			}
-			sb.append("(");
+			sb.append(")");
 		}
 		return sb.toString();
 	}
@@ -92,5 +92,70 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 	@Override
 	public CodeRange codeRange() {
 		return locationInfo.codeRange();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((memberValuePairs == null) ? 0 : memberValuePairsHashCode());
+		result = prime * result + ((typeName == null) ? 0 : typeName.hashCode());
+		result = prime * result + ((value == null) ? 0 : value.getExpression().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UMLAnnotation other = (UMLAnnotation) obj;
+		if (memberValuePairs == null) {
+			if (other.memberValuePairs != null)
+				return false;
+		} else if (!this.memberValuePairsEquals(other))
+			return false;
+		if (typeName == null) {
+			if (other.typeName != null)
+				return false;
+		} else if (!typeName.equals(other.typeName))
+			return false;
+		if (value == null) {
+			if (other.value != null)
+				return false;
+		} else if (!value.getExpression().equals(other.value.getExpression()))
+			return false;
+		return true;
+	}
+
+	private boolean memberValuePairsEquals(UMLAnnotation other) {
+		Map<String, AbstractExpression> m = other.memberValuePairs;
+		int thisSize = this.memberValuePairs.size();
+		int otherSize = other.memberValuePairs.size();
+		if(thisSize != otherSize) {
+			return false;
+		}
+		for (Map.Entry<String, AbstractExpression> entry : memberValuePairs.entrySet()) {
+			String thisKey = entry.getKey();
+			AbstractExpression thisValue = entry.getValue();
+			if (thisValue == null) {
+				if (!(m.get(thisKey) == null && m.containsKey(thisKey)))
+					return false;
+			} else {
+				if (!thisValue.getExpression().equals(m.get(thisKey).getExpression()))
+					return false;
+			}
+		}
+		return true;
+	}
+
+	private int memberValuePairsHashCode() {
+		int h = 0;
+		for (Map.Entry<String, AbstractExpression> entry : memberValuePairs.entrySet())
+			h += (entry.getKey() == null ? 0 : entry.getKey().hashCode()) ^ (entry.getValue() == null ? 0 : entry.getValue().getExpression().hashCode());
+		return h;
 	}
 }

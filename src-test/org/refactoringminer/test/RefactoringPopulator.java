@@ -71,7 +71,8 @@ public class RefactoringPopulator {
 		ExtractAttribute(new BigInteger("274877906944")),
 		MoveAndRenameMethod(new BigInteger("549755813888")),
 		MoveAndInlineMethod(new BigInteger("1099511627776")),
-		All(new BigInteger("2199023255551"));
+		AddMethodAnnotation(new BigInteger("2199023255552")),
+		All(new BigInteger("4398046511103"));
 
 		private BigInteger value;
 

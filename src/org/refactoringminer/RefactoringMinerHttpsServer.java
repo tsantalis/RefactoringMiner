@@ -145,7 +145,7 @@ public class RefactoringMinerHttpsServer {
 		sb.append("{");
 		sb.append("\t").append("\"").append("repository").append("\"").append(": ").append("\"").append(gitURL).append("\"").append(",").append("\n");
 		sb.append("\t").append("\"").append("sha1").append("\"").append(": ").append("\"").append(currentCommitId).append("\"").append(",").append("\n");
-		String url = "https://github.com/" + gitURL.substring(19, gitURL.indexOf(".git")) + "/commit/" + currentCommitId;
+		String url = "https://github.com/" + GitHistoryRefactoringMinerImpl.extractRepositoryName(gitURL) + "/commit/" + currentCommitId;
 		sb.append("\t").append("\"").append("url").append("\"").append(": ").append("\"").append(url).append("\"").append(",").append("\n");
 		sb.append("\t").append("\"").append("refactorings").append("\"").append(": ");
 		sb.append("[");

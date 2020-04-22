@@ -70,50 +70,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	private GitHub gitHub;
 	
 	public GitHistoryRefactoringMinerImpl() {
-		this.setRefactoringTypesToConsider(
-			RefactoringType.RENAME_CLASS,
-			RefactoringType.MOVE_CLASS,
-			RefactoringType.MOVE_SOURCE_FOLDER,
-			RefactoringType.RENAME_METHOD,
-			RefactoringType.EXTRACT_OPERATION,
-			RefactoringType.INLINE_OPERATION,
-			RefactoringType.MOVE_OPERATION,
-			RefactoringType.PULL_UP_OPERATION,
-			RefactoringType.PUSH_DOWN_OPERATION,
-			RefactoringType.MOVE_ATTRIBUTE,
-			RefactoringType.MOVE_RENAME_ATTRIBUTE,
-			RefactoringType.REPLACE_ATTRIBUTE,
-			RefactoringType.PULL_UP_ATTRIBUTE,
-			RefactoringType.PUSH_DOWN_ATTRIBUTE,
-			RefactoringType.EXTRACT_INTERFACE,
-			RefactoringType.EXTRACT_SUPERCLASS,
-			RefactoringType.EXTRACT_SUBCLASS,
-			RefactoringType.EXTRACT_CLASS,
-			RefactoringType.EXTRACT_AND_MOVE_OPERATION,
-			RefactoringType.MOVE_RENAME_CLASS,
-			RefactoringType.RENAME_PACKAGE,
-			RefactoringType.EXTRACT_VARIABLE,
-			RefactoringType.INLINE_VARIABLE,
-			RefactoringType.RENAME_VARIABLE,
-			RefactoringType.RENAME_PARAMETER,
-			RefactoringType.RENAME_ATTRIBUTE,
-			RefactoringType.REPLACE_VARIABLE_WITH_ATTRIBUTE,
-			RefactoringType.PARAMETERIZE_VARIABLE,
-			RefactoringType.MERGE_VARIABLE,
-			RefactoringType.MERGE_PARAMETER,
-			RefactoringType.MERGE_ATTRIBUTE,
-			RefactoringType.SPLIT_VARIABLE,
-			RefactoringType.SPLIT_PARAMETER,
-			RefactoringType.SPLIT_ATTRIBUTE,
-			RefactoringType.CHANGE_RETURN_TYPE,
-			RefactoringType.CHANGE_VARIABLE_TYPE,
-			RefactoringType.CHANGE_PARAMETER_TYPE,
-			RefactoringType.CHANGE_ATTRIBUTE_TYPE,
-			RefactoringType.EXTRACT_ATTRIBUTE,
-			RefactoringType.MOVE_AND_RENAME_OPERATION,
-			RefactoringType.MOVE_AND_INLINE_OPERATION,
-			RefactoringType.ADD_METHOD_ANNOTATION
-		);
+		this.setRefactoringTypesToConsider(RefactoringType.ALL);
 	}
 
 	public void setRefactoringTypesToConsider(RefactoringType ... types) {

@@ -55,11 +55,57 @@ public enum RefactoringType {
 	CHANGE_VARIABLE_TYPE("Change Variable Type", "Change Variable Type (.+) to (.+) in method (.+) from class (.+)"),
 	CHANGE_PARAMETER_TYPE("Change Parameter Type", "Change Parameter Type (.+) to (.+) in method (.+) from class (.+)"),
 	CHANGE_ATTRIBUTE_TYPE("Change Attribute Type", "Change Attribute Type (.+) to (.+) in class (.+)"),
-	ADD_METHOD_ANNOTATION("Add Method Annotation", "Add Method Annotation (.+) in method (.+) from class (.+)");
+	ADD_METHOD_ANNOTATION("Add Method Annotation", "Add Method Annotation (.+) in method (.+) from class (.+)"),
+	REMOVE_METHOD_ANNOTATION("Remove Method Annotation", "Remove Method Annotation (.+) in method (.+) from class (.+)");
 
 	private String displayName;
 	private Pattern regex;
 	private int[] aggregateGroups;
+	public static RefactoringType[] ALL = {
+		RENAME_CLASS,
+		MOVE_CLASS,
+		MOVE_SOURCE_FOLDER,
+		RENAME_METHOD,
+		EXTRACT_OPERATION,
+		INLINE_OPERATION,
+		MOVE_OPERATION,
+		PULL_UP_OPERATION,
+		PUSH_DOWN_OPERATION,
+		MOVE_ATTRIBUTE,
+		MOVE_RENAME_ATTRIBUTE,
+		REPLACE_ATTRIBUTE,
+		PULL_UP_ATTRIBUTE,
+		PUSH_DOWN_ATTRIBUTE,
+		EXTRACT_INTERFACE,
+		EXTRACT_SUPERCLASS,
+		EXTRACT_SUBCLASS,
+		EXTRACT_CLASS,
+		EXTRACT_AND_MOVE_OPERATION,
+		MOVE_RENAME_CLASS,
+		RENAME_PACKAGE,
+		EXTRACT_VARIABLE,
+		INLINE_VARIABLE,
+		RENAME_VARIABLE,
+		RENAME_PARAMETER,
+		RENAME_ATTRIBUTE,
+		REPLACE_VARIABLE_WITH_ATTRIBUTE,
+		PARAMETERIZE_VARIABLE,
+		MERGE_VARIABLE,
+		MERGE_PARAMETER,
+		MERGE_ATTRIBUTE,
+		SPLIT_VARIABLE,
+		SPLIT_PARAMETER,
+		SPLIT_ATTRIBUTE,
+		CHANGE_RETURN_TYPE,
+		CHANGE_VARIABLE_TYPE,
+		CHANGE_PARAMETER_TYPE,
+		CHANGE_ATTRIBUTE_TYPE,
+		EXTRACT_ATTRIBUTE,
+		MOVE_AND_RENAME_OPERATION,
+		MOVE_AND_INLINE_OPERATION,
+		ADD_METHOD_ANNOTATION,
+		REMOVE_METHOD_ANNOTATION
+	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {
 		this.displayName = displayName;

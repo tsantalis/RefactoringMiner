@@ -691,6 +691,25 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return repoName;
 	}
 
+	public static String extractCommitURL(String cloneURL, String commitId) {
+		int indexOfDotGit = cloneURL.length();
+		if(cloneURL.endsWith(".git")) {
+			indexOfDotGit = cloneURL.indexOf(".git");
+		}
+		else if(cloneURL.endsWith("/")) {
+			indexOfDotGit = cloneURL.length() - 1;
+		}
+		String commitResource = "";
+		if(cloneURL.startsWith(GITHUB_URL)) {
+			commitResource = "/commit/";
+		}
+		else if(cloneURL.startsWith(BITBUCKET_URL)) {
+			commitResource = "/commits/";
+		}
+		String commitURL = cloneURL.substring(0, indexOfDotGit) + commitResource + commitId;
+		return commitURL;
+	}
+
 	private static String extractDownloadLink(String cloneURL, String commitId) {
 		int indexOfDotGit = cloneURL.length();
 		if(cloneURL.endsWith(".git")) {

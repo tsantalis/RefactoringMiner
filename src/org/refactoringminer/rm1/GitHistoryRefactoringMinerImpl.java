@@ -672,7 +672,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	private static final String GITHUB_URL = "https://github.com/";
 	private static final String BITBUCKET_URL = "https://bitbucket.org/";
 
-	public static String extractRepositoryName(String cloneURL) {
+	private static String extractRepositoryName(String cloneURL) {
 		int hostLength = 0;
 		if(cloneURL.startsWith(GITHUB_URL)) {
 			hostLength = GITHUB_URL.length();
@@ -699,7 +699,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		else if(cloneURL.endsWith("/")) {
 			indexOfDotGit = cloneURL.length() - 1;
 		}
-		String commitResource = "";
+		String commitResource = "/";
 		if(cloneURL.startsWith(GITHUB_URL)) {
 			commitResource = "/commit/";
 		}
@@ -718,7 +718,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		else if(cloneURL.endsWith("/")) {
 			indexOfDotGit = cloneURL.length() - 1;
 		}
-		String downloadResource = "";
+		String downloadResource = "/";
 		if(cloneURL.startsWith(GITHUB_URL)) {
 			downloadResource = "/archive/";
 		}

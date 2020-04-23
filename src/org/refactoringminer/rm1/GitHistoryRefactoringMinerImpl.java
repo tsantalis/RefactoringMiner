@@ -669,14 +669,44 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 	}
 
+	private static final String GITHUB_URL = "https://github.com/";
+	private static final String BITBUCKET_URL = "https://bitbucket.org/";
+
 	public static String extractRepositoryName(String cloneURL) {
-		//https://github.com/ is 19 chars
-		String repoName = cloneURL.substring(19, cloneURL.indexOf(".git"));
+		int hostLength = 0;
+		if(cloneURL.startsWith(GITHUB_URL)) {
+			hostLength = GITHUB_URL.length();
+		}
+		else if(cloneURL.startsWith(BITBUCKET_URL)) {
+			hostLength = BITBUCKET_URL.length();
+		}
+		int indexOfDotGit = cloneURL.length();
+		if(cloneURL.endsWith(".git")) {
+			indexOfDotGit = cloneURL.indexOf(".git");
+		}
+		else if(cloneURL.endsWith("/")) {
+			indexOfDotGit = cloneURL.length() - 1;
+		}
+		String repoName = cloneURL.substring(hostLength, indexOfDotGit);
 		return repoName;
 	}
 
 	private static String extractDownloadLink(String cloneURL, String commitId) {
-		String downloadLink = cloneURL.substring(0, cloneURL.indexOf(".git")) + "/archive/" + commitId + ".zip";
+		int indexOfDotGit = cloneURL.length();
+		if(cloneURL.endsWith(".git")) {
+			indexOfDotGit = cloneURL.indexOf(".git");
+		}
+		else if(cloneURL.endsWith("/")) {
+			indexOfDotGit = cloneURL.length() - 1;
+		}
+		String downloadResource = "";
+		if(cloneURL.startsWith(GITHUB_URL)) {
+			downloadResource = "/archive/";
+		}
+		else if(cloneURL.startsWith(BITBUCKET_URL)) {
+			downloadResource = "/get/";
+		}
+		String downloadLink = cloneURL.substring(0, indexOfDotGit) + downloadResource + commitId + ".zip";
 		return downloadLink;
 	}
 }

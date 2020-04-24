@@ -62,7 +62,10 @@ public abstract class UMLAbstractClass {
 	public UMLOperation operationWithTheSameSignatureIgnoringChangedTypes(UMLOperation operation) {
 		List<UMLOperation> matchingOperations = new ArrayList<UMLOperation>();
 		for(UMLOperation originalOperation : operations) {
-			if(originalOperation.equalSignatureIgnoringChangedTypes(operation)) {
+			boolean matchesOperation = isInterface() ?
+				originalOperation.equalSignatureIgnoringChangedTypes(operation) :
+				originalOperation.equalSignatureWithIdenticalNameIgnoringChangedTypes(operation);
+			if(matchesOperation) {
 				boolean originalOperationEmptyBody = originalOperation.getBody() == null || originalOperation.hasEmptyBody();
 				boolean operationEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
 				if(originalOperationEmptyBody == operationEmptyBody)
@@ -324,6 +327,8 @@ public abstract class UMLAbstractClass {
 
 	public abstract boolean isSingleAbstractMethodInterface();
 
+	public abstract boolean isInterface();
+	
 	public String getSourceFile() {
 		return locationInfo.getFilePath();
 	}

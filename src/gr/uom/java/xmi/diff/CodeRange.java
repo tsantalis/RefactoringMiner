@@ -3,6 +3,9 @@ package gr.uom.java.xmi.diff;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.core.io.JsonStringEncoder;
+import com.fasterxml.jackson.core.util.BufferRecyclers;
+
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
@@ -95,14 +98,18 @@ public class CodeRange {
 		encodeIntProperty(sb, "endColumn", endColumn, false);
 		encodeStringProperty(sb, "codeElementType", codeElementType.name(), false);
 		encodeStringProperty(sb, "description", description, false);
-		encodeStringProperty(sb, "codeElement", removeQuotes(codeElement), true);
+		encodeStringProperty(sb, "codeElement", escapeQuotes(codeElement), true);
 		sb.append("}");
 		return sb.toString();
 	}
 
-	private String removeQuotes(String s) {
-		if(s != null)
-			return s.replace("\"", "");
+	private String escapeQuotes(String s) {
+		if(s != null) {
+			StringBuilder sb = new StringBuilder();
+			JsonStringEncoder encoder = BufferRecyclers.getJsonStringEncoder();
+			encoder.quoteAsString(s, sb);
+			return sb.toString();
+		}
 		return s;
 	}
 

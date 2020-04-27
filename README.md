@@ -93,6 +93,8 @@ The Chrome extension can detect refactorings for **public** projects and commits
 * `https://github.com/user/project/commit/id`
 * `https://github.com/user/project/pull/id/commits/id`
 
+![Refactoring Aware Commit Review Chrome Extension](https://user-images.githubusercontent.com/1483516/80326324-62fab400-8806-11ea-9595-4906018b831a.png)
+
 # Research
 ## How to cite RefactoringMiner
 If you are using RefactoringMiner in your research, please cite the following paper:

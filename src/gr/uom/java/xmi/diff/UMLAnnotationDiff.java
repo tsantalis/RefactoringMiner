@@ -18,14 +18,16 @@ public class UMLAnnotationDiff {
 	private boolean valueAdded = false;
 	private List<SimpleEntry<String, AbstractExpression>> removedMemberValuePairs;
 	private List<SimpleEntry<String, AbstractExpression>> addedMemberValuePairs;
-	private Map<SimpleEntry<String, AbstractExpression>, SimpleEntry<String, AbstractExpression>> matchedMemberValuePairs;
+	private Map<SimpleEntry<String, AbstractExpression>, SimpleEntry<String, AbstractExpression>> matchedMemberValuePairsWithDifferentExpressions;
 	
 	public UMLAnnotationDiff(UMLAnnotation removedAnnotation, UMLAnnotation addedAnnotation) {
 		this.removedAnnotation = removedAnnotation;
 		this.addedAnnotation = addedAnnotation;
 		this.removedMemberValuePairs = new ArrayList<SimpleEntry<String,AbstractExpression>>();
 		this.addedMemberValuePairs = new ArrayList<SimpleEntry<String,AbstractExpression>>();
-		this.matchedMemberValuePairs = new LinkedHashMap<SimpleEntry<String,AbstractExpression>, SimpleEntry<String,AbstractExpression>>();
+		this.matchedMemberValuePairsWithDifferentExpressions = new LinkedHashMap<SimpleEntry<String,AbstractExpression>, SimpleEntry<String,AbstractExpression>>();
+		Map<SimpleEntry<String,AbstractExpression>, SimpleEntry<String,AbstractExpression>> matchedMemberValuePairs =
+				new LinkedHashMap<SimpleEntry<String,AbstractExpression>, SimpleEntry<String,AbstractExpression>>();
 		if(!removedAnnotation.getTypeName().equals(addedAnnotation.getTypeName())) {
 			typeNameChanged = true;
 		}
@@ -62,6 +64,12 @@ public class UMLAnnotationDiff {
 				}
 			}
 		}
+		for(SimpleEntry<String, AbstractExpression> key : matchedMemberValuePairs.keySet()) {
+			SimpleEntry<String, AbstractExpression> value = matchedMemberValuePairs.get(key);
+			if(!key.getValue().getExpression().equals(value.getValue().getExpression())) {
+				matchedMemberValuePairsWithDifferentExpressions.put(key, value);
+			}
+		}
 	}
 	
 	public UMLAnnotation getRemovedAnnotation() {
@@ -74,6 +82,7 @@ public class UMLAnnotationDiff {
 
 	public boolean isEmpty() {
 		return !typeNameChanged && !valueChanged && !valueAdded && !valueRemoved &&
-				removedMemberValuePairs.isEmpty() && addedMemberValuePairs.isEmpty();
+				removedMemberValuePairs.isEmpty() && addedMemberValuePairs.isEmpty() &&
+				matchedMemberValuePairsWithDifferentExpressions.isEmpty();
 	}
 }

@@ -266,6 +266,10 @@ public class UMLOperationDiff {
 			RemoveMethodAnnotationRefactoring refactoring = new RemoveMethodAnnotationRefactoring(annotation, removedOperation, addedOperation);
 			refactorings.add(refactoring);
 		}
+		for(UMLAnnotationDiff annotationDiff : annotationListDiff.getAnnotationDiffList()) {
+			ModifyMethodAnnotation refactoring = new ModifyMethodAnnotation(annotationDiff.getRemovedAnnotation(), annotationDiff.getAddedAnnotation(), removedOperation, addedOperation);
+			refactorings.add(refactoring);
+		}
 		return refactorings;
 	}
 	

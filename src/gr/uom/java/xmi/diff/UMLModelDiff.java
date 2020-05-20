@@ -1367,17 +1367,10 @@ public class UMLModelDiff {
 					 if(!diff.getOriginalClass().containsAttributeWithName(pattern.getAfter()) &&
 								!diff.getNextClass().containsAttributeWithName(pattern.getBefore()) &&
 								!attributeMerged(a1, a2, refactorings)) {
-						 RenameAttributeRefactoring ref = new RenameAttributeRefactoring(a1.getVariableDeclaration(), a2.getVariableDeclaration(),
-								 diff.getOriginalClassName(), diff.getNextClassName(), set);
-						 if(!refactorings.contains(ref)) {
-							 refactorings.add(ref);
-							 if(!a1.getVariableDeclaration().getType().equals(a2.getVariableDeclaration().getType()) || !a1.getVariableDeclaration().getType().equalsQualified(a2.getVariableDeclaration().getType())) {
-									ChangeAttributeTypeRefactoring refactoring = new ChangeAttributeTypeRefactoring(a1.getVariableDeclaration(), a2.getVariableDeclaration(),
-											diff.getOriginalClassName(), diff.getNextClassName(),
-											VariableReferenceExtractor.findReferences(a1.getVariableDeclaration(), a2.getVariableDeclaration(), diff.getOperationBodyMapperList()));
-									refactoring.addRelatedRefactoring(ref);
-									refactorings.add(refactoring);
-								}
+						 UMLAttributeDiff attributeDiff = new UMLAttributeDiff(a1, a2, diff.getOperationBodyMapperList());
+						 Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
+						 if(!refactorings.containsAll(attributeDiffRefactorings)) {
+							 refactorings.addAll(attributeDiffRefactorings);
 							 break;//it's not necessary to repeat the same process for all candidates in the set
 						 }
 					 }

@@ -160,12 +160,8 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
     			this.removedAttributes.add(attribute);
     		}
 			else if((!attribute.equals(attributeWithTheSameName) || !attribute.equalsQualified(attributeWithTheSameName)) && !attributeDiffListContainsAttribute(attribute, attributeWithTheSameName)) {
-				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attribute, attributeWithTheSameName);
-				if(attributeDiff.isTypeChanged() || attributeDiff.isQualifiedTypeChanged()) {
-					ChangeAttributeTypeRefactoring ref = new ChangeAttributeTypeRefactoring(attribute.getVariableDeclaration(), attributeWithTheSameName.getVariableDeclaration(), originalClass.getName(), nextClass.getName(),
-							VariableReferenceExtractor.findReferences(attribute.getVariableDeclaration(), attributeWithTheSameName.getVariableDeclaration(), operationBodyMapperList));
-					refactorings.add(ref);
-				}
+				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attribute, attributeWithTheSameName, operationBodyMapperList);
+				refactorings.addAll(attributeDiff.getRefactorings());
 				this.attributeDiffList.add(attributeDiff);
 			}
     	}
@@ -175,12 +171,8 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
     			this.addedAttributes.add(attribute);
     		}
 			else if((!attribute.equals(attributeWithTheSameName) || !attribute.equalsQualified(attributeWithTheSameName)) && !attributeDiffListContainsAttribute(attributeWithTheSameName, attribute)) {
-				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attributeWithTheSameName, attribute);
-				if(attributeDiff.isTypeChanged() || attributeDiff.isQualifiedTypeChanged()) {
-					ChangeAttributeTypeRefactoring ref = new ChangeAttributeTypeRefactoring(attributeWithTheSameName.getVariableDeclaration(), attribute.getVariableDeclaration(), originalClass.getName(), nextClass.getName(),
-							VariableReferenceExtractor.findReferences(attributeWithTheSameName.getVariableDeclaration(), attribute.getVariableDeclaration(), operationBodyMapperList));
-					refactorings.add(ref);
-				}
+				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attributeWithTheSameName, attribute, operationBodyMapperList);
+				refactorings.addAll(attributeDiff.getRefactorings());
 				this.attributeDiffList.add(attributeDiff);
 			}
     	}
@@ -549,17 +541,10 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 								(!nextClass.containsAttributeWithName(pattern.getBefore()) || cyclicRename(renameMap, pattern)) &&
 								!inconsistentAttributeRename(pattern, aliasedAttributesInOriginalClass, aliasedAttributesInNextClass) &&
 								!attributeMerged(a1, a2, refactorings) && !attributeSplit(a1, a2, refactorings)) {
-							RenameAttributeRefactoring ref = new RenameAttributeRefactoring(a1.getVariableDeclaration(), a2.getVariableDeclaration(),
-									getOriginalClassName(), getNextClassName(), set);
-							if(!refactorings.contains(ref)) {
-								refactorings.add(ref);
-								if(!a1.getVariableDeclaration().getType().equals(a2.getVariableDeclaration().getType()) || !a1.getVariableDeclaration().getType().equalsQualified(a2.getVariableDeclaration().getType())) {
-									ChangeAttributeTypeRefactoring refactoring = new ChangeAttributeTypeRefactoring(a1.getVariableDeclaration(), a2.getVariableDeclaration(),
-											getOriginalClassName(), getNextClassName(),
-											VariableReferenceExtractor.findReferences(a1.getVariableDeclaration(), a2.getVariableDeclaration(), operationBodyMapperList));
-									refactoring.addRelatedRefactoring(ref);
-									refactorings.add(refactoring);
-								}
+							UMLAttributeDiff attributeDiff = new UMLAttributeDiff(a1, a2, operationBodyMapperList);
+							Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
+							if(!refactorings.containsAll(attributeDiffRefactorings)) {
+								refactorings.addAll(attributeDiffRefactorings);
 								break;//it's not necessary to repeat the same process for all candidates in the set
 							}
 						}

@@ -75,7 +75,8 @@ public class RefactoringPopulator {
 		RemoveMethodAnnotation(new BigInteger("4398046511104")),
 		ModifyMethodAnnotation(new BigInteger("8796093022208")),
 		AddAttributeAnnotation(new BigInteger("17592186044416")),
-		All(new BigInteger("35184372088831"));
+		RemoveAttributeAnnotation(new BigInteger("35184372088832")),
+		All(new BigInteger("70368744177663"));
 
 		private BigInteger value;
 

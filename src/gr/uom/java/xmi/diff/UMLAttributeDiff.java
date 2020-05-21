@@ -72,7 +72,7 @@ public class UMLAttributeDiff {
 	}
 
 	public boolean isEmpty() {
-		return !visibilityChanged && !typeChanged && !renamed;
+		return !visibilityChanged && !typeChanged && !renamed && !qualifiedTypeChanged && annotationListDiff.isEmpty();
 	}
 
 	public String toString() {
@@ -102,7 +102,24 @@ public class UMLAttributeDiff {
 		}
 		return sb.toString();
 	}
-	
+
+	private Set<Refactoring> getAnnotationRefactorings() {
+		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
+		for(UMLAnnotation annotation : annotationListDiff.getAddedAnnotations()) {
+			AddAttributeAnnotationRefactoring refactoring = new AddAttributeAnnotationRefactoring(annotation, removedAttribute, addedAttribute);
+			refactorings.add(refactoring);
+		}
+		for(UMLAnnotation annotation : annotationListDiff.getRemovedAnnotations()) {
+			//RemoveAttributeAnnotationRefactoring refactoring = new RemoveAttributeAnnotationRefactoring(annotation, removedAttribute, addedAttribute);
+			//refactorings.add(refactoring);
+		}
+		for(UMLAnnotationDiff annotationDiff : annotationListDiff.getAnnotationDiffList()) {
+			//ModifyAttributeAnnotationRefactoring refactoring = new ModifyAttributeAnnotationRefactoring(annotationDiff.getRemovedAnnotation(), annotationDiff.getAddedAnnotation(), removedAttribute, addedAttribute);
+			//refactorings.add(refactoring);
+		}
+		return refactorings;
+	}
+
 	public Set<Refactoring> getRefactorings() {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 		if(isTypeChanged() || isQualifiedTypeChanged()) {
@@ -110,6 +127,7 @@ public class UMLAttributeDiff {
 					VariableReferenceExtractor.findReferences(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), operationBodyMapperList));
 			refactorings.add(ref);
 		}
+		refactorings.addAll(getAnnotationRefactorings());
 		return refactorings;
 	}
 	
@@ -128,6 +146,7 @@ public class UMLAttributeDiff {
 				ref.addRelatedRefactoring(rename);
 			}
 		}
+		refactorings.addAll(getAnnotationRefactorings());
 		return refactorings;
 	}
 }

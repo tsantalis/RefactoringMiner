@@ -44,10 +44,12 @@ public class UMLClassDiff extends UMLClassBaseDiff {
     		if(matchingAttribute == null) {
     			this.reportRemovedAttribute(attribute);
     		}
-    		else if(!attribute.equalsQualified(matchingAttribute)) {
+    		else {
     			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attribute, matchingAttribute, getOperationBodyMapperList());
-    			refactorings.addAll(attributeDiff.getRefactorings());
-				this.attributeDiffList.add(attributeDiff);
+    			if(!attributeDiff.isEmpty()) {
+	    			refactorings.addAll(attributeDiff.getRefactorings());
+	    			this.attributeDiffList.add(attributeDiff);
+    			}
     		}
     	}
     	for(UMLAttribute attribute : nextClass.getAttributes()) {
@@ -55,10 +57,12 @@ public class UMLClassDiff extends UMLClassBaseDiff {
     		if(matchingAttribute == null) {
     			this.reportAddedAttribute(attribute);
     		}
-    		else if(!attribute.equalsQualified(matchingAttribute)) {
+    		else {
     			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(matchingAttribute, attribute, getOperationBodyMapperList());
-    			refactorings.addAll(attributeDiff.getRefactorings());
-				this.attributeDiffList.add(attributeDiff);
+    			if(!attributeDiff.isEmpty()) {
+	    			refactorings.addAll(attributeDiff.getRefactorings());
+					this.attributeDiffList.add(attributeDiff);
+    			}
     		}
     	}
 	}

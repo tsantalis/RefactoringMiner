@@ -60,7 +60,10 @@ public enum RefactoringType {
 	MODIFY_METHOD_ANNOTATION("Modify Method Annotation", "Modify Method Annotation (.+) to (.+) in method (.+) from class (.+)"),
 	ADD_ATTRIBUTE_ANNOTATION("Add Attribute Annotation", "Add Attribute Annotation (.+) in attribute (.+) from class (.+)"),
 	REMOVE_ATTRIBUTE_ANNOTATION("Remove Attribute Annotation", "Remove Attribute Annotation (.+) in attribute (.+) from class (.+)"),
-	MODIFY_ATTRIBUTE_ANNOTATION("Modify Attribute Annotation", "Modify Attribute Annotation (.+) to (.+) in attribute (.+) from class (.+)");
+	MODIFY_ATTRIBUTE_ANNOTATION("Modify Attribute Annotation", "Modify Attribute Annotation (.+) to (.+) in attribute (.+) from class (.+)"),
+	ADD_CLASS_ANNOTATION("Add Class Annotation", "Add Class Annotation (.+) in class (.+)"),
+	REMOVE_CLASS_ANNOTATION("Remove Class Annotation", "Remove Class Annotation (.+) in class (.+)"),
+	MODIFY_CLASS_ANNOTATION("Modify Class Annotation", "Modify Class Annotation (.+) to (.+) in class (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -112,7 +115,10 @@ public enum RefactoringType {
 		MODIFY_METHOD_ANNOTATION,
 		ADD_ATTRIBUTE_ANNOTATION,
 		REMOVE_ATTRIBUTE_ANNOTATION,
-		MODIFY_ATTRIBUTE_ANNOTATION
+		MODIFY_ATTRIBUTE_ANNOTATION,
+		ADD_CLASS_ANNOTATION,
+		REMOVE_CLASS_ANNOTATION,
+		MODIFY_CLASS_ANNOTATION
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

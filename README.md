@@ -67,6 +67,15 @@ Currently, it supports the detection of the following refactorings:
 38. Extract Attribute
 39. Move and Rename Method
 40. Move and Inline Method
+41. Add Method Annotation
+42. Remove Method Annotation
+43. Modify Method Annotation
+44. Add Attribute Annotation
+45. Remove Attribute Annotation
+46. Modify Attribute Annotation
+47. Add Class Annotation
+48. Remove Class Annotation
+49. Modify Class Annotation
 
 # How to build RefactoringMiner
 

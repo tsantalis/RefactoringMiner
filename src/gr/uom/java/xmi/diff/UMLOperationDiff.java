@@ -258,6 +258,12 @@ public class UMLOperationDiff {
 				refactorings.add(refactoring);
 			}
 		}
+		if(removedParameters.isEmpty()) {
+			for(UMLParameter umlParameter : addedParameters) {
+				AddParameterRefactoring refactoring = new AddParameterRefactoring(umlParameter, removedOperation, addedOperation);
+				refactorings.add(refactoring);
+			}
+		}
 		for(UMLAnnotation annotation : annotationListDiff.getAddedAnnotations()) {
 			AddMethodAnnotationRefactoring refactoring = new AddMethodAnnotationRefactoring(annotation, removedOperation, addedOperation);
 			refactorings.add(refactoring);

@@ -15,7 +15,7 @@ public class RefactoringCrawlerRefactoring {
     TYPE_MAP.put("PulledUpMethods", RefactoringType.PULL_UP_OPERATION);
     TYPE_MAP.put("PushedDownMethods", RefactoringType.PUSH_DOWN_OPERATION);
     TYPE_MAP.put("MovedMethods", RefactoringType.MOVE_OPERATION);
-    TYPE_MAP.put("ChangedMethodSignatures", RefactoringType.CHANGE_METHOD_SIGNATURE);
+    //TYPE_MAP.put("ChangedMethodSignatures", RefactoringType.CHANGE_METHOD_SIGNATURE);
     TYPE_MAP.put("RenamedPackages", RefactoringType.RENAME_PACKAGE);
   }
 

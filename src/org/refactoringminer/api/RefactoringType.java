@@ -36,7 +36,6 @@ public enum RefactoringType {
 	CONVERT_ANONYMOUS_CLASS_TO_TYPE("Convert Anonymous Class to Type", ".+"),
 	INTRODUCE_POLYMORPHISM("Introduce Polymorphism", ".+"),
 	RENAME_PACKAGE("Change Package", "Change Package (.+) to (.+)"),
-	CHANGE_METHOD_SIGNATURE("Change Method Signature", "Change Method Signature (.+) to (.+) in class (.+)"),
 	EXTRACT_VARIABLE("Extract Variable", "Extract Variable (.+) in method (.+) from class (.+)"),
 	EXTRACT_ATTRIBUTE("Extract Attribute", "Extract Attribute (.+) in class (.+)"),
 	INLINE_VARIABLE("Inline Variable", "Inline Variable (.+) in method (.+) from class (.+)"),
@@ -63,7 +62,9 @@ public enum RefactoringType {
 	MODIFY_ATTRIBUTE_ANNOTATION("Modify Attribute Annotation", "Modify Attribute Annotation (.+) to (.+) in attribute (.+) from class (.+)"),
 	ADD_CLASS_ANNOTATION("Add Class Annotation", "Add Class Annotation (.+) in class (.+)"),
 	REMOVE_CLASS_ANNOTATION("Remove Class Annotation", "Remove Class Annotation (.+) in class (.+)"),
-	MODIFY_CLASS_ANNOTATION("Modify Class Annotation", "Modify Class Annotation (.+) to (.+) in class (.+)");
+	MODIFY_CLASS_ANNOTATION("Modify Class Annotation", "Modify Class Annotation (.+) to (.+) in class (.+)"),
+	ADD_PARAMETER("Add Parameter", "Add Parameter (.+) in method (.+) from class (.+)"),
+	REMOVE_PARAMETER("Remove Parameter", "Remove Parameter (.+) in method (.+) from class (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -118,7 +119,9 @@ public enum RefactoringType {
 		MODIFY_ATTRIBUTE_ANNOTATION,
 		ADD_CLASS_ANNOTATION,
 		REMOVE_CLASS_ANNOTATION,
-		MODIFY_CLASS_ANNOTATION
+		MODIFY_CLASS_ANNOTATION,
+		ADD_PARAMETER,
+		REMOVE_PARAMETER
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

@@ -9,23 +9,23 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.UMLParameter;
 
-public class RemoveMethodAnnotationRefactoring implements Refactoring {
-	private UMLAnnotation annotation;
+public class RemoveParameterRefactoring implements Refactoring {
+	private UMLParameter parameter;
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
 	
-	public RemoveMethodAnnotationRefactoring(UMLAnnotation annotation, UMLOperation operationBefore,
+	public RemoveParameterRefactoring(UMLParameter parameter, UMLOperation operationBefore,
 			UMLOperation operationAfter) {
-		this.annotation = annotation;
+		this.parameter = parameter;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 	}
 
-	public UMLAnnotation getAnnotation() {
-		return annotation;
+	public UMLParameter getParameter() {
+		return parameter;
 	}
 
 	public UMLOperation getOperationBefore() {
@@ -39,9 +39,9 @@ public class RemoveMethodAnnotationRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> leftSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		ranges.add(annotation.codeRange()
-				.setDescription("removed annotation")
-				.setCodeElement(annotation.toString()));
+		ranges.add(parameter.getVariableDeclaration().codeRange()
+				.setDescription("removed parameter")
+				.setCodeElement(parameter.getVariableDeclaration().toString()));
 		ranges.add(operationBefore.codeRange()
 				.setDescription("original method declaration")
 				.setCodeElement(operationBefore.toString()));
@@ -52,14 +52,14 @@ public class RemoveMethodAnnotationRefactoring implements Refactoring {
 	public List<CodeRange> rightSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
 		ranges.add(operationAfter.codeRange()
-				.setDescription("method declaration with removed annotation")
+				.setDescription("method declaration with removed parameter")
 				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}
 
 	@Override
 	public RefactoringType getRefactoringType() {
-		return RefactoringType.REMOVE_METHOD_ANNOTATION;
+		return RefactoringType.REMOVE_PARAMETER;
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class RemoveMethodAnnotationRefactoring implements Refactoring {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(annotation);
+		sb.append(parameter.getVariableDeclaration());
 		sb.append(" in method ");
 		sb.append(operationBefore);
 		sb.append(" from class ");
@@ -96,7 +96,7 @@ public class RemoveMethodAnnotationRefactoring implements Refactoring {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((annotation == null) ? 0 : annotation.hashCode());
+		result = prime * result + ((parameter.getVariableDeclaration() == null) ? 0 : parameter.getVariableDeclaration().hashCode());
 		result = prime * result + ((operationAfter == null) ? 0 : operationAfter.hashCode());
 		result = prime * result + ((operationBefore == null) ? 0 : operationBefore.hashCode());
 		return result;
@@ -110,11 +110,11 @@ public class RemoveMethodAnnotationRefactoring implements Refactoring {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		RemoveMethodAnnotationRefactoring other = (RemoveMethodAnnotationRefactoring) obj;
-		if (annotation == null) {
-			if (other.annotation != null)
+		RemoveParameterRefactoring other = (RemoveParameterRefactoring) obj;
+		if (parameter == null) {
+			if (other.parameter != null)
 				return false;
-		} else if (!annotation.equals(other.annotation))
+		} else if (!parameter.getVariableDeclaration().equals(other.parameter.getVariableDeclaration()))
 			return false;
 		if (operationAfter == null) {
 			if (other.operationAfter != null)

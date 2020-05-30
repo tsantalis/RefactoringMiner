@@ -81,7 +81,8 @@ public class RefactoringPopulator {
 		RemoveClassAnnotation(new BigInteger("281474976710656")),
 		ModifyClassAnnotation(new BigInteger("562949953421312")),
 		AddParameter(new BigInteger("1125899906842624")),
-		All(new BigInteger("2251799813685247"));
+		RemoveParameter(new BigInteger("2251799813685248")),
+		All(new BigInteger("4503599627370495"));
 
 		private BigInteger value;
 

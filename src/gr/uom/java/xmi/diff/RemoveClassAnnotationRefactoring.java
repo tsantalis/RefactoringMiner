@@ -39,7 +39,7 @@ public class RemoveClassAnnotationRefactoring implements Refactoring {
 	public List<CodeRange> leftSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
 		ranges.add(annotation.codeRange()
-				.setDescription("deleted annotation")
+				.setDescription("removed annotation")
 				.setCodeElement(annotation.toString()));
 		ranges.add(classBefore.codeRange()
 				.setDescription("original class declaration")

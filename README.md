@@ -76,6 +76,9 @@ Currently, it supports the detection of the following refactorings:
 47. Add Class Annotation
 48. Remove Class Annotation
 49. Modify Class Annotation
+50. Add Parameter
+51. Remove Parameter
+52. Reorder Parameter
 
 # How to build RefactoringMiner
 

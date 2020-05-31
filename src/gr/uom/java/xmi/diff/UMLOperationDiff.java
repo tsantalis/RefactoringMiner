@@ -29,6 +29,7 @@ public class UMLOperationDiff {
 	private boolean returnTypeChanged;
 	private boolean qualifiedReturnTypeChanged;
 	private boolean operationRenamed;
+	private boolean parametersReordered;
 	private Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
 	private UMLAnnotationListDiff annotationListDiff;
 	
@@ -63,6 +64,13 @@ public class UMLOperationDiff {
 			}
 		}
 		int matchedParameterCount = matchedParameters.size()/2;
+		List<String> parameterNames1 = removedOperation.getParameterNameList();
+		List<String> parameterNames2 = addedOperation.getParameterNameList();
+		if(removedParameters.isEmpty() && addedParameters.isEmpty() && parameterDiffList.isEmpty() &&
+				matchedParameterCount == parameterNames1.size() && matchedParameterCount == parameterNames2.size() &&
+				parameterNames1.size() == parameterNames2.size() && parameterNames1.size() > 1 && !parameterNames1.equals(parameterNames2)) {
+			parametersReordered = true;
+		}
 		//first round match parameters with the same name
 		for(Iterator<UMLParameter> removedParameterIterator = removedParameters.iterator(); removedParameterIterator.hasNext();) {
 			UMLParameter removedParameter = removedParameterIterator.next();
@@ -270,6 +278,10 @@ public class UMLOperationDiff {
 				refactorings.add(refactoring);
 			}
 		}
+		if(parametersReordered) {
+			ReorderParameterRefactoring refactoring = new ReorderParameterRefactoring(removedOperation, addedOperation);
+			refactorings.add(refactoring);
+		}
 		for(UMLAnnotation annotation : annotationListDiff.getAddedAnnotations()) {
 			AddMethodAnnotationRefactoring refactoring = new AddMethodAnnotationRefactoring(annotation, removedOperation, addedOperation);
 			refactorings.add(refactoring);
@@ -284,7 +296,7 @@ public class UMLOperationDiff {
 		}
 		return refactorings;
 	}
-	
+
 	private boolean inconsistentReplacement(VariableDeclaration originalVariable, VariableDeclaration newVariable) {
 		if(removedOperation.isStatic() || addedOperation.isStatic()) {
 			for(AbstractCodeMapping mapping : mappings) {

@@ -3697,6 +3697,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private void replaceVariablesWithArguments(Map<String, List<? extends AbstractCall>> callMap,
 			Set<String> calls, Map<String, String> parameterToArgumentMap) {
+		Set<String> finalNewCalls = new LinkedHashSet<String>();
 		for(String parameter : parameterToArgumentMap.keySet()) {
 			String argument = parameterToArgumentMap.get(parameter);
 			if(!parameter.equals(argument)) {
@@ -3714,9 +3715,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						callMap.put(afterReplacement, newCalls);
 					}
 				}
-				calls.addAll(toBeAdded);
+				finalNewCalls.addAll(toBeAdded);
 			}
 		}
+		calls.addAll(finalNewCalls);
 	}
 
 	private void findReplacements(Set<String> strings1, Set<String> strings2, ReplacementInfo replacementInfo, ReplacementType type) throws RefactoringMinerTimedOutException {

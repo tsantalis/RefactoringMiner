@@ -32,6 +32,7 @@ import gr.uom.java.xmi.diff.UMLParameterDiff;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -3695,30 +3696,78 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private void replaceVariablesWithArguments(Map<String, List<? extends AbstractCall>> callMap,
-			Set<String> calls, Map<String, String> parameterToArgumentMap) {
-		Set<String> finalNewCalls = new LinkedHashSet<String>();
-		for(String parameter : parameterToArgumentMap.keySet()) {
-			String argument = parameterToArgumentMap.get(parameter);
-			if(!parameter.equals(argument)) {
-				Set<String> toBeAdded = new LinkedHashSet<String>();
-				for(String call : calls) {
-					String afterReplacement = ReplacementUtil.performArgumentReplacement(call, parameter, argument);
-					if(!call.equals(afterReplacement)) {
-						toBeAdded.add(afterReplacement);
-						List<? extends AbstractCall> oldCalls = callMap.get(call);
-						List<AbstractCall> newCalls = new ArrayList<AbstractCall>();
-						for(AbstractCall oldCall : oldCalls) {
-							AbstractCall newCall = oldCall.update(parameter, argument);
-							newCalls.add(newCall);
-						}
-						callMap.put(afterReplacement, newCalls);
+	private boolean isCallChain(Collection<List<? extends AbstractCall>> calls) {
+		if(calls.size() > 1) {
+			AbstractCall previous = null;
+			AbstractCall current = null;
+			int chainLength = 0;
+			for(List<? extends AbstractCall> list : calls) {
+				previous = current;
+				current = list.get(0);
+				if(current != null && previous != null) {
+					if(previous.getExpression() != null && previous.getExpression().equals(current.actualString())) {
+						chainLength++;
+					}
+					else {
+						return false;
 					}
 				}
-				finalNewCalls.addAll(toBeAdded);
+			}
+			if(chainLength == calls.size()-1) {
+				return true;
 			}
 		}
-		calls.addAll(finalNewCalls);
+		return false;
+	}
+
+	private void replaceVariablesWithArguments(Map<String, List<? extends AbstractCall>> callMap,
+			Set<String> calls, Map<String, String> parameterToArgumentMap) {
+		if(isCallChain(callMap.values())) {
+			for(String parameter : parameterToArgumentMap.keySet()) {
+				String argument = parameterToArgumentMap.get(parameter);
+				if(!parameter.equals(argument)) {
+					Set<String> toBeAdded = new LinkedHashSet<String>();
+					for(String call : calls) {
+						String afterReplacement = ReplacementUtil.performArgumentReplacement(call, parameter, argument);
+						if(!call.equals(afterReplacement)) {
+							toBeAdded.add(afterReplacement);
+							List<? extends AbstractCall> oldCalls = callMap.get(call);
+							List<AbstractCall> newCalls = new ArrayList<AbstractCall>();
+							for(AbstractCall oldCall : oldCalls) {
+								AbstractCall newCall = oldCall.update(parameter, argument);
+								newCalls.add(newCall);
+							}
+							callMap.put(afterReplacement, newCalls);
+						}
+					}
+					calls.addAll(toBeAdded);
+				}
+			}
+		}
+		else {
+			Set<String> finalNewCalls = new LinkedHashSet<String>();
+			for(String parameter : parameterToArgumentMap.keySet()) {
+				String argument = parameterToArgumentMap.get(parameter);
+				if(!parameter.equals(argument)) {
+					Set<String> toBeAdded = new LinkedHashSet<String>();
+					for(String call : calls) {
+						String afterReplacement = ReplacementUtil.performArgumentReplacement(call, parameter, argument);
+						if(!call.equals(afterReplacement)) {
+							toBeAdded.add(afterReplacement);
+							List<? extends AbstractCall> oldCalls = callMap.get(call);
+							List<AbstractCall> newCalls = new ArrayList<AbstractCall>();
+							for(AbstractCall oldCall : oldCalls) {
+								AbstractCall newCall = oldCall.update(parameter, argument);
+								newCalls.add(newCall);
+							}
+							callMap.put(afterReplacement, newCalls);
+						}
+					}
+					finalNewCalls.addAll(toBeAdded);
+				}
+			}
+			calls.addAll(finalNewCalls);
+		}
 	}
 
 	private void findReplacements(Set<String> strings1, Set<String> strings2, ReplacementInfo replacementInfo, ReplacementType type) throws RefactoringMinerTimedOutException {

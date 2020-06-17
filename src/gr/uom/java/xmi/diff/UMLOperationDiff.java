@@ -4,10 +4,7 @@ import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
-import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
-import gr.uom.java.xmi.decomposition.replacement.Replacement;
-import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
@@ -58,15 +55,13 @@ public class UMLOperationDiff {
 		for(SimpleEntry<UMLParameter, UMLParameter> matchedParameter : matchedParameters) {
 			UMLParameter parameter1 = matchedParameter.getKey();
 			UMLParameter parameter2 = matchedParameter.getValue();
-			if(!parameter1.equalsQualified(parameter2)) {
-				UMLParameterDiff parameterDiff = new UMLParameterDiff(parameter1, parameter2);
-				parameterDiffList.add(parameterDiff);
-			}
+			UMLParameterDiff parameterDiff = new UMLParameterDiff(parameter1, parameter2, removedOperation, addedOperation, mappings);
+			parameterDiffList.add(parameterDiff);
 		}
 		int matchedParameterCount = matchedParameters.size()/2;
 		List<String> parameterNames1 = removedOperation.getParameterNameList();
 		List<String> parameterNames2 = addedOperation.getParameterNameList();
-		if(removedParameters.isEmpty() && addedParameters.isEmpty() && parameterDiffList.isEmpty() &&
+		if(removedParameters.isEmpty() && addedParameters.isEmpty() &&
 				matchedParameterCount == parameterNames1.size() && matchedParameterCount == parameterNames2.size() &&
 				parameterNames1.size() == parameterNames2.size() && parameterNames1.size() > 1 && !parameterNames1.equals(parameterNames2)) {
 			parametersReordered = true;
@@ -77,7 +72,7 @@ public class UMLOperationDiff {
 			for(Iterator<UMLParameter> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
 				UMLParameter addedParameter = addedParameterIterator.next();
 				if(removedParameter.getName().equals(addedParameter.getName())) {
-					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter);
+					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings);
 					parameterDiffList.add(parameterDiff);
 					addedParameterIterator.remove();
 					removedParameterIterator.remove();
@@ -92,7 +87,7 @@ public class UMLOperationDiff {
 				UMLParameter addedParameter = addedParameterIterator.next();
 				if(removedParameter.getType().equalsQualified(addedParameter.getType()) &&
 						!existsAnotherAddedParameterWithTheSameType(addedParameter)) {
-					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter);
+					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings);
 					parameterDiffList.add(parameterDiff);
 					addedParameterIterator.remove();
 					removedParameterIterator.remove();
@@ -111,7 +106,7 @@ public class UMLOperationDiff {
 					UMLParameter addedParameter = addedParameterIterator.next();
 					int indexOfAddedParameter = addedParametersWithoutReturnType.indexOf(addedParameter);
 					if(indexOfRemovedParameter == indexOfAddedParameter) {
-						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter);
+						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings);
 						parameterDiffList.add(parameterDiff);
 						addedParameterIterator.remove();
 						removedParameterIterator.remove();
@@ -121,6 +116,7 @@ public class UMLOperationDiff {
 			}
 		}
 	}
+
 	public UMLOperationDiff(UMLOperation removedOperation, UMLOperation addedOperation, Set<AbstractCodeMapping> mappings) {
 		this(removedOperation, addedOperation);
 		this.mappings = mappings;
@@ -250,21 +246,7 @@ public class UMLOperationDiff {
 			}
 		}
 		for(UMLParameterDiff parameterDiff : getParameterDiffList()) {
-			VariableDeclaration originalVariable = parameterDiff.getRemovedParameter().getVariableDeclaration();
-			VariableDeclaration newVariable = parameterDiff.getAddedParameter().getVariableDeclaration();
-			Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReferences(originalVariable, newVariable, mappings);
-			RenameVariableRefactoring renameRefactoring = null;
-			if(parameterDiff.isNameChanged() && !inconsistentReplacement(originalVariable, newVariable)) {
-				renameRefactoring = new RenameVariableRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references);
-				refactorings.add(renameRefactoring);
-			}
-			if((parameterDiff.isTypeChanged() || parameterDiff.isQualifiedTypeChanged()) && !inconsistentReplacement(originalVariable, newVariable)) {
-				ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references);
-				if(renameRefactoring != null) {
-					refactoring.addRelatedRefactoring(renameRefactoring);
-				}
-				refactorings.add(refactoring);
-			}
+			refactorings.addAll(parameterDiff.getRefactorings());
 		}
 		if(removedParameters.isEmpty()) {
 			for(UMLParameter umlParameter : addedParameters) {
@@ -295,23 +277,5 @@ public class UMLOperationDiff {
 			refactorings.add(refactoring);
 		}
 		return refactorings;
-	}
-
-	private boolean inconsistentReplacement(VariableDeclaration originalVariable, VariableDeclaration newVariable) {
-		if(removedOperation.isStatic() || addedOperation.isStatic()) {
-			for(AbstractCodeMapping mapping : mappings) {
-				for(Replacement replacement : mapping.getReplacements()) {
-					if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
-						if(replacement.getBefore().equals(originalVariable.getVariableName()) && !replacement.getAfter().equals(newVariable.getVariableName())) {
-							return true;
-						}
-						else if(!replacement.getBefore().equals(originalVariable.getVariableName()) && replacement.getAfter().equals(newVariable.getVariableName())) {
-							return true;
-						}
-					}
-				}
-			}
-		}
-		return false;
 	}
 }

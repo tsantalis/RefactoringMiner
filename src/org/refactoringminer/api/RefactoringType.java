@@ -63,6 +63,7 @@ public enum RefactoringType {
 	ADD_CLASS_ANNOTATION("Add Class Annotation", "Add Class Annotation (.+) in class (.+)"),
 	REMOVE_CLASS_ANNOTATION("Remove Class Annotation", "Remove Class Annotation (.+) in class (.+)"),
 	MODIFY_CLASS_ANNOTATION("Modify Class Annotation", "Modify Class Annotation (.+) to (.+) in class (.+)"),
+	ADD_PARAMETER_ANNOTATION("Add Parameter Annotation", "Add Parameter Annotation (.+) in parameter (.+) in method (.+) from class (.+)"),
 	ADD_PARAMETER("Add Parameter", "Add Parameter (.+) in method (.+) from class (.+)"),
 	REMOVE_PARAMETER("Remove Parameter", "Remove Parameter (.+) in method (.+) from class (.+)"),
 	REORDER_PARAMETER("Reorder Parameter", "Reorder Parameter \\[(.+)\\] to \\[(.+)\\] in method (.+) from class (.+)");
@@ -123,7 +124,8 @@ public enum RefactoringType {
 		MODIFY_CLASS_ANNOTATION,
 		ADD_PARAMETER,
 		REMOVE_PARAMETER,
-		REORDER_PARAMETER
+		REORDER_PARAMETER,
+		ADD_PARAMETER_ANNOTATION
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

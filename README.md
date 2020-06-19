@@ -170,6 +170,7 @@ Refactorings and Commit Messages](https://doi.org/10.1109/SCAM.2019.00017)," *19
 34. Anthony Peruma, Christian D. Newman, Mohamed Wiem Mkaouer, Ali Ouni, and Fabio Palomba, "An Exploratory Study on the Refactoring of Unit Test Files in Android Applications," *4th International Workshop on Refactoring* (IWoR 2020), Seoul, South Korea, 2020.
 35. Yoshiki Higo, Shinpei Hayashi, and Shinji Kusumoto, "[On Tracking Java Methods with Git Mechanisms](https://doi.org/10.1016/j.jss.2020.110571)," *Journal of Systems and Software*, Volume 165, July 2020.
 36. Eduardo Fernandes, Alexander Chávez, Alessandro Garcia, Isabella Ferreira, Diego Cedrim, Leonardo Sousa, and Willian Oizumi, "[Refactoring Effect on Internal Quality Attributes: What Haven't They Told You Yet?](https://doi.org/10.1016/j.infsof.2020.106347)," *Information and Software Technology*, 2020.
+37. Rrezarta Krasniqi, and Jane Cleland-Huang, "[Enhancing Source Code Refactoring Detection with Explanations from Commit Messages](https://doi.org/10.1109/SANER48275.2020.9054816)," *IEEE 27th International Conference on Software Analysis, Evolution and Reengineering* (SANER 2020), London, ON, Canada, February 18-21, 2020.
 
 # Contributors
 The code in package **gr.uom.java.xmi.*** is developed by [Nikolaos Tsantalis](https://github.com/tsantalis).

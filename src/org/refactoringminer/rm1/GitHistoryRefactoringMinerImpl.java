@@ -596,6 +596,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		pool.shutdown();
 		pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
 		repositoryDirectories(currentCommit.getTree(), "", repositoryDirectoriesCurrent, deletedAndRenamedFileParentDirectories);
+		repositoryDirectoriesCurrent.addAll(deletedAndRenamedFileParentDirectories);
 		//allRepositoryDirectories(currentCommit.getTree(), "", repositoryDirectoriesCurrent);
 		//GHCommit parentCommit = repository.getCommit(parentCommitId);
 		//allRepositoryDirectories(parentCommit.getTree(), "", repositoryDirectoriesBefore);

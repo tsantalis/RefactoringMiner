@@ -82,7 +82,9 @@ public class MoveAttributeRefactoring implements Refactoring {
 			return this.originalAttribute.equals(other.originalAttribute) &&
 				this.movedAttribute.equals(other.movedAttribute) &&
 				this.getSourceClassName().equals(other.getSourceClassName()) &&
-				this.getTargetClassName().equals(other.getTargetClassName());
+				this.getTargetClassName().equals(other.getTargetClassName()) &&
+				this.originalAttribute.getLocationInfo().equals(other.originalAttribute.getLocationInfo()) &&
+				this.movedAttribute.getLocationInfo().equals(other.movedAttribute.getLocationInfo());
 		}
 		return false;
 	}
@@ -94,6 +96,8 @@ public class MoveAttributeRefactoring implements Refactoring {
 			result = 37*result + movedAttribute.hashCode();
 			result = 37*result + getSourceClassName().hashCode();
 			result = 37*result + getTargetClassName().hashCode();
+			result = 37*result + originalAttribute.getLocationInfo().hashCode();
+			result = 37*result + movedAttribute.getLocationInfo().hashCode();
 			hashCode = result;
 		}
 		return hashCode;

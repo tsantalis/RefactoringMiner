@@ -19,7 +19,6 @@ import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapperComparator;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
-import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
@@ -612,24 +611,24 @@ public class UMLModelDiff {
 			   processCandidates(candidates, refactorings);
 		   }
 	   }
-	   return filterOutDuplicateRefactorings(refactorings);
+	   return refactorings;
    }
 
-   private List<MoveAttributeRefactoring> filterOutDuplicateRefactorings(List<MoveAttributeRefactoring> refactorings) {
-	   List<MoveAttributeRefactoring> filtered = new ArrayList<MoveAttributeRefactoring>();
-	   Map<String, List<MoveAttributeRefactoring>> map = new LinkedHashMap<String, List<MoveAttributeRefactoring>>();
-	   for(MoveAttributeRefactoring ref : refactorings) {
+   private List<Refactoring> filterOutDuplicateRefactorings(Set<Refactoring> refactorings) {
+	   List<Refactoring> filtered = new ArrayList<Refactoring>();
+	   Map<String, List<Refactoring>> map = new LinkedHashMap<String, List<Refactoring>>();
+	   for(Refactoring ref : refactorings) {
 		   if(map.containsKey(ref.toString())) {
 			   map.get(ref.toString()).add(ref);
 		   }
 		   else {
-			   List<MoveAttributeRefactoring> refs = new ArrayList<MoveAttributeRefactoring>();
+			   List<Refactoring> refs = new ArrayList<Refactoring>();
 			   refs.add(ref);
 			   map.put(ref.toString(), refs);
 		   }
 	   }
 	   for(String key : map.keySet()) {
-		   List<MoveAttributeRefactoring> refs = map.get(key);
+		   List<Refactoring> refs = map.get(key);
 		   if(refs.size() == 1) {
 			   filtered.addAll(refs);
 		   }
@@ -640,32 +639,32 @@ public class UMLModelDiff {
 	   return filtered;
    }
 
-   private List<MoveAttributeRefactoring> filterOutBasedOnFilePath(List<MoveAttributeRefactoring> refs) {
-	   List<MoveAttributeRefactoring> filtered = new ArrayList<MoveAttributeRefactoring>();
-	   Map<String, List<MoveAttributeRefactoring>> groupBySourceFilePath = new LinkedHashMap<String, List<MoveAttributeRefactoring>>();
-	   for(MoveAttributeRefactoring ref : refs) {
-		   String sourceFilePath = ref.getOriginalAttribute().getLocationInfo().getFilePath();
+   private List<Refactoring> filterOutBasedOnFilePath(List<Refactoring> refs) {
+	   List<Refactoring> filtered = new ArrayList<Refactoring>();
+	   Map<String, List<Refactoring>> groupBySourceFilePath = new LinkedHashMap<String, List<Refactoring>>();
+	   for(Refactoring ref : refs) {
+		   String sourceFilePath = ref.getInvolvedClassesBeforeRefactoring().iterator().next().getLeft();
 		   if(groupBySourceFilePath.containsKey(sourceFilePath)) {
 			   groupBySourceFilePath.get(sourceFilePath).add(ref);
 		   }
 		   else {
-			   List<MoveAttributeRefactoring> refs2 = new ArrayList<MoveAttributeRefactoring>();
+			   List<Refactoring> refs2 = new ArrayList<Refactoring>();
 			   refs2.add(ref);
 			   groupBySourceFilePath.put(sourceFilePath, refs2);
 		   }
 	   }
 	   for(String sourceFilePath : groupBySourceFilePath.keySet()) {
-		   List<MoveAttributeRefactoring> sourceFilePathGroup = groupBySourceFilePath.get(sourceFilePath);
-		   TreeMap<Integer, List<MoveAttributeRefactoring>> groupByLongestCommonSourceFilePath = new TreeMap<Integer, List<MoveAttributeRefactoring>>();
-		   for(MoveAttributeRefactoring ref : sourceFilePathGroup) {
-			   String longestCommonFilePathPrefix = PrefixSuffixUtils.longestCommonPrefix(ref.getOriginalAttribute().getLocationInfo().getFilePath(),
-					   ref.getMovedAttribute().getLocationInfo().getFilePath());
+		   List<Refactoring> sourceFilePathGroup = groupBySourceFilePath.get(sourceFilePath);
+		   TreeMap<Integer, List<Refactoring>> groupByLongestCommonSourceFilePath = new TreeMap<Integer, List<Refactoring>>();
+		   for(Refactoring ref : sourceFilePathGroup) {
+			   String longestCommonFilePathPrefix = PrefixSuffixUtils.longestCommonPrefix(ref.getInvolvedClassesBeforeRefactoring().iterator().next().getLeft(),
+					   ref.getInvolvedClassesAfterRefactoring().iterator().next().getLeft());
 			   int length = longestCommonFilePathPrefix.length();
 			   if(groupByLongestCommonSourceFilePath.containsKey(length)) {
 				   groupByLongestCommonSourceFilePath.get(length).add(ref);
 			   }
 			   else {
-				   List<MoveAttributeRefactoring> refs2 = new ArrayList<MoveAttributeRefactoring>();
+				   List<Refactoring> refs2 = new ArrayList<Refactoring>();
 				   refs2.add(ref);
 				   groupByLongestCommonSourceFilePath.put(length, refs2);
 			   }
@@ -1483,7 +1482,7 @@ public class UMLModelDiff {
       for(UMLClassRenameDiff classDiff : classRenameDiffList) {
     	  inferMethodSignatureRelatedRefactorings(classDiff, refactorings);
       }
-      return new ArrayList<Refactoring>(refactorings);
+      return filterOutDuplicateRefactorings(refactorings);
    }
 
    private Map<RenamePattern, Integer> typeRenamePatternMap(Set<Refactoring> refactorings) {

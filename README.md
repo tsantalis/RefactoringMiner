@@ -112,7 +112,7 @@ The Chrome extension can detect refactorings for **public** projects and commits
 
 # Research
 ## How to cite RefactoringMiner
-If you are using RefactoringMiner in your research, please cite the following paper:
+If you are using RefactoringMiner in your research, please cite the following papers:
 
 Nikolaos Tsantalis, Matin Mansouri, Laleh Eshkevari, Davood Mazinanian, and Danny Dig, "[Accurate and Efficient Refactoring Detection in Commit History](https://users.encs.concordia.ca/~nikolaos/publications/ICSE_2018.pdf)," *40th International Conference on Software Engineering* (ICSE 2018), Gothenburg, Sweden, May 27 - June 3, 2018.
 
@@ -132,6 +132,17 @@ Nikolaos Tsantalis, Matin Mansouri, Laleh Eshkevari, Davood Mazinanian, and Dann
 	publisher = {ACM},
 	address = {New York, NY, USA},
 	keywords = {Git, Oracle, abstract syntax tree, accuracy, commit, refactoring},
+    }
+
+Nikolaos Tsantalis, Ameya Ketkar, and Danny Dig, "[RefactoringMiner 2.0](https://users.encs.concordia.ca/~nikolaos/publications/TSE_2020.pdf)," *IEEE Transactions on Software Engineering*, 2020.
+
+    @article{Tsantalis:TSE:2020:RefactoringMiner2.0,
+	author = {Tsantalis, Nikolaos and Ketkar, Ameya and Dig, Danny},
+	title = {RefactoringMiner 2.0},
+	journal = {IEEE Transactions on Software Engineering},
+	year = {2020},
+	numpages = {21},
+	doi = {10.1109/TSE.2020.3007722},
     }
 
 ## Empirical studies based on RefactoringMiner
@@ -174,6 +185,7 @@ Refactorings and Commit Messages](https://doi.org/10.1109/SCAM.2019.00017)," *19
 35. Yoshiki Higo, Shinpei Hayashi, and Shinji Kusumoto, "[On Tracking Java Methods with Git Mechanisms](https://doi.org/10.1016/j.jss.2020.110571)," *Journal of Systems and Software*, Volume 165, July 2020.
 36. Eduardo Fernandes, Alexander Chávez, Alessandro Garcia, Isabella Ferreira, Diego Cedrim, Leonardo Sousa, and Willian Oizumi, "[Refactoring Effect on Internal Quality Attributes: What Haven't They Told You Yet?](https://doi.org/10.1016/j.infsof.2020.106347)," *Information and Software Technology*, 2020.
 37. Rrezarta Krasniqi, and Jane Cleland-Huang, "[Enhancing Source Code Refactoring Detection with Explanations from Commit Messages](https://doi.org/10.1109/SANER48275.2020.9054816)," *IEEE 27th International Conference on Software Analysis, Evolution and Reengineering* (SANER 2020), London, ON, Canada, February 18-21, 2020.
+38. Anthony Peruma, Mohamed Wiem Mkaouer, Michael J.Decker, and Christian D.Newman, "[Contextualizing rename decisions using refactorings, commit messages, and data types](https://doi.org/10.1016/j.jss.2020.110704)," *Journal of Systems and Software*, Volume 169, November 2020.
 
 # Contributors
 The code in package **gr.uom.java.xmi.*** is developed by [Nikolaos Tsantalis](https://github.com/tsantalis).

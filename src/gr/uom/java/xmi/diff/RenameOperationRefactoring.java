@@ -127,4 +127,43 @@ public class RenameOperationRefactoring implements Refactoring {
 				.setCodeElement(renamedOperation.toString()));
 		return ranges;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((renamedOperation == null) ? 0 : renamedOperation.hashCode());
+		result = prime * result + ((renamedOperation == null) ? 0 : renamedOperation.getLocationInfo().hashCode());
+		result = prime * result + ((originalOperation == null) ? 0 : originalOperation.hashCode());
+		result = prime * result + ((originalOperation == null) ? 0 : originalOperation.getLocationInfo().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RenameOperationRefactoring other = (RenameOperationRefactoring) obj;
+		if (renamedOperation == null) {
+			if (other.renamedOperation != null)
+				return false;
+		} else if (!renamedOperation.equals(other.renamedOperation)) {
+			return false;
+		} else if(!renamedOperation.getLocationInfo().equals(other.renamedOperation.getLocationInfo())) {
+			return false;
+		}
+		if (originalOperation == null) {
+			if (other.originalOperation != null)
+				return false;
+		} else if (!originalOperation.equals(other.originalOperation)) {
+			return false;
+		} else if (!originalOperation.getLocationInfo().equals(other.originalOperation.getLocationInfo())) {
+			return false;
+		}
+		return true;
+	}
 }

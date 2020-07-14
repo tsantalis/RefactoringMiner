@@ -135,7 +135,7 @@ public class UMLAttributeDiff {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 		RenameAttributeRefactoring rename = null;
 		if(isRenamed()) {
-			rename = new RenameAttributeRefactoring(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), removedAttribute.getClassName(), addedAttribute.getClassName(), set);
+			rename = new RenameAttributeRefactoring(removedAttribute, addedAttribute, set);
 			refactorings.add(rename);
 		}
 		if(isTypeChanged() || isQualifiedTypeChanged()) {

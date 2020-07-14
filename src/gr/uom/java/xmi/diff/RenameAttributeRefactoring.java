@@ -9,29 +9,29 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.UMLAttribute;
 
 public class RenameAttributeRefactoring implements Refactoring {
-	private VariableDeclaration originalAttribute;
-	private VariableDeclaration renamedAttribute;
+	private UMLAttribute originalAttribute;
+	private UMLAttribute renamedAttribute;
 	private Set<CandidateAttributeRefactoring> attributeRenames;
 	private String classNameBefore;
 	private String classNameAfter;
 
-	public RenameAttributeRefactoring(VariableDeclaration originalAttribute, VariableDeclaration renamedAttribute,
-			String classNameBefore, String classNameAfter, Set<CandidateAttributeRefactoring> attributeRenames) {
+	public RenameAttributeRefactoring(UMLAttribute originalAttribute, UMLAttribute renamedAttribute,
+			Set<CandidateAttributeRefactoring> attributeRenames) {
 		this.originalAttribute = originalAttribute;
 		this.renamedAttribute = renamedAttribute;
-		this.classNameBefore = classNameBefore;
-		this.classNameAfter = classNameAfter;
+		this.classNameBefore = originalAttribute.getClassName();;
+		this.classNameAfter = renamedAttribute.getClassName();;
 		this.attributeRenames = attributeRenames;
 	}
 
-	public VariableDeclaration getOriginalAttribute() {
+	public UMLAttribute getOriginalAttribute() {
 		return originalAttribute;
 	}
 
-	public VariableDeclaration getRenamedAttribute() {
+	public UMLAttribute getRenamedAttribute() {
 		return renamedAttribute;
 	}
 

@@ -10,22 +10,22 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
-import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.UMLAttribute;
 
 public class ChangeAttributeTypeRefactoring implements Refactoring {
-	private VariableDeclaration originalAttribute;
-	private VariableDeclaration changedTypeAttribute;
+	private UMLAttribute originalAttribute;
+	private UMLAttribute changedTypeAttribute;
 	private String classNameBefore;
 	private String classNameAfter;
 	private Set<AbstractCodeMapping> attributeReferences;
 	private Set<Refactoring> relatedRefactorings;
 	
-	public ChangeAttributeTypeRefactoring(VariableDeclaration originalAttribute,
-			VariableDeclaration changedTypeAttribute, String classNameBefore, String classNameAfter, Set<AbstractCodeMapping> attributeReferences) {
+	public ChangeAttributeTypeRefactoring(UMLAttribute originalAttribute,
+										  UMLAttribute changedTypeAttribute, Set<AbstractCodeMapping> attributeReferences) {
 		this.originalAttribute = originalAttribute;
 		this.changedTypeAttribute = changedTypeAttribute;
-		this.classNameBefore = classNameBefore;
-		this.classNameAfter = classNameAfter;
+		this.classNameBefore = originalAttribute.getClassName();
+		this.classNameAfter = changedTypeAttribute.getClassName();
 		this.attributeReferences = attributeReferences;
 		this.relatedRefactorings = new LinkedHashSet<Refactoring>();
 	}
@@ -38,11 +38,11 @@ public class ChangeAttributeTypeRefactoring implements Refactoring {
 		return relatedRefactorings;
 	}
 
-	public VariableDeclaration getOriginalAttribute() {
+	public UMLAttribute getOriginalAttribute() {
 		return originalAttribute;
 	}
 
-	public VariableDeclaration getChangedTypeAttribute() {
+	public UMLAttribute getChangedTypeAttribute() {
 		return changedTypeAttribute;
 	}
 

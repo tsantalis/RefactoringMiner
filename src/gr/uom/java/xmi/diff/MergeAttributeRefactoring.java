@@ -9,16 +9,16 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.UMLAttribute;
 
 public class MergeAttributeRefactoring implements Refactoring {
-	private Set<VariableDeclaration> mergedAttributes;
-	private VariableDeclaration newAttribute;
+	private Set<UMLAttribute> mergedAttributes;
+	private UMLAttribute newAttribute;
 	private Set<CandidateMergeVariableRefactoring> attributeMerges;
 	private String classNameBefore;
 	private String classNameAfter;
 	
-	public MergeAttributeRefactoring(Set<VariableDeclaration> mergedAttributes, VariableDeclaration newAttribute,
+	public MergeAttributeRefactoring(Set<UMLAttribute> mergedAttributes, UMLAttribute newAttribute,
 			String classNameBefore, String classNameAfter, Set<CandidateMergeVariableRefactoring> attributeMerges) {
 		this.mergedAttributes = mergedAttributes;
 		this.newAttribute = newAttribute;
@@ -27,11 +27,11 @@ public class MergeAttributeRefactoring implements Refactoring {
 		this.attributeMerges = attributeMerges;
 	}
 
-	public Set<VariableDeclaration> getMergedAttributes() {
+	public Set<UMLAttribute> getMergedAttributes() {
 		return mergedAttributes;
 	}
 
-	public VariableDeclaration getNewAttribute() {
+	public UMLAttribute getNewAttribute() {
 		return newAttribute;
 	}
 
@@ -110,7 +110,7 @@ public class MergeAttributeRefactoring implements Refactoring {
 
 	public Set<ImmutablePair<String, String>> getInvolvedClassesBeforeRefactoring() {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
-		for(VariableDeclaration mergedAttribute : this.mergedAttributes) {
+		for(UMLAttribute mergedAttribute : this.mergedAttributes) {
 			pairs.add(new ImmutablePair<String, String>(mergedAttribute.getLocationInfo().getFilePath(), getClassNameBefore()));
 		}
 		return pairs;
@@ -125,7 +125,7 @@ public class MergeAttributeRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> leftSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		for(VariableDeclaration mergedAttribute : mergedAttributes) {
+		for(UMLAttribute mergedAttribute : mergedAttributes) {
 			ranges.add(mergedAttribute.codeRange()
 					.setDescription("merged attribute declaration")
 					.setCodeElement(mergedAttribute.toString()));

@@ -143,8 +143,6 @@ public class MergeAttributeRefactoring implements Refactoring {
 	}
 
 	private Set<VariableDeclaration> getMergedVariables() {
-		if (mergedAttributes == null)
-			return Collections.emptySet();
-		return mergedAttributes.stream().map(UMLAttribute::getVariableDeclaration).filter(Objects::nonNull).collect(Collectors.toSet());
+		return mergedAttributes.stream().map(UMLAttribute::getVariableDeclaration).filter(Objects::nonNull).collect(Collectors.toCollection(LinkedHashSet::new));
 	}
 }

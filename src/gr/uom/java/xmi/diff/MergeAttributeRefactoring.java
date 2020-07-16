@@ -1,14 +1,13 @@
 package gr.uom.java.xmi.diff;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.UMLAttribute;
 
 public class MergeAttributeRefactoring implements Refactoring {
@@ -17,7 +16,7 @@ public class MergeAttributeRefactoring implements Refactoring {
 	private Set<CandidateMergeVariableRefactoring> attributeMerges;
 	private String classNameBefore;
 	private String classNameAfter;
-	
+
 	public MergeAttributeRefactoring(Set<UMLAttribute> mergedAttributes, UMLAttribute newAttribute,
 			String classNameBefore, String classNameAfter, Set<CandidateMergeVariableRefactoring> attributeMerges) {
 		this.mergedAttributes = mergedAttributes;
@@ -58,9 +57,9 @@ public class MergeAttributeRefactoring implements Refactoring {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(mergedAttributes);
+		sb.append(getMergedVariables());
 		sb.append(" to ");
-		sb.append(newAttribute);
+		sb.append(newAttribute.getVariableDeclaration());
 		sb.append(" in class ").append(classNameAfter);
 		return sb.toString();
 	}
@@ -71,8 +70,9 @@ public class MergeAttributeRefactoring implements Refactoring {
 		int result = 1;
 		result = prime * result + ((classNameAfter == null) ? 0 : classNameAfter.hashCode());
 		result = prime * result + ((classNameBefore == null) ? 0 : classNameBefore.hashCode());
-		result = prime * result + ((mergedAttributes == null) ? 0 : mergedAttributes.hashCode());
-		result = prime * result + ((newAttribute == null) ? 0 : newAttribute.hashCode());
+		Set<VariableDeclaration> mergedVariables = getMergedVariables();
+		result = prime * result + ((mergedVariables == null) ? 0 : mergedVariables.hashCode());
+		result = prime * result + ((newAttribute == null || newAttribute.getVariableDeclaration() == null) ? 0 : newAttribute.getVariableDeclaration().hashCode());
 		return result;
 	}
 
@@ -95,15 +95,20 @@ public class MergeAttributeRefactoring implements Refactoring {
 				return false;
 		} else if (!classNameBefore.equals(other.classNameBefore))
 			return false;
-		if (mergedAttributes == null) {
-			if (other.mergedAttributes != null)
+		Set<VariableDeclaration> thisMergedVariables = this.getMergedVariables();
+		Set<VariableDeclaration> otherMergedVariables = other.getMergedVariables();
+		if (thisMergedVariables == null) {
+			if (otherMergedVariables != null)
 				return false;
-		} else if (!mergedAttributes.equals(other.mergedAttributes))
+		} else if (!thisMergedVariables.equals(otherMergedVariables))
 			return false;
 		if (newAttribute == null) {
 			if (other.newAttribute != null)
 				return false;
-		} else if (!newAttribute.equals(other.newAttribute))
+		} else if (newAttribute.getVariableDeclaration() == null) {
+			if (other.newAttribute.getVariableDeclaration() != null)
+				return false;
+		} else if (!newAttribute.getVariableDeclaration().equals(other.newAttribute.getVariableDeclaration()))
 			return false;
 		return true;
 	}
@@ -140,5 +145,11 @@ public class MergeAttributeRefactoring implements Refactoring {
 				.setDescription("new attribute declaration")
 				.setCodeElement(newAttribute.toString()));
 		return ranges;
+	}
+
+	private Set<VariableDeclaration> getMergedVariables() {
+		if (mergedAttributes == null)
+			return null;
+		return mergedAttributes.stream().map(UMLAttribute::getVariableDeclaration).filter(Objects::nonNull).collect(Collectors.toSet());
 	}
 }

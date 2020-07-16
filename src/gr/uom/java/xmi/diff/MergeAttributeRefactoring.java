@@ -71,7 +71,7 @@ public class MergeAttributeRefactoring implements Refactoring {
 		result = prime * result + ((classNameAfter == null) ? 0 : classNameAfter.hashCode());
 		result = prime * result + ((classNameBefore == null) ? 0 : classNameBefore.hashCode());
 		Set<VariableDeclaration> mergedVariables = getMergedVariables();
-		result = prime * result + ((mergedVariables == null) ? 0 : mergedVariables.hashCode());
+		result = prime * result + ((mergedVariables.isEmpty()) ? 0 : mergedVariables.hashCode());
 		result = prime * result + ((newAttribute == null || newAttribute.getVariableDeclaration() == null) ? 0 : newAttribute.getVariableDeclaration().hashCode());
 		return result;
 	}
@@ -95,12 +95,7 @@ public class MergeAttributeRefactoring implements Refactoring {
 				return false;
 		} else if (!classNameBefore.equals(other.classNameBefore))
 			return false;
-		Set<VariableDeclaration> thisMergedVariables = this.getMergedVariables();
-		Set<VariableDeclaration> otherMergedVariables = other.getMergedVariables();
-		if (thisMergedVariables == null) {
-			if (otherMergedVariables != null)
-				return false;
-		} else if (!thisMergedVariables.equals(otherMergedVariables))
+		if (!this.getMergedVariables().equals(other.getMergedVariables()))
 			return false;
 		if (newAttribute == null) {
 			if (other.newAttribute != null)
@@ -130,7 +125,7 @@ public class MergeAttributeRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> leftSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		for(UMLAttribute mergedAttribute : mergedAttributes) {
+		for(VariableDeclaration mergedAttribute : getMergedVariables()) {
 			ranges.add(mergedAttribute.codeRange()
 					.setDescription("merged attribute declaration")
 					.setCodeElement(mergedAttribute.toString()));
@@ -141,15 +136,15 @@ public class MergeAttributeRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> rightSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		ranges.add(newAttribute.codeRange()
+		ranges.add(newAttribute.getVariableDeclaration().codeRange()
 				.setDescription("new attribute declaration")
-				.setCodeElement(newAttribute.toString()));
+				.setCodeElement(newAttribute.getVariableDeclaration().toString()));
 		return ranges;
 	}
 
 	private Set<VariableDeclaration> getMergedVariables() {
 		if (mergedAttributes == null)
-			return null;
+			return Collections.emptySet();
 		return mergedAttributes.stream().map(UMLAttribute::getVariableDeclaration).filter(Objects::nonNull).collect(Collectors.toSet());
 	}
 }

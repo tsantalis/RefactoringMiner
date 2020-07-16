@@ -58,9 +58,9 @@ public class RenameAttributeRefactoring implements Refactoring {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(originalAttribute);
+		sb.append(originalAttribute.getVariableDeclaration());
 		sb.append(" to ");
-		sb.append(renamedAttribute);
+		sb.append(renamedAttribute.getVariableDeclaration());
 		sb.append(" in class ").append(classNameAfter);
 		return sb.toString();
 	}
@@ -71,8 +71,8 @@ public class RenameAttributeRefactoring implements Refactoring {
 		int result = 1;
 		result = prime * result + ((classNameAfter == null) ? 0 : classNameAfter.hashCode());
 		result = prime * result + ((classNameBefore == null) ? 0 : classNameBefore.hashCode());
-		result = prime * result + ((originalAttribute == null) ? 0 : originalAttribute.hashCode());
-		result = prime * result + ((renamedAttribute == null) ? 0 : renamedAttribute.hashCode());
+		result = prime * result + ((originalAttribute == null || originalAttribute.getVariableDeclaration() == null) ? 0 : originalAttribute.getVariableDeclaration().hashCode());
+		result = prime * result + ((renamedAttribute == null || renamedAttribute.getVariableDeclaration() == null) ? 0 : renamedAttribute.getVariableDeclaration().hashCode());
 		return result;
 	}
 
@@ -98,12 +98,18 @@ public class RenameAttributeRefactoring implements Refactoring {
 		if (originalAttribute == null) {
 			if (other.originalAttribute != null)
 				return false;
-		} else if (!originalAttribute.equals(other.originalAttribute))
+		} else if(originalAttribute.getVariableDeclaration() == null) {
+			if(other.originalAttribute.getVariableDeclaration() != null)
+				return false;
+		} else if (!originalAttribute.getVariableDeclaration().equals(other.originalAttribute.getVariableDeclaration()))
 			return false;
 		if (renamedAttribute == null) {
 			if (other.renamedAttribute != null)
 				return false;
-		} else if (!renamedAttribute.equals(other.renamedAttribute))
+		} else if(renamedAttribute.getVariableDeclaration() == null) {
+			if(other.renamedAttribute.getVariableDeclaration() != null)
+				return false;
+		} else if (!renamedAttribute.getVariableDeclaration().equals(other.renamedAttribute.getVariableDeclaration()))
 			return false;
 		return true;
 	}

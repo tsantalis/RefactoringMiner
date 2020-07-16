@@ -1,14 +1,13 @@
 package gr.uom.java.xmi.diff;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.UMLAttribute;
 
 public class SplitAttributeRefactoring implements Refactoring {
@@ -60,9 +59,9 @@ public class SplitAttributeRefactoring implements Refactoring {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(oldAttribute);
+		sb.append(oldAttribute.getVariableDeclaration());
 		sb.append(" to ");
-		sb.append(splitAttributes);
+		sb.append(getSplitVariables());
 		sb.append(" in class ").append(classNameAfter);
 		return sb.toString();
 	}
@@ -73,8 +72,9 @@ public class SplitAttributeRefactoring implements Refactoring {
 		int result = 1;
 		result = prime * result + ((classNameAfter == null) ? 0 : classNameAfter.hashCode());
 		result = prime * result + ((classNameBefore == null) ? 0 : classNameBefore.hashCode());
-		result = prime * result + ((oldAttribute == null) ? 0 : oldAttribute.hashCode());
-		result = prime * result + ((splitAttributes == null) ? 0 : splitAttributes.hashCode());
+		result = prime * result + ((oldAttribute == null || oldAttribute.getVariableDeclaration() == null) ? 0 : oldAttribute.getVariableDeclaration().hashCode());
+		Set<VariableDeclaration> splitVariables = getSplitVariables();
+		result = prime * result + ((splitVariables == null) ? 0 : splitVariables.hashCode());
 		return result;
 	}
 
@@ -100,13 +100,22 @@ public class SplitAttributeRefactoring implements Refactoring {
 		if (oldAttribute == null) {
 			if (other.oldAttribute != null)
 				return false;
-		} else if (!oldAttribute.equals(other.oldAttribute))
+		} else if (oldAttribute.getVariableDeclaration() == null) {
+			if (other.oldAttribute.getVariableDeclaration() != null)
+				return false;
+		} else if (!oldAttribute.getVariableDeclaration().equals(other.oldAttribute.getVariableDeclaration()))
 			return false;
 		if (splitAttributes == null) {
 			if (other.splitAttributes != null)
 				return false;
-		} else if (!splitAttributes.equals(other.splitAttributes))
-			return false;
+		}
+		Set<VariableDeclaration> thisSplitVariables = this.getSplitVariables();
+		Set<VariableDeclaration> otherSplitVariables = other.getSplitVariables();
+		if (thisSplitVariables == null) {
+			if (otherSplitVariables != null)
+				return false;
+		} else if (!thisSplitVariables.equals(otherSplitVariables))
+				return false;
 		return true;
 	}
 
@@ -144,5 +153,11 @@ public class SplitAttributeRefactoring implements Refactoring {
 					.setCodeElement(splitAttribute.toString()));
 		}
 		return ranges;
+	}
+
+	private Set<VariableDeclaration> getSplitVariables() {
+		if (splitAttributes == null)
+			return null;
+		return splitAttributes.stream().map(UMLAttribute::getVariableDeclaration).filter(Objects::nonNull).collect(Collectors.toSet());
 	}
 }

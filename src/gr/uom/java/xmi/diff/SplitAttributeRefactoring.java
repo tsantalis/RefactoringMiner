@@ -74,7 +74,7 @@ public class SplitAttributeRefactoring implements Refactoring {
 		result = prime * result + ((classNameBefore == null) ? 0 : classNameBefore.hashCode());
 		result = prime * result + ((oldAttribute == null || oldAttribute.getVariableDeclaration() == null) ? 0 : oldAttribute.getVariableDeclaration().hashCode());
 		Set<VariableDeclaration> splitVariables = getSplitVariables();
-		result = prime * result + ((splitVariables == null) ? 0 : splitVariables.hashCode());
+		result = prime * result + ((splitVariables.isEmpty()) ? 0 : splitVariables.hashCode());
 		return result;
 	}
 
@@ -109,12 +109,7 @@ public class SplitAttributeRefactoring implements Refactoring {
 			if (other.splitAttributes != null)
 				return false;
 		}
-		Set<VariableDeclaration> thisSplitVariables = this.getSplitVariables();
-		Set<VariableDeclaration> otherSplitVariables = other.getSplitVariables();
-		if (thisSplitVariables == null) {
-			if (otherSplitVariables != null)
-				return false;
-		} else if (!thisSplitVariables.equals(otherSplitVariables))
+		if (!this.getSplitVariables().equals(other.getSplitVariables()))
 				return false;
 		return true;
 	}
@@ -138,26 +133,26 @@ public class SplitAttributeRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> leftSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		ranges.add(oldAttribute.codeRange()
+		ranges.add(oldAttribute.getVariableDeclaration().codeRange()
 				.setDescription("original attribute declaration")
-				.setCodeElement(oldAttribute.toString()));
+				.setCodeElement(oldAttribute.getVariableDeclaration().toString()));
 		return ranges;
 	}
 
 	@Override
 	public List<CodeRange> rightSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		for(UMLAttribute splitAttribute : splitAttributes) {
-			ranges.add(splitAttribute.codeRange()
+		for(VariableDeclaration splitVariableDeclaration : getSplitVariables()) {
+			ranges.add(splitVariableDeclaration.codeRange()
 					.setDescription("split attribute declaration")
-					.setCodeElement(splitAttribute.toString()));
+					.setCodeElement(splitVariableDeclaration.toString()));
 		}
 		return ranges;
 	}
 
 	private Set<VariableDeclaration> getSplitVariables() {
 		if (splitAttributes == null)
-			return null;
+			return Collections.emptySet();
 		return splitAttributes.stream().map(UMLAttribute::getVariableDeclaration).filter(Objects::nonNull).collect(Collectors.toSet());
 	}
 }

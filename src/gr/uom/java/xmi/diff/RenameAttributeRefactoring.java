@@ -129,18 +129,18 @@ public class RenameAttributeRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> leftSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		ranges.add(originalAttribute.codeRange()
+		ranges.add(originalAttribute.getVariableDeclaration().codeRange()
 				.setDescription("original attribute declaration")
-				.setCodeElement(originalAttribute.toString()));
+				.setCodeElement(originalAttribute.getVariableDeclaration().toString()));
 		return ranges;
 	}
 
 	@Override
 	public List<CodeRange> rightSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		ranges.add(renamedAttribute.codeRange()
+		ranges.add(renamedAttribute.getVariableDeclaration().codeRange()
 				.setDescription("renamed attribute declaration")
-				.setCodeElement(renamedAttribute.toString()));
+				.setCodeElement(renamedAttribute.getVariableDeclaration().toString()));
 		return ranges;
 	}
 }

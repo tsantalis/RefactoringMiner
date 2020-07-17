@@ -26,7 +26,6 @@ import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
-import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
@@ -821,7 +820,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof MergeAttributeRefactoring) {
 				MergeAttributeRefactoring merge = (MergeAttributeRefactoring)refactoring;
-				if(merge.getMergedAttributes().contains(a1.getVariableDeclaration()) && merge.getNewAttribute().equals(a2.getVariableDeclaration())) {
+				if(merge.getMergedVariables().contains(a1.getVariableDeclaration()) && merge.getNewAttribute().getVariableDeclaration().equals(a2.getVariableDeclaration())) {
 					return true;
 				}
 			}
@@ -833,7 +832,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof SplitAttributeRefactoring) {
 				SplitAttributeRefactoring split = (SplitAttributeRefactoring)refactoring;
-				if(split.getSplitAttributes().contains(a2.getVariableDeclaration()) && split.getOldAttribute().equals(a1.getVariableDeclaration())) {
+				if(split.getSplitVariables().contains(a2.getVariableDeclaration()) && split.getOldAttribute().getVariableDeclaration().equals(a1.getVariableDeclaration())) {
 					return true;
 				}
 			}

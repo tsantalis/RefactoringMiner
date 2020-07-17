@@ -1,7 +1,6 @@
 package gr.uom.java.xmi;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import gr.uom.java.xmi.decomposition.VariableDeclaration;

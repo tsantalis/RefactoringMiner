@@ -2492,7 +2492,7 @@ public class UMLModelDiff {
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof MergeAttributeRefactoring) {
 				MergeAttributeRefactoring merge = (MergeAttributeRefactoring)refactoring;
-				if(merge.getMergedAttributes().contains(a1.getVariableDeclaration()) && merge.getNewAttribute().equals(a2.getVariableDeclaration())) {
+				if(merge.getMergedVariables().contains(a1.getVariableDeclaration()) && merge.getNewAttribute().getVariableDeclaration().equals(a2.getVariableDeclaration())) {
 					return true;
 				}
 			}
@@ -2504,7 +2504,7 @@ public class UMLModelDiff {
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof RenameAttributeRefactoring) {
 				RenameAttributeRefactoring rename = (RenameAttributeRefactoring)refactoring;
-				if(mergedAttributes.contains(rename.getOriginalAttribute()) && a2.equals(rename.getRenamedAttribute())) {
+				if(mergedAttributes.contains(rename.getOriginalAttribute().getVariableDeclaration()) && a2.equals(rename.getRenamedAttribute().getVariableDeclaration())) {
 					return rename;
 				}
 			}

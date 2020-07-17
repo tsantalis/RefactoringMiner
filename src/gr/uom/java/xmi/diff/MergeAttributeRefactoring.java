@@ -1,24 +1,23 @@
 package gr.uom.java.xmi.diff;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.UMLAttribute;
 
 public class MergeAttributeRefactoring implements Refactoring {
-	private Set<VariableDeclaration> mergedAttributes;
-	private VariableDeclaration newAttribute;
+	private Set<UMLAttribute> mergedAttributes;
+	private UMLAttribute newAttribute;
 	private Set<CandidateMergeVariableRefactoring> attributeMerges;
 	private String classNameBefore;
 	private String classNameAfter;
-	
-	public MergeAttributeRefactoring(Set<VariableDeclaration> mergedAttributes, VariableDeclaration newAttribute,
+
+	public MergeAttributeRefactoring(Set<UMLAttribute> mergedAttributes, UMLAttribute newAttribute,
 			String classNameBefore, String classNameAfter, Set<CandidateMergeVariableRefactoring> attributeMerges) {
 		this.mergedAttributes = mergedAttributes;
 		this.newAttribute = newAttribute;
@@ -27,11 +26,11 @@ public class MergeAttributeRefactoring implements Refactoring {
 		this.attributeMerges = attributeMerges;
 	}
 
-	public Set<VariableDeclaration> getMergedAttributes() {
+	public Set<UMLAttribute> getMergedAttributes() {
 		return mergedAttributes;
 	}
 
-	public VariableDeclaration getNewAttribute() {
+	public UMLAttribute getNewAttribute() {
 		return newAttribute;
 	}
 
@@ -58,9 +57,9 @@ public class MergeAttributeRefactoring implements Refactoring {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(mergedAttributes);
+		sb.append(getMergedVariables());
 		sb.append(" to ");
-		sb.append(newAttribute);
+		sb.append(newAttribute.getVariableDeclaration());
 		sb.append(" in class ").append(classNameAfter);
 		return sb.toString();
 	}
@@ -71,8 +70,9 @@ public class MergeAttributeRefactoring implements Refactoring {
 		int result = 1;
 		result = prime * result + ((classNameAfter == null) ? 0 : classNameAfter.hashCode());
 		result = prime * result + ((classNameBefore == null) ? 0 : classNameBefore.hashCode());
-		result = prime * result + ((mergedAttributes == null) ? 0 : mergedAttributes.hashCode());
-		result = prime * result + ((newAttribute == null) ? 0 : newAttribute.hashCode());
+		Set<VariableDeclaration> mergedVariables = getMergedVariables();
+		result = prime * result + ((mergedVariables.isEmpty()) ? 0 : mergedVariables.hashCode());
+		result = prime * result + ((newAttribute == null || newAttribute.getVariableDeclaration() == null) ? 0 : newAttribute.getVariableDeclaration().hashCode());
 		return result;
 	}
 
@@ -95,22 +95,22 @@ public class MergeAttributeRefactoring implements Refactoring {
 				return false;
 		} else if (!classNameBefore.equals(other.classNameBefore))
 			return false;
-		if (mergedAttributes == null) {
-			if (other.mergedAttributes != null)
-				return false;
-		} else if (!mergedAttributes.equals(other.mergedAttributes))
+		if (!this.getMergedVariables().equals(other.getMergedVariables()))
 			return false;
 		if (newAttribute == null) {
 			if (other.newAttribute != null)
 				return false;
-		} else if (!newAttribute.equals(other.newAttribute))
+		} else if (newAttribute.getVariableDeclaration() == null) {
+			if (other.newAttribute.getVariableDeclaration() != null)
+				return false;
+		} else if (!newAttribute.getVariableDeclaration().equals(other.newAttribute.getVariableDeclaration()))
 			return false;
 		return true;
 	}
 
 	public Set<ImmutablePair<String, String>> getInvolvedClassesBeforeRefactoring() {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
-		for(VariableDeclaration mergedAttribute : this.mergedAttributes) {
+		for(UMLAttribute mergedAttribute : this.mergedAttributes) {
 			pairs.add(new ImmutablePair<String, String>(mergedAttribute.getLocationInfo().getFilePath(), getClassNameBefore()));
 		}
 		return pairs;
@@ -125,7 +125,7 @@ public class MergeAttributeRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> leftSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		for(VariableDeclaration mergedAttribute : mergedAttributes) {
+		for(VariableDeclaration mergedAttribute : getMergedVariables()) {
 			ranges.add(mergedAttribute.codeRange()
 					.setDescription("merged attribute declaration")
 					.setCodeElement(mergedAttribute.toString()));
@@ -136,9 +136,13 @@ public class MergeAttributeRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> rightSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		ranges.add(newAttribute.codeRange()
+		ranges.add(newAttribute.getVariableDeclaration().codeRange()
 				.setDescription("new attribute declaration")
-				.setCodeElement(newAttribute.toString()));
+				.setCodeElement(newAttribute.getVariableDeclaration().toString()));
 		return ranges;
+	}
+
+	private Set<VariableDeclaration> getMergedVariables() {
+		return mergedAttributes.stream().map(UMLAttribute::getVariableDeclaration).collect(Collectors.toCollection(LinkedHashSet::new));
 	}
 }

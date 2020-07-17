@@ -9,29 +9,29 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.UMLAttribute;
 
 public class RenameAttributeRefactoring implements Refactoring {
-	private VariableDeclaration originalAttribute;
-	private VariableDeclaration renamedAttribute;
+	private UMLAttribute originalAttribute;
+	private UMLAttribute renamedAttribute;
 	private Set<CandidateAttributeRefactoring> attributeRenames;
 	private String classNameBefore;
 	private String classNameAfter;
 
-	public RenameAttributeRefactoring(VariableDeclaration originalAttribute, VariableDeclaration renamedAttribute,
-			String classNameBefore, String classNameAfter, Set<CandidateAttributeRefactoring> attributeRenames) {
+	public RenameAttributeRefactoring(UMLAttribute originalAttribute, UMLAttribute renamedAttribute,
+			Set<CandidateAttributeRefactoring> attributeRenames) {
 		this.originalAttribute = originalAttribute;
 		this.renamedAttribute = renamedAttribute;
-		this.classNameBefore = classNameBefore;
-		this.classNameAfter = classNameAfter;
+		this.classNameBefore = originalAttribute.getClassName();;
+		this.classNameAfter = renamedAttribute.getClassName();;
 		this.attributeRenames = attributeRenames;
 	}
 
-	public VariableDeclaration getOriginalAttribute() {
+	public UMLAttribute getOriginalAttribute() {
 		return originalAttribute;
 	}
 
-	public VariableDeclaration getRenamedAttribute() {
+	public UMLAttribute getRenamedAttribute() {
 		return renamedAttribute;
 	}
 
@@ -58,9 +58,9 @@ public class RenameAttributeRefactoring implements Refactoring {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(originalAttribute);
+		sb.append(originalAttribute.getVariableDeclaration());
 		sb.append(" to ");
-		sb.append(renamedAttribute);
+		sb.append(renamedAttribute.getVariableDeclaration());
 		sb.append(" in class ").append(classNameAfter);
 		return sb.toString();
 	}
@@ -71,8 +71,8 @@ public class RenameAttributeRefactoring implements Refactoring {
 		int result = 1;
 		result = prime * result + ((classNameAfter == null) ? 0 : classNameAfter.hashCode());
 		result = prime * result + ((classNameBefore == null) ? 0 : classNameBefore.hashCode());
-		result = prime * result + ((originalAttribute == null) ? 0 : originalAttribute.hashCode());
-		result = prime * result + ((renamedAttribute == null) ? 0 : renamedAttribute.hashCode());
+		result = prime * result + ((originalAttribute == null || originalAttribute.getVariableDeclaration() == null) ? 0 : originalAttribute.getVariableDeclaration().hashCode());
+		result = prime * result + ((renamedAttribute == null || renamedAttribute.getVariableDeclaration() == null) ? 0 : renamedAttribute.getVariableDeclaration().hashCode());
 		return result;
 	}
 
@@ -98,12 +98,18 @@ public class RenameAttributeRefactoring implements Refactoring {
 		if (originalAttribute == null) {
 			if (other.originalAttribute != null)
 				return false;
-		} else if (!originalAttribute.equals(other.originalAttribute))
+		} else if(originalAttribute.getVariableDeclaration() == null) {
+			if(other.originalAttribute.getVariableDeclaration() != null)
+				return false;
+		} else if (!originalAttribute.getVariableDeclaration().equals(other.originalAttribute.getVariableDeclaration()))
 			return false;
 		if (renamedAttribute == null) {
 			if (other.renamedAttribute != null)
 				return false;
-		} else if (!renamedAttribute.equals(other.renamedAttribute))
+		} else if(renamedAttribute.getVariableDeclaration() == null) {
+			if(other.renamedAttribute.getVariableDeclaration() != null)
+				return false;
+		} else if (!renamedAttribute.getVariableDeclaration().equals(other.renamedAttribute.getVariableDeclaration()))
 			return false;
 		return true;
 	}
@@ -123,18 +129,18 @@ public class RenameAttributeRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> leftSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		ranges.add(originalAttribute.codeRange()
+		ranges.add(originalAttribute.getVariableDeclaration().codeRange()
 				.setDescription("original attribute declaration")
-				.setCodeElement(originalAttribute.toString()));
+				.setCodeElement(originalAttribute.getVariableDeclaration().toString()));
 		return ranges;
 	}
 
 	@Override
 	public List<CodeRange> rightSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		ranges.add(renamedAttribute.codeRange()
+		ranges.add(renamedAttribute.getVariableDeclaration().codeRange()
 				.setDescription("renamed attribute declaration")
-				.setCodeElement(renamedAttribute.toString()));
+				.setCodeElement(renamedAttribute.getVariableDeclaration().toString()));
 		return ranges;
 	}
 }

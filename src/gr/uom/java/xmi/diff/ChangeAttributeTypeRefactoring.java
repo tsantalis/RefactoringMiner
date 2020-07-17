@@ -11,21 +11,22 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.UMLAttribute;
 
 public class ChangeAttributeTypeRefactoring implements Refactoring {
-	private VariableDeclaration originalAttribute;
-	private VariableDeclaration changedTypeAttribute;
+	private UMLAttribute originalAttribute;
+	private UMLAttribute changedTypeAttribute;
 	private String classNameBefore;
 	private String classNameAfter;
 	private Set<AbstractCodeMapping> attributeReferences;
 	private Set<Refactoring> relatedRefactorings;
 	
-	public ChangeAttributeTypeRefactoring(VariableDeclaration originalAttribute,
-			VariableDeclaration changedTypeAttribute, String classNameBefore, String classNameAfter, Set<AbstractCodeMapping> attributeReferences) {
+	public ChangeAttributeTypeRefactoring(UMLAttribute originalAttribute,
+										  UMLAttribute changedTypeAttribute, Set<AbstractCodeMapping> attributeReferences) {
 		this.originalAttribute = originalAttribute;
 		this.changedTypeAttribute = changedTypeAttribute;
-		this.classNameBefore = classNameBefore;
-		this.classNameAfter = classNameAfter;
+		this.classNameBefore = originalAttribute.getClassName();
+		this.classNameAfter = changedTypeAttribute.getClassName();
 		this.attributeReferences = attributeReferences;
 		this.relatedRefactorings = new LinkedHashSet<Refactoring>();
 	}
@@ -38,11 +39,11 @@ public class ChangeAttributeTypeRefactoring implements Refactoring {
 		return relatedRefactorings;
 	}
 
-	public VariableDeclaration getOriginalAttribute() {
+	public UMLAttribute getOriginalAttribute() {
 		return originalAttribute;
 	}
 
-	public VariableDeclaration getChangedTypeAttribute() {
+	public UMLAttribute getChangedTypeAttribute() {
 		return changedTypeAttribute;
 	}
 
@@ -70,11 +71,13 @@ public class ChangeAttributeTypeRefactoring implements Refactoring {
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		boolean qualified = originalAttribute.getType().equals(changedTypeAttribute.getType()) && !originalAttribute.getType().equalsQualified(changedTypeAttribute.getType());
+		VariableDeclaration originalVariableDeclaration = originalAttribute.getVariableDeclaration();
+		VariableDeclaration changedTypeVariableDeclaration = changedTypeAttribute.getVariableDeclaration();
+		boolean qualified = originalVariableDeclaration.getType().equals(changedTypeVariableDeclaration.getType()) && !originalVariableDeclaration.getType().equalsQualified(changedTypeVariableDeclaration.getType());
 		sb.append(getName()).append("\t");
-		sb.append(qualified ? originalAttribute.toQualifiedString() : originalAttribute.toString());
+		sb.append(qualified ? originalVariableDeclaration.toQualifiedString() : originalVariableDeclaration.toString());
 		sb.append(" to ");
-		sb.append(qualified ? changedTypeAttribute.toQualifiedString() : changedTypeAttribute.toString());
+		sb.append(qualified ? changedTypeVariableDeclaration.toQualifiedString() : changedTypeVariableDeclaration.toString());
 		sb.append(" in class ").append(classNameAfter);
 		return sb.toString();
 	}
@@ -83,10 +86,10 @@ public class ChangeAttributeTypeRefactoring implements Refactoring {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((changedTypeAttribute == null) ? 0 : changedTypeAttribute.hashCode());
+		result = prime * result + ((changedTypeAttribute == null || changedTypeAttribute.getVariableDeclaration() == null) ? 0 : changedTypeAttribute.getVariableDeclaration().hashCode());
 		result = prime * result + ((classNameAfter == null) ? 0 : classNameAfter.hashCode());
 		result = prime * result + ((classNameBefore == null) ? 0 : classNameBefore.hashCode());
-		result = prime * result + ((originalAttribute == null) ? 0 : originalAttribute.hashCode());
+		result = prime * result + ((originalAttribute == null || changedTypeAttribute.getVariableDeclaration() == null) ? 0 : originalAttribute.getVariableDeclaration().hashCode());
 		return result;
 	}
 
@@ -102,7 +105,10 @@ public class ChangeAttributeTypeRefactoring implements Refactoring {
 		if (changedTypeAttribute == null) {
 			if (other.changedTypeAttribute != null)
 				return false;
-		} else if (!changedTypeAttribute.equals(other.changedTypeAttribute))
+		} else if(changedTypeAttribute.getVariableDeclaration() == null) {
+			if(other.changedTypeAttribute.getVariableDeclaration() != null)
+				return false;
+		} else if (!changedTypeAttribute.getVariableDeclaration().equals(other.changedTypeAttribute.getVariableDeclaration()))
 			return false;
 		if (classNameAfter == null) {
 			if (other.classNameAfter != null)
@@ -117,7 +123,10 @@ public class ChangeAttributeTypeRefactoring implements Refactoring {
 		if (originalAttribute == null) {
 			if (other.originalAttribute != null)
 				return false;
-		} else if (!originalAttribute.equals(other.originalAttribute))
+		} else if(originalAttribute.getVariableDeclaration() == null) {
+			if(other.originalAttribute.getVariableDeclaration() != null)
+				return false;
+		} else if (!originalAttribute.getVariableDeclaration().equals(other.originalAttribute.getVariableDeclaration()))
 			return false;
 		return true;
 	}
@@ -139,18 +148,18 @@ public class ChangeAttributeTypeRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> leftSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		ranges.add(originalAttribute.codeRange()
+		ranges.add(originalAttribute.getVariableDeclaration().codeRange()
 				.setDescription("original attribute declaration")
-				.setCodeElement(originalAttribute.toString()));
+				.setCodeElement(originalAttribute.getVariableDeclaration().toString()));
 		return ranges;
 	}
 
 	@Override
 	public List<CodeRange> rightSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		ranges.add(changedTypeAttribute.codeRange()
+		ranges.add(changedTypeAttribute.getVariableDeclaration().codeRange()
 				.setDescription("changed-type attribute declaration")
-				.setCodeElement(changedTypeAttribute.toString()));
+				.setCodeElement(changedTypeAttribute.getVariableDeclaration().toString()));
 		return ranges;
 	}
 }

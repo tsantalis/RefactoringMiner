@@ -151,6 +151,6 @@ public class SplitAttributeRefactoring implements Refactoring {
 	}
 
 	private Set<VariableDeclaration> getSplitVariables() {
-		return splitAttributes.stream().map(UMLAttribute::getVariableDeclaration).filter(Objects::nonNull).collect(Collectors.toCollection(LinkedHashSet::new));
+		return splitAttributes.stream().map(UMLAttribute::getVariableDeclaration).collect(Collectors.toCollection(LinkedHashSet::new));
 	}
 }

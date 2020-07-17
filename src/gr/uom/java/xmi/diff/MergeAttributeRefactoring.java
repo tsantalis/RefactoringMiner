@@ -142,7 +142,7 @@ public class MergeAttributeRefactoring implements Refactoring {
 		return ranges;
 	}
 
-	private Set<VariableDeclaration> getMergedVariables() {
+	public Set<VariableDeclaration> getMergedVariables() {
 		return mergedAttributes.stream().map(UMLAttribute::getVariableDeclaration).collect(Collectors.toCollection(LinkedHashSet::new));
 	}
 }

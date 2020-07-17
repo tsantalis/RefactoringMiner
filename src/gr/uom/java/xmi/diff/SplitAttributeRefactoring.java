@@ -150,7 +150,7 @@ public class SplitAttributeRefactoring implements Refactoring {
 		return ranges;
 	}
 
-	private Set<VariableDeclaration> getSplitVariables() {
+	public Set<VariableDeclaration> getSplitVariables() {
 		return splitAttributes.stream().map(UMLAttribute::getVariableDeclaration).collect(Collectors.toCollection(LinkedHashSet::new));
 	}
 }

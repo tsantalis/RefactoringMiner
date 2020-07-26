@@ -194,6 +194,12 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return 0;
 	}
 
+	public List<String> stringRepresentation() {
+		if(operationBody != null)
+			return operationBody.stringRepresentation();
+		return new ArrayList<String>();
+	}
+
 	public void setBody(OperationBody body) {
 		this.operationBody = body;
 	}

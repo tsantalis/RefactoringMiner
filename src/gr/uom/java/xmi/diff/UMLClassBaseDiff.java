@@ -1299,6 +1299,8 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 				bestMapperOperation1.commonParameterTypes(bestMapperOperation2).size() > 0) {
 			return bestMapper;
 		}
+		boolean identicalBodyWithOperation1OfTheBestMapper = identicalBodyWithAnotherAddedMethod(bestMapper);
+		boolean identicalBodyWithOperation2OfTheBestMapper = identicalBodyWithAnotherRemovedMethod(bestMapper);
 		for(int i=1; i<mapperList.size(); i++) {
 			UMLOperationBodyMapper mapper = mapperList.get(i);
 			UMLOperation operation2 = mapper.getOperation2();
@@ -1331,11 +1333,45 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 				bestMapper = mapper;
 				break;
 			}
+			if(identicalBodyWithOperation2OfTheBestMapper || identicalBodyWithOperation1OfTheBestMapper) {
+				bestMapper = mapper;
+				break;
+			}
 		}
 		if(mismatchesConsistentMethodInvocationRename(bestMapper, consistentMethodInvocationRenames)) {
 			return null;
 		}
 		return bestMapper;
+	}
+
+	private boolean identicalBodyWithAnotherAddedMethod(UMLOperationBodyMapper mapper) {
+		UMLOperation operation1 = mapper.getOperation1();
+		List<String> stringRepresentation = operation1.stringRepresentation();
+		if(stringRepresentation.size() > 2) {
+			for(UMLOperation addedOperation : addedOperations) {
+				if(!mapper.getOperation2().equals(addedOperation)) {
+					if(addedOperation.stringRepresentation().equals(stringRepresentation)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean identicalBodyWithAnotherRemovedMethod(UMLOperationBodyMapper mapper) {
+		UMLOperation operation2 = mapper.getOperation2();
+		List<String> stringRepresentation = operation2.stringRepresentation();
+		if(stringRepresentation.size() > 2) {
+			for(UMLOperation removedOperation : removedOperations) {
+				if(!mapper.getOperation1().equals(removedOperation)) {
+					if(removedOperation.stringRepresentation().equals(stringRepresentation)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean matchesConsistentMethodInvocationRename(UMLOperationBodyMapper mapper, Set<MethodInvocationReplacement> consistentMethodInvocationRenames) {

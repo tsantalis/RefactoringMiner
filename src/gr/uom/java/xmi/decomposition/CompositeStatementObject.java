@@ -531,4 +531,14 @@ public class CompositeStatementObject extends AbstractStatement {
 		}
 		return null;
 	}
+
+	@Override
+	public List<String> stringRepresentation() {
+		List<String> stringRepresentation = new ArrayList<String>();
+		stringRepresentation.add(this.toString());
+		for(AbstractStatement statement : statementList) {
+			stringRepresentation.addAll(statement.stringRepresentation());
+		}
+		return stringRepresentation;
+	}
 }

@@ -92,7 +92,8 @@ You can also work with the project with Eclipse IDE. First, run `./gradlew eclip
 
 # How to use RefactoringMiner as a maven dependency
 
-In order to use RefactoringMiner as a maven dependency in your project, add the following dependency to your project:
+Since version 2.0, RefactoringMiner is available in the [Maven Central Repository](https://mvnrepository.com/artifact/com.github.tsantalis/refactoring-miner).
+In order to use RefactoringMiner as a maven dependency in your project, add the following snippet to your project's build configuration file:
 
     <dependency>
       <groupId>com.github.tsantalis</groupId>

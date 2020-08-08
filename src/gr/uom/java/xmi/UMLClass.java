@@ -276,8 +276,6 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     }
 
     public boolean hasSameKind(UMLClass umlClass) {
-    	if(this.isAbstract != umlClass.isAbstract)
-    		return false;
     	if(this.isInterface != umlClass.isInterface)
     		return false;
     	if(!equalTypeParameters(umlClass))

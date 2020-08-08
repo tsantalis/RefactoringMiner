@@ -2053,7 +2053,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
 											this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
 											matchedOperations++;
+											UMLOperationDiff operationDiff = new UMLOperationDiff(operation1, operation2, mapper.mappings);
 											this.refactorings.addAll(mapper.getRefactorings());
+											this.refactorings.addAll(operationDiff.getRefactorings());
 										}
 									}
 								}

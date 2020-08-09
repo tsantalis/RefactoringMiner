@@ -74,7 +74,10 @@ public class RemoveVariableAnnotationRefactoring implements Refactoring {
 	public RefactoringType getRefactoringType() {
 		if(variableBefore.isParameter() && variableAfter.isParameter())
 			return RefactoringType.REMOVE_PARAMETER_ANNOTATION;
-		return null;
+		if(variableBefore.isParameter())
+			return RefactoringType.REMOVE_PARAMETER_ANNOTATION;
+		else
+			return RefactoringType.REMOVE_VARIABLE_ANNOTATION;
 	}
 
 	@Override
@@ -102,6 +105,8 @@ public class RemoveVariableAnnotationRefactoring implements Refactoring {
 		sb.append(annotation);
 		if(variableBefore.isParameter())
 			sb.append(" in parameter ");
+		else
+			sb.append(" in variable ");
 		sb.append(variableBefore);
 		sb.append(" in method ");
 		sb.append(operationBefore);

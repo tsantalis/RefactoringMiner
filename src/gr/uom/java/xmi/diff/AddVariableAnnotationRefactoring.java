@@ -74,7 +74,10 @@ public class AddVariableAnnotationRefactoring implements Refactoring {
 	public RefactoringType getRefactoringType() {
 		if(variableBefore.isParameter() && variableAfter.isParameter())
 			return RefactoringType.ADD_PARAMETER_ANNOTATION;
-		return null;
+		if(variableAfter.isParameter())
+			return RefactoringType.ADD_PARAMETER_ANNOTATION;
+		else
+			return RefactoringType.ADD_VARIABLE_ANNOTATION;
 	}
 
 	@Override
@@ -102,6 +105,8 @@ public class AddVariableAnnotationRefactoring implements Refactoring {
 		sb.append(annotation);
 		if(variableAfter.isParameter())
 			sb.append(" in parameter ");
+		else
+			sb.append(" in variable ");
 		sb.append(variableAfter);
 		sb.append(" in method ");
 		sb.append(operationAfter);

@@ -2,10 +2,14 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'eclipse'
 
-apply plugin: "maven"
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
-group = "org.refactoringminer"
-version = "1.0"
+group = "com.github.tsantalis"
+version = "2.0.1"
+
+applicationName = rootProject.name
+mainClassName = "org.refactoringminer.RefactoringMiner"
 
 sourceSets {
     main {
@@ -13,7 +17,7 @@ sourceSets {
             srcDir 'src'
             srcDir 'src-test'
         }
-        resources  {
+        resources {
             srcDir 'res'
         }
     }
@@ -29,15 +33,76 @@ repositories {
 }
 
 dependencies {
-	compile 'org.eclipse.jgit:org.eclipse.jgit:5.2.1.201812262042-r'
-	compile 'org.slf4j:slf4j-log4j12:1.7.7'
-	compile 'junit:junit:4.11'
-	compile 'org.eclipse.jdt:org.eclipse.jdt.core:3.16.0'
-	compile 'org.apache.commons:commons-text:1.6'
-	compile 'org.kohsuke:github-api:1.95'
-	
-	testCompile 'junit:junit:4.11'
+    compile 'org.eclipse.jgit:org.eclipse.jgit:5.8.1.202007141445-r'
+    compile 'org.slf4j:slf4j-log4j12:1.7.30'
+    compile 'junit:junit:4.11'
+    compile 'org.eclipse.jdt:org.eclipse.jdt.core:3.22.0'
+    compile 'org.apache.commons:commons-text:1.9'
+    compile 'org.kohsuke:github-api:1.115'
+
+    testCompile 'junit:junit:4.11'
 }
 
-applicationName = rootProject.name
-mainClassName = "org.refactoringminer.RefactoringMiner"
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+
+publishing {
+    repositories {
+        maven {
+            def releaseRepo = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotRepo = "https://oss.sonatype.org/content/repositories/snapshots/"
+            url = isReleaseVersion ? releaseRepo : snapshotRepo
+            credentials {
+                username = project.hasProperty('ossrhUsername') ? ossrhUsername : "Unknown user"
+                password = project.hasProperty('ossrhPassword') ? ossrhPassword : "Unknown password"
+            }
+        }
+    }
+
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'refactoring-miner'
+            from components.java
+
+            pom {
+                name = "Refactoring Miner"
+                description = 'RefactoringMiner is a library/API written in Java that can detect refactorings applied in the history of a Java project.'
+                url = 'https://github.com/tsantalis/RefactoringMiner'
+                licenses {
+                    license {
+                        name = 'The MIT License (MIT)'
+                        url = 'http://opensource.org/licenses/MIT'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'tsantalis'
+                        name = 'Nikolaos Tsantalis'
+                        email = 'tsantalis@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git@github.com:tsantalis/RefactoringMiner.git'
+                    developerConnection = 'scm:git:git@github.com:tsantalis/RefactoringMiner.git'
+                    url = 'https://github.com/tsantalis/RefactoringMiner/tree/master'
+                }
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+tasks.withType(Sign) {
+    onlyIf { isReleaseVersion }
+}

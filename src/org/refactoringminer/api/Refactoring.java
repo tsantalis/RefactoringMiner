@@ -6,7 +6,6 @@ import java.util.Set;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import com.fasterxml.jackson.core.io.JsonStringEncoder;
-import com.fasterxml.jackson.core.util.BufferRecyclers;
 
 public interface Refactoring extends Serializable, CodeRangeProvider {
 
@@ -28,7 +27,7 @@ public interface Refactoring extends Serializable, CodeRangeProvider {
 	
 	default public String toJSON() {
 		StringBuilder sb = new StringBuilder();
-		JsonStringEncoder encoder = BufferRecyclers.getJsonStringEncoder();
+		JsonStringEncoder encoder = JsonStringEncoder.getInstance();
 		sb.append("{").append("\n");
 		sb.append("\t").append("\"").append("type").append("\"").append(": ").append("\"").append(getName()).append("\"").append(",").append("\n");
 		sb.append("\t").append("\"").append("description").append("\"").append(": ").append("\"");

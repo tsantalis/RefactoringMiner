@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.core.io.JsonStringEncoder;
-import com.fasterxml.jackson.core.util.BufferRecyclers;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -106,7 +105,7 @@ public class CodeRange {
 	private String escapeQuotes(String s) {
 		if(s != null) {
 			StringBuilder sb = new StringBuilder();
-			JsonStringEncoder encoder = BufferRecyclers.getJsonStringEncoder();
+			JsonStringEncoder encoder = JsonStringEncoder.getInstance();
 			encoder.quoteAsString(s, sb);
 			return sb.toString();
 		}

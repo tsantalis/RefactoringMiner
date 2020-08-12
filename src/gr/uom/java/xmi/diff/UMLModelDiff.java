@@ -938,7 +938,7 @@ public class UMLModelDiff {
    private List<ExtractClassRefactoring> identifyExtractClassRefactorings(List<? extends UMLClassBaseDiff> classDiffs) throws RefactoringMinerTimedOutException {
 	   List<ExtractClassRefactoring> refactorings = new ArrayList<ExtractClassRefactoring>();
 	   for(UMLClass addedClass : addedClasses) {
-		   List<CandidateExtractClassRefactoring> candidates = new ArrayList<CandidateExtractClassRefactoring>();
+		   TreeSet<CandidateExtractClassRefactoring> candidates = new TreeSet<CandidateExtractClassRefactoring>();
 		   UMLType addedClassSuperType = addedClass.getSuperclass();
 		   if(!addedClass.isInterface()) {
 			   for(UMLClassBaseDiff classDiff : classDiffs) {
@@ -970,18 +970,14 @@ public class UMLModelDiff {
 			   }
 		   }
 		   if(!candidates.isEmpty()) {
-			   boolean innerClassExtract = false;
-			   for(CandidateExtractClassRefactoring candidate : candidates) {
-				   if(candidate.innerClassExtract()) {
-					   innerClassExtract = true;
-					   detectSubRefactorings(candidate.getClassDiff(),
-							   candidate.getRefactoring().getExtractedClass(),
-							   candidate.getRefactoring().getRefactoringType());
-					   refactorings.add(candidate.getRefactoring());
-					   break;
-				   }
+			   CandidateExtractClassRefactoring firstCandidate = candidates.first();
+			   if(firstCandidate.innerClassExtract() || firstCandidate.subclassExtract()) {
+				   detectSubRefactorings(firstCandidate.getClassDiff(),
+						   firstCandidate.getRefactoring().getExtractedClass(),
+						   firstCandidate.getRefactoring().getRefactoringType());
+				   refactorings.add(firstCandidate.getRefactoring());
 			   }
-			   if(!innerClassExtract) {
+			   else {
 				   for(CandidateExtractClassRefactoring candidate : candidates) {
 					   detectSubRefactorings(candidate.getClassDiff(),
 							   candidate.getRefactoring().getExtractedClass(),

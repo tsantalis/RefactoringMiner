@@ -28,7 +28,9 @@ import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
+import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.FileASTRequestor;
 import org.eclipse.jdt.core.dom.IExtendedModifier;
@@ -207,6 +209,22 @@ public class UMLModelASTReader {
 		umlClass.setJavadoc(javadoc);
 		
 		umlClass.setEnum(true);
+		
+		List<Type> superInterfaceTypes = enumDeclaration.superInterfaceTypes();
+    	for(Type interfaceType : superInterfaceTypes) {
+    		UMLType umlType = UMLType.extractTypeObject(cu, sourceFile, interfaceType, 0);
+    		UMLRealization umlRealization = new UMLRealization(umlClass, umlType.getClassType());
+    		umlClass.addImplementedInterface(umlType);
+    		getUmlModel().addRealization(umlRealization);
+    	}
+    	
+    	List<EnumConstantDeclaration> enumConstantDeclarations = enumDeclaration.enumConstants();
+    	for(EnumConstantDeclaration enumConstantDeclaration : enumConstantDeclarations) {
+			UMLEnumConstant enumConstant = processEnumConstantDeclaration(cu, enumConstantDeclaration, sourceFile);
+			enumConstant.setClassName(umlClass.getName());
+			umlClass.addEnumConstant(enumConstant);
+		}
+		
 		processModifiers(cu, sourceFile, enumDeclaration, umlClass);
 		
 		processBodyDeclarations(cu, enumDeclaration, packageName, sourceFile, importedTypes, umlClass);
@@ -478,6 +496,17 @@ public class UMLModelASTReader {
 		return umlOperation;
 	}
 
+	private UMLEnumConstant processEnumConstantDeclaration(CompilationUnit cu, EnumConstantDeclaration enumConstantDeclaration, String sourceFile) {
+		UMLJavadoc javadoc = generateJavadoc(enumConstantDeclaration);
+		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, enumConstantDeclaration, CodeElementType.ENUM_CONSTANT_DECLARATION);
+		UMLEnumConstant enumConstant = new UMLEnumConstant(enumConstantDeclaration.getName().getIdentifier(), locationInfo);
+		enumConstant.setJavadoc(javadoc);
+		List<Expression> arguments = enumConstantDeclaration.arguments();
+		for(Expression argument : arguments) {
+			enumConstant.addArgument(argument.toString());
+		}
+		return enumConstant;
+	}
 
 	private List<UMLAttribute> processFieldDeclaration(CompilationUnit cu, FieldDeclaration fieldDeclaration, boolean isInterfaceField, String sourceFile) {
 		UMLJavadoc javadoc = generateJavadoc(fieldDeclaration);

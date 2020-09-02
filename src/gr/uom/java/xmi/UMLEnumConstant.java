@@ -1,26 +1,14 @@
 package gr.uom.java.xmi;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import gr.uom.java.xmi.diff.CodeRange;
-
-public class UMLEnumConstant implements Serializable, LocationInfoProvider {
-	private LocationInfo locationInfo;
+public class UMLEnumConstant extends UMLAttribute {
 	private List<String> arguments;
-	private String name;
-	private String className;
-	private UMLJavadoc javadoc;
 
-	public UMLEnumConstant(String name, LocationInfo locationInfo) {
-		this.name = name;
-		this.locationInfo = locationInfo;
+	public UMLEnumConstant(String name, UMLType type, LocationInfo locationInfo) {
+		super(name, type, locationInfo);
 		this.arguments = new ArrayList<String>();
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public void addArgument(String argument) {
@@ -31,34 +19,9 @@ public class UMLEnumConstant implements Serializable, LocationInfoProvider {
 		return arguments;
 	}
 
-	public String getClassName() {
-		return className;
-	}
-
-	public void setClassName(String className) {
-		this.className = className;
-	}
-
-	public UMLJavadoc getJavadoc() {
-		return javadoc;
-	}
-
-	public void setJavadoc(UMLJavadoc javadoc) {
-		this.javadoc = javadoc;
-	}
-
-	public LocationInfo getLocationInfo() {
-		return locationInfo;
-	}
-
-	public CodeRange codeRange() {
-		LocationInfo info = getLocationInfo();
-		return info.codeRange();
-	}
-
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(name);
+        sb.append(getName());
         if(arguments.size() > 0) {
         	sb.append("(");
             for(int i=0; i<arguments.size()-1; i++) {
@@ -73,7 +36,7 @@ public class UMLEnumConstant implements Serializable, LocationInfoProvider {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
 		return result;
 	}
 
@@ -85,10 +48,10 @@ public class UMLEnumConstant implements Serializable, LocationInfoProvider {
 		if (getClass() != obj.getClass())
 			return false;
 		UMLEnumConstant other = (UMLEnumConstant) obj;
-		if (name == null) {
-			if (other.name != null)
+		if (getName() == null) {
+			if (other.getName() != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!getName().equals(other.getName()))
 			return false;
 		return true;
 	}

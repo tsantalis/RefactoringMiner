@@ -6,6 +6,8 @@ import java.util.List;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
+import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.IExtendedModifier;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
@@ -30,6 +32,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private LocationInfo locationInfo;
 	private boolean isParameter;
 	private boolean isAttribute;
+	private boolean isEnumConstant;
 	private VariableScope scope;
 	private List<UMLAnnotation> annotations;
 	
@@ -99,6 +102,29 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.varargsParameter = varargs;
 	}
 
+	public VariableDeclaration(CompilationUnit cu, String filePath, EnumConstantDeclaration fragment) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.isEnumConstant = true;
+		List<IExtendedModifier> extendedModifiers = fragment.modifiers();
+		for(IExtendedModifier extendedModifier : extendedModifiers) {
+			if(extendedModifier.isAnnotation()) {
+				Annotation annotation = (Annotation)extendedModifier;
+				this.annotations.add(new UMLAnnotation(cu, filePath, annotation));
+			}
+		}
+		this.locationInfo = new LocationInfo(cu, filePath, fragment, CodeElementType.ENUM_CONSTANT_DECLARATION);
+		this.variableName = fragment.getName().getIdentifier();
+		this.initializer = null;
+		if(fragment.getParent() instanceof EnumDeclaration) {
+			EnumDeclaration enumDeclaration = (EnumDeclaration)fragment.getParent();
+			this.type = UMLType.extractTypeObject(enumDeclaration.getName().getIdentifier());
+		}
+		ASTNode scopeNode = fragment.getParent();
+		int startOffset = scopeNode.getStartPosition();
+		int endOffset = scopeNode.getStartPosition() + scopeNode.getLength();
+		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
+	}
+
 	public String getVariableName() {
 		return variableName;
 	}
@@ -129,6 +155,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public void setAttribute(boolean isAttribute) {
 		this.isAttribute = isAttribute;
+	}
+
+	public boolean isEnumConstant() {
+		return isEnumConstant;
 	}
 
 	public boolean isVarargsParameter() {

@@ -202,6 +202,17 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		this.javadoc = javadoc;
 	}
 
+    public UMLEnumConstant containsEnumConstant(UMLEnumConstant otherEnumConstant) {
+    	ListIterator<UMLEnumConstant> enumConstantIt = enumConstants.listIterator();
+    	while(enumConstantIt.hasNext()) {
+    		UMLEnumConstant enumConstant = enumConstantIt.next();
+    		if(enumConstant.equals(otherEnumConstant)) {
+    			return enumConstant;
+    		}
+    	}
+    	return null;
+    }
+
     public UMLAttribute containsAttribute(UMLAttribute otherAttribute) {
     	ListIterator<UMLAttribute> attributeIt = attributes.listIterator();
     	while(attributeIt.hasNext()) {

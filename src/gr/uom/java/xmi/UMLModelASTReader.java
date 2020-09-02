@@ -220,9 +220,7 @@ public class UMLModelASTReader {
     	
     	List<EnumConstantDeclaration> enumConstantDeclarations = enumDeclaration.enumConstants();
     	for(EnumConstantDeclaration enumConstantDeclaration : enumConstantDeclarations) {
-			UMLEnumConstant enumConstant = processEnumConstantDeclaration(cu, enumConstantDeclaration, sourceFile);
-			enumConstant.setClassName(umlClass.getName());
-			umlClass.addEnumConstant(enumConstant);
+			processEnumConstantDeclaration(cu, enumConstantDeclaration, sourceFile, umlClass);
 		}
 		
 		processModifiers(cu, sourceFile, enumDeclaration, umlClass);
@@ -496,16 +494,22 @@ public class UMLModelASTReader {
 		return umlOperation;
 	}
 
-	private UMLEnumConstant processEnumConstantDeclaration(CompilationUnit cu, EnumConstantDeclaration enumConstantDeclaration, String sourceFile) {
+	private void processEnumConstantDeclaration(CompilationUnit cu, EnumConstantDeclaration enumConstantDeclaration, String sourceFile, UMLClass umlClass) {
 		UMLJavadoc javadoc = generateJavadoc(enumConstantDeclaration);
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, enumConstantDeclaration, CodeElementType.ENUM_CONSTANT_DECLARATION);
-		UMLEnumConstant enumConstant = new UMLEnumConstant(enumConstantDeclaration.getName().getIdentifier(), locationInfo);
+		UMLEnumConstant enumConstant = new UMLEnumConstant(enumConstantDeclaration.getName().getIdentifier(), UMLType.extractTypeObject(umlClass.getName()), locationInfo);
+		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, enumConstantDeclaration);
+		enumConstant.setVariableDeclaration(variableDeclaration);
 		enumConstant.setJavadoc(javadoc);
+		enumConstant.setFinal(true);
+		enumConstant.setStatic(true);
+		enumConstant.setVisibility("public");
 		List<Expression> arguments = enumConstantDeclaration.arguments();
 		for(Expression argument : arguments) {
 			enumConstant.addArgument(argument.toString());
 		}
-		return enumConstant;
+		enumConstant.setClassName(umlClass.getName());
+		umlClass.addEnumConstant(enumConstant);
 	}
 
 	private List<UMLAttribute> processFieldDeclaration(CompilationUnit cu, FieldDeclaration fieldDeclaration, boolean isInterfaceField, String sourceFile) {

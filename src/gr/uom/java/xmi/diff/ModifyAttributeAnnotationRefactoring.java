@@ -11,6 +11,7 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLEnumConstant;
 
 public class ModifyAttributeAnnotationRefactoring implements Refactoring {
 	private UMLAnnotation annotationBefore;
@@ -96,7 +97,12 @@ public class ModifyAttributeAnnotationRefactoring implements Refactoring {
 		sb.append(annotationBefore);
 		sb.append(" to ");
 		sb.append(annotationAfter);
-		sb.append(" in attribute ");
+		if(attributeAfter instanceof UMLEnumConstant) {
+			sb.append(" in enum constant ");
+		}
+		else {
+			sb.append(" in attribute ");
+		}
 		sb.append(attributeAfter);
 		sb.append(" from class ");
 		sb.append(attributeAfter.getClassName());

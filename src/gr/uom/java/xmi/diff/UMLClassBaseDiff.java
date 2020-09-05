@@ -963,6 +963,11 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 				return attribute;
 			}
 		}
+		for(UMLEnumConstant enumConstant : originalClass.getEnumConstants()) {
+			if(enumConstant.getName().equals(attributeName) && removedEnumConstants.contains(enumConstant)) {
+				return enumConstant;
+			}
+		}
 		return null;
 	}
 
@@ -970,6 +975,11 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		for(UMLAttribute attribute : nextClass.getAttributes()) {
 			if(attribute.getName().equals(attributeName)) {
 				return attribute;
+			}
+		}
+		for(UMLEnumConstant enumConstant : nextClass.getEnumConstants()) {
+			if(enumConstant.getName().equals(attributeName) && addedEnumConstants.contains(enumConstant)) {
+				return enumConstant;
 			}
 		}
 		return null;

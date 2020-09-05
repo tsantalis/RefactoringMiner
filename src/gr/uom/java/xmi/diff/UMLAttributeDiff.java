@@ -9,6 +9,7 @@ import org.refactoringminer.api.Refactoring;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
 
 public class UMLAttributeDiff {
@@ -122,7 +123,7 @@ public class UMLAttributeDiff {
 
 	public Set<Refactoring> getRefactorings() {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
-		if(isTypeChanged() || isQualifiedTypeChanged()) {
+		if(changeTypeCondition()) {
 			ChangeAttributeTypeRefactoring ref = new ChangeAttributeTypeRefactoring(removedAttribute, addedAttribute,
 					VariableReferenceExtractor.findReferences(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), operationBodyMapperList));
 			refactorings.add(ref);
@@ -138,7 +139,7 @@ public class UMLAttributeDiff {
 			rename = new RenameAttributeRefactoring(removedAttribute, addedAttribute, set);
 			refactorings.add(rename);
 		}
-		if(isTypeChanged() || isQualifiedTypeChanged()) {
+		if(changeTypeCondition()) {
 			ChangeAttributeTypeRefactoring ref = new ChangeAttributeTypeRefactoring(removedAttribute, addedAttribute,
 					VariableReferenceExtractor.findReferences(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), operationBodyMapperList));
 			refactorings.add(ref);
@@ -148,5 +149,19 @@ public class UMLAttributeDiff {
 		}
 		refactorings.addAll(getAnnotationRefactorings());
 		return refactorings;
+	}
+
+	private boolean changeTypeCondition() {
+		return (isTypeChanged() || isQualifiedTypeChanged()) && !enumConstantsDeclaredInTheSameEnumDeclarationType();
+	}
+
+	private boolean enumConstantsDeclaredInTheSameEnumDeclarationType() {
+		VariableDeclaration removedVariableDeclaration = removedAttribute.getVariableDeclaration();
+		VariableDeclaration addedVariableDeclaration = addedAttribute.getVariableDeclaration();
+		if(removedVariableDeclaration.isEnumConstant() && addedVariableDeclaration.isEnumConstant() &&
+				removedVariableDeclaration.getType().equals(addedVariableDeclaration.getType())) {
+			return true;
+		}
+		return false;
 	}
 }

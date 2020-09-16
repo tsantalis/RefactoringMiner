@@ -668,6 +668,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return normalized;
 	}
 
+	public boolean testAnnotationCheck(UMLOperation operation) { 
+		if(this.hasTestAnnotation() && !operation.hasTestAnnotation())
+			return false;
+		if(!this.hasTestAnnotation() && operation.hasTestAnnotation())
+			return false;
+		return true;
+	}
+
 	public boolean equalParameters(UMLOperation operation) {
 		return this.equalReturnParameter(operation) && this.getParameters().equals(operation.getParameters());
 	}

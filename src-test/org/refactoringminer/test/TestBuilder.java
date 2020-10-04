@@ -100,7 +100,7 @@ public class TestBuilder {
 		return projectMatcher;
 	}
 
-	public void assertExpectations() throws Exception {
+	public void assertExpectations(int expectedTPs, int expectedFPs, int expectedFNs) throws Exception {
 		c = new Counter();
 		cMap = new HashMap<RefactoringType, Counter>();
 		commitsCount = 0;
@@ -135,7 +135,7 @@ public class TestBuilder {
 			}
 		}
 
-		boolean success = get(FP) == 0 && get(FN) == 0 && get(TP) > 0;
+		boolean success = get(FP) == expectedFPs && get(FN) == expectedFNs && get(TP) == expectedTPs;
 		if (!success || verbose) {
 			for (ProjectMatcher m : map.values()) {
 				m.printResults();

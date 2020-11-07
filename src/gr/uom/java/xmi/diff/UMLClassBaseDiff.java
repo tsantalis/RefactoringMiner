@@ -1349,8 +1349,6 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 				bestMapperOperation1.commonParameterTypes(bestMapperOperation2).size() > 0) {
 			return bestMapper;
 		}
-		boolean identicalBodyWithOperation1OfTheBestMapper = identicalBodyWithAnotherAddedMethod(bestMapper);
-		boolean identicalBodyWithOperation2OfTheBestMapper = identicalBodyWithAnotherRemovedMethod(bestMapper);
 		for(int i=1; i<mapperList.size(); i++) {
 			UMLOperationBodyMapper mapper = mapperList.get(i);
 			UMLOperation operation2 = mapper.getOperation2();
@@ -1383,12 +1381,13 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 				bestMapper = mapper;
 				break;
 			}
-			if(identicalBodyWithOperation2OfTheBestMapper || identicalBodyWithOperation1OfTheBestMapper) {
-				bestMapper = mapper;
-				break;
-			}
 		}
 		if(mismatchesConsistentMethodInvocationRename(bestMapper, consistentMethodInvocationRenames)) {
+			return null;
+		}
+		boolean identicalBodyWithOperation1OfTheBestMapper = identicalBodyWithAnotherAddedMethod(bestMapper);
+		boolean identicalBodyWithOperation2OfTheBestMapper = identicalBodyWithAnotherRemovedMethod(bestMapper);
+		if(identicalBodyWithOperation2OfTheBestMapper || identicalBodyWithOperation1OfTheBestMapper) {
 			return null;
 		}
 		return bestMapper;

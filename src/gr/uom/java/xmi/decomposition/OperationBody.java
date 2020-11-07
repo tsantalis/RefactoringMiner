@@ -39,6 +39,7 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 public class OperationBody {
 
 	private CompositeStatementObject compositeStatement;
+	private List<String> stringRepresentation;
 
 	public OperationBody(CompilationUnit cu, String filePath, Block methodBody) {
 		this.compositeStatement = new CompositeStatementObject(cu, filePath, methodBody, 0, CodeElementType.BLOCK);
@@ -299,6 +300,9 @@ public class OperationBody {
 	}
 
 	public List<String> stringRepresentation() {
-		return compositeStatement.stringRepresentation();
+		if(stringRepresentation == null) {
+			stringRepresentation = compositeStatement.stringRepresentation();
+		}
+		return stringRepresentation;
 	}
 }

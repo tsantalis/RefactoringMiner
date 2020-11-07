@@ -26,6 +26,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 	private List<String> booleanLiterals;
 	private List<String> typeLiterals;
 	private Map<String, List<ObjectCreation>> creationMap;
+	private List<String> infixExpressions;
 	private List<String> infixOperators;
 	private List<String> arrayAccesses;
 	private List<String> prefixExpressions;
@@ -49,6 +50,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.booleanLiterals = visitor.getBooleanLiterals();
 		this.typeLiterals = visitor.getTypeLiterals();
 		this.creationMap = visitor.getCreationMap();
+		this.infixExpressions = visitor.getInfixExpressions();
 		this.infixOperators = visitor.getInfixOperators();
 		this.arrayAccesses = visitor.getArrayAccesses();
 		this.prefixExpressions = visitor.getPrefixExpressions();
@@ -138,6 +140,11 @@ public class AbstractExpression extends AbstractCodeFragment {
 	@Override
 	public Map<String, List<ObjectCreation>> getCreationMap() {
 		return creationMap;
+	}
+
+	@Override
+	public List<String> getInfixExpressions() {
+		return infixExpressions;
 	}
 
 	@Override

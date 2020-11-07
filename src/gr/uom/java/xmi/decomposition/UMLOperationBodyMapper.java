@@ -908,7 +908,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(replacement instanceof MethodInvocationReplacement ||
 						replacement instanceof VariableReplacementWithMethodInvocation ||
 						replacement instanceof ClassInstanceCreationWithMethodInvocationReplacement ||
-						replacement.getType().equals(ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION)) {
+						replacement.getType().equals(ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION) ||
+						replacement instanceof IntersectionReplacement) {
 					replacements.add(replacement);
 				}
 			}
@@ -1961,7 +1962,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		replacementInfo.addReplacements(replacementsToBeAdded);
 		boolean isEqualWithReplacement = s1.equals(s2) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) || differOnlyInCastExpressionOrPrefixOperator(s1, s2, replacementInfo) || oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString()) ||
-				(commonConditional(s1, s2, replacementInfo) && containsValidOperatorReplacements(replacementInfo)) ||
+				(containsValidOperatorReplacements(replacementInfo) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, replacementInfo))) ||
 				equalAfterArgumentMerge(s1, s2, replacementInfo) ||
 				equalAfterNewArgumentAdditions(s1, s2, replacementInfo) ||
 				(validStatementForConcatComparison(statement1, statement2) && commonConcat(s1, s2, replacementInfo));
@@ -2588,6 +2589,40 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private boolean equalAfterInfixExpressionExpansion(String s1, String s2, ReplacementInfo replacementInfo, List<String> infixExpressions1) {
+		Set<Replacement> replacementsToBeRemoved = new LinkedHashSet<Replacement>();
+		Set<Replacement> replacementsToBeAdded = new LinkedHashSet<Replacement>();
+		String originalArgumentizedString1 = replacementInfo.getArgumentizedString1();
+		for(Replacement replacement : replacementInfo.getReplacements()) {
+			String before = replacement.getBefore();
+			for(String infixExpression1 : infixExpressions1) {
+				if(infixExpression1.startsWith(before)) {
+					String suffix = infixExpression1.substring(before.length(), infixExpression1.length());
+					String after = replacement.getAfter();
+					if(s1.contains(after + suffix)) {
+						String temp = ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), after + suffix, after);
+						int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2());
+						if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance()) {
+							replacementsToBeRemoved.add(replacement);
+							Replacement newReplacement = new Replacement(infixExpression1, after, ReplacementType.INFIX_EXPRESSION);
+							replacementsToBeAdded.add(newReplacement);
+							replacementInfo.setArgumentizedString1(temp);
+						}
+					}
+				}
+			}
+		}
+		if(replacementInfo.getRawDistance() == 0) {
+			replacementInfo.removeReplacements(replacementsToBeRemoved);
+			replacementInfo.addReplacements(replacementsToBeAdded);
+			return true;
+		}
+		else {
+			replacementInfo.setArgumentizedString1(originalArgumentizedString1);
+			return false;
+		}
 	}
 
 	private boolean isExpressionOfAnotherMethodInvocation(AbstractCall invocation, Map<String, List<? extends AbstractCall>> invocationMap) {

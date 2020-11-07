@@ -207,6 +207,15 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	@Override
+	public List<String> getInfixExpressions() {
+		List<String> infixExpressions = new ArrayList<String>();
+		for(AbstractExpression expression : expressionList) {
+			infixExpressions.addAll(expression.getInfixExpressions());
+		}
+		return infixExpressions;
+	}
+
+	@Override
 	public List<String> getInfixOperators() {
 		List<String> infixOperators = new ArrayList<String>();
 		for(AbstractExpression expression : expressionList) {

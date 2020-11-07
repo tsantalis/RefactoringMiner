@@ -70,6 +70,7 @@ public class Visitor extends ASTVisitor {
 	private List<String> booleanLiterals = new ArrayList<String>();
 	private List<String> typeLiterals = new ArrayList<String>();
 	private Map<String, List<ObjectCreation>> creationMap = new LinkedHashMap<String, List<ObjectCreation>>();
+	private List<String> infixExpressions = new ArrayList<String>();
 	private List<String> infixOperators = new ArrayList<String>();
 	private List<String> arrayAccesses = new ArrayList<String>();
 	private List<String> prefixExpressions = new ArrayList<String>();
@@ -124,9 +125,11 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(InfixExpression node) {
+		infixExpressions.add(node.toString());
 		infixOperators.add(node.getOperator().toString());
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getInfixExpressions().add(node.toString());
 			anonymous.getInfixOperators().add(node.getOperator().toString());
 		}
 		return super.visit(node);
@@ -261,6 +264,7 @@ public class Visitor extends ASTVisitor {
 			this.booleanLiterals.removeAll(anonymous.getBooleanLiterals());
 			this.typeLiterals.removeAll(anonymous.getTypeLiterals());
 			this.numberLiterals.removeAll(anonymous.getNumberLiterals());
+			this.infixExpressions.removeAll(anonymous.getInfixExpressions());
 			this.infixOperators.removeAll(anonymous.getInfixOperators());
 			this.arguments.removeAll(anonymous.getArguments());
 			this.ternaryOperatorExpressions.removeAll(anonymous.getTernaryOperatorExpressions());
@@ -826,6 +830,10 @@ public class Visitor extends ASTVisitor {
 
 	public Map<String, List<ObjectCreation>> getCreationMap() {
 		return creationMap;
+	}
+
+	public List<String> getInfixExpressions() {
+		return infixExpressions;
 	}
 
 	public List<String> getInfixOperators() {

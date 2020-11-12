@@ -97,10 +97,6 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Loc
 	}
 
 	public boolean equalsIgnoringChangedType(UMLAttribute attribute) {
-		if(this.isStatic != attribute.isStatic)
-			return false;
-		if(this.isFinal != attribute.isFinal)
-			return false;
 		if(this.name.equals(attribute.name) && this.type.equals(attribute.type) && this.type.equalsQualified(attribute.type))
 			return true;
 		if(!this.type.equals(attribute.type))

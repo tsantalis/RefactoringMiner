@@ -1967,6 +1967,12 @@ public class UMLModelDiff {
 				   }
 			   }
 		   }
+		   if(operationBodyMapper.getOperation1().isGetter()) {
+			   if(mappingList.get(0).getFragment1().getString().startsWith("return this;") ||
+					   mappingList.get(0).getFragment2().getString().startsWith("return this;")) {
+				   return false;
+			   }
+		   }
 	   }
 	   int mappings = operationBodyMapper.mappingsWithoutBlocks();
 	   int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();

@@ -340,7 +340,7 @@ public abstract class AbstractCodeMapping {
 		}
 		String initializerReservedTokens = ReplacementUtil.keepReservedTokens(initializer.toString());
 		String replacementReservedTokens = ReplacementUtil.keepReservedTokens(replacedExpression);
-		return methodInvocationMatch && !initializerReservedTokens.isEmpty() && !initializerReservedTokens.equals("[]") && !initializerReservedTokens.equals(".()") && initializerReservedTokens.equals(replacementReservedTokens);
+		return methodInvocationMatch && !initializerReservedTokens.isEmpty() && !initializerReservedTokens.equals("[]") && !initializerReservedTokens.equals(".()") && !initializerReservedTokens.equals(" ()") && initializerReservedTokens.equals(replacementReservedTokens);
 	}
 
 	private void processInlineVariableRefactoring(InlineVariableRefactoring ref, Set<Refactoring> refactorings) {

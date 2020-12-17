@@ -2313,30 +2313,66 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			replacementInfo.addReplacement(r);
 			return replacementInfo.getReplacements();
 		}
-		//check if the method call in the second statement is the expression of the method invocation in the first statement
+		//check if the method call in the second statement is the expression (or sub-expression) of the method invocation in the first statement
 		if(invocationCoveringTheEntireStatement2 != null) {
 			for(String key1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
-					if(statement1.getString().endsWith(key1 + ";\n") &&
-							methodInvocationMap2.keySet().contains(invocation1.getExpression())) {
-						Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
-								invocationCoveringTheEntireStatement2.actualString(), (OperationInvocation)invocation1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
-						replacementInfo.addReplacement(replacement);
-						return replacementInfo.getReplacements();
+					if(statement1.getString().endsWith(key1 + ";\n")) {
+						if(methodInvocationMap2.keySet().contains(invocation1.getExpression())) {
+							Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
+									invocationCoveringTheEntireStatement2.actualString(), (OperationInvocation)invocation1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
+							replacementInfo.addReplacement(replacement);
+							return replacementInfo.getReplacements();
+						}
+						if(invocation1 instanceof OperationInvocation) {
+							for(String subExpression1 : ((OperationInvocation)invocation1).getSubExpressions()) {
+								if(methodInvocationMap2.keySet().contains(subExpression1)) {
+									AbstractCall subOperationInvocation1 = null;
+									for(String key : methodInvocationMap1.keySet()) {
+										if(key.endsWith(subExpression1)) {
+											subOperationInvocation1 = methodInvocationMap1.get(key).get(0);
+											break;
+										}
+									}
+									Replacement replacement = new MethodInvocationReplacement(subExpression1,
+											invocationCoveringTheEntireStatement2.actualString(), (OperationInvocation)subOperationInvocation1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
+									replacementInfo.addReplacement(replacement);
+									return replacementInfo.getReplacements();
+								}
+							}
+						}
 					}
 				}
 			}
 		}
-		//check if the method call in the first statement is the expression of the method invocation in the second statement
+		//check if the method call in the first statement is the expression (or sub-expression) of the method invocation in the second statement
 		if(invocationCoveringTheEntireStatement1 != null) {
 			for(String key2 : methodInvocationMap2.keySet()) {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
-					if(statement2.getString().endsWith(key2 + ";\n") &&
-							methodInvocationMap1.keySet().contains(invocation2.getExpression())) {
-						Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
-								invocation2.actualString(), invocationCoveringTheEntireStatement1, (OperationInvocation)invocation2, ReplacementType.METHOD_INVOCATION);
-						replacementInfo.addReplacement(replacement);
-						return replacementInfo.getReplacements();
+					if(statement2.getString().endsWith(key2 + ";\n")) {
+						if(methodInvocationMap1.keySet().contains(invocation2.getExpression())) {
+							Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+									invocation2.actualString(), invocationCoveringTheEntireStatement1, (OperationInvocation)invocation2, ReplacementType.METHOD_INVOCATION);
+							replacementInfo.addReplacement(replacement);
+							return replacementInfo.getReplacements();
+						}
+						if(invocation2 instanceof OperationInvocation) {
+							for(String subExpression2 : ((OperationInvocation)invocation2).getSubExpressions()) {
+								if(methodInvocationMap1.keySet().contains(subExpression2)) {
+									AbstractCall subOperationInvocation2 = null;
+									for(String key : methodInvocationMap2.keySet()) {
+										if(key.endsWith(subExpression2)) {
+											subOperationInvocation2 = methodInvocationMap2.get(key).get(0);
+											break;
+										}
+									}
+									Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+											subExpression2, invocationCoveringTheEntireStatement1, (OperationInvocation)subOperationInvocation2, ReplacementType.METHOD_INVOCATION);
+									replacementInfo.addReplacement(replacement);
+									return replacementInfo.getReplacements();
+								}
+							}
+						}
 					}
 				}
 			}

@@ -909,7 +909,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						replacement instanceof VariableReplacementWithMethodInvocation ||
 						replacement instanceof ClassInstanceCreationWithMethodInvocationReplacement ||
 						replacement.getType().equals(ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION) ||
-						replacement instanceof IntersectionReplacement) {
+						replacement instanceof IntersectionReplacement ||
+						replacement.getType().equals(ReplacementType.ANONYMOUS_CLASS_DECLARATION)) {
 					replacements.add(replacement);
 				}
 			}
@@ -2419,6 +2420,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				identicalArrayInitializer = creationCoveringTheEntireStatement1.identicalArrayInitializer(creationCoveringTheEntireStatement2);
 			}
 			if(identicalArrayInitializer) {
+				String anonymousClassDeclaration1 = creationCoveringTheEntireStatement1.getAnonymousClassDeclaration();
+				String anonymousClassDeclaration2 = creationCoveringTheEntireStatement2.getAnonymousClassDeclaration();
+				if(anonymousClassDeclaration1 != null && anonymousClassDeclaration2 != null && !anonymousClassDeclaration1.equals(anonymousClassDeclaration2)) {
+					Replacement replacement = new Replacement(anonymousClassDeclaration1, anonymousClassDeclaration2, ReplacementType.ANONYMOUS_CLASS_DECLARATION);
+					replacementInfo.addReplacement(replacement);
+				}
 				return replacementInfo.getReplacements();
 			}
 		}

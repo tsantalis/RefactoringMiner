@@ -2,6 +2,7 @@ package org.refactoringminer.rm1;
 
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLModelASTReader;
+import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,6 +32,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.regex.Matcher;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -139,7 +141,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				populateFileContents(repository, currentCommit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
 				UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
 				
-				refactoringsAtRevision = parentUMLModel.diff(currentUMLModel, renamedFilesHint).getRefactorings();
+				UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel, renamedFilesHint);
+				refactoringsAtRevision = modelDiff.getRefactorings();
 				refactoringsAtRevision = filter(refactoringsAtRevision);
 			} else {
 				//logger.info(String.format("Ignored revision %s with no changes in java files", commitId));
@@ -202,7 +205,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				UMLModel currentUMLModel = createModel(currentFolder, filesCurrent);
 				UMLModel parentUMLModel = createModel(parentFolder, filesBefore);
 				// Diff between currentModel e parentModel
-				refactoringsAtRevision = parentUMLModel.diff(currentUMLModel, renamedFilesHint).getRefactorings();
+				UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel, renamedFilesHint);
+				refactoringsAtRevision = modelDiff.getRefactorings();
 				refactoringsAtRevision = filter(refactoringsAtRevision);
 			}
 			else {
@@ -400,8 +404,22 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return new UMLModelASTReader(fileContents, repositoryDirectories).getUmlModel();
 	}
 
+	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
+	
 	protected UMLModel createModel(File projectFolder, List<String> filePaths) throws Exception {
-		return new UMLModelASTReader(projectFolder, filePaths).getUmlModel();
+		Map<String, String> fileContents = new LinkedHashMap<String, String>();
+		Set<String> repositoryDirectories = new LinkedHashSet<String>();
+		for(String path : filePaths) {
+			String fullPath = projectFolder + File.separator + path.replaceAll("/", systemFileSeparator);
+			String contents = FileUtils.readFileToString(new File(fullPath));
+			fileContents.put(path, contents);
+			String directory = new String(path);
+			while(directory.contains("/")) {
+				directory = directory.substring(0, directory.lastIndexOf("/"));
+				repositoryDirectories.add(directory);
+			}
+		}
+		return new UMLModelASTReader(fileContents, repositoryDirectories).getUmlModel();
 	}
 
 	@Override
@@ -540,7 +558,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
 			UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
 			//  Diff between currentModel e parentModel
-			refactoringsAtRevision = parentUMLModel.diff(currentUMLModel, renamedFilesHint).getRefactorings();
+			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel, renamedFilesHint);
+			refactoringsAtRevision = modelDiff.getRefactorings();
 			refactoringsAtRevision = filter(refactoringsAtRevision);
 		}
 		catch(RefactoringMinerTimedOutException e) {

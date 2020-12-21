@@ -1,19 +1,10 @@
 package gr.uom.java.xmi;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
@@ -27,12 +18,12 @@ import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
+import org.eclipse.jdt.core.dom.Comment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
-import org.eclipse.jdt.core.dom.FileASTRequestor;
 import org.eclipse.jdt.core.dom.IExtendedModifier;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.Javadoc;
@@ -55,15 +46,11 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class UMLModelASTReader {
 	private static final String FREE_MARKER_GENERATED = "generated using freemarker";
-	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
-	
 	private UMLModel umlModel;
-	private String projectRoot;
-	private ASTParser parser;
 
 	public UMLModelASTReader(Map<String, String> javaFileContents, Set<String> repositoryDirectories) {
 		this.umlModel = new UMLModel(repositoryDirectories);
-		this.parser = ASTParser.newParser(AST.JLS14);
+		ASTParser parser = ASTParser.newParser(AST.JLS14);
 		for(String filePath : javaFileContents.keySet()) {
 			Map<String, String> options = JavaCore.getOptions();
 			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_8);
@@ -73,13 +60,14 @@ public class UMLModelASTReader {
 			parser.setResolveBindings(false);
 			parser.setKind(ASTParser.K_COMPILATION_UNIT);
 			parser.setStatementsRecovery(true);
-			parser.setSource(javaFileContents.get(filePath).toCharArray());
-			if(javaFileContents.get(filePath).contains(FREE_MARKER_GENERATED)) {
+			String javaFileContent = javaFileContents.get(filePath);
+			parser.setSource(javaFileContent.toCharArray());
+			if(javaFileContent.contains(FREE_MARKER_GENERATED)) {
 				return;
 			}
 			try {
 				CompilationUnit compilationUnit = (CompilationUnit)parser.createAST(null);
-				processCompilationUnit(filePath, compilationUnit);
+				processCompilationUnit(filePath, compilationUnit, javaFileContent);
 			}
 			catch(Exception e) {
 				//e.printStackTrace();
@@ -87,73 +75,12 @@ public class UMLModelASTReader {
 		}
 	}
 
-	public UMLModelASTReader(File rootFolder) throws IOException {
-		this(rootFolder, getJavaFilePaths(rootFolder));
-	}
-
-	public UMLModelASTReader(File rootFolder, List<String> javaFiles) throws IOException {
-		this(rootFolder, buildAstParser(rootFolder), javaFiles, getDirectories(rootFolder, javaFiles));
-	}
-
-	private static List<String> getJavaFilePaths(File folder) throws IOException {
-		Stream<Path> walk = Files.walk(Paths.get(folder.toURI()));
-		List<String> paths = walk.map(x -> x.toString())
-				.filter(f -> f.endsWith(".java"))
-				.map(x -> x.substring(folder.getPath().length()+1).replaceAll(systemFileSeparator, "/"))
-				.collect(Collectors.toList());
-		walk.close();
-		return paths;
-	}
-
-	private static Set<String> getDirectories(File folder, List<String> paths) {
-		Set<String> repositoryDirectories = new LinkedHashSet<String>();
-		for(String path : paths) {
-			String directory = new String(path);
-			while(directory.contains("/")) {
-				directory = directory.substring(0, directory.lastIndexOf("/"));
-				repositoryDirectories.add(directory);
-			}
-		}
-		return repositoryDirectories;
-	}
-
-	private UMLModelASTReader(File rootFolder, ASTParser parser, List<String> javaFiles, Set<String> repositoryDirectories) {
-		this.umlModel = new UMLModel(repositoryDirectories);
-		this.projectRoot = rootFolder.getPath();
-		this.parser = parser;
-		final String[] emptyArray = new String[0];
-		
-		String[] filesArray = new String[javaFiles.size()];
-		for (int i = 0; i < filesArray.length; i++) {
-			filesArray[i] = rootFolder + File.separator + javaFiles.get(i).replaceAll("/", systemFileSeparator);
-		}
-
-		FileASTRequestor fileASTRequestor = new FileASTRequestor() { 
-			@Override
-			public void acceptAST(String sourceFilePath, CompilationUnit ast) {
-				String relativePath = sourceFilePath.substring(projectRoot.length() + 1).replaceAll(systemFileSeparator, "/");
-				processCompilationUnit(relativePath, ast);
-			}
-		};
-		this.parser.createASTs((String[]) filesArray, null, emptyArray, fileASTRequestor, null);
-	}
-
-	private static ASTParser buildAstParser(File srcFolder) {
-		ASTParser parser = ASTParser.newParser(AST.JLS14);
-		parser.setKind(ASTParser.K_COMPILATION_UNIT);
-		Map<String, String> options = JavaCore.getOptions();
-		JavaCore.setComplianceOptions(JavaCore.VERSION_1_8, options);
-		parser.setCompilerOptions(options);
-		parser.setResolveBindings(false);
-		parser.setEnvironment(new String[0], new String[]{srcFolder.getPath()}, null, false);
-		return parser;
-	}
-
 	public UMLModel getUmlModel() {
 		return this.umlModel;
 	}
 
-	protected void processCompilationUnit(String sourceFilePath, CompilationUnit compilationUnit) {
+	protected void processCompilationUnit(String sourceFilePath, CompilationUnit compilationUnit, String javaFileContent) {
+		List<UMLComment> comments = extractInternalComments(compilationUnit, sourceFilePath, javaFileContent);
 		PackageDeclaration packageDeclaration = compilationUnit.getPackage();
 		String packageName = null;
 		if(packageDeclaration != null)
@@ -179,11 +106,34 @@ public class UMLModelASTReader {
         }
 	}
 
-	private UMLJavadoc generateJavadoc(BodyDeclaration bodyDeclaration) {
+	private List<UMLComment> extractInternalComments(CompilationUnit cu, String sourceFile, String javaFileContent) {
+		List<Comment> astComments = cu.getCommentList();
+		List<UMLComment> comments = new ArrayList<UMLComment>();
+		for(Comment comment : astComments) {
+			LocationInfo locationInfo = null;
+			if(comment.isLineComment()) {
+				locationInfo = generateLocationInfo(cu, sourceFile, comment, CodeElementType.LINE_COMMENT);
+			}
+			else if(comment.isBlockComment()) {
+				locationInfo = generateLocationInfo(cu, sourceFile, comment, CodeElementType.BLOCK_COMMENT);
+			}
+			if(locationInfo != null) {
+				int start = comment.getStartPosition();
+				int end = start + comment.getLength();
+				String text = javaFileContent.substring(start, end);
+				UMLComment umlComment = new UMLComment(text, locationInfo);
+				comments.add(umlComment);
+			}
+		}
+		return comments;
+	}
+
+	private UMLJavadoc generateJavadoc(CompilationUnit cu, BodyDeclaration bodyDeclaration, String sourceFile) {
 		UMLJavadoc doc = null;
 		Javadoc javaDoc = bodyDeclaration.getJavadoc();
 		if(javaDoc != null) {
-			doc = new UMLJavadoc();
+			LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, javaDoc, CodeElementType.JAVADOC);
+			doc = new UMLJavadoc(locationInfo);
 			List<TagElement> tags = javaDoc.tags();
 			for(TagElement tag : tags) {
 				UMLTagElement tagElement = new UMLTagElement(tag.getTagName());
@@ -199,7 +149,7 @@ public class UMLModelASTReader {
 
 	private void processEnumDeclaration(CompilationUnit cu, EnumDeclaration enumDeclaration, String packageName, String sourceFile,
 			List<String> importedTypes) {
-		UMLJavadoc javadoc = generateJavadoc(enumDeclaration);
+		UMLJavadoc javadoc = generateJavadoc(cu, enumDeclaration, sourceFile);
 		if(javadoc != null && javadoc.containsIgnoreCase(FREE_MARKER_GENERATED)) {
 			return;
 		}
@@ -263,7 +213,7 @@ public class UMLModelASTReader {
 
 	private void processTypeDeclaration(CompilationUnit cu, TypeDeclaration typeDeclaration, String packageName, String sourceFile,
 			List<String> importedTypes) {
-		UMLJavadoc javadoc = generateJavadoc(typeDeclaration);
+		UMLJavadoc javadoc = generateJavadoc(cu, typeDeclaration, sourceFile);
 		if(javadoc != null && javadoc.containsIgnoreCase(FREE_MARKER_GENERATED)) {
 			return;
 		}
@@ -407,7 +357,7 @@ public class UMLModelASTReader {
 	}
 
 	private UMLOperation processMethodDeclaration(CompilationUnit cu, MethodDeclaration methodDeclaration, String packageName, boolean isInterfaceMethod, String sourceFile) {
-		UMLJavadoc javadoc = generateJavadoc(methodDeclaration);
+		UMLJavadoc javadoc = generateJavadoc(cu, methodDeclaration, sourceFile);
 		String methodName = methodDeclaration.getName().getFullyQualifiedName();
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, methodDeclaration, CodeElementType.METHOD_DECLARATION);
 		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo);
@@ -495,7 +445,7 @@ public class UMLModelASTReader {
 	}
 
 	private void processEnumConstantDeclaration(CompilationUnit cu, EnumConstantDeclaration enumConstantDeclaration, String sourceFile, UMLClass umlClass) {
-		UMLJavadoc javadoc = generateJavadoc(enumConstantDeclaration);
+		UMLJavadoc javadoc = generateJavadoc(cu, enumConstantDeclaration, sourceFile);
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, enumConstantDeclaration, CodeElementType.ENUM_CONSTANT_DECLARATION);
 		UMLEnumConstant enumConstant = new UMLEnumConstant(enumConstantDeclaration.getName().getIdentifier(), UMLType.extractTypeObject(umlClass.getName()), locationInfo);
 		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, enumConstantDeclaration);
@@ -513,7 +463,7 @@ public class UMLModelASTReader {
 	}
 
 	private List<UMLAttribute> processFieldDeclaration(CompilationUnit cu, FieldDeclaration fieldDeclaration, boolean isInterfaceField, String sourceFile) {
-		UMLJavadoc javadoc = generateJavadoc(fieldDeclaration);
+		UMLJavadoc javadoc = generateJavadoc(cu, fieldDeclaration, sourceFile);
 		List<UMLAttribute> attributes = new ArrayList<UMLAttribute>();
 		Type fieldType = fieldDeclaration.getType();
 		List<VariableDeclarationFragment> fragments = fieldDeclaration.fragments();

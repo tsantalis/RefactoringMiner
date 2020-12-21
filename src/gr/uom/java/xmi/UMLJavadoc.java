@@ -3,13 +3,25 @@ package gr.uom.java.xmi;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UMLJavadoc {
+import gr.uom.java.xmi.diff.CodeRange;
+
+public class UMLJavadoc implements LocationInfoProvider {
+	private LocationInfo locationInfo;
 	private List<UMLTagElement> tags;
 
-	public UMLJavadoc() {
+	public UMLJavadoc(LocationInfo locationInfo) {
+		this.locationInfo = locationInfo;
 		this.tags = new ArrayList<UMLTagElement>();
 	}
-	
+
+	public LocationInfo getLocationInfo() {
+		return locationInfo;
+	}
+
+	public CodeRange codeRange() {
+		return locationInfo.codeRange();
+	}
+
 	public void addTag(UMLTagElement tag) {
 		tags.add(tag);
 	}

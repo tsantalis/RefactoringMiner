@@ -87,6 +87,17 @@ public class LocationInfo {
 				this.endOffset >= other.endOffset;
 	}
 
+	public boolean sameLine(LocationInfo other) {
+		return this.filePath.equals(other.filePath) &&
+				this.startLine == other.startLine &&
+				this.endLine == other.endLine;
+	}
+
+	public boolean nextLine(LocationInfo other) {
+		return this.filePath.equals(other.filePath) &&
+				this.startLine == other.endLine + 1;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

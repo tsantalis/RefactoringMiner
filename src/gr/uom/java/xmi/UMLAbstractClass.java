@@ -17,10 +17,12 @@ public abstract class UMLAbstractClass {
 	protected String name;
 	protected List<UMLOperation> operations;
 	protected List<UMLAttribute> attributes;
+	protected List<UMLComment> comments;
 
 	public UMLAbstractClass() {
         this.operations = new ArrayList<UMLOperation>();
         this.attributes = new ArrayList<UMLAttribute>();
+        this.comments = new ArrayList<UMLComment>();
 	}
 
 	public LocationInfo getLocationInfo() {
@@ -41,6 +43,10 @@ public abstract class UMLAbstractClass {
 
 	public List<UMLAttribute> getAttributes() {
 		return attributes;
+	}
+
+	public List<UMLComment> getComments() {
+		return comments;
 	}
 
 	public UMLOperation operationWithTheSameSignature(UMLOperation operation) {

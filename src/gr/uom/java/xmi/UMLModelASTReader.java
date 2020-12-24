@@ -180,7 +180,7 @@ public class UMLModelASTReader {
 			LocationInfo commentLocationInfo = comment.getLocationInfo();
 			if(codeElementLocationInfo.subsumes(commentLocationInfo) ||
 					codeElementLocationInfo.sameLine(commentLocationInfo) ||
-					codeElementLocationInfo.nextLine(commentLocationInfo) ||
+					(codeElementLocationInfo.nextLine(commentLocationInfo) && !codeElementLocationInfo.getCodeElementType().equals(CodeElementType.ANONYMOUS_CLASS_DECLARATION)) ||
 					(codeElementComments.size() > 0 && codeElementComments.get(0).getLocationInfo().nextLine(commentLocationInfo))) {
 				codeElementComments.add(0, comment);
 			}
@@ -237,7 +237,7 @@ public class UMLModelASTReader {
 		
 		processBodyDeclarations(cu, enumDeclaration, packageName, sourceFile, importedTypes, umlClass, comments);
 		
-		processAnonymousClassDeclarations(cu, enumDeclaration, packageName, sourceFile, className, umlClass, comments);
+		processAnonymousClassDeclarations(cu, enumDeclaration, packageName, sourceFile, className, umlClass);
 		
 		this.getUmlModel().addClass(umlClass);
 		distributeComments(comments, locationInfo, umlClass.getComments());
@@ -338,7 +338,7 @@ public class UMLModelASTReader {
     		umlClass.addOperation(operation);
     	}
     	
-    	processAnonymousClassDeclarations(cu, typeDeclaration, packageName, sourceFile, className, umlClass, comments);
+    	processAnonymousClassDeclarations(cu, typeDeclaration, packageName, sourceFile, className, umlClass);
     	
     	this.getUmlModel().addClass(umlClass);
 		
@@ -358,7 +358,7 @@ public class UMLModelASTReader {
 	}
 
 	private void processAnonymousClassDeclarations(CompilationUnit cu, AbstractTypeDeclaration typeDeclaration,
-			String packageName, String sourceFile, String className, UMLClass umlClass, List<UMLComment> comments) {
+			String packageName, String sourceFile, String className, UMLClass umlClass) {
 		AnonymousClassDeclarationVisitor visitor = new AnonymousClassDeclarationVisitor();
     	typeDeclaration.accept(visitor);
     	Set<AnonymousClassDeclaration> anonymousClassDeclarations = visitor.getAnonymousClassDeclarations();
@@ -369,28 +369,50 @@ public class UMLModelASTReader {
     	}
     	
     	List<UMLAnonymousClass> createdAnonymousClasses = new ArrayList<UMLAnonymousClass>();
-    	Enumeration enumeration = root.preorderEnumeration();
+    	Enumeration enumeration = root.postorderEnumeration();
     	while(enumeration.hasMoreElements()) {
     		DefaultMutableTreeNode node = (DefaultMutableTreeNode)enumeration.nextElement();
     		if(node.getUserObject() != null) {
     			AnonymousClassDeclaration anonymous = (AnonymousClassDeclaration)node.getUserObject();
-    			String anonymousBinaryName = getAnonymousBinaryName(node);
-    			String anonymousCodePath = getAnonymousCodePath(node);
-    			UMLAnonymousClass anonymousClass = processAnonymousClassDeclaration(cu, anonymous, packageName + "." + className, anonymousBinaryName, anonymousCodePath, sourceFile, comments);
-    			umlClass.addAnonymousClass(anonymousClass);
-    			for(UMLOperation operation : umlClass.getOperations()) {
-    				if(operation.getLocationInfo().subsumes(anonymousClass.getLocationInfo())) {
-    					operation.addAnonymousClass(anonymousClass);
+    			boolean operationFound = false;
+    			UMLOperation matchingOperation = null;
+    			List<UMLComment> comments = null;
+				for(UMLOperation operation : umlClass.getOperations()) {
+    				if(operation.getLocationInfo().getStartOffset() <= anonymous.getStartPosition() &&
+    						operation.getLocationInfo().getEndOffset() >= anonymous.getStartPosition()+anonymous.getLength()) {
+    					comments  = operation.getComments();
+    					operationFound = true;
+    					matchingOperation = operation;
+    					break;
     				}
     			}
-    			for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
-    				for(UMLOperation operation : createdAnonymousClass.getOperations()) {
-        				if(operation.getLocationInfo().subsumes(anonymousClass.getLocationInfo())) {
-        					operation.addAnonymousClass(anonymousClass);
-        				}
-        			}
+    			if(!operationFound) {
+	    			for(UMLAttribute attribute : umlClass.getAttributes()) {
+	    				if(attribute.getLocationInfo().getStartOffset() <= anonymous.getStartPosition() &&
+	    						attribute.getLocationInfo().getEndOffset() >= anonymous.getStartPosition()+anonymous.getLength()) {
+	    					comments = attribute.getComments();
+	    					operationFound = true;
+	    					break;
+	    				}
+	    			}
     			}
-    			createdAnonymousClasses.add(anonymousClass);
+    			if(operationFound) {
+	    			String anonymousBinaryName = getAnonymousBinaryName(node);
+	    			String anonymousCodePath = getAnonymousCodePath(node);
+	    			UMLAnonymousClass anonymousClass = processAnonymousClassDeclaration(cu, anonymous, packageName + "." + className, anonymousBinaryName, anonymousCodePath, sourceFile, comments);
+	    			umlClass.addAnonymousClass(anonymousClass);
+	    			if(matchingOperation != null) {
+	    				matchingOperation.addAnonymousClass(anonymousClass);
+	    			}
+	    			for(UMLOperation operation : anonymousClass.getOperations()) {
+	    				for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
+	    					if(operation.getLocationInfo().subsumes(createdAnonymousClass.getLocationInfo())) {
+	    						operation.addAnonymousClass(createdAnonymousClass);
+	    					}
+	    				}
+	    			}
+	    			createdAnonymousClasses.add(anonymousClass);
+    			}
     		}
     	}
 	}

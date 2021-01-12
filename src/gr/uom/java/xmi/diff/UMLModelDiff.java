@@ -1821,13 +1821,25 @@ public class UMLModelDiff {
             	  }
             	  String className = mapper.getOperation2().getClassName();
             	  List<UMLAttribute> attributes = new ArrayList<UMLAttribute>();
-            	  if(className.contains(".") && isNumeric(className.substring(className.lastIndexOf(".")+1, className.length()))) {
+            	  if(className.contains(".") && isAnonymousClassName(className)) {
             		  //add enclosing class fields + anonymous class fields
-            		  UMLClassBaseDiff umlClassDiff = getUMLClassDiff(className.substring(0, className.lastIndexOf(".")));
+            		  String[] tokens = className.split("\\.");
+            		  String anonymousID = "";
+            		  for(int i=tokens.length-1; i>=0; i--) {
+            			  String token = tokens[i];
+            			  if(isNumeric(token) || Character.isLowerCase(token.charAt(0))) {
+            				  anonymousID = "." + token + anonymousID;
+            			  }
+            			  else {
+            				  break;
+            			  }
+            		  }
+            		  String enclosingClassName = className.substring(0, className.indexOf(anonymousID));
+            		  UMLClassBaseDiff umlClassDiff = getUMLClassDiff(enclosingClassName);
             		  attributes.addAll(umlClassDiff.originalClassAttributesOfType(addedOperation.getClassName()));
-            		  for(UMLAnonymousClass anonymous : umlClassDiff.getOriginalClass().getAnonymousClassList()) {
-            			  if(anonymous.getName().equals(className)) {
-            				  attributes.addAll(anonymous.attributesOfType(addedOperation.getClassName()));
+            		  for(UMLAnonymousClass anonymousClass : umlClassDiff.getOriginalClass().getAnonymousClassList()) {
+            			  if(className.equals(anonymousClass.getCodePath())) {
+            				  attributes.addAll(anonymousClass.attributesOfType(addedOperation.getClassName()));
             				  break;
             			  }
             		  }
@@ -1912,6 +1924,11 @@ public class UMLModelDiff {
             }
          }
       }
+   }
+
+   private boolean isAnonymousClassName(String className) {
+	   String anonymousID = className.substring(className.lastIndexOf(".")+1, className.length());
+	   return isNumeric(anonymousID) || Character.isLowerCase(anonymousID.charAt(0));
    }
 
    private boolean conflictingExpression(OperationInvocation invocation, UMLOperation addedOperation, Map<String, UMLType> variableTypeMap) {

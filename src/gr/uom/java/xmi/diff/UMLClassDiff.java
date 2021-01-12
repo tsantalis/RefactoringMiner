@@ -113,15 +113,20 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 			}
 		}
 		for(UMLOperation operation : originalClass.getOperations()) {
-			if(!containsMapperForOperation(operation) && nextClass.getOperations().contains(operation) && !removedOperations.contains(operation)) {
+			if(!containsMapperForOperation1(operation) && nextClass.getOperations().contains(operation) && !removedOperations.contains(operation)) {
     			int index = nextClass.getOperations().indexOf(operation);
     			int lastIndex = nextClass.getOperations().lastIndexOf(operation);
     			int finalIndex = index;
     			if(index != lastIndex) {
-    				double d1 = operation.getReturnParameter().getType().normalizedNameDistance(nextClass.getOperations().get(index).getReturnParameter().getType());
-    				double d2 = operation.getReturnParameter().getType().normalizedNameDistance(nextClass.getOperations().get(lastIndex).getReturnParameter().getType());
-    				if(d2 < d1) {
+    				if(containsMapperForOperation2(nextClass.getOperations().get(index))) {
     					finalIndex = lastIndex;
+    				}
+    				else if(!operation.isConstructor()) {
+	    				double d1 = operation.getReturnParameter().getType().normalizedNameDistance(nextClass.getOperations().get(index).getReturnParameter().getType());
+	    				double d2 = operation.getReturnParameter().getType().normalizedNameDistance(nextClass.getOperations().get(lastIndex).getReturnParameter().getType());
+	    				if(d2 < d1) {
+	    					finalIndex = lastIndex;
+	    				}
     				}
     			}
     			UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(operation, nextClass.getOperations().get(finalIndex), this);
@@ -178,9 +183,18 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 		}
 	}
 
-	private boolean containsMapperForOperation(UMLOperation operation) {
+	private boolean containsMapperForOperation1(UMLOperation operation) {
 		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
 			if(mapper.getOperation1().equalsQualified(operation)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean containsMapperForOperation2(UMLOperation operation) {
+		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+			if(mapper.getOperation2().equalsQualified(operation)) {
 				return true;
 			}
 		}

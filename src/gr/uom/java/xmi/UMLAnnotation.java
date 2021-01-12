@@ -145,6 +145,8 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 				if (!(m.get(thisKey) == null && m.containsKey(thisKey)))
 					return false;
 			} else {
+				if (m.get(thisKey) == null)
+					return false;
 				if (!thisValue.getExpression().equals(m.get(thisKey).getExpression()))
 					return false;
 			}

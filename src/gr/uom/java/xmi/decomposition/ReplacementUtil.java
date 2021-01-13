@@ -6,7 +6,28 @@ import java.util.regex.Pattern;
 public class ReplacementUtil {
 	private static final String[] SPECIAL_CHARACTERS = {";", ",", ")", "=", "+", "-", ">", "<", ".", "]", " ", "(", "["};
 	private static final String[] SPECIAL_ARGUMENT_CHARACTERS = {";", ",", ")", "=", "+", "-", ">", "<", ".", "]", " "};
-	
+	private static final Pattern DOUBLE_QUOTES = Pattern.compile("\"([^\"]*)\"|(\\S+)");
+
+	public static boolean isInsideSingleQuotes(String argument, int indexOfChar) {
+		if(indexOfChar > 0 && indexOfChar < argument.length()-1) {
+			return argument.charAt(indexOfChar-1) == '\'' &&
+					argument.charAt(indexOfChar+1) == '\'';
+		}
+		return false;
+	}
+
+	public static boolean isInsideDoubleQuotes(String argument, int indexOfChar) {
+		Matcher m = DOUBLE_QUOTES.matcher(argument);
+		while (m.find()) {
+			if (m.group(1) != null) {
+				if(indexOfChar > m.start() && indexOfChar < m.end()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public static String keepReservedTokens(String input) {
 		StringBuilder sb = new StringBuilder();
 		for(int i=0; i<input.length(); i++) {

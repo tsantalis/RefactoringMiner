@@ -237,9 +237,19 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		if(index != -1) {
 			String prefix = statement.substring(0, index);
 			if(prefix.contains("(") && prefix.contains(")")) {
-				String casting = prefix.substring(prefix.indexOf("("), prefix.indexOf(")")+1);
-				if(("return " + casting + expression + ";\n").equals(statement)) {
-					return true;
+				int indexOfOpeningParenthesis = prefix.indexOf("(");
+				int indexOfClosingParenthesis = prefix.indexOf(")");
+				boolean openingParenthesisInsideSingleQuotes = ReplacementUtil.isInsideSingleQuotes(prefix, indexOfOpeningParenthesis);
+				boolean closingParenthesisInsideSingleQuotes = ReplacementUtil.isInsideSingleQuotes(prefix, indexOfClosingParenthesis);
+				boolean openingParenthesisInsideDoubleQuotes = ReplacementUtil.isInsideDoubleQuotes(prefix, indexOfOpeningParenthesis);
+				boolean closingParenthesisIndideDoubleQuotes = ReplacementUtil.isInsideDoubleQuotes(prefix, indexOfClosingParenthesis);
+				if(indexOfOpeningParenthesis < indexOfClosingParenthesis &&
+						!openingParenthesisInsideSingleQuotes && !closingParenthesisInsideSingleQuotes &&
+						!openingParenthesisInsideDoubleQuotes && !closingParenthesisIndideDoubleQuotes) {
+					String casting = prefix.substring(indexOfOpeningParenthesis, indexOfClosingParenthesis+1);
+					if(("return " + casting + expression + ";\n").equals(statement)) {
+						return true;
+					}
 				}
 			}
 		}

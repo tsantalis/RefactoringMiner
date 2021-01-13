@@ -447,20 +447,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(UMLAnonymousClass anonymous : anonymousList) {
 					if(statement.getLocationInfo().subsumes(anonymous.getLocationInfo())) {
 						for(UMLOperation anonymousOperation : anonymous.getOperations()) {
-							List<StatementObject> anonymousClassLeaves = anonymousOperation.getBody().getCompositeStatement().getLeaves();
-							for(StatementObject anonymousLeaf : anonymousClassLeaves) {
-								if(!leaves1.contains(anonymousLeaf)) {
-									leaves1.add(anonymousLeaf);
-									addedLeaves1.add(anonymousLeaf);
-									codeFragmentOperationMap1.put(anonymousLeaf, anonymousOperation);
+							if(anonymousOperation.getBody() != null) {
+								List<StatementObject> anonymousClassLeaves = anonymousOperation.getBody().getCompositeStatement().getLeaves();
+								for(StatementObject anonymousLeaf : anonymousClassLeaves) {
+									if(!leaves1.contains(anonymousLeaf)) {
+										leaves1.add(anonymousLeaf);
+										addedLeaves1.add(anonymousLeaf);
+										codeFragmentOperationMap1.put(anonymousLeaf, anonymousOperation);
+									}
 								}
-							}
-							List<CompositeStatementObject> anonymousClassInnerNodes = anonymousOperation.getBody().getCompositeStatement().getInnerNodes();
-							for(CompositeStatementObject anonymousInnerNode : anonymousClassInnerNodes) {
-								if(!innerNodes1.contains(anonymousInnerNode)) {
-									innerNodes1.add(anonymousInnerNode);
-									addedInnerNodes1.add(anonymousInnerNode);
-									codeFragmentOperationMap1.put(anonymousInnerNode, anonymousOperation);
+								List<CompositeStatementObject> anonymousClassInnerNodes = anonymousOperation.getBody().getCompositeStatement().getInnerNodes();
+								for(CompositeStatementObject anonymousInnerNode : anonymousClassInnerNodes) {
+									if(!innerNodes1.contains(anonymousInnerNode)) {
+										innerNodes1.add(anonymousInnerNode);
+										addedInnerNodes1.add(anonymousInnerNode);
+										codeFragmentOperationMap1.put(anonymousInnerNode, anonymousOperation);
+									}
 								}
 							}
 						}

@@ -3118,13 +3118,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				String arg2 = it2.next();
 				if(arg1.contains("(") && arg2.contains("(") && arg1.contains(")") && arg2.contains(")")) {
 					int indexOfOpeningParenthesis1 = arg1.indexOf("(");
-					int indexOfClosingParenthesis1 = arg1.indexOf(")");
+					int indexOfClosingParenthesis1 = arg1.lastIndexOf(")");
 					boolean openingParenthesisInsideSingleQuotes1 = isInsideSingleQuotes(arg1, indexOfOpeningParenthesis1);
 					boolean openingParenthesisInsideDoubleQuotes1 = isInsideDoubleQuotes(arg1, indexOfOpeningParenthesis1);
 					boolean closingParenthesisInsideSingleQuotes1 = isInsideSingleQuotes(arg1, indexOfClosingParenthesis1);
 					boolean closingParenthesisInsideDoubleQuotes1 = isInsideDoubleQuotes(arg1, indexOfClosingParenthesis1);
 					int indexOfOpeningParenthesis2 = arg2.indexOf("(");
-					int indexOfClosingParenthesis2 = arg2.indexOf(")");
+					int indexOfClosingParenthesis2 = arg2.lastIndexOf(")");
 					boolean openingParenthesisInsideSingleQuotes2 = isInsideSingleQuotes(arg2, indexOfOpeningParenthesis2);
 					boolean openingParenthesisInsideDoubleQuotes2 = isInsideDoubleQuotes(arg2, indexOfOpeningParenthesis2);
 					boolean closingParenthesisInsideSingleQuotes2 = isInsideSingleQuotes(arg2, indexOfClosingParenthesis2);

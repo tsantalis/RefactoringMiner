@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLOperation;
 
 public class VariableReferenceExtractor {
 
@@ -16,11 +17,27 @@ public class VariableReferenceExtractor {
 			AbstractCodeFragment fragment1 = mapping.getFragment1();
 			AbstractCodeFragment fragment2 = mapping.getFragment2();
 			if(scope1.subsumes(fragment1.getLocationInfo()) && scope2.subsumes(fragment2.getLocationInfo()) &&
-					usesVariable(fragment1, declaration1) && usesVariable(fragment2, declaration2)) {
+					usesVariable(fragment1, declaration1) && !matchingLocalVariable(declaration1, fragment1, mapping.getOperation1()) &&
+					usesVariable(fragment2, declaration2) && !matchingLocalVariable(declaration2, fragment2, mapping.getOperation2())) {
 				references.add(mapping);
 			}
 		}
 		return references;
+	}
+
+	private static boolean matchingLocalVariable(VariableDeclaration declaration, AbstractCodeFragment fragment, UMLOperation operation) {
+		if(declaration.isAttribute()) {
+			List<VariableDeclaration> variableDeclarations = operation.getAllVariableDeclarations();
+			for(VariableDeclaration localVariableDeclaration : variableDeclarations) {
+				if(localVariableDeclaration.getVariableName().equals(declaration.getVariableName())) {
+					VariableScope scope = localVariableDeclaration.getScope();
+					if(scope.subsumes(fragment.getLocationInfo()) && fragment.getVariables().contains(declaration.getVariableName())) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private static boolean usesVariable(AbstractCodeFragment fragment, VariableDeclaration declaration) {

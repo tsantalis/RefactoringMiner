@@ -1222,7 +1222,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 	}
 
 	private boolean exactMappings(UMLOperationBodyMapper operationBodyMapper) {
-		if(allMappingsAreExactMatches(operationBodyMapper)) {
+		if(operationBodyMapper.allMappingsAreExactMatches()) {
 			if(operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() == 0)
 				return true;
 			else if(operationBodyMapper.nonMappedElementsT1() > 0 && operationBodyMapper.getNonMappedInnerNodesT1().size() == 0 && operationBodyMapper.nonMappedElementsT2() == 0) {
@@ -1546,27 +1546,6 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		int numberOfInvocationsCalledByAddedOperationFoundInOtherRemovedOperations = newIntersection.size();
 		int numberOfInvocationsMissingFromAddedOperationWithoutThoseFoundInOtherRemovedOperations = numberOfInvocationsMissingFromAddedOperation - numberOfInvocationsCalledByAddedOperationFoundInOtherRemovedOperations;
 		return numberOfInvocationsCalledByAddedOperationFoundInOtherRemovedOperations > numberOfInvocationsMissingFromAddedOperationWithoutThoseFoundInOtherRemovedOperations;
-	}
-
-	public static boolean allMappingsAreExactMatches(UMLOperationBodyMapper operationBodyMapper) {
-		int mappings = operationBodyMapper.mappingsWithoutBlocks();
-		int tryMappings = 0;
-		int mappingsWithTypeReplacement = 0;
-		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-			if(mapping.getFragment1().getString().equals("try") && mapping.getFragment2().getString().equals("try")) {
-				tryMappings++;
-			}
-			if(mapping.containsReplacement(ReplacementType.TYPE)) {
-				mappingsWithTypeReplacement++;
-			}
-		}
-		if(mappings == operationBodyMapper.exactMatches() + tryMappings) {
-			return true;
-		}
-		if(mappings == operationBodyMapper.exactMatches() + tryMappings + mappingsWithTypeReplacement && mappings > mappingsWithTypeReplacement) {
-			return true;
-		}
-		return false;
 	}
 
 	private boolean compatibleSignatures(UMLOperation removedOperation, UMLOperation addedOperation, int absoluteDifferenceInPosition) {

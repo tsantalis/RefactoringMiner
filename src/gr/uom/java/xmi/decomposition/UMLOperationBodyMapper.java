@@ -857,6 +857,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return exactMatches;
 	}
 
+	public boolean allMappingsAreExactMatches() {
+		int mappings = this.mappingsWithoutBlocks();
+		int tryMappings = 0;
+		int mappingsWithTypeReplacement = 0;
+		for(AbstractCodeMapping mapping : this.getMappings()) {
+			if(mapping.getFragment1().getString().equals("try") && mapping.getFragment2().getString().equals("try")) {
+				tryMappings++;
+			}
+			if(mapping.containsReplacement(ReplacementType.TYPE)) {
+				mappingsWithTypeReplacement++;
+			}
+		}
+		if(mappings == this.exactMatches() + tryMappings) {
+			return true;
+		}
+		if(mappings == this.exactMatches() + tryMappings + mappingsWithTypeReplacement && mappings > mappingsWithTypeReplacement) {
+			return true;
+		}
+		return false;
+	}
+
 	private int editDistance() {
 		int count = 0;
 		for(AbstractCodeMapping mapping : getMappings()) {

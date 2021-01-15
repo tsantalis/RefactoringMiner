@@ -165,20 +165,40 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	}
 
 	public List<VariableDeclaration> getAllVariableDeclarations() {
-		if(operationBody != null)
-			return operationBody.getAllVariableDeclarations();
-		return new ArrayList<VariableDeclaration>();
+		if(operationBody != null) {
+			List<VariableDeclaration> allVariableDeclarations = new ArrayList<VariableDeclaration>();
+			allVariableDeclarations.addAll(this.getParameterDeclarationList());
+			allVariableDeclarations.addAll(operationBody.getAllVariableDeclarations());
+			return allVariableDeclarations;
+		}
+		return getParameterDeclarationList();
 	}
 
 	public List<VariableDeclaration> getVariableDeclarationsInScope(LocationInfo location) {
-		if(operationBody != null)
-			return operationBody.getVariableDeclarationsInScope(location);
-		return new ArrayList<VariableDeclaration>();
+		List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
+		for(VariableDeclaration parameterDeclaration : getParameterDeclarationList()) {
+			if(parameterDeclaration.getScope().subsumes(location)) {
+				variableDeclarations.add(parameterDeclaration);
+			}
+		}
+		if(operationBody != null) {
+			variableDeclarations.addAll(operationBody.getVariableDeclarationsInScope(location));
+		}
+		return variableDeclarations;
 	}
 
 	public VariableDeclaration getVariableDeclaration(String variableName) {
-		if(operationBody != null)
-			return operationBody.getVariableDeclaration(variableName);
+		if(operationBody != null) {
+			VariableDeclaration variableDeclatation = operationBody.getVariableDeclaration(variableName);
+			if(variableDeclatation != null) {
+				return variableDeclatation;
+			}
+		}
+		for(VariableDeclaration parameterDeclaration : getParameterDeclarationList()) {
+			if(parameterDeclaration.getVariableName().equals(variableName)) {
+				return parameterDeclaration;
+			}
+		}
 		return null;
 	}
 
@@ -406,6 +426,15 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 				parameterNameList.add(parameter.getName());
 		}
 		return parameterNameList;
+	}
+
+	public List<VariableDeclaration> getParameterDeclarationList() {
+		List<VariableDeclaration> parameterDeclarationList = new ArrayList<VariableDeclaration>();
+		for(UMLParameter parameter : parameters) {
+			if(!parameter.getKind().equals("return"))
+				parameterDeclarationList.add(parameter.getVariableDeclaration());
+		}
+		return parameterDeclarationList;
 	}
 
 	public int getNumberOfNonVarargsParameters() {

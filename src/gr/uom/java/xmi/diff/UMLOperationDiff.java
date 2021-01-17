@@ -31,6 +31,10 @@ public class UMLOperationDiff {
 	private UMLAnnotationListDiff annotationListDiff;
 	
 	public UMLOperationDiff(UMLOperation removedOperation, UMLOperation addedOperation) {
+		process(removedOperation, addedOperation);
+	}
+
+	private void process(UMLOperation removedOperation, UMLOperation addedOperation) {
 		this.removedOperation = removedOperation;
 		this.addedOperation = addedOperation;
 		this.addedParameters = new ArrayList<UMLParameter>();
@@ -118,8 +122,8 @@ public class UMLOperationDiff {
 	}
 
 	public UMLOperationDiff(UMLOperation removedOperation, UMLOperation addedOperation, Set<AbstractCodeMapping> mappings) {
-		this(removedOperation, addedOperation);
 		this.mappings = mappings;
+		process(removedOperation, addedOperation);
 	}
 
 	private boolean existsAnotherAddedParameterWithTheSameType(UMLParameter parameter) {

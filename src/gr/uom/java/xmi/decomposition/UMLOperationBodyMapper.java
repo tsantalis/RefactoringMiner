@@ -109,6 +109,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					parameterToArgumentMap2.put("this.", "");
 				}
 			}
+			List<UMLParameterDiff> parameterDiffList = operationDiff.getParameterDiffList();
+			for(UMLParameterDiff parameterDiff : parameterDiffList) {
+				UMLParameter addedParameter = parameterDiff.getAddedParameter();
+				UMLParameter removedParameter = parameterDiff.getRemovedParameter();
+				if(UMLModelDiff.looksLikeSameType(addedParameter.getType().getClassType(), operation1.getClassName()) &&
+						UMLModelDiff.looksLikeSameType(removedParameter.getType().getClassType(), operation2.getClassName())) {
+					parameterToArgumentMap1.put("this.", "");
+					parameterToArgumentMap2.put(addedParameter.getName() + ".", "");
+					parameterToArgumentMap1.put(removedParameter.getName() + ".", "");
+					parameterToArgumentMap2.put("this.", "");
+				}
+			}
 			resetNodes(leaves1);
 			//replace parameters with arguments in leaves1
 			if(!parameterToArgumentMap1.isEmpty()) {

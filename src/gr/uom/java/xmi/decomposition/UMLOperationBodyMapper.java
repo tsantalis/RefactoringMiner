@@ -1994,7 +1994,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
-		boolean isEqualWithReplacement = s1.equals(s2) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) || differOnlyInCastExpressionOrPrefixOperator(s1, s2, replacementInfo) || oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, replacementInfo) ||
+		boolean isEqualWithReplacement = s1.equals(s2) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) || differOnlyInCastExpressionOrPrefixOperator(s1, s2, replacementInfo) ||
+				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString()) ||
 				(containsValidOperatorReplacements(replacementInfo) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, replacementInfo))) ||
 				equalAfterArgumentMerge(s1, s2, replacementInfo) ||
@@ -3494,6 +3495,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			return true;
+		}
+		return false;
+	}
+
+	private boolean identicalVariableDeclarationsWithDifferentNames(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {
+		if(variableDeclarations1.size() == variableDeclarations2.size() && variableDeclarations1.size() == 1) {
+			VariableDeclaration declaration1 = variableDeclarations1.get(0);
+			VariableDeclaration declaration2 = variableDeclarations2.get(0);
+			if(!declaration1.getVariableName().equals(declaration2.getVariableName())) {
+				String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
+				String composedString1 = declaration1.getType() + " " + declaration1.getVariableName() + commonSuffix;
+				String composedString2 = declaration2.getType() + " " + declaration2.getVariableName() + commonSuffix;
+				if(s1.equals(composedString1) && s2.equals(composedString2)) {
+					Replacement replacement = new Replacement(declaration1.getVariableName(), declaration2.getVariableName(), ReplacementType.VARIABLE_NAME);
+					replacementInfo.addReplacement(replacement);
+					return true;
+				}
+			}
 		}
 		return false;
 	}

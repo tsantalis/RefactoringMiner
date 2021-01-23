@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -52,7 +53,8 @@ public class ExtractOperationDetection {
 					}
 				}
 				if(otherAddedMethodsCalled == 0) {
-					for(OperationInvocation addedOperationInvocation : addedOperationInvocations) {
+					List<OperationInvocation> sortedInvocations = sortInvocationsBasedOnArgumentOccurrences(addedOperationInvocations);
+					for(OperationInvocation addedOperationInvocation : sortedInvocations) {
 						processAddedOperation(mapper, addedOperation, refactorings, addedOperationInvocations, addedOperationInvocation);
 					}
 				}
@@ -62,6 +64,38 @@ public class ExtractOperationDetection {
 			}
 		}
 		return refactorings;
+	}
+
+	private List<OperationInvocation> sortInvocationsBasedOnArgumentOccurrences(List<OperationInvocation> invocations) {
+		if(invocations.size() > 1) {
+			List<OperationInvocation> sorted = new ArrayList<OperationInvocation>();
+			List<String> allVariables = new ArrayList<String>();
+			for(CompositeStatementObject composite : mapper.getNonMappedInnerNodesT1()) {
+				allVariables.addAll(composite.getVariables());
+			}
+			for(StatementObject leaf : mapper.getNonMappedLeavesT1()) {
+				allVariables.addAll(leaf.getVariables());
+			}
+			int max = 0;
+			for(OperationInvocation invocation : invocations) {
+				List<String> arguments = invocation.getArguments();
+				int occurrences = 0;
+				for(String argument : arguments) {
+					occurrences += Collections.frequency(allVariables, argument);
+				}
+				if(occurrences > max) {
+					sorted.add(0, invocation);
+					max = occurrences;
+				}
+				else {
+					sorted.add(invocation);
+				}
+			}
+			return sorted;
+		}
+		else {
+			return invocations;
+		}
 	}
 
 	private void processAddedOperation(UMLOperationBodyMapper mapper, UMLOperation addedOperation,

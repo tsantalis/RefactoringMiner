@@ -48,10 +48,10 @@ public class AddThrownExceptionTypeRefactoring implements Refactoring {
 	public List<CodeRange> rightSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
 		ranges.add(exceptionType.codeRange()
-				.setDescription("added thown exception type")
+				.setDescription("added thrown exception type")
 				.setCodeElement(exceptionType.toString()));
 		ranges.add(operationAfter.codeRange()
-				.setDescription("method declaration with added parameter")
+				.setDescription("method declaration with added thrown exception type")
 				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}

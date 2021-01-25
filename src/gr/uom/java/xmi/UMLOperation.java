@@ -35,6 +35,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	private OperationBody operationBody;
 	private List<UMLAnonymousClass> anonymousClassList;
 	private List<UMLTypeParameter> typeParameters;
+	private List<UMLType> thrownExceptionTypes;
 	private UMLJavadoc javadoc;
 	private List<UMLAnnotation> annotations;
 	private List<UMLComment> comments;
@@ -45,6 +46,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
         this.parameters = new ArrayList<UMLParameter>();
         this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
         this.typeParameters = new ArrayList<UMLTypeParameter>();
+        this.thrownExceptionTypes = new ArrayList<UMLType>();
         this.annotations = new ArrayList<UMLAnnotation>();
         this.comments = new ArrayList<UMLComment>();
     }
@@ -63,6 +65,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 
 	public void addAnnotation(UMLAnnotation annotation) {
 		annotations.add(annotation);
+	}
+
+	public List<UMLType> getThrownExceptionTypes() {
+		return thrownExceptionTypes;
+	}
+
+	public void addThrownExceptionType(UMLType exceptionType) {
+		thrownExceptionTypes.add(exceptionType);
 	}
 
 	public LocationInfo getLocationInfo() {

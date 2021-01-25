@@ -51,7 +51,7 @@ public class RemoveThrownExceptionTypeRefactoring implements Refactoring {
 	public List<CodeRange> rightSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
 		ranges.add(operationAfter.codeRange()
-				.setDescription("method declaration with removed parameter")
+				.setDescription("method declaration with removed thrown exception type")
 				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}

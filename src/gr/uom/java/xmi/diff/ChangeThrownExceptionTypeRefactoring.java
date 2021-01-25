@@ -50,6 +50,9 @@ public class ChangeThrownExceptionTypeRefactoring implements Refactoring {
 					.setDescription("original exception type")
 					.setCodeElement(originalType.toString()));
 		}
+		ranges.add(operationBefore.codeRange()
+				.setDescription("original method declaration")
+				.setCodeElement(operationBefore.toString()));
 		return ranges;
 	}
 
@@ -61,6 +64,9 @@ public class ChangeThrownExceptionTypeRefactoring implements Refactoring {
 					.setDescription("changed exception type")
 					.setCodeElement(changedType.toString()));
 		}
+		ranges.add(operationAfter.codeRange()
+				.setDescription("method declaration with changed thrown exception type")
+				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}
 

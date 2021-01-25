@@ -71,7 +71,10 @@ public enum RefactoringType {
 	REORDER_PARAMETER("Reorder Parameter", "Reorder Parameter \\[(.+)\\] to \\[(.+)\\] in method (.+) from class (.+)"),
 	ADD_VARIABLE_ANNOTATION("Add Variable Annotation", "Add Variable Annotation (.+) in variable (.+) in method (.+) from class (.+)"),
 	REMOVE_VARIABLE_ANNOTATION("Remove Variable Annotation", "Remove Variable Annotation (.+) in variable (.+) in method (.+) from class (.+)"),
-	MODIFY_VARIABLE_ANNOTATION("Modify Variable Annotation", "Modify Variable Annotation (.+) to (.+) in variable (.+) in method (.+) from class (.+)"),;
+	MODIFY_VARIABLE_ANNOTATION("Modify Variable Annotation", "Modify Variable Annotation (.+) to (.+) in variable (.+) in method (.+) from class (.+)"),
+	ADD_THROWN_EXCEPTION_TYPE("Add Thrown Exception Type", "Add Thrown Exception Type (.+) in method (.+) from class (.+)"),
+	REMOVE_THROWN_EXCEPTION_TYPE("Remove Thrown Exception Type", "Remove Thrown Exception Type (.+) in method (.+) from class (.+)"),
+	CHANGE_THROWN_EXCEPTION_TYPE("Change Thrown Exception Type", "Change Thrown Exception Type (.+) to (.+) in method (.+) from class (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -135,7 +138,10 @@ public enum RefactoringType {
 		MODIFY_PARAMETER_ANNOTATION,
 		ADD_VARIABLE_ANNOTATION,
 		REMOVE_VARIABLE_ANNOTATION,
-		MODIFY_VARIABLE_ANNOTATION
+		MODIFY_VARIABLE_ANNOTATION,
+		ADD_THROWN_EXCEPTION_TYPE,
+		REMOVE_THROWN_EXCEPTION_TYPE,
+		CHANGE_THROWN_EXCEPTION_TYPE
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

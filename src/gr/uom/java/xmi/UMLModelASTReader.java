@@ -526,6 +526,11 @@ public class UMLModelASTReader {
 			umlParameter.setVariableDeclaration(variableDeclaration);
 			umlOperation.addParameter(umlParameter);
 		}
+		List<Type> thrownExceptionTypes = methodDeclaration.thrownExceptionTypes();
+		for(Type thrownExceptionType : thrownExceptionTypes) {
+			UMLType type = UMLType.extractTypeObject(cu, sourceFile, thrownExceptionType, 0);
+			umlOperation.addThrownExceptionType(type);
+		}
 		return umlOperation;
 	}
 

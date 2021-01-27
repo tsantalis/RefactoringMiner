@@ -726,25 +726,40 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	}
 
 	public boolean equalParameterTypes(UMLOperation operation) {
-		return this.equalReturnParameter(operation) && this.getParameterTypeList().equals(operation.getParameterTypeList()) && equalTypeParameters(operation);
+		return this.getParameterTypeList().equals(operation.getParameterTypeList()) && equalTypeParameters(operation);
+	}
+
+	private boolean typeParameterToTypeArgumentMatch(UMLOperation operation, Map<UMLTypeParameter, UMLType> typeParameterToTypeArgumentMap) {
+		for(UMLTypeParameter key : typeParameterToTypeArgumentMap.keySet()) {
+			UMLType value = typeParameterToTypeArgumentMap.get(key);
+			UMLParameter thisReturnParameter = this.getReturnParameter();
+			UMLParameter otherReturnParameter = operation.getReturnParameter();
+			if(thisReturnParameter != null && otherReturnParameter != null) {
+				UMLType thisReturnType = thisReturnParameter.getType();
+				UMLType otherReturnType = otherReturnParameter.getType();
+				if(thisReturnType.toString().equals(value.toString()) &&
+						(otherReturnType.toString().equals(key.toString()) || otherReturnType.toString().equals(key.getName()))) {
+					return true;
+				}
+				if(otherReturnType.toString().equals(value.toString()) &&
+						(thisReturnType.toString().equals(key.toString()) || thisReturnType.toString().equals(key.getName()))) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean equalTypeParameters(UMLOperation operation) {
 		return this.typeParameters.equals(operation.typeParameters);
 	}
 
-	public boolean equalParameterNames(UMLOperation operation) {
-		return this.equalReturnParameter(operation) && this.getParameterNameList().equals(operation.getParameterNameList());
+	private boolean equalParameterNames(UMLOperation operation) {
+		return this.getParameterNameList().equals(operation.getParameterNameList());
 	}
 
-	public boolean overloadedParameters(UMLOperation operation) {
-		return this.equalReturnParameter(operation) &&
-				(this.getParameters().containsAll(operation.getParameters()) || operation.getParameters().containsAll(this.getParameters()));
-	}
-
-	public boolean overloadedParameterTypes(UMLOperation operation) {
-		return this.equalReturnParameter(operation) &&
-				(this.getParameterTypeList().containsAll(operation.getParameterTypeList()) || operation.getParameterTypeList().containsAll(this.getParameterTypeList()));
+	private boolean overloadedParameterTypes(UMLOperation operation) {
+		return this.getParameterTypeList().containsAll(operation.getParameterTypeList()) || operation.getParameterTypeList().containsAll(this.getParameterTypeList());
 	}
 	
 	public boolean replacedParameterTypes(UMLOperation operation) {
@@ -855,7 +870,11 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	}
 
 	public boolean compatibleSignature(UMLOperation removedOperation) {
-		return equalParameterTypes(removedOperation) || overloadedParameterTypes(removedOperation) || replacedParameterTypes(removedOperation) || equalParameterNames(removedOperation);
+		return (this.equalReturnParameter(removedOperation) && (equalParameterTypes(removedOperation) || overloadedParameterTypes(removedOperation) || equalParameterNames(removedOperation))) || replacedParameterTypes(removedOperation);
+	}
+
+	public boolean compatibleSignature(UMLOperation removedOperation, Map<UMLTypeParameter, UMLType> typeParameterToTypeArgumentMap) {
+		return ((this.equalReturnParameter(removedOperation) || typeParameterToTypeArgumentMatch(removedOperation, typeParameterToTypeArgumentMap)) && (equalParameterTypes(removedOperation) || overloadedParameterTypes(removedOperation) || equalParameterNames(removedOperation))) || replacedParameterTypes(removedOperation);
 	}
 
 	public boolean hasTwoParametersWithTheSameType() {

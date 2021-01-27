@@ -35,6 +35,10 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		return this.arrayDimension;
 	}
 
+	public List<UMLType> getTypeArguments() {
+		return typeArguments;
+	}
+
 	public List<UMLAnnotation> getAnnotations() {
 		return annotations;
 	}

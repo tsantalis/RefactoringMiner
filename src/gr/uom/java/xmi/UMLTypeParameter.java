@@ -34,6 +34,30 @@ public class UMLTypeParameter {
 		annotations.add(annotation);
 	}
 
+	protected String typeBoundsToString() {
+		StringBuilder sb = new StringBuilder();
+		if(typeBounds.isEmpty()) {
+			sb.append("");
+		}
+		else {
+			sb.append("<");
+			for(int i = 0; i < typeBounds.size(); i++) {
+				sb.append(typeBounds.get(i).toQualifiedString());
+				if(i < typeBounds.size() - 1)
+					sb.append(",");
+			}
+			sb.append(">");
+		}
+		return sb.toString();
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(name);
+		sb.append(typeBoundsToString());
+		return sb.toString();
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -9,6 +9,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLRealization;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.UMLTypeParameter;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
@@ -2148,11 +2149,11 @@ public class UMLModelDiff {
 	            	  }
 	               }
 	               else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
-	            		   isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation)) {
+	            		   isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation, typeParameterToTypeArgumentMap(removedOperation.getClassName(), addedOperation.getClassName()))) {
 	                  refactoring = new PullUpOperationRefactoring(firstMapper);
 	               }
 	               else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
-	            		   isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation)) {
+	            		   isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation, typeParameterToTypeArgumentMap(addedOperation.getClassName(), removedOperation.getClassName()))) {
 	                  refactoring = new PushDownOperationRefactoring(firstMapper);
 	               }
 	               else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
@@ -2237,11 +2238,11 @@ public class UMLModelDiff {
 	            	  }
 	               }
 	               else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
-	            		   isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation)) {
+	            		   isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation, typeParameterToTypeArgumentMap(removedOperation.getClassName(), addedOperation.getClassName()))) {
 	                  refactoring = new PullUpOperationRefactoring(firstMapper);
 	               }
 	               else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
-	            		   isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation)) {
+	            		   isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation, typeParameterToTypeArgumentMap(addedOperation.getClassName(), removedOperation.getClassName()))) {
 	                  refactoring = new PushDownOperationRefactoring(firstMapper);
 	               }
 	               else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
@@ -2263,6 +2264,27 @@ public class UMLModelDiff {
 	         }
 	      }
       }
+   }
+
+   private Map<UMLTypeParameter, UMLType> typeParameterToTypeArgumentMap(String subclass, String superclass) {
+	   Map<UMLTypeParameter, UMLType> typeParameterToTypeArgumentMap = new LinkedHashMap<UMLTypeParameter, UMLType>();
+	   UMLClassBaseDiff subclassDiff = getUMLClassDiff(subclass);
+	   if(subclassDiff != null) {
+		   UMLType superclassType = subclassDiff.getNewSuperclass();
+		   if(superclassType != null) {
+			   UMLClassBaseDiff superclassDiff = getUMLClassDiff(superclass);
+			   if(superclassDiff != null) {
+				   List<UMLTypeParameter> typeParameters = superclassDiff.getNextClass().getTypeParameters();
+				   List<UMLType> typeArguments = superclassType.getTypeArguments();
+				   if(typeParameters.size() == typeArguments.size()) {
+					   for(int i=0; i<typeParameters.size(); i++) {
+						   typeParameterToTypeArgumentMap.put(typeParameters.get(i), typeArguments.get(i));
+					   }
+				   }
+			   }
+		   }
+	   }
+	   return typeParameterToTypeArgumentMap;
    }
 
 	private List<UMLOperationBodyMapper> firstMappers(TreeMap<Integer, List<UMLOperationBodyMapper>> operationBodyMapperMap) {

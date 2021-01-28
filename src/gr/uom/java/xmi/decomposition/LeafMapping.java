@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import gr.uom.java.xmi.UMLOperation;
@@ -67,12 +68,48 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					return Integer.valueOf(indexDiff1).compareTo(Integer.valueOf(indexDiff2));
 				}
 				else {
+					boolean sameVariableDeclarationTypeInParent1 = this.sameVariableDeclarationTypeInParent();
+					boolean sameVariableDeclarationTypeInParent2 = o.sameVariableDeclarationTypeInParent();
 					double parentEditDistance1 = this.parentEditDistance();
 					double parentEditDistance2 = o.parentEditDistance();
+					if(parentEditDistance1 > 0 && parentEditDistance2 > 0 && sameVariableDeclarationTypeInParent1 != sameVariableDeclarationTypeInParent2) {
+						if(sameVariableDeclarationTypeInParent1 && !sameVariableDeclarationTypeInParent2) {
+							return -1;
+						}
+						if(!sameVariableDeclarationTypeInParent1 && sameVariableDeclarationTypeInParent2) {
+							return 1;
+						}
+					}
 					return Double.compare(parentEditDistance1, parentEditDistance2);
 				}
 			}
 		}
+	}
+
+	private boolean sameVariableDeclarationTypeInParent() {
+		CompositeStatementObject parent1 = getFragment1().getParent();
+		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent1 = parent1.getParent();
+		}
+		CompositeStatementObject parent2 = getFragment2().getParent();
+		while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent2 = parent2.getParent();
+		}
+		if(parent1 != null && parent2 != null) {
+			List<VariableDeclaration> declarations1 = parent1.getVariableDeclarations();
+			List<VariableDeclaration> declarations2 = parent2.getVariableDeclarations();
+			if(declarations1.size() == declarations2.size()) {
+				for(int i=0; i< declarations1.size(); i++) {
+					VariableDeclaration declaration1 = declarations1.get(i);
+					VariableDeclaration declaration2 = declarations2.get(i);
+					if(!declaration1.getType().equals(declaration2.getType())) {
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private double parentEditDistance() {

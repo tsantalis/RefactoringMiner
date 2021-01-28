@@ -337,6 +337,10 @@ public class UMLOperationDiff {
 			ChangeThrownExceptionTypeRefactoring refactoring = new ChangeThrownExceptionTypeRefactoring(changedExceptionTypes.getKey(), changedExceptionTypes.getValue(), removedOperation, addedOperation);
 			refactorings.add(refactoring);
 		}
+		if(visibilityChanged) {
+			ChangeOperationAccessModifierRefactoring refactoring = new ChangeOperationAccessModifierRefactoring(removedOperation.getVisibility(), addedOperation.getVisibility(), removedOperation, addedOperation);
+			refactorings.add(refactoring);
+		}
 		return refactorings;
 	}
 }

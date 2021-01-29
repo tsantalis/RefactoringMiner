@@ -91,7 +91,7 @@ public class ChangeOperationAccessModifierRefactoring implements Refactoring {
 		sb.append(changedAccessModifier);
 		sb.append(" in method ");
 		sb.append(operationAfter);
-		sb.append(" in class ").append(operationAfter.getClassName());
+		sb.append(" from class ").append(operationAfter.getClassName());
 		return sb.toString();
 	}
 

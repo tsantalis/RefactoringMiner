@@ -75,7 +75,7 @@ public class RenameVariableRefactoring implements Refactoring {
 		sb.append(renamedVariable);
 		sb.append(" in method ");
 		sb.append(operationAfter);
-		sb.append(" in class ").append(operationAfter.getClassName());
+		sb.append(" from class ").append(operationAfter.getClassName());
 		return sb.toString();
 	}
 

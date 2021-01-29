@@ -102,7 +102,7 @@ public class ChangeThrownExceptionTypeRefactoring implements Refactoring {
 		sb.append(changedTypes.size() == 1 ? changedTypes.iterator().next() : changedTypes);
 		sb.append(" in method ");
 		sb.append(operationAfter.toString());
-		sb.append(" in class ").append(operationAfter.getClassName());
+		sb.append(" from class ").append(operationAfter.getClassName());
 		return sb.toString();
 	}
 

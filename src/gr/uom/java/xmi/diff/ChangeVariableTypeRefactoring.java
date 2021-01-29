@@ -78,7 +78,7 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 		sb.append(qualified ? changedTypeVariable.toQualifiedString() : changedTypeVariable.toString());
 		sb.append(" in method ");
 		sb.append(qualified ? operationAfter.toQualifiedString() : operationAfter.toString());
-		sb.append(" in class ").append(operationAfter.getClassName());
+		sb.append(" from class ").append(operationAfter.getClassName());
 		return sb.toString();
 	}
 

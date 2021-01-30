@@ -213,43 +213,6 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     	return null;
     }
 
-    public UMLAttribute containsAttribute(UMLAttribute otherAttribute) {
-    	ListIterator<UMLAttribute> attributeIt = attributes.listIterator();
-    	while(attributeIt.hasNext()) {
-    		UMLAttribute attribute = attributeIt.next();
-    		if(attribute.equals(otherAttribute)) {
-    			return attribute;
-    		}
-    	}
-    	return null;
-    }
-
-    public UMLAttribute matchAttribute(UMLAttribute otherAttribute) {
-    	ListIterator<UMLAttribute> attributeIt = attributes.listIterator();
-    	while(attributeIt.hasNext()) {
-    		UMLAttribute attribute = attributeIt.next();
-    		if(attribute.getName().equals(otherAttribute.getName())) {
-    			String thisAttributeType = attribute.getType().getClassType();
-				String otherAttributeType = otherAttribute.getType().getClassType();
-				int thisArrayDimension = attribute.getType().getArrayDimension();
-				int otherArrayDimension = otherAttribute.getType().getArrayDimension();
-				String thisAttributeTypeComparedString = null;
-    			if(thisAttributeType.contains("."))
-    				thisAttributeTypeComparedString = thisAttributeType.substring(thisAttributeType.lastIndexOf(".")+1);
-    			else
-    				thisAttributeTypeComparedString = thisAttributeType;
-    			String otherAttributeTypeComparedString = null;
-    			if(otherAttributeType.contains("."))
-    				otherAttributeTypeComparedString = otherAttributeType.substring(otherAttributeType.lastIndexOf(".")+1);
-    			else
-    				otherAttributeTypeComparedString = otherAttributeType;
-    			if(thisAttributeTypeComparedString.equals(otherAttributeTypeComparedString) && thisArrayDimension == otherArrayDimension)
-    				return attribute;
-    		}
-    	}
-    	return null;
-    }
-
     public UMLOperation matchOperation(UMLOperation otherOperation) {
     	ListIterator<UMLOperation> operationIt = operations.listIterator();
     	while(operationIt.hasNext()) {

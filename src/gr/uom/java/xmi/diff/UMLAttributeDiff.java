@@ -1,12 +1,15 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.UMLAnnotation;
+import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -23,11 +26,27 @@ public class UMLAttributeDiff {
 	private boolean finalChanged;
 	private List<UMLOperationBodyMapper> operationBodyMapperList;
 	private UMLAnnotationListDiff annotationListDiff;
+	private List<UMLAnonymousClassDiff> anonymousClassDiffList;
+
+	public UMLAttributeDiff(UMLAttribute removedAttribute, UMLAttribute addedAttribute, UMLClassBaseDiff classDiff) throws RefactoringMinerTimedOutException {
+		this(removedAttribute, addedAttribute, classDiff.getOperationBodyMapperList());
+		List<UMLAnonymousClass> removedAttributeAnonymousClassList = removedAttribute.getAnonymousClassList();
+		List<UMLAnonymousClass> addedAttributeAnonymousClassList = addedAttribute.getAnonymousClassList();
+		if(removedAttributeAnonymousClassList.size() == addedAttributeAnonymousClassList.size() && removedAttributeAnonymousClassList.size() > 0) {
+			for(int i=0; i<removedAttributeAnonymousClassList.size(); i++) {
+				UMLAnonymousClass anonymousClass1 = removedAttributeAnonymousClassList.get(i);
+				UMLAnonymousClass anonymousClass2 = addedAttributeAnonymousClassList.get(i);
+				UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff);
+				anonymousClassDiffList.add(anonymousClassDiff);
+			}
+		}
+	}
 
 	public UMLAttributeDiff(UMLAttribute removedAttribute, UMLAttribute addedAttribute, List<UMLOperationBodyMapper> operationBodyMapperList) {
 		this.removedAttribute = removedAttribute;
 		this.addedAttribute = addedAttribute;
 		this.operationBodyMapperList = operationBodyMapperList;
+		this.anonymousClassDiffList = new ArrayList<UMLAnonymousClassDiff>();
 		this.visibilityChanged = false;
 		this.typeChanged = false;
 		this.renamed = false;
@@ -73,7 +92,7 @@ public class UMLAttributeDiff {
 	}
 
 	public boolean isEmpty() {
-		return !visibilityChanged && !typeChanged && !renamed && !qualifiedTypeChanged && annotationListDiff.isEmpty();
+		return !visibilityChanged && !typeChanged && !renamed && !qualifiedTypeChanged && annotationListDiff.isEmpty() && anonymousClassDiffList.isEmpty();
 	}
 
 	public String toString() {
@@ -121,6 +140,22 @@ public class UMLAttributeDiff {
 		return refactorings;
 	}
 
+	private Set<Refactoring> getAnonymousClassRefactorings() {
+		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
+		for(UMLAnonymousClassDiff anonymousClassDiff : anonymousClassDiffList) {
+			for(UMLOperationBodyMapper mapper : anonymousClassDiff.getMatchedOperationMappers()) {
+				refactorings.addAll(mapper.getRefactorings());
+			}
+			for(UMLOperationDiff operationDiff : anonymousClassDiff.getOperationDiffs()) {
+				refactorings.addAll(operationDiff.getRefactorings());
+			}
+			for(UMLAttributeDiff attributeDiff : anonymousClassDiff.getAttributeDiffs()) {
+				refactorings.addAll(attributeDiff.getRefactorings());
+			}
+		}
+		return refactorings;
+	}
+
 	public Set<Refactoring> getRefactorings() {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 		if(changeTypeCondition()) {
@@ -129,6 +164,7 @@ public class UMLAttributeDiff {
 			refactorings.add(ref);
 		}
 		refactorings.addAll(getAnnotationRefactorings());
+		refactorings.addAll(getAnonymousClassRefactorings());
 		return refactorings;
 	}
 	
@@ -148,6 +184,7 @@ public class UMLAttributeDiff {
 			}
 		}
 		refactorings.addAll(getAnnotationRefactorings());
+		refactorings.addAll(getAnonymousClassRefactorings());
 		return refactorings;
 	}
 

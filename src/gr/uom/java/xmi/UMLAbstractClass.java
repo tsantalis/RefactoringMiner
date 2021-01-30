@@ -3,6 +3,7 @@ package gr.uom.java.xmi;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 
 import org.refactoringminer.util.PrefixSuffixUtils;
@@ -331,9 +332,48 @@ public abstract class UMLAbstractClass {
 		return attributesOfType;
 	}
 
+    public UMLAttribute containsAttribute(UMLAttribute otherAttribute) {
+    	ListIterator<UMLAttribute> attributeIt = attributes.listIterator();
+    	while(attributeIt.hasNext()) {
+    		UMLAttribute attribute = attributeIt.next();
+    		if(attribute.equals(otherAttribute)) {
+    			return attribute;
+    		}
+    	}
+    	return null;
+    }
+
+    public UMLAttribute matchAttribute(UMLAttribute otherAttribute) {
+    	ListIterator<UMLAttribute> attributeIt = attributes.listIterator();
+    	while(attributeIt.hasNext()) {
+    		UMLAttribute attribute = attributeIt.next();
+    		if(attribute.getName().equals(otherAttribute.getName())) {
+    			String thisAttributeType = attribute.getType().getClassType();
+				String otherAttributeType = otherAttribute.getType().getClassType();
+				int thisArrayDimension = attribute.getType().getArrayDimension();
+				int otherArrayDimension = otherAttribute.getType().getArrayDimension();
+				String thisAttributeTypeComparedString = null;
+    			if(thisAttributeType.contains("."))
+    				thisAttributeTypeComparedString = thisAttributeType.substring(thisAttributeType.lastIndexOf(".")+1);
+    			else
+    				thisAttributeTypeComparedString = thisAttributeType;
+    			String otherAttributeTypeComparedString = null;
+    			if(otherAttributeType.contains("."))
+    				otherAttributeTypeComparedString = otherAttributeType.substring(otherAttributeType.lastIndexOf(".")+1);
+    			else
+    				otherAttributeTypeComparedString = otherAttributeType;
+    			if(thisAttributeTypeComparedString.equals(otherAttributeTypeComparedString) && thisArrayDimension == otherArrayDimension)
+    				return attribute;
+    		}
+    	}
+    	return null;
+    }
+
 	public abstract boolean isSingleAbstractMethodInterface();
 
 	public abstract boolean isInterface();
+	
+	public abstract String getName();
 	
 	public String getSourceFile() {
 		return locationInfo.getFilePath();

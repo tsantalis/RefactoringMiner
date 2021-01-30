@@ -268,6 +268,15 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return anonymousClassList;
 	}
 
+	public UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration) {
+		for(UMLAnonymousClass anonymousClass : this.getAnonymousClassList()) {
+			if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration.getLocationInfo())) {
+				return anonymousClass;
+			}
+		}
+		return null;
+	}
+
 	public UMLParameter getReturnParameter() {
 		for(UMLParameter parameter : parameters) {
 			if(parameter.getKind().equals("return"))

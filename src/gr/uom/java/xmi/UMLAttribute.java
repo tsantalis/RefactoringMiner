@@ -1,5 +1,6 @@
 package gr.uom.java.xmi;
 
+import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
@@ -17,6 +18,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Loc
 	private boolean isFinal;
 	private boolean isStatic;
 	private VariableDeclaration variableDeclaration;
+	private List<UMLAnonymousClass> anonymousClassList;
 	private UMLJavadoc javadoc;
 	private List<UMLComment> comments;
 
@@ -24,6 +26,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Loc
 		this.locationInfo = locationInfo;
 		this.name = name;
 		this.type = type;
+		this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
 		this.comments = new ArrayList<UMLComment>();
 	}
 
@@ -37,6 +40,23 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Loc
 
 	public void setType(UMLType type) {
 		this.type = type;
+	}
+
+	public void addAnonymousClass(UMLAnonymousClass anonymous) {
+		this.anonymousClassList.add(anonymous);
+	}
+
+	public List<UMLAnonymousClass> getAnonymousClassList() {
+		return anonymousClassList;
+	}
+
+	public UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration) {
+		for(UMLAnonymousClass anonymousClass : this.getAnonymousClassList()) {
+			if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration.getLocationInfo())) {
+				return anonymousClass;
+			}
+		}
+		return null;
 	}
 
 	public String getVisibility() {

@@ -19,11 +19,13 @@ import gr.uom.java.xmi.decomposition.replacement.SplitVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
+import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.CandidateMergeVariableRefactoring;
 import gr.uom.java.xmi.diff.CandidateSplitVariableRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
+import gr.uom.java.xmi.diff.UMLAttributeDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
@@ -2071,33 +2073,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 							(invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements()) ||
 							invocationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)))) {
-						UMLAnonymousClass anonymousClass1 = findAnonymousClass(anonymousClassDeclaration1, operation1);
-						UMLAnonymousClass anonymousClass2 = findAnonymousClass(anonymousClassDeclaration2, operation2);
-						int matchedOperations = 0;
-						for(UMLOperation operation1 : anonymousClass1.getOperations()) {
-							for(UMLOperation operation2 : anonymousClass2.getOperations()) {
-								if(operation1.equals(operation2) || operation1.equalSignature(operation2) || operation1.equalSignatureWithIdenticalNameIgnoringChangedTypes(operation2)) {	
-									UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation1, operation2, classDiff);
-									int mappings = mapper.mappingsWithoutBlocks();
-									if(mappings > 0) {
-										int nonMappedElementsT1 = mapper.nonMappedElementsT1();
-										int nonMappedElementsT2 = mapper.nonMappedElementsT2();
-										if(mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) {
-											this.mappings.addAll(mapper.mappings);
-											this.nonMappedInnerNodesT1.addAll(mapper.nonMappedInnerNodesT1);
-											this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);
-											this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
-											this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
-											matchedOperations++;
-											UMLOperationDiff operationDiff = new UMLOperationDiff(operation1, operation2, mapper.mappings);
-											this.refactorings.addAll(mapper.getRefactorings());
-											this.refactorings.addAll(operationDiff.getRefactorings());
-										}
-									}
-								}
+						UMLAnonymousClass anonymousClass1 = operation1.findAnonymousClass(anonymousClassDeclaration1);
+						UMLAnonymousClass anonymousClass2 = operation2.findAnonymousClass(anonymousClassDeclaration2);
+						UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff);
+						List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getMatchedOperationMappers();
+						if(matchedOperationMappers.size() > 0) {
+							for(UMLOperationBodyMapper mapper : matchedOperationMappers) {
+								this.mappings.addAll(mapper.mappings);
+								this.nonMappedInnerNodesT1.addAll(mapper.nonMappedInnerNodesT1);
+								this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);
+								this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
+								this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
+								this.refactorings.addAll(mapper.getRefactorings());
 							}
-						}
-						if(matchedOperations > 0) {
+							for(UMLOperationDiff operationDiff : anonymousClassDiff.getOperationDiffs()) {
+								this.refactorings.addAll(operationDiff.getRefactorings());
+							}
+							for(UMLAttributeDiff attributeDiff : anonymousClassDiff.getAttributeDiffs()) {
+								this.refactorings.addAll(attributeDiff.getRefactorings());
+							}
 							Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), anonymousClassDeclaration2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION);
 							replacementInfo.addReplacement(replacement);
 							return replacementInfo.getReplacements();
@@ -2775,15 +2769,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		else {
 			removeCommonElements(strings1, strings2);
 		}
-	}
-
-	private UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration1, UMLOperation operation) {
-		for(UMLAnonymousClass anonymousClass : operation.getAnonymousClassList()) {
-			if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration1.getLocationInfo())) {
-				return anonymousClass;
-			}
-		}
-		return null;
 	}
 
 	private String statementWithoutAnonymous(AbstractCodeFragment statement, AnonymousClassDeclarationObject anonymousClassDeclaration, UMLOperation operation) {

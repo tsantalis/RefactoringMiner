@@ -62,6 +62,8 @@ public class RefactoringMiner {
 				public void handle(String commitId, List<Refactoring> refactorings) {
 					if(commitCount > 0) {
 						sb.append(",").append("\n");
+						System.out.print(sb.toString());
+						sb.setLength(0);
 					}
 					commitJSON(sb, gitURL, commitId, refactorings);
 					commitCount++;
@@ -103,6 +105,8 @@ public class RefactoringMiner {
 				public void handle(String commitId, List<Refactoring> refactorings) {
 					if(commitCount > 0) {
 						sb.append(",").append("\n");
+						System.out.print(sb.toString());
+						sb.setLength(0);
 					}
 					commitJSON(sb, gitURL, commitId, refactorings);
 					commitCount++;
@@ -144,6 +148,8 @@ public class RefactoringMiner {
 				public void handle(String commitId, List<Refactoring> refactorings) {
 					if(commitCount > 0) {
 						sb.append(",").append("\n");
+						System.out.print(sb.toString());
+						sb.setLength(0);
 					}
 					commitJSON(sb, gitURL, commitId, refactorings);
 					commitCount++;
@@ -237,6 +243,8 @@ public class RefactoringMiner {
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				if(commitCount > 0) {
 					sb.append(",").append("\n");
+					System.out.print(sb.toString());
+					sb.setLength(0);
 				}
 				commitJSON(sb, gitURL, commitId, refactorings);
 				commitCount++;

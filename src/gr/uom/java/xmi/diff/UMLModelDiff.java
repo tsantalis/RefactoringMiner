@@ -2099,7 +2099,7 @@ public class UMLModelDiff {
 	            
 	            Pair<UMLOperation, UMLOperation> pair = Pair.of(removedOperation, addedOperation);
 	            if(!processedOperationPairs.contains(pair)) {
-		            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, null);
+		            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, getUMLClassDiff(removedOperation.getClassName()));
 		            processedOperationPairs.add(pair);
 		            int mappings = operationBodyMapper.mappingsWithoutBlocks();
 		            if(mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) {
@@ -2188,7 +2188,7 @@ public class UMLModelDiff {
 	            
 	            Pair<UMLOperation, UMLOperation> pair = Pair.of(removedOperation, addedOperation);
 	            if(!processedOperationPairs.contains(pair)) {
-		            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, null);
+		            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, getUMLClassDiff(removedOperation.getClassName()));
 		            processedOperationPairs.add(pair);
 		            int mappings = operationBodyMapper.mappingsWithoutBlocks();
 		            if(mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) {

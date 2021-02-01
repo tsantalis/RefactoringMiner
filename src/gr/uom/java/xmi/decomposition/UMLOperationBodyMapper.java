@@ -123,6 +123,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					parameterToArgumentMap2.put("this.", "");
 				}
 			}
+			if(classDiff != null) {
+				for(UMLAttribute attribute : classDiff.getOriginalClass().getAttributes()) {
+					if(UMLModelDiff.looksLikeSameType(attribute.getType().getClassType(), operation2.getClassName())) {
+						parameterToArgumentMap1.put(attribute.getName() + ".", "");
+						parameterToArgumentMap2.put("this.", "");
+					}
+				}
+			}
 			resetNodes(leaves1);
 			//replace parameters with arguments in leaves1
 			if(!parameterToArgumentMap1.isEmpty()) {

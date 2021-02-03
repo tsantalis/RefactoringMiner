@@ -19,10 +19,19 @@ public class UMLAnnotationListDiff {
 		for(UMLAnnotation annotation1 : annotations1) {
 			boolean found = false;
 			for(UMLAnnotation annotation2 : annotations2) {
-				if(annotation1.getTypeName().equals(annotation2.getTypeName())) {
+				if(annotation1.equals(annotation2)) {
 					matchedAnnotations.add(new SimpleEntry<UMLAnnotation, UMLAnnotation>(annotation1, annotation2));
 					found = true;
 					break;
+				}
+			}
+			if(!found) {
+				for(UMLAnnotation annotation2 : annotations2) {
+					if(annotation1.getTypeName().equals(annotation2.getTypeName())) {
+						matchedAnnotations.add(new SimpleEntry<UMLAnnotation, UMLAnnotation>(annotation1, annotation2));
+						found = true;
+						break;
+					}
 				}
 			}
 			if(!found) {
@@ -32,10 +41,19 @@ public class UMLAnnotationListDiff {
 		for(UMLAnnotation annotation2 : annotations2) {
 			boolean found = false;
 			for(UMLAnnotation annotation1 : annotations1) {
-				if(annotation1.getTypeName().equals(annotation2.getTypeName())) {
+				if(annotation1.equals(annotation2)) {
 					matchedAnnotations.add(new SimpleEntry<UMLAnnotation, UMLAnnotation>(annotation1, annotation2));
 					found = true;
 					break;
+				}
+			}
+			if(!found) {
+				for(UMLAnnotation annotation1 : annotations1) {
+					if(annotation1.getTypeName().equals(annotation2.getTypeName())) {
+						matchedAnnotations.add(new SimpleEntry<UMLAnnotation, UMLAnnotation>(annotation1, annotation2));
+						found = true;
+						break;
+					}
 				}
 			}
 			if(!found) {
@@ -49,7 +67,7 @@ public class UMLAnnotationListDiff {
 			}
 		}
 	}
-	
+
 	public List<UMLAnnotation> getRemovedAnnotations() {
 		return removedAnnotations;
 	}

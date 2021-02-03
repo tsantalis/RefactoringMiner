@@ -50,6 +50,7 @@ import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHPullRequest;
 import org.kohsuke.github.GHPullRequestCommitDetail;
 import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GHRepositoryWrapper;
 import org.kohsuke.github.GHTree;
 import org.kohsuke.github.GHTreeEntry;
 import org.kohsuke.github.GitHub;
@@ -295,12 +296,10 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			return changedFileInfo;
 		}
 		else {
-			GitHub gitHub = connectToGitHub();
-			String repoName = extractRepositoryName(cloneURL);
-			GHRepository repository = gitHub.getRepository(repoName);
-			GHCommit commit = repository.getCommit(currentCommitId);
+			GHRepository repository = getGhRepository(cloneURL);
+			List<GHCommit.File> commitFiles = new ArrayList<>();
+			GHCommit commit = new GHRepositoryWrapper(repository).getCommit(currentCommitId, commitFiles);
 			String parentCommitId = commit.getParents().get(0).getSHA1();
-			List<GHCommit.File> commitFiles = commit.getFiles();
 			List<String> filesBefore = new ArrayList<String>();
 			List<String> filesCurrent = new ArrayList<String>();
 			Map<String, String> renamedFilesHint = new HashMap<String, String>();
@@ -579,13 +578,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			Map<String, String> filesBefore, Map<String, String> filesCurrent, Map<String, String> renamedFilesHint,
 			Set<String> repositoryDirectoriesBefore, Set<String> repositoryDirectoriesCurrent) throws IOException, InterruptedException {
 		logger.info("Processing {} {} ...", cloneURL, currentCommitId);
-		GitHub gitHub = connectToGitHub();
-		String repoName = extractRepositoryName(cloneURL);
-		GHRepository repository = gitHub.getRepository(repoName);
-		GHCommit currentCommit = repository.getCommit(currentCommitId);
+		GHRepository repository = getGhRepository(cloneURL);
+		List<GHCommit.File> commitFiles = new ArrayList<>();
+		GHCommit currentCommit = new GHRepositoryWrapper(repository).getCommit(currentCommitId, commitFiles);
 		final String parentCommitId = currentCommit.getParents().get(0).getSHA1();
 		Set<String> deletedAndRenamedFileParentDirectories = ConcurrentHashMap.newKeySet();
-		List<GHCommit.File> commitFiles = currentCommit.getFiles();
 		ExecutorService pool = Executors.newFixedThreadPool(commitFiles.size());
 		for (GHCommit.File commitFile : commitFiles) {
 			String fileName = commitFile.getFileName();
@@ -731,14 +728,18 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 	@Override
 	public void detectAtPullRequest(String cloneURL, int pullRequestId, RefactoringHandler handler, int timeout) throws IOException {
-		GitHub gitHub = connectToGitHub();
-		String repoName = extractRepositoryName(cloneURL);
-		GHRepository repository = gitHub.getRepository(repoName);
+		GHRepository repository = getGhRepository(cloneURL);
 		GHPullRequest pullRequest = repository.getPullRequest(pullRequestId);
 		PagedIterable<GHPullRequestCommitDetail> commits = pullRequest.listCommits();
 		for(GHPullRequestCommitDetail commit : commits) {
 			detectAtCommit(cloneURL, commit.getSha(), handler, timeout);
 		}
+	}
+
+	public GHRepository getGhRepository(String cloneURL) throws IOException {
+		GitHub gitHub = connectToGitHub();
+		String repoName = extractRepositoryName(cloneURL);
+		return gitHub.getRepository(repoName);
 	}
 
 	private static final String GITHUB_URL = "https://github.com/";

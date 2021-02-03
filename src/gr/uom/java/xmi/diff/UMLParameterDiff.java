@@ -22,6 +22,7 @@ public class UMLParameterDiff {
 	private boolean typeChanged;
 	private boolean qualifiedTypeChanged;
 	private boolean nameChanged;
+	private boolean varArgsChanged;
 	private Set<AbstractCodeMapping> mappings;
 	private UMLAnnotationListDiff annotationListDiff;
 	
@@ -39,6 +40,14 @@ public class UMLParameterDiff {
 			typeChanged = true;
 		else if(!removedParameter.getType().equalsQualified(addedParameter.getType()))
 			qualifiedTypeChanged = true;
+		if(!typeChanged && !qualifiedTypeChanged) {
+			if(removedParameter.isVarargs() && !addedParameter.isVarargs()) {
+				varArgsChanged = true;
+			}
+			if(!removedParameter.isVarargs() && addedParameter.isVarargs()) {
+				varArgsChanged = true;
+			}
+		}
 		if(!removedParameter.getName().equals(addedParameter.getName()))
 			nameChanged = true;
 		this.annotationListDiff = new UMLAnnotationListDiff(removedParameter.getAnnotations(), addedParameter.getAnnotations());
@@ -58,6 +67,10 @@ public class UMLParameterDiff {
 
 	public boolean isQualifiedTypeChanged() {
 		return qualifiedTypeChanged;
+	}
+
+	public boolean isVarArgsChanged() {
+		return varArgsChanged;
 	}
 
 	public boolean isNameChanged() {
@@ -94,7 +107,7 @@ public class UMLParameterDiff {
 			renameRefactoring = new RenameVariableRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references);
 			refactorings.add(renameRefactoring);
 		}
-		if((isTypeChanged() || isQualifiedTypeChanged()) && !inconsistentReplacement(originalVariable, newVariable)) {
+		if((isTypeChanged() || isQualifiedTypeChanged() || isVarArgsChanged()) && !inconsistentReplacement(originalVariable, newVariable)) {
 			ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references);
 			if(renameRefactoring != null) {
 				refactoring.addRelatedRefactoring(renameRefactoring);

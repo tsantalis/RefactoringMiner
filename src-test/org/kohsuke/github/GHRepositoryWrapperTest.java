@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 public class GHRepositoryWrapperTest {
+	private final GitHistoryRefactoringMinerImpl gitHistoryRefactoringMiner = new GitHistoryRefactoringMinerImpl();
     private final static List<Triple<String, String, Integer>> TEST_CASES_LIST = new ArrayList<>();
 
     static {
@@ -37,10 +38,10 @@ public class GHRepositoryWrapperTest {
 
     private int getNumberOfChangedFile(String cloneUrl, String commitId) {
         try {
-            GitHistoryRefactoringMinerImpl gitHistoryRefactoringMiner = new GitHistoryRefactoringMinerImpl();
             List<GHCommit.File> commitFiles = new ArrayList<>();
-            GHRepository ghRepository = gitHistoryRefactoringMiner.getGhRepository(cloneUrl);
-            GHCommit commit = new GHRepositoryWrapper(ghRepository).getCommit(commitId, commitFiles);
+            GHRepository ghRepository = gitHistoryRefactoringMiner.getGitHubRepository(cloneUrl);
+            GHRepositoryWrapper ghRepositoryWrapper = new GHRepositoryWrapper(ghRepository);
+			ghRepositoryWrapper.getCommit(commitId, commitFiles);
             return commitFiles.size();
         } catch (IOException e) {
             return -1;

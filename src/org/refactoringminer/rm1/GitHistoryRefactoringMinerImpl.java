@@ -296,7 +296,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			return changedFileInfo;
 		}
 		else {
-			GHRepository repository = getGhRepository(cloneURL);
+			GHRepository repository = getGitHubRepository(cloneURL);
 			List<GHCommit.File> commitFiles = new ArrayList<>();
 			GHCommit commit = new GHRepositoryWrapper(repository).getCommit(currentCommitId, commitFiles);
 			String parentCommitId = commit.getParents().get(0).getSHA1();
@@ -578,7 +578,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			Map<String, String> filesBefore, Map<String, String> filesCurrent, Map<String, String> renamedFilesHint,
 			Set<String> repositoryDirectoriesBefore, Set<String> repositoryDirectoriesCurrent) throws IOException, InterruptedException {
 		logger.info("Processing {} {} ...", cloneURL, currentCommitId);
-		GHRepository repository = getGhRepository(cloneURL);
+		GHRepository repository = getGitHubRepository(cloneURL);
 		List<GHCommit.File> commitFiles = new ArrayList<>();
 		GHCommit currentCommit = new GHRepositoryWrapper(repository).getCommit(currentCommitId, commitFiles);
 		final String parentCommitId = currentCommit.getParents().get(0).getSHA1();
@@ -728,7 +728,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 	@Override
 	public void detectAtPullRequest(String cloneURL, int pullRequestId, RefactoringHandler handler, int timeout) throws IOException {
-		GHRepository repository = getGhRepository(cloneURL);
+		GHRepository repository = getGitHubRepository(cloneURL);
 		GHPullRequest pullRequest = repository.getPullRequest(pullRequestId);
 		PagedIterable<GHPullRequestCommitDetail> commits = pullRequest.listCommits();
 		for(GHPullRequestCommitDetail commit : commits) {
@@ -736,7 +736,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 	}
 
-	public GHRepository getGhRepository(String cloneURL) throws IOException {
+	public GHRepository getGitHubRepository(String cloneURL) throws IOException {
 		GitHub gitHub = connectToGitHub();
 		String repoName = extractRepositoryName(cloneURL);
 		return gitHub.getRepository(repoName);

@@ -112,10 +112,10 @@ public class UMLOperationDiff {
 		if(matchedParameterCount == removedParametersWithoutReturnType.size()-1 && matchedParameterCount == addedParametersWithoutReturnType.size()-1) {
 			for(Iterator<UMLParameter> removedParameterIterator = removedParameters.iterator(); removedParameterIterator.hasNext();) {
 				UMLParameter removedParameter = removedParameterIterator.next();
-				int indexOfRemovedParameter = removedParametersWithoutReturnType.indexOf(removedParameter);
+				int indexOfRemovedParameter = indexOfParameter(removedParametersWithoutReturnType, removedParameter);
 				for(Iterator<UMLParameter> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
 					UMLParameter addedParameter = addedParameterIterator.next();
-					int indexOfAddedParameter = addedParametersWithoutReturnType.indexOf(addedParameter);
+					int indexOfAddedParameter = indexOfParameter(addedParametersWithoutReturnType, addedParameter);
 					if(indexOfRemovedParameter == indexOfAddedParameter) {
 						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings);
 						parameterDiffList.add(parameterDiff);
@@ -126,6 +126,17 @@ public class UMLOperationDiff {
 				}
 			}
 		}
+	}
+
+	private int indexOfParameter(List<UMLParameter> parameters, UMLParameter parameter) {
+		int index = 0;
+		for(UMLParameter p : parameters) {
+			if(p.equalsIncludingName(parameter)) {
+				return index;
+			}
+			index++;
+		}
+		return -1;
 	}
 
 	public UMLOperationDiff(UMLOperation removedOperation, UMLOperation addedOperation, Set<AbstractCodeMapping> mappings) {

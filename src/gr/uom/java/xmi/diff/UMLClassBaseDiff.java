@@ -1396,7 +1396,8 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 	private boolean identicalBodyWithAnotherAddedMethod(UMLOperationBodyMapper mapper) {
 		UMLOperation operation1 = mapper.getOperation1();
 		List<String> stringRepresentation = operation1.stringRepresentation();
-		if(stringRepresentation.size() > 2) {
+		// 3 corresponds to the opening and closing bracket of a method + a single statement
+		if(stringRepresentation.size() > 3) {
 			for(UMLOperation addedOperation : addedOperations) {
 				if(!mapper.getOperation2().equals(addedOperation)) {
 					if(addedOperation.stringRepresentation().equals(stringRepresentation)) {
@@ -1411,7 +1412,8 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 	private boolean identicalBodyWithAnotherRemovedMethod(UMLOperationBodyMapper mapper) {
 		UMLOperation operation2 = mapper.getOperation2();
 		List<String> stringRepresentation = operation2.stringRepresentation();
-		if(stringRepresentation.size() > 2) {
+		// 3 corresponds to the opening and closing bracket of a method + a single statement
+		if(stringRepresentation.size() > 3) {
 			for(UMLOperation removedOperation : removedOperations) {
 				if(!mapper.getOperation1().equals(removedOperation)) {
 					if(removedOperation.stringRepresentation().equals(stringRepresentation)) {

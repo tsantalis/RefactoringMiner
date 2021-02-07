@@ -517,7 +517,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public UMLOperationBodyMapper(UMLOperation removedOperation, UMLOperationBodyMapper operationBodyMapper,
-			Map<String, String> parameterToArgumentMap, UMLClassBaseDiff classDiff) throws RefactoringMinerTimedOutException {
+			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2, UMLClassBaseDiff classDiff) throws RefactoringMinerTimedOutException {
 		this.parentMapper = operationBodyMapper;
 		this.operation1 = removedOperation;
 		this.operation2 = operationBodyMapper.operation2;
@@ -550,25 +550,32 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			resetNodes(leaves1);
 			//replace parameters with arguments in leaves1
-			if(!parameterToArgumentMap.isEmpty()) {
+			if(!parameterToArgumentMap1.isEmpty()) {
 				//check for temporary variables that the argument might be assigned to
 				for(StatementObject leave2 : leaves2) {
 					List<VariableDeclaration> variableDeclarations = leave2.getVariableDeclarations();
 					for(VariableDeclaration variableDeclaration : variableDeclarations) {
-						for(String parameter : parameterToArgumentMap.keySet()) {
-							String argument = parameterToArgumentMap.get(parameter);
+						for(String parameter : parameterToArgumentMap1.keySet()) {
+							String argument = parameterToArgumentMap1.get(parameter);
 							if(variableDeclaration.getInitializer() != null && argument.equals(variableDeclaration.getInitializer().toString())) {
-								parameterToArgumentMap.put(parameter, variableDeclaration.getVariableName());
+								parameterToArgumentMap1.put(parameter, variableDeclaration.getVariableName());
 							}
 						}
 					}
 				}
 				for(StatementObject leave1 : leaves1) {
-					leave1.replaceParametersWithArguments(parameterToArgumentMap);
+					leave1.replaceParametersWithArguments(parameterToArgumentMap1);
+				}
+			}
+			resetNodes(leaves2);
+			//replace parameters with arguments in leaves2
+			if(!parameterToArgumentMap2.isEmpty()) {
+				for(StatementObject leave2 : leaves2) {
+					leave2.replaceParametersWithArguments(parameterToArgumentMap2);
 				}
 			}
 			//compare leaves from T1 with leaves from T2
-			processLeaves(leaves1, leaves2, parameterToArgumentMap);
+			processLeaves(leaves1, leaves2, parameterToArgumentMap1);
 			
 			List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
 			innerNodes1.remove(composite1);
@@ -589,22 +596,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			resetNodes(innerNodes1);
 			//replace parameters with arguments in innerNodes1
-			if(!parameterToArgumentMap.isEmpty()) {
+			if(!parameterToArgumentMap1.isEmpty()) {
 				for(CompositeStatementObject innerNode1 : innerNodes1) {
-					innerNode1.replaceParametersWithArguments(parameterToArgumentMap);
+					innerNode1.replaceParametersWithArguments(parameterToArgumentMap1);
+				}
+			}
+			resetNodes(innerNodes2);
+			//replace parameters with arguments in innerNode2
+			if(!parameterToArgumentMap2.isEmpty()) {
+				for(CompositeStatementObject innerNode2 : innerNodes2) {
+					innerNode2.replaceParametersWithArguments(parameterToArgumentMap2);
 				}
 			}
 			//compare inner nodes from T1 with inner nodes from T2
-			processInnerNodes(innerNodes1, innerNodes2, parameterToArgumentMap);
+			processInnerNodes(innerNodes1, innerNodes2, parameterToArgumentMap1);
 			
 			//match expressions in inner nodes from T2 with leaves from T1
 			List<AbstractExpression> expressionsT2 = new ArrayList<AbstractExpression>();
 			for(CompositeStatementObject composite : operationBodyMapper.getNonMappedInnerNodesT2()) {
 				for(AbstractExpression expression : composite.getExpressions()) {
+					expression.replaceParametersWithArguments(parameterToArgumentMap2);
 					expressionsT2.add(expression);
 				}
 			}
-			processLeaves(leaves1, expressionsT2, parameterToArgumentMap);
+			processLeaves(leaves1, expressionsT2, parameterToArgumentMap1);
 			
 			//remove the leaves that were mapped with replacement, if they are not mapped again for a second time
 			leaves2.removeAll(addedLeaves2);

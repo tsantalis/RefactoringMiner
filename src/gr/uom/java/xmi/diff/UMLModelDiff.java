@@ -126,7 +126,7 @@ public class UMLModelDiff {
 	   return false;
    }
 
-   private UMLClassBaseDiff getUMLClassDiff(String className) {
+   public UMLClassBaseDiff getUMLClassDiff(String className) {
       for(UMLClassDiff classDiff : commonClassDiffList) {
          if(classDiff.matches(className))
             return classDiff;
@@ -146,7 +146,7 @@ public class UMLModelDiff {
       return null;
    }
 
-   private UMLClassBaseDiff getUMLClassDiff(UMLType type) {
+   public UMLClassBaseDiff getUMLClassDiff(UMLType type) {
       for(UMLClassDiff classDiff : commonClassDiffList) {
          if(classDiff.matches(type))
             return classDiff;
@@ -1737,13 +1737,19 @@ public class UMLModelDiff {
 						OperationInvocation removedOperationInvocation = removedOperationInvocations.get(0);
 						List<String> arguments = removedOperationInvocation.getArguments();
 						List<String> parameters = removedOperation.getParameterNameList();
-						Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
+						Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
 						//special handling for methods with varargs parameter for which no argument is passed in the matching invocation
 						int size = Math.min(arguments.size(), parameters.size());
 						for(int i=0; i<size; i++) {
-							parameterToArgumentMap.put(parameters.get(i), arguments.get(i));
+							parameterToArgumentMap1.put(parameters.get(i), arguments.get(i));
 						}
-						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap, getUMLClassDiff(removedOperation.getClassName()));
+						Map<String, String> parameterToArgumentMap2 = new LinkedHashMap<String, String>();
+						String expression = removedOperationInvocation.getExpression();
+						if(expression != null && !removedOperation.getClassName().endsWith("." + expression)) {
+							parameterToArgumentMap2.put(expression + ".", "");
+							parameterToArgumentMap1.put("this.", "");
+						}
+						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(removedOperation.getClassName()));
 						if(moveAndInlineMatchCondition(operationBodyMapper, mapper)) {
 							InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getOperation1(), removedOperationInvocations);
 							refactorings.add(inlineOperationRefactoring);

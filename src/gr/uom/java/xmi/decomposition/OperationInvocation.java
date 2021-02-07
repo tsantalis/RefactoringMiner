@@ -6,6 +6,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.diff.StringDistance;
+import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.util.ArrayList;
@@ -261,7 +262,24 @@ public class OperationInvocation extends AbstractCall {
     	if(modelDiff != null && modelDiff.isSubclassOf(type.getClassType(), parameter.getType().getClassType())) {
     		return true;
     	}
+    	// the super type is available in the modelDiff, but not the subclass type
+    	UMLClassBaseDiff subclassDiff = getUMLClassDiff(modelDiff, type);
+    	UMLClassBaseDiff superclassDiff = getUMLClassDiff(modelDiff, parameter.getType());
+    	if(superclassDiff != null && subclassDiff == null) {
+    		return true;
+    	}
     	return false;
+    }
+
+    private UMLClassBaseDiff getUMLClassDiff(UMLModelDiff modelDiff, UMLType type) {
+    	UMLClassBaseDiff classDiff = null;
+    	if(modelDiff != null) {
+    		classDiff = modelDiff.getUMLClassDiff(type.getClassType());
+    		if(classDiff == null) {
+    			classDiff = modelDiff.getUMLClassDiff(type);
+    		}
+    	}
+		return classDiff;
     }
 
     private boolean varArgsMatch(UMLOperation operation) {

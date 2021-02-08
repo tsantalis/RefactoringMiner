@@ -429,6 +429,16 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return commonParameterTypes;
 	}
 
+	public List<UMLParameter> getParameterizedTypesInSignature() {
+		List<UMLParameter> params = new ArrayList<UMLParameter>();
+		for(UMLParameter parameter : parameters) {
+			if(parameter.getType().isParameterized()) {
+				params.add(parameter);
+			}
+		}
+		return params;
+	}
+
 	public List<UMLType> getParameterTypeList() {
 		List<UMLType> parameterTypeList = new ArrayList<UMLType>();
 		for(UMLParameter parameter : parameters) {

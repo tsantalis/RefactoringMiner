@@ -95,6 +95,16 @@ public class ExtractClassRefactoring implements Refactoring {
 		ranges.add(extractedClass.codeRange()
 				.setDescription("extracted type declaration")
 				.setCodeElement(extractedClass.getName()));
+		for(UMLOperation extractedOperation : extractedOperations) {
+			ranges.add(extractedOperation.codeRange()
+					.setDescription("extracted method declaration")
+					.setCodeElement(extractedOperation.toString()));
+		}
+		for(UMLAttribute extractedAttribute : extractedAttributes) {
+			ranges.add(extractedAttribute.codeRange()
+					.setDescription("extracted attribute declaration")
+					.setCodeElement(extractedAttribute.toString()));
+		}
 		return ranges;
 	}
 }

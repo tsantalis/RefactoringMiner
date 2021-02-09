@@ -124,6 +124,9 @@ public class InlineVariableRefactoring implements Refactoring {
 		for(AbstractCodeMapping mapping : references) {
 			ranges.add(mapping.getFragment1().codeRange().setDescription("statement with the name of the inlined variable"));
 		}
+		ranges.add(operationBefore.codeRange()
+				.setDescription("original method declaration")
+				.setCodeElement(operationBefore.toString()));
 		return ranges;
 	}
 
@@ -133,6 +136,9 @@ public class InlineVariableRefactoring implements Refactoring {
 		for(AbstractCodeMapping mapping : references) {
 			ranges.add(mapping.getFragment2().codeRange().setDescription("statement with the initializer of the inlined variable"));
 		}
+		ranges.add(operationAfter.codeRange()
+				.setDescription("method declaration with inlined variable")
+				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}
 }

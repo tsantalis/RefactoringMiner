@@ -140,6 +140,9 @@ public class RenameVariableRefactoring implements Refactoring {
 		ranges.add(originalVariable.codeRange()
 				.setDescription("original variable declaration")
 				.setCodeElement(originalVariable.toString()));
+		ranges.add(operationBefore.codeRange()
+				.setDescription("original method declaration")
+				.setCodeElement(operationBefore.toString()));
 		return ranges;
 	}
 
@@ -149,6 +152,9 @@ public class RenameVariableRefactoring implements Refactoring {
 		ranges.add(renamedVariable.codeRange()
 				.setDescription("renamed variable declaration")
 				.setCodeElement(renamedVariable.toString()));
+		ranges.add(operationAfter.codeRange()
+				.setDescription("method declaration with renamed variable")
+				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}
 }

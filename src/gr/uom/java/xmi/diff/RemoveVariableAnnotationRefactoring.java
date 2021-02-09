@@ -58,6 +58,9 @@ public class RemoveVariableAnnotationRefactoring implements Refactoring {
 		ranges.add(variableBefore.codeRange()
 				.setDescription("original variable declaration")
 				.setCodeElement(variableBefore.toString()));
+		ranges.add(operationBefore.codeRange()
+				.setDescription("original method declaration")
+				.setCodeElement(operationBefore.toString()));
 		return ranges;
 	}
 
@@ -67,6 +70,9 @@ public class RemoveVariableAnnotationRefactoring implements Refactoring {
 		ranges.add(variableAfter.codeRange()
 				.setDescription("variable declaration with removed annotation")
 				.setCodeElement(variableAfter.toString()));
+		ranges.add(operationAfter.codeRange()
+				.setDescription("method declaration with removed variable annotation")
+				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}
 

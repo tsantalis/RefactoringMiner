@@ -121,6 +121,9 @@ public class ExtractVariableRefactoring implements Refactoring {
 		for(AbstractCodeMapping mapping : references) {
 			ranges.add(mapping.getFragment1().codeRange().setDescription("statement with the initializer of the extracted variable"));
 		}
+		ranges.add(operationBefore.codeRange()
+				.setDescription("original method declaration")
+				.setCodeElement(operationBefore.toString()));
 		return ranges;
 	}
 
@@ -133,6 +136,9 @@ public class ExtractVariableRefactoring implements Refactoring {
 		for(AbstractCodeMapping mapping : references) {
 			ranges.add(mapping.getFragment2().codeRange().setDescription("statement with the name of the extracted variable"));
 		}
+		ranges.add(operationAfter.codeRange()
+				.setDescription("method declaration with extracted variable")
+				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}
 }

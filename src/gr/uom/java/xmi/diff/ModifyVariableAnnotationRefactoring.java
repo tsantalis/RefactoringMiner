@@ -64,6 +64,9 @@ public class ModifyVariableAnnotationRefactoring implements Refactoring {
 		ranges.add(variableBefore.codeRange()
 				.setDescription("original variable declaration")
 				.setCodeElement(variableBefore.toString()));
+		ranges.add(operationBefore.codeRange()
+				.setDescription("original method declaration")
+				.setCodeElement(operationBefore.toString()));
 		return ranges;
 	}
 
@@ -76,6 +79,9 @@ public class ModifyVariableAnnotationRefactoring implements Refactoring {
 		ranges.add(variableAfter.codeRange()
 				.setDescription("variable declaration with modified annotation")
 				.setCodeElement(variableAfter.toString()));
+		ranges.add(operationAfter.codeRange()
+				.setDescription("method declaration with modified variable annotation")
+				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}
 	@Override

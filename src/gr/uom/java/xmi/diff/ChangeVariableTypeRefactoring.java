@@ -143,6 +143,9 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 		ranges.add(originalVariable.codeRange()
 				.setDescription("original variable declaration")
 				.setCodeElement(originalVariable.toString()));
+		ranges.add(operationBefore.codeRange()
+				.setDescription("original method declaration")
+				.setCodeElement(operationBefore.toString()));
 		return ranges;
 	}
 
@@ -152,6 +155,9 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 		ranges.add(changedTypeVariable.codeRange()
 				.setDescription("changed-type variable declaration")
 				.setCodeElement(changedTypeVariable.toString()));
+		ranges.add(operationAfter.codeRange()
+				.setDescription("method declaration with changed variable type")
+				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}
 }

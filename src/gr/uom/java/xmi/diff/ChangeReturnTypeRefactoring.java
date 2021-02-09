@@ -132,6 +132,9 @@ public class ChangeReturnTypeRefactoring implements Refactoring {
 		ranges.add(originalType.codeRange()
 				.setDescription("original return type")
 				.setCodeElement(originalType.toString()));
+		ranges.add(operationBefore.codeRange()
+				.setDescription("original method declaration")
+				.setCodeElement(operationBefore.toString()));
 		return ranges;
 	}
 
@@ -141,6 +144,9 @@ public class ChangeReturnTypeRefactoring implements Refactoring {
 		ranges.add(changedType.codeRange()
 				.setDescription("changed return type")
 				.setCodeElement(changedType.toString()));
+		ranges.add(operationAfter.codeRange()
+				.setDescription("method declaration with changed return type")
+				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}
 }

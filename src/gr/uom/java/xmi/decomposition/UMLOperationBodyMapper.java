@@ -4013,22 +4013,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			else {
+				Set<Replacement> conflictingReplacements = conflictingReplacements(globalReplacementMap);
 				Set<String> processedBefores = new LinkedHashSet<String>();
 				for(Set<Replacement> replacements : globalReplacementMap.values()) {
 					for(Replacement replacement : replacements) {
-						if(!processedBefores.contains(replacement.getBefore())) {
-							replacementInfo.addReplacement(replacement);
-							replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement.getBefore(), replacement.getAfter()));
-							processedBefores.add(replacement.getBefore());
-						}
-						else {
-							//find the next best match for replacement.getAfter() from the replacement cache
-							for(Set<Replacement> replacements2 : replacementCache.values()) {
-								for(Replacement replacement2 : replacements2) {
-									if(replacement2.getAfter().equals(replacement.getAfter()) && !replacement2.equals(replacement)) {
-										replacementInfo.addReplacement(replacement2);
-										replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement2.getBefore(), replacement2.getAfter()));
-										processedBefores.add(replacement2.getBefore());
+						if(!conflictingReplacements.contains(replacement)) {
+							if(!processedBefores.contains(replacement.getBefore())) {
+								replacementInfo.addReplacement(replacement);
+								replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement.getBefore(), replacement.getAfter()));
+								processedBefores.add(replacement.getBefore());
+							}
+							else {
+								//find the next best match for replacement.getAfter() from the replacement cache
+								for(Set<Replacement> replacements2 : replacementCache.values()) {
+									boolean found = false;
+									for(Replacement replacement2 : replacements2) {
+										if(replacement2.getAfter().equals(replacement.getAfter()) && !replacement2.equals(replacement)) {
+											replacementInfo.addReplacement(replacement2);
+											replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement2.getBefore(), replacement2.getAfter()));
+											processedBefores.add(replacement2.getBefore());
+											found = true;
+											break;
+										}
+									}
+									if(found) {
 										break;
 									}
 								}
@@ -4038,6 +4046,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private Set<Replacement> conflictingReplacements(TreeMap<Double, Set<Replacement>> globalReplacementMap) {
+		Map<String, Set<Replacement>> map = new LinkedHashMap<String, Set<Replacement>>();
+		for(Set<Replacement> replacements : globalReplacementMap.values()) {
+			for(Replacement replacement : replacements) {
+				String after = replacement.getAfter();
+				if(map.containsKey(after)) {
+					map.get(after).add(replacement);
+				}
+				else {
+					Set<Replacement> set = new LinkedHashSet<Replacement>();
+					set.add(replacement);
+					map.put(after, set);
+				}
+			}
+		}
+		Set<Replacement> conflictingReplacements = new LinkedHashSet<Replacement>();
+		for(String key : map.keySet()) {
+			Set<Replacement> replacements = map.get(key);
+			if(replacements.size() > 1) {
+				conflictingReplacements.add(replacements.iterator().next());
+			}
+		}
+		return conflictingReplacements;
 	}
 
 	private Replacement variableReplacementWithinMethodInvocations(String s1, String s2, Set<String> variables1, Set<String> variables2) {

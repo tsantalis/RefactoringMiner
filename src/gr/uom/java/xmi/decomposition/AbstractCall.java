@@ -388,15 +388,27 @@ public abstract class AbstractCall implements LocationInfoProvider {
 	}
 
 	private boolean argumentIsEqual(String statement) {
-		return statement.endsWith(";\n") && getArguments().size() == 1 &&
+		if(statement.endsWith(";\n")) {
+			for(String argument : getArguments()) {
 				//length()-2 to remove ";\n" from the end of the statement
-				equalsIgnoringExtraParenthesis(getArguments().get(0), statement.substring(0, statement.length()-2));
+				if(equalsIgnoringExtraParenthesis(argument, statement.substring(0, statement.length()-2))) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean argumentIsReturned(String statement) {
-		return statement.startsWith("return ") && getArguments().size() == 1 &&
+		if(statement.startsWith("return ")) {
+			for(String argument : getArguments()) {
 				//length()-2 to remove ";\n" from the end of the return statement, 7 to remove the prefix "return "
-				equalsIgnoringExtraParenthesis(getArguments().get(0), statement.substring(7, statement.length()-2));
+				if(equalsIgnoringExtraParenthesis(argument, statement.substring(7, statement.length()-2))) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public Replacement makeReplacementForReturnedArgument(String statement) {

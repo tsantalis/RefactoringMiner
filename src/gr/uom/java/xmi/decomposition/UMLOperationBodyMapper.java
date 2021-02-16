@@ -4398,7 +4398,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return score;
 	}
 
-	private boolean matchesOperation(OperationInvocation invocation, List<UMLOperation> operations, Map<String, UMLType> variableTypeMap) {
+	private boolean matchesOperation(OperationInvocation invocation, List<UMLOperation> operations, Map<String, Set<VariableDeclaration>> variableTypeMap) {
 		for(UMLOperation operation : operations) {
 			if(invocation.matchesOperation(operation, variableTypeMap, modelDiff))
 				return true;

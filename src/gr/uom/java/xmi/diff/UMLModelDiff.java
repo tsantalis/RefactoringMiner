@@ -1799,7 +1799,7 @@ public class UMLModelDiff {
 				(exactMatches > 1 && nonMappedElementsT1-exactMatches < 20));
 	}
 
-	private boolean invocationMatchesWithAddedOperation(OperationInvocation removedOperationInvocation, Map<String, UMLType> variableTypeMap, List<OperationInvocation> operationInvocationsInNewMethod) {
+	private boolean invocationMatchesWithAddedOperation(OperationInvocation removedOperationInvocation, Map<String, Set<VariableDeclaration>> variableTypeMap, List<OperationInvocation> operationInvocationsInNewMethod) {
 		if(operationInvocationsInNewMethod.contains(removedOperationInvocation)) {
 			for(UMLOperation addedOperation : getAddedOperationsInCommonClasses()) {
 				if(removedOperationInvocation.matchesOperation(addedOperation, variableTypeMap, this)) {
@@ -1944,18 +1944,21 @@ public class UMLModelDiff {
 	   return isNumeric(anonymousID) || Character.isLowerCase(anonymousID.charAt(0));
    }
 
-   private boolean conflictingExpression(OperationInvocation invocation, UMLOperation addedOperation, Map<String, UMLType> variableTypeMap) {
+   private boolean conflictingExpression(OperationInvocation invocation, UMLOperation addedOperation, Map<String, Set<VariableDeclaration>> variableTypeMap) {
 	   String expression = invocation.getExpression();
 	   if(expression != null && variableTypeMap.containsKey(expression)) {
-		   UMLType type = variableTypeMap.get(expression);
+		   Set<VariableDeclaration> variableDeclarations = variableTypeMap.get(expression);
 		   UMLClassBaseDiff classDiff = getUMLClassDiff(addedOperation.getClassName());
 		   boolean superclassRelationship = false;
-		   if(classDiff != null && classDiff.getNewSuperclass() != null &&
-				   classDiff.getNewSuperclass().equals(type)) {
-			   superclassRelationship = true;
-		   }
-		   if(!addedOperation.getNonQualifiedClassName().equals(type.getClassType()) && !superclassRelationship) {
-			   return true;
+		   for(VariableDeclaration variableDeclaration : variableDeclarations) {
+			   UMLType type = variableDeclaration.getType();
+			   if(classDiff != null && classDiff.getNewSuperclass() != null &&
+					   classDiff.getNewSuperclass().equals(type)) {
+				   superclassRelationship = true;
+			   }
+			   if(!addedOperation.getNonQualifiedClassName().equals(type.getClassType()) && !superclassRelationship) {
+				   return true;
+			   }
 		   }
 	   }
 	   return false;

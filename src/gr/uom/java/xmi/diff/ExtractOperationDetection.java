@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
@@ -19,6 +20,7 @@ import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
 public class ExtractOperationDetection {
@@ -41,12 +43,13 @@ public class ExtractOperationDetection {
 		List<ExtractOperationRefactoring> refactorings = new ArrayList<ExtractOperationRefactoring>();
 		if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
 			!mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
-			List<OperationInvocation> addedOperationInvocations = matchingInvocations(addedOperation, operationInvocations, mapper.getOperation2().variableTypeMap());
+			Map<String, Set<VariableDeclaration>> variableTypeMapForOperation2 = mapper.getOperation2().variableTypeMap();
+			List<OperationInvocation> addedOperationInvocations = matchingInvocations(addedOperation, operationInvocations, variableTypeMapForOperation2);
 			if(addedOperationInvocations.size() > 0) {
 				int otherAddedMethodsCalled = 0;
 				for(UMLOperation addedOperation2 : this.addedOperations) {
 					if(!addedOperation.equals(addedOperation2)) {
-						List<OperationInvocation> addedOperationInvocations2 = matchingInvocations(addedOperation2, operationInvocations, mapper.getOperation2().variableTypeMap());
+						List<OperationInvocation> addedOperationInvocations2 = matchingInvocations(addedOperation2, operationInvocations, variableTypeMapForOperation2);
 						if(addedOperationInvocations2.size() > 0) {
 							otherAddedMethodsCalled++;
 						}
@@ -209,7 +212,7 @@ public class ExtractOperationDetection {
 	}
 
 	private List<OperationInvocation> matchingInvocations(UMLOperation operation,
-			List<OperationInvocation> operationInvocations, Map<String, UMLType> variableTypeMap) {
+			List<OperationInvocation> operationInvocations, Map<String, Set<VariableDeclaration>> variableTypeMap) {
 		List<OperationInvocation> addedOperationInvocations = new ArrayList<OperationInvocation>();
 		for(OperationInvocation invocation : operationInvocations) {
 			if(invocation.matchesOperation(operation, variableTypeMap, modelDiff)) {

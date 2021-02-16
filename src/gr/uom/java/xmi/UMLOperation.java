@@ -212,16 +212,31 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return null;
 	}
 
-	public Map<String, UMLType> variableTypeMap() {
-		Map<String, UMLType> variableTypeMap = new LinkedHashMap<String, UMLType>();
+	public Map<String, Set<VariableDeclaration>> variableTypeMap() {
+		Map<String, Set<VariableDeclaration>> variableDeclarationMap = new LinkedHashMap<String, Set<VariableDeclaration>>();
 		for(UMLParameter parameter : parameters) {
-			if(!parameter.getKind().equals("return"))
-				variableTypeMap.put(parameter.getName(), parameter.getType());
+			if(!parameter.getKind().equals("return")) {
+				if(variableDeclarationMap.containsKey(parameter.getName())) {
+					variableDeclarationMap.get(parameter.getName()).add(parameter.getVariableDeclaration());
+				}
+				else {
+					Set<VariableDeclaration> variableDeclarations = new LinkedHashSet<VariableDeclaration>();
+					variableDeclarations.add(parameter.getVariableDeclaration());
+					variableDeclarationMap.put(parameter.getName(), variableDeclarations);
+				}
+			}
 		}
 		for(VariableDeclaration declaration : getAllVariableDeclarations()) {
-			variableTypeMap.put(declaration.getVariableName(), declaration.getType());
+			if(variableDeclarationMap.containsKey(declaration.getVariableName())) {
+				variableDeclarationMap.get(declaration.getVariableName()).add(declaration);
+			}
+			else {
+				Set<VariableDeclaration> variableDeclarations = new LinkedHashSet<VariableDeclaration>();
+				variableDeclarations.add(declaration);
+				variableDeclarationMap.put(declaration.getVariableName(), variableDeclarations);
+			}
 		}
-		return variableTypeMap;
+		return variableDeclarationMap;
 	}
 
 	public int statementCount() {

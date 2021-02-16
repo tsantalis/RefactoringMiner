@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
@@ -14,6 +15,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class InlineOperationDetection {
 	private UMLOperationBodyMapper mapper;
@@ -73,7 +75,7 @@ public class InlineOperationDetection {
 		return refactorings;
 	}
 
-	private List<OperationInvocation> matchingInvocations(UMLOperation removedOperation, List<OperationInvocation> operationInvocations, Map<String, UMLType> variableTypeMap) {
+	private List<OperationInvocation> matchingInvocations(UMLOperation removedOperation, List<OperationInvocation> operationInvocations, Map<String, Set<VariableDeclaration>> variableTypeMap) {
 		List<OperationInvocation> removedOperationInvocations = new ArrayList<OperationInvocation>();
 		for(OperationInvocation invocation : operationInvocations) {
 			if(invocation.matchesOperation(removedOperation, variableTypeMap, modelDiff)) {
@@ -148,7 +150,7 @@ public class InlineOperationDetection {
 				(exactMatches > 1 && nonMappedElementsT1-exactMatches < 20));
 	}
 
-	private boolean invocationMatchesWithAddedOperation(OperationInvocation removedOperationInvocation, Map<String, UMLType> variableTypeMap, List<OperationInvocation> operationInvocationsInNewMethod) {
+	private boolean invocationMatchesWithAddedOperation(OperationInvocation removedOperationInvocation, Map<String, Set<VariableDeclaration>> variableTypeMap, List<OperationInvocation> operationInvocationsInNewMethod) {
 		if(operationInvocationsInNewMethod.contains(removedOperationInvocation)) {
 			for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
 				if(removedOperationInvocation.matchesOperation(addedOperation, variableTypeMap, modelDiff)) {

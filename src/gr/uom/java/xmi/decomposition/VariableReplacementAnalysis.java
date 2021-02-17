@@ -1134,7 +1134,7 @@ public class VariableReplacementAnalysis {
 							Map<String, List<OperationInvocation>> methodInvocationMap = v2.getInitializer().getMethodInvocationMap();
 							for(String key : methodInvocationMap.keySet()) {
 								for(OperationInvocation invocation : methodInvocationMap.get(key)) {
-									if(invocation.matchesOperation(extractedMethod, operation2.variableTypeMap(), null)) {
+									if(invocation.matchesOperation(extractedMethod, operation2.variableDeclarationMap(), null)) {
 										return false;
 									}
 									else {
@@ -1146,7 +1146,7 @@ public class VariableReplacementAnalysis {
 													Map<String, List<OperationInvocation>> methodInvocationMap2 = declaration.getInitializer().getMethodInvocationMap();
 													for(String key2 : methodInvocationMap2.keySet()) {
 														for(OperationInvocation invocation2 : methodInvocationMap2.get(key2)) {
-															if(invocation2.matchesOperation(extractedMethod, operation2.variableTypeMap(), null)) {
+															if(invocation2.matchesOperation(extractedMethod, operation2.variableDeclarationMap(), null)) {
 																return false;
 															}
 														}

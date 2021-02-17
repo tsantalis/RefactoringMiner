@@ -39,6 +39,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	private UMLJavadoc javadoc;
 	private List<UMLAnnotation> annotations;
 	private List<UMLComment> comments;
+	private Map<String, Set<VariableDeclaration>> variableDeclarationMap;
 	
 	public UMLOperation(String name, LocationInfo locationInfo) {
 		this.locationInfo = locationInfo;
@@ -212,28 +213,18 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return null;
 	}
 
-	public Map<String, Set<VariableDeclaration>> variableTypeMap() {
-		Map<String, Set<VariableDeclaration>> variableDeclarationMap = new LinkedHashMap<String, Set<VariableDeclaration>>();
-		for(UMLParameter parameter : parameters) {
-			if(!parameter.getKind().equals("return")) {
-				if(variableDeclarationMap.containsKey(parameter.getName())) {
-					variableDeclarationMap.get(parameter.getName()).add(parameter.getVariableDeclaration());
+	public Map<String, Set<VariableDeclaration>> variableDeclarationMap() {
+		if(this.variableDeclarationMap == null) {
+			this.variableDeclarationMap = new LinkedHashMap<String, Set<VariableDeclaration>>();
+			for(VariableDeclaration declaration : getAllVariableDeclarations()) {
+				if(variableDeclarationMap.containsKey(declaration.getVariableName())) {
+					variableDeclarationMap.get(declaration.getVariableName()).add(declaration);
 				}
 				else {
 					Set<VariableDeclaration> variableDeclarations = new LinkedHashSet<VariableDeclaration>();
-					variableDeclarations.add(parameter.getVariableDeclaration());
-					variableDeclarationMap.put(parameter.getName(), variableDeclarations);
+					variableDeclarations.add(declaration);
+					variableDeclarationMap.put(declaration.getVariableName(), variableDeclarations);
 				}
-			}
-		}
-		for(VariableDeclaration declaration : getAllVariableDeclarations()) {
-			if(variableDeclarationMap.containsKey(declaration.getVariableName())) {
-				variableDeclarationMap.get(declaration.getVariableName()).add(declaration);
-			}
-			else {
-				Set<VariableDeclaration> variableDeclarations = new LinkedHashSet<VariableDeclaration>();
-				variableDeclarations.add(declaration);
-				variableDeclarationMap.put(declaration.getVariableName(), variableDeclarations);
 			}
 		}
 		return variableDeclarationMap;
@@ -509,7 +500,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 				for(String key : operationInvocationMap.keySet()) {
 					List<OperationInvocation> operationInvocations = operationInvocationMap.get(key);
 					for(OperationInvocation operationInvocation : operationInvocations) {
-						if(operationInvocation.matchesOperation(this, this.variableTypeMap(), null) || operationInvocation.getMethodName().equals(this.getName())) {
+						if(operationInvocation.matchesOperation(this, this.variableDeclarationMap(), null) || operationInvocation.getMethodName().equals(this.getName())) {
 							return operationInvocation;
 						}
 					}

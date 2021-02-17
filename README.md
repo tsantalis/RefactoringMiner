@@ -436,6 +436,8 @@ If you don't want to clone locally the repository, run:
 
     > ./RefactoringMiner -gc https://github.com/danilofes/refactoring-toy-example.git 36287f7c3b09eff78395267a3ac0d7da067863fd 10
 
+For the `-gc` and `-gp` options you must provide a valid OAuth token in the `github-oauth.properties` file stored in the `bin` folder.
+
 In both cases, you will get the output in JSON format:
 
     {

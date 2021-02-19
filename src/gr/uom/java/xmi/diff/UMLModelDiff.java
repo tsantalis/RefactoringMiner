@@ -2114,7 +2114,7 @@ public class UMLModelDiff {
 		            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, getUMLClassDiff(removedOperation.getClassName()));
 		            processedOperationPairs.add(pair);
 		            int mappings = operationBodyMapper.mappingsWithoutBlocks();
-		            if(mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) {
+		            if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || addedOperation.equalSignatureForAbstractMethods(removedOperation)) {
 		               int exactMatches = operationBodyMapper.exactMatches();
 		               if(operationBodyMapperMap.containsKey(exactMatches)) {
 		                  List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
@@ -2203,7 +2203,7 @@ public class UMLModelDiff {
 		            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, getUMLClassDiff(removedOperation.getClassName()));
 		            processedOperationPairs.add(pair);
 		            int mappings = operationBodyMapper.mappingsWithoutBlocks();
-		            if(mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) {
+		            if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || removedOperation.equalSignatureForAbstractMethods(addedOperation)) {
 		               int exactMatches = operationBodyMapper.exactMatches();
 		               if(operationBodyMapperMap.containsKey(exactMatches)) {
 		                  List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);

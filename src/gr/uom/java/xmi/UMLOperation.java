@@ -313,6 +313,11 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 			return false;
 	}
 
+	public boolean equalSignatureForAbstractMethods(UMLOperation operation) {
+		return this.getBody() == null && operation.getBody() == null && this.name.equals(operation.name) &&
+				equalTypeParameters(operation) && equalReturnParameter(operation) && this.getParameterTypeList().equals(operation.getParameterTypeList());
+	}
+
 	public boolean equalSignature(UMLOperation operation) {
 		boolean equalParameterTypes = this.getParameterTypeList().equals(operation.getParameterTypeList());
 		boolean compatibleParameterTypes = false;

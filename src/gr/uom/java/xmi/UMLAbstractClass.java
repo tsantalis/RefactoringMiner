@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.refactoringminer.util.PrefixSuffixUtils;
 
+import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.RenamePattern;
 import gr.uom.java.xmi.diff.StringDistance;
@@ -277,11 +278,32 @@ public abstract class UMLAbstractClass {
 		if(this.isSingleAbstractMethodInterface() && umlClass.isSingleAbstractMethodInterface()) {
 			return commonOperations.size() == totalOperations;
 		}
-		return (commonOperations.size() > Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0)) ||
+		if((commonOperations.size() > Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0)) ||
 				(commonOperations.size() > Math.floor(totalOperations/3.0*2.0) && (commonAttributes.size() >= 2 || totalAttributes == 0)) ||
 				(commonAttributes.size() > Math.floor(totalAttributes/2.0) && (commonOperations.size() > 2 || totalOperations == 0)) ||
 				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && this.attributes.size() == umlClass.attributes.size()) ||
-				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && totalAttributes == 1);
+				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && totalAttributes == 1)) {
+			return true;
+		}
+		Set<UMLOperation> unmatchedOperations = new LinkedHashSet<UMLOperation>(umlClass.operations);
+		unmatchedOperations.removeAll(commonOperations);
+		Set<UMLOperation> unmatchedCalledOperations = new LinkedHashSet<UMLOperation>();
+		for(UMLOperation operation : umlClass.operations) {
+			if(commonOperations.contains(operation)) {
+				for(OperationInvocation invocation : operation.getAllOperationInvocations()) {
+					for(UMLOperation unmatchedOperation : unmatchedOperations) {
+						if(invocation.matchesOperation(unmatchedOperation, operation.variableDeclarationMap(), null)) {
+							unmatchedCalledOperations.add(unmatchedOperation);
+							break;
+						}
+					}
+				}
+			}
+		}
+		if((commonOperations.size() + unmatchedCalledOperations.size() > Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0))) {
+			return true;
+		}
+		return false;
 	}
 
 	public boolean hasSameAttributesAndOperations(UMLAbstractClass umlClass) {

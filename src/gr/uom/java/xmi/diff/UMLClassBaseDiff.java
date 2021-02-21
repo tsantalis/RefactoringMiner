@@ -1348,9 +1348,7 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		UMLOperationBodyMapper bestMapper = mapperSet.first();
 		UMLOperation bestMapperOperation1 = bestMapper.getOperation1();
 		UMLOperation bestMapperOperation2 = bestMapper.getOperation2();
-		if(bestMapperOperation1.equalReturnParameter(bestMapperOperation2) &&
-				bestMapperOperation1.getName().equals(bestMapperOperation2.getName()) &&
-				bestMapperOperation1.commonParameterTypes(bestMapperOperation2).size() > 0) {
+		if(equalSignatureWithCommonParameterTypes(bestMapperOperation1, bestMapperOperation2)) {
 			return bestMapper;
 		}
 		for(int i=1; i<mapperList.size(); i++) {
@@ -1397,6 +1395,12 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		return bestMapper;
 	}
 
+	private boolean equalSignatureWithCommonParameterTypes(UMLOperation operation1, UMLOperation operation2) {
+		return operation1.equalReturnParameter(operation2) &&
+				operation1.getName().equals(operation2.getName()) &&
+				operation1.commonParameterTypes(operation2).size() > 0;
+	}
+
 	private boolean identicalBodyWithAnotherAddedMethod(UMLOperationBodyMapper mapper) {
 		UMLOperation operation1 = mapper.getOperation1();
 		List<String> stringRepresentation = operation1.stringRepresentation();
@@ -1404,8 +1408,23 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		if(stringRepresentation.size() > 3) {
 			for(UMLOperation addedOperation : addedOperations) {
 				if(!mapper.getOperation2().equals(addedOperation)) {
-					if(addedOperation.stringRepresentation().equals(stringRepresentation)) {
+					List<String> addedOperationStringRepresentation = addedOperation.stringRepresentation();
+					if(addedOperationStringRepresentation.equals(stringRepresentation)) {
 						return true;
+					}
+					else if(equalSignatureWithCommonParameterTypes(operation1, addedOperation)) {
+						List<String> commonStatements = new ArrayList<String>();
+						for(String statement : addedOperationStringRepresentation) {
+							if(!statement.equals("{") && !statement.equals("}") && !statement.equals("try") && !statement.startsWith("catch(") && !statement.startsWith("case ") && !statement.startsWith("default :") &&
+									!statement.startsWith("return true;") && !statement.startsWith("return false;") && !statement.startsWith("return this;") && !statement.startsWith("return null;") && !statement.startsWith("return;")) {
+								if(stringRepresentation.contains(statement)) {
+									commonStatements.add(statement);
+								}
+							}
+						}
+						if(commonStatements.size() > mapper.exactMatches()*2) {
+							return true;
+						}
 					}
 				}
 			}
@@ -1420,8 +1439,23 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		if(stringRepresentation.size() > 3) {
 			for(UMLOperation removedOperation : removedOperations) {
 				if(!mapper.getOperation1().equals(removedOperation)) {
-					if(removedOperation.stringRepresentation().equals(stringRepresentation)) {
+					List<String> removedOperationStringRepresentation = removedOperation.stringRepresentation();
+					if(removedOperationStringRepresentation.equals(stringRepresentation)) {
 						return true;
+					}
+					else if(equalSignatureWithCommonParameterTypes(removedOperation, operation2)) {
+						List<String> commonStatements = new ArrayList<String>();
+						for(String statement : removedOperationStringRepresentation) {
+							if(!statement.equals("{") && !statement.equals("}") && !statement.equals("try") && !statement.startsWith("catch(") && !statement.startsWith("case ") && !statement.startsWith("default :") &&
+									!statement.startsWith("return true;") && !statement.startsWith("return false;") && !statement.startsWith("return this;") && !statement.startsWith("return null;") && !statement.startsWith("return;")) {
+								if(stringRepresentation.contains(statement)) {
+									commonStatements.add(statement);
+								}
+							}
+						}
+						if(commonStatements.size() > mapper.exactMatches()*2) {
+							return true;
+						}
 					}
 				}
 			}

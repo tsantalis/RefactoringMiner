@@ -27,6 +27,7 @@ import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLAttributeDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
+import gr.uom.java.xmi.diff.UMLClassMoveDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
 import gr.uom.java.xmi.diff.UMLParameterDiff;
@@ -318,6 +319,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(!returnWithVariableReplacement(mapping) && !nullLiteralReplacements(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
 					AbstractCodeFragment fragment = mapping.getFragment1();
 					expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper);
+				}
+			}
+			for(UMLOperationBodyMapper childMapper : operationBodyMapper.childMappers) {
+				if(childMapper.getOperation1().getClassName().equals(addedOperation.getClassName()) || classDiff instanceof UMLClassMoveDiff) {
+					for(AbstractCodeMapping mapping : childMapper.getMappings()) {
+						if(!returnWithVariableReplacement(mapping) && !nullLiteralReplacements(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
+							AbstractCodeFragment fragment = mapping.getFragment1();
+							expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, childMapper);
+						}
+					}
 				}
 			}
 			List<StatementObject> leaves2 = composite2.getLeaves();
@@ -963,17 +974,33 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 		for(AbstractCodeMapping mapping : getMappings()) {
 			for(Replacement replacement : mapping.getReplacements()) {
-				if(replacement instanceof MethodInvocationReplacement ||
-						replacement instanceof VariableReplacementWithMethodInvocation ||
-						replacement instanceof ClassInstanceCreationWithMethodInvocationReplacement ||
-						replacement.getType().equals(ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION) ||
-						replacement instanceof IntersectionReplacement ||
-						replacement.getType().equals(ReplacementType.ANONYMOUS_CLASS_DECLARATION)) {
+				if(involvesMethodInvocation(replacement)) {
 					replacements.add(replacement);
 				}
 			}
 		}
+		if(replacements.isEmpty()) {
+			for(UMLOperationBodyMapper childMapper : childMappers) {
+				for(AbstractCodeMapping mapping : childMapper.getMappings()) {
+					for(Replacement replacement : mapping.getReplacements()) {
+						if(involvesMethodInvocation(replacement)) {
+							replacements.add(replacement);
+						}
+					}
+				}
+			}
+		}
 		return replacements;
+	}
+
+	private boolean involvesMethodInvocation(Replacement replacement) {
+		return replacement instanceof MethodInvocationReplacement ||
+				replacement instanceof VariableReplacementWithMethodInvocation ||
+				replacement instanceof ClassInstanceCreationWithMethodInvocationReplacement ||
+				replacement.getType().equals(ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION) ||
+				replacement.getType().equals(ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION) ||
+				replacement instanceof IntersectionReplacement ||
+				replacement.getType().equals(ReplacementType.ANONYMOUS_CLASS_DECLARATION);
 	}
 
 	public Set<MethodInvocationReplacement> getMethodInvocationRenameReplacements() {

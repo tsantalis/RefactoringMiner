@@ -1322,6 +1322,8 @@ public class UMLModelDiff {
     	    	  else
     	    		  refactoring = new MoveAndRenameClassRefactoring(renameDiff.getOriginalClass(), renameDiff.getRenamedClass());
     			  refactorings.add(refactoring);
+    			  removedClasses.remove(removedClass);
+    			  addedClasses.remove(addedClass);
     		  }
     	  }
       }

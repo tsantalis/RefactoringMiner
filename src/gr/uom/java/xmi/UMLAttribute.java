@@ -1,5 +1,6 @@
 package gr.uom.java.xmi;
 
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
@@ -121,6 +122,15 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Loc
 
 	public List<UMLAnnotation> getAnnotations() {
 		return variableDeclaration.getAnnotations();
+	}
+
+	public boolean renamedWithIdenticalTypeAndInitializer(UMLAttribute attribute) {
+		AbstractExpression thisInitializer = this.getVariableDeclaration().getInitializer();
+		AbstractExpression otherInitializer = attribute.getVariableDeclaration().getInitializer();
+		if(thisInitializer != null && otherInitializer != null && !this.name.equals(attribute.name)) {
+			return thisInitializer.getExpression().equals(otherInitializer.getExpression()) && this.type.equals(attribute.type) && this.type.equalsQualified(attribute.type);
+		}
+		return false;
 	}
 
 	public boolean equalsIgnoringChangedType(UMLAttribute attribute) {

@@ -142,8 +142,8 @@ public abstract class AbstractCall implements LocationInfoProvider {
 			String argument2 = arguments2.get(i);
 			boolean argumentConcatenated = false;
 			if((argument1.contains("+") || argument2.contains("+")) && !argument1.contains("++") && !argument2.contains("++")) {
-				Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(argument1.split(UMLOperationBodyMapper.SPLIT_CONCAT_STRING_PATTERN)));
-				Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(argument2.split(UMLOperationBodyMapper.SPLIT_CONCAT_STRING_PATTERN)));
+				Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(UMLOperationBodyMapper.SPLIT_CONCAT_STRING_PATTERN.split(argument1)));
+				Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(UMLOperationBodyMapper.SPLIT_CONCAT_STRING_PATTERN.split(argument2)));
 				Set<String> intersection = new LinkedHashSet<String>(tokens1);
 				intersection.retainAll(tokens2);
 				int size = intersection.size();

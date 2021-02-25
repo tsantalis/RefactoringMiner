@@ -216,7 +216,7 @@ public class OperationInvocation extends AbstractCall {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("ClassLoader"));
     		}
     		else if(arg.contains("+") && !arg.contains("++") && !UMLOperationBodyMapper.containsMethodSignatureOfAnonymousClass(arg)) {
-    			String[] tokens = arg.split(UMLOperationBodyMapper.SPLIT_CONCAT_STRING_PATTERN);
+    			String[] tokens = UMLOperationBodyMapper.SPLIT_CONCAT_STRING_PATTERN.split(arg);
     			if(tokens[0].startsWith("\"") && tokens[0].endsWith("\"")) {
     				inferredArgumentTypes.add(UMLType.extractTypeObject("String"));
     			}

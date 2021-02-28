@@ -2034,6 +2034,7 @@ public class UMLModelDiff {
 	  Set<UMLType> interfaceIntersection = new LinkedHashSet<UMLType>(interfacesImplementedByAddedClasses);
 	  interfaceIntersection.retainAll(interfacesImplementedByRemovedClasses);
 	  List<UMLOperation> addedOperations = getAddedAndExtractedOperationsInCommonClasses();
+	  addedOperations.addAll(getAddedOperationsInMovedAndRenamedClasses());
       for(UMLClass addedClass : addedClasses) {
     	  if(!addedClass.implementsInterface(interfaceIntersection) && !outerClassMovedOrRenamed(addedClass)) {
     		  addedOperations.addAll(addedClass.getOperations());
@@ -2052,6 +2053,7 @@ public class UMLModelDiff {
 
    private void checkForOperationMovesBetweenCommonClasses() throws RefactoringMinerTimedOutException {
       List<UMLOperation> addedOperations = getAddedAndExtractedOperationsInCommonClasses();
+      addedOperations.addAll(getAddedOperationsInMovedAndRenamedClasses());
       List<UMLOperation> removedOperations = getRemovedOperationsInCommonMovedRenamedClasses();
       if(removedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS || addedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
     	  checkForOperationMoves(addedOperations, removedOperations);
@@ -2061,14 +2063,30 @@ public class UMLModelDiff {
    private boolean outerClassMovedOrRenamed(UMLClass umlClass) {
 	   if(!umlClass.isTopLevel()) {
 		   for(UMLClassMoveDiff diff : classMoveDiffList) {
-			   if(diff.getOriginalClass().getName().equals(umlClass.getPackageName()) ||
-					   diff.getMovedClass().getName().equals(umlClass.getPackageName())) {
+			   if(diff.getOriginalClass().getName().equals(umlClass.getPackageName())) {
+				   String nestedClassExpectedName = diff.getMovedClass().getName() + 
+						   umlClass.getName().substring(diff.getOriginalClass().getName().length(), umlClass.getName().length());
+				   for(UMLClass addedClass : addedClasses) {
+					   if(addedClass.getName().equals(nestedClassExpectedName)) {
+						   return true;
+					   }
+				   }
+			   }
+			   else if(diff.getMovedClass().getName().equals(umlClass.getPackageName())) {
 				   return true;
 			   }
 		   }
 		   for(UMLClassRenameDiff diff : classRenameDiffList) {
-			   if(diff.getOriginalClass().getName().equals(umlClass.getPackageName()) ||
-					   diff.getRenamedClass().getName().equals(umlClass.getPackageName())) {
+			   if(diff.getOriginalClass().getName().equals(umlClass.getPackageName())) {
+				   String nestedClassExpectedName = diff.getRenamedClass().getName() + 
+						   umlClass.getName().substring(diff.getOriginalClass().getName().length(), umlClass.getName().length());
+				   for(UMLClass addedClass : addedClasses) {
+					   if(addedClass.getName().equals(nestedClassExpectedName)) {
+						   return true;
+					   }
+				   }
+			   }
+			   else if(diff.getRenamedClass().getName().equals(umlClass.getPackageName())) {
 				   return true;
 			   }
 		   }

@@ -2073,7 +2073,13 @@ public class UMLModelDiff {
 				   }
 			   }
 			   else if(diff.getMovedClass().getName().equals(umlClass.getPackageName())) {
-				   return true;
+				   String nestedClassExpectedName = diff.getOriginalClass().getName() +
+						   umlClass.getName().substring(diff.getMovedClass().getName().length(), umlClass.getName().length());
+				   for(UMLClass removedClass : removedClasses) {
+					   if(removedClass.getName().equals(nestedClassExpectedName)) {
+						   return true;
+					   }
+				   }
 			   }
 		   }
 		   for(UMLClassRenameDiff diff : classRenameDiffList) {
@@ -2087,7 +2093,13 @@ public class UMLModelDiff {
 				   }
 			   }
 			   else if(diff.getRenamedClass().getName().equals(umlClass.getPackageName())) {
-				   return true;
+				   String nestedClassExpectedName = diff.getOriginalClass().getName() +
+						   umlClass.getName().substring(diff.getRenamedClass().getName().length(), umlClass.getName().length());
+				   for(UMLClass removedClass : removedClasses) {
+					   if(removedClass.getName().equals(nestedClassExpectedName)) {
+						   return true;
+					   }
+				   }
 			   }
 		   }
 	   }

@@ -77,6 +77,10 @@ public class UMLParameterDiff {
 		return nameChanged;
 	}
 
+	public boolean isEmpty() {
+		return !nameChanged && !typeChanged && !qualifiedTypeChanged && !varArgsChanged && annotationListDiff.isEmpty();
+	}
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		if(typeChanged || nameChanged || qualifiedTypeChanged)

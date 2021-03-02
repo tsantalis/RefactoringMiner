@@ -2071,12 +2071,22 @@ public class UMLModelDiff {
 						   return true;
 					   }
 				   }
+				   for(UMLClassMoveDiff innerClassDiff : innerClassMoveDiffList) {
+					   if(innerClassDiff.getNextClassName().equals(nestedClassExpectedName)) {
+						   return true;
+					   }
+				   }
 			   }
 			   else if(diff.getMovedClass().getName().equals(umlClass.getPackageName())) {
 				   String nestedClassExpectedName = diff.getOriginalClass().getName() +
 						   umlClass.getName().substring(diff.getMovedClass().getName().length(), umlClass.getName().length());
 				   for(UMLClass removedClass : removedClasses) {
 					   if(removedClass.getName().equals(nestedClassExpectedName)) {
+						   return true;
+					   }
+				   }
+				   for(UMLClassMoveDiff innerClassDiff : innerClassMoveDiffList) {
+					   if(innerClassDiff.getOriginalClassName().equals(nestedClassExpectedName)) {
 						   return true;
 					   }
 				   }
@@ -2091,12 +2101,22 @@ public class UMLModelDiff {
 						   return true;
 					   }
 				   }
+				   for(UMLClassMoveDiff innerClassDiff : innerClassMoveDiffList) {
+					   if(innerClassDiff.getNextClassName().equals(nestedClassExpectedName)) {
+						   return true;
+					   }
+				   }
 			   }
 			   else if(diff.getRenamedClass().getName().equals(umlClass.getPackageName())) {
 				   String nestedClassExpectedName = diff.getOriginalClass().getName() +
 						   umlClass.getName().substring(diff.getRenamedClass().getName().length(), umlClass.getName().length());
 				   for(UMLClass removedClass : removedClasses) {
 					   if(removedClass.getName().equals(nestedClassExpectedName)) {
+						   return true;
+					   }
+				   }
+				   for(UMLClassMoveDiff innerClassDiff : innerClassMoveDiffList) {
+					   if(innerClassDiff.getOriginalClassName().equals(nestedClassExpectedName)) {
 						   return true;
 					   }
 				   }

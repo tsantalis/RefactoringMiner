@@ -67,7 +67,9 @@ public class UMLOperationDiff {
 			UMLParameter parameter1 = matchedParameter.getKey();
 			UMLParameter parameter2 = matchedParameter.getValue();
 			UMLParameterDiff parameterDiff = new UMLParameterDiff(parameter1, parameter2, removedOperation, addedOperation, mappings);
-			parameterDiffList.add(parameterDiff);
+			if(!parameterDiff.isEmpty()) {
+				parameterDiffList.add(parameterDiff);
+			}
 		}
 		int matchedParameterCount = matchedParameters.size()/2;
 		List<String> parameterNames1 = removedOperation.getParameterNameList();
@@ -84,7 +86,9 @@ public class UMLOperationDiff {
 				UMLParameter addedParameter = addedParameterIterator.next();
 				if(removedParameter.getName().equals(addedParameter.getName())) {
 					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings);
-					parameterDiffList.add(parameterDiff);
+					if(!parameterDiff.isEmpty()) {
+						parameterDiffList.add(parameterDiff);
+					}
 					addedParameterIterator.remove();
 					removedParameterIterator.remove();
 					break;
@@ -99,7 +103,9 @@ public class UMLOperationDiff {
 				if(removedParameter.getType().equalsQualified(addedParameter.getType()) &&
 						!existsAnotherAddedParameterWithTheSameType(addedParameter)) {
 					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings);
-					parameterDiffList.add(parameterDiff);
+					if(!parameterDiff.isEmpty()) {
+						parameterDiffList.add(parameterDiff);
+					}
 					addedParameterIterator.remove();
 					removedParameterIterator.remove();
 					break;
@@ -118,7 +124,9 @@ public class UMLOperationDiff {
 					int indexOfAddedParameter = indexOfParameter(addedParametersWithoutReturnType, addedParameter);
 					if(indexOfRemovedParameter == indexOfAddedParameter) {
 						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings);
-						parameterDiffList.add(parameterDiff);
+						if(!parameterDiff.isEmpty()) {
+							parameterDiffList.add(parameterDiff);
+						}
 						addedParameterIterator.remove();
 						removedParameterIterator.remove();
 						break;

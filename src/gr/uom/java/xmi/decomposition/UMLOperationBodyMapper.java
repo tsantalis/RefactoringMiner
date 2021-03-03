@@ -2250,6 +2250,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					return replacementInfo.getReplacements();
 				}
 			}
+			String expression1 = invocationCoveringTheEntireStatement1.getExpression();
+			String expression2 = invocationCoveringTheEntireStatement2.getExpression();
+			boolean staticVSNonStatic = (expression1 == null && expression2 != null && operation1.getClassName().endsWith("." + expression2)) ||
+					(expression1 != null && expression2 == null && operation2.getClassName().endsWith("." + expression1));
+			if(invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2) && staticVSNonStatic &&
+					invocationCoveringTheEntireStatement1.identicalOrReplacedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), lambdaMappers)) {
+				return replacementInfo.getReplacements();
+			}
 		}
 		//method invocation is identical if arguments are replaced
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&

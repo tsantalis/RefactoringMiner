@@ -46,7 +46,6 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 
 public class UMLModelDiff {
    private static final Pattern RETURN_NUMBER_LITERAL = Pattern.compile("return \\d+;\n");
-   private static final int MAXIMUM_NUMBER_OF_COMPARED_METHODS = 100;
    private List<UMLClass> addedClasses;
    private List<UMLClass> removedClasses;
    
@@ -2026,38 +2025,42 @@ public class UMLModelDiff {
 	  Set<UMLType> interfacesImplementedByAddedClasses = new LinkedHashSet<UMLType>();
 	  for(UMLClass addedClass : addedClasses) {
 		  interfacesImplementedByAddedClasses.addAll(addedClass.getImplementedInterfaces());
+		  UMLType superclass = addedClass.getSuperclass();
+		  if(superclass != null && superclass.getClassType().startsWith("Abstract")) {
+			  interfacesImplementedByAddedClasses.add(superclass);
+		  }
 	  }
 	  Set<UMLType> interfacesImplementedByRemovedClasses = new LinkedHashSet<UMLType>();
 	  for(UMLClass removedClass : removedClasses) {
 		  interfacesImplementedByRemovedClasses.addAll(removedClass.getImplementedInterfaces());
+		  UMLType superclass = removedClass.getSuperclass();
+		  if(superclass != null && superclass.getClassType().startsWith("Abstract")) {
+			  interfacesImplementedByRemovedClasses.add(superclass);
+		  }
 	  }
 	  Set<UMLType> interfaceIntersection = new LinkedHashSet<UMLType>(interfacesImplementedByAddedClasses);
 	  interfaceIntersection.retainAll(interfacesImplementedByRemovedClasses);
 	  List<UMLOperation> addedOperations = getAddedAndExtractedOperationsInCommonClasses();
 	  addedOperations.addAll(getAddedOperationsInMovedAndRenamedClasses());
       for(UMLClass addedClass : addedClasses) {
-    	  if(!addedClass.implementsInterface(interfaceIntersection) && !outerClassMovedOrRenamed(addedClass)) {
+    	  if(!addedClass.implementsInterface(interfaceIntersection) && !addedClass.extendsSuperclass(interfaceIntersection) && !outerClassMovedOrRenamed(addedClass)) {
     		  addedOperations.addAll(addedClass.getOperations());
     	  }
       }
       List<UMLOperation> removedOperations = getRemovedOperationsInCommonClasses();
       for(UMLClass removedClass : removedClasses) {
-    	  if(!removedClass.implementsInterface(interfaceIntersection) && !outerClassMovedOrRenamed(removedClass)) {
+    	  if(!removedClass.implementsInterface(interfaceIntersection) && !removedClass.extendsSuperclass(interfaceIntersection) && !outerClassMovedOrRenamed(removedClass)) {
     		  removedOperations.addAll(removedClass.getOperations());
     	  }
       }
-      if(removedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS || addedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
-    	  checkForOperationMoves(addedOperations, removedOperations);
-      }
+      checkForOperationMoves(addedOperations, removedOperations);
    }
 
    private void checkForOperationMovesBetweenCommonClasses() throws RefactoringMinerTimedOutException {
       List<UMLOperation> addedOperations = getAddedAndExtractedOperationsInCommonClasses();
       addedOperations.addAll(getAddedOperationsInMovedAndRenamedClasses());
       List<UMLOperation> removedOperations = getRemovedOperationsInCommonMovedRenamedClasses();
-      if(removedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS || addedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
-    	  checkForOperationMoves(addedOperations, removedOperations);
-      }
+      checkForOperationMoves(addedOperations, removedOperations);
    }
 
    private boolean outerClassMovedOrRenamed(UMLClass umlClass) {
@@ -2135,7 +2138,7 @@ public class UMLModelDiff {
 	            UMLOperation removedOperation = removedOperationIterator.next();
 	            
 	            Pair<UMLOperation, UMLOperation> pair = Pair.of(removedOperation, addedOperation);
-	            if(!processedOperationPairs.contains(pair)) {
+	            if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation)) {
 		            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, getUMLClassDiff(removedOperation.getClassName()));
 		            processedOperationPairs.add(pair);
 		            int mappings = operationBodyMapper.mappingsWithoutBlocks();
@@ -2231,7 +2234,7 @@ public class UMLModelDiff {
 	            UMLOperation addedOperation = addedOperationIterator.next();
 	            
 	            Pair<UMLOperation, UMLOperation> pair = Pair.of(removedOperation, addedOperation);
-	            if(!processedOperationPairs.contains(pair)) {
+	            if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation)) {
 		            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, getUMLClassDiff(removedOperation.getClassName()));
 		            processedOperationPairs.add(pair);
 		            int mappings = operationBodyMapper.mappingsWithoutBlocks();

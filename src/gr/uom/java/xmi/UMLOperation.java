@@ -163,6 +163,12 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return new ArrayList<OperationInvocation>();
 	}
 
+	public boolean containsAssertion() {
+		if(operationBody != null)
+			return operationBody.containsAssertion();
+		return false;
+	}
+
 	public List<LambdaExpressionObject> getAllLambdas() {
 		if(operationBody != null)
 			return operationBody.getAllLambdas();
@@ -743,10 +749,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return normalized;
 	}
 
-	public boolean testAnnotationCheck(UMLOperation operation) { 
-		if(this.hasTestAnnotation() && !operation.hasTestAnnotation())
+	public boolean testMethodCheck(UMLOperation operation) { 
+		if(this.hasTestAnnotation() && !operation.hasTestAnnotation() && !operation.containsAssertion())
 			return false;
-		if(!this.hasTestAnnotation() && operation.hasTestAnnotation())
+		if(!this.hasTestAnnotation() && !this.containsAssertion() && operation.hasTestAnnotation())
 			return false;
 		return true;
 	}

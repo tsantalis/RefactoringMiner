@@ -1160,21 +1160,21 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 			else if(mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper) &&
 					absoluteDifferenceInPosition <= differenceInPosition &&
 					compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition) &&
-					removedOperation.testAnnotationCheck(addedOperation)) {
+					removedOperation.testMethodCheck(addedOperation)) {
 				mapperSet.add(operationBodyMapper);
 			}
 			else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 					mappedElementsMoreThanNonMappedT2(mappings, operationBodyMapper) &&
 					absoluteDifferenceInPosition <= differenceInPosition &&
 					isPartOfMethodExtracted(removedOperation, addedOperation) &&
-					removedOperation.testAnnotationCheck(addedOperation)) {
+					removedOperation.testMethodCheck(addedOperation)) {
 				mapperSet.add(operationBodyMapper);
 			}
 			else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 					mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper) &&
 					absoluteDifferenceInPosition <= differenceInPosition &&
 					isPartOfMethodInlined(removedOperation, addedOperation) &&
-					removedOperation.testAnnotationCheck(addedOperation)) {
+					removedOperation.testMethodCheck(addedOperation)) {
 				mapperSet.add(operationBodyMapper);
 			}
 		}

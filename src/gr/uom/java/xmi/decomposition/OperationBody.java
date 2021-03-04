@@ -40,12 +40,19 @@ public class OperationBody {
 
 	private CompositeStatementObject compositeStatement;
 	private List<String> stringRepresentation;
+	private boolean containsAssertion;
 
 	public OperationBody(CompilationUnit cu, String filePath, Block methodBody) {
 		this.compositeStatement = new CompositeStatementObject(cu, filePath, methodBody, 0, CodeElementType.BLOCK);
 		List<Statement> statements = methodBody.statements();
 		for(Statement statement : statements) {
 			processStatement(cu, filePath, compositeStatement, statement);
+		}
+		for(OperationInvocation invocation : getAllOperationInvocations()) {
+			if(invocation.getName().startsWith("assert")) {
+				containsAssertion = true;
+				break;
+			}
 		}
 	}
 
@@ -55,6 +62,10 @@ public class OperationBody {
 
 	public CompositeStatementObject getCompositeStatement() {
 		return compositeStatement;
+	}
+
+	public boolean containsAssertion() {
+		return containsAssertion;
 	}
 
 	public List<AnonymousClassDeclarationObject> getAllAnonymousClassDeclarations() {

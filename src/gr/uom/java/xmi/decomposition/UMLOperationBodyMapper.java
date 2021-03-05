@@ -67,6 +67,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private UMLOperationBodyMapper parentMapper;
 	private static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)|(\\?)|(:)");
 	public static final Pattern SPLIT_CONCAT_STRING_PATTERN = Pattern.compile("(\\s)*(\\+)(\\s)*");
+	private static final int MAXIMUM_NUMBER_OF_COMPARED_STRINGS = 100;
 	private UMLClassBaseDiff classDiff;
 	private UMLModelDiff modelDiff;
 	private UMLOperation callSiteOperation;
@@ -3942,6 +3943,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private void findReplacements(Set<String> strings1, Set<String> strings2, ReplacementInfo replacementInfo, ReplacementType type) throws RefactoringMinerTimedOutException {
+		if(strings1.size() > MAXIMUM_NUMBER_OF_COMPARED_STRINGS || strings2.size() > MAXIMUM_NUMBER_OF_COMPARED_STRINGS) {
+			return;
+		}
 		TreeMap<Double, Set<Replacement>> globalReplacementMap = new TreeMap<Double, Set<Replacement>>();
 		TreeMap<Double, Set<Replacement>> replacementCache = new TreeMap<Double, Set<Replacement>>();
 		if(strings1.size() <= strings2.size()) {

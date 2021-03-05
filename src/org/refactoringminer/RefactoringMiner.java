@@ -1,5 +1,10 @@
 package org.refactoringminer;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 import org.eclipse.jgit.lib.Repository;
@@ -11,7 +16,7 @@ import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.util.GitServiceImpl;
 
 public class RefactoringMiner {
-
+	private static Path path = null;
 	public static void main(String[] args) throws Exception {
 		if (args.length < 1) {
 			throw argumentException();
@@ -42,7 +47,8 @@ public class RefactoringMiner {
 	}
 
 	private static void detectAll(String[] args) throws Exception {
-		if (args.length > 3) {
+		int maxArgLength = processJSONoption(args, 3);
+		if (args.length > maxArgLength) {
 			throw argumentException();
 		}
 		String folder = args[1];
@@ -54,23 +60,22 @@ public class RefactoringMiner {
 		try (Repository repo = gitService.openRepository(folder)) {
 			String gitURL = repo.getConfig().getString("remote", "origin", "url");
 			GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
-			StringBuilder sb = new StringBuilder();
-			startJSON(sb);
+			startJSON();
 			detector.detectAll(repo, branch, new RefactoringHandler() {
 				private int commitCount = 0;
 				@Override
 				public void handle(String commitId, List<Refactoring> refactorings) {
 					if(commitCount > 0) {
-						sb.append(",").append("\n");
+						betweenCommitsJSON();
 					}
-					commitJSON(sb, gitURL, commitId, refactorings);
+					commitJSON(gitURL, commitId, refactorings);
 					commitCount++;
 				}
 
 				@Override
 				public void onFinish(int refactoringsCount, int commitsCount, int errorCommitsCount) {
-					//System.out.println(String.format("Total count: [Commits: %d, Errors: %d, Refactorings: %d]",
-					//		commitsCount, errorCommitsCount, refactoringsCount));
+					System.out.println(String.format("Total count: [Commits: %d, Errors: %d, Refactorings: %d]",
+							commitsCount, errorCommitsCount, refactoringsCount));
 				}
 
 				@Override
@@ -79,13 +84,13 @@ public class RefactoringMiner {
 					e.printStackTrace(System.err);
 				}
 			});
-			endJSON(sb);
-			System.out.println(sb.toString());
+			endJSON();
 		}
 	}
 
 	private static void detectBetweenCommits(String[] args) throws Exception {
-		if (!(args.length == 3 || args.length == 4)) {
+		int maxArgLength = processJSONoption(args, 4);
+		if (!(args.length == maxArgLength-1 || args.length == maxArgLength)) {
 			throw argumentException();
 		}
 		String folder = args[1];
@@ -95,23 +100,22 @@ public class RefactoringMiner {
 		try (Repository repo = gitService.openRepository(folder)) {
 			String gitURL = repo.getConfig().getString("remote", "origin", "url");
 			GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
-			StringBuilder sb = new StringBuilder();
-			startJSON(sb);
+			startJSON();
 			detector.detectBetweenCommits(repo, startCommit, endCommit, new RefactoringHandler() {
 				private int commitCount = 0;
 				@Override
 				public void handle(String commitId, List<Refactoring> refactorings) {
 					if(commitCount > 0) {
-						sb.append(",").append("\n");
+						betweenCommitsJSON();
 					}
-					commitJSON(sb, gitURL, commitId, refactorings);
+					commitJSON(gitURL, commitId, refactorings);
 					commitCount++;
 				}
 
 				@Override
 				public void onFinish(int refactoringsCount, int commitsCount, int errorCommitsCount) {
-					//System.out.println(String.format("Total count: [Commits: %d, Errors: %d, Refactorings: %d]",
-					//		commitsCount, errorCommitsCount, refactoringsCount));
+					System.out.println(String.format("Total count: [Commits: %d, Errors: %d, Refactorings: %d]",
+							commitsCount, errorCommitsCount, refactoringsCount));
 				}
 
 				@Override
@@ -120,13 +124,13 @@ public class RefactoringMiner {
 					e.printStackTrace(System.err);
 				}
 			});
-			endJSON(sb);
-			System.out.println(sb.toString());
+			endJSON();
 		}
 	}
 
 	private static void detectBetweenTags(String[] args) throws Exception {
-		if (!(args.length == 3 || args.length == 4)) {
+		int maxArgLength = processJSONoption(args, 4);
+		if (!(args.length == maxArgLength-1 || args.length == maxArgLength)) {
 			throw argumentException();
 		}
 		String folder = args[1];
@@ -136,23 +140,22 @@ public class RefactoringMiner {
 		try (Repository repo = gitService.openRepository(folder)) {
 			String gitURL = repo.getConfig().getString("remote", "origin", "url");
 			GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
-			StringBuilder sb = new StringBuilder();
-			startJSON(sb);
+			startJSON();
 			detector.detectBetweenTags(repo, startTag, endTag, new RefactoringHandler() {
 				private int commitCount = 0;
 				@Override
 				public void handle(String commitId, List<Refactoring> refactorings) {
 					if(commitCount > 0) {
-						sb.append(",").append("\n");
+						betweenCommitsJSON();
 					}
-					commitJSON(sb, gitURL, commitId, refactorings);
+					commitJSON(gitURL, commitId, refactorings);
 					commitCount++;
 				}
 
 				@Override
 				public void onFinish(int refactoringsCount, int commitsCount, int errorCommitsCount) {
-					//System.out.println(String.format("Total count: [Commits: %d, Errors: %d, Refactorings: %d]",
-					//		commitsCount, errorCommitsCount, refactoringsCount));
+					System.out.println(String.format("Total count: [Commits: %d, Errors: %d, Refactorings: %d]",
+							commitsCount, errorCommitsCount, refactoringsCount));
 				}
 
 				@Override
@@ -161,13 +164,13 @@ public class RefactoringMiner {
 					e.printStackTrace(System.err);
 				}
 			});
-			endJSON(sb);
-			System.out.println(sb.toString());
+			endJSON();
 		}
 	}
 
 	private static void detectAtCommit(String[] args) throws Exception {
-		if (args.length != 3) {
+		int maxArgLength = processJSONoption(args, 3);
+		if (args.length != maxArgLength) {
 			throw argumentException();
 		}
 		String folder = args[1];
@@ -176,12 +179,11 @@ public class RefactoringMiner {
 		try (Repository repo = gitService.openRepository(folder)) {
 			String gitURL = repo.getConfig().getString("remote", "origin", "url");
 			GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
-			StringBuilder sb = new StringBuilder();
-			startJSON(sb);
+			startJSON();
 			detector.detectAtCommit(repo, commitId, new RefactoringHandler() {
 				@Override
 				public void handle(String commitId, List<Refactoring> refactorings) {
-					commitJSON(sb, gitURL, commitId, refactorings);
+					commitJSON(gitURL, commitId, refactorings);
 				}
 
 				@Override
@@ -190,25 +192,24 @@ public class RefactoringMiner {
 					e.printStackTrace(System.err);
 				}
 			});
-			endJSON(sb);
-			System.out.println(sb.toString());
+			endJSON();
 		}
 	}
 
 	private static void detectAtGitHubCommit(String[] args) throws Exception {
-		if (args.length != 4) {
+		int maxArgLength = processJSONoption(args, 4);
+		if (args.length != maxArgLength) {
 			throw argumentException();
 		}
 		String gitURL = args[1];
 		String commitId = args[2];
 		int timeout = Integer.parseInt(args[3]);
 		GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
-		StringBuilder sb = new StringBuilder();
-		startJSON(sb);
+		startJSON();
 		detector.detectAtCommit(gitURL, commitId, new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
-				commitJSON(sb, gitURL, commitId, refactorings);
+				commitJSON(gitURL, commitId, refactorings);
 			}
 
 			@Override
@@ -217,28 +218,27 @@ public class RefactoringMiner {
 				e.printStackTrace(System.err);
 			}
 		}, timeout);
-		endJSON(sb);
-		System.out.println(sb.toString());
+		endJSON();
 	}
 
 	private static void detectAtGitHubPullRequest(String[] args) throws Exception {
-		if (args.length != 4) {
+		int maxArgLength = processJSONoption(args, 4);
+		if (args.length != maxArgLength) {
 			throw argumentException();
 		}
 		String gitURL = args[1];
 		int pullId = Integer.parseInt(args[2]);
 		int timeout = Integer.parseInt(args[3]);
 		GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
-		StringBuilder sb = new StringBuilder();
-		startJSON(sb);
+		startJSON();
 		detector.detectAtPullRequest(gitURL, pullId, new RefactoringHandler() {
 			private int commitCount = 0;
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				if(commitCount > 0) {
-					sb.append(",").append("\n");
+					betweenCommitsJSON();
 				}
-				commitJSON(sb, gitURL, commitId, refactorings);
+				commitJSON(gitURL, commitId, refactorings);
 				commitCount++;
 			}
 
@@ -248,40 +248,88 @@ public class RefactoringMiner {
 				e.printStackTrace(System.err);
 			}
 		}, timeout);
-		endJSON(sb);
-		System.out.println(sb.toString());
+		endJSON();
 	}
 
-	private static void commitJSON(StringBuilder sb, String cloneURL, String currentCommitId, List<Refactoring> refactoringsAtRevision) {
-		sb.append("{").append("\n");
-		sb.append("\t").append("\"").append("repository").append("\"").append(": ").append("\"").append(cloneURL).append("\"").append(",").append("\n");
-		sb.append("\t").append("\"").append("sha1").append("\"").append(": ").append("\"").append(currentCommitId).append("\"").append(",").append("\n");
-		String url = GitHistoryRefactoringMinerImpl.extractCommitURL(cloneURL, currentCommitId);
-		sb.append("\t").append("\"").append("url").append("\"").append(": ").append("\"").append(url).append("\"").append(",").append("\n");
-		sb.append("\t").append("\"").append("refactorings").append("\"").append(": ");
-		sb.append("[");
-		int counter = 0;
-		for(Refactoring refactoring : refactoringsAtRevision) {
-			sb.append(refactoring.toJSON());
-			if(counter < refactoringsAtRevision.size()-1) {
-				sb.append(",");
+	private static int processJSONoption(String[] args, int maxArgLength) {
+		if (args[args.length-2].equalsIgnoreCase("-json")) {
+			path = Paths.get(args[args.length-1]);
+			try {
+				Files.createFile(path);
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			sb.append("\n");
-			counter++;
+			maxArgLength = maxArgLength + 2;
 		}
-		sb.append("]").append("\n");
-		sb.append("}");
+		return maxArgLength;
 	}
 
-	private static void startJSON(StringBuilder sb) {
-		sb.append("{").append("\n");
-		sb.append("\"").append("commits").append("\"").append(": ");
-		sb.append("[").append("\n");
+	private static void commitJSON(String cloneURL, String currentCommitId, List<Refactoring> refactoringsAtRevision) {
+		if(path != null) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("{").append("\n");
+			sb.append("\t").append("\"").append("repository").append("\"").append(": ").append("\"").append(cloneURL).append("\"").append(",").append("\n");
+			sb.append("\t").append("\"").append("sha1").append("\"").append(": ").append("\"").append(currentCommitId).append("\"").append(",").append("\n");
+			String url = GitHistoryRefactoringMinerImpl.extractCommitURL(cloneURL, currentCommitId);
+			sb.append("\t").append("\"").append("url").append("\"").append(": ").append("\"").append(url).append("\"").append(",").append("\n");
+			sb.append("\t").append("\"").append("refactorings").append("\"").append(": ");
+			sb.append("[");
+			int counter = 0;
+			for(Refactoring refactoring : refactoringsAtRevision) {
+				sb.append(refactoring.toJSON());
+				if(counter < refactoringsAtRevision.size()-1) {
+					sb.append(",");
+				}
+				sb.append("\n");
+				counter++;
+			}
+			sb.append("]").append("\n");
+			sb.append("}");
+			try {
+				Files.write(path, sb.toString().getBytes(), StandardOpenOption.APPEND);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
-	private static void endJSON(StringBuilder sb) {
-		sb.append("]").append("\n");
-		sb.append("}");
+	private static void betweenCommitsJSON() {
+		if(path != null) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(",").append("\n");
+			try {
+				Files.write(path, sb.toString().getBytes(), StandardOpenOption.APPEND);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private static void startJSON() {
+		if(path != null) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("{").append("\n");
+			sb.append("\"").append("commits").append("\"").append(": ");
+			sb.append("[").append("\n");
+			try {
+				Files.write(path, sb.toString().getBytes(), StandardOpenOption.APPEND);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private static void endJSON() {
+		if(path != null) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("]").append("\n");
+			sb.append("}");
+			try {
+				Files.write(path, sb.toString().getBytes(), StandardOpenOption.APPEND);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private static void printTips() {

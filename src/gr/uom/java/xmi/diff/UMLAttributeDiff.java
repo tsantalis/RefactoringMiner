@@ -37,6 +37,7 @@ public class UMLAttributeDiff {
 				UMLAnonymousClass anonymousClass1 = removedAttributeAnonymousClassList.get(i);
 				UMLAnonymousClass anonymousClass2 = addedAttributeAnonymousClassList.get(i);
 				UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff);
+				anonymousClassDiff.process();
 				anonymousClassDiffList.add(anonymousClassDiff);
 			}
 		}
@@ -143,13 +144,13 @@ public class UMLAttributeDiff {
 	private Set<Refactoring> getAnonymousClassRefactorings() {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 		for(UMLAnonymousClassDiff anonymousClassDiff : anonymousClassDiffList) {
-			for(UMLOperationBodyMapper mapper : anonymousClassDiff.getMatchedOperationMappers()) {
+			for(UMLOperationBodyMapper mapper : anonymousClassDiff.getOperationBodyMapperList()) {
 				refactorings.addAll(mapper.getRefactorings());
 			}
-			for(UMLOperationDiff operationDiff : anonymousClassDiff.getOperationDiffs()) {
+			for(UMLOperationDiff operationDiff : anonymousClassDiff.getOperationDiffList()) {
 				refactorings.addAll(operationDiff.getRefactorings());
 			}
-			for(UMLAttributeDiff attributeDiff : anonymousClassDiff.getAttributeDiffs()) {
+			for(UMLAttributeDiff attributeDiff : anonymousClassDiff.getAttributeDiffList()) {
 				refactorings.addAll(attributeDiff.getRefactorings());
 			}
 		}

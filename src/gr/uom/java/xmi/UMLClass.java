@@ -4,10 +4,8 @@ import gr.uom.java.xmi.diff.StringDistance;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.Set;
 
 public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, Serializable, LocationInfoProvider {
@@ -21,7 +19,6 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean topLevel;
     private UMLType superclass;
     private List<UMLType> implementedInterfaces;
-    private List<UMLAnonymousClass> anonymousClassList;
     private List<String> importedTypes;
     private List<UMLTypeParameter> typeParameters;
     private UMLJavadoc javadoc;
@@ -72,7 +69,6 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.topLevel = topLevel;
         this.superclass = null;
         this.implementedInterfaces = new ArrayList<UMLType>();
-        this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
         this.importedTypes = importedTypes;
         this.typeParameters = new ArrayList<UMLTypeParameter>();
         this.annotations = new ArrayList<UMLAnnotation>();
@@ -103,11 +99,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     	annotations.add(annotation);
     }
 
-	public void addAnonymousClass(UMLAnonymousClass anonymousClass) {
-    	anonymousClassList.add(anonymousClass);
-    }
-
-    public void addEnumConstant(UMLEnumConstant enumConstant) {
+	public void addEnumConstant(UMLEnumConstant enumConstant) {
     	enumConstants.add(enumConstant);
     }
 
@@ -115,19 +107,8 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		return enumConstants;
 	}
 
-	public String getPackageName() {
-		return this.packageName;
-	}
-
     public String getName() {
     	return this.qualifiedName;
-    }
-
-    //returns true if the "innerClass" parameter is inner class of this
-    public boolean isInnerClass(UMLClass innerClass) {
-    	if(this.getName().equals(innerClass.packageName))
-    		return true;
-    	return false;
     }
 
     public boolean isTopLevel() {
@@ -188,10 +169,6 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public List<String> getImportedTypes() {
 		return importedTypes;
-	}
-
-	public List<UMLAnonymousClass> getAnonymousClassList() {
-		return anonymousClassList;
 	}
 
 	public UMLJavadoc getJavadoc() {
@@ -394,27 +371,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		return false;
 	}
 
-	public boolean containsAnonymousWithSameAttributesAndOperations(UMLAnonymousClass anonymous) {
-		for(UMLAnonymousClass thisAnonymous : anonymousClassList) {
-			if(thisAnonymous.hasSameAttributesAndOperations(anonymous))
-				return true;
-		}
-		return false;
-	}
-
 	public boolean isSingleAbstractMethodInterface() {
 		return isInterface && operations.size() == 1;
-	}
-
-	public Map<String, Set<String>> aliasedAttributes() {
-		for(UMLOperation operation : getOperations()) {
-			if(operation.isConstructor()) {
-				Map<String, Set<String>> aliased = operation.aliasedAttributes();
-				if(!aliased.isEmpty()) {
-					return aliased;
-				}
-			}
-		}
-		return new LinkedHashMap<String, Set<String>>();
 	}
 }

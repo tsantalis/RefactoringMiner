@@ -34,18 +34,13 @@ import gr.uom.java.xmi.decomposition.replacement.SplitVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 
-public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
+public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements Comparable<UMLClassBaseDiff> {
 
 	public static final double MAX_OPERATION_NAME_DISTANCE = 0.4;
 	protected UMLClass originalClass;
 	protected UMLClass nextClass;
-	protected List<UMLOperation> addedOperations;
-	protected List<UMLOperation> removedOperations;
-	protected List<UMLAttribute> addedAttributes;
-	protected List<UMLAttribute> removedAttributes;
-	protected List<UMLEnumConstant> addedEnumConstants;
-	protected List<UMLEnumConstant> removedEnumConstants;
-	private List<UMLOperationBodyMapper> operationBodyMapperList;
+	private List<UMLEnumConstant> addedEnumConstants;
+	private List<UMLEnumConstant> removedEnumConstants;
 	private boolean visibilityChanged;
 	private String oldVisibility;
 	private String newVisibility;
@@ -59,11 +54,8 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 	private List<UMLType> removedImplementedInterfaces;
 	private List<UMLAnonymousClass> addedAnonymousClasses;
 	private List<UMLAnonymousClass> removedAnonymousClasses;
-	private List<UMLOperationDiff> operationDiffList;
 	private UMLAnnotationListDiff annotationListDiff;
-	protected List<UMLAttributeDiff> attributeDiffList;
-	protected List<UMLEnumConstantDiff> enumConstantDiffList;
-	protected List<Refactoring> refactorings;
+	private List<UMLEnumConstantDiff> enumConstantDiffList;
 	private Set<MethodInvocationReplacement> consistentMethodInvocationRenames;
 	private Set<CandidateAttributeRefactoring> candidateAttributeRenames = new LinkedHashSet<CandidateAttributeRefactoring>();
 	private Set<CandidateMergeVariableRefactoring> candidateAttributeMerges = new LinkedHashSet<CandidateMergeVariableRefactoring>();
@@ -79,21 +71,13 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 		this.visibilityChanged = false;
 		this.abstractionChanged = false;
 		this.superclassChanged = false;
-		this.addedOperations = new ArrayList<UMLOperation>();
-		this.removedOperations = new ArrayList<UMLOperation>();
-		this.addedAttributes = new ArrayList<UMLAttribute>();
-		this.removedAttributes = new ArrayList<UMLAttribute>();
 		this.addedEnumConstants = new ArrayList<UMLEnumConstant>();
 		this.removedEnumConstants = new ArrayList<UMLEnumConstant>();
-		this.operationBodyMapperList = new ArrayList<UMLOperationBodyMapper>();
 		this.addedImplementedInterfaces = new ArrayList<UMLType>();
 		this.removedImplementedInterfaces = new ArrayList<UMLType>();
 		this.addedAnonymousClasses = new ArrayList<UMLAnonymousClass>();
 		this.removedAnonymousClasses = new ArrayList<UMLAnonymousClass>();
-		this.operationDiffList = new ArrayList<UMLOperationDiff>();
-		this.attributeDiffList = new ArrayList<UMLAttributeDiff>();
 		this.enumConstantDiffList = new ArrayList<UMLEnumConstantDiff>();
-		this.refactorings = new ArrayList<Refactoring>();
 		this.modelDiff = modelDiff;
 	}
 
@@ -300,26 +284,6 @@ public abstract class UMLClassBaseDiff implements Comparable<UMLClassBaseDiff> {
 
 	public UMLClass getNextClass() {
 		return nextClass;
-	}
-
-	public List<UMLOperationBodyMapper> getOperationBodyMapperList() {
-		return operationBodyMapperList;
-	}
-
-	public List<UMLOperation> getAddedOperations() {
-		return addedOperations;
-	}
-
-	public List<UMLOperation> getRemovedOperations() {
-		return removedOperations;
-	}
-
-	public List<UMLAttribute> getAddedAttributes() {
-		return addedAttributes;
-	}
-
-	public List<UMLAttribute> getRemovedAttributes() {
-		return removedAttributes;
 	}
 
 	//return true if "classMoveDiff" represents the move of a class that is inner to this.originalClass

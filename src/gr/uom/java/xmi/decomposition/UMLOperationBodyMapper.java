@@ -23,9 +23,9 @@ import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.CandidateMergeVariableRefactoring;
 import gr.uom.java.xmi.diff.CandidateSplitVariableRefactoring;
+import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
-import gr.uom.java.xmi.diff.UMLAttributeDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLClassMoveDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
@@ -2140,14 +2140,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);
 								this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
 								this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
-								this.refactorings.addAll(mapper.getRefactorings());
 							}
-							for(UMLOperationDiff operationDiff : anonymousClassDiff.getOperationDiffList()) {
-								this.refactorings.addAll(operationDiff.getRefactorings());
-							}
-							for(UMLAttributeDiff attributeDiff : anonymousClassDiff.getAttributeDiffList()) {
-								this.refactorings.addAll(attributeDiff.getRefactorings());
-							}
+							this.refactorings.addAll(anonymousClassDiff.getRefactorings());
 							Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), anonymousClassDeclaration2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION);
 							replacementInfo.addReplacement(replacement);
 							return replacementInfo.getReplacements();
@@ -4323,7 +4317,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public boolean containsExtractOperationRefactoring(UMLOperation extractedOperation) {
 		if(classDiff != null) {
-			return classDiff.containsExtractOperationRefactoring(operation1, extractedOperation);
+			if(classDiff.containsExtractOperationRefactoring(operation1, extractedOperation)) {
+				return true;
+			}
+		}
+		for(Refactoring ref : refactorings) {
+			if(ref instanceof ExtractOperationRefactoring) {
+				ExtractOperationRefactoring extractRef = (ExtractOperationRefactoring)ref;
+				if(extractRef.getExtractedOperation().equals(extractedOperation)) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}

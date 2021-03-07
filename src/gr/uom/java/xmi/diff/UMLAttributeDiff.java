@@ -144,15 +144,7 @@ public class UMLAttributeDiff {
 	private Set<Refactoring> getAnonymousClassRefactorings() {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 		for(UMLAnonymousClassDiff anonymousClassDiff : anonymousClassDiffList) {
-			for(UMLOperationBodyMapper mapper : anonymousClassDiff.getOperationBodyMapperList()) {
-				refactorings.addAll(mapper.getRefactorings());
-			}
-			for(UMLOperationDiff operationDiff : anonymousClassDiff.getOperationDiffList()) {
-				refactorings.addAll(operationDiff.getRefactorings());
-			}
-			for(UMLAttributeDiff attributeDiff : anonymousClassDiff.getAttributeDiffList()) {
-				refactorings.addAll(attributeDiff.getRefactorings());
-			}
+			refactorings.addAll(anonymousClassDiff.getRefactorings());
 		}
 		return refactorings;
 	}

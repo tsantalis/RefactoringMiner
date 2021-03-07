@@ -17,7 +17,8 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 	private UMLAnonymousClass anonymousClass2;
 	private UMLClassBaseDiff classDiff;
 	
-	public UMLAnonymousClassDiff(UMLAnonymousClass anonymousClass1, UMLAnonymousClass anonymousClass2, UMLClassBaseDiff classDiff) throws RefactoringMinerTimedOutException {
+	public UMLAnonymousClassDiff(UMLAnonymousClass anonymousClass1, UMLAnonymousClass anonymousClass2, UMLClassBaseDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
+		super(modelDiff);
 		this.anonymousClass1 = anonymousClass1;
 		this.anonymousClass2 = anonymousClass2;
 		this.classDiff = classDiff;
@@ -86,7 +87,8 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 					if(mappings > 0) {
 						int nonMappedElementsT1 = mapper.nonMappedElementsT1();
 						int nonMappedElementsT2 = mapper.nonMappedElementsT2();
-						if(mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) {
+						if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
+								isPartOfMethodExtracted(operation1, operation2)) {
 							operationBodyMapperList.add(mapper);
 							UMLOperationDiff operationDiff = new UMLOperationDiff(operation1, operation2, mapper.getMappings());
 							operationDiffList.add(operationDiff);
@@ -124,7 +126,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 		for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 			UMLOperation addedOperation = addedOperationIterator.next();
 			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-				ExtractOperationDetection detection = new ExtractOperationDetection(mapper, addedOperations, classDiff, null);
+				ExtractOperationDetection detection = new ExtractOperationDetection(mapper, addedOperations, classDiff, modelDiff);
 				List<ExtractOperationRefactoring> refs = detection.check(addedOperation);
 				for(ExtractOperationRefactoring refactoring : refs) {
 					refactorings.add(refactoring);

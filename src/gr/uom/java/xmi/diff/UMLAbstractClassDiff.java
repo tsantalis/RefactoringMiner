@@ -1,13 +1,17 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
 public abstract class UMLAbstractClassDiff {
@@ -19,8 +23,9 @@ public abstract class UMLAbstractClassDiff {
 	protected List<UMLOperationDiff> operationDiffList;
 	protected List<UMLAttributeDiff> attributeDiffList;
 	protected List<Refactoring> refactorings;
+	protected UMLModelDiff modelDiff;
 	
-	public UMLAbstractClassDiff() {
+	public UMLAbstractClassDiff(UMLModelDiff modelDiff) {
 		this.addedOperations = new ArrayList<UMLOperation>();
 		this.removedOperations = new ArrayList<UMLOperation>();
 		this.addedAttributes = new ArrayList<UMLAttribute>();
@@ -29,6 +34,7 @@ public abstract class UMLAbstractClassDiff {
 		this.operationDiffList = new ArrayList<UMLOperationDiff>();
 		this.attributeDiffList = new ArrayList<UMLAttributeDiff>();
 		this.refactorings = new ArrayList<Refactoring>();
+		this.modelDiff = modelDiff;		
 	}
 
 	public List<UMLOperation> getAddedOperations() {
@@ -64,4 +70,42 @@ public abstract class UMLAbstractClassDiff {
 	protected abstract void checkForAttributeChanges() throws RefactoringMinerTimedOutException;
 
 	protected abstract void createBodyMappers() throws RefactoringMinerTimedOutException;
+
+	protected boolean isPartOfMethodExtracted(UMLOperation removedOperation, UMLOperation addedOperation) {
+		List<OperationInvocation> removedOperationInvocations = removedOperation.getAllOperationInvocations();
+		List<OperationInvocation> addedOperationInvocations = addedOperation.getAllOperationInvocations();
+		Set<OperationInvocation> intersection = new LinkedHashSet<OperationInvocation>(removedOperationInvocations);
+		intersection.retainAll(addedOperationInvocations);
+		int numberOfInvocationsMissingFromRemovedOperation = new LinkedHashSet<OperationInvocation>(removedOperationInvocations).size() - intersection.size();
+		
+		Set<OperationInvocation> operationInvocationsInMethodsCalledByAddedOperation = new LinkedHashSet<OperationInvocation>();
+		for(OperationInvocation addedOperationInvocation : addedOperationInvocations) {
+			if(!intersection.contains(addedOperationInvocation)) {
+				for(UMLOperation operation : addedOperations) {
+					if(!operation.equals(addedOperation) && operation.getBody() != null) {
+						if(addedOperationInvocation.matchesOperation(operation, addedOperation.variableDeclarationMap(), modelDiff)) {
+							//addedOperation calls another added method
+							operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllOperationInvocations());
+						}
+					}
+				}
+			}
+		}
+		Set<OperationInvocation> newIntersection = new LinkedHashSet<OperationInvocation>(removedOperationInvocations);
+		newIntersection.retainAll(operationInvocationsInMethodsCalledByAddedOperation);
+		
+		Set<OperationInvocation> removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted = new LinkedHashSet<OperationInvocation>(removedOperationInvocations);
+		removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.removeAll(intersection);
+		removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.removeAll(newIntersection);
+		for(Iterator<OperationInvocation> operationInvocationIterator = removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.iterator(); operationInvocationIterator.hasNext();) {
+			OperationInvocation invocation = operationInvocationIterator.next();
+			if(invocation.getMethodName().startsWith("get")) {
+				operationInvocationIterator.remove();
+			}
+		}
+		int numberOfInvocationsOriginallyCalledByRemovedOperationFoundInOtherAddedOperations = newIntersection.size();
+		int numberOfInvocationsMissingFromRemovedOperationWithoutThoseFoundInOtherAddedOperations = numberOfInvocationsMissingFromRemovedOperation - numberOfInvocationsOriginallyCalledByRemovedOperationFoundInOtherAddedOperations;
+		return numberOfInvocationsOriginallyCalledByRemovedOperationFoundInOtherAddedOperations > numberOfInvocationsMissingFromRemovedOperationWithoutThoseFoundInOtherAddedOperations ||
+				numberOfInvocationsOriginallyCalledByRemovedOperationFoundInOtherAddedOperations > removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.size();
+	}
 }

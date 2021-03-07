@@ -1369,7 +1369,7 @@ public class UMLModelDiff {
 					 if(!diff.getOriginalClass().containsAttributeWithName(pattern.getAfter()) &&
 								!diff.getNextClass().containsAttributeWithName(pattern.getBefore()) &&
 								!attributeMerged(a1, a2, refactorings)) {
-						 UMLAttributeDiff attributeDiff = new UMLAttributeDiff(a1, a2, diff);
+						 UMLAttributeDiff attributeDiff = new UMLAttributeDiff(a1, a2, diff, this);
 						 Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
 						 if(!refactorings.containsAll(attributeDiffRefactorings)) {
 							 refactorings.addAll(attributeDiffRefactorings);

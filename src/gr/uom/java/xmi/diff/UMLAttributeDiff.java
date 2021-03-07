@@ -28,7 +28,7 @@ public class UMLAttributeDiff {
 	private UMLAnnotationListDiff annotationListDiff;
 	private List<UMLAnonymousClassDiff> anonymousClassDiffList;
 
-	public UMLAttributeDiff(UMLAttribute removedAttribute, UMLAttribute addedAttribute, UMLClassBaseDiff classDiff) throws RefactoringMinerTimedOutException {
+	public UMLAttributeDiff(UMLAttribute removedAttribute, UMLAttribute addedAttribute, UMLClassBaseDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
 		this(removedAttribute, addedAttribute, classDiff.getOperationBodyMapperList());
 		List<UMLAnonymousClass> removedAttributeAnonymousClassList = removedAttribute.getAnonymousClassList();
 		List<UMLAnonymousClass> addedAttributeAnonymousClassList = addedAttribute.getAnonymousClassList();
@@ -36,7 +36,7 @@ public class UMLAttributeDiff {
 			for(int i=0; i<removedAttributeAnonymousClassList.size(); i++) {
 				UMLAnonymousClass anonymousClass1 = removedAttributeAnonymousClassList.get(i);
 				UMLAnonymousClass anonymousClass2 = addedAttributeAnonymousClassList.get(i);
-				UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff);
+				UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
 				anonymousClassDiff.process();
 				anonymousClassDiffList.add(anonymousClassDiff);
 			}

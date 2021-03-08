@@ -30,6 +30,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 		createBodyMappers();
 		processAttributes();
 		checkForAttributeChanges();
+		checkForInlinedOperations();
 		checkForExtractedOperations();
 	}
 
@@ -88,7 +89,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 						int nonMappedElementsT1 = mapper.nonMappedElementsT1();
 						int nonMappedElementsT2 = mapper.nonMappedElementsT2();
 						if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
-								isPartOfMethodExtracted(operation1, operation2)) {
+								isPartOfMethodExtracted(operation1, operation2) || isPartOfMethodInlined(operation1, operation2)) {
 							operationBodyMapperList.add(mapper);
 							UMLOperationDiff operationDiff = new UMLOperationDiff(operation1, operation2, mapper.getMappings());
 							operationDiffList.add(operationDiff);
@@ -137,5 +138,23 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 			}
 		}
 		addedOperations.removeAll(operationsToBeRemoved);
+	}
+
+	private void checkForInlinedOperations() throws RefactoringMinerTimedOutException {
+		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
+		for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
+			UMLOperation removedOperation = removedOperationIterator.next();
+			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+				InlineOperationDetection detection = new InlineOperationDetection(mapper, removedOperations, classDiff, modelDiff);
+				List<InlineOperationRefactoring> refs = detection.check(removedOperation);
+				for(InlineOperationRefactoring refactoring : refs) {
+					refactorings.add(refactoring);
+					UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
+					mapper.addChildMapper(operationBodyMapper);
+					operationsToBeRemoved.add(removedOperation);
+				}
+			}
+		}
+		removedOperations.removeAll(operationsToBeRemoved);
 	}
 }

@@ -6,7 +6,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 group = "com.github.tsantalis"
-version = "2.0.3"
+version = "2.1.0"
 
 applicationName = rootProject.name
 mainClassName = "org.refactoringminer.RefactoringMiner"
@@ -38,7 +38,7 @@ dependencies {
     compile 'junit:junit:4.11'
     compile 'org.eclipse.jdt:org.eclipse.jdt.core:3.24.0'
     compile 'org.apache.commons:commons-text:1.9'
-    compile 'org.kohsuke:github-api:1.117'
+    compile 'org.kohsuke:github-api:1.123'
 
     testCompile 'junit:junit:4.11'
 }

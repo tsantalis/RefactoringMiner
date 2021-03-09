@@ -108,7 +108,7 @@ In order to use RefactoringMiner as a maven dependency in your project, add the 
     <dependency>
       <groupId>com.github.tsantalis</groupId>
       <artifactId>refactoring-miner</artifactId>
-      <version>2.0</version>
+      <version>2.1.0</version>
     </dependency>
 
 # Chrome Extension

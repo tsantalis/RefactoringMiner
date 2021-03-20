@@ -9,24 +9,29 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
 
-public class AddAttributeAnnotationRefactoring implements Refactoring {
-	private UMLAnnotation annotation;
+public class ChangeAttributeAccessModifierRefactoring implements Refactoring {
+	private String originalAccessModifier;
+	private String changedAccessModifier;
 	private UMLAttribute attributeBefore;
 	private UMLAttribute attributeAfter;
 
-	public AddAttributeAnnotationRefactoring(UMLAnnotation annotation, UMLAttribute attributeBefore,
-			UMLAttribute attributeAfter) {
-		this.annotation = annotation;
+	public ChangeAttributeAccessModifierRefactoring(String originalAccessModifier, String changedAccessModifier,
+			UMLAttribute attributeBefore, UMLAttribute attributeAfter) {
+		this.originalAccessModifier = originalAccessModifier;
+		this.changedAccessModifier = changedAccessModifier;
 		this.attributeBefore = attributeBefore;
 		this.attributeAfter = attributeAfter;
 	}
 
-	public UMLAnnotation getAnnotation() {
-		return annotation;
+	public String getOriginalAccessModifier() {
+		return originalAccessModifier;
+	}
+
+	public String getChangedAccessModifier() {
+		return changedAccessModifier;
 	}
 
 	public UMLAttribute getAttributeBefore() {
@@ -49,18 +54,15 @@ public class AddAttributeAnnotationRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> rightSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		ranges.add(annotation.codeRange()
-				.setDescription("added annotation")
-				.setCodeElement(annotation.toString()));
 		ranges.add(attributeAfter.codeRange()
-				.setDescription("attribute declaration with added annotation")
+				.setDescription("attribute declaration with changed access modifier")
 				.setCodeElement(attributeAfter.toString()));
 		return ranges;
 	}
 
 	@Override
 	public RefactoringType getRefactoringType() {
-		return RefactoringType.ADD_ATTRIBUTE_ANNOTATION;
+		return RefactoringType.CHANGE_ATTRIBUTE_ACCESS_MODIFIER;
 	}
 
 	@Override
@@ -85,13 +87,10 @@ public class AddAttributeAnnotationRefactoring implements Refactoring {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(annotation);
-		if(attributeAfter instanceof UMLEnumConstant) {
-			sb.append(" in enum constant ");
-		}
-		else {
-			sb.append(" in attribute ");
-		}
+		sb.append(originalAccessModifier);
+		sb.append(" to ");
+		sb.append(changedAccessModifier);
+		sb.append(" in attribute ");
 		sb.append(attributeAfter);
 		sb.append(" from class ");
 		sb.append(attributeAfter.getClassName());
@@ -102,7 +101,6 @@ public class AddAttributeAnnotationRefactoring implements Refactoring {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((annotation == null) ? 0 : annotation.hashCode());
 		result = prime * result + ((attributeAfter == null || attributeAfter.getVariableDeclaration() == null) ? 0 : attributeAfter.getVariableDeclaration().hashCode());
 		result = prime * result + ((attributeBefore == null || attributeBefore.getVariableDeclaration() == null) ? 0 : attributeBefore.getVariableDeclaration().hashCode());
 		return result;
@@ -116,12 +114,7 @@ public class AddAttributeAnnotationRefactoring implements Refactoring {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AddAttributeAnnotationRefactoring other = (AddAttributeAnnotationRefactoring) obj;
-		if (annotation == null) {
-			if (other.annotation != null)
-				return false;
-		} else if (!annotation.equals(other.annotation))
-			return false;
+		ChangeAttributeAccessModifierRefactoring other = (ChangeAttributeAccessModifierRefactoring) obj;
 		if (attributeBefore == null) {
 			if (other.attributeBefore != null)
 				return false;

@@ -89,7 +89,7 @@ public class ChangeAttributeTypeRefactoring implements Refactoring {
 		result = prime * result + ((changedTypeAttribute == null || changedTypeAttribute.getVariableDeclaration() == null) ? 0 : changedTypeAttribute.getVariableDeclaration().hashCode());
 		result = prime * result + ((classNameAfter == null) ? 0 : classNameAfter.hashCode());
 		result = prime * result + ((classNameBefore == null) ? 0 : classNameBefore.hashCode());
-		result = prime * result + ((originalAttribute == null || changedTypeAttribute.getVariableDeclaration() == null) ? 0 : originalAttribute.getVariableDeclaration().hashCode());
+		result = prime * result + ((originalAttribute == null || originalAttribute.getVariableDeclaration() == null) ? 0 : originalAttribute.getVariableDeclaration().hashCode());
 		return result;
 	}
 

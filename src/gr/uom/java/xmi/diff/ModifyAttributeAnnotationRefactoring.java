@@ -114,8 +114,8 @@ public class ModifyAttributeAnnotationRefactoring implements Refactoring {
 		int result = 1;
 		result = prime * result + ((annotationAfter == null) ? 0 : annotationAfter.hashCode());
 		result = prime * result + ((annotationBefore == null) ? 0 : annotationBefore.hashCode());
-		result = prime * result + ((attributeAfter == null) ? 0 : attributeAfter.hashCode());
-		result = prime * result + ((attributeBefore == null) ? 0 : attributeBefore.hashCode());
+		result = prime * result + ((attributeAfter == null || attributeAfter.getVariableDeclaration() == null) ? 0 : attributeAfter.getVariableDeclaration().hashCode());
+		result = prime * result + ((attributeBefore == null || attributeBefore.getVariableDeclaration() == null) ? 0 : attributeBefore.getVariableDeclaration().hashCode());
 		return result;
 	}
 
@@ -138,15 +138,21 @@ public class ModifyAttributeAnnotationRefactoring implements Refactoring {
 				return false;
 		} else if (!annotationBefore.equals(other.annotationBefore))
 			return false;
-		if (attributeAfter == null) {
-			if (other.attributeAfter != null)
-				return false;
-		} else if (!attributeAfter.equals(other.attributeAfter))
-			return false;
 		if (attributeBefore == null) {
 			if (other.attributeBefore != null)
 				return false;
-		} else if (!attributeBefore.equals(other.attributeBefore))
+		} else if(attributeBefore.getVariableDeclaration() == null) {
+			if(other.attributeBefore.getVariableDeclaration() != null)
+				return false;
+		} else if (!attributeBefore.getVariableDeclaration().equals(other.attributeBefore.getVariableDeclaration()))
+			return false;
+		if (attributeAfter == null) {
+			if (other.attributeAfter != null)
+				return false;
+		} else if(attributeAfter.getVariableDeclaration() == null) {
+			if(other.attributeAfter.getVariableDeclaration() != null)
+				return false;
+		} else if (!attributeAfter.getVariableDeclaration().equals(other.attributeAfter.getVariableDeclaration()))
 			return false;
 		return true;
 	}

@@ -75,7 +75,8 @@ public enum RefactoringType {
 	ADD_THROWN_EXCEPTION_TYPE("Add Thrown Exception Type", "Add Thrown Exception Type (.+) in method (.+) from class (.+)"),
 	REMOVE_THROWN_EXCEPTION_TYPE("Remove Thrown Exception Type", "Remove Thrown Exception Type (.+) in method (.+) from class (.+)"),
 	CHANGE_THROWN_EXCEPTION_TYPE("Change Thrown Exception Type", "Change Thrown Exception Type (.+) to (.+) in method (.+) from class (.+)"),
-	CHANGE_OPERATION_ACCESS_MODIFIER("Change Method Access Modifier", "Change Method Access Modifier (.+) to (.+) in method (.+) from class (.+)");
+	CHANGE_OPERATION_ACCESS_MODIFIER("Change Method Access Modifier", "Change Method Access Modifier (.+) to (.+) in method (.+) from class (.+)"),
+	CHANGE_ATTRIBUTE_ACCESS_MODIFIER("Change Attribute Access Modifier", "Change Attribute Access Modifier (.+) to (.+) in attribute (.+) from class (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -143,7 +144,8 @@ public enum RefactoringType {
 		ADD_THROWN_EXCEPTION_TYPE,
 		REMOVE_THROWN_EXCEPTION_TYPE,
 		CHANGE_THROWN_EXCEPTION_TYPE,
-		CHANGE_OPERATION_ACCESS_MODIFIER
+		CHANGE_OPERATION_ACCESS_MODIFIER,
+		CHANGE_ATTRIBUTE_ACCESS_MODIFIER
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

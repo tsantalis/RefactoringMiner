@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
@@ -1468,9 +1469,32 @@ public class UMLModelDiff {
       checkForExtractedAndMovedOperations(getOperationBodyMappersInCommonClasses(), getAddedAndExtractedOperationsInCommonClasses());
       checkForExtractedAndMovedOperations(getOperationBodyMappersInMovedAndRenamedClasses(), getAddedOperationsInMovedAndRenamedClasses());
       checkForMovedAndInlinedOperations(getOperationBodyMappersInCommonClasses(), getRemovedAndInlinedOperationsInCommonClasses());
-      refactorings.addAll(checkForAttributeMovesBetweenCommonClasses());
-      refactorings.addAll(checkForAttributeMovesIncludingAddedClasses());
-      refactorings.addAll(checkForAttributeMovesIncludingRemovedClasses());
+      List<MoveAttributeRefactoring> moveAttributeRefactorings = new ArrayList<MoveAttributeRefactoring>();
+      moveAttributeRefactorings.addAll(checkForAttributeMovesBetweenCommonClasses());
+      moveAttributeRefactorings.addAll(checkForAttributeMovesIncludingAddedClasses());
+      moveAttributeRefactorings.addAll(checkForAttributeMovesIncludingRemovedClasses());
+      refactorings.addAll(moveAttributeRefactorings);
+      for(MoveAttributeRefactoring moveAttributeRefactoring : moveAttributeRefactorings) {
+    	  UMLAttribute originalAttribute = moveAttributeRefactoring.getOriginalAttribute();
+    	  UMLAttribute movedAttribute = moveAttributeRefactoring.getMovedAttribute();
+    	  if(!originalAttribute.getVisibility().equals(movedAttribute.getVisibility())) {
+    		  ChangeAttributeAccessModifierRefactoring ref = new ChangeAttributeAccessModifierRefactoring(originalAttribute.getVisibility(), movedAttribute.getVisibility(), originalAttribute, movedAttribute);
+    		  refactorings.add(ref);
+    	  }
+    	  UMLAnnotationListDiff annotationListDiff = new UMLAnnotationListDiff(originalAttribute.getAnnotations(), movedAttribute.getAnnotations());
+    	  for(UMLAnnotation annotation : annotationListDiff.getAddedAnnotations()) {
+  			  AddAttributeAnnotationRefactoring refactoring = new AddAttributeAnnotationRefactoring(annotation, originalAttribute, movedAttribute);
+  			  refactorings.add(refactoring);
+  		  }
+  		  for(UMLAnnotation annotation : annotationListDiff.getRemovedAnnotations()) {
+  			  RemoveAttributeAnnotationRefactoring refactoring = new RemoveAttributeAnnotationRefactoring(annotation, originalAttribute, movedAttribute);
+  			  refactorings.add(refactoring);
+  		  }
+  		  for(UMLAnnotationDiff annotationDiff : annotationListDiff.getAnnotationDiffList()) {
+  			  ModifyAttributeAnnotationRefactoring refactoring = new ModifyAttributeAnnotationRefactoring(annotationDiff.getRemovedAnnotation(), annotationDiff.getAddedAnnotation(), originalAttribute, movedAttribute);
+  			  refactorings.add(refactoring);
+  		  }
+      }
       refactorings.addAll(this.refactorings);
       for(UMLClassDiff classDiff : commonClassDiffList) {
     	  inferMethodSignatureRelatedRefactorings(classDiff, refactorings);

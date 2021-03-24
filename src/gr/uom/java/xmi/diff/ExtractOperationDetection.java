@@ -166,8 +166,10 @@ public class ExtractOperationDetection {
 	}
 
 	private boolean containsRefactoringWithIdenticalMappings(List<ExtractOperationRefactoring> refactorings, ExtractOperationRefactoring extractOperationRefactoring) {
+		Set<AbstractCodeMapping> newMappings = extractOperationRefactoring.getBodyMapper().getMappings();
 		for(ExtractOperationRefactoring ref : refactorings) {
-			if(ref.getBodyMapper().getMappings().equals(extractOperationRefactoring.getBodyMapper().getMappings())) {
+			Set<AbstractCodeMapping> oldMappings = ref.getBodyMapper().getMappings();
+			if(oldMappings.containsAll(newMappings)) {
 				return true;
 			}
 		}

@@ -62,7 +62,7 @@ public abstract class AbstractCodeMapping {
 	}
 
 	public boolean isExact() {
-		return (fragment1.getArgumentizedString().equals(fragment2.getArgumentizedString()) ||
+		return (fragment1.getArgumentizedString().equals(fragment2.getArgumentizedString()) || argumentizedStringExactAfterTypeReplacement() ||
 				fragment1.getString().equals(fragment2.getString()) || isExactAfterAbstraction() || containsIdenticalOrCompositeReplacement()) && !isKeyword();
 	}
 
@@ -70,6 +70,22 @@ public abstract class AbstractCodeMapping {
 		return fragment1.getString().startsWith("return;") ||
 				fragment1.getString().startsWith("break;") ||
 				fragment1.getString().startsWith("continue;");
+	}
+
+	private boolean argumentizedStringExactAfterTypeReplacement() {
+		String s1 = fragment1.getArgumentizedString();
+		String s2 = fragment2.getArgumentizedString();
+		for(Replacement r : replacements) {
+			if(r.getType().equals(ReplacementType.TYPE)) {
+				if(s1.startsWith(r.getBefore()) && s2.startsWith(r.getAfter())) {
+					String temp = s2.replace(r.getAfter(), r.getBefore());
+					if(s1.equals(temp)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean isExactAfterAbstraction() {

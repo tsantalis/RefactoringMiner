@@ -150,15 +150,28 @@ public class ExtractOperationDetection {
 			}
 			UMLOperation delegateMethod = findDelegateMethod(mapper.getOperation1(), addedOperation, addedOperationInvocation);
 			if(extractMatchCondition(operationBodyMapper, additionalExactMatches)) {
+				ExtractOperationRefactoring extractOperationRefactoring = null;
 				if(delegateMethod == null) {
-					refactorings.add(new ExtractOperationRefactoring(operationBodyMapper, mapper.getOperation2(), addedOperationInvocations));
+					extractOperationRefactoring = new ExtractOperationRefactoring(operationBodyMapper, mapper.getOperation2(), addedOperationInvocations);
 				}
 				else {
-					refactorings.add(new ExtractOperationRefactoring(operationBodyMapper, addedOperation,
-							mapper.getOperation1(), mapper.getOperation2(), addedOperationInvocations));
+					extractOperationRefactoring = new ExtractOperationRefactoring(operationBodyMapper, addedOperation,
+							mapper.getOperation1(), mapper.getOperation2(), addedOperationInvocations);
+				}
+				if(!containsRefactoringWithIdenticalMappings(refactorings, extractOperationRefactoring)) {
+					refactorings.add(extractOperationRefactoring);
 				}
 			}
 		}
+	}
+
+	private boolean containsRefactoringWithIdenticalMappings(List<ExtractOperationRefactoring> refactorings, ExtractOperationRefactoring extractOperationRefactoring) {
+		for(ExtractOperationRefactoring ref : refactorings) {
+			if(ref.getBodyMapper().getMappings().equals(extractOperationRefactoring.getBodyMapper().getMappings())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static List<OperationInvocation> getInvocationsInSourceOperationAfterExtraction(UMLOperationBodyMapper mapper) {

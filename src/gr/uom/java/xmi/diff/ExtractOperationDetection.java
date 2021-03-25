@@ -114,14 +114,14 @@ public class ExtractOperationDetection {
 			callTreeMap.put(root, callTree);
 		}
 		UMLOperationBodyMapper operationBodyMapper = createMapperForExtractedMethod(mapper, mapper.getOperation1(), addedOperation, addedOperationInvocation);
-		if(operationBodyMapper != null) {
+		if(operationBodyMapper != null && !containsRefactoringWithIdenticalMappings(refactorings, operationBodyMapper)) {
 			List<AbstractCodeMapping> additionalExactMatches = new ArrayList<AbstractCodeMapping>();
 			List<CallTreeNode> nodesInBreadthFirstOrder = callTree.getNodesInBreadthFirstOrder();
 			for(int i=1; i<nodesInBreadthFirstOrder.size(); i++) {
 				CallTreeNode node = nodesInBreadthFirstOrder.get(i);
 				if(matchingInvocations(node.getInvokedOperation(), operationInvocations, mapper.getOperation2().variableDeclarationMap()).size() == 0) {
 					UMLOperationBodyMapper nestedMapper = createMapperForExtractedMethod(mapper, node.getOriginalOperation(), node.getInvokedOperation(), node.getInvocation());
-					if(nestedMapper != null) {
+					if(nestedMapper != null && !containsRefactoringWithIdenticalMappings(refactorings, nestedMapper)) {
 						additionalExactMatches.addAll(nestedMapper.getExactMatches());
 						if(extractMatchCondition(nestedMapper, new ArrayList<AbstractCodeMapping>()) && extractMatchCondition(operationBodyMapper, additionalExactMatches)) {
 							List<OperationInvocation> nestedMatchingInvocations = matchingInvocations(node.getInvokedOperation(), node.getOriginalOperation().getAllOperationInvocations(), node.getOriginalOperation().variableDeclarationMap());
@@ -158,15 +158,13 @@ public class ExtractOperationDetection {
 					extractOperationRefactoring = new ExtractOperationRefactoring(operationBodyMapper, addedOperation,
 							mapper.getOperation1(), mapper.getOperation2(), addedOperationInvocations);
 				}
-				if(!containsRefactoringWithIdenticalMappings(refactorings, extractOperationRefactoring)) {
-					refactorings.add(extractOperationRefactoring);
-				}
+				refactorings.add(extractOperationRefactoring);
 			}
 		}
 	}
 
-	private boolean containsRefactoringWithIdenticalMappings(List<ExtractOperationRefactoring> refactorings, ExtractOperationRefactoring extractOperationRefactoring) {
-		Set<AbstractCodeMapping> newMappings = extractOperationRefactoring.getBodyMapper().getMappings();
+	private boolean containsRefactoringWithIdenticalMappings(List<ExtractOperationRefactoring> refactorings, UMLOperationBodyMapper mapper) {
+		Set<AbstractCodeMapping> newMappings = mapper.getMappings();
 		for(ExtractOperationRefactoring ref : refactorings) {
 			Set<AbstractCodeMapping> oldMappings = ref.getBodyMapper().getMappings();
 			if(oldMappings.containsAll(newMappings)) {
@@ -240,8 +238,8 @@ public class ExtractOperationDetection {
 		for(UMLOperation addedOperation : addedOperations) {
 			for(OperationInvocation invocation : invocations) {
 				if(invocation.matchesOperation(addedOperation, operation.variableDeclarationMap(), modelDiff)) {
-					if(!callTree.contains(addedOperation)) {
-						CallTreeNode node = new CallTreeNode(operation, addedOperation, invocation);
+					if(!callTree.containsInPathToRootOrSibling(parent, addedOperation)) {
+						CallTreeNode node = new CallTreeNode(parent, operation, addedOperation, invocation);
 						parent.addChild(node);
 						generateCallTree(addedOperation, node, callTree);
 					}

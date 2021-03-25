@@ -440,6 +440,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			int numberOfMappings = mappings.size();
+			for(AbstractCodeMapping mapping : this.mappings) {
+				if(mapping instanceof LeafMapping) {
+					AbstractCodeFragment fragment2 = mapping.getFragment2();
+					if(fragment2 instanceof StatementObject) {
+						addedLeaves2.add((StatementObject)fragment2);
+						leaves2.add((StatementObject)fragment2);
+					}
+				}
+			}
 			processLeaves(expressionsT1, leaves2, parameterToArgumentMap2);
 			List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
 			for(int i = numberOfMappings; i < mappings.size(); i++) {
@@ -1293,9 +1302,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					else {
 						LeafMapping minStatementMapping = mappingSet.first();
-						mappings.add(minStatementMapping);
-						leaves2.remove(minStatementMapping.getFragment2());
-						leafIterator1.remove();
+						if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
+							mappings.add(minStatementMapping);
+							leaves2.remove(minStatementMapping.getFragment2());
+							leafIterator1.remove();
+						}
 					}
 				}
 			}
@@ -1391,9 +1402,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					else {
 						LeafMapping minStatementMapping = mappingSet.first();
-						mappings.add(minStatementMapping);
-						leaves1.remove(minStatementMapping.getFragment1());
-						leafIterator2.remove();
+						if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
+							mappings.add(minStatementMapping);
+							leaves1.remove(minStatementMapping.getFragment1());
+							leafIterator2.remove();
+						}
 					}
 				}
 			}
@@ -1427,6 +1440,43 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				leaves2.remove(minStatementMapping.getFragment2());
 			}
 		}
+	}
+
+	private boolean canBeAdded(LeafMapping minStatementMapping, Map<String, String> parameterToArgumentMap) {
+		int newMappingReplacents = validReplacements(minStatementMapping, parameterToArgumentMap);
+		AbstractCodeMapping mappingToBeRemoved = null;
+		boolean conflictingMappingFound = false;
+		for(AbstractCodeMapping mapping : mappings) {
+			if(mapping.getFragment1().equals(minStatementMapping.getFragment1()) ||
+					mapping.getFragment2().equals(minStatementMapping.getFragment2())) {
+				conflictingMappingFound = true;
+				int oldMappingReplacements = validReplacements(mapping, parameterToArgumentMap);
+				if(newMappingReplacents < oldMappingReplacements) {
+					mappingToBeRemoved = mapping;
+					break;
+				}
+			}
+		}
+		if(mappingToBeRemoved != null) {
+			mappings.remove(mappingToBeRemoved);
+		}
+		else if(conflictingMappingFound) {
+			return false;
+		}
+		return true;
+	}
+
+	private int validReplacements(AbstractCodeMapping mapping, Map<String, String> parameterToArgumentMap) {
+		int validReplacements = 0;
+		for(Replacement r : mapping.getReplacements()) {
+			if(parameterToArgumentMap.containsKey(r.getAfter()) && parameterToArgumentMap.get(r.getAfter()).equals(r.getBefore())) {
+				
+			}
+			else {
+				validReplacements++;
+			}
+		}
+		return validReplacements;
 	}
 
 	private ReplacementInfo initializeReplacementInfo(AbstractCodeFragment leaf1, AbstractCodeFragment leaf2,
@@ -2051,7 +2101,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
-		boolean isEqualWithReplacement = s1.equals(s2) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) || differOnlyInCastExpressionOrPrefixOperator(s1, s2, replacementInfo) ||
+		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) || differOnlyInCastExpressionOrPrefixOperator(s1, s2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString()) ||
 				(containsValidOperatorReplacements(replacementInfo) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, replacementInfo))) ||

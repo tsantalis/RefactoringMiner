@@ -10,13 +10,20 @@ public class CallTreeNode {
 	private UMLOperation originalOperation;
 	private UMLOperation invokedOperation;
 	private OperationInvocation invocation;
+	private CallTreeNode parent;
 	private List<CallTreeNode> children = new ArrayList<CallTreeNode>();
-	
+
 	public CallTreeNode(UMLOperation originalOperation, UMLOperation invokedOperation,
 			OperationInvocation invocation) {
 		this.originalOperation = originalOperation;
 		this.invokedOperation = invokedOperation;
 		this.invocation = invocation;
+	}
+
+	public CallTreeNode(CallTreeNode parent, UMLOperation originalOperation, UMLOperation invokedOperation,
+			OperationInvocation invocation) {
+		this(originalOperation, invokedOperation, invocation);
+		this.parent = parent;
 	}
 
 	public UMLOperation getOriginalOperation() {
@@ -33,6 +40,10 @@ public class CallTreeNode {
 
 	public void addChild(CallTreeNode node) {
 		children.add(node);
+	}
+
+	public CallTreeNode getParent() {
+		return parent;
 	}
 
 	public List<CallTreeNode> getChildren() {

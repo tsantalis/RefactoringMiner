@@ -79,7 +79,7 @@ public abstract class AbstractCodeMapping {
 			if(r.getType().equals(ReplacementType.TYPE)) {
 				if(s1.startsWith(r.getBefore()) && s2.startsWith(r.getAfter())) {
 					String temp = s2.replace(r.getAfter(), r.getBefore());
-					if(s1.equals(temp)) {
+					if(s1.equals(temp) || (s1 + ";\n").equals(temp)) {
 						return true;
 					}
 				}

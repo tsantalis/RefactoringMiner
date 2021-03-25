@@ -104,8 +104,8 @@ public class InlineOperationDetection {
 		for(UMLOperation removedOperation : removedOperations) {
 			for(OperationInvocation invocation : invocations) {
 				if(invocation.matchesOperation(removedOperation, operation.variableDeclarationMap(), modelDiff)) {
-					if(!callTree.contains(removedOperation)) {
-						CallTreeNode node = new CallTreeNode(operation, removedOperation, invocation);
+					if(!callTree.containsInPathToRootOrSibling(parent, removedOperation)) {
+						CallTreeNode node = new CallTreeNode(parent, operation, removedOperation, invocation);
 						parent.addChild(node);
 						generateCallTree(removedOperation, node, callTree);
 					}

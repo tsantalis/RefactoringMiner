@@ -1160,7 +1160,7 @@ public class UMLModelDiff {
 	   for(OperationInvocation newInvocation : newInvocations) {
 		   for(UMLOperation operation : addedClass.getOperations()) {
 			   if(!operation.isAbstract() && !operation.hasEmptyBody() &&
-					   newInvocation.matchesOperation(operation, addedOperation.variableDeclarationMap(), this)) {
+					   newInvocation.matchesOperation(operation, addedOperation, this)) {
 				   ExtractOperationDetection detection = new ExtractOperationDetection(movedMethodMapper, addedClass.getOperations(), getUMLClassDiff(operation.getClassName()), this);
 				   List<ExtractOperationRefactoring> refs = detection.check(operation);
 				   this.refactorings.addAll(refs);
@@ -1779,13 +1779,13 @@ public class UMLModelDiff {
 				   List<OperationInvocation> operationInvocations = mapper.getOperation1().getAllOperationInvocations();
 				   List<OperationInvocation> removedOperationInvocations = new ArrayList<OperationInvocation>();
 				   for(OperationInvocation invocation : operationInvocations) {
-					   if(invocation.matchesOperation(removedOperation, mapper.getOperation1().variableDeclarationMap(), this)) {
+					   if(invocation.matchesOperation(removedOperation, mapper.getOperation1(), this)) {
 						   removedOperationInvocations.add(invocation);
 					   }
 				   }
 				   if(removedOperationInvocations.size() > 0) {
 						for(OperationInvocation removedOperationInvocation : removedOperationInvocations) {
-							if(!invocationMatchesWithAddedOperation(removedOperationInvocation, mapper.getOperation1().variableDeclarationMap(), mapper.getOperation2().getAllOperationInvocations())) {
+							if(!invocationMatchesWithAddedOperation(removedOperationInvocation, mapper.getOperation1(), mapper.getOperation2().getAllOperationInvocations())) {
 								List<String> arguments = removedOperationInvocation.getArguments();
 								List<String> parameters = removedOperation.getParameterNameList();
 								Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
@@ -1836,7 +1836,7 @@ public class UMLModelDiff {
 		int delegateStatements = 0;
 		for(StatementObject statement : operationBodyMapper.getNonMappedLeavesT1()) {
 			OperationInvocation invocation = statement.invocationCoveringEntireFragment();
-			if(invocation != null && invocation.matchesOperation(operationBodyMapper.getOperation1(), parentMapper.getOperation1().variableDeclarationMap(), this)) {
+			if(invocation != null && invocation.matchesOperation(operationBodyMapper.getOperation1(), parentMapper.getOperation1(), this)) {
 				delegateStatements++;
 			}
 		}
@@ -1849,10 +1849,10 @@ public class UMLModelDiff {
 				(exactMatches > 1 && nonMappedElementsT1-exactMatches < 20));
 	}
 
-	private boolean invocationMatchesWithAddedOperation(OperationInvocation removedOperationInvocation, Map<String, Set<VariableDeclaration>> variableDeclarationMap, List<OperationInvocation> operationInvocationsInNewMethod) {
+	private boolean invocationMatchesWithAddedOperation(OperationInvocation removedOperationInvocation, UMLOperation callerOperation, List<OperationInvocation> operationInvocationsInNewMethod) {
 		if(operationInvocationsInNewMethod.contains(removedOperationInvocation)) {
 			for(UMLOperation addedOperation : getAddedOperationsInCommonClasses()) {
-				if(removedOperationInvocation.matchesOperation(addedOperation, variableDeclarationMap, this)) {
+				if(removedOperationInvocation.matchesOperation(addedOperation, callerOperation, this)) {
 					return true;
 				}
 			}
@@ -1868,7 +1868,7 @@ public class UMLModelDiff {
                List<OperationInvocation> operationInvocations = ExtractOperationDetection.getInvocationsInSourceOperationAfterExtraction(mapper);
                List<OperationInvocation> addedOperationInvocations = new ArrayList<OperationInvocation>();
                for(OperationInvocation invocation : operationInvocations) {
-                  if(invocation.matchesOperation(addedOperation, mapper.getOperation2().variableDeclarationMap(), this)) {
+                  if(invocation.matchesOperation(addedOperation, mapper.getOperation2(), this)) {
                      addedOperationInvocations.add(invocation);
                   }
                }

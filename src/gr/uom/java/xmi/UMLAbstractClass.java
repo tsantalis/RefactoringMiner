@@ -317,7 +317,7 @@ public abstract class UMLAbstractClass {
 			if(commonOperations.contains(operation)) {
 				for(OperationInvocation invocation : operation.getAllOperationInvocations()) {
 					for(UMLOperation unmatchedOperation : unmatchedOperations) {
-						if(invocation.matchesOperation(unmatchedOperation, operation.variableDeclarationMap(), null)) {
+						if(invocation.matchesOperation(unmatchedOperation, operation, null)) {
 							unmatchedCalledOperations.add(unmatchedOperation);
 							break;
 						}

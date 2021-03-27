@@ -146,7 +146,8 @@ public class OperationInvocation extends AbstractCall {
     	return subExpressions.size();
     }
 
-    public boolean matchesOperation(UMLOperation operation, Map<String, Set<VariableDeclaration>> variableDeclarationMap, UMLModelDiff modelDiff) {
+    public boolean matchesOperation(UMLOperation operation, UMLOperation callerOperation, UMLModelDiff modelDiff) {
+    	Map<String, Set<VariableDeclaration>> variableDeclarationMap = callerOperation.variableDeclarationMap();
     	List<UMLType> inferredArgumentTypes = new ArrayList<UMLType>();
     	for(String arg : arguments) {
     		int indexOfOpeningParenthesis = arg.indexOf("(");

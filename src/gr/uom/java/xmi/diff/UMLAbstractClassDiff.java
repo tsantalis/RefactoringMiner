@@ -83,7 +83,7 @@ public abstract class UMLAbstractClassDiff {
 			if(!intersection.contains(addedOperationInvocation)) {
 				for(UMLOperation operation : addedOperations) {
 					if(!operation.equals(addedOperation) && operation.getBody() != null) {
-						if(addedOperationInvocation.matchesOperation(operation, addedOperation.variableDeclarationMap(), modelDiff)) {
+						if(addedOperationInvocation.matchesOperation(operation, addedOperation, modelDiff)) {
 							//addedOperation calls another added method
 							operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllOperationInvocations());
 						}
@@ -121,7 +121,7 @@ public abstract class UMLAbstractClassDiff {
 			if(!intersection.contains(removedOperationInvocation)) {
 				for(UMLOperation operation : removedOperations) {
 					if(!operation.equals(removedOperation) && operation.getBody() != null) {
-						if(removedOperationInvocation.matchesOperation(operation, removedOperation.variableDeclarationMap(), modelDiff)) {
+						if(removedOperationInvocation.matchesOperation(operation, removedOperation, modelDiff)) {
 							//removedOperation calls another removed method
 							operationInvocationsInMethodsCalledByRemovedOperation.addAll(operation.getAllOperationInvocations());
 						}

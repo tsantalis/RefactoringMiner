@@ -42,12 +42,12 @@ public class ExtractOperationDetection {
 		List<ExtractOperationRefactoring> refactorings = new ArrayList<ExtractOperationRefactoring>();
 		if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
 			!mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
-			List<OperationInvocation> addedOperationInvocations = matchingInvocations(addedOperation, operationInvocations, mapper.getOperation2().variableDeclarationMap());
+			List<OperationInvocation> addedOperationInvocations = matchingInvocations(addedOperation, operationInvocations, mapper.getOperation2());
 			if(addedOperationInvocations.size() > 0) {
 				int otherAddedMethodsCalled = 0;
 				for(UMLOperation addedOperation2 : this.addedOperations) {
 					if(!addedOperation.equals(addedOperation2)) {
-						List<OperationInvocation> addedOperationInvocations2 = matchingInvocations(addedOperation2, operationInvocations, mapper.getOperation2().variableDeclarationMap());
+						List<OperationInvocation> addedOperationInvocations2 = matchingInvocations(addedOperation2, operationInvocations, mapper.getOperation2());
 						if(addedOperationInvocations2.size() > 0) {
 							otherAddedMethodsCalled++;
 						}
@@ -119,12 +119,12 @@ public class ExtractOperationDetection {
 			List<CallTreeNode> nodesInBreadthFirstOrder = callTree.getNodesInBreadthFirstOrder();
 			for(int i=1; i<nodesInBreadthFirstOrder.size(); i++) {
 				CallTreeNode node = nodesInBreadthFirstOrder.get(i);
-				if(matchingInvocations(node.getInvokedOperation(), operationInvocations, mapper.getOperation2().variableDeclarationMap()).size() == 0) {
+				if(matchingInvocations(node.getInvokedOperation(), operationInvocations, mapper.getOperation2()).size() == 0) {
 					UMLOperationBodyMapper nestedMapper = createMapperForExtractedMethod(mapper, node.getOriginalOperation(), node.getInvokedOperation(), node.getInvocation());
 					if(nestedMapper != null && !containsRefactoringWithIdenticalMappings(refactorings, nestedMapper)) {
 						additionalExactMatches.addAll(nestedMapper.getExactMatches());
 						if(extractMatchCondition(nestedMapper, new ArrayList<AbstractCodeMapping>()) && extractMatchCondition(operationBodyMapper, additionalExactMatches)) {
-							List<OperationInvocation> nestedMatchingInvocations = matchingInvocations(node.getInvokedOperation(), node.getOriginalOperation().getAllOperationInvocations(), node.getOriginalOperation().variableDeclarationMap());
+							List<OperationInvocation> nestedMatchingInvocations = matchingInvocations(node.getInvokedOperation(), node.getOriginalOperation().getAllOperationInvocations(), node.getOriginalOperation());
 							ExtractOperationRefactoring nestedRefactoring = new ExtractOperationRefactoring(nestedMapper, mapper.getOperation2(), nestedMatchingInvocations);
 							refactorings.add(nestedRefactoring);
 							operationBodyMapper.addChildMapper(nestedMapper);
@@ -223,10 +223,10 @@ public class ExtractOperationDetection {
 	}
 
 	private List<OperationInvocation> matchingInvocations(UMLOperation operation,
-			List<OperationInvocation> operationInvocations, Map<String, Set<VariableDeclaration>> variableDeclarationMap) {
+			List<OperationInvocation> operationInvocations, UMLOperation callerOperation) {
 		List<OperationInvocation> addedOperationInvocations = new ArrayList<OperationInvocation>();
 		for(OperationInvocation invocation : operationInvocations) {
-			if(invocation.matchesOperation(operation, variableDeclarationMap, modelDiff)) {
+			if(invocation.matchesOperation(operation, callerOperation, modelDiff)) {
 				addedOperationInvocations.add(invocation);
 			}
 		}
@@ -237,7 +237,7 @@ public class ExtractOperationDetection {
 		List<OperationInvocation> invocations = operation.getAllOperationInvocations();
 		for(UMLOperation addedOperation : addedOperations) {
 			for(OperationInvocation invocation : invocations) {
-				if(invocation.matchesOperation(addedOperation, operation.variableDeclarationMap(), modelDiff)) {
+				if(invocation.matchesOperation(addedOperation, operation, modelDiff)) {
 					if(!callTree.containsInPathToRootOrSibling(parent, addedOperation)) {
 						CallTreeNode node = new CallTreeNode(parent, operation, addedOperation, invocation);
 						parent.addChild(node);
@@ -326,7 +326,7 @@ public class ExtractOperationDetection {
 		OperationInvocation delegateMethodInvocation = addedOperation.isDelegate();
 		if(originalOperation.isDelegate() == null && delegateMethodInvocation != null && !originalOperation.getAllOperationInvocations().contains(addedOperationInvocation)) {
 			for(UMLOperation operation : addedOperations) {
-				if(delegateMethodInvocation.matchesOperation(operation, addedOperation.variableDeclarationMap(), modelDiff)) {
+				if(delegateMethodInvocation.matchesOperation(operation, addedOperation, modelDiff)) {
 					return operation;
 				}
 			}

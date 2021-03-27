@@ -1151,8 +1151,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			else {
 				for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
 					UMLOperationBodyMapper mapper = consistentMethodInvocationRenames.get(replacement);
-					if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getOperation1().variableDeclarationMap(), modelDiff) &&
-							replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getOperation2().variableDeclarationMap(), modelDiff)) {
+					if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getOperation1(), modelDiff) &&
+							replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getOperation2(), modelDiff)) {
 						mapperSet.add(operationBodyMapper);
 						break;
 					}
@@ -1162,8 +1162,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		else {
 			for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
 				UMLOperationBodyMapper mapper = consistentMethodInvocationRenames.get(replacement);
-				if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getOperation1().variableDeclarationMap(), modelDiff) &&
-						replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getOperation2().variableDeclarationMap(), modelDiff)) {
+				if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getOperation1(), modelDiff) &&
+						replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getOperation2(), modelDiff)) {
 					mapperSet.add(operationBodyMapper);
 					break;
 				}
@@ -1339,7 +1339,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			List<OperationInvocation> operationInvocations2 = operation2.getAllOperationInvocations();
 			boolean anotherMapperCallsOperation2OfTheBestMapper = false;
 			for(OperationInvocation invocation : operationInvocations2) {
-				if(invocation.matchesOperation(bestMapper.getOperation2(), operation2.variableDeclarationMap(), modelDiff) && !invocation.matchesOperation(bestMapper.getOperation1(), operation2.variableDeclarationMap(), modelDiff) &&
+				if(invocation.matchesOperation(bestMapper.getOperation2(), operation2, modelDiff) && !invocation.matchesOperation(bestMapper.getOperation1(), operation2, modelDiff) &&
 						!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, removedOperations)) {
 					anotherMapperCallsOperation2OfTheBestMapper = true;
 					break;
@@ -1349,7 +1349,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			List<OperationInvocation> operationInvocations1 = operation1.getAllOperationInvocations();
 			boolean anotherMapperCallsOperation1OfTheBestMapper = false;
 			for(OperationInvocation invocation : operationInvocations1) {
-				if(invocation.matchesOperation(bestMapper.getOperation1(), operation1.variableDeclarationMap(), modelDiff) && !invocation.matchesOperation(bestMapper.getOperation2(), operation1.variableDeclarationMap(), modelDiff) &&
+				if(invocation.matchesOperation(bestMapper.getOperation1(), operation1, modelDiff) && !invocation.matchesOperation(bestMapper.getOperation2(), operation1, modelDiff) &&
 						!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, addedOperations)) {
 					anotherMapperCallsOperation1OfTheBestMapper = true;
 					break;
@@ -1491,7 +1491,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			OperationInvocation invocationT2 = statementT2.invocationCoveringEntireFragment();
 			if(invocationT2 != null) {
 				for(UMLOperation addedOperation : addedOperations) {
-					if(invocationT2.matchesOperation(addedOperation, operationBodyMapper.getOperation2().variableDeclarationMap(), modelDiff)) {
+					if(invocationT2.matchesOperation(addedOperation, operationBodyMapper.getOperation2(), modelDiff)) {
 						StatementObject statementT1 = nonMappedLeavesT1.get(0);
 						OperationInvocation invocationT1 = statementT1.invocationCoveringEntireFragment();
 						if(invocationT1 != null && addedOperation.getAllOperationInvocations().contains(invocationT1)) {

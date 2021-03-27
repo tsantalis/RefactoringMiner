@@ -1018,7 +1018,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeMapping mapping : getMappings()) {
 			for(Replacement replacement : mapping.getReplacements()) {
 				if(replacement.getType().equals(ReplacementType.METHOD_INVOCATION_NAME) ||
-						replacement.getType().equals(ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT)) {
+						replacement.getType().equals(ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT) ||
+						replacement.getType().equals(ReplacementType.METHOD_INVOCATION_ARGUMENT)) {
 					replacements.add((MethodInvocationReplacement) replacement);
 				}
 			}

@@ -58,7 +58,7 @@ public class InlineOperationDetection {
 					if(matchingInvocations(node.getInvokedOperation(), operationInvocations, mapper.getOperation1().variableDeclarationMap()).size() == 0) {
 						UMLOperationBodyMapper nestedMapper = createMapperForInlinedMethod(mapper, node.getInvokedOperation(), node.getInvocation());
 						additionalExactMatches.addAll(nestedMapper.getExactMatches());
-						if(inlineMatchCondition(nestedMapper)) {
+						if(inlineMatchCondition(nestedMapper, mapper)) {
 							List<OperationInvocation> nestedMatchingInvocations = matchingInvocations(node.getInvokedOperation(), node.getOriginalOperation().getAllOperationInvocations(), node.getOriginalOperation().variableDeclarationMap());
 							InlineOperationRefactoring nestedRefactoring = new InlineOperationRefactoring(nestedMapper, mapper.getOperation1(), nestedMatchingInvocations);
 							refactorings.add(nestedRefactoring);
@@ -66,7 +66,7 @@ public class InlineOperationDetection {
 						}
 					}
 				}
-				if(inlineMatchCondition(operationBodyMapper)) {
+				if(inlineMatchCondition(operationBodyMapper, mapper)) {
 					InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getOperation1(), removedOperationInvocations);
 					refactorings.add(inlineOperationRefactoring);
 				}
@@ -133,11 +133,11 @@ public class InlineOperationDetection {
 		return operationInvocations;
 	}
 
-	private boolean inlineMatchCondition(UMLOperationBodyMapper operationBodyMapper) {
+	private boolean inlineMatchCondition(UMLOperationBodyMapper operationBodyMapper, UMLOperationBodyMapper parentMapper) {
 		int delegateStatements = 0;
 		for(StatementObject statement : operationBodyMapper.getNonMappedLeavesT1()) {
 			OperationInvocation invocation = statement.invocationCoveringEntireFragment();
-			if(invocation != null && invocation.matchesOperation(operationBodyMapper.getOperation1())) {
+			if(invocation != null && invocation.matchesOperation(operationBodyMapper.getOperation1(), parentMapper.getOperation1().variableDeclarationMap(), modelDiff)) {
 				delegateStatements++;
 			}
 		}

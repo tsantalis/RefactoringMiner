@@ -112,7 +112,7 @@ public class UMLModel {
     }
 
 	public UMLModelDiff diff(UMLModel umlModel, Map<String, String> renamedFileHints) throws RefactoringMinerTimedOutException {
-    	UMLModelDiff modelDiff = new UMLModelDiff();
+    	UMLModelDiff modelDiff = new UMLModelDiff(this, umlModel);
     	for(UMLClass umlClass : classList) {
     		if(!umlModel.classList.contains(umlClass))
     			modelDiff.reportRemovedClass(umlClass);

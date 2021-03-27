@@ -1,11 +1,13 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLClassMatcher;
 import gr.uom.java.xmi.UMLGeneralization;
+import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLRealization;
@@ -47,6 +49,8 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 
 public class UMLModelDiff {
    private static final Pattern RETURN_NUMBER_LITERAL = Pattern.compile("return \\d+;\n");
+   private UMLModel parentModel;
+   private UMLModel childModel;
    private List<UMLClass> addedClasses;
    private List<UMLClass> removedClasses;
    
@@ -65,7 +69,9 @@ public class UMLModelDiff {
    private Set<String> deletedFolderPaths;
    private Set<Pair<UMLOperation, UMLOperation>> processedOperationPairs = new HashSet<Pair<UMLOperation, UMLOperation>>();
    
-   public UMLModelDiff() {
+   public UMLModelDiff(UMLModel parentModel, UMLModel childModel) {
+      this.parentModel = parentModel;
+      this.childModel = childModel;
       this.addedClasses = new ArrayList<UMLClass>();
       this.removedClasses = new ArrayList<UMLClass>();
       this.addedGeneralizations = new ArrayList<UMLGeneralization>();
@@ -82,6 +88,24 @@ public class UMLModelDiff {
       this.deletedFolderPaths = new LinkedHashSet<String>();
    }
 
+   public UMLAbstractClass findClassInParentModel(String className) {
+	   for(UMLClass umlClass : parentModel.getClassList()) {
+		   if(umlClass.getName().equals(className)) {
+			   return umlClass;
+		   }
+	   }
+	   return null;
+   }
+
+   public UMLAbstractClass findClassInChildModel(String className) {
+	   for(UMLClass umlClass : childModel.getClassList()) {
+		   if(umlClass.getName().equals(className)) {
+			   return umlClass;
+		   }
+	   }
+	   return null;
+   }
+  
    public void reportAddedClass(UMLClass umlClass) {
 	   if(!addedClasses.contains(umlClass))
 		   this.addedClasses.add(umlClass);
@@ -1812,7 +1836,7 @@ public class UMLModelDiff {
 		int delegateStatements = 0;
 		for(StatementObject statement : operationBodyMapper.getNonMappedLeavesT1()) {
 			OperationInvocation invocation = statement.invocationCoveringEntireFragment();
-			if(invocation != null && invocation.matchesOperation(operationBodyMapper.getOperation1())) {
+			if(invocation != null && invocation.matchesOperation(operationBodyMapper.getOperation1(), parentMapper.getOperation1().variableDeclarationMap(), this)) {
 				delegateStatements++;
 			}
 		}

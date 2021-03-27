@@ -10,7 +10,6 @@ import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -147,10 +146,6 @@ public class OperationInvocation extends AbstractCall {
     	return subExpressions.size();
     }
 
-    public boolean matchesOperation(UMLOperation operation) {
-    	return matchesOperation(operation, new HashMap<String, Set<VariableDeclaration>>(), null);
-    }
-
     public boolean matchesOperation(UMLOperation operation, Map<String, Set<VariableDeclaration>> variableDeclarationMap, UMLModelDiff modelDiff) {
     	List<UMLType> inferredArgumentTypes = new ArrayList<UMLType>();
     	for(String arg : arguments) {
@@ -246,6 +241,10 @@ public class OperationInvocation extends AbstractCall {
     private boolean compatibleTypes(UMLParameter parameter, UMLType type, UMLModelDiff modelDiff) {
     	String type1 = parameter.getType().toString();
     	String type2 = type.toString();
+    	if(parameter.getType().getClassType().equals("Iterable") &&
+    			(type.getClassType().endsWith("List") || type.getClassType().endsWith("Set") || type.getClassType().endsWith("Collection")) &&
+    			parameter.getType().getTypeArguments().equals(type.getTypeArguments()))
+    		return true;
     	if(type1.equals("Throwable") && type2.endsWith("Exception"))
     		return true;
     	if(type1.equals("Exception") && type2.endsWith("Exception"))
@@ -253,6 +252,9 @@ public class OperationInvocation extends AbstractCall {
     	if(type1.equals("int") && type2.equals("long"))
     		return true;
     	if(type1.equals("long") && type2.equals("int"))
+    		return true;
+    	// *able interface
+    	if(!parameter.isVarargs() && type1.endsWith("able") && !type2.endsWith("able"))
     		return true;
     	if(!parameter.isVarargs() && type1.endsWith("Object") && !type2.endsWith("Object"))
     		return true;

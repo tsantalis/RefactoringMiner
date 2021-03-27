@@ -25,4 +25,35 @@ public class MethodInvocationReplacement extends Replacement {
 	public boolean differentExpressionNameAndArguments() {
 		return invokedOperationBefore.differentExpressionNameAndArguments(invokedOperationAfter);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((invokedOperationAfter == null) ? 0 : invokedOperationAfter.actualString().hashCode());
+		result = prime * result + ((invokedOperationBefore == null) ? 0 : invokedOperationBefore.actualString().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MethodInvocationReplacement other = (MethodInvocationReplacement) obj;
+		if (invokedOperationAfter == null) {
+			if (other.invokedOperationAfter != null)
+				return false;
+		} else if (!invokedOperationAfter.actualString().equals(other.invokedOperationAfter.actualString()))
+			return false;
+		if (invokedOperationBefore == null) {
+			if (other.invokedOperationBefore != null)
+				return false;
+		} else if (!invokedOperationBefore.actualString().equals(other.invokedOperationBefore.actualString()))
+			return false;
+		return true;
+	}
 }

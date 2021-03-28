@@ -1890,7 +1890,7 @@ public class UMLModelDiff {
             		  String anonymousID = "";
             		  for(int i=tokens.length-1; i>=0; i--) {
             			  String token = tokens[i];
-            			  if(isNumeric(token) || Character.isLowerCase(token.charAt(0))) {
+            			  if(PrefixSuffixUtils.isNumeric(token) || Character.isLowerCase(token.charAt(0))) {
             				  anonymousID = "." + token + anonymousID;
             			  }
             			  else {
@@ -1991,7 +1991,7 @@ public class UMLModelDiff {
 
    private boolean isAnonymousClassName(String className) {
 	   String anonymousID = className.substring(className.lastIndexOf(".")+1, className.length());
-	   return isNumeric(anonymousID) || Character.isLowerCase(anonymousID.charAt(0));
+	   return PrefixSuffixUtils.isNumeric(anonymousID) || Character.isLowerCase(anonymousID.charAt(0));
    }
 
    private boolean conflictingExpression(OperationInvocation invocation, UMLOperation addedOperation, Map<String, Set<VariableDeclaration>> variableDeclarationMap) {
@@ -2686,11 +2686,4 @@ public class UMLModelDiff {
       if(classDiff != null)
     	  classDiff.getAddedOperations().remove(operation);
    }
-
-	private static boolean isNumeric(String str) {
-		for(char c : str.toCharArray()) {
-			if(!Character.isDigit(c)) return false;
-		}
-		return true;
-	}
 }

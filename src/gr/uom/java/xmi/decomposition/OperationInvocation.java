@@ -2,6 +2,7 @@ package gr.uom.java.xmi.decomposition;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
@@ -10,6 +11,9 @@ import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -29,7 +33,47 @@ public class OperationInvocation extends AbstractCall {
 	private String methodName;
 	private List<String> subExpressions = new ArrayList<String>();
 	private volatile int hashCode = 0;
-	
+	private static Map<String, String> PRIMITIVE_WRAPPER_CLASS_MAP;
+    private static Map<String, List<String>> PRIMITIVE_TYPE_WIDENING_MAP;
+    private static Map<String, List<String>> PRIMITIVE_TYPE_NARROWING_MAP;
+    private static List<String> PRIMITIVE_TYPE_LIST;
+
+    static {
+    	PRIMITIVE_TYPE_LIST = new ArrayList<>(Arrays.asList("byte", "short", "int", "long", "float", "double", "char", "boolean"));
+    	
+    	PRIMITIVE_WRAPPER_CLASS_MAP = new HashMap<>();
+        PRIMITIVE_WRAPPER_CLASS_MAP.put("boolean", "Boolean");
+        PRIMITIVE_WRAPPER_CLASS_MAP.put("byte", "Byte");
+        PRIMITIVE_WRAPPER_CLASS_MAP.put("char", "Character");
+        PRIMITIVE_WRAPPER_CLASS_MAP.put("float", "Float");
+        PRIMITIVE_WRAPPER_CLASS_MAP.put("int", "Integer");
+        PRIMITIVE_WRAPPER_CLASS_MAP.put("long", "Long");
+        PRIMITIVE_WRAPPER_CLASS_MAP.put("short", "Short");
+        PRIMITIVE_WRAPPER_CLASS_MAP.put("double", "Double");
+
+        PRIMITIVE_WRAPPER_CLASS_MAP = Collections.unmodifiableMap(PRIMITIVE_WRAPPER_CLASS_MAP);
+
+        PRIMITIVE_TYPE_WIDENING_MAP = new HashMap<>();
+        PRIMITIVE_TYPE_WIDENING_MAP.put("byte", Arrays.asList("short", "int", "long", "float", "double"));
+        PRIMITIVE_TYPE_WIDENING_MAP.put("short", Arrays.asList("int", "long", "float", "double"));
+        PRIMITIVE_TYPE_WIDENING_MAP.put("char", Arrays.asList("int", "long", "float", "double"));
+        PRIMITIVE_TYPE_WIDENING_MAP.put("int", Arrays.asList("long", "float", "double"));
+        PRIMITIVE_TYPE_WIDENING_MAP.put("long", Arrays.asList("float", "double"));
+        PRIMITIVE_TYPE_WIDENING_MAP.put("float", Arrays.asList("double"));
+
+        PRIMITIVE_TYPE_WIDENING_MAP = Collections.unmodifiableMap(PRIMITIVE_TYPE_WIDENING_MAP);
+
+        PRIMITIVE_TYPE_NARROWING_MAP = new HashMap<>();
+        PRIMITIVE_TYPE_NARROWING_MAP.put("short", Arrays.asList("byte", "char"));
+        PRIMITIVE_TYPE_NARROWING_MAP.put("char", Arrays.asList("byte", "short"));
+        PRIMITIVE_TYPE_NARROWING_MAP.put("int", Arrays.asList("byte", "short", "char"));
+        PRIMITIVE_TYPE_NARROWING_MAP.put("long", Arrays.asList("byte", "short", "char", "int"));
+        PRIMITIVE_TYPE_NARROWING_MAP.put("float", Arrays.asList("byte", "short", "char", "int", "long"));
+        PRIMITIVE_TYPE_NARROWING_MAP.put("double", Arrays.asList("byte", "short", "char", "int", "long", "float"));
+
+        PRIMITIVE_TYPE_NARROWING_MAP = Collections.unmodifiableMap(PRIMITIVE_TYPE_NARROWING_MAP);
+    }
+
 	public OperationInvocation(CompilationUnit cu, String filePath, MethodInvocation invocation) {
 		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.METHOD_INVOCATION);
 		this.methodName = invocation.getName().getIdentifier();
@@ -148,6 +192,18 @@ public class OperationInvocation extends AbstractCall {
 
     public boolean matchesOperation(UMLOperation operation, UMLOperation callerOperation, UMLModelDiff modelDiff) {
     	Map<String, Set<VariableDeclaration>> variableDeclarationMap = callerOperation.variableDeclarationMap();
+    	Map<String, VariableDeclaration> parentFieldDeclarationMap = null;
+    	Map<String, VariableDeclaration> childFieldDeclarationMap = null;
+    	if(modelDiff != null) {
+    		UMLAbstractClass parentCallerClass = modelDiff.findClassInParentModel(callerOperation.getClassName());
+    		if(parentCallerClass != null) {
+    			parentFieldDeclarationMap = parentCallerClass.getFieldDeclarationMap();
+    		}
+    		UMLAbstractClass childCallerClass = modelDiff.findClassInChildModel(callerOperation.getClassName());
+    		if(childCallerClass != null) {
+    			childFieldDeclarationMap = childCallerClass.getFieldDeclarationMap();
+    		}
+    	}
     	List<UMLType> inferredArgumentTypes = new ArrayList<UMLType>();
     	for(String arg : arguments) {
     		int indexOfOpeningParenthesis = arg.indexOf("(");
@@ -177,8 +233,23 @@ public class OperationInvocation extends AbstractCall {
     				}
     			}
     		}
+    		else if(parentFieldDeclarationMap != null && parentFieldDeclarationMap.containsKey(arg)) {
+    			VariableDeclaration variableDeclaration = parentFieldDeclarationMap.get(arg);
+    			if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
+					inferredArgumentTypes.add(variableDeclaration.getType());
+				}
+    		}
+    		else if(childFieldDeclarationMap != null && childFieldDeclarationMap.containsKey(arg)) {
+    			VariableDeclaration variableDeclaration = childFieldDeclarationMap.get(arg);
+    			if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
+					inferredArgumentTypes.add(variableDeclaration.getType());
+				}
+    		}
     		else if(arg.startsWith("\"") && arg.endsWith("\"")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("String"));
+    		}
+    		else if(PrefixSuffixUtils.isNumeric(arg)) {
+    			inferredArgumentTypes.add(UMLType.extractTypeObject("int"));
     		}
     		else if(arg.startsWith("\'") && arg.endsWith("\'")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("char"));
@@ -236,7 +307,8 @@ public class OperationInvocation extends AbstractCall {
     		}
     		i++;
     	}
-    	return this.methodName.equals(operation.getName()) && (this.typeArguments == operation.getParameterTypeList().size() || varArgsMatch(operation));
+    	UMLType lastInferredArgumentType = inferredArgumentTypes.size() > 0 ? inferredArgumentTypes.get(inferredArgumentTypes.size()-1) : null;
+		return this.methodName.equals(operation.getName()) && (this.typeArguments == operation.getParameterTypeList().size() || varArgsMatch(operation, lastInferredArgumentType));
     }
 
     private boolean compatibleTypes(UMLParameter parameter, UMLType type, UMLModelDiff modelDiff) {
@@ -250,10 +322,13 @@ public class OperationInvocation extends AbstractCall {
     		return true;
     	if(type1.equals("Exception") && type2.endsWith("Exception"))
     		return true;
-    	if(type1.equals("int") && type2.equals("long"))
-    		return true;
-    	if(type1.equals("long") && type2.equals("int"))
-    		return true;
+    	if (isPrimitiveType(type1) && isPrimitiveType(type2)) {
+            if (isWideningPrimitiveConversion(type2, type1)) {
+                return true;
+            } else if (isNarrowingPrimitiveConversion(type2, type1)) {
+                return true;
+            }
+    	}
     	// *able interface
     	if(!parameter.isVarargs() && type1.endsWith("able") && !type2.endsWith("able"))
     		return true;
@@ -280,6 +355,18 @@ public class OperationInvocation extends AbstractCall {
     	return false;
     }
 
+    private static boolean isWideningPrimitiveConversion(String type1, String type2) {
+        return PRIMITIVE_TYPE_WIDENING_MAP.containsKey(type1) && PRIMITIVE_TYPE_WIDENING_MAP.get(type1).contains(type2);
+    }
+
+    private static boolean isNarrowingPrimitiveConversion(String type1, String type2) {
+        return PRIMITIVE_TYPE_NARROWING_MAP.containsKey(type1) && PRIMITIVE_TYPE_NARROWING_MAP.get(type1).contains(type2);
+    }
+
+    private static boolean isPrimitiveType(String argumentTypeClassName) {
+        return PRIMITIVE_TYPE_LIST.contains(argumentTypeClassName);
+    }
+
     private UMLClassBaseDiff getUMLClassDiff(UMLModelDiff modelDiff, UMLType type) {
     	UMLClassBaseDiff classDiff = null;
     	if(modelDiff != null) {
@@ -291,11 +378,23 @@ public class OperationInvocation extends AbstractCall {
 		return classDiff;
     }
 
-    private boolean varArgsMatch(UMLOperation operation) {
-    	//0 varargs arguments passed
-    	return this.typeArguments == operation.getNumberOfNonVarargsParameters() ||
-    			//>=1 varargs arguments passed
-    			(operation.hasVarargsParameter() && this.typeArguments > operation.getNumberOfNonVarargsParameters());
+    private boolean varArgsMatch(UMLOperation operation, UMLType lastInferredArgumentType) {
+		//0 varargs arguments passed
+		if(this.typeArguments == operation.getNumberOfNonVarargsParameters()) {
+			return true;
+		}
+		//>=1 varargs arguments passed
+		if(operation.hasVarargsParameter() && this.typeArguments > operation.getNumberOfNonVarargsParameters()) {
+			List<UMLType> parameterTypeList = operation.getParameterTypeList();
+			UMLType lastParameterType = parameterTypeList.get(parameterTypeList.size()-1);
+			if(lastParameterType.equals(lastInferredArgumentType)) {
+				return true;
+			}
+			if(lastInferredArgumentType != null && lastParameterType.getClassType().equals(lastInferredArgumentType.getClassType())) {
+				return true;
+			}
+		}
+		return false;
     }
 
     public boolean compatibleExpression(OperationInvocation other) {

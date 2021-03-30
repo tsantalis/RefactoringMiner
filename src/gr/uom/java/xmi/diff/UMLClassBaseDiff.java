@@ -32,6 +32,7 @@ import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.SplitVariableReplacement;
+import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 
@@ -1302,8 +1303,16 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	private boolean mappedElementsMoreThanNonMappedT1AndT2(int mappings, UMLOperationBodyMapper operationBodyMapper) {
-		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();
-		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();
+		List<CompositeReplacement> composites = operationBodyMapper.getCompositeReplacements();
+		int additionallyMatchedStatements1 = 0;
+		int additionallyMatchedStatements2 = 0;
+		for(CompositeReplacement composite : composites) {
+			additionallyMatchedStatements1 += composite.getAdditionallyMatchedStatements1().size();
+			additionallyMatchedStatements2 += composite.getAdditionallyMatchedStatements2().size();
+		}
+		mappings += additionallyMatchedStatements1 + additionallyMatchedStatements2;
+		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1() - additionallyMatchedStatements1;
+		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2() - additionallyMatchedStatements2;
 		return (mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 				(nonMappedElementsT1 == 0 && mappings > Math.floor(nonMappedElementsT2/2.0)) ||
 				(mappings == 1 && nonMappedElementsT1 + nonMappedElementsT2 == 1 && operationBodyMapper.getOperation1().getName().equals(operationBodyMapper.getOperation2().getName()));
@@ -1559,10 +1568,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(operationBefore1 != null && operationBefore2 != null) {
 			operationsBeforeMatch = operationBefore1.equalReturnParameter(operationBefore2) && operationBefore1.equalParameterTypes(operationBefore2) && operationBefore1.getName().equals(operationBefore2.getName());
 		}
+		else if(operationBefore1 == null && operationBefore2 == null) {
+			//both operations are in the first position
+			operationsBeforeMatch = true;
+		}
 		
 		boolean operationsAfterMatch = false;
 		if(operationAfter1 != null && operationAfter2 != null) {
 			operationsAfterMatch = operationAfter1.equalReturnParameter(operationAfter2) && operationAfter1.equalParameterTypes(operationAfter2) && operationAfter1.getName().equals(operationAfter2.getName());
+		}
+		else if(operationAfter1 == null && operationAfter2 == null) {
+			//both operations are in the last position
+			operationsAfterMatch = true;
 		}
 		
 		return operationsBeforeMatch || operationsAfterMatch;

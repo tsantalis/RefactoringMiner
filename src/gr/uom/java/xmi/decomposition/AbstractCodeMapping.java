@@ -8,6 +8,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ObjectCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
@@ -113,6 +114,15 @@ public abstract class AbstractCodeMapping {
 			}
 		}
 		return false;
+	}
+
+	public CompositeReplacement containsCompositeReplacement() {
+		for(Replacement r : replacements) {
+			if(r.getType().equals(ReplacementType.COMPOSITE)) {
+				return (CompositeReplacement)r;
+			}
+		}
+		return null;
 	}
 
 	public void addReplacement(Replacement replacement) {

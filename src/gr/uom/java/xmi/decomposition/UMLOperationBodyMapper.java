@@ -717,6 +717,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return nonMappedInnerNodesT2;
 	}
 
+	public List<CompositeReplacement> getCompositeReplacements() {
+		List<CompositeReplacement> composites = new ArrayList<>();
+		for(AbstractCodeMapping mapping : getMappings()) {
+			CompositeReplacement composite = mapping.containsCompositeReplacement();
+			if(composite != null) {
+				composites.add(composite);
+			}
+		}
+		return composites;
+	}
+
 	public int mappingsWithoutBlocks() {
 		int count = 0;
 		for(AbstractCodeMapping mapping : getMappings()) {
@@ -2243,14 +2254,60 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							!assignmentInvocationCoveringTheEntireStatement1.getArguments().contains(key1) && invocationCoveringTheEntireStatement2.getExpression() != null) {
 						boolean expressionMatched = false;
 						Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<AbstractCodeFragment>();
+						Map<VariableDeclaration, AbstractCodeFragment> variableDeclarationsInUnmatchedStatements2 = new LinkedHashMap<VariableDeclaration, AbstractCodeFragment>();
+						for(AbstractCodeFragment codeFragment : replacementInfo.statements2) {
+							for(VariableDeclaration variableDeclaration : codeFragment.getVariableDeclarations()) {
+								variableDeclarationsInUnmatchedStatements2.put(variableDeclaration, codeFragment);
+							}
+						}
 						for(AbstractCodeFragment codeFragment : replacementInfo.statements2) {
 							VariableDeclaration variableDeclaration = codeFragment.getVariableDeclaration(invocationCoveringTheEntireStatement2.getExpression());
 							OperationInvocation invocationCoveringEntireCodeFragment = codeFragment.invocationCoveringEntireFragment();
-							if(variableDeclaration != null && variableDeclaration.getInitializer() != null && invocation1.getExpression() != null && invocation1.getExpression().equals(variableDeclaration.getInitializer().getString())) {
-								Replacement r = new Replacement(invocation1.getExpression(), variableDeclaration.getVariableName(), ReplacementType.VARIABLE_REPLACED_WITH_EXPRESSION_OF_METHOD_INVOCATION);
-								replacementInfo.getReplacements().add(r);
-								additionallyMatchedStatements2.add(codeFragment);
-								expressionMatched = true;
+							if(variableDeclaration != null && variableDeclaration.getInitializer() != null) {
+								String initializer = variableDeclaration.getInitializer().getString();
+								if(invocation1.getExpression() != null && invocation1.getExpression().equals(initializer)) {
+									Replacement r = new Replacement(invocation1.getExpression(), variableDeclaration.getVariableName(), ReplacementType.VARIABLE_REPLACED_WITH_EXPRESSION_OF_METHOD_INVOCATION);
+									replacementInfo.getReplacements().add(r);
+									additionallyMatchedStatements2.add(codeFragment);
+									expressionMatched = true;
+								}
+								else if(invocation1.getExpression() != null) {
+									String temp = initializer;
+									Set<VariableDeclaration> matchingDeclarations = new LinkedHashSet<>();
+									for(VariableDeclaration decl : variableDeclarationsInUnmatchedStatements2.keySet()) {
+										if(temp.contains(decl.getVariableName() + ".") && decl.getInitializer() != null) {
+											temp = ReplacementUtil.performReplacement(temp, decl.getVariableName(), decl.getInitializer().getString());
+											matchingDeclarations.add(decl);
+										}
+									}
+									if(invocation1.getExpression().equals(temp)) {
+										expressionMatched = true;
+										additionallyMatchedStatements2.add(codeFragment);
+										for(VariableDeclaration decl : matchingDeclarations) {
+											additionallyMatchedStatements2.add(variableDeclarationsInUnmatchedStatements2.get(decl));
+										}
+									}
+									else if(invocation1.getExpression().startsWith(temp + ".")) {
+										additionallyMatchedStatements2.add(codeFragment);
+										for(VariableDeclaration decl : matchingDeclarations) {
+											additionallyMatchedStatements2.add(variableDeclarationsInUnmatchedStatements2.get(decl));
+										}
+										for(AbstractCodeFragment codeFragment2 : replacementInfo.statements2) {
+											OperationInvocation invocationCoveringEntireCodeFragment2 = codeFragment2.invocationCoveringEntireFragment();
+											if(invocationCoveringEntireCodeFragment2 != null) {
+												String extendedTemp = temp + "." + invocationCoveringEntireCodeFragment2.actualString().substring(
+														invocationCoveringEntireCodeFragment2.getExpression() != null ? invocationCoveringEntireCodeFragment2.getExpression().length()+1 : 0);
+												if(invocation1.getExpression().startsWith(extendedTemp)) {
+													additionallyMatchedStatements2.add(codeFragment2);
+													temp = extendedTemp;
+												}
+											}
+										}
+										if(invocation1.getExpression().equals(temp)) {
+											expressionMatched = true;
+										}
+									}
+								}
 							}
 							if(invocationCoveringEntireCodeFragment != null && assignmentInvocationCoveringTheEntireStatement1.identicalName(invocationCoveringEntireCodeFragment) &&
 									assignmentInvocationCoveringTheEntireStatement1.equalArguments(invocationCoveringEntireCodeFragment)) {

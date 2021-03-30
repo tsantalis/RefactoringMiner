@@ -22,4 +22,8 @@ public class CompositeReplacement extends Replacement {
 	public Set<AbstractCodeFragment> getAdditionallyMatchedStatements2() {
 		return additionallyMatchedStatements2;
 	}
+
+	public int getTotalAdditionallyMatchedStatements() {
+		return additionallyMatchedStatements1.size() + additionallyMatchedStatements2.size();
+	}
 }

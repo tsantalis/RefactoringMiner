@@ -233,17 +233,22 @@ public class OperationInvocation extends AbstractCall {
     				}
     			}
     		}
-    		else if(parentFieldDeclarationMap != null && parentFieldDeclarationMap.containsKey(arg)) {
-    			VariableDeclaration variableDeclaration = parentFieldDeclarationMap.get(arg);
-    			if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
-					inferredArgumentTypes.add(variableDeclaration.getType());
-				}
-    		}
-    		else if(childFieldDeclarationMap != null && childFieldDeclarationMap.containsKey(arg)) {
-    			VariableDeclaration variableDeclaration = childFieldDeclarationMap.get(arg);
-    			if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
-					inferredArgumentTypes.add(variableDeclaration.getType());
-				}
+    		else if((parentFieldDeclarationMap != null && parentFieldDeclarationMap.containsKey(arg)) ||
+    				(childFieldDeclarationMap != null && childFieldDeclarationMap.containsKey(arg))) {
+    			boolean variableDeclarationFound = false;
+    			if(parentFieldDeclarationMap != null && parentFieldDeclarationMap.containsKey(arg)) {
+	    			VariableDeclaration variableDeclaration = parentFieldDeclarationMap.get(arg);
+	    			if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
+						inferredArgumentTypes.add(variableDeclaration.getType());
+						variableDeclarationFound = true;
+					}
+    			}
+    			if(!variableDeclarationFound && childFieldDeclarationMap != null && childFieldDeclarationMap.containsKey(arg)) {
+    				VariableDeclaration variableDeclaration = childFieldDeclarationMap.get(arg);
+        			if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
+    					inferredArgumentTypes.add(variableDeclaration.getType());
+    				}
+    			}
     		}
     		else if(arg.startsWith("\"") && arg.endsWith("\"")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("String"));

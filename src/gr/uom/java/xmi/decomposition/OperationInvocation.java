@@ -327,12 +327,19 @@ public class OperationInvocation extends AbstractCall {
     		return true;
     	if(type1.equals("Exception") && type2.endsWith("Exception"))
     		return true;
-    	if (isPrimitiveType(type1) && isPrimitiveType(type2)) {
-            if (isWideningPrimitiveConversion(type2, type1)) {
+    	if(isPrimitiveType(type1) && isPrimitiveType(type2)) {
+            if(isWideningPrimitiveConversion(type2, type1))
                 return true;
-            } else if (isNarrowingPrimitiveConversion(type2, type1)) {
+            else if(isNarrowingPrimitiveConversion(type2, type1))
                 return true;
-            }
+    	}
+    	else if(isPrimitiveType(type1) && !isPrimitiveType(type2)) {
+    		if(PRIMITIVE_WRAPPER_CLASS_MAP.get(type1).equals(type2))
+    			return true;
+    	}
+    	else if(isPrimitiveType(type2) && !isPrimitiveType(type1)) {
+    		if(PRIMITIVE_WRAPPER_CLASS_MAP.get(type2).equals(type1))
+    			return true;
     	}
     	// *able interface
     	if(!parameter.isVarargs() && type1.endsWith("able") && !type2.endsWith("able"))

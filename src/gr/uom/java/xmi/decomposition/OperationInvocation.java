@@ -3,6 +3,7 @@ package gr.uom.java.xmi.decomposition;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAbstractClass;
+import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
@@ -341,12 +342,33 @@ public class OperationInvocation extends AbstractCall {
     		if(PRIMITIVE_WRAPPER_CLASS_MAP.get(type2).equals(type1))
     			return true;
     	}
-    	// *able interface
-    	if(!parameter.isVarargs() && type1.endsWith("able") && !type2.endsWith("able"))
-    		return true;
+    	if(modelDiff != null) {
+	    	UMLAbstractClass subClassInParentModel = modelDiff.findClassInParentModel(type2);
+	    	if(!parameter.isVarargs() && subClassInParentModel instanceof UMLClass) {
+	    		UMLClass subClass = (UMLClass)subClassInParentModel;
+	    		if(subClass.getSuperclass() != null) {
+	    			if(subClass.getSuperclass().equalClassType(parameter.getType()))
+	    				return true;
+	    		}
+				for(UMLType implementedInterface : subClass.getImplementedInterfaces()) {
+	    			if(implementedInterface.equalClassType(parameter.getType()))
+	    				return true;
+	    		}
+	    	}
+	    	UMLAbstractClass subClassInChildModel = modelDiff.findClassInChildModel(type2);
+	    	if(!parameter.isVarargs() && subClassInChildModel instanceof UMLClass) {
+	    		UMLClass subClass = (UMLClass)subClassInChildModel;
+	    		if(subClass.getSuperclass() != null) {
+	    			if(subClass.getSuperclass().equalClassType(parameter.getType()))
+	    				return true;
+	    		}
+				for(UMLType implementedInterface : subClass.getImplementedInterfaces()) {
+	    			if(implementedInterface.equalClassType(parameter.getType()))
+	    				return true;
+	    		}
+	    	}
+    	}
     	if(!parameter.isVarargs() && type1.endsWith("Object") && !type2.endsWith("Object"))
-    		return true;
-    	if(!parameter.isVarargs() && type1.endsWith("Base") && type2.endsWith("Impl"))
     		return true;
     	if(parameter.isVarargs() && type1.endsWith("Object[]") && (type2.equals("Throwable") || type2.endsWith("Exception")))
     		return true;

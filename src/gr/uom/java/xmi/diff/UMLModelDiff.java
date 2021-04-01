@@ -94,12 +94,22 @@ public class UMLModelDiff {
 			   return umlClass;
 		   }
 	   }
+	   for(UMLClass umlClass : parentModel.getClassList()) {
+		   if(umlClass.getName().endsWith("." + className)) {
+			   return umlClass;
+		   }
+	   }
 	   return null;
    }
 
    public UMLAbstractClass findClassInChildModel(String className) {
 	   for(UMLClass umlClass : childModel.getClassList()) {
 		   if(umlClass.getName().equals(className)) {
+			   return umlClass;
+		   }
+	   }
+	   for(UMLClass umlClass : childModel.getClassList()) {
+		   if(umlClass.getName().endsWith("." + className)) {
 			   return umlClass;
 		   }
 	   }

@@ -11,6 +11,7 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
@@ -27,6 +28,8 @@ public class UMLAttributeDiff {
 	private List<UMLOperationBodyMapper> operationBodyMapperList;
 	private UMLAnnotationListDiff annotationListDiff;
 	private List<UMLAnonymousClassDiff> anonymousClassDiffList;
+	private UMLOperation addedGetter;
+	private UMLOperation addedSetter;
 
 	public UMLAttributeDiff(UMLAttribute removedAttribute, UMLAttribute addedAttribute, UMLClassBaseDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
 		this(removedAttribute, addedAttribute, classDiff.getOperationBodyMapperList());
@@ -39,6 +42,25 @@ public class UMLAttributeDiff {
 				UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
 				anonymousClassDiff.process();
 				anonymousClassDiffList.add(anonymousClassDiff);
+			}
+		}
+		for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
+			if(addedOperation.isGetter() && addedOperation.getReturnParameter().getType().equals(addedAttribute.getType())) {
+				addedOperation.getAllVariables();
+				List<String> variables = addedOperation.getAllVariables();
+				if(variables.contains(addedAttribute.getName()) || variables.contains("this." + addedAttribute.getName())) {
+					this.addedGetter = addedOperation;
+					break;
+				}
+			}
+		}
+		for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
+			if(addedOperation.isSetter() && addedOperation.getParameterTypeList().get(0).equals(addedAttribute.getType())) {
+				List<String> variables = addedOperation.getAllVariables();
+				if(variables.contains(addedAttribute.getName()) || variables.contains("this." + addedAttribute.getName())) {
+					this.addedSetter = addedOperation;
+					break;
+				}
 			}
 		}
 	}
@@ -93,7 +115,7 @@ public class UMLAttributeDiff {
 	}
 
 	public boolean isEmpty() {
-		return !visibilityChanged && !typeChanged && !renamed && !qualifiedTypeChanged && annotationListDiff.isEmpty() && anonymousClassDiffList.isEmpty();
+		return !visibilityChanged && !typeChanged && !renamed && !qualifiedTypeChanged && annotationListDiff.isEmpty() && anonymousClassDiffList.isEmpty() && addedGetter == null && addedSetter == null;
 	}
 
 	public String toString() {
@@ -160,6 +182,10 @@ public class UMLAttributeDiff {
 			ChangeAttributeAccessModifierRefactoring ref = new ChangeAttributeAccessModifierRefactoring(removedAttribute.getVisibility(), addedAttribute.getVisibility(), removedAttribute, addedAttribute);
 			refactorings.add(ref);
 		}
+		if(addedSetter != null || addedGetter != null) {
+			EncapsulateAttributeRefactoring ref = new EncapsulateAttributeRefactoring(removedAttribute, addedAttribute, addedGetter, addedSetter);
+			refactorings.add(ref);
+		}
 		refactorings.addAll(getAnnotationRefactorings());
 		refactorings.addAll(getAnonymousClassRefactorings());
 		return refactorings;
@@ -182,6 +208,10 @@ public class UMLAttributeDiff {
 		}
 		if(isVisibilityChanged()) {
 			ChangeAttributeAccessModifierRefactoring ref = new ChangeAttributeAccessModifierRefactoring(removedAttribute.getVisibility(), addedAttribute.getVisibility(), removedAttribute, addedAttribute);
+			refactorings.add(ref);
+		}
+		if(addedSetter != null || addedGetter != null) {
+			EncapsulateAttributeRefactoring ref = new EncapsulateAttributeRefactoring(removedAttribute, addedAttribute, addedGetter, addedSetter);
 			refactorings.add(ref);
 		}
 		refactorings.addAll(getAnnotationRefactorings());

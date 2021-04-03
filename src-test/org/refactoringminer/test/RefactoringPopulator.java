@@ -94,7 +94,8 @@ public class RefactoringPopulator {
 		ChangeThrownExceptionType(new BigInteger("2305843009213693952")),
 		ChangeMethodAccessModifier(new BigInteger("4611686018427387904")),
 		ChangeAttributeAccessModifier(new BigInteger("9223372036854775808")),
-		All(new BigInteger("18446744073709551615"));
+		EncapsulateAttribute(new BigInteger("18446744073709551616")),
+		All(new BigInteger("36893488147419103231"));
 
 		private BigInteger value;
 

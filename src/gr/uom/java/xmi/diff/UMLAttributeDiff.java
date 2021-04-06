@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
@@ -44,25 +45,42 @@ public class UMLAttributeDiff {
 				anonymousClassDiffList.add(anonymousClassDiff);
 			}
 		}
-		for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
-			if(addedOperation.isGetter() && addedOperation.getReturnParameter().getType().equals(addedAttribute.getType())) {
-				addedOperation.getAllVariables();
-				List<String> variables = addedOperation.getAllVariables();
-				if(variables.contains(addedAttribute.getName()) || variables.contains("this." + addedAttribute.getName())) {
-					this.addedGetter = addedOperation;
-					break;
+		this.addedGetter = findMethod(classDiff.getAddedOperations(), addedAttribute, getterCondition(addedAttribute));
+		if(this.addedGetter != null && !removedAttribute.getName().equals(addedAttribute.getName())) {
+			UMLOperation removedGetter = findMethod(classDiff.getRemovedOperations(), removedAttribute, getterCondition(removedAttribute));
+			if(removedGetter != null) {
+				this.addedGetter = null;
+			}
+		}
+		this.addedSetter = findMethod(classDiff.getAddedOperations(), addedAttribute, setterCondition(addedAttribute));
+		if(this.addedSetter != null && !removedAttribute.getName().equals(addedAttribute.getName())) {
+			UMLOperation removedSetter = findMethod(classDiff.getRemovedOperations(), removedAttribute, setterCondition(removedAttribute));
+			if(removedSetter != null) {
+				this.addedSetter = null;
+			}
+		}
+	}
+
+	private Function<UMLOperation, Boolean> getterCondition(UMLAttribute attribute) {
+		return (UMLOperation operation) -> operation.isGetter() && (operation.getReturnParameter().getType().equals(attribute.getType()) ||
+				operation.getReturnParameter().getType().getClassType().equalsIgnoreCase(attribute.getType().getClassType()));
+	}
+
+	private Function<UMLOperation, Boolean> setterCondition(UMLAttribute attribute) {
+		return (UMLOperation operation) -> operation.isSetter() && (operation.getParameterTypeList().get(0).equals(attribute.getType()) ||
+				operation.getParameterTypeList().get(0).getClassType().equalsIgnoreCase(attribute.getType().getClassType()));
+	}
+
+	private UMLOperation findMethod(List<UMLOperation> operations, UMLAttribute attribute, Function<UMLOperation, Boolean> condition) {
+		for(UMLOperation operation : operations) {
+			if(!operation.isConstructor() && !operation.hasOverrideAnnotation() && condition.apply(operation)) {
+				List<String> variables = operation.getAllVariables();
+				if(variables.contains(attribute.getName()) || variables.contains("this." + attribute.getName())) {
+					return operation;
 				}
 			}
 		}
-		for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
-			if(addedOperation.isSetter() && addedOperation.getParameterTypeList().get(0).equals(addedAttribute.getType())) {
-				List<String> variables = addedOperation.getAllVariables();
-				if(variables.contains(addedAttribute.getName()) || variables.contains("this." + addedAttribute.getName())) {
-					this.addedSetter = addedOperation;
-					break;
-				}
-			}
-		}
+		return null;
 	}
 
 	public UMLAttributeDiff(UMLAttribute removedAttribute, UMLAttribute addedAttribute, List<UMLOperationBodyMapper> operationBodyMapperList) {
@@ -182,7 +200,7 @@ public class UMLAttributeDiff {
 			ChangeAttributeAccessModifierRefactoring ref = new ChangeAttributeAccessModifierRefactoring(removedAttribute.getVisibility(), addedAttribute.getVisibility(), removedAttribute, addedAttribute);
 			refactorings.add(ref);
 		}
-		if(addedSetter != null || addedGetter != null) {
+		if(encapsulationCondition()) {
 			EncapsulateAttributeRefactoring ref = new EncapsulateAttributeRefactoring(removedAttribute, addedAttribute, addedGetter, addedSetter);
 			refactorings.add(ref);
 		}
@@ -210,13 +228,17 @@ public class UMLAttributeDiff {
 			ChangeAttributeAccessModifierRefactoring ref = new ChangeAttributeAccessModifierRefactoring(removedAttribute.getVisibility(), addedAttribute.getVisibility(), removedAttribute, addedAttribute);
 			refactorings.add(ref);
 		}
-		if(addedSetter != null || addedGetter != null) {
+		if(encapsulationCondition()) {
 			EncapsulateAttributeRefactoring ref = new EncapsulateAttributeRefactoring(removedAttribute, addedAttribute, addedGetter, addedSetter);
 			refactorings.add(ref);
 		}
 		refactorings.addAll(getAnnotationRefactorings());
 		refactorings.addAll(getAnonymousClassRefactorings());
 		return refactorings;
+	}
+
+	private boolean encapsulationCondition() {
+		return addedSetter != null || addedGetter != null;
 	}
 
 	private boolean changeTypeCondition() {

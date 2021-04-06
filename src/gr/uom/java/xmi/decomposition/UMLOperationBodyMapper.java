@@ -4496,6 +4496,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(leaveSize1 == 1 && leaveSize2 == 1 && leaves1.get(0).getString().equals("continue;\n") && leaves2.get(0).getString().equals("return null;\n")) {
 					mappedLeavesSize++;
 				}
+				if(leaveSize1 == 2 && leaveSize2 == 1 && !leaves1.get(0).getString().equals("break;\n") && leaves1.get(1).getString().equals("break;\n") && leaves2.get(0).getString().startsWith("return ")) {
+					mappedLeavesSize++;
+				}
 			}
 			int max = Math.max(leaveSize1, leaveSize2);
 			if(max == 0) {

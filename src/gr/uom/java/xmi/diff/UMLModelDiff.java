@@ -2661,6 +2661,18 @@ public class UMLModelDiff {
 	   return false;
    }
 
+   public boolean refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(UMLOperation addedOperation) {
+	   for(Refactoring refactoring : refactorings) {
+		   if(refactoring instanceof MoveOperationRefactoring) {
+			   MoveOperationRefactoring moveRefactoring = (MoveOperationRefactoring)refactoring;
+			   if(moveRefactoring.getMovedOperation().equals(addedOperation)) {
+				   return true;
+			   }
+		   }
+	   }
+	   return false;
+   }
+
 	private boolean attributeMerged(UMLAttribute a1, UMLAttribute a2, Set<Refactoring> refactorings) {
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof MergeAttributeRefactoring) {

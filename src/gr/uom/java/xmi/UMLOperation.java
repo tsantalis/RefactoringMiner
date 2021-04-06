@@ -136,6 +136,15 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return operationBody;
 	}
 
+	public boolean hasOverrideAnnotation() {
+		for(UMLAnnotation annotation : annotations) {
+			if(annotation.getTypeName().equals("Override")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean hasTestAnnotation() {
 		for(UMLAnnotation annotation : annotations) {
 			if(annotation.getTypeName().equals("Test")) {

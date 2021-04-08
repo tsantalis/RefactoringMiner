@@ -1051,7 +1051,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						refactorings.addAll(operationSignatureDiff.getRefactorings());
 						if(!removedOperation.getName().equals(addedOperation.getName()) &&
 								!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
-							RenameOperationRefactoring rename = new RenameOperationRefactoring(bestMapper);
+							Set<MethodInvocationReplacement> callReferences = getCallReferences(removedOperation, addedOperation);
+							RenameOperationRefactoring rename = new RenameOperationRefactoring(bestMapper, callReferences);
 							refactorings.add(rename);
 						}
 						this.addOperationBodyMapper(bestMapper);
@@ -1092,7 +1093,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						refactorings.addAll(operationSignatureDiff.getRefactorings());
 						if(!removedOperation.getName().equals(addedOperation.getName()) &&
 								!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
-							RenameOperationRefactoring rename = new RenameOperationRefactoring(bestMapper);
+							Set<MethodInvocationReplacement> callReferences = getCallReferences(removedOperation, addedOperation);
+							RenameOperationRefactoring rename = new RenameOperationRefactoring(bestMapper, callReferences);
 							refactorings.add(rename);
 						}
 						this.addOperationBodyMapper(bestMapper);
@@ -1101,6 +1103,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+	}
+
+	private Set<MethodInvocationReplacement> getCallReferences(UMLOperation removedOperation, UMLOperation addedOperation) {
+		Set<MethodInvocationReplacement> callReferences = new LinkedHashSet<MethodInvocationReplacement>();
+		for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
+			UMLOperationBodyMapper mapper = consistentMethodInvocationRenames.get(replacement);
+			if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getOperation1(), modelDiff) &&
+					replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getOperation2(), modelDiff)) {
+				callReferences.add(replacement);
+			}
+		}
+		return callReferences;
 	}
 
 	private Map<MethodInvocationReplacement, UMLOperationBodyMapper> findConsistentMethodInvocationRenames() {
@@ -1204,6 +1218,16 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					absoluteDifferenceInPosition <= differenceInPosition &&
 					isPartOfMethodInlined(removedOperation, addedOperation)) {
 				mapperSet.add(operationBodyMapper);
+			}
+			else {
+				for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
+					UMLOperationBodyMapper mapper = consistentMethodInvocationRenames.get(replacement);
+					if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getOperation1(), modelDiff) &&
+							replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getOperation2(), modelDiff)) {
+						mapperSet.add(operationBodyMapper);
+						break;
+					}
+				}
 			}
 		}
 	}

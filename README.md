@@ -92,6 +92,9 @@ Currently, it supports the detection of the following refactorings:
 60. Remove Thrown Exception Type
 61. Change Thrown Exception Type
 62. Change Method Access Modifier
+63. Change Attribute Access Modifier
+64. Encapsulate Attribute
+65. Parameterize Attribute
 
 # How to build RefactoringMiner
 

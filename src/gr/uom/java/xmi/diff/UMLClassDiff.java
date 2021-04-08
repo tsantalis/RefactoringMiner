@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 
 public class UMLClassDiff extends UMLClassBaseDiff {
 	
@@ -153,7 +155,7 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 					refactorings.addAll(operationSignatureDiff.getRefactorings());
 					if(!removedOperation.getName().equals(addedOperation.getName()) &&
 							!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
-						RenameOperationRefactoring rename = new RenameOperationRefactoring(operationBodyMapper);
+						RenameOperationRefactoring rename = new RenameOperationRefactoring(operationBodyMapper, new HashSet<MethodInvocationReplacement>());
 						refactorings.add(rename);
 					}
 					this.addOperationBodyMapper(operationBodyMapper);

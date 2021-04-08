@@ -605,7 +605,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 				else if(candidate.getRenamedVariableDeclaration() != null) {
-					//inline field
+					if(a1 != null) {
+						RenameVariableRefactoring ref = new RenameVariableRefactoring(
+								a1.getVariableDeclaration(), candidate.getRenamedVariableDeclaration(),
+								candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getAttributeReferences());
+						if(!refactorings.contains(ref)) {
+							refactorings.add(ref);
+						}
+					}
+					else {
+						//field is declared in a superclass or outer class
+						candidateAttributeRenames.add(candidate);
+					}
 				}
 			}
 		}

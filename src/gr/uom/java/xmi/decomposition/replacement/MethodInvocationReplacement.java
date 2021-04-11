@@ -30,8 +30,8 @@ public class MethodInvocationReplacement extends Replacement {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((invokedOperationAfter == null) ? 0 : invokedOperationAfter.actualString().hashCode());
-		result = prime * result + ((invokedOperationBefore == null) ? 0 : invokedOperationBefore.actualString().hashCode());
+		result = prime * result + ((invokedOperationAfter == null) ? 0 : invokedOperationAfter.getLocationInfo().hashCode());
+		result = prime * result + ((invokedOperationBefore == null) ? 0 : invokedOperationBefore.getLocationInfo().hashCode());
 		return result;
 	}
 
@@ -47,12 +47,12 @@ public class MethodInvocationReplacement extends Replacement {
 		if (invokedOperationAfter == null) {
 			if (other.invokedOperationAfter != null)
 				return false;
-		} else if (!invokedOperationAfter.actualString().equals(other.invokedOperationAfter.actualString()))
+		} else if (!invokedOperationAfter.getLocationInfo().equals(other.invokedOperationAfter.getLocationInfo()))
 			return false;
 		if (invokedOperationBefore == null) {
 			if (other.invokedOperationBefore != null)
 				return false;
-		} else if (!invokedOperationBefore.actualString().equals(other.invokedOperationBefore.actualString()))
+		} else if (!invokedOperationBefore.getLocationInfo().equals(other.invokedOperationBefore.getLocationInfo()))
 			return false;
 		return true;
 	}

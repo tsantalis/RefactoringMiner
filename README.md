@@ -214,6 +214,7 @@ Refactorings and Commit Messages](https://doi.org/10.1109/SCAM.2019.00017)," *19
 50. Ameya Ketkar, Nikolaos Tsantalis, and Danny Dig, "Understanding Type Changes in Java," *ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering* (ESEC/FSE 2020), Sacramento, California, United States, November 8-13, 2020.
 51. Zhongxin Liu, Xin Xia, Meng Yan, and Shanping Li, "Automating Just-In-Time Comment Updating," *35th IEEE/ACM International Conference on Automated Software Engineering* (ASE 2020), September 21–25, 2020.
 52. Zadia Codabux and Christopher Dutchyn, "Profiling Developers Through the Lens of Technical Debt," *ACM/IEEE International Symposium on Empirical Software Engineering and Measurement* (ESEM 2020), October 8–9, 2020, Bari, Italy.
+53. Yiming Tang, Raffi Khatchadourian, Mehdi Bagherzadeh, Rhia Singh, Ajani Stewart, and Anita Raja, "An empirical study of refactorings and technical debt in Machine Learning systems," *International Conference on Software Engineering* (ICSE 2021), ACM/IEEE, May 2021.
 
 # Contributors
 The code in package **gr.uom.java.xmi.*** is developed by [Nikolaos Tsantalis](https://github.com/tsantalis).

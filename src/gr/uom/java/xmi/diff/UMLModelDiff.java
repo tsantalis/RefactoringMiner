@@ -1874,15 +1874,17 @@ public class UMLModelDiff {
       for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
     	  UMLOperation addedOperation = addedOperationIterator.next();
     	  for(UMLOperationBodyMapper mapper : mappers) {
-    		  if((mapper.nonMappedElementsT1() > 0 || !mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) && !mapper.containsExtractOperationRefactoring(addedOperation)) {
-               List<OperationInvocation> operationInvocations = ExtractOperationDetection.getInvocationsInSourceOperationAfterExtraction(mapper);
-               List<OperationInvocation> addedOperationInvocations = new ArrayList<OperationInvocation>();
-               for(OperationInvocation invocation : operationInvocations) {
-                  if(invocation.matchesOperation(addedOperation, mapper.getOperation2(), this)) {
-                     addedOperationInvocations.add(invocation);
-                  }
-               }
-               if(addedOperationInvocations.size() > 0) {
+    		  Pair<UMLOperation, UMLOperation> pair = Pair.of(mapper.getOperation1(), addedOperation);
+    		  if((mapper.nonMappedElementsT1() > 0 || !mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) && !mapper.containsExtractOperationRefactoring(addedOperation) && !processedOperationPairs.contains(pair)) {
+    			  processedOperationPairs.add(pair);
+    			  List<OperationInvocation> operationInvocations = ExtractOperationDetection.getInvocationsInSourceOperationAfterExtraction(mapper);
+    			  List<OperationInvocation> addedOperationInvocations = new ArrayList<OperationInvocation>();
+    			  for(OperationInvocation invocation : operationInvocations) {
+    				  if(invocation.matchesOperation(addedOperation, mapper.getOperation2(), this)) {
+    					  addedOperationInvocations.add(invocation);
+    				  }
+    			  }
+    			  if(addedOperationInvocations.size() > 0) {
             	  OperationInvocation addedOperationInvocation = addedOperationInvocations.get(0);
             	  List<String> arguments = addedOperationInvocation.getArguments();
             	  List<String> parameters = addedOperation.getParameterNameList();

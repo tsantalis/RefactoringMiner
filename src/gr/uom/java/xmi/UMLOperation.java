@@ -31,6 +31,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	private boolean isConstructor;
 	private boolean isFinal;
 	private boolean isStatic;
+	private boolean isSynchronized;
 	private boolean emptyBody;
 	private OperationBody operationBody;
 	private List<UMLAnonymousClass> anonymousClassList;
@@ -122,6 +123,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 
 	public void setStatic(boolean isStatic) {
 		this.isStatic = isStatic;
+	}
+
+	public boolean isSynchronized() {
+		return isSynchronized;
+	}
+
+	public void setSynchronized(boolean isSynchronized) {
+		this.isSynchronized = isSynchronized;
 	}
 
 	public boolean hasEmptyBody() {

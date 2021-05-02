@@ -79,7 +79,9 @@ public enum RefactoringType {
 	CHANGE_THROWN_EXCEPTION_TYPE("Change Thrown Exception Type", "Change Thrown Exception Type (.+) to (.+) in method (.+) from class (.+)"),
 	CHANGE_OPERATION_ACCESS_MODIFIER("Change Method Access Modifier", "Change Method Access Modifier (.+) to (.+) in method (.+) from class (.+)"),
 	CHANGE_ATTRIBUTE_ACCESS_MODIFIER("Change Attribute Access Modifier", "Change Attribute Access Modifier (.+) to (.+) in attribute (.+) from class (.+)"),
-	ENCAPSULATE_ATTRIBUTE("Encapsulate Attribute", "Encapsulate Attribute (.+) from class (.+)");
+	ENCAPSULATE_ATTRIBUTE("Encapsulate Attribute", "Encapsulate Attribute (.+) from class (.+)"),
+	ADD_METHOD_MODIFIER("Add Method Modifier", "Add Method Modifier (.+) in method (.+) from class (.+)"),
+	REMOVE_METHOD_MODIFIER("Remove Method Modifier", "Remove Method Modifier (.+) in method (.+) from class (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -151,7 +153,9 @@ public enum RefactoringType {
 		CHANGE_THROWN_EXCEPTION_TYPE,
 		CHANGE_OPERATION_ACCESS_MODIFIER,
 		CHANGE_ATTRIBUTE_ACCESS_MODIFIER,
-		ENCAPSULATE_ATTRIBUTE
+		ENCAPSULATE_ATTRIBUTE,
+		ADD_METHOD_MODIFIER,
+		REMOVE_METHOD_MODIFIER
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

@@ -374,10 +374,18 @@ public class UMLOperationDiff {
 				AddMethodModifierRefactoring refactoring = new AddMethodModifierRefactoring("final", removedOperation, addedOperation);
 				refactorings.add(refactoring);
 			}
+			else if(removedOperation.isFinal()) {
+				RemoveMethodModifierRefactoring refactoring = new RemoveMethodModifierRefactoring("final", removedOperation, addedOperation);
+				refactorings.add(refactoring);
+			}
 		}
 		if(abstractionChanged) {
 			if(addedOperation.isAbstract()) {
 				AddMethodModifierRefactoring refactoring = new AddMethodModifierRefactoring("abstract", removedOperation, addedOperation);
+				refactorings.add(refactoring);
+			}
+			else if(removedOperation.isAbstract()) {
+				RemoveMethodModifierRefactoring refactoring = new RemoveMethodModifierRefactoring("abstract", removedOperation, addedOperation);
 				refactorings.add(refactoring);
 			}
 		}
@@ -386,10 +394,18 @@ public class UMLOperationDiff {
 				AddMethodModifierRefactoring refactoring = new AddMethodModifierRefactoring("static", removedOperation, addedOperation);
 				refactorings.add(refactoring);
 			}
+			else if(removedOperation.isStatic()) {
+				RemoveMethodModifierRefactoring refactoring = new RemoveMethodModifierRefactoring("static", removedOperation, addedOperation);
+				refactorings.add(refactoring);
+			}
 		}
 		if(synchronizedChanged) {
 			if(addedOperation.isSynchronized()) {
 				AddMethodModifierRefactoring refactoring = new AddMethodModifierRefactoring("synchronized", removedOperation, addedOperation);
+				refactorings.add(refactoring);
+			}
+			else if(removedOperation.isSynchronized()) {
+				RemoveMethodModifierRefactoring refactoring = new RemoveMethodModifierRefactoring("synchronized", removedOperation, addedOperation);
 				refactorings.add(refactoring);
 			}
 		}

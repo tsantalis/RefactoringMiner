@@ -81,7 +81,9 @@ public enum RefactoringType {
 	CHANGE_ATTRIBUTE_ACCESS_MODIFIER("Change Attribute Access Modifier", "Change Attribute Access Modifier (.+) to (.+) in attribute (.+) from class (.+)"),
 	ENCAPSULATE_ATTRIBUTE("Encapsulate Attribute", "Encapsulate Attribute (.+) from class (.+)"),
 	ADD_METHOD_MODIFIER("Add Method Modifier", "Add Method Modifier (.+) in method (.+) from class (.+)"),
-	REMOVE_METHOD_MODIFIER("Remove Method Modifier", "Remove Method Modifier (.+) in method (.+) from class (.+)");
+	REMOVE_METHOD_MODIFIER("Remove Method Modifier", "Remove Method Modifier (.+) in method (.+) from class (.+)"),
+	ADD_ATTRIBUTE_MODIFIER("Add Attribute Modifier", "Add Attribute Modifier (.+) in attribute (.+) from class (.+)"),
+	REMOVE_ATTRIBUTE_MODIFIER("Remove Attribute Modifier", "Remove Attribute Modifier (.+) in attribute (.+) from class (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -155,7 +157,9 @@ public enum RefactoringType {
 		CHANGE_ATTRIBUTE_ACCESS_MODIFIER,
 		ENCAPSULATE_ATTRIBUTE,
 		ADD_METHOD_MODIFIER,
-		REMOVE_METHOD_MODIFIER
+		REMOVE_METHOD_MODIFIER,
+		ADD_ATTRIBUTE_MODIFIER,
+		REMOVE_ATTRIBUTE_MODIFIER
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

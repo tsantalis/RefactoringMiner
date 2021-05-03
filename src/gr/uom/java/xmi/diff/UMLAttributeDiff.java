@@ -26,6 +26,8 @@ public class UMLAttributeDiff {
 	private boolean renamed;
 	private boolean staticChanged;
 	private boolean finalChanged;
+	private boolean volatileChanged;
+	private boolean transientChanged;
 	private List<UMLOperationBodyMapper> operationBodyMapperList;
 	private UMLAnnotationListDiff annotationListDiff;
 	private List<UMLAnonymousClassDiff> anonymousClassDiffList;
@@ -105,6 +107,10 @@ public class UMLAttributeDiff {
 			staticChanged = true;
 		if(removedAttribute.isFinal() != addedAttribute.isFinal())
 			finalChanged = true;
+		if(removedAttribute.isVolatile() != addedAttribute.isVolatile())
+			volatileChanged = true;
+		if(removedAttribute.isTransient() != addedAttribute.isTransient())
+			transientChanged = true;
 		this.annotationListDiff = new UMLAnnotationListDiff(removedAttribute.getAnnotations(), addedAttribute.getAnnotations());
 	}
 
@@ -133,7 +139,7 @@ public class UMLAttributeDiff {
 	}
 
 	public boolean isEmpty() {
-		return !visibilityChanged && !typeChanged && !renamed && !qualifiedTypeChanged && annotationListDiff.isEmpty() && anonymousClassDiffList.isEmpty() && addedGetter == null && addedSetter == null;
+		return !visibilityChanged && !staticChanged && !finalChanged && !volatileChanged && !transientChanged && !typeChanged && !renamed && !qualifiedTypeChanged && annotationListDiff.isEmpty() && anonymousClassDiffList.isEmpty() && addedGetter == null && addedSetter == null;
 	}
 
 	public String toString() {
@@ -196,6 +202,14 @@ public class UMLAttributeDiff {
 					VariableReferenceExtractor.findReferences(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), operationBodyMapperList));
 			refactorings.add(ref);
 		}
+		refactorings.addAll(getModifierRefactorings());
+		refactorings.addAll(getAnnotationRefactorings());
+		refactorings.addAll(getAnonymousClassRefactorings());
+		return refactorings;
+	}
+
+	private Set<Refactoring> getModifierRefactorings() {
+		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 		if(isVisibilityChanged()) {
 			ChangeAttributeAccessModifierRefactoring ref = new ChangeAttributeAccessModifierRefactoring(removedAttribute.getVisibility(), addedAttribute.getVisibility(), removedAttribute, addedAttribute);
 			refactorings.add(ref);
@@ -204,8 +218,46 @@ public class UMLAttributeDiff {
 			EncapsulateAttributeRefactoring ref = new EncapsulateAttributeRefactoring(removedAttribute, addedAttribute, addedGetter, addedSetter);
 			refactorings.add(ref);
 		}
-		refactorings.addAll(getAnnotationRefactorings());
-		refactorings.addAll(getAnonymousClassRefactorings());
+		if(finalChanged) {
+			if(addedAttribute.isFinal()) {
+				AddAttributeModifierRefactoring ref = new AddAttributeModifierRefactoring("final", removedAttribute, addedAttribute);
+				refactorings.add(ref);
+			}
+			else if(removedAttribute.isFinal()) {
+				RemoveAttributeModifierRefactoring ref = new RemoveAttributeModifierRefactoring("final", removedAttribute, addedAttribute);
+				refactorings.add(ref);
+			}
+		}
+		if(staticChanged) {
+			if(addedAttribute.isStatic()) {
+				AddAttributeModifierRefactoring ref = new AddAttributeModifierRefactoring("static", removedAttribute, addedAttribute);
+				refactorings.add(ref);
+			}
+			else if(removedAttribute.isStatic()) {
+				RemoveAttributeModifierRefactoring ref = new RemoveAttributeModifierRefactoring("static", removedAttribute, addedAttribute);
+				refactorings.add(ref);
+			}
+		}
+		if(transientChanged) {
+			if(addedAttribute.isTransient()) {
+				AddAttributeModifierRefactoring ref = new AddAttributeModifierRefactoring("transient", removedAttribute, addedAttribute);
+				refactorings.add(ref);
+			}
+			else if(removedAttribute.isTransient()) {
+				RemoveAttributeModifierRefactoring ref = new RemoveAttributeModifierRefactoring("transient", removedAttribute, addedAttribute);
+				refactorings.add(ref);
+			}
+		}
+		if(volatileChanged) {
+			if(addedAttribute.isVolatile()) {
+				AddAttributeModifierRefactoring ref = new AddAttributeModifierRefactoring("volatile", removedAttribute, addedAttribute);
+				refactorings.add(ref);
+			}
+			else if(removedAttribute.isVolatile()) {
+				RemoveAttributeModifierRefactoring ref = new RemoveAttributeModifierRefactoring("volatile", removedAttribute, addedAttribute);
+				refactorings.add(ref);
+			}
+		}
 		return refactorings;
 	}
 	
@@ -224,14 +276,7 @@ public class UMLAttributeDiff {
 				ref.addRelatedRefactoring(rename);
 			}
 		}
-		if(isVisibilityChanged()) {
-			ChangeAttributeAccessModifierRefactoring ref = new ChangeAttributeAccessModifierRefactoring(removedAttribute.getVisibility(), addedAttribute.getVisibility(), removedAttribute, addedAttribute);
-			refactorings.add(ref);
-		}
-		if(encapsulationCondition()) {
-			EncapsulateAttributeRefactoring ref = new EncapsulateAttributeRefactoring(removedAttribute, addedAttribute, addedGetter, addedSetter);
-			refactorings.add(ref);
-		}
+		refactorings.addAll(getModifierRefactorings());
 		refactorings.addAll(getAnnotationRefactorings());
 		refactorings.addAll(getAnonymousClassRefactorings());
 		return refactorings;

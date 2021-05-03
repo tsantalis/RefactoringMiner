@@ -595,6 +595,12 @@ public class UMLModelASTReader {
 			if((fieldModifiers & Modifier.STATIC) != 0)
 				umlAttribute.setStatic(true);
 			
+			if((fieldModifiers & Modifier.VOLATILE) != 0)
+				umlAttribute.setVolatile(true);
+			
+			if((fieldModifiers & Modifier.TRANSIENT) != 0)
+				umlAttribute.setTransient(true);
+			
 			attributes.add(umlAttribute);
 		}
 		return attributes;

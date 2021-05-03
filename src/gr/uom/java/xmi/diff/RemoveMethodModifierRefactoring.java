@@ -9,14 +9,15 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLOperation;
 
-public class AddMethodModifierRefactoring implements Refactoring {
+public class RemoveMethodModifierRefactoring implements Refactoring {
 	private String modifier;
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
 
-	public AddMethodModifierRefactoring(String modifier, UMLOperation operationBefore, UMLOperation operationAfter) {
+	public RemoveMethodModifierRefactoring(String modifier, UMLOperation operationBefore, UMLOperation operationAfter) {
 		this.modifier = modifier;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
@@ -47,14 +48,14 @@ public class AddMethodModifierRefactoring implements Refactoring {
 	public List<CodeRange> rightSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
 		ranges.add(operationAfter.codeRange()
-				.setDescription("method declaration with added modifier")
+				.setDescription("method declaration with removed modifier")
 				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}
 
 	@Override
 	public RefactoringType getRefactoringType() {
-		return RefactoringType.ADD_METHOD_MODIFIER;
+		return RefactoringType.REMOVE_METHOD_MODIFIER;
 	}
 
 	@Override
@@ -81,9 +82,9 @@ public class AddMethodModifierRefactoring implements Refactoring {
 		sb.append(getName()).append("\t");
 		sb.append(modifier);
 		sb.append(" in method ");
-		sb.append(operationAfter);
+		sb.append(operationBefore);
 		sb.append(" from class ");
-		sb.append(operationAfter.getClassName());
+		sb.append(operationBefore.getClassName());
 		return sb.toString();
 	}
 
@@ -105,7 +106,7 @@ public class AddMethodModifierRefactoring implements Refactoring {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AddMethodModifierRefactoring other = (AddMethodModifierRefactoring) obj;
+		RemoveMethodModifierRefactoring other = (RemoveMethodModifierRefactoring) obj;
 		if (modifier == null) {
 			if (other.modifier != null)
 				return false;

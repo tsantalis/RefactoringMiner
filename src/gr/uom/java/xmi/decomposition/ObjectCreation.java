@@ -139,4 +139,11 @@ public class ObjectCreation extends AbstractCall {
 	public boolean identicalName(AbstractCall call) {
 		return getType().equals(((ObjectCreation)call).getType());
 	}
+
+	public String actualString() {
+		StringBuilder sb = new StringBuilder();
+        sb.append("new ");
+        sb.append(super.actualString());
+        return sb.toString();
+	}
 }

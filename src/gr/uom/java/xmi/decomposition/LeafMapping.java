@@ -88,7 +88,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						boolean sameVariableDeclarationTypeInParent2 = o.sameVariableDeclarationTypeInParent();
 						double parentEditDistance1 = this.parentEditDistance();
 						double parentEditDistance2 = o.parentEditDistance();
-						if(parentEditDistance1 > 0 && parentEditDistance2 > 0 && sameVariableDeclarationTypeInParent1 != sameVariableDeclarationTypeInParent2) {
+						if(parentEditDistance1 >= 0 && parentEditDistance2 >= 0 && sameVariableDeclarationTypeInParent1 != sameVariableDeclarationTypeInParent2) {
 							if(sameVariableDeclarationTypeInParent1 && !sameVariableDeclarationTypeInParent2) {
 								return -1;
 							}

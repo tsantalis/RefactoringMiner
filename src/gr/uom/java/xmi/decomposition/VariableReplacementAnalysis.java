@@ -2,6 +2,7 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -94,36 +95,35 @@ public class VariableReplacementAnalysis {
 		for(AbstractCodeMapping mapping : mappings) {
 			AbstractCodeFragment fragment1 = mapping.getFragment1();
 			AbstractCodeFragment fragment2 = mapping.getFragment2();
-			for(Replacement replacement : mapping.getReplacements()) {
-				if(replacement.getType().equals(ReplacementType.TYPE)) {
-					List<VariableDeclaration> declarations1 = fragment1.getVariableDeclarations();
-					List<VariableDeclaration> declarations2 = fragment2.getVariableDeclarations();
-					for(VariableDeclaration declaration1 : declarations1) {
-						for(VariableDeclaration declaration2 : declarations2) {
-							if(declaration1.getVariableName().equals(declaration2.getVariableName()) &&
-									(!declaration1.getType().equals(declaration2.getType()) || !declaration1.getType().equalsQualified(declaration2.getType())) &&
-									!containsVariableDeclarationWithSameNameAndType(declaration1, declarations2)) {
-								Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(declaration1, declaration2, mappings);
-								getVariableRefactorings(declaration1, declaration2, mapping.getOperation1(), mapping.getOperation2(), variableReferences, null);
-								break;
-							}
+			List<VariableDeclaration> declarations1 = fragment1.getVariableDeclarations();
+			List<VariableDeclaration> declarations2 = fragment2.getVariableDeclarations();
+			if(declarations1.size() == declarations2.size()) {
+				for(int i=0; i<declarations1.size(); i++) {
+					VariableDeclaration declaration1 = declarations1.get(i);
+					VariableDeclaration declaration2 = declarations2.get(i);
+					if(declaration1.getVariableName().equals(declaration2.getVariableName())) {
+						if(declaration1.getType().equals(declaration2.getType()) && declaration1.getType().equalsQualified(declaration2.getType())) {
+							getVariableRefactorings(declaration1, declaration2, mapping.getOperation1(), mapping.getOperation2(), Collections.emptySet(), null);
+						}
+						else if(!containsVariableDeclarationWithSameNameAndType(declaration1, declarations2) &&
+								!containsVariableDeclarationWithSameNameAndType(declaration2, declarations1)) {
+							Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(declaration1, declaration2, mappings);
+							getVariableRefactorings(declaration1, declaration2, mapping.getOperation1(), mapping.getOperation2(), variableReferences, null);
 						}
 					}
 				}
 			}
-			if(fragment1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
-					fragment2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
-				List<VariableDeclaration> declarations1 = fragment1.getVariableDeclarations();
-				List<VariableDeclaration> declarations2 = fragment2.getVariableDeclarations();
-				for(VariableDeclaration declaration1 : declarations1) {
-					for(VariableDeclaration declaration2 : declarations2) {
-						if(declaration1.getVariableName().equals(declaration2.getVariableName()) &&
-								(!declaration1.getType().equals(declaration2.getType()) || !declaration1.getType().equalsQualified(declaration2.getType())) &&
-								!containsVariableDeclarationWithSameNameAndType(declaration1, declarations2)) {
-							Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(declaration1, declaration2, mappings);
-							getVariableRefactorings(declaration1, declaration2, mapping.getOperation1(), mapping.getOperation2(), variableReferences, null);
-							break;
-						}
+			else if(declarations1.size() > 0 && declarations2.size() > 0) {
+				VariableDeclaration declaration1 = declarations1.get(0);
+				VariableDeclaration declaration2 = declarations2.get(0);
+				if(declaration1.getVariableName().equals(declaration2.getVariableName())) {
+					if(declaration1.getType().equals(declaration2.getType()) && declaration1.getType().equalsQualified(declaration2.getType())) {
+						getVariableRefactorings(declaration1, declaration2, mapping.getOperation1(), mapping.getOperation2(), Collections.emptySet(), null);
+					}
+					else if(!containsVariableDeclarationWithSameNameAndType(declaration1, declarations2) &&
+							!containsVariableDeclarationWithSameNameAndType(declaration2, declarations1)) {
+						Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(declaration1, declaration2, mappings);
+						getVariableRefactorings(declaration1, declaration2, mapping.getOperation1(), mapping.getOperation2(), variableReferences, null);
 					}
 				}
 			}

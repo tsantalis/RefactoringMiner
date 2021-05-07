@@ -1201,6 +1201,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(statement1 instanceof TryStatementObject && statement2 instanceof TryStatementObject) {
 			return compositeChildMatchingScore((TryStatementObject)statement1, (TryStatementObject)statement2, mappings, removedOperations, addedOperations);
 		}
+		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
+				statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+			for(AbstractCodeMapping mapping : mappings) {
+				if(mapping.getFragment1() instanceof TryStatementObject && mapping.getFragment2() instanceof TryStatementObject) {
+					TryStatementObject try1 = (TryStatementObject)mapping.getFragment1();
+					TryStatementObject try2 = (TryStatementObject)mapping.getFragment2();
+					if(try1.getCatchClauses().contains(statement1) && try2.getCatchClauses().contains(statement2)) {
+						return compositeChildMatchingScore(statement1, statement2, mappings, removedOperations, addedOperations);
+					}
+				}
+			}
+			return -1;
+		}
 		return compositeChildMatchingScore(statement1, statement2, mappings, removedOperations, addedOperations);
 	}
 
@@ -1991,7 +2004,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 							VariableDeclaration v1 = statement1.searchVariableDeclaration(s1);
+							/*if(v1 == null) {
+								for(VariableDeclaration declaration : operation1.getParameterDeclarationList()) {
+									if(declaration.getVariableName().equals(s1)) {
+										v1 = declaration;
+										break;
+									}
+								}
+							}*/
 							VariableDeclaration v2 = statement2.searchVariableDeclaration(s2);
+							/*if(v2 == null) {
+								for(VariableDeclaration declaration : operation2.getParameterDeclarationList()) {
+									if(declaration.getVariableName().equals(s2)) {
+										v2 = declaration;
+										break;
+									}
+								}
+							}*/
 							if(inconsistentVariableMappingCount(statement1, statement2, v1, v2) > 1 && operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) == null) {
 								replacement = null;
 							}
@@ -4391,17 +4420,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private int inconsistentVariableMappingCount(AbstractCodeFragment statement1, AbstractCodeFragment statement2, VariableDeclaration v1, VariableDeclaration v2) {
 		int count = 0;
 		if(v1 != null && v2 != null) {
+			boolean variableDeclarationMismatch = false;
 			for(AbstractCodeMapping mapping : mappings) {
 				List<VariableDeclaration> variableDeclarations1 = mapping.getFragment1().getVariableDeclarations();
 				List<VariableDeclaration> variableDeclarations2 = mapping.getFragment2().getVariableDeclarations();
 				if(variableDeclarations1.contains(v1) &&
 						variableDeclarations2.size() > 0 &&
 						!variableDeclarations2.contains(v2)) {
+					variableDeclarationMismatch = true;
 					count++;
 				}
 				if(variableDeclarations2.contains(v2) &&
 						variableDeclarations1.size() > 0 &&
 						!variableDeclarations1.contains(v1)) {
+					variableDeclarationMismatch = true;
 					count++;
 				}
 				if(mapping.isExact()) {
@@ -4414,6 +4446,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					if(containsMapping && (VariableReplacementAnalysis.bothFragmentsUseVariable(v1, mapping) || VariableReplacementAnalysis.bothFragmentsUseVariable(v2, mapping))) {
 						count++;
+					}
+				}
+				else if(variableDeclarationMismatch && !variableDeclarations1.contains(v1) && !variableDeclarations2.contains(v2)) {
+					for(Replacement r : mapping.getReplacements()) {
+						if(r.getBefore().equals(v1.getVariableName()) && !r.getAfter().equals(v2.getVariableName())) {
+							count++;
+						}
+						else if(!r.getBefore().equals(v1.getVariableName()) && r.getAfter().equals(v2.getVariableName())) {
+							count++;
+						}
 					}
 				}
 			}

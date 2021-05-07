@@ -32,4 +32,8 @@ public class TryStatementObject extends CompositeStatementObject {
 	public CompositeStatementObject getFinallyClause() {
 		return finallyClause;
 	}
+
+	public boolean isTryWithResources() {
+		return getExpressions().size() > 0;
+	}
 }

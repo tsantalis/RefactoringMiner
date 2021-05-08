@@ -1044,22 +1044,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Map<String, String> parameterToArgumentMap) throws RefactoringMinerTimedOutException {
 		List<UMLOperation> removedOperations = classDiff != null ? classDiff.getRemovedOperations() : new ArrayList<UMLOperation>();
 		List<UMLOperation> addedOperations = classDiff != null ? classDiff.getAddedOperations() : new ArrayList<UMLOperation>();
-		int tryWithResources1 = 0;
-		int tryWithResources2 = 0;
-		for(CompositeStatementObject comp1 : innerNodes1) {
-			if(comp1 instanceof TryStatementObject) {
-				if(comp1.getExpressions().size() > 0) {
-					tryWithResources1++;
-				}
-			}
-		}
-		for(CompositeStatementObject comp2 : innerNodes2) {
-			if(comp2 instanceof TryStatementObject) {
-				if(comp2.getExpressions().size() > 0) {
-					tryWithResources2++;
-				}
-			}
-		}
+		int tryWithResources1 = tryWithResourcesCount(innerNodes1);
+		int tryWithResources2 = tryWithResourcesCount(innerNodes2);
 		boolean tryWithResourceMigration = (tryWithResources1 == 0 && tryWithResources2 > 0) || (tryWithResources1 > 0 && tryWithResources2 == 0);
 		if(innerNodes1.size() <= innerNodes2.size()) {
 			//exact string+depth matching - inner nodes
@@ -1211,6 +1197,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private static int tryWithResourcesCount(List<CompositeStatementObject> innerNodes) {
+		int tryWithResources = 0;
+		for(CompositeStatementObject comp1 : innerNodes) {
+			if(comp1 instanceof TryStatementObject) {
+				if(comp1.getExpressions().size() > 0) {
+					tryWithResources++;
+				}
+			}
+		}
+		return tryWithResources;
 	}
 
 	private double computeScore(CompositeStatementObject statement1, CompositeStatementObject statement2,

@@ -1583,9 +1583,9 @@ public class UMLModelDiff {
    }
 
    private void inferMethodSignatureRelatedRefactorings(UMLClassBaseDiff classDiff, Set<Refactoring> refactorings) {
-	  if(classDiff.getOriginalClass().isInterface() && classDiff.getNextClass().isInterface()) {
-		  for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
-			  for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
+	  for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
+		  for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
+			  if(allowInference(classDiff, removedOperation, addedOperation)) {
 				  List<UMLOperationBodyMapper> mappers = findMappersWithMatchingSignatures(removedOperation, addedOperation);
 				  if(!mappers.isEmpty()) {
 					  UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation);
@@ -1602,27 +1602,10 @@ public class UMLModelDiff {
 			  }
 		  }
 	  }
-	  else if(classDiff.getOriginalClass().isAbstract() && classDiff.getNextClass().isAbstract()) {
-		  for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
-			  for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
-				  if(removedOperation.isAbstract() && addedOperation.isAbstract()) {
-					  List<UMLOperationBodyMapper> mappers = findMappersWithMatchingSignatures(removedOperation, addedOperation);
-					  if(!mappers.isEmpty()) {
-						  UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation);
-						  if(operationSignatureDiff.isOperationRenamed()) {
-							  RenameOperationRefactoring refactoring = new RenameOperationRefactoring(removedOperation, addedOperation);
-							  refactorings.add(refactoring);
-						  }
-						  Set<Refactoring> signatureRefactorings = operationSignatureDiff.getRefactorings();
-						  refactorings.addAll(signatureRefactorings);
-						  if(signatureRefactorings.isEmpty()) {
-							  inferRefactoringsFromMatchingMappers(mappers, operationSignatureDiff, refactorings);
-						  }
-					  }
-				  }
-			  }
-		  }
-	  }
+   }
+
+   private boolean allowInference(UMLClassBaseDiff classDiff, UMLOperation removedOperation, UMLOperation addedOperation) {
+	   return removedOperation.isAbstract() == addedOperation.isAbstract();
    }
 
    private void inferRefactoringsFromMatchingMappers(List<UMLOperationBodyMapper> mappers, UMLOperationDiff operationSignatureDiff, Set<Refactoring> refactorings) {

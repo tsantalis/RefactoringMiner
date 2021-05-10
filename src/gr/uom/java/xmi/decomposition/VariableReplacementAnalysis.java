@@ -27,6 +27,7 @@ import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodIn
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.SplitVariableReplacement;
 import gr.uom.java.xmi.diff.AddVariableAnnotationRefactoring;
+import gr.uom.java.xmi.diff.AddVariableModifierRefactoring;
 import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.CandidateMergeVariableRefactoring;
 import gr.uom.java.xmi.diff.CandidateSplitVariableRefactoring;
@@ -624,6 +625,16 @@ public class VariableReplacementAnalysis {
 		for(UMLAnnotationDiff annotationDiff : annotationListDiff.getAnnotationDiffList()) {
 			ModifyVariableAnnotationRefactoring refactoring = new ModifyVariableAnnotationRefactoring(annotationDiff.getRemovedAnnotation(), annotationDiff.getAddedAnnotation(), variableDeclaration1, variableDeclaration2, operation1, operation2);
 			refactorings.add(refactoring);
+		}
+		if(variableDeclaration1.isFinal() != variableDeclaration2.isFinal()) {
+			if(variableDeclaration2.isFinal()) {
+				AddVariableModifierRefactoring refactoring = new AddVariableModifierRefactoring("final", variableDeclaration1, variableDeclaration2, operation1, operation2);
+				refactorings.add(refactoring);
+			}
+			else if(variableDeclaration1.isFinal()) {
+				//RemoveVariableModifierRefactoring refactoring = new RemoveVariableModifierRefactoring("final", variableDeclaration1, variableDeclaration2, operation1, operation2);
+				//refactorings.add(refactoring);
+			}
 		}
 	}
 

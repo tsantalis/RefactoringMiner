@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.IExtendedModifier;
+import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
@@ -34,6 +35,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private boolean isAttribute;
 	private boolean isEnumConstant;
 	private VariableScope scope;
+	private boolean isFinal;
 	private List<UMLAnnotation> annotations;
 	
 	public VariableDeclaration(CompilationUnit cu, String filePath, VariableDeclarationFragment fragment) {
@@ -42,14 +44,26 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		if(fragment.getParent() instanceof VariableDeclarationStatement) {
 			VariableDeclarationStatement parent = (VariableDeclarationStatement)fragment.getParent();
 			extendedModifiers = parent.modifiers();
+			int modifiers = parent.getModifiers();
+			if((modifiers & Modifier.FINAL) != 0) {
+				this.isFinal = true;
+			}
 		}
 		else if(fragment.getParent() instanceof VariableDeclarationExpression) {
 			VariableDeclarationExpression parent = (VariableDeclarationExpression)fragment.getParent();
 			extendedModifiers = parent.modifiers();
+			int modifiers = parent.getModifiers();
+			if((modifiers & Modifier.FINAL) != 0) {
+				this.isFinal = true;
+			}
 		}
 		else if(fragment.getParent() instanceof FieldDeclaration) {
 			FieldDeclaration parent = (FieldDeclaration)fragment.getParent();
 			extendedModifiers = parent.modifiers();
+			int modifiers = parent.getModifiers();
+			if((modifiers & Modifier.FINAL) != 0) {
+				this.isFinal = true;
+			}
 		}
 		if(extendedModifiers != null) {
 			for(IExtendedModifier extendedModifier : extendedModifiers) {
@@ -79,6 +93,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public VariableDeclaration(CompilationUnit cu, String filePath, SingleVariableDeclaration fragment) {
 		this.annotations = new ArrayList<UMLAnnotation>();
+		int modifiers = fragment.getModifiers();
+		if((modifiers & Modifier.FINAL) != 0) {
+			this.isFinal = true;
+		}
 		List<IExtendedModifier> extendedModifiers = fragment.modifiers();
 		for(IExtendedModifier extendedModifier : extendedModifiers) {
 			if(extendedModifier.isAnnotation()) {
@@ -104,6 +122,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public VariableDeclaration(CompilationUnit cu, String filePath, EnumConstantDeclaration fragment) {
 		this.annotations = new ArrayList<UMLAnnotation>();
+		int modifiers = fragment.getModifiers();
+		if((modifiers & Modifier.FINAL) != 0) {
+			this.isFinal = true;
+		}
 		this.isEnumConstant = true;
 		List<IExtendedModifier> extendedModifiers = fragment.modifiers();
 		for(IExtendedModifier extendedModifier : extendedModifiers) {
@@ -163,6 +185,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public boolean isVarargsParameter() {
 		return varargsParameter;
+	}
+
+	public boolean isFinal() {
+		return isFinal;
 	}
 
 	public List<UMLAnnotation> getAnnotations() {

@@ -23,6 +23,7 @@ public class UMLParameterDiff {
 	private boolean qualifiedTypeChanged;
 	private boolean nameChanged;
 	private boolean varArgsChanged;
+	private boolean finalChanged;
 	private Set<AbstractCodeMapping> mappings;
 	private UMLAnnotationListDiff annotationListDiff;
 	
@@ -50,6 +51,8 @@ public class UMLParameterDiff {
 		}
 		if(!removedParameter.getName().equals(addedParameter.getName()))
 			nameChanged = true;
+		if(removedParameter.isFinal() != addedParameter.isFinal())
+			finalChanged = true;
 		this.annotationListDiff = new UMLAnnotationListDiff(removedParameter.getAnnotations(), addedParameter.getAnnotations());
 	}
 
@@ -78,7 +81,7 @@ public class UMLParameterDiff {
 	}
 
 	public boolean isEmpty() {
-		return !nameChanged && !typeChanged && !qualifiedTypeChanged && !varArgsChanged && annotationListDiff.isEmpty();
+		return !nameChanged && !typeChanged && !qualifiedTypeChanged && !varArgsChanged && !finalChanged && annotationListDiff.isEmpty();
 	}
 
 	public String toString() {
@@ -129,6 +132,16 @@ public class UMLParameterDiff {
 		for(UMLAnnotationDiff annotationDiff : annotationListDiff.getAnnotationDiffList()) {
 			ModifyVariableAnnotationRefactoring refactoring = new ModifyVariableAnnotationRefactoring(annotationDiff.getRemovedAnnotation(), annotationDiff.getAddedAnnotation(), originalVariable, newVariable, removedOperation, addedOperation);
 			refactorings.add(refactoring);
+		}
+		if(finalChanged) {
+			if(newVariable.isFinal()) {
+				AddVariableModifierRefactoring ref = new AddVariableModifierRefactoring("final", originalVariable, newVariable, removedOperation, addedOperation);
+				refactorings.add(ref);
+			}
+			else if(originalVariable.isFinal()) {
+				//RemoveVariableModifierRefactoring ref = new RemoveVariableModifierRefactoring("final", originalVariable, newVariable, removedOperation, addedOperation);
+				//refactorings.add(ref);
+			}
 		}
 		return refactorings;
 	}

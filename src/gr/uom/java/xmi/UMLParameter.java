@@ -46,6 +46,13 @@ public class UMLParameter implements Serializable, VariableDeclarationProvider {
 		return varargs;
 	}
 
+	public boolean isFinal() {
+		if(variableDeclaration != null) {
+			return variableDeclaration.isFinal();
+		}
+		return false;
+	}
+
 	public List<UMLAnnotation> getAnnotations() {
 		return variableDeclaration.getAnnotations();
 	}

@@ -85,7 +85,9 @@ public enum RefactoringType {
 	ADD_ATTRIBUTE_MODIFIER("Add Attribute Modifier", "Add Attribute Modifier (.+) in attribute (.+) from class (.+)"),
 	REMOVE_ATTRIBUTE_MODIFIER("Remove Attribute Modifier", "Remove Attribute Modifier (.+) in attribute (.+) from class (.+)"),
 	ADD_VARIABLE_MODIFIER("Add Variable Modifier", "Add Variable Modifier (.+) in variable (.+) in method (.+) from class (.+)"),
-	ADD_PARAMETER_MODIFIER("Add Parameter Modifier", "Add Parameter Modifier (.+) in parameter (.+) in method (.+) from class (.+)");
+	ADD_PARAMETER_MODIFIER("Add Parameter Modifier", "Add Parameter Modifier (.+) in parameter (.+) in method (.+) from class (.+)"),
+	REMOVE_VARIABLE_MODIFIER("Remove Variable Modifier", "Remove Variable Modifier (.+) in variable (.+) in method (.+) from class (.+)"),
+	REMOVE_PARAMETER_MODIFIER("Remove Parameter Modifier", "Remove Parameter Modifier (.+) in parameter (.+) in method (.+) from class (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -163,7 +165,9 @@ public enum RefactoringType {
 		ADD_ATTRIBUTE_MODIFIER,
 		REMOVE_ATTRIBUTE_MODIFIER,
 		ADD_VARIABLE_MODIFIER,
-		ADD_PARAMETER_MODIFIER
+		ADD_PARAMETER_MODIFIER,
+		REMOVE_VARIABLE_MODIFIER,
+		REMOVE_PARAMETER_MODIFIER
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

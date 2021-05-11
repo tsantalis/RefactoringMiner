@@ -139,8 +139,8 @@ public class UMLParameterDiff {
 				refactorings.add(ref);
 			}
 			else if(originalVariable.isFinal()) {
-				//RemoveVariableModifierRefactoring ref = new RemoveVariableModifierRefactoring("final", originalVariable, newVariable, removedOperation, addedOperation);
-				//refactorings.add(ref);
+				RemoveVariableModifierRefactoring ref = new RemoveVariableModifierRefactoring("final", originalVariable, newVariable, removedOperation, addedOperation);
+				refactorings.add(ref);
 			}
 		}
 		return refactorings;

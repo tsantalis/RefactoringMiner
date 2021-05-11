@@ -38,6 +38,7 @@ import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.MergeVariableRefactoring;
 import gr.uom.java.xmi.diff.ModifyVariableAnnotationRefactoring;
 import gr.uom.java.xmi.diff.RemoveVariableAnnotationRefactoring;
+import gr.uom.java.xmi.diff.RemoveVariableModifierRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.SplitVariableRefactoring;
 import gr.uom.java.xmi.diff.UMLAnnotationDiff;
@@ -632,8 +633,8 @@ public class VariableReplacementAnalysis {
 				refactorings.add(refactoring);
 			}
 			else if(variableDeclaration1.isFinal()) {
-				//RemoveVariableModifierRefactoring refactoring = new RemoveVariableModifierRefactoring("final", variableDeclaration1, variableDeclaration2, operation1, operation2);
-				//refactorings.add(refactoring);
+				RemoveVariableModifierRefactoring refactoring = new RemoveVariableModifierRefactoring("final", variableDeclaration1, variableDeclaration2, operation1, operation2);
+				refactorings.add(refactoring);
 			}
 		}
 	}

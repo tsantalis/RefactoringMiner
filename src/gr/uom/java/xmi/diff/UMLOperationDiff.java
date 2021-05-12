@@ -325,13 +325,19 @@ public class UMLOperationDiff {
 		for(UMLParameterDiff parameterDiff : getParameterDiffList()) {
 			refactorings.addAll(parameterDiff.getRefactorings());
 		}
-		if(removedParameters.isEmpty()) {
+		int exactMappings = 0;
+		for(AbstractCodeMapping mapping : mappings) {
+			if(mapping.isExact()) {
+				exactMappings++;
+			}
+		}
+		if(removedParameters.isEmpty() || exactMappings > 0) {
 			for(UMLParameter umlParameter : addedParameters) {
 				AddParameterRefactoring refactoring = new AddParameterRefactoring(umlParameter, removedOperation, addedOperation);
 				refactorings.add(refactoring);
 			}
 		}
-		if(addedParameters.isEmpty()) {
+		if(addedParameters.isEmpty() || exactMappings > 0) {
 			for(UMLParameter umlParameter : removedParameters) {
 				RemoveParameterRefactoring refactoring = new RemoveParameterRefactoring(umlParameter, removedOperation, addedOperation);
 				refactorings.add(refactoring);

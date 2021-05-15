@@ -928,18 +928,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		int mappings = this.mappingsWithoutBlocks();
 		int tryMappings = 0;
 		int mappingsWithTypeReplacement = 0;
+		int mappingsWithVariableReplacement = 0;
 		for(AbstractCodeMapping mapping : this.getMappings()) {
 			if(mapping.getFragment1().getString().equals("try") && mapping.getFragment2().getString().equals("try")) {
 				tryMappings++;
 			}
-			if(mapping.containsReplacement(ReplacementType.TYPE)) {
+			if(mapping.containsOnlyReplacement(ReplacementType.TYPE)) {
 				mappingsWithTypeReplacement++;
+			}
+			if(mapping.containsOnlyReplacement(ReplacementType.VARIABLE_NAME)) {
+				mappingsWithVariableReplacement++;
 			}
 		}
 		if(mappings == this.exactMatches() + tryMappings) {
 			return true;
 		}
 		if(mappings == this.exactMatches() + tryMappings + mappingsWithTypeReplacement && mappings > mappingsWithTypeReplacement) {
+			return true;
+		}
+		if(mappings == this.exactMatches() + tryMappings + mappingsWithVariableReplacement && mappings > mappingsWithVariableReplacement) {
 			return true;
 		}
 		return false;
@@ -2267,7 +2274,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(mappings > 0) {
 						int nonMappedElementsT1 = mapper.nonMappedElementsT1();
 						int nonMappedElementsT2 = mapper.nonMappedElementsT2();
-						if(mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) {
+						if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
+								nonMappedElementsT1 == 0 || nonMappedElementsT2 == 0) {
 							this.mappings.addAll(mapper.mappings);
 							this.nonMappedInnerNodesT1.addAll(mapper.nonMappedInnerNodesT1);
 							this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);

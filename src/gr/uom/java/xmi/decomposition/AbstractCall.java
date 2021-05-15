@@ -338,7 +338,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 					String argument2 = arguments2.get(i);
 					if(argument1.contains("->") && argument2.contains("->")) {
 						for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
-							if(!(lambdaMapper.nonMappedElementsT1() == 0 && lambdaMapper.nonMappedElementsT2() == 0)) {
+							if(lambdaMapper.nonMappedElementsT1() > 0 && lambdaMapper.nonMappedElementsT2() > 0) {
 								return false;
 							}
 						}

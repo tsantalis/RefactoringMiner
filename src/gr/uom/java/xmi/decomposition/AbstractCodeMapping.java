@@ -146,6 +146,15 @@ public abstract class AbstractCodeMapping {
 		return false;
 	}
 
+	public boolean containsOnlyReplacement(ReplacementType type) {
+		for(Replacement replacement : replacements) {
+			if(!replacement.getType().equals(type)) {
+				return false;
+			}
+		}
+		return replacements.size() > 0;
+	}
+
 	public Set<ReplacementType> getReplacementTypes() {
 		Set<ReplacementType> types = new LinkedHashSet<ReplacementType>();
 		for(Replacement replacement : replacements) {

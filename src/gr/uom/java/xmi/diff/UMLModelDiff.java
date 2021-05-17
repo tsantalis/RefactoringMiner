@@ -2185,7 +2185,8 @@ public class UMLModelDiff {
 		            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, getUMLClassDiff(removedOperation.getClassName()));
 		            processedOperationPairs.add(pair);
 		            int mappings = operationBodyMapper.mappingsWithoutBlocks();
-		            if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || addedOperation.equalSignatureForAbstractMethods(removedOperation)) {
+		            if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || addedOperation.equalSignatureForAbstractMethods(removedOperation) ||
+		            		(mappings > 0 && isPartOfMethodExtracted(removedOperation, addedOperation, addedOperations))) {
 		               int exactMatches = operationBodyMapper.exactMatches();
 		               List<AbstractCodeMapping> exactMappings = operationBodyMapper.getExactMatches();
 		               for(AbstractCodeMapping mapping : exactMappings) {
@@ -2281,7 +2282,8 @@ public class UMLModelDiff {
 		            UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, getUMLClassDiff(removedOperation.getClassName()));
 		            processedOperationPairs.add(pair);
 		            int mappings = operationBodyMapper.mappingsWithoutBlocks();
-		            if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || removedOperation.equalSignatureForAbstractMethods(addedOperation)) {
+		            if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || removedOperation.equalSignatureForAbstractMethods(addedOperation) ||
+		            		(mappings > 0 && isPartOfMethodExtracted(removedOperation, addedOperation, addedOperations))) {
 		               int exactMatches = operationBodyMapper.exactMatches();
 		               List<AbstractCodeMapping> exactMappings = operationBodyMapper.getExactMatches();
 		               for(AbstractCodeMapping mapping : exactMappings) {
@@ -2356,6 +2358,10 @@ public class UMLModelDiff {
 	                  UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation, firstMapper.getMappings());
 	                  refactorings.addAll(operationSignatureDiff.getRefactorings());
 	                  refactorings.add(refactoring);
+	                  UMLClass addedClass = getAddedClass(addedOperation.getClassName());
+	                  if(addedClass != null) {
+	                	  checkForExtractedOperationsWithinMovedMethod(firstMapper, addedClass);
+	                  }
 	               }
 	            }
 	         }
@@ -2506,6 +2512,51 @@ public class UMLModelDiff {
 				(nonMappedElementsT1-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable == 0 && mappings > Math.floor(nonMappedElementsT2/2.0)) ||
 				(nonMappedElementsT2-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable == 0 && mappings > Math.floor(nonMappedElementsT1/2.0));
    }
+
+	private boolean isPartOfMethodExtracted(UMLOperation removedOperation, UMLOperation addedOperation, List<UMLOperation> addedOperations) {
+		//filter addedOperations that belong to the same class as the addedOperation
+		List<UMLOperation> filteredAddedOperations = new ArrayList<>();
+		for(UMLOperation operation : addedOperations) {
+			if(operation.getClassName().equals(addedOperation.getClassName())) {
+				filteredAddedOperations.add(operation);
+			}
+		}
+		List<OperationInvocation> removedOperationInvocations = removedOperation.getAllOperationInvocations();
+		List<OperationInvocation> addedOperationInvocations = addedOperation.getAllOperationInvocations();
+		Set<OperationInvocation> intersection = new LinkedHashSet<OperationInvocation>(removedOperationInvocations);
+		intersection.retainAll(addedOperationInvocations);
+		int numberOfInvocationsMissingFromRemovedOperation = new LinkedHashSet<OperationInvocation>(removedOperationInvocations).size() - intersection.size();
+		
+		Set<OperationInvocation> operationInvocationsInMethodsCalledByAddedOperation = new LinkedHashSet<OperationInvocation>();
+		for(OperationInvocation addedOperationInvocation : addedOperationInvocations) {
+			if(!intersection.contains(addedOperationInvocation)) {
+				for(UMLOperation operation : filteredAddedOperations) {
+					if(!operation.equals(addedOperation) && operation.getBody() != null) {
+						if(addedOperationInvocation.matchesOperation(operation, addedOperation, this)) {
+							//addedOperation calls another added method
+							operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllOperationInvocations());
+						}
+					}
+				}
+			}
+		}
+		Set<OperationInvocation> newIntersection = new LinkedHashSet<OperationInvocation>(removedOperationInvocations);
+		newIntersection.retainAll(operationInvocationsInMethodsCalledByAddedOperation);
+		
+		Set<OperationInvocation> removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted = new LinkedHashSet<OperationInvocation>(removedOperationInvocations);
+		removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.removeAll(intersection);
+		removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.removeAll(newIntersection);
+		for(Iterator<OperationInvocation> operationInvocationIterator = removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.iterator(); operationInvocationIterator.hasNext();) {
+			OperationInvocation invocation = operationInvocationIterator.next();
+			if(invocation.getMethodName().startsWith("get")) {
+				operationInvocationIterator.remove();
+			}
+		}
+		int numberOfInvocationsOriginallyCalledByRemovedOperationFoundInOtherAddedOperations = newIntersection.size();
+		int numberOfInvocationsMissingFromRemovedOperationWithoutThoseFoundInOtherAddedOperations = numberOfInvocationsMissingFromRemovedOperation - numberOfInvocationsOriginallyCalledByRemovedOperationFoundInOtherAddedOperations;
+		return numberOfInvocationsOriginallyCalledByRemovedOperationFoundInOtherAddedOperations > numberOfInvocationsMissingFromRemovedOperationWithoutThoseFoundInOtherAddedOperations ||
+				numberOfInvocationsOriginallyCalledByRemovedOperationFoundInOtherAddedOperations > removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.size();
+	}
 
    private boolean movedAndRenamedMethodSignature(UMLOperation removedOperation, UMLOperation addedOperation, UMLOperationBodyMapper mapper, boolean multipleMappers) {
 	   UMLClassBaseDiff removedOperationClassDiff = getUMLClassDiff(removedOperation.getClassName());

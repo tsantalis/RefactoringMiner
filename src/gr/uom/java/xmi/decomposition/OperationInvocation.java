@@ -570,7 +570,8 @@ public class OperationInvocation extends AbstractCall {
         if (o instanceof OperationInvocation) {
         	OperationInvocation invocation = (OperationInvocation)o;
             return methodName.equals(invocation.methodName) &&
-                typeArguments == invocation.typeArguments;
+                typeArguments == invocation.typeArguments &&
+                (this.expression != null) == (invocation.expression != null);
         }
         return false;
     }
@@ -591,6 +592,7 @@ public class OperationInvocation extends AbstractCall {
     public int hashCode() {
     	if(hashCode == 0) {
     		int result = 17;
+    		result = 37*result + expression != null ? 1 : 0;
     		result = 37*result + methodName.hashCode();
     		result = 37*result + typeArguments;
     		hashCode = result;

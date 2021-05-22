@@ -1451,12 +1451,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			boolean nextMapperMatchesConsistentRename = matchesConsistentMethodInvocationRename(mapper, consistentMethodInvocationRenames.keySet());
 			boolean bestMapperMismatchesConsistentRename = mismatchesConsistentMethodInvocationRename(bestMapper, consistentMethodInvocationRenames.keySet());
 			if(bestMapperMismatchesConsistentRename && nextMapperMatchesConsistentRename) {
-				bestMapper = mapper;
-				break;
+				return mapper;
 			}
 			if(anotherMapperCallsOperation2OfTheBestMapper || anotherMapperCallsOperation1OfTheBestMapper) {
-				bestMapper = mapper;
-				break;
+				return mapper;
 			}
 		}
 		if(mismatchesConsistentMethodInvocationRename(bestMapper, consistentMethodInvocationRenames.keySet())) {

@@ -85,6 +85,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	public void process() throws RefactoringMinerTimedOutException {
+		processModifiers();
 		processAnnotations();
 		processEnumConstants();
 		processInheritance();
@@ -96,6 +97,16 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		checkForAttributeChanges();
 		checkForInlinedOperations();
 		checkForExtractedOperations();
+	}
+
+	private void processModifiers() {
+		if(!originalClass.getVisibility().equals(nextClass.getVisibility())) {
+			setVisibilityChanged(true);
+			setOldVisibility(originalClass.getVisibility());
+			setNewVisibility(nextClass.getVisibility());
+			ChangeClassAccessModifierRefactoring refactoring = new ChangeClassAccessModifierRefactoring(oldVisibility, newVisibility, originalClass, nextClass);
+			refactorings.add(refactoring);
+		}
 	}
 
 	private void processAnnotations() {
@@ -439,11 +450,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	private void processInheritance() {
-		if(!originalClass.getVisibility().equals(nextClass.getVisibility())) {
-			setVisibilityChanged(true);
-			setOldVisibility(originalClass.getVisibility());
-			setNewVisibility(nextClass.getVisibility());
-		}
 		if(!originalClass.isInterface() && !nextClass.isInterface()) {
 			if(originalClass.isAbstract() != nextClass.isAbstract()) {
 				setAbstractionChanged(true);

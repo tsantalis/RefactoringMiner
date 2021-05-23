@@ -13,6 +13,8 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private String sourceFile;
     private String sourceFolder;
     private String visibility;
+    private boolean isFinal;
+    private boolean isStatic;
 	private boolean isAbstract;
 	private boolean isInterface;
 	private boolean isEnum;
@@ -125,6 +127,22 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public void setVisibility(String visibility) {
 		this.visibility = visibility;
+	}
+
+	public boolean isFinal() {
+		return isFinal;
+	}
+
+	public void setFinal(boolean isFinal) {
+		this.isFinal = isFinal;
+	}
+
+	public boolean isStatic() {
+		return isStatic;
+	}
+
+	public void setStatic(boolean isStatic) {
+		this.isStatic = isStatic;
 	}
 
 	public boolean isEnum() {
@@ -289,6 +307,15 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     	}
     	return false;
     }
+
+    public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((packageName == null) ? 0 : packageName.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((sourceFile == null) ? 0 : sourceFile.hashCode());
+		return result;
+	}
 
     public String toString() {
     	return getName();

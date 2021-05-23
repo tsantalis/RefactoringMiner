@@ -426,6 +426,10 @@ public class UMLModelASTReader {
 		int modifiers = typeDeclaration.getModifiers();
     	if((modifiers & Modifier.ABSTRACT) != 0)
     		umlClass.setAbstract(true);
+    	if((modifiers & Modifier.STATIC) != 0)
+    		umlClass.setStatic(true);
+    	if((modifiers & Modifier.FINAL) != 0)
+    		umlClass.setFinal(true);
     	
     	if((modifiers & Modifier.PUBLIC) != 0)
     		umlClass.setVisibility("public");

@@ -96,6 +96,17 @@ Currently, it supports the detection of the following refactorings:
 64. Encapsulate Attribute
 65. Parameterize Attribute
 66. Replace Attribute with Variable
+67. Add Method Modifier (`final`, `static`, `abstract`, `synchronized`)
+68. Remove Method Modifier (`final`, `static`, `abstract`, `synchronized`)
+69. Add Attribute Modifier (`final`, `static`, `transient`, `volatile`)
+70. Remove Attribute Modifier (`final`, `static`, `transient`, `volatile`)
+71. Add Variable Modifier (`final`)
+72. Add Parameter Modifier (`final`)
+73. Remove Variable Modifier (`final`)
+74. Remove Parameter Modifier (`final`)
+75. Change Class Access Modifier
+76. Add Class Modifier (`final`, `static`, `abstract`)
+77. Remove Class Modifier (`final`, `static`, `abstract`)
 
 # How to build RefactoringMiner
 

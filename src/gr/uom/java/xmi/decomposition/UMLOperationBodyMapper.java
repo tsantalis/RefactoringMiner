@@ -2030,24 +2030,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 							VariableDeclaration v1 = statement1.searchVariableDeclaration(s1);
-							/*if(v1 == null) {
+							if(v1 == null) {
 								for(VariableDeclaration declaration : operation1.getParameterDeclarationList()) {
 									if(declaration.getVariableName().equals(s1)) {
 										v1 = declaration;
 										break;
 									}
 								}
-							}*/
+							}
 							VariableDeclaration v2 = statement2.searchVariableDeclaration(s2);
-							/*if(v2 == null) {
+							if(v2 == null) {
 								for(VariableDeclaration declaration : operation2.getParameterDeclarationList()) {
 									if(declaration.getVariableName().equals(s2)) {
 										v2 = declaration;
 										break;
 									}
 								}
-							}*/
-							if(inconsistentVariableMappingCount(statement1, statement2, v1, v2) > 1 && operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) == null) {
+							}
+							if(inconsistentVariableMappingCount(statement1, statement2, v1, v2) > 1 && !existsVariableDeclarationForV2InitializedWithV1(v1, v2, replacementInfo) && operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) == null) {
 								replacement = null;
 							}
 						}
@@ -3659,8 +3659,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							int characterIndex1 = indexOf1 + replacement.getAfter().length();
 							int characterIndex2 = indexOf2 + replacement.getAfter().length();
 							boolean isVariableDeclarationReplacement =
-									characterIndex1 < s1.length() && s1.charAt(characterIndex1) == '=' &&
-									characterIndex2 < s2.length() && s2.charAt(characterIndex2) == '=';
+									characterIndex1 < s1.length() && (s1.charAt(characterIndex1) == '=' || s1.charAt(characterIndex1) == '.') &&
+									characterIndex2 < s2.length() && (s2.charAt(characterIndex2) == '=' || s2.charAt(characterIndex2) == '.');
 							if(!isVariableDeclarationReplacement &&
 									operation1.getVariableDeclaration(replacement.getBefore()) != null &&
 									operation2.getVariableDeclaration(replacement.getAfter()) != null) {
@@ -4511,6 +4511,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private boolean existsVariableDeclarationForV2InitializedWithV1(VariableDeclaration v1, VariableDeclaration v2, ReplacementInfo info) {
+		for(AbstractCodeFragment fragment2 : info.statements2) {
+			if(fragment2.getVariableDeclarations().contains(v2)) {
+				AbstractExpression initializer = v2.getInitializer();
+				if(initializer != null && initializer.getVariables().contains(v1.getVariableName())) {
+					return true;
+				}
+				
+			}
+			VariableDeclaration v1DeclarationInFragment2 = fragment2.getVariableDeclaration(v1.getVariableName());
+			if(v1DeclarationInFragment2 != null) {
+				AbstractExpression initializer = v1DeclarationInFragment2.getInitializer();
+				if(initializer != null && initializer.getVariables().contains(v2.getVariableName())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private int inconsistentVariableMappingCount(AbstractCodeFragment statement1, AbstractCodeFragment statement2, VariableDeclaration v1, VariableDeclaration v2) {

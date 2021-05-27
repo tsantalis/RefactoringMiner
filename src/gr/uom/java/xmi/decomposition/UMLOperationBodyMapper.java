@@ -2167,6 +2167,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
 		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) || differOnlyInCastExpressionOrPrefixOperator(s1, s2, replacementInfo) ||
+				differOnlyInEnhancedForParameterFinalModifier(s1, s2) ||
 				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString()) ||
 				(containsValidOperatorReplacements(replacementInfo) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, replacementInfo))) ||
@@ -3825,6 +3826,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			if(s2.startsWith("return ") && s2.substring(7, s2.length()).equals(commonSuffix) &&
 					s1.contains("=") && s1.substring(s1.indexOf("=")+1, s1.length()).equals(commonSuffix)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean differOnlyInEnhancedForParameterFinalModifier(String s1, String s2) {
+		String prefixWithoutFinalModifier = "for(";
+		String prefixWithFinalModifier = "for(final ";
+		if(s1.startsWith(prefixWithoutFinalModifier) && s2.startsWith(prefixWithFinalModifier)) {
+			String suffix1 = s1.substring(prefixWithoutFinalModifier.length(), s1.length());
+			String suffix2 = s2.substring(prefixWithFinalModifier.length(), s2.length());
+			if(suffix1.equals(suffix2)) {
+				return true;
+			}
+		}
+		if(s1.startsWith(prefixWithFinalModifier) && s2.startsWith(prefixWithoutFinalModifier)) {
+			String suffix1 = s1.substring(prefixWithFinalModifier.length(), s1.length());
+			String suffix2 = s2.substring(prefixWithoutFinalModifier.length(), s2.length());
+			if(suffix1.equals(suffix2)) {
 				return true;
 			}
 		}

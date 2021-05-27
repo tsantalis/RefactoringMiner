@@ -103,7 +103,20 @@ public class CompositeStatementObject extends AbstractStatement {
 		if(expressionList.size() > 0) {
 			sb.append("(");
 			for(int i=0; i<expressionList.size()-1; i++) {
-				sb.append(expressionList.get(i).toString()).append("; ");
+				AbstractExpression expression = expressionList.get(i);
+				//special handling for the string representation of enhanced-for parameter declaration
+				if(expression.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT_PARAMETER_NAME)) {
+					VariableDeclaration parameterDeclaration = this.getVariableDeclaration(expression.toString());
+					if(parameterDeclaration != null) {
+						if(parameterDeclaration.isFinal()) {
+							sb.append("final").append(" ");
+						}
+						sb.append(parameterDeclaration.getVariableName()).append(": ");
+					}
+				}
+				else {
+					sb.append(expression.toString()).append("; ");
+				}
 			}
 			sb.append(expressionList.get(expressionList.size()-1).toString());
 			sb.append(")");

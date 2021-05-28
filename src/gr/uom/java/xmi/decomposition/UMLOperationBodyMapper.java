@@ -4479,21 +4479,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	@Override
 	public int compareTo(UMLOperationBodyMapper operationBodyMapper) {
-		int thisCallChainIntersectionSum = 0;
-		for(AbstractCodeMapping mapping : this.mappings) {
-			if(mapping instanceof LeafMapping) {
-				thisCallChainIntersectionSum += ((LeafMapping)mapping).callChainIntersection().size();
-			}
-		}
-		int otherCallChainIntersectionSum = 0;
-		for(AbstractCodeMapping mapping : operationBodyMapper.mappings) {
-			if(mapping instanceof LeafMapping) {
-				otherCallChainIntersectionSum += ((LeafMapping)mapping).callChainIntersection().size();
-			}
-		}
-		if(thisCallChainIntersectionSum != otherCallChainIntersectionSum) {
-			return -Integer.compare(thisCallChainIntersectionSum, otherCallChainIntersectionSum);
-		}
 		int thisMappings = this.mappingsWithoutBlocks();
 		for(AbstractCodeMapping mapping : this.getMappings()) {
 			if(mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable()) {

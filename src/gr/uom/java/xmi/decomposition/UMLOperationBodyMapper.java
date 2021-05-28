@@ -2167,7 +2167,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
 		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) || differOnlyInCastExpressionOrPrefixOperator(s1, s2, replacementInfo) ||
-				differOnlyInEnhancedForParameterFinalModifier(s1, s2) ||
+				differOnlyInFinalModifier(s1, s2) ||
 				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString()) ||
 				(containsValidOperatorReplacements(replacementInfo) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, replacementInfo))) ||
@@ -3832,9 +3832,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean differOnlyInEnhancedForParameterFinalModifier(String s1, String s2) {
-		String prefixWithoutFinalModifier = "for(";
-		String prefixWithFinalModifier = "for(final ";
+	private boolean differOnlyInFinalModifier(String s1, String s2) {;
+		return differOnlyInFinalModifier(s1, s2, "for(", "for(final ") ||
+				differOnlyInFinalModifier(s1, s2, "catch(", "catch(final ");
+	}
+
+	private boolean differOnlyInFinalModifier(String s1, String s2, String prefixWithoutFinalModifier, String prefixWithFinalModifier) {
 		if(s1.startsWith(prefixWithoutFinalModifier) && s2.startsWith(prefixWithFinalModifier)) {
 			String suffix1 = s1.substring(prefixWithoutFinalModifier.length(), s1.length());
 			String suffix2 = s2.substring(prefixWithFinalModifier.length(), s2.length());

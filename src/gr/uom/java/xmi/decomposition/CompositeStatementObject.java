@@ -118,7 +118,19 @@ public class CompositeStatementObject extends AbstractStatement {
 					sb.append(expression.toString()).append("; ");
 				}
 			}
-			sb.append(expressionList.get(expressionList.size()-1).toString());
+			AbstractExpression lastExpression = expressionList.get(expressionList.size()-1);
+			if(lastExpression.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE_EXCEPTION_NAME)) {
+				VariableDeclaration exceptionDeclaration = this.getVariableDeclaration(lastExpression.toString());
+				if(exceptionDeclaration != null) {
+					if(exceptionDeclaration.isFinal()) {
+						sb.append("final").append(" ");
+					}
+					sb.append(exceptionDeclaration.getVariableName());
+				}
+			}
+			else {
+				sb.append(lastExpression.toString());
+			}
 			sb.append(")");
 		}
 		return sb.toString();

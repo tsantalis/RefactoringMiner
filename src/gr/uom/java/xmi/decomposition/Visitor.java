@@ -680,6 +680,7 @@ public class Visitor extends ASTVisitor {
 				argument instanceof Name ||
 				argument instanceof StringLiteral ||
 				argument instanceof BooleanLiteral ||
+				argument instanceof NumberLiteral ||
 				(argument instanceof FieldAccess && ((FieldAccess)argument).getExpression() instanceof ThisExpression) ||
 				(argument instanceof ArrayAccess && invalidArrayAccess((ArrayAccess)argument)) ||
 				(argument instanceof InfixExpression && invalidInfix((InfixExpression)argument)))

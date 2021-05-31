@@ -1201,6 +1201,36 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+		//infer signature changes for delegate methods calling methods in the operationDiffList
+		for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
+			UMLOperation removedOperation = removedOperationIterator.next();
+			OperationInvocation removedOperationInvocation = removedOperation.isDelegate();
+			if(removedOperationInvocation != null) {
+				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
+					UMLOperation addedOperation = addedOperationIterator.next();
+					OperationInvocation addedOperationInvocation = addedOperation.isDelegate();
+					if(addedOperationInvocation != null) {
+						for(UMLOperationDiff operationDiff : operationDiffList) {
+							if(removedOperationInvocation.matchesOperation(operationDiff.getRemovedOperation(), removedOperation, modelDiff) &&
+									addedOperationInvocation.matchesOperation(operationDiff.getAddedOperation(), addedOperation, modelDiff) &&
+									removedOperation.getParameterTypeList().equals(addedOperation.getParameterTypeList())) {
+								addedOperationIterator.remove();
+								removedOperationIterator.remove();
+			
+								UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation);
+								refactorings.addAll(operationSignatureDiff.getRefactorings());
+								if(!removedOperation.getName().equals(addedOperation.getName()) &&
+										!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
+									RenameOperationRefactoring rename = new RenameOperationRefactoring(removedOperation, addedOperation);
+									refactorings.add(rename);
+								}
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	private Set<MethodInvocationReplacement> getCallReferences(UMLOperation removedOperation, UMLOperation addedOperation) {

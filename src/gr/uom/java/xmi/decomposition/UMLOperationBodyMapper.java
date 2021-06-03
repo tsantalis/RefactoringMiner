@@ -2332,6 +2332,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					return replacementInfo.getReplacements();
 				}
 			}
+			else if(try1.isTryWithResources() && try2.isTryWithResources()) {
+				if((creationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) ||
+						(invocationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null)) {
+					List<AbstractStatement> tryStatements1 = try1.getStatements();
+					List<AbstractStatement> tryStatements2 = try2.getStatements();
+					List<AbstractCodeFragment> matchedChildStatements1 = new ArrayList<>();
+					List<AbstractCodeFragment> matchedChildStatements2 = new ArrayList<>();
+					for(AbstractCodeMapping mapping : mappings) {
+						if(tryStatements1.contains(mapping.getFragment1()) && tryStatements2.contains(mapping.getFragment2())) {
+							matchedChildStatements1.add(mapping.getFragment1());
+							matchedChildStatements2.add(mapping.getFragment2());
+						}
+					}
+					if(matchedChildStatements1.size() > 0 && matchedChildStatements1.size() == matchedChildStatements2.size() &&
+							(tryStatements1.size() == matchedChildStatements1.size() || tryStatements2.size() == matchedChildStatements2.size())) {
+						return replacementInfo.getReplacements();
+					}
+				}
+			}
 		}
 		OperationInvocation assignmentInvocationCoveringTheEntireStatement1 = invocationCoveringTheEntireStatement1 == null ? statement1.assignmentInvocationCoveringEntireStatement() : invocationCoveringTheEntireStatement1;
 		//method invocation is identical

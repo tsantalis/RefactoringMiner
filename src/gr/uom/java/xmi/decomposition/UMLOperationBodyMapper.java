@@ -36,6 +36,7 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -2264,6 +2265,58 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), anonymousClassDeclaration2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION);
 							replacementInfo.addReplacement(replacement);
 							return replacementInfo.getReplacements();
+						}
+					}
+				}
+			}
+		}
+		else if(anonymousClassDeclarations1.size() == 0 && anonymousClassDeclarations2.size() == 1) {
+			AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(0);
+			UMLAnonymousClass anonymousClass2 = operation2.findAnonymousClass(anonymousClassDeclaration2);
+			if(anonymousClass2.getOperations().size() == 1) {
+				UMLOperation anonymousClass2Operation = anonymousClass2.getOperations().get(0);
+				if(anonymousClass2Operation.getBody() != null) {
+					List<AbstractStatement> statements = anonymousClass2Operation.getBody().getCompositeStatement().getStatements();
+					if(statements.size() == 1) {
+						AbstractStatement statement = statements.get(0);
+						OperationInvocation invocation2 = statement.invocationCoveringEntireFragment();
+						if(invocation2 != null) {
+							for(String key1 : methodInvocationMap1.keySet()) {
+								for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
+									if(invocation1.identical(invocation2, replacementInfo.getReplacements(), Collections.emptyList())) {
+										Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
+												invocation2.actualString(), (OperationInvocation)invocation1, invocation2, ReplacementType.METHOD_INVOCATION_WRAPPED_IN_ANONYMOUS_CLASS_DECLARATION);
+										replacementInfo.addReplacement(replacement);
+										return replacementInfo.getReplacements();
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		else if(anonymousClassDeclarations1.size() == 1 && anonymousClassDeclarations2.size() == 0) {
+			AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(0);
+			UMLAnonymousClass anonymousClass1 = operation1.findAnonymousClass(anonymousClassDeclaration1);
+			if(anonymousClass1.getOperations().size() == 1) {
+				UMLOperation anonymousClass1Operation = anonymousClass1.getOperations().get(0);
+				if(anonymousClass1Operation.getBody() != null) {
+					List<AbstractStatement> statements = anonymousClass1Operation.getBody().getCompositeStatement().getStatements();
+					if(statements.size() == 1) {
+						AbstractStatement statement = statements.get(0);
+						OperationInvocation invocation1 = statement.invocationCoveringEntireFragment();
+						if(invocation1 != null) {
+							for(String key2 : methodInvocationMap2.keySet()) {
+								for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
+									if(invocation1.identical(invocation2, replacementInfo.getReplacements(), Collections.emptyList())) {
+										Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
+												invocation2.actualString(), invocation1, (OperationInvocation)invocation2, ReplacementType.METHOD_INVOCATION_WRAPPED_IN_ANONYMOUS_CLASS_DECLARATION);
+										replacementInfo.addReplacement(replacement);
+										return replacementInfo.getReplacements();
+									}
+								}
+							}
 						}
 					}
 				}

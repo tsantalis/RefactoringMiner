@@ -8,6 +8,9 @@ Table of Contents
    * [Research](#research)
       * [How to cite RefactoringMiner](#how-to-cite-refactoringminer)
       * [Papers based on RefactoringMiner](#papers-based-on-refactoringminer)
+   * [Support for other programming languages](#support-for-other-programming-languages)
+      * [Kotlin](#kotlin)
+      * [Python](#python)
    * [Contributors](#contributors)
    * [API usage guidelines](#api-usage-guidelines)
       * [With a locally cloned git repository](#with-a-locally-cloned-git-repository)
@@ -230,6 +233,14 @@ Refactorings and Commit Messages](https://doi.org/10.1109/SCAM.2019.00017)," *19
 54. Dong Jae Kim, Nikolaos Tsantalis, Tse-Hsun (Peter) Chen, and Jinqiu Yang, "Studying Test Annotation Maintenance in the Wild," *43rd International Conference on Software Engineering* (ICSE 2021), Madrid, Spain, May 25-28, 2021.
 55. Yanjie Jiang, Hui Liu, Nan Niu, Lu Zhang, and Yamin Hu, "Extracting Concise Bug-Fixing Patches from Human-Written Patches in Version Control Systems," *43rd International Conference on Software Engineering* (ICSE 2021), Madrid, Spain, May 25-28, 2021.
 56. Giovanni Rosa, Luca Pascarella, Simone Scalabrino, Rosalia Tufano, Gabriele Bavota, Michele Lanza, and Rocco Oliveto, "Evaluating SZZ Implementations Through a Developer-informed Oracle," *43rd International Conference on Software Engineering* (ICSE 2021), Madrid, Spain, May 25-28, 2021.
+
+# Support for other programming languages
+## Kotlin
+[KotlinRMiner](https://github.com/JetBrains-Research/kotlinRMiner) has been developed by [JetBrains Research](https://research.jetbrains.org/).
+The project is led and maintained by [Zarina Kurbatova](https://github.com/onewhl).
+
+## Python
+[Python-adapted RefactoringMiner](https://github.com/maldil/RefactoringMiner) has been developed by [Malinda Dilhara](https://maldil.github.io/), a Ph.D. student in the department of Computer Science at University of Colorado Boulder under the suprevision of [Danny Dig](https://dig.cs.illinois.edu/).
 
 # Contributors
 The code in package **gr.uom.java.xmi.*** is developed by [Nikolaos Tsantalis](https://github.com/tsantalis).

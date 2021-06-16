@@ -90,7 +90,9 @@ public enum RefactoringType {
 	REMOVE_PARAMETER_MODIFIER("Remove Parameter Modifier", "Remove Parameter Modifier (.+) in parameter (.+) in method (.+) from class (.+)"),
 	CHANGE_CLASS_ACCESS_MODIFIER("Change Class Access Modifier", "Change Class Access Modifier (.+) to (.+) in class (.+)"),
 	ADD_CLASS_MODIFIER("Add Class Modifier", "Add Class Modifier (.+) in class (.+)"),
-	REMOVE_CLASS_MODIFIER("Remove Class Modifier", "Remove Class Modifier (.+) in class (.+)");
+	REMOVE_CLASS_MODIFIER("Remove Class Modifier", "Remove Class Modifier (.+) in class (.+)"),
+	SPLIT_PACKAGE("Split Package", "Split Package (.+) to \\[(.+)\\]"),
+	MERGE_PACKAGE("Merge Package", "Merge Package \\[(.+)\\] to (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -173,7 +175,9 @@ public enum RefactoringType {
 		REMOVE_PARAMETER_MODIFIER,
 		CHANGE_CLASS_ACCESS_MODIFIER,
 		ADD_CLASS_MODIFIER,
-		REMOVE_CLASS_MODIFIER
+		REMOVE_CLASS_MODIFIER,
+		SPLIT_PACKAGE,
+		MERGE_PACKAGE
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

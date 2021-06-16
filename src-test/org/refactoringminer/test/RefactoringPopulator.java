@@ -108,7 +108,9 @@ public class RefactoringPopulator {
 		ChangeClassAccessModifier(new BigInteger("37778931862957161709568")),
 		AddClassModifier(new BigInteger("75557863725914323419136")),
 		RemoveClassModifier(new BigInteger("151115727451828646838272")),
-		All(new BigInteger("302231454903657293676543"));
+		SplitPackage(new BigInteger("302231454903657293676544")),
+		MergePackage(new BigInteger("604462909807314587353088")),
+		All(new BigInteger("1208925819614629174706175"));
 
 		private BigInteger value;
 

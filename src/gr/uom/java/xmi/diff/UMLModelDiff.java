@@ -1336,9 +1336,52 @@ public class UMLModelDiff {
 		   List<PackageLevelRefactoring> moveClassRefactorings = renamePackageRefactoring.getMoveClassRefactorings();
 		   if(moveClassRefactorings.size() >= 1 && isSourcePackageDeleted(renamePackageRefactoring)) {
 			   refactorings.add(renamePackageRefactoring);
+			   previousRenamePackageRefactorings.add(renamePackageRefactoring);
 		   }
       }
       return refactorings;
+   }
+
+   private void postProcessRenamedPackages(List<RenamePackageRefactoring> renamePackageRefactorings, Set<Refactoring> allRefactorings) {
+	   Map<String, Set<RenamePackageRefactoring>> groupBasedOnOriginalPackage = new LinkedHashMap<String, Set<RenamePackageRefactoring>>();
+	   Map<String, Set<RenamePackageRefactoring>> groupBasedOnNewPackage = new LinkedHashMap<String, Set<RenamePackageRefactoring>>();
+	   for(RenamePackageRefactoring refactoring : renamePackageRefactorings) {
+		   RenamePattern pattern = refactoring.getPattern();
+		   String before = pattern.getBefore();
+		   String after = pattern.getAfter();
+		   if(groupBasedOnOriginalPackage.containsKey(before)) {
+			   groupBasedOnOriginalPackage.get(before).add(refactoring);
+		   }
+		   else {
+			   Set<RenamePackageRefactoring> initialRenamePackageRefactorings = new LinkedHashSet<>();
+			   initialRenamePackageRefactorings.add(refactoring);
+			   groupBasedOnOriginalPackage.put(before, initialRenamePackageRefactorings);
+		   }
+		   if(groupBasedOnNewPackage.containsKey(after)) {
+			   groupBasedOnNewPackage.get(after).add(refactoring);
+		   }
+		   else {
+			   Set<RenamePackageRefactoring> initialRenamePackageRefactorings = new LinkedHashSet<>();
+			   initialRenamePackageRefactorings.add(refactoring);
+			   groupBasedOnNewPackage.put(after, initialRenamePackageRefactorings);
+		   }
+	   }
+	   for(String key : groupBasedOnOriginalPackage.keySet()) {
+		   Set<RenamePackageRefactoring> value = groupBasedOnOriginalPackage.get(key);
+		   if(value.size() > 1) {
+			   SplitPackageRefactoring refactoring = new SplitPackageRefactoring(value);
+			   allRefactorings.add(refactoring);
+			   allRefactorings.removeAll(value);
+		   }
+	   }
+	   for(String key : groupBasedOnNewPackage.keySet()) {
+		   Set<RenamePackageRefactoring> value = groupBasedOnNewPackage.get(key);
+		   if(value.size() > 1) {
+			   MergePackageRefactoring refactoring = new MergePackageRefactoring(value);
+			   allRefactorings.add(refactoring);
+			   allRefactorings.removeAll(value);
+		   }
+	   }
    }
 
    public List<Refactoring> getRefactorings() throws RefactoringMinerTimedOutException {
@@ -1351,6 +1394,7 @@ public class UMLModelDiff {
 		  }
       }
       refactorings.addAll(getRenameClassRefactorings(renamePackageRefactorings));
+      postProcessRenamedPackages(renamePackageRefactorings, refactorings);
       refactorings.addAll(identifyConvertAnonymousClassToTypeRefactorings());
       Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();
       Map<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>> mergeMap = new LinkedHashMap<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>>();

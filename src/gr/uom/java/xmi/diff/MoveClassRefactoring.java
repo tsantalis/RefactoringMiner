@@ -8,11 +8,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
-public class MoveClassRefactoring implements Refactoring {
+public class MoveClassRefactoring implements PackageLevelRefactoring {
 	private UMLClass originalClass;
 	private UMLClass movedClass;
 	

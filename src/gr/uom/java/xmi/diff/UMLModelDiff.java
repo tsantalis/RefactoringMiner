@@ -1299,9 +1299,9 @@ public class UMLModelDiff {
 	   return false;
    }
 
-   private List<Refactoring> getRenameClassRefactorings() {
+   private List<Refactoring> getRenameClassRefactorings(List<RenamePackageRefactoring> previousRenamePackageRefactorings) {
       List<Refactoring> refactorings = new ArrayList<Refactoring>();
-      List<RenamePackageRefactoring> renamePackageRefactorings = new ArrayList<RenamePackageRefactoring>();
+      List<RenamePackageRefactoring> newRenamePackageRefactorings = new ArrayList<RenamePackageRefactoring>();
       for(UMLClassRenameDiff classRenameDiff : classRenameDiffList) {
     	  if(classRenameDiff.samePackage()) {
     		  RenameClassRefactoring refactoring = new RenameClassRefactoring(classRenameDiff.getOriginalClass(), classRenameDiff.getRenamedClass());
@@ -1312,17 +1312,14 @@ public class UMLModelDiff {
     		  RenamePattern renamePattern = refactoring.getRenamePattern();
     		  boolean foundInMatchingRenamePackageRefactoring = false;
     		  //search first in RenamePackage refactorings established from Move Class refactorings
-    		  for(Refactoring r : this.refactorings) {
-    			  if(r instanceof RenamePackageRefactoring) {
-    				  RenamePackageRefactoring renamePackageRefactoring = (RenamePackageRefactoring)r;
-    				  if(renamePackageRefactoring.getPattern().equals(renamePattern)) {
-        				  renamePackageRefactoring.addMoveClassRefactoring(refactoring);
-        				  foundInMatchingRenamePackageRefactoring = true;
-        				  break;
-        			  }
+    		  for(RenamePackageRefactoring renamePackageRefactoring : previousRenamePackageRefactorings) {
+				  if(renamePackageRefactoring.getPattern().equals(renamePattern)) {
+    				  renamePackageRefactoring.addMoveClassRefactoring(refactoring);
+    				  foundInMatchingRenamePackageRefactoring = true;
+    				  break;
     			  }
     		  }
-    		  for(RenamePackageRefactoring renamePackageRefactoring : renamePackageRefactorings) {
+    		  for(RenamePackageRefactoring renamePackageRefactoring : newRenamePackageRefactorings) {
     			  if(renamePackageRefactoring.getPattern().equals(renamePattern)) {
     				  renamePackageRefactoring.addMoveClassRefactoring(refactoring);
     				  foundInMatchingRenamePackageRefactoring = true;
@@ -1330,12 +1327,12 @@ public class UMLModelDiff {
     			  }
     		  }
     		  if(!foundInMatchingRenamePackageRefactoring) {
-    			  renamePackageRefactorings.add(new RenamePackageRefactoring(refactoring));
+    			  newRenamePackageRefactorings.add(new RenamePackageRefactoring(refactoring));
     		  }
     		  refactorings.add(refactoring);
     	  }
       }
-      for(RenamePackageRefactoring renamePackageRefactoring : renamePackageRefactorings) {
+      for(RenamePackageRefactoring renamePackageRefactoring : newRenamePackageRefactorings) {
 		   List<PackageLevelRefactoring> moveClassRefactorings = renamePackageRefactoring.getMoveClassRefactorings();
 		   if(moveClassRefactorings.size() >= 1 && isSourcePackageDeleted(renamePackageRefactoring)) {
 			   refactorings.add(renamePackageRefactoring);
@@ -1347,7 +1344,13 @@ public class UMLModelDiff {
    public List<Refactoring> getRefactorings() throws RefactoringMinerTimedOutException {
       Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
       refactorings.addAll(getMoveClassRefactorings());
-      refactorings.addAll(getRenameClassRefactorings());
+      List<RenamePackageRefactoring> renamePackageRefactorings = new ArrayList<RenamePackageRefactoring>();
+      for(Refactoring r : refactorings) {
+		  if(r instanceof RenamePackageRefactoring) {
+			  renamePackageRefactorings.add((RenamePackageRefactoring)r);
+		  }
+      }
+      refactorings.addAll(getRenameClassRefactorings(renamePackageRefactorings));
       refactorings.addAll(identifyConvertAnonymousClassToTypeRefactorings());
       Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();
       Map<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>> mergeMap = new LinkedHashMap<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>>();

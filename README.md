@@ -41,7 +41,7 @@ Currently, it supports the detection of the following refactorings:
 12. Move Class
 13. Rename Class
 14. Extract and Move Method
-15. Change Package (Move, Rename, Split, Merge)
+15. Rename Package ~~Change Package (Move, Rename, Split, Merge)~~
 
 **<ins>supported by RefactoringMiner 2.0</ins>**
 
@@ -110,6 +110,9 @@ Currently, it supports the detection of the following refactorings:
 75. Change Class Access Modifier
 76. Add Class Modifier (`final`, `static`, `abstract`)
 77. Remove Class Modifier (`final`, `static`, `abstract`)
+78. Move Package
+79. Split Package
+80. Merge Package
 
 # How to build RefactoringMiner
 

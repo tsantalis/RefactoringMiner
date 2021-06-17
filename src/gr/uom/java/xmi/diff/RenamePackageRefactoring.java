@@ -38,7 +38,19 @@ public class RenamePackageRefactoring implements Refactoring {
 	}
 
 	public RefactoringType getRefactoringType() {
-		return RefactoringType.RENAME_PACKAGE;
+		String originalPath = pattern.getBefore().endsWith(".") ? pattern.getBefore().substring(0, pattern.getBefore().length()-1) : pattern.getBefore();
+		String movedPath = pattern.getAfter().endsWith(".") ? pattern.getAfter().substring(0, pattern.getAfter().length()-1) : pattern.getAfter();
+		if(originalPath.contains(".") && movedPath.contains(".")) {
+			String prefix1 = originalPath.substring(0, originalPath.lastIndexOf("."));
+			String prefix2 = movedPath.substring(0, movedPath.lastIndexOf("."));
+			if(prefix1.equals(prefix2)) {
+				return RefactoringType.RENAME_PACKAGE;
+			}
+		}
+		else if(!originalPath.contains(".") && !movedPath.contains(".")) {
+			return RefactoringType.RENAME_PACKAGE;
+		}
+		return RefactoringType.MOVE_PACKAGE;
 	}
 
 	public String getName() {

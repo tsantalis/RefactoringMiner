@@ -110,9 +110,17 @@ public class UMLParameterDiff {
 		VariableDeclaration newVariable = getAddedParameter().getVariableDeclaration();
 		Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReferences(originalVariable, newVariable, mappings);
 		RenameVariableRefactoring renameRefactoring = null;
-		if(isNameChanged() && !inconsistentReplacement(originalVariable, newVariable)) {
-			renameRefactoring = new RenameVariableRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references);
-			refactorings.add(renameRefactoring);
+		if(isNameChanged()) {
+			if(!inconsistentReplacement(originalVariable, newVariable)) {
+				renameRefactoring = new RenameVariableRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references);
+				refactorings.add(renameRefactoring);
+			}
+			else {
+				RemoveParameterRefactoring removeParameter = new RemoveParameterRefactoring(removedParameter, removedOperation, addedOperation);
+				AddParameterRefactoring addParameter = new AddParameterRefactoring(addedParameter, removedOperation, addedOperation);
+				refactorings.add(removeParameter);
+				refactorings.add(addParameter);
+			}
 		}
 		if((isTypeChanged() || isQualifiedTypeChanged() || isVarArgsChanged()) && !inconsistentReplacement(originalVariable, newVariable)) {
 			ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references);

@@ -1,8 +1,10 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -10,18 +12,21 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 public class MoveSourceFolderRefactoring implements Refactoring {
-	private List<MovedClassToAnotherSourceFolder> movedClassesToAnotherSourceFolder;
+	private List<MovedClassToAnotherSourceFolder> movedClassesToAnotherSourceFolder = new ArrayList<MovedClassToAnotherSourceFolder>();
+	private Map<String, String> identicalFilePaths = new HashMap<String, String>();
 	private RenamePattern pattern;
 	
 	public MoveSourceFolderRefactoring(RenamePattern pattern) {
-		this.movedClassesToAnotherSourceFolder = new ArrayList<MovedClassToAnotherSourceFolder>();
 		this.pattern = pattern;
 	}
 
 	public MoveSourceFolderRefactoring(MovedClassToAnotherSourceFolder movedClassToAnotherSourceFolder) {
-		this.movedClassesToAnotherSourceFolder = new ArrayList<MovedClassToAnotherSourceFolder>();
 		this.movedClassesToAnotherSourceFolder.add(movedClassToAnotherSourceFolder);
 		this.pattern = movedClassToAnotherSourceFolder.getRenamePattern();
+	}
+
+	public void putIdenticalFilePaths(String filePathBefore, String filePathAfter) {
+		identicalFilePaths.put(filePathBefore, filePathAfter);
 	}
 
 	public void addMovedClassToAnotherSourceFolder(MovedClassToAnotherSourceFolder movedClassToAnotherSourceFolder) {
@@ -30,6 +35,10 @@ public class MoveSourceFolderRefactoring implements Refactoring {
 
 	public List<MovedClassToAnotherSourceFolder> getMovedClassesToAnotherSourceFolder() {
 		return movedClassesToAnotherSourceFolder;
+	}
+
+	public Map<String, String> getIdenticalFilePaths() {
+		return identicalFilePaths;
 	}
 
 	public RenamePattern getPattern() {

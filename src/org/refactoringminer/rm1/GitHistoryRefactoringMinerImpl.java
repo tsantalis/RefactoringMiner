@@ -191,12 +191,15 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				boolean foundInMatchingMoveSourceFolderRefactoring = false;
 				for(MoveSourceFolderRefactoring moveSourceFolderRefactoring : moveSourceFolderRefactorings) {
 					if(moveSourceFolderRefactoring.getPattern().equals(renamePattern)) {
+						moveSourceFolderRefactoring.putIdenticalFilePaths(originalPath, movedPath);
 						foundInMatchingMoveSourceFolderRefactoring = true;
 						break;
 					}
 				}
 				if(!foundInMatchingMoveSourceFolderRefactoring) {
-					moveSourceFolderRefactorings.add(new MoveSourceFolderRefactoring(renamePattern));
+					MoveSourceFolderRefactoring moveSourceFolderRefactoring = new MoveSourceFolderRefactoring(renamePattern);
+					moveSourceFolderRefactoring.putIdenticalFilePaths(originalPath, movedPath);
+					moveSourceFolderRefactorings.add(moveSourceFolderRefactoring);
 				}
 			}
 		}

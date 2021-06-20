@@ -336,6 +336,9 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	public double normalizedPackageNameDistance(UMLClass c) {
 		String s1 = packageName.toLowerCase();
 		String s2 = c.packageName.toLowerCase();
+		if(s1.length() == 0 && s2.length() == 0) {
+			return 0;
+		}
 		int distance = StringDistance.editDistance(s1, s2);
 		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
 		return normalized;

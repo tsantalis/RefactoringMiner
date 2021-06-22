@@ -592,7 +592,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		Map<String, Set<String>> aliasedAttributesInOriginalClass = originalClass.aliasedAttributes();
 		Map<String, Set<String>> aliasedAttributesInNextClass = nextClass.aliasedAttributes();
 		ConsistentReplacementDetector.updateRenames(allConsistentRenames, allInconsistentRenames, renames,
-				aliasedAttributesInOriginalClass, aliasedAttributesInNextClass);
+				aliasedAttributesInOriginalClass, aliasedAttributesInNextClass, renameMap);
 		allConsistentRenames.removeAll(allInconsistentRenames);
 		for(Replacement pattern : allConsistentRenames) {
 			UMLAttribute a1 = findAttributeInOriginalClass(pattern.getBefore());

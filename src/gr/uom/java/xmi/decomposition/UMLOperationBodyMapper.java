@@ -3041,6 +3041,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return replacementInfo.getReplacements();
 			}
 		}
+		else if(creationCoveringTheEntireStatement1 == null && invocationCoveringTheEntireStatement2 == null) {
+			for(String key1 : creationMap1.keySet()) {
+				for(AbstractCall creation1 : creationMap1.get(key1)) {
+					if(statement1.getString().endsWith(key1 + ";\n")) {
+						for(String key2 : methodInvocationMap2.keySet()) {
+							for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
+								if(statement2.getString().endsWith(key2 + ";\n")) {
+									if(creation1.equalArguments(invocation2) && creation1.getArguments().size() > 0) {
+										Replacement replacement = new ClassInstanceCreationWithMethodInvocationReplacement(creation1.getName(),
+												invocation2.getName(), ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION, (ObjectCreation)creation1, (OperationInvocation)invocation2);
+										replacementInfo.addReplacement(replacement);
+										return replacementInfo.getReplacements();
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 		if(invocationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null &&
 				variableDeclarations1.size() == variableDeclarations2.size()) {
 			if(invocationCoveringTheEntireStatement1.equalArguments(creationCoveringTheEntireStatement2) && invocationCoveringTheEntireStatement1.getArguments().size() > 0) {
@@ -3050,17 +3070,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return replacementInfo.getReplacements();
 			}
 		}
-		for(String key1 : creationMap1.keySet()) {
-			for(AbstractCall creation1 : creationMap1.get(key1)) {
-				if(statement1.getString().endsWith(key1 + ";\n")) {
-					for(String key2 : methodInvocationMap2.keySet()) {
-						for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
-							if(statement2.getString().endsWith(key2 + ";\n")) {
-								if(creation1.equalArguments(invocation2) && creation1.getArguments().size() > 0) {
-									Replacement replacement = new ClassInstanceCreationWithMethodInvocationReplacement(creation1.getName(),
-											invocation2.getName(), ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION, (ObjectCreation)creation1, (OperationInvocation)invocation2);
-									replacementInfo.addReplacement(replacement);
-									return replacementInfo.getReplacements();
+		else if(invocationCoveringTheEntireStatement1 == null && creationCoveringTheEntireStatement2 == null) {
+			for(String key1 : methodInvocationMap1.keySet()) {
+				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
+					if(statement1.getString().endsWith(key1 + ";\n")) {
+						for(String key2 : creationMap2.keySet()) {
+							for(AbstractCall creation2 : creationMap2.get(key2)) {
+								if(statement2.getString().endsWith(key2 + ";\n")) {
+									if(invocation1.equalArguments(creation2) && invocation1.getArguments().size() > 0) {
+										Replacement replacement = new MethodInvocationWithClassInstanceCreationReplacement(invocation1.getName(),
+												creation2.getName(), ReplacementType.METHOD_INVOCATION_REPLACED_WITH_CLASS_INSTANCE_CREATION, (OperationInvocation)invocation1, (ObjectCreation)creation2);
+										replacementInfo.addReplacement(replacement);
+										return replacementInfo.getReplacements();
+									}
 								}
 							}
 						}

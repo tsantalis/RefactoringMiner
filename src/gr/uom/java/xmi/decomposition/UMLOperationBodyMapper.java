@@ -2812,6 +2812,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(invocation1.equalArguments(invocationCoveringTheEntireStatement2)) {
 								commonArguments += invocation1.getArguments().size();
 							}
+							else {
+								Set<String> argumentIntersection = invocation1.argumentIntersection(invocationCoveringTheEntireStatement2);
+								int threshold = Math.max(invocation1.getArguments().size(), invocationCoveringTheEntireStatement2.getArguments().size())/2;
+								if(argumentIntersection.size() > threshold) {
+									commonArguments += argumentIntersection.size();
+								}
+							}
 						}
 					}
 				}
@@ -2849,6 +2856,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
 							if(invocation2.equalArguments(invocationCoveringTheEntireStatement1)) {
 								commonArguments += invocation2.getArguments().size();
+							}
+							else {
+								Set<String> argumentIntersection = invocation2.argumentIntersection(invocationCoveringTheEntireStatement1);
+								int threshold = Math.max(invocation2.getArguments().size(), invocationCoveringTheEntireStatement1.getArguments().size())/2;
+								if(argumentIntersection.size() > threshold) {
+									commonArguments += argumentIntersection.size();
+								}
 							}
 						}
 					}

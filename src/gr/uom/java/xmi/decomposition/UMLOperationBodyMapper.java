@@ -2786,8 +2786,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		//builder call chain in the first statement is replaced with class instance creation in the second statement
-		if(invocationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null) {
-			if(invocationCoveringTheEntireStatement1.getName().equals("build")) {
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement1.getName().equals("build")) {
+			if(creationCoveringTheEntireStatement2 != null) {
 				int commonArguments = 0;
 				for(String key1 : methodInvocationMap1.keySet()) {
 					if(invocationCoveringTheEntireStatement1.actualString().startsWith(key1)) {
@@ -2800,6 +2800,62 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(commonArguments > 0) {
 					Replacement replacement = new MethodInvocationWithClassInstanceCreationReplacement(invocationCoveringTheEntireStatement1.getName(),
 							creationCoveringTheEntireStatement2.getName(), ReplacementType.BUILDER_REPLACED_WITH_CLASS_INSTANCE_CREATION, invocationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2);
+					replacementInfo.addReplacement(replacement);
+					return replacementInfo.getReplacements();
+				}
+			}
+			if(invocationCoveringTheEntireStatement2 != null) {
+				int commonArguments = 0;
+				for(String key1 : methodInvocationMap1.keySet()) {
+					if(invocationCoveringTheEntireStatement1.actualString().startsWith(key1)) {
+						for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
+							if(invocation1.equalArguments(invocationCoveringTheEntireStatement2)) {
+								commonArguments += invocation1.getArguments().size();
+							}
+						}
+					}
+				}
+				if(commonArguments > 0) {
+					Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getName(), invocationCoveringTheEntireStatement2.getName(),
+							invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
+					replacementInfo.addReplacement(replacement);
+					return replacementInfo.getReplacements();
+				}
+			}
+		}
+		//class instance creation in the first statement is replaced with builder call chain in the second statement
+		if(invocationCoveringTheEntireStatement2 != null && invocationCoveringTheEntireStatement2.getName().equals("build")) {
+			if(creationCoveringTheEntireStatement1 != null) {
+				int commonArguments = 0;
+				for(String key2 : methodInvocationMap2.keySet()) {
+					if(invocationCoveringTheEntireStatement2.actualString().startsWith(key2)) {
+						for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
+							Set<String> argumentIntersection = invocation2.argumentIntersection(creationCoveringTheEntireStatement1);
+							commonArguments += argumentIntersection.size();
+						}
+					}
+				}
+				if(commonArguments > 0) {
+					Replacement replacement = new ClassInstanceCreationWithMethodInvocationReplacement(creationCoveringTheEntireStatement1.getName(),
+							invocationCoveringTheEntireStatement2.getName(), ReplacementType.BUILDER_REPLACED_WITH_CLASS_INSTANCE_CREATION, creationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2);
+					replacementInfo.addReplacement(replacement);
+					return replacementInfo.getReplacements();
+				}
+			}
+			if(invocationCoveringTheEntireStatement1 != null) {
+				int commonArguments = 0;
+				for(String key2 : methodInvocationMap2.keySet()) {
+					if(invocationCoveringTheEntireStatement2.actualString().startsWith(key2)) {
+						for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
+							if(invocation2.equalArguments(invocationCoveringTheEntireStatement1)) {
+								commonArguments += invocation2.getArguments().size();
+							}
+						}
+					}
+				}
+				if(commonArguments > 0) {
+					Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getName(), invocationCoveringTheEntireStatement2.getName(),
+							invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
 					replacementInfo.addReplacement(replacement);
 					return replacementInfo.getReplacements();
 				}

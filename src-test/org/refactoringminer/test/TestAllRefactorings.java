@@ -13,6 +13,6 @@ public class TestAllRefactorings {
 		GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
 		TestBuilder test = new TestBuilder(detector, "tmp1", Refactorings.All.getValue());
 		RefactoringPopulator.feedRefactoringsInstances(Refactorings.All.getValue(), Systems.FSE.getValue(), test);
-		test.assertExpectations(10472, 36, 385);
+		test.assertExpectations(10474, 36, 383);
 	}
 }

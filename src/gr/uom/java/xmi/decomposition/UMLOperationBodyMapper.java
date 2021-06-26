@@ -2170,7 +2170,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
-		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) || differOnlyInCastExpressionOrPrefixOperator(s1, s2, replacementInfo) ||
+		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) || differOnlyInCastExpressionOrPrefixOperator(s1, s2, methodInvocationMap1, methodInvocationMap2, replacementInfo) ||
 				differOnlyInFinalModifier(s1, s2) ||
 				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString()) ||
@@ -4058,7 +4058,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean differOnlyInCastExpressionOrPrefixOperator(String s1, String s2, ReplacementInfo info) {
+	private boolean differOnlyInCastExpressionOrPrefixOperator(String s1, String s2, Map<String, List<? extends AbstractCall>> methodInvocationMap1, Map<String, List<? extends AbstractCall>> methodInvocationMap2, ReplacementInfo info) {
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
@@ -4083,6 +4083,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				Replacement r = new Replacement(s1, s2, ReplacementType.INVERT_CONDITIONAL);
 				info.addReplacement(r);
 				return true;
+			}
+			for(String key1 : methodInvocationMap1.keySet()) {
+				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
+					if(invocation1.actualString().equals(diff1) && invocation1.getArguments().contains(diff2)) {
+						Replacement r = new VariableReplacementWithMethodInvocation(diff1, diff2, (OperationInvocation)invocation1, Direction.INVOCATION_TO_VARIABLE);
+						info.addReplacement(r);
+						return true;
+					}
+				}
+			}
+			for(String key2 : methodInvocationMap2.keySet()) {
+				for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
+					if(invocation2.actualString().equals(diff2) && invocation2.getArguments().contains(diff1)) {
+						Replacement r = new VariableReplacementWithMethodInvocation(diff1, diff2, (OperationInvocation)invocation2, Direction.VARIABLE_TO_INVOCATION);
+						info.addReplacement(r);
+						return true;
+					}
+				}
 			}
 		}
 		return false;

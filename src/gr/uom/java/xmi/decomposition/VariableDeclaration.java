@@ -312,4 +312,17 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	public VariableDeclaration getVariableDeclaration() {
 		return this;
 	}
+
+	public void addStatementInScope(AbstractStatement statement) {
+		if(scope.subsumes(statement.getLocationInfo())) {
+			scope.addStatement(statement);
+			if(statement.getVariables().contains(variableName)) {
+				scope.addStatementUsingVariable(statement);
+			}
+		}
+	}
+
+	public List<AbstractCodeFragment> getStatementsInScopeUsingVariable() {
+		return scope.getStatementsInScopeUsingVariable();
+	}
 }

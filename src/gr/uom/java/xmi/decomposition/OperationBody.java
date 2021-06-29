@@ -120,9 +120,9 @@ public class OperationBody {
 			IfStatement ifStatement = (IfStatement)statement;
 			CompositeStatementObject child = new CompositeStatementObject(cu, filePath, ifStatement, parent.getDepth()+1, CodeElementType.IF_STATEMENT);
 			parent.addStatement(child);
-			addStatementInVariableScopes(child);
 			AbstractExpression abstractExpression = new AbstractExpression(cu, filePath, ifStatement.getExpression(), CodeElementType.IF_STATEMENT_CONDITION);
 			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
 			processStatement(cu, filePath, child, ifStatement.getThenStatement());
 			if(ifStatement.getElseStatement() != null) {
 				processStatement(cu, filePath, child, ifStatement.getElseStatement());
@@ -132,7 +132,6 @@ public class OperationBody {
 			ForStatement forStatement = (ForStatement)statement;
 			CompositeStatementObject child = new CompositeStatementObject(cu, filePath, forStatement, parent.getDepth()+1, CodeElementType.FOR_STATEMENT);
 			parent.addStatement(child);
-			addStatementInVariableScopes(child);
 			List<Expression> initializers = forStatement.initializers();
 			for(Expression initializer : initializers) {
 				AbstractExpression abstractExpression = new AbstractExpression(cu, filePath, initializer, CodeElementType.FOR_STATEMENT_INITIALIZER);
@@ -148,6 +147,7 @@ public class OperationBody {
 				AbstractExpression abstractExpression = new AbstractExpression(cu, filePath, updater, CodeElementType.FOR_STATEMENT_UPDATER);
 				child.addExpression(abstractExpression);
 			}
+			addStatementInVariableScopes(child);
 			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
 			this.activeVariableDeclarations.addAll(variableDeclarations);
 			processStatement(cu, filePath, child, forStatement.getBody());
@@ -157,7 +157,6 @@ public class OperationBody {
 			EnhancedForStatement enhancedForStatement = (EnhancedForStatement)statement;
 			CompositeStatementObject child = new CompositeStatementObject(cu, filePath, enhancedForStatement, parent.getDepth()+1, CodeElementType.ENHANCED_FOR_STATEMENT);
 			parent.addStatement(child);
-			addStatementInVariableScopes(child);
 			SingleVariableDeclaration variableDeclaration = enhancedForStatement.getParameter();
 			VariableDeclaration vd = new VariableDeclaration(cu, filePath, variableDeclaration);
 			child.addVariableDeclaration(vd);
@@ -169,6 +168,7 @@ public class OperationBody {
 			}
 			AbstractExpression abstractExpression = new AbstractExpression(cu, filePath, enhancedForStatement.getExpression(), CodeElementType.ENHANCED_FOR_STATEMENT_EXPRESSION);
 			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
 			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
 			this.activeVariableDeclarations.addAll(variableDeclarations);
 			processStatement(cu, filePath, child, enhancedForStatement.getBody());
@@ -178,18 +178,18 @@ public class OperationBody {
 			WhileStatement whileStatement = (WhileStatement)statement;
 			CompositeStatementObject child = new CompositeStatementObject(cu, filePath, whileStatement, parent.getDepth()+1, CodeElementType.WHILE_STATEMENT);
 			parent.addStatement(child);
-			addStatementInVariableScopes(child);
 			AbstractExpression abstractExpression = new AbstractExpression(cu, filePath, whileStatement.getExpression(), CodeElementType.WHILE_STATEMENT_CONDITION);
 			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
 			processStatement(cu, filePath, child, whileStatement.getBody());
 		}
 		else if(statement instanceof DoStatement) {
 			DoStatement doStatement = (DoStatement)statement;
 			CompositeStatementObject child = new CompositeStatementObject(cu, filePath, doStatement, parent.getDepth()+1, CodeElementType.DO_STATEMENT);
 			parent.addStatement(child);
-			addStatementInVariableScopes(child);
 			AbstractExpression abstractExpression = new AbstractExpression(cu, filePath, doStatement.getExpression(), CodeElementType.DO_STATEMENT_CONDITION);
 			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
 			processStatement(cu, filePath, child, doStatement.getBody());
 		}
 		else if(statement instanceof ExpressionStatement) {
@@ -202,9 +202,9 @@ public class OperationBody {
 			SwitchStatement switchStatement = (SwitchStatement)statement;
 			CompositeStatementObject child = new CompositeStatementObject(cu, filePath, switchStatement, parent.getDepth()+1, CodeElementType.SWITCH_STATEMENT);
 			parent.addStatement(child);
-			addStatementInVariableScopes(child);
 			AbstractExpression abstractExpression = new AbstractExpression(cu, filePath, switchStatement.getExpression(), CodeElementType.SWITCH_STATEMENT_CONDITION);
 			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
 			List<Statement> switchStatements = switchStatement.statements();
 			for(Statement switchStatement2 : switchStatements)
 				processStatement(cu, filePath, child, switchStatement2);
@@ -239,9 +239,9 @@ public class OperationBody {
 			SynchronizedStatement synchronizedStatement = (SynchronizedStatement)statement;
 			CompositeStatementObject child = new CompositeStatementObject(cu, filePath, synchronizedStatement, parent.getDepth()+1, CodeElementType.SYNCHRONIZED_STATEMENT);
 			parent.addStatement(child);
-			addStatementInVariableScopes(child);
 			AbstractExpression abstractExpression = new AbstractExpression(cu, filePath, synchronizedStatement.getExpression(), CodeElementType.SYNCHRONIZED_STATEMENT_EXPRESSION);
 			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
 			processStatement(cu, filePath, child, synchronizedStatement.getBody());
 		}
 		else if(statement instanceof ThrowStatement) {
@@ -254,12 +254,12 @@ public class OperationBody {
 			TryStatement tryStatement = (TryStatement)statement;
 			TryStatementObject child = new TryStatementObject(cu, filePath, tryStatement, parent.getDepth()+1);
 			parent.addStatement(child);
-			addStatementInVariableScopes(child);
 			List<Expression> resources = tryStatement.resources();
 			for(Expression resource : resources) {
 				AbstractExpression expression = new AbstractExpression(cu, filePath, resource, CodeElementType.TRY_STATEMENT_RESOURCE);
 				child.addExpression(expression);
 			}
+			addStatementInVariableScopes(child);
 			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
 			this.activeVariableDeclarations.addAll(variableDeclarations);
 			List<Statement> tryStatements = tryStatement.getBody().statements();
@@ -273,7 +273,6 @@ public class OperationBody {
 				CompositeStatementObject catchClauseStatementObject = new CompositeStatementObject(cu, filePath, catchClauseBody, parent.getDepth()+1, CodeElementType.CATCH_CLAUSE);
 				child.addCatchClause(catchClauseStatementObject);
 				parent.addStatement(catchClauseStatementObject);
-				addStatementInVariableScopes(catchClauseStatementObject);
 				SingleVariableDeclaration variableDeclaration = catchClause.getException();
 				VariableDeclaration vd = new VariableDeclaration(cu, filePath, variableDeclaration);
 				catchClauseStatementObject.addVariableDeclaration(vd);
@@ -283,6 +282,7 @@ public class OperationBody {
 					AbstractExpression variableDeclarationInitializer = new AbstractExpression(cu, filePath, variableDeclaration.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER);
 					catchClauseStatementObject.addExpression(variableDeclarationInitializer);
 				}
+				addStatementInVariableScopes(catchClauseStatementObject);
 				List<VariableDeclaration> catchClauseVariableDeclarations = catchClauseStatementObject.getVariableDeclarations();
 				this.activeVariableDeclarations.addAll(catchClauseVariableDeclarations);
 				List<Statement> blockStatements = catchClauseBody.statements();
@@ -344,10 +344,7 @@ public class OperationBody {
 
 	private void addStatementInVariableScopes(AbstractStatement statement) {
 		for(VariableDeclaration variableDeclaration : activeVariableDeclarations) {
-			VariableScope scope = variableDeclaration.getScope();
-			if(scope.subsumes(statement.getLocationInfo())) {
-				scope.addStatement(statement);
-			}
+			variableDeclaration.addStatementInScope(statement);
 		}
 	}
 

@@ -2826,7 +2826,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(invocation.identical(invocation1, replacementInfo.getReplacements(), lambdaMappers)) { 
 										additionallyMatchedStatements2.add(codeFragment); 
 									} 
-									if(invocation.getExpression() != null && invocation.getExpression().equals(invocation1.actualString())) { 
+									if((invocation.getExpression() != null && invocation.getExpression().equals(invocation1.actualString())) ||
+											invocation.callChainIntersection((OperationInvocation)invocation1).size() > 0) {
 										additionallyMatchedStatements2.add(codeFragment); 
 									} 
 								} 
@@ -2889,7 +2890,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(invocation.identical(invocation2, replacementInfo.getReplacements(), lambdaMappers)) {
 										additionallyMatchedStatements1.add(codeFragment);
 									}
-									if(invocation.getExpression() != null && invocation.getExpression().equals(invocation2.actualString())) {
+									if((invocation.getExpression() != null && invocation.getExpression().equals(invocation2.actualString())) ||
+											invocation.callChainIntersection((OperationInvocation)invocation2).size() > 0) {
 										additionallyMatchedStatements1.add(codeFragment);
 									}
 								}

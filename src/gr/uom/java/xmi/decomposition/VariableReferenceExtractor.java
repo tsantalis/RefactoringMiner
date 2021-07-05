@@ -21,6 +21,15 @@ public class VariableReferenceExtractor {
 					usesVariable(fragment2, declaration2) && !matchingLocalVariable(declaration2, fragment2, mapping.getOperation2())) {
 				references.add(mapping);
 			}
+			OperationInvocation invocation1 = fragment1.invocationCoveringEntireFragment();
+			OperationInvocation invocation2 = fragment2.invocationCoveringEntireFragment();
+			if(invocation1 != null && invocation2 != null) {
+				//add recursive calls to the mappings
+				if(invocation1.matchesOperation(mapping.getOperation1(), mapping.getOperation1(), null) &&
+						invocation2.matchesOperation(mapping.getOperation2(), mapping.getOperation2(), null)) {
+					references.add(mapping);
+				}
+			}
 		}
 		return references;
 	}

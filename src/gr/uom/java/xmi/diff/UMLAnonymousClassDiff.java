@@ -91,7 +91,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 						if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 								isPartOfMethodExtracted(operation1, operation2) || isPartOfMethodInlined(operation1, operation2)) {
 							operationBodyMapperList.add(mapper);
-							UMLOperationDiff operationDiff = new UMLOperationDiff(operation1, operation2, mapper.getMappings());
+							UMLOperationDiff operationDiff = new UMLOperationDiff(mapper);
 							operationDiffList.add(operationDiff);
 							removedOperations.remove(operation1);
 							addedOperations.remove(operation2);

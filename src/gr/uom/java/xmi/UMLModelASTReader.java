@@ -509,18 +509,6 @@ public class UMLModelASTReader {
 			umlOperation.addTypeParameter(umlTypeParameter);
 		}
 		
-		Block block = methodDeclaration.getBody();
-		if(block != null) {
-			OperationBody body = new OperationBody(cu, sourceFile, block);
-			umlOperation.setBody(body);
-			if(block.statements().size() == 0) {
-				umlOperation.setEmptyBody(true);
-			}
-		}
-		else {
-			umlOperation.setBody(null);
-		}
-		
 		Type returnType = methodDeclaration.getReturnType2();
 		if(returnType != null) {
 			UMLType type = UMLType.extractTypeObject(cu, sourceFile, returnType, methodDeclaration.getExtraDimensions());
@@ -543,6 +531,19 @@ public class UMLModelASTReader {
 			UMLType type = UMLType.extractTypeObject(cu, sourceFile, thrownExceptionType, 0);
 			umlOperation.addThrownExceptionType(type);
 		}
+		
+		Block block = methodDeclaration.getBody();
+		if(block != null) {
+			OperationBody body = new OperationBody(cu, sourceFile, block, umlOperation.getParameterDeclarationList());
+			umlOperation.setBody(body);
+			if(block.statements().size() == 0) {
+				umlOperation.setEmptyBody(true);
+			}
+		}
+		else {
+			umlOperation.setBody(null);
+		}
+		
 		return umlOperation;
 	}
 

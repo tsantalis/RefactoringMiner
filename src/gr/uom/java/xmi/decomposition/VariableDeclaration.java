@@ -226,6 +226,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		return true;
 	}
 
+	public boolean sameKind(VariableDeclaration other) {
+		return this.isParameter == other.isParameter && this.isEnumConstant == other.isEnumConstant && this.isAttribute == other.isAttribute;
+	}
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
         sb.append(variableName).append(" : ").append(type);

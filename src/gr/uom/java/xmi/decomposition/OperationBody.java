@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -45,8 +46,13 @@ public class OperationBody {
 	private Set<VariableDeclaration> activeVariableDeclarations;
 
 	public OperationBody(CompilationUnit cu, String filePath, Block methodBody) {
+		this(cu, filePath, methodBody, Collections.emptyList());
+	}
+
+	public OperationBody(CompilationUnit cu, String filePath, Block methodBody, List<VariableDeclaration> parameters) {
 		this.compositeStatement = new CompositeStatementObject(cu, filePath, methodBody, 0, CodeElementType.BLOCK);
 		this.activeVariableDeclarations = new HashSet<VariableDeclaration>();
+		this.activeVariableDeclarations.addAll(parameters);
 		List<Statement> statements = methodBody.statements();
 		for(Statement statement : statements) {
 			processStatement(cu, filePath, compositeStatement, statement);

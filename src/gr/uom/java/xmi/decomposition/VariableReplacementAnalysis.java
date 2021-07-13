@@ -1068,9 +1068,22 @@ public class VariableReplacementAnalysis {
 		}
 		Set<VariableDeclaration> allVariableDeclarations1 = new LinkedHashSet<VariableDeclaration>();
 		Set<VariableDeclaration> allVariableDeclarations2 = new LinkedHashSet<VariableDeclaration>();
+		boolean onlyOneFragmentIncludesDeclarationInReferences = false;
 		for(AbstractCodeMapping referenceMapping : set) {
 			AbstractCodeFragment statement1 = referenceMapping.getFragment1();
 			AbstractCodeFragment statement2 = referenceMapping.getFragment2();
+			if(set.size() == 1) {
+				if(statement1.getVariableDeclarations().contains(v1) && !statement2.getVariableDeclarations().contains(v2)) {
+					if(v2 != null && v2.getInitializer() == null) {
+						onlyOneFragmentIncludesDeclarationInReferences = true;
+					}
+				}
+				if(!statement1.getVariableDeclarations().contains(v1) && statement2.getVariableDeclarations().contains(v2)) {
+					if(v1 != null && v1.getInitializer() == null) {
+						onlyOneFragmentIncludesDeclarationInReferences = true;
+					}
+				}
+			}
 			if(statement1 instanceof CompositeStatementObject && statement2 instanceof CompositeStatementObject &&
 					statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
 				CompositeStatementObject comp1 = (CompositeStatementObject)statement1;
@@ -1085,7 +1098,7 @@ public class VariableReplacementAnalysis {
 			}
 		}
 		return v1 != null && v2 != null &&
-				v1.equalVariableDeclarationType(v2) &&
+				v1.equalVariableDeclarationType(v2) && !onlyOneFragmentIncludesDeclarationInReferences &&
 				!containsVariableDeclarationWithName(allVariableDeclarations1, v2.getVariableName()) &&
 				(!containsVariableDeclarationWithName(allVariableDeclarations2, v1.getVariableName()) || operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) != null) &&
 				consistencyCheck(v1, v2, set);

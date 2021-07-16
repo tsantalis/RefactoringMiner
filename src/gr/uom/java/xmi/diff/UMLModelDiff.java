@@ -1979,8 +1979,11 @@ public class UMLModelDiff {
             				  break;
             			  }
             		  }
-            		  String enclosingClassName = className.substring(0, className.indexOf(anonymousID));
-            		  UMLClassBaseDiff umlClassDiff = getUMLClassDiff(enclosingClassName);
+            		  UMLClassBaseDiff umlClassDiff = getUMLClassDiff(className);
+            		  if(umlClassDiff == null) {
+            			  String enclosingClassName = className.substring(0, className.indexOf(anonymousID));
+            			  umlClassDiff = getUMLClassDiff(enclosingClassName);
+            		  }
             		  attributes.addAll(umlClassDiff.originalClassAttributesOfType(addedOperation.getClassName()));
             		  for(UMLAnonymousClass anonymousClass : umlClassDiff.getOriginalClass().getAnonymousClassList()) {
             			  if(className.equals(anonymousClass.getCodePath())) {

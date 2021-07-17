@@ -320,9 +320,7 @@ public class OperationInvocation extends AbstractCall {
     private boolean compatibleTypes(UMLParameter parameter, UMLType type, UMLModelDiff modelDiff) {
     	String type1 = parameter.getType().toString();
     	String type2 = type.toString();
-    	if(parameter.getType().getClassType().equals("Iterable") &&
-    			(type.getClassType().endsWith("List") || type.getClassType().endsWith("Set") || type.getClassType().endsWith("Collection")) &&
-    			parameter.getType().getTypeArguments().equals(type.getTypeArguments()))
+    	if(collectionMatch(parameter, type))
     		return true;
     	if(type1.equals("Throwable") && type2.endsWith("Exception"))
     		return true;
@@ -388,6 +386,23 @@ public class OperationInvocation extends AbstractCall {
     	}
     	return false;
     }
+
+	public static boolean collectionMatch(UMLParameter parameter, UMLType type) {
+		if(parameter.getType().getClassType().equals("Iterable") || parameter.getType().getClassType().equals("Collection") ) {
+			if(type.getClassType().endsWith("List") || type.getClassType().endsWith("Set") || type.getClassType().endsWith("Collection")) {
+				if(parameter.getType().getTypeArguments().equals(type.getTypeArguments())) {
+					return true;
+				}
+				if(parameter.getType().getTypeArguments().size() == 1) {
+					UMLType typeArgument = parameter.getType().getTypeArguments().get(0);
+					if(typeArgument.toString().length() == 1 && Character.isUpperCase(typeArgument.toString().charAt(0))) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
 
     private static boolean isWideningPrimitiveConversion(String type1, String type2) {
         return PRIMITIVE_TYPE_WIDENING_MAP.containsKey(type1) && PRIMITIVE_TYPE_WIDENING_MAP.get(type1).contains(type2);

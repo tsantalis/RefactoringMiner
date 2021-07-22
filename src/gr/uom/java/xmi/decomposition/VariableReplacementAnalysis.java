@@ -122,7 +122,7 @@ public class VariableReplacementAnalysis {
 					}
 					Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
 					if(!matchedVariables.contains(pair) && removedVariable.getVariableName().equals(addedVariable.getVariableName()) && !bothCatchExceptionVariables(removedVariable, addedVariable) &&
-							!containerElementRelationship(removedVariable, addedVariable) && mappedStatementWithinVariableScopes(removedVariable.getStatementsInScopeUsingVariable(), addedVariable.getStatementsInScopeUsingVariable())) {
+							!containerElementRelationship(removedVariable, addedVariable) && mappedStatementWithinVariableScopes(removedVariable, addedVariable)) {
 						removedVariablesToBeRemoved.add(removedVariable);
 						addedVariablesToBeRemoved.add(addedVariable);
 						matchedVariables.add(pair);
@@ -142,7 +142,7 @@ public class VariableReplacementAnalysis {
 					}
 					Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
 					if(!matchedVariables.contains(pair) && removedVariable.getVariableName().equals(addedVariable.getVariableName()) && !bothCatchExceptionVariables(removedVariable, addedVariable) &&
-							!containerElementRelationship(removedVariable, addedVariable) && mappedStatementWithinVariableScopes(removedVariable.getStatementsInScopeUsingVariable(), addedVariable.getStatementsInScopeUsingVariable())) {
+							!containerElementRelationship(removedVariable, addedVariable) && mappedStatementWithinVariableScopes(removedVariable, addedVariable)) {
 						removedVariablesToBeRemoved.add(removedVariable);
 						addedVariablesToBeRemoved.add(addedVariable);
 						matchedVariables.add(pair);
@@ -185,10 +185,34 @@ public class VariableReplacementAnalysis {
 		return isRemovedVariableCatchException && isAddedVariableCatchException;
 	}
 
-	private boolean mappedStatementWithinVariableScopes(List<AbstractCodeFragment> statementsInScope1, List<AbstractCodeFragment> statementsInScope2) {
+	private boolean mappedStatementWithinVariableScopes(VariableDeclaration removedVariable, VariableDeclaration addedVariable) {
+		List<AbstractCodeFragment> statementsInScope1 = removedVariable.getStatementsInScopeUsingVariable();
+		List<AbstractCodeFragment> statementsInScope2 = addedVariable.getStatementsInScopeUsingVariable();
 		for(AbstractCodeMapping mapping : mappings) {
 			if(statementsInScope1.contains(mapping.getFragment1()) && statementsInScope2.contains(mapping.getFragment2())) {
 				return true;
+			}
+			boolean statementInScopeInsideLambda1 = statementInScopeInsideLambda(removedVariable, statementsInScope1, mapping.getFragment1());
+			boolean statementInScopeInsideLambda2 = statementInScopeInsideLambda(addedVariable, statementsInScope2, mapping.getFragment2());
+			if(statementInScopeInsideLambda1 && statementInScopeInsideLambda2) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean statementInScopeInsideLambda(VariableDeclaration variable,
+			List<AbstractCodeFragment> statementsInScope, AbstractCodeFragment fragment) {
+		List<LambdaExpressionObject> lambdas = fragment.getLambdas();
+		if(lambdas.size() > 0) {
+			for(LambdaExpressionObject lambda : lambdas) {
+				OperationBody lambdaBody = lambda.getBody();
+				if(lambdaBody != null && lambdaBody.getAllVariableDeclarations().contains(variable)) {
+					List<AbstractStatement> statements = lambdaBody.getCompositeStatement().getStatements();
+					if(statements.containsAll(statementsInScope)) {
+						return true;
+					}
+				}
 			}
 		}
 		return false;

@@ -66,6 +66,7 @@ public class VariableReplacementAnalysis {
 	private Set<VariableDeclaration> removedVariables = new LinkedHashSet<>();
     private Set<VariableDeclaration> addedVariables = new LinkedHashSet<>();
     private Set<Pair<VariableDeclaration, VariableDeclaration>> matchedVariables = new LinkedHashSet<>();
+    private Set<Pair<VariableDeclaration, VariableDeclaration>> movedVariables = new LinkedHashSet<>();
 	private Set<RenameVariableRefactoring> variableRenames = new LinkedHashSet<RenameVariableRefactoring>();
 	private Set<MergeVariableRefactoring> variableMerges = new LinkedHashSet<MergeVariableRefactoring>();
 	private Set<SplitVariableRefactoring> variableSplits = new LinkedHashSet<SplitVariableRefactoring>();
@@ -105,10 +106,44 @@ public class VariableReplacementAnalysis {
 		findParametersWrappedInLocalVariables();
 		findAttributeExtractions();
 		findTypeChanges();
-		findMarchingVariablesWithoutVariableDeclarationMapping();
+		findMatchingVariablesWithoutVariableDeclarationMapping();
+		findMovedVariablesToExtractedFromInlinedMethods();
 	}
 
-	private void findMarchingVariablesWithoutVariableDeclarationMapping() {
+	private void findMovedVariablesToExtractedFromInlinedMethods() {
+		// check in removedVariables for variables moved to extracted methods
+		Set<VariableDeclaration> removedVariablesToBeRemoved = new LinkedHashSet<>();
+		for(VariableDeclaration removedVariable : removedVariables) {
+			for(UMLOperationBodyMapper childMapper : childMappers) {
+				Set<Pair<VariableDeclaration, VariableDeclaration>> pairs = childMapper.getMatchedVariables();
+				for(Pair<VariableDeclaration, VariableDeclaration> pair : pairs) {
+					if(removedVariable.equals(pair.getKey())) {
+						removedVariablesToBeRemoved.add(removedVariable);
+						movedVariables.add(pair);
+						break;
+					}
+				}
+			}
+		}
+		removedVariables.removeAll(removedVariablesToBeRemoved);
+		// check in addedVariables for variables moved from inlined methods
+		Set<VariableDeclaration> addedVariablesToBeRemoved = new LinkedHashSet<>();
+		for(VariableDeclaration addedVariable : addedVariables) {
+			for(UMLOperationBodyMapper childMapper : childMappers) {
+				Set<Pair<VariableDeclaration, VariableDeclaration>> pairs = childMapper.getMatchedVariables();
+				for(Pair<VariableDeclaration, VariableDeclaration> pair : pairs) {
+					if(addedVariable.equals(pair.getValue())) {
+						addedVariablesToBeRemoved.add(addedVariable);
+						movedVariables.add(pair);
+						break;
+					}
+				}
+			}
+		}
+		addedVariables.removeAll(addedVariablesToBeRemoved);
+	}
+
+	private void findMatchingVariablesWithoutVariableDeclarationMapping() {
 		Set<VariableDeclaration> removedVariablesToBeRemoved = new LinkedHashSet<>();
 		Set<VariableDeclaration> addedVariablesToBeRemoved = new LinkedHashSet<>();
 		if(removedVariables.size() <= addedVariables.size()) {
@@ -196,6 +231,34 @@ public class VariableReplacementAnalysis {
 			boolean statementInScopeInsideLambda2 = statementInScopeInsideLambda(addedVariable, statementsInScope2, mapping.getFragment2());
 			if(statementInScopeInsideLambda1 && statementInScopeInsideLambda2) {
 				return true;
+			}
+		}
+		for(UMLOperationBodyMapper childMapper : childMappers) {
+			for(AbstractCodeMapping mapping : childMapper.getMappings()) {
+				//statementsInScope2 contains a call to an extracted method
+				if(statementsInScope1.contains(mapping.getFragment1()) && containCallToOperation(statementsInScope2, childMapper.getOperation2(), this.operation2)) {
+					return true;
+				}
+				//statementsInScope1 contains a call to an inlined method
+				if(statementsInScope2.contains(mapping.getFragment2()) && containCallToOperation(statementsInScope1, childMapper.getOperation1(), this.operation1)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean containCallToOperation(List<AbstractCodeFragment> statementsInScope, UMLOperation calledOperation, UMLOperation callerOperation) {
+		UMLModelDiff modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
+		for(AbstractCodeFragment statement : statementsInScope) {
+			Map<String, List<OperationInvocation>> map = statement.getMethodInvocationMap();
+			for(String key : map.keySet()) {
+				List<OperationInvocation> invocationList = map.get(key);
+				for(OperationInvocation invocation : invocationList) {
+					if(invocation.matchesOperation(calledOperation, callerOperation, modelDiff)) {
+						return true;
+					}
+				}
 			}
 		}
 		return false;
@@ -377,6 +440,10 @@ public class VariableReplacementAnalysis {
 
 	public Set<Pair<VariableDeclaration, VariableDeclaration>> getMatchedVariables() {
 		return matchedVariables;
+	}
+
+	public Set<Pair<VariableDeclaration, VariableDeclaration>> getMovedVariables() {
+		return movedVariables;
 	}
 
 	public Set<CandidateAttributeRefactoring> getCandidateAttributeRenames() {

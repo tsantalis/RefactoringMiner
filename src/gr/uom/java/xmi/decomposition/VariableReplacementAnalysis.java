@@ -227,6 +227,54 @@ public class VariableReplacementAnalysis {
 			if(statementsInScope1.contains(mapping.getFragment1()) && statementsInScope2.contains(mapping.getFragment2())) {
 				return true;
 			}
+			if(statementsInScope1.contains(mapping.getFragment1())) {
+				for(Refactoring refactoring : refactorings) {
+					if(refactoring instanceof ExtractVariableRefactoring) {
+						ExtractVariableRefactoring ref = (ExtractVariableRefactoring)refactoring;
+						boolean referenceFound = false;
+						for(AbstractCodeMapping reference : ref.getReferences()) {
+							if(mapping.equals(reference)) {
+								referenceFound = true;
+								break;
+							}
+						}
+						boolean variableDeclarationFound = false;
+						for(AbstractCodeFragment fragment : statementsInScope2) {
+							if(fragment.getVariableDeclarations().contains(ref.getVariableDeclaration())) {
+								variableDeclarationFound = true;
+								break;
+							}
+						}
+						if(referenceFound && variableDeclarationFound) {
+							return true;
+						}
+					}
+				}
+			}
+			if(statementsInScope2.contains(mapping.getFragment2())) {
+				for(Refactoring refactoring : refactorings) {
+					if(refactoring instanceof InlineVariableRefactoring) {
+						InlineVariableRefactoring ref = (InlineVariableRefactoring)refactoring;
+						boolean referenceFound = false;
+						for(AbstractCodeMapping reference : ref.getReferences()) {
+							if(mapping.equals(reference)) {
+								referenceFound = true;
+								break;
+							}
+						}
+						boolean variableDeclarationFound = false;
+						for(AbstractCodeFragment fragment : statementsInScope1) {
+							if(fragment.getVariableDeclarations().contains(ref.getVariableDeclaration())) {
+								variableDeclarationFound = true;
+								break;
+							}
+						}
+						if(referenceFound && variableDeclarationFound) {
+							return true;
+						}
+					}
+				}
+			}
 			boolean statementInScopeInsideLambda1 = statementInScopeInsideLambda(removedVariable, statementsInScope1, mapping.getFragment1());
 			boolean statementInScopeInsideLambda2 = statementInScopeInsideLambda(addedVariable, statementsInScope2, mapping.getFragment2());
 			if(statementInScopeInsideLambda1 && statementInScopeInsideLambda2) {

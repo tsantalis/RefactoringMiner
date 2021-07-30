@@ -812,14 +812,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private void inlinedVariableAssignment(StatementObject statement, List<StatementObject> nonMappedLeavesT2) {
 		for(AbstractCodeMapping mapping : getMappings()) {
-			mapping.inlinedVariableAssignment(statement, nonMappedLeavesT2, refactorings);
+			mapping.inlinedVariableAssignment(statement, nonMappedLeavesT2);
+			refactorings.addAll(mapping.getRefactorings());
 		}
 	}
 
 	private void temporaryVariableAssignment(StatementObject statement, List<StatementObject> nonMappedLeavesT2) {
 		for(AbstractCodeMapping mapping : getMappings()) {
 			UMLClassBaseDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
-			mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, refactorings, classDiff);
+			mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, classDiff);
+			refactorings.addAll(mapping.getRefactorings());
 		}
 	}
 
@@ -1337,7 +1339,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 							UMLClassBaseDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
-							mapping.temporaryVariableAssignment(leaf, leaves2, refactorings, classDiff);
+							mapping.temporaryVariableAssignment(leaf, leaves2, classDiff);
 							if(mapping.isIdenticalWithExtractedVariable()) {
 								break;
 							}
@@ -1346,7 +1348,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(leaf.equals(leaf1)) {
 								break;
 							}
-							mapping.inlinedVariableAssignment(leaf, leaves2, refactorings);
+							mapping.inlinedVariableAssignment(leaf, leaves2);
 							if(mapping.isIdenticalWithInlinedVariable()) {
 								break;
 							}
@@ -1362,14 +1364,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					else if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
 						LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
-						mappings.add(bestMapping);
+						addToMappings(bestMapping, mappingSet);
 						leaves2.remove(bestMapping.getFragment2());
 						leafIterator1.remove();
 					}
 					else {
 						LeafMapping minStatementMapping = mappingSet.first();
 						if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
-							mappings.add(minStatementMapping);
+							addToMappings(minStatementMapping, mappingSet);
 							leaves2.remove(minStatementMapping.getFragment2());
 							leafIterator1.remove();
 						}
@@ -1437,7 +1439,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 							UMLClassBaseDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
-							mapping.temporaryVariableAssignment(leaf, leaves2, refactorings, classDiff);
+							mapping.temporaryVariableAssignment(leaf, leaves2, classDiff);
 							if(mapping.isIdenticalWithExtractedVariable()) {
 								break;
 							}
@@ -1446,7 +1448,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(leaf.equals(leaf1)) {
 								break;
 							}
-							mapping.inlinedVariableAssignment(leaf, leaves2, refactorings);
+							mapping.inlinedVariableAssignment(leaf, leaves2);
 							if(mapping.isIdenticalWithInlinedVariable()) {
 								break;
 							}
@@ -1462,14 +1464,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					else if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
 						LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
-						mappings.add(bestMapping);
+						addToMappings(bestMapping, mappingSet);
 						leaves1.remove(bestMapping.getFragment1());
 						leafIterator2.remove();
 					}
 					else {
 						LeafMapping minStatementMapping = mappingSet.first();
 						if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
-							mappings.add(minStatementMapping);
+							addToMappings(minStatementMapping, mappingSet);
 							leaves1.remove(minStatementMapping.getFragment1());
 							leafIterator2.remove();
 						}
@@ -1495,15 +1497,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			if(mappingsToBeAdded.size() == 1) {
 				LeafMapping minStatementMapping = mappingsToBeAdded.iterator().next();
-				this.mappings.add(minStatementMapping);
+				addToMappings(minStatementMapping, postponed);
 				leaves1.remove(minStatementMapping.getFragment1());
 				leaves2.remove(minStatementMapping.getFragment2());
 			}
 			else {
 				LeafMapping minStatementMapping = postponed.first();
-				this.mappings.add(minStatementMapping);
+				addToMappings(minStatementMapping, postponed);
 				leaves1.remove(minStatementMapping.getFragment1());
 				leaves2.remove(minStatementMapping.getFragment2());
+			}
+		}
+	}
+
+	private void addToMappings(LeafMapping mapping, TreeSet<LeafMapping> mappingSet) {
+		mappings.add(mapping);
+		refactorings.addAll(mapping.getRefactorings());
+		CompositeReplacement compositeReplacement = mapping.containsCompositeReplacement();
+		if(compositeReplacement != null) {
+			for(LeafMapping leafMapping : mappingSet) {
+				if(!leafMapping.equals(mapping)) {
+					if(compositeReplacement.getAdditionallyMatchedStatements1().contains(leafMapping.getFragment1()) ||
+							compositeReplacement.getAdditionallyMatchedStatements2().contains(leafMapping.getFragment2())) {
+						refactorings.addAll(leafMapping.getRefactorings());
+					}
+				}
 			}
 		}
 	}
@@ -1800,6 +1818,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		variableIntersection.retainAll(variables2);
 		// ignore the variables in the intersection that also appear with "this." prefix in the sets of variables
 		// ignore the variables in the intersection that are static fields
+		// ignore the variables in the intersection that one of them is a variable declaration and the other is not
 		Set<String> variablesToBeRemovedFromTheIntersection = new LinkedHashSet<String>();
 		for(String variable : variableIntersection) {
 			if(!variable.startsWith("this.") && !variableIntersection.contains("this."+variable) &&
@@ -1832,6 +1851,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			if(variable.toUpperCase().equals(variable) && !ReplacementUtil.sameCharsBeforeAfter(statement1.getString(), statement2.getString(), variable)) {
+				variablesToBeRemovedFromTheIntersection.add(variable);
+			}
+			boolean foundInDeclaration1 = false;
+			for(VariableDeclaration declaration : variableDeclarations1) {
+				if(declaration.getVariableName().equals(variable)) {
+					foundInDeclaration1 = true;
+					break;
+				}
+			}
+			boolean foundInDeclaration2 = false;
+			for(VariableDeclaration declaration : variableDeclarations2) {
+				if(declaration.getVariableName().equals(variable)) {
+					foundInDeclaration2 = true;
+					break;
+				}
+			}
+			if(foundInDeclaration1 != foundInDeclaration2) {
 				variablesToBeRemovedFromTheIntersection.add(variable);
 			}
 		}
@@ -2035,7 +2071,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(distanceRaw >= 0 && (distanceRaw < replacementInfo.getRawDistance() || multipleInstanceRule)) {
 						minDistance = distanceRaw;
 						Replacement replacement = null;
-						if(variables1.contains(s1) && variables2.contains(s2) && variablesStartWithSameCase(s1, s2, parameterToArgumentMap)) {
+						if(variables1.contains(s1) && variables2.contains(s2) && variablesStartWithSameCase(s1, s2, parameterToArgumentMap, replacementInfo)) {
 							replacement = new Replacement(s1, s2, ReplacementType.VARIABLE_NAME);
 							if(s1.startsWith("(") && s2.startsWith("(") && s1.contains(")") && s2.contains(")")) {
 								String prefix1 = s1.substring(0, s1.indexOf(")")+1);
@@ -4831,7 +4867,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean variablesStartWithSameCase(String s1, String s2, Map<String, String> parameterToArgumentMap) {
+	private boolean variablesStartWithSameCase(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo) {
 		if(parameterToArgumentMap.values().contains(s2)) {
 			return true;
 		}
@@ -4840,9 +4876,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return true;
 			if(Character.isLowerCase(s1.charAt(0)) && Character.isLowerCase(s2.charAt(0)))
 				return true;
-			if(s1.charAt(0) == '_' && s2.charAt(0) == '_')
+			if(s1.charAt(0) == '_' || s2.charAt(0) == '_')
 				return true;
 			if(s1.charAt(0) == '(' || s2.charAt(0) == '(')
+				return true;
+			if((s1.contains(".") || s2.contains(".")) && !replacementInfo.argumentizedString1.equals("return " + s1 + ";\n") &&
+					!replacementInfo.argumentizedString2.equals("return " + s2 + ";\n"))
+				return true;
+			if(s1.equalsIgnoreCase(s2))
 				return true;
 		}
 		return false;

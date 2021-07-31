@@ -2433,6 +2433,33 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		//match traditional for with enhanced for
+		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) &&
+				statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+			CompositeStatementObject for1 = (CompositeStatementObject)statement1;
+			CompositeStatementObject for2 = (CompositeStatementObject)statement2;
+			List<AbstractExpression> expressions2 = for2.getExpressions();
+			AbstractExpression enhancedForExpression = expressions2.get(expressions2.size()-1);
+			for(AbstractExpression expression1 : for1.getExpressions()) {
+				if(expression1.getString().contains(enhancedForExpression.getString() + ".length") ||
+						expression1.getString().contains(enhancedForExpression.getString() + ".size()")) {
+					return replacementInfo.getReplacements();
+				}
+			}
+		}
+		if(statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) &&
+				statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+			CompositeStatementObject for1 = (CompositeStatementObject)statement1;
+			CompositeStatementObject for2 = (CompositeStatementObject)statement2;
+			List<AbstractExpression> expressions1 = for1.getExpressions();
+			AbstractExpression enhancedForExpression = expressions1.get(expressions1.size()-1);
+			for(AbstractExpression expression2 : for2.getExpressions()) {
+				if(expression2.getString().contains(enhancedForExpression.getString() + ".length") ||
+						expression2.getString().contains(enhancedForExpression.getString() + ".size()")) {
+					return replacementInfo.getReplacements();
+				}
+			}
+		}
 		//match try-with-resources with regular try
 		if(statement1 instanceof TryStatementObject && statement2 instanceof TryStatementObject) {
 			TryStatementObject try1 = (TryStatementObject)statement1;

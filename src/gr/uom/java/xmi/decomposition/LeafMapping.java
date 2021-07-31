@@ -6,6 +6,7 @@ import java.util.Set;
 
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.StringDistance;
 
@@ -20,6 +21,8 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 	public int compareTo(LeafMapping o) {
 		CompositeReplacement compositeReplacement1 = this.containsCompositeReplacement();
 		CompositeReplacement compositeReplacement2 = o.containsCompositeReplacement();
+		boolean concatenationReplacement1 = this.containsReplacement(ReplacementType.CONCATENATION);
+		boolean concatenationReplacement2 = o.containsReplacement(ReplacementType.CONCATENATION);
 		if(compositeReplacement1 != null || compositeReplacement2 != null) {
 			if(compositeReplacement1 != null && compositeReplacement2 == null) {
 				return -1;
@@ -30,6 +33,14 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			else {
 				return -Integer.compare(compositeReplacement1.getTotalAdditionallyMatchedStatements(),
 						compositeReplacement2.getTotalAdditionallyMatchedStatements());
+			}
+		}
+		else if(concatenationReplacement1 != concatenationReplacement2) {
+			if(concatenationReplacement1 && !concatenationReplacement2) {
+				return 1;
+			}
+			else {
+				return -1;
 			}
 		}
 		else {

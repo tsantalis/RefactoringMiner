@@ -1514,13 +1514,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		mappings.add(mapping);
 		refactorings.addAll(mapping.getRefactorings());
 		CompositeReplacement compositeReplacement = mapping.containsCompositeReplacement();
-		if(compositeReplacement != null) {
-			for(LeafMapping leafMapping : mappingSet) {
-				if(!leafMapping.equals(mapping)) {
+		for(LeafMapping leafMapping : mappingSet) {
+			if(!leafMapping.equals(mapping)) {
+				if(compositeReplacement != null) {
 					if(compositeReplacement.getAdditionallyMatchedStatements1().contains(leafMapping.getFragment1()) ||
 							compositeReplacement.getAdditionallyMatchedStatements2().contains(leafMapping.getFragment2())) {
 						refactorings.addAll(leafMapping.getRefactorings());
 					}
+				}
+				if(leafMapping.isIdenticalWithExtractedVariable() || leafMapping.isIdenticalWithInlinedVariable()) {
+					refactorings.addAll(leafMapping.getRefactorings());
 				}
 			}
 		}
@@ -4382,6 +4385,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			int size = filteredIntersection.size();
 			int threshold = Math.max(tokens1.size(), tokens2.size()) - size;
 			if((size > 0 && size > threshold) || (size > 1 && size >= threshold)) {
+				List<String> tokens1AsList = new ArrayList<>(tokens1);
+				List<String> tokens2AsList = new ArrayList<>(tokens2);
+				int counter = 0;
+				boolean allTokensMatchInTheSameOrder = true;
+				for(String s : filteredIntersection) {
+					if(!tokens1AsList.get(counter).equals(s)) {
+						allTokensMatchInTheSameOrder = false;
+						break;
+					}
+					if(!tokens2AsList.get(counter).equals(s)) {
+						allTokensMatchInTheSameOrder = false;
+						break;
+					}
+					counter++;
+				}
+				if(allTokensMatchInTheSameOrder && tokens1.size() == size+1 && tokens2.size() == size+1) {
+					return false;
+				}
 				IntersectionReplacement r = new IntersectionReplacement(s1, s2, intersection, ReplacementType.CONCATENATION);
 				info.getReplacements().add(r);
 				return true;

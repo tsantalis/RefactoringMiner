@@ -513,7 +513,6 @@ public class Visitor extends ASTVisitor {
 				!(node.getName().getIdentifier().equals("length") && node.arguments().size() == 0)) {
 			builderPatternChains.add(node);
 		}
-		boolean builderPatternChain = false;
 		for(String key : methodInvocationMap.keySet()) {
 			List<OperationInvocation> invocations = methodInvocationMap.get(key);
 			OperationInvocation invocation = invocations.get(0);
@@ -521,12 +520,6 @@ public class Visitor extends ASTVisitor {
 					!(invocation.getName().equals("length") && invocation.getArguments().size() == 0)) {
 				builderPatternChains.add(node);
 			}
-			if(key.startsWith(methodInvocation) && complexInvocation(invocation)) {
-				builderPatternChain = true;
-			}
-		}
-		if(builderPatternChain) {
-			return false;
 		}
 		OperationInvocation invocation = new OperationInvocation(cu, filePath, node);
 		if(methodInvocationMap.containsKey(methodInvocation)) {
@@ -550,11 +543,6 @@ public class Visitor extends ASTVisitor {
 			}
 		}
 		return super.visit(node);
-	}
-
-	private boolean complexInvocation(OperationInvocation invocation) {
-		return (invocation.numberOfSubExpressions() > 3 && invocation.containsVeryLongSubExpression()) ||
-				invocation.numberOfSubExpressions() > 15;
 	}
 
 	public static String processMethodInvocation(MethodInvocation node) {

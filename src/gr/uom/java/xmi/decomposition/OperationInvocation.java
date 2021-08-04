@@ -467,15 +467,6 @@ public class OperationInvocation extends AbstractCall {
     	return true;
     }
 
-    public boolean containsVeryLongSubExpression() {
-    	for(String expression : subExpressions) {
-    		if(expression.length() > 100 && !UMLOperationBodyMapper.containsMethodSignatureOfAnonymousClass(expression)) {
-    			return true;
-    		}
-    	}
-    	return false;
-    }
-
     public Set<String> callChainIntersection(OperationInvocation other) {
     	Set<String> s1 = new LinkedHashSet<String>(this.subExpressions);
     	s1.add(this.actualString());

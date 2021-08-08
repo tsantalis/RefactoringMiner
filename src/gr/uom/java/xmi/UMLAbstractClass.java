@@ -433,7 +433,11 @@ public abstract class UMLAbstractClass {
 	public abstract boolean isInterface();
 	
 	public abstract String getName();
-	
+
+	public String getNonQualifiedName() {
+		return name;
+	}
+
 	public String getSourceFile() {
 		return locationInfo.getFilePath();
 	}

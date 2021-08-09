@@ -5014,12 +5014,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				
 			}
+			if(fragment2.getString().equals(v2.getVariableName() + "=" + v1.getVariableName() + ";\n")) {
+				return true;
+			}
 			VariableDeclaration v1DeclarationInFragment2 = fragment2.getVariableDeclaration(v1.getVariableName());
 			if(v1DeclarationInFragment2 != null) {
 				AbstractExpression initializer = v1DeclarationInFragment2.getInitializer();
 				if(initializer != null && initializer.getVariables().contains(v2.getVariableName())) {
 					return true;
 				}
+			}
+			if(fragment2.getString().equals(v1.getVariableName() + "=" + v2.getVariableName() + ";\n")) {
+				return true;
 			}
 		}
 		return false;

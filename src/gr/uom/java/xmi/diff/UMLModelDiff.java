@@ -379,6 +379,20 @@ public class UMLModelDiff {
 	   return null;
    }
 
+   public UMLOperation findOperationInAddedClasses(OperationInvocation operationInvocation, UMLOperation callerOperation) {
+	   for(UMLClass umlClass : addedClasses) {
+		   String expression = operationInvocation.getExpression();
+		   if(expression != null && umlClass.getNonQualifiedName().equalsIgnoreCase(expression)) {
+			   for(UMLOperation operation : umlClass.getOperations()) {
+				   if(operationInvocation.matchesOperation(operation, callerOperation, this)) {
+					   return operation;
+				   }
+			   }
+		   }
+	   }
+	   return null;
+   }
+
    public UMLClass getAddedClass(String className) {
       for(UMLClass umlClass : addedClasses) {
          if(umlClass.getName().equals(className))

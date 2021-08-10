@@ -79,6 +79,7 @@ public abstract class UMLAbstractClassDiff {
 		int numberOfInvocationsMissingFromRemovedOperation = new LinkedHashSet<OperationInvocation>(removedOperationInvocations).size() - intersection.size();
 		
 		Set<OperationInvocation> operationInvocationsInMethodsCalledByAddedOperation = new LinkedHashSet<OperationInvocation>();
+		Set<OperationInvocation> matchedOperationInvocations = new LinkedHashSet<OperationInvocation>();
 		for(OperationInvocation addedOperationInvocation : addedOperationInvocations) {
 			if(!intersection.contains(addedOperationInvocation)) {
 				for(UMLOperation operation : addedOperations) {
@@ -86,7 +87,20 @@ public abstract class UMLAbstractClassDiff {
 						if(addedOperationInvocation.matchesOperation(operation, addedOperation, modelDiff)) {
 							//addedOperation calls another added method
 							operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllOperationInvocations());
+							matchedOperationInvocations.add(addedOperationInvocation);
 						}
+					}
+				}
+			}
+		}
+		if(modelDiff != null) {
+			for(OperationInvocation addedOperationInvocation : addedOperationInvocations) {
+				String expression = addedOperationInvocation.getExpression();
+				if(expression != null && !expression.equals("this") &&
+						!intersection.contains(addedOperationInvocation) && !matchedOperationInvocations.contains(addedOperationInvocation)) {
+					UMLOperation operation = modelDiff.findOperationInAddedClasses(addedOperationInvocation, addedOperation);
+					if(operation != null) {
+						operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllOperationInvocations());
 					}
 				}
 			}
@@ -99,7 +113,7 @@ public abstract class UMLAbstractClassDiff {
 		removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.removeAll(newIntersection);
 		for(Iterator<OperationInvocation> operationInvocationIterator = removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.iterator(); operationInvocationIterator.hasNext();) {
 			OperationInvocation invocation = operationInvocationIterator.next();
-			if(invocation.getMethodName().startsWith("get")) {
+			if(invocation.getMethodName().startsWith("get") || invocation.getMethodName().equals("add") || invocation.getMethodName().equals("contains")) {
 				operationInvocationIterator.remove();
 			}
 		}

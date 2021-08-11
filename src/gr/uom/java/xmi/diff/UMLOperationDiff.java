@@ -11,6 +11,7 @@ import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringType;
 
 public class UMLOperationDiff {
 	private UMLOperation removedOperation;
@@ -36,6 +38,7 @@ public class UMLOperationDiff {
 	private boolean parametersReordered;
 	private Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
 	private Set<Pair<VariableDeclaration, VariableDeclaration>> matchedVariables = new LinkedHashSet<>();
+	private Set<Refactoring> refactorings = new LinkedHashSet<>();
 	private UMLAnnotationListDiff annotationListDiff;
 	private List<UMLType> addedExceptionTypes;
 	private List<UMLType> removedExceptionTypes;
@@ -163,6 +166,7 @@ public class UMLOperationDiff {
 	public UMLOperationDiff(UMLOperationBodyMapper mapper) {
 		this.mappings = mapper.getMappings();
 		this.matchedVariables = mapper.getMatchedVariables();
+		this.refactorings = mapper.getRefactoringsAfterPostProcessing();
 		process(mapper.getOperation1(), mapper.getOperation2());
 	}
 
@@ -351,16 +355,54 @@ public class UMLOperationDiff {
 				exactMappings++;
 			}
 		}
-		if(removedParameters.isEmpty() || exactMappings > 0) {
+		if(condition(removedParameters, exactMappings)) {
 			for(UMLParameter umlParameter : addedParameters) {
-				AddParameterRefactoring refactoring = new AddParameterRefactoring(umlParameter, removedOperation, addedOperation);
-				refactorings.add(refactoring);
+				boolean conflictFound = false;
+				for(Refactoring refactoring : this.refactorings) {
+					if(refactoring instanceof RenameVariableRefactoring) {
+						RenameVariableRefactoring rename = (RenameVariableRefactoring)refactoring;
+						if(rename.getRefactoringType().equals(RefactoringType.RENAME_PARAMETER) && rename.getRenamedVariable().equals(umlParameter.getVariableDeclaration())) {
+							conflictFound = true;
+							break;
+						}
+					}
+					else if(refactoring instanceof ChangeVariableTypeRefactoring) {
+						ChangeVariableTypeRefactoring changeType = (ChangeVariableTypeRefactoring)refactoring;
+						if(changeType.getChangedTypeVariable().equals(umlParameter.getVariableDeclaration())) {
+							conflictFound = true;
+							break;
+						}
+					}
+				}
+				if(!conflictFound) {
+					AddParameterRefactoring refactoring = new AddParameterRefactoring(umlParameter, removedOperation, addedOperation);
+					refactorings.add(refactoring);
+				}
 			}
 		}
-		if(addedParameters.isEmpty() || exactMappings > 0) {
+		if(condition(addedParameters, exactMappings)) {
 			for(UMLParameter umlParameter : removedParameters) {
-				RemoveParameterRefactoring refactoring = new RemoveParameterRefactoring(umlParameter, removedOperation, addedOperation);
-				refactorings.add(refactoring);
+				boolean conflictFound = false;
+				for(Refactoring refactoring : this.refactorings) {
+					if(refactoring instanceof RenameVariableRefactoring) {
+						RenameVariableRefactoring rename = (RenameVariableRefactoring)refactoring;
+						if(rename.getRefactoringType().equals(RefactoringType.RENAME_PARAMETER) && rename.getOriginalVariable().equals(umlParameter.getVariableDeclaration())) {
+							conflictFound = true;
+							break;
+						}
+					}
+					else if(refactoring instanceof ChangeVariableTypeRefactoring) {
+						ChangeVariableTypeRefactoring changeType = (ChangeVariableTypeRefactoring)refactoring;
+						if(changeType.getOriginalVariable().equals(umlParameter.getVariableDeclaration())) {
+							conflictFound = true;
+							break;
+						}
+					}
+				}
+				if(!conflictFound) {
+					RemoveParameterRefactoring refactoring = new RemoveParameterRefactoring(umlParameter, removedOperation, addedOperation);
+					refactorings.add(refactoring);
+				}
 			}
 		}
 		if(parametersReordered) {
@@ -436,5 +478,16 @@ public class UMLOperationDiff {
 			}
 		}
 		return refactorings;
+	}
+
+	private boolean condition(List<UMLParameter> parameters, int exactMappings) {
+		if(parameters.isEmpty())
+			return true;
+		List<VariableDeclaration> declarations1 = removedOperation.getBody() != null ? removedOperation.getBody().getAllVariableDeclarations() : Collections.emptyList();
+		List<VariableDeclaration> declarations2 = addedOperation.getBody() != null ? addedOperation.getBody().getAllVariableDeclarations() : Collections.emptyList();
+		boolean moved = !removedOperation.getClassName().equals(addedOperation.getClassName());
+		if(exactMappings > 0 && (moved || !matchedVariables.isEmpty() || declarations1.isEmpty() || declarations2.isEmpty()))
+			return true;
+		return false;
 	}
 }

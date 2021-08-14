@@ -629,6 +629,7 @@ public class UMLModelASTReader {
 				MethodDeclaration methodDeclaration = (MethodDeclaration)bodyDeclaration;
 				UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, false, sourceFile, comments);
 				operation.setClassName(anonymousClass.getCodePath());
+				operation.setDeclaredInAnonymousClass(true);
 				anonymousClass.addOperation(operation);
 			}
 		}

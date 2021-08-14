@@ -33,6 +33,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 	private boolean isStatic;
 	private boolean isSynchronized;
 	private boolean emptyBody;
+	private boolean declaredInAnonymousClass;
 	private OperationBody operationBody;
 	private List<UMLAnonymousClass> anonymousClassList;
 	private List<UMLTypeParameter> typeParameters;
@@ -139,6 +140,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 
 	public void setEmptyBody(boolean emptyBody) {
 		this.emptyBody = emptyBody;
+	}
+
+	public boolean isDeclaredInAnonymousClass() {
+		return declaredInAnonymousClass;
+	}
+
+	public void setDeclaredInAnonymousClass(boolean declaredInAnonymousClass) {
+		this.declaredInAnonymousClass = declaredInAnonymousClass;
 	}
 
 	public OperationBody getBody() {

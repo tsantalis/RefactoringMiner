@@ -92,11 +92,45 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		OperationBody body1 = operation1.getBody();
 		OperationBody body2 = operation2.getBody();
 		if(body1 != null && body2 != null) {
+			List<AnonymousClassDeclarationObject> anonymous1 = body1.getAllAnonymousClassDeclarations();
+			List<AnonymousClassDeclarationObject> anonymous2 = body2.getAllAnonymousClassDeclarations();
 			CompositeStatementObject composite1 = body1.getCompositeStatement();
 			CompositeStatementObject composite2 = body2.getCompositeStatement();
 			List<StatementObject> leaves1 = composite1.getLeaves();
 			List<StatementObject> leaves2 = composite2.getLeaves();
-			
+			List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
+			innerNodes1.remove(composite1);
+			List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
+			innerNodes2.remove(composite2);
+			int totalNodes1 = leaves1.size() + innerNodes1.size();
+			int totalNodes2 = leaves2.size() + innerNodes2.size();
+			boolean anonymousCollapse = Math.abs(totalNodes1 - totalNodes2) > 2*Math.min(totalNodes1, totalNodes2);
+			if(!operation1.isDeclaredInAnonymousClass() && !operation2.isDeclaredInAnonymousClass() && anonymousCollapse) {
+				if(anonymous1.size() == 1 && anonymous2.size() == 0) {
+					AbstractCodeFragment anonymousFragment = null;
+					for(StatementObject leaf1 : leaves1) {
+						if(leaf1.getAnonymousClassDeclarations().size() > 0) {
+							anonymousFragment = leaf1;
+							break;
+						}
+					}
+					if(anonymousFragment != null) {
+						expandAnonymousAndLambdas(anonymousFragment, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), this);
+					}
+				}
+				else if(anonymous1.size() == 0 && anonymous2.size() == 1) {
+					AbstractCodeFragment anonymousFragment = null;
+					for(StatementObject leaf2 : leaves2) {
+						if(leaf2.getAnonymousClassDeclarations().size() > 0) {
+							anonymousFragment = leaf2;
+							break;
+						}
+					}
+					if(anonymousFragment != null) {
+						expandAnonymousAndLambdas(anonymousFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), this);
+					}
+				}
+			}
 			UMLOperationDiff operationDiff = new UMLOperationDiff(operation1, operation2);
 			Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
 			Map<String, String> parameterToArgumentMap2 = new LinkedHashMap<String, String>();
@@ -153,10 +187,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>());
 			
-			List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
-			innerNodes1.remove(composite1);
-			List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
-			innerNodes2.remove(composite2);
 			resetNodes(innerNodes1);
 			//replace parameters with arguments in innerNodes1
 			if(!parameterToArgumentMap1.isEmpty()) {
@@ -2248,6 +2278,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		if(!statement2.getString().endsWith("=true;\n") && !statement2.getString().endsWith("=false;\n")) {
 			findReplacements(arguments1, booleanLiterals2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_ARGUMENT);
+		}
+		if((statement2.getString().endsWith("true;\n") && statement1.getString().endsWith("Boolean.TRUE;\n")) ||
+				(statement2.getString().endsWith("false;\n") && statement1.getString().endsWith("Boolean.FALSE;\n"))) {
+			findReplacements(variables1, booleanLiterals2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_VARIABLE);
+		}
+		if((statement1.getString().endsWith("true;\n") && statement2.getString().endsWith("Boolean.TRUE;\n")) ||
+				(statement1.getString().endsWith("false;\n") && statement2.getString().endsWith("Boolean.FALSE;\n"))) {
+			findReplacements(booleanLiterals1, variables2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_VARIABLE);
 		}
 		if(!argumentsWithIdenticalMethodCalls(arguments1, arguments2, methodInvocations1, methodInvocations2) && !replacementInfo.getReplacements().isEmpty()) {
 			findReplacements(arguments1, methodInvocations2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_METHOD_INVOCATION);

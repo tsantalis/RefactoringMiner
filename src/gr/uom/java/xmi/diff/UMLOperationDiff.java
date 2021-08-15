@@ -337,11 +337,25 @@ public class UMLOperationDiff {
 				if(matchedPair.getLeft().equals(parameterDiff.getRemovedParameter().getVariableDeclaration()) &&
 						!matchedPair.getRight().equals(parameterDiff.getAddedParameter().getVariableDeclaration())) {
 					conflictFound = true;
+					if(matchedPair.getLeft().isParameter() && matchedPair.getRight().isLocalVariable()) {
+						Refactoring rename = new RenameVariableRefactoring(matchedPair.getLeft(), matchedPair.getRight(), removedOperation, addedOperation,
+								VariableReferenceExtractor.findReferences(matchedPair.getLeft(), matchedPair.getRight(), mappings));
+						refactorings.add(rename);
+						Refactoring addParameter = new AddParameterRefactoring(parameterDiff.getAddedParameter(), removedOperation, addedOperation);
+						refactorings.add(addParameter);
+					}
 					break;
 				}
 				if(matchedPair.getRight().equals(parameterDiff.getAddedParameter().getVariableDeclaration()) &&
 						!matchedPair.getLeft().equals(parameterDiff.getRemovedParameter().getVariableDeclaration())) {
 					conflictFound = true;
+					if(matchedPair.getLeft().isLocalVariable() && matchedPair.getRight().isParameter()) {
+						Refactoring rename = new RenameVariableRefactoring(matchedPair.getLeft(), matchedPair.getRight(), removedOperation, addedOperation,
+								VariableReferenceExtractor.findReferences(matchedPair.getLeft(), matchedPair.getRight(), mappings));
+						refactorings.add(rename);
+						Refactoring removeParameter = new RemoveParameterRefactoring(parameterDiff.getRemovedParameter(), removedOperation, addedOperation);
+						refactorings.add(removeParameter);
+					}
 					break;
 				}
 			}

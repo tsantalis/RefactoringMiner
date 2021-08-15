@@ -111,7 +111,8 @@ public class RefactoringPopulator {
 		SplitPackage(new BigInteger("302231454903657293676544")),
 		MergePackage(new BigInteger("604462909807314587353088")),
 		MovePackage(new BigInteger("1208925819614629174706176")),
-		All(new BigInteger("2417851639229258349412351"));
+		LocalizeParameter(new BigInteger("2417851639229258349412352")),
+		All(new BigInteger("4835703278458516698824703"));
 
 		private BigInteger value;
 

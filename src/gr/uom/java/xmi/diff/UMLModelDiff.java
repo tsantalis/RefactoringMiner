@@ -2242,7 +2242,7 @@ public class UMLModelDiff {
     		  removedOperations.addAll(removedClass.getOperations());
     	  }
       }
-      if(removedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS || addedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
+      if(condition(addedOperations, removedOperations)) {
     	  checkForOperationMoves(addedOperations, removedOperations);
       }
    }
@@ -2251,9 +2251,16 @@ public class UMLModelDiff {
       List<UMLOperation> addedOperations = getAddedAndExtractedOperationsInCommonClasses();
       addedOperations.addAll(getAddedOperationsInMovedAndRenamedClasses());
       List<UMLOperation> removedOperations = getRemovedOperationsInCommonMovedRenamedClasses();
-      if(removedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS || addedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
+      if(condition(addedOperations, removedOperations)) {
     	  checkForOperationMoves(addedOperations, removedOperations);
       }
+   }
+
+   private boolean condition(List<UMLOperation> addedOperations, List<UMLOperation> removedOperations) {
+	   	int size1 = removedOperations.size();
+		int size2 = addedOperations.size();
+		return (size1 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS || size2 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) &&
+				size1*size2 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS*MAXIMUM_NUMBER_OF_COMPARED_METHODS;
    }
 
    private boolean outerClassMovedOrRenamed(UMLClass umlClass) {

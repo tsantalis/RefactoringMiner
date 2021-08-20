@@ -165,8 +165,17 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		for(String key : fileContentsBefore.keySet()) {
 			if(renamedFilesHint.containsKey(key)) {
 				String renamedFile = renamedFilesHint.get(key);
-				if(fileContentsBefore.get(key).equals(fileContentsCurrent.get(renamedFile))) {
+				String fileBefore = fileContentsBefore.get(key);
+				String fileAfter = fileContentsCurrent.get(renamedFile);
+				if(fileBefore.equals(fileAfter) || fileBefore.length() == fileAfter.length()) {
 					identicalFiles.put(key, renamedFile);
+				}
+			}
+			if(fileContentsCurrent.containsKey(key)) {
+				String fileBefore = fileContentsBefore.get(key);
+				String fileAfter = fileContentsCurrent.get(key);
+				if(fileBefore.length() == fileAfter.length() || fileBefore.equals(fileAfter)) {
+					identicalFiles.put(key, key);
 				}
 			}
 		}

@@ -14,6 +14,7 @@ import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
@@ -76,8 +77,14 @@ public class UMLAttributeDiff {
 	}
 
 	private Function<UMLOperation, Boolean> getterCondition(UMLAttribute attribute) {
-		return (UMLOperation operation) -> operation.isGetter() && (operation.getReturnParameter().getType().equals(attribute.getType()) ||
-				operation.getReturnParameter().getType().getClassType().equalsIgnoreCase(attribute.getType().getClassType()));
+		return (UMLOperation operation) -> {
+			UMLParameter returnParameter = operation.getReturnParameter();
+			if(returnParameter != null) {
+				return operation.isGetter() && (returnParameter.getType().equals(attribute.getType()) ||
+						returnParameter.getType().getClassType().equalsIgnoreCase(attribute.getType().getClassType()));
+			}
+			return false;
+		};
 	}
 
 	private Function<UMLOperation, Boolean> setterCondition(UMLAttribute attribute) {

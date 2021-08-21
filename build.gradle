@@ -39,6 +39,7 @@ dependencies {
     compile 'org.eclipse.jdt:org.eclipse.jdt.core:3.24.0'
     compile 'org.apache.commons:commons-text:1.9'
     compile 'org.kohsuke:github-api:1.123'
+    compile 'io.github.java-diff-utils:java-diff-utils:4.10'
 
     testCompile 'junit:junit:4.11'
 }

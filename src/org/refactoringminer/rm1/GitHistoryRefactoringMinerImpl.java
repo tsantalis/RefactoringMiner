@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URL;
 import java.util.ArrayList;
@@ -70,6 +71,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.difflib.DiffUtils;
+import com.github.difflib.patch.AbstractDelta;
+import com.github.difflib.patch.Chunk;
+import com.github.difflib.patch.Patch;
 
 public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMiner {
 
@@ -160,21 +165,21 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return refactoringsAtRevision;
 	}
 
-	private List<MoveSourceFolderRefactoring> processIdenticalFiles(Map<String, String> fileContentsBefore, Map<String, String> fileContentsCurrent, Map<String, String> renamedFilesHint) {
+	private List<MoveSourceFolderRefactoring> processIdenticalFiles(Map<String, String> fileContentsBefore, Map<String, String> fileContentsCurrent, Map<String, String> renamedFilesHint) throws IOException {
 		Map<String, String> identicalFiles = new HashMap<String, String>();
 		for(String key : fileContentsBefore.keySet()) {
 			if(renamedFilesHint.containsKey(key)) {
 				String renamedFile = renamedFilesHint.get(key);
 				String fileBefore = fileContentsBefore.get(key);
 				String fileAfter = fileContentsCurrent.get(renamedFile);
-				if(fileBefore.equals(fileAfter) || fileBefore.length() == fileAfter.length()) {
+				if(fileBefore.equals(fileAfter) || trivialCommentChange(fileBefore, fileAfter)) {
 					identicalFiles.put(key, renamedFile);
 				}
 			}
 			if(fileContentsCurrent.containsKey(key)) {
 				String fileBefore = fileContentsBefore.get(key);
 				String fileAfter = fileContentsCurrent.get(key);
-				if(fileBefore.length() == fileAfter.length() || fileBefore.equals(fileAfter)) {
+				if(fileBefore.equals(fileAfter) || trivialCommentChange(fileBefore, fileAfter)) {
 					identicalFiles.put(key, key);
 				}
 			}
@@ -213,6 +218,24 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			}
 		}
 		return moveSourceFolderRefactorings;
+	}
+
+	private boolean trivialCommentChange(String fileBefore, String fileAfter) throws IOException {
+		if(fileBefore.length() == fileAfter.length()) {
+			List<String> original = IOUtils.readLines(new StringReader(fileBefore));
+			List<String> revised = IOUtils.readLines(new StringReader(fileAfter));
+			
+			Patch<String> patch = DiffUtils.diff(original, revised);
+			List<AbstractDelta<String>> deltas = patch.getDeltas();
+			for(AbstractDelta<String> delta : deltas) {
+				Chunk<String> source = delta.getSource();
+				if(source.getLines().size() > 0 && !source.getLines().get(0).matches("^\\s*//.*")) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
 	}
 
 	private void populateFileContents(Repository repository, RevCommit commit,

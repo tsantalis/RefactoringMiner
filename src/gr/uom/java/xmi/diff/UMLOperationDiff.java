@@ -392,7 +392,7 @@ public class UMLOperationDiff {
 				for(Refactoring refactoring : this.refactorings) {
 					if(refactoring instanceof RenameVariableRefactoring) {
 						RenameVariableRefactoring rename = (RenameVariableRefactoring)refactoring;
-						if(rename.getRefactoringType().equals(RefactoringType.RENAME_PARAMETER) && rename.getRenamedVariable().equals(umlParameter.getVariableDeclaration())) {
+						if(rename.getRenamedVariable().equals(umlParameter.getVariableDeclaration())) {
 							conflictFound = true;
 							break;
 						}
@@ -417,7 +417,7 @@ public class UMLOperationDiff {
 				for(Refactoring refactoring : this.refactorings) {
 					if(refactoring instanceof RenameVariableRefactoring) {
 						RenameVariableRefactoring rename = (RenameVariableRefactoring)refactoring;
-						if(rename.getRefactoringType().equals(RefactoringType.RENAME_PARAMETER) && rename.getOriginalVariable().equals(umlParameter.getVariableDeclaration())) {
+						if(rename.getOriginalVariable().equals(umlParameter.getVariableDeclaration())) {
 							conflictFound = true;
 							break;
 						}

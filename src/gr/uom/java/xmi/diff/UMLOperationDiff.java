@@ -359,6 +359,24 @@ public class UMLOperationDiff {
 					break;
 				}
 			}
+			for(Refactoring refactoring : this.refactorings) {
+				if(refactoring instanceof RenameVariableRefactoring) {
+					RenameVariableRefactoring rename = (RenameVariableRefactoring)refactoring;
+					if(rename.getOriginalVariable().equals(parameterDiff.getRemovedParameter().getVariableDeclaration()) &&
+							!rename.getRenamedVariable().equals(parameterDiff.getAddedParameter().getVariableDeclaration())) {
+						conflictFound = true;
+						break;
+					}
+				}
+				else if(refactoring instanceof ChangeVariableTypeRefactoring) {
+					ChangeVariableTypeRefactoring changeType = (ChangeVariableTypeRefactoring)refactoring;
+					if(changeType.getOriginalVariable().equals(parameterDiff.getRemovedParameter().getVariableDeclaration()) &&
+							!changeType.getChangedTypeVariable().equals(parameterDiff.getAddedParameter().getVariableDeclaration())) {
+						conflictFound = true;
+						break;
+					}
+				}
+			}
 			if(!conflictFound) {
 				refactorings.addAll(parameterDiff.getRefactorings());
 			}

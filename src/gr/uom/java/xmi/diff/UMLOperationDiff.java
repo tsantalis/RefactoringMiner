@@ -366,11 +366,21 @@ public class UMLOperationDiff {
 						conflictFound = true;
 						break;
 					}
+					else if(!rename.getOriginalVariable().equals(parameterDiff.getRemovedParameter().getVariableDeclaration()) &&
+							rename.getRenamedVariable().equals(parameterDiff.getAddedParameter().getVariableDeclaration())) {
+						conflictFound = true;
+						break;
+					}
 				}
 				else if(refactoring instanceof ChangeVariableTypeRefactoring) {
 					ChangeVariableTypeRefactoring changeType = (ChangeVariableTypeRefactoring)refactoring;
 					if(changeType.getOriginalVariable().equals(parameterDiff.getRemovedParameter().getVariableDeclaration()) &&
 							!changeType.getChangedTypeVariable().equals(parameterDiff.getAddedParameter().getVariableDeclaration())) {
+						conflictFound = true;
+						break;
+					}
+					else if(!changeType.getOriginalVariable().equals(parameterDiff.getRemovedParameter().getVariableDeclaration()) &&
+							changeType.getChangedTypeVariable().equals(parameterDiff.getAddedParameter().getVariableDeclaration())) {
 						conflictFound = true;
 						break;
 					}

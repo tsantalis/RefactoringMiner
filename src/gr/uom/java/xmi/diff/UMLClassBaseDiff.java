@@ -1145,7 +1145,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	
 						UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(bestMapper);
 						operationDiffList.add(operationSignatureDiff);
-						refactorings.addAll(operationSignatureDiff.getRefactorings());
 						if(!removedOperation.getName().equals(addedOperation.getName()) &&
 								!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
 							Set<MethodInvocationReplacement> callReferences = getCallReferences(removedOperation, addedOperation);
@@ -1191,7 +1190,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	
 						UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(bestMapper);
 						operationDiffList.add(operationSignatureDiff);
-						refactorings.addAll(operationSignatureDiff.getRefactorings());
 						if(!removedOperation.getName().equals(addedOperation.getName()) &&
 								!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
 							Set<MethodInvocationReplacement> callReferences = getCallReferences(removedOperation, addedOperation);

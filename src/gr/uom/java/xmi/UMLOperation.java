@@ -596,6 +596,29 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return false;
 	}
 
+	public boolean isMultiSetter() {
+		List<String> parameterNames = getParameterNameList();
+		int matchCount = 0;
+		if(getBody() != null) {
+			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
+			for(AbstractStatement statement : statements) {
+				if(statement instanceof StatementObject) {
+					for(String variable : statement.getVariables()) {
+						if(statement.getString().startsWith(variable + "=")) {
+							for(String parameterName : parameterNames) {
+								if(statement.getString().equals(variable + "=" + parameterName + ";\n")) {
+									matchCount++;
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return matchCount > 0;
+	}
+
 	public boolean equalsIgnoringVisibility(UMLOperation operation) {
 		boolean thisEmptyBody = this.getBody() == null || this.hasEmptyBody();
 		boolean otherEmptyBody = operation.getBody() == null || operation.hasEmptyBody();

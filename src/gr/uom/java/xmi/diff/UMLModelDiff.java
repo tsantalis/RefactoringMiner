@@ -2236,13 +2236,28 @@ public class UMLModelDiff {
     		  addedOperations.addAll(addedClass.getOperations());
     	  }
       }
-      List<UMLOperation> removedOperations = getRemovedOperationsInCommonClasses();
+      List<UMLOperation> removedOperations = new ArrayList<UMLOperation>();
       for(UMLClass removedClass : removedClasses) {
     	  if(!removedClass.implementsInterface(interfaceIntersection) && !removedClass.extendsSuperclass(interfaceIntersection) && !outerClassMovedOrRenamed(removedClass)) {
     		  removedOperations.addAll(removedClass.getOperations());
     	  }
       }
-      if(condition(addedOperations, removedOperations)) {
+      List<UMLOperation> removedOperations1 = getRemovedOperationsInCommonClasses();
+      List<UMLOperation> removedOperations2 = getRemovedOperationsInCommonMovedRenamedClasses();
+      if(condition(addedOperations.size(), removedOperations.size() + removedOperations2.size())) {
+    	  for(UMLOperation operation : removedOperations2) {
+    		  if(removedOperations1.contains(operation)) {
+    			  removedOperations.add(operation);
+    		  }
+    		  else if(!operation.isGetter() && !operation.isSetter() && !operation.isMultiSetter()) {
+    			  removedOperations.add(operation);
+    		  }
+    	  }
+      }
+      else {
+    	  removedOperations.addAll(removedOperations1);
+      }
+      if(condition(addedOperations.size(), removedOperations.size())) {
     	  checkForOperationMoves(addedOperations, removedOperations);
       }
    }
@@ -2251,14 +2266,12 @@ public class UMLModelDiff {
       List<UMLOperation> addedOperations = getAddedAndExtractedOperationsInCommonClasses();
       addedOperations.addAll(getAddedOperationsInMovedAndRenamedClasses());
       List<UMLOperation> removedOperations = getRemovedOperationsInCommonMovedRenamedClasses();
-      if(condition(addedOperations, removedOperations)) {
+      if(condition(addedOperations.size(), removedOperations.size())) {
     	  checkForOperationMoves(addedOperations, removedOperations);
       }
    }
 
-   private boolean condition(List<UMLOperation> addedOperations, List<UMLOperation> removedOperations) {
-	   	int size1 = removedOperations.size();
-		int size2 = addedOperations.size();
+   private boolean condition(int size1, int size2) {
 		return (size1 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS || size2 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) &&
 				size1*size2 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS*MAXIMUM_NUMBER_OF_COMPARED_METHODS;
    }

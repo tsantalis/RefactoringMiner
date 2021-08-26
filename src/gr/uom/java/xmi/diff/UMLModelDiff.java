@@ -2235,11 +2235,19 @@ public class UMLModelDiff {
     	  if(!addedClass.implementsInterface(interfaceIntersection) && !addedClass.extendsSuperclass(interfaceIntersection) && !outerClassMovedOrRenamed(addedClass)) {
     		  addedOperations.addAll(addedClass.getOperations());
     	  }
+    	  else if(addedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS &&
+    			  addedClass.getOperationsWithOverrideAnnotation().size() > 0) {
+    		  addedOperations.addAll(addedClass.getOperationsWithoutOverrideAnnotation());
+    	  }
       }
       List<UMLOperation> removedOperations = new ArrayList<UMLOperation>();
       for(UMLClass removedClass : removedClasses) {
     	  if(!removedClass.implementsInterface(interfaceIntersection) && !removedClass.extendsSuperclass(interfaceIntersection) && !outerClassMovedOrRenamed(removedClass)) {
     		  removedOperations.addAll(removedClass.getOperations());
+    	  }
+    	  else if(addedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS && removedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS &&
+    			  removedClass.getOperationsWithOverrideAnnotation().size() > 0) {
+    		  removedOperations.addAll(removedClass.getOperationsWithoutOverrideAnnotation());
     	  }
       }
       List<UMLOperation> removedOperations1 = getRemovedOperationsInCommonClasses();

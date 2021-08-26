@@ -33,6 +33,26 @@ public abstract class UMLAbstractClass {
         this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
 	}
 
+	public List<UMLOperation> getOperationsWithOverrideAnnotation() {
+		List<UMLOperation> operations = new ArrayList<>();
+		for(UMLOperation operation : this.operations) {
+			if(operation.hasOverrideAnnotation() && !operation.isConstructor() && !operation.overridesObject()) {
+				operations.add(operation);
+			}
+		}
+		return operations;
+	}
+	
+	public List<UMLOperation> getOperationsWithoutOverrideAnnotation() {
+		List<UMLOperation> operations = new ArrayList<>();
+		for(UMLOperation operation : this.operations) {
+			if(!operation.hasOverrideAnnotation() && !operation.isConstructor() && !operation.overridesObject()) {
+				operations.add(operation);
+			}
+		}
+		return operations;
+	}
+	
 	public LocationInfo getLocationInfo() {
 		return locationInfo;
 	}

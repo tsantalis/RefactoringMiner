@@ -5184,12 +5184,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
+	private List<CompositeStatementObject> getNestedTryCatch(List<AbstractStatement> compStatements) {
+		List<CompositeStatementObject> nestedTryCatch = new ArrayList<CompositeStatementObject>();
+		for(AbstractStatement statement : compStatements) {
+			if(statement.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) ||
+					statement.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+				nestedTryCatch.add((CompositeStatementObject)statement);
+			}
+		}
+		return nestedTryCatch;
+	}
+
 	private double compositeChildMatchingScore(CompositeStatementObject comp1, CompositeStatementObject comp2, Set<AbstractCodeMapping> mappings,
 			List<UMLOperation> removedOperations, List<UMLOperation> addedOperations) {
 		List<AbstractStatement> compStatements1 = comp1.getStatements();
 		List<AbstractStatement> compStatements2 = comp2.getStatements();
 		int childrenSize1 = compStatements1.size();
 		int childrenSize2 = compStatements2.size();
+		List<CompositeStatementObject> nestedTryCatch1 = getNestedTryCatch(compStatements1);
+		List<CompositeStatementObject> nestedTryCatch2 = getNestedTryCatch(compStatements2);
 		
 		if(parentMapper != null && comp1.getLocationInfo().getCodeElementType().equals(comp2.getLocationInfo().getCodeElementType()) &&
 				childrenSize1 == 1 && childrenSize2 == 1 && !comp1.getString().equals("{") && !comp2.getString().equals("{")) {
@@ -5216,7 +5229,38 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			int mappedLeavesSize = 0;
 			for(AbstractCodeMapping mapping : mappings) {
 				if(leaves1.contains(mapping.getFragment1()) && leaves2.contains(mapping.getFragment2())) {
-					mappedLeavesSize++;
+					boolean mappingUnderNestedTryCatch = false;
+					if(nestedTryCatch1.isEmpty() && !nestedTryCatch2.isEmpty()) {
+						for(CompositeStatementObject statement : nestedTryCatch2) {
+							List<AbstractStatement> directlyNestedStatements = statement.getStatements();
+							if(directlyNestedStatements.contains(mapping.getFragment2())) {
+								mappingUnderNestedTryCatch = true;
+								break;
+							}
+							List<StatementObject> leaves = statement.getLeaves();
+							if(leaves.contains(mapping.getFragment2())) {
+								mappingUnderNestedTryCatch = true;
+								break;
+							}
+						}
+					}
+					else if(!nestedTryCatch1.isEmpty() && nestedTryCatch2.isEmpty()) {
+						for(CompositeStatementObject statement : nestedTryCatch1) {
+							List<AbstractStatement> directlyNestedStatements = statement.getStatements();
+							if(directlyNestedStatements.contains(mapping.getFragment1())) {
+								mappingUnderNestedTryCatch = true;
+								break;
+							}
+							List<StatementObject> leaves = statement.getLeaves();
+							if(leaves.contains(mapping.getFragment1())) {
+								mappingUnderNestedTryCatch = true;
+								break;
+							}
+						}
+					}
+					if(!mappingUnderNestedTryCatch) {
+						mappedLeavesSize++;
+					}
 				}
 			}
 			if(mappedLeavesSize == 0) {

@@ -893,7 +893,7 @@ public class VariableReplacementAnalysis {
 			if((variableReferences.size() > 1 && consistencyCheck(variableDeclaration1, variableDeclaration2, variableReferences)) ||
 					(variableReferences.size() == 1 && replacementInLocalVariableDeclaration(vdReplacement.getVariableNameReplacement(), variableReferences))) {
 				RenameVariableRefactoring ref = new RenameVariableRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences);
-				if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref) && !existsConflictingSplitVariableRefactoring(ref)) {
+				if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref) && !existsConflictingSplitVariableRefactoring(ref) && !existsConflictingParameter(ref)) {
 					variableRenames.add(ref);
 					removedVariables.remove(variableDeclaration1);
 					addedVariables.remove(variableDeclaration2);
@@ -935,7 +935,7 @@ public class VariableReplacementAnalysis {
 				UMLOperation operation1 = v1.getValue();
 				UMLOperation operation2 = v2.getValue();
 				RenameVariableRefactoring ref = new RenameVariableRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences);
-				if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref) && !existsConflictingSplitVariableRefactoring(ref) &&
+				if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref) && !existsConflictingSplitVariableRefactoring(ref) && !existsConflictingParameter(ref) &&
 						variableDeclaration1.isVarargsParameter() == variableDeclaration2.isVarargsParameter()) {
 					variableRenames.add(ref);
 					removedVariables.remove(variableDeclaration1);
@@ -1379,9 +1379,33 @@ public class VariableReplacementAnalysis {
 							CompositeStatementObject comp2 = (CompositeStatementObject)statement2;
 							containsMapping = comp1.contains(mapping.getFragment1()) && comp2.contains(mapping.getFragment2());
 						}
-						if(containsMapping && (bothFragmentsUseVariable(v1, mapping) || bothFragmentsUseVariable(v2, mapping)) &&
-								operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) == null) {
-							return true;
+						if(containsMapping && operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) == null) {
+							if(bothFragmentsUseVariable(v1, mapping)) {
+								VariableDeclaration otherV1 = mapping.getFragment1().getVariableDeclaration(v1.getVariableName());
+								if(otherV1 != null) {
+									VariableScope otherV1Scope = otherV1.getScope();
+									VariableScope v1Scope = v1.getScope();
+									if(otherV1Scope.overlaps(v1Scope)) {
+										return true;
+									}
+								}
+								else if(set.size() == 1) {
+									return true;
+								}
+							}
+							if(bothFragmentsUseVariable(v2, mapping)) {
+								VariableDeclaration otherV2 = mapping.getFragment2().getVariableDeclaration(v2.getVariableName());
+								if(otherV2 != null) {
+									VariableScope otherV2Scope = otherV2.getScope();
+									VariableScope v2Scope = v2.getScope();
+									if(otherV2Scope.overlaps(v2Scope)) {
+										return true;
+									}
+								}
+								else if(set.size() == 1) {
+									return true;
+								}
+							}
 						}
 					}
 				}
@@ -1698,6 +1722,19 @@ public class VariableReplacementAnalysis {
 					split.getSplitVariables().contains(ref.getRenamedVariable()) &&
 					split.getOldVariable().equals(ref.getOriginalVariable())) {
 				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean existsConflictingParameter(RenameVariableRefactoring ref) {
+		VariableDeclaration renamedVariable = ref.getRenamedVariable();
+		if(renamedVariable.isParameter()) {
+			for(VariableDeclaration parameter : operation1.getParameterDeclarationList()) {
+				if(renamedVariable.getVariableName().equals(parameter.getVariableName()) &&
+						renamedVariable.getType().equals(parameter.getType())) {
+					return true;
+				}
 			}
 		}
 		return false;

@@ -130,6 +130,40 @@ public class VariableReplacementAnalysis {
 				}
 			}
 		}
+		else if(removedVariables.size() <= addedVariables.size()) {
+			for(VariableDeclaration removedVariable : removedVariables) {
+				if(!removedVariablesToBeRemoved.contains(removedVariable) && removedVariable.isParameter()) {
+					for(VariableDeclaration addedVariable : addedVariables) {
+						if(!addedVariablesToBeRemoved.contains(addedVariable) && addedVariable.isParameter()) {
+							Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
+							if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && addedVariable.getType().equals(removedVariable.getType())) {
+								removedVariablesToBeRemoved.add(removedVariable);
+								addedVariablesToBeRemoved.add(addedVariable);
+								matchedVariables.add(pair);
+								getVariableRefactorings(removedVariable, addedVariable, operation1, operation2, Collections.emptySet(), null);
+							}
+						}
+					}
+				}
+			}
+		}
+		else {
+			for(VariableDeclaration addedVariable : addedVariables) {
+				if(!addedVariablesToBeRemoved.contains(addedVariable) && addedVariable.isParameter()) {
+					for(VariableDeclaration removedVariable : removedVariables) {
+						if(!removedVariablesToBeRemoved.contains(removedVariable) && removedVariable.isParameter()) {
+							Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
+							if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && addedVariable.getType().equals(removedVariable.getType())) {
+								removedVariablesToBeRemoved.add(removedVariable);
+								addedVariablesToBeRemoved.add(addedVariable);
+								matchedVariables.add(pair);
+								getVariableRefactorings(removedVariable, addedVariable, operation1, operation2, Collections.emptySet(), null);
+							}
+						}
+					}
+				}
+			}
+		}
 		removedVariables.removeAll(removedVariablesToBeRemoved);
 		addedVariables.removeAll(addedVariablesToBeRemoved);
 	}

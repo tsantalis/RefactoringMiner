@@ -114,4 +114,9 @@ public class VariableScope {
 				this.startOffset <= other.getStartOffset() &&
 				this.endOffset >= other.getEndOffset();
 	}
+	
+	public boolean overlaps(VariableScope other) {
+		return this.filePath.equals(other.filePath) &&
+				this.startOffset <= other.endOffset && this.endOffset >= other.startOffset;
+	}
 }

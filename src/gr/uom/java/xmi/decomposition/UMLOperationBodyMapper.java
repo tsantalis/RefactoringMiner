@@ -5155,8 +5155,33 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						CompositeStatementObject comp2 = (CompositeStatementObject)statement2;
 						containsMapping = comp1.contains(mapping.getFragment1()) && comp2.contains(mapping.getFragment2());
 					}
-					if(containsMapping && (VariableReplacementAnalysis.bothFragmentsUseVariable(v1, mapping) || VariableReplacementAnalysis.bothFragmentsUseVariable(v2, mapping))) {
-						count++;
+					if(containsMapping) {
+						if(VariableReplacementAnalysis.bothFragmentsUseVariable(v1, mapping)) {
+							VariableDeclaration otherV1 = mapping.getFragment1().getVariableDeclaration(v1.getVariableName());
+							if(otherV1 != null) {
+								VariableScope otherV1Scope = otherV1.getScope();
+								VariableScope v1Scope = v1.getScope();
+								if(otherV1Scope.overlaps(v1Scope)) {
+									count++;
+								}
+							}
+							else {
+								count++;
+							}
+						}
+						if(VariableReplacementAnalysis.bothFragmentsUseVariable(v2, mapping)) {
+							VariableDeclaration otherV2 = mapping.getFragment2().getVariableDeclaration(v2.getVariableName());
+							if(otherV2 != null) {
+								VariableScope otherV2Scope = otherV2.getScope();
+								VariableScope v2Scope = v2.getScope();
+								if(otherV2Scope.overlaps(v2Scope)) {
+									count++;
+								}
+							}
+							else {
+								count++;
+							}
+						}
 					}
 				}
 				else if(variableDeclarationMismatch && !variableDeclarations1.contains(v1) && !variableDeclarations2.contains(v2)) {

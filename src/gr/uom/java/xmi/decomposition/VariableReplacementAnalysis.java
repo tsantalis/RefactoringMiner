@@ -1737,6 +1737,15 @@ public class VariableReplacementAnalysis {
 				}
 			}
 		}
+		VariableDeclaration originalVariable = ref.getOriginalVariable();
+		if(originalVariable.isParameter()) {
+			for(VariableDeclaration parameter : operation2.getParameterDeclarationList()) {
+				if(originalVariable.getVariableName().equals(parameter.getVariableName()) &&
+						originalVariable.getType().equals(parameter.getType())) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 

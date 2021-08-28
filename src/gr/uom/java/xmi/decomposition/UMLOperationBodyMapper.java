@@ -5025,6 +5025,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return true;
 			if(s1.equalsIgnoreCase(s2))
 				return true;
+			if(replacementInfo.argumentizedString1.startsWith(s1 + "=") && replacementInfo.argumentizedString2.startsWith(s2 + "=")) {
+				String suffix1 = replacementInfo.argumentizedString1.substring(s1.length(), replacementInfo.argumentizedString1.length());
+				String suffix2 = replacementInfo.argumentizedString2.substring(s2.length(), replacementInfo.argumentizedString2.length());
+				if(suffix1.equals(suffix2)) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}

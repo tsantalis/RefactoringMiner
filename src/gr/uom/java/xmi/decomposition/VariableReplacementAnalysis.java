@@ -3,6 +3,7 @@ package gr.uom.java.xmi.decomposition;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -108,6 +109,29 @@ public class VariableReplacementAnalysis {
 		findTypeChanges();
 		findMatchingVariablesWithoutVariableDeclarationMapping();
 		findMovedVariablesToExtractedFromInlinedMethods();
+		findMatchingVariablesWithoutReferenceMapping();
+	}
+
+	private void findMatchingVariablesWithoutReferenceMapping() {
+		Set<VariableDeclaration> removedVariablesToBeRemoved = new LinkedHashSet<>();
+		Set<VariableDeclaration> addedVariablesToBeRemoved = new LinkedHashSet<>();
+		if(removedVariables.toString().equals(addedVariables.toString())) {
+			Iterator<VariableDeclaration> removedVariableIterator = removedVariables.iterator();
+			Iterator<VariableDeclaration> addedVariableIterator = addedVariables.iterator();
+			while(removedVariableIterator.hasNext() && addedVariableIterator.hasNext()) {
+				VariableDeclaration removedVariable = removedVariableIterator.next();
+				VariableDeclaration addedVariable = addedVariableIterator.next();
+				Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
+				if(!matchedVariables.contains(pair) && removedVariable.getVariableName().equals(addedVariable.getVariableName())) {
+					removedVariablesToBeRemoved.add(removedVariable);
+					addedVariablesToBeRemoved.add(addedVariable);
+					matchedVariables.add(pair);
+					getVariableRefactorings(removedVariable, addedVariable, operation1, operation2, Collections.emptySet(), null);
+				}
+			}
+		}
+		removedVariables.removeAll(removedVariablesToBeRemoved);
+		addedVariables.removeAll(addedVariablesToBeRemoved);
 	}
 
 	private void findMovedVariablesToExtractedFromInlinedMethods() {

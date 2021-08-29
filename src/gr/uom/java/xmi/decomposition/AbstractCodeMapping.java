@@ -360,7 +360,7 @@ public abstract class AbstractCodeMapping {
 				return true;
 			}
 			String expression = invocation.getExpression();
-			if(expression != null && expression.contains(replacedExpression)) {
+			if(expression != null && (expression.equals(replacedExpression) || ReplacementUtil.contains(expression, replacedExpression))) {
 				return true;
 			}
 		}

@@ -783,9 +783,11 @@ public class VariableReplacementAnalysis {
 			}
 		}
 		for(StatementObject statement : nonMappedLeavesT2) {
+			boolean matchingParameterFound = false;
 			for(String parameterName : operation1.getParameterNameList()) {
 				VariableDeclaration variableDeclaration = statement.getVariableDeclaration(parameterName);
 				if(variableDeclaration != null) {
+					matchingParameterFound = true;
 					AbstractExpression initializer = variableDeclaration.getInitializer();
 					if(initializer != null) {
 						OperationInvocation invocation = initializer.invocationCoveringEntireFragment();
@@ -796,13 +798,29 @@ public class VariableReplacementAnalysis {
 					}
 				}
 			}
+			if(!matchingParameterFound && statement.getVariableDeclarations().size() > 0) {	
+				VariableDeclaration variableDeclaration = statement.getVariableDeclarations().get(0);
+				for(VariableDeclaration parameterDeclaration : operation1.getParameterDeclarationList()) {
+					if(parameterDeclaration.getType().equals(variableDeclaration.getType())) {
+						AbstractExpression initializer = variableDeclaration.getInitializer();
+						if(initializer != null && initializer.getString().startsWith("(" + parameterDeclaration.getType() + ")")) {
+							OperationInvocation invocation = initializer.invocationCoveringEntireFragment();
+							if(invocation != null) {
+								VariableReplacementWithMethodInvocation variableReplacement = new VariableReplacementWithMethodInvocation(parameterDeclaration.getVariableName(), initializer.getString(), invocation, Direction.VARIABLE_TO_INVOCATION);
+								processVariableReplacementWithMethodInvocation(variableReplacement, null, variableInvocationExpressionMap, Direction.VARIABLE_TO_INVOCATION);
+							}
+						}
+					}
+				}
+			}
 		}
 		for(String key : variableInvocationExpressionMap.keySet()) {
 			Map<VariableReplacementWithMethodInvocation, Set<AbstractCodeMapping>> map = variableInvocationExpressionMap.get(key);
 			Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
 			Set<String> mergedVariables = new LinkedHashSet<String>();
 			for(VariableReplacementWithMethodInvocation replacement : map.keySet()) {
-				if(!PrefixSuffixUtils.normalize(key).equals(PrefixSuffixUtils.normalize(replacement.getBefore()))) {
+				if(!PrefixSuffixUtils.normalize(key).equals(PrefixSuffixUtils.normalize(replacement.getBefore())) ||
+						replacement.getInvokedOperation().getCoverage().equals(AbstractCall.StatementCoverageType.CAST_CALL)) {
 					mergedVariables.add(replacement.getBefore());
 					mappings.addAll(map.get(replacement));
 				}
@@ -841,7 +859,7 @@ public class VariableReplacementAnalysis {
 			if(mergedVariables.size() > 1 && mergedVariables.size() == merge.getMergedVariables().size() && newVariable != null) {
 				UMLOperation operationBefore = mergedVariableOperations.iterator().next();
 				MergeVariableRefactoring refactoring = new MergeVariableRefactoring(mergedVariables, newVariable.getKey(), operationBefore, newVariable.getValue(), mergeMap.get(merge));
-				if(!existsConflictingInlineVariableRefactoring(refactoring) && !existsConflictingParameterRenameInOperationDiff(refactoring)) {
+				if(!existsConflictingInlineVariableRefactoring(refactoring) && !existsConflictingParameterRenameInOperationDiff(refactoring, variableInvocationExpressionMap)) {
 					variableMerges.add(refactoring);
 					removedVariables.removeAll(mergedVariables);
 					addedVariables.remove(newVariable.getKey());
@@ -1640,13 +1658,25 @@ public class VariableReplacementAnalysis {
 		return false;
 	}
 
-	private boolean existsConflictingParameterRenameInOperationDiff(MergeVariableRefactoring ref) {
+	private boolean existsConflictingParameterRenameInOperationDiff(MergeVariableRefactoring ref, Map<String, Map<VariableReplacementWithMethodInvocation, Set<AbstractCodeMapping>>> variableInvocationExpressionMap) {
 		if(operationDiff != null) {
 			for(UMLParameterDiff parameterDiff : operationDiff.getParameterDiffList()) {
 				if(ref.getMergedVariables().contains(parameterDiff.getRemovedParameter().getVariableDeclaration()) &&
 						ref.getNewVariable().equals(parameterDiff.getAddedParameter().getVariableDeclaration())) {
-					return true;
-					
+					boolean castInvocation = false;
+					String variableName = ref.getNewVariable().getVariableName();
+					Map<VariableReplacementWithMethodInvocation, Set<AbstractCodeMapping>> map = variableInvocationExpressionMap.get(variableName);
+					for(VariableReplacementWithMethodInvocation replacement : map.keySet()) {
+						if(replacement.getBefore().equals(variableName)) {
+							if(replacement.getInvokedOperation().getCoverage().equals(AbstractCall.StatementCoverageType.CAST_CALL)) {
+								castInvocation = true;
+								break;
+							}
+						}
+					}
+					if(!castInvocation) {
+						return true;
+					}
 				}
 			}
 		}

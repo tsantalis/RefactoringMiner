@@ -385,6 +385,14 @@ public class UMLOperationDiff {
 						break;
 					}
 				}
+				else if(refactoring instanceof MergeVariableRefactoring) {
+					MergeVariableRefactoring merge = (MergeVariableRefactoring)refactoring;
+					if(merge.getMergedVariables().contains(parameterDiff.getRemovedParameter().getVariableDeclaration()) &&
+							merge.getNewVariable().equals(parameterDiff.getAddedParameter().getVariableDeclaration())) {
+						conflictFound = true;
+						break;
+					}
+				}
 			}
 			if(!conflictFound) {
 				refactorings.addAll(parameterDiff.getRefactorings());

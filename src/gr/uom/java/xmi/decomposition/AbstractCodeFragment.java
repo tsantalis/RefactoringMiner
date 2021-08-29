@@ -233,7 +233,13 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 
 	private boolean isCastExpressionCoveringEntireFragment(String expression) {
 		String statement = getString();
-		int index = statement.indexOf(expression + ";\n");
+		int index = -1;
+		if(statement.endsWith(";\n")) {
+			index = statement.indexOf(expression + ";\n");
+		}
+		else {
+			index = statement.indexOf(expression);
+		}
 		if(index != -1) {
 			String prefix = statement.substring(0, index);
 			if(prefix.contains("(") && prefix.contains(")")) {
@@ -247,7 +253,10 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 						!openingParenthesisInsideSingleQuotes && !closingParenthesisInsideSingleQuotes &&
 						!openingParenthesisInsideDoubleQuotes && !closingParenthesisIndideDoubleQuotes) {
 					String casting = prefix.substring(indexOfOpeningParenthesis, indexOfClosingParenthesis+1);
-					if(("return " + casting + expression + ";\n").equals(statement)) {
+					if(statement.endsWith(";\n") && ("return " + casting + expression + ";\n").equals(statement)) {
+						return true;
+					}
+					if(!statement.endsWith(";\n") && (casting + expression).equals(statement)) {
 						return true;
 					}
 				}

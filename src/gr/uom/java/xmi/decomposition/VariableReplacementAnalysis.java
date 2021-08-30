@@ -19,6 +19,7 @@ import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAnnotation;
+import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
@@ -99,7 +100,17 @@ public class VariableReplacementAnalysis {
 		}
 		else {
 			this.removedVariables.addAll(operation1.getAllVariableDeclarations());
+			for(UMLAnonymousClass anonymous : operation1.getAnonymousClassList()) {
+				for(UMLOperation operation : anonymous.getOperations()) {
+					this.removedVariables.addAll(operation.getAllVariableDeclarations());
+				}
+			}
 			this.addedVariables.addAll(operation2.getAllVariableDeclarations());
+			for(UMLAnonymousClass anonymous : operation2.getAnonymousClassList()) {
+				for(UMLOperation operation : anonymous.getOperations()) {
+					this.addedVariables.addAll(operation.getAllVariableDeclarations());
+				}
+			}
 		}
 		findVariableSplits();
 		findVariableMerges();
@@ -127,6 +138,42 @@ public class VariableReplacementAnalysis {
 					addedVariablesToBeRemoved.add(addedVariable);
 					matchedVariables.add(pair);
 					getVariableRefactorings(removedVariable, addedVariable, operation1, operation2, Collections.emptySet(), null);
+				}
+			}
+		}
+		else if(operation1.stringRepresentation().equals(operation2.stringRepresentation())) {
+			if(removedVariables.size() <= addedVariables.size()) {
+				for(VariableDeclaration removedVariable : removedVariables) {
+					if(!removedVariablesToBeRemoved.contains(removedVariable)) {
+						for(VariableDeclaration addedVariable : addedVariables) {
+							if(!addedVariablesToBeRemoved.contains(addedVariable)) {
+								Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
+								if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && addedVariable.getType().equals(removedVariable.getType())) {
+									removedVariablesToBeRemoved.add(removedVariable);
+									addedVariablesToBeRemoved.add(addedVariable);
+									matchedVariables.add(pair);
+									getVariableRefactorings(removedVariable, addedVariable, operation1, operation2, Collections.emptySet(), null);
+								}
+							}
+						}
+					}
+				}
+			}
+			else {
+				for(VariableDeclaration addedVariable : addedVariables) {
+					if(!addedVariablesToBeRemoved.contains(addedVariable)) {
+						for(VariableDeclaration removedVariable : removedVariables) {
+							if(!removedVariablesToBeRemoved.contains(removedVariable)) {
+								Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
+								if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && addedVariable.getType().equals(removedVariable.getType())) {
+									removedVariablesToBeRemoved.add(removedVariable);
+									addedVariablesToBeRemoved.add(addedVariable);
+									matchedVariables.add(pair);
+									getVariableRefactorings(removedVariable, addedVariable, operation1, operation2, Collections.emptySet(), null);
+								}
+							}
+						}
+					}
 				}
 			}
 		}

@@ -252,25 +252,48 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		else if(lambda1.getBody() != null && lambda2.getBody() != null) {
 			CompositeStatementObject composite1 = lambda1.getBody().getCompositeStatement();
 			CompositeStatementObject composite2 = lambda2.getBody().getCompositeStatement();
-			List<StatementObject> leaves1 = composite1.getLeaves();
-			List<StatementObject> leaves2 = composite2.getLeaves();
-			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>());
-			
-			List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
-			List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
-			processInnerNodes(innerNodes1, innerNodes2, new LinkedHashMap<String, String>());
-			
-			nonMappedLeavesT1.addAll(leaves1);
-			nonMappedLeavesT2.addAll(leaves2);
-			nonMappedInnerNodesT1.addAll(innerNodes1);
-			nonMappedInnerNodesT2.addAll(innerNodes2);
-			
-			for(StatementObject statement : getNonMappedLeavesT2()) {
-				temporaryVariableAssignment(statement, nonMappedLeavesT2);
-			}
-			for(StatementObject statement : getNonMappedLeavesT1()) {
-				inlinedVariableAssignment(statement, nonMappedLeavesT2);
-			}
+			processCompositeStatements(composite1, composite2);
+		}
+	}
+
+	private void processCompositeStatements(CompositeStatementObject composite1, CompositeStatementObject composite2)
+			throws RefactoringMinerTimedOutException {
+		List<StatementObject> leaves1 = composite1.getLeaves();
+		List<StatementObject> leaves2 = composite2.getLeaves();
+		processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>());
+		
+		List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
+		List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
+		processInnerNodes(innerNodes1, innerNodes2, new LinkedHashMap<String, String>());
+		
+		nonMappedLeavesT1.addAll(leaves1);
+		nonMappedLeavesT2.addAll(leaves2);
+		nonMappedInnerNodesT1.addAll(innerNodes1);
+		nonMappedInnerNodesT2.addAll(innerNodes2);
+		
+		for(StatementObject statement : getNonMappedLeavesT2()) {
+			temporaryVariableAssignment(statement, nonMappedLeavesT2);
+		}
+		for(StatementObject statement : getNonMappedLeavesT1()) {
+			inlinedVariableAssignment(statement, nonMappedLeavesT2);
+		}
+	}
+
+	private UMLOperationBodyMapper(UMLOperation anonymousClassOperation, LambdaExpressionObject lambda2, UMLOperationBodyMapper parentMapper) throws RefactoringMinerTimedOutException {
+		this.classDiff = parentMapper.classDiff;
+		if(classDiff != null)
+			this.modelDiff = classDiff.getModelDiff();
+		this.operation1 = parentMapper.operation1;
+		this.operation2 = parentMapper.operation2;
+		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
+		this.nonMappedLeavesT1 = new ArrayList<StatementObject>();
+		this.nonMappedLeavesT2 = new ArrayList<StatementObject>();
+		this.nonMappedInnerNodesT1 = new ArrayList<CompositeStatementObject>();
+		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
+		if(anonymousClassOperation.getBody() != null && lambda2.getBody() != null) {
+			CompositeStatementObject composite1 = anonymousClassOperation.getBody().getCompositeStatement();
+			CompositeStatementObject composite2 = lambda2.getBody().getCompositeStatement();
+			processCompositeStatements(composite1, composite2);
 		}
 	}
 
@@ -2331,6 +2354,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				(validStatementForConcatComparison(statement1, statement2) && commonConcat(s1, s2, replacementInfo));
 		List<AnonymousClassDeclarationObject> anonymousClassDeclarations1 = statement1.getAnonymousClassDeclarations();
 		List<AnonymousClassDeclarationObject> anonymousClassDeclarations2 = statement2.getAnonymousClassDeclarations();
+		List<LambdaExpressionObject> lambdas1 = statement1.getLambdas();
+		List<LambdaExpressionObject> lambdas2 = statement2.getLambdas();
+		List<UMLOperationBodyMapper> lambdaMappers = new ArrayList<UMLOperationBodyMapper>();
 		if(isEqualWithReplacement) {
 			List<Replacement> typeReplacements = replacementInfo.getReplacements(ReplacementType.TYPE);
 			if(typeReplacements.size() > 0 && invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
@@ -2388,122 +2414,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					equalAfterNewArgumentAdditions(replacement.getBefore(), replacement.getAfter(), replacementInfo);
 				}
 			}
+			processAnonymousAndLambdas(statement1, statement2, parameterToArgumentMap, replacementInfo,
+					invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, methodInvocationMap1, methodInvocationMap2,
+					anonymousClassDeclarations1, anonymousClassDeclarations2, lambdas1, lambdas2, lambdaMappers);
 			return replacementInfo.getReplacements();
 		}
-		if(!anonymousClassDeclarations1.isEmpty() && !anonymousClassDeclarations2.isEmpty() && operation1 != null && operation2 != null) {
-			for(int i=0; i<anonymousClassDeclarations1.size(); i++) {
-				for(int j=0; j<anonymousClassDeclarations2.size(); j++) {
-					AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);
-					AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(j);
-					String statementWithoutAnonymous1 = statementWithoutAnonymous(statement1, anonymousClassDeclaration1, operation1);
-					String statementWithoutAnonymous2 = statementWithoutAnonymous(statement2, anonymousClassDeclaration2, operation2);
-					if(statementWithoutAnonymous1.equals(statementWithoutAnonymous2) ||
-							identicalAfterVariableAndTypeReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements()) ||
-							(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-							(invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements()) ||
-							invocationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)))) {
-						UMLAnonymousClass anonymousClass1 = operation1.findAnonymousClass(anonymousClassDeclaration1);
-						UMLAnonymousClass anonymousClass2 = operation2.findAnonymousClass(anonymousClassDeclaration2);
-						UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
-						anonymousClassDiff.process();
-						List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
-						if(matchedOperationMappers.size() > 0) {
-							for(UMLOperationBodyMapper mapper : matchedOperationMappers) {
-								this.mappings.addAll(mapper.mappings);
-								this.nonMappedInnerNodesT1.addAll(mapper.nonMappedInnerNodesT1);
-								this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);
-								this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
-								this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
-							}
-							this.refactorings.addAll(anonymousClassDiff.getRefactorings());
-							Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), anonymousClassDeclaration2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION);
-							replacementInfo.addReplacement(replacement);
-							return replacementInfo.getReplacements();
-						}
-					}
-				}
-			}
-		}
-		else if(anonymousClassDeclarations1.size() == 0 && anonymousClassDeclarations2.size() == 1 && operation2 != null) {
-			AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(0);
-			UMLAnonymousClass anonymousClass2 = operation2.findAnonymousClass(anonymousClassDeclaration2);
-			if(anonymousClass2.getOperations().size() == 1) {
-				UMLOperation anonymousClass2Operation = anonymousClass2.getOperations().get(0);
-				if(anonymousClass2Operation.getBody() != null) {
-					List<AbstractStatement> statements = anonymousClass2Operation.getBody().getCompositeStatement().getStatements();
-					if(statements.size() == 1) {
-						AbstractStatement statement = statements.get(0);
-						OperationInvocation invocation2 = statement.invocationCoveringEntireFragment();
-						if(invocation2 != null) {
-							for(String key1 : methodInvocationMap1.keySet()) {
-								for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
-									if(invocation1.identical(invocation2, replacementInfo.getReplacements(), Collections.emptyList())) {
-										Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
-												invocation2.actualString(), (OperationInvocation)invocation1, invocation2, ReplacementType.METHOD_INVOCATION_WRAPPED_IN_ANONYMOUS_CLASS_DECLARATION);
-										replacementInfo.addReplacement(replacement);
-										return replacementInfo.getReplacements();
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		else if(anonymousClassDeclarations1.size() == 1 && anonymousClassDeclarations2.size() == 0 && operation1 != null) {
-			AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(0);
-			UMLAnonymousClass anonymousClass1 = operation1.findAnonymousClass(anonymousClassDeclaration1);
-			if(anonymousClass1.getOperations().size() == 1) {
-				UMLOperation anonymousClass1Operation = anonymousClass1.getOperations().get(0);
-				if(anonymousClass1Operation.getBody() != null) {
-					List<AbstractStatement> statements = anonymousClass1Operation.getBody().getCompositeStatement().getStatements();
-					if(statements.size() == 1) {
-						AbstractStatement statement = statements.get(0);
-						OperationInvocation invocation1 = statement.invocationCoveringEntireFragment();
-						if(invocation1 != null) {
-							for(String key2 : methodInvocationMap2.keySet()) {
-								for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
-									if(invocation1.identical(invocation2, replacementInfo.getReplacements(), Collections.emptyList())) {
-										Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
-												invocation2.actualString(), invocation1, (OperationInvocation)invocation2, ReplacementType.METHOD_INVOCATION_WRAPPED_IN_ANONYMOUS_CLASS_DECLARATION);
-										replacementInfo.addReplacement(replacement);
-										return replacementInfo.getReplacements();
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		List<LambdaExpressionObject> lambdas1 = statement1.getLambdas();
-		List<LambdaExpressionObject> lambdas2 = statement2.getLambdas();
-		List<UMLOperationBodyMapper> lambdaMappers = new ArrayList<UMLOperationBodyMapper>();
-		if(!lambdas1.isEmpty() && !lambdas2.isEmpty()) {
-			for(int i=0; i<lambdas1.size(); i++) {
-				for(int j=0; j<lambdas2.size(); j++) {
-					LambdaExpressionObject lambda1 = lambdas1.get(i);
-					LambdaExpressionObject lambda2 = lambdas2.get(j);
-					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(lambda1, lambda2, this);
-					int mappings = mapper.mappingsWithoutBlocks();
-					if(mappings > 0) {
-						int nonMappedElementsT1 = mapper.nonMappedElementsT1();
-						int nonMappedElementsT2 = mapper.nonMappedElementsT2();
-						if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
-								nonMappedElementsT1 == 0 || nonMappedElementsT2 == 0) {
-							this.mappings.addAll(mapper.mappings);
-							this.nonMappedInnerNodesT1.addAll(mapper.nonMappedInnerNodesT1);
-							this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);
-							this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
-							this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
-							if(this.operation1 != null && this.operation2 != null) {
-								this.refactorings.addAll(mapper.getRefactorings());
-							}
-							lambdaMappers.add(mapper);
-						}
-					}
-				}
-			}
+		Set<Replacement> replacements = processAnonymousAndLambdas(statement1, statement2, parameterToArgumentMap, replacementInfo,
+				invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, methodInvocationMap1, methodInvocationMap2,
+				anonymousClassDeclarations1, anonymousClassDeclarations2, lambdas1, lambdas2, lambdaMappers);
+		if(replacements != null) {
+			return replacements;
 		}
 		//match traditional for with enhanced for
 		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) &&
@@ -3401,6 +3321,158 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						creationCoveringTheEntireStatement2.getName(), ReplacementType.METHOD_INVOCATION_REPLACED_WITH_CLASS_INSTANCE_CREATION, invocationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2);
 				replacementInfo.addReplacement(replacement);
 				return replacementInfo.getReplacements();
+			}
+		}
+		return null;
+	}
+
+	private Set<Replacement> processAnonymousAndLambdas(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
+			Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo,
+			OperationInvocation invocationCoveringTheEntireStatement1,
+			OperationInvocation invocationCoveringTheEntireStatement2,
+			Map<String, List<? extends AbstractCall>> methodInvocationMap1,
+			Map<String, List<? extends AbstractCall>> methodInvocationMap2,
+			List<AnonymousClassDeclarationObject> anonymousClassDeclarations1,
+			List<AnonymousClassDeclarationObject> anonymousClassDeclarations2,
+			List<LambdaExpressionObject> lambdas1,
+			List<LambdaExpressionObject> lambdas2,
+			List<UMLOperationBodyMapper> lambdaMappers)
+			throws RefactoringMinerTimedOutException {
+		if(!anonymousClassDeclarations1.isEmpty() && !anonymousClassDeclarations2.isEmpty() && operation1 != null && operation2 != null) {
+			for(int i=0; i<anonymousClassDeclarations1.size(); i++) {
+				for(int j=0; j<anonymousClassDeclarations2.size(); j++) {
+					AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);
+					AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(j);
+					String statementWithoutAnonymous1 = statementWithoutAnonymous(statement1, anonymousClassDeclaration1, operation1);
+					String statementWithoutAnonymous2 = statementWithoutAnonymous(statement2, anonymousClassDeclaration2, operation2);
+					if(statementWithoutAnonymous1.equals(statementWithoutAnonymous2) ||
+							identicalAfterVariableAndTypeReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements()) ||
+							(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+							(invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements()) ||
+							invocationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)))) {
+						UMLAnonymousClass anonymousClass1 = operation1.findAnonymousClass(anonymousClassDeclaration1);
+						UMLAnonymousClass anonymousClass2 = operation2.findAnonymousClass(anonymousClassDeclaration2);
+						UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
+						anonymousClassDiff.process();
+						List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
+						if(matchedOperationMappers.size() > 0) {
+							for(UMLOperationBodyMapper mapper : matchedOperationMappers) {
+								this.mappings.addAll(mapper.mappings);
+								this.nonMappedInnerNodesT1.addAll(mapper.nonMappedInnerNodesT1);
+								this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);
+								this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
+								this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
+							}
+							this.refactorings.addAll(anonymousClassDiff.getRefactorings());
+							Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), anonymousClassDeclaration2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION);
+							replacementInfo.addReplacement(replacement);
+							return replacementInfo.getReplacements();
+						}
+					}
+				}
+			}
+		}
+		else if(anonymousClassDeclarations1.size() == 0 && anonymousClassDeclarations2.size() == 1 && operation2 != null) {
+			AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(0);
+			UMLAnonymousClass anonymousClass2 = operation2.findAnonymousClass(anonymousClassDeclaration2);
+			if(anonymousClass2.getOperations().size() == 1) {
+				UMLOperation anonymousClass2Operation = anonymousClass2.getOperations().get(0);
+				if(anonymousClass2Operation.getBody() != null) {
+					List<AbstractStatement> statements = anonymousClass2Operation.getBody().getCompositeStatement().getStatements();
+					if(statements.size() == 1) {
+						AbstractStatement statement = statements.get(0);
+						OperationInvocation invocation2 = statement.invocationCoveringEntireFragment();
+						if(invocation2 != null) {
+							for(String key1 : methodInvocationMap1.keySet()) {
+								for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
+									if(invocation1.identical(invocation2, replacementInfo.getReplacements(), Collections.emptyList())) {
+										Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
+												invocation2.actualString(), (OperationInvocation)invocation1, invocation2, ReplacementType.METHOD_INVOCATION_WRAPPED_IN_ANONYMOUS_CLASS_DECLARATION);
+										replacementInfo.addReplacement(replacement);
+										return replacementInfo.getReplacements();
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		else if(anonymousClassDeclarations1.size() == 1 && anonymousClassDeclarations2.size() == 0 && operation1 != null) {
+			AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(0);
+			UMLAnonymousClass anonymousClass1 = operation1.findAnonymousClass(anonymousClassDeclaration1);
+			if(anonymousClass1.getOperations().size() == 1) {
+				UMLOperation anonymousClass1Operation = anonymousClass1.getOperations().get(0);
+				if(anonymousClass1Operation.getBody() != null) {
+					List<AbstractStatement> statements = anonymousClass1Operation.getBody().getCompositeStatement().getStatements();
+					if(statements.size() == 1) {
+						AbstractStatement statement = statements.get(0);
+						OperationInvocation invocation1 = statement.invocationCoveringEntireFragment();
+						if(invocation1 != null) {
+							for(String key2 : methodInvocationMap2.keySet()) {
+								for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
+									if(invocation1.identical(invocation2, replacementInfo.getReplacements(), Collections.emptyList())) {
+										Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
+												invocation2.actualString(), invocation1, (OperationInvocation)invocation2, ReplacementType.METHOD_INVOCATION_WRAPPED_IN_ANONYMOUS_CLASS_DECLARATION);
+										replacementInfo.addReplacement(replacement);
+										return replacementInfo.getReplacements();
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		if(!lambdas1.isEmpty() && !lambdas2.isEmpty()) {
+			for(int i=0; i<lambdas1.size(); i++) {
+				for(int j=0; j<lambdas2.size(); j++) {
+					LambdaExpressionObject lambda1 = lambdas1.get(i);
+					LambdaExpressionObject lambda2 = lambdas2.get(j);
+					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(lambda1, lambda2, this);
+					int mappings = mapper.mappingsWithoutBlocks();
+					if(mappings > 0) {
+						int nonMappedElementsT1 = mapper.nonMappedElementsT1();
+						int nonMappedElementsT2 = mapper.nonMappedElementsT2();
+						if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
+								nonMappedElementsT1 == 0 || nonMappedElementsT2 == 0) {
+							this.mappings.addAll(mapper.mappings);
+							this.nonMappedInnerNodesT1.addAll(mapper.nonMappedInnerNodesT1);
+							this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);
+							this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
+							this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
+							if(this.operation1 != null && this.operation2 != null) {
+								this.refactorings.addAll(mapper.getRefactorings());
+							}
+							lambdaMappers.add(mapper);
+						}
+					}
+				}
+			}
+		}
+		if(anonymousClassDeclarations1.size() == 1 && anonymousClassDeclarations2.size() == 0 && operation1 != null && lambdas2.size() == 1) {
+			AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(0);
+			UMLAnonymousClass anonymousClass1 = operation1.findAnonymousClass(anonymousClassDeclaration1);
+			if(anonymousClass1.getOperations().size() == 1) {
+				UMLOperation anonymousClass1Operation = anonymousClass1.getOperations().get(0);
+				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(anonymousClass1Operation, lambdas2.get(0), this);
+				int mappings = mapper.mappingsWithoutBlocks();
+				if(mappings > 0) {
+					int nonMappedElementsT1 = mapper.nonMappedElementsT1();
+					int nonMappedElementsT2 = mapper.nonMappedElementsT2();
+					if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
+							nonMappedElementsT1 == 0 || nonMappedElementsT2 == 0) {
+						this.mappings.addAll(mapper.mappings);
+						this.nonMappedInnerNodesT1.addAll(mapper.nonMappedInnerNodesT1);
+						this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);
+						this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
+						this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
+						if(this.operation1 != null && this.operation2 != null) {
+							this.refactorings.addAll(mapper.getRefactorings());
+						}
+						lambdaMappers.add(mapper);
+					}
+				}
 			}
 		}
 		return null;

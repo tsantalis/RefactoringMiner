@@ -1583,6 +1583,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(leafMapping.isIdenticalWithExtractedVariable() || leafMapping.isIdenticalWithInlinedVariable()) {
 					refactorings.addAll(leafMapping.getRefactorings());
 				}
+				//remove from this.mappings nested mappings (inside anonymous or lambdas) corresponding to loser mappings
+				Set<AbstractCodeMapping> mappingsToBeRemoved = new LinkedHashSet<AbstractCodeMapping>();
+				for(AbstractCodeMapping m : this.mappings) {
+					if(leafMapping.getFragment1().getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) &&
+							leafMapping.getFragment2().getLocationInfo().subsumes(m.getFragment2().getLocationInfo())) {
+						mappingsToBeRemoved.add(m);
+					}
+				}
+				this.mappings.removeAll(mappingsToBeRemoved);
 			}
 		}
 	}

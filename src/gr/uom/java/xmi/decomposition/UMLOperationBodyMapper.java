@@ -5131,6 +5131,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	@Override
 	public int compareTo(UMLOperationBodyMapper operationBodyMapper) {
+		boolean identicalStringRepresentation1 = this.identicalStringRepresentation();
+		boolean identicalStringRepresentation2 = operationBodyMapper.identicalStringRepresentation();
+		if(identicalStringRepresentation1 != identicalStringRepresentation2) {
+			if(identicalStringRepresentation1) {
+				return -1;
+			}
+			else if(identicalStringRepresentation2) {
+				return 1;
+			}
+		}
 		int thisMappings = this.mappingsWithoutBlocks();
 		for(AbstractCodeMapping mapping : this.getMappings()) {
 			if(mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable()) {
@@ -5172,6 +5182,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private boolean identicalStringRepresentation() {
+		return this.operation1 != null && this.operation2 != null && this.operation1.stringRepresentation().equals(this.operation2.stringRepresentation());
 	}
 
 	private boolean existsVariableDeclarationForV2InitializedWithV1(VariableDeclaration v1, VariableDeclaration v2, ReplacementInfo info) {

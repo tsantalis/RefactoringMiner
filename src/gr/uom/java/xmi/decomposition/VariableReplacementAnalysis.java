@@ -137,8 +137,12 @@ public class VariableReplacementAnalysis {
 					for(int j=0; j<operations1.size(); j++) {
 						UMLOperation op1 = operations1.get(j);
 						UMLOperation op2 = operations2.get(j);
-						if(op1.stringRepresentation().equals(op2.stringRepresentation())) {
-							processVariableDeclarationsInIdenticalOperations(op1.getBody(), op2.getBody());
+						OperationBody body1 = op1.getBody();
+						OperationBody body2 = op2.getBody();
+						if(body1 != null && body2 != null) {
+							if(body1.getBodyHashCode() == body2.getBodyHashCode()) {
+								processVariableDeclarationsInIdenticalOperations(op1.getBody(), op2.getBody());
+							}
 						}
 					}
 				}
@@ -153,7 +157,7 @@ public class VariableReplacementAnalysis {
 				OperationBody body1 = lambda1.getBody();
 				OperationBody body2 = lambda2.getBody();
 				if(body1 != null && body2 != null) {
-					if(body1.stringRepresentation().equals(body2.stringRepresentation())) {
+					if(body1.getBodyHashCode() == body2.getBodyHashCode()) {
 						processVariableDeclarationsInIdenticalOperations(body1, body2);
 					}
 				}
@@ -196,7 +200,7 @@ public class VariableReplacementAnalysis {
 				}
 			}
 		}
-		else if(operation1.stringRepresentation().equals(operation2.stringRepresentation())) {
+		else if(operation1.getBody() != null && operation2.getBody() != null && operation1.getBody().getBodyHashCode() == operation2.getBody().getBodyHashCode()) {
 			if(removedVariables.size() <= addedVariables.size()) {
 				for(VariableDeclaration removedVariable : removedVariables) {
 					if(!removedVariablesToBeRemoved.contains(removedVariable)) {

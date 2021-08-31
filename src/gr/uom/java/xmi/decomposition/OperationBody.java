@@ -44,6 +44,7 @@ public class OperationBody {
 	private List<String> stringRepresentation;
 	private boolean containsAssertion;
 	private Set<VariableDeclaration> activeVariableDeclarations;
+	private int bodyHashCode;
 
 	public OperationBody(CompilationUnit cu, String filePath, Block methodBody) {
 		this(cu, filePath, methodBody, Collections.emptyList());
@@ -51,6 +52,7 @@ public class OperationBody {
 
 	public OperationBody(CompilationUnit cu, String filePath, Block methodBody, List<VariableDeclaration> parameters) {
 		this.compositeStatement = new CompositeStatementObject(cu, filePath, methodBody, 0, CodeElementType.BLOCK);
+		this.bodyHashCode = methodBody.toString().hashCode();
 		this.activeVariableDeclarations = new HashSet<VariableDeclaration>();
 		this.activeVariableDeclarations.addAll(parameters);
 		List<Statement> statements = methodBody.statements();
@@ -360,6 +362,10 @@ public class OperationBody {
 
 	public CompositeStatementObject loopWithVariables(String currentElementName, String collectionName) {
 		return compositeStatement.loopWithVariables(currentElementName, collectionName);
+	}
+
+	public int getBodyHashCode() {
+		return bodyHashCode;
 	}
 
 	public List<String> stringRepresentation() {

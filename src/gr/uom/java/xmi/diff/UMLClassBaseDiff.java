@@ -25,6 +25,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
@@ -1552,12 +1553,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(stringRepresentation.size() > 3) {
 			for(UMLOperation addedOperation : addedOperations) {
 				if(!mapper.getOperation2().equals(addedOperation)) {
-					List<String> addedOperationStringRepresentation = addedOperation.stringRepresentation();
-					if(addedOperationStringRepresentation.equals(stringRepresentation)) {
+					OperationBody body = addedOperation.getBody();
+					if(body != null && body.getBodyHashCode() == operation1.getBody().getBodyHashCode()) {
 						return true;
 					}
 					else if(equalSignatureWithCommonParameterTypes(operation1, addedOperation)) {
 						List<String> commonStatements = new ArrayList<String>();
+						List<String> addedOperationStringRepresentation = addedOperation.stringRepresentation();
 						for(String statement : addedOperationStringRepresentation) {
 							if(!statement.equals("{") && !statement.equals("}") && !statement.equals("try") && !statement.startsWith("catch(") && !statement.startsWith("case ") && !statement.startsWith("default :") &&
 									!statement.startsWith("return true;") && !statement.startsWith("return false;") && !statement.startsWith("return this;") && !statement.startsWith("return null;") && !statement.startsWith("return;")) {
@@ -1583,12 +1585,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(stringRepresentation.size() > 3) {
 			for(UMLOperation removedOperation : removedOperations) {
 				if(!mapper.getOperation1().equals(removedOperation)) {
-					List<String> removedOperationStringRepresentation = removedOperation.stringRepresentation();
-					if(removedOperationStringRepresentation.equals(stringRepresentation)) {
+					OperationBody body = removedOperation.getBody();
+					if(body != null && body.getBodyHashCode() == operation2.getBody().getBodyHashCode()) {
 						return true;
 					}
 					else if(equalSignatureWithCommonParameterTypes(removedOperation, operation2)) {
 						List<String> commonStatements = new ArrayList<String>();
+						List<String> removedOperationStringRepresentation = removedOperation.stringRepresentation();
 						for(String statement : removedOperationStringRepresentation) {
 							if(!statement.equals("{") && !statement.equals("}") && !statement.equals("try") && !statement.startsWith("catch(") && !statement.startsWith("case ") && !statement.startsWith("default :") &&
 									!statement.startsWith("return true;") && !statement.startsWith("return false;") && !statement.startsWith("return this;") && !statement.startsWith("return null;") && !statement.startsWith("return;")) {

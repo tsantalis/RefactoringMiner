@@ -112,6 +112,7 @@ public class VariableReplacementAnalysis {
 				}
 			}
 		}
+		processIdenticalAnonymousAndLambdas();
 		findVariableSplits();
 		findVariableMerges();
 		findConsistentVariableRenames();
@@ -121,6 +122,60 @@ public class VariableReplacementAnalysis {
 		findMatchingVariablesWithoutVariableDeclarationMapping();
 		findMovedVariablesToExtractedFromInlinedMethods();
 		findMatchingVariablesWithoutReferenceMapping();
+	}
+
+	private void processIdenticalAnonymousAndLambdas() {
+		List<UMLAnonymousClass> anonymousClassList1 = operation1.getAnonymousClassList();
+		List<UMLAnonymousClass> anonymousClassList2 = operation2.getAnonymousClassList();
+		if(anonymousClassList1.size() == anonymousClassList2.size()) {
+			for(int i=0; i<anonymousClassList1.size(); i++) {
+				UMLAnonymousClass anonymous1 = anonymousClassList1.get(i);
+				UMLAnonymousClass anonymous2 = anonymousClassList2.get(i);
+				List<UMLOperation> operations1 = anonymous1.getOperations();
+				List<UMLOperation> operations2 = anonymous2.getOperations();
+				if(operations1.size() == operations2.size()) {
+					for(int j=0; j<operations1.size(); j++) {
+						UMLOperation op1 = operations1.get(j);
+						UMLOperation op2 = operations2.get(j);
+						if(op1.stringRepresentation().equals(op2.stringRepresentation())) {
+							processVariableDeclarationsInIdenticalOperations(op1.getBody(), op2.getBody());
+						}
+					}
+				}
+			}
+		}
+		List<LambdaExpressionObject> lambdas1 = operation1.getAllLambdas();
+		List<LambdaExpressionObject> lambdas2 = operation2.getAllLambdas();
+		if(lambdas1.size() == lambdas2.size()) {
+			for(int i=0; i<lambdas1.size(); i++) {
+				LambdaExpressionObject lambda1 = lambdas1.get(i);
+				LambdaExpressionObject lambda2 = lambdas2.get(i);
+				OperationBody body1 = lambda1.getBody();
+				OperationBody body2 = lambda2.getBody();
+				if(body1 != null && body2 != null) {
+					if(body1.stringRepresentation().equals(body2.stringRepresentation())) {
+						processVariableDeclarationsInIdenticalOperations(body1, body2);
+					}
+				}
+			}
+		}
+	}
+
+	private void processVariableDeclarationsInIdenticalOperations(OperationBody body1, OperationBody body2) {
+		List<VariableDeclaration> declarations1 = body1.getAllVariableDeclarations();
+		List<VariableDeclaration> declarations2 = body2.getAllVariableDeclarations();
+		Iterator<VariableDeclaration> removedVariableIterator = declarations1.iterator();
+		Iterator<VariableDeclaration> addedVariableIterator = declarations2.iterator();
+		while(removedVariableIterator.hasNext() && addedVariableIterator.hasNext()) {
+			VariableDeclaration removedVariable = removedVariableIterator.next();
+			VariableDeclaration addedVariable = addedVariableIterator.next();
+			Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
+			if(!matchedVariables.contains(pair) && removedVariable.getVariableName().equals(addedVariable.getVariableName())) {
+				removedVariables.remove(removedVariable);
+				addedVariables.remove(addedVariable);
+				matchedVariables.add(pair);
+			}
+		}
 	}
 
 	private void findMatchingVariablesWithoutReferenceMapping() {

@@ -140,8 +140,13 @@ public class VariableReplacementAnalysis {
 						OperationBody body1 = op1.getBody();
 						OperationBody body2 = op2.getBody();
 						if(body1 != null && body2 != null) {
+							List<VariableDeclaration> declarations1 = op1.getParameterDeclarationList();
+							List<VariableDeclaration> declarations2 = op2.getParameterDeclarationList();
+							if(declarations1.toString().equals(declarations2.toString())) {
+								processVariableDeclarationsInIdenticalOperations(declarations1, declarations2);
+							}
 							if(body1.getBodyHashCode() == body2.getBodyHashCode()) {
-								processVariableDeclarationsInIdenticalOperations(op1.getBody(), op2.getBody());
+								processVariableDeclarationsInIdenticalOperations(body1.getAllVariableDeclarations(), body2.getAllVariableDeclarations());
 							}
 						}
 					}
@@ -158,16 +163,14 @@ public class VariableReplacementAnalysis {
 				OperationBody body2 = lambda2.getBody();
 				if(body1 != null && body2 != null) {
 					if(body1.getBodyHashCode() == body2.getBodyHashCode()) {
-						processVariableDeclarationsInIdenticalOperations(body1, body2);
+						processVariableDeclarationsInIdenticalOperations(body1.getAllVariableDeclarations(), body2.getAllVariableDeclarations());
 					}
 				}
 			}
 		}
 	}
 
-	private void processVariableDeclarationsInIdenticalOperations(OperationBody body1, OperationBody body2) {
-		List<VariableDeclaration> declarations1 = body1.getAllVariableDeclarations();
-		List<VariableDeclaration> declarations2 = body2.getAllVariableDeclarations();
+	private void processVariableDeclarationsInIdenticalOperations(List<VariableDeclaration> declarations1, List<VariableDeclaration> declarations2) {
 		Iterator<VariableDeclaration> removedVariableIterator = declarations1.iterator();
 		Iterator<VariableDeclaration> addedVariableIterator = declarations2.iterator();
 		while(removedVariableIterator.hasNext() && addedVariableIterator.hasNext()) {

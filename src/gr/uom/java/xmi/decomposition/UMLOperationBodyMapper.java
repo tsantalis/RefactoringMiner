@@ -3373,8 +3373,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
 							}
 							this.refactorings.addAll(anonymousClassDiff.getRefactorings());
-							Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), anonymousClassDeclaration2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION);
-							replacementInfo.addReplacement(replacement);
+							if(!anonymousClassDeclaration1.toString().equals(anonymousClassDeclaration2.toString())) {
+								Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), anonymousClassDeclaration2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION);
+								replacementInfo.addReplacement(replacement);
+							}
 							return replacementInfo.getReplacements();
 						}
 					}

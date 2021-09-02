@@ -24,8 +24,11 @@ import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.CandidateMergeVariableRefactoring;
 import gr.uom.java.xmi.diff.CandidateSplitVariableRefactoring;
+import gr.uom.java.xmi.diff.ChangeReturnTypeRefactoring;
+import gr.uom.java.xmi.diff.ChangeVariableTypeRefactoring;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
+import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLClassMoveDiff;
@@ -1592,6 +1595,41 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				this.mappings.removeAll(mappingsToBeRemoved);
+				//remove from this.refactorings nested refactorings (inside anonymous or lambdas) corresponding to loser mappings
+				Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
+				for(Refactoring r : this.refactorings) {
+					if(r instanceof ChangeReturnTypeRefactoring) {
+						ChangeReturnTypeRefactoring changeReturnType = (ChangeReturnTypeRefactoring)r;
+						Set<AbstractCodeMapping> returnReferences = changeReturnType.getReturnReferences();
+						Set<AbstractCodeMapping> intersection = new LinkedHashSet<AbstractCodeMapping>();
+						intersection.addAll(returnReferences);
+						intersection.retainAll(mappingsToBeRemoved);
+						if(!intersection.isEmpty()) {
+							refactoringsToBeRemoved.add(r);
+						}
+					}
+					else if(r instanceof RenameVariableRefactoring) {
+						RenameVariableRefactoring renameVariable = (RenameVariableRefactoring)r;
+						Set<AbstractCodeMapping> variableReferences = renameVariable.getVariableReferences();
+						Set<AbstractCodeMapping> intersection = new LinkedHashSet<AbstractCodeMapping>();
+						intersection.addAll(variableReferences);
+						intersection.retainAll(mappingsToBeRemoved);
+						if(!intersection.isEmpty()) {
+							refactoringsToBeRemoved.add(r);
+						}
+					}
+					else if(r instanceof ChangeVariableTypeRefactoring) {
+						ChangeVariableTypeRefactoring changeVariableType = (ChangeVariableTypeRefactoring)r;
+						Set<AbstractCodeMapping> variableReferences = changeVariableType.getVariableReferences();
+						Set<AbstractCodeMapping> intersection = new LinkedHashSet<AbstractCodeMapping>();
+						intersection.addAll(variableReferences);
+						intersection.retainAll(mappingsToBeRemoved);
+						if(!intersection.isEmpty()) {
+							refactoringsToBeRemoved.add(r);
+						}
+					}
+				}
+				this.refactorings.removeAll(refactoringsToBeRemoved);
 			}
 		}
 	}

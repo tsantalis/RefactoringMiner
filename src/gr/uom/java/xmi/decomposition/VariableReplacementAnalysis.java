@@ -66,7 +66,9 @@ public class VariableReplacementAnalysis {
 	private UMLOperationDiff operationDiff;
 	private UMLClassBaseDiff classDiff;
 	private Set<VariableDeclaration> removedVariables = new LinkedHashSet<>();
+	private Set<VariableDeclaration> removedVariablesStoringTheReturnOfInlinedMethod = new LinkedHashSet<>();
     private Set<VariableDeclaration> addedVariables = new LinkedHashSet<>();
+    private Set<VariableDeclaration> addedVariablesStoringTheReturnOfExtractedMethod = new LinkedHashSet<>();
     private Set<Pair<VariableDeclaration, VariableDeclaration>> matchedVariables = new LinkedHashSet<>();
     private Set<Pair<VariableDeclaration, VariableDeclaration>> movedVariables = new LinkedHashSet<>();
 	private Set<RenameVariableRefactoring> variableRenames = new LinkedHashSet<RenameVariableRefactoring>();
@@ -316,10 +318,12 @@ public class VariableReplacementAnalysis {
 		if(removedVariables.size() <= addedVariables.size()) {
 			for(VariableDeclaration removedVariable : removedVariables) {
 				if(!removedVariablesToBeRemoved.contains(removedVariable) && callsInlinedMethod(removedVariable)) {
+					removedVariablesStoringTheReturnOfInlinedMethod.add(removedVariable);
 					removedVariablesToBeRemoved.add(removedVariable);
 				}
 				for(VariableDeclaration addedVariable : addedVariables) {
 					if(!addedVariablesToBeRemoved.contains(addedVariable) && callsExtractedMethod(addedVariable)) {
+						addedVariablesStoringTheReturnOfExtractedMethod.add(addedVariable);
 						addedVariablesToBeRemoved.add(addedVariable);
 					}
 					Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
@@ -336,10 +340,12 @@ public class VariableReplacementAnalysis {
 		else {
 			for(VariableDeclaration addedVariable : addedVariables) {
 				if(!addedVariablesToBeRemoved.contains(addedVariable) && callsExtractedMethod(addedVariable)) {
+					addedVariablesStoringTheReturnOfExtractedMethod.add(addedVariable);
 					addedVariablesToBeRemoved.add(addedVariable);
 				}
 				for(VariableDeclaration removedVariable : removedVariables) {
 					if(!removedVariablesToBeRemoved.contains(removedVariable) && callsInlinedMethod(removedVariable)) {
+						removedVariablesStoringTheReturnOfInlinedMethod.add(removedVariable);
 						removedVariablesToBeRemoved.add(removedVariable);
 					}
 					Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
@@ -659,6 +665,22 @@ public class VariableReplacementAnalysis {
 
 	public Set<Pair<VariableDeclaration, VariableDeclaration>> getMovedVariables() {
 		return movedVariables;
+	}
+
+	public Set<VariableDeclaration> getRemovedVariables() {
+		return removedVariables;
+	}
+
+	public Set<VariableDeclaration> getRemovedVariablesStoringTheReturnOfInlinedMethod() {
+		return removedVariablesStoringTheReturnOfInlinedMethod;
+	}
+
+	public Set<VariableDeclaration> getAddedVariables() {
+		return addedVariables;
+	}
+
+	public Set<VariableDeclaration> getAddedVariablesStoringTheReturnOfExtractedMethod() {
+		return addedVariablesStoringTheReturnOfExtractedMethod;
 	}
 
 	public Set<CandidateAttributeRefactoring> getCandidateAttributeRenames() {

@@ -81,6 +81,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Map<AbstractCodeFragment, UMLOperation> codeFragmentOperationMap1 = new LinkedHashMap<AbstractCodeFragment, UMLOperation>();
 	private Map<AbstractCodeFragment, UMLOperation> codeFragmentOperationMap2 = new LinkedHashMap<AbstractCodeFragment, UMLOperation>();
 	
+	private Set<StatementObject> streamAPICalls(List<StatementObject> leaves) {
+		Set<StatementObject> streamAPICalls = new LinkedHashSet<StatementObject>();
+		for(StatementObject statement : leaves) {
+			OperationInvocation invocation = statement.invocationCoveringEntireFragment();
+			if(invocation != null) {
+				String name = invocation.getName();
+				if(name.equals("stream") || name.equals("filter") || name.equals("forEach")) {
+					streamAPICalls.add(statement);
+				}
+			}
+		}
+		return streamAPICalls;
+	}
+
 	public UMLOperationBodyMapper(UMLOperation operation1, UMLOperation operation2, UMLClassBaseDiff classDiff) throws RefactoringMinerTimedOutException {
 		this.classDiff = classDiff;
 		if(classDiff != null)
@@ -131,6 +145,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					if(anonymousFragment != null) {
 						expandAnonymousAndLambdas(anonymousFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), this);
+					}
+				}
+			}
+			Set<StatementObject> streamAPICalls1 = streamAPICalls(leaves1);
+			Set<StatementObject> streamAPICalls2 = streamAPICalls(leaves2);
+			if(streamAPICalls1.size() == 0 && streamAPICalls2.size() > 0) {
+				for(AbstractCodeFragment streamAPICall : streamAPICalls2) {
+					if(streamAPICall.getLambdas().size() > 0) {
+						expandAnonymousAndLambdas(streamAPICall, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), this);
 					}
 				}
 			}

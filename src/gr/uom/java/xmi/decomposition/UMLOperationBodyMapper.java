@@ -548,7 +548,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			processLeaves(expressionsT1, leaves2, parameterToArgumentMap2);
 			List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
 			for(int i = numberOfMappings; i < mappings.size(); i++) {
-				mappings.get(i).temporaryVariableAssignment(refactorings);
+				mappings.get(i).temporaryVariableAssignment(refactorings, parentMapper != null);
 			}
 			// TODO remove non-mapped inner nodes from T1 corresponding to mapped expressions
 			
@@ -896,7 +896,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private void inlinedVariableAssignment(StatementObject statement, List<StatementObject> nonMappedLeavesT2) {
 		for(AbstractCodeMapping mapping : getMappings()) {
-			mapping.inlinedVariableAssignment(statement, nonMappedLeavesT2);
+			mapping.inlinedVariableAssignment(statement, nonMappedLeavesT2, parentMapper != null);
 			refactorings.addAll(mapping.getRefactorings());
 		}
 	}
@@ -904,7 +904,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private void temporaryVariableAssignment(StatementObject statement, List<StatementObject> nonMappedLeavesT2) {
 		for(AbstractCodeMapping mapping : getMappings()) {
 			UMLClassBaseDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
-			mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, classDiff);
+			mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, classDiff, parentMapper != null);
 			refactorings.addAll(mapping.getRefactorings());
 		}
 	}
@@ -1423,7 +1423,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 							UMLClassBaseDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
-							mapping.temporaryVariableAssignment(leaf, leaves2, classDiff);
+							mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 							if(mapping.isIdenticalWithExtractedVariable()) {
 								break;
 							}
@@ -1432,7 +1432,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(leaf.equals(leaf1)) {
 								break;
 							}
-							mapping.inlinedVariableAssignment(leaf, leaves2);
+							mapping.inlinedVariableAssignment(leaf, leaves2, parentMapper != null);
 							if(mapping.isIdenticalWithInlinedVariable()) {
 								break;
 							}
@@ -1523,7 +1523,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 							UMLClassBaseDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
-							mapping.temporaryVariableAssignment(leaf, leaves2, classDiff);
+							mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 							if(mapping.isIdenticalWithExtractedVariable()) {
 								break;
 							}
@@ -1532,7 +1532,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(leaf.equals(leaf1)) {
 								break;
 							}
-							mapping.inlinedVariableAssignment(leaf, leaves2);
+							mapping.inlinedVariableAssignment(leaf, leaves2, parentMapper != null);
 							if(mapping.isIdenticalWithInlinedVariable()) {
 								break;
 							}

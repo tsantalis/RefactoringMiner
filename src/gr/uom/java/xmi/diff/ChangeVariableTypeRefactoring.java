@@ -20,15 +20,18 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 	private UMLOperation operationAfter;
 	private Set<AbstractCodeMapping> variableReferences;
 	private Set<Refactoring> relatedRefactorings;
+	private boolean insideExtractedOrInlinedMethod;
 
 	public ChangeVariableTypeRefactoring(VariableDeclaration originalVariable, VariableDeclaration changedTypeVariable,
-			UMLOperation operationBefore, UMLOperation operationAfter, Set<AbstractCodeMapping> variableReferences) {
+			UMLOperation operationBefore, UMLOperation operationAfter, Set<AbstractCodeMapping> variableReferences,
+			boolean insideExtractedOrInlinedMethod) {
 		this.originalVariable = originalVariable;
 		this.changedTypeVariable = changedTypeVariable;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.variableReferences = variableReferences;
 		this.relatedRefactorings = new LinkedHashSet<Refactoring>();
+		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
 	}
 
 	public void addRelatedRefactoring(Refactoring refactoring) {
@@ -67,6 +70,10 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 
 	public Set<AbstractCodeMapping> getVariableReferences() {
 		return variableReferences;
+	}
+
+	public boolean isInsideExtractedOrInlinedMethod() {
+		return insideExtractedOrInlinedMethod;
 	}
 
 	public String toString() {

@@ -19,14 +19,17 @@ public class AddVariableAnnotationRefactoring implements Refactoring {
 	private VariableDeclaration variableAfter;
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
+	private boolean insideExtractedOrInlinedMethod;
 	
 	public AddVariableAnnotationRefactoring(UMLAnnotation annotation, VariableDeclaration variableBefore,
-			VariableDeclaration variableAfter, UMLOperation operationBefore, UMLOperation operationAfter) {
+			VariableDeclaration variableAfter, UMLOperation operationBefore, UMLOperation operationAfter,
+			boolean insideExtractedOrInlinedMethod) {
 		this.annotation = annotation;
 		this.variableBefore = variableBefore;
 		this.variableAfter = variableAfter;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
 	}
 
 	public UMLAnnotation getAnnotation() {
@@ -47,6 +50,10 @@ public class AddVariableAnnotationRefactoring implements Refactoring {
 
 	public UMLOperation getOperationAfter() {
 		return operationAfter;
+	}
+
+	public boolean isInsideExtractedOrInlinedMethod() {
+		return insideExtractedOrInlinedMethod;
 	}
 
 	@Override

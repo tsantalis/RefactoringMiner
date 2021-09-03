@@ -18,14 +18,17 @@ public class AddVariableModifierRefactoring implements Refactoring {
 	private VariableDeclaration variableAfter;
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
+	private boolean insideExtractedOrInlinedMethod;
 
 	public AddVariableModifierRefactoring(String modifier, VariableDeclaration variableBefore,
-			VariableDeclaration variableAfter, UMLOperation operationBefore, UMLOperation operationAfter) {
+			VariableDeclaration variableAfter, UMLOperation operationBefore, UMLOperation operationAfter,
+			boolean insideExtractedOrInlinedMethod) {
 		this.modifier = modifier;
 		this.variableBefore = variableBefore;
 		this.variableAfter = variableAfter;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
 	}
 
 	public String getModifier() {
@@ -46,6 +49,10 @@ public class AddVariableModifierRefactoring implements Refactoring {
 
 	public UMLOperation getOperationAfter() {
 		return operationAfter;
+	}
+
+	public boolean isInsideExtractedOrInlinedMethod() {
+		return insideExtractedOrInlinedMethod;
 	}
 
 	@Override

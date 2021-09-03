@@ -18,12 +18,15 @@ public class ExtractVariableRefactoring implements Refactoring {
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
 	private Set<AbstractCodeMapping> references;
+	private boolean insideExtractedOrInlinedMethod;
 
-	public ExtractVariableRefactoring(VariableDeclaration variableDeclaration, UMLOperation operationBefore, UMLOperation operationAfter) {
+	public ExtractVariableRefactoring(VariableDeclaration variableDeclaration, UMLOperation operationBefore, UMLOperation operationAfter,
+			boolean insideExtractedOrInlinedMethod) {
 		this.variableDeclaration = variableDeclaration;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.references = new LinkedHashSet<AbstractCodeMapping>();
+		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
 	}
 
 	public void addReference(AbstractCodeMapping mapping) {
@@ -52,6 +55,10 @@ public class ExtractVariableRefactoring implements Refactoring {
 
 	public Set<AbstractCodeMapping> getReferences() {
 		return references;
+	}
+
+	public boolean isInsideExtractedOrInlinedMethod() {
+		return insideExtractedOrInlinedMethod;
 	}
 
 	public String toString() {

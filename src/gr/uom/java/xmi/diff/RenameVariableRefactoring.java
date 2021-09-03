@@ -19,18 +19,21 @@ public class RenameVariableRefactoring implements Refactoring {
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
 	private Set<AbstractCodeMapping> variableReferences;
+	private boolean insideExtractedOrInlinedMethod;
 
 	public RenameVariableRefactoring(
 			VariableDeclaration originalVariable,
 			VariableDeclaration renamedVariable,
 			UMLOperation operationBefore,
 			UMLOperation operationAfter,
-			Set<AbstractCodeMapping> variableReferences) {
+			Set<AbstractCodeMapping> variableReferences,
+			boolean insideExtractedOrInlinedMethod) {
 		this.originalVariable = originalVariable;
 		this.renamedVariable = renamedVariable;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.variableReferences = variableReferences;
+		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
 	}
 
 	public RefactoringType getRefactoringType() {
@@ -71,6 +74,10 @@ public class RenameVariableRefactoring implements Refactoring {
 
 	public Set<AbstractCodeMapping> getVariableReferences() {
 		return variableReferences;
+	}
+
+	public boolean isInsideExtractedOrInlinedMethod() {
+		return insideExtractedOrInlinedMethod;
 	}
 
 	public String toString() {

@@ -18,12 +18,15 @@ public class ExtractAttributeRefactoring implements Refactoring {
 	private UMLClass originalClass;
 	private UMLClass nextClass;
 	private Set<AbstractCodeMapping> references;
+	private boolean insideExtractedOrInlinedMethod;
 
-	public ExtractAttributeRefactoring(UMLAttribute variableDeclaration, UMLClass originalClass, UMLClass nextClass) {
+	public ExtractAttributeRefactoring(UMLAttribute variableDeclaration, UMLClass originalClass, UMLClass nextClass,
+			boolean insideExtractedOrInlinedMethod) {
 		this.attributeDeclaration = variableDeclaration;
 		this.originalClass = originalClass;
 		this.nextClass = nextClass;
 		this.references = new LinkedHashSet<AbstractCodeMapping>();
+		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
 	}
 
 	public void addReference(AbstractCodeMapping mapping) {
@@ -44,6 +47,10 @@ public class ExtractAttributeRefactoring implements Refactoring {
 
 	public Set<AbstractCodeMapping> getReferences() {
 		return references;
+	}
+
+	public boolean isInsideExtractedOrInlinedMethod() {
+		return insideExtractedOrInlinedMethod;
 	}
 
 	public String toString() {

@@ -112,7 +112,7 @@ public class UMLParameterDiff {
 		RenameVariableRefactoring renameRefactoring = null;
 		if(isNameChanged()) {
 			if(!inconsistentReplacement(originalVariable, newVariable)) {
-				renameRefactoring = new RenameVariableRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references);
+				renameRefactoring = new RenameVariableRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references, false);
 				refactorings.add(renameRefactoring);
 			}
 			else {
@@ -123,31 +123,31 @@ public class UMLParameterDiff {
 			}
 		}
 		if((isTypeChanged() || isQualifiedTypeChanged() || isVarArgsChanged()) && !inconsistentReplacement(originalVariable, newVariable)) {
-			ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references);
+			ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references, false);
 			if(renameRefactoring != null) {
 				refactoring.addRelatedRefactoring(renameRefactoring);
 			}
 			refactorings.add(refactoring);
 		}
 		for(UMLAnnotation annotation : annotationListDiff.getAddedAnnotations()) {
-			AddVariableAnnotationRefactoring refactoring = new AddVariableAnnotationRefactoring(annotation, originalVariable, newVariable, removedOperation, addedOperation);
+			AddVariableAnnotationRefactoring refactoring = new AddVariableAnnotationRefactoring(annotation, originalVariable, newVariable, removedOperation, addedOperation, false);
 			refactorings.add(refactoring);
 		}
 		for(UMLAnnotation annotation : annotationListDiff.getRemovedAnnotations()) {
-			RemoveVariableAnnotationRefactoring refactoring = new RemoveVariableAnnotationRefactoring(annotation, originalVariable, newVariable, removedOperation, addedOperation);
+			RemoveVariableAnnotationRefactoring refactoring = new RemoveVariableAnnotationRefactoring(annotation, originalVariable, newVariable, removedOperation, addedOperation, false);
 			refactorings.add(refactoring);
 		}
 		for(UMLAnnotationDiff annotationDiff : annotationListDiff.getAnnotationDiffList()) {
-			ModifyVariableAnnotationRefactoring refactoring = new ModifyVariableAnnotationRefactoring(annotationDiff.getRemovedAnnotation(), annotationDiff.getAddedAnnotation(), originalVariable, newVariable, removedOperation, addedOperation);
+			ModifyVariableAnnotationRefactoring refactoring = new ModifyVariableAnnotationRefactoring(annotationDiff.getRemovedAnnotation(), annotationDiff.getAddedAnnotation(), originalVariable, newVariable, removedOperation, addedOperation, false);
 			refactorings.add(refactoring);
 		}
 		if(finalChanged) {
 			if(newVariable.isFinal()) {
-				AddVariableModifierRefactoring ref = new AddVariableModifierRefactoring("final", originalVariable, newVariable, removedOperation, addedOperation);
+				AddVariableModifierRefactoring ref = new AddVariableModifierRefactoring("final", originalVariable, newVariable, removedOperation, addedOperation, false);
 				refactorings.add(ref);
 			}
 			else if(originalVariable.isFinal()) {
-				RemoveVariableModifierRefactoring ref = new RemoveVariableModifierRefactoring("final", originalVariable, newVariable, removedOperation, addedOperation);
+				RemoveVariableModifierRefactoring ref = new RemoveVariableModifierRefactoring("final", originalVariable, newVariable, removedOperation, addedOperation, false);
 				refactorings.add(ref);
 			}
 		}

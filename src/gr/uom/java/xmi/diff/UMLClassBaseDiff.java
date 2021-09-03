@@ -626,13 +626,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					if(a2 != null) {
 						RenameVariableRefactoring ref = new RenameVariableRefactoring(
 								candidate.getOriginalVariableDeclaration(), a2.getVariableDeclaration(),
-								candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getAttributeReferences());
+								candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getAttributeReferences(), false);
 						if(!refactorings.contains(ref)) {
 							refactorings.add(ref);
 							if(!candidate.getOriginalVariableDeclaration().getType().equals(a2.getVariableDeclaration().getType()) ||
 									!candidate.getOriginalVariableDeclaration().getType().equalsQualified(a2.getVariableDeclaration().getType())) {
 								ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(candidate.getOriginalVariableDeclaration(), a2.getVariableDeclaration(),
-										candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getAttributeReferences());
+										candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getAttributeReferences(), false);
 								refactoring.addRelatedRefactoring(ref);
 								refactorings.add(refactoring);
 							}
@@ -647,7 +647,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					if(a1 != null) {
 						RenameVariableRefactoring ref = new RenameVariableRefactoring(
 								a1.getVariableDeclaration(), candidate.getRenamedVariableDeclaration(),
-								candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getAttributeReferences());
+								candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getAttributeReferences(), false);
 						if(!refactorings.contains(ref)) {
 							refactorings.add(ref);
 						}

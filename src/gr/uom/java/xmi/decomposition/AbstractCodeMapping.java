@@ -172,7 +172,7 @@ public abstract class AbstractCodeMapping {
 		return fragment1.toString() + fragment2.toString();
 	}
 
-	public void temporaryVariableAssignment(Set<Refactoring> refactorings, boolean insideExtractedOrInlineMethod) {
+	public void temporaryVariableAssignment(Set<Refactoring> refactorings, boolean insideExtractedOrInlinedMethod) {
 		if(this instanceof LeafMapping && getFragment1() instanceof AbstractExpression
 				&& getFragment2() instanceof StatementObject) {
 			StatementObject statement = (StatementObject) getFragment2();
@@ -186,7 +186,7 @@ public abstract class AbstractCodeMapping {
 			}
 			if(variableDeclarations.size() == 1 && validReplacements) {
 				VariableDeclaration variableDeclaration = variableDeclarations.get(0);
-				ExtractVariableRefactoring ref = new ExtractVariableRefactoring(variableDeclaration, operation1, operation2, insideExtractedOrInlineMethod);
+				ExtractVariableRefactoring ref = new ExtractVariableRefactoring(variableDeclaration, operation1, operation2, insideExtractedOrInlinedMethod);
 				processExtractVariableRefactoring(ref, refactorings);
 				identicalWithExtractedVariable = true;
 			}
@@ -194,7 +194,7 @@ public abstract class AbstractCodeMapping {
 	}
 
 	public void temporaryVariableAssignment(AbstractCodeFragment statement,
-			List<? extends AbstractCodeFragment> nonMappedLeavesT2, UMLClassBaseDiff classDiff, boolean insideExtractedOrInlineMethod) {
+			List<? extends AbstractCodeFragment> nonMappedLeavesT2, UMLClassBaseDiff classDiff, boolean insideExtractedOrInlinedMethod) {
 		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
 			String variableName = declaration.getVariableName();
 			AbstractExpression initializer = declaration.getInitializer();
@@ -206,7 +206,7 @@ public abstract class AbstractCodeMapping {
 						if(initializer != null) {
 							if(initializer.toString().equals(prefixBefore) ||
 									overlappingExtractVariable(initializer, prefixBefore, nonMappedLeavesT2, refactorings)) {
-								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlineMethod);
+								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 								processExtractVariableRefactoring(ref, refactorings);
 								if(getReplacements().size() == 1) {
 									identicalWithExtractedVariable = true;
@@ -222,7 +222,7 @@ public abstract class AbstractCodeMapping {
 							wrappedAsArgument(initializer, replacement.getBefore()) ||
 							reservedTokenMatch(initializer, replacement, replacement.getBefore()) ||
 							overlappingExtractVariable(initializer, replacement.getBefore(), nonMappedLeavesT2, refactorings)) {
-						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlineMethod);
+						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						processExtractVariableRefactoring(ref, refactorings);
 						if(getReplacements().size() == 1) {
 							identicalWithExtractedVariable = true;
@@ -239,7 +239,7 @@ public abstract class AbstractCodeMapping {
 							if(invocation.getMethodName().equals(rename.getRenamedOperation().getName())) {
 								String initializerBeforeRename = initializer.getString().replace(rename.getRenamedOperation().getName(), rename.getOriginalOperation().getName());
 								if(getFragment1().getString().contains(initializerBeforeRename) && getFragment2().getString().contains(variableName)) {
-									ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlineMethod);
+									ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 									processExtractVariableRefactoring(ref, refactorings);
 								}
 							}
@@ -265,7 +265,7 @@ public abstract class AbstractCodeMapping {
 					List<VariableDeclaration> variableDeclarations = operation2.getVariableDeclarationsInScope(fragment2.getLocationInfo());
 					for(VariableDeclaration declaration : variableDeclarations) {
 						if(declaration.getVariableName().equals(variable)) {
-							ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlineMethod);
+							ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 							processExtractVariableRefactoring(ref, refactorings);
 							if(getReplacements().size() == 1) {
 								identicalWithExtractedVariable = true;
@@ -278,7 +278,7 @@ public abstract class AbstractCodeMapping {
 	}
 
 	public void inlinedVariableAssignment(AbstractCodeFragment statement,
-			List<? extends AbstractCodeFragment> nonMappedLeavesT2, boolean insideExtractedOrInlineMethod) {
+			List<? extends AbstractCodeFragment> nonMappedLeavesT2, boolean insideExtractedOrInlinedMethod) {
 		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
 			for(Replacement replacement : getReplacements()) {
 				String variableName = declaration.getVariableName();
@@ -290,7 +290,7 @@ public abstract class AbstractCodeMapping {
 						if(initializer != null) {
 							if(initializer.toString().equals(prefixAfter) ||
 									overlappingExtractVariable(initializer, prefixAfter, nonMappedLeavesT2, refactorings)) {
-								InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlineMethod);
+								InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 								processInlineVariableRefactoring(ref, refactorings);
 								if(getReplacements().size() == 1) {
 									identicalWithInlinedVariable = true;
@@ -306,7 +306,7 @@ public abstract class AbstractCodeMapping {
 							wrappedAsArgument(initializer, replacement.getAfter()) ||
 							reservedTokenMatch(initializer, replacement, replacement.getAfter()) ||
 							overlappingExtractVariable(initializer, replacement.getAfter(), nonMappedLeavesT2, refactorings)) {
-						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlineMethod);
+						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						processInlineVariableRefactoring(ref, refactorings);
 						if(getReplacements().size() == 1) {
 							identicalWithInlinedVariable = true;
@@ -332,7 +332,7 @@ public abstract class AbstractCodeMapping {
 					List<VariableDeclaration> variableDeclarations = operation1.getVariableDeclarationsInScope(fragment1.getLocationInfo());
 					for(VariableDeclaration declaration : variableDeclarations) {
 						if(declaration.getVariableName().equals(variable)) {
-							InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlineMethod);
+							InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 							processInlineVariableRefactoring(ref, refactorings);
 							if(getReplacements().size() == 1) {
 								identicalWithInlinedVariable = true;

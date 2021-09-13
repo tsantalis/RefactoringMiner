@@ -50,8 +50,8 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				distance1 = 0;
 			}
 			else {
-				String s1 = this.getFragment1().getString().toLowerCase();
-				String s2 = this.getFragment2().getString().toLowerCase();
+				String s1 = removeGenericTypeAfterDot(this.getFragment1().getString().toLowerCase());
+				String s2 = removeGenericTypeAfterDot(this.getFragment2().getString().toLowerCase());
 				int distance = StringDistance.editDistance(s1, s2);
 				distance1 = (double)distance/(double)Math.max(s1.length(), s2.length());
 			}
@@ -60,8 +60,8 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				distance2 = 0;
 			}
 			else {
-				String s1 = o.getFragment1().getString().toLowerCase();
-				String s2 = o.getFragment2().getString().toLowerCase();
+				String s1 = removeGenericTypeAfterDot(o.getFragment1().getString().toLowerCase());
+				String s2 = removeGenericTypeAfterDot(o.getFragment2().getString().toLowerCase());
 				int distance = StringDistance.editDistance(s1, s2);
 				distance2 = (double)distance/(double)Math.max(s1.length(), s2.length());
 			}
@@ -112,6 +112,17 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				}
 			}
 		}
+	}
+
+	private static String removeGenericTypeAfterDot(String s) {
+		if(s.contains(".<")) {
+			int indexOfGenericTypeStart = s.indexOf(".<");
+			int indexOfGenericTypeEnd = s.indexOf(">", indexOfGenericTypeStart);
+			if(indexOfGenericTypeStart < indexOfGenericTypeEnd) {
+				s = s.substring(0, indexOfGenericTypeStart) + "." + s.substring(indexOfGenericTypeEnd + 1, s.length());
+			}
+		}
+		return s;
 	}
 
 	private boolean sameVariableDeclarationTypeInParent() {

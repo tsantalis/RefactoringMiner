@@ -120,7 +120,6 @@ public class VariableReplacementAnalysis {
 		findVariableSplits();
 		findVariableMerges();
 		findConsistentVariableRenames();
-		findParametersWrappedInLocalVariables();
 		findAttributeExtractions();
 		findTypeChanges();
 		findMatchingVariablesWithoutVariableDeclarationMapping();
@@ -616,39 +615,6 @@ public class VariableReplacementAnalysis {
 		}
 	}
 
-	private void findParametersWrappedInLocalVariables() {
-		for(StatementObject statement : nonMappedLeavesT2) {
-			for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
-				AbstractExpression initializer = declaration.getInitializer();
-				if(initializer != null) {
-					for(String key : initializer.getCreationMap().keySet()) {
-						List<ObjectCreation> creations = initializer.getCreationMap().get(key);
-						for(ObjectCreation creation : creations) {
-							for(String argument : creation.arguments) {
-								SimpleEntry<VariableDeclaration, UMLOperation> v2 = getVariableDeclaration2(new Replacement("", argument, ReplacementType.VARIABLE_NAME));
-								SimpleEntry<VariableDeclaration, UMLOperation> v1 = getVariableDeclaration1(new Replacement(declaration.getVariableName(), "", ReplacementType.VARIABLE_NAME));
-								if(v2 != null && v1 != null) {
-									Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReferences(v1.getKey(), v2.getKey(), mappings);
-									RenameVariableRefactoring ref = new RenameVariableRefactoring(v1.getKey(), v2.getKey(), v1.getValue(), v2.getValue(), references, insideExtractedOrInlinedMethod);
-									if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref) && !existsConflictingSplitVariableRefactoring(ref)) {
-										variableRenames.add(ref);
-										removedVariables.remove(v1.getKey());
-										addedVariables.remove(v2.getKey());
-										if(!v1.getKey().getType().equals(v2.getKey().getType()) || !v1.getKey().getType().equalsQualified(v2.getKey().getType())) {
-											ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(v1.getKey(), v2.getKey(), v1.getValue(), v2.getValue(), references, insideExtractedOrInlinedMethod);
-											refactoring.addRelatedRefactoring(ref);
-											refactorings.add(refactoring);
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
 	public Set<RenameVariableRefactoring> getVariableRenames() {
 		return variableRenames;
 	}
@@ -1114,6 +1080,10 @@ public class VariableReplacementAnalysis {
 	private void getVariableRefactorings(VariableDeclaration variableDeclaration1,
 			VariableDeclaration variableDeclaration2, UMLOperation operation1, UMLOperation operation2,
 			Set<AbstractCodeMapping> variableReferences, RenameVariableRefactoring ref) {
+		if(ref == null && variableDeclaration1.isParameter() != variableDeclaration2.isParameter()) {
+			RenameVariableRefactoring refactoring = new RenameVariableRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
+			refactorings.add(refactoring);
+		}
 		if(!variableDeclaration1.getType().equals(variableDeclaration2.getType()) || !variableDeclaration1.getType().equalsQualified(variableDeclaration2.getType())) {
 			ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
 			if(ref != null) {

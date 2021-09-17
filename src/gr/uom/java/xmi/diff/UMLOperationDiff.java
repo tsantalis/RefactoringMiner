@@ -18,7 +18,6 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
-import org.refactoringminer.api.RefactoringType;
 
 public class UMLOperationDiff {
 	private UMLOperation removedOperation;
@@ -137,7 +136,9 @@ public class UMLOperationDiff {
 				for(Iterator<UMLParameter> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
 					UMLParameter addedParameter = addedParameterIterator.next();
 					int indexOfAddedParameter = indexOfParameter(addedParametersWithoutReturnType, addedParameter);
-					if(indexOfRemovedParameter == indexOfAddedParameter) {
+					if(indexOfRemovedParameter == indexOfAddedParameter &&
+							removedOperation.getAllVariables().contains(removedParameter.getName()) ==
+							addedOperation.getAllVariables().contains(addedParameter.getName())) {
 						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings);
 						if(!parameterDiff.isEmpty()) {
 							parameterDiffList.add(parameterDiff);

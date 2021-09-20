@@ -137,8 +137,7 @@ public class UMLOperationDiff {
 					UMLParameter addedParameter = addedParameterIterator.next();
 					int indexOfAddedParameter = indexOfParameter(addedParametersWithoutReturnType, addedParameter);
 					if(indexOfRemovedParameter == indexOfAddedParameter &&
-							removedOperation.getAllVariables().contains(removedParameter.getName()) ==
-							addedOperation.getAllVariables().contains(addedParameter.getName())) {
+							usedParameters(removedOperation, addedOperation, removedParameter, addedParameter)) {
 						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings);
 						if(!parameterDiff.isEmpty()) {
 							parameterDiffList.add(parameterDiff);
@@ -150,6 +149,23 @@ public class UMLOperationDiff {
 				}
 			}
 		}
+	}
+
+	private boolean usedParameters(UMLOperation removedOperation, UMLOperation addedOperation,
+			UMLParameter removedParameter, UMLParameter addedParameter) {
+		List<String> removedOperationVariables = removedOperation.getAllVariables();
+		List<String> addedOperationVariables = addedOperation.getAllVariables();
+		if(removedOperationVariables.contains(removedParameter.getName()) ==
+				addedOperationVariables.contains(addedParameter.getName())) {
+			if(!removedOperation.isConstructor() && !addedOperation.isConstructor()) {
+				return !removedOperationVariables.contains(addedParameter.getName()) &&
+						!addedOperationVariables.contains(removedParameter.getName());
+			}
+			else {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private int indexOfParameter(List<UMLParameter> parameters, UMLParameter parameter) {

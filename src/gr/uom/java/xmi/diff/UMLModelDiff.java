@@ -2441,6 +2441,7 @@ public class UMLModelDiff {
 	               if(refactoring != null) {
 	                  deleteRemovedOperation(removedOperation);
 	                  deleteAddedOperation(addedOperation);
+	                  refactorings.addAll(firstMapper.getRefactorings());
 	                  UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(firstMapper);
 	                  refactorings.addAll(operationSignatureDiff.getRefactorings());
 	                  refactorings.add(refactoring);
@@ -2543,6 +2544,7 @@ public class UMLModelDiff {
 	               if(refactoring != null) {
 	                  deleteRemovedOperation(removedOperation);
 	                  deleteAddedOperation(addedOperation);
+	                  refactorings.addAll(firstMapper.getRefactorings());
 	                  UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(firstMapper);
 	                  refactorings.addAll(operationSignatureDiff.getRefactorings());
 	                  refactorings.add(refactoring);

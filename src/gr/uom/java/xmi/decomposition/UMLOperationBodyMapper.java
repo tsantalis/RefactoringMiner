@@ -2868,6 +2868,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
 									invocationCoveringTheEntireStatement2.actualString(), (OperationInvocation)invocation1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
 							replacementInfo.addReplacement(replacement);
+							if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo) &&
+									invocationCoveringTheEntireStatement2.getArguments().contains(invocation1.getExpression()) &&
+									!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
+									!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+								return null;
+							}
 							return replacementInfo.getReplacements();
 						}
 						if(invocation1 instanceof OperationInvocation) {
@@ -2900,6 +2906,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 									invocation2.actualString(), invocationCoveringTheEntireStatement1, (OperationInvocation)invocation2, ReplacementType.METHOD_INVOCATION);
 							replacementInfo.addReplacement(replacement);
+							if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo) &&
+									invocationCoveringTheEntireStatement1.getArguments().contains(invocation2.getExpression()) &&
+									!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
+									!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+								return null;
+							}
 							return replacementInfo.getReplacements();
 						}
 						if(invocation2 instanceof OperationInvocation) {

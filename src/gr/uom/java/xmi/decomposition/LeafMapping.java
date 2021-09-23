@@ -2,6 +2,7 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import gr.uom.java.xmi.UMLOperation;
@@ -85,6 +86,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				else if(!this.identicalDepthIndexAndParentType() && o.identicalDepthIndexAndParentType()) {
 					return 1;
 				}
+				if(this.referencesMapping(o)) {
+					return 1;
+				}
+				else if(o.referencesMapping(this)) {
+					return -1;
+				}
 				return Double.compare(distance1, distance2);
 			}
 			else {
@@ -118,6 +125,33 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				}
 			}
 		}
+	}
+
+	private boolean referencesMapping(LeafMapping o) {
+		if(getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_STATEMENT) &&
+				getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_STATEMENT) &&
+				o.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_STATEMENT) &&
+				o.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_STATEMENT) &&
+				this.getFragment1().equals(o.getFragment1()) &&
+				o.getFragment2().getLocationInfo().getEndOffset() < this.getFragment2().getLocationInfo().getStartOffset()) {
+			List<VariableDeclaration> variableDeclarations2 = o.getFragment2().getVariableDeclarations();
+			Map<String, List<ObjectCreation>> creationMap2 = this.getFragment2().getCreationMap();
+			for(VariableDeclaration declaration2 : variableDeclarations2) {
+				for(String key : creationMap2.keySet()) {
+					List<ObjectCreation> creations = creationMap2.get(key);
+					for(ObjectCreation creation : creations) {
+						if(creation.getAnonymousClassDeclaration() != null) {
+							return false;
+						}
+						List<String> arguments = creation.getArguments();
+						if(arguments.size() == 1 && arguments.contains(declaration2.getVariableName())) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private static String removeGenericTypeAfterDot(String s) {

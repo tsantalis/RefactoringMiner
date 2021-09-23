@@ -105,7 +105,9 @@ public class LeafType extends UMLType {
 					leafType.getClassType().endsWith(this.getClassType()) ||
 					this.containsTypeArgument(leafType.getClassType()) ||
 					leafType.containsTypeArgument(this.getClassType()) ||
-					this.commonTokenInClassType(leafType);
+					this.commonTokenInClassType(leafType) ||
+					(this.getClassType().equals("List") && leafType.getClassType().equals("Set") && this.getTypeArguments().equals(leafType.getTypeArguments())) ||
+					(this.getClassType().equals("ArrayList") && leafType.getClassType().equals("LinkedHashSet") && this.getTypeArguments().equals(leafType.getTypeArguments()));
 		}
 		return false;
 	}

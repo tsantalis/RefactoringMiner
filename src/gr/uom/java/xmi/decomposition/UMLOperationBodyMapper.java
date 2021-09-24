@@ -2285,6 +2285,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				if(!replacementMap.isEmpty()) {
 					Replacement replacement = replacementMap.firstEntry().getValue();
+					if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+							invocationCoveringTheEntireStatement1.methodNameContainsArgumentName() &&
+							invocationCoveringTheEntireStatement2.methodNameContainsArgumentName() &&
+							replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
+						for(Replacement r : replacementMap.values()) {
+							if(!replacement.equals(r) && r.getType().equals(ReplacementType.VARIABLE_NAME) &&
+									invocationCoveringTheEntireStatement1.getName().toLowerCase().endsWith(r.getBefore().toLowerCase()) &&
+									invocationCoveringTheEntireStatement2.getName().toLowerCase().endsWith(r.getAfter().toLowerCase())) {
+								replacement = r;
+								break;
+							}
+						}
+					}
 					replacementInfo.addReplacement(replacement);
 					replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), replacement.getBefore(), replacement.getAfter()));
 					if(replacementMap.firstEntry().getKey() == 0) {

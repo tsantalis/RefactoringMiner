@@ -267,9 +267,18 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		}
 		return getExpression() != null && call.getExpression() != null &&
 				identicalExpression(call, replacements) &&
-				(normalizedNameDistance(call) <= distance || allExactLambdaMappers) &&
+				(normalizedNameDistance(call) <= distance || allExactLambdaMappers || (this.methodNameContainsArgumentName() && call.methodNameContainsArgumentName())) &&
 				!equalArguments(call) &&
 				getArguments().size() != call.getArguments().size();
+	}
+
+	public boolean methodNameContainsArgumentName() {
+		for(String argument : arguments) {
+			if(getName().toLowerCase().endsWith(argument.toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean onlyArgumentsChanged(AbstractCall call, Set<Replacement> replacements) {

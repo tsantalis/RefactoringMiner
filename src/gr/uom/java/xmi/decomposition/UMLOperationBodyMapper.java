@@ -2414,15 +2414,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				replacementsToBeRemoved.add(replacement);
 				replacementsToBeAdded.addAll(set);
 			}
-			Replacement r = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), variables1, variables2);
-			if(r != null) {
+			Set<Replacement> r = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), variables1, variables2);
+			if(!r.isEmpty()) {
 				replacementsToBeRemoved.add(replacement);
-				replacementsToBeAdded.add(r);
+				replacementsToBeAdded.addAll(r);
 			}
-			Replacement r2 = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), stringLiterals1, variables2);
-			if(r2 != null) {
+			Set<Replacement> r2 = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), stringLiterals1, variables2);
+			if(!r2.isEmpty()) {
 				replacementsToBeRemoved.add(replacement);
-				replacementsToBeAdded.add(r2);
+				replacementsToBeAdded.addAll(r2);
 			}
 		}
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
@@ -5101,7 +5101,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return conflictingReplacements;
 	}
 
-	private Replacement variableReplacementWithinMethodInvocations(String s1, String s2, Set<String> variables1, Set<String> variables2) {
+	private Set<Replacement> variableReplacementWithinMethodInvocations(String s1, String s2, Set<String> variables1, Set<String> variables2) {
+		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 		for(String variable1 : variables1) {
 			if(s1.contains(variable1) && !s1.equals(variable1) && !s1.equals("this." + variable1) && !s1.equals("_" + variable1)) {
 				int startIndex1 = s1.indexOf(variable1);
@@ -5115,14 +5116,66 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						int startIndex2 = s2.indexOf(variable2);
 						String substringBeforeIndex2 = s2.substring(0, startIndex2);
 						String substringAfterIndex2 = s2.substring(startIndex2 + variable2.length(), s2.length());
-						if(substringBeforeIndex1.equals(substringBeforeIndex2) && substringAfterIndex1.equals(substringAfterIndex2)) {
-							return new Replacement(variable1, variable2, ReplacementType.VARIABLE_NAME);
+						boolean suffixMatch = false;
+						if(substringAfterIndex1.equals(substringAfterIndex2)) {
+							suffixMatch = true;
+						}
+						else {
+							String variableContainedInSubstringAfterIndex1 = null;
+							for(String var1 : variables1) {
+								if(substringAfterIndex1.contains(var1)) {
+									variableContainedInSubstringAfterIndex1 = var1;
+									break;
+								}
+							}
+							String variableContainedInSubstringAfterIndex2 = null;
+							for(String var2 : variables2) {
+								if(substringAfterIndex2.contains(var2)) {
+									variableContainedInSubstringAfterIndex2 = var2;
+									break;
+								}
+							}
+							if(variableContainedInSubstringAfterIndex1 != null && variableContainedInSubstringAfterIndex2 != null) {
+								Set<Replacement> r = variableReplacementWithinMethodInvocations(substringAfterIndex1, substringAfterIndex2, variables1, variables2);
+								if(!r.isEmpty()) {
+									suffixMatch = true;
+								}
+							}
+						}
+						boolean prefixMatch = false;
+						if(substringBeforeIndex1.equals(substringBeforeIndex2)) {
+							prefixMatch = true;
+						}
+						else {
+							String variableContainedInSubstringBeforeIndex1 = null;
+							for(String var1 : variables1) {
+								if(substringBeforeIndex1.contains(var1)) {
+									variableContainedInSubstringBeforeIndex1 = var1;
+									break;
+								}
+							}
+							String variableContainedInSubstringBeforeIndex2 = null;
+							for(String var2 : variables2) {
+								if(substringBeforeIndex2.contains(var2)) {
+									variableContainedInSubstringBeforeIndex2 = var2;
+									break;
+								}
+							}
+							if(variableContainedInSubstringBeforeIndex1 != null && variableContainedInSubstringBeforeIndex2 != null) {
+								Set<Replacement> r = variableReplacementWithinMethodInvocations(substringBeforeIndex1, substringBeforeIndex2, variables1, variables2);
+								if(!r.isEmpty()) {
+									prefixMatch = true;
+								}
+							}
+						}
+						if(prefixMatch && suffixMatch) {
+							replacements.add(new Replacement(variable1, variable2, ReplacementType.VARIABLE_NAME));
 						}
 					}
 				}
 			}
 		}
-		return null;
+		return replacements;
 	}
 
 	private Set<Replacement> replacementsWithinMethodInvocations(String s1, String s2, Set<String> set1, Set<String> set2, Map<String, List<? extends AbstractCall>> methodInvocationMap, Direction direction) {

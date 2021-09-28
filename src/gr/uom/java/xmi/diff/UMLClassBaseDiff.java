@@ -1497,7 +1497,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		UMLOperationBodyMapper bestMapper = mapperSet.first();
 		UMLOperation bestMapperOperation1 = bestMapper.getOperation1();
 		UMLOperation bestMapperOperation2 = bestMapper.getOperation2();
-		if(equalSignatureWithCommonParameterTypes(bestMapperOperation1, bestMapperOperation2)) {
+		boolean identicalBodyWithOperation1OfTheBestMapper = identicalBodyWithAnotherAddedMethod(bestMapper);
+		boolean identicalBodyWithOperation2OfTheBestMapper = identicalBodyWithAnotherRemovedMethod(bestMapper);
+		if(equalSignatureWithCommonParameterTypes(bestMapperOperation1, bestMapperOperation2) &&
+				!identicalBodyWithOperation1OfTheBestMapper && !identicalBodyWithOperation2OfTheBestMapper) {
 			return bestMapper;
 		}
 		for(int i=1; i<mapperList.size(); i++) {
@@ -1534,8 +1537,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(mismatchesConsistentMethodInvocationRename(bestMapper, consistentMethodInvocationRenames.keySet())) {
 			return null;
 		}
-		boolean identicalBodyWithOperation1OfTheBestMapper = identicalBodyWithAnotherAddedMethod(bestMapper);
-		boolean identicalBodyWithOperation2OfTheBestMapper = identicalBodyWithAnotherRemovedMethod(bestMapper);
 		if(identicalBodyWithOperation2OfTheBestMapper || identicalBodyWithOperation1OfTheBestMapper) {
 			return null;
 		}
@@ -1577,6 +1578,22 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+		else if(stringRepresentation.size() == 3) {
+			int counter = 0;
+			for(UMLOperation addedOperation : addedOperations) {
+				if(!mapper.getOperation2().equals(addedOperation)) {
+					OperationBody body = addedOperation.getBody();
+					List<String> parameterNameList = addedOperation.getParameterNameList();
+					if(body != null && body.getBodyHashCode() == operation1.getBody().getBodyHashCode() &&
+							parameterNameList.size() > 0 && parameterNameList.equals(operation1.getParameterNameList())) {
+						counter++;
+					}
+				}
+			}
+			if(counter == 1 && !existingMapperWithIdenticalMapping(stringRepresentation.get(1))) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -1606,6 +1623,35 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							return true;
 						}
 					}
+				}
+			}
+		}
+		else if(stringRepresentation.size() == 3) {
+			int counter = 0;
+			for(UMLOperation removedOperation : removedOperations) {
+				if(!mapper.getOperation1().equals(removedOperation)) {
+					OperationBody body = removedOperation.getBody();
+					List<String> parameterNameList = removedOperation.getParameterNameList();
+					if(body != null && body.getBodyHashCode() == operation2.getBody().getBodyHashCode() &&
+							parameterNameList.size() > 0 && parameterNameList.equals(operation2.getParameterNameList())) {
+						counter++;
+					}
+				}
+			}
+			if(counter == 1 && !existingMapperWithIdenticalMapping(stringRepresentation.get(1))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean existingMapperWithIdenticalMapping(String stringRepresentation) {
+		for(int i=operationBodyMapperList.size()-1; i>=0; i--) {
+			UMLOperationBodyMapper mapper = operationBodyMapperList.get(i);
+			for(AbstractCodeMapping mapping : mapper.getExactMatches()) {
+				if(mapping.getFragment1().getString().equals(stringRepresentation) ||
+						mapping.getFragment2().getString().equals(stringRepresentation)) {
+					return true;
 				}
 			}
 		}

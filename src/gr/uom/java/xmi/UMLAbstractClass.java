@@ -296,19 +296,31 @@ public abstract class UMLAbstractClass {
 		for(UMLOperation operation : operations) {
 			if(!operation.isConstructor() && !operation.overridesObject()) {
 				totalOperations++;
-	    		if(umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
-	    				(pattern != null && umlClass.containsOperationWithTheSameRenamePattern(operation, pattern.reverse()))) {
-	    			commonOperations.add(operation);
-	    		}
+				if(umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
+						(pattern != null && umlClass.containsOperationWithTheSameRenamePattern(operation, pattern.reverse()))) {
+					commonOperations.add(operation);
+				}
+			}
+			else if(operation.isConstructor() && commonPrefix.equals(commonSuffix) && commonPrefix.length() > 0) {
+				if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
+						(pattern != null && this.containsOperationWithTheSameRenamePattern(operation, pattern))) {
+					commonOperations.add(operation);
+				}
 			}
 		}
 		for(UMLOperation operation : umlClass.operations) {
 			if(!operation.isConstructor() && !operation.overridesObject()) {
 				totalOperations++;
-	    		if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
-	    				(pattern != null && this.containsOperationWithTheSameRenamePattern(operation, pattern))) {
-	    			commonOperations.add(operation);
-	    		}
+				if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
+						(pattern != null && this.containsOperationWithTheSameRenamePattern(operation, pattern))) {
+					commonOperations.add(operation);
+				}
+			}
+			else if(operation.isConstructor() && commonPrefix.equals(commonSuffix) && commonPrefix.length() > 0) {
+				if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
+						(pattern != null && this.containsOperationWithTheSameRenamePattern(operation, pattern))) {
+					commonOperations.add(operation);
+				}
 			}
 		}
 		Set<UMLAttribute> commonAttributes = new LinkedHashSet<UMLAttribute>();

@@ -13,6 +13,7 @@ import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLRealization;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.UMLTypeParameter;
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
@@ -1593,12 +1594,14 @@ public class UMLModelDiff {
       checkForOperationMovesBetweenCommonClasses();
       checkForOperationMovesIncludingRemovedAndAddedClasses();
       List<UMLOperation> addedAndExtractedOperationsInCommonClasses = getAddedAndExtractedOperationsInCommonClasses();
-      if(addedAndExtractedOperationsInCommonClasses.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
-    	  checkForExtractedAndMovedOperations(getOperationBodyMappersInCommonClasses(), addedAndExtractedOperationsInCommonClasses);
-      }
       List<UMLOperation> addedOperationsInMovedAndRenamedClasses = getAddedOperationsInMovedAndRenamedClasses();
+      List<UMLOperation> allAddedOperations = new ArrayList<UMLOperation>(addedAndExtractedOperationsInCommonClasses);
+      allAddedOperations.addAll(addedOperationsInMovedAndRenamedClasses);
+      if(addedAndExtractedOperationsInCommonClasses.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
+    	  checkForExtractedAndMovedOperations(getOperationBodyMappersInCommonClasses(), allAddedOperations);
+      }
       if(addedOperationsInMovedAndRenamedClasses.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
-    	  checkForExtractedAndMovedOperations(getOperationBodyMappersInMovedAndRenamedClasses(), addedOperationsInMovedAndRenamedClasses);
+    	  checkForExtractedAndMovedOperations(getOperationBodyMappersInMovedAndRenamedClasses(), allAddedOperations);
       }
       List<UMLOperation> removedAndInlinedOperationsInCommonClasses = getRemovedAndInlinedOperationsInCommonClasses();
       if(removedAndInlinedOperationsInCommonClasses.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
@@ -2124,6 +2127,17 @@ public class UMLModelDiff {
 	                      deleteAddedOperation(addedOperation);
                 	  }
                   }
+                  else {
+                	  for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+                		  AbstractCodeFragment fragment1 = mapping.getFragment1();
+						if(mapping instanceof LeafMapping && !mapper.getNonMappedLeavesT1().contains(fragment1) && fragment1 instanceof StatementObject) {
+                			  mapper.getNonMappedLeavesT1().add((StatementObject) fragment1);
+                		  }
+                		  else if(mapping instanceof CompositeStatementObjectMapping && !mapper.getNonMappedInnerNodesT1().contains(fragment1) && fragment1 instanceof CompositeStatementObject) {
+                			  mapper.getNonMappedInnerNodesT1().add((CompositeStatementObject) fragment1);
+                		  }
+                	  }
+                  }
                }
             }
          }
@@ -2158,13 +2172,11 @@ public class UMLModelDiff {
    private boolean anotherAddedMethodExistsWithBetterMatchingInvocationExpression(OperationInvocation invocation, UMLOperation addedOperation, List<UMLOperation> addedOperations) {
 	   String expression = invocation.getExpression();
 	   if(expression != null) {
-		   int originalDistance = StringDistance.editDistance(expression, addedOperation.getNonQualifiedClassName());
 		   for(UMLOperation operation : addedOperations) {
 			   UMLClassBaseDiff classDiff = getUMLClassDiff(operation.getClassName());
 			   boolean isInterface = classDiff != null ? classDiff.nextClass.isInterface() : false;
 			   if(!operation.equals(addedOperation) && addedOperation.equalSignature(operation) && !operation.isAbstract() && !isInterface) {
-				   int newDistance = StringDistance.editDistance(expression, operation.getNonQualifiedClassName());
-				   if(newDistance < originalDistance) {
+				   if(expression.equals(operation.getNonQualifiedClassName())) {
 					   return true;
 				   }
 			   }

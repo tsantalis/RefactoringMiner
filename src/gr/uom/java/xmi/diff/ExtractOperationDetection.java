@@ -34,7 +34,7 @@ public class ExtractOperationDetection {
 		this.addedOperations = addedOperations;
 		this.classDiff = classDiff;
 		this.modelDiff = modelDiff;
-		this.operationInvocations = getInvocationsInSourceOperationAfterExtraction(mapper);
+		this.operationInvocations = getInvocationsInSourceOperationAfterExtractionExcludingInvocationsInExactlyMappedStatements(mapper);
 	}
 
 	public List<ExtractOperationRefactoring> check(UMLOperation addedOperation) throws RefactoringMinerTimedOutException {
@@ -176,10 +176,54 @@ public class ExtractOperationDetection {
 		return false;
 	}
 
-	public static List<OperationInvocation> getInvocationsInSourceOperationAfterExtraction(UMLOperationBodyMapper mapper) {
+	private static List<OperationInvocation> getInvocationsInSourceOperationAfterExtractionExcludingInvocationsInExactlyMappedStatements(UMLOperationBodyMapper mapper) {
 		List<OperationInvocation> operationInvocations = mapper.getOperation2().getAllOperationInvocations();
+		for(AbstractCodeMapping mapping : mapper.getMappings()) {
+			if(mapping.isExact()) {
+				Map<String, List<OperationInvocation>> methodInvocationMap = mapping.getFragment2().getMethodInvocationMap();
+				for(String key : methodInvocationMap.keySet()) {
+					List<OperationInvocation> invocations = methodInvocationMap.get(key);
+					for(OperationInvocation invocation : invocations) {
+						for(ListIterator<OperationInvocation> iterator = operationInvocations.listIterator(); iterator.hasNext();) {
+							OperationInvocation matchingInvocation = iterator.next();
+							if(invocation == matchingInvocation) {
+								iterator.remove();
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
 		for(StatementObject statement : mapper.getNonMappedLeavesT2()) {
 			addStatementInvocations(operationInvocations, statement);
+		}
+		return operationInvocations;
+	}
+
+	public static List<OperationInvocation> getInvocationsInSourceOperationAfterExtraction(UMLOperationBodyMapper mapper) {
+		List<OperationInvocation> operationInvocations = getInvocationsInSourceOperationAfterExtractionExcludingInvocationsInExactlyMappedStatements(mapper);
+		if(operationInvocations.isEmpty()) {
+			return operationInvocations;
+		}
+		List<OperationInvocation> invocationsInSourceOperationBeforeExtraction = mapper.getOperation1().getAllOperationInvocations();
+		for(OperationInvocation invocation : invocationsInSourceOperationBeforeExtraction) {
+			for(ListIterator<OperationInvocation> iterator = operationInvocations.listIterator(); iterator.hasNext();) {
+				OperationInvocation matchingInvocation = iterator.next();
+				if(invocation.getName().equals(matchingInvocation.getName())) {
+					boolean matchingInvocationFound = false;
+					for(String argument : invocation.getArguments()) {
+						if(argument.equals(matchingInvocation.getExpression())) {
+							iterator.remove();
+							matchingInvocationFound = true;
+							break;
+						}
+					}
+					if(matchingInvocationFound) {
+						break;
+					}
+				}
+			}
 		}
 		return operationInvocations;
 	}

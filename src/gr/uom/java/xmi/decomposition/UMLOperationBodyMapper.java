@@ -4581,7 +4581,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			for(String key1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
-					if(invocation1.actualString().equals(diff1) && invocation1.getArguments().contains(diff2)) {
+					if(invocation1.actualString().equals(diff1) && invocation1.getArguments().contains(diff2) &&
+							(invocation1.getArguments().size() == 1 || (diff2.contains("?") && diff2.contains(":")))) {
 						Replacement r = new VariableReplacementWithMethodInvocation(diff1, diff2, (OperationInvocation)invocation1, Direction.INVOCATION_TO_VARIABLE);
 						info.addReplacement(r);
 						return true;
@@ -4590,7 +4591,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			for(String key2 : methodInvocationMap2.keySet()) {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
-					if(invocation2.actualString().equals(diff2) && invocation2.getArguments().contains(diff1)) {
+					if(invocation2.actualString().equals(diff2) && invocation2.getArguments().contains(diff1) &&
+							(invocation2.getArguments().size() == 1 || (diff1.contains("?") && diff1.contains(":")))) {
 						Replacement r = new VariableReplacementWithMethodInvocation(diff1, diff2, (OperationInvocation)invocation2, Direction.VARIABLE_TO_INVOCATION);
 						info.addReplacement(r);
 						return true;

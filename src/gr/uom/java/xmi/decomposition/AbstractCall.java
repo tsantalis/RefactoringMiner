@@ -448,11 +448,11 @@ public abstract class AbstractCall implements LocationInfoProvider {
 	}
 
 	public Replacement makeReplacementForReturnedArgument(String statement) {
-		if(argumentIsReturned(statement)) {
+		if(argumentIsReturned(statement) && (getArguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
 			return new Replacement(getArguments().get(0), statement.substring(7, statement.length()-2),
 					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
 		}
-		else if(argumentIsEqual(statement)) {
+		else if(argumentIsEqual(statement) && (getArguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
 			return new Replacement(getArguments().get(0), statement.substring(0, statement.length()-2),
 					ReplacementType.ARGUMENT_REPLACED_WITH_STATEMENT);
 		}
@@ -460,11 +460,11 @@ public abstract class AbstractCall implements LocationInfoProvider {
 	}
 
 	public Replacement makeReplacementForWrappedCall(String statement) {
-		if(argumentIsReturned(statement)) {
+		if(argumentIsReturned(statement) && (getArguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
 			return new Replacement(statement.substring(7, statement.length()-2), getArguments().get(0),
 					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
 		}
-		else if(argumentIsEqual(statement)) {
+		else if(argumentIsEqual(statement) && (getArguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
 			return new Replacement(statement.substring(0, statement.length()-2), getArguments().get(0),
 					ReplacementType.ARGUMENT_REPLACED_WITH_STATEMENT);
 		}

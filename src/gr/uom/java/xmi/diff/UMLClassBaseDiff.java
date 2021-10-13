@@ -1590,6 +1590,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 			}
+			if(nextClass.hasDeprecatedAnnotation() != originalClass.hasDeprecatedAnnotation() && modelDiff != null) {
+				for(UMLClass addedClass : modelDiff.getAddedClasses()) {
+					for(UMLOperation addedOperation : addedClass.getOperations()) {
+						OperationBody body = addedOperation.getBody();
+						List<String> parameterNameList = addedOperation.getParameterNameList();
+						if(body != null && body.getBodyHashCode() == operation1.getBody().getBodyHashCode() &&
+								parameterNameList.size() > 0 && parameterNameList.equals(operation1.getParameterNameList())) {
+							counter++;
+						}
+					}
+				}
+			}
 			if(counter == 1 && !existingMapperWithIdenticalMapping(stringRepresentation.get(1))) {
 				return true;
 			}
@@ -1635,6 +1647,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					if(body != null && body.getBodyHashCode() == operation2.getBody().getBodyHashCode() &&
 							parameterNameList.size() > 0 && parameterNameList.equals(operation2.getParameterNameList())) {
 						counter++;
+					}
+				}
+			}
+			if(nextClass.hasDeprecatedAnnotation() != originalClass.hasDeprecatedAnnotation() && modelDiff != null) {
+				for(UMLClass removedClass : modelDiff.getRemovedClasses()) {
+					for(UMLOperation removedOperation : removedClass.getOperations()) {
+						OperationBody body = removedOperation.getBody();
+						List<String> parameterNameList = removedOperation.getParameterNameList();
+						if(body != null && body.getBodyHashCode() == operation2.getBody().getBodyHashCode() &&
+								parameterNameList.size() > 0 && parameterNameList.equals(operation2.getParameterNameList())) {
+							counter++;
+						}
 					}
 				}
 			}

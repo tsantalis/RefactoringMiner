@@ -101,6 +101,15 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     	annotations.add(annotation);
     }
 
+	public boolean hasDeprecatedAnnotation() {
+		for(UMLAnnotation annotation : annotations) {
+			if(annotation.getTypeName().equals("Deprecated")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void addEnumConstant(UMLEnumConstant enumConstant) {
     	enumConstants.add(enumConstant);
     }

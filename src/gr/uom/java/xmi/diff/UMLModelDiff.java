@@ -123,9 +123,17 @@ public class UMLModelDiff {
 		   this.addedClasses.add(umlClass);
    }
 
+   public List<UMLClass> getAddedClasses() {
+	   return addedClasses;
+   }
+
    public void reportRemovedClass(UMLClass umlClass) {
 	   if(!removedClasses.contains(umlClass))
 		   this.removedClasses.add(umlClass);
+   }
+
+   public List<UMLClass> getRemovedClasses() {
+	   return removedClasses;
    }
 
    public void reportAddedGeneralization(UMLGeneralization umlGeneralization) {

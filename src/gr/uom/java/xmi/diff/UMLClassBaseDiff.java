@@ -1577,6 +1577,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 			}
+			if(nextClass.hasDeprecatedAnnotation() != originalClass.hasDeprecatedAnnotation()) {
+				for(UMLClass addedClass : modelDiff.getAddedClasses()) {
+					for(UMLOperation addedOperation : addedClass.getOperations()) {
+						OperationBody body = addedOperation.getBody();
+						List<String> parameterNameList = addedOperation.getParameterNameList();
+						if(body != null && body.getBodyHashCode() == operation1.getBody().getBodyHashCode() &&
+								parameterNameList.size() > 0 && parameterNameList.equals(operation1.getParameterNameList())) {
+							return true;
+						}
+					}
+				}
+			}
 		}
 		else if(stringRepresentation.size() == 3) {
 			int counter = 0;
@@ -1590,7 +1602,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 			}
-			if(nextClass.hasDeprecatedAnnotation() != originalClass.hasDeprecatedAnnotation() && modelDiff != null) {
+			if(nextClass.hasDeprecatedAnnotation() != originalClass.hasDeprecatedAnnotation()) {
 				for(UMLClass addedClass : modelDiff.getAddedClasses()) {
 					for(UMLOperation addedOperation : addedClass.getOperations()) {
 						OperationBody body = addedOperation.getBody();
@@ -1637,6 +1649,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 			}
+			if(nextClass.hasDeprecatedAnnotation() != originalClass.hasDeprecatedAnnotation()) {
+				for(UMLClass removedClass : modelDiff.getRemovedClasses()) {
+					for(UMLOperation removedOperation : removedClass.getOperations()) {
+						OperationBody body = removedOperation.getBody();
+						List<String> parameterNameList = removedOperation.getParameterNameList();
+						if(body != null && body.getBodyHashCode() == operation2.getBody().getBodyHashCode() &&
+								parameterNameList.size() > 0 && parameterNameList.equals(operation2.getParameterNameList())) {
+							return true;
+						}
+					}
+				}
+			}
 		}
 		else if(stringRepresentation.size() == 3) {
 			int counter = 0;
@@ -1650,7 +1674,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 			}
-			if(nextClass.hasDeprecatedAnnotation() != originalClass.hasDeprecatedAnnotation() && modelDiff != null) {
+			if(nextClass.hasDeprecatedAnnotation() != originalClass.hasDeprecatedAnnotation()) {
 				for(UMLClass removedClass : modelDiff.getRemovedClasses()) {
 					for(UMLOperation removedOperation : removedClass.getOperations()) {
 						OperationBody body = removedOperation.getBody();

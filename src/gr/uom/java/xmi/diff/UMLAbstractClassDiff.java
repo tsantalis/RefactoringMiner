@@ -71,6 +71,40 @@ public abstract class UMLAbstractClassDiff {
 
 	protected abstract void createBodyMappers() throws RefactoringMinerTimedOutException;
 
+	protected boolean isPartOfMethodMovedFromExistingMethod(UMLOperation removedOperation, UMLOperation addedOperation) {
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			List<OperationInvocation> invocationsCalledInOperation1 = mapper.getOperation1().getAllOperationInvocations();
+			List<OperationInvocation> invocationsCalledInOperation2 = mapper.getOperation2().getAllOperationInvocations();
+			Set<OperationInvocation> invocationsCalledOnlyInOperation1 = new LinkedHashSet<OperationInvocation>(invocationsCalledInOperation1);
+			Set<OperationInvocation> invocationsCalledOnlyInOperation2 = new LinkedHashSet<OperationInvocation>(invocationsCalledInOperation2);
+			invocationsCalledOnlyInOperation1.removeAll(invocationsCalledInOperation2);
+			invocationsCalledOnlyInOperation2.removeAll(invocationsCalledInOperation1);
+			for(OperationInvocation invocation : invocationsCalledOnlyInOperation2) {
+				if(invocation.matchesOperation(addedOperation, mapper.getOperation2(), modelDiff)) {
+					List<OperationInvocation> removedOperationInvocations = removedOperation.getAllOperationInvocations();
+					List<OperationInvocation> addedOperationInvocations = addedOperation.getAllOperationInvocations();
+					Set<OperationInvocation> movedInvocations = new LinkedHashSet<OperationInvocation>(addedOperationInvocations);
+					movedInvocations.removeAll(removedOperationInvocations);
+					movedInvocations.retainAll(invocationsCalledOnlyInOperation1);
+					Set<OperationInvocation> intersection = new LinkedHashSet<OperationInvocation>(addedOperationInvocations);
+					intersection.retainAll(removedOperationInvocations);
+					int chainedCalls = 0;
+					OperationInvocation previous = null;
+					for(OperationInvocation inv : intersection) {
+						if(previous != null && previous.getExpression() != null && previous.getExpression().equals(inv.actualString())) {
+							chainedCalls++;
+						}
+						previous = inv;
+					}
+					if(movedInvocations.size() > 1 && intersection.size() - chainedCalls > 1) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	protected boolean isPartOfMethodMovedToExistingMethod(UMLOperation removedOperation, UMLOperation addedOperation) {
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 			List<OperationInvocation> invocationsCalledInOperation1 = mapper.getOperation1().getAllOperationInvocations();

@@ -1289,7 +1289,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 					mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper) &&
 					absoluteDifferenceInPosition <= differenceInPosition &&
-					isPartOfMethodInlined(removedOperation, addedOperation) &&
+					(isPartOfMethodInlined(removedOperation, addedOperation) || isPartOfMethodMovedFromExistingMethod(removedOperation, addedOperation)) &&
 					removedOperation.testMethodCheck(addedOperation)) {
 				mapperSet.add(operationBodyMapper);
 			}
@@ -1346,7 +1346,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 					mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper) &&
 					absoluteDifferenceInPosition <= differenceInPosition &&
-					isPartOfMethodInlined(removedOperation, addedOperation)) {
+					(isPartOfMethodInlined(removedOperation, addedOperation) || isPartOfMethodMovedFromExistingMethod(removedOperation, addedOperation))) {
 				mapperSet.add(operationBodyMapper);
 			}
 			else {

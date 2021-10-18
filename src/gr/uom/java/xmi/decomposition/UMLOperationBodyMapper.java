@@ -90,6 +90,32 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(name.equals("stream") || name.equals("filter") || name.equals("forEach")) {
 					streamAPICalls.add(statement);
 				}
+				if(containsMethodSignatureOfAnonymousClass(invocation.actualString())) {
+					for(LambdaExpressionObject lambda : statement.getLambdas()) {
+						if(lambda.getBody() != null) {
+							for(OperationInvocation inv : lambda.getBody().getAllOperationInvocations()) {
+								name = inv.getName();
+								if(name.equals("stream") || name.equals("filter") || name.equals("forEach")) {
+									streamAPICalls.add(statement);
+									break;
+								}
+							}
+						}
+						else if(lambda.getExpression() != null) {
+							Map<String, List<OperationInvocation>> methodInvocationMap = lambda.getExpression().getMethodInvocationMap();
+							for(String key : methodInvocationMap.keySet()) {
+								List<OperationInvocation> invocations = methodInvocationMap.get(key);
+								for(OperationInvocation inv : invocations) {
+									name = inv.getName();
+									if(name.equals("stream") || name.equals("filter") || name.equals("forEach")) {
+										streamAPICalls.add(statement);
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		return streamAPICalls;
@@ -154,6 +180,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(AbstractCodeFragment streamAPICall : streamAPICalls2) {
 					if(streamAPICall.getLambdas().size() > 0) {
 						expandAnonymousAndLambdas(streamAPICall, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), this.getOperation2().getAnonymousClassList(), codeFragmentOperationMap2, operation2);
+					}
+				}
+			}
+			else if(streamAPICalls1.size() > 0 && streamAPICalls2.size() == 0) {
+				for(AbstractCodeFragment streamAPICall : streamAPICalls1) {
+					if(streamAPICall.getLambdas().size() > 0) {
+						expandAnonymousAndLambdas(streamAPICall, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), this.getOperation1().getAnonymousClassList(), codeFragmentOperationMap1, operation1);
 					}
 				}
 			}

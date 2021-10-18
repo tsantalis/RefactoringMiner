@@ -609,6 +609,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<StatementObject> leaves2 = operationBodyMapper.getNonMappedLeavesT2();
 			//adding leaves that were mapped with replacements or are inexact matches
 			Set<StatementObject> addedLeaves2 = new LinkedHashSet<StatementObject>();
+			List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
+			List<CompositeStatementObject> innerNodes2 = operationBodyMapper.getNonMappedInnerNodesT2();
+			//adding innerNodes that were mapped with replacements or are inexact matches
+			Set<CompositeStatementObject> addedInnerNodes2 = new LinkedHashSet<CompositeStatementObject>();
 			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
 				if(!returnWithVariableReplacement(mapping) && !nullLiteralReplacements(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
 					AbstractCodeFragment fragment = mapping.getFragment2();
@@ -640,6 +644,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					leave1.replaceParametersWithArguments(parameterToArgumentMap1);
 				}
 			}
+			for(StatementObject statement : new ArrayList<>(operationBodyMapper.getNonMappedLeavesT2())) {
+				expandAnonymousAndLambdas(statement, leaves2, innerNodes2, addedLeaves2, addedInnerNodes2, operation2.getAnonymousClassList(), codeFragmentOperationMap2, operation2);
+			}
 			resetNodes(leaves2);
 			//replace parameters with arguments in leaves2
 			if(!parameterToArgumentMap2.isEmpty()) {
@@ -650,11 +657,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			//compare leaves from T1 with leaves from T2
 			processLeaves(leaves1, leaves2, parameterToArgumentMap1);
 			
-			List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
 			innerNodes1.remove(composite1);
-			List<CompositeStatementObject> innerNodes2 = operationBodyMapper.getNonMappedInnerNodesT2();
-			//adding innerNodes that were mapped with replacements or are inexact matches
-			Set<CompositeStatementObject> addedInnerNodes2 = new LinkedHashSet<CompositeStatementObject>();
 			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
 				if(!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2())) {
 					AbstractCodeFragment fragment = mapping.getFragment2();

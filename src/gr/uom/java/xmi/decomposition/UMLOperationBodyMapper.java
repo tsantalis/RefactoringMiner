@@ -432,52 +432,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
 			Set<StatementObject> addedLeaves2 = new LinkedHashSet<StatementObject>();
 			Set<CompositeStatementObject> addedInnerNodes2 = new LinkedHashSet<CompositeStatementObject>();
-			for(StatementObject statement : leaves2) {
-				if(!statement.getAnonymousClassDeclarations().isEmpty()) {
-					List<UMLAnonymousClass> anonymousList = operation2.getAnonymousClassList();
-					for(UMLAnonymousClass anonymous : anonymousList) {
-						if(anonymous.isDirectlyNested() && statement.getLocationInfo().subsumes(anonymous.getLocationInfo())) {
-							for(UMLOperation anonymousOperation : anonymous.getOperations()) {
-								List<StatementObject> anonymousClassLeaves = anonymousOperation.getBody().getCompositeStatement().getLeaves();
-								for(StatementObject anonymousLeaf : anonymousClassLeaves) {
-									if(!leaves2.contains(anonymousLeaf)) {
-										addedLeaves2.add(anonymousLeaf);
-										codeFragmentOperationMap2.put(anonymousLeaf, anonymousOperation);
-									}
-								}
-								List<CompositeStatementObject> anonymousClassInnerNodes = anonymousOperation.getBody().getCompositeStatement().getInnerNodes();
-								for(CompositeStatementObject anonymousInnerNode : anonymousClassInnerNodes) {
-									if(!innerNodes2.contains(anonymousInnerNode)) {
-										addedInnerNodes2.add(anonymousInnerNode);
-										codeFragmentOperationMap2.put(anonymousInnerNode, anonymousOperation);
-									}
-								}
-							}
-						}
-					}
-				}
-				if(!statement.getLambdas().isEmpty()) {
-					for(LambdaExpressionObject lambda : statement.getLambdas()) {
-						if(lambda.getBody() != null) {
-							List<StatementObject> lambdaLeaves = lambda.getBody().getCompositeStatement().getLeaves();
-							for(StatementObject lambdaLeaf : lambdaLeaves) {
-								if(!leaves2.contains(lambdaLeaf)) {
-									addedLeaves2.add(lambdaLeaf);
-									codeFragmentOperationMap2.put(lambdaLeaf, operation2);
-								}
-							}
-							List<CompositeStatementObject> lambdaInnerNodes = lambda.getBody().getCompositeStatement().getInnerNodes();
-							for(CompositeStatementObject lambdaInnerNode : lambdaInnerNodes) {
-								if(!innerNodes2.contains(lambdaInnerNode)) {
-									addedInnerNodes2.add(lambdaInnerNode);
-									codeFragmentOperationMap2.put(lambdaInnerNode, operation2);
-								}
-							}
-						}
-					}
-				}
+			for(StatementObject statement : new ArrayList<>(composite2.getLeaves())) {
+				expandAnonymousAndLambdas(statement, leaves2, innerNodes2, addedLeaves2, addedInnerNodes2, operation2.getAnonymousClassList(), codeFragmentOperationMap2, operation2);
 			}
-			leaves2.addAll(addedLeaves2);
 			resetNodes(leaves1);
 			//replace parameters with arguments in leaves1
 			if(!parameterToArgumentMap1.isEmpty()) {

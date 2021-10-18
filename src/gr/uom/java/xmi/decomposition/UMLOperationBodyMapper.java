@@ -132,7 +132,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(anonymousFragment != null) {
-						expandAnonymousAndLambdas(anonymousFragment, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), this);
+						expandAnonymousAndLambdas(anonymousFragment, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), this.getOperation1().getAnonymousClassList(), codeFragmentOperationMap1, operation1);
 					}
 				}
 				else if(anonymous1.size() == 0 && anonymous2.size() == 1) {
@@ -144,7 +144,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(anonymousFragment != null) {
-						expandAnonymousAndLambdas(anonymousFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), this);
+						expandAnonymousAndLambdas(anonymousFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), this.getOperation2().getAnonymousClassList(), codeFragmentOperationMap2, operation2);
 					}
 				}
 			}
@@ -153,7 +153,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(streamAPICalls1.size() == 0 && streamAPICalls2.size() > 0) {
 				for(AbstractCodeFragment streamAPICall : streamAPICalls2) {
 					if(streamAPICall.getLambdas().size() > 0) {
-						expandAnonymousAndLambdas(streamAPICall, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), this);
+						expandAnonymousAndLambdas(streamAPICall, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), this.getOperation2().getAnonymousClassList(), codeFragmentOperationMap2, operation2);
 					}
 				}
 			}
@@ -410,12 +410,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Set<StatementObject> addedLeaves1 = new LinkedHashSet<StatementObject>();
 			Set<CompositeStatementObject> addedInnerNodes1 = new LinkedHashSet<CompositeStatementObject>();
 			for(StatementObject nonMappedLeaf1 : new ArrayList<>(operationBodyMapper.getNonMappedLeavesT1())) {
-				expandAnonymousAndLambdas(nonMappedLeaf1, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper);
+				expandAnonymousAndLambdas(nonMappedLeaf1, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.getOperation1().getAnonymousClassList(), codeFragmentOperationMap1, operation1);
 			}
 			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
 				if(!returnWithVariableReplacement(mapping) && !nullLiteralReplacements(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
 					AbstractCodeFragment fragment = mapping.getFragment1();
-					expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper);
+					expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.getOperation1().getAnonymousClassList(), codeFragmentOperationMap1, operation1);
 				}
 			}
 			for(UMLOperationBodyMapper childMapper : operationBodyMapper.childMappers) {
@@ -423,7 +423,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					for(AbstractCodeMapping mapping : childMapper.getMappings()) {
 						if(!returnWithVariableReplacement(mapping) && !nullLiteralReplacements(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
 							AbstractCodeFragment fragment = mapping.getFragment1();
-							expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, childMapper);
+							expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, childMapper.getOperation1().getAnonymousClassList(), codeFragmentOperationMap1, operation1);
 						}
 					}
 				}
@@ -572,35 +572,34 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	private void expandAnonymousAndLambdas(AbstractCodeFragment fragment, List<StatementObject> leaves1,
-			List<CompositeStatementObject> innerNodes1, Set<StatementObject> addedLeaves1,
-			Set<CompositeStatementObject> addedInnerNodes1, UMLOperationBodyMapper operationBodyMapper) {
+	private void expandAnonymousAndLambdas(AbstractCodeFragment fragment, List<StatementObject> leaves, List<CompositeStatementObject> innerNodes,
+			Set<StatementObject> addedLeaves, Set<CompositeStatementObject> addedInnerNodes,
+			List<UMLAnonymousClass> anonymousClassList, Map<AbstractCodeFragment, UMLOperation> map, UMLOperation parentOperation) {
 		if(fragment instanceof StatementObject) {
 			StatementObject statement = (StatementObject)fragment;
-			if(!leaves1.contains(statement)) {
-				leaves1.add(statement);
-				addedLeaves1.add(statement);
+			if(!leaves.contains(statement)) {
+				leaves.add(statement);
+				addedLeaves.add(statement);
 			}
 			if(!statement.getAnonymousClassDeclarations().isEmpty()) {
-				List<UMLAnonymousClass> anonymousList = operationBodyMapper.getOperation1().getAnonymousClassList();
-				for(UMLAnonymousClass anonymous : anonymousList) {
+				for(UMLAnonymousClass anonymous : anonymousClassList) {
 					if(statement.getLocationInfo().subsumes(anonymous.getLocationInfo())) {
 						for(UMLOperation anonymousOperation : anonymous.getOperations()) {
 							if(anonymousOperation.getBody() != null) {
 								List<StatementObject> anonymousClassLeaves = anonymousOperation.getBody().getCompositeStatement().getLeaves();
 								for(StatementObject anonymousLeaf : anonymousClassLeaves) {
-									if(!leaves1.contains(anonymousLeaf)) {
-										leaves1.add(anonymousLeaf);
-										addedLeaves1.add(anonymousLeaf);
-										codeFragmentOperationMap1.put(anonymousLeaf, anonymousOperation);
+									if(!leaves.contains(anonymousLeaf)) {
+										leaves.add(anonymousLeaf);
+										addedLeaves.add(anonymousLeaf);
+										map.put(anonymousLeaf, anonymousOperation);
 									}
 								}
 								List<CompositeStatementObject> anonymousClassInnerNodes = anonymousOperation.getBody().getCompositeStatement().getInnerNodes();
 								for(CompositeStatementObject anonymousInnerNode : anonymousClassInnerNodes) {
-									if(!innerNodes1.contains(anonymousInnerNode)) {
-										innerNodes1.add(anonymousInnerNode);
-										addedInnerNodes1.add(anonymousInnerNode);
-										codeFragmentOperationMap1.put(anonymousInnerNode, anonymousOperation);
+									if(!innerNodes.contains(anonymousInnerNode)) {
+										innerNodes.add(anonymousInnerNode);
+										addedInnerNodes.add(anonymousInnerNode);
+										map.put(anonymousInnerNode, anonymousOperation);
 									}
 								}
 							}
@@ -613,18 +612,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(lambda.getBody() != null) {
 						List<StatementObject> lambdaLeaves = lambda.getBody().getCompositeStatement().getLeaves();
 						for(StatementObject lambdaLeaf : lambdaLeaves) {
-							if(!leaves1.contains(lambdaLeaf)) {
-								leaves1.add(lambdaLeaf);
-								addedLeaves1.add(lambdaLeaf);
-								codeFragmentOperationMap1.put(lambdaLeaf, operation1);
+							if(!leaves.contains(lambdaLeaf)) {
+								leaves.add(lambdaLeaf);
+								addedLeaves.add(lambdaLeaf);
+								map.put(lambdaLeaf, parentOperation);
 							}
 						}
 						List<CompositeStatementObject> lambdaInnerNodes = lambda.getBody().getCompositeStatement().getInnerNodes();
 						for(CompositeStatementObject lambdaInnerNode : lambdaInnerNodes) {
-							if(!innerNodes1.contains(lambdaInnerNode)) {
-								innerNodes1.add(lambdaInnerNode);
-								addedInnerNodes1.add(lambdaInnerNode);
-								codeFragmentOperationMap1.put(lambdaInnerNode, operation1);
+							if(!innerNodes.contains(lambdaInnerNode)) {
+								innerNodes.add(lambdaInnerNode);
+								addedInnerNodes.add(lambdaInnerNode);
+								map.put(lambdaInnerNode, parentOperation);
 							}
 						}
 					}

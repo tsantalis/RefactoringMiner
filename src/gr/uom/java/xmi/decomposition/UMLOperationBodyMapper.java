@@ -81,7 +81,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Map<AbstractCodeFragment, UMLOperation> codeFragmentOperationMap1 = new LinkedHashMap<AbstractCodeFragment, UMLOperation>();
 	private Map<AbstractCodeFragment, UMLOperation> codeFragmentOperationMap2 = new LinkedHashMap<AbstractCodeFragment, UMLOperation>();
 	
-	private Set<StatementObject> streamAPICalls(List<StatementObject> leaves) {
+	private Set<StatementObject> statementsWithStreamAPICalls(List<StatementObject> leaves) {
 		Set<StatementObject> streamAPICalls = new LinkedHashSet<StatementObject>();
 		for(StatementObject statement : leaves) {
 			OperationInvocation invocation = statement.invocationCoveringEntireFragment();
@@ -90,7 +90,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(name.equals("stream") || name.equals("filter") || name.equals("forEach")) {
 					streamAPICalls.add(statement);
 				}
-				if(containsMethodSignatureOfAnonymousClass(invocation.actualString())) {
+				if(invocation.actualString().contains(" -> ")) {
 					for(LambdaExpressionObject lambda : statement.getLambdas()) {
 						if(lambda.getBody() != null) {
 							for(OperationInvocation inv : lambda.getBody().getAllOperationInvocations()) {
@@ -110,6 +110,44 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(name.equals("stream") || name.equals("filter") || name.equals("forEach")) {
 										streamAPICalls.add(statement);
 										break;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return streamAPICalls;
+	}
+
+	private List<OperationInvocation> streamAPICalls(List<StatementObject> leaves) {
+		List<OperationInvocation> streamAPICalls = new ArrayList<OperationInvocation>();
+		for(StatementObject statement : leaves) {
+			OperationInvocation invocation = statement.invocationCoveringEntireFragment();
+			if(invocation != null) {
+				String name = invocation.getName();
+				if(name.equals("stream") || name.equals("filter") || name.equals("forEach")) {
+					streamAPICalls.add(invocation);
+				}
+				if(invocation.actualString().contains(" -> ")) {
+					for(LambdaExpressionObject lambda : statement.getLambdas()) {
+						if(lambda.getBody() != null) {
+							for(OperationInvocation inv : lambda.getBody().getAllOperationInvocations()) {
+								name = inv.getName();
+								if(name.equals("stream") || name.equals("filter") || name.equals("forEach")) {
+									streamAPICalls.add(inv);
+								}
+							}
+						}
+						else if(lambda.getExpression() != null) {
+							Map<String, List<OperationInvocation>> methodInvocationMap = lambda.getExpression().getMethodInvocationMap();
+							for(String key : methodInvocationMap.keySet()) {
+								List<OperationInvocation> invocations = methodInvocationMap.get(key);
+								for(OperationInvocation inv : invocations) {
+									name = inv.getName();
+									if(name.equals("stream") || name.equals("filter") || name.equals("forEach")) {
+										streamAPICalls.add(inv);
 									}
 								}
 							}
@@ -174,8 +212,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			Set<StatementObject> streamAPICalls1 = streamAPICalls(leaves1);
-			Set<StatementObject> streamAPICalls2 = streamAPICalls(leaves2);
+			Set<StatementObject> streamAPICalls1 = statementsWithStreamAPICalls(leaves1);
+			Set<StatementObject> streamAPICalls2 = statementsWithStreamAPICalls(leaves2);
 			if(streamAPICalls1.size() == 0 && streamAPICalls2.size() > 0) {
 				for(AbstractCodeFragment streamAPICall : streamAPICalls2) {
 					if(streamAPICall.getLambdas().size() > 0) {
@@ -321,8 +359,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		List<StatementObject> leaves2 = composite2.getLeaves();
 		List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
 		List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
-		Set<StatementObject> streamAPICalls1 = streamAPICalls(leaves1);
-		Set<StatementObject> streamAPICalls2 = streamAPICalls(leaves2);
+		Set<StatementObject> streamAPICalls1 = statementsWithStreamAPICalls(leaves1);
+		Set<StatementObject> streamAPICalls2 = statementsWithStreamAPICalls(leaves2);
 		if(streamAPICalls1.size() == 0 && streamAPICalls2.size() > 0) {
 			for(AbstractCodeFragment streamAPICall : streamAPICalls2) {
 				if(streamAPICall.getLambdas().size() > 0) {
@@ -3549,6 +3587,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(mappings > 0) {
 						int nonMappedElementsT1 = mapper.nonMappedElementsT1();
 						int nonMappedElementsT2 = mapper.nonMappedElementsT2();
+						List<OperationInvocation> invocations1 = streamAPICalls(mapper.getNonMappedLeavesT1());
+						List<OperationInvocation> invocations2 = streamAPICalls(mapper.getNonMappedLeavesT2());
+						if(invocations1.size() > 0 && invocations2.size() == 0) {
+							nonMappedElementsT2 = nonMappedElementsT2 - ignoredNonMappedElements(invocations1, mapper.getNonMappedLeavesT2(), mapper.getNonMappedInnerNodesT2());
+						}
+						else if(invocations1.size() == 0 && invocations2.size() > 0) {
+							nonMappedElementsT1 = nonMappedElementsT1 - ignoredNonMappedElements(invocations2, mapper.getNonMappedLeavesT1(), mapper.getNonMappedInnerNodesT1());
+						}
 						if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 								nonMappedElementsT1 == 0 || nonMappedElementsT2 == 0) {
 							this.mappings.addAll(mapper.mappings);
@@ -3591,6 +3637,46 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private int ignoredNonMappedElements(List<OperationInvocation> invocations, List<StatementObject> nonMappedLeaves, List<CompositeStatementObject> nonMappedInnerNodes) {
+		int counter = 0;
+		for(OperationInvocation inv : invocations) {
+			if(inv.getName().equals("forEach")) {
+				for(CompositeStatementObject comp : nonMappedInnerNodes) {
+					if(comp.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
+							comp.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
+							comp.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
+							comp.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT)) {
+						counter++;
+					}
+				}
+				for(StatementObject statement : nonMappedLeaves) {
+					Map<String, List<OperationInvocation>> methodInvocationMap = statement.getMethodInvocationMap();
+					for(String key : methodInvocationMap.keySet()) {
+						List<OperationInvocation> statementInvocations = methodInvocationMap.get(key);
+						for(OperationInvocation statementInvocation : statementInvocations) {
+							if(statementInvocation.getName().equals("iterator") || statementInvocation.getName().equals("next")) {
+								counter++;
+							}
+						}
+					}
+					for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
+						if(declaration.getInitializer() != null && declaration.getInitializer().getNumberLiterals().contains(declaration.getInitializer().getExpression())) {
+							counter++;
+						}
+					}
+				}
+			}
+			else if(inv.getName().equals("filter")) {
+				for(CompositeStatementObject comp : nonMappedInnerNodes) {
+					if(comp.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+						counter++;
+					}
+				}
+			}
+		}
+		return counter;
 	}
 
 	private boolean equalAfterInfixExpressionExpansion(String s1, String s2, ReplacementInfo replacementInfo, List<String> infixExpressions1) {

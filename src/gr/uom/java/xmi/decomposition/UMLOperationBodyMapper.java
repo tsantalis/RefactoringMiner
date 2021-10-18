@@ -319,10 +319,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			throws RefactoringMinerTimedOutException {
 		List<StatementObject> leaves1 = composite1.getLeaves();
 		List<StatementObject> leaves2 = composite2.getLeaves();
-		processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>());
-		
 		List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
 		List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
+		Set<StatementObject> streamAPICalls1 = streamAPICalls(leaves1);
+		Set<StatementObject> streamAPICalls2 = streamAPICalls(leaves2);
+		if(streamAPICalls1.size() == 0 && streamAPICalls2.size() > 0) {
+			for(AbstractCodeFragment streamAPICall : streamAPICalls2) {
+				if(streamAPICall.getLambdas().size() > 0) {
+					expandAnonymousAndLambdas(streamAPICall, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), this.getOperation2().getAnonymousClassList(), codeFragmentOperationMap2, operation2);
+				}
+			}
+		}
+		else if(streamAPICalls1.size() > 0 && streamAPICalls2.size() == 0) {
+			for(AbstractCodeFragment streamAPICall : streamAPICalls1) {
+				if(streamAPICall.getLambdas().size() > 0) {
+					expandAnonymousAndLambdas(streamAPICall, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), this.getOperation1().getAnonymousClassList(), codeFragmentOperationMap1, operation1);
+				}
+			}
+		}
+		processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>());
+		
 		processInnerNodes(innerNodes1, innerNodes2, new LinkedHashMap<String, String>());
 		
 		nonMappedLeavesT1.addAll(leaves1);
@@ -5539,6 +5555,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(invocation != null && matchesOperation(invocation, addedOperations, operation2)) {
 							mappedLeavesSize++;
 						}
+						if(invocation != null && invocation.actualString().contains(" -> ")) {
+							for(LambdaExpressionObject lambda : leaf2.getLambdas()) {
+								if(lambda.getBody() != null) {
+									for(OperationInvocation inv : lambda.getBody().getAllOperationInvocations()) {
+										if(matchesOperation(inv, addedOperations, operation2)) {
+											mappedLeavesSize++;
+										}
+									}
+								}
+								else if(lambda.getExpression() != null) {
+									Map<String, List<OperationInvocation>> methodInvocationMap = lambda.getExpression().getMethodInvocationMap();
+									for(String key : methodInvocationMap.keySet()) {
+										List<OperationInvocation> invocations = methodInvocationMap.get(key);
+										for(OperationInvocation inv : invocations) {
+											if(matchesOperation(inv, addedOperations, operation2)) {
+												mappedLeavesSize++;
+											}
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 				else if(leaveSize1 <= 2) {
@@ -5546,6 +5584,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						OperationInvocation invocation = leaf1.invocationCoveringEntireFragment();
 						if(invocation != null && matchesOperation(invocation, removedOperations, operation1)) {
 							mappedLeavesSize++;
+						}
+						if(invocation != null && invocation.actualString().contains(" -> ")) {
+							for(LambdaExpressionObject lambda : leaf1.getLambdas()) {
+								if(lambda.getBody() != null) {
+									for(OperationInvocation inv : lambda.getBody().getAllOperationInvocations()) {
+										if(matchesOperation(inv, removedOperations, operation1)) {
+											mappedLeavesSize++;
+										}
+									}
+								}
+								else if(lambda.getExpression() != null) {
+									Map<String, List<OperationInvocation>> methodInvocationMap = lambda.getExpression().getMethodInvocationMap();
+									for(String key : methodInvocationMap.keySet()) {
+										List<OperationInvocation> invocations = methodInvocationMap.get(key);
+										for(OperationInvocation inv : invocations) {
+											if(matchesOperation(inv, removedOperations, operation1)) {
+												mappedLeavesSize++;
+											}
+										}
+									}
+								}
+							}
 						}
 					}
 				}

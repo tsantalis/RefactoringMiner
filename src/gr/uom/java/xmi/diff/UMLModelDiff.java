@@ -1988,7 +1988,7 @@ public class UMLModelDiff {
 	   for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 		   UMLOperation removedOperation = removedOperationIterator.next();
 		   for(UMLOperationBodyMapper mapper : mappers) {
-			   if(!mapper.getNonMappedLeavesT2().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty() || !mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
+			   if((!mapper.getNonMappedLeavesT2().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty() || !mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) && !mapper.containsInlineOperationRefactoring(removedOperation)) {
 				   List<OperationInvocation> operationInvocations = mapper.getOperation1().getAllOperationInvocations();
 				   List<OperationInvocation> removedOperationInvocations = new ArrayList<OperationInvocation>();
 				   for(OperationInvocation invocation : operationInvocations) {

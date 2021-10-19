@@ -28,6 +28,7 @@ import gr.uom.java.xmi.diff.ChangeReturnTypeRefactoring;
 import gr.uom.java.xmi.diff.ChangeVariableTypeRefactoring;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
+import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
@@ -5547,6 +5548,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(ref instanceof ExtractOperationRefactoring) {
 				ExtractOperationRefactoring extractRef = (ExtractOperationRefactoring)ref;
 				if(extractRef.getExtractedOperation().equals(extractedOperation)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean containsInlineOperationRefactoring(UMLOperation inlinedOperation) {
+		if(classDiff != null) {
+			if(classDiff.containsInlineOperationRefactoring(inlinedOperation, operation2)) {
+				return true;
+			}
+		}
+		for(Refactoring ref : refactorings) {
+			if(ref instanceof InlineOperationRefactoring) {
+				InlineOperationRefactoring inlineRef = (InlineOperationRefactoring)ref;
+				if(inlineRef.getInlinedOperation().equals(inlinedOperation)) {
 					return true;
 				}
 			}

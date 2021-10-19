@@ -1976,6 +1976,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return false;
 	}
 
+	public boolean containsInlineOperationRefactoring(UMLOperation inlinedOperation, UMLOperation targetOperationAfterInline) {
+		for(Refactoring ref : refactorings) {
+			if(ref instanceof InlineOperationRefactoring) {
+				InlineOperationRefactoring inlineRef = (InlineOperationRefactoring)ref;
+				if(inlineRef.getTargetOperationAfterInline().equals(targetOperationAfterInline) &&
+						inlineRef.getInlinedOperation().equalSignature(inlinedOperation)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public UMLModelDiff getModelDiff() {
 		return modelDiff;
 	}

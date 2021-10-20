@@ -527,6 +527,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	public List<Refactoring> getRefactorings() throws RefactoringMinerTimedOutException {
 		List<Refactoring> refactorings = new ArrayList<Refactoring>(this.refactorings);
+		if(!originalClass.getTypeDeclarationKind().equals(nextClass.getTypeDeclarationKind())) {
+			ChangeTypeDeclarationKindRefactoring ref = new ChangeTypeDeclarationKindRefactoring(originalClass.getTypeDeclarationKind(), nextClass.getTypeDeclarationKind(), originalClass, nextClass);
+			refactorings.add(ref);
+		}
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 			processMapperRefactorings(mapper, refactorings);
 		}

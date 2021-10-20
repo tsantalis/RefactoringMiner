@@ -94,7 +94,8 @@ public enum RefactoringType {
 	ADD_CLASS_MODIFIER("Add Class Modifier", "Add Class Modifier (.+) in class (.+)"),
 	REMOVE_CLASS_MODIFIER("Remove Class Modifier", "Remove Class Modifier (.+) in class (.+)"),
 	SPLIT_PACKAGE("Split Package", "Split Package (.+) to \\[(.+)\\]"),
-	MERGE_PACKAGE("Merge Package", "Merge Package \\[(.+)\\] to (.+)");
+	MERGE_PACKAGE("Merge Package", "Merge Package \\[(.+)\\] to (.+)"),
+	CHANGE_TYPE_DECLARATION_KIND("Change Type Declaration Kind", "Change Type Declaration Kind (.+) to (.+) in type (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -181,7 +182,8 @@ public enum RefactoringType {
 		ADD_CLASS_MODIFIER,
 		REMOVE_CLASS_MODIFIER,
 		SPLIT_PACKAGE,
-		MERGE_PACKAGE
+		MERGE_PACKAGE,
+		CHANGE_TYPE_DECLARATION_KIND
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {
@@ -297,20 +299,6 @@ public enum RefactoringType {
 
     private static String attributeKey(String attribute, String typeKey) {
         return typeKey + "#" + AstUtils.normalizeAttribute(attribute);
-    }
-
-    public List<RefactoringRelationship> parseRefactoring(String refactoringDescription) {
-        List<RefactoringRelationship> result;
-        Matcher m = regex.matcher(refactoringDescription);
-        if (m.matches()) {
-            
-            for (int g = 1; g <= m.groupCount(); g++) {
-                
-            }
-            return null;
-        } else {
-            throw new RuntimeException("Pattern not matched: " + refactoringDescription);
-        }
     }
 
     public static RefactoringType extractFromDescription(String refactoringDescription) {

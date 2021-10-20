@@ -77,6 +77,15 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.enumConstants = new ArrayList<UMLEnumConstant>();
     }
 
+    public String getTypeDeclarationKind() {
+    	if(isInterface)
+    		return "interface";
+    	else if(isEnum)
+    		return "enum";
+    	else
+    		return "class";
+    }
+
     public List<UMLTypeParameter> getTypeParameters() {
 		return typeParameters;
 	}

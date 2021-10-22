@@ -86,17 +86,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Set<StatementObject> streamAPICalls = new LinkedHashSet<StatementObject>();
 		for(StatementObject statement : leaves) {
 			OperationInvocation invocation = statement.invocationCoveringEntireFragment();
+			if(invocation == null) {
+				invocation = statement.assignmentInvocationCoveringEntireStatement();
+			}
 			if(invocation != null) {
-				String name = invocation.getName();
-				if(name.equals("stream") || name.equals("filter") || name.equals("forEach")) {
+				if(streamAPIName(invocation.getName())) {
 					streamAPICalls.add(statement);
 				}
 				if(invocation.actualString().contains(" -> ")) {
 					for(LambdaExpressionObject lambda : statement.getLambdas()) {
 						if(lambda.getBody() != null) {
 							for(OperationInvocation inv : lambda.getBody().getAllOperationInvocations()) {
-								name = inv.getName();
-								if(name.equals("stream") || name.equals("filter") || name.equals("forEach")) {
+								if(streamAPIName(inv.getName())) {
 									streamAPICalls.add(statement);
 									break;
 								}
@@ -107,8 +108,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							for(String key : methodInvocationMap.keySet()) {
 								List<OperationInvocation> invocations = methodInvocationMap.get(key);
 								for(OperationInvocation inv : invocations) {
-									name = inv.getName();
-									if(name.equals("stream") || name.equals("filter") || name.equals("forEach")) {
+									if(streamAPIName(inv.getName())) {
 										streamAPICalls.add(statement);
 										break;
 									}
@@ -122,21 +122,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return streamAPICalls;
 	}
 
+	private boolean streamAPIName(String name) {
+		return name.equals("stream") || name.equals("filter") || name.equals("forEach") || name.equals("collect");
+	}
+
 	private List<OperationInvocation> streamAPICalls(List<StatementObject> leaves) {
 		List<OperationInvocation> streamAPICalls = new ArrayList<OperationInvocation>();
 		for(StatementObject statement : leaves) {
 			OperationInvocation invocation = statement.invocationCoveringEntireFragment();
+			if(invocation == null) {
+				invocation = statement.assignmentInvocationCoveringEntireStatement();
+			}
 			if(invocation != null) {
-				String name = invocation.getName();
-				if(name.equals("stream") || name.equals("filter") || name.equals("forEach")) {
+				if(streamAPIName(invocation.getName())) {
 					streamAPICalls.add(invocation);
 				}
 				if(invocation.actualString().contains(" -> ")) {
 					for(LambdaExpressionObject lambda : statement.getLambdas()) {
 						if(lambda.getBody() != null) {
 							for(OperationInvocation inv : lambda.getBody().getAllOperationInvocations()) {
-								name = inv.getName();
-								if(name.equals("stream") || name.equals("filter") || name.equals("forEach")) {
+								if(streamAPIName(inv.getName())) {
 									streamAPICalls.add(inv);
 								}
 							}
@@ -146,8 +151,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							for(String key : methodInvocationMap.keySet()) {
 								List<OperationInvocation> invocations = methodInvocationMap.get(key);
 								for(OperationInvocation inv : invocations) {
-									name = inv.getName();
-									if(name.equals("stream") || name.equals("filter") || name.equals("forEach")) {
+									if(streamAPIName(inv.getName())) {
 										streamAPICalls.add(inv);
 									}
 								}

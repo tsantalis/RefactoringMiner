@@ -23,11 +23,11 @@ import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
-import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
@@ -849,7 +849,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								matchingVariableName = variableDeclaration.getVariableName();
 							}
 							else {
-								for(StatementObject statement : candidateMapper.getNonMappedLeavesT1()) {
+								for(AbstractCodeFragment statement : candidateMapper.getNonMappedLeavesT1()) {
 									if(statement.getString().startsWith(variableDeclaration.getVariableName() + "=") ||
 											statement.getString().startsWith("this." + variableDeclaration.getVariableName() + "=")) {
 										nonMatchingVariableNames.add(variableDeclaration.getVariableName());
@@ -895,7 +895,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								matchingVariableName = variableDeclaration.getVariableName();
 							}
 							else {
-								for(StatementObject statement : candidateMapper.getNonMappedLeavesT2()) {
+								for(AbstractCodeFragment statement : candidateMapper.getNonMappedLeavesT2()) {
 									if(statement.getString().startsWith(variableDeclaration.getVariableName() + "=") ||
 											statement.getString().startsWith("this." + variableDeclaration.getVariableName() + "=")) {
 										nonMatchingVariableNames.add(variableDeclaration.getVariableName());
@@ -1399,7 +1399,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				int parameterizedVariableDeclarationStatements = 0;
 				UMLOperation addedOperation = operationBodyMapper.getOperation2();
 				List<String> nonMappedLeavesT1 = new ArrayList<String>();
-				for(StatementObject statement : operationBodyMapper.getNonMappedLeavesT1()) {
+				for(AbstractCodeFragment statement : operationBodyMapper.getNonMappedLeavesT1()) {
 					if(statement.countableStatement()) {
 						nonMappedLeavesT1.add(statement.getString());
 						for(String parameterName : addedOperation.getParameterNameList()) {
@@ -1414,7 +1414,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				int nonMappedLeavesExactlyMatchedInTheBodyOfAddedOperation = 0;
 				for(UMLOperation operation : addedOperations) {
 					if(!operation.equals(addedOperation) && operation.getBody() != null) {
-						for(StatementObject statement : operation.getBody().getCompositeStatement().getLeaves()) {
+						for(AbstractCodeFragment statement : operation.getBody().getCompositeStatement().getLeaves()) {
 							if(nonMappedLeavesT1.contains(statement.getString())) {
 								nonMappedLeavesExactlyMatchedInTheBodyOfAddedOperation++;
 							}
@@ -1427,7 +1427,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				int countableStatements = 0;
 				int parameterizedVariableDeclarationStatements = 0;
 				UMLOperation removedOperation = operationBodyMapper.getOperation1();
-				for(StatementObject statement : operationBodyMapper.getNonMappedLeavesT2()) {
+				for(AbstractCodeFragment statement : operationBodyMapper.getNonMappedLeavesT2()) {
 					if(statement.countableStatement()) {
 						for(String parameterName : removedOperation.getParameterNameList()) {
 							if(statement.getVariableDeclaration(parameterName) != null) {
@@ -1442,9 +1442,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 			else if((operationBodyMapper.nonMappedElementsT1() == 1 || operationBodyMapper.nonMappedElementsT2() == 1) &&
 					operationBodyMapper.getNonMappedInnerNodesT1().size() == 0 && operationBodyMapper.getNonMappedInnerNodesT2().size() == 0) {
-				StatementObject statementUsingParameterAsInvoker1 = null;
+				AbstractCodeFragment statementUsingParameterAsInvoker1 = null;
 				UMLOperation removedOperation = operationBodyMapper.getOperation1();
-				for(StatementObject statement : operationBodyMapper.getNonMappedLeavesT1()) {
+				for(AbstractCodeFragment statement : operationBodyMapper.getNonMappedLeavesT1()) {
 					if(statement.countableStatement()) {
 						for(String parameterName : removedOperation.getParameterNameList()) {
 							OperationInvocation invocation = statement.invocationCoveringEntireFragment();
@@ -1455,9 +1455,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 				}
-				StatementObject statementUsingParameterAsInvoker2 = null;
+				AbstractCodeFragment statementUsingParameterAsInvoker2 = null;
 				UMLOperation addedOperation = operationBodyMapper.getOperation2();
-				for(StatementObject statement : operationBodyMapper.getNonMappedLeavesT2()) {
+				for(AbstractCodeFragment statement : operationBodyMapper.getNonMappedLeavesT2()) {
 					if(statement.countableStatement()) {
 						for(String parameterName : addedOperation.getParameterNameList()) {
 							OperationInvocation invocation = statement.invocationCoveringEntireFragment();
@@ -1773,15 +1773,15 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	private boolean singleUnmatchedStatementCallsAddedOperation(UMLOperationBodyMapper operationBodyMapper) {
-		List<StatementObject> nonMappedLeavesT1 = operationBodyMapper.getNonMappedLeavesT1();
-		List<StatementObject> nonMappedLeavesT2 = operationBodyMapper.getNonMappedLeavesT2();
+		List<AbstractCodeFragment> nonMappedLeavesT1 = operationBodyMapper.getNonMappedLeavesT1();
+		List<AbstractCodeFragment> nonMappedLeavesT2 = operationBodyMapper.getNonMappedLeavesT2();
 		if(nonMappedLeavesT1.size() == 1 && nonMappedLeavesT2.size() == 1) {
-			StatementObject statementT2 = nonMappedLeavesT2.get(0);
+			AbstractCodeFragment statementT2 = nonMappedLeavesT2.get(0);
 			OperationInvocation invocationT2 = statementT2.invocationCoveringEntireFragment();
 			if(invocationT2 != null) {
 				for(UMLOperation addedOperation : addedOperations) {
 					if(invocationT2.matchesOperation(addedOperation, operationBodyMapper.getOperation2(), modelDiff)) {
-						StatementObject statementT1 = nonMappedLeavesT1.get(0);
+						AbstractCodeFragment statementT1 = nonMappedLeavesT1.get(0);
 						OperationInvocation invocationT1 = statementT1.invocationCoveringEntireFragment();
 						if(invocationT1 != null && addedOperation.getAllOperationInvocations().contains(invocationT1)) {
 							return true;

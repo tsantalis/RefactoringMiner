@@ -134,8 +134,8 @@ public class StatementObject extends AbstractStatement {
 	}
 
 	@Override
-	public List<StatementObject> getLeaves() {
-		List<StatementObject> leaves = new ArrayList<StatementObject>();
+	public List<AbstractCodeFragment> getLeaves() {
+		List<AbstractCodeFragment> leaves = new ArrayList<AbstractCodeFragment>();
 		leaves.add(this);
 		return leaves;
 	}

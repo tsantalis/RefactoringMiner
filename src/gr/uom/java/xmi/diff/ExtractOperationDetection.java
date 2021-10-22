@@ -76,7 +76,7 @@ public class ExtractOperationDetection {
 			for(CompositeStatementObject composite : mapper.getNonMappedInnerNodesT1()) {
 				allVariables.addAll(composite.getVariables());
 			}
-			for(StatementObject leaf : mapper.getNonMappedLeavesT1()) {
+			for(AbstractCodeFragment leaf : mapper.getNonMappedLeavesT1()) {
 				allVariables.addAll(leaf.getVariables());
 			}
 			int max = 0;
@@ -195,7 +195,7 @@ public class ExtractOperationDetection {
 				}
 			}
 		}
-		for(StatementObject statement : mapper.getNonMappedLeavesT2()) {
+		for(AbstractCodeFragment statement : mapper.getNonMappedLeavesT2()) {
 			addStatementInvocations(operationInvocations, statement);
 		}
 		return operationInvocations;
@@ -228,7 +228,7 @@ public class ExtractOperationDetection {
 		return operationInvocations;
 	}
 
-	public static void addStatementInvocations(List<OperationInvocation> operationInvocations, StatementObject statement) {
+	public static void addStatementInvocations(List<OperationInvocation> operationInvocations, AbstractCodeFragment statement) {
 		Map<String, List<OperationInvocation>> statementMethodInvocationMap = statement.getMethodInvocationMap();
 		for(String key : statementMethodInvocationMap.keySet()) {
 			for(OperationInvocation statementInvocation : statementMethodInvocationMap.get(key)) {
@@ -362,7 +362,7 @@ public class ExtractOperationDetection {
 				iterator.remove();
 			}
 		}
-		List<StatementObject> nonMappedLeavesT2 = operationBodyMapper.getNonMappedLeavesT2();
+		List<AbstractCodeFragment> nonMappedLeavesT2 = operationBodyMapper.getNonMappedLeavesT2();
 		return totalMappings.size() == 1 && totalMappings.get(0).containsReplacement(ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION) &&
 				nonMappedInnerNodesT2.size() == 1 && nonMappedInnerNodesT2.get(0).toString().startsWith("if") &&
 				nonMappedLeavesT2.size() == 1 && nonMappedLeavesT2.get(0).toString().startsWith("return ");

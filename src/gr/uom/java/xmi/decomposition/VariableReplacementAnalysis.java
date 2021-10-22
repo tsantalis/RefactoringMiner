@@ -54,8 +54,8 @@ import gr.uom.java.xmi.diff.UMLParameterDiff;
 
 public class VariableReplacementAnalysis {
 	private Set<AbstractCodeMapping> mappings;
-	private List<StatementObject> nonMappedLeavesT1;
-	private List<StatementObject> nonMappedLeavesT2;
+	private List<AbstractCodeFragment> nonMappedLeavesT1;
+	private List<AbstractCodeFragment> nonMappedLeavesT2;
 	private List<CompositeStatementObject> nonMappedInnerNodesT1;
 	private List<CompositeStatementObject> nonMappedInnerNodesT2;
 	private UMLOperation operation1;
@@ -684,7 +684,7 @@ public class VariableReplacementAnalysis {
 					processVariableReplacementWithMethodInvocation(variableReplacement, mapping, variableInvocationExpressionMap, Direction.INVOCATION_TO_VARIABLE);
 				}
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
-					for(StatementObject statement : nonMappedLeavesT1) {
+					for(AbstractCodeFragment statement : nonMappedLeavesT1) {
 						VariableDeclaration variableDeclaration = statement.getVariableDeclaration(replacement.getBefore());
 						if(variableDeclaration != null) {
 							AbstractExpression initializer = variableDeclaration.getInitializer();
@@ -700,7 +700,7 @@ public class VariableReplacementAnalysis {
 				}
 			}
 		}
-		for(StatementObject statement : nonMappedLeavesT1) {
+		for(AbstractCodeFragment statement : nonMappedLeavesT1) {
 			for(String parameterName : operation2.getParameterNameList()) {
 				VariableDeclaration variableDeclaration = statement.getVariableDeclaration(parameterName);
 				if(variableDeclaration != null) {
@@ -838,7 +838,7 @@ public class VariableReplacementAnalysis {
 					}
 				}
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
-					for(StatementObject statement : nonMappedLeavesT2) {
+					for(AbstractCodeFragment statement : nonMappedLeavesT2) {
 						VariableDeclaration variableDeclaration = statement.getVariableDeclaration(replacement.getBefore());
 						if(variableDeclaration != null) {
 							AbstractExpression initializer = variableDeclaration.getInitializer();
@@ -881,7 +881,7 @@ public class VariableReplacementAnalysis {
 				}
 			}
 		}
-		for(StatementObject statement : nonMappedLeavesT2) {
+		for(AbstractCodeFragment statement : nonMappedLeavesT2) {
 			boolean matchingParameterFound = false;
 			for(String parameterName : operation1.getParameterNameList()) {
 				VariableDeclaration variableDeclaration = statement.getVariableDeclaration(parameterName);
@@ -1753,15 +1753,15 @@ public class VariableReplacementAnalysis {
 						return true;
 					}
 				}
-				for(StatementObject nonMappedStatement : mapper.getNonMappedLeavesT2()) {
+				for(AbstractCodeFragment nonMappedStatement : mapper.getNonMappedLeavesT2()) {
 					VariableDeclaration variableDeclaration2 = nonMappedStatement.getVariableDeclaration(v1.getVariableName());
 					if(variableDeclaration2 != null && variableDeclaration2.getType().equals(v1.getType())) {
 						for(AbstractCodeMapping mapping : mapper.getMappings()) {
 							if(mapping.getFragment2().equals(nonMappedStatement.getParent())) {
 								if(mapping.getFragment1() instanceof CompositeStatementObject) {
 									CompositeStatementObject composite1 = (CompositeStatementObject)mapping.getFragment1();
-									List<StatementObject> leaves1 = composite1.getLeaves();
-									for(StatementObject leaf1 : leaves1) {
+									List<AbstractCodeFragment> leaves1 = composite1.getLeaves();
+									for(AbstractCodeFragment leaf1 : leaves1) {
 										VariableDeclaration variableDeclaration1 = leaf1.getVariableDeclaration(variableDeclaration2.getVariableName());
 										if(variableDeclaration1 != null) {
 											return true;

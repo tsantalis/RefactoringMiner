@@ -114,6 +114,8 @@ Currently, it supports the detection of the following refactorings:
 79. Split Package
 80. Merge Package
 81. Localize Parameter
+82. Change Type Declaration Kind (`class`, `interface`, `enum`)
+83. Collapse Hierarchy
 
 # How to build RefactoringMiner
 

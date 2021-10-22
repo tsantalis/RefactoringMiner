@@ -95,7 +95,8 @@ public enum RefactoringType {
 	REMOVE_CLASS_MODIFIER("Remove Class Modifier", "Remove Class Modifier (.+) in class (.+)"),
 	SPLIT_PACKAGE("Split Package", "Split Package (.+) to \\[(.+)\\]"),
 	MERGE_PACKAGE("Merge Package", "Merge Package \\[(.+)\\] to (.+)"),
-	CHANGE_TYPE_DECLARATION_KIND("Change Type Declaration Kind", "Change Type Declaration Kind (.+) to (.+) in type (.+)");
+	CHANGE_TYPE_DECLARATION_KIND("Change Type Declaration Kind", "Change Type Declaration Kind (.+) to (.+) in type (.+)"),
+	COLLAPSE_HIERARCHY("Collapse Hierarchy", "Collapse Hierarchy (.+) to (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -183,7 +184,8 @@ public enum RefactoringType {
 		REMOVE_CLASS_MODIFIER,
 		SPLIT_PACKAGE,
 		MERGE_PACKAGE,
-		CHANGE_TYPE_DECLARATION_KIND
+		CHANGE_TYPE_DECLARATION_KIND,
+		COLLAPSE_HIERARCHY
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

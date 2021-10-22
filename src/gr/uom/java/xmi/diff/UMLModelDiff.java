@@ -1160,6 +1160,49 @@ public class UMLModelDiff {
 	   return null;
    }
 
+   private List<CollapseHierarchyRefactoring> identifyCollapseHierarchyRefactorings() throws RefactoringMinerTimedOutException {
+	   List<CollapseHierarchyRefactoring> refactorings = new ArrayList<CollapseHierarchyRefactoring>();
+	   for(UMLClass removedClass : removedClasses) {
+		   for(UMLRealization removedRealization : removedRealizations) {
+			   UMLClass client = removedRealization.getClient();
+			   UMLClassBaseDiff supplierClassDiff = getUMLClassDiff(UMLType.extractTypeObject(removedRealization.getSupplier()));
+			   if(removedClass.equals(client) && supplierClassDiff != null) {
+				   int commonOperations = 0;
+				   for(UMLOperation operation : removedClass.getOperations()) {
+					   if(supplierClassDiff.containsConcreteOperationWithTheSameSignatureInNextClass(operation)) {
+						   commonOperations++;
+					   }
+				   }
+				   if(commonOperations > 0) {
+					   CollapseHierarchyRefactoring refactoring = new CollapseHierarchyRefactoring(removedClass, supplierClassDiff.getNextClass());
+					   refactorings.add(refactoring);
+					   for(UMLOperation removedOperation : removedClass.getOperations()) {
+						   UMLOperation addedOperation = supplierClassDiff.containsAddedOperationWithTheSameSignature(removedOperation);
+						   if(addedOperation != null) {
+							   supplierClassDiff.getAddedOperations().remove(addedOperation);
+							   Refactoring ref = new PullUpOperationRefactoring(removedOperation, addedOperation);
+							   this.refactorings.add(ref);
+							   UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, addedOperation, supplierClassDiff);
+							   UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(mapper);
+							   this.refactorings.addAll(operationSignatureDiff.getRefactorings());
+							   checkForExtractedOperationsWithinMovedMethod(mapper, supplierClassDiff.getNextClass());
+						   }
+					   }
+					   for(UMLAttribute removedAttribute : removedClass.getAttributes()) {
+						   UMLAttribute addedAttribute = supplierClassDiff.containsAddedAttributeWithTheSameSignature(removedAttribute);
+						   if(addedAttribute != null) {
+							   supplierClassDiff.getAddedAttributes().remove(addedAttribute);
+							   Refactoring ref = new PullUpAttributeRefactoring(removedAttribute, addedAttribute);
+							   this.refactorings.add(ref);
+						   }
+					   }
+				   }
+			   }
+		   }
+	   }
+	   return refactorings;
+   }
+
    private List<ExtractSuperclassRefactoring> identifyExtractSuperclassRefactorings() throws RefactoringMinerTimedOutException {
       List<ExtractSuperclassRefactoring> refactorings = new ArrayList<ExtractSuperclassRefactoring>();
       for(UMLClass addedClass : addedClasses) {
@@ -1667,6 +1710,7 @@ public class UMLModelDiff {
 		 }
 	  }
 	  refactorings.addAll(identifyExtractSuperclassRefactorings());
+	  refactorings.addAll(identifyCollapseHierarchyRefactorings());
 	  refactorings.addAll(identifyExtractClassRefactorings(commonClassDiffList));
       refactorings.addAll(identifyExtractClassRefactorings(classMoveDiffList));
       refactorings.addAll(identifyExtractClassRefactorings(innerClassMoveDiffList));

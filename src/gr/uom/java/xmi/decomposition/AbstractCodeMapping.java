@@ -63,6 +63,10 @@ public abstract class AbstractCodeMapping {
 		return identicalWithInlinedVariable;
 	}
 
+	public void addRefactoring(Refactoring r) {
+		refactorings.add(r);
+	}
+
 	public Set<Refactoring> getRefactorings() {
 		return refactorings;
 	}

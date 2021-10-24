@@ -30,6 +30,7 @@ import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
+import gr.uom.java.xmi.diff.ReplaceLoopWithPipelineRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLClassMoveDiff;
@@ -82,7 +83,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Map<AbstractCodeFragment, UMLOperation> codeFragmentOperationMap1 = new LinkedHashMap<AbstractCodeFragment, UMLOperation>();
 	private Map<AbstractCodeFragment, UMLOperation> codeFragmentOperationMap2 = new LinkedHashMap<AbstractCodeFragment, UMLOperation>();
 	
-	private Set<? extends AbstractCodeFragment> statementsWithStreamAPICalls(List<? extends AbstractCodeFragment> leaves) {
+	private Set<AbstractCodeFragment> statementsWithStreamAPICalls(List<AbstractCodeFragment> leaves) {
 		Set<AbstractCodeFragment> streamAPICalls = new LinkedHashSet<AbstractCodeFragment>();
 		for(AbstractCodeFragment statement : leaves) {
 			OperationInvocation invocation = statement.invocationCoveringEntireFragment();
@@ -126,36 +127,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return name.equals("stream") || name.equals("filter") || name.equals("forEach") || name.equals("collect");
 	}
 
-	private List<OperationInvocation> streamAPICalls(List<? extends AbstractCodeFragment> leaves) {
+	private List<OperationInvocation> streamAPICalls(AbstractCodeFragment leaf) {
+		List<AbstractCodeFragment> list = new ArrayList<>();
+		list.add(leaf);
+		return streamAPICalls(list);
+	}
+
+	private List<OperationInvocation> streamAPICalls(List<AbstractCodeFragment> leaves) {
 		List<OperationInvocation> streamAPICalls = new ArrayList<OperationInvocation>();
 		for(AbstractCodeFragment statement : leaves) {
 			OperationInvocation invocation = statement.invocationCoveringEntireFragment();
 			if(invocation == null) {
 				invocation = statement.assignmentInvocationCoveringEntireStatement();
 			}
-			if(invocation != null) {
-				if(streamAPIName(invocation.getName())) {
-					streamAPICalls.add(invocation);
-				}
-				if(invocation.actualString().contains(" -> ")) {
-					for(LambdaExpressionObject lambda : statement.getLambdas()) {
-						if(lambda.getBody() != null) {
-							for(OperationInvocation inv : lambda.getBody().getAllOperationInvocations()) {
-								if(streamAPIName(inv.getName())) {
-									streamAPICalls.add(inv);
-								}
-							}
-						}
-						else if(lambda.getExpression() != null) {
-							Map<String, List<OperationInvocation>> methodInvocationMap = lambda.getExpression().getMethodInvocationMap();
-							for(String key : methodInvocationMap.keySet()) {
-								List<OperationInvocation> invocations = methodInvocationMap.get(key);
-								for(OperationInvocation inv : invocations) {
-									if(streamAPIName(inv.getName())) {
-										streamAPICalls.add(inv);
-									}
-								}
-							}
+			if(invocation != null && invocation.actualString().contains(" -> ")) {
+				Map<String, List<OperationInvocation>> methodInvocationMap = statement.getMethodInvocationMap();
+				for(String key : methodInvocationMap.keySet()) {
+					List<OperationInvocation> invocations = methodInvocationMap.get(key);
+					for(OperationInvocation inv : invocations) {
+						if(streamAPIName(inv.getName())) {
+							streamAPICalls.add(inv);
 						}
 					}
 				}
@@ -217,17 +208,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			Set<? extends AbstractCodeFragment> streamAPICalls1 = statementsWithStreamAPICalls(leaves1);
-			Set<? extends AbstractCodeFragment> streamAPICalls2 = statementsWithStreamAPICalls(leaves2);
-			if(streamAPICalls1.size() == 0 && streamAPICalls2.size() > 0) {
-				for(AbstractCodeFragment streamAPICall : streamAPICalls2) {
+			Set<AbstractCodeFragment> streamAPIStatements1 = statementsWithStreamAPICalls(leaves1);
+			Set<AbstractCodeFragment> streamAPIStatements2 = statementsWithStreamAPICalls(leaves2);
+			if(streamAPIStatements1.size() == 0 && streamAPIStatements2.size() > 0) {
+				for(AbstractCodeFragment streamAPICall : streamAPIStatements2) {
 					if(streamAPICall.getLambdas().size() > 0) {
 						expandAnonymousAndLambdas(streamAPICall, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), this.getOperation2().getAnonymousClassList(), codeFragmentOperationMap2, operation2);
 					}
 				}
 			}
-			else if(streamAPICalls1.size() > 0 && streamAPICalls2.size() == 0) {
-				for(AbstractCodeFragment streamAPICall : streamAPICalls1) {
+			else if(streamAPIStatements1.size() > 0 && streamAPIStatements2.size() == 0) {
+				for(AbstractCodeFragment streamAPICall : streamAPIStatements1) {
 					if(streamAPICall.getLambdas().size() > 0) {
 						expandAnonymousAndLambdas(streamAPICall, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), this.getOperation1().getAnonymousClassList(), codeFragmentOperationMap1, operation1);
 					}
@@ -305,6 +296,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			processInnerNodes(innerNodes1, innerNodes2, new LinkedHashMap<String, String>());
 			
+			if(streamAPIStatements1.size() == 0 && streamAPIStatements2.size() > 0) {
+				processStreamAPIStatements(leaves1, leaves2, innerNodes1, streamAPIStatements2);
+			}
+			
 			nonMappedLeavesT1.addAll(leaves1);
 			nonMappedLeavesT2.addAll(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
@@ -364,17 +359,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		List<AbstractCodeFragment> leaves2 = composite2.getLeaves();
 		List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
 		List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
-		Set<? extends AbstractCodeFragment> streamAPICalls1 = statementsWithStreamAPICalls(leaves1);
-		Set<? extends AbstractCodeFragment> streamAPICalls2 = statementsWithStreamAPICalls(leaves2);
-		if(streamAPICalls1.size() == 0 && streamAPICalls2.size() > 0) {
-			for(AbstractCodeFragment streamAPICall : streamAPICalls2) {
+		Set<AbstractCodeFragment> streamAPIStatements1 = statementsWithStreamAPICalls(leaves1);
+		Set<AbstractCodeFragment> streamAPIStatements2 = statementsWithStreamAPICalls(leaves2);
+		if(streamAPIStatements1.size() == 0 && streamAPIStatements2.size() > 0) {
+			for(AbstractCodeFragment streamAPICall : streamAPIStatements2) {
 				if(streamAPICall.getLambdas().size() > 0) {
 					expandAnonymousAndLambdas(streamAPICall, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), this.getOperation2().getAnonymousClassList(), codeFragmentOperationMap2, operation2);
 				}
 			}
 		}
-		else if(streamAPICalls1.size() > 0 && streamAPICalls2.size() == 0) {
-			for(AbstractCodeFragment streamAPICall : streamAPICalls1) {
+		else if(streamAPIStatements1.size() > 0 && streamAPIStatements2.size() == 0) {
+			for(AbstractCodeFragment streamAPICall : streamAPIStatements1) {
 				if(streamAPICall.getLambdas().size() > 0) {
 					expandAnonymousAndLambdas(streamAPICall, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), this.getOperation1().getAnonymousClassList(), codeFragmentOperationMap1, operation1);
 				}
@@ -383,6 +378,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>());
 		
 		processInnerNodes(innerNodes1, innerNodes2, new LinkedHashMap<String, String>());
+		
+		if(streamAPIStatements1.size() == 0 && streamAPIStatements2.size() > 0) {
+			processStreamAPIStatements(leaves1, leaves2, innerNodes1, streamAPIStatements2);
+		}
 		
 		nonMappedLeavesT1.addAll(leaves1);
 		nonMappedLeavesT2.addAll(leaves2);
@@ -394,6 +393,103 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		for(AbstractCodeFragment statement : getNonMappedLeavesT1()) {
 			inlinedVariableAssignment(statement, nonMappedLeavesT2);
+		}
+	}
+
+	private void processStreamAPIStatements(List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2,
+			List<CompositeStatementObject> innerNodes1, Set<AbstractCodeFragment> streamAPIStatements2)
+			throws RefactoringMinerTimedOutException {
+		//match expressions in inner nodes from T1 with leaves from T2
+		List<AbstractExpression> expressionsT1 = new ArrayList<AbstractExpression>();
+		for(CompositeStatementObject composite : innerNodes1) {
+			for(AbstractExpression expression : composite.getExpressions()) {
+				expressionsT1.add(expression);
+			}
+		}
+		int numberOfMappings = mappings.size();
+		processLeaves(expressionsT1, leaves2, new LinkedHashMap<String, String>());
+		
+		List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
+		for(int i = numberOfMappings; i < mappings.size(); i++) {
+			for(ListIterator<CompositeStatementObject> innerNodeIterator1 = innerNodes1.listIterator(); innerNodeIterator1.hasNext();) {
+				CompositeStatementObject composite = innerNodeIterator1.next();
+				AbstractCodeMapping mapping = mappings.get(i);
+				AbstractCodeFragment fragment1 = mapping.getFragment1();
+				AbstractCodeFragment fragment2 = mapping.getFragment2();
+				if(composite.getExpressions().contains(fragment1)) {
+					AbstractCodeFragment streamAPICallStatement = null;
+					List<OperationInvocation> streamAPICalls = null;
+					for(AbstractCodeFragment leaf2 : streamAPIStatements2) {
+						if(leaves2.contains(leaf2)) {
+							boolean matchingLambda = false;
+							for(LambdaExpressionObject lambda : leaf2.getLambdas()) {
+								if(lambda.getExpression() != null && lambda.getExpression().equals(fragment2)) {
+									matchingLambda = true;
+									break;
+								}
+							}
+							if(matchingLambda) {
+								streamAPICallStatement = leaf2;
+								streamAPICalls = streamAPICalls(leaf2);
+								break;
+							}
+						}
+					}
+					if(streamAPICallStatement != null && streamAPICalls != null) {
+						Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
+						additionallyMatchedStatements1.add(composite);
+						Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
+						additionallyMatchedStatements2.add(streamAPICallStatement);
+						for(OperationInvocation streamAPICall : streamAPICalls) {
+							if(streamAPICall.getName().equals("filter")) {
+								for(AbstractCodeFragment leaf1 : leaves1) {
+									OperationInvocation invocation = leaf1.invocationCoveringEntireFragment();
+									if(invocation != null && invocation.getName().equals("add")) {
+										for(String argument : invocation.getArguments()) {
+											if(streamAPICall.getArguments().get(0).startsWith(argument + " -> ")) {
+												additionallyMatchedStatements1.add(leaf1);
+												break;
+											}
+										}
+									}
+								}
+							}
+							else if(streamAPICall.getName().equals("stream")) {
+								if(streamAPICall.getExpression() != null) {
+									for(CompositeStatementObject comp1 : innerNodes1) {
+										if(!additionallyMatchedStatements1.contains(comp1)) {
+											for(AbstractExpression expression : comp1.getExpressions()) {
+												if(expression.getString().equals(streamAPICall.getExpression())) {
+													additionallyMatchedStatements1.add(comp1);
+													break;
+												}
+												for(String argument : streamAPICall.getArguments()) {
+													if(expression.getString().equals(argument)) {
+														additionallyMatchedStatements1.add(comp1);
+														break;
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+						CompositeReplacement replacement = new CompositeReplacement(composite.getString(), streamAPICallStatement.getString(), additionallyMatchedStatements1, additionallyMatchedStatements2);
+						Set<Replacement> replacements = new LinkedHashSet<>();
+						replacements.add(replacement);
+						LeafMapping newMapping = createLeafMapping(composite, streamAPICallStatement, new LinkedHashMap<String, String>());
+						newMapping.addReplacements(replacements);
+						TreeSet<LeafMapping> mappingSet = new TreeSet<>();
+						mappingSet.add(newMapping);
+						ReplaceLoopWithPipelineRefactoring ref = new ReplaceLoopWithPipelineRefactoring(additionallyMatchedStatements1, additionallyMatchedStatements2, operation1, operation2);
+						newMapping.addRefactoring(ref);
+						addToMappings(newMapping, mappingSet);
+						leaves2.remove(newMapping.getFragment2());
+						innerNodeIterator1.remove();
+					}
+				}
+			}
 		}
 	}
 
@@ -674,6 +770,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								addedInnerNodes.add(lambdaInnerNode);
 								map.put(lambdaInnerNode, parentOperation);
 							}
+						}
+					}
+					else if(lambda.getExpression() != null) {
+						AbstractCodeFragment lambdaLeaf = lambda.getExpression();
+						if(!leaves.contains(lambdaLeaf)) {
+							leaves.add(lambdaLeaf);
+							addedLeaves.add(lambdaLeaf);
+							map.put(lambdaLeaf, parentOperation);
 						}
 					}
 				}

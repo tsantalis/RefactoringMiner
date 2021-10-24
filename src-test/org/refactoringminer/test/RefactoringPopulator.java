@@ -114,7 +114,8 @@ public class RefactoringPopulator {
 		LocalizeParameter(new BigInteger("2417851639229258349412352")),
 		ChangeTypeDeclarationKind(new BigInteger("4835703278458516698824704")),
 		CollapseHierarchy(new BigInteger("9671406556917033397649408")),
-		All(new BigInteger("19342813113834066795298815"));
+		ReplaceLoopWithPipeline(new BigInteger("19342813113834066795298816")),
+		All(new BigInteger("38685626227668133590597631"));
 
 		private BigInteger value;
 

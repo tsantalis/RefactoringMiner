@@ -95,7 +95,8 @@ public enum RefactoringType {
 	SPLIT_PACKAGE("Split Package", "Split Package (.+) to \\[(.+)\\]"),
 	MERGE_PACKAGE("Merge Package", "Merge Package \\[(.+)\\] to (.+)"),
 	CHANGE_TYPE_DECLARATION_KIND("Change Type Declaration Kind", "Change Type Declaration Kind (.+) to (.+) in type (.+)"),
-	COLLAPSE_HIERARCHY("Collapse Hierarchy", "Collapse Hierarchy (.+) to (.+)");
+	COLLAPSE_HIERARCHY("Collapse Hierarchy", "Collapse Hierarchy (.+) to (.+)"),
+	REPLACE_LOOP_WITH_PIPELINE("Replace Loop With Pipeline", "Replace Loop With Pipeline");
 
 	private String displayName;
 	private Pattern regex;
@@ -184,7 +185,8 @@ public enum RefactoringType {
 		SPLIT_PACKAGE,
 		MERGE_PACKAGE,
 		CHANGE_TYPE_DECLARATION_KIND,
-		COLLAPSE_HIERARCHY
+		COLLAPSE_HIERARCHY,
+		REPLACE_LOOP_WITH_PIPELINE
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

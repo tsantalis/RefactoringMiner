@@ -402,8 +402,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		//match expressions in inner nodes from T1 with leaves from T2
 		List<AbstractExpression> expressionsT1 = new ArrayList<AbstractExpression>();
 		for(CompositeStatementObject composite : innerNodes1) {
-			for(AbstractExpression expression : composite.getExpressions()) {
-				expressionsT1.add(expression);
+			if(composite.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+				for(AbstractExpression expression : composite.getExpressions()) {
+					expressionsT1.add(expression);
+				}
 			}
 		}
 		int numberOfMappings = mappings.size();

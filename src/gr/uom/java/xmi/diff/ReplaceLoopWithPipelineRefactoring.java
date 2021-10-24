@@ -57,7 +57,7 @@ public class ReplaceLoopWithPipelineRefactoring implements Refactoring {
 		}
 		sb.append(" with ");
 		String pipeline = codeFragmentsAfter.iterator().next().getString();
-		sb.append(pipeline.endsWith("\n") ? pipeline.substring(0, pipeline.length()-2) : pipeline);
+		sb.append(pipeline.contains("\n") ? pipeline.substring(0, pipeline.indexOf("\n")) : pipeline);
 		sb.append(" in method ");
 		sb.append(operationAfter);
 		sb.append(" from class ");

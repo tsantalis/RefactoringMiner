@@ -563,7 +563,7 @@ public class OperationInvocation extends AbstractCall {
 
 	public double normalizedNameDistance(AbstractCall call) {
 		String s1 = getMethodName().toLowerCase();
-		String s2 = ((OperationInvocation)call).getMethodName().toLowerCase();
+		String s2 = call.getName().toLowerCase();
 		int distance = StringDistance.editDistance(s1, s2);
 		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
 		return normalized;
@@ -576,6 +576,12 @@ public class OperationInvocation extends AbstractCall {
         if (o instanceof OperationInvocation) {
         	OperationInvocation invocation = (OperationInvocation)o;
             return methodName.equals(invocation.methodName) &&
+                typeArguments == invocation.typeArguments &&
+                (this.expression != null) == (invocation.expression != null);
+        }
+        else if (o instanceof MethodReference) {
+        	MethodReference invocation = (MethodReference)o;
+            return methodName.equals(invocation.getMethodName()) &&
                 typeArguments == invocation.typeArguments &&
                 (this.expression != null) == (invocation.expression != null);
         }
@@ -607,7 +613,7 @@ public class OperationInvocation extends AbstractCall {
     }
 
 	public boolean identicalName(AbstractCall call) {
-		return getMethodName().equals(((OperationInvocation)call).getMethodName());
+		return getMethodName().equals(call.getName());
 	}
 
 	public boolean typeInferenceMatch(UMLOperation operationToBeMatched, Map<String, UMLType> typeInferenceMapFromContext) {
@@ -657,38 +663,6 @@ public class OperationInvocation extends AbstractCall {
 			}
 		}
 		return true;
-	}
-	
-	public boolean differentExpressionNameAndArguments(OperationInvocation other) {
-		boolean differentExpression = false;
-		if(this.expression == null && other.expression != null)
-			differentExpression = true;
-		if(this.expression != null && other.expression == null)
-			differentExpression = true;
-		if(this.expression != null && other.expression != null)
-			differentExpression = !this.expression.equals(other.expression) &&
-			!this.expression.startsWith(other.expression) && !other.expression.startsWith(this.expression);
-		boolean differentName = !this.methodName.equals(other.methodName);
-		Set<String> argumentIntersection = new LinkedHashSet<String>(this.arguments);
-		argumentIntersection.retainAll(other.arguments);
-		boolean argumentFoundInExpression = false;
-		if(this.expression != null) {
-			for(String argument : other.arguments) {
-				if(this.expression.contains(argument)) {
-					argumentFoundInExpression = true;
-				}
-			}
-		}
-		if(other.expression != null) {
-			for(String argument : this.arguments) {
-				if(other.expression.contains(argument)) {
-					argumentFoundInExpression = true;
-				}
-			}
-		}
-		boolean differentArguments = !this.arguments.equals(other.arguments) &&
-				argumentIntersection.isEmpty() && !argumentFoundInExpression;
-		return differentExpression && differentName && differentArguments;
 	}
 
 	public boolean identicalWithExpressionCallChainDifference(OperationInvocation other) {

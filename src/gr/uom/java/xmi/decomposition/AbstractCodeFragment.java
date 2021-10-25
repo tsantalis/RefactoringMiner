@@ -40,7 +40,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	public abstract List<String> getVariables();
 	public abstract List<String> getTypes();
 	public abstract List<VariableDeclaration> getVariableDeclarations();
-	public abstract Map<String, List<OperationInvocation>> getMethodInvocationMap();
+	public abstract Map<String, List<AbstractCall>> getMethodInvocationMap();
 	public abstract List<AnonymousClassDeclarationObject> getAnonymousClassDeclarations();
 	public abstract List<String> getStringLiterals();
 	public abstract List<String> getNumberLiterals();
@@ -186,12 +186,12 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return null;
 	}
 
-	public OperationInvocation invocationCoveringEntireFragment() {
-		Map<String, List<OperationInvocation>> methodInvocationMap = getMethodInvocationMap();
+	public AbstractCall invocationCoveringEntireFragment() {
+		Map<String, List<AbstractCall>> methodInvocationMap = getMethodInvocationMap();
 		String statement = getString();
 		for(String methodInvocation : methodInvocationMap.keySet()) {
-			List<OperationInvocation> invocations = methodInvocationMap.get(methodInvocation);
-			for(OperationInvocation invocation : invocations) {
+			List<AbstractCall> invocations = methodInvocationMap.get(methodInvocation);
+			for(AbstractCall invocation : invocations) {
 				if((methodInvocation + ";\n").equals(statement) || methodInvocation.equals(statement)) {
 					invocation.coverage = StatementCoverageType.ONLY_CALL;
 					return invocation;
@@ -218,11 +218,11 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return null;
 	}
 
-	public OperationInvocation assignmentInvocationCoveringEntireStatement() {
-		Map<String, List<OperationInvocation>> methodInvocationMap = getMethodInvocationMap();
+	public AbstractCall assignmentInvocationCoveringEntireStatement() {
+		Map<String, List<AbstractCall>> methodInvocationMap = getMethodInvocationMap();
 		for(String methodInvocation : methodInvocationMap.keySet()) {
-			List<OperationInvocation> invocations = methodInvocationMap.get(methodInvocation);
-			for(OperationInvocation invocation : invocations) {
+			List<AbstractCall> invocations = methodInvocationMap.get(methodInvocation);
+			for(AbstractCall invocation : invocations) {
 				if(expressionIsTheRightHandSideOfAssignment(methodInvocation)) {
 					return invocation;
 				}

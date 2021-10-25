@@ -4,24 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gr.uom.java.xmi.UMLOperation;
-import gr.uom.java.xmi.decomposition.OperationInvocation;
+import gr.uom.java.xmi.decomposition.AbstractCall;
 
 public class CallTreeNode {
 	private UMLOperation originalOperation;
 	private UMLOperation invokedOperation;
-	private OperationInvocation invocation;
+	private AbstractCall invocation;
 	private CallTreeNode parent;
 	private List<CallTreeNode> children = new ArrayList<CallTreeNode>();
 
 	public CallTreeNode(UMLOperation originalOperation, UMLOperation invokedOperation,
-			OperationInvocation invocation) {
+			AbstractCall invocation) {
 		this.originalOperation = originalOperation;
 		this.invokedOperation = invokedOperation;
 		this.invocation = invocation;
 	}
 
 	public CallTreeNode(CallTreeNode parent, UMLOperation originalOperation, UMLOperation invokedOperation,
-			OperationInvocation invocation) {
+			AbstractCall invocation) {
 		this(originalOperation, invokedOperation, invocation);
 		this.parent = parent;
 	}
@@ -34,7 +34,7 @@ public class CallTreeNode {
 		return invokedOperation;
 	}
 
-	public OperationInvocation getInvocation() {
+	public AbstractCall getInvocation() {
 		return invocation;
 	}
 

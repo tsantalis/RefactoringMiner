@@ -99,8 +99,8 @@ public abstract class AbstractCodeMapping {
 	}
 
 	private boolean isExactAfterAbstraction() {
-		OperationInvocation invocation1 = fragment1.invocationCoveringEntireFragment();
-		OperationInvocation invocation2 = fragment2.invocationCoveringEntireFragment();
+		AbstractCall invocation1 = fragment1.invocationCoveringEntireFragment();
+		AbstractCall invocation2 = fragment2.invocationCoveringEntireFragment();
 		if(invocation1 != null && invocation2 != null) {
 			return invocation1.actualString().equals(invocation2.actualString());
 		}
@@ -235,12 +235,12 @@ public abstract class AbstractCodeMapping {
 				}
 			}
 			if(classDiff != null && initializer != null) {
-				OperationInvocation invocation = initializer.invocationCoveringEntireFragment();
+				AbstractCall invocation = initializer.invocationCoveringEntireFragment();
 				if(invocation != null) {
 					for(Refactoring refactoring : classDiff.getRefactoringsBeforePostProcessing()) {
 						if(refactoring instanceof RenameOperationRefactoring) {
 							RenameOperationRefactoring rename = (RenameOperationRefactoring)refactoring;
-							if(invocation.getMethodName().equals(rename.getRenamedOperation().getName())) {
+							if(invocation.getName().equals(rename.getRenamedOperation().getName())) {
 								String initializerBeforeRename = initializer.getString().replace(rename.getRenamedOperation().getName(), rename.getOriginalOperation().getName());
 								if(getFragment1().getString().contains(initializerBeforeRename) && getFragment2().getString().contains(variableName)) {
 									ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
@@ -358,7 +358,7 @@ public abstract class AbstractCodeMapping {
 		if(replacementCount > 1) {
 			return false;
 		}
-		OperationInvocation invocation = initializer.invocationCoveringEntireFragment();
+		AbstractCall invocation = initializer.invocationCoveringEntireFragment();
 		if(invocation != null) {
 			if(invocation.getArguments().contains(replacedExpression)) {
 				return true;
@@ -399,8 +399,8 @@ public abstract class AbstractCodeMapping {
 	}
 
 	private boolean reservedTokenMatch(AbstractExpression initializer, Replacement replacement, String replacedExpression) {
-		OperationInvocation initializerInvocation = initializer.invocationCoveringEntireFragment();
-		OperationInvocation replacementInvocation = replacement instanceof VariableReplacementWithMethodInvocation ? ((VariableReplacementWithMethodInvocation)replacement).getInvokedOperation() : null;
+		AbstractCall initializerInvocation = initializer.invocationCoveringEntireFragment();
+		AbstractCall replacementInvocation = replacement instanceof VariableReplacementWithMethodInvocation ? ((VariableReplacementWithMethodInvocation)replacement).getInvokedOperation() : null;
 		boolean methodInvocationMatch = true;
 		if(initializerInvocation != null && replacementInvocation != null) {
 			if(!initializerInvocation.getName().equals(replacementInvocation.getName())) {

@@ -11,7 +11,7 @@ import java.util.Set;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.UMLClassMatcher.MatchResult;
-import gr.uom.java.xmi.decomposition.OperationInvocation;
+import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.RenamePattern;
@@ -385,7 +385,7 @@ public abstract class UMLAbstractClass {
 		Set<UMLOperation> unmatchedCalledOperations = new LinkedHashSet<UMLOperation>();
 		for(UMLOperation operation : umlClass.operations) {
 			if(commonOperations.contains(operation)) {
-				for(OperationInvocation invocation : operation.getAllOperationInvocations()) {
+				for(AbstractCall invocation : operation.getAllOperationInvocations()) {
 					for(UMLOperation unmatchedOperation : unmatchedOperations) {
 						if(invocation.matchesOperation(unmatchedOperation, operation, null)) {
 							unmatchedCalledOperations.add(unmatchedOperation);

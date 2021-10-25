@@ -1,24 +1,24 @@
 package gr.uom.java.xmi.decomposition.replacement;
 
-import gr.uom.java.xmi.decomposition.OperationInvocation;
+import gr.uom.java.xmi.decomposition.AbstractCall;
 
 public class MethodInvocationReplacement extends Replacement {
-	private OperationInvocation invokedOperationBefore;
-	private OperationInvocation invokedOperationAfter;
+	private AbstractCall invokedOperationBefore;
+	private AbstractCall invokedOperationAfter;
 	
 	public MethodInvocationReplacement(String before, String after,
-			OperationInvocation invokedOperationBefore, OperationInvocation invokedOperationAfter,
+			AbstractCall invokedOperationBefore, AbstractCall invokedOperationAfter,
 			ReplacementType type) {
 		super(before, after, type);
 		this.invokedOperationBefore = invokedOperationBefore;
 		this.invokedOperationAfter = invokedOperationAfter;
 	}
 
-	public OperationInvocation getInvokedOperationBefore() {
+	public AbstractCall getInvokedOperationBefore() {
 		return invokedOperationBefore;
 	}
 
-	public OperationInvocation getInvokedOperationAfter() {
+	public AbstractCall getInvokedOperationAfter() {
 		return invokedOperationAfter;
 	}
 

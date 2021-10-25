@@ -204,7 +204,9 @@ public class LocationInfo {
 		ENUM_CONSTANT_DECLARATION,
 		JAVADOC,
 		LINE_COMMENT,
-		BLOCK_COMMENT;
+		BLOCK_COMMENT,
+		METHOD_REFERENCE,
+		CREATION_REFERENCE;
 		
 		private String name;
 		

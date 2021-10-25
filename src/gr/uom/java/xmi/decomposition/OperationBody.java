@@ -59,7 +59,7 @@ public class OperationBody {
 		for(Statement statement : statements) {
 			processStatement(cu, filePath, compositeStatement, statement);
 		}
-		for(OperationInvocation invocation : getAllOperationInvocations()) {
+		for(AbstractCall invocation : getAllOperationInvocations()) {
 			if(invocation.getName().startsWith("assert")) {
 				containsAssertion = true;
 				break;
@@ -84,9 +84,9 @@ public class OperationBody {
 		return new ArrayList<AnonymousClassDeclarationObject>(compositeStatement.getAllAnonymousClassDeclarations());
 	}
 
-	public List<OperationInvocation> getAllOperationInvocations() {
-		List<OperationInvocation> invocations = new ArrayList<OperationInvocation>();
-		Map<String, List<OperationInvocation>> invocationMap = compositeStatement.getAllMethodInvocations();
+	public List<AbstractCall> getAllOperationInvocations() {
+		List<AbstractCall> invocations = new ArrayList<AbstractCall>();
+		Map<String, List<AbstractCall>> invocationMap = compositeStatement.getAllMethodInvocations();
 		for(String key : invocationMap.keySet()) {
 			invocations.addAll(invocationMap.get(key));
 		}

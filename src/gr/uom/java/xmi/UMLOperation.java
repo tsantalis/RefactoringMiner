@@ -1,11 +1,11 @@
 package gr.uom.java.xmi;
 
+import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
-import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
@@ -184,10 +184,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return comments;
 	}
 
-	public List<OperationInvocation> getAllOperationInvocations() {
+	public List<AbstractCall> getAllOperationInvocations() {
 		if(operationBody != null)
 			return operationBody.getAllOperationInvocations();
-		return new ArrayList<OperationInvocation>();
+		return new ArrayList<AbstractCall>();
 	}
 
 	public boolean containsAssertion() {
@@ -529,16 +529,16 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		return false;
 	}
 
-	public OperationInvocation isDelegate() {
+	public AbstractCall isDelegate() {
 		if(getBody() != null) {
 			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
 			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
 				StatementObject statement = (StatementObject)statements.get(0);
-				Map<String, List<OperationInvocation>> operationInvocationMap = statement.getMethodInvocationMap();
+				Map<String, List<AbstractCall>> operationInvocationMap = statement.getMethodInvocationMap();
 				for(String key : operationInvocationMap.keySet()) {
-					List<OperationInvocation> operationInvocations = operationInvocationMap.get(key);
-					for(OperationInvocation operationInvocation : operationInvocations) {
-						if(operationInvocation.matchesOperation(this, this, null) || operationInvocation.getMethodName().equals(this.getName())) {
+					List<AbstractCall> operationInvocations = operationInvocationMap.get(key);
+					for(AbstractCall operationInvocation : operationInvocations) {
+						if(operationInvocation.matchesOperation(this, this, null) || operationInvocation.getName().equals(this.getName())) {
 							return operationInvocation;
 						}
 					}

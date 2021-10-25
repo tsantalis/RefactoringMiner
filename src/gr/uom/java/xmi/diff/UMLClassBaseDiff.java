@@ -23,11 +23,11 @@ import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
-import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
@@ -792,11 +792,11 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			if(refactoring instanceof ExtractOperationRefactoring) {
 				ExtractOperationRefactoring extractRefactoring = (ExtractOperationRefactoring)refactoring;
 				if(extractRefactoring.getExtractedOperation().equals(candidate.getOperationAfter())) {
-					List<OperationInvocation> extractedInvocations = extractRefactoring.getExtractedOperationInvocations();
+					List<AbstractCall> extractedInvocations = extractRefactoring.getExtractedOperationInvocations();
 					if(extractedInvocations.size() > 1) {
 						Set<VariableDeclaration> attributesMatchedWithArguments = new LinkedHashSet<VariableDeclaration>();
 						Set<String> attributeNamesMatchedWithArguments = new LinkedHashSet<String>();
-						for(OperationInvocation extractedInvocation : extractedInvocations) {
+						for(AbstractCall extractedInvocation : extractedInvocations) {
 							for(String argument : extractedInvocation.getArguments()) {
 								for(UMLAttribute attribute : originalClass.getAttributes()) {
 									if(attribute.getName().equals(argument)) {
@@ -1234,11 +1234,11 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		//infer signature changes for delegate methods calling methods in the operationDiffList
 		for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 			UMLOperation removedOperation = removedOperationIterator.next();
-			OperationInvocation removedOperationInvocation = removedOperation.isDelegate();
+			AbstractCall removedOperationInvocation = removedOperation.isDelegate();
 			if(removedOperationInvocation != null) {
 				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 					UMLOperation addedOperation = addedOperationIterator.next();
-					OperationInvocation addedOperationInvocation = addedOperation.isDelegate();
+					AbstractCall addedOperationInvocation = addedOperation.isDelegate();
 					if(addedOperationInvocation != null) {
 						for(UMLOperationDiff operationDiff : operationDiffList) {
 							if(removedOperationInvocation.matchesOperation(operationDiff.getRemovedOperation(), removedOperation, modelDiff) &&
@@ -1447,7 +1447,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				for(AbstractCodeFragment statement : operationBodyMapper.getNonMappedLeavesT1()) {
 					if(statement.countableStatement()) {
 						for(String parameterName : removedOperation.getParameterNameList()) {
-							OperationInvocation invocation = statement.invocationCoveringEntireFragment();
+							AbstractCall invocation = statement.invocationCoveringEntireFragment();
 							if(invocation != null && invocation.getExpression() != null && invocation.getExpression().equals(parameterName)) {
 								statementUsingParameterAsInvoker1 = statement;
 								break;
@@ -1460,7 +1460,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				for(AbstractCodeFragment statement : operationBodyMapper.getNonMappedLeavesT2()) {
 					if(statement.countableStatement()) {
 						for(String parameterName : addedOperation.getParameterNameList()) {
-							OperationInvocation invocation = statement.invocationCoveringEntireFragment();
+							AbstractCall invocation = statement.invocationCoveringEntireFragment();
 							if(invocation != null && invocation.getExpression() != null && invocation.getExpression().equals(parameterName)) {
 								statementUsingParameterAsInvoker2 = statement;
 								break;
@@ -1534,9 +1534,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		for(int i=1; i<mapperList.size(); i++) {
 			UMLOperationBodyMapper mapper = mapperList.get(i);
 			UMLOperation operation2 = mapper.getOperation2();
-			List<OperationInvocation> operationInvocations2 = operation2.getAllOperationInvocations();
+			List<AbstractCall> operationInvocations2 = operation2.getAllOperationInvocations();
 			boolean anotherMapperCallsOperation2OfTheBestMapper = false;
-			for(OperationInvocation invocation : operationInvocations2) {
+			for(AbstractCall invocation : operationInvocations2) {
 				if(invocation.matchesOperation(bestMapper.getOperation2(), operation2, modelDiff) && !invocation.matchesOperation(bestMapper.getOperation1(), operation2, modelDiff) &&
 						!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, removedOperations)) {
 					anotherMapperCallsOperation2OfTheBestMapper = true;
@@ -1544,9 +1544,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 			UMLOperation operation1 = mapper.getOperation1();
-			List<OperationInvocation> operationInvocations1 = operation1.getAllOperationInvocations();
+			List<AbstractCall> operationInvocations1 = operation1.getAllOperationInvocations();
 			boolean anotherMapperCallsOperation1OfTheBestMapper = false;
-			for(OperationInvocation invocation : operationInvocations1) {
+			for(AbstractCall invocation : operationInvocations1) {
 				if(invocation.matchesOperation(bestMapper.getOperation1(), operation1, modelDiff) && !invocation.matchesOperation(bestMapper.getOperation2(), operation1, modelDiff) &&
 						!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, addedOperations)) {
 					anotherMapperCallsOperation1OfTheBestMapper = true;
@@ -1755,13 +1755,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return false;
 	}
 
-	private boolean operationContainsMethodInvocationWithTheSameNameAndCommonArguments(OperationInvocation invocation, List<UMLOperation> operations) {
+	private boolean operationContainsMethodInvocationWithTheSameNameAndCommonArguments(AbstractCall invocation, List<UMLOperation> operations) {
 		for(UMLOperation operation : operations) {
-			List<OperationInvocation> operationInvocations = operation.getAllOperationInvocations();
-			for(OperationInvocation operationInvocation : operationInvocations) {
+			List<AbstractCall> operationInvocations = operation.getAllOperationInvocations();
+			for(AbstractCall operationInvocation : operationInvocations) {
 				Set<String> argumentIntersection = new LinkedHashSet<String>(operationInvocation.getArguments());
 				argumentIntersection.retainAll(invocation.getArguments());
-				if(operationInvocation.getMethodName().equals(invocation.getMethodName()) && !argumentIntersection.isEmpty()) {
+				if(operationInvocation.getName().equals(invocation.getName()) && !argumentIntersection.isEmpty()) {
 					return true;
 				}
 				else if(argumentIntersection.size() > 0 && argumentIntersection.size() == invocation.getArguments().size()) {
@@ -1777,12 +1777,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		List<AbstractCodeFragment> nonMappedLeavesT2 = operationBodyMapper.getNonMappedLeavesT2();
 		if(nonMappedLeavesT1.size() == 1 && nonMappedLeavesT2.size() == 1) {
 			AbstractCodeFragment statementT2 = nonMappedLeavesT2.get(0);
-			OperationInvocation invocationT2 = statementT2.invocationCoveringEntireFragment();
+			AbstractCall invocationT2 = statementT2.invocationCoveringEntireFragment();
 			if(invocationT2 != null) {
 				for(UMLOperation addedOperation : addedOperations) {
 					if(invocationT2.matchesOperation(addedOperation, operationBodyMapper.getOperation2(), modelDiff)) {
 						AbstractCodeFragment statementT1 = nonMappedLeavesT1.get(0);
-						OperationInvocation invocationT1 = statementT1.invocationCoveringEntireFragment();
+						AbstractCall invocationT1 = statementT1.invocationCoveringEntireFragment();
 						if(invocationT1 != null && addedOperation.getAllOperationInvocations().contains(invocationT1)) {
 							return true;
 						}

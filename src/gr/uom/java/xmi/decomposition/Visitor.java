@@ -27,6 +27,7 @@ import org.eclipse.jdt.core.dom.ConditionalExpression;
 import org.eclipse.jdt.core.dom.ConstructorInvocation;
 import org.eclipse.jdt.core.dom.EnhancedForStatement;
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.ExpressionMethodReference;
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.LambdaExpression;
@@ -48,9 +49,11 @@ import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.StringLiteral;
 import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
+import org.eclipse.jdt.core.dom.SuperMethodReference;
 import org.eclipse.jdt.core.dom.ThisExpression;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeLiteral;
+import org.eclipse.jdt.core.dom.TypeMethodReference;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.WildcardType;
 
@@ -61,7 +64,7 @@ public class Visitor extends ASTVisitor {
 	private String filePath;
 	private List<String> variables = new ArrayList<String>();
 	private List<String> types = new ArrayList<String>();
-	private Map<String, List<OperationInvocation>> methodInvocationMap = new LinkedHashMap<String, List<OperationInvocation>>();
+	private Map<String, List<AbstractCall>> methodInvocationMap = new LinkedHashMap<String, List<AbstractCall>>();
 	private List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
 	private List<AnonymousClassDeclarationObject> anonymousClassDeclarations = new ArrayList<AnonymousClassDeclarationObject>();
 	private List<String> stringLiterals = new ArrayList<String>();
@@ -514,9 +517,9 @@ public class Visitor extends ASTVisitor {
 			builderPatternChains.add(node);
 		}
 		for(String key : methodInvocationMap.keySet()) {
-			List<OperationInvocation> invocations = methodInvocationMap.get(key);
-			OperationInvocation invocation = invocations.get(0);
-			if(key.startsWith(methodInvocation) && invocation.numberOfSubExpressions() > 0 &&
+			List<AbstractCall> invocations = methodInvocationMap.get(key);
+			AbstractCall invocation = invocations.get(0);
+			if(invocation instanceof OperationInvocation && key.startsWith(methodInvocation) && ((OperationInvocation)invocation).numberOfSubExpressions() > 0 &&
 					!(invocation.getName().equals("length") && invocation.getArguments().size() == 0)) {
 				builderPatternChains.add(node);
 			}
@@ -526,7 +529,7 @@ public class Visitor extends ASTVisitor {
 			methodInvocationMap.get(methodInvocation).add(invocation);
 		}
 		else {
-			List<OperationInvocation> list = new ArrayList<OperationInvocation>();
+			List<AbstractCall> list = new ArrayList<AbstractCall>();
 			list.add(invocation);
 			methodInvocationMap.put(methodInvocation, list);
 		}
@@ -542,6 +545,18 @@ public class Visitor extends ASTVisitor {
 				anonymousMethodInvocationMap.put(methodInvocation, list);
 			}
 		}
+		return super.visit(node);
+	}
+
+	public boolean visit(ExpressionMethodReference node) {
+		return super.visit(node);
+	}
+	
+	public boolean visit(SuperMethodReference node) {
+		return super.visit(node);
+	}
+	
+	public boolean visit(TypeMethodReference node) {
 		return super.visit(node);
 	}
 
@@ -584,7 +599,7 @@ public class Visitor extends ASTVisitor {
 			methodInvocationMap.get(nodeAsString).add(invocation);
 		}
 		else {
-			List<OperationInvocation> list = new ArrayList<OperationInvocation>();
+			List<AbstractCall> list = new ArrayList<AbstractCall>();
 			list.add(invocation);
 			methodInvocationMap.put(nodeAsString, list);
 		}
@@ -614,7 +629,7 @@ public class Visitor extends ASTVisitor {
 			methodInvocationMap.get(nodeAsString).add(invocation);
 		}
 		else {
-			List<OperationInvocation> list = new ArrayList<OperationInvocation>();
+			List<AbstractCall> list = new ArrayList<AbstractCall>();
 			list.add(invocation);
 			methodInvocationMap.put(nodeAsString, list);
 		}
@@ -644,7 +659,7 @@ public class Visitor extends ASTVisitor {
 			methodInvocationMap.get(nodeAsString).add(invocation);
 		}
 		else {
-			List<OperationInvocation> list = new ArrayList<OperationInvocation>();
+			List<AbstractCall> list = new ArrayList<AbstractCall>();
 			list.add(invocation);
 			methodInvocationMap.put(nodeAsString, list);
 		}
@@ -781,7 +796,7 @@ public class Visitor extends ASTVisitor {
 		return false;
 	}
 
-	public Map<String, List<OperationInvocation>> getMethodInvocationMap() {
+	public Map<String, List<AbstractCall>> getMethodInvocationMap() {
 		return this.methodInvocationMap;
 	}
 

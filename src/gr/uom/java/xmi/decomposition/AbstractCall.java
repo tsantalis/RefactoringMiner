@@ -51,7 +51,19 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		}
 		return false;
 	}
-	
+
+	public boolean compatibleExpression(AbstractCall other) {
+		if(this instanceof OperationInvocation && other instanceof OperationInvocation) {
+			return ((OperationInvocation)this).compatibleExpression((OperationInvocation)other);
+		}
+		else {
+			if(this.expression != null && other.expression != null) {
+				return this.expression.equals(other.expression);
+			}
+			return false;
+		}
+	}
+
 	public boolean differentExpressionNameAndArguments(AbstractCall other) {
 		boolean differentExpression = false;
 		if(this.expression == null && other.expression != null)

@@ -3,7 +3,10 @@ package gr.uom.java.xmi.decomposition;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.ExpressionMethodReference;
 import org.eclipse.jdt.core.dom.LambdaExpression;
+import org.eclipse.jdt.core.dom.SuperMethodReference;
+import org.eclipse.jdt.core.dom.TypeMethodReference;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -25,6 +28,21 @@ public class LambdaExpressionObject implements LocationInfoProvider {
 		}
 	}
 
+	public LambdaExpressionObject(CompilationUnit cu, String filePath, ExpressionMethodReference reference) {
+		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION);
+		this.expression = new AbstractExpression(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY);
+	}
+
+	public LambdaExpressionObject(CompilationUnit cu, String filePath, SuperMethodReference reference) {
+		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION);
+		this.expression = new AbstractExpression(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY);
+	}
+
+	public LambdaExpressionObject(CompilationUnit cu, String filePath, TypeMethodReference reference) {
+		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION);
+		this.expression = new AbstractExpression(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY);
+	}
+	
 	public OperationBody getBody() {
 		return body;
 	}

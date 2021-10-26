@@ -535,12 +535,12 @@ public class Visitor extends ASTVisitor {
 		}
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			Map<String, List<OperationInvocation>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
+			Map<String, List<AbstractCall>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
 			if(anonymousMethodInvocationMap.containsKey(methodInvocation)) {
 				anonymousMethodInvocationMap.get(methodInvocation).add(invocation);
 			}
 			else {
-				List<OperationInvocation> list = new ArrayList<OperationInvocation>();
+				List<AbstractCall> list = new ArrayList<AbstractCall>();
 				list.add(invocation);
 				anonymousMethodInvocationMap.put(methodInvocation, list);
 			}
@@ -549,14 +549,80 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(ExpressionMethodReference node) {
+		MethodReference reference = new MethodReference(cu, filePath, node);
+		String referenceString = node.toString();
+		if(methodInvocationMap.containsKey(referenceString)) {
+			methodInvocationMap.get(referenceString).add(reference);
+		}
+		else {
+			List<AbstractCall> list = new ArrayList<AbstractCall>();
+			list.add(reference);
+			methodInvocationMap.put(referenceString, list);
+		}
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			Map<String, List<AbstractCall>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
+			if(anonymousMethodInvocationMap.containsKey(referenceString)) {
+				anonymousMethodInvocationMap.get(referenceString).add(reference);
+			}
+			else {
+				List<AbstractCall> list = new ArrayList<AbstractCall>();
+				list.add(reference);
+				anonymousMethodInvocationMap.put(referenceString, list);
+			}
+		}
 		return super.visit(node);
 	}
 	
 	public boolean visit(SuperMethodReference node) {
+		MethodReference reference = new MethodReference(cu, filePath, node);
+		String referenceString = node.toString();
+		if(methodInvocationMap.containsKey(referenceString)) {
+			methodInvocationMap.get(referenceString).add(reference);
+		}
+		else {
+			List<AbstractCall> list = new ArrayList<AbstractCall>();
+			list.add(reference);
+			methodInvocationMap.put(referenceString, list);
+		}
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			Map<String, List<AbstractCall>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
+			if(anonymousMethodInvocationMap.containsKey(referenceString)) {
+				anonymousMethodInvocationMap.get(referenceString).add(reference);
+			}
+			else {
+				List<AbstractCall> list = new ArrayList<AbstractCall>();
+				list.add(reference);
+				anonymousMethodInvocationMap.put(referenceString, list);
+			}
+		}
 		return super.visit(node);
 	}
 	
 	public boolean visit(TypeMethodReference node) {
+		MethodReference reference = new MethodReference(cu, filePath, node);
+		String referenceString = node.toString();
+		if(methodInvocationMap.containsKey(referenceString)) {
+			methodInvocationMap.get(referenceString).add(reference);
+		}
+		else {
+			List<AbstractCall> list = new ArrayList<AbstractCall>();
+			list.add(reference);
+			methodInvocationMap.put(referenceString, list);
+		}
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			Map<String, List<AbstractCall>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
+			if(anonymousMethodInvocationMap.containsKey(referenceString)) {
+				anonymousMethodInvocationMap.get(referenceString).add(reference);
+			}
+			else {
+				List<AbstractCall> list = new ArrayList<AbstractCall>();
+				list.add(reference);
+				anonymousMethodInvocationMap.put(referenceString, list);
+			}
+		}
 		return super.visit(node);
 	}
 
@@ -605,12 +671,12 @@ public class Visitor extends ASTVisitor {
 		}
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			Map<String, List<OperationInvocation>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
+			Map<String, List<AbstractCall>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
 			if(anonymousMethodInvocationMap.containsKey(nodeAsString)) {
 				anonymousMethodInvocationMap.get(nodeAsString).add(invocation);
 			}
 			else {
-				List<OperationInvocation> list = new ArrayList<OperationInvocation>();
+				List<AbstractCall> list = new ArrayList<AbstractCall>();
 				list.add(invocation);
 				anonymousMethodInvocationMap.put(nodeAsString, list);
 			}
@@ -635,12 +701,12 @@ public class Visitor extends ASTVisitor {
 		}
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			Map<String, List<OperationInvocation>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
+			Map<String, List<AbstractCall>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
 			if(anonymousMethodInvocationMap.containsKey(nodeAsString)) {
 				anonymousMethodInvocationMap.get(nodeAsString).add(invocation);
 			}
 			else {
-				List<OperationInvocation> list = new ArrayList<OperationInvocation>();
+				List<AbstractCall> list = new ArrayList<AbstractCall>();
 				list.add(invocation);
 				anonymousMethodInvocationMap.put(nodeAsString, list);
 			}
@@ -665,12 +731,12 @@ public class Visitor extends ASTVisitor {
 		}
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			Map<String, List<OperationInvocation>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
+			Map<String, List<AbstractCall>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
 			if(anonymousMethodInvocationMap.containsKey(nodeAsString)) {
 				anonymousMethodInvocationMap.get(nodeAsString).add(invocation);
 			}
 			else {
-				List<OperationInvocation> list = new ArrayList<OperationInvocation>();
+				List<AbstractCall> list = new ArrayList<AbstractCall>();
 				list.add(invocation);
 				anonymousMethodInvocationMap.put(nodeAsString, list);
 			}
@@ -688,6 +754,30 @@ public class Visitor extends ASTVisitor {
 				(argument instanceof ArrayAccess && invalidArrayAccess((ArrayAccess)argument)) ||
 				(argument instanceof InfixExpression && invalidInfix((InfixExpression)argument)))
 			return;
+		if(argument instanceof ExpressionMethodReference) {
+			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (ExpressionMethodReference)argument);
+			lambdas.add(lambda);
+			if(current.getUserObject() != null) {
+				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+				anonymous.getLambdas().add(lambda);
+			}
+		}
+		else if(argument instanceof SuperMethodReference) {
+			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (SuperMethodReference)argument);
+			lambdas.add(lambda);
+			if(current.getUserObject() != null) {
+				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+				anonymous.getLambdas().add(lambda);
+			}
+		}
+		else if(argument instanceof TypeMethodReference) {
+			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (TypeMethodReference)argument);
+			lambdas.add(lambda);
+			if(current.getUserObject() != null) {
+				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+				anonymous.getLambdas().add(lambda);
+			}
+		}
 		this.arguments.add(argument.toString());
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();

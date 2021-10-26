@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
+import java.util.ArrayList;
+
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ExpressionMethodReference;
 import org.eclipse.jdt.core.dom.SuperMethodReference;
@@ -18,11 +20,13 @@ public class MethodReference extends AbstractCall {
 		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.METHOD_REFERENCE);
 		this.methodName = reference.getName().getIdentifier();
 		this.expression = reference.getExpression().toString();
+		this.arguments = new ArrayList<String>();
 	}
 	
 	public MethodReference(CompilationUnit cu, String filePath, SuperMethodReference reference) {
 		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.METHOD_REFERENCE);
 		this.methodName = reference.getName().getIdentifier();
+		this.arguments = new ArrayList<String>();
 		if(reference.getQualifier() != null) {
 			this.expression = reference.getQualifier().getFullyQualifiedName() + ".super";
 		}
@@ -35,6 +39,7 @@ public class MethodReference extends AbstractCall {
 		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.METHOD_REFERENCE);
 		this.methodName = reference.getName().getIdentifier();
 		this.expression = UMLType.extractTypeObject(cu, filePath, reference.getType(), 0).toQualifiedString();
+		this.arguments = new ArrayList<String>();
 	}
 
 	public String getMethodName() {
@@ -107,5 +112,14 @@ public class MethodReference extends AbstractCall {
     		hashCode = result;
     	}
     	return hashCode;
+    }
+   
+    public String actualString() {
+		StringBuilder sb = new StringBuilder();
+		if(expression != null) {
+			sb.append(expression).append("::");
+		}
+		sb.append(getName());
+		return sb.toString();
     }
 }

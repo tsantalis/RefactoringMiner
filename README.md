@@ -116,6 +116,7 @@ Currently, it supports the detection of the following refactorings:
 81. Localize Parameter
 82. Change Type Declaration Kind (`class`, `interface`, `enum`)
 83. Collapse Hierarchy
+84. Replace Loop with Pipeline
 
 # How to build RefactoringMiner
 
@@ -235,10 +236,10 @@ Refactorings and Commit Messages](https://doi.org/10.1109/SCAM.2019.00017)," *19
 50. Ameya Ketkar, Nikolaos Tsantalis, and Danny Dig, "[Understanding Type Changes in Java](https://doi.org/10.1145/3368089.3409725)," *ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering* (ESEC/FSE 2020), Sacramento, California, United States, November 8-13, 2020.
 51. Zhongxin Liu, Xin Xia, Meng Yan, and Shanping Li, "[Automating Just-In-Time Comment Updating](https://doi.org/10.1145/3324884.3416581)," *35th IEEE/ACM International Conference on Automated Software Engineering* (ASE 2020), September 21–25, 2020.
 52. Zadia Codabux and Christopher Dutchyn, "[Profiling Developers Through the Lens of Technical Debt](https://doi.org/10.1145/3382494.3422172)," *ACM/IEEE International Symposium on Empirical Software Engineering and Measurement* (ESEM 2020), October 8–9, 2020, Bari, Italy.
-53. Yiming Tang, Raffi Khatchadourian, Mehdi Bagherzadeh, Rhia Singh, Ajani Stewart, and Anita Raja, "[An Empirical Study of Refactorings and Technical Debt in Machine Learning Systems](http://doi.org/10.1109/ICSE43902.2021.00033)," *43rd International Conference on Software Engineering* (ICSE 2021), Madrid, Spain, May 25-28, 2021.
-54. Dong Jae Kim, Nikolaos Tsantalis, Tse-Hsun (Peter) Chen, and Jinqiu Yang, "Studying Test Annotation Maintenance in the Wild," *43rd International Conference on Software Engineering* (ICSE 2021), Madrid, Spain, May 25-28, 2021.
-55. Yanjie Jiang, Hui Liu, Nan Niu, Lu Zhang, and Yamin Hu, "Extracting Concise Bug-Fixing Patches from Human-Written Patches in Version Control Systems," *43rd International Conference on Software Engineering* (ICSE 2021), Madrid, Spain, May 25-28, 2021.
-56. Giovanni Rosa, Luca Pascarella, Simone Scalabrino, Rosalia Tufano, Gabriele Bavota, Michele Lanza, and Rocco Oliveto, "Evaluating SZZ Implementations Through a Developer-informed Oracle," *43rd International Conference on Software Engineering* (ICSE 2021), Madrid, Spain, May 25-28, 2021.
+53. Yiming Tang, Raffi Khatchadourian, Mehdi Bagherzadeh, Rhia Singh, Ajani Stewart, and Anita Raja, "[An Empirical Study of Refactorings and Technical Debt in Machine Learning Systems](https://doi.org/10.1109/ICSE43902.2021.00033)," *43rd International Conference on Software Engineering* (ICSE 2021), Madrid, Spain, May 25-28, 2021.
+54. Dong Jae Kim, Nikolaos Tsantalis, Tse-Hsun (Peter) Chen, and Jinqiu Yang, "[Studying Test Annotation Maintenance in the Wild](https://doi.org/10.1109/ICSE43902.2021.00019)," *43rd International Conference on Software Engineering* (ICSE 2021), Madrid, Spain, May 25-28, 2021.
+55. Yanjie Jiang, Hui Liu, Nan Niu, Lu Zhang, and Yamin Hu, "[Extracting Concise Bug-Fixing Patches from Human-Written Patches in Version Control Systems](https://doi.ieeecomputersociety.org/10.1109/ICSE43902.2021.00069)," *43rd International Conference on Software Engineering* (ICSE 2021), Madrid, Spain, May 25-28, 2021.
+56. Giovanni Rosa, Luca Pascarella, Simone Scalabrino, Rosalia Tufano, Gabriele Bavota, Michele Lanza, and Rocco Oliveto, "[Evaluating SZZ Implementations Through a Developer-informed Oracle](https://doi.ieeecomputersociety.org/10.1109/ICSE43902.2021.00049)," *43rd International Conference on Software Engineering* (ICSE 2021), Madrid, Spain, May 25-28, 2021.
 57. Bo Shen, Wei Zhang, Christian Kästner, Haiyan Zhao, Zhao Wei, Guangtai Liang, and Zhi Jin, "[SmartCommit: a graph-based interactive assistant for activity-oriented commits](https://doi.org/10.1145/3468264.3468551)," *29th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering* (ESEC/FSE 2021), Athens, Greece, August 23-28, 2021.
 
 # Support for other programming languages

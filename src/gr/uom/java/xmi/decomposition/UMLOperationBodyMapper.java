@@ -90,31 +90,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(invocation == null) {
 				invocation = statement.assignmentInvocationCoveringEntireStatement();
 			}
-			if(invocation != null) {
-				if(streamAPIName(invocation.getName())) {
-					streamAPICalls.add(statement);
-				}
-				if(invocation.actualString().contains(" -> ")) {
-					for(LambdaExpressionObject lambda : statement.getLambdas()) {
-						if(lambda.getBody() != null) {
-							for(AbstractCall inv : lambda.getBody().getAllOperationInvocations()) {
-								if(streamAPIName(inv.getName())) {
-									streamAPICalls.add(statement);
-									break;
-								}
-							}
-						}
-						else if(lambda.getExpression() != null) {
-							Map<String, List<AbstractCall>> methodInvocationMap = lambda.getExpression().getMethodInvocationMap();
-							for(String key : methodInvocationMap.keySet()) {
-								List<AbstractCall> invocations = methodInvocationMap.get(key);
-								for(AbstractCall inv : invocations) {
-									if(streamAPIName(inv.getName())) {
-										streamAPICalls.add(statement);
-										break;
-									}
-								}
-							}
+			if(invocation != null && (invocation.actualString().contains(" -> ") ||
+					invocation.actualString().contains("::"))) {
+				Map<String, List<AbstractCall>> methodInvocationMap = statement.getMethodInvocationMap();
+				for(String key : methodInvocationMap.keySet()) {
+					List<AbstractCall> invocations = methodInvocationMap.get(key);
+					for(AbstractCall inv : invocations) {
+						if(streamAPIName(inv.getName())) {
+							streamAPICalls.add(statement);
+							break;
 						}
 					}
 				}

@@ -124,7 +124,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean streamAPIName(String name) {
-		return name.equals("stream") || name.equals("filter") || name.equals("forEach") || name.equals("collect");
+		return name.equals("stream") || name.equals("filter") || name.equals("forEach") || name.equals("collect") || name.equals("map");
 	}
 
 	private List<AbstractCall> streamAPICalls(AbstractCodeFragment leaf) {
@@ -449,10 +449,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							additionallyMatchedStatements2.add(streamAPICallStatement);
 							for(AbstractCall streamAPICall : streamAPICalls) {
 								if(streamAPICall.getName().equals("forEach")) {
-									if(streamAPICall.getExpression() != null) {
-										if(!additionallyMatchedStatements1.contains(composite)) {
-											for(AbstractExpression expression : composite.getExpressions()) {
-												if(expression.getString().equals(streamAPICall.getExpression())) {
+									if(!additionallyMatchedStatements1.contains(composite)) {
+										for(AbstractExpression expression : composite.getExpressions()) {
+											if(expression.getString().equals(streamAPICall.getExpression())) {
+												additionallyMatchedStatements1.add(composite);
+												break;
+											}
+										}
+									}
+								}
+								else if(streamAPICall.getName().equals("stream")) {
+									if(!additionallyMatchedStatements1.contains(composite)) {
+										for(AbstractExpression expression : composite.getExpressions()) {
+											if(expression.getString().equals(streamAPICall.getExpression())) {
+												additionallyMatchedStatements1.add(composite);
+												break;
+											}
+											for(String argument : streamAPICall.getArguments()) {
+												if(expression.getString().equals(argument)) {
 													additionallyMatchedStatements1.add(composite);
 													break;
 												}
@@ -523,19 +537,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 							else if(streamAPICall.getName().equals("stream")) {
-								if(streamAPICall.getExpression() != null) {
-									for(CompositeStatementObject comp1 : innerNodes1) {
-										if(!additionallyMatchedStatements1.contains(comp1)) {
-											for(AbstractExpression expression : comp1.getExpressions()) {
-												if(expression.getString().equals(streamAPICall.getExpression())) {
+								for(CompositeStatementObject comp1 : innerNodes1) {
+									if(!additionallyMatchedStatements1.contains(comp1)) {
+										for(AbstractExpression expression : comp1.getExpressions()) {
+											if(expression.getString().equals(streamAPICall.getExpression())) {
+												additionallyMatchedStatements1.add(comp1);
+												break;
+											}
+											for(String argument : streamAPICall.getArguments()) {
+												if(expression.getString().equals(argument)) {
 													additionallyMatchedStatements1.add(comp1);
 													break;
-												}
-												for(String argument : streamAPICall.getArguments()) {
-													if(expression.getString().equals(argument)) {
-														additionallyMatchedStatements1.add(comp1);
-														break;
-													}
 												}
 											}
 										}
@@ -543,14 +555,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 							else if(streamAPICall.getName().equals("forEach")) {
-								if(streamAPICall.getExpression() != null) {
-									for(CompositeStatementObject comp1 : innerNodes1) {
-										if(!additionallyMatchedStatements1.contains(comp1)) {
-											for(AbstractExpression expression : comp1.getExpressions()) {
-												if(expression.getString().equals(streamAPICall.getExpression())) {
-													additionallyMatchedStatements1.add(comp1);
-													break;
-												}
+								for(CompositeStatementObject comp1 : innerNodes1) {
+									if(!additionallyMatchedStatements1.contains(comp1)) {
+										for(AbstractExpression expression : comp1.getExpressions()) {
+											if(expression.getString().equals(streamAPICall.getExpression())) {
+												additionallyMatchedStatements1.add(comp1);
+												break;
 											}
 										}
 									}

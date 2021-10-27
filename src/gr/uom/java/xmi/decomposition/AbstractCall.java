@@ -476,11 +476,23 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return argumentIntersectionSize;
 	}
 
-	private boolean argumentIsEqual(String statement) {
+	private boolean argumentIsStatement(String statement) {
 		if(statement.endsWith(";\n")) {
 			for(String argument : getArguments()) {
 				//length()-2 to remove ";\n" from the end of the statement
 				if(equalsIgnoringExtraParenthesis(argument, statement.substring(0, statement.length()-2))) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean argumentIsExpression(String expression) {
+		if(!expression.endsWith(";\n")) {
+			//statement is actually an expression
+			for(String argument : getArguments()) {
+				if(equalsIgnoringExtraParenthesis(argument, expression)) {
 					return true;
 				}
 			}
@@ -505,9 +517,13 @@ public abstract class AbstractCall implements LocationInfoProvider {
 			return new Replacement(getArguments().get(0), statement.substring(7, statement.length()-2),
 					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
 		}
-		else if(argumentIsEqual(statement) && (getArguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
+		else if(argumentIsStatement(statement) && (getArguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
 			return new Replacement(getArguments().get(0), statement.substring(0, statement.length()-2),
 					ReplacementType.ARGUMENT_REPLACED_WITH_STATEMENT);
+		}
+		else if(argumentIsExpression(statement) && (getArguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
+			return new Replacement(getArguments().get(0), statement,
+					ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION);
 		}
 		return null;
 	}
@@ -517,9 +533,13 @@ public abstract class AbstractCall implements LocationInfoProvider {
 			return new Replacement(statement.substring(7, statement.length()-2), getArguments().get(0),
 					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
 		}
-		else if(argumentIsEqual(statement) && (getArguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
+		else if(argumentIsStatement(statement) && (getArguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
 			return new Replacement(statement.substring(0, statement.length()-2), getArguments().get(0),
 					ReplacementType.ARGUMENT_REPLACED_WITH_STATEMENT);
+		}
+		else if(argumentIsExpression(statement) && (getArguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
+			return new Replacement(statement, getArguments().get(0),
+					ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION);
 		}
 		return null;
 	}

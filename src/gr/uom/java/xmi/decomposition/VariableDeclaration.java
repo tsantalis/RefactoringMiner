@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.IExtendedModifier;
+import org.eclipse.jdt.core.dom.LambdaExpression;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.Type;
@@ -77,7 +78,9 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.variableName = fragment.getName().getIdentifier();
 		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER) : null;
 		Type astType = extractType(fragment);
-		this.type = UMLType.extractTypeObject(cu, filePath, astType, fragment.getExtraDimensions());
+		if(astType != null) {
+			this.type = UMLType.extractTypeObject(cu, filePath, astType, fragment.getExtraDimensions());
+		}
 		ASTNode scopeNode = getScopeNode(fragment);
 		int startOffset = 0;
 		if(locationInfo.getCodeElementType().equals(CodeElementType.FIELD_DECLARATION)) {
@@ -284,6 +287,9 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 			}
 			else if(fragment.getParent() instanceof FieldDeclaration) {
 				return CodeElementType.FIELD_DECLARATION;
+			}
+			else if(fragment.getParent() instanceof LambdaExpression) {
+				return CodeElementType.LAMBDA_EXPRESSION_PARAMETER;
 			}
 		}
 		return null;

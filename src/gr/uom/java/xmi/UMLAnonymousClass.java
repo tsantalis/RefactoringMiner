@@ -38,11 +38,19 @@ public class UMLAnonymousClass extends UMLAbstractClass implements Comparable<UM
     	
     	if(o instanceof UMLAnonymousClass) {
     		UMLAnonymousClass umlClass = (UMLAnonymousClass)o;
-    		return this.packageName.equals(umlClass.packageName) && this.attributes.equals(umlClass.attributes) &&
-    				this.operations.equals(umlClass.operations) && this.getSourceFile().equals(umlClass.getSourceFile());
+    		return this.packageName.equals(umlClass.packageName) && this.name.equals(umlClass.name) && this.getSourceFile().equals(umlClass.getSourceFile());
     	}
     	return false;
     }
+
+    public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((packageName == null) ? 0 : packageName.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((getSourceFile() == null) ? 0 : getSourceFile().hashCode());
+		return result;
+	}
 
     public String toString() {
     	return getName();

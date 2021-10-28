@@ -96,7 +96,8 @@ public enum RefactoringType {
 	MERGE_PACKAGE("Merge Package", "Merge Package \\[(.+)\\] to (.+)"),
 	CHANGE_TYPE_DECLARATION_KIND("Change Type Declaration Kind", "Change Type Declaration Kind (.+) to (.+) in type (.+)"),
 	COLLAPSE_HIERARCHY("Collapse Hierarchy", "Collapse Hierarchy (.+) to (.+)"),
-	REPLACE_LOOP_WITH_PIPELINE("Replace Loop With Pipeline", "Replace Loop With Pipeline");
+	REPLACE_LOOP_WITH_PIPELINE("Replace Loop With Pipeline", "Replace Loop With Pipeline (.+) with (.+) in method (.+) from class (.+)"),
+	REPLACE_ANONYMOUS_WITH_LAMBDA("Replace Anonymous With Lambda", "Replace Anonymous With Lambda (.+) with (.+) in method (.+) from class (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -186,7 +187,8 @@ public enum RefactoringType {
 		MERGE_PACKAGE,
 		CHANGE_TYPE_DECLARATION_KIND,
 		COLLAPSE_HIERARCHY,
-		REPLACE_LOOP_WITH_PIPELINE
+		REPLACE_LOOP_WITH_PIPELINE,
+		REPLACE_ANONYMOUS_WITH_LAMBDA
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

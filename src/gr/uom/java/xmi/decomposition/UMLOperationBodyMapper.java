@@ -30,6 +30,7 @@ import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
+import gr.uom.java.xmi.diff.ReplaceAnonymousWithLambdaRefactoring;
 import gr.uom.java.xmi.diff.ReplaceLoopWithPipelineRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
@@ -3831,6 +3832,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
 						this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
 						if(this.operation1 != null && this.operation2 != null) {
+							ReplaceAnonymousWithLambdaRefactoring ref = new ReplaceAnonymousWithLambdaRefactoring(anonymousClass1, lambdas2.get(0), operation1, operation2);
+							this.refactorings.add(ref);
 							this.refactorings.addAll(mapper.getRefactorings());
 						}
 						lambdaMappers.add(mapper);

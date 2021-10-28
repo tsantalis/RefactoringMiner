@@ -335,16 +335,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		else if(lambda1.getBody() != null && lambda2.getBody() != null) {
 			CompositeStatementObject composite1 = lambda1.getBody().getCompositeStatement();
 			CompositeStatementObject composite2 = lambda2.getBody().getCompositeStatement();
-			processCompositeStatements(composite1, composite2);
+			processCompositeStatements(composite1.getLeaves(), composite2.getLeaves(), composite1.getInnerNodes(), composite2.getInnerNodes());
 		}
 	}
 
-	private void processCompositeStatements(CompositeStatementObject composite1, CompositeStatementObject composite2)
+	private void processCompositeStatements(List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2, List<CompositeStatementObject> innerNodes1, List<CompositeStatementObject> innerNodes2)
 			throws RefactoringMinerTimedOutException {
-		List<AbstractCodeFragment> leaves1 = composite1.getLeaves();
-		List<AbstractCodeFragment> leaves2 = composite2.getLeaves();
-		List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
-		List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
 		Set<AbstractCodeFragment> streamAPIStatements1 = statementsWithStreamAPICalls(leaves1);
 		Set<AbstractCodeFragment> streamAPIStatements2 = statementsWithStreamAPICalls(leaves2);
 		if(streamAPIStatements1.size() == 0 && streamAPIStatements2.size() > 0) {
@@ -581,10 +577,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.nonMappedLeavesT2 = new ArrayList<AbstractCodeFragment>();
 		this.nonMappedInnerNodesT1 = new ArrayList<CompositeStatementObject>();
 		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
-		if(anonymousClassOperation.getBody() != null && lambda2.getBody() != null) {
+		if(anonymousClassOperation.getBody() != null) {
 			CompositeStatementObject composite1 = anonymousClassOperation.getBody().getCompositeStatement();
-			CompositeStatementObject composite2 = lambda2.getBody().getCompositeStatement();
-			processCompositeStatements(composite1, composite2);
+			if(lambda2.getBody() != null) {
+				CompositeStatementObject composite2 = lambda2.getBody().getCompositeStatement();
+				processCompositeStatements(composite1.getLeaves(), composite2.getLeaves(), composite1.getInnerNodes(), composite2.getInnerNodes());
+			}
+			else if(lambda2.getExpression() != null) {
+				List<AbstractCodeFragment> leaves2 = new ArrayList<AbstractCodeFragment>();
+				leaves2.add(lambda2.getExpression());
+				processCompositeStatements(composite1.getLeaves(), leaves2, composite1.getInnerNodes(), new ArrayList<CompositeStatementObject>());
+			}
 		}
 	}
 

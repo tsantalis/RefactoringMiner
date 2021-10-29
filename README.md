@@ -117,6 +117,7 @@ Currently, it supports the detection of the following refactorings:
 82. Change Type Declaration Kind (`class`, `interface`, `enum`)
 83. Collapse Hierarchy
 84. Replace Loop with Pipeline
+85. Replace Anonymous with Lambda
 
 # How to build RefactoringMiner
 

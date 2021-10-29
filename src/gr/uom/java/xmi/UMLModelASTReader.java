@@ -30,6 +30,7 @@ import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.Comment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
@@ -694,6 +695,15 @@ public class UMLModelASTReader {
 				}
 				else {
 					name = invocationName + "." + name;
+				}
+			}
+			else if(parent instanceof ClassInstanceCreation) {
+				String invocationName = ((ClassInstanceCreation)parent).getType().toString();
+				if(name.isEmpty()) {
+					name = "new " + invocationName;
+				}
+				else {
+					name = "new " + invocationName + "." + name;
 				}
 			}
 			parent = parent.getParent();

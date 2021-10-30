@@ -3857,39 +3857,41 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		if(anonymousClassDeclarations1.size() == 1 && anonymousClassDeclarations2.size() == 0 && (operation1 != null || attribute1 != null) && lambdas2.size() >= 1) {
-			AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(0);
-			UMLAnonymousClass anonymousClass1 = null;
-			if(operation1 != null)
-				anonymousClass1 = operation1.findAnonymousClass(anonymousClassDeclaration1);
-			if(attribute1 != null)
-				anonymousClass1 = attribute1.findAnonymousClass(anonymousClassDeclaration1);
-			if(anonymousClass1.getOperations().size() == 1) {
-				UMLOperation anonymousClass1Operation = anonymousClass1.getOperations().get(0);
-				for(int i=0; i<lambdas2.size(); i++) {
-					LambdaExpressionObject lambda2 = lambdas2.get(i);
-					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(anonymousClass1Operation, lambda2, this);
-					int mappings = mapper.mappingsWithoutBlocks();
-					if(mappings > 0) {
-						int nonMappedElementsT1 = mapper.nonMappedElementsT1();
-						int nonMappedElementsT2 = mapper.nonMappedElementsT2();
-						if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
-								nonMappedElementsT1 == 0 || nonMappedElementsT2 == 0) {
-							this.mappings.addAll(mapper.mappings);
-							this.nonMappedInnerNodesT1.addAll(mapper.nonMappedInnerNodesT1);
-							this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);
-							this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
-							this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
-							if(this.operation1 != null && this.operation2 != null) {
-								ReplaceAnonymousWithLambdaRefactoring ref = new ReplaceAnonymousWithLambdaRefactoring(anonymousClass1, lambda2, operation1, operation2);
-								this.refactorings.add(ref);
-								this.refactorings.addAll(mapper.getRefactorings());
+		if(anonymousClassDeclarations1.size() >= 1 && (operation1 != null || attribute1 != null) && lambdas2.size() >= 1) {
+			for(int i=0; i<anonymousClassDeclarations1.size(); i++) {
+				AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);
+				UMLAnonymousClass anonymousClass1 = null;
+				if(operation1 != null)
+					anonymousClass1 = operation1.findAnonymousClass(anonymousClassDeclaration1);
+				if(attribute1 != null)
+					anonymousClass1 = attribute1.findAnonymousClass(anonymousClassDeclaration1);
+				if(anonymousClass1.getOperations().size() == 1) {
+					UMLOperation anonymousClass1Operation = anonymousClass1.getOperations().get(0);
+					for(int j=0; j<lambdas2.size(); j++) {
+						LambdaExpressionObject lambda2 = lambdas2.get(j);
+						UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(anonymousClass1Operation, lambda2, this);
+						int mappings = mapper.mappingsWithoutBlocks();
+						if(mappings > 0) {
+							int nonMappedElementsT1 = mapper.nonMappedElementsT1();
+							int nonMappedElementsT2 = mapper.nonMappedElementsT2();
+							if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
+									nonMappedElementsT1 == 0 || nonMappedElementsT2 == 0) {
+								this.mappings.addAll(mapper.mappings);
+								this.nonMappedInnerNodesT1.addAll(mapper.nonMappedInnerNodesT1);
+								this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);
+								this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
+								this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
+								if(this.operation1 != null && this.operation2 != null) {
+									ReplaceAnonymousWithLambdaRefactoring ref = new ReplaceAnonymousWithLambdaRefactoring(anonymousClass1, lambda2, operation1, operation2);
+									this.refactorings.add(ref);
+									this.refactorings.addAll(mapper.getRefactorings());
+								}
+								else if(this.attribute1 != null && this.attribute2 != null) {
+									ReplaceAnonymousWithLambdaRefactoring ref = new ReplaceAnonymousWithLambdaRefactoring(anonymousClass1, lambda2, attribute1, attribute2);
+									this.refactorings.add(ref);
+								}
+								lambdaMappers.add(mapper);
 							}
-							else if(this.attribute1 != null && this.attribute2 != null) {
-								ReplaceAnonymousWithLambdaRefactoring ref = new ReplaceAnonymousWithLambdaRefactoring(anonymousClass1, lambda2, attribute1, attribute2);
-								this.refactorings.add(ref);
-							}
-							lambdaMappers.add(mapper);
 						}
 					}
 				}

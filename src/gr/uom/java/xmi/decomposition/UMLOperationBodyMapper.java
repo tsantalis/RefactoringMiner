@@ -1872,7 +1872,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				Set<AbstractCodeMapping> mappingsToBeRemoved = new LinkedHashSet<AbstractCodeMapping>();
 				for(AbstractCodeMapping m : this.mappings) {
 					if(leafMapping.getFragment1().getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) &&
-							leafMapping.getFragment2().getLocationInfo().subsumes(m.getFragment2().getLocationInfo())) {
+							!leafMapping.getFragment1().equals(m.getFragment1()) &&
+							leafMapping.getFragment2().getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) &&
+							!leafMapping.getFragment2().equals(m.getFragment2())) {
 						mappingsToBeRemoved.add(m);
 					}
 				}
@@ -1908,6 +1910,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						intersection.retainAll(mappingsToBeRemoved);
 						if(!intersection.isEmpty()) {
 							refactoringsToBeRemoved.add(r);
+						}
+					}
+					else if(r instanceof ReplaceAnonymousWithLambdaRefactoring) {
+						ReplaceAnonymousWithLambdaRefactoring lambdaRef = (ReplaceAnonymousWithLambdaRefactoring)r;
+						LambdaExpressionObject lambda = lambdaRef.getLambda();
+						if(lambda.getExpression() != null) {
+							for(AbstractCodeMapping m : mappingsToBeRemoved) {
+								if(m.getFragment2().equals(lambda.getExpression())) {
+									refactoringsToBeRemoved.add(r);
+									break;
+								}
+							}
 						}
 					}
 				}
@@ -1983,7 +1997,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						replacementTypes = mapping.getReplacementTypes();
 						mappingsWithSameReplacementTypes.add(mapping);
 					}
-					else if(mapping.getReplacementTypes().equals(replacementTypes)) {
+					else if(mapping.getReplacementTypes().equals(replacementTypes) &&
+							!(replacementTypes.size() == 1 && replacementTypes.contains(ReplacementType.ANONYMOUS_CLASS_DECLARATION_REPLACED_WITH_LAMBDA))) {
 						mappingsWithSameReplacementTypes.add(mapping);
 					}
 					else if(mapping.getReplacementTypes().containsAll(replacementTypes) || replacementTypes.containsAll(mapping.getReplacementTypes())) {
@@ -3857,6 +3872,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		boolean replacementAdded = false;
 		if(anonymousClassDeclarations1.size() >= 1 && (operation1 != null || attribute1 != null) && lambdas2.size() >= 1) {
 			for(int i=0; i<anonymousClassDeclarations1.size(); i++) {
 				AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);
@@ -3890,12 +3906,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									ReplaceAnonymousWithLambdaRefactoring ref = new ReplaceAnonymousWithLambdaRefactoring(anonymousClass1, lambda2, attribute1, attribute2);
 									this.refactorings.add(ref);
 								}
+								Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), lambda2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION_REPLACED_WITH_LAMBDA);
+								replacementInfo.addReplacement(replacement);
+								replacementAdded = true;
 								lambdaMappers.add(mapper);
 							}
 						}
 					}
 				}
 			}
+		}
+		if(replacementAdded) {
+			return replacementInfo.getReplacements();
 		}
 		return null;
 	}

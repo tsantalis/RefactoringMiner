@@ -417,6 +417,13 @@ public class UMLModelASTReader {
 	    					}
 	    				}
 	    			}
+	    			for(UMLAttribute attribute : anonymousClass.getAttributes()) {
+	    				for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
+	    					if(attribute.getLocationInfo().subsumes(createdAnonymousClass.getLocationInfo())) {
+	    						attribute.addAnonymousClass(createdAnonymousClass);
+	    					}
+	    				}
+	    			}
 	    			createdAnonymousClasses.add(anonymousClass);
     			}
     		}

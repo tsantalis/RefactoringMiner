@@ -34,29 +34,12 @@ public class UMLAttributeDiff {
 	private boolean transientChanged;
 	private List<UMLOperationBodyMapper> operationBodyMapperList;
 	private UMLAnnotationListDiff annotationListDiff;
-	private List<UMLAnonymousClassDiff> anonymousClassDiffList;
 	private UMLOperation addedGetter;
 	private UMLOperation addedSetter;
 	private UMLOperationBodyMapper mapper;
 
 	public UMLAttributeDiff(UMLAttribute removedAttribute, UMLAttribute addedAttribute, UMLClassBaseDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
 		this(removedAttribute, addedAttribute, classDiff.getOperationBodyMapperList());
-		AbstractExpression initializer1 = removedAttribute.getVariableDeclaration().getInitializer();
-		AbstractExpression initializer2 = addedAttribute.getVariableDeclaration().getInitializer();
-		if(initializer1 != null && initializer2 != null) {
-			this.mapper = new UMLOperationBodyMapper(removedAttribute, addedAttribute);
-		}
-		List<UMLAnonymousClass> removedAttributeAnonymousClassList = removedAttribute.getAnonymousClassList();
-		List<UMLAnonymousClass> addedAttributeAnonymousClassList = addedAttribute.getAnonymousClassList();
-		if(removedAttributeAnonymousClassList.size() == addedAttributeAnonymousClassList.size() && removedAttributeAnonymousClassList.size() > 0) {
-			for(int i=0; i<removedAttributeAnonymousClassList.size(); i++) {
-				UMLAnonymousClass anonymousClass1 = removedAttributeAnonymousClassList.get(i);
-				UMLAnonymousClass anonymousClass2 = addedAttributeAnonymousClassList.get(i);
-				UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
-				anonymousClassDiff.process();
-				anonymousClassDiffList.add(anonymousClassDiff);
-			}
-		}
 		this.addedGetter = findMethod(classDiff.getAddedOperations(), addedAttribute, getterCondition(addedAttribute));
 		if(this.addedGetter != null && !removedAttribute.getName().equals(addedAttribute.getName())) {
 			UMLOperation removedGetter = findMethod(classDiff.getRemovedOperations(), removedAttribute, getterCondition(removedAttribute));
@@ -101,11 +84,10 @@ public class UMLAttributeDiff {
 		return null;
 	}
 
-	public UMLAttributeDiff(UMLAttribute removedAttribute, UMLAttribute addedAttribute, List<UMLOperationBodyMapper> operationBodyMapperList) {
+	public UMLAttributeDiff(UMLAttribute removedAttribute, UMLAttribute addedAttribute, List<UMLOperationBodyMapper> operationBodyMapperList) throws RefactoringMinerTimedOutException {
 		this.removedAttribute = removedAttribute;
 		this.addedAttribute = addedAttribute;
 		this.operationBodyMapperList = operationBodyMapperList;
-		this.anonymousClassDiffList = new ArrayList<UMLAnonymousClassDiff>();
 		this.visibilityChanged = false;
 		this.typeChanged = false;
 		this.renamed = false;
@@ -128,6 +110,11 @@ public class UMLAttributeDiff {
 		if(removedAttribute.isTransient() != addedAttribute.isTransient())
 			transientChanged = true;
 		this.annotationListDiff = new UMLAnnotationListDiff(removedAttribute.getAnnotations(), addedAttribute.getAnnotations());
+		AbstractExpression initializer1 = removedAttribute.getVariableDeclaration().getInitializer();
+		AbstractExpression initializer2 = addedAttribute.getVariableDeclaration().getInitializer();
+		if(initializer1 != null && initializer2 != null) {
+			this.mapper = new UMLOperationBodyMapper(removedAttribute, addedAttribute);
+		}
 	}
 
 	public UMLAttribute getRemovedAttribute() {
@@ -162,7 +149,7 @@ public class UMLAttributeDiff {
 
 	public boolean isEmpty() {
 		return !visibilityChanged && !staticChanged && !finalChanged && !volatileChanged && !transientChanged && !typeChanged && !renamed && !qualifiedTypeChanged && annotationListDiff.isEmpty() &&
-				anonymousClassDiffList.isEmpty() && addedGetter == null && addedSetter == null && (mapper == null || (mapper != null && mapper.getRefactoringsAfterPostProcessing().isEmpty()));
+				addedGetter == null && addedSetter == null && (mapper == null || (mapper != null && mapper.getRefactoringsAfterPostProcessing().isEmpty()));
 	}
 
 	public String toString() {
@@ -210,14 +197,6 @@ public class UMLAttributeDiff {
 		return refactorings;
 	}
 
-	private Set<Refactoring> getAnonymousClassRefactorings() {
-		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
-		for(UMLAnonymousClassDiff anonymousClassDiff : anonymousClassDiffList) {
-			refactorings.addAll(anonymousClassDiff.getRefactorings());
-		}
-		return refactorings;
-	}
-
 	public Set<Refactoring> getRefactorings() {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 		if(changeTypeCondition()) {
@@ -227,7 +206,6 @@ public class UMLAttributeDiff {
 		}
 		refactorings.addAll(getModifierRefactorings());
 		refactorings.addAll(getAnnotationRefactorings());
-		refactorings.addAll(getAnonymousClassRefactorings());
 		if(mapper != null) {
 			refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
 		}
@@ -304,7 +282,6 @@ public class UMLAttributeDiff {
 		}
 		refactorings.addAll(getModifierRefactorings());
 		refactorings.addAll(getAnnotationRefactorings());
-		refactorings.addAll(getAnonymousClassRefactorings());
 		if(mapper != null) {
 			refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
 		}

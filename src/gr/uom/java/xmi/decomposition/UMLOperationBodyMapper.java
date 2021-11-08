@@ -3734,6 +3734,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<LambdaExpressionObject> lambdas2,
 			List<UMLOperationBodyMapper> lambdaMappers)
 			throws RefactoringMinerTimedOutException {
+		boolean replacementAdded = false;
 		if(!anonymousClassDeclarations1.isEmpty() && !anonymousClassDeclarations2.isEmpty() && (operation1 != null || attribute1 != null) && (operation2 != null || attribute2 != null)) {
 			for(int i=0; i<anonymousClassDeclarations1.size(); i++) {
 				for(int j=0; j<anonymousClassDeclarations2.size(); j++) {
@@ -3771,8 +3772,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(!anonymousClassDeclaration1.toString().equals(anonymousClassDeclaration2.toString())) {
 								Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), anonymousClassDeclaration2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION);
 								replacementInfo.addReplacement(replacement);
+								replacementAdded = true;
 							}
-							return replacementInfo.getReplacements();
 						}
 					}
 				}
@@ -3872,7 +3873,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		boolean replacementAdded = false;
 		if(anonymousClassDeclarations1.size() >= 1 && (operation1 != null || attribute1 != null) && lambdas2.size() >= 1) {
 			for(int i=0; i<anonymousClassDeclarations1.size(); i++) {
 				AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);

@@ -159,12 +159,8 @@ public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((anonymousClass == null) ? 0 : anonymousClass.hashCode());
-		result = prime * result + ((attributeAfter == null) ? 0 : attributeAfter.getVariableDeclaration().hashCode());
-		result = prime * result + ((attributeBefore == null) ? 0 : attributeBefore.getVariableDeclaration().hashCode());
-		result = prime * result + ((lambda == null) ? 0 : lambda.hashCode());
-		result = prime * result + ((operationAfter == null) ? 0 : operationAfter.hashCode());
-		result = prime * result + ((operationBefore == null) ? 0 : operationBefore.hashCode());
+		result = prime * result + ((anonymousClass == null) ? 0 : anonymousClass.getLocationInfo().hashCode());
+		result = prime * result + ((lambda == null) ? 0 : lambda.getLocationInfo().hashCode());
 		return result;
 	}
 
@@ -180,32 +176,12 @@ public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
 		if (anonymousClass == null) {
 			if (other.anonymousClass != null)
 				return false;
-		} else if (!anonymousClass.equals(other.anonymousClass))
-			return false;
-		if (attributeAfter == null) {
-			if (other.attributeAfter != null)
-				return false;
-		} else if (!attributeAfter.getVariableDeclaration().equals(other.attributeAfter.getVariableDeclaration()))
-			return false;
-		if (attributeBefore == null) {
-			if (other.attributeBefore != null)
-				return false;
-		} else if (!attributeBefore.getVariableDeclaration().equals(other.attributeBefore.getVariableDeclaration()))
+		} else if (!anonymousClass.getLocationInfo().equals(other.anonymousClass.getLocationInfo()))
 			return false;
 		if (lambda == null) {
 			if (other.lambda != null)
 				return false;
-		} else if (!lambda.equals(other.lambda))
-			return false;
-		if (operationAfter == null) {
-			if (other.operationAfter != null)
-				return false;
-		} else if (!operationAfter.equals(other.operationAfter))
-			return false;
-		if (operationBefore == null) {
-			if (other.operationBefore != null)
-				return false;
-		} else if (!operationBefore.equals(other.operationBefore))
+		} else if (!lambda.getLocationInfo().equals(other.lambda.getLocationInfo()))
 			return false;
 		return true;
 	}

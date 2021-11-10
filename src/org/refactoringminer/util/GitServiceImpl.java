@@ -47,16 +47,16 @@ public class GitServiceImpl implements GitService {
 	@Override
 	public Repository cloneIfNotExists(String projectPath, String cloneUrl/*, String branch*/) throws Exception {
 		File folder = new File(projectPath);
-		String[] contents = folder.list();
-	    boolean dotGitFound = false;
-	    for(String content : contents) {
-	    	if(content.equals(".git")) {
-	    		dotGitFound = true;
-	    		break;
-	    	}
-	    }
 		Repository repository;
 		if (folder.exists()) {
+			String[] contents = folder.list();
+			boolean dotGitFound = false;
+			for(String content : contents) {
+				if(content.equals(".git")) {
+					dotGitFound = true;
+					break;
+				}
+			}
 			RepositoryBuilder builder = new RepositoryBuilder();
 			repository = builder
 					.setGitDir(dotGitFound ? new File(folder, ".git") : folder)
@@ -81,27 +81,27 @@ public class GitServiceImpl implements GitService {
 
 	@Override
 	public Repository openRepository(String repositoryPath) throws Exception {
-	    File folder = new File(repositoryPath);
-	    String[] contents = folder.list();
-	    boolean dotGitFound = false;
-	    for(String content : contents) {
-	    	if(content.equals(".git")) {
-	    		dotGitFound = true;
-	    		break;
-	    	}
-	    }
-	    Repository repository;
-	    if (folder.exists()) {
-	        RepositoryBuilder builder = new RepositoryBuilder();
-	        repository = builder
-	            .setGitDir(dotGitFound ? new File(folder, ".git") : folder)
-	            .readEnvironment()
-	            .findGitDir()
-	            .build();
-	    } else {
-	        throw new FileNotFoundException(repositoryPath);
-	    }
-	    return repository;
+		File folder = new File(repositoryPath);
+		Repository repository;
+		if (folder.exists()) {
+			String[] contents = folder.list();
+			boolean dotGitFound = false;
+			for(String content : contents) {
+				if(content.equals(".git")) {
+					dotGitFound = true;
+					break;
+				}
+			}
+			RepositoryBuilder builder = new RepositoryBuilder();
+			repository = builder
+					.setGitDir(dotGitFound ? new File(folder, ".git") : folder)
+					.readEnvironment()
+					.findGitDir()
+					.build();
+		} else {
+			throw new FileNotFoundException(repositoryPath);
+		}
+		return repository;
 	}
 
 	public void checkout(Repository repository, String commitId) throws Exception {

@@ -1784,12 +1784,14 @@ public class VariableReplacementAnalysis {
 						ref.getNewVariable().equals(parameterDiff.getAddedParameter().getVariableDeclaration())) {
 					boolean castInvocation = false;
 					String variableName = ref.getNewVariable().getVariableName();
-					Map<VariableReplacementWithMethodInvocation, Set<AbstractCodeMapping>> map = variableInvocationExpressionMap.get(variableName);
-					for(VariableReplacementWithMethodInvocation replacement : map.keySet()) {
-						if(replacement.getBefore().equals(variableName)) {
-							if(replacement.getInvokedOperation().getCoverage().equals(AbstractCall.StatementCoverageType.CAST_CALL)) {
-								castInvocation = true;
-								break;
+					if(variableInvocationExpressionMap.containsKey(variableName)) {
+						Map<VariableReplacementWithMethodInvocation, Set<AbstractCodeMapping>> map = variableInvocationExpressionMap.get(variableName);
+						for(VariableReplacementWithMethodInvocation replacement : map.keySet()) {
+							if(replacement.getBefore().equals(variableName)) {
+								if(replacement.getInvokedOperation().getCoverage().equals(AbstractCall.StatementCoverageType.CAST_CALL)) {
+									castInvocation = true;
+									break;
+								}
 							}
 						}
 					}

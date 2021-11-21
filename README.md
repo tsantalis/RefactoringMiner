@@ -7,6 +7,7 @@ Table of Contents
    * [Chrome extension](#chrome-extension)
    * [Research](#research)
       * [How to cite RefactoringMiner](#how-to-cite-refactoringminer)
+      * [Talks about RefactoringMiner](#talks-about-refactoringminer)
       * [Papers based on RefactoringMiner](#papers-based-on-refactoringminer)
    * [Support for other programming languages](#support-for-other-programming-languages)
       * [Kotlin](#kotlin)
@@ -181,6 +182,9 @@ Nikolaos Tsantalis, Ameya Ketkar, and Danny Dig, "[RefactoringMiner 2.0](https:/
 	numpages = {21},
 	doi = {10.1109/TSE.2020.3007722},
     }
+
+## Talks about RefactoringMiner
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CXO32d1ih3E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Papers based on RefactoringMiner
 RefactoringMiner has been used in the following studies:

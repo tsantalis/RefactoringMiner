@@ -184,7 +184,10 @@ Nikolaos Tsantalis, Ameya Ketkar, and Danny Dig, "[RefactoringMiner 2.0](https:/
     }
 
 ## Talks about RefactoringMiner
-<iframe width="560" height="315" src="https://www.youtube.com/embed/CXO32d1ih3E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+**Keynote at the Fifth International Workshop on Refactoring (IWoR 2021)**
+
+[![2021-11-14 22_16_25-Greenshot](https://user-images.githubusercontent.com/1483516/142782871-7f7545d3-3fe7-4d0c-8860-db892757a152.png)](https://www.youtube.com/watch?v=CXO32d1ih3E)
+
 
 ## Papers based on RefactoringMiner
 RefactoringMiner has been used in the following studies:

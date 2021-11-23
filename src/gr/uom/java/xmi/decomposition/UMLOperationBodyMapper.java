@@ -4437,17 +4437,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			for(Replacement replacement : replacementInfo.getReplacements()) {
-				if(replacement.getType().equals(ReplacementType.TYPE))
+				if(replacement.getType().equals(ReplacementType.TYPE) &&
+						variableDeclarations1.get(0).getType().toQualifiedString().equals(replacement.getBefore()) &&
+						variableDeclarations2.get(0).getType().toQualifiedString().equals(replacement.getAfter()))
 					typeReplacement = true;
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
 						variableDeclarations1.get(0).getVariableName().equals(replacement.getBefore()) &&
 						variableDeclarations2.get(0).getVariableName().equals(replacement.getAfter()))
 					variableRename = true;
-				else {
-					if(initializer1 != null && initializer1.getExpression().equals(replacement.getBefore()) &&
-							initializer2 != null && initializer2.getExpression().equals(replacement.getAfter())) {
-						initializerReplacement = true;
-					}
+				else if(initializer1 != null && initializer1.getExpression().equals(replacement.getBefore()) &&
+						initializer2 != null && initializer2.getExpression().equals(replacement.getAfter())) {
+					initializerReplacement = true;
 				}
 			}
 			if(typeReplacement && !type1.compatibleTypes(type2) && variableRename && (initializerReplacement || nullInitializer || zeroArgumentClassInstantiation || classInstantiationArgumentReplacement)) {

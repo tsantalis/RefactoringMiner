@@ -1739,23 +1739,8 @@ public class UMLModelDiff {
 		for(MoveAttributeRefactoring moveAttributeRefactoring : moveAttributeRefactorings) {
 			UMLAttribute originalAttribute = moveAttributeRefactoring.getOriginalAttribute();
 			UMLAttribute movedAttribute = moveAttributeRefactoring.getMovedAttribute();
-			if(!originalAttribute.getVisibility().equals(movedAttribute.getVisibility())) {
-				ChangeAttributeAccessModifierRefactoring ref = new ChangeAttributeAccessModifierRefactoring(originalAttribute.getVisibility(), movedAttribute.getVisibility(), originalAttribute, movedAttribute);
-				refactorings.add(ref);
-			}
-			UMLAnnotationListDiff annotationListDiff = new UMLAnnotationListDiff(originalAttribute.getAnnotations(), movedAttribute.getAnnotations());
-			for(UMLAnnotation annotation : annotationListDiff.getAddedAnnotations()) {
-				AddAttributeAnnotationRefactoring refactoring = new AddAttributeAnnotationRefactoring(annotation, originalAttribute, movedAttribute);
-				refactorings.add(refactoring);
-			}
-			for(UMLAnnotation annotation : annotationListDiff.getRemovedAnnotations()) {
-				RemoveAttributeAnnotationRefactoring refactoring = new RemoveAttributeAnnotationRefactoring(annotation, originalAttribute, movedAttribute);
-				refactorings.add(refactoring);
-			}
-			for(UMLAnnotationDiff annotationDiff : annotationListDiff.getAnnotationDiffList()) {
-				ModifyAttributeAnnotationRefactoring refactoring = new ModifyAttributeAnnotationRefactoring(annotationDiff.getRemovedAnnotation(), annotationDiff.getAddedAnnotation(), originalAttribute, movedAttribute);
-				refactorings.add(refactoring);
-			}
+			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(originalAttribute, movedAttribute, Collections.emptyList());
+			refactorings.addAll(attributeDiff.getRefactorings());
 		}
 		refactorings.addAll(this.refactorings);
 		for(UMLClassDiff classDiff : commonClassDiffList) {

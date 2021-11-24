@@ -1601,9 +1601,9 @@ public class UMLModelDiff {
 					MergeAttributeRefactoring ref = new MergeAttributeRefactoring(mergedAttributes, a2, diff.getOriginalClassName(), diff.getNextClassName(), set);
 					if(!refactorings.contains(ref)) {
 						refactorings.add(ref);
-						Refactoring conflictingRefactoring = attributeRenamed(mergedVariables, a2.getVariableDeclaration(), refactorings);
-						if(conflictingRefactoring != null) {
-							refactorings.remove(conflictingRefactoring);
+						Set<Refactoring> conflictingRefactorings = attributeRenamed(mergedVariables, a2.getVariableDeclaration(), refactorings);
+						if(!conflictingRefactorings.isEmpty()) {
+							refactorings.removeAll(conflictingRefactorings);
 						}
 					}
 				}
@@ -1739,6 +1739,10 @@ public class UMLModelDiff {
 		for(MoveAttributeRefactoring moveAttributeRefactoring : moveAttributeRefactorings) {
 			UMLAttribute originalAttribute = moveAttributeRefactoring.getOriginalAttribute();
 			UMLAttribute movedAttribute = moveAttributeRefactoring.getMovedAttribute();
+			Set<Refactoring> conflictingRefactorings = movedAttributeRenamed(originalAttribute.getVariableDeclaration(), movedAttribute.getVariableDeclaration(), refactorings);
+			if(!conflictingRefactorings.isEmpty()) {
+				refactorings.removeAll(conflictingRefactorings);
+			}
 			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(originalAttribute, movedAttribute, Collections.emptyList());
 			refactorings.addAll(attributeDiff.getRefactorings());
 		}
@@ -3032,16 +3036,112 @@ public class UMLModelDiff {
 		return false;
 	}
 
-	private Refactoring attributeRenamed(Set<VariableDeclaration> mergedAttributes, VariableDeclaration a2, Set<Refactoring> refactorings) {
+	private Set<Refactoring> movedAttributeRenamed(VariableDeclaration a1, VariableDeclaration a2, Set<Refactoring> refactorings) {
+		Set<Refactoring> matchingRefactorings = new HashSet<Refactoring>();
+		boolean renameFound = false;
+		for(Refactoring refactoring : refactorings) {
+			if(refactoring instanceof RenameAttributeRefactoring) {
+				RenameAttributeRefactoring rename = (RenameAttributeRefactoring)refactoring;
+				if(a1.equals(rename.getOriginalAttribute().getVariableDeclaration()) || a2.equals(rename.getRenamedAttribute().getVariableDeclaration())) {
+					matchingRefactorings.add(rename);
+					renameFound = true;
+				}
+			}
+			else if(refactoring instanceof ChangeAttributeTypeRefactoring) {
+				ChangeAttributeTypeRefactoring changeType = (ChangeAttributeTypeRefactoring)refactoring;
+				if(a1.equals(changeType.getOriginalAttribute().getVariableDeclaration()) || a2.equals(changeType.getChangedTypeAttribute().getVariableDeclaration())) {
+					matchingRefactorings.add(changeType);
+				}
+			}
+			else if(refactoring instanceof ChangeAttributeAccessModifierRefactoring) {
+				ChangeAttributeAccessModifierRefactoring changeAccessModifer = (ChangeAttributeAccessModifierRefactoring)refactoring;
+				if(a1.equals(changeAccessModifer.getAttributeBefore().getVariableDeclaration()) || a2.equals(changeAccessModifer.getAttributeAfter().getVariableDeclaration())) {
+					matchingRefactorings.add(changeAccessModifer);
+				}
+			}
+			else if(refactoring instanceof AddAttributeModifierRefactoring) {
+				AddAttributeModifierRefactoring addModifer = (AddAttributeModifierRefactoring)refactoring;
+				if(a1.equals(addModifer.getAttributeBefore().getVariableDeclaration()) || a2.equals(addModifer.getAttributeAfter().getVariableDeclaration())) {
+					matchingRefactorings.add(addModifer);
+				}
+			}
+			else if(refactoring instanceof RemoveAttributeModifierRefactoring) {
+				RemoveAttributeModifierRefactoring removeModifer = (RemoveAttributeModifierRefactoring)refactoring;
+				if(a1.equals(removeModifer.getAttributeBefore().getVariableDeclaration()) || a2.equals(removeModifer.getAttributeAfter().getVariableDeclaration())) {
+					matchingRefactorings.add(removeModifer);
+				}
+			}
+			else if(refactoring instanceof AddAttributeAnnotationRefactoring) {
+				AddAttributeAnnotationRefactoring addAnnotation = (AddAttributeAnnotationRefactoring)refactoring;
+				if(a1.equals(addAnnotation.getAttributeBefore().getVariableDeclaration()) || a2.equals(addAnnotation.getAttributeAfter().getVariableDeclaration())) {
+					matchingRefactorings.add(addAnnotation);
+				}
+			}
+			else if(refactoring instanceof RemoveAttributeAnnotationRefactoring) {
+				RemoveAttributeAnnotationRefactoring removeAnnotation = (RemoveAttributeAnnotationRefactoring)refactoring;
+				if(a1.equals(removeAnnotation.getAttributeBefore().getVariableDeclaration()) || a2.equals(removeAnnotation.getAttributeAfter().getVariableDeclaration())) {
+					matchingRefactorings.add(removeAnnotation);
+				}
+			}
+		}
+		if(renameFound)
+			return matchingRefactorings;
+		else
+			return Collections.emptySet();
+	}
+
+	private Set<Refactoring> attributeRenamed(Set<VariableDeclaration> mergedAttributes, VariableDeclaration a2, Set<Refactoring> refactorings) {
+		Set<Refactoring> matchingRefactorings = new HashSet<Refactoring>();
+		boolean renameFound = false;
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof RenameAttributeRefactoring) {
 				RenameAttributeRefactoring rename = (RenameAttributeRefactoring)refactoring;
 				if(mergedAttributes.contains(rename.getOriginalAttribute().getVariableDeclaration()) && a2.equals(rename.getRenamedAttribute().getVariableDeclaration())) {
-					return rename;
+					matchingRefactorings.add(rename);
+					renameFound = true;
+				}
+			}
+			else if(refactoring instanceof ChangeAttributeTypeRefactoring) {
+				ChangeAttributeTypeRefactoring changeType = (ChangeAttributeTypeRefactoring)refactoring;
+				if(mergedAttributes.contains(changeType.getOriginalAttribute().getVariableDeclaration()) && a2.equals(changeType.getChangedTypeAttribute().getVariableDeclaration())) {
+					matchingRefactorings.add(changeType);
+				}
+			}
+			else if(refactoring instanceof ChangeAttributeAccessModifierRefactoring) {
+				ChangeAttributeAccessModifierRefactoring changeAccessModifer = (ChangeAttributeAccessModifierRefactoring)refactoring;
+				if(mergedAttributes.contains(changeAccessModifer.getAttributeBefore().getVariableDeclaration()) && a2.equals(changeAccessModifer.getAttributeAfter().getVariableDeclaration())) {
+					matchingRefactorings.add(changeAccessModifer);
+				}
+			}
+			else if(refactoring instanceof AddAttributeModifierRefactoring) {
+				AddAttributeModifierRefactoring addModifer = (AddAttributeModifierRefactoring)refactoring;
+				if(mergedAttributes.contains(addModifer.getAttributeBefore().getVariableDeclaration()) && a2.equals(addModifer.getAttributeAfter().getVariableDeclaration())) {
+					matchingRefactorings.add(addModifer);
+				}
+			}
+			else if(refactoring instanceof RemoveAttributeModifierRefactoring) {
+				RemoveAttributeModifierRefactoring removeModifer = (RemoveAttributeModifierRefactoring)refactoring;
+				if(mergedAttributes.contains(removeModifer.getAttributeBefore().getVariableDeclaration()) && a2.equals(removeModifer.getAttributeAfter().getVariableDeclaration())) {
+					matchingRefactorings.add(removeModifer);
+				}
+			}
+			else if(refactoring instanceof AddAttributeAnnotationRefactoring) {
+				AddAttributeAnnotationRefactoring addAnnotation = (AddAttributeAnnotationRefactoring)refactoring;
+				if(mergedAttributes.contains(addAnnotation.getAttributeBefore().getVariableDeclaration()) && a2.equals(addAnnotation.getAttributeAfter().getVariableDeclaration())) {
+					matchingRefactorings.add(addAnnotation);
+				}
+			}
+			else if(refactoring instanceof RemoveAttributeAnnotationRefactoring) {
+				RemoveAttributeAnnotationRefactoring removeAnnotation = (RemoveAttributeAnnotationRefactoring)refactoring;
+				if(mergedAttributes.contains(removeAnnotation.getAttributeBefore().getVariableDeclaration()) && a2.equals(removeAnnotation.getAttributeAfter().getVariableDeclaration())) {
+					matchingRefactorings.add(removeAnnotation);
 				}
 			}
 		}
-		return null;
+		if(renameFound)
+			return matchingRefactorings;
+		else
+			return Collections.emptySet();
 	}
 
 	private void deleteRemovedOperation(UMLOperation operation) {

@@ -1293,6 +1293,8 @@ public class UMLModelDiff {
 					ref = new PushDownAttributeRefactoring(removedAttribute, addedAttribute);
 				}
 				this.refactorings.add(ref);
+				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, Collections.emptyList()); 
+				refactorings.addAll(attributeDiff.getRefactorings()); 
 			}
 		}
 	}

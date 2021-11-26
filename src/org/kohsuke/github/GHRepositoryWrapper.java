@@ -40,7 +40,7 @@ public class GHRepositoryWrapper {
     }
 
     private GitHubResponse<GHCommit> getGhCommitGitHubResponse(String url) throws IOException {
-        Requester requester = ghRepository.root.createRequest().withUrlPath(url);
+        Requester requester = ghRepository.root().createRequest().withUrlPath(url);
         GitHubResponse<GHCommit> ghCommitGitHubResponse = requester.client.sendRequest(requester, (responseInfo) -> GitHubResponse.parseBody(responseInfo, GHCommit.class));
         return ghCommitGitHubResponse;
     }

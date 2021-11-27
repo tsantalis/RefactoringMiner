@@ -47,4 +47,8 @@ public class UMLJavadoc implements LocationInfoProvider {
 		}
 		return false;
 	}
+	
+	public boolean equalText(UMLJavadoc other) {
+		return this.tags.equals(other.tags);
+	}
 }

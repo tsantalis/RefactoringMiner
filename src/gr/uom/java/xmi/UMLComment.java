@@ -12,6 +12,10 @@ public class UMLComment implements LocationInfoProvider {
 		this.locationInfo = locationInfo;
 	}
 
+	public String getText() {
+		return text;
+	}
+
 	public LocationInfo getLocationInfo() {
 		return locationInfo;
 	}

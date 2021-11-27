@@ -2,6 +2,7 @@ package gr.uom.java.xmi;
 
 import gr.uom.java.xmi.diff.StringDistance;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,8 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private List<String> importedTypes;
     private List<UMLTypeParameter> typeParameters;
     private UMLJavadoc javadoc;
+    private UMLJavadoc packageDeclarationJavadoc;
+    private List<UMLComment> packageDeclarationComments;
     private List<UMLAnnotation> annotations;
     private List<UMLEnumConstant> enumConstants;
     
@@ -73,6 +76,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.implementedInterfaces = new ArrayList<UMLType>();
         this.importedTypes = importedTypes;
         this.typeParameters = new ArrayList<UMLTypeParameter>();
+        this.packageDeclarationComments = new ArrayList<UMLComment>();
         this.annotations = new ArrayList<UMLAnnotation>();
         this.enumConstants = new ArrayList<UMLEnumConstant>();
     }
@@ -215,7 +219,31 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		this.javadoc = javadoc;
 	}
 
-    public UMLEnumConstant containsEnumConstant(UMLEnumConstant otherEnumConstant) {
+    public UMLJavadoc getPackageDeclarationJavadoc() {
+		return packageDeclarationJavadoc;
+	}
+
+	public void setPackageDeclarationJavadoc(UMLJavadoc packageJavadoc) {
+		this.packageDeclarationJavadoc = packageJavadoc;
+	}
+
+	public List<UMLComment> getPackageDeclarationComments() {
+		return packageDeclarationComments;
+	}
+
+	public boolean identicalPackageHeader(UMLClass c) throws IOException {
+		if(this.packageDeclarationComments.size() > 0 && c.packageDeclarationComments.size() > 0) {
+			String text1 = this.packageDeclarationComments.get(0).getText();
+			String text2 = c.packageDeclarationComments.get(0).getText();
+			return text1.equals(text2) || StringDistance.trivialCommentChange(text1, text2);
+		}
+		if(this.packageDeclarationJavadoc != null && c.packageDeclarationJavadoc != null) {
+			return this.packageDeclarationJavadoc.equalText(c.packageDeclarationJavadoc);
+		}
+		return false;
+	}
+
+	public UMLEnumConstant containsEnumConstant(UMLEnumConstant otherEnumConstant) {
     	ListIterator<UMLEnumConstant> enumConstantIt = enumConstants.listIterator();
     	while(enumConstantIt.hasNext()) {
     		UMLEnumConstant enumConstant = enumConstantIt.next();

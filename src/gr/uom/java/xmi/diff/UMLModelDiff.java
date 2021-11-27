@@ -1,7 +1,6 @@
 package gr.uom.java.xmi.diff;
 
 import gr.uom.java.xmi.UMLAbstractClass;
-import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
@@ -2146,7 +2145,7 @@ public class UMLModelDiff {
 							String anonymousID = "";
 							for(int i=tokens.length-1; i>=0; i--) {
 								String token = tokens[i];
-								if(PrefixSuffixUtils.isNumeric(token) || Character.isLowerCase(token.charAt(0))) {
+								if(StringDistance.isNumeric(token) || Character.isLowerCase(token.charAt(0))) {
 									anonymousID = "." + token + anonymousID;
 								}
 								else {
@@ -2261,7 +2260,7 @@ public class UMLModelDiff {
 
 	private boolean isAnonymousClassName(String className) {
 		String anonymousID = className.substring(className.lastIndexOf(".")+1, className.length());
-		return PrefixSuffixUtils.isNumeric(anonymousID) || Character.isLowerCase(anonymousID.charAt(0));
+		return StringDistance.isNumeric(anonymousID) || Character.isLowerCase(anonymousID.charAt(0));
 	}
 
 	private boolean conflictingExpression(AbstractCall invocation, UMLOperation addedOperation, Map<String, Set<VariableDeclaration>> variableDeclarationMap) {

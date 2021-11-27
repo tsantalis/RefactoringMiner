@@ -5,11 +5,19 @@ public interface UMLClassMatcher {
 	public class MatchResult {
 		private int matchedOperations;
 		private int matchedAttributes;
+		private int totalOperations;
+		private int totalAttributes;
+		private boolean identicalPackageHeader;
 		private boolean match;
 
-		public MatchResult(int matchedOperations, int matchedAttributes, boolean match) {
+		public MatchResult(int matchedOperations, int matchedAttributes,
+				int totalOperations, int totalAttributes,
+				boolean identicalPackageHeader, boolean match) {
 			this.matchedOperations = matchedOperations;
 			this.matchedAttributes = matchedAttributes;
+			this.totalOperations = totalOperations;
+			this.totalAttributes = totalAttributes;
+			this.identicalPackageHeader = identicalPackageHeader;
 			this.match = match;
 		}
 
@@ -21,7 +29,18 @@ public interface UMLClassMatcher {
 			return matchedAttributes;
 		}
 
+		public int getTotalOperations() {
+			return totalOperations;
+		}
+
+		public int getTotalAttributes() {
+			return totalAttributes;
+		}
+
 		public boolean isMatch() {
+			if(identicalPackageHeader && totalOperations + totalAttributes > 0) {
+				return match && matchedOperations + matchedAttributes > 0;
+			}
 			return match;
 		}
 

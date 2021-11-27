@@ -283,7 +283,7 @@ public class GitServiceImpl implements GitService {
         	tw.addTree(newTree);
 
         	final RenameDetector rd = new RenameDetector(repository);
-        	rd.setRenameScore(80);
+        	//rd.setRenameScore(80);
         	rd.addAll(DiffEntry.scan(tw));
 
         	for (DiffEntry diff : rd.compute(tw.getObjectReader(), null)) {

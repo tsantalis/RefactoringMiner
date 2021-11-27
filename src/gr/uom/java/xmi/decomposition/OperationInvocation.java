@@ -254,7 +254,7 @@ public class OperationInvocation extends AbstractCall {
     		else if(arg.startsWith("\"") && arg.endsWith("\"")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("String"));
     		}
-    		else if(PrefixSuffixUtils.isNumeric(arg)) {
+    		else if(StringDistance.isNumeric(arg)) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("int"));
     		}
     		else if(arg.startsWith("\'") && arg.endsWith("\'")) {

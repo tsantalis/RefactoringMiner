@@ -12,7 +12,6 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
-import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 
 public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {

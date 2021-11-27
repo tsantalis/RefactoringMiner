@@ -5,6 +5,7 @@ import gr.uom.java.xmi.UMLModelASTReader;
 import gr.uom.java.xmi.diff.MoveSourceFolderRefactoring;
 import gr.uom.java.xmi.diff.MovedClassToAnotherSourceFolder;
 import gr.uom.java.xmi.diff.RenamePattern;
+import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.io.File;
@@ -14,7 +15,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URL;
 import java.util.ArrayList;
@@ -71,10 +71,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.difflib.DiffUtils;
-import com.github.difflib.patch.AbstractDelta;
-import com.github.difflib.patch.Chunk;
-import com.github.difflib.patch.Patch;
 
 public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMiner {
 
@@ -172,14 +168,14 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				String renamedFile = renamedFilesHint.get(key);
 				String fileBefore = fileContentsBefore.get(key);
 				String fileAfter = fileContentsCurrent.get(renamedFile);
-				if(fileBefore.equals(fileAfter) || trivialCommentChange(fileBefore, fileAfter)) {
+				if(fileBefore.equals(fileAfter) || StringDistance.trivialCommentChange(fileBefore, fileAfter)) {
 					identicalFiles.put(key, renamedFile);
 				}
 			}
 			if(fileContentsCurrent.containsKey(key)) {
 				String fileBefore = fileContentsBefore.get(key);
 				String fileAfter = fileContentsCurrent.get(key);
-				if(fileBefore.equals(fileAfter) || trivialCommentChange(fileBefore, fileAfter)) {
+				if(fileBefore.equals(fileAfter) || StringDistance.trivialCommentChange(fileBefore, fileAfter)) {
 					identicalFiles.put(key, key);
 				}
 			}
@@ -218,24 +214,6 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			}
 		}
 		return moveSourceFolderRefactorings;
-	}
-
-	private boolean trivialCommentChange(String fileBefore, String fileAfter) throws IOException {
-		if(fileBefore.length() == fileAfter.length()) {
-			List<String> original = IOUtils.readLines(new StringReader(fileBefore));
-			List<String> revised = IOUtils.readLines(new StringReader(fileAfter));
-			
-			Patch<String> patch = DiffUtils.diff(original, revised);
-			List<AbstractDelta<String>> deltas = patch.getDeltas();
-			for(AbstractDelta<String> delta : deltas) {
-				Chunk<String> source = delta.getSource();
-				if(source.getLines().size() > 0 && !source.getLines().get(0).matches("^\\s*//.*")) {
-					return false;
-				}
-			}
-			return true;
-		}
-		return false;
 	}
 
 	private void populateFileContents(Repository repository, RevCommit commit,

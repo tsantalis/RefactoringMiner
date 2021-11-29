@@ -249,6 +249,7 @@ Refactorings and Commit Messages](https://doi.org/10.1109/SCAM.2019.00017)," *19
 55. Yanjie Jiang, Hui Liu, Nan Niu, Lu Zhang, and Yamin Hu, "[Extracting Concise Bug-Fixing Patches from Human-Written Patches in Version Control Systems](https://doi.ieeecomputersociety.org/10.1109/ICSE43902.2021.00069)," *43rd International Conference on Software Engineering* (ICSE 2021), Madrid, Spain, May 25-28, 2021.
 56. Giovanni Rosa, Luca Pascarella, Simone Scalabrino, Rosalia Tufano, Gabriele Bavota, Michele Lanza, and Rocco Oliveto, "[Evaluating SZZ Implementations Through a Developer-informed Oracle](https://doi.ieeecomputersociety.org/10.1109/ICSE43902.2021.00049)," *43rd International Conference on Software Engineering* (ICSE 2021), Madrid, Spain, May 25-28, 2021.
 57. Bo Shen, Wei Zhang, Christian Kästner, Haiyan Zhao, Zhao Wei, Guangtai Liang, and Zhi Jin, "[SmartCommit: a graph-based interactive assistant for activity-oriented commits](https://doi.org/10.1145/3468264.3468551)," *29th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering* (ESEC/FSE 2021), Athens, Greece, August 23-28, 2021.
+58. Dimitrios Tsoukalas, Nikolaos Mittas, Alexander Chatzigeorgiou, Dionysios Kehagias, Apostolos Ampatzoglou, Theodoros Amanatidis, and Lefteris Angelis, "[Machine Learning for Technical Debt Identification](https://doi.ieeecomputersociety.org/10.1109/TSE.2021.3129355)," *IEEE Transactions on Software Engineering*, 2021.
 
 # Support for other programming languages
 ## Kotlin

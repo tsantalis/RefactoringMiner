@@ -48,11 +48,27 @@ public class StringDistance {
 						String oldLine = rows.get(0).getOldLine();
 						String newLine = rows.get(0).getNewLine();
 						String oldEditStartTag = "<span class=\"editOldInline\">";
-						String oldValue = oldLine.substring(oldLine.indexOf(oldEditStartTag) + oldEditStartTag.length(), oldLine.indexOf("</span>"));
 						String newEditStartTag = "<span class=\"editNewInline\">";
-						String newValue = newLine.substring(newLine.indexOf(newEditStartTag) + newEditStartTag.length(), newLine.indexOf("</span>"));
-						if(!isNumeric(oldValue) || !isNumeric(newValue)) {
-							return false;
+						if(oldLine.contains(oldEditStartTag) && newLine.contains(newEditStartTag)) {
+							String oldValue = oldLine.substring(oldLine.indexOf(oldEditStartTag) + oldEditStartTag.length(), oldLine.indexOf("</span>"));
+							String newValue = newLine.substring(newLine.indexOf(newEditStartTag) + newEditStartTag.length(), newLine.indexOf("</span>"));
+							if(!isNumeric(oldValue) || !isNumeric(newValue)) {
+								return false;
+							}
+						}
+						//removing whitespace
+						else if(oldLine.contains(oldEditStartTag) && newLine.isEmpty()) {
+							String oldValue = oldLine.substring(oldLine.indexOf(oldEditStartTag) + oldEditStartTag.length(), oldLine.indexOf("</span>"));
+							if(!oldValue.isBlank()) {
+								return false;
+							}
+						}
+						//adding whitespace
+						else if(oldLine.isEmpty() && newLine.contains(newEditStartTag)) {
+							String newValue = newLine.substring(newLine.indexOf(newEditStartTag) + newEditStartTag.length(), newLine.indexOf("</span>"));
+							if(!newValue.isBlank()) {
+								return false;
+							}
 						}
 					}
 				}

@@ -17,6 +17,7 @@ public class UMLModel {
     private List<UMLClass> classList;
     private List<UMLGeneralization> generalizationList;
     private List<UMLRealization> realizationList;
+    private boolean partial;
 
     public UMLModel(Set<String> repositoryDirectories) {
     	this.repositoryDirectories = repositoryDirectories;
@@ -24,6 +25,14 @@ public class UMLModel {
         generalizationList = new ArrayList<UMLGeneralization>();
         realizationList = new ArrayList<UMLRealization>();
     }
+
+	public boolean isPartial() {
+		return partial;
+	}
+
+	public void setPartial(boolean partial) {
+		this.partial = partial;
+	}
 
 	public void addClass(UMLClass umlClass) {
         classList.add(umlClass);

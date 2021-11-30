@@ -51,7 +51,7 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 
 public class UMLModelDiff {
 	private static final Pattern RETURN_NUMBER_LITERAL = Pattern.compile("return \\d+;\n");
-	private static final int MAXIMUM_NUMBER_OF_COMPARED_METHODS = 200;
+	private final int MAXIMUM_NUMBER_OF_COMPARED_METHODS;
 	private UMLModel parentModel;
 	private UMLModel childModel;
 	private List<UMLClass> addedClasses;
@@ -75,6 +75,12 @@ public class UMLModelDiff {
 	public UMLModelDiff(UMLModel parentModel, UMLModel childModel) {
 		this.parentModel = parentModel;
 		this.childModel = childModel;
+		if(parentModel.isPartial() || childModel.isPartial()) {
+			MAXIMUM_NUMBER_OF_COMPARED_METHODS = 100;
+		}
+		else {
+			MAXIMUM_NUMBER_OF_COMPARED_METHODS = 200;
+		}
 		this.addedClasses = new ArrayList<UMLClass>();
 		this.removedClasses = new ArrayList<UMLClass>();
 		this.addedGeneralizations = new ArrayList<UMLGeneralization>();

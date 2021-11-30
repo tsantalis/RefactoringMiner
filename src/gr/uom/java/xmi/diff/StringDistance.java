@@ -14,7 +14,7 @@ import com.github.difflib.patch.Chunk;
 import com.github.difflib.patch.Patch;
 
 public class StringDistance {
-	private static final Pattern COMMENT_LINE = Pattern.compile("^\\s*(//|\\*).*");
+	private static final Pattern COMMENT_LINE = Pattern.compile("^\\s*(//|\\*|import\\s).*");
 	
 	public static int editDistance(String a, String b, int threshold) {
 		return new LevenshteinDistance(threshold).apply(a, b);
@@ -33,11 +33,35 @@ public class StringDistance {
 			List<AbstractDelta<String>> deltas = patch.getDeltas();
 			for(AbstractDelta<String> delta : deltas) {
 				Chunk<String> source = delta.getSource();
-				if(source.getLines().size() > 0 && !COMMENT_LINE.matcher(source.getLines().get(0)).matches()) {
+				if(source.getLines().size() > 0 && !source.getLines().get(0).isBlank() && !COMMENT_LINE.matcher(source.getLines().get(0)).matches()) {
+					return false;
+				}
+				Chunk<String> target = delta.getTarget();
+				if(target.getLines().size() > 0 && !target.getLines().get(0).isBlank() && !COMMENT_LINE.matcher(target.getLines().get(0)).matches()) {
 					return false;
 				}
 			}
 			return true;
+		}
+		else {
+			List<String> original = IOUtils.readLines(new StringReader(fileBefore));
+			List<String> revised = IOUtils.readLines(new StringReader(fileAfter));
+
+			if(original.size() == revised.size()) {
+				Patch<String> patch = DiffUtils.diff(original, revised);
+				List<AbstractDelta<String>> deltas = patch.getDeltas();
+				for(AbstractDelta<String> delta : deltas) {
+					Chunk<String> source = delta.getSource();
+					if(source.getLines().size() > 0 && !source.getLines().get(0).isBlank() && !COMMENT_LINE.matcher(source.getLines().get(0)).matches()) {
+						return false;
+					}
+					Chunk<String> target = delta.getTarget();
+					if(target.getLines().size() > 0 && !target.getLines().get(0).isBlank() && !COMMENT_LINE.matcher(target.getLines().get(0)).matches()) {
+						return false;
+					}
+				}
+				return true;
+			}
 		}
 		return false;
 	}

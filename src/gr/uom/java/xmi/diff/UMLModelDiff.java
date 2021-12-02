@@ -76,7 +76,7 @@ public class UMLModelDiff {
 		this.parentModel = parentModel;
 		this.childModel = childModel;
 		if(parentModel.isPartial() || childModel.isPartial()) {
-			MAXIMUM_NUMBER_OF_COMPARED_METHODS = 100;
+			MAXIMUM_NUMBER_OF_COMPARED_METHODS = 500;
 		}
 		else {
 			MAXIMUM_NUMBER_OF_COMPARED_METHODS = 200;
@@ -2412,8 +2412,13 @@ public class UMLModelDiff {
 	}
 
 	private boolean condition(int size1, int size2) {
-		return (size1 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS || size2 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) &&
-				size1*size2 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS*MAXIMUM_NUMBER_OF_COMPARED_METHODS;
+		if(childModel.isPartial() || parentModel.isPartial()) {
+			return size1 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS && size2 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS;
+		}
+		else {
+			return (size1 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS || size2 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) &&
+					size1*size2 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS*MAXIMUM_NUMBER_OF_COMPARED_METHODS;
+		}
 	}
 
 	private boolean outerClassMovedOrRenamed(UMLClass umlClass) {

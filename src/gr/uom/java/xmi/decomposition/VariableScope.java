@@ -17,6 +17,7 @@ public class VariableScope {
 	private int endColumn;
 	private List<AbstractCodeFragment> statementsInScope = new ArrayList<>();
 	private List<AbstractCodeFragment> statementsInScopeUsingVariable = new ArrayList<>();
+	private String parentSignature = "";
 	
 	public VariableScope(CompilationUnit cu, String filePath, int startOffset, int endOffset) {
 		//ASTNode parent = node.getParent();
@@ -118,5 +119,21 @@ public class VariableScope {
 	public boolean overlaps(VariableScope other) {
 		return this.filePath.equals(other.filePath) &&
 				this.startOffset <= other.endOffset && this.endOffset >= other.startOffset;
+	}
+	
+	public int getStartOffset() {
+		return startOffset;
+	}
+
+	public int getEndOffset() {
+		return endOffset;
+	}
+
+	public String getParentSignature() {
+		return parentSignature;
+	}
+
+	public void setParentSignature(String parentSignature) {
+		this.parentSignature = parentSignature;
 	}
 }

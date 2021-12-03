@@ -163,6 +163,22 @@ public class UMLModelDiff {
 		this.commonClassDiffList.add(classDiff);
 	}
 
+	public List<UMLClassDiff> getCommonClassDiffList() {
+		return commonClassDiffList;
+	}
+
+	public List<UMLClassMoveDiff> getClassMoveDiffList() {
+		return classMoveDiffList;
+	}
+
+	public List<UMLClassMoveDiff> getInnerClassMoveDiffList() {
+		return innerClassMoveDiffList;
+	}
+
+	public List<UMLClassRenameDiff> getClassRenameDiffList() {
+		return classRenameDiffList;
+	}
+
 	public boolean commonlyImplementedOperations(UMLOperation operation1, UMLOperation operation2, UMLClassBaseDiff classDiff2) {
 		UMLClassBaseDiff classDiff1 = getUMLClassDiff(operation1.getClassName());
 		if(classDiff1 != null) {

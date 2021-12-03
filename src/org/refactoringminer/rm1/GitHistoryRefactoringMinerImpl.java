@@ -74,7 +74,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMiner {
 
-	Logger logger = LoggerFactory.getLogger(GitHistoryRefactoringMinerImpl.class);
+	private final static Logger logger = LoggerFactory.getLogger(GitHistoryRefactoringMinerImpl.class);
 	private Set<RefactoringType> refactoringTypesToConsider = null;
 	private GitHub gitHub;
 	

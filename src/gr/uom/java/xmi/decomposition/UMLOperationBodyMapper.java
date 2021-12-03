@@ -85,6 +85,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private UMLOperation callSiteOperation;
 	private Map<AbstractCodeFragment, UMLOperation> codeFragmentOperationMap1 = new LinkedHashMap<AbstractCodeFragment, UMLOperation>();
 	private Map<AbstractCodeFragment, UMLOperation> codeFragmentOperationMap2 = new LinkedHashMap<AbstractCodeFragment, UMLOperation>();
+	private Set<VariableDeclaration> removedVariables;
+	private Set<VariableDeclaration> addedVariables;
+	private Set<Pair<VariableDeclaration, VariableDeclaration>> movedVariables;
 	
 	private Set<AbstractCodeFragment> statementsWithStreamAPICalls(List<AbstractCodeFragment> leaves) {
 		Set<AbstractCodeFragment> streamAPICalls = new LinkedHashSet<AbstractCodeFragment>();
@@ -1036,6 +1039,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		candidateAttributeRenames.addAll(analysis.getCandidateAttributeRenames());
 		candidateAttributeMerges.addAll(analysis.getCandidateAttributeMerges());
 		candidateAttributeSplits.addAll(analysis.getCandidateAttributeSplits());
+
+		removedVariables = analysis.getRemovedVariables();
+		removedVariables.addAll(analysis.getRemovedVariablesStoringTheReturnOfInlinedMethod());
+		addedVariables = analysis.getAddedVariables();
+		addedVariables.addAll(analysis.getAddedVariablesStoringTheReturnOfExtractedMethod());
+		movedVariables = analysis.getMovedVariables();
+
 		return refactorings;
 	}
 
@@ -6085,5 +6095,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return true;
 		}
 		return false;
+	}
+
+	public Set<VariableDeclaration> getRemovedVariables() {
+		return removedVariables;
+	}
+
+	public Set<VariableDeclaration> getAddedVariables() {
+		return addedVariables;
+	}
+
+	public Set<Pair<VariableDeclaration, VariableDeclaration>> getMovedVariables() {
+		return movedVariables;
 	}
 }

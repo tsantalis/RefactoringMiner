@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Statement;
@@ -34,6 +35,9 @@ public class CompositeStatementObject extends AbstractStatement {
 		statement.setIndex(statementList.size());
 		statementList.add(statement);
 		statement.setParent(this);
+		statement.getVariableDeclarations().stream().forEach(variableDeclaration -> {
+			variableDeclaration.getScope().setParentSignature(this.getSignature());
+		});
 	}
 
 	public List<AbstractStatement> getStatements() {
@@ -46,6 +50,9 @@ public class CompositeStatementObject extends AbstractStatement {
 		expression.setIndex(this.getIndex());
 		expressionList.add(expression);
 		expression.setOwner(this);
+		expression.getVariableDeclarations().stream().forEach(variableDeclaration -> {
+			variableDeclaration.getScope().setParentSignature(this.getSignature());
+		});
 	}
 
 	public List<AbstractExpression> getExpressions() {
@@ -54,6 +61,7 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public void addVariableDeclaration(VariableDeclaration declaration) {
 		this.variableDeclarations.add(declaration);
+		declaration.getScope().setParentSignature(this.getSignature());
 	}
 
 	@Override
@@ -630,5 +638,22 @@ public class CompositeStatementObject extends AbstractStatement {
 			stringRepresentation.add("}");
 		}
 		return stringRepresentation;
+	}
+
+	private String getSignature() {
+		String statementType = getLocationInfo().getCodeElementType().getName() != null ? getLocationInfo().getCodeElementType().getName() : toString();
+		CompositeStatementObject parent = getParent();
+		if (parent == null) {
+			return statementType;
+		}
+		List<AbstractStatement> sameTypeSibling = parent.getStatements().stream().filter(st -> statementType.equals(st.getLocationInfo().getCodeElementType().getName())).collect(Collectors.toList());
+		int typeIndex = 1;
+		for (AbstractStatement abstractStatement : sameTypeSibling) {
+			if (abstractStatement.getIndex() == getIndex()) {
+				break;
+			}
+			typeIndex++;
+		}
+		return String.format("%s:%s%d", parent.getSignature(), statementType, typeIndex);
 	}
 }

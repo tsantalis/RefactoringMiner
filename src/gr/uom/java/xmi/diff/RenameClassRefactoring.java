@@ -83,4 +83,35 @@ public class RenameClassRefactoring implements Refactoring {
 				.setCodeElement(renamedClass.getName()));
 		return ranges;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((originalClass == null) ? 0 : originalClass.hashCode());
+		result = prime * result + ((renamedClass == null) ? 0 : renamedClass.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RenameClassRefactoring other = (RenameClassRefactoring) obj;
+		if (originalClass == null) {
+			if (other.originalClass != null)
+				return false;
+		} else if (!originalClass.equals(other.originalClass))
+			return false;
+		if (renamedClass == null) {
+			if (other.renamedClass != null)
+				return false;
+		} else if (!renamedClass.equals(other.renamedClass))
+			return false;
+		return true;
+	}
 }

@@ -161,7 +161,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return refactoringsAtRevision;
 	}
 
-	private List<MoveSourceFolderRefactoring> processIdenticalFiles(Map<String, String> fileContentsBefore, Map<String, String> fileContentsCurrent, Map<String, String> renamedFilesHint) throws IOException {
+	public static List<MoveSourceFolderRefactoring> processIdenticalFiles(Map<String, String> fileContentsBefore, Map<String, String> fileContentsCurrent, Map<String, String> renamedFilesHint) throws IOException {
 		Map<String, String> identicalFiles = new HashMap<String, String>();
 		for(String key : fileContentsBefore.keySet()) {
 			if(renamedFilesHint.containsKey(key)) {
@@ -216,7 +216,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return moveSourceFolderRefactorings;
 	}
 
-	private void populateFileContents(Repository repository, RevCommit commit,
+	public static void populateFileContents(Repository repository, RevCommit commit,
 			List<String> filePaths, Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
 		logger.info("Processing {} {} ...", repository.getDirectory().getParent().toString(), commit.getName());
 		RevTree parentTree = commit.getTree();
@@ -480,7 +480,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 	}
 
-	protected UMLModel createModel(Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
+	public static UMLModel createModel(Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
 		return new UMLModelASTReader(fileContents, repositoryDirectories).getUmlModel();
 	}
 

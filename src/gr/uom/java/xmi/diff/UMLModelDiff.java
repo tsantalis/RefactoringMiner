@@ -1282,7 +1282,7 @@ public class UMLModelDiff {
 			UMLOperation removedOperation = classDiff.containsRemovedOperationWithTheSameSignature(addedOperation);
 			if(removedOperation != null) {
 				classDiff.getRemovedOperations().remove(removedOperation);
-				Refactoring ref = null;
+				MoveOperationRefactoring ref = null;
 				if(parentType.equals(RefactoringType.EXTRACT_SUPERCLASS)) {
 					ref = new PullUpOperationRefactoring(removedOperation, addedOperation);
 				}
@@ -1294,6 +1294,8 @@ public class UMLModelDiff {
 				}
 				this.refactorings.add(ref);
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
+				refactorings.addAll(mapper.getRefactorings());
+				ref.setBodyMapper(mapper);
 				UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(mapper);
 				refactorings.addAll(operationSignatureDiff.getRefactorings());
 				checkForExtractedOperationsWithinMovedMethod(mapper, addedClass);

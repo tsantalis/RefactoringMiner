@@ -60,6 +60,10 @@ public class MoveOperationRefactoring implements Refactoring {
 		return bodyMapper;
 	}
 
+	public void setBodyMapper(UMLOperationBodyMapper bodyMapper) {
+		this.bodyMapper = bodyMapper;
+	}
+
 	public UMLOperation getOriginalOperation() {
 		return originalOperation;
 	}

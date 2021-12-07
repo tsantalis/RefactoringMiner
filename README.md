@@ -128,6 +128,7 @@ Alternatively, you can generate a complete distribution zip including all runtim
 You can also work with the project with Eclipse IDE. First, run `./gradlew eclipse` to generate Eclipse project metadata files. Then, import it into Eclipse using the *Import Existing Project* feature.
 
 # How to use RefactoringMiner as a maven dependency
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner)
 
 Since version 2.0, RefactoringMiner is available in the [Maven Central Repository](https://mvnrepository.com/artifact/com.github.tsantalis/refactoring-miner).
 In order to use RefactoringMiner as a maven dependency in your project, add the following snippet to your project's build configuration file:
@@ -135,7 +136,7 @@ In order to use RefactoringMiner as a maven dependency in your project, add the 
     <dependency>
       <groupId>com.github.tsantalis</groupId>
       <artifactId>refactoring-miner</artifactId>
-      <version>2.1.0</version>
+      <version>2.2.0</version>
     </dependency>
 
 # Chrome Extension

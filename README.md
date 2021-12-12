@@ -26,7 +26,7 @@ RefactoringMiner is a library/API written in Java that can detect refactorings a
 
 Currently, it supports the detection of the following refactorings:
 
-**<ins>supported by RefactoringMiner 1.0 & 2.0</ins>**
+**<ins>supported by RefactoringMiner 1.0 and newer versions</ins>**
 
 1. Extract Method
 2. Inline Method
@@ -44,7 +44,7 @@ Currently, it supports the detection of the following refactorings:
 14. Extract and Move Method
 15. Rename Package ~~Change Package (Move, Rename, Split, Merge)~~
 
-**<ins>supported by RefactoringMiner 2.0</ins>**
+**<ins>supported by RefactoringMiner 2.0 and newer versions</ins>**
 
 16. Move and Rename Class
 17. Extract Class
@@ -72,7 +72,7 @@ Currently, it supports the detection of the following refactorings:
 39. Move and Rename Method
 40. Move and Inline Method
 
-**<ins>supported by RefactoringMiner 2.1</ins>**
+**<ins>supported by RefactoringMiner 2.1 and newer versions</ins>**
 
 41. Add Method Annotation
 42. Remove Method Annotation
@@ -96,6 +96,9 @@ Currently, it supports the detection of the following refactorings:
 60. Remove Thrown Exception Type
 61. Change Thrown Exception Type
 62. Change Method Access Modifier
+
+**<ins>supported by RefactoringMiner 2.2</ins>**
+
 63. Change Attribute Access Modifier
 64. Encapsulate Attribute
 65. Parameterize Attribute

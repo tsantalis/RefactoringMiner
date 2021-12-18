@@ -1,15 +1,15 @@
-apply plugin: 'java'
-apply plugin: 'application'
-apply plugin: 'eclipse'
+plugins {
+    id "java"
+    id "org.jetbrains.intellij" version "1.3.0"
+}
 
-apply plugin: 'maven-publish'
-apply plugin: 'signing'
+apply {
+    plugin "java"
+    plugin "org.jetbrains.intellij"
+}
 
 group = "com.github.tsantalis"
 version = "2.2.0"
-
-applicationName = rootProject.name
-mainClassName = "org.refactoringminer.RefactoringMiner"
 
 sourceSets {
     main {
@@ -44,66 +44,11 @@ dependencies {
     testImplementation 'junit:junit:4.11'
 }
 
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
-
-artifacts {
-    archives javadocJar, sourcesJar
-}
-
-ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
-
-publishing {
-    repositories {
-        maven {
-            def releaseRepo = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-            def snapshotRepo = "https://oss.sonatype.org/content/repositories/snapshots/"
-            url = isReleaseVersion ? releaseRepo : snapshotRepo
-            credentials {
-                username = project.hasProperty('ossrhUsername') ? ossrhUsername : "Unknown user"
-                password = project.hasProperty('ossrhPassword') ? ossrhPassword : "Unknown password"
-            }
-        }
-    }
-
-    publications {
-        mavenJava(MavenPublication) {
-            artifactId = 'refactoring-miner'
-            from components.java
-
-            pom {
-                name = "Refactoring Miner"
-                description = 'RefactoringMiner is a library/API written in Java that can detect refactorings applied in the history of a Java project.'
-                url = 'https://github.com/tsantalis/RefactoringMiner'
-                licenses {
-                    license {
-                        name = 'The MIT License (MIT)'
-                        url = 'http://opensource.org/licenses/MIT'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'tsantalis'
-                        name = 'Nikolaos Tsantalis'
-                        email = 'tsantalis@gmail.com'
-                    }
-                }
-                scm {
-                    connection = 'scm:git:git@github.com:tsantalis/RefactoringMiner.git'
-                    developerConnection = 'scm:git:git@github.com:tsantalis/RefactoringMiner.git'
-                    url = 'https://github.com/tsantalis/RefactoringMiner/tree/master'
-                }
-            }
-        }
-    }
-}
-
-signing {
-    sign publishing.publications.mavenJava
-}
-
-tasks.withType(Sign) {
-    onlyIf { isReleaseVersion }
+intellij {
+    type = "IC"
+    version = "2021.3"
+    downloadSources = true
+    plugins = ["java"]
+    updateSinceUntilBuild = true
+    buildSearchableOptions.enabled = false
 }

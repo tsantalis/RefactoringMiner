@@ -1,5 +1,9 @@
 package gr.uom.java.xmi;
 
+import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.util.TextRange;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
@@ -16,26 +20,31 @@ public class LocationInfo {
 	private int endColumn;
 	private CodeElementType codeElementType;
 	
-	public LocationInfo(CompilationUnit cu, String filePath, ASTNode node, CodeElementType codeElementType) {
+	public LocationInfo(PsiFile cu, String filePath, PsiElement node, CodeElementType codeElementType) {
 		this.filePath = filePath;
 		this.codeElementType = codeElementType;
-		this.startOffset = node.getStartPosition();
-		this.length = node.getLength();
-		this.endOffset = startOffset + length;
-		
-		//lines are 1-based
-		this.startLine = cu.getLineNumber(startOffset);
-		this.endLine = cu.getLineNumber(endOffset);
-		//columns are 0-based
-		this.startColumn = cu.getColumnNumber(startOffset);
-		//convert to 1-based
-		if(this.startColumn > 0) {
-			this.startColumn += 1;
-		}
-		this.endColumn = cu.getColumnNumber(endOffset);
-		//convert to 1-based
-		if(this.endColumn > 0) {
-			this.endColumn += 1;
+
+		TextRange range = node.getTextRange();
+		this.startOffset = range.getStartOffset();
+		this.length = range.getLength();
+		this.endOffset = range.getEndOffset();
+
+		Document document = cu.getViewProvider().getDocument();
+		if(document != null) {
+			//lines are 0-based, convert to 1-based
+			this.startLine = document.getLineNumber(startOffset) + 1;
+			this.endLine = document.getLineNumber(endOffset) + 1;
+			//columns are 0-based
+			this.startColumn = startOffset - document.getLineStartOffset(startLine - 1);
+			//convert to 1-based
+			if (this.startColumn > 0) {
+				this.startColumn += 1;
+			}
+			this.endColumn = endOffset - document.getLineStartOffset(endLine - 1);
+			//convert to 1-based
+			if (this.endColumn > 0) {
+				this.endColumn += 1;
+			}
 		}
 	}
 

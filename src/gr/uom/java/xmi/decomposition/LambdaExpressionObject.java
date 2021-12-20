@@ -3,15 +3,7 @@ package gr.uom.java.xmi.decomposition;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.ExpressionMethodReference;
-import org.eclipse.jdt.core.dom.LambdaExpression;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.SuperMethodReference;
-import org.eclipse.jdt.core.dom.TypeMethodReference;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import com.intellij.psi.*;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -25,39 +17,23 @@ public class LambdaExpressionObject implements LocationInfoProvider {
 	private List<VariableDeclaration> parameters = new ArrayList<VariableDeclaration>();
 	private boolean hasParentheses = false;
 	
-	public LambdaExpressionObject(CompilationUnit cu, String filePath, LambdaExpression lambda) {
+	public LambdaExpressionObject(PsiFile cu, String filePath, PsiLambdaExpression lambda) {
 		this.locationInfo = new LocationInfo(cu, filePath, lambda, CodeElementType.LAMBDA_EXPRESSION);
-		if(lambda.getBody() instanceof Block) {
-			this.body = new OperationBody(cu, filePath, (Block)lambda.getBody());
+		if(lambda.getBody() instanceof PsiCodeBlock) {
+			this.body = new OperationBody(cu, filePath, (PsiCodeBlock)lambda.getBody());
 		}
-		else if(lambda.getBody() instanceof Expression) {
-			this.expression = new AbstractExpression(cu, filePath, (Expression)lambda.getBody(), CodeElementType.LAMBDA_EXPRESSION_BODY);
+		else if(lambda.getBody() instanceof PsiExpression) {
+			this.expression = new AbstractExpression(cu, filePath, (PsiExpression)lambda.getBody(), CodeElementType.LAMBDA_EXPRESSION_BODY);
 		}
-		this.hasParentheses = lambda.hasParentheses();
-		List<org.eclipse.jdt.core.dom.VariableDeclaration> params = lambda.parameters();
-		for(org.eclipse.jdt.core.dom.VariableDeclaration param : params) {
-			VariableDeclaration parameter = null;
-			if(param instanceof VariableDeclarationFragment) {
-				parameter = new VariableDeclaration(cu, filePath, (VariableDeclarationFragment)param);
-			}
-			else if(param instanceof SingleVariableDeclaration) {
-				parameter = new VariableDeclaration(cu, filePath, (SingleVariableDeclaration)param);
-			}
+		this.hasParentheses = lambda.hasFormalParameterTypes();
+		PsiParameterList params = lambda.getParameterList();
+		for(PsiParameter param : params.getParameters()) {
+			VariableDeclaration parameter = new VariableDeclaration(cu, filePath, param, CodeElementType.LAMBDA_EXPRESSION_PARAMETER);
 			this.parameters.add(parameter);
 		}
 	}
 
-	public LambdaExpressionObject(CompilationUnit cu, String filePath, ExpressionMethodReference reference) {
-		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION);
-		this.expression = new AbstractExpression(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY);
-	}
-
-	public LambdaExpressionObject(CompilationUnit cu, String filePath, SuperMethodReference reference) {
-		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION);
-		this.expression = new AbstractExpression(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY);
-	}
-
-	public LambdaExpressionObject(CompilationUnit cu, String filePath, TypeMethodReference reference) {
+	public LambdaExpressionObject(PsiFile cu, String filePath, PsiMethodReferenceExpression reference) {
 		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION);
 		this.expression = new AbstractExpression(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY);
 	}

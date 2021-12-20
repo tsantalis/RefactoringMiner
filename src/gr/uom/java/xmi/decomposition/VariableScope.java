@@ -3,7 +3,8 @@ package gr.uom.java.xmi.decomposition;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jdt.core.dom.CompilationUnit;
+import com.intellij.openapi.editor.Document;
+import com.intellij.psi.PsiFile;
 
 import gr.uom.java.xmi.LocationInfo;
 
@@ -19,27 +20,26 @@ public class VariableScope {
 	private List<AbstractCodeFragment> statementsInScopeUsingVariable = new ArrayList<>();
 	private String parentSignature = "";
 	
-	public VariableScope(CompilationUnit cu, String filePath, int startOffset, int endOffset) {
-		//ASTNode parent = node.getParent();
+	public VariableScope(PsiFile cu, String filePath, int startOffset, int endOffset) {
 		this.filePath = filePath;
 		this.startOffset = startOffset;
 		this.endOffset = endOffset;
-		//this.startOffset = node.getStartPosition();
-		//this.endOffset = parent.getStartPosition() + parent.getLength();
-		
-		//lines are 1-based
-		this.startLine = cu.getLineNumber(startOffset);
-		this.endLine = cu.getLineNumber(endOffset);
-		//columns are 0-based
-		this.startColumn = cu.getColumnNumber(startOffset);
-		//convert to 1-based
-		if(this.startColumn > 0) {
-			this.startColumn += 1;
-		}
-		this.endColumn = cu.getColumnNumber(endOffset);
-		//convert to 1-based
-		if(this.endColumn > 0) {
-			this.endColumn += 1;
+
+		Document document = cu.getViewProvider().getDocument();
+		if (document != null) {
+			this.startLine = document.getLineNumber(startOffset) + 1;
+			this.endLine = document.getLineNumber(endOffset) + 1;
+			//columns are 0-based
+			this.startColumn = startOffset - document.getLineStartOffset(startLine - 1);
+			//convert to 1-based
+			if (this.startColumn > 0) {
+				this.startColumn += 1;
+			}
+			this.endColumn = endOffset - document.getLineStartOffset(endLine - 1);
+			//convert to 1-based
+			if (this.endColumn > 0) {
+				this.endColumn += 1;
+			}
 		}
 	}
 

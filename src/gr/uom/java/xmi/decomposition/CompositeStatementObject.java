@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.Statement;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -22,7 +22,7 @@ public class CompositeStatementObject extends AbstractStatement {
 	private List<VariableDeclaration> variableDeclarations;
 	private LocationInfo locationInfo;
 
-	public CompositeStatementObject(CompilationUnit cu, String filePath, Statement statement, int depth, CodeElementType codeElementType) {
+	public CompositeStatementObject(PsiFile cu, String filePath, PsiElement statement, int depth, CodeElementType codeElementType) {
 		super();
 		this.setDepth(depth);
 		this.locationInfo = new LocationInfo(cu, filePath, statement, codeElementType);

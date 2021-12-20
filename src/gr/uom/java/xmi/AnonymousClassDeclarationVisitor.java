@@ -3,18 +3,23 @@ package gr.uom.java.xmi;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
+import com.intellij.psi.PsiAnonymousClass;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiRecursiveElementWalkingVisitor;
 
-public class AnonymousClassDeclarationVisitor extends ASTVisitor {
+public class AnonymousClassDeclarationVisitor extends PsiRecursiveElementWalkingVisitor {
 
-	private Set<AnonymousClassDeclaration> anonymousClassDeclarations = new LinkedHashSet<AnonymousClassDeclaration>();
-	public boolean visit(AnonymousClassDeclaration node) {
-		anonymousClassDeclarations.add(node);
-		return super.visit(node);
+	private Set<PsiAnonymousClass> anonymousClassDeclarations = new LinkedHashSet<>();
+
+	public void visitElement(PsiElement element) {
+		if (element instanceof PsiAnonymousClass) {
+			PsiAnonymousClass anonymousClass = (PsiAnonymousClass) element;
+			anonymousClassDeclarations.add(anonymousClass);
+		}
+		super.visitElement(element);
 	}
 
-	public Set<AnonymousClassDeclaration> getAnonymousClassDeclarations() {
+	public Set<PsiAnonymousClass> getAnonymousClassDeclarations() {
 		return anonymousClassDeclarations;
 	}
 }

@@ -639,7 +639,8 @@ public class UMLModelASTReader {
 				}
 			}
 			else if(parent instanceof PsiNewExpression) {
-				String invocationName = ((PsiNewExpression)parent).getType().getPresentableText();
+				PsiJavaCodeReferenceElement reference = ((PsiNewExpression) parent).getClassOrAnonymousClassReference();
+				String invocationName = Formatter.format(reference);
 				if(name.isEmpty()) {
 					name = "new " + invocationName;
 				}

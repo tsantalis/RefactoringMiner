@@ -2,43 +2,27 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
 
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.ExpressionMethodReference;
-import org.eclipse.jdt.core.dom.SuperMethodReference;
-import org.eclipse.jdt.core.dom.TypeMethodReference;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiMethodReferenceExpression;
+import gr.uom.java.xmi.Formatter;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.StringDistance;
-import gr.uom.java.xmi.UMLType;
 
 public class MethodReference extends AbstractCall {
 	private String methodName;
 	private volatile int hashCode = 0;
 	
-	public MethodReference(CompilationUnit cu, String filePath, ExpressionMethodReference reference) {
+	public MethodReference(PsiFile cu, String filePath, PsiMethodReferenceExpression reference) {
 		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.METHOD_REFERENCE);
-		this.methodName = reference.getName().getIdentifier();
-		this.expression = reference.getExpression().toString();
-		this.arguments = new ArrayList<String>();
-	}
-	
-	public MethodReference(CompilationUnit cu, String filePath, SuperMethodReference reference) {
-		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.METHOD_REFERENCE);
-		this.methodName = reference.getName().getIdentifier();
-		this.arguments = new ArrayList<String>();
-		if(reference.getQualifier() != null) {
-			this.expression = reference.getQualifier().getFullyQualifiedName() + ".super";
+		if(reference.getQualifierType() != null) {
+			this.expression = Formatter.format(reference.getQualifierType());
 		}
-		else {
-			this.expression = "super";
+		else if(reference.getQualifier() != null) {
+			this.expression = Formatter.format(reference.getQualifier());
 		}
-	}
-	
-	public MethodReference(CompilationUnit cu, String filePath, TypeMethodReference reference) {
-		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.METHOD_REFERENCE);
-		this.methodName = reference.getName().getIdentifier();
-		this.expression = UMLType.extractTypeObject(cu, filePath, reference.getType(), 0).toQualifiedString();
+		this.methodName = reference.getReferenceName();
 		this.arguments = new ArrayList<String>();
 	}
 

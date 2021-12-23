@@ -1,11 +1,7 @@
 package org.refactoringminer.api;
 
-import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.refactoringminer.util.AstUtils;
-import org.refactoringminer.utils.RefactoringRelationship;
 
 public enum RefactoringType {
 
@@ -237,73 +233,6 @@ public enum RefactoringType {
         } else {
             throw new RuntimeException("Pattern not matched: " + refactoringDescription);
         }
-    }
-
-    public static void parse(String refactoringDescription, Collection<RefactoringRelationship> result) {
-        RefactoringType refType = extractFromDescription(refactoringDescription);
-        Matcher m = refType.regex.matcher(refactoringDescription);
-        if (m.matches()) {
-            switch (refType) {
-            case RENAME_CLASS:
-            case MOVE_CLASS:
-            case RENAME_PACKAGE: {
-                String entityBefore = m.group(1);
-                String entityAfter = m.group(2);
-                result.add(new RefactoringRelationship(refType, entityBefore, entityAfter));
-                return;
-            }
-            case MOVE_OPERATION:
-            case PULL_UP_OPERATION:
-            case PUSH_DOWN_OPERATION: {
-                String entityBefore = methodKey(m.group(1), m.group(2));
-                String entityAfter = methodKey(m.group(3), m.group(4));
-                result.add(new RefactoringRelationship(refType, entityBefore, entityAfter));
-                return;
-            }
-            case RENAME_METHOD:
-            case INLINE_OPERATION: {
-                String entityBefore = methodKey(m.group(1), m.group(3));
-                String entityAfter = methodKey(m.group(2), m.group(3));
-                result.add(new RefactoringRelationship(refType, entityBefore, entityAfter));
-                return;
-            }
-            case EXTRACT_OPERATION: {
-                String entityBefore = methodKey(m.group(2), m.group(3));
-                String entityAfter = methodKey(m.group(1), m.group(3));
-                result.add(new RefactoringRelationship(refType, entityBefore, entityAfter));
-                return;
-            }
-            case EXTRACT_INTERFACE:
-            case EXTRACT_SUPERCLASS: {
-                String entityAfter = m.group(1);
-                String[] entityBeforeArray = m.group(2).split(" *, *");
-                for (String entityBefore : entityBeforeArray) {
-                    result.add(new RefactoringRelationship(refType, entityBefore, entityAfter));
-                }
-                return;
-            }
-            case MOVE_ATTRIBUTE:
-            case PULL_UP_ATTRIBUTE:
-            case PUSH_DOWN_ATTRIBUTE: {
-                String entityBefore = attributeKey(m.group(1), m.group(2));
-                String entityAfter = attributeKey(m.group(1), m.group(3));
-                result.add(new RefactoringRelationship(refType, entityBefore, entityAfter));
-                return;
-            }
-            default:
-                throw new RuntimeException("Unable do parse: " + refactoringDescription);
-            }
-        } else {
-            throw new RuntimeException("Pattern not matched: " + refactoringDescription);
-        }
-    }
-
-    private static String methodKey(String methodSignature, String typeKey) {
-        return typeKey + "#" + AstUtils.normalizeMethodSignature(methodSignature);
-    }
-
-    private static String attributeKey(String attribute, String typeKey) {
-        return typeKey + "#" + AstUtils.normalizeAttribute(attribute);
     }
 
     public static RefactoringType extractFromDescription(String refactoringDescription) {

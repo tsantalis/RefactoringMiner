@@ -5,8 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
-import org.eclipse.jdt.core.dom.CompilationUnit;
+import com.intellij.psi.PsiAnonymousClass;
+import com.intellij.psi.PsiFile;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -15,7 +15,7 @@ import gr.uom.java.xmi.LocationInfoProvider;
 
 public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	private LocationInfo locationInfo;
-	private AnonymousClassDeclaration astNode;
+	private PsiAnonymousClass astNode;
 	private String astNodeString;
 	private List<String> variables = new ArrayList<String>();
 	private List<String> types = new ArrayList<String>();
@@ -37,7 +37,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
 	
-	public AnonymousClassDeclarationObject(CompilationUnit cu, String filePath, AnonymousClassDeclaration anonymous) {
+	public AnonymousClassDeclarationObject(PsiFile cu, String filePath, PsiAnonymousClass anonymous) {
 		this.locationInfo = new LocationInfo(cu, filePath, anonymous, CodeElementType.ANONYMOUS_CLASS_DECLARATION);
 		this.astNode = anonymous;
 		this.astNodeString = anonymous.toString();
@@ -47,11 +47,11 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 		return locationInfo;
 	}
 
-	public AnonymousClassDeclaration getAstNode() {
+	public PsiAnonymousClass getAstNode() {
 		return astNode;
 	}
 
-	public void setAstNode(AnonymousClassDeclaration node) {
+	public void setAstNode(PsiAnonymousClass node) {
 		this.astNode = node;
 	}
 	

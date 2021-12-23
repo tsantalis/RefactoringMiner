@@ -11,56 +11,14 @@ import java.util.regex.Pattern;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
-import org.eclipse.jdt.core.dom.ArrayAccess;
-import org.eclipse.jdt.core.dom.ArrayCreation;
-import org.eclipse.jdt.core.dom.ArrayInitializer;
-import org.eclipse.jdt.core.dom.ArrayType;
-import org.eclipse.jdt.core.dom.BooleanLiteral;
-import org.eclipse.jdt.core.dom.CastExpression;
-import org.eclipse.jdt.core.dom.CatchClause;
-import org.eclipse.jdt.core.dom.ClassInstanceCreation;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.eclipse.jdt.core.dom.ConstructorInvocation;
-import org.eclipse.jdt.core.dom.EnhancedForStatement;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.ExpressionMethodReference;
-import org.eclipse.jdt.core.dom.FieldAccess;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.LambdaExpression;
-import org.eclipse.jdt.core.dom.MarkerAnnotation;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.Name;
-import org.eclipse.jdt.core.dom.NullLiteral;
-import org.eclipse.jdt.core.dom.NumberLiteral;
-import org.eclipse.jdt.core.dom.ParameterizedType;
-import org.eclipse.jdt.core.dom.PostfixExpression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.PrimitiveType;
-import org.eclipse.jdt.core.dom.QualifiedName;
-import org.eclipse.jdt.core.dom.QualifiedType;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.SimpleType;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.StringLiteral;
-import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
-import org.eclipse.jdt.core.dom.SuperMethodInvocation;
-import org.eclipse.jdt.core.dom.SuperMethodReference;
-import org.eclipse.jdt.core.dom.ThisExpression;
-import org.eclipse.jdt.core.dom.Type;
-import org.eclipse.jdt.core.dom.TypeLiteral;
-import org.eclipse.jdt.core.dom.TypeMethodReference;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.WildcardType;
+import com.intellij.psi.*;
+import gr.uom.java.xmi.Formatter;
+import org.jetbrains.annotations.NotNull;
 
-public class Visitor extends ASTVisitor {
+public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	public static final Pattern METHOD_INVOCATION_PATTERN = Pattern.compile("!(\\w|\\.)*@\\w*");
 	public static final Pattern METHOD_SIGNATURE_PATTERN = Pattern.compile("(public|protected|private|static|\\s) +[\\w\\<\\>\\[\\]]+\\s+(\\w+) *\\([^\\)]*\\) *(\\{?|[^;])");
-	private CompilationUnit cu;
+	private PsiFile cu;
 	private String filePath;
 	private List<String> variables = new ArrayList<String>();
 	private List<String> types = new ArrayList<String>();
@@ -81,70 +39,114 @@ public class Visitor extends ASTVisitor {
 	private List<String> arguments = new ArrayList<String>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
-	private Set<ASTNode> builderPatternChains = new LinkedHashSet<ASTNode>();
+	private Set<PsiMethodCallExpression> builderPatternChains = new LinkedHashSet<PsiMethodCallExpression>();
 	private DefaultMutableTreeNode root = new DefaultMutableTreeNode();
 	private DefaultMutableTreeNode current = root;
 
-	public Visitor(CompilationUnit cu, String filePath) {
+	public Visitor(PsiFile cu, String filePath) {
 		this.cu = cu;
 		this.filePath = filePath;
 	}
 
-	public boolean visit(ArrayAccess node) {
-		arrayAccesses.add(node.toString());
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getArrayAccesses().add(node.toString());
+	public void visitElement(@NotNull PsiElement element) {
+		boolean visitSubtree = true;
+		if (element instanceof PsiArrayAccessExpression) {
+			visit((PsiArrayAccessExpression) element);
+		} else if (element instanceof PsiPrefixExpression) {
+			visit((PsiPrefixExpression) element);
+		} else if (element instanceof PsiPostfixExpression) {
+			visit((PsiPostfixExpression) element);
+		} else if (element instanceof PsiConditionalExpression) {
+			visit((PsiConditionalExpression) element);
+		} else if (element instanceof PsiPolyadicExpression) {
+			visit((PsiPolyadicExpression) element);
+		} else if (element instanceof PsiNewExpression) {
+			visitSubtree = visit((PsiNewExpression) element);
+		} else if (element instanceof PsiDeclarationStatement) {
+			visitSubtree = visit((PsiDeclarationStatement) element);
+		} else if (element instanceof PsiResourceVariable) {
+			visit((PsiResourceVariable) element);
+		} else if (element instanceof PsiAnonymousClass) {
+			visitSubtree = visit((PsiAnonymousClass) element);
+		} else if (element instanceof PsiLiteralExpression) {
+			visit((PsiLiteralExpression) element);
+		} else if (element instanceof PsiClassObjectAccessExpression) {
+			visit((PsiClassObjectAccessExpression) element);
+		} else if (element instanceof PsiThisExpression) {
+			visit((PsiThisExpression) element);
+		} else if (element instanceof PsiIdentifier) {
+			visit((PsiIdentifier) element);
+		} else if (element instanceof  PsiMethodReferenceExpression) {
+			visit((PsiMethodReferenceExpression) element);
+		} else if (element instanceof PsiReferenceExpression) {
+			visit((PsiReferenceExpression) element);
+		} else if (element instanceof PsiJavaCodeReferenceElement) {
+
+		} else if (element instanceof PsiTypeElement) {
+			visitSubtree = visit((PsiTypeElement) element);
+		} else if (element instanceof PsiTypeCastExpression) {
+			visit((PsiTypeCastExpression) element);
+		} else if (element instanceof PsiMethodCallExpression) {
+			visit((PsiMethodCallExpression) element);
+		} else if (element instanceof PsiLambdaExpression) {
+			visitSubtree = visit((PsiLambdaExpression) element);
 		}
-		return super.visit(node);
+		if (visitSubtree) {
+			super.visitElement(element);
+		}
 	}
 
-	public boolean visit(PrefixExpression node) {
-		prefixExpressions.add(node.toString());
+	private void visit(PsiArrayAccessExpression node) {
+		String source = Formatter.format(node);
+		arrayAccesses.add(source);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getPrefixExpressions().add(node.toString());
+			anonymous.getArrayAccesses().add(source);
 		}
-		return super.visit(node);
 	}
 
-	public boolean visit(PostfixExpression node) {
-		postfixExpressions.add(node.toString());
+	private void visit(PsiPrefixExpression node) {
+		String source = Formatter.format(node);
+		prefixExpressions.add(source);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getPostfixExpressions().add(node.toString());
+			anonymous.getPrefixExpressions().add(source);
 		}
-		return super.visit(node);
 	}
 
-	public boolean visit(ConditionalExpression node) {
+	private void visit(PsiPostfixExpression node) {
+		String source = Formatter.format(node);
+		postfixExpressions.add(source);
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getPostfixExpressions().add(source);
+		}
+	}
+
+	private void visit(PsiConditionalExpression node) {
 		TernaryOperatorExpression ternary = new TernaryOperatorExpression(cu, filePath, node);
 		ternaryOperatorExpressions.add(ternary);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 			anonymous.getTernaryOperatorExpressions().add(ternary);
 		}
-		return super.visit(node);
 	}
 
-	public boolean visit(InfixExpression node) {
-		infixExpressions.add(node.toString());
-		infixOperators.add(node.getOperator().toString());
+	private void visit(PsiPolyadicExpression node) {
+		String polyadicString = Formatter.format(node);
+		String operator = Formatter.format(node.getTokenBeforeOperand(node.getOperands()[1]));
+		infixExpressions.add(polyadicString);
+		infixOperators.add(operator);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getInfixExpressions().add(node.toString());
-			anonymous.getInfixOperators().add(node.getOperator().toString());
+			anonymous.getInfixExpressions().add(polyadicString);
+			anonymous.getInfixOperators().add(operator);
 		}
-		return super.visit(node);
 	}
 
-	public boolean visit(ClassInstanceCreation node) {
-		List<Expression> arguments = node.arguments();
-		for(Expression argument : arguments) {
-			processArgument(argument);
-		}
+	private void addCreation(PsiNewExpression node) {
 		ObjectCreation creation = new ObjectCreation(cu, filePath, node);
-		String nodeAsString = node.toString();
+		String nodeAsString = Formatter.format(node);
 		if(creationMap.containsKey(nodeAsString)) {
 			creationMap.get(nodeAsString).add(creation);
 		}
@@ -165,65 +167,58 @@ public class Visitor extends ASTVisitor {
 				anonymousCreationMap.put(nodeAsString, list);
 			}
 		}
-		return super.visit(node);
 	}
 
-	public boolean visit(ArrayCreation node) {
-		ObjectCreation creation = new ObjectCreation(cu, filePath, node);
-		String nodeAsString = node.toString();
-		if(creationMap.containsKey(nodeAsString)) {
-			creationMap.get(nodeAsString).add(creation);
+	private boolean visit(PsiNewExpression node) {
+		addCreation(node);
+		if(node.isArrayCreation()) {
+			PsiArrayInitializerExpression initializer = node.getArrayInitializer();
+			if(initializer != null) {
+				PsiExpression[] expressions = initializer.getInitializers();
+				if(expressions.length > 10) {
+					return false;
+				}
+			}
 		}
 		else {
-			List<ObjectCreation> list = new ArrayList<ObjectCreation>();
-			list.add(creation);
-			creationMap.put(nodeAsString, list);
-		}
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			Map<String, List<ObjectCreation>> anonymousCreationMap = anonymous.getCreationMap();
-			if(anonymousCreationMap.containsKey(nodeAsString)) {
-				anonymousCreationMap.get(nodeAsString).add(creation);
-			}
-			else {
-				List<ObjectCreation> list = new ArrayList<ObjectCreation>();
-				list.add(creation);
-				anonymousCreationMap.put(nodeAsString, list);
+			PsiExpressionList argList = node.getArgumentList();
+			if (argList != null) {
+				PsiExpression[] arguments = argList.getExpressions();
+				for (PsiExpression argument : arguments) {
+					processArgument(argument);
+				}
 			}
 		}
-		ArrayInitializer initializer = node.getInitializer();
-		if(initializer != null) {
-			List<Expression> expressions = initializer.expressions();
-			if(expressions.size() > 10) {
+		return true;
+	}
+
+	private boolean visit(PsiDeclarationStatement node) {
+		for (PsiElement declaredElement : node.getDeclaredElements()) {
+			if (declaredElement instanceof PsiLocalVariable) {
+				VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, (PsiLocalVariable) declaredElement);
+				variableDeclarations.add(variableDeclaration);
+				if(current.getUserObject() != null) {
+					AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+					anonymous.getVariableDeclarations().add(variableDeclaration);
+				}
+			}
+			else if(declaredElement instanceof PsiClass) {
 				return false;
 			}
 		}
-		return super.visit(node);
+		return true;
 	}
 
-	public boolean visit(VariableDeclarationFragment node) {
-		if(!(node.getParent() instanceof LambdaExpression)) {
-			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node);
-			variableDeclarations.add(variableDeclaration);
-			if(current.getUserObject() != null) {
-				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariableDeclarations().add(variableDeclaration);
-			}
-		}
-		return super.visit(node);
-	}
-
-	public boolean visit(SingleVariableDeclaration node) {
+	private void visit(PsiResourceVariable node) {
 		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node);
 		variableDeclarations.add(variableDeclaration);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 			anonymous.getVariableDeclarations().add(variableDeclaration);
 		}
-		return super.visit(node);
 	}
 
-	public boolean visit(AnonymousClassDeclaration node) {
+	public boolean visit(PsiAnonymousClass node) {
 		DefaultMutableTreeNode childNode = insertNode(node);
 		AnonymousClassDeclarationObject childAnonymous = (AnonymousClassDeclarationObject)childNode.getUserObject();
 		if(current.getUserObject() != null) {
@@ -232,23 +227,26 @@ public class Visitor extends ASTVisitor {
 		}
 		anonymousClassDeclarations.add(childAnonymous);
 		this.current = childNode;
-		for(ASTNode parent : builderPatternChains) {
+		for(PsiElement parent : builderPatternChains) {
 			if(isParent(node, parent)) {
 				return false;
 			}
 		}
-		return super.visit(node);
+		return true;
 	}
 
-	public void endVisit(AnonymousClassDeclaration node) {
-		DefaultMutableTreeNode parentNode = deleteNode(node);
-		for(ASTNode parent : builderPatternChains) {
-			if(isParent(node, parent) || isParent(parent, node)) {
-				removeAnonymousData();
-				break;
+	protected void elementFinished(PsiElement element) {
+		if (element instanceof PsiAnonymousClass) {
+			PsiAnonymousClass node = (PsiAnonymousClass) element;
+			DefaultMutableTreeNode parentNode = deleteNode(node);
+			for(PsiElement parent : builderPatternChains) {
+				if(isParent(node, parent) || isParent(parent, node)) {
+					removeAnonymousData();
+					break;
+				}
 			}
+			this.current = parentNode;
 		}
-		this.current = parentNode;
 	}
 
 	private void removeAnonymousData() {
@@ -276,7 +274,7 @@ public class Visitor extends ASTVisitor {
 		}
 	}
 
-	private DefaultMutableTreeNode deleteNode(AnonymousClassDeclaration childAnonymous) {
+	private DefaultMutableTreeNode deleteNode(PsiAnonymousClass childAnonymous) {
 		Enumeration enumeration = root.postorderEnumeration();
 		DefaultMutableTreeNode childNode = findNode(childAnonymous);
 		
@@ -295,7 +293,7 @@ public class Visitor extends ASTVisitor {
 		return parentNode;
 	}
 
-	private DefaultMutableTreeNode insertNode(AnonymousClassDeclaration childAnonymous) {
+	private DefaultMutableTreeNode insertNode(PsiAnonymousClass childAnonymous) {
 		Enumeration enumeration = root.postorderEnumeration();
 		AnonymousClassDeclarationObject anonymousObject = new AnonymousClassDeclarationObject(cu, filePath, childAnonymous);
 		DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(anonymousObject);
@@ -313,7 +311,7 @@ public class Visitor extends ASTVisitor {
 		return childNode;
 	}
 
-	private DefaultMutableTreeNode findNode(AnonymousClassDeclaration anonymous) {
+	private DefaultMutableTreeNode findNode(PsiAnonymousClass anonymous) {
 		Enumeration enumeration = root.postorderEnumeration();
 		
 		while(enumeration.hasMoreElements()) {
@@ -326,8 +324,8 @@ public class Visitor extends ASTVisitor {
 		return null;
 	}
 
-	private boolean isParent(ASTNode child, ASTNode parent) {
-		ASTNode current = child;
+	private boolean isParent(PsiElement child, PsiElement parent) {
+		PsiElement current = child;
 		while(current.getParent() != null) {
 			if(current.getParent().equals(parent))
 				return true;
@@ -336,184 +334,133 @@ public class Visitor extends ASTVisitor {
 		return false;
 	}
 
-	public boolean visit(StringLiteral node) {
-		stringLiterals.add(node.toString());
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getStringLiterals().add(node.toString());
-		}
-		return super.visit(node);
-	}
-
-	public boolean visit(NumberLiteral node) {
-		numberLiterals.add(node.toString());
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getNumberLiterals().add(node.toString());
-		}
-		return super.visit(node);
-	}
-
-	public boolean visit(NullLiteral node) {
-		nullLiterals.add(node.toString());
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getNullLiterals().add(node.toString());
-		}
-		return super.visit(node);
-	}
-
-	public boolean visit(BooleanLiteral node) {
-		booleanLiterals.add(node.toString());
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getBooleanLiterals().add(node.toString());
-		}
-		return super.visit(node);
-	}
-
-	public boolean visit(TypeLiteral node) {
-		typeLiterals.add(node.toString());
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getTypeLiterals().add(node.toString());
-		}
-		return super.visit(node);
-	}
-
-	public boolean visit(ThisExpression node) {
-		if(!(node.getParent() instanceof FieldAccess)) {
-			variables.add(node.toString());
+	private void visit(PsiLiteralExpression node) {
+		Object value = node.getValue();
+		String source = Formatter.format(node);
+		if(value instanceof String) {
+			stringLiterals.add(source);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(node.toString());
+				anonymous.getStringLiterals().add(source);
 			}
-		}
-		return super.visit(node);
-	}
-
-	public boolean visit(SimpleName node) {
-		if(node.getParent() instanceof FieldAccess && ((FieldAccess)node.getParent()).getExpression() instanceof ThisExpression) {
-			FieldAccess fieldAccess = (FieldAccess)node.getParent();
-			variables.add(fieldAccess.toString());
+		} else if (value instanceof Number) {
+			numberLiterals.add(source);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(fieldAccess.toString());
+				anonymous.getNumberLiterals().add(source);
+			}
+		} else if (value instanceof Boolean) {
+			booleanLiterals.add(source);
+			if(current.getUserObject() != null) {
+				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+				anonymous.getBooleanLiterals().add(source);
+			}
+		} else if (value == null) {
+			nullLiterals.add(source);
+			if(current.getUserObject() != null) {
+				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+				anonymous.getNullLiterals().add(source);
+			}
+		} else {
+			// Characters not processed
+			assert value instanceof Character;
+		}
+	}
+
+	private void visit(PsiClassObjectAccessExpression node) {
+		String source = Formatter.format(node);
+		typeLiterals.add(source);
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getTypeLiterals().add(source);
+		}
+	}
+
+	public void visit(PsiThisExpression node) {
+		if(!(node.getParent() instanceof PsiReferenceExpression)) {
+			String source = Formatter.format(node);
+			variables.add(source);
+			if(current.getUserObject() != null) {
+				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+				anonymous.getVariables().add(source);
 			}
 		}
-		else if(node.getParent() instanceof MethodInvocation &&
-				((MethodInvocation)node.getParent()).getName().equals(node)) {
+	}
+
+	private static boolean isFieldAccessWithThisExpression(PsiElement element) {
+		return element instanceof PsiReferenceExpression && ((PsiReferenceExpression)element).getQualifierExpression() instanceof PsiThisExpression;
+	}
+
+	private void visit(PsiIdentifier node) {
+		if(isFieldAccessWithThisExpression(node.getParent())) {
+			PsiReferenceExpression fieldAccess = (PsiReferenceExpression)node.getParent();
+			String source = Formatter.format(fieldAccess);
+			variables.add(source);
+			if(current.getUserObject() != null) {
+				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+				anonymous.getVariables().add(source);
+			}
+		}
+		else if(node.getParent() instanceof PsiMethodCallExpression &&
+				Formatter.format(node).equals(((PsiMethodCallExpression)node.getParent()).getMethodExpression().getReferenceName())) {
 			// skip method invocation names
 		}
-		else if(node.getParent() instanceof SuperMethodInvocation &&
-				((SuperMethodInvocation)node.getParent()).getName().equals(node)) {
-			// skip super method invocation names
-		}
-		else if(node.getParent() instanceof Type) {
-			// skip type names
-		}
-		else if(node.getParent() instanceof MarkerAnnotation &&
-				((MarkerAnnotation)node.getParent()).getTypeName().equals(node)) {
+		else if(node.getParent() instanceof PsiAnnotation &&
+				((PsiAnnotation)node.getParent()).getNameReferenceElement().getReferenceName().equals(Formatter.format(node))) {
 			// skip marker annotation names
 		}
-		else if(node.getParent() instanceof MethodDeclaration &&
-				((MethodDeclaration)node.getParent()).getName().equals(node)) {
+		else if(node.getParent() instanceof PsiMethod &&
+				((PsiMethod)node.getParent()).getName().equals(Formatter.format(node))) {
 			// skip method declaration names
 		}
-		else if(node.getParent() instanceof SingleVariableDeclaration &&
-				node.getParent().getParent() instanceof MethodDeclaration) {
+		else if(node.getParent() instanceof PsiParameter &&
+				node.getParent().getParent() instanceof PsiMethod) {
 			// skip method parameter names
 		}
-		else if(node.getParent() instanceof SingleVariableDeclaration &&
-				node.getParent().getParent() instanceof CatchClause) {
+		else if(node.getParent() instanceof PsiParameter &&
+				node.getParent().getParent() instanceof PsiCatchSection) {
 			// skip catch clause formal parameter names
 		}
-		else if(node.getParent() instanceof QualifiedName &&
-				(node.getParent().getParent() instanceof QualifiedName ||
-				node.getParent().getParent() instanceof MethodInvocation ||
-				node.getParent().getParent() instanceof SuperMethodInvocation ||
-				node.getParent().getParent() instanceof ClassInstanceCreation)) {
+		else if(node.getParent() instanceof PsiReferenceExpression &&
+				(node.getParent().getParent() instanceof PsiReferenceExpression ||
+				node.getParent().getParent() instanceof PsiMethodCallExpression ||
+				node.getParent().getParent() instanceof PsiNewExpression)) {
 			// skip names being part of qualified names
 		}
 		else {
-			variables.add(node.getIdentifier());
+			String source = Formatter.format(node);
+			variables.add(source);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(node.getIdentifier());
+				anonymous.getVariables().add(source);
 			}
 		}
-		return super.visit(node);
 	}
 	
-	public boolean visit(ArrayType node) {
-		types.add(node.toString());
+	private boolean visit(PsiTypeElement node) {
+		String source = Formatter.format(node);
+		types.add(source);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getTypes().add(node.toString());
+			anonymous.getTypes().add(source);
 		}
 		return false;
 	}
-	
-	public boolean visit(ParameterizedType node) {
-		types.add(node.toString());
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getTypes().add(node.toString());
+
+	private void visit(PsiMethodCallExpression node) {
+		PsiExpressionList argumentList = node.getArgumentList();
+		int argumentSize = 0;
+		if(argumentList != null) {
+			PsiExpression[] arguments = argumentList.getExpressions();
+			argumentSize = arguments.length;
+			for (PsiExpression argument : arguments) {
+				processArgument(argument);
+			}
 		}
-		return false;
-	}
-	
-	public boolean visit(WildcardType node) {
-		types.add(node.toString());
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getTypes().add(node.toString());
-		}
-		return false;
-	}
-	
-	public boolean visit(QualifiedType node) {
-		types.add(node.toString());
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getTypes().add(node.toString());
-		}
-		return false;
-	}
-	
-	public boolean visit(PrimitiveType node) {
-		types.add(node.toString());
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getTypes().add(node.toString());
-		}
-		return false;
-	}
-	
-	public boolean visit(SimpleType node) {
-		Name name = node.getName();
-		types.add(name.getFullyQualifiedName());
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getTypes().add(name.getFullyQualifiedName());
-		}
-		return false;
-	}
-	
-	public boolean visit(MethodInvocation node) {
-		List<Expression> arguments = node.arguments();
-		for(Expression argument : arguments) {
-			processArgument(argument);
-		}
-		String methodInvocation = null;
-		if(METHOD_INVOCATION_PATTERN.matcher(node.toString()).matches()) {
-			methodInvocation = processMethodInvocation(node);
-		}
-		else {
-			methodInvocation = node.toString();
-		}
-		if(methodInvocationMap.isEmpty() && node.getExpression() instanceof MethodInvocation &&
-				!(node.getName().getIdentifier().equals("length") && node.arguments().size() == 0)) {
+		String methodInvocation = Formatter.format(node);
+		PsiReferenceExpression methodExpression = node.getMethodExpression();
+		if(methodInvocationMap.isEmpty() && methodExpression.getQualifierExpression() instanceof PsiMethodCallExpression &&
+				!(methodExpression.getReferenceName().equals("length") && argumentSize == 0)) {
 			builderPatternChains.add(node);
 		}
 		for(String key : methodInvocationMap.keySet()) {
@@ -545,12 +492,11 @@ public class Visitor extends ASTVisitor {
 				anonymousMethodInvocationMap.put(methodInvocation, list);
 			}
 		}
-		return super.visit(node);
 	}
 
-	public boolean visit(ExpressionMethodReference node) {
+	private void visit(PsiMethodReferenceExpression node) {
 		MethodReference reference = new MethodReference(cu, filePath, node);
-		String referenceString = node.toString();
+		String referenceString = Formatter.format(node);
 		if(methodInvocationMap.containsKey(referenceString)) {
 			methodInvocationMap.get(referenceString).add(reference);
 		}
@@ -571,312 +517,127 @@ public class Visitor extends ASTVisitor {
 				anonymousMethodInvocationMap.put(referenceString, list);
 			}
 		}
-		return super.visit(node);
-	}
-	
-	public boolean visit(SuperMethodReference node) {
-		MethodReference reference = new MethodReference(cu, filePath, node);
-		String referenceString = node.toString();
-		if(methodInvocationMap.containsKey(referenceString)) {
-			methodInvocationMap.get(referenceString).add(reference);
-		}
-		else {
-			List<AbstractCall> list = new ArrayList<AbstractCall>();
-			list.add(reference);
-			methodInvocationMap.put(referenceString, list);
-		}
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			Map<String, List<AbstractCall>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
-			if(anonymousMethodInvocationMap.containsKey(referenceString)) {
-				anonymousMethodInvocationMap.get(referenceString).add(reference);
-			}
-			else {
-				List<AbstractCall> list = new ArrayList<AbstractCall>();
-				list.add(reference);
-				anonymousMethodInvocationMap.put(referenceString, list);
-			}
-		}
-		return super.visit(node);
-	}
-	
-	public boolean visit(TypeMethodReference node) {
-		MethodReference reference = new MethodReference(cu, filePath, node);
-		String referenceString = node.toString();
-		if(methodInvocationMap.containsKey(referenceString)) {
-			methodInvocationMap.get(referenceString).add(reference);
-		}
-		else {
-			List<AbstractCall> list = new ArrayList<AbstractCall>();
-			list.add(reference);
-			methodInvocationMap.put(referenceString, list);
-		}
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			Map<String, List<AbstractCall>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
-			if(anonymousMethodInvocationMap.containsKey(referenceString)) {
-				anonymousMethodInvocationMap.get(referenceString).add(reference);
-			}
-			else {
-				List<AbstractCall> list = new ArrayList<AbstractCall>();
-				list.add(reference);
-				anonymousMethodInvocationMap.put(referenceString, list);
-			}
-		}
-		return super.visit(node);
 	}
 
-	public static String processMethodInvocation(MethodInvocation node) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(node.getName().getIdentifier());
-		sb.append("(");
-		List<Expression> arguments = node.arguments();
-		if(arguments.size() > 0) {
-		    for(int i=0; i<arguments.size()-1; i++)
-		        sb.append(arguments.get(i).toString()).append(", ");
-		    sb.append(arguments.get(arguments.size()-1).toString());
-		}
-		sb.append(")");
-		return sb.toString();
-	}
-	
-	public static String processClassInstanceCreation(ClassInstanceCreation node) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("new").append(" ");
-		sb.append(node.getType().toString());
-		List<Expression> arguments = node.arguments();
-		if(arguments.size() > 0) {
-		    for(int i=0; i<arguments.size()-1; i++)
-		        sb.append(arguments.get(i).toString()).append(", ");
-		    sb.append(arguments.get(arguments.size()-1).toString());
-		}
-		sb.append(")");
-		return sb.toString();
-	}
-	
-	public boolean visit(SuperMethodInvocation node) {
-		List<Expression> arguments = node.arguments();
-		for(Expression argument : arguments) {
-			processArgument(argument);
-		}
-		OperationInvocation invocation = new OperationInvocation(cu, filePath, node);
-		String nodeAsString = node.toString();
-		if(methodInvocationMap.containsKey(nodeAsString)) {
-			methodInvocationMap.get(nodeAsString).add(invocation);
-		}
-		else {
-			List<AbstractCall> list = new ArrayList<AbstractCall>();
-			list.add(invocation);
-			methodInvocationMap.put(nodeAsString, list);
-		}
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			Map<String, List<AbstractCall>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
-			if(anonymousMethodInvocationMap.containsKey(nodeAsString)) {
-				anonymousMethodInvocationMap.get(nodeAsString).add(invocation);
-			}
-			else {
-				List<AbstractCall> list = new ArrayList<AbstractCall>();
-				list.add(invocation);
-				anonymousMethodInvocationMap.put(nodeAsString, list);
-			}
-		}
-		return super.visit(node);
-	}
-
-	public boolean visit(SuperConstructorInvocation node) {
-		List<Expression> arguments = node.arguments();
-		for(Expression argument : arguments) {
-			processArgument(argument);
-		}
-		OperationInvocation invocation = new OperationInvocation(cu, filePath, node);
-		String nodeAsString = node.toString();
-		if(methodInvocationMap.containsKey(nodeAsString)) {
-			methodInvocationMap.get(nodeAsString).add(invocation);
-		}
-		else {
-			List<AbstractCall> list = new ArrayList<AbstractCall>();
-			list.add(invocation);
-			methodInvocationMap.put(nodeAsString, list);
-		}
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			Map<String, List<AbstractCall>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
-			if(anonymousMethodInvocationMap.containsKey(nodeAsString)) {
-				anonymousMethodInvocationMap.get(nodeAsString).add(invocation);
-			}
-			else {
-				List<AbstractCall> list = new ArrayList<AbstractCall>();
-				list.add(invocation);
-				anonymousMethodInvocationMap.put(nodeAsString, list);
-			}
-		}
-		return super.visit(node);
-	}
-
-	public boolean visit(ConstructorInvocation node) {
-		List<Expression> arguments = node.arguments();
-		for(Expression argument : arguments) {
-			processArgument(argument);
-		}
-		OperationInvocation invocation = new OperationInvocation(cu, filePath, node);
-		String nodeAsString = node.toString();
-		if(methodInvocationMap.containsKey(nodeAsString)) {
-			methodInvocationMap.get(nodeAsString).add(invocation);
-		}
-		else {
-			List<AbstractCall> list = new ArrayList<AbstractCall>();
-			list.add(invocation);
-			methodInvocationMap.put(nodeAsString, list);
-		}
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			Map<String, List<AbstractCall>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
-			if(anonymousMethodInvocationMap.containsKey(nodeAsString)) {
-				anonymousMethodInvocationMap.get(nodeAsString).add(invocation);
-			}
-			else {
-				List<AbstractCall> list = new ArrayList<AbstractCall>();
-				list.add(invocation);
-				anonymousMethodInvocationMap.put(nodeAsString, list);
-			}
-		}
-		return super.visit(node);
-	}
-
-	private void processArgument(Expression argument) {
-		if(argument instanceof SuperMethodInvocation ||
-				argument instanceof Name ||
-				argument instanceof StringLiteral ||
-				argument instanceof BooleanLiteral ||
-				argument instanceof NumberLiteral ||
-				(argument instanceof FieldAccess && ((FieldAccess)argument).getExpression() instanceof ThisExpression) ||
-				(argument instanceof ArrayAccess && invalidArrayAccess((ArrayAccess)argument)) ||
-				(argument instanceof InfixExpression && invalidInfix((InfixExpression)argument)))
+	private void processArgument(PsiExpression argument) {
+		if((argument instanceof PsiMethodCallExpression && ((PsiMethodCallExpression)argument).getMethodExpression().getQualifierExpression() instanceof PsiSuperExpression) ||
+				argument instanceof PsiIdentifier ||
+				(argument instanceof PsiQualifiedExpression && ((PsiQualifiedExpression)argument).getQualifier().isQualified()) ||
+				(argument instanceof PsiLiteral && ((PsiLiteral)argument).getValue() instanceof String) ||
+				(argument instanceof PsiLiteral && ((PsiLiteral)argument).getValue() instanceof Boolean) ||
+				(argument instanceof PsiLiteral && ((PsiLiteral)argument).getValue() instanceof Number) ||
+				isFieldAccessWithThisExpression(argument) ||
+				(argument instanceof PsiArrayAccessExpression && invalidArrayAccess((PsiArrayAccessExpression)argument)) ||
+				(argument instanceof PsiPolyadicExpression && invalidInfix((PsiPolyadicExpression)argument)))
 			return;
-		if(argument instanceof ExpressionMethodReference) {
-			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (ExpressionMethodReference)argument);
+		if(argument instanceof PsiMethodReferenceExpression) {
+			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (PsiMethodReferenceExpression)argument);
 			lambdas.add(lambda);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 				anonymous.getLambdas().add(lambda);
 			}
 		}
-		else if(argument instanceof SuperMethodReference) {
-			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (SuperMethodReference)argument);
-			lambdas.add(lambda);
-			if(current.getUserObject() != null) {
-				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getLambdas().add(lambda);
-			}
-		}
-		else if(argument instanceof TypeMethodReference) {
-			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (TypeMethodReference)argument);
-			lambdas.add(lambda);
-			if(current.getUserObject() != null) {
-				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getLambdas().add(lambda);
-			}
-		}
-		this.arguments.add(argument.toString());
+		String argumentSource = Formatter.format(argument);
+		this.arguments.add(argumentSource);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getArguments().add(argument.toString());
+			anonymous.getArguments().add(argumentSource);
 		}
 	}
 
-	public boolean visit(QualifiedName node) {
-		Name qualifier = node.getQualifier();
-		if(Character.isUpperCase(qualifier.getFullyQualifiedName().charAt(0))) {
-			types.add(qualifier.getFullyQualifiedName());
+	private void visit(PsiReferenceExpression node) {
+		String source = Formatter.format(node);
+		PsiExpression qualifier = node.getQualifierExpression();
+		String qualifierIdentifier = Formatter.format(qualifier);
+		if(Character.isUpperCase(qualifierIdentifier.charAt(0))) {
+			types.add(qualifierIdentifier);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getTypes().add(qualifier.getFullyQualifiedName());
+				anonymous.getTypes().add(qualifierIdentifier);
 			}
-			variables.add(node.toString());
+			variables.add(source);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(node.toString());
+				anonymous.getVariables().add(source);
 			}
 		}
-		else if(qualifier instanceof SimpleName && !(node.getParent() instanceof QualifiedName)) {
-			if(node.getName().getIdentifier().equals("length")) {
-				variables.add(node.toString());
+		else if(isSimpleName(qualifier) && !(node.getParent() instanceof PsiReferenceExpression)) {
+			if(source.equals("length")) {
+				variables.add(source);
 				if(current.getUserObject() != null) {
 					AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-					anonymous.getVariables().add(node.toString());
+					anonymous.getVariables().add(source);
 				}
 			}
 			else {
-				String qualifierIdentifier = ((SimpleName)qualifier).getIdentifier();
-				MethodDeclaration parentMethodDeclaration = findParentMethodDeclaration(node);
+				PsiMethod parentMethodDeclaration = findParentMethodDeclaration(node);
 				if(parentMethodDeclaration != null) {
 					boolean qualifierIsParameter = false;
-					List<SingleVariableDeclaration> parameters = parentMethodDeclaration.parameters();
-					for(SingleVariableDeclaration parameter : parameters) {
-						if(parameter.getName().getIdentifier().equals(qualifierIdentifier)) {
+					PsiParameter[] parameters = parentMethodDeclaration.getParameterList().getParameters();
+					for(PsiParameter parameter : parameters) {
+						if(parameter.getName().equals(qualifierIdentifier)) {
 							qualifierIsParameter = true;
 							break;
 						}
 					}
 					if(qualifierIsParameter) {
-						variables.add(node.toString());
+						variables.add(source);
 						if(current.getUserObject() != null) {
 							AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-							anonymous.getVariables().add(node.toString());
+							anonymous.getVariables().add(source);
 						}
 					}
 				}
-				EnhancedForStatement enhancedFor = findParentEnhancedForStatement(node);
+				PsiForeachStatement enhancedFor = findParentEnhancedForStatement(node);
 				if(enhancedFor != null) {
-					if(enhancedFor.getParameter().getName().getIdentifier().equals(qualifierIdentifier)) {
-						variables.add(node.toString());
+					if(enhancedFor.getIterationParameter().getName().equals(qualifierIdentifier)) {
+						variables.add(source);
 						if(current.getUserObject() != null) {
 							AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-							anonymous.getVariables().add(node.toString());
+							anonymous.getVariables().add(source);
 						}
 					}
 				}
 			}
 		}
-		return super.visit(node);
 	}
 
-	private EnhancedForStatement findParentEnhancedForStatement(ASTNode node) {
-		ASTNode parent = node.getParent();
+	private PsiForeachStatement findParentEnhancedForStatement(PsiElement node) {
+		PsiElement parent = node.getParent();
 		while(parent != null) {
-			if(parent instanceof EnhancedForStatement) {
-				return (EnhancedForStatement)parent;
+			if(parent instanceof PsiForeachStatement) {
+				return (PsiForeachStatement)parent;
 			}
 			parent = parent.getParent();
 		}
 		return null;
 	}
 
-	private MethodDeclaration findParentMethodDeclaration(ASTNode node) {
-		ASTNode parent = node.getParent();
+	private PsiMethod findParentMethodDeclaration(PsiElement node) {
+		PsiElement parent = node.getParent();
 		while(parent != null) {
-			if(parent instanceof MethodDeclaration) {
-				return (MethodDeclaration)parent;
+			if(parent instanceof PsiMethod) {
+				return (PsiMethod)parent;
 			}
 			parent = parent.getParent();
 		}
 		return null;
 	}
 
-	public boolean visit(CastExpression node) {
-		Expression castExpression = node.getExpression();
-		if(castExpression instanceof SimpleName) {
-			variables.add(node.toString());
+	private void visit(PsiTypeCastExpression node) {
+		PsiExpression castExpression = node.getOperand();
+		if(isSimpleName(castExpression)) {
+			String source = Formatter.format(node);
+			variables.add(source);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(node.toString());
+				anonymous.getVariables().add(source);
 			}
 		}
-		return super.visit(node);
 	}
 
-	public boolean visit(LambdaExpression node) {
+	private boolean visit(PsiLambdaExpression node) {
 		LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, node);
 		lambdas.add(lambda);
 		if(current.getUserObject() != null) {
@@ -962,15 +723,25 @@ public class Visitor extends ASTVisitor {
 		return lambdas;
 	}
 
-	private static boolean invalidArrayAccess(ArrayAccess e) {
-		return e.getArray() instanceof SimpleName && simpleNameOrNumberLiteral(e.getIndex());
+	private static boolean isSimpleName(PsiElement element) {
+		return element instanceof PsiReferenceExpression && ((PsiReferenceExpression)element).getQualifierExpression() == null;
 	}
 
-	private static boolean invalidInfix(InfixExpression e) {
-		return simpleNameOrNumberLiteral(e.getLeftOperand()) && simpleNameOrNumberLiteral(e.getRightOperand());
+	private static boolean invalidArrayAccess(PsiArrayAccessExpression e) {
+		return isSimpleName(e.getArrayExpression()) && simpleNameOrNumberLiteral(e.getIndexExpression());
 	}
 
-	private static boolean simpleNameOrNumberLiteral(Expression e) {
-		return e instanceof SimpleName || e instanceof NumberLiteral;
+	private static boolean invalidInfix(PsiPolyadicExpression e) {
+		PsiExpression[] operands = e.getOperands();
+		for(PsiExpression operand : operands) {
+			if(!simpleNameOrNumberLiteral(operand)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static boolean simpleNameOrNumberLiteral(PsiExpression e) {
+		return isSimpleName(e) || (e instanceof PsiLiteral && ((PsiLiteral) e).getValue() instanceof Number);
 	}
 }

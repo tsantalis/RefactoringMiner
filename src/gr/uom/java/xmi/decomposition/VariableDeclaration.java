@@ -6,12 +6,6 @@ import java.util.List;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import gr.uom.java.xmi.*;
-import org.eclipse.jdt.core.dom.FieldDeclaration;
-import org.eclipse.jdt.core.dom.LambdaExpression;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.CodeRange;
@@ -28,6 +22,27 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private VariableScope scope;
 	private boolean isFinal;
 	private List<UMLAnnotation> annotations;
+
+	public VariableDeclaration(PsiFile cu, String filePath, PsiResourceVariable fragment) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		PsiModifierList modifiers = fragment.getModifierList();
+		if(modifiers != null) {
+			if (modifiers.hasExplicitModifier(PsiModifier.FINAL)) {
+				this.isFinal = true;
+			}
+			for (PsiAnnotation annotation : modifiers.getAnnotations()) {
+				this.annotations.add(new UMLAnnotation(cu, filePath, annotation));
+			}
+		}
+		this.locationInfo = new LocationInfo(cu, filePath, fragment, CodeElementType.VARIABLE_DECLARATION_EXPRESSION);
+		this.variableName = fragment.getName();
+		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER) : null;
+		this.type = TypeUtils.extractType(cu, filePath, fragment);
+		int startOffset = fragment.getTextRange().getStartOffset();
+		PsiElement scopeNode = getScopeNode(fragment);
+		int endOffset = scopeNode.getTextRange().getEndOffset();
+		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
+	}
 
 	public VariableDeclaration(PsiFile cu, String filePath, PsiLocalVariable fragment) {
 		this.annotations = new ArrayList<UMLAnnotation>();

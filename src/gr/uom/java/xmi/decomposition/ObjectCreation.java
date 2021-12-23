@@ -1,12 +1,10 @@
 package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import org.eclipse.jdt.core.dom.ArrayCreation;
-import org.eclipse.jdt.core.dom.ClassInstanceCreation;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.Expression;
+import com.intellij.psi.*;
+import gr.uom.java.xmi.Formatter;
+import gr.uom.java.xmi.TypeUtils;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -19,35 +17,42 @@ public class ObjectCreation extends AbstractCall {
 	private boolean isArray = false;
 	private volatile int hashCode = 0;
 	
-	public ObjectCreation(CompilationUnit cu, String filePath, ClassInstanceCreation creation) {
-		this.locationInfo = new LocationInfo(cu, filePath, creation, CodeElementType.CLASS_INSTANCE_CREATION);
-		this.type = UMLType.extractTypeObject(cu, filePath, creation.getType(), 0);
-		this.typeArguments = creation.arguments().size();
-		this.arguments = new ArrayList<String>();
-		List<Expression> args = creation.arguments();
-		for(Expression argument : args) {
-			this.arguments.add(argument.toString());
+	public ObjectCreation(PsiFile cu, String filePath, PsiNewExpression creation) {
+		if(creation.isArrayCreation()) {
+			this.locationInfo = new LocationInfo(cu, filePath, creation, CodeElementType.ARRAY_CREATION);
+			this.isArray = true;
+			this.type = TypeUtils.extractType(cu, filePath, creation);
+			this.arguments = new ArrayList<String>();
+			PsiExpression[] args = creation.getArrayDimensions();
+			for(PsiExpression argument : args) {
+				this.arguments.add(Formatter.format(argument));
+			}
+			this.typeArguments = this.arguments.size();
+			PsiArrayInitializerExpression arrayInitializer = creation.getArrayInitializer();
+			if(arrayInitializer != null) {
+				this.anonymousClassDeclaration = Formatter.format(arrayInitializer);
+			}
 		}
-		if(creation.getExpression() != null) {
-			this.expression = creation.getExpression().toString();
-		}
-		if(creation.getAnonymousClassDeclaration() != null) {
-			this.anonymousClassDeclaration = creation.getAnonymousClassDeclaration().toString();
-		}
-	}
-
-	public ObjectCreation(CompilationUnit cu, String filePath, ArrayCreation creation) {
-		this.locationInfo = new LocationInfo(cu, filePath, creation, CodeElementType.ARRAY_CREATION);
-		this.isArray = true;
-		this.type = UMLType.extractTypeObject(cu, filePath, creation.getType(), 0);
-		this.typeArguments = creation.dimensions().size();
-		this.arguments = new ArrayList<String>();
-		List<Expression> args = creation.dimensions();
-		for(Expression argument : args) {
-			this.arguments.add(argument.toString());
-		}
-		if(creation.getInitializer() != null) {
-			this.anonymousClassDeclaration = creation.getInitializer().toString();
+		else {
+			this.locationInfo = new LocationInfo(cu, filePath, creation, CodeElementType.CLASS_INSTANCE_CREATION);
+			this.type = TypeUtils.extractType(cu, filePath, creation);
+			this.arguments = new ArrayList<String>();
+			PsiExpressionList argList = creation.getArgumentList();
+			if (argList != null) {
+				PsiExpression[] args = argList.getExpressions();
+				for (PsiExpression argument : args) {
+					this.arguments.add(Formatter.format(argument));
+				}
+			}
+			this.typeArguments = this.arguments.size();
+			PsiExpression qualifier = creation.getQualifier();
+			if (qualifier != null) {
+				this.expression = Formatter.format(qualifier);
+			}
+			PsiAnonymousClass anonymous = creation.getAnonymousClass();
+			if (anonymous != null) {
+				this.anonymousClassDeclaration = Formatter.format(anonymous);
+			}
 		}
 	}
 

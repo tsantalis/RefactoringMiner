@@ -1,12 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
-import gr.uom.java.xmi.LocationInfo;
-import gr.uom.java.xmi.LocationInfo.CodeElementType;
-import gr.uom.java.xmi.UMLAbstractClass;
-import gr.uom.java.xmi.UMLClass;
-import gr.uom.java.xmi.UMLOperation;
-import gr.uom.java.xmi.UMLParameter;
-import gr.uom.java.xmi.UMLType;
+import com.intellij.psi.*;
+import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
@@ -21,14 +16,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jdt.core.dom.ClassInstanceCreation;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.ConstructorInvocation;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
-import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 import org.refactoringminer.util.PrefixSuffixUtils;
+
+import static gr.uom.java.xmi.decomposition.PsiUtils.isSuperConstructorInvocation;
+import static gr.uom.java.xmi.decomposition.PsiUtils.isThisConstructorInvocation;
 
 public class OperationInvocation extends AbstractCall {
 	private String methodName;
@@ -75,86 +66,64 @@ public class OperationInvocation extends AbstractCall {
         PRIMITIVE_TYPE_NARROWING_MAP = Collections.unmodifiableMap(PRIMITIVE_TYPE_NARROWING_MAP);
     }
 
-	public OperationInvocation(CompilationUnit cu, String filePath, MethodInvocation invocation) {
-		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.METHOD_INVOCATION);
-		this.methodName = invocation.getName().getIdentifier();
-		this.typeArguments = invocation.arguments().size();
+	public OperationInvocation(PsiFile cu, String filePath, PsiMethodCallExpression invocation) {
+		PsiReferenceExpression methodExpression = invocation.getMethodExpression();
+		new LocationInfo(cu, filePath, invocation, getCodeElementType(invocation, methodExpression.getQualifierExpression()));
+		this.methodName = methodExpression.getReferenceName();
 		this.arguments = new ArrayList<String>();
-		List<Expression> args = invocation.arguments();
-		for(Expression argument : args) {
-			this.arguments.add(argument.toString());
+		PsiExpressionList argumentList = invocation.getArgumentList();
+		if(argumentList != null) {
+			PsiExpression[] args = argumentList.getExpressions();
+			this.typeArguments = args.length;
+			for (PsiExpression argument : args) {
+				this.arguments.add(Formatter.format(argument));
+			}
 		}
-		if(invocation.getExpression() != null) {
-			this.expression = invocation.getExpression().toString();
-			processExpression(invocation.getExpression(), this.subExpressions);
+		if(methodExpression.getQualifierExpression() != null) {
+			this.expression = Formatter.format(methodExpression.getQualifierExpression());
+			processExpression(methodExpression.getQualifierExpression(), this.subExpressions);
 		}
 	}
-	
-	private void processExpression(Expression expression, List<String> subExpressions) {
-		if(expression instanceof MethodInvocation) {
-			MethodInvocation invocation = (MethodInvocation)expression;
-			if(invocation.getExpression() != null) {
-				String expressionAsString = invocation.getExpression().toString();
-				String invocationAsString = invocation.toString();
+
+	private LocationInfo.CodeElementType getCodeElementType(PsiMethodCallExpression expression, PsiExpression qualifierExpression) {
+		if (qualifierExpression instanceof PsiSuperExpression) {
+			return LocationInfo.CodeElementType.SUPER_METHOD_INVOCATION;
+		} else if (isThisConstructorInvocation(expression)) {
+			return LocationInfo.CodeElementType.CONSTRUCTOR_INVOCATION;
+		} else if (isSuperConstructorInvocation(expression)) {
+			return LocationInfo.CodeElementType.SUPER_CONSTRUCTOR_INVOCATION;
+		} else {
+			return LocationInfo.CodeElementType.METHOD_INVOCATION;
+		}
+	}
+
+	private void processExpression(PsiExpression expression, List<String> subExpressions) {
+		if(expression instanceof PsiMethodCallExpression) {
+			PsiMethodCallExpression invocation = (PsiMethodCallExpression)expression;
+			PsiReferenceExpression methodExpression = invocation.getMethodExpression();
+			if(methodExpression.getQualifierExpression() != null) {
+				String expressionAsString = Formatter.format(methodExpression.getQualifierExpression());
+				String invocationAsString = Formatter.format(invocation);
 				String suffix = invocationAsString.substring(expressionAsString.length() + 1, invocationAsString.length());
 				subExpressions.add(0, suffix);
-				processExpression(invocation.getExpression(), subExpressions);
+				processExpression(methodExpression.getQualifierExpression(), subExpressions);
 			}
 			else {
-				subExpressions.add(0, invocation.toString());
+				subExpressions.add(0, Formatter.format(invocation));
 			}
 		}
-		else if(expression instanceof ClassInstanceCreation) {
-			ClassInstanceCreation creation = (ClassInstanceCreation)expression;
-			if(creation.getExpression() != null) {
-				String expressionAsString = creation.getExpression().toString();
-				String invocationAsString = creation.toString();
+		else if(expression instanceof PsiNewExpression) {
+			PsiNewExpression creation = (PsiNewExpression)expression;
+			if(creation.getQualifier() != null) {
+				String expressionAsString = Formatter.format(creation.getQualifier());
+				String invocationAsString = Formatter.format(creation);
 				String suffix = invocationAsString.substring(expressionAsString.length() + 1, invocationAsString.length());
 				subExpressions.add(0, suffix);
-				processExpression(creation.getExpression(), subExpressions);
+				processExpression(creation.getQualifier(), subExpressions);
 			}
 			else {
-				subExpressions.add(0, creation.toString());
+				subExpressions.add(0, Formatter.format(creation));
 			}
-		}
-	}
-
-	public OperationInvocation(CompilationUnit cu, String filePath, SuperMethodInvocation invocation) {
-		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.SUPER_METHOD_INVOCATION);
-		this.methodName = invocation.getName().getIdentifier();
-		this.typeArguments = invocation.arguments().size();
-		this.arguments = new ArrayList<String>();
-		this.expression = "super";
-		this.subExpressions.add("super");
-		List<Expression> args = invocation.arguments();
-		for(Expression argument : args) {
-			this.arguments.add(argument.toString());
-		}
-	}
-
-	public OperationInvocation(CompilationUnit cu, String filePath, SuperConstructorInvocation invocation) {
-		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.SUPER_CONSTRUCTOR_INVOCATION);
-		this.methodName = "super";
-		this.typeArguments = invocation.arguments().size();
-		this.arguments = new ArrayList<String>();
-		List<Expression> args = invocation.arguments();
-		for(Expression argument : args) {
-			this.arguments.add(argument.toString());
-		}
-		if(invocation.getExpression() != null) {
-			this.expression = invocation.getExpression().toString();
-			processExpression(invocation.getExpression(), this.subExpressions);
-		}
-	}
-
-	public OperationInvocation(CompilationUnit cu, String filePath, ConstructorInvocation invocation) {
-		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.CONSTRUCTOR_INVOCATION);
-		this.methodName = "this";
-		this.typeArguments = invocation.arguments().size();
-		this.arguments = new ArrayList<String>();
-		List<Expression> args = invocation.arguments();
-		for(Expression argument : args) {
-			this.arguments.add(argument.toString());
 		}
 	}
 

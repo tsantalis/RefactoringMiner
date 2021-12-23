@@ -338,7 +338,6 @@ public class OperationBody {
 	}
 
 	private CodeElementType getCodeElementType(PsiExpression expression) {
-		//TODO check if PsiConstructorCall is more appropriate
 		if (expression instanceof PsiMethodCallExpression) {
 			PsiMethodCallExpression callExpression = (PsiMethodCallExpression) expression;
 			if (isThisConstructorInvocation(callExpression)) {

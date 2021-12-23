@@ -1,6 +1,7 @@
 package gr.uom.java.xmi;
 
 import com.intellij.lang.java.JavaLanguage;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
 
@@ -26,7 +27,7 @@ public class UMLModelASTReader {
 
 	public UMLModelASTReader(Map<String, String> javaFileContents, Set<String> repositoryDirectories) {
 		this.umlModel = new UMLModel(repositoryDirectories);
-		processJavaFileContents(javaFileContents);
+		ApplicationManager.getApplication().runReadAction(() -> processJavaFileContents(javaFileContents));
 	}
 
 	private void processJavaFileContents(Map<String, String> javaFileContents) {
@@ -625,12 +626,7 @@ public class UMLModelASTReader {
 				}
 			}
 			else if(parent instanceof PsiMethodCallExpression) {
-				PsiIdentifier identifier =
-						PsiUtils.findFirstChildOfType(
-								((PsiMethodCallExpression) parent).getMethodExpression(),
-								PsiIdentifier.class
-						);
-				String invocationName = Formatter.format(identifier);
+				String invocationName = ((PsiMethodCallExpression) parent).getMethodExpression().getReferenceName();
 				if(name.isEmpty()) {
 					name = invocationName;
 				}

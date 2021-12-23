@@ -81,7 +81,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 		} else if (element instanceof PsiReferenceExpression) {
 			visit((PsiReferenceExpression) element);
 		} else if (element instanceof PsiJavaCodeReferenceElement) {
-
+			visitSubtree = visit((PsiJavaCodeReferenceElement) element);
 		} else if (element instanceof PsiTypeElement) {
 			visitSubtree = visit((PsiTypeElement) element);
 		} else if (element instanceof PsiTypeCastExpression) {
@@ -436,7 +436,18 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 			}
 		}
 	}
-	
+
+	private boolean visit(PsiJavaCodeReferenceElement node) {
+		// type from PsiNewExpression.getClassReference() or PsiNewExpression.getClassOrAnonymousClassReference()
+		String source = Formatter.format(node);
+		types.add(source);
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getTypes().add(source);
+		}
+		return false;
+	}
+
 	private boolean visit(PsiTypeElement node) {
 		String source = Formatter.format(node);
 		types.add(source);
@@ -547,6 +558,9 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	}
 
 	private void visit(PsiReferenceExpression node) {
+		if (node.getParent() instanceof PsiMethodCallExpression || node instanceof PsiMethodReferenceExpression) {
+			return;
+		}
 		String source = Formatter.format(node);
 		PsiExpression qualifier = node.getQualifierExpression();
 		String qualifierIdentifier = Formatter.format(qualifier);

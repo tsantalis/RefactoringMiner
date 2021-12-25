@@ -21,6 +21,7 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class UMLModelASTReader {
 	private static final String FREE_MARKER_GENERATED = "generated using freemarker";
+	private static final String FREE_MARKER_GENERATED_2 = "generated using FreeMarker";
 	private UMLModel umlModel;
 
 	public UMLModelASTReader(Map<String, String> javaFileContents, Set<String> repositoryDirectories) {
@@ -31,7 +32,7 @@ public class UMLModelASTReader {
 	private void processJavaFileContents(Map<String, String> javaFileContents) {
 		for(String filePath : javaFileContents.keySet()) {
 			String javaFileContent = javaFileContents.get(filePath);
-			if(javaFileContent.contains(FREE_MARKER_GENERATED) &&
+			if((javaFileContent.contains(FREE_MARKER_GENERATED) || javaFileContent.contains(FREE_MARKER_GENERATED_2)) &&
 					!javaFileContent.contains("private static final String FREE_MARKER_GENERATED = \"generated using freemarker\";")) {
 				continue;
 			}

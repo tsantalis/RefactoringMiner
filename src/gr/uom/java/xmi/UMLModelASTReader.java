@@ -59,6 +59,7 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class UMLModelASTReader {
 	private static final String FREE_MARKER_GENERATED = "generated using freemarker";
+	private static final String FREE_MARKER_GENERATED_2 = "generated using FreeMarker";
 	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
 	private UMLModel umlModel;
 
@@ -80,7 +81,7 @@ public class UMLModelASTReader {
 			parser.setStatementsRecovery(true);
 			String javaFileContent = javaFileContents.get(filePath);
 			parser.setSource(javaFileContent.toCharArray());
-			if(javaFileContent.contains(FREE_MARKER_GENERATED) &&
+			if((javaFileContent.contains(FREE_MARKER_GENERATED) || javaFileContent.contains(FREE_MARKER_GENERATED_2)) &&
 					!javaFileContent.contains("private static final String FREE_MARKER_GENERATED = \"generated using freemarker\";")) {
 				continue;
 			}

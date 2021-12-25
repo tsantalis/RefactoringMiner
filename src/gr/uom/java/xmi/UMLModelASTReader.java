@@ -551,6 +551,9 @@ public class UMLModelASTReader {
 			Type parameterType = parameter.getType();
 			String parameterName = parameter.getName().getFullyQualifiedName();
 			UMLType type = UMLType.extractTypeObject(cu, sourceFile, parameterType, parameter.getExtraDimensions());
+			if(parameter.isVarargs()) {
+				type.setVarargs();
+			}
 			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarargs());
 			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, parameter, parameter.isVarargs());
 			variableDeclaration.setParameter(true);

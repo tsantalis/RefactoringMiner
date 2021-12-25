@@ -100,10 +100,14 @@ public class OperationBody {
 			PsiIfStatement ifStatement = (PsiIfStatement)statement;
 			CompositeStatementObject child = new CompositeStatementObject(cu, filePath, ifStatement, parent.getDepth()+1, CodeElementType.IF_STATEMENT);
 			parent.addStatement(child);
-			AbstractExpression abstractExpression = new AbstractExpression(cu, filePath, ifStatement.getCondition(), CodeElementType.IF_STATEMENT_CONDITION);
-			child.addExpression(abstractExpression);
+			if(ifStatement.getCondition() != null) {
+				AbstractExpression abstractExpression = new AbstractExpression(cu, filePath, ifStatement.getCondition(), CodeElementType.IF_STATEMENT_CONDITION);
+				child.addExpression(abstractExpression);
+			}
 			addStatementInVariableScopes(child);
-			processStatement(cu, filePath, child, ifStatement.getThenBranch());
+			if(ifStatement.getThenBranch() != null) {
+				processStatement(cu, filePath, child, ifStatement.getThenBranch());
+			}
 			if(ifStatement.getElseBranch() != null) {
 				processStatement(cu, filePath, child, ifStatement.getElseBranch());
 			}

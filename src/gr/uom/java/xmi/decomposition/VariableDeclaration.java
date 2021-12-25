@@ -120,7 +120,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.varargsParameter = varargs;
 	}
 
-	public VariableDeclaration(PsiFile cu, String filePath, PsiEnumConstant fragment) {
+	public VariableDeclaration(PsiFile cu, String filePath, PsiEnumConstant fragment, UMLType type) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		PsiModifierList modifiers = fragment.getModifierList();
 		if(modifiers != null) {
@@ -135,7 +135,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.locationInfo = new LocationInfo(cu, filePath, fragment, CodeElementType.ENUM_CONSTANT_DECLARATION);
 		this.variableName = fragment.getName();
 		this.initializer = null;
-		this.type = UMLTypePsiParser.extractTypeObject(cu, filePath, fragment.getTypeElement(), fragment.getType());
+		this.type = type;
 		PsiElement scopeNode = getScopeNode(fragment);
 		int startOffset = scopeNode.getTextRange().getStartOffset();
 		int endOffset = scopeNode.getTextRange().getEndOffset();

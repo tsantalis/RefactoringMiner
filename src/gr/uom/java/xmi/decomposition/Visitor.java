@@ -58,6 +58,8 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 			visit((PsiPostfixExpression) element);
 		} else if (element instanceof PsiConditionalExpression) {
 			visit((PsiConditionalExpression) element);
+		} else if (element instanceof PsiBinaryExpression) {
+			visit((PsiBinaryExpression) element);
 		} else if (element instanceof PsiPolyadicExpression) {
 			visit((PsiPolyadicExpression) element);
 		} else if (element instanceof PsiNewExpression) {
@@ -129,6 +131,18 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 			anonymous.getTernaryOperatorExpressions().add(ternary);
+		}
+	}
+
+	private void visit(PsiBinaryExpression node) {
+		String binaryExpression = Formatter.format(node);
+		String operator = Formatter.format(node.getOperationSign());
+		infixExpressions.add(binaryExpression);
+		infixOperators.add(operator);
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getInfixExpressions().add(binaryExpression);
+			anonymous.getInfixOperators().add(operator);
 		}
 	}
 
@@ -533,7 +547,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	private void processArgument(PsiExpression argument) {
 		if((argument instanceof PsiMethodCallExpression && ((PsiMethodCallExpression)argument).getMethodExpression().getQualifierExpression() instanceof PsiSuperExpression) ||
 				argument instanceof PsiIdentifier ||
-				(argument instanceof PsiQualifiedExpression && ((PsiQualifiedExpression)argument).getQualifier().isQualified()) ||
+				(argument instanceof PsiQualifiedExpression && ((PsiQualifiedExpression)argument).getQualifier() != null && ((PsiQualifiedExpression)argument).getQualifier().isQualified()) ||
 				(argument instanceof PsiLiteral && ((PsiLiteral)argument).getValue() instanceof String) ||
 				(argument instanceof PsiLiteral && ((PsiLiteral)argument).getValue() instanceof Boolean) ||
 				(argument instanceof PsiLiteral && ((PsiLiteral)argument).getValue() instanceof Number) ||
@@ -613,6 +627,13 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 						}
 					}
 				}
+			}
+		}
+		else {
+			variables.add(source);
+			if(current.getUserObject() != null) {
+				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+				anonymous.getVariables().add(source);
 			}
 		}
 	}

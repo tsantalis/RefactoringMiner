@@ -41,7 +41,7 @@ public class UMLModelASTReader {
 				processCompilationUnit(filePath, psiFile, javaFileContent);
 			}
 			catch(Exception e) {
-				//e.printStackTrace();
+				e.printStackTrace();
 			}
 		}
 	}
@@ -496,8 +496,9 @@ public class UMLModelASTReader {
 	private void processEnumConstantDeclaration(PsiFile cu, PsiEnumConstant enumConstantDeclaration, String sourceFile, UMLClass umlClass, List<UMLComment> comments) {
 		UMLJavadoc javadoc = generateJavadoc(cu, enumConstantDeclaration, sourceFile);
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, enumConstantDeclaration, CodeElementType.ENUM_CONSTANT_DECLARATION);
-		UMLEnumConstant enumConstant = new UMLEnumConstant(enumConstantDeclaration.getName(), UMLType.extractTypeObject(umlClass.getName()), locationInfo);
-		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, enumConstantDeclaration);
+		LeafType type = UMLType.extractTypeObject(umlClass.getName());
+		UMLEnumConstant enumConstant = new UMLEnumConstant(enumConstantDeclaration.getName(), type, locationInfo);
+		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, enumConstantDeclaration, type);
 		enumConstant.setVariableDeclaration(variableDeclaration);
 		enumConstant.setJavadoc(javadoc);
 		distributeComments(comments, locationInfo, enumConstant.getComments());

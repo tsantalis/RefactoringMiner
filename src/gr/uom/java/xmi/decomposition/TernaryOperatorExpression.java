@@ -3,6 +3,7 @@ package gr.uom.java.xmi.decomposition;
 import com.intellij.psi.PsiConditionalExpression;
 import com.intellij.psi.PsiFile;
 
+import gr.uom.java.xmi.Formatter;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
@@ -16,9 +17,13 @@ public class TernaryOperatorExpression {
 
 	public TernaryOperatorExpression(PsiFile cu, String filePath, PsiConditionalExpression expression) {
 		this.condition = new AbstractExpression(cu, filePath, expression.getCondition(), CodeElementType.TERNARY_OPERATOR_CONDITION);
-		this.thenExpression = new AbstractExpression(cu, filePath, expression.getThenExpression(), CodeElementType.TERNARY_OPERATOR_THEN_EXPRESSION);
-		this.elseExpression = new AbstractExpression(cu, filePath, expression.getElseExpression(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION);
-		this.expression = expression.toString();
+		if(expression.getThenExpression() != null) {
+			this.thenExpression = new AbstractExpression(cu, filePath, expression.getThenExpression(), CodeElementType.TERNARY_OPERATOR_THEN_EXPRESSION);
+		}
+		if(expression.getElseExpression() != null) {
+			this.elseExpression = new AbstractExpression(cu, filePath, expression.getElseExpression(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION);
+		}
+		this.expression = Formatter.format(expression);
 	}
 
 	public AbstractExpression getCondition() {

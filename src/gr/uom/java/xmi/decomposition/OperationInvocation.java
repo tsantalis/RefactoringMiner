@@ -68,7 +68,7 @@ public class OperationInvocation extends AbstractCall {
 
 	public OperationInvocation(PsiFile cu, String filePath, PsiMethodCallExpression invocation) {
 		PsiReferenceExpression methodExpression = invocation.getMethodExpression();
-		new LocationInfo(cu, filePath, invocation, getCodeElementType(invocation, methodExpression.getQualifierExpression()));
+		this.locationInfo = new LocationInfo(cu, filePath, invocation, getCodeElementType(invocation, methodExpression.getQualifierExpression()));
 		this.methodName = methodExpression.getReferenceName();
 		this.arguments = new ArrayList<String>();
 		PsiExpressionList argumentList = invocation.getArgumentList();

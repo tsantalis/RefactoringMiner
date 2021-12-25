@@ -563,53 +563,53 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 		}
 		String source = Formatter.format(node);
 		PsiExpression qualifier = node.getQualifierExpression();
-		String qualifierIdentifier = Formatter.format(qualifier);
-		if(Character.isUpperCase(qualifierIdentifier.charAt(0))) {
-			types.add(qualifierIdentifier);
-			if(current.getUserObject() != null) {
-				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getTypes().add(qualifierIdentifier);
-			}
-			variables.add(source);
-			if(current.getUserObject() != null) {
-				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(source);
-			}
-		}
-		else if(isSimpleName(qualifier) && !(node.getParent() instanceof PsiReferenceExpression)) {
-			if(source.equals("length")) {
+		if(qualifier != null) {
+			String qualifierIdentifier = Formatter.format(qualifier);
+			if (Character.isUpperCase(qualifierIdentifier.charAt(0))) {
+				types.add(qualifierIdentifier);
+				if (current.getUserObject() != null) {
+					AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();
+					anonymous.getTypes().add(qualifierIdentifier);
+				}
 				variables.add(source);
-				if(current.getUserObject() != null) {
-					AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+				if (current.getUserObject() != null) {
+					AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();
 					anonymous.getVariables().add(source);
 				}
-			}
-			else {
-				PsiMethod parentMethodDeclaration = findParentMethodDeclaration(node);
-				if(parentMethodDeclaration != null) {
-					boolean qualifierIsParameter = false;
-					PsiParameter[] parameters = parentMethodDeclaration.getParameterList().getParameters();
-					for(PsiParameter parameter : parameters) {
-						if(parameter.getName().equals(qualifierIdentifier)) {
-							qualifierIsParameter = true;
-							break;
+			} else if (isSimpleName(qualifier) && !(node.getParent() instanceof PsiReferenceExpression)) {
+				if (source.equals("length")) {
+					variables.add(source);
+					if (current.getUserObject() != null) {
+						AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();
+						anonymous.getVariables().add(source);
+					}
+				} else {
+					PsiMethod parentMethodDeclaration = findParentMethodDeclaration(node);
+					if (parentMethodDeclaration != null) {
+						boolean qualifierIsParameter = false;
+						PsiParameter[] parameters = parentMethodDeclaration.getParameterList().getParameters();
+						for (PsiParameter parameter : parameters) {
+							if (parameter.getName().equals(qualifierIdentifier)) {
+								qualifierIsParameter = true;
+								break;
+							}
+						}
+						if (qualifierIsParameter) {
+							variables.add(source);
+							if (current.getUserObject() != null) {
+								AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();
+								anonymous.getVariables().add(source);
+							}
 						}
 					}
-					if(qualifierIsParameter) {
-						variables.add(source);
-						if(current.getUserObject() != null) {
-							AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-							anonymous.getVariables().add(source);
-						}
-					}
-				}
-				PsiForeachStatement enhancedFor = findParentEnhancedForStatement(node);
-				if(enhancedFor != null) {
-					if(enhancedFor.getIterationParameter().getName().equals(qualifierIdentifier)) {
-						variables.add(source);
-						if(current.getUserObject() != null) {
-							AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-							anonymous.getVariables().add(source);
+					PsiForeachStatement enhancedFor = findParentEnhancedForStatement(node);
+					if (enhancedFor != null) {
+						if (enhancedFor.getIterationParameter().getName().equals(qualifierIdentifier)) {
+							variables.add(source);
+							if (current.getUserObject() != null) {
+								AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();
+								anonymous.getVariables().add(source);
+							}
 						}
 					}
 				}

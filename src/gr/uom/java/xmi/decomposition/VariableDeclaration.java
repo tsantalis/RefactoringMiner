@@ -105,7 +105,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.locationInfo = new LocationInfo(cu, filePath, fragment, codeElementType);
 		this.variableName = fragment.getName();
 		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER) : null;
-		this.type = UMLTypePsiParser.extractTypeObject(cu, filePath, fragment.getTypeElement(), fragment.getType());
+		//handling lambda expression parameters without type
+		if(fragment.getTypeElement() != null) {
+			this.type = UMLTypePsiParser.extractTypeObject(cu, filePath, fragment.getTypeElement(), fragment.getType());
+		}
 		int startOffset = fragment.getTextRange().getStartOffset();
 		PsiElement scopeNode = getScopeNode(fragment);
 		int endOffset = scopeNode.getTextRange().getEndOffset();

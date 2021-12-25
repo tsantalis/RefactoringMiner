@@ -20,8 +20,6 @@ import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class UMLModelASTReader {
-	private static final PsiFileFactory factory =
-			PsiFileFactory.getInstance(ProjectManager.getInstance().getDefaultProject());
 	private static final String FREE_MARKER_GENERATED = "generated using freemarker";
 	private UMLModel umlModel;
 
@@ -38,7 +36,7 @@ public class UMLModelASTReader {
 				continue;
 			}
 			try {
-				PsiFile psiFile = factory.createFileFromText(JavaLanguage.INSTANCE, javaFileContent);
+				PsiFile psiFile = PsiFactoryManager.getFactory().createFileFromText(JavaLanguage.INSTANCE, javaFileContent);
 				processCompilationUnit(filePath, psiFile, javaFileContent);
 			}
 			catch(Exception e) {
@@ -308,11 +306,11 @@ public class UMLModelASTReader {
     		umlClass.addOperation(operation);
     	}
     	*/
+		processBodyDeclarations(cu, typeDeclaration, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments);
     	processAnonymousClassDeclarations(cu, typeDeclaration, packageName, sourceFile, className, umlClass);
     	
     	this.getUmlModel().addClass(umlClass);
 
-		processBodyDeclarations(cu, typeDeclaration, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments);
 		distributeComments(comments, locationInfo, umlClass.getComments());
 	}
 

@@ -8,6 +8,7 @@ import java.util.Map;
 import com.intellij.psi.PsiAnonymousClass;
 import com.intellij.psi.PsiFile;
 
+import gr.uom.java.xmi.Formatter;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.CodeRange;
@@ -40,7 +41,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	public AnonymousClassDeclarationObject(PsiFile cu, String filePath, PsiAnonymousClass anonymous) {
 		this.locationInfo = new LocationInfo(cu, filePath, anonymous, CodeElementType.ANONYMOUS_CLASS_DECLARATION);
 		this.astNode = anonymous;
-		this.astNodeString = anonymous.toString();
+		this.astNodeString = Formatter.format(anonymous);
 	}
 
 	public LocationInfo getLocationInfo() {

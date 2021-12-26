@@ -121,6 +121,9 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	public VariableDeclaration(CompilationUnit cu, String filePath, SingleVariableDeclaration fragment, boolean varargs) {
 		this(cu, filePath, fragment);
 		this.varargsParameter = varargs;
+		if(varargs) {
+			this.type.setVarargs();
+		}
 	}
 
 	public VariableDeclaration(CompilationUnit cu, String filePath, EnumConstantDeclaration fragment) {
@@ -239,18 +242,26 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-        sb.append(variableName).append(" : ").append(type);
+        sb.append(variableName).append(" : ");
         if(varargsParameter) {
+        	sb.append(type.toString().substring(0, type.toString().lastIndexOf("[]")));
         	sb.append("...");
+        }
+        else {
+        	sb.append(type);
         }
         return sb.toString();
 	}
 
 	public String toQualifiedString() {
 		StringBuilder sb = new StringBuilder();
-        sb.append(variableName).append(" : ").append(type.toQualifiedString());
+        sb.append(variableName).append(" : ");
         if(varargsParameter) {
+        	sb.append(type.toQualifiedString().substring(0, type.toQualifiedString().lastIndexOf("[]")));
         	sb.append("...");
+        }
+        else {
+        	sb.append(type.toQualifiedString());
         }
         return sb.toString();
 	}

@@ -1,10 +1,6 @@
 package gr.uom.java.xmi;
 
-import com.intellij.psi.JavaTokenType;
-import com.intellij.psi.PsiComment;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiRecursiveElementWalkingVisitor;
-import com.intellij.psi.PsiWhiteSpace;
+import com.intellij.psi.*;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiUtil;
 import org.jetbrains.annotations.NotNull;
@@ -23,14 +19,22 @@ public class FormattingVisitor extends PsiRecursiveElementWalkingVisitor {
         JavaTokenType.SEMICOLON, JavaTokenType.DOUBLE_COLON
     );
     private static final TokenSet noSpaceAfter = TokenSet.create(
-        JavaTokenType.AT, JavaTokenType.LBRACE, JavaTokenType.RBRACE
+        JavaTokenType.AT, JavaTokenType.LBRACE, JavaTokenType.RBRACE, JavaTokenType.EXCL
     );
     private static final TokenSet noSpaceBefore = TokenSet.create(
-        JavaTokenType.ELLIPSIS, JavaTokenType.RBRACE
+            JavaTokenType.ELLIPSIS
     );
     private static final TokenSet endLineAfter = TokenSet.create(
-        //JavaTokenType.LBRACE, JavaTokenType.RBRACE,
-            JavaTokenType.SEMICOLON
+            JavaTokenType.LBRACE, JavaTokenType.RBRACE, JavaTokenType.SEMICOLON
+    );
+    private static final TokenSet mustSpaceBefore = TokenSet.create(
+            JavaTokenType.OROR, JavaTokenType.ANDAND, JavaTokenType.EQEQ, JavaTokenType.PLUS
+    );
+    private static final TokenSet annotationNoSpaceBefore = TokenSet.create(
+        JavaTokenType.ELLIPSIS, JavaTokenType.RBRACE
+    );
+    private static final TokenSet annotationEndLineAfter = TokenSet.create(
+        JavaTokenType.SEMICOLON
     );
 
     private final StringBuilder sb = new StringBuilder();
@@ -43,7 +47,7 @@ public class FormattingVisitor extends PsiRecursiveElementWalkingVisitor {
             if (!(element instanceof PsiWhiteSpace || element instanceof PsiComment)) {
                 String text = element.getText();
                 if (!text.isEmpty()) {
-                    if (needSpaceBefore(element) && previousNeedSpaceAfter) {
+                    if ((needSpaceBefore(element) && previousNeedSpaceAfter) || mustHaveSpaceBefore(element)) {
                         sb.append(' ');
                     }
                     sb.append(element.getText());
@@ -58,16 +62,33 @@ public class FormattingVisitor extends PsiRecursiveElementWalkingVisitor {
         }
     }
 
-    private boolean needEndLineAfter(@NotNull PsiElement element) {
-        return PsiUtil.isJavaToken(element, endLineAfter);
+    private static boolean needEndLineAfter(@NotNull PsiElement element) {
+        return PsiUtil.isJavaToken(element,
+                findParentAnnotation(element) != null ? annotationEndLineAfter : endLineAfter);
     }
 
     private static boolean needSpaceBefore(PsiElement element) {
-        return !(PsiUtil.isJavaToken(element, noSpaces) || PsiUtil.isJavaToken(element, noSpaceBefore));
+        return !(PsiUtil.isJavaToken(element, noSpaces) || PsiUtil.isJavaToken(element,
+                findParentAnnotation(element) != null ? annotationNoSpaceBefore : noSpaceBefore));
     }
 
     private static boolean needSpaceAfter(PsiElement element) {
         return !(PsiUtil.isJavaToken(element, noSpaces) || PsiUtil.isJavaToken(element, noSpaceAfter));
+    }
+
+    private static boolean mustHaveSpaceBefore(PsiElement element) {
+        return PsiUtil.isJavaToken(element, mustSpaceBefore);
+    }
+
+    private static PsiElement findParentAnnotation(PsiElement node) {
+        PsiElement parent = node.getParent();
+        while(parent != null) {
+            if(parent instanceof PsiAnnotation || parent instanceof PsiArrayInitializerExpression) {
+                return parent;
+            }
+            parent = parent.getParent();
+        }
+        return null;
     }
 
     public String getText() {

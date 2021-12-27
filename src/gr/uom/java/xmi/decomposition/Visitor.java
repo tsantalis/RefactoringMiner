@@ -546,8 +546,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 
 	private void processArgument(PsiExpression argument) {
 		if((argument instanceof PsiMethodCallExpression && ((PsiMethodCallExpression)argument).getMethodExpression().getQualifierExpression() instanceof PsiSuperExpression) ||
-				argument instanceof PsiIdentifier ||
-				(argument instanceof PsiQualifiedExpression && ((PsiQualifiedExpression)argument).getQualifier() != null && ((PsiQualifiedExpression)argument).getQualifier().isQualified()) ||
+				(argument instanceof PsiReferenceExpression && !(argument.getParent() instanceof PsiMethodCallExpression || argument instanceof PsiMethodReferenceExpression)) ||
 				(argument instanceof PsiLiteral && ((PsiLiteral)argument).getValue() instanceof String) ||
 				(argument instanceof PsiLiteral && ((PsiLiteral)argument).getValue() instanceof Boolean) ||
 				(argument instanceof PsiLiteral && ((PsiLiteral)argument).getValue() instanceof Number) ||

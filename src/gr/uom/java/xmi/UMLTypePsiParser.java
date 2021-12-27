@@ -138,7 +138,7 @@ public class UMLTypePsiParser {
         } else if (type instanceof PsiEllipsisType) {
             typeElement = findFirstChildOfType(typeElement, PsiTypeElement.class);
             UMLType ellipsisType = extractTypeObject(file, filePath, typeElement);
-            ellipsisType.arrayDimension++;
+            ellipsisType.arrayDimension = type.getArrayDimensions();
             return ellipsisType;
         } else if (type instanceof PsiArrayType) {
             if (typeElement.getType() instanceof PsiArrayType) {

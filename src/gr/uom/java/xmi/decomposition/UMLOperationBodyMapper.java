@@ -5332,7 +5332,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					boolean containsMethodSignatureOfAnonymousClass2 = containsMethodSignatureOfAnonymousClass(s2);
 					if(containsMethodSignatureOfAnonymousClass1 != containsMethodSignatureOfAnonymousClass2 &&
 							operation1 != null && operation2 != null &&
-							operation1.getVariableDeclaration(s1) == null && operation2.getVariableDeclaration(s2) == null) {
+							operation1.getVariableDeclaration(s1) == null && operation2.getVariableDeclaration(s2) == null &&
+							classDiff != null && !classDiff.getOriginalClass().containsAttributeWithName(s1) && !classDiff.getNextClass().containsAttributeWithName(s2)) {
 						continue;
 					}
 					String temp = ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), s1, s2);
@@ -5382,7 +5383,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					boolean containsMethodSignatureOfAnonymousClass2 = containsMethodSignatureOfAnonymousClass(s2);
 					if(containsMethodSignatureOfAnonymousClass1 != containsMethodSignatureOfAnonymousClass2 &&
 							operation1 != null && operation2 != null &&
-							operation1.getVariableDeclaration(s1) == null && operation2.getVariableDeclaration(s2) == null) {
+							operation1.getVariableDeclaration(s1) == null && operation2.getVariableDeclaration(s2) == null &&
+							classDiff != null && !classDiff.getOriginalClass().containsAttributeWithName(s1) && !classDiff.getNextClass().containsAttributeWithName(s2)) {
 						continue;
 					}
 					String temp = ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), s1, s2);

@@ -64,12 +64,12 @@ public class FormattingVisitor extends PsiRecursiveElementWalkingVisitor {
 
     private static boolean needEndLineAfter(@NotNull PsiElement element) {
         return PsiUtil.isJavaToken(element,
-                findParentAnnotation(element) != null ? annotationEndLineAfter : endLineAfter);
+                insideAnnotationOrArrayInitializer(element) ? annotationEndLineAfter : endLineAfter);
     }
 
     private static boolean needSpaceBefore(PsiElement element) {
         return !(PsiUtil.isJavaToken(element, noSpaces) || PsiUtil.isJavaToken(element,
-                findParentAnnotation(element) != null ? annotationNoSpaceBefore : noSpaceBefore));
+                insideAnnotationOrArrayInitializer(element) ? annotationNoSpaceBefore : noSpaceBefore));
     }
 
     private static boolean needSpaceAfter(PsiElement element) {
@@ -85,15 +85,15 @@ public class FormattingVisitor extends PsiRecursiveElementWalkingVisitor {
                 element.getParent().getParent() instanceof PsiDeclarationStatement;
     }
 
-    private static PsiElement findParentAnnotation(PsiElement node) {
+    private static boolean insideAnnotationOrArrayInitializer(PsiElement node) {
         PsiElement parent = node.getParent();
         while(parent != null) {
             if(parent instanceof PsiAnnotation || parent instanceof PsiArrayInitializerExpression) {
-                return parent;
+                return true;
             }
             parent = parent.getParent();
         }
-        return null;
+        return false;
     }
 
     public String getText() {

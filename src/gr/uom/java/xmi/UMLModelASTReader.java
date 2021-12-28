@@ -496,9 +496,10 @@ public class UMLModelASTReader {
 	private void processEnumConstantDeclaration(PsiFile cu, PsiEnumConstant enumConstantDeclaration, String sourceFile, UMLClass umlClass, List<UMLComment> comments) {
 		UMLJavadoc javadoc = generateJavadoc(cu, enumConstantDeclaration, sourceFile);
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, enumConstantDeclaration, CodeElementType.ENUM_CONSTANT_DECLARATION);
-		LeafType type = UMLType.extractTypeObject(umlClass.getName());
-		UMLEnumConstant enumConstant = new UMLEnumConstant(enumConstantDeclaration.getName(), type, locationInfo);
-		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, enumConstantDeclaration, type);
+		LeafType qualifiedType = UMLType.extractTypeObject(umlClass.getName());
+		UMLEnumConstant enumConstant = new UMLEnumConstant(enumConstantDeclaration.getName(), qualifiedType, locationInfo);
+		LeafType nonQualifiedType = UMLType.extractTypeObject(umlClass.getNonQualifiedName());
+		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, enumConstantDeclaration, nonQualifiedType);
 		enumConstant.setVariableDeclaration(variableDeclaration);
 		enumConstant.setJavadoc(javadoc);
 		distributeComments(comments, locationInfo, enumConstant.getComments());

@@ -50,6 +50,9 @@ public class FormattingVisitor extends PsiRecursiveElementWalkingVisitor {
                     if ((needSpaceBefore(element) && previousNeedSpaceAfter) || mustHaveSpaceBefore(element)) {
                         sb.append(' ');
                     }
+                    if(sb.toString().equals("return") && !text.equals(";")) {
+                        sb.append(' ');
+                    }
                     sb.append(element.getText());
                     if (needEndLineAfter(element)) {
                         sb.append('\n');

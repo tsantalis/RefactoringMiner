@@ -122,6 +122,10 @@ public class OperationBody {
 				for (PsiElement initializer : declarationStatement.getDeclaredElements()) {
 					AbstractExpression abstractExpression = new AbstractExpression(cu, filePath, initializer, CodeElementType.FOR_STATEMENT_INITIALIZER);
 					child.addExpression(abstractExpression);
+					if(initializer instanceof PsiLocalVariable) {
+						VariableDeclaration vd = new VariableDeclaration(cu, filePath, (PsiLocalVariable) initializer);
+						child.addVariableDeclaration(vd);
+					}
 				}
 			}
 			PsiExpression expression = forStatement.getCondition();

@@ -209,18 +209,22 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	private boolean visit(PsiDeclarationStatement node) {
 		for (PsiElement declaredElement : node.getDeclaredElements()) {
 			if (declaredElement instanceof PsiLocalVariable) {
-				VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, (PsiLocalVariable) declaredElement);
-				variableDeclarations.add(variableDeclaration);
-				if(current.getUserObject() != null) {
-					AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-					anonymous.getVariableDeclarations().add(variableDeclaration);
-				}
+				visit((PsiLocalVariable) declaredElement);
 			}
 			else if(declaredElement instanceof PsiClass) {
 				return false;
 			}
 		}
 		return true;
+	}
+
+	private void visit(PsiLocalVariable node) {
+		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node);
+		variableDeclarations.add(variableDeclaration);
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getVariableDeclarations().add(variableDeclaration);
+		}
 	}
 
 	private void visit(PsiResourceVariable node) {

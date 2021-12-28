@@ -265,8 +265,9 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	private static PsiElement getScopeNode(PsiVariable variableDeclaration) {
 		return PsiTreeUtil.getParentOfType(variableDeclaration,
-				PsiMethod.class, PsiCodeBlock.class, PsiCatchSection.class,
-				PsiTryStatement.class, PsiClass.class, PsiForStatement.class,
+				PsiMethod.class, PsiCodeBlock.class, PsiCatchSection.class, PsiIfStatement.class,
+				PsiTryStatement.class, PsiClass.class, PsiForStatement.class, PsiWhileStatement.class,
+				PsiDoWhileStatement.class, PsiSynchronizedStatement.class,
 				PsiForeachStatement.class, PsiLambdaExpression.class);
 	}
 

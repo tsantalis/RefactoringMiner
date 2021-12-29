@@ -13,6 +13,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.intellij.psi.*;
 import gr.uom.java.xmi.Formatter;
+import gr.uom.java.xmi.LocationInfo;
 import org.jetbrains.annotations.NotNull;
 
 public class Visitor extends PsiRecursiveElementWalkingVisitor {
@@ -68,6 +69,8 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 			visitSubtree = visit((PsiDeclarationStatement) element);
 		} else if (element instanceof PsiResourceVariable) {
 			visit((PsiResourceVariable) element);
+		} else if (element instanceof PsiParameter) {
+			visit((PsiParameter) element);
 		} else if (element instanceof PsiAnonymousClass) {
 			visitSubtree = visit((PsiAnonymousClass) element);
 		} else if (element instanceof PsiLiteralExpression) {
@@ -229,6 +232,15 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 
 	private void visit(PsiResourceVariable node) {
 		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node);
+		variableDeclarations.add(variableDeclaration);
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getVariableDeclarations().add(variableDeclaration);
+		}
+	}
+
+	private void visit(PsiParameter node) {
+		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node, LocationInfo.CodeElementType.SINGLE_VARIABLE_DECLARATION, node.isVarArgs());
 		variableDeclarations.add(variableDeclaration);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();

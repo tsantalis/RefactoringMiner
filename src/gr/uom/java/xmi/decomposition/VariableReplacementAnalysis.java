@@ -1080,6 +1080,44 @@ public class VariableReplacementAnalysis {
 	private void getVariableRefactorings(VariableDeclaration variableDeclaration1,
 			VariableDeclaration variableDeclaration2, UMLOperation operation1, UMLOperation operation2,
 			Set<AbstractCodeMapping> variableReferences, RenameVariableRefactoring ref) {
+		for(UMLAnonymousClass anonymous : operation1.getAnonymousClassList()) {
+			for(UMLOperation operation : anonymous.getOperations()) {
+				int subsumedReferences = 0;
+				for(AbstractCodeMapping mapping : variableReferences) {
+					if(operation.getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo())) {
+						subsumedReferences++;
+					}
+				}
+				if(subsumedReferences > 0 && subsumedReferences == variableReferences.size() && operation.getAllVariableDeclarations().contains(variableDeclaration1)) {
+					operation1 = operation;
+					for(VariableDeclaration parameter : operation1.getParameterDeclarationList()) {
+						if(parameter.equals(variableDeclaration1)) {
+							variableDeclaration1 = parameter;
+						}
+					}
+					break;
+				}
+			}
+		}
+		for(UMLAnonymousClass anonymous : operation2.getAnonymousClassList()) {
+			for(UMLOperation operation : anonymous.getOperations()) {
+				int subsumedReferences = 0;
+				for(AbstractCodeMapping mapping : variableReferences) {
+					if(operation.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo())) {
+						subsumedReferences++;
+					}
+				}
+				if(subsumedReferences > 0 && subsumedReferences == variableReferences.size() && operation.getAllVariableDeclarations().contains(variableDeclaration2)) {
+					operation2 = operation;
+					for(VariableDeclaration parameter : operation2.getParameterDeclarationList()) {
+						if(parameter.equals(variableDeclaration2)) {
+							variableDeclaration2 = parameter;
+						}
+					}
+					break;
+				}
+			}
+		}
 		if(ref == null && variableDeclaration1.isParameter() != variableDeclaration2.isParameter()) {
 			RenameVariableRefactoring refactoring = new RenameVariableRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
 			refactorings.add(refactoring);

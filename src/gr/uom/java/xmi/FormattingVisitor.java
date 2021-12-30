@@ -80,7 +80,11 @@ public class FormattingVisitor extends PsiRecursiveElementWalkingVisitor {
     }
 
     private static boolean mustHaveSpaceBefore(PsiElement element) {
-        return PsiUtil.isJavaToken(element, mustSpaceBefore) || isLocalVariableDeclaration(element);
+        return PsiUtil.isJavaToken(element, mustSpaceBefore) || isLocalVariableDeclaration(element) || isMethodName(element);
+    }
+
+    private static boolean isMethodName(PsiElement element) {
+        return element instanceof PsiIdentifier && element.getParent() instanceof PsiMethod;
     }
 
     private static boolean isLocalVariableDeclaration(PsiElement element) {

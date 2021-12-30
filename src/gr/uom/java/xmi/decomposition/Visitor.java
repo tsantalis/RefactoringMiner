@@ -407,7 +407,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	}
 
 	public void visit(PsiThisExpression node) {
-		if(!(node.getParent() instanceof PsiReferenceExpression)) {
+		if(!isFieldAccessWithThisExpression(node.getParent())) {
 			String source = Formatter.format(node);
 			variables.add(source);
 			if(current.getUserObject() != null) {
@@ -418,7 +418,12 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	}
 
 	private static boolean isFieldAccessWithThisExpression(PsiElement element) {
-		return element instanceof PsiReferenceExpression && ((PsiReferenceExpression)element).getQualifierExpression() instanceof PsiThisExpression;
+		return element instanceof PsiReferenceExpression && ((PsiReferenceExpression)element).getQualifierExpression() instanceof PsiThisExpression &&
+				!methodCallReferenceExpression(element);
+	}
+
+	private static boolean methodCallReferenceExpression(PsiElement element) {
+		return element.getParent() instanceof PsiMethodCallExpression || element instanceof PsiMethodReferenceExpression;
 	}
 
 	private void visit(PsiIdentifier node) {
@@ -562,7 +567,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 
 	private void processArgument(PsiExpression argument) {
 		if((argument instanceof PsiMethodCallExpression && ((PsiMethodCallExpression)argument).getMethodExpression().getQualifierExpression() instanceof PsiSuperExpression) ||
-				(argument instanceof PsiReferenceExpression && !(argument.getParent() instanceof PsiMethodCallExpression || argument instanceof PsiMethodReferenceExpression)) ||
+				(argument instanceof PsiReferenceExpression && !methodCallReferenceExpression(argument)) ||
 				(argument instanceof PsiLiteral && ((PsiLiteral)argument).getValue() instanceof String) ||
 				(argument instanceof PsiLiteral && ((PsiLiteral)argument).getValue() instanceof Boolean) ||
 				(argument instanceof PsiLiteral && ((PsiLiteral)argument).getValue() instanceof Number) ||
@@ -587,7 +592,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	}
 
 	private void visit(PsiReferenceExpression node) {
-		if (node.getParent() instanceof PsiMethodCallExpression || node instanceof PsiMethodReferenceExpression) {
+		if (methodCallReferenceExpression(node)) {
 			return;
 		}
 		String source = Formatter.format(node);

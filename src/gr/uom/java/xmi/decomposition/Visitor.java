@@ -71,6 +71,8 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 			visit((PsiResourceVariable) element);
 		} else if (element instanceof PsiParameter) {
 			visit((PsiParameter) element);
+		} else if (element instanceof PsiField) {
+			visit((PsiField) element);
 		} else if (element instanceof PsiAnonymousClass) {
 			visitSubtree = visit((PsiAnonymousClass) element);
 		} else if (element instanceof PsiLiteralExpression) {
@@ -241,6 +243,15 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 
 	private void visit(PsiParameter node) {
 		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node, LocationInfo.CodeElementType.SINGLE_VARIABLE_DECLARATION, node.isVarArgs());
+		variableDeclarations.add(variableDeclaration);
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getVariableDeclarations().add(variableDeclaration);
+		}
+	}
+
+	private void visit(PsiField node) {
+		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node);
 		variableDeclarations.add(variableDeclaration);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -474,11 +485,13 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 
 	private boolean visit(PsiJavaCodeReferenceElement node) {
 		// type from PsiNewExpression.getClassReference() or PsiNewExpression.getClassOrAnonymousClassReference()
-		String source = Formatter.format(node);
-		types.add(source);
-		if(current.getUserObject() != null) {
-			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getTypes().add(source);
+		if(!(node.getParent() instanceof PsiAnnotation)) {
+			String source = Formatter.format(node);
+			types.add(source);
+			if (current.getUserObject() != null) {
+				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();
+				anonymous.getTypes().add(source);
+			}
 		}
 		return false;
 	}

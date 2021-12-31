@@ -800,41 +800,32 @@ public class Visitor extends ASTVisitor {
 			}
 		}
 		else if(qualifier instanceof SimpleName && !(node.getParent() instanceof QualifiedName)) {
-			if(node.getName().getIdentifier().equals("length")) {
-				variables.add(node.toString());
-				if(current.getUserObject() != null) {
-					AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-					anonymous.getVariables().add(node.toString());
+			String qualifierIdentifier = ((SimpleName)qualifier).getIdentifier();
+			MethodDeclaration parentMethodDeclaration = findParentMethodDeclaration(node);
+			if(parentMethodDeclaration != null) {
+				boolean qualifierIsParameter = false;
+				List<SingleVariableDeclaration> parameters = parentMethodDeclaration.parameters();
+				for(SingleVariableDeclaration parameter : parameters) {
+					if(parameter.getName().getIdentifier().equals(qualifierIdentifier)) {
+						qualifierIsParameter = true;
+						break;
+					}
+				}
+				if(qualifierIsParameter) {
+					variables.add(node.toString());
+					if(current.getUserObject() != null) {
+						AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+						anonymous.getVariables().add(node.toString());
+					}
 				}
 			}
-			else {
-				String qualifierIdentifier = ((SimpleName)qualifier).getIdentifier();
-				MethodDeclaration parentMethodDeclaration = findParentMethodDeclaration(node);
-				if(parentMethodDeclaration != null) {
-					boolean qualifierIsParameter = false;
-					List<SingleVariableDeclaration> parameters = parentMethodDeclaration.parameters();
-					for(SingleVariableDeclaration parameter : parameters) {
-						if(parameter.getName().getIdentifier().equals(qualifierIdentifier)) {
-							qualifierIsParameter = true;
-							break;
-						}
-					}
-					if(qualifierIsParameter) {
-						variables.add(node.toString());
-						if(current.getUserObject() != null) {
-							AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-							anonymous.getVariables().add(node.toString());
-						}
-					}
-				}
-				EnhancedForStatement enhancedFor = findParentEnhancedForStatement(node);
-				if(enhancedFor != null) {
-					if(enhancedFor.getParameter().getName().getIdentifier().equals(qualifierIdentifier)) {
-						variables.add(node.toString());
-						if(current.getUserObject() != null) {
-							AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-							anonymous.getVariables().add(node.toString());
-						}
+			EnhancedForStatement enhancedFor = findParentEnhancedForStatement(node);
+			if(enhancedFor != null) {
+				if(enhancedFor.getParameter().getName().getIdentifier().equals(qualifierIdentifier)) {
+					variables.add(node.toString());
+					if(current.getUserObject() != null) {
+						AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+						anonymous.getVariables().add(node.toString());
 					}
 				}
 			}

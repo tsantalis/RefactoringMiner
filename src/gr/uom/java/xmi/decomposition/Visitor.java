@@ -624,39 +624,31 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 					anonymous.getVariables().add(source);
 				}
 			} else if (isSimpleName(qualifier) && !(node.getParent() instanceof PsiReferenceExpression)) {
-				if (source.equals("length")) {
-					variables.add(source);
-					if (current.getUserObject() != null) {
-						AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();
-						anonymous.getVariables().add(source);
-					}
-				} else {
-					PsiMethod parentMethodDeclaration = findParentMethodDeclaration(node);
-					if (parentMethodDeclaration != null) {
-						boolean qualifierIsParameter = false;
-						PsiParameter[] parameters = parentMethodDeclaration.getParameterList().getParameters();
-						for (PsiParameter parameter : parameters) {
-							if (parameter.getName().equals(qualifierIdentifier)) {
-								qualifierIsParameter = true;
-								break;
-							}
-						}
-						if (qualifierIsParameter) {
-							variables.add(source);
-							if (current.getUserObject() != null) {
-								AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();
-								anonymous.getVariables().add(source);
-							}
+				PsiMethod parentMethodDeclaration = findParentMethodDeclaration(node);
+				if (parentMethodDeclaration != null) {
+					boolean qualifierIsParameter = false;
+					PsiParameter[] parameters = parentMethodDeclaration.getParameterList().getParameters();
+					for (PsiParameter parameter : parameters) {
+						if (parameter.getName().equals(qualifierIdentifier)) {
+							qualifierIsParameter = true;
+							break;
 						}
 					}
-					PsiForeachStatement enhancedFor = findParentEnhancedForStatement(node);
-					if (enhancedFor != null) {
-						if (enhancedFor.getIterationParameter().getName().equals(qualifierIdentifier)) {
-							variables.add(source);
-							if (current.getUserObject() != null) {
-								AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();
-								anonymous.getVariables().add(source);
-							}
+					if (qualifierIsParameter) {
+						variables.add(source);
+						if (current.getUserObject() != null) {
+							AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();
+							anonymous.getVariables().add(source);
+						}
+					}
+				}
+				PsiForeachStatement enhancedFor = findParentEnhancedForStatement(node);
+				if (enhancedFor != null) {
+					if (enhancedFor.getIterationParameter().getName().equals(qualifierIdentifier)) {
+						variables.add(source);
+						if (current.getUserObject() != null) {
+							AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();
+							anonymous.getVariables().add(source);
 						}
 					}
 				}

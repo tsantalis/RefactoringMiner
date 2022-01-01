@@ -28,7 +28,7 @@ public class FormattingVisitor extends PsiRecursiveElementWalkingVisitor {
             JavaTokenType.LBRACE, JavaTokenType.RBRACE, JavaTokenType.SEMICOLON
     );
     private static final TokenSet mustSpaceBefore = TokenSet.create(
-            JavaTokenType.OROR, JavaTokenType.ANDAND, JavaTokenType.EQEQ, JavaTokenType.PLUS
+            JavaTokenType.OROR, JavaTokenType.ANDAND, JavaTokenType.EQEQ, JavaTokenType.PLUS, JavaTokenType.QUEST, JavaTokenType.COLON
     );
     private static final TokenSet annotationNoSpaceBefore = TokenSet.create(
         JavaTokenType.ELLIPSIS, JavaTokenType.RBRACE

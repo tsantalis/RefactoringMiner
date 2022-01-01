@@ -8,7 +8,7 @@ Table of Contents
    * [Research](#research)
       * [How to cite RefactoringMiner](#how-to-cite-refactoringminer)
       * [Talks about RefactoringMiner](#talks-about-refactoringminer)
-      * [Papers based on RefactoringMiner](#papers-based-on-refactoringminer)
+      * [Papers using RefactoringMiner](#papers-using-refactoringminer)
    * [Support for other programming languages](#support-for-other-programming-languages)
       * [Kotlin](#kotlin)
       * [Python](#python)
@@ -193,7 +193,7 @@ Nikolaos Tsantalis, Ameya Ketkar, and Danny Dig, "[RefactoringMiner 2.0](https:/
 [![2021-11-14 22_16_25-Greenshot](https://user-images.githubusercontent.com/1483516/142782871-7f7545d3-3fe7-4d0c-8860-db892757a152.png)](https://www.youtube.com/watch?v=CXO32d1ih3E)
 
 
-## Papers based on RefactoringMiner
+## Papers using RefactoringMiner
 RefactoringMiner has been used in the following studies:
 1. Danilo Silva, Nikolaos Tsantalis, and Marco Tulio Valente, "[Why We Refactor? Confessions of GitHub Contributors](https://doi.org/10.1145/2950290.2950305)," *24th ACM SIGSOFT International Symposium on the Foundations of Software Engineering* (FSE 2016), Seattle, WA, USA, November 13-18, 2016.
 2. Davood Mazinanian, Ameya Ketkar, Nikolaos Tsantalis, and Danny Dig, "[Understanding the use of lambda expressions in Java](https://doi.org/10.1145/3133909)",  *Proceedings of the ACM on Programming Languages*, vol. 1, issue OOPSLA, Article 85, 31 pages, October 2017.
@@ -254,6 +254,10 @@ Refactorings and Commit Messages](https://doi.org/10.1109/SCAM.2019.00017)," *19
 56. Giovanni Rosa, Luca Pascarella, Simone Scalabrino, Rosalia Tufano, Gabriele Bavota, Michele Lanza, and Rocco Oliveto, "[Evaluating SZZ Implementations Through a Developer-informed Oracle](https://doi.ieeecomputersociety.org/10.1109/ICSE43902.2021.00049)," *43rd International Conference on Software Engineering* (ICSE 2021), Madrid, Spain, May 25-28, 2021.
 57. Bo Shen, Wei Zhang, Christian Kästner, Haiyan Zhao, Zhao Wei, Guangtai Liang, and Zhi Jin, "[SmartCommit: a graph-based interactive assistant for activity-oriented commits](https://doi.org/10.1145/3468264.3468551)," *29th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering* (ESEC/FSE 2021), Athens, Greece, August 23-28, 2021.
 58. Dimitrios Tsoukalas, Nikolaos Mittas, Alexander Chatzigeorgiou, Dionysios Kehagias, Apostolos Ampatzoglou, Theodoros Amanatidis, and Lefteris Angelis, "[Machine Learning for Technical Debt Identification](https://doi.ieeecomputersociety.org/10.1109/TSE.2021.3129355)," *IEEE Transactions on Software Engineering*, 2021.
+59. Luca Traini, Daniele Di Pompeo, Michele Tucci, Bin Lin, Simone Scalabrino, Gabriele Bavota, Michele Lanza, Rocco Oliveto, and Vittorio Cortellessa, "[How Software Refactoring Impacts Execution Time](https://doi.org/10.1145/3485136)," *ACM Transactions on Software Engineering and Methodology*, Volume 31, Issue 2, Article 25, pp. 1-23, April 2022.
+60. Jarosław Pokropiński, Jakub Gąsiorek, Patryk Kramarczyk, and Lech Madeyski, "[SZZ Unleashed-RA-C: An Improved Implementation of the SZZ Algorithm and Empirical Comparison with Existing Open Source Solutions](https://doi.org/10.1007/978-3-030-77916-0_7)," Developments in Information & Knowledge Management for Business Applications : Volume 3, Springer International Publishing, pp. 181-199, 2022.
+61. Eman Abdullah AlOmar, Jiaqian Liu, Kenneth Addo, Mohamed Wiem Mkaouer, Christian Newman, Ali Ouni, and Zhe Yu, "[On the documentation of refactoring types](https://doi.org/10.1007/s10515-021-00314-w)," *Automated Software Engineering*, Volume 29, Article 9, 2022.
+62. Giulia Sellitto, Emanuele Iannone, Zadia Codabux, Valentina Lenarduzzi, Andrea De Lucia, Fabio Palomba, and Filomena Ferrucci, "Toward Understanding the Impact of Refactoring on Program Comprehension," *29th IEEE International Conference on Software Analysis, Evolution and Reengineering* (SANER 2022), Honolulu, Hawaii, USA, March 15-18, 2022.
 
 # Support for other programming languages
 ## Kotlin

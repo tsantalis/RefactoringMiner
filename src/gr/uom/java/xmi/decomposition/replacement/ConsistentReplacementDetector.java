@@ -26,18 +26,49 @@ public class ConsistentReplacementDetector {
 			Set<T> allConsistentRenames,
 			Set<T> allInconsistentRenames,
 			Set<T> renames) {
+		boolean allRenamesHaveIdenticalTypeAndInitializer = allRenamesHaveIdenticalTypeAndInitializer(renames);
 		for(T newRename : renames) {
 			Set<T> inconsistentRenames = inconsistentRenames(allConsistentRenames, newRename);
-			if(inconsistentRenames.isEmpty()) {
+			if(inconsistentRenames.isEmpty() || (identicalTypeAndInitializer(newRename) && !allRenamesHaveIdenticalTypeAndInitializer)) {
 				allConsistentRenames.add(newRename);
 			}
 			else {
-				allInconsistentRenames.addAll(inconsistentRenames);
+				if(!allRenamesHaveIdenticalTypeAndInitializer) {
+					for(T rename : inconsistentRenames) {
+						if(!identicalTypeAndInitializer(rename)) {
+							allInconsistentRenames.add(rename);
+						}
+					}
+				}
+				else {
+					allInconsistentRenames.addAll(inconsistentRenames);
+				}
 				allInconsistentRenames.add(newRename);
 			}
 		}
 	}
 
+	private static <T extends Replacement> boolean allRenamesHaveIdenticalTypeAndInitializer(Set<T> renames) {
+		if(renames.size() > 1) {
+			for(T rename : renames) {
+				if(!identicalTypeAndInitializer(rename)) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	private static <T extends Replacement> boolean identicalTypeAndInitializer(T newRename) {
+		if(newRename instanceof VariableDeclarationReplacement) {
+			VariableDeclarationReplacement replacement = (VariableDeclarationReplacement)newRename;
+			if(replacement.identicalTypeAndInitializer()) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public static <T extends Replacement> void updateRenames(
 			Set<T> allConsistentRenames,

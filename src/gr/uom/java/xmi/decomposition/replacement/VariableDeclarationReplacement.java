@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.decomposition.replacement;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class VariableDeclarationReplacement extends Replacement {
@@ -33,6 +34,15 @@ public class VariableDeclarationReplacement extends Replacement {
 
 	public UMLOperation getOperation2() {
 		return operation2;
+	}
+
+	public boolean identicalTypeAndInitializer() {
+		AbstractExpression initializer1 = v1.getInitializer();
+		AbstractExpression initializer2 = v2.getInitializer();
+		if(initializer1 != null && initializer2 != null) {
+			return v1.getType().equals(v2.getType()) && initializer1.getExpression().equals(initializer2.getExpression());
+		}
+		return false;
 	}
 
 	public Replacement getVariableNameReplacement() {

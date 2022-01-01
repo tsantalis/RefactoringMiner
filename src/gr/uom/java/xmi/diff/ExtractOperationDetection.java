@@ -20,6 +20,7 @@ import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
 public class ExtractOperationDetection {
@@ -342,6 +343,19 @@ public class ExtractOperationDetection {
 			}
 			if(mapping.getFragment1().throwsNewException() && mapping.getFragment2().throwsNewException()) {
 				throwsNewExceptionExactMatch = true;
+			}
+		}
+		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+			List<VariableDeclaration> variableDeclarations = mapping.getFragment2().getVariableDeclarations();
+			if(variableDeclarations.size() > 0) {
+				for(VariableDeclaration variableDeclaration : variableDeclarations) {
+					for(AbstractCodeFragment leaf2 : operationBodyMapper.getNonMappedLeavesT2()) {
+						if(leaf2.countableStatement() && leaf2.getString().equals("return " + variableDeclaration.getVariableName() + ";\n")) {
+							nonMappedElementsT2--;
+							break;
+						}
+					}
+	 			}
 			}
 		}
 		exactMatchList.addAll(additionalExactMatches);

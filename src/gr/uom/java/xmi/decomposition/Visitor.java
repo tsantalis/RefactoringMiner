@@ -580,7 +580,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 
 	private void processArgument(PsiExpression argument) {
 		if((argument instanceof PsiMethodCallExpression && ((PsiMethodCallExpression)argument).getMethodExpression().getQualifierExpression() instanceof PsiSuperExpression) ||
-				(argument instanceof PsiReferenceExpression && !methodCallReferenceExpression(argument)) ||
+				isSimpleName(argument) || isQualifiedName(argument) ||
 				(argument instanceof PsiLiteral && ((PsiLiteral)argument).getValue() instanceof String) ||
 				(argument instanceof PsiLiteral && ((PsiLiteral)argument).getValue() instanceof Boolean) ||
 				(argument instanceof PsiLiteral && ((PsiLiteral)argument).getValue() instanceof Number) ||
@@ -785,6 +785,18 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 
 	private static boolean isSimpleName(PsiElement element) {
 		return element instanceof PsiReferenceExpression && ((PsiReferenceExpression)element).getQualifierExpression() == null;
+	}
+
+	private static boolean isQualifiedName(PsiElement element) {
+		if(element instanceof PsiReferenceExpression && !(element instanceof PsiMethodReferenceExpression)) {
+			PsiExpression qualifier = ((PsiReferenceExpression)element).getQualifierExpression();
+			if(qualifier != null) {
+				if(isSimpleName(qualifier) || isQualifiedName(qualifier)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private static boolean invalidArrayAccess(PsiArrayAccessExpression e) {

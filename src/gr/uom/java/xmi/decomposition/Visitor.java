@@ -623,7 +623,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 					AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();
 					anonymous.getVariables().add(source);
 				}
-			} else if (isSimpleName(qualifier) && !(node.getParent() instanceof PsiReferenceExpression)) {
+			} else if (isSimpleName(qualifier) && !isQualifiedName(node.getParent())) {
 				PsiMethod parentMethodDeclaration = findParentMethodDeclaration(node);
 				if (parentMethodDeclaration != null) {
 					boolean qualifierIsParameter = false;

@@ -41,7 +41,14 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	public AnonymousClassDeclarationObject(PsiFile cu, String filePath, PsiAnonymousClass anonymous) {
 		this.locationInfo = new LocationInfo(cu, filePath, anonymous, CodeElementType.ANONYMOUS_CLASS_DECLARATION);
 		this.astNode = anonymous;
-		this.astNodeString = Formatter.format(anonymous);
+		String stringIncludingClassInstantiation = Formatter.format(anonymous);
+		int index = stringIncludingClassInstantiation.indexOf("){\n");
+		if(index != -1) {
+			this.astNodeString = stringIncludingClassInstantiation.substring(index + 1);
+		}
+		else {
+			this.astNodeString = stringIncludingClassInstantiation;
+		}
 	}
 
 	public LocationInfo getLocationInfo() {
@@ -58,6 +65,28 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	
 	public String toString() {
 		return astNodeString;
+	}
+
+	public void clearAll() {
+		this.variables.clear();
+		this.types.clear();
+		this.methodInvocationMap.clear();
+		this.creationMap.clear();
+		this.variableDeclarations.clear();
+		this.stringLiterals.clear();
+		this.nullLiterals.clear();
+		this.booleanLiterals.clear();
+		this.typeLiterals.clear();
+		this.numberLiterals.clear();
+		this.infixExpressions.clear();
+		this.infixOperators.clear();
+		this.postfixExpressions.clear();
+		this.prefixExpressions.clear();
+		this.arguments.clear();
+		this.ternaryOperatorExpressions.clear();
+		this.anonymousClassDeclarations.clear();
+		this.lambdas.clear();
+		this.arrayAccesses.clear();
 	}
 
 	public Map<String, List<AbstractCall>> getMethodInvocationMap() {

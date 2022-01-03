@@ -164,6 +164,10 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	}
 
 	private void addCreation(PsiNewExpression node) {
+		PsiJavaCodeReferenceElement classOrAnonymousClassReference = node.getClassOrAnonymousClassReference();
+		if(classOrAnonymousClassReference != null) {
+			visit(classOrAnonymousClassReference);
+		}
 		ObjectCreation creation = new ObjectCreation(cu, filePath, node);
 		String nodeAsString = Formatter.format(node);
 		if(creationMap.containsKey(nodeAsString)) {
@@ -288,6 +292,12 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 			}
 			this.current = parentNode;
 		}
+		else if (element instanceof PsiExpressionList && current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();
+			if(element.getParent().equals(anonymous.getAstNode())) {
+				anonymous.clearAll();
+			}
+		}
 	}
 
 	private void removeAnonymousData() {
@@ -303,15 +313,19 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 			}
 			this.variableDeclarations.removeAll(anonymous.getVariableDeclarations());
 			this.stringLiterals.removeAll(anonymous.getStringLiterals());
+			this.nullLiterals.removeAll(anonymous.getNullLiterals());
 			this.booleanLiterals.removeAll(anonymous.getBooleanLiterals());
 			this.typeLiterals.removeAll(anonymous.getTypeLiterals());
 			this.numberLiterals.removeAll(anonymous.getNumberLiterals());
 			this.infixExpressions.removeAll(anonymous.getInfixExpressions());
 			this.infixOperators.removeAll(anonymous.getInfixOperators());
+			this.postfixExpressions.removeAll(anonymous.getPostfixExpressions());
+			this.prefixExpressions.removeAll(anonymous.getPrefixExpressions());
 			this.arguments.removeAll(anonymous.getArguments());
 			this.ternaryOperatorExpressions.removeAll(anonymous.getTernaryOperatorExpressions());
 			this.anonymousClassDeclarations.removeAll(anonymous.getAnonymousClassDeclarations());
 			this.lambdas.removeAll(anonymous.getLambdas());
+			this.arrayAccesses.removeAll(anonymous.getArrayAccesses());
 		}
 	}
 

@@ -264,15 +264,19 @@ public class Visitor extends ASTVisitor {
 			}
 			this.variableDeclarations.removeAll(anonymous.getVariableDeclarations());
 			this.stringLiterals.removeAll(anonymous.getStringLiterals());
+			this.nullLiterals.removeAll(anonymous.getNullLiterals());
 			this.booleanLiterals.removeAll(anonymous.getBooleanLiterals());
 			this.typeLiterals.removeAll(anonymous.getTypeLiterals());
 			this.numberLiterals.removeAll(anonymous.getNumberLiterals());
 			this.infixExpressions.removeAll(anonymous.getInfixExpressions());
 			this.infixOperators.removeAll(anonymous.getInfixOperators());
+			this.postfixExpressions.removeAll(anonymous.getPostfixExpressions());
+			this.prefixExpressions.removeAll(anonymous.getPrefixExpressions());
 			this.arguments.removeAll(anonymous.getArguments());
 			this.ternaryOperatorExpressions.removeAll(anonymous.getTernaryOperatorExpressions());
 			this.anonymousClassDeclarations.removeAll(anonymous.getAnonymousClassDeclarations());
 			this.lambdas.removeAll(anonymous.getLambdas());
+			this.arrayAccesses.removeAll(anonymous.getArrayAccesses());
 		}
 	}
 

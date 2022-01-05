@@ -14,6 +14,6 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 		GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
 		TestBuilder test = new TestBuilder(detector, "tmp1", Refactorings.All.getValue());
 		RefactoringPopulator.feedRefactoringsInstances(Refactorings.All.getValue(), Systems.FSE.getValue(), test);
-		test.assertExpectations(11058, 29, 329);
+		test.assertExpectations(11059, 29, 329);
 	}
 }

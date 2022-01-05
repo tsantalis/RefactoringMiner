@@ -802,7 +802,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	}
 
 	private static boolean isQualifiedName(PsiElement element) {
-		if(element instanceof PsiReferenceExpression && !(element instanceof PsiMethodReferenceExpression)) {
+		if(element instanceof PsiReferenceExpression && !methodCallReferenceExpression(element)) {
 			PsiExpression qualifier = ((PsiReferenceExpression)element).getQualifierExpression();
 			if(qualifier != null) {
 				if(isSimpleName(qualifier) || isQualifiedName(qualifier)) {

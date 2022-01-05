@@ -457,6 +457,9 @@ public class VariableReplacementAnalysis {
 		}
 		for(UMLOperationBodyMapper childMapper : childMappers) {
 			for(AbstractCodeMapping mapping : childMapper.getMappings()) {
+				if(mapping.getFragment1().getVariableDeclarations().contains(removedVariable) || mapping.getFragment2().getVariableDeclarations().contains(addedVariable)) {
+					break;
+				}
 				//statementsInScope2 contains a call to an extracted method
 				if(statementsInScope1.contains(mapping.getFragment1()) && containCallToOperation(statementsInScope2, childMapper.getOperation2(), this.operation2)) {
 					return true;

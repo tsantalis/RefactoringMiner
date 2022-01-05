@@ -746,7 +746,8 @@ public class VariableReplacementAnalysis {
 					splitVariableOperations.add(declaration.getValue());
 				}
 			}
-			SimpleEntry<VariableDeclaration,UMLOperation> oldVariable = getVariableDeclaration1(split);
+			Set<SimpleEntry<VariableDeclaration,UMLOperation>> oldVariables = getVariableDeclaration1(split);
+			SimpleEntry<VariableDeclaration,UMLOperation> oldVariable = !oldVariables.isEmpty() ? oldVariables.iterator().next() : null;
 			if(splitVariables.size() > 1 && splitVariables.size() == split.getSplitVariables().size() && oldVariable != null) {
 				UMLOperation operationAfter = splitVariableOperations.iterator().next();
 				SplitVariableRefactoring refactoring = new SplitVariableRefactoring(oldVariable.getKey(), splitVariables, oldVariable.getValue(), operationAfter, splitMap.get(split), insideExtractedOrInlinedMethod);
@@ -1031,7 +1032,8 @@ public class VariableReplacementAnalysis {
 		Set<Replacement> allConsistentRenames = allConsistentRenames(replacementOccurrenceMap);
 		Map<Replacement, Set<AbstractCodeMapping>> finalConsistentRenames = new LinkedHashMap<Replacement, Set<AbstractCodeMapping>>();
 		for(Replacement replacement : allConsistentRenames) {
-			SimpleEntry<VariableDeclaration, UMLOperation> v1 = getVariableDeclaration1(replacement);
+			Set<SimpleEntry<VariableDeclaration, UMLOperation>> v1s = getVariableDeclaration1(replacement);
+			SimpleEntry<VariableDeclaration, UMLOperation> v1 = !v1s.isEmpty() ? v1s.iterator().next() : null;
 			SimpleEntry<VariableDeclaration, UMLOperation> v2 = getVariableDeclaration2(replacement);
 			Set<AbstractCodeMapping> set = replacementOccurrenceMap.get(replacement);
 			if((set.size() > 1 && v1 != null && v2 != null && consistencyCheck(v1.getKey(), v2.getKey(), set)) ||
@@ -1046,21 +1048,30 @@ public class VariableReplacementAnalysis {
 			}
 		}
 		for(Replacement replacement : finalConsistentRenames.keySet()) {
-			SimpleEntry<VariableDeclaration, UMLOperation> v1 = getVariableDeclaration1(replacement);
+			Set<SimpleEntry<VariableDeclaration, UMLOperation>> v1s = getVariableDeclaration1(replacement);
 			SimpleEntry<VariableDeclaration, UMLOperation> v2 = getVariableDeclaration2(replacement);
-			if(v1 != null && v2 != null) {
-				Set<AbstractCodeMapping> variableReferences = finalConsistentRenames.get(replacement);
-				VariableDeclaration variableDeclaration1 = v1.getKey();
-				VariableDeclaration variableDeclaration2 = v2.getKey();
-				UMLOperation operation1 = v1.getValue();
-				UMLOperation operation2 = v2.getValue();
-				RenameVariableRefactoring ref = new RenameVariableRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
-				if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref) && !existsConflictingSplitVariableRefactoring(ref) && !existsConflictingParameter(ref) &&
-						variableDeclaration1.isVarargsParameter() == variableDeclaration2.isVarargsParameter()) {
-					variableRenames.add(ref);
-					removedVariables.remove(variableDeclaration1);
-					addedVariables.remove(variableDeclaration2);
-					getVariableRefactorings(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences, ref);
+			Set<AbstractCodeMapping> variableReferences = finalConsistentRenames.get(replacement);
+			if(!v1s.isEmpty() && v2 != null) {
+				for(SimpleEntry<VariableDeclaration, UMLOperation> v1 : v1s) {
+					VariableDeclaration variableDeclaration1 = v1.getKey();
+					VariableDeclaration variableDeclaration2 = v2.getKey();
+					UMLOperation operation1 = v1.getValue();
+					UMLOperation operation2 = v2.getValue();
+					Set<AbstractCodeMapping> actualReferences = new LinkedHashSet<>();
+					for(AbstractCodeMapping mapping : variableReferences) {
+						if(variableDeclaration1.getScope().subsumes(mapping.getFragment1().getLocationInfo()) &&
+								variableDeclaration2.getScope().subsumes(mapping.getFragment2().getLocationInfo())) {
+							actualReferences.add(mapping);
+						}
+					}
+					RenameVariableRefactoring ref = new RenameVariableRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, actualReferences, insideExtractedOrInlinedMethod);
+					if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref) && !existsConflictingSplitVariableRefactoring(ref) && !existsConflictingParameter(ref) &&
+							variableDeclaration1.isVarargsParameter() == variableDeclaration2.isVarargsParameter()) {
+						variableRenames.add(ref);
+						removedVariables.remove(variableDeclaration1);
+						addedVariables.remove(variableDeclaration2);
+						getVariableRefactorings(variableDeclaration1, variableDeclaration2, operation1, operation2, actualReferences, ref);
+					}
 				}
 			}
 			else if(!PrefixSuffixUtils.normalize(replacement.getBefore()).equals(PrefixSuffixUtils.normalize(replacement.getAfter())) &&
@@ -1071,6 +1082,7 @@ public class VariableReplacementAnalysis {
 				CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
 						replacement.getBefore(), replacement.getAfter(), operation1, operation2,
 						replacementOccurrenceMap.get(replacement));
+				SimpleEntry<VariableDeclaration, UMLOperation> v1 = !v1s.isEmpty() ? v1s.iterator().next() : null;
 				if(v1 != null)
 					candidate.setOriginalVariableDeclaration(v1.getKey());
 				if(v2 != null)
@@ -1606,30 +1618,31 @@ public class VariableReplacementAnalysis {
 		return false;
 	}
 
-	private SimpleEntry<VariableDeclaration, UMLOperation> getVariableDeclaration1(Replacement replacement) {
+	private Set<SimpleEntry<VariableDeclaration, UMLOperation>> getVariableDeclaration1(Replacement replacement) {
+		Set<SimpleEntry<VariableDeclaration, UMLOperation>> set = new LinkedHashSet<>();
 		for(AbstractCodeMapping mapping : mappings) {
 			if(mapping.getReplacements().contains(replacement)) {
 				VariableDeclaration vd = mapping.getFragment1().searchVariableDeclaration(replacement.getBefore());
 				if(vd != null) {
-					return new SimpleEntry<VariableDeclaration, UMLOperation>(vd, mapping.getOperation1());
+					set.add(new SimpleEntry<VariableDeclaration, UMLOperation>(vd, mapping.getOperation1()));
 				}
 			}
 		}
 		for(UMLParameter parameter : operation1.getParameters()) {
 			VariableDeclaration vd = parameter.getVariableDeclaration();
 			if(vd != null && vd.getVariableName().equals(replacement.getBefore())) {
-				return new SimpleEntry<VariableDeclaration, UMLOperation>(vd, operation1);
+				set.add(new SimpleEntry<VariableDeclaration, UMLOperation>(vd, operation1));
 			}
 		}
 		if(callSiteOperation != null) {
 			for(UMLParameter parameter : callSiteOperation.getParameters()) {
 				VariableDeclaration vd = parameter.getVariableDeclaration();
 				if(vd != null && vd.getVariableName().equals(replacement.getBefore())) {
-					return new SimpleEntry<VariableDeclaration, UMLOperation>(vd, callSiteOperation);
+					set.add(new SimpleEntry<VariableDeclaration, UMLOperation>(vd, callSiteOperation));
 				}
 			}
 		}
-		return null;
+		return set;
 	}
 
 	private SimpleEntry<VariableDeclaration, UMLOperation> getVariableDeclaration1(MergeVariableReplacement replacement, String variableName) {

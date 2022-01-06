@@ -156,6 +156,21 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return false;
 	}
 
+	public boolean staticInvokerExpressionReplaced(AbstractCall call, Set<Replacement> replacements) {
+		if(getExpression() != null && call.getExpression() != null) {
+			String expression1 = getExpression();
+			String expression2 = call.getExpression();
+			for(Replacement replacement : replacements) {
+				if(replacement.getBefore().equals(expression1) && replacement.getAfter().equals(expression2)) {
+					if(Character.isUpperCase(expression1.charAt(0)) && Character.isUpperCase(expression2.charAt(0))) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	public boolean equalArguments(AbstractCall call) {
 		return getArguments().equals(call.getArguments());
 	}
@@ -244,7 +259,8 @@ public abstract class AbstractCall implements LocationInfoProvider {
 				String argument1 = arguments1.get(i);
 				String argument2 = arguments2.get(i);
 				for(Replacement replacement : replacements) {
-					if(replacement.getBefore().equals(argument1) &&	replacement.getAfter().equals(argument2)) {
+					if( (replacement.getBefore().equals(argument1) || argument1.contains(replacement.getBefore())) &&
+							(replacement.getAfter().equals(argument2) || argument2.contains(replacement.getAfter())) ) {
 						replacedArguments++;
 						break;
 					}

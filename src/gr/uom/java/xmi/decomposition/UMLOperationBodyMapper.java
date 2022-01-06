@@ -2733,8 +2733,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		List<LambdaExpressionObject> lambdas2 = statement2.getLambdas();
 		List<UMLOperationBodyMapper> lambdaMappers = new ArrayList<UMLOperationBodyMapper>();
 		if(isEqualWithReplacement) {
-			List<Replacement> typeReplacements = replacementInfo.getReplacements(ReplacementType.TYPE);
-			if(typeReplacements.size() > 0 && invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
+			if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
+				List<Replacement> typeReplacements = replacementInfo.getReplacements(ReplacementType.TYPE);
 				for(Replacement typeReplacement : typeReplacements) {
 					if(invocationCoveringTheEntireStatement1.getName().contains(typeReplacement.getBefore()) && invocationCoveringTheEntireStatement2.getName().contains(typeReplacement.getAfter())) {
 						if(invocationCoveringTheEntireStatement1.identicalExpression(invocationCoveringTheEntireStatement2) && invocationCoveringTheEntireStatement1.equalArguments(invocationCoveringTheEntireStatement2)) {
@@ -2749,6 +2749,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						break;
 					}
+				}
+				if(invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2) &&
+						invocationCoveringTheEntireStatement1.staticInvokerExpressionReplaced(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements()) &&
+						invocationCoveringTheEntireStatement1.allArgumentsReplaced(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
+					Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+							invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
+					replacementInfo.addReplacement(replacement);
 				}
 			}
 			if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo) &&

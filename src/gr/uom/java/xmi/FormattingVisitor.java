@@ -27,14 +27,41 @@ public class FormattingVisitor extends PsiRecursiveElementWalkingVisitor {
     private static final TokenSet endLineAfter = TokenSet.create(
             JavaTokenType.LBRACE, JavaTokenType.RBRACE, JavaTokenType.SEMICOLON
     );
-    private static final TokenSet mustSpaceBefore = TokenSet.create(
-            JavaTokenType.OROR, JavaTokenType.ANDAND, JavaTokenType.EQEQ, JavaTokenType.PLUS, JavaTokenType.QUEST, JavaTokenType.COLON
-    );
     private static final TokenSet annotationNoSpaceBefore = TokenSet.create(
         JavaTokenType.ELLIPSIS, JavaTokenType.RBRACE
     );
     private static final TokenSet annotationEndLineAfter = TokenSet.create(
         JavaTokenType.SEMICOLON
+    );
+    private static final TokenSet conditionalExpressionTokens = TokenSet.create(
+            JavaTokenType.QUEST, JavaTokenType.COLON
+    );
+    /*
+    *  TIMES
+    /  DIVIDE
+    %  REMAINDER
+    +  PLUS
+    -  MINUS
+    <<  LEFT_SHIFT
+    >>  RIGHT_SHIFT_SIGNED
+    >>>  RIGHT_SHIFT_UNSIGNED
+    <  LESS
+    >  GREATER
+    <=  LESS_EQUALS
+    >=  GREATER_EQUALS
+    ==  EQUALS
+    !=  NOT_EQUALS
+    ^  XOR
+    &  AND
+    |  OR
+    &&  CONDITIONAL_AND
+    ||  CONDITIONAL_OR
+     */
+    private static final TokenSet infixOperators = TokenSet.create(
+            JavaTokenType.ASTERISK, JavaTokenType.DIV, JavaTokenType.PERC, JavaTokenType.PLUS, JavaTokenType.MINUS,
+            JavaTokenType.LTLT, JavaTokenType.GTGT, JavaTokenType.GTGTGT,
+            JavaTokenType.LT, JavaTokenType.GT, JavaTokenType.LE, JavaTokenType.GE, JavaTokenType.EQEQ, JavaTokenType.NE,
+            JavaTokenType.XOR, JavaTokenType.AND, JavaTokenType.OR, JavaTokenType.ANDAND, JavaTokenType.OROR
     );
 
     private final StringBuilder sb = new StringBuilder();
@@ -76,11 +103,20 @@ public class FormattingVisitor extends PsiRecursiveElementWalkingVisitor {
     }
 
     private static boolean needSpaceAfter(PsiElement element) {
-        return !(PsiUtil.isJavaToken(element, noSpaces) || PsiUtil.isJavaToken(element, noSpaceAfter));
+        return !(PsiUtil.isJavaToken(element, noSpaces) || PsiUtil.isJavaToken(element, noSpaceAfter)) || isInfixOperator(element);
     }
 
     private static boolean mustHaveSpaceBefore(PsiElement element) {
-        return PsiUtil.isJavaToken(element, mustSpaceBefore) || isLocalVariableDeclaration(element) || isMethodName(element);
+        return isConditionalExpressionToken(element) || isLocalVariableDeclaration(element) || isMethodName(element) || isInfixOperator(element);
+    }
+
+    private static boolean isConditionalExpressionToken(PsiElement element) {
+        return PsiUtil.isJavaToken(element, conditionalExpressionTokens) && element.getParent() instanceof PsiConditionalExpression;
+    }
+
+    private static boolean isInfixOperator(PsiElement element) {
+        return PsiUtil.isJavaToken(element, infixOperators) &&
+                (element.getParent() instanceof PsiBinaryExpression || element.getParent() instanceof PsiPolyadicExpression);
     }
 
     private static boolean isMethodName(PsiElement element) {

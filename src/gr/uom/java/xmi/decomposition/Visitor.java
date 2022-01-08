@@ -461,10 +461,6 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 				anonymous.getVariables().add(source);
 			}
 		}
-		else if(node.getParent() instanceof PsiMethodCallExpression &&
-				Formatter.format(node).equals(((PsiMethodCallExpression)node.getParent()).getMethodExpression().getReferenceName())) {
-			// skip method invocation names
-		}
 		else if(node.getParent() instanceof PsiAnnotation &&
 				((PsiAnnotation)node.getParent()).getNameReferenceElement().getReferenceName().equals(Formatter.format(node))) {
 			// skip marker annotation names
@@ -483,9 +479,10 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 		}
 		else if(node.getParent() instanceof PsiReferenceExpression &&
 				(node.getParent().getParent() instanceof PsiReferenceExpression ||
+				node.getParent().getParent() instanceof PsiExpressionList ||
 				node.getParent().getParent() instanceof PsiMethodCallExpression ||
 				node.getParent().getParent() instanceof PsiNewExpression)) {
-			// skip names being part of qualified names
+			// skip names being part of qualified names, or method invocation names
 		}
 		else {
 			String source = Formatter.format(node);

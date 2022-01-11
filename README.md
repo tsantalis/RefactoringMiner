@@ -258,6 +258,9 @@ Refactorings and Commit Messages](https://doi.org/10.1109/SCAM.2019.00017)," *19
 60. Jarosław Pokropiński, Jakub Gąsiorek, Patryk Kramarczyk, and Lech Madeyski, "[SZZ Unleashed-RA-C: An Improved Implementation of the SZZ Algorithm and Empirical Comparison with Existing Open Source Solutions](https://doi.org/10.1007/978-3-030-77916-0_7)," Developments in Information & Knowledge Management for Business Applications : Volume 3, Springer International Publishing, pp. 181-199, 2022.
 61. Eman Abdullah AlOmar, Jiaqian Liu, Kenneth Addo, Mohamed Wiem Mkaouer, Christian Newman, Ali Ouni, and Zhe Yu, "[On the documentation of refactoring types](https://doi.org/10.1007/s10515-021-00314-w)," *Automated Software Engineering*, Volume 29, Article 9, 2022.
 62. Giulia Sellitto, Emanuele Iannone, Zadia Codabux, Valentina Lenarduzzi, Andrea De Lucia, Fabio Palomba, and Filomena Ferrucci, "Toward Understanding the Impact of Refactoring on Program Comprehension," *29th IEEE International Conference on Software Analysis, Evolution and Reengineering* (SANER 2022), Honolulu, Hawaii, USA, March 15-18, 2022.
+63. Eman Abdullah AlOmar, Tianjia Wang, Vaibhavi Raut, Mohamed Wiem Mkaouer, Christian Newman, and Ali Ouni, "[Refactoring for Reuse: An Empirical Study](https://arxiv.org/abs/2111.07002)," arXiv:2111.07002v1, 13 Nov 2021.
+64. Anton Ivanov, Zarina Kurbatova, Yaroslav Golubev, Andrey Kirilenko, and Timofey Bryksin, "[AntiCopyPaster: Extracting Code Duplicates As Soon As They Are Introduced in the IDE](https://arxiv.org/abs/2112.15230)," arXiv:2112.15230v1, 30 Dec 2021.
+65. Max Ellis, Sarah Nadi, and Danny Dig, "[A Systematic Comparison of Two Refactoring-aware Merging Techniques](https://arxiv.org/abs/2112.10370)," arXiv:2112.10370v1, 20 Dec 2021.
 
 # Support for other programming languages
 ## Kotlin

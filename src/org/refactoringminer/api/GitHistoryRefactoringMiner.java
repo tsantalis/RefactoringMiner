@@ -46,17 +46,6 @@ public interface GitHistoryRefactoringMiner {
 	 */
 	void detectBetweenCommits(Repository repository, String startCommitId, String endCommitId, RefactoringHandler handler)
 			throws Exception;
-	
-	/**
-	 * Fetch new commits from the remote repo and detect all refactorings performed in these
-	 * commits.
-	 * 
-	 * @param repository A git repository (from JGit library).
-	 * @param handler A handler object that is responsible to process the detected refactorings and
-	 *                control when to skip a commit. 
-	 * @throws Exception propagated from JGit library.
-	 */
-	void fetchAndDetectNew(Repository repository, RefactoringHandler handler) throws Exception;
 
 	/**
 	 * Detect refactorings performed in the specified commit. 

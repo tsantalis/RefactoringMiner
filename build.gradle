@@ -47,7 +47,7 @@ intellij {
     type = "IC"
     version = "2021.3"
     downloadSources = true
-    plugins = ["java"]
+    plugins = ["java", "git4idea"]
     updateSinceUntilBuild = true
     buildSearchableOptions.enabled = false
 }

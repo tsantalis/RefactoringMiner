@@ -332,8 +332,8 @@ public abstract class UMLAbstractClass {
 				}
 			}
 			else if(operation.isConstructor() && commonPrefix.equals(commonSuffix) && commonPrefix.length() > 0) {
-				if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
-						(pattern != null && this.containsOperationWithTheSameRenamePattern(operation, pattern))) {
+				if(umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
+						(pattern != null && umlClass.containsOperationWithTheSameRenamePattern(operation, pattern))) {
 					commonOperations.add(operation);
 				}
 			}
@@ -388,7 +388,7 @@ public abstract class UMLAbstractClass {
 			}
 		}
 		if(this.isSingleMethodClass() && umlClass.isSingleMethodClass() && this.getNonQualifiedName().equals(umlClass.getNonQualifiedName())) {
-			if(commonOperations.size() == totalOperations) {
+			if(commonOperations.size() >= totalOperations) {
 				return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, identicalPackageHeader, true);
 			}
 		}

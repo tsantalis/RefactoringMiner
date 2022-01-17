@@ -387,6 +387,24 @@ public abstract class UMLAbstractClass {
 				return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, identicalPackageHeader, false);
 			}
 		}
+		if(this.isSingleMethodClass() && umlClass.isSingleMethodClass() && this.getNonQualifiedName().equals(umlClass.getNonQualifiedName())) {
+			if(commonOperations.size() == totalOperations) {
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, identicalPackageHeader, true);
+			}
+		}
+		if(this.isSingleAbstractMethodInterface() || umlClass.isSingleAbstractMethodInterface()) {
+			if(commonOperations.size() == 2) {
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, identicalPackageHeader, true);
+			}
+			else {
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, identicalPackageHeader, false);
+			}
+		}
+		if(this.isInterface() && umlClass.isInterface()) {
+			if(commonOperations.size() > Math.floor(totalOperations/2.0)) {
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, identicalPackageHeader, true);
+			}
+		}
 		if((commonOperations.size() > Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0)) ||
 				(commonOperations.size() > Math.floor(totalOperations/3.0*2.0) && (commonAttributes.size() >= 2 || totalAttributes == 0)) ||
 				(commonAttributes.size() > Math.floor(totalAttributes/2.0) && (commonOperations.size() > 2 || totalOperations == 0)) ||
@@ -511,6 +529,8 @@ public abstract class UMLAbstractClass {
     }
 
 	public abstract boolean isSingleAbstractMethodInterface();
+	
+	public abstract boolean isSingleMethodClass();
 
 	public abstract boolean isInterface();
 	

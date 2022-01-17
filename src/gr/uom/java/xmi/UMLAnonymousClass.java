@@ -64,6 +64,10 @@ public class UMLAnonymousClass extends UMLAbstractClass implements Comparable<UM
 		return false;
 	}
 
+	public boolean isSingleMethodClass() {
+		return false;
+	}
+
 	public boolean isInterface() {
 		return false;
 	}

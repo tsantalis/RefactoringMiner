@@ -450,4 +450,17 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	public boolean isSingleAbstractMethodInterface() {
 		return isInterface && operations.size() == 1;
 	}
+
+	public boolean isSingleMethodClass() {
+		if(!isInterface && !isEnum) {
+			int counter = 0;
+			for(UMLOperation operation : operations) {
+				if(!operation.isConstructor()) {
+					counter++;
+				}
+			}
+			return counter == 1;
+		}
+		return false;
+	}
 }

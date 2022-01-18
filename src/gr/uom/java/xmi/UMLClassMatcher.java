@@ -49,13 +49,12 @@ public interface UMLClassMatcher {
 		}
 	}
 
-	public MatchResult match(UMLClass removedClass, UMLClass addedClass, String renamedFile);
+	public MatchResult match(UMLClass removedClass, UMLClass addedClass);
 
 	public static class Move implements UMLClassMatcher {
-		public MatchResult match(UMLClass removedClass, UMLClass addedClass, String renamedFile) {
+		public MatchResult match(UMLClass removedClass, UMLClass addedClass) {
 			MatchResult matchResult = removedClass.hasSameAttributesAndOperations(addedClass);
-			if(removedClass.hasSameNameAndKind(addedClass) 
-					&& (matchResult.isMatch() || addedClass.getSourceFile().equals(renamedFile))) {
+			if(removedClass.hasSameNameAndKind(addedClass) && matchResult.isMatch()) {
 				matchResult.setMatch(true);
 				return matchResult;
 			}
@@ -67,10 +66,9 @@ public interface UMLClassMatcher {
 	}
 
 	public static class RelaxedMove implements UMLClassMatcher {
-		public MatchResult match(UMLClass removedClass, UMLClass addedClass, String renamedFile) {
+		public MatchResult match(UMLClass removedClass, UMLClass addedClass) {
 			MatchResult matchResult = removedClass.hasCommonAttributesAndOperations(addedClass);
-			if(removedClass.hasSameNameAndKind(addedClass) 
-					&& (matchResult.isMatch() || addedClass.getSourceFile().equals(renamedFile))) {
+			if(removedClass.hasSameNameAndKind(addedClass) && matchResult.isMatch()) {
 				matchResult.setMatch(true);
 				return matchResult;
 			}
@@ -82,10 +80,9 @@ public interface UMLClassMatcher {
 	}
 
 	public static class ExtremelyRelaxedMove implements UMLClassMatcher {
-		public MatchResult match(UMLClass removedClass, UMLClass addedClass, String renamedFile) {
+		public MatchResult match(UMLClass removedClass, UMLClass addedClass) {
 			MatchResult matchResult = removedClass.hasAttributesAndOperationsWithCommonNames(addedClass);
-			if(removedClass.hasSameNameAndKind(addedClass) 
-					&& (matchResult.isMatch() || addedClass.getSourceFile().equals(renamedFile))) {
+			if(removedClass.hasSameNameAndKind(addedClass) && matchResult.isMatch()) {
 				matchResult.setMatch(true);
 				return matchResult;
 			}
@@ -97,10 +94,9 @@ public interface UMLClassMatcher {
 	}
 
 	public static class Rename implements UMLClassMatcher {
-		public MatchResult match(UMLClass removedClass, UMLClass addedClass, String renamedFile) {
+		public MatchResult match(UMLClass removedClass, UMLClass addedClass) {
 			MatchResult matchResult = removedClass.hasSameAttributesAndOperations(addedClass);
-			if(removedClass.hasSameKind(addedClass) 
-					&& (matchResult.isMatch() || addedClass.getSourceFile().equals(renamedFile))) {
+			if(removedClass.hasSameKind(addedClass) && matchResult.isMatch()) {
 				matchResult.setMatch(true);
 				return matchResult;
 			}
@@ -112,10 +108,9 @@ public interface UMLClassMatcher {
 	}
 
 	public static class RelaxedRename implements UMLClassMatcher {
-		public MatchResult match(UMLClass removedClass, UMLClass addedClass, String renamedFile) {
+		public MatchResult match(UMLClass removedClass, UMLClass addedClass) {
 			MatchResult matchResult = removedClass.hasCommonAttributesAndOperations(addedClass);
-			if(removedClass.hasSameKind(addedClass) 
-					&& (matchResult.isMatch() || addedClass.getSourceFile().equals(renamedFile))) {
+			if(removedClass.hasSameKind(addedClass) && matchResult.isMatch()) {
 				matchResult.setMatch(true);
 				return matchResult;
 			}
@@ -127,10 +122,9 @@ public interface UMLClassMatcher {
 	}
 
 	public static class ExtremelyRelaxedRename implements UMLClassMatcher {
-		public MatchResult match(UMLClass removedClass, UMLClass addedClass, String renamedFile) {
+		public MatchResult match(UMLClass removedClass, UMLClass addedClass) {
 			MatchResult matchResult = removedClass.hasAttributesAndOperationsWithCommonNames(addedClass);
-			if(removedClass.hasSameKind(addedClass) 
-					&& (matchResult.isMatch() || addedClass.getSourceFile().equals(renamedFile))) {
+			if(removedClass.hasSameKind(addedClass) && matchResult.isMatch()) {
 				matchResult.setMatch(true);
 				return matchResult;
 			}

@@ -4,10 +4,8 @@ import gr.uom.java.xmi.diff.UMLClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.Set;
 
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
@@ -116,11 +114,7 @@ public class UMLModel {
     	return null;
     }
 
-    public UMLModelDiff diff(UMLModel umlModel) throws RefactoringMinerTimedOutException {
-    	return this.diff(umlModel, Collections.<String, String>emptyMap());
-    }
-
-	public UMLModelDiff diff(UMLModel umlModel, Map<String, String> renamedFileHints) throws RefactoringMinerTimedOutException {
+	public UMLModelDiff diff(UMLModel umlModel) throws RefactoringMinerTimedOutException {
     	UMLModelDiff modelDiff = new UMLModelDiff(this, umlModel);
     	for(UMLClass umlClass : classList) {
     		if(!umlModel.classList.contains(umlClass))
@@ -130,8 +124,8 @@ public class UMLModel {
     		if(!this.classList.contains(umlClass))
     			modelDiff.reportAddedClass(umlClass);
     	}
-    	modelDiff.checkForMovedClasses(renamedFileHints, umlModel.repositoryDirectories, new UMLClassMatcher.Move());
-    	modelDiff.checkForRenamedClasses(renamedFileHints, new UMLClassMatcher.Rename());
+    	modelDiff.checkForMovedClasses(umlModel.repositoryDirectories, new UMLClassMatcher.Move());
+    	modelDiff.checkForRenamedClasses(new UMLClassMatcher.Rename());
     	for(UMLGeneralization umlGeneralization : generalizationList) {
     		if(!umlModel.generalizationList.contains(umlGeneralization))
     			modelDiff.reportRemovedGeneralization(umlGeneralization);
@@ -158,8 +152,8 @@ public class UMLModel {
     				modelDiff.addUMLClassDiff(classDiff);
     		}
     	}
-    	modelDiff.checkForMovedClasses(renamedFileHints, umlModel.repositoryDirectories, new UMLClassMatcher.RelaxedMove());
-    	modelDiff.checkForRenamedClasses(renamedFileHints, new UMLClassMatcher.RelaxedRename());
+    	modelDiff.checkForMovedClasses(umlModel.repositoryDirectories, new UMLClassMatcher.RelaxedMove());
+    	modelDiff.checkForRenamedClasses(new UMLClassMatcher.RelaxedRename());
     	return modelDiff;
     }
 }

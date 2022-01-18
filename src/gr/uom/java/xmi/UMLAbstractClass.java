@@ -345,6 +345,12 @@ public abstract class UMLAbstractClass {
 					commonOperations.add(operation);
 				}
 			}
+			else if(operation.isConstructor() && commonPrefix.isEmpty() && commonSuffix.equals(this.name)) {
+				if(umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
+						(pattern != null && umlClass.containsOperationWithTheSameRenamePattern(operation, pattern.reverse()))) {
+					commonOperations.add(operation);
+				}
+			}
 		}
 		for(UMLOperation operation : umlClass.operations) {
 			if(!operation.isConstructor() && !operation.overridesObject()) {
@@ -360,6 +366,12 @@ public abstract class UMLAbstractClass {
 					commonOperations.add(operation);
 				}
 			}
+			else if(operation.isConstructor() && commonPrefix.isEmpty() && commonSuffix.equals(this.name)) {
+				if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
+						(pattern != null && this.containsOperationWithTheSameRenamePattern(operation, pattern))) {
+					commonOperations.add(operation);
+				}
+			}
 		}
 		Set<UMLAttribute> commonAttributes = new LinkedHashSet<UMLAttribute>();
 		Set<UMLAttribute> identicalAttributes = new LinkedHashSet<UMLAttribute>();
@@ -368,7 +380,7 @@ public abstract class UMLAbstractClass {
 			totalAttributes++;
 			if(umlClass.containsAttributeWithTheSameNameIgnoringChangedType(attribute) ||
 					umlClass.containsRenamedAttributeWithIdenticalTypeAndInitializer(attribute) ||
-    				(pattern != null && umlClass.containsAttributeWithTheSameRenamePattern(attribute, pattern.reverse()))) {
+					(pattern != null && umlClass.containsAttributeWithTheSameRenamePattern(attribute, pattern.reverse()))) {
 				commonAttributes.add(attribute);
 				if(umlClass.containsIdenticalAttributeIncludingAnnotation(attribute)) {
 					identicalAttributes.add(attribute);
@@ -379,7 +391,7 @@ public abstract class UMLAbstractClass {
 			totalAttributes++;
 			if(this.containsAttributeWithTheSameNameIgnoringChangedType(attribute) ||
 					this.containsRenamedAttributeWithIdenticalTypeAndInitializer(attribute) ||
-    				(pattern != null && this.containsAttributeWithTheSameRenamePattern(attribute, pattern))) {
+					(pattern != null && this.containsAttributeWithTheSameRenamePattern(attribute, pattern))) {
 				commonAttributes.add(attribute);
 				if(this.containsIdenticalAttributeIncludingAnnotation(attribute)) {
 					identicalAttributes.add(attribute);

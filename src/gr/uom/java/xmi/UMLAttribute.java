@@ -142,6 +142,20 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Loc
 		return variableDeclaration.getAnnotations();
 	}
 
+	public boolean identicalIncludingAnnotation(UMLAttribute attribute) {
+		AbstractExpression thisInitializer = this.getVariableDeclaration().getInitializer();
+		AbstractExpression otherInitializer = attribute.getVariableDeclaration().getInitializer();
+		boolean equal = this.name.equals(attribute.name) && this.type.equals(attribute.type) && this.type.equalsQualified(attribute.type) &&
+				this.visibility.equals(attribute.visibility) && this.getAnnotations().equals(attribute.getAnnotations());
+		if(thisInitializer != null && otherInitializer != null) {
+			return equal && thisInitializer.getExpression().equals(otherInitializer.getExpression());
+		}
+		if(thisInitializer == null && otherInitializer == null) {
+			return equal;
+		}
+		return false;
+	}
+
 	public boolean renamedWithIdenticalTypeAndInitializer(UMLAttribute attribute) {
 		AbstractExpression thisInitializer = this.getVariableDeclaration().getInitializer();
 		AbstractExpression otherInitializer = attribute.getVariableDeclaration().getInitializer();

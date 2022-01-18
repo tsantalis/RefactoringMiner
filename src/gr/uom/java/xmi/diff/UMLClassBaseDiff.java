@@ -2020,4 +2020,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	public UMLModelDiff getModelDiff() {
 		return modelDiff;
 	}
+
+	public boolean samePackage() {
+		return originalClass.getPackageName().equals(nextClass.getPackageName());
+	}
 }

@@ -1,8 +1,12 @@
 package org.refactoringminer.api;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vcs.changes.Change;
+import git4idea.repo.GitRepository;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -21,9 +25,9 @@ public interface GitService {
 	 * @return The repository object (JGit library).
 	 * @throws Exception propagated from JGit library.
 	 */
-	Repository cloneIfNotExists(String folder, String cloneUrl/*, String branch*/) throws Exception;
-	
-	Repository openRepository(String folder) throws Exception;
+	GitRepository cloneIfNotExists(Project project, String folder, String cloneUrl/*, String branch*/) throws Exception;
+
+	GitRepository openRepository(Project project, String folder) throws Exception;
 
 	RevWalk createAllRevsWalk(Repository repository) throws Exception;
 
@@ -33,7 +37,5 @@ public interface GitService {
 
 	Iterable<RevCommit> createRevsWalkBetweenCommits(Repository repository, String startCommitId, String endCommitId) throws Exception;
 
-	void fileTreeDiff(Repository repository, RevCommit currentCommit, List<String> filesBefore, List<String> filesCurrent, Map<String, String> renamedFilesHint) throws Exception;
-
-	Churn churn(Repository repository, RevCommit currentCommit) throws Exception;
+	void fileTreeDiff(GitRepository repository, Collection<Change> changes, List<String> filesBefore, List<String> filesCurrent, Map<String, String> renamedFilesHint) throws Exception;
 }

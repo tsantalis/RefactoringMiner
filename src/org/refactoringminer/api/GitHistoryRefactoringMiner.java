@@ -1,5 +1,6 @@
 package org.refactoringminer.api;
 
+import git4idea.repo.GitRepository;
 import org.eclipse.jgit.lib.Repository;
 
 /**
@@ -54,7 +55,7 @@ public interface GitHistoryRefactoringMiner {
 	 * @param commitId The SHA key that identifies the commit.
 	 * @param handler A handler object that is responsible to process the detected refactorings. 
 	 */
-	void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler);
+	void detectAtCommit(GitRepository repository, String commitId, RefactoringHandler handler);
 
 	/**
 	 * Detect refactorings performed in the specified commit.
@@ -64,7 +65,7 @@ public interface GitHistoryRefactoringMiner {
 	 * @param handler A handler object that is responsible to process the detected refactorings.
 	 * @param timeout A timeout, in seconds. When timeout is reached, the operation stops and returns no refactorings.
 	 */
-	void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler, int timeout);
+	void detectAtCommit(GitRepository repository, String commitId, RefactoringHandler handler, int timeout);
 
 	/**
 	 * Detect refactorings performed in the specified commit. All required information is extracted using the GitHub API.
@@ -86,15 +87,6 @@ public interface GitHistoryRefactoringMiner {
 	 * @throws Exception propagated from org.kohsuke.github API
 	 */
 	void detectAtPullRequest(String gitURL, int pullRequest, RefactoringHandler handler, int timeout) throws Exception;
-
-	/**
-	 * Detect refactorings performed in the specified commit. 
-	 * 
-	 * @param repository A git repository (from JGit library).
-	 * @param commitId The SHA key that identifies the commit.
-	 * @param handler A handler object that is responsible to process the detected refactorings. 
-	 */
-	Churn churnAtCommit(Repository repository, String commitId, RefactoringHandler handler);
 
 	/**
 	 * @return An ID that represents the current configuration for the Refactoring Miner algorithm in use.

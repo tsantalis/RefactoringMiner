@@ -1,5 +1,8 @@
 package org.refactoringminer.test;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,7 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.jgit.lib.Repository;
+import com.intellij.openapi.project.Project;
+import git4idea.repo.GitRepository;
 import org.junit.Assert;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
@@ -100,7 +104,7 @@ public class TestBuilder {
 		return projectMatcher;
 	}
 
-	public void assertExpectations(int expectedTPs, int expectedFPs, int expectedFNs) throws Exception {
+	public void assertExpectations(Project project, int expectedTPs, int expectedFPs, int expectedFNs) throws Exception {
 		c = new Counter();
 		cMap = new HashMap<RefactoringType, Counter>();
 		commitsCount = 0;
@@ -110,38 +114,42 @@ public class TestBuilder {
 		for (ProjectMatcher m : map.values()) {
 			String folder = tempDir + "/"
 					+ m.cloneUrl.substring(m.cloneUrl.lastIndexOf('/') + 1, m.cloneUrl.lastIndexOf('.'));
-			try (Repository rep = gitService.cloneIfNotExists(folder,
-					m.cloneUrl/* , m.branch */)) {
-				if (m.ignoreNonSpecifiedCommits) {
-					// It is faster to only look at particular commits
-					for (String commitId : m.getCommits()) {
-						refactoringDetector.detectAtCommit(rep, commitId, m);
-					}
-				} else {
-					// Iterate over each commit
-					refactoringDetector.detectAll(rep, m.branch, m);
+			GitRepository rep = gitService.cloneIfNotExists(project, folder, m.cloneUrl/* , m.branch */);
+			if (m.ignoreNonSpecifiedCommits) {
+				// It is faster to only look at particular commits
+				for (String commitId : m.getCommits()) {
+					refactoringDetector.detectAtCommit(rep, commitId, m);
+					System.out.println("Processed " + m.cloneUrl + "\t" + commitId);
+				}
+			} else {
+				// Iterate over each commit
+				//refactoringDetector.detectAll(rep, m.branch, m);
+			}
+		}
+		try(FileWriter fw = new FileWriter("log.txt", true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			PrintWriter out = new PrintWriter(bw)) {
+			out.println(String.format("Commits: %d  Errors: %d", commitsCount, errorCommitsCount));
+
+			String mainResultMessage = buildResultMessage(c);
+			out.println("Total  " + mainResultMessage);
+			for (RefactoringType refType : RefactoringType.values()) {
+				Counter refTypeCounter = cMap.get(refType);
+				if (refTypeCounter != null) {
+					out.println(String.format("%-7s", refType.getAbbreviation()) + buildResultMessage(refTypeCounter));
 				}
 			}
-		}
-		System.out.println(String.format("Commits: %d  Errors: %d", commitsCount, errorCommitsCount));
 
-		String mainResultMessage = buildResultMessage(c);
-		System.out.println("Total  " + mainResultMessage);
-		for (RefactoringType refType : RefactoringType.values()) {
-			Counter refTypeCounter = cMap.get(refType);
-			if (refTypeCounter != null) {
-				System.out
-						.println(String.format("%-7s", refType.getAbbreviation()) + buildResultMessage(refTypeCounter));
+			boolean success = get(FP) == expectedFPs && get(FN) == expectedFNs && get(TP) == expectedTPs;
+			if (!success || verbose) {
+				for (ProjectMatcher m : map.values()) {
+					String results = m.printResults();
+					if(results.length() > 0)
+						out.println(results);
+				}
 			}
+			Assert.assertTrue(mainResultMessage, success);
 		}
-
-		boolean success = get(FP) == expectedFPs && get(FN) == expectedFNs && get(TP) == expectedTPs;
-		if (!success || verbose) {
-			for (ProjectMatcher m : map.values()) {
-				m.printResults();
-			}
-		}
-		Assert.assertTrue(mainResultMessage, success);
 	}
 
 	private String buildResultMessage(Counter c) {
@@ -321,57 +329,63 @@ public class TestBuilder {
 				CommitMatcher matcher = expected.get(commitId);
 				matcher.error = e.toString();
 			}
+			e.printStackTrace();
 			errorCommitsCount++;
 			// System.err.println(" error at commit " + commitId + ": " +
 			// e.getMessage());
 		}
 
-		private void printResults() {
+		private String printResults() {
 			// if (verbose || this.falsePositiveCount > 0 ||
 			// this.falseNegativeCount > 0 || this.errorsCount > 0) {
 			// System.out.println(this.cloneUrl);
 			// }
+			StringBuilder sb = new StringBuilder();
 			String baseUrl = this.cloneUrl.substring(0, this.cloneUrl.length() - 4) + "/commit/";
 			for (Map.Entry<String, CommitMatcher> entry : this.expected.entrySet()) {
 				String commitUrl = baseUrl + entry.getKey();
 				CommitMatcher matcher = entry.getValue();
 				if (matcher.error != null) {
-					System.out.println("error at " + commitUrl + ": " + matcher.error);
+					sb.append("error at " + commitUrl + ": " + matcher.error).append("\n");
 				} else {
 					if (verbose || !matcher.expected.isEmpty() || !matcher.notExpected.isEmpty()
 							|| !matcher.unknown.isEmpty()) {
 						if (!matcher.analyzed) {
-							System.out.println("at not analyzed " + commitUrl);
+							sb.append("at not analyzed " + commitUrl).append("\n");
 						} else {
-							System.out.println("at " + commitUrl);
+							sb.append("at " + commitUrl).append("\n");
 						}
 					}
 					if (verbose && !matcher.truePositive.isEmpty()) {
-						System.out.println(" true positives");
+						sb.append(" true positives").append("\n");
 						for (String ref : matcher.truePositive) {
-							System.out.println("  " + ref);
+							sb.append("  " + ref).append("\n");
 						}
 					}
 					if (!matcher.notExpected.isEmpty()) {
-						System.out.println(" false positives");
+						sb.append(" false positives").append("\n");
 						for (String ref : matcher.notExpected) {
-							System.out.println("  " + ref);
+							sb.append("  " + ref).append("\n");
 						}
 					}
 					if (!matcher.expected.isEmpty()) {
-						System.out.println(" false negatives");
+						sb.append(" false negatives").append("\n");
 						for (String ref : matcher.expected) {
-							System.out.println("  " + ref);
+							sb.append("  " + ref).append("\n");
 						}
 					}
 					if (!matcher.unknown.isEmpty()) {
-						System.out.println(" unknown");
+						sb.append(" unknown").append("\n");
 						for (String ref : matcher.unknown) {
-							System.out.println("  " + ref);
+							sb.append("  " + ref).append("\n");
 						}
 					}
 				}
 			}
+			String string = sb.toString();
+			if(string.endsWith("\n"))
+				return string.substring(0, string.length()-1);
+			return string;
 		}
 
 		// private void countFalseNegatives() {

@@ -10,29 +10,20 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import org.eclipse.jgit.api.CheckoutCommand;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vcs.changes.Change;
+import com.intellij.openapi.vfs.LocalFileSystem;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.vcsUtil.VcsFileUtil;
+import git4idea.repo.GitRepository;
+import git4idea.repo.GitRepositoryImpl;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.diff.DiffEntry;
-import org.eclipse.jgit.diff.DiffFormatter;
-import org.eclipse.jgit.diff.Edit;
-import org.eclipse.jgit.diff.DiffEntry.ChangeType;
-import org.eclipse.jgit.diff.Edit.Type;
-import org.eclipse.jgit.diff.RenameDetector;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryBuilder;
-import org.eclipse.jgit.patch.FileHeader;
-import org.eclipse.jgit.patch.HunkHeader;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.revwalk.RevWalkUtils;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
-import org.eclipse.jgit.transport.FetchResult;
-import org.eclipse.jgit.transport.TrackingRefUpdate;
-import org.eclipse.jgit.treewalk.TreeWalk;
-import org.eclipse.jgit.util.io.DisabledOutputStream;
-import org.refactoringminer.api.Churn;
 import org.refactoringminer.api.GitService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,63 +36,34 @@ public class GitServiceImpl implements GitService {
 	DefaultCommitsFilter commitsFilter = new DefaultCommitsFilter();
 	
 	@Override
-	public Repository cloneIfNotExists(String projectPath, String cloneUrl/*, String branch*/) throws Exception {
-		File folder = new File(projectPath);
-		Repository repository;
+	public GitRepository cloneIfNotExists(Project project, String projectPath, String cloneUrl/*, String branch*/) throws Exception {
+		java.io.File folder = new File(projectPath);
 		if (folder.exists()) {
-			String[] contents = folder.list();
-			boolean dotGitFound = false;
-			for(String content : contents) {
-				if(content.equals(".git")) {
-					dotGitFound = true;
-					break;
-				}
-			}
-			RepositoryBuilder builder = new RepositoryBuilder();
-			repository = builder
-					.setGitDir(dotGitFound ? new File(folder, ".git") : folder)
-					.readEnvironment()
-					.findGitDir()
-					.build();
-			
+			VirtualFile rootDir = LocalFileSystem.getInstance().findFileByIoFile(folder);
+			return GitRepositoryImpl.getInstance(rootDir, project, false);
 			//logger.info("Project {} is already cloned, current branch is {}", cloneUrl, repository.getBranch());
-			
 		} else {
 			logger.info("Cloning {} ...", cloneUrl);
-			Git git = Git.cloneRepository()
-					.setDirectory(folder)
-					.setURI(cloneUrl)
-					.setCloneAllBranches(true)
-					.call();
-			repository = git.getRepository();
+//			Git git = Git.cloneRepository()
+//					.setDirectory(folder)
+//					.setURI(cloneUrl)
+//					.setCloneAllBranches(true)
+//					.call();
+//			repository = git.getRepository();
 			//logger.info("Done cloning {}, current branch is {}", cloneUrl, repository.getBranch());
 		}
-		return repository;
+		return null;
 	}
 
 	@Override
-	public Repository openRepository(String repositoryPath) throws Exception {
+	public GitRepository openRepository(Project project, String repositoryPath) throws Exception {
 		File folder = new File(repositoryPath);
-		Repository repository;
 		if (folder.exists()) {
-			String[] contents = folder.list();
-			boolean dotGitFound = false;
-			for(String content : contents) {
-				if(content.equals(".git")) {
-					dotGitFound = true;
-					break;
-				}
-			}
-			RepositoryBuilder builder = new RepositoryBuilder();
-			repository = builder
-					.setGitDir(dotGitFound ? new File(folder, ".git") : folder)
-					.readEnvironment()
-					.findGitDir()
-					.build();
+			VirtualFile rootDir = LocalFileSystem.getInstance().findFileByIoFile(folder);
+			return GitRepositoryImpl.getInstance(rootDir, project, false);
 		} else {
 			throw new FileNotFoundException(repositoryPath);
 		}
-		return repository;
 	}
 
 	public RevWalk createAllRevsWalk(Repository repository) throws Exception {
@@ -190,82 +152,32 @@ public class GitServiceImpl implements GitService {
 		}
 	}
 
-	public void fileTreeDiff(Repository repository, RevCommit currentCommit, List<String> javaFilesBefore, List<String> javaFilesCurrent, Map<String, String> renamedFilesHint) throws Exception {
-        if (currentCommit.getParentCount() > 0) {
-        	ObjectId oldTree = currentCommit.getParent(0).getTree();
-	        ObjectId newTree = currentCommit.getTree();
-        	final TreeWalk tw = new TreeWalk(repository);
-        	tw.setRecursive(true);
-        	tw.addTree(oldTree);
-        	tw.addTree(newTree);
-
-        	final RenameDetector rd = new RenameDetector(repository);
-        	rd.setRenameScore(55);
-        	rd.addAll(DiffEntry.scan(tw));
-
-        	for (DiffEntry diff : rd.compute(tw.getObjectReader(), null)) {
-        		ChangeType changeType = diff.getChangeType();
-        		String oldPath = diff.getOldPath();
-        		String newPath = diff.getNewPath();
-        		if (changeType != ChangeType.ADD) {
-	        		if (isJavafile(oldPath)) {
-	        			javaFilesBefore.add(oldPath);
-	        		}
-	        	}
-        		if (changeType != ChangeType.DELETE) {
-	        		if (isJavafile(newPath)) {
-	        			javaFilesCurrent.add(newPath);
-	        		}
-        		}
-        		if (changeType == ChangeType.RENAME && diff.getScore() >= rd.getRenameScore()) {
-        			if (isJavafile(oldPath) && isJavafile(newPath)) {
-        				renamedFilesHint.put(oldPath, newPath);
-        			}
-        		}
-        	}
-        }
+	public void fileTreeDiff(GitRepository repository, Collection<Change> changes, List<String> javaFilesBefore, List<String> javaFilesCurrent, Map<String, String> renamedFilesHint) throws Exception {
+		for(Change change : changes) {
+			Change.Type changeType = change.getType();
+			if (changeType != Change.Type.NEW) {
+				String oldRelativePath = VcsFileUtil.relativePath(repository.getRoot(), change.getBeforeRevision().getFile());
+				if (isJavafile(oldRelativePath)) {
+					javaFilesBefore.add(oldRelativePath);
+				}
+			}
+			if (changeType != Change.Type.DELETED) {
+				String newRelativePath = VcsFileUtil.relativePath(repository.getRoot(), change.getAfterRevision().getFile());
+				if (isJavafile(newRelativePath)) {
+					javaFilesCurrent.add(newRelativePath);
+				}
+			}
+			if (change.isRenamed() || change.isMoved()) {
+				String oldRelativePath = VcsFileUtil.relativePath(repository.getRoot(), change.getBeforeRevision().getFile());
+				String newRelativePath = VcsFileUtil.relativePath(repository.getRoot(), change.getAfterRevision().getFile());
+				if (isJavafile(oldRelativePath) && isJavafile(newRelativePath)) {
+					renamedFilesHint.put(oldRelativePath, newRelativePath);
+				}
+			}
+		}
 	}
 
 	private boolean isJavafile(String path) {
 		return path.endsWith(".java");
-	}
-
-	@Override
-	public Churn churn(Repository repository, RevCommit currentCommit) throws Exception {
-		if (currentCommit.getParentCount() > 0) {
-        	ObjectId oldTree = currentCommit.getParent(0).getTree();
-	        ObjectId newTree = currentCommit.getTree();
-        	final TreeWalk tw = new TreeWalk(repository);
-        	tw.setRecursive(true);
-        	tw.addTree(oldTree);
-        	tw.addTree(newTree);
-        	
-        	List<DiffEntry> diffs = DiffEntry.scan(tw);
-        	DiffFormatter diffFormatter = new DiffFormatter(DisabledOutputStream.INSTANCE);
-    		diffFormatter.setRepository(repository);
-    		diffFormatter.setContext(0);
-    		
-        	int addedLines = 0;
-    		int deletedLines = 0;
-        	for (DiffEntry entry : diffs) {
-    			FileHeader header = diffFormatter.toFileHeader(entry);
-            	List<? extends HunkHeader> hunks = header.getHunks();
-            	for (HunkHeader hunkHeader : hunks) {
-            		for (Edit edit : hunkHeader.toEditList()) {
-    					if (edit.getType() == Type.INSERT) {
-    						addedLines += edit.getLengthB();
-    					} else if (edit.getType() == Type.DELETE) {
-    						deletedLines += edit.getLengthA();
-    					} else if (edit.getType() == Type.REPLACE) {
-    						deletedLines += edit.getLengthA();
-    						addedLines += edit.getLengthB();
-    					}
-    				}
-            	}
-        	}
-        	diffFormatter.close();
-        	return new Churn(addedLines, deletedLines);
-		}
-		return null;
 	}
 }

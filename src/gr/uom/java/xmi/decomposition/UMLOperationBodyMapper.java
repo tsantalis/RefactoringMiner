@@ -305,7 +305,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	public UMLOperationBodyMapper(UMLAttribute removedAttribute, UMLAttribute addedAttribute) throws RefactoringMinerTimedOutException {
+	public UMLOperationBodyMapper(UMLAttribute removedAttribute, UMLAttribute addedAttribute, UMLClassBaseDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
+		this.classDiff = classDiff;
+		this.modelDiff = modelDiff;
 		this.attribute1 = removedAttribute;
 		this.attribute2 = addedAttribute;
 		AbstractExpression expression1 = removedAttribute.getVariableDeclaration().getInitializer();

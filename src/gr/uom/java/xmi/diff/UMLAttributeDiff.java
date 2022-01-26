@@ -35,9 +35,13 @@ public class UMLAttributeDiff {
 	private UMLOperation addedGetter;
 	private UMLOperation addedSetter;
 	private UMLOperationBodyMapper mapper;
+	private UMLClassBaseDiff classDiff;
+	private UMLModelDiff modelDiff;
 
 	public UMLAttributeDiff(UMLAttribute removedAttribute, UMLAttribute addedAttribute, UMLClassBaseDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
-		this(removedAttribute, addedAttribute, classDiff.getOperationBodyMapperList());
+		this.classDiff = classDiff;
+		this.modelDiff = modelDiff;
+		init(removedAttribute, addedAttribute, classDiff.getOperationBodyMapperList());
 		this.addedGetter = findMethod(classDiff.getAddedOperations(), addedAttribute, getterCondition(addedAttribute));
 		if(this.addedGetter != null && !removedAttribute.getName().equals(addedAttribute.getName())) {
 			UMLOperation removedGetter = findMethod(classDiff.getRemovedOperations(), removedAttribute, getterCondition(removedAttribute));
@@ -83,6 +87,11 @@ public class UMLAttributeDiff {
 	}
 
 	public UMLAttributeDiff(UMLAttribute removedAttribute, UMLAttribute addedAttribute, List<UMLOperationBodyMapper> operationBodyMapperList) throws RefactoringMinerTimedOutException {
+		init(removedAttribute, addedAttribute, operationBodyMapperList);
+	}
+
+	private void init(UMLAttribute removedAttribute, UMLAttribute addedAttribute,
+			List<UMLOperationBodyMapper> operationBodyMapperList) throws RefactoringMinerTimedOutException {
 		this.removedAttribute = removedAttribute;
 		this.addedAttribute = addedAttribute;
 		this.operationBodyMapperList = operationBodyMapperList;
@@ -111,7 +120,7 @@ public class UMLAttributeDiff {
 		AbstractExpression initializer1 = removedAttribute.getVariableDeclaration().getInitializer();
 		AbstractExpression initializer2 = addedAttribute.getVariableDeclaration().getInitializer();
 		if(initializer1 != null && initializer2 != null) {
-			this.mapper = new UMLOperationBodyMapper(removedAttribute, addedAttribute);
+			this.mapper = new UMLOperationBodyMapper(removedAttribute, addedAttribute, classDiff, modelDiff);
 		}
 	}
 

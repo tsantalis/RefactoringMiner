@@ -140,8 +140,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		else {
 			changes = Collections.emptyList();
 		}
-		List<String> filePathsBefore = new ArrayList<String>();
-		List<String> filePathsCurrent = new ArrayList<String>();
+		Set<String> filePathsBefore = new LinkedHashSet<String>();
+		Set<String> filePathsCurrent = new LinkedHashSet<String>();
 		Map<String, String> renamedFilesHint = new HashMap<String, String>();
 		gitService.fileTreeDiff(repository, changes, filePathsBefore, filePathsCurrent, renamedFilesHint);
 
@@ -258,7 +258,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	public static void populateFileContents(GitRepository repository, Collection<Change> changes, RevisionType revisionType, VcsCommitMetadata commit,
-			List<String> filePaths, Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
+			Set<String> filePaths, Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
 		for (Change change : changes) {
 			ContentRevision revision;
 			if(revisionType.equals(RevisionType.BEFORE)) {

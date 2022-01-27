@@ -1,8 +1,8 @@
 package org.refactoringminer.api;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vcs.changes.Change;
@@ -37,5 +37,5 @@ public interface GitService {
 
 	Iterable<RevCommit> createRevsWalkBetweenCommits(Repository repository, String startCommitId, String endCommitId) throws Exception;
 
-	void fileTreeDiff(GitRepository repository, Collection<Change> changes, List<String> filesBefore, List<String> filesCurrent, Map<String, String> renamedFilesHint) throws Exception;
+	void fileTreeDiff(GitRepository repository, Collection<Change> changes, Set<String> filesBefore, Set<String> filesCurrent, Map<String, String> renamedFilesHint) throws Exception;
 }

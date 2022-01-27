@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -152,7 +153,7 @@ public class GitServiceImpl implements GitService {
 		}
 	}
 
-	public void fileTreeDiff(GitRepository repository, Collection<Change> changes, List<String> javaFilesBefore, List<String> javaFilesCurrent, Map<String, String> renamedFilesHint) throws Exception {
+	public void fileTreeDiff(GitRepository repository, Collection<Change> changes, Set<String> javaFilesBefore, Set<String> javaFilesCurrent, Map<String, String> renamedFilesHint) throws Exception {
 		for(Change change : changes) {
 			Change.Type changeType = change.getType();
 			if (changeType != Change.Type.NEW) {

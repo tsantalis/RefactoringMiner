@@ -126,8 +126,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	protected List<Refactoring> detectRefactorings(GitService gitService, Repository repository, final RefactoringHandler handler, RevCommit currentCommit) throws Exception {
 		List<Refactoring> refactoringsAtRevision;
 		String commitId = currentCommit.getId().getName();
-		List<String> filePathsBefore = new ArrayList<String>();
-		List<String> filePathsCurrent = new ArrayList<String>();
+		Set<String> filePathsBefore = new LinkedHashSet<String>();
+		Set<String> filePathsCurrent = new LinkedHashSet<String>();
 		Map<String, String> renamedFilesHint = new HashMap<String, String>();
 		gitService.fileTreeDiff(repository, currentCommit, filePathsBefore, filePathsCurrent, renamedFilesHint);
 		
@@ -237,7 +237,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	public static void populateFileContents(Repository repository, RevCommit commit,
-			List<String> filePaths, Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
+			Set<String> filePaths, Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
 		logger.info("Processing {} {} ...", repository.getDirectory().getParent().toString(), commit.getName());
 		RevTree parentTree = commit.getTree();
 		try (TreeWalk treeWalk = new TreeWalk(repository)) {

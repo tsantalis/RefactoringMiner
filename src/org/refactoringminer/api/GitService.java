@@ -1,7 +1,7 @@
 package org.refactoringminer.api;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -41,7 +41,7 @@ public interface GitService {
 
 	Iterable<RevCommit> createRevsWalkBetweenCommits(Repository repository, String startCommitId, String endCommitId) throws Exception;
 
-	void fileTreeDiff(Repository repository, RevCommit currentCommit, List<String> filesBefore, List<String> filesCurrent, Map<String, String> renamedFilesHint) throws Exception;
+	void fileTreeDiff(Repository repository, RevCommit currentCommit, Set<String> filesBefore, Set<String> filesCurrent, Map<String, String> renamedFilesHint) throws Exception;
 
 	Churn churn(Repository repository, RevCommit currentCommit) throws Exception;
 }

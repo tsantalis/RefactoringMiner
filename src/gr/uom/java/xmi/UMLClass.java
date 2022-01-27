@@ -2,7 +2,6 @@ package gr.uom.java.xmi;
 
 import gr.uom.java.xmi.diff.StringDistance;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -229,18 +228,6 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public List<UMLComment> getPackageDeclarationComments() {
 		return packageDeclarationComments;
-	}
-
-	public boolean identicalPackageHeader(UMLClass c) throws IOException {
-		if(this.packageDeclarationComments.size() > 0 && c.packageDeclarationComments.size() > 0) {
-			String text1 = this.packageDeclarationComments.get(0).getText();
-			String text2 = c.packageDeclarationComments.get(0).getText();
-			return text1.equals(text2) || StringDistance.trivialCommentChange(text1, text2);
-		}
-		if(this.packageDeclarationJavadoc != null && c.packageDeclarationJavadoc != null) {
-			return this.packageDeclarationJavadoc.equalText(c.packageDeclarationJavadoc);
-		}
-		return false;
 	}
 
 	public UMLEnumConstant containsEnumConstant(UMLEnumConstant otherEnumConstant) {

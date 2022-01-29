@@ -198,6 +198,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						String fileAfter = fileContentsCurrent.get(key2);
 						if(fileBefore.equals(fileAfter)) {
 							identicalFiles.put(key1, key2);
+							break;
 						}
 					}
 				}
@@ -212,6 +213,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						String fileAfter = fileContentsCurrent.get(key2);
 						if(StringDistance.trivialCommentChange(fileBefore, fileAfter)) {
 							identicalFiles.put(key1, key2);
+							break;
 						}
 					}
 				}

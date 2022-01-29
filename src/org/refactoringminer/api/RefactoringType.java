@@ -97,7 +97,8 @@ public enum RefactoringType {
 	CHANGE_TYPE_DECLARATION_KIND("Change Type Declaration Kind", "Change Type Declaration Kind (.+) to (.+) in type (.+)"),
 	COLLAPSE_HIERARCHY("Collapse Hierarchy", "Collapse Hierarchy (.+) to (.+)"),
 	REPLACE_LOOP_WITH_PIPELINE("Replace Loop With Pipeline", "Replace Loop With Pipeline (.+) with (.+) in method (.+) from class (.+)"),
-	REPLACE_ANONYMOUS_WITH_LAMBDA("Replace Anonymous With Lambda", "Replace Anonymous With Lambda (.+) with (.+) in method (.+) from class (.+)");
+	REPLACE_ANONYMOUS_WITH_LAMBDA("Replace Anonymous With Lambda", "Replace Anonymous With Lambda (.+) with (.+) in method (.+) from class (.+)"),
+	MERGE_CLASS("Merge Class", "Merge Class \\[(.+)\\] to (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -188,7 +189,8 @@ public enum RefactoringType {
 		CHANGE_TYPE_DECLARATION_KIND,
 		COLLAPSE_HIERARCHY,
 		REPLACE_LOOP_WITH_PIPELINE,
-		REPLACE_ANONYMOUS_WITH_LAMBDA
+		REPLACE_ANONYMOUS_WITH_LAMBDA,
+		MERGE_CLASS
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

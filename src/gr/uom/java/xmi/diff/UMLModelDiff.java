@@ -68,6 +68,7 @@ public class UMLModelDiff {
 	private List<UMLClassMoveDiff> classMoveDiffList;
 	private List<UMLClassMoveDiff> innerClassMoveDiffList;
 	private List<UMLClassRenameDiff> classRenameDiffList;
+	private List<UMLClassMergeDiff> classMergeDiffList;
 	private List<Refactoring> refactorings;
 	private Set<String> deletedFolderPaths;
 	private Set<Pair<UMLOperation, UMLOperation>> processedOperationPairs = new HashSet<Pair<UMLOperation, UMLOperation>>();
@@ -93,6 +94,7 @@ public class UMLModelDiff {
 		this.classMoveDiffList = new ArrayList<UMLClassMoveDiff>();
 		this.innerClassMoveDiffList = new ArrayList<UMLClassMoveDiff>();
 		this.classRenameDiffList = new ArrayList<UMLClassRenameDiff>();
+		this.classMergeDiffList = new ArrayList<UMLClassMergeDiff>();
 		this.refactorings = new ArrayList<Refactoring>();
 		this.deletedFolderPaths = new LinkedHashSet<String>();
 	}
@@ -662,19 +664,93 @@ public class UMLModelDiff {
 		return false;
 	}
 
+	private boolean sameRenamedClass(Set<UMLClassRenameDiff> union) {
+		if(union.size() > 1) {
+			UMLClass renamedClass = null;
+			for(UMLClassRenameDiff renameDiff : union) {
+				if(renamedClass == null) {
+					renamedClass = renameDiff.getRenamedClass();
+				}
+				else if(!renamedClass.equals(renameDiff.getRenamedClass())) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	private boolean inheritanceRelationshipBetweenMergedClasses(Set<UMLClassRenameDiff> union) {
+		if(union.size() > 1) {
+			UMLClass originalClass = null;
+			for(UMLClassRenameDiff renameDiff : union) {
+				if(originalClass == null) {
+					originalClass = renameDiff.getOriginalClass();
+				}
+				else if(isSubclassOf(originalClass.getName(), renameDiff.getOriginalClass().getName()) ||
+						isSubclassOf(renameDiff.getOriginalClass().getName(), originalClass.getName())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public void checkForRenamedClasses(UMLClassMatcher matcher) throws RefactoringMinerTimedOutException {
 		if(removedClasses.size() <= addedClasses.size()) {
+			Set<UMLClass> mergedClassesToBeRemoved = new HashSet<UMLClass>();
 			for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
 				UMLClass removedClass = removedClassIterator.next();
 				TreeSet<UMLClassRenameDiff> diffSet = findRenameMatchesForRemovedClass(removedClass, matcher);
 				if(!diffSet.isEmpty()) {
 					UMLClassRenameDiff minClassRenameDiff = diffSet.first();
-					minClassRenameDiff.process();
-					classRenameDiffList.add(minClassRenameDiff);
-					addedClasses.remove(minClassRenameDiff.getRenamedClass());
-					removedClassIterator.remove();
+					boolean mergeFound = false;
+					TreeSet<UMLClassRenameDiff> renameDiffSet = new TreeSet<>();
+					if(matcher instanceof UMLClassMatcher.RelaxedRename) {
+						renameDiffSet = findRenameMatchesForAddedClass(minClassRenameDiff.getRenamedClass(), matcher);
+						TreeSet<UMLClassRenameDiff> union = new TreeSet<>();
+						union.addAll(diffSet);
+						union.addAll(renameDiffSet);
+						if(sameRenamedClass(union) && !inheritanceRelationshipBetweenMergedClasses(union)) {
+							UMLClassMergeDiff mergeDiff = new UMLClassMergeDiff(union);
+							classMergeDiffList.add(mergeDiff);
+							for(UMLClassRenameDiff renameDiff : union) {
+								addedClasses.remove(renameDiff.getRenamedClass());
+								mergedClassesToBeRemoved.add(renameDiff.getOriginalClass());
+							}
+							removedClassIterator.remove();
+							mergeFound = true;
+						}
+					}
+					if(!mergeFound) {
+						if(!renameDiffSet.isEmpty() && !(renameDiffSet.first().getOriginalClass().equals(minClassRenameDiff.getOriginalClass()) &&
+								renameDiffSet.first().getRenamedClass().equals(minClassRenameDiff.getRenamedClass()))) {
+							UMLClassRenameDiff minClassRenameDiff2 = renameDiffSet.first();
+							int matchedMembers1 = minClassRenameDiff.getMatchResult().getMatchedOperations() + minClassRenameDiff.getMatchResult().getMatchedAttributes();
+							int matchedMembers2 = minClassRenameDiff2.getMatchResult().getMatchedOperations() + minClassRenameDiff2.getMatchResult().getMatchedAttributes();
+							if(matchedMembers2 > matchedMembers1) {
+								minClassRenameDiff2.process();
+								classRenameDiffList.add(minClassRenameDiff2);
+								addedClasses.remove(minClassRenameDiff2.getRenamedClass());
+								removedClassIterator.remove();
+							}
+							else {
+								minClassRenameDiff.process();
+								classRenameDiffList.add(minClassRenameDiff);
+								addedClasses.remove(minClassRenameDiff.getRenamedClass());
+								removedClassIterator.remove();
+							}
+						}
+						else {
+							minClassRenameDiff.process();
+							classRenameDiffList.add(minClassRenameDiff);
+							addedClasses.remove(minClassRenameDiff.getRenamedClass());
+							removedClassIterator.remove();
+						}
+					}
 				}
 			}
+			removedClasses.removeAll(mergedClassesToBeRemoved);
 		}
 		else {
 			for(Iterator<UMLClass> addedClassIterator = addedClasses.iterator(); addedClassIterator.hasNext();) {
@@ -682,10 +758,49 @@ public class UMLModelDiff {
 				TreeSet<UMLClassRenameDiff> diffSet = findRenameMatchesForAddedClass(addedClass, matcher);
 				if(!diffSet.isEmpty()) {
 					UMLClassRenameDiff minClassRenameDiff = diffSet.first();
-					minClassRenameDiff.process();
-					classRenameDiffList.add(minClassRenameDiff);
-					removedClasses.remove(minClassRenameDiff.getOriginalClass());
-					addedClassIterator.remove();
+					boolean mergeFound = false;
+					TreeSet<UMLClassRenameDiff> renameDiffSet = new TreeSet<>();
+					if(matcher instanceof UMLClassMatcher.RelaxedRename) {
+						renameDiffSet = findRenameMatchesForRemovedClass(minClassRenameDiff.getOriginalClass(), matcher);
+						TreeSet<UMLClassRenameDiff> union = new TreeSet<>();
+						union.addAll(diffSet);
+						union.addAll(renameDiffSet);
+						if(sameRenamedClass(union) && !inheritanceRelationshipBetweenMergedClasses(union)) {
+							UMLClassMergeDiff mergeDiff = new UMLClassMergeDiff(union);
+							classMergeDiffList.add(mergeDiff);
+							for(UMLClassRenameDiff renameDiff : union) {
+								removedClasses.remove(renameDiff.getOriginalClass());
+							}
+							addedClassIterator.remove();
+							mergeFound = true;
+						}
+					}
+					if(!mergeFound) {
+						if(!renameDiffSet.isEmpty() && !(renameDiffSet.first().getOriginalClass().equals(minClassRenameDiff.getOriginalClass()) &&
+								renameDiffSet.first().getRenamedClass().equals(minClassRenameDiff.getRenamedClass()))) {
+							UMLClassRenameDiff minClassRenameDiff2 = renameDiffSet.first();
+							int matchedMembers1 = minClassRenameDiff.getMatchResult().getMatchedOperations() + minClassRenameDiff.getMatchResult().getMatchedAttributes();
+							int matchedMembers2 = minClassRenameDiff2.getMatchResult().getMatchedOperations() + minClassRenameDiff2.getMatchResult().getMatchedAttributes();
+							if(matchedMembers2 > matchedMembers1) {
+								minClassRenameDiff2.process();
+								classRenameDiffList.add(minClassRenameDiff2);
+								removedClasses.remove(minClassRenameDiff2.getOriginalClass());
+								addedClassIterator.remove();
+							}
+							else {
+								minClassRenameDiff.process();
+								classRenameDiffList.add(minClassRenameDiff);
+								removedClasses.remove(minClassRenameDiff.getOriginalClass());
+								addedClassIterator.remove();
+							}
+						}
+						else {
+							minClassRenameDiff.process();
+							classRenameDiffList.add(minClassRenameDiff);
+							removedClasses.remove(minClassRenameDiff.getOriginalClass());
+							addedClassIterator.remove();
+						}
+					}
 				}
 			}
 		}
@@ -1334,13 +1449,16 @@ public class UMLModelDiff {
 	private void detectSubRefactorings(UMLClassBaseDiff classDiff, UMLClass addedClass, RefactoringType parentType) throws RefactoringMinerTimedOutException {
 		for(UMLOperation addedOperation : addedClass.getOperations()) {
 			UMLOperation removedOperation = classDiff.containsRemovedOperationWithTheSameSignature(addedOperation);
+			if(parentType.equals(RefactoringType.MERGE_CLASS) && removedOperation == null) {
+				removedOperation = classDiff.getOriginalClass().operationWithTheSameSignature(addedOperation);
+			}
 			if(removedOperation != null) {
 				classDiff.getRemovedOperations().remove(removedOperation);
 				MoveOperationRefactoring ref = null;
 				if(parentType.equals(RefactoringType.EXTRACT_SUPERCLASS)) {
 					ref = new PullUpOperationRefactoring(removedOperation, addedOperation);
 				}
-				else if(parentType.equals(RefactoringType.EXTRACT_CLASS)) {
+				else if(parentType.equals(RefactoringType.EXTRACT_CLASS) || parentType.equals(RefactoringType.MERGE_CLASS)) {
 					ref = new MoveOperationRefactoring(removedOperation, addedOperation);
 				}
 				else if(parentType.equals(RefactoringType.EXTRACT_SUBCLASS)) {
@@ -1559,6 +1677,48 @@ public class UMLModelDiff {
 		return refactorings;
 	}
 
+	private List<Refactoring> getMergeClassRefactorings(List<RenamePackageRefactoring> previousRenamePackageRefactorings) throws RefactoringMinerTimedOutException {
+		List<Refactoring> refactorings = new ArrayList<Refactoring>();
+		List<RenamePackageRefactoring> newRenamePackageRefactorings = new ArrayList<RenamePackageRefactoring>();
+		for(UMLClassMergeDiff classMergeDiff : classMergeDiffList) {
+			MergeClassRefactoring refactoring = new MergeClassRefactoring(classMergeDiff);
+			for(UMLClassRenameDiff renameDiff : classMergeDiff.getClassRenameDiffs()) {
+				detectSubRefactorings(renameDiff, renameDiff.getRenamedClass(), refactoring.getRefactoringType());
+			}
+			if(!classMergeDiff.samePackage()) {
+				RenamePattern renamePattern = refactoring.getRenamePattern();
+				boolean foundInMatchingRenamePackageRefactoring = false;
+				//search first in RenamePackage refactorings established from Move Class refactorings
+				for(RenamePackageRefactoring renamePackageRefactoring : previousRenamePackageRefactorings) {
+					if(renamePackageRefactoring.getPattern().equals(renamePattern)) {
+						renamePackageRefactoring.addMoveClassRefactoring(refactoring);
+						foundInMatchingRenamePackageRefactoring = true;
+						break;
+					}
+				}
+				for(RenamePackageRefactoring renamePackageRefactoring : newRenamePackageRefactorings) {
+					if(renamePackageRefactoring.getPattern().equals(renamePattern)) {
+						renamePackageRefactoring.addMoveClassRefactoring(refactoring);
+						foundInMatchingRenamePackageRefactoring = true;
+						break;
+					}
+				}
+				if(!foundInMatchingRenamePackageRefactoring) {
+					newRenamePackageRefactorings.add(new RenamePackageRefactoring(refactoring));
+				}
+			}
+			refactorings.add(refactoring);
+		}
+		for(RenamePackageRefactoring renamePackageRefactoring : newRenamePackageRefactorings) {
+			List<PackageLevelRefactoring> moveClassRefactorings = renamePackageRefactoring.getMoveClassRefactorings();
+			if(moveClassRefactorings.size() >= 1 && isSourcePackageDeleted(renamePackageRefactoring)) {
+				refactorings.add(renamePackageRefactoring);
+				previousRenamePackageRefactorings.add(renamePackageRefactoring);
+			}
+		}
+		return refactorings;
+	}
+
 	private void postProcessRenamedPackages(List<RenamePackageRefactoring> renamePackageRefactorings, Set<Refactoring> allRefactorings) {
 		Map<String, Set<RenamePackageRefactoring>> groupBasedOnOriginalPackage = new LinkedHashMap<String, Set<RenamePackageRefactoring>>();
 		Map<String, Set<RenamePackageRefactoring>> groupBasedOnNewPackage = new LinkedHashMap<String, Set<RenamePackageRefactoring>>();
@@ -1611,6 +1771,7 @@ public class UMLModelDiff {
 			}
 		}
 		refactorings.addAll(getRenameClassRefactorings(renamePackageRefactorings));
+		refactorings.addAll(getMergeClassRefactorings(renamePackageRefactorings));
 		postProcessRenamedPackages(renamePackageRefactorings, refactorings);
 		refactorings.addAll(identifyConvertAnonymousClassToTypeRefactorings());
 		Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();

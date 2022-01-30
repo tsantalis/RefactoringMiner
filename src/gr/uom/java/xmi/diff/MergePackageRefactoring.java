@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
@@ -16,7 +17,7 @@ public class MergePackageRefactoring implements Refactoring {
 
 	public MergePackageRefactoring(Set<RenamePackageRefactoring> renamePackageRefactorings) {
 		this.renamePackageRefactorings = renamePackageRefactorings;
-		this.mergedPackages = new LinkedHashSet<String>();
+		this.mergedPackages = new TreeSet<String>();
 		for(RenamePackageRefactoring refactoring : renamePackageRefactorings) {
 			RenamePattern pattern = refactoring.getPattern();
 			if(newPackage == null) {

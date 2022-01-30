@@ -1451,6 +1451,10 @@ public class UMLModelDiff {
 			UMLOperation removedOperation = classDiff.containsRemovedOperationWithTheSameSignature(addedOperation);
 			if(parentType.equals(RefactoringType.MERGE_CLASS) && removedOperation == null) {
 				removedOperation = classDiff.getOriginalClass().operationWithTheSameSignature(addedOperation);
+				if(addedOperation.isConstructor() && removedOperation == null) {
+					RenamePattern renamePattern = new RenamePattern(classDiff.getOriginalClass().getNonQualifiedName(), classDiff.getNextClass().getNonQualifiedName());
+					removedOperation = classDiff.getOriginalClass().operationWithTheSameRenamePattern(addedOperation, renamePattern);
+				}
 			}
 			if(removedOperation != null) {
 				classDiff.getRemovedOperations().remove(removedOperation);
@@ -1475,13 +1479,16 @@ public class UMLModelDiff {
 		}
 		for(UMLAttribute addedAttribute : addedClass.getAttributes()) {
 			UMLAttribute removedAttribute = classDiff.containsRemovedAttributeWithTheSameSignature(addedAttribute);
+			if(parentType.equals(RefactoringType.MERGE_CLASS) && removedAttribute == null) {
+				removedAttribute = classDiff.getOriginalClass().attributeWithTheSameSignature(addedAttribute);
+			}
 			if(removedAttribute != null) {
 				classDiff.getRemovedAttributes().remove(removedAttribute);
 				Refactoring ref = null;
 				if(parentType.equals(RefactoringType.EXTRACT_SUPERCLASS)) {
 					ref = new PullUpAttributeRefactoring(removedAttribute, addedAttribute);
 				}
-				else if(parentType.equals(RefactoringType.EXTRACT_CLASS)) {
+				else if(parentType.equals(RefactoringType.EXTRACT_CLASS) || parentType.equals(RefactoringType.MERGE_CLASS)) {
 					ref = new MoveAttributeRefactoring(removedAttribute, addedAttribute);
 				}
 				else if(parentType.equals(RefactoringType.EXTRACT_SUBCLASS)) {

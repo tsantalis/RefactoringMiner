@@ -180,9 +180,31 @@ public abstract class UMLAbstractClass {
 		return false;
 	}
 
+	public UMLOperation operationWithTheSameRenamePattern(UMLOperation operation, RenamePattern pattern) {
+		if(pattern == null)
+			return null;
+		for(UMLOperation originalOperation : operations) {
+			String originalOperationName = originalOperation.getName();
+			if(originalOperationName.contains(pattern.getBefore())) {
+				String originalOperationNameAfterReplacement = originalOperationName.replace(pattern.getBefore(), pattern.getAfter());
+				if(originalOperationNameAfterReplacement.equals(operation.getName()))
+					return originalOperation;
+			}
+		}
+		return null;
+	}
+
 	public UMLAttribute attributeWithTheSameNameIgnoringChangedType(UMLAttribute attribute) {
 		for(UMLAttribute originalAttribute : attributes) {
 			if(originalAttribute.equalsIgnoringChangedType(attribute))
+				return originalAttribute;
+		}
+		return null;
+	}
+
+	public UMLAttribute attributeWithTheSameSignature(UMLAttribute attribute) {
+		for(UMLAttribute originalAttribute : attributes) {
+			if(originalAttribute.equalsIgnoringChangedVisibility(attribute))
 				return originalAttribute;
 		}
 		return null;

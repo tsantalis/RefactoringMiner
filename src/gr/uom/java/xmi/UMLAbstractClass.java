@@ -442,6 +442,7 @@ public abstract class UMLAbstractClass {
 		}
 		if((commonOperations.size() > Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0)) ||
 				(commonOperations.size() > Math.floor(totalOperations/3.0*2.0) && (commonAttributes.size() >= 2 || totalAttributes == 0)) ||
+				(totalAttributes == 1 && commonOperations.size() > 2 && commonOperations.size() >= Math.floor(totalOperations/3.0*2.0)) ||
 				(commonAttributes.size() > Math.floor(totalAttributes/2.0) && (commonOperations.size() > 2 || totalOperations == 0)) ||
 				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && this.attributes.size() == umlClass.attributes.size()) ||
 				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && totalAttributes == 1)) {
@@ -467,19 +468,6 @@ public abstract class UMLAbstractClass {
 		}
 		if((commonOperations.size() + unmatchedCalledOperations.size() > Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0))) {
 			return new MatchResult(commonOperations.size() + unmatchedCalledOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, true);
-		}
-		if(totalAttributes == 1 && commonOperations.size() > 2) {
-			UMLAttribute attribute = !this.attributes.isEmpty() ? this.attributes.get(0) : umlClass.attributes.get(0);
-			boolean noneOfCommonOperationsAccessesAttribute = true;
-			for(UMLOperation commonOperation : commonOperations) {
-				if(commonOperation.getAllVariables().contains(attribute.getName())) {
-					noneOfCommonOperationsAccessesAttribute = false;
-					break;
-				}
-			}
-			if(noneOfCommonOperationsAccessesAttribute && commonOperations.size() >= Math.floor(totalOperations/3.0*2.0)) {
-				return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, true);
-			}
 		}
 		return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, false);
 	}

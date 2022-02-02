@@ -72,6 +72,7 @@ public class UMLModelDiff {
 	private List<Refactoring> refactorings;
 	private Set<String> deletedFolderPaths;
 	private Set<Pair<UMLOperation, UMLOperation>> processedOperationPairs = new HashSet<Pair<UMLOperation, UMLOperation>>();
+	private Set<Pair<UMLClass, UMLClass>> processedClassPairs = new HashSet<Pair<UMLClass, UMLClass>>();
 
 	public UMLModelDiff(UMLModel parentModel, UMLModel childModel) {
 		this.parentModel = parentModel;
@@ -822,6 +823,15 @@ public class UMLModelDiff {
 		TreeSet<UMLClassRenameDiff> diffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 		for(Iterator<UMLClass> addedClassIterator = addedClasses.iterator(); addedClassIterator.hasNext();) {
 			UMLClass addedClass = addedClassIterator.next();
+			if(matcher instanceof UMLClassMatcher.RelaxedRename) {
+				Pair<UMLClass, UMLClass> pair = Pair.of(removedClass, addedClass);
+				if(processedClassPairs.contains(pair)) {
+					continue;
+				}
+				else {
+					processedClassPairs.add(pair);
+				}
+			}
 			MatchResult matchResult = matcher.match(removedClass, addedClass);
 			if(matchResult.isMatch()) {
 				if(!conflictingMoveOfTopLevelClass(removedClass, addedClass) && !innerClassWithTheSameName(removedClass, addedClass)) {
@@ -837,6 +847,15 @@ public class UMLModelDiff {
 		TreeSet<UMLClassRenameDiff> diffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 		for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
 			UMLClass removedClass = removedClassIterator.next();
+			if(matcher instanceof UMLClassMatcher.RelaxedRename) {
+				Pair<UMLClass, UMLClass> pair = Pair.of(removedClass, addedClass);
+				if(processedClassPairs.contains(pair)) {
+					continue;
+				}
+				else {
+					processedClassPairs.add(pair);
+				}
+			}
 			MatchResult matchResult = matcher.match(removedClass, addedClass);
 			if(matchResult.isMatch()) {
 				if(!conflictingMoveOfTopLevelClass(removedClass, addedClass) && !innerClassWithTheSameName(removedClass, addedClass)) {

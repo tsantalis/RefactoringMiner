@@ -10,17 +10,18 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class InlineVariableRefactoring implements Refactoring {
 	private VariableDeclaration variableDeclaration;
-	private UMLOperation operationBefore;
-	private UMLOperation operationAfter;
+	private VariableDeclarationContainer operationBefore;
+	private VariableDeclarationContainer operationAfter;
 	private Set<AbstractCodeMapping> references;
 	private boolean insideExtractedOrInlinedMethod;
 
-	public InlineVariableRefactoring(VariableDeclaration variableDeclaration, UMLOperation operationBefore, UMLOperation operationAfter,
+	public InlineVariableRefactoring(VariableDeclaration variableDeclaration, VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter,
 			boolean insideExtractedOrInlinedMethod) {
 		this.variableDeclaration = variableDeclaration;
 		this.operationBefore = operationBefore;
@@ -45,11 +46,11 @@ public class InlineVariableRefactoring implements Refactoring {
 		return variableDeclaration;
 	}
 
-	public UMLOperation getOperationBefore() {
+	public VariableDeclarationContainer getOperationBefore() {
 		return operationBefore;
 	}
 
-	public UMLOperation getOperationAfter() {
+	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
 	}
 
@@ -65,7 +66,8 @@ public class InlineVariableRefactoring implements Refactoring {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
 		sb.append(variableDeclaration);
-		sb.append(" in method ");
+		String elementType = operationBefore instanceof UMLOperation ? "method" : "attribute";
+		sb.append(" in " + elementType + " ");
 		sb.append(operationBefore);
 		sb.append(" from class ");
 		sb.append(operationBefore.getClassName());
@@ -131,8 +133,9 @@ public class InlineVariableRefactoring implements Refactoring {
 		for(AbstractCodeMapping mapping : references) {
 			ranges.add(mapping.getFragment1().codeRange().setDescription("statement with the name of the inlined variable"));
 		}
+		String elementType = operationBefore instanceof UMLOperation ? "method" : "attribute";
 		ranges.add(operationBefore.codeRange()
-				.setDescription("original method declaration")
+				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
 		return ranges;
 	}
@@ -143,8 +146,9 @@ public class InlineVariableRefactoring implements Refactoring {
 		for(AbstractCodeMapping mapping : references) {
 			ranges.add(mapping.getFragment2().codeRange().setDescription("statement with the initializer of the inlined variable"));
 		}
+		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
 		ranges.add(operationAfter.codeRange()
-				.setDescription("method declaration with inlined variable")
+				.setDescription(elementType + " declaration with inlined variable")
 				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}

@@ -10,19 +10,20 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class SplitVariableRefactoring implements Refactoring {
 	private Set<VariableDeclaration> splitVariables;
 	private VariableDeclaration oldVariable;
-	private UMLOperation operationBefore;
-	private UMLOperation operationAfter;
+	private VariableDeclarationContainer operationBefore;
+	private VariableDeclarationContainer operationAfter;
 	private Set<AbstractCodeMapping> variableReferences;
 	private boolean insideExtractedOrInlinedMethod;
 	
 	public SplitVariableRefactoring(VariableDeclaration oldVariable, Set<VariableDeclaration> splitVariables,
-			UMLOperation operationBefore, UMLOperation operationAfter, Set<AbstractCodeMapping> variableReferences,
+			VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter, Set<AbstractCodeMapping> variableReferences,
 			boolean insideExtractedOrInlinedMethod) {
 		this.splitVariables = splitVariables;
 		this.oldVariable = oldVariable;
@@ -40,11 +41,11 @@ public class SplitVariableRefactoring implements Refactoring {
 		return oldVariable;
 	}
 
-	public UMLOperation getOperationBefore() {
+	public VariableDeclarationContainer getOperationBefore() {
 		return operationBefore;
 	}
 
-	public UMLOperation getOperationAfter() {
+	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
 	}
 
@@ -97,7 +98,8 @@ public class SplitVariableRefactoring implements Refactoring {
 		sb.append(oldVariable);
 		sb.append(" to ");
 		sb.append(splitVariables);
-		sb.append(" in method ");
+		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		sb.append(" in " + elementType + " ");
 		sb.append(operationAfter);
 		sb.append(" from class ").append(operationAfter.getClassName());
 		return sb.toString();
@@ -152,8 +154,9 @@ public class SplitVariableRefactoring implements Refactoring {
 		ranges.add(oldVariable.codeRange()
 				.setDescription("original variable declaration")
 				.setCodeElement(oldVariable.toString()));
+		String elementType = operationBefore instanceof UMLOperation ? "method" : "attribute";
 		ranges.add(operationBefore.codeRange()
-				.setDescription("original method declaration")
+				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
 		return ranges;
 	}
@@ -166,8 +169,9 @@ public class SplitVariableRefactoring implements Refactoring {
 					.setDescription("split variable declaration")
 					.setCodeElement(splitVariable.toString()));
 		}
+		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
 		ranges.add(operationAfter.codeRange()
-				.setDescription("method declaration with split variable")
+				.setDescription(elementType + " declaration with split variable")
 				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}

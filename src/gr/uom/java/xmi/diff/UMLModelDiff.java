@@ -3071,7 +3071,9 @@ public class UMLModelDiff {
 										v1.getVariableName().toLowerCase().contains(attribute.getName().toLowerCase()))) {
 							nonMappedStatementsDeclaringSameVariable++;
 							leafIterator1.remove();
-							LeafMapping mapping = new LeafMapping(v1.getInitializer(), attributeDeclaration.getInitializer(), operationBodyMapper.getOperation1(), operationBodyMapper.getOperation2());
+							LeafMapping mapping = new LeafMapping(v1.getInitializer(), attributeDeclaration.getInitializer(),
+									operationBodyMapper.getOperation1() != null ? operationBodyMapper.getOperation1() : operationBodyMapper.getAttribute1(),
+									operationBodyMapper.getOperation2() != null ? operationBodyMapper.getOperation2() : operationBodyMapper.getAttribute2());
 							operationBodyMapper.getMappings().add(mapping);
 							break;
 						}

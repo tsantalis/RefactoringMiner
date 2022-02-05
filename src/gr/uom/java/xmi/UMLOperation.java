@@ -21,7 +21,7 @@ import java.util.Set;
 
 import org.refactoringminer.util.AstUtils;
 
-public class UMLOperation implements Comparable<UMLOperation>, Serializable, LocationInfoProvider {
+public class UMLOperation implements Comparable<UMLOperation>, Serializable, VariableDeclarationContainer {
 	private LocationInfo locationInfo;
 	private String name;
 	private String visibility;
@@ -206,29 +206,6 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 		if(operationBody != null)
 			return operationBody.getAllVariables();
 		return new ArrayList<String>();
-	}
-
-	public List<VariableDeclaration> getAllVariableDeclarations() {
-		if(operationBody != null) {
-			List<VariableDeclaration> allVariableDeclarations = new ArrayList<VariableDeclaration>();
-			allVariableDeclarations.addAll(this.getParameterDeclarationList());
-			allVariableDeclarations.addAll(operationBody.getAllVariableDeclarations());
-			return allVariableDeclarations;
-		}
-		return getParameterDeclarationList();
-	}
-
-	public List<VariableDeclaration> getVariableDeclarationsInScope(LocationInfo location) {
-		List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
-		for(VariableDeclaration parameterDeclaration : getParameterDeclarationList()) {
-			if(parameterDeclaration.getScope().subsumes(location)) {
-				variableDeclarations.add(parameterDeclaration);
-			}
-		}
-		if(operationBody != null) {
-			variableDeclarations.addAll(operationBody.getVariableDeclarationsInScope(location));
-		}
-		return variableDeclarations;
 	}
 
 	public VariableDeclaration getVariableDeclaration(String variableName) {
@@ -989,12 +966,5 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Loc
 			return map;
 		}
 		return new LinkedHashMap<String, Set<String>>();
-	}
-
-	public CompositeStatementObject loopWithVariables(String currentElementName, String collectionName) {
-		if(operationBody != null) {
-			return operationBody.loopWithVariables(currentElementName, collectionName);
-		}
-		return null;
 	}
 }

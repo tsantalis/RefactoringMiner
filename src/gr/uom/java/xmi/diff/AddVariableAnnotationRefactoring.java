@@ -11,18 +11,19 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class AddVariableAnnotationRefactoring implements Refactoring {
 	private UMLAnnotation annotation;
 	private VariableDeclaration variableBefore;
 	private VariableDeclaration variableAfter;
-	private UMLOperation operationBefore;
-	private UMLOperation operationAfter;
+	private VariableDeclarationContainer operationBefore;
+	private VariableDeclarationContainer operationAfter;
 	private boolean insideExtractedOrInlinedMethod;
 	
 	public AddVariableAnnotationRefactoring(UMLAnnotation annotation, VariableDeclaration variableBefore,
-			VariableDeclaration variableAfter, UMLOperation operationBefore, UMLOperation operationAfter,
+			VariableDeclaration variableAfter, VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter,
 			boolean insideExtractedOrInlinedMethod) {
 		this.annotation = annotation;
 		this.variableBefore = variableBefore;
@@ -44,11 +45,11 @@ public class AddVariableAnnotationRefactoring implements Refactoring {
 		return variableAfter;
 	}
 
-	public UMLOperation getOperationBefore() {
+	public VariableDeclarationContainer getOperationBefore() {
 		return operationBefore;
 	}
 
-	public UMLOperation getOperationAfter() {
+	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
 	}
 
@@ -62,8 +63,9 @@ public class AddVariableAnnotationRefactoring implements Refactoring {
 		ranges.add(variableBefore.codeRange()
 				.setDescription("original variable declaration")
 				.setCodeElement(variableBefore.toString()));
+		String elementType = operationBefore instanceof UMLOperation ? "method" : "attribute";
 		ranges.add(operationBefore.codeRange()
-				.setDescription("original method declaration")
+				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
 		return ranges;
 	}
@@ -77,8 +79,9 @@ public class AddVariableAnnotationRefactoring implements Refactoring {
 		ranges.add(variableAfter.codeRange()
 				.setDescription("variable declaration with added annotation")
 				.setCodeElement(variableAfter.toString()));
+		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
 		ranges.add(operationAfter.codeRange()
-				.setDescription("method declaration with added variable annotation")
+				.setDescription(elementType + " declaration with added variable annotation")
 				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}
@@ -121,7 +124,8 @@ public class AddVariableAnnotationRefactoring implements Refactoring {
 		else
 			sb.append(" in variable ");
 		sb.append(variableAfter);
-		sb.append(" in method ");
+		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		sb.append(" in " + elementType + " ");
 		sb.append(operationAfter);
 		sb.append(" from class ");
 		sb.append(operationAfter.getClassName());

@@ -7,7 +7,7 @@ import java.util.Set;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
-import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ObjectCreationReplacement;
@@ -23,15 +23,15 @@ public abstract class AbstractCodeMapping {
 
 	private AbstractCodeFragment fragment1;
 	private AbstractCodeFragment fragment2;
-	private UMLOperation operation1;
-	private UMLOperation operation2;
+	private VariableDeclarationContainer operation1;
+	private VariableDeclarationContainer operation2;
 	private Set<Replacement> replacements;
 	private boolean identicalWithExtractedVariable;
 	private boolean identicalWithInlinedVariable;
 	private Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 	
 	public AbstractCodeMapping(AbstractCodeFragment fragment1, AbstractCodeFragment fragment2,
-			UMLOperation operation1, UMLOperation operation2) {
+			VariableDeclarationContainer operation1, VariableDeclarationContainer operation2) {
 		this.fragment1 = fragment1;
 		this.fragment2 = fragment2;
 		this.operation1 = operation1;
@@ -47,11 +47,11 @@ public abstract class AbstractCodeMapping {
 		return fragment2;
 	}
 
-	public UMLOperation getOperation1() {
+	public VariableDeclarationContainer getOperation1() {
 		return operation1;
 	}
 
-	public UMLOperation getOperation2() {
+	public VariableDeclarationContainer getOperation2() {
 		return operation2;
 	}
 

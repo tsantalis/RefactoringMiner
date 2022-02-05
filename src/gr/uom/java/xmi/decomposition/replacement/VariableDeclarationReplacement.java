@@ -1,6 +1,6 @@
 package gr.uom.java.xmi.decomposition.replacement;
 
-import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
@@ -8,11 +8,11 @@ public class VariableDeclarationReplacement extends Replacement {
 
 	private VariableDeclaration v1;
 	private VariableDeclaration v2;
-	private UMLOperation operation1;
-	private UMLOperation operation2;
+	private VariableDeclarationContainer operation1;
+	private VariableDeclarationContainer operation2;
 	
 	public VariableDeclarationReplacement(VariableDeclaration v1, VariableDeclaration v2,
-			UMLOperation operation1, UMLOperation operation2) {
+			VariableDeclarationContainer operation1, VariableDeclarationContainer operation2) {
 		super(v1.toString() + " | " + v1.getScope(), v2.toString() + " | " + v2.getScope(), ReplacementType.VARIABLE_DECLARATION);
 		this.v1 = v1;
 		this.v2 = v2;
@@ -28,11 +28,11 @@ public class VariableDeclarationReplacement extends Replacement {
 		return v2;
 	}
 
-	public UMLOperation getOperation1() {
+	public VariableDeclarationContainer getOperation1() {
 		return operation1;
 	}
 
-	public UMLOperation getOperation2() {
+	public VariableDeclarationContainer getOperation2() {
 		return operation2;
 	}
 

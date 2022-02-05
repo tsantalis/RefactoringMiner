@@ -12,15 +12,14 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 
 public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
 	private UMLAnonymousClass anonymousClass;
 	private LambdaExpressionObject lambda;
-	private UMLOperation operationBefore;
-	private UMLOperation operationAfter;
-	private UMLAttribute attributeBefore;
-	private UMLAttribute attributeAfter;
+	private VariableDeclarationContainer operationBefore;
+	private VariableDeclarationContainer operationAfter;
 
 	public ReplaceAnonymousWithLambdaRefactoring(UMLAnonymousClass anonymousClass, LambdaExpressionObject lambda,
 			UMLOperation operationBefore, UMLOperation operationAfter) {
@@ -34,8 +33,8 @@ public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
 			UMLAttribute attributeBefore, UMLAttribute attributeAfter) {
 		this.anonymousClass = anonymousClass;
 		this.lambda = lambda;
-		this.attributeBefore = attributeBefore;
-		this.attributeAfter = attributeAfter;
+		this.operationBefore = attributeBefore;
+		this.operationAfter = attributeAfter;
 	}
 
 	public UMLAnonymousClass getAnonymousClass() {
@@ -46,20 +45,12 @@ public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
 		return lambda;
 	}
 
-	public UMLOperation getOperationBefore() {
+	public VariableDeclarationContainer getOperationBefore() {
 		return operationBefore;
 	}
 
-	public UMLOperation getOperationAfter() {
+	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
-	}
-
-	public UMLAttribute getAttributeBefore() {
-		return attributeBefore;
-	}
-
-	public UMLAttribute getAttributeAfter() {
-		return attributeAfter;
 	}
 
 	@Override
@@ -68,16 +59,10 @@ public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
 		ranges.add(anonymousClass.codeRange()
 				.setDescription("anonymous class declaration")
 				.setCodeElement(anonymousClass.getCodePath()));
-		if(operationBefore != null)  {
-			ranges.add(operationBefore.codeRange()
-					.setDescription("original method declaration")
-					.setCodeElement(operationBefore.toString()));
-		}
-		if(attributeBefore != null) {
-			ranges.add(attributeBefore.codeRange()
-					.setDescription("original attribute declaration")
-					.setCodeElement(attributeBefore.toString()));
-		}
+		String elementType = operationBefore instanceof UMLOperation ? "method" : "attribute";
+		ranges.add(operationBefore.codeRange()
+				.setDescription("original " + elementType + " declaration")
+				.setCodeElement(operationBefore.toString()));
 		return ranges;
 	}
 
@@ -89,16 +74,10 @@ public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
 		ranges.add(lambda.codeRange()
 				.setDescription("lambda expression")
 				.setCodeElement(lambdaString));
-		if(operationAfter != null) {
-			ranges.add(operationAfter.codeRange()
-					.setDescription("method declaration with introduced lambda")
-					.setCodeElement(operationAfter.toString()));
-		}
-		if(attributeAfter != null) {
-			ranges.add(attributeAfter.codeRange()
-					.setDescription("attribute declaration with introduced lambda")
-					.setCodeElement(attributeAfter.toString()));
-		}
+		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		ranges.add(operationAfter.codeRange()
+				.setDescription(elementType + " declaration with introduced lambda")
+				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}
 
@@ -115,20 +94,14 @@ public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
 	@Override
 	public Set<ImmutablePair<String, String>> getInvolvedClassesBeforeRefactoring() {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
-		if(getOperationBefore() != null)
-			pairs.add(new ImmutablePair<String, String>(getOperationBefore().getLocationInfo().getFilePath(), getOperationBefore().getClassName()));
-		if(getAttributeBefore() != null)
-			pairs.add(new ImmutablePair<String, String>(getAttributeBefore().getLocationInfo().getFilePath(), getAttributeBefore().getClassName()));
+		pairs.add(new ImmutablePair<String, String>(getOperationBefore().getLocationInfo().getFilePath(), getOperationBefore().getClassName()));
 		return pairs;
 	}
 
 	@Override
 	public Set<ImmutablePair<String, String>> getInvolvedClassesAfterRefactoring() {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
-		if(getOperationAfter() != null)
-			pairs.add(new ImmutablePair<String, String>(getOperationAfter().getLocationInfo().getFilePath(), getOperationAfter().getClassName()));
-		if(getAttributeAfter() != null)
-			pairs.add(new ImmutablePair<String, String>(getAttributeAfter().getLocationInfo().getFilePath(), getAttributeAfter().getClassName()));
+		pairs.add(new ImmutablePair<String, String>(getOperationAfter().getLocationInfo().getFilePath(), getOperationAfter().getClassName()));
 		return pairs;
 	}
 
@@ -139,18 +112,11 @@ public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
 		sb.append(" with ");
 		String string = lambda.toString();
 		sb.append(string.contains("\n") ? string.substring(0, string.indexOf("\n")) : string);
-		if(operationAfter != null) {
-			sb.append(" in method ");
-			sb.append(operationAfter);
-			sb.append(" from class ");
-			sb.append(operationAfter.getClassName());
-		}
-		if(attributeAfter != null) {
-			sb.append(" in attribute ");
-			sb.append(attributeAfter);
-			sb.append(" from class ");
-			sb.append(attributeAfter.getClassName());
-		}
+		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		sb.append(" in " + elementType + " ");
+		sb.append(operationAfter);
+		sb.append(" from class ");
+		sb.append(operationAfter.getClassName());
 		return sb.toString();
 	}
 

@@ -74,6 +74,14 @@ public class LambdaExpressionObject implements LocationInfoProvider {
 		return parameters;
 	}
 
+	public List<String> getParameterNameList() {
+		List<String> parameterNameList = new ArrayList<String>();
+		for(VariableDeclaration parameter : parameters) {
+			parameterNameList.add(parameter.getVariableName());
+		}
+		return parameterNameList;
+	}
+
 	@Override
 	public LocationInfo getLocationInfo() {
 		return locationInfo;

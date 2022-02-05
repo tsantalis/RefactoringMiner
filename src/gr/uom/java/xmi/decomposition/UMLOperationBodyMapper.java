@@ -332,6 +332,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			this.modelDiff = classDiff.getModelDiff();
 		this.operation1 = parentMapper.operation1;
 		this.operation2 = parentMapper.operation2;
+		this.attribute1 = parentMapper.attribute1;
+		this.attribute2 = parentMapper.attribute2;
 		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
 		this.nonMappedLeavesT1 = new ArrayList<AbstractCodeFragment>();
 		this.nonMappedLeavesT2 = new ArrayList<AbstractCodeFragment>();
@@ -601,6 +603,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			this.modelDiff = classDiff.getModelDiff();
 		this.operation1 = parentMapper.operation1;
 		this.operation2 = parentMapper.operation2;
+		this.attribute1 = parentMapper.attribute1;
+		this.attribute2 = parentMapper.attribute2;
 		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
 		this.nonMappedLeavesT1 = new ArrayList<AbstractCodeFragment>();
 		this.nonMappedLeavesT2 = new ArrayList<AbstractCodeFragment>();
@@ -1026,6 +1030,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public UMLOperation getOperation2() {
 		return operation2;
+	}
+
+	public UMLAttribute getAttribute1() {
+		return attribute1;
+	}
+
+	public UMLAttribute getAttribute2() {
+		return attribute2;
 	}
 
 	public Set<Pair<VariableDeclaration, VariableDeclaration>> getMatchedVariables() {
@@ -1621,7 +1633,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			CompositeStatementObject statement2, Map<String, String> parameterToArgumentMap, double score) {
 		UMLOperation operation1 = codeFragmentOperationMap1.containsKey(statement1) ? codeFragmentOperationMap1.get(statement1) : this.operation1;
 		UMLOperation operation2 = codeFragmentOperationMap2.containsKey(statement2) ? codeFragmentOperationMap2.get(statement2) : this.operation2;
-		CompositeStatementObjectMapping mapping = new CompositeStatementObjectMapping(statement1, statement2, operation1, operation2, score);
+		CompositeStatementObjectMapping mapping = new CompositeStatementObjectMapping(statement1, statement2, operation1 != null ? operation1 : attribute1, operation2 != null ? operation2 : attribute2, score);
 		for(String key : parameterToArgumentMap.keySet()) {
 			String value = parameterToArgumentMap.get(key);
 			if(!key.equals(value) && ReplacementUtil.contains(statement2.getString(), key) && ReplacementUtil.contains(statement1.getString(), value)) {
@@ -2123,7 +2135,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private LeafMapping createLeafMapping(AbstractCodeFragment leaf1, AbstractCodeFragment leaf2, Map<String, String> parameterToArgumentMap) {
 		UMLOperation operation1 = codeFragmentOperationMap1.containsKey(leaf1) ? codeFragmentOperationMap1.get(leaf1) : this.operation1;
 		UMLOperation operation2 = codeFragmentOperationMap2.containsKey(leaf2) ? codeFragmentOperationMap2.get(leaf2) : this.operation2;
-		LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1, operation2);
+		LeafMapping mapping = new LeafMapping(leaf1, leaf2, operation1 != null ? operation1 : attribute1, operation2 != null ? operation2 : attribute2);
 		for(String key : parameterToArgumentMap.keySet()) {
 			String value = parameterToArgumentMap.get(key);
 			if(!key.equals(value) && ReplacementUtil.contains(leaf2.getString(), key) && ReplacementUtil.contains(leaf1.getString(), value)) {
@@ -3891,7 +3903,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);
 							this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
 							this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
-							if(this.operation1 != null && this.operation2 != null) {
+							if((this.operation1 != null && this.operation2 != null) || (this.attribute1 != null && this.attribute2 != null)) {
 								this.refactorings.addAll(mapper.getRefactorings());
 							}
 							lambdaMappers.add(mapper);
@@ -3932,6 +3944,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								else if(this.attribute1 != null && this.attribute2 != null) {
 									ReplaceAnonymousWithLambdaRefactoring ref = new ReplaceAnonymousWithLambdaRefactoring(anonymousClass1, lambda2, attribute1, attribute2);
 									this.refactorings.add(ref);
+									this.refactorings.addAll(mapper.getRefactorings());
 								}
 								Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), lambda2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION_REPLACED_WITH_LAMBDA);
 								replacementInfo.addReplacement(replacement);

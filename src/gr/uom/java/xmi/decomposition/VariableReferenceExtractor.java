@@ -6,6 +6,7 @@ import java.util.Set;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 
 public class VariableReferenceExtractor {
 
@@ -23,10 +24,11 @@ public class VariableReferenceExtractor {
 			}
 			AbstractCall invocation1 = fragment1.invocationCoveringEntireFragment();
 			AbstractCall invocation2 = fragment2.invocationCoveringEntireFragment();
-			if(invocation1 != null && invocation2 != null) {
+			if(invocation1 != null && invocation2 != null &&
+					mapping.getOperation1() instanceof UMLOperation && mapping.getOperation2() instanceof UMLOperation) {
 				//add recursive calls to the mappings
-				if(invocation1.matchesOperation(mapping.getOperation1(), mapping.getOperation1(), null) &&
-						invocation2.matchesOperation(mapping.getOperation2(), mapping.getOperation2(), null)) {
+				if(invocation1.matchesOperation((UMLOperation)mapping.getOperation1(), (UMLOperation)mapping.getOperation1(), null) &&
+						invocation2.matchesOperation((UMLOperation)mapping.getOperation2(), (UMLOperation)mapping.getOperation2(), null)) {
 					references.add(mapping);
 				}
 			}
@@ -34,7 +36,7 @@ public class VariableReferenceExtractor {
 		return references;
 	}
 
-	private static boolean matchingLocalVariable(VariableDeclaration declaration, AbstractCodeFragment fragment, UMLOperation operation) {
+	private static boolean matchingLocalVariable(VariableDeclaration declaration, AbstractCodeFragment fragment, VariableDeclarationContainer operation) {
 		if(declaration.isAttribute()) {
 			List<VariableDeclaration> variableDeclarations = operation.getAllVariableDeclarations();
 			for(VariableDeclaration localVariableDeclaration : variableDeclarations) {

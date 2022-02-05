@@ -2,15 +2,18 @@ package gr.uom.java.xmi;
 
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
+import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
+import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, LocationInfoProvider, VariableDeclarationProvider {
+public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, VariableDeclarationProvider, VariableDeclarationContainer {
 	private LocationInfo locationInfo;
 	private String name;
 	private UMLType type;
@@ -60,6 +63,63 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Loc
 			}
 		}
 		return null;
+	}
+
+	public List<VariableDeclaration> getParameterDeclarationList() {
+		AbstractExpression initializer = variableDeclaration.getInitializer();
+		if(initializer != null) {
+			for(LambdaExpressionObject lambda : initializer.getLambdas()) {
+				if(match(initializer, lambda)) {
+					return lambda.getParameters();
+				}
+			}
+		}
+		return Collections.emptyList();
+	}
+
+	public List<String> getParameterNameList() {
+		AbstractExpression initializer = variableDeclaration.getInitializer();
+		if(initializer != null) {
+			for(LambdaExpressionObject lambda : initializer.getLambdas()) {
+				if(match(initializer, lambda)) {
+					return lambda.getParameterNameList();
+				}
+			}
+		}
+		return Collections.emptyList();
+	}
+
+	public OperationBody getBody() {
+		AbstractExpression initializer = variableDeclaration.getInitializer();
+		if(initializer != null) {
+			for(LambdaExpressionObject lambda : initializer.getLambdas()) {
+				if(match(initializer, lambda)) {
+					return lambda.getBody();
+				}
+			}
+		}
+		return null;
+	}
+
+	private boolean match(AbstractExpression initializer, LambdaExpressionObject lambda) {
+		return lambda.getLocationInfo().getStartLine() == initializer.getLocationInfo().getStartLine() &&
+				lambda.getLocationInfo().getEndLine() == initializer.getLocationInfo().getEndLine();
+	}
+
+	public List<LambdaExpressionObject> getAllLambdas() {
+		AbstractExpression initializer = variableDeclaration.getInitializer();
+		if(initializer != null) {
+			return initializer.getLambdas();
+		}
+		return Collections.emptyList();
+	}
+
+	public List<String> getAllVariables() {
+		AbstractExpression initializer = variableDeclaration.getInitializer();
+		if(initializer != null) {
+			return initializer.getVariables();
+		}
+		return Collections.emptyList();
 	}
 
 	public String getVisibility() {

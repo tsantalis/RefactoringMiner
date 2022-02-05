@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -14,7 +14,7 @@ import gr.uom.java.xmi.diff.StringDistance;
 public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafMapping> {
 
 	public LeafMapping(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
-			UMLOperation operation1, UMLOperation operation2) {
+			VariableDeclarationContainer operation1, VariableDeclarationContainer operation2) {
 		super(statement1, statement2, operation1, operation2);
 	}
 

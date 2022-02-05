@@ -10,20 +10,21 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class ChangeVariableTypeRefactoring implements Refactoring {
 	private VariableDeclaration originalVariable;
 	private VariableDeclaration changedTypeVariable;
-	private UMLOperation operationBefore;
-	private UMLOperation operationAfter;
+	private VariableDeclarationContainer operationBefore;
+	private VariableDeclarationContainer operationAfter;
 	private Set<AbstractCodeMapping> variableReferences;
 	private Set<Refactoring> relatedRefactorings;
 	private boolean insideExtractedOrInlinedMethod;
 
 	public ChangeVariableTypeRefactoring(VariableDeclaration originalVariable, VariableDeclaration changedTypeVariable,
-			UMLOperation operationBefore, UMLOperation operationAfter, Set<AbstractCodeMapping> variableReferences,
+			VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter, Set<AbstractCodeMapping> variableReferences,
 			boolean insideExtractedOrInlinedMethod) {
 		this.originalVariable = originalVariable;
 		this.changedTypeVariable = changedTypeVariable;
@@ -60,11 +61,11 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 		return changedTypeVariable;
 	}
 
-	public UMLOperation getOperationBefore() {
+	public VariableDeclarationContainer getOperationBefore() {
 		return operationBefore;
 	}
 
-	public UMLOperation getOperationAfter() {
+	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
 	}
 
@@ -83,7 +84,8 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 		sb.append(qualified ? originalVariable.toQualifiedString() : originalVariable.toString());
 		sb.append(" to ");
 		sb.append(qualified ? changedTypeVariable.toQualifiedString() : changedTypeVariable.toString());
-		sb.append(" in method ");
+		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		sb.append(" in " + elementType + " ");
 		sb.append(qualified ? operationAfter.toQualifiedString() : operationAfter.toString());
 		sb.append(" from class ").append(operationAfter.getClassName());
 		return sb.toString();
@@ -150,8 +152,9 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 		ranges.add(originalVariable.codeRange()
 				.setDescription("original variable declaration")
 				.setCodeElement(originalVariable.toString()));
+		String elementType = operationBefore instanceof UMLOperation ? "method" : "attribute";
 		ranges.add(operationBefore.codeRange()
-				.setDescription("original method declaration")
+				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
 		return ranges;
 	}
@@ -162,8 +165,9 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 		ranges.add(changedTypeVariable.codeRange()
 				.setDescription("changed-type variable declaration")
 				.setCodeElement(changedTypeVariable.toString()));
+		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
 		ranges.add(operationAfter.codeRange()
-				.setDescription("method declaration with changed variable type")
+				.setDescription(elementType + " declaration with changed variable type")
 				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}

@@ -10,22 +10,23 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class RenameVariableRefactoring implements Refactoring {
 	private VariableDeclaration originalVariable;
 	private VariableDeclaration renamedVariable;
-	private UMLOperation operationBefore;
-	private UMLOperation operationAfter;
+	private VariableDeclarationContainer operationBefore;
+	private VariableDeclarationContainer operationAfter;
 	private Set<AbstractCodeMapping> variableReferences;
 	private boolean insideExtractedOrInlinedMethod;
 
 	public RenameVariableRefactoring(
 			VariableDeclaration originalVariable,
 			VariableDeclaration renamedVariable,
-			UMLOperation operationBefore,
-			UMLOperation operationAfter,
+			VariableDeclarationContainer operationBefore,
+			VariableDeclarationContainer operationAfter,
 			Set<AbstractCodeMapping> variableReferences,
 			boolean insideExtractedOrInlinedMethod) {
 		this.originalVariable = originalVariable;
@@ -64,11 +65,11 @@ public class RenameVariableRefactoring implements Refactoring {
 		return renamedVariable;
 	}
 
-	public UMLOperation getOperationBefore() {
+	public VariableDeclarationContainer getOperationBefore() {
 		return operationBefore;
 	}
 
-	public UMLOperation getOperationAfter() {
+	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
 	}
 
@@ -86,7 +87,8 @@ public class RenameVariableRefactoring implements Refactoring {
 		sb.append(originalVariable);
 		sb.append(" to ");
 		sb.append(renamedVariable);
-		sb.append(" in method ");
+		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		sb.append(" in " + elementType + " ");
 		sb.append(operationAfter);
 		sb.append(" from class ").append(operationAfter.getClassName());
 		return sb.toString();
@@ -153,8 +155,9 @@ public class RenameVariableRefactoring implements Refactoring {
 		ranges.add(originalVariable.codeRange()
 				.setDescription("original variable declaration")
 				.setCodeElement(originalVariable.toString()));
+		String elementType = operationBefore instanceof UMLOperation ? "method" : "attribute";
 		ranges.add(operationBefore.codeRange()
-				.setDescription("original method declaration")
+				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
 		return ranges;
 	}
@@ -165,8 +168,9 @@ public class RenameVariableRefactoring implements Refactoring {
 		ranges.add(renamedVariable.codeRange()
 				.setDescription("renamed variable declaration")
 				.setCodeElement(renamedVariable.toString()));
+		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
 		ranges.add(operationAfter.codeRange()
-				.setDescription("method declaration with renamed variable")
+				.setDescription(elementType + " declaration with renamed variable")
 				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}

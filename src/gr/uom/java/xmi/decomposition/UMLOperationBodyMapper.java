@@ -3354,7 +3354,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										additionallyMatchedStatements2.add(codeFragment); 
 									} 
 									if((invocation.getExpression() != null && invocation.getExpression().equals(invocation1.actualString())) ||
-											(invocation instanceof OperationInvocation && ((OperationInvocation)invocation).callChainIntersection((OperationInvocation)invocation1).size() > 0)) {
+											invocation.callChainIntersection(invocation1).size() > 0) {
 										additionallyMatchedStatements2.add(codeFragment); 
 									} 
 								} 
@@ -3418,7 +3418,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										additionallyMatchedStatements1.add(codeFragment);
 									}
 									if((invocation.getExpression() != null && invocation.getExpression().equals(invocation2.actualString())) ||
-											(invocation instanceof OperationInvocation && ((OperationInvocation)invocation).callChainIntersection((OperationInvocation)invocation2).size() > 0)) {
+											invocation.callChainIntersection(invocation2).size() > 0) {
 										additionallyMatchedStatements1.add(codeFragment);
 									}
 								}

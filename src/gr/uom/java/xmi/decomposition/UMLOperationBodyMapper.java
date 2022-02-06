@@ -3789,16 +3789,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 							(invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements()) ||
 							invocationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)))) {
-						UMLAnonymousClass anonymousClass1 = null;
-						if(operation1 != null)
-							anonymousClass1 = operation1.findAnonymousClass(anonymousClassDeclaration1);
-						if(attribute1 != null)
-							anonymousClass1 = attribute1.findAnonymousClass(anonymousClassDeclaration1);
-						UMLAnonymousClass anonymousClass2 = null;
-						if(operation2 != null)
-							anonymousClass2 = operation2.findAnonymousClass(anonymousClassDeclaration2);
-						if(attribute2 != null)
-							anonymousClass2 = attribute2.findAnonymousClass(anonymousClassDeclaration2);
+						UMLAnonymousClass anonymousClass1 = findAnonymousClass1(anonymousClassDeclaration1);
+						UMLAnonymousClass anonymousClass2 = findAnonymousClass2(anonymousClassDeclaration2);
 						UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
 						anonymousClassDiff.process();
 						List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
@@ -3823,11 +3815,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		else if(anonymousClassDeclarations1.size() == 0 && anonymousClassDeclarations2.size() == 1 && (operation2 != null || attribute2 != null)) {
 			AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(0);
-			UMLAnonymousClass anonymousClass2 = null;
-			if(operation2 != null)
-				anonymousClass2 = operation2.findAnonymousClass(anonymousClassDeclaration2);
-			if(attribute2 != null)
-				anonymousClass2 = attribute2.findAnonymousClass(anonymousClassDeclaration2);
+			UMLAnonymousClass anonymousClass2 = findAnonymousClass2(anonymousClassDeclaration2);
 			if(anonymousClass2.getOperations().size() == 1) {
 				UMLOperation anonymousClass2Operation = anonymousClass2.getOperations().get(0);
 				if(anonymousClass2Operation.getBody() != null) {
@@ -3853,11 +3841,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		else if(anonymousClassDeclarations1.size() == 1 && anonymousClassDeclarations2.size() == 0 && (operation1 != null || attribute1 != null)) {
 			AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(0);
-			UMLAnonymousClass anonymousClass1 = null;
-			if(operation1 != null)
-				anonymousClass1 = operation1.findAnonymousClass(anonymousClassDeclaration1);
-			if(attribute1 != null)
-				anonymousClass1 = attribute1.findAnonymousClass(anonymousClassDeclaration1);
+			UMLAnonymousClass anonymousClass1 = findAnonymousClass1(anonymousClassDeclaration1);
 			if(anonymousClass1.getOperations().size() == 1) {
 				UMLOperation anonymousClass1Operation = anonymousClass1.getOperations().get(0);
 				if(anonymousClass1Operation.getBody() != null) {
@@ -3918,11 +3902,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(anonymousClassDeclarations1.size() >= 1 && (operation1 != null || attribute1 != null) && lambdas2.size() >= 1) {
 			for(int i=0; i<anonymousClassDeclarations1.size(); i++) {
 				AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);
-				UMLAnonymousClass anonymousClass1 = null;
-				if(operation1 != null)
-					anonymousClass1 = operation1.findAnonymousClass(anonymousClassDeclaration1);
-				if(attribute1 != null)
-					anonymousClass1 = attribute1.findAnonymousClass(anonymousClassDeclaration1);
+				UMLAnonymousClass anonymousClass1 = findAnonymousClass1(anonymousClassDeclaration1);
 				if(anonymousClass1.getOperations().size() == 1) {
 					UMLOperation anonymousClass1Operation = anonymousClass1.getOperations().get(0);
 					for(int j=0; j<lambdas2.size(); j++) {
@@ -3963,6 +3943,40 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return replacementInfo.getReplacements();
 		}
 		return null;
+	}
+
+	private UMLAnonymousClass findAnonymousClass1(AnonymousClassDeclarationObject anonymousClassDeclaration1) {
+		UMLAnonymousClass anonymousClass1 = null;
+		if(operation1 != null)
+			anonymousClass1 = operation1.findAnonymousClass(anonymousClassDeclaration1);
+		if(attribute1 != null)
+			anonymousClass1 = attribute1.findAnonymousClass(anonymousClassDeclaration1);
+		if(anonymousClass1 == null && parentMapper != null) {
+			for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
+				anonymousClass1 = childMapper.getOperation1().findAnonymousClass(anonymousClassDeclaration1);
+				if(anonymousClass1 != null) {
+					break;
+				}
+			}
+		}
+		return anonymousClass1;
+	}
+
+	private UMLAnonymousClass findAnonymousClass2(AnonymousClassDeclarationObject anonymousClassDeclaration2) {
+		UMLAnonymousClass anonymousClass2 = null;
+		if(operation2 != null)
+			anonymousClass2 = operation2.findAnonymousClass(anonymousClassDeclaration2);
+		if(attribute2 != null)
+			anonymousClass2 = attribute2.findAnonymousClass(anonymousClassDeclaration2);
+		if(anonymousClass2 == null && parentMapper != null) {
+			for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
+				anonymousClass2 = childMapper.getOperation2().findAnonymousClass(anonymousClassDeclaration2);
+				if(anonymousClass2 != null) {
+					break;
+				}
+			}
+		}
+		return anonymousClass2;
 	}
 
 	private int ignoredNonMappedElements(List<AbstractCall> invocations, List<AbstractCodeFragment> nonMappedLeaves, List<CompositeStatementObject> nonMappedInnerNodes) {

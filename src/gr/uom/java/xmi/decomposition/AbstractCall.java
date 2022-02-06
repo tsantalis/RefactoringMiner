@@ -2,6 +2,7 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -599,6 +600,12 @@ public abstract class AbstractCall implements LocationInfoProvider {
 			newCall.arguments.add(
 				ReplacementUtil.performReplacement(argument, oldExpression, newExpression));
 		}
+	}
+	public Set<String> callChainIntersection(AbstractCall call) {
+		if(this instanceof OperationInvocation && call instanceof OperationInvocation) {
+			return ((OperationInvocation)this).callChainIntersection((OperationInvocation)call);
+		}
+		return Collections.emptySet();
 	}
 
 	public CodeRange codeRange() {

@@ -494,22 +494,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							newMapping.addReplacements(replacements);
 							TreeSet<LeafMapping> mappingSet = new TreeSet<>();
 							mappingSet.add(newMapping);
+							if(!additionallyMatchedStatements1.contains(composite)) {
+								additionallyMatchedStatements1.add(composite);
+							}
 							ReplaceLoopWithPipelineRefactoring ref = new ReplaceLoopWithPipelineRefactoring(additionallyMatchedStatements1, additionallyMatchedStatements2, operation1, operation2);
 							newMapping.addRefactoring(ref);
 							addToMappings(newMapping, mappingSet);
 							leaves2.remove(newMapping.getFragment2());
-							innerNodeIterator1.remove();
 						}
 					}
 				}
+				innerNodeIterator1.remove();
 			}
 		}
 		for(int i = numberOfMappings; i < mappings.size(); i++) {
+			AbstractCodeMapping mapping = mappings.get(i);
+			AbstractCodeFragment fragment1 = mapping.getFragment1();
+			AbstractCodeFragment fragment2 = mapping.getFragment2();
 			for(ListIterator<CompositeStatementObject> innerNodeIterator1 = innerNodes1.listIterator(); innerNodeIterator1.hasNext();) {
 				CompositeStatementObject composite = innerNodeIterator1.next();
-				AbstractCodeMapping mapping = mappings.get(i);
-				AbstractCodeFragment fragment1 = mapping.getFragment1();
-				AbstractCodeFragment fragment2 = mapping.getFragment2();
 				if(composite.getExpressions().contains(fragment1)) {
 					AbstractCodeFragment streamAPICallStatement = null;
 					List<AbstractCall> streamAPICalls = null;
@@ -586,6 +589,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						newMapping.addReplacements(replacements);
 						TreeSet<LeafMapping> mappingSet = new TreeSet<>();
 						mappingSet.add(newMapping);
+						if(!additionallyMatchedStatements1.contains(composite)) {
+							additionallyMatchedStatements1.add(composite);
+						}
 						ReplaceLoopWithPipelineRefactoring ref = new ReplaceLoopWithPipelineRefactoring(additionallyMatchedStatements1, additionallyMatchedStatements2, operation1, operation2);
 						newMapping.addRefactoring(ref);
 						addToMappings(newMapping, mappingSet);

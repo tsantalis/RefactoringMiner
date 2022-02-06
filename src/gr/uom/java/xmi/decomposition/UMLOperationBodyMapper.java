@@ -589,9 +589,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						newMapping.addReplacements(replacements);
 						TreeSet<LeafMapping> mappingSet = new TreeSet<>();
 						mappingSet.add(newMapping);
-						if(!additionallyMatchedStatements1.contains(composite)) {
-							additionallyMatchedStatements1.add(composite);
-						}
 						ReplaceLoopWithPipelineRefactoring ref = new ReplaceLoopWithPipelineRefactoring(additionallyMatchedStatements1, additionallyMatchedStatements2, operation1, operation2);
 						newMapping.addRefactoring(ref);
 						addToMappings(newMapping, mappingSet);

@@ -5,6 +5,7 @@ import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.replacement.AddVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
@@ -1196,6 +1197,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public int nonMappedElementsT2CallingAddedOperation(List<UMLOperation> addedOperations) {
+		VariableDeclarationContainer op2 = operation2 != null ? operation2 : attribute2;
 		int nonMappedInnerNodeCount = 0;
 		for(CompositeStatementObject composite : getNonMappedInnerNodesT2()) {
 			if(composite.countableStatement()) {
@@ -1203,7 +1205,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(String key : methodInvocationMap.keySet()) {
 					for(AbstractCall invocation : methodInvocationMap.get(key)) {
 						for(UMLOperation operation : addedOperations) {
-							if(invocation.matchesOperation(operation, operation2, modelDiff)) {
+							if(invocation.matchesOperation(operation, op2, modelDiff)) {
 								nonMappedInnerNodeCount++;
 								break;
 							}
@@ -1219,7 +1221,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(String key : methodInvocationMap.keySet()) {
 					for(AbstractCall invocation : methodInvocationMap.get(key)) {
 						for(UMLOperation operation : addedOperations) {
-							if(invocation.matchesOperation(operation, operation2, modelDiff)) {
+							if(invocation.matchesOperation(operation, op2, modelDiff)) {
 								nonMappedLeafCount++;
 								break;
 							}
@@ -1232,6 +1234,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public int nonMappedElementsT1CallingRemovedOperation(List<UMLOperation> removedOperations) {
+		VariableDeclarationContainer op1 = operation1 != null ? operation1 : attribute1;
 		int nonMappedInnerNodeCount = 0;
 		for(CompositeStatementObject composite : getNonMappedInnerNodesT1()) {
 			if(composite.countableStatement()) {
@@ -1239,7 +1242,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(String key : methodInvocationMap.keySet()) {
 					for(AbstractCall invocation : methodInvocationMap.get(key)) {
 						for(UMLOperation operation : removedOperations) {
-							if(invocation.matchesOperation(operation, operation1, modelDiff)) {
+							if(invocation.matchesOperation(operation, op1, modelDiff)) {
 								nonMappedInnerNodeCount++;
 								break;
 							}
@@ -1255,7 +1258,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(String key : methodInvocationMap.keySet()) {
 					for(AbstractCall invocation : methodInvocationMap.get(key)) {
 						for(UMLOperation operation : removedOperations) {
-							if(invocation.matchesOperation(operation, operation1, modelDiff)) {
+							if(invocation.matchesOperation(operation, op1, modelDiff)) {
 								nonMappedLeafCount++;
 								break;
 							}
@@ -1265,32 +1268,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return nonMappedLeafCount + nonMappedInnerNodeCount;
-	}
-
-	public boolean callsRemovedAndAddedOperation(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations) {
-		boolean removedOperationCalled = false;
-		for(AbstractCall invocation : operation1.getAllOperationInvocations()) {
-			for(UMLOperation operation : removedOperations) {
-				if(invocation.matchesOperation(operation, operation1, modelDiff)) {
-					removedOperationCalled = true;
-					break;
-				}
-			}
-			if(removedOperationCalled)
-				break;
-		}
-		boolean addedOperationCalled = false;
-		for(AbstractCall invocation : operation2.getAllOperationInvocations()) {
-			for(UMLOperation operation : addedOperations) {
-				if(invocation.matchesOperation(operation, operation2, modelDiff)) {
-					addedOperationCalled = true;
-					break;
-				}
-			}
-			if(addedOperationCalled)
-				break;
-		}
-		return removedOperationCalled && addedOperationCalled;
 	}
 
 	public int exactMatches() {
@@ -5999,19 +5976,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(mappedLeavesSize == 0) {
 				//check for possible extract or inline
 				if(leaveSize2 <= 2) {
+					VariableDeclarationContainer op2 = operation2 != null ? operation2 : attribute2;
 					for(AbstractCodeFragment leaf2 : leaves2) {
 						AbstractCall invocation = leaf2.invocationCoveringEntireFragment();
 						if(invocation == null) {
 							invocation = leaf2.assignmentInvocationCoveringEntireStatement();
 						}
-						if(invocation != null && matchesOperation(invocation, addedOperations, operation2)) {
+						if(invocation != null && matchesOperation(invocation, addedOperations, op2)) {
 							mappedLeavesSize++;
 						}
 						if(invocation != null && invocation.actualString().contains(" -> ")) {
 							for(LambdaExpressionObject lambda : leaf2.getLambdas()) {
 								if(lambda.getBody() != null) {
 									for(AbstractCall inv : lambda.getBody().getAllOperationInvocations()) {
-										if(matchesOperation(inv, addedOperations, operation2)) {
+										if(matchesOperation(inv, addedOperations, op2)) {
 											mappedLeavesSize++;
 										}
 									}
@@ -6021,7 +5999,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									for(String key : methodInvocationMap.keySet()) {
 										List<AbstractCall> invocations = methodInvocationMap.get(key);
 										for(AbstractCall inv : invocations) {
-											if(matchesOperation(inv, addedOperations, operation2)) {
+											if(matchesOperation(inv, addedOperations, op2)) {
 												mappedLeavesSize++;
 											}
 										}
@@ -6032,19 +6010,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				else if(leaveSize1 <= 2) {
+					VariableDeclarationContainer op1 = operation1 != null ? operation1 : attribute1;
 					for(AbstractCodeFragment leaf1 : leaves1) {
 						AbstractCall invocation = leaf1.invocationCoveringEntireFragment();
 						if(invocation == null) {
 							invocation = leaf1.assignmentInvocationCoveringEntireStatement();
 						}
-						if(invocation != null && matchesOperation(invocation, removedOperations, operation1)) {
+						if(invocation != null && matchesOperation(invocation, removedOperations, op1)) {
 							mappedLeavesSize++;
 						}
 						if(invocation != null && invocation.actualString().contains(" -> ")) {
 							for(LambdaExpressionObject lambda : leaf1.getLambdas()) {
 								if(lambda.getBody() != null) {
 									for(AbstractCall inv : lambda.getBody().getAllOperationInvocations()) {
-										if(matchesOperation(inv, removedOperations, operation1)) {
+										if(matchesOperation(inv, removedOperations, op1)) {
 											mappedLeavesSize++;
 										}
 									}
@@ -6054,7 +6033,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									for(String key : methodInvocationMap.keySet()) {
 										List<AbstractCall> invocations = methodInvocationMap.get(key);
 										for(AbstractCall inv : invocations) {
-											if(matchesOperation(inv, removedOperations, operation1)) {
+											if(matchesOperation(inv, removedOperations, op1)) {
 												mappedLeavesSize++;
 											}
 										}
@@ -6138,7 +6117,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return score;
 	}
 
-	private boolean matchesOperation(AbstractCall invocation, List<UMLOperation> operations, UMLOperation callerOperation) {
+	private boolean matchesOperation(AbstractCall invocation, List<UMLOperation> operations, VariableDeclarationContainer callerOperation) {
 		for(UMLOperation operation : operations) {
 			if(invocation.matchesOperation(operation, callerOperation, modelDiff))
 				return true;

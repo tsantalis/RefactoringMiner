@@ -2,6 +2,8 @@ package gr.uom.java.xmi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
@@ -43,6 +45,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	List<String> getAllVariables();
 	String getClassName();
 	String toQualifiedString();
+	Map<String, Set<VariableDeclaration>> variableDeclarationMap();
 
 	default CompositeStatementObject loopWithVariables(String currentElementName, String collectionName) {
 		OperationBody operationBody = getBody();

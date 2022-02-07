@@ -11,7 +11,11 @@ import gr.uom.java.xmi.diff.StringDistance;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, VariableDeclarationProvider, VariableDeclarationContainer {
 	private LocationInfo locationInfo;
@@ -27,6 +31,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	private List<UMLAnonymousClass> anonymousClassList;
 	private UMLJavadoc javadoc;
 	private List<UMLComment> comments;
+	private Map<String, Set<VariableDeclaration>> variableDeclarationMap;
 
 	public UMLAttribute(String name, UMLType type, LocationInfo locationInfo) {
 		this.locationInfo = locationInfo;
@@ -120,6 +125,23 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 			return initializer.getVariables();
 		}
 		return Collections.emptyList();
+	}
+
+	public Map<String, Set<VariableDeclaration>> variableDeclarationMap() {
+		if(this.variableDeclarationMap == null) {
+			this.variableDeclarationMap = new LinkedHashMap<String, Set<VariableDeclaration>>();
+			for(VariableDeclaration declaration : getAllVariableDeclarations()) {
+				if(variableDeclarationMap.containsKey(declaration.getVariableName())) {
+					variableDeclarationMap.get(declaration.getVariableName()).add(declaration);
+				}
+				else {
+					Set<VariableDeclaration> variableDeclarations = new LinkedHashSet<VariableDeclaration>();
+					variableDeclarations.add(declaration);
+					variableDeclarationMap.put(declaration.getVariableName(), variableDeclarations);
+				}
+			}
+		}
+		return variableDeclarationMap;
 	}
 
 	public String getVisibility() {

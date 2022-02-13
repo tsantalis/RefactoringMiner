@@ -205,21 +205,6 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return new ArrayList<String>();
 	}
 
-	public VariableDeclaration getVariableDeclaration(String variableName) {
-		if(operationBody != null) {
-			VariableDeclaration variableDeclatation = operationBody.getVariableDeclaration(variableName);
-			if(variableDeclatation != null) {
-				return variableDeclatation;
-			}
-		}
-		for(VariableDeclaration parameterDeclaration : getParameterDeclarationList()) {
-			if(parameterDeclaration.getVariableName().equals(variableName)) {
-				return parameterDeclaration;
-			}
-		}
-		return null;
-	}
-
 	public Map<String, Set<VariableDeclaration>> variableDeclarationMap() {
 		if(this.variableDeclarationMap == null) {
 			this.variableDeclarationMap = new LinkedHashMap<String, Set<VariableDeclaration>>();

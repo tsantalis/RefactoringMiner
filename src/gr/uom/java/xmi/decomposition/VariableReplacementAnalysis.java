@@ -63,7 +63,7 @@ public class VariableReplacementAnalysis {
 	private VariableDeclarationContainer operation2;
 	private List<UMLOperationBodyMapper> childMappers;
 	private Set<Refactoring> refactorings;
-	private UMLOperation callSiteOperation;
+	private VariableDeclarationContainer callSiteOperation;
 	private UMLOperationDiff operationDiff;
 	private UMLClassBaseDiff classDiff;
 	private Set<VariableDeclaration> removedVariables = new LinkedHashSet<>();
@@ -86,8 +86,8 @@ public class VariableReplacementAnalysis {
 		this.nonMappedLeavesT2 = mapper.getNonMappedLeavesT2();
 		this.nonMappedInnerNodesT1 = mapper.getNonMappedInnerNodesT1();
 		this.nonMappedInnerNodesT2 = mapper.getNonMappedInnerNodesT2();
-		this.operation1 = mapper.getOperation1() != null ? mapper.getOperation1() : mapper.getAttribute1();
-		this.operation2 = mapper.getOperation2() != null ? mapper.getOperation2() : mapper.getAttribute2();
+		this.operation1 = mapper.getContainer1();
+		this.operation2 = mapper.getContainer2();
 		this.childMappers = new ArrayList<UMLOperationBodyMapper>();
 		this.childMappers.addAll(mapper.getChildMappers());
 		UMLOperationBodyMapper parentMapper = mapper.getParentMapper();
@@ -1636,10 +1636,9 @@ public class VariableReplacementAnalysis {
 			}
 		}
 		if(callSiteOperation != null) {
-			for(UMLParameter parameter : callSiteOperation.getParameters()) {
-				VariableDeclaration vd = parameter.getVariableDeclaration();
-				if(vd != null && vd.getVariableName().equals(replacement.getBefore())) {
-					set.add(new SimpleEntry<>(vd, callSiteOperation));
+			for(VariableDeclaration parameter : callSiteOperation.getParameterDeclarationList()) {
+				if(parameter.getVariableName().equals(replacement.getBefore())) {
+					set.add(new SimpleEntry<>(parameter, callSiteOperation));
 				}
 			}
 		}
@@ -1667,10 +1666,9 @@ public class VariableReplacementAnalysis {
 			}
 		}
 		if(callSiteOperation != null) {
-			for(UMLParameter parameter : callSiteOperation.getParameters()) {
-				VariableDeclaration vd = parameter.getVariableDeclaration();
-				if(vd != null && vd.getVariableName().equals(variableName)) {
-					return new SimpleEntry<>(vd, callSiteOperation);
+			for(VariableDeclaration parameter : callSiteOperation.getParameterDeclarationList()) {
+				if(parameter.getVariableName().equals(variableName)) {
+					return new SimpleEntry<>(parameter, callSiteOperation);
 				}
 			}
 		}
@@ -1692,10 +1690,9 @@ public class VariableReplacementAnalysis {
 			}
 		}
 		if(callSiteOperation != null) {
-			for(UMLParameter parameter : callSiteOperation.getParameters()) {
-				VariableDeclaration vd = parameter.getVariableDeclaration();
-				if(vd != null && vd.getVariableName().equals(replacement.getAfter())) {
-					return new SimpleEntry<>(vd, callSiteOperation);
+			for(VariableDeclaration parameter : callSiteOperation.getParameterDeclarationList()) {
+				if(parameter.getVariableName().equals(replacement.getAfter())) {
+					return new SimpleEntry<>(parameter, callSiteOperation);
 				}
 			}
 		}
@@ -1725,10 +1722,9 @@ public class VariableReplacementAnalysis {
 			}
 		}
 		if(callSiteOperation != null) {
-			for(UMLParameter parameter : callSiteOperation.getParameters()) {
-				VariableDeclaration vd = parameter.getVariableDeclaration();
-				if(vd != null && vd.getVariableName().equals(variableName)) {
-					return new SimpleEntry<>(vd, callSiteOperation);
+			for(VariableDeclaration parameter : callSiteOperation.getParameterDeclarationList()) {
+				if(parameter.getVariableName().equals(variableName)) {
+					return new SimpleEntry<>(parameter, callSiteOperation);
 				}
 			}
 		}
@@ -1756,10 +1752,9 @@ public class VariableReplacementAnalysis {
 			}
 		}
 		if(callSiteOperation != null) {
-			for(UMLParameter parameter : callSiteOperation.getParameters()) {
-				VariableDeclaration vd = parameter.getVariableDeclaration();
-				if(vd != null && vd.getVariableName().equals(replacement.getAfter())) {
-					return new SimpleEntry<>(vd, callSiteOperation);
+			for(VariableDeclaration parameter : callSiteOperation.getParameterDeclarationList()) {
+				if(parameter.getVariableName().equals(replacement.getAfter())) {
+					return new SimpleEntry<>(parameter, callSiteOperation);
 				}
 			}
 		}
@@ -1982,10 +1977,9 @@ public class VariableReplacementAnalysis {
 			}
 		}
 		if(callSiteOperation != null) {
-			for(UMLParameter parameter : callSiteOperation.getParameters()) {
-				VariableDeclaration vd = parameter.getVariableDeclaration();
-				if(vd != null && vd.getVariableName().equals(replacement.getBefore())) {
-					return new SimpleEntry<>(vd, callSiteOperation);
+			for(VariableDeclaration parameter : callSiteOperation.getParameterDeclarationList()) {
+				if(parameter.getVariableName().equals(replacement.getBefore())) {
+					return new SimpleEntry<>(parameter, callSiteOperation);
 				}
 			}
 		}
@@ -2005,10 +1999,9 @@ public class VariableReplacementAnalysis {
 			}
 		}
 		if(callSiteOperation != null) {
-			for(UMLParameter parameter : callSiteOperation.getParameters()) {
-				VariableDeclaration vd = parameter.getVariableDeclaration();
-				if(vd != null && vd.getVariableName().equals(replacement.getAfter())) {
-					return new SimpleEntry<>(vd, callSiteOperation);
+			for(VariableDeclaration parameter : callSiteOperation.getParameterDeclarationList()) {
+				if(parameter.getVariableName().equals(replacement.getAfter())) {
+					return new SimpleEntry<>(parameter, callSiteOperation);
 				}
 			}
 		}

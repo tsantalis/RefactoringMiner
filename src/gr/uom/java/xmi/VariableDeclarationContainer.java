@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
@@ -37,15 +38,34 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 		return variableDeclarations;
 	}
 
+	default VariableDeclaration getVariableDeclaration(String variableName) {
+		OperationBody operationBody = getBody();
+		if(operationBody != null) {
+			VariableDeclaration variableDeclatation = operationBody.getVariableDeclaration(variableName);
+			if(variableDeclatation != null) {
+				return variableDeclatation;
+			}
+		}
+		for(VariableDeclaration parameterDeclaration : getParameterDeclarationList()) {
+			if(parameterDeclaration.getVariableName().equals(variableName)) {
+				return parameterDeclaration;
+			}
+		}
+		return null;
+	}
+
 	List<VariableDeclaration> getParameterDeclarationList();
 	List<String> getParameterNameList();
 	OperationBody getBody();
 	List<UMLAnonymousClass> getAnonymousClassList();
 	List<LambdaExpressionObject> getAllLambdas();
 	List<String> getAllVariables();
+	String getName();
 	String getClassName();
 	String toQualifiedString();
 	Map<String, Set<VariableDeclaration>> variableDeclarationMap();
+	UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration);
+	boolean hasTestAnnotation();
 
 	default CompositeStatementObject loopWithVariables(String currentElementName, String collectionName) {
 		OperationBody operationBody = getBody();

@@ -144,6 +144,15 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return variableDeclarationMap;
 	}
 
+	public boolean hasTestAnnotation() {
+		for(UMLAnnotation annotation : variableDeclaration.getAnnotations()) {
+			if(annotation.getTypeName().equals("Test")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public String getVisibility() {
 		return visibility;
 	}

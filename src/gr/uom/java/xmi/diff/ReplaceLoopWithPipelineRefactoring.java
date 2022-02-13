@@ -11,16 +11,17 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 
 public class ReplaceLoopWithPipelineRefactoring implements Refactoring {
 	private Set<AbstractCodeFragment> codeFragmentsBefore;
 	private Set<AbstractCodeFragment> codeFragmentsAfter;
-	private UMLOperation operationBefore;
-	private UMLOperation operationAfter;
+	private VariableDeclarationContainer operationBefore;
+	private VariableDeclarationContainer operationAfter;
 
 	public ReplaceLoopWithPipelineRefactoring(Set<AbstractCodeFragment> codeFragmentsBefore,
-			Set<AbstractCodeFragment> codeFragmentsAfter, UMLOperation operationBefore, UMLOperation operationAfter) {
+			Set<AbstractCodeFragment> codeFragmentsAfter, VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
 		this.codeFragmentsBefore = codeFragmentsBefore;
 		this.codeFragmentsAfter = codeFragmentsAfter;
 		this.operationBefore = operationBefore;
@@ -35,11 +36,11 @@ public class ReplaceLoopWithPipelineRefactoring implements Refactoring {
 		return codeFragmentsAfter;
 	}
 
-	public UMLOperation getOperationBefore() {
+	public VariableDeclarationContainer getOperationBefore() {
 		return operationBefore;
 	}
 
-	public UMLOperation getOperationAfter() {
+	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
 	}
 
@@ -58,7 +59,8 @@ public class ReplaceLoopWithPipelineRefactoring implements Refactoring {
 		sb.append(" with ");
 		String pipeline = codeFragmentsAfter.iterator().next().getString();
 		sb.append(pipeline.contains("\n") ? pipeline.substring(0, pipeline.indexOf("\n")) : pipeline);
-		sb.append(" in method ");
+		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		sb.append(" in " + elementType + " ");
 		sb.append(operationAfter);
 		sb.append(" from class ");
 		sb.append(operationAfter.getClassName());
@@ -73,8 +75,9 @@ public class ReplaceLoopWithPipelineRefactoring implements Refactoring {
 					.setDescription("original code")
 					.setCodeElement(fragment.getString()));
 		}
+		String elementType = operationBefore instanceof UMLOperation ? "method" : "attribute";
 		ranges.add(operationBefore.codeRange()
-				.setDescription("original method declaration")
+				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
 		return ranges;
 	}
@@ -87,8 +90,9 @@ public class ReplaceLoopWithPipelineRefactoring implements Refactoring {
 					.setDescription("pipeline code")
 					.setCodeElement(fragment.getString()));
 		}
+		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
 		ranges.add(operationAfter.codeRange()
-				.setDescription("method declaration with introduced pipeline")
+				.setDescription(elementType + " declaration with introduced pipeline")
 				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}

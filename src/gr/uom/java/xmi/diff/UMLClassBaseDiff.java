@@ -23,6 +23,7 @@ import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -1991,7 +1992,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return this.originalClass.getName().compareTo(other.originalClass.getName());
 	}
 
-	public boolean containsExtractOperationRefactoring(UMLOperation sourceOperationBeforeExtraction, UMLOperation extractedOperation) {
+	public boolean containsExtractOperationRefactoring(VariableDeclarationContainer sourceOperationBeforeExtraction, UMLOperation extractedOperation) {
 		for(Refactoring ref : refactorings) {
 			if(ref instanceof ExtractOperationRefactoring) {
 				ExtractOperationRefactoring extractRef = (ExtractOperationRefactoring)ref;
@@ -2004,7 +2005,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return false;
 	}
 
-	public boolean containsInlineOperationRefactoring(UMLOperation inlinedOperation, UMLOperation targetOperationAfterInline) {
+	public boolean containsInlineOperationRefactoring(UMLOperation inlinedOperation, VariableDeclarationContainer targetOperationAfterInline) {
 		for(Refactoring ref : refactorings) {
 			if(ref instanceof InlineOperationRefactoring) {
 				InlineOperationRefactoring inlineRef = (InlineOperationRefactoring)ref;

@@ -1,6 +1,5 @@
 package gr.uom.java.xmi.decomposition;
 
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

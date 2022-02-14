@@ -97,7 +97,7 @@ Currently, it supports the detection of the following refactorings:
 61. Change Thrown Exception Type
 62. Change Method Access Modifier
 
-**<ins>supported by RefactoringMiner 2.2</ins>**
+**<ins>supported by RefactoringMiner 2.2 and newer versions</ins>**
 
 63. Change Attribute Access Modifier
 64. Encapsulate Attribute
@@ -122,6 +122,10 @@ Currently, it supports the detection of the following refactorings:
 83. Collapse Hierarchy
 84. Replace Loop with Pipeline
 85. Replace Anonymous with Lambda
+
+**<ins>supported by RefactoringMiner 2.3</ins>**
+
+86. Merge Class
 
 # How to build RefactoringMiner
 

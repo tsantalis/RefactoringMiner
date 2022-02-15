@@ -634,12 +634,27 @@ public class OperationInvocation extends AbstractCall {
 		return true;
 	}
 
+	private int subExpressionsWithStringLiteralArgument() {
+		int count = 0;
+		for(String subExpression : subExpressions) {
+			if(subExpression.contains("(") && subExpression.contains(")")) {
+				int startIndex = subExpression.indexOf("(") + 1;
+				int endIndex = subExpression.lastIndexOf(")");
+				String argument = subExpression.substring(startIndex, endIndex);
+				if(isStringLiteral(argument)) {
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+
 	public boolean identicalWithExpressionCallChainDifference(OperationInvocation other) {
 		Set<String> subExpressionIntersection = subExpressionIntersection(other);
 		return identicalName(other) &&
-				equalArguments(other) &&
+				(equalArguments(other) || equalArgumentsExceptForStringLiterals(other)) &&
 				subExpressionIntersection.size() > 0 &&
-				(subExpressionIntersection.size() == this.subExpressions().size() ||
-				subExpressionIntersection.size() == other.subExpressions().size());
+				(subExpressionIntersection.size() >= this.subExpressions().size() - this.subExpressionsWithStringLiteralArgument() ||
+				subExpressionIntersection.size() >= other.subExpressions().size() - other.subExpressionsWithStringLiteralArgument());
 	}
 }

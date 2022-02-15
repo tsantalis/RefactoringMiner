@@ -173,6 +173,37 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return false;
 	}
 
+	public boolean equalArgumentsExceptForStringLiterals(AbstractCall call) {
+		List<String> arguments1 = getArguments();
+		List<String> arguments2 = call.getArguments();
+		if(arguments1.size() != arguments2.size())
+			return false;
+		int stringLiterals1 = 0;
+		int stringLiterals2 = 0;
+		for(int i=0; i<arguments1.size(); i++) {
+			String argument1 = arguments1.get(i);
+			String argument2 = arguments2.get(i);
+			boolean stringLiteral1 = isStringLiteral(argument1);
+			if(stringLiteral1) {
+				stringLiterals1++;
+			}
+			boolean stringLiteral2 = isStringLiteral(argument2);
+			if(stringLiteral2) {
+				stringLiterals2++;
+			}
+			if(!stringLiteral1 || !stringLiteral2) {
+				if(!argument1.equals(argument2)) {
+					return false;
+				}
+			}
+		}
+		return stringLiterals1 == stringLiterals2 && stringLiterals1 > 0;
+	}
+
+	public boolean isStringLiteral(String argument) {
+		return argument.startsWith("\"") && argument.endsWith("\"");
+	}
+
 	public boolean equalArguments(AbstractCall call) {
 		return getArguments().equals(call.getArguments());
 	}

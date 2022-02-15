@@ -2984,6 +2984,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					AbstractCall invokedOperationAfter = invokedOperationsAfter.get(0);
 					Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getExpression(), invocationCoveringTheEntireStatement2.getExpression(), invokedOperationBefore, invokedOperationAfter, ReplacementType.METHOD_INVOCATION_EXPRESSION);
 					replacementInfo.addReplacement(replacement);
+					Set<AbstractCodeFragment> additionallyMatchedStatements1 = additionallyMatchedStatements(variableDeclarations2, replacementInfo.statements1);
+					Set<AbstractCodeFragment> additionallyMatchedStatements2 = additionallyMatchedStatements(variableDeclarations1, replacementInfo.statements2);
+					if(additionallyMatchedStatements1.size() > 0 || additionallyMatchedStatements2.size() > 0) {
+						Replacement r = new CompositeReplacement(statement1.getString(), statement2.getString(), additionallyMatchedStatements1, additionallyMatchedStatements2);
+						replacementInfo.getReplacements().add(r);
+					}
 					return replacementInfo.getReplacements();
 				}
 				else if(invokedOperationsBefore != null && invokedOperationsBefore.size() > 0) {
@@ -3739,6 +3745,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private Set<AbstractCodeFragment> additionallyMatchedStatements(List<VariableDeclaration> variableDeclarations, List<? extends AbstractCodeFragment> unmatchedStatements) {
+		Set<AbstractCodeFragment> additionallyMatchedStatements = new LinkedHashSet<AbstractCodeFragment>();
+		if(!variableDeclarations.isEmpty()) {
+			for(AbstractCodeFragment codeFragment : unmatchedStatements) {
+				for(VariableDeclaration variableDeclaration : codeFragment.getVariableDeclarations()) {
+					if(variableDeclaration.getVariableName().equals(variableDeclarations.get(0).getVariableName()) &&
+							variableDeclaration.getType().equals(variableDeclarations.get(0).getType())) {
+						additionallyMatchedStatements.add(codeFragment);
+						break;
+					}
+				}
+			}
+		}
+		return additionallyMatchedStatements;
 	}
 
 	private Set<Replacement> processAnonymousAndLambdas(AbstractCodeFragment statement1, AbstractCodeFragment statement2,

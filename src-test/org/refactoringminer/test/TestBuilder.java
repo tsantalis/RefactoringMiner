@@ -12,6 +12,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import com.intellij.openapi.project.Project;
 import git4idea.repo.GitRepository;
@@ -110,7 +113,7 @@ public class TestBuilder {
 		commitsCount = 0;
 		errorCommitsCount = 0;
 		GitService gitService = new GitServiceImpl();
-
+		ExecutorService pool = Executors.newFixedThreadPool(map.size());
 		for (ProjectMatcher m : map.values()) {
 			String folder = tempDir + "/"
 					+ m.cloneUrl.substring(m.cloneUrl.lastIndexOf('/') + 1, m.cloneUrl.lastIndexOf('.'));
@@ -118,7 +121,8 @@ public class TestBuilder {
 			if (m.ignoreNonSpecifiedCommits) {
 				// It is faster to only look at particular commits
 				for (String commitId : m.getCommits()) {
-					refactoringDetector.detectAtCommit(rep, commitId, m);
+					Runnable r = () -> refactoringDetector.detectAtCommit(rep, commitId, m);
+					pool.submit(r);
 					System.out.println("Processed " + m.cloneUrl + "\t" + commitId);
 				}
 			} else {
@@ -126,6 +130,8 @@ public class TestBuilder {
 				//refactoringDetector.detectAll(rep, m.branch, m);
 			}
 		}
+		pool.shutdown();
+		pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
 		try(FileWriter fw = new FileWriter("log.txt", true);
 			BufferedWriter bw = new BufferedWriter(fw);
 			PrintWriter out = new PrintWriter(bw)) {

@@ -160,9 +160,34 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/Alluxio/alluxio.git",
 				"https://github.com/spring-projects/spring-data-rest.git",
 				"https://github.com/NLPchina/ansj_seg.git",
+				"https://github.com/apache/camel.git",
+				"https://github.com/droolsjbpm/drools.git",
+				"https://github.com/robovm/robovm.git",
+				"https://github.com/bitcoinj/bitcoinj.git",
+				"https://github.com/facebook/presto.git",
+				"https://github.com/deeplearning4j/deeplearning4j.git",
+				"https://github.com/crate/crate.git",
+				"https://github.com/libgdx/libgdx.git",
+				"https://github.com/hibernate/hibernate-orm.git",
+				"https://github.com/Netflix/zuul.git",
+				"https://github.com/ratpack/ratpack.git",
+				"https://github.com/brianfrankcooper/YCSB.git",
+				"https://github.com/QuantumBadger/RedReader.git",
+				"https://github.com/addthis/hydra.git",
+				"https://github.com/apache/pig.git",
 		};
-		//TP: 1507  FP:  4  FN: 44
-		processRepositoryCommits(Arrays.asList(gitURLs), 1507, 4, 44);
+		//TP: 2989  FP:  7  FN: 61
+		processRepositoryCommits(Arrays.asList(gitURLs), 2989, 7, 61);
+	}
+
+	@Test
+	public void testBatch4() throws Exception {
+		String gitURLs[] = new String[]{
+				"https://github.com/apache/hive.git",
+				"https://github.com/google/closure-compiler.git",
+		};
+		//TP: 129  FP:  0  FN: 5
+		processRepositoryCommits(Arrays.asList(gitURLs), 129, 0, 5);
 	}
 /*
 	@Test

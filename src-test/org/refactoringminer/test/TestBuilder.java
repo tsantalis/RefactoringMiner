@@ -107,7 +107,7 @@ public class TestBuilder {
 		return projectMatcher;
 	}
 
-	public void assertExpectations(Project project, int expectedTPs, int expectedFPs, int expectedFNs) throws Exception {
+	public void assertExpectations(Project project, int expectedTPs, int expectedFPs, int expectedFNs, boolean log) throws Exception {
 		c = new Counter();
 		cMap = new HashMap<RefactoringType, Counter>();
 		commitsCount = 0;
@@ -132,30 +132,33 @@ public class TestBuilder {
 		}
 		pool.shutdown();
 		pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
-		try(FileWriter fw = new FileWriter("log.txt", true);
-			BufferedWriter bw = new BufferedWriter(fw);
-			PrintWriter out = new PrintWriter(bw)) {
-			out.println(String.format("Commits: %d  Errors: %d", commitsCount, errorCommitsCount));
+		String mainResultMessage = buildResultMessage(c);
+		boolean success = get(FP) == expectedFPs && get(FN) == expectedFNs && get(TP) == expectedTPs;
 
-			String mainResultMessage = buildResultMessage(c);
-			out.println("Total  " + mainResultMessage);
-			for (RefactoringType refType : RefactoringType.values()) {
-				Counter refTypeCounter = cMap.get(refType);
-				if (refTypeCounter != null) {
-					out.println(String.format("%-7s", refType.getAbbreviation()) + buildResultMessage(refTypeCounter));
+		if(log) {
+			try (FileWriter fw = new FileWriter("log.txt", true);
+				 BufferedWriter bw = new BufferedWriter(fw);
+				 PrintWriter out = new PrintWriter(bw)) {
+				out.println(String.format("Commits: %d  Errors: %d", commitsCount, errorCommitsCount));
+
+				out.println("Total  " + mainResultMessage);
+				for (RefactoringType refType : RefactoringType.values()) {
+					Counter refTypeCounter = cMap.get(refType);
+					if (refTypeCounter != null) {
+						out.println(String.format("%-7s", refType.getAbbreviation()) + buildResultMessage(refTypeCounter));
+					}
+				}
+
+				if (!success || verbose) {
+					for (ProjectMatcher m : map.values()) {
+						String results = m.printResults();
+						if (results.length() > 0)
+							out.println(results);
+					}
 				}
 			}
-
-			boolean success = get(FP) == expectedFPs && get(FN) == expectedFNs && get(TP) == expectedTPs;
-			if (!success || verbose) {
-				for (ProjectMatcher m : map.values()) {
-					String results = m.printResults();
-					if(results.length() > 0)
-						out.println(results);
-				}
-			}
-			Assert.assertTrue(mainResultMessage, success);
 		}
+		Assert.assertTrue(mainResultMessage, success);
 	}
 
 	private String buildResultMessage(Counter c) {

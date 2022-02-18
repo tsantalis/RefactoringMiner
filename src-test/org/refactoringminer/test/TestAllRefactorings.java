@@ -27,7 +27,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				test.project(root.repository, "master").atCommit(root.sha1)
 						.containsOnly(RefactoringPopulator.extractRefactorings(root.refactorings));
 		}
-		test.assertExpectations(getProject(), expectedTPs, expectedFPs, expectedFNs);
+		test.assertExpectations(getProject(), expectedTPs, expectedFPs, expectedFNs, false);
 	}
 
 	@Test
@@ -185,9 +185,65 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 		String gitURLs[] = new String[]{
 				"https://github.com/apache/hive.git",
 				"https://github.com/google/closure-compiler.git",
+				"https://github.com/go-lang-plugin-org/go-lang-idea-plugin.git",
+				"https://github.com/spring-projects/spring-framework.git",
+				"https://github.com/greenrobot/greenDAO.git",
+				"https://github.com/springfox/springfox.git",
+				"https://github.com/alibaba/druid.git",
+				"https://github.com/JoanZapata/android-iconify.git",
+				"https://github.com/processing/processing.git",
+				"https://github.com/spring-projects/spring-roo.git",
+				"https://github.com/cgeo/cgeo.git",
+				"https://github.com/plutext/docx4j.git",
+				"https://github.com/checkstyle/checkstyle.git",
+				"https://github.com/k9mail/k-9.git",
+				"https://github.com/RoboBinding/RoboBinding.git",
+				"https://github.com/selendroid/selendroid.git",
+				"https://github.com/spring-projects/spring-data-mongodb.git",
+				"https://github.com/google/auto.git",
+				"https://github.com/Netflix/feign.git",
+				"https://github.com/apache/zookeeper.git",
+				"https://github.com/jMonkeyEngine/jmonkeyengine.git",
+				"https://github.com/jboss-developer/jboss-eap-quickstarts.git",
+				"https://github.com/AntennaPod/AntennaPod.git",
+				"https://github.com/MovingBlocks/Terasology.git",
+				"https://github.com/GoClipse/goclipse.git",
+				"https://github.com/google/j2objc.git",
+				"https://github.com/SonarSource/sonarqube.git",
+				"https://github.com/Atmosphere/atmosphere.git",
+				"https://github.com/slapperwan/gh4a.git",
+				"https://github.com/square/okhttp.git",
+				"https://github.com/opentripplanner/OpenTripPlanner.git",
+				"https://github.com/facebook/facebook-android-sdk.git",
+				"https://github.com/bumptech/glide.git",
+				"https://github.com/languagetool-org/languagetool.git",
+				"https://github.com/spring-projects/spring-hateoas.git",
+				"https://github.com/rstudio/rstudio.git",
+				"https://github.com/puniverse/quasar.git",
+				"https://github.com/Jasig/cas.git",
+				"https://github.com/cucumber/cucumber-jvm.git",
+				"https://github.com/orientechnologies/orientdb.git",
+				"https://github.com/spotify/helios.git",
+				"https://github.com/SlimeKnights/TinkersConstruct.git",
+				"https://github.com/Graylog2/graylog2-server.git",
+				"https://github.com/SecUpwN/Android-IMSI-Catcher-Detector.git",
+				"https://github.com/jline/jline2.git",
+				"https://github.com/killbill/killbill.git",
+				"https://github.com/VoltDB/voltdb.git",
+				"https://github.com/mongodb/morphia.git",
+				"https://github.com/reactor/reactor.git",
+				"https://github.com/zeromq/jeromq.git",
+				"https://github.com/mongodb/mongo-java-driver.git",
+				"https://github.com/osmandapp/Osmand.git",
+				"https://github.com/openhab/openhab.git",
+				"https://github.com/BroadleafCommerce/BroadleafCommerce.git",
+				"https://github.com/nutzam/nutz.git",
+				"https://github.com/spring-projects/spring-security.git",
+				"https://github.com/novoda/android-demos.git",
+				"https://github.com/wordpress-mobile/WordPress-Android.git",
 		};
-		//TP: 129  FP:  0  FN: 5
-		processRepositoryCommits(Arrays.asList(gitURLs), 129, 0, 5);
+		//TP: 1825  FP:  0  FN: 49
+		processRepositoryCommits(Arrays.asList(gitURLs), 1825, 0, 49);
 	}
 /*
 	@Test

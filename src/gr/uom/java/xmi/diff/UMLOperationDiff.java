@@ -576,34 +576,6 @@ public class UMLOperationDiff {
 					}
 				}
 			}
-			int matchedRemovedOperationLeaves = 0;
-			for(AbstractCodeFragment leaf : removedOperationLeaves) {
-				if(removedFieldAssignmentMap.values().contains(leaf)) {
-					matchedRemovedOperationLeaves++;
-				}
-				else {
-					for(AbstractCodeMapping mapping : mappings) {
-						if(mapping.getFragment1().equals(leaf)) {
-							matchedRemovedOperationLeaves++;
-							break;
-						}
-					}
-				}
-			}
-			int matchedAddedOperationLeaves = 0;
-			for(AbstractCodeFragment leaf : addedOperationLeaves) {
-				if(addedFieldAssignmentMap.values().contains(leaf)) {
-					matchedAddedOperationLeaves++;
-				}
-				else {
-					for(AbstractCodeMapping mapping : mappings) {
-						if(mapping.getFragment2().equals(leaf)) {
-							matchedAddedOperationLeaves++;
-							break;
-						}
-					}
-				}
-			}
 			int removedAttributes = 0;
 			for(UMLAttribute attribute : classDiff.getRemovedAttributes()) {
 				for(VariableDeclaration parameter : removedFieldAssignmentMap.keySet()) {
@@ -622,8 +594,7 @@ public class UMLOperationDiff {
 					}
 				}
 			}
-			if(matchedRemovedOperationLeaves == removedOperationLeaves.size() && matchedAddedOperationLeaves == addedOperationLeaves.size() &&
-					!removedFieldAssignmentMap.isEmpty() && !addedFieldAssignmentMap.isEmpty() &&
+			if(!removedFieldAssignmentMap.isEmpty() && !addedFieldAssignmentMap.isEmpty() &&
 					removedAttributes == removedFieldAssignmentMap.size() && addedAttributes == addedFieldAssignmentMap.size()) {
 				Set<AbstractCodeMapping> references = new LinkedHashSet<>();
 				for(AbstractCodeMapping mapping : mappings) {

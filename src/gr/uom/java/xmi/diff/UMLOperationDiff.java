@@ -1,9 +1,11 @@
 package gr.uom.java.xmi.diff;
 
 import gr.uom.java.xmi.UMLAnnotation;
+import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -11,9 +13,12 @@ import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -37,6 +42,7 @@ public class UMLOperationDiff {
 	private Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
 	private Set<Pair<VariableDeclaration, VariableDeclaration>> matchedVariables = new LinkedHashSet<>();
 	private Set<Refactoring> refactorings = new LinkedHashSet<>();
+	private UMLClassBaseDiff classDiff;
 	private UMLAnnotationListDiff annotationListDiff;
 	private List<UMLType> addedExceptionTypes;
 	private List<UMLType> removedExceptionTypes;
@@ -183,6 +189,7 @@ public class UMLOperationDiff {
 		this.mappings = mapper.getMappings();
 		this.matchedVariables = mapper.getMatchedVariables();
 		this.refactorings = mapper.getRefactoringsAfterPostProcessing();
+		this.classDiff = mapper.getClassDiff();
 		process(mapper.getOperation1(), mapper.getOperation2());
 	}
 
@@ -415,6 +422,7 @@ public class UMLOperationDiff {
 				refactorings.addAll(parameterDiff.getRefactorings());
 			}
 		}
+		checkForSplitMergeParameterBasedOnAttributeAssignments(refactorings);
 		int exactMappings = 0;
 		for(AbstractCodeMapping mapping : mappings) {
 			if(mapping.isExact()) {
@@ -544,5 +552,111 @@ public class UMLOperationDiff {
 			}
 		}
 		return refactorings;
+	}
+
+	private void checkForSplitMergeParameterBasedOnAttributeAssignments(Set<Refactoring> refactorings) {
+		if(classDiff != null) {
+			List<AbstractCodeFragment> removedOperationLeaves = removedOperation.getBody() != null ? removedOperation.getBody().getCompositeStatement().getLeaves() : Collections.emptyList();
+			Map<VariableDeclaration, AbstractCodeFragment> removedFieldAssignmentMap = new LinkedHashMap<>();
+			for(UMLParameter removedParameter : removedParameters) {
+				for(AbstractCodeFragment leaf : removedOperationLeaves) {
+					if(leaf.getString().equals("this." + removedParameter.getName() + "=" + removedParameter.getName() + ";\n")) {
+						removedFieldAssignmentMap.put(removedParameter.getVariableDeclaration(), leaf);
+						break;
+					}
+				}
+			}
+			List<AbstractCodeFragment> addedOperationLeaves = addedOperation.getBody() != null ? addedOperation.getBody().getCompositeStatement().getLeaves() : Collections.emptyList();
+			Map<VariableDeclaration, AbstractCodeFragment> addedFieldAssignmentMap = new LinkedHashMap<>();
+			for(UMLParameter addedParameter : addedParameters) {
+				for(AbstractCodeFragment leaf : addedOperationLeaves) {
+					if(leaf.getString().equals("this." + addedParameter.getName() + "=" + addedParameter.getName() + ";\n")) {
+						addedFieldAssignmentMap.put(addedParameter.getVariableDeclaration(), leaf);
+						break;
+					}
+				}
+			}
+			int matchedRemovedOperationLeaves = 0;
+			for(AbstractCodeFragment leaf : removedOperationLeaves) {
+				if(removedFieldAssignmentMap.values().contains(leaf)) {
+					matchedRemovedOperationLeaves++;
+				}
+				else {
+					for(AbstractCodeMapping mapping : mappings) {
+						if(mapping.getFragment1().equals(leaf)) {
+							matchedRemovedOperationLeaves++;
+							break;
+						}
+					}
+				}
+			}
+			int matchedAddedOperationLeaves = 0;
+			for(AbstractCodeFragment leaf : addedOperationLeaves) {
+				if(addedFieldAssignmentMap.values().contains(leaf)) {
+					matchedAddedOperationLeaves++;
+				}
+				else {
+					for(AbstractCodeMapping mapping : mappings) {
+						if(mapping.getFragment2().equals(leaf)) {
+							matchedAddedOperationLeaves++;
+							break;
+						}
+					}
+				}
+			}
+			int removedAttributes = 0;
+			for(UMLAttribute attribute : classDiff.getRemovedAttributes()) {
+				for(VariableDeclaration parameter : removedFieldAssignmentMap.keySet()) {
+					if(attribute.getName().equals(parameter.getVariableName()) && attribute.getType().equals(parameter.getType())) {
+						removedAttributes++;
+						break;
+					}
+				}
+			}
+			int addedAttributes = 0;
+			for(UMLAttribute attribute : classDiff.getAddedAttributes()) {
+				for(VariableDeclaration parameter : addedFieldAssignmentMap.keySet()) {
+					if(attribute.getName().equals(parameter.getVariableName()) && attribute.getType().equals(parameter.getType())) {
+						addedAttributes++;
+						break;
+					}
+				}
+			}
+			if(matchedRemovedOperationLeaves == removedOperationLeaves.size() && matchedAddedOperationLeaves == addedOperationLeaves.size() &&
+					!removedFieldAssignmentMap.isEmpty() && !addedFieldAssignmentMap.isEmpty() &&
+					removedAttributes == removedFieldAssignmentMap.size() && addedAttributes == addedFieldAssignmentMap.size()) {
+				Set<AbstractCodeMapping> references = new LinkedHashSet<>();
+				for(AbstractCodeMapping mapping : mappings) {
+					if(removedFieldAssignmentMap.values().contains(mapping.getFragment1()) || addedFieldAssignmentMap.values().contains(mapping.getFragment2())) {
+						references.add(mapping);
+					}
+				}
+				if(removedFieldAssignmentMap.size() == 1 && addedFieldAssignmentMap.size() > 1) {
+					SplitVariableRefactoring ref = new SplitVariableRefactoring(removedFieldAssignmentMap.keySet().iterator().next(), addedFieldAssignmentMap.keySet(), removedOperation, addedOperation, references, false);
+					refactorings.add(ref);
+					cleanUpParameters(removedFieldAssignmentMap, addedFieldAssignmentMap);
+				}
+				if(removedFieldAssignmentMap.size() > 1 && addedFieldAssignmentMap.size() == 1) {
+					MergeVariableRefactoring ref = new MergeVariableRefactoring(removedFieldAssignmentMap.keySet(), addedFieldAssignmentMap.keySet().iterator().next(), removedOperation, addedOperation, references, false);
+					refactorings.add(ref);
+					cleanUpParameters(removedFieldAssignmentMap, addedFieldAssignmentMap);
+				}
+			}
+		}
+	}
+
+	private void cleanUpParameters(Map<VariableDeclaration, AbstractCodeFragment> removedFieldAssignmentMap, Map<VariableDeclaration, AbstractCodeFragment> addedFieldAssignmentMap) {
+		for(Iterator<UMLParameter> removedParameterIterator = removedParameters.iterator(); removedParameterIterator.hasNext();) {
+			UMLParameter removedParameter = removedParameterIterator.next();
+			if(removedFieldAssignmentMap.keySet().contains(removedParameter.getVariableDeclaration())) {
+				removedParameterIterator.remove();
+			}
+		}
+		for(Iterator<UMLParameter> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
+			UMLParameter addedParameter = addedParameterIterator.next();
+			if(addedFieldAssignmentMap.keySet().contains(addedParameter.getVariableDeclaration())) {
+				addedParameterIterator.remove();
+			}
+		}
 	}
 }

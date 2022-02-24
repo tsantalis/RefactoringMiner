@@ -1297,7 +1297,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
 		List<AbstractCodeMapping> totalMappings = new ArrayList<AbstractCodeMapping>(operationBodyMapper.getMappings());
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
-		if(mappings > 0) {
+		if(mappings > 0 || (removedOperation.getName().equals(addedOperation.getName()) && removedOperation.getBody() != null && addedOperation.getBody() != null)) {
 			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
 			if(exactMappings(operationBodyMapper)) {
 				mapperSet.add(operationBodyMapper);
@@ -1534,33 +1534,35 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		}
 		for(int i=1; i<mapperList.size(); i++) {
 			UMLOperationBodyMapper mapper = mapperList.get(i);
-			UMLOperation operation2 = mapper.getOperation2();
-			List<AbstractCall> operationInvocations2 = operation2.getAllOperationInvocations();
-			boolean anotherMapperCallsOperation2OfTheBestMapper = false;
-			for(AbstractCall invocation : operationInvocations2) {
-				if(invocation.matchesOperation(bestMapper.getOperation2(), operation2, modelDiff) && !invocation.matchesOperation(bestMapper.getOperation1(), operation2, modelDiff) &&
-						!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, removedOperations)) {
-					anotherMapperCallsOperation2OfTheBestMapper = true;
-					break;
+			if(mapper.getMappings().size() > 0) {
+				UMLOperation operation2 = mapper.getOperation2();
+				List<AbstractCall> operationInvocations2 = operation2.getAllOperationInvocations();
+				boolean anotherMapperCallsOperation2OfTheBestMapper = false;
+				for(AbstractCall invocation : operationInvocations2) {
+					if(invocation.matchesOperation(bestMapper.getOperation2(), operation2, modelDiff) && !invocation.matchesOperation(bestMapper.getOperation1(), operation2, modelDiff) &&
+							!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, removedOperations)) {
+						anotherMapperCallsOperation2OfTheBestMapper = true;
+						break;
+					}
 				}
-			}
-			UMLOperation operation1 = mapper.getOperation1();
-			List<AbstractCall> operationInvocations1 = operation1.getAllOperationInvocations();
-			boolean anotherMapperCallsOperation1OfTheBestMapper = false;
-			for(AbstractCall invocation : operationInvocations1) {
-				if(invocation.matchesOperation(bestMapper.getOperation1(), operation1, modelDiff) && !invocation.matchesOperation(bestMapper.getOperation2(), operation1, modelDiff) &&
-						!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, addedOperations)) {
-					anotherMapperCallsOperation1OfTheBestMapper = true;
-					break;
+				UMLOperation operation1 = mapper.getOperation1();
+				List<AbstractCall> operationInvocations1 = operation1.getAllOperationInvocations();
+				boolean anotherMapperCallsOperation1OfTheBestMapper = false;
+				for(AbstractCall invocation : operationInvocations1) {
+					if(invocation.matchesOperation(bestMapper.getOperation1(), operation1, modelDiff) && !invocation.matchesOperation(bestMapper.getOperation2(), operation1, modelDiff) &&
+							!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, addedOperations)) {
+						anotherMapperCallsOperation1OfTheBestMapper = true;
+						break;
+					}
 				}
-			}
-			boolean nextMapperMatchesConsistentRename = matchesConsistentMethodInvocationRename(mapper, consistentMethodInvocationRenames.keySet());
-			boolean bestMapperMismatchesConsistentRename = mismatchesConsistentMethodInvocationRename(bestMapper, consistentMethodInvocationRenames.keySet());
-			if(bestMapperMismatchesConsistentRename && nextMapperMatchesConsistentRename) {
-				return mapper;
-			}
-			if(anotherMapperCallsOperation2OfTheBestMapper || anotherMapperCallsOperation1OfTheBestMapper) {
-				return mapper;
+				boolean nextMapperMatchesConsistentRename = matchesConsistentMethodInvocationRename(mapper, consistentMethodInvocationRenames.keySet());
+				boolean bestMapperMismatchesConsistentRename = mismatchesConsistentMethodInvocationRename(bestMapper, consistentMethodInvocationRenames.keySet());
+				if(bestMapperMismatchesConsistentRename && nextMapperMatchesConsistentRename) {
+					return mapper;
+				}
+				if(anotherMapperCallsOperation2OfTheBestMapper || anotherMapperCallsOperation1OfTheBestMapper) {
+					return mapper;
+				}
 			}
 		}
 		if(mismatchesConsistentMethodInvocationRename(bestMapper, consistentMethodInvocationRenames.keySet())) {

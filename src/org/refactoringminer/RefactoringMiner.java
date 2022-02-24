@@ -263,7 +263,12 @@ public class RefactoringMiner {
 		if (args[args.length-2].equalsIgnoreCase("-json")) {
 			path = Paths.get(args[args.length-1]);
 			try {
-				Files.createFile(path);
+				if(Files.exists(path)) {
+					Files.delete(path);
+				}
+				if(Files.notExists(path)) {
+					Files.createFile(path);
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

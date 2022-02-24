@@ -1,7 +1,6 @@
 package org.refactoringminer.api;
 
 import git4idea.repo.GitRepository;
-import org.eclipse.jgit.lib.Repository;
 
 /**
  * Detect refactorings in the git history.
@@ -20,7 +19,7 @@ public interface GitHistoryRefactoringMiner {
 	 *                control when to skip a commit. 
 	 * @throws Exception propagated from JGit library.
 	 */
-	void detectAll(Repository repository, String branch, RefactoringHandler handler) throws Exception;
+	void detectAll(GitRepository repository, String branch, RefactoringHandler handler) throws Exception;
 
 	/**
 	 * Iterate over commits between two release tags of a git repository and detect the performed refactorings.
@@ -32,7 +31,7 @@ public interface GitHistoryRefactoringMiner {
 	 *                control when to skip a commit. 
 	 * @throws Exception propagated from JGit library.
 	 */
-	void detectBetweenTags(Repository repository, String startTag, String endTag, RefactoringHandler handler)
+	void detectBetweenTags(GitRepository repository, String startTag, String endTag, RefactoringHandler handler)
 			throws Exception;
 	
 	/**
@@ -45,7 +44,7 @@ public interface GitHistoryRefactoringMiner {
 	 *                control when to skip a commit. 
 	 * @throws Exception propagated from JGit library.
 	 */
-	void detectBetweenCommits(Repository repository, String startCommitId, String endCommitId, RefactoringHandler handler)
+	void detectBetweenCommits(GitRepository repository, String startCommitId, String endCommitId, RefactoringHandler handler)
 			throws Exception;
 
 	/**

@@ -1,15 +1,14 @@
 package org.refactoringminer.api;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vcs.changes.Change;
+import com.intellij.vcs.log.TimedVcsCommit;
 import git4idea.repo.GitRepository;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 
 /**
  * Simple service to make git related tasks easier.  
@@ -29,13 +28,13 @@ public interface GitService {
 
 	GitRepository openRepository(Project project, String folder) throws Exception;
 
-	RevWalk createAllRevsWalk(Repository repository) throws Exception;
+	List<? extends TimedVcsCommit> createAllRevsWalk(GitRepository repository) throws Exception;
 
-	RevWalk createAllRevsWalk(Repository repository, String branch) throws Exception;
+	List<? extends TimedVcsCommit> createAllRevsWalk(GitRepository repository, String branch) throws Exception;
 
-	Iterable<RevCommit> createRevsWalkBetweenTags(Repository repository, String startTag, String endTag) throws Exception;
+	List<? extends TimedVcsCommit> createRevsWalkBetweenTags(GitRepository repository, String startTag, String endTag) throws Exception;
 
-	Iterable<RevCommit> createRevsWalkBetweenCommits(Repository repository, String startCommitId, String endCommitId) throws Exception;
+	List<? extends TimedVcsCommit> createRevsWalkBetweenCommits(GitRepository repository, String startCommitId, String endCommitId) throws Exception;
 
 	void fileTreeDiff(GitRepository repository, Collection<Change> changes, Set<String> filesBefore, Set<String> filesCurrent, Map<String, String> renamedFilesHint) throws Exception;
 }

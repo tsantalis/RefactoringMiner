@@ -8,6 +8,7 @@ import com.intellij.openapi.vcs.changes.ContentRevision;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.vcs.log.Hash;
+import com.intellij.vcs.log.TimedVcsCommit;
 import com.intellij.vcs.log.VcsCommitMetadata;
 import com.intellij.vcsUtil.VcsFileUtil;
 import git4idea.changes.GitChangeUtils;
@@ -51,9 +52,6 @@ import java.util.zip.ZipFile;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHPullRequest;
@@ -95,25 +93,26 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 	}
 	
-	private void detect(GitService gitService, Repository repository, final RefactoringHandler handler, Iterator<RevCommit> i) {
+	private void detect(GitService gitService, GitRepository repository, final RefactoringHandler handler, List<? extends TimedVcsCommit> commits) {
 		int commitsCount = 0;
 		int errorCommitsCount = 0;
 		int refactoringsCount = 0;
 
-		File metadataFolder = repository.getDirectory();
-		File projectFolder = metadataFolder.getParentFile();
-		String projectName = projectFolder.getName();
+		String projectName = null;
+		if(repository.getRemotes().size() > 0) {
+			GitRemote remote = repository.getRemotes().iterator().next();
+			projectName = remote.getFirstUrl();
+		}
 		
 		long time = System.currentTimeMillis();
-		while (i.hasNext()) {
-			RevCommit currentCommit = i.next();
+		for(TimedVcsCommit currentCommit : commits) {
 			try {
-				//List<Refactoring> refactoringsAtRevision = detectRefactorings(gitService, repository, handler, currentCommit);
-				//refactoringsCount += refactoringsAtRevision.size();
+				List<Refactoring> refactoringsAtRevision = detectRefactorings(gitService, repository, handler, currentCommit);
+				refactoringsCount += refactoringsAtRevision.size();
 				
 			} catch (Exception e) {
-				logger.warn(String.format("Ignored revision %s due to error", currentCommit.getId().getName()), e);
-				handler.handleException(currentCommit.getId().getName(),e);
+				logger.warn(String.format("Ignored revision %s due to error", currentCommit.getId().asString()), e);
+				handler.handleException(currentCommit.getId().asString(),e);
 				errorCommitsCount++;
 			}
 
@@ -129,8 +128,18 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		logger.info(String.format("Analyzed %s [Commits: %d, Errors: %d, Refactorings: %d]", projectName, commitsCount, errorCommitsCount, refactoringsCount));
 	}
 
-	protected List<Refactoring> detectRefactorings(GitService gitService, GitRepository repository, final RefactoringHandler handler, VcsCommitMetadata currentCommit) throws Exception {
+	protected List<Refactoring> detectRefactorings(GitService gitService, GitRepository repository, final RefactoringHandler handler, TimedVcsCommit commit) throws Exception {
 		List<Refactoring> refactoringsAtRevision;
+		VcsCommitMetadata currentCommit = null;
+		if(commit instanceof VcsCommitMetadata) {
+			currentCommit = (VcsCommitMetadata)commit;
+		}
+		else {
+			List<? extends VcsCommitMetadata> currentCommits = GitHistoryUtils.collectCommitsMetadata(repository.getProject(), repository.getRoot(), commit.getId().asString());
+			if (currentCommits != null) {
+				currentCommit = currentCommits.get(0);
+			}
+		}
 		String commitId = currentCommit.getId().asString();
 		Collection<Change> changes;
 		if (currentCommit.getParents().size() > 0) {
@@ -517,19 +526,15 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 	
 	@Override
-	public void detectAll(Repository repository, String branch, final RefactoringHandler handler) throws Exception {
+	public void detectAll(GitRepository repository, String branch, final RefactoringHandler handler) throws Exception {
 		GitService gitService = new GitServiceImpl() {
 			@Override
 			public boolean isCommitAnalyzed(String sha1) {
 				return handler.skipCommit(sha1);
 			}
 		};
-		RevWalk walk = gitService.createAllRevsWalk(repository, branch);
-		try {
-			detect(gitService, repository, handler, walk.iterator());
-		} finally {
-			walk.dispose();
-		}
+		List<? extends TimedVcsCommit> commits = gitService.createAllRevsWalk(repository, branch);
+		detect(gitService, repository, handler, commits);
 	}
 
 	public static UMLModel createModel(Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
@@ -588,7 +593,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	@Override
-	public void detectBetweenTags(Repository repository, String startTag, String endTag, RefactoringHandler handler)
+	public void detectBetweenTags(GitRepository repository, String startTag, String endTag, RefactoringHandler handler)
 			throws Exception {
 		GitService gitService = new GitServiceImpl() {
 			@Override
@@ -596,13 +601,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				return handler.skipCommit(sha1);
 			}
 		};
-		
-		Iterable<RevCommit> walk = gitService.createRevsWalkBetweenTags(repository, startTag, endTag);
-		detect(gitService, repository, handler, walk.iterator());
+		List<? extends TimedVcsCommit> commits = gitService.createRevsWalkBetweenTags(repository, startTag, endTag);
+		detect(gitService, repository, handler, commits);
 	}
 
 	@Override
-	public void detectBetweenCommits(Repository repository, String startCommitId, String endCommitId,
+	public void detectBetweenCommits(GitRepository repository, String startCommitId, String endCommitId,
 			RefactoringHandler handler) throws Exception {
 		GitService gitService = new GitServiceImpl() {
 			@Override
@@ -610,9 +614,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				return handler.skipCommit(sha1);
 			}
 		};
-		
-		Iterable<RevCommit> walk = gitService.createRevsWalkBetweenCommits(repository, startCommitId, endCommitId);
-		detect(gitService, repository, handler, walk.iterator());
+		List<? extends TimedVcsCommit> commits = gitService.createRevsWalkBetweenCommits(repository, startCommitId, endCommitId);
+		detect(gitService, repository, handler, commits);
 	}
 
 	@Override

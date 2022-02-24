@@ -7,7 +7,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
-import org.eclipse.jgit.lib.Repository;
+import com.intellij.openapi.project.Project;
+import git4idea.repo.GitRemote;
+import git4idea.repo.GitRepository;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
 import org.refactoringminer.api.Refactoring;
@@ -17,36 +19,13 @@ import org.refactoringminer.util.GitServiceImpl;
 
 public class RefactoringMiner {
 	private static Path path = null;
-	public static void main(String[] args) throws Exception {
-		if (args.length < 1) {
-			throw argumentException();
-		}
+	private Project project;
 
-		final String option = args[0];
-		if (option.equalsIgnoreCase("-h") || option.equalsIgnoreCase("--h") || option.equalsIgnoreCase("-help")
-				|| option.equalsIgnoreCase("--help")) {
-			printTips();
-			return;
-		}
-
-		if (option.equalsIgnoreCase("-a")) {
-			detectAll(args);
-		} else if (option.equalsIgnoreCase("-bc")) {
-			detectBetweenCommits(args);
-		} else if (option.equalsIgnoreCase("-bt")) {
-			detectBetweenTags(args);
-		} else if (option.equalsIgnoreCase("-c")) {
-			detectAtCommit(args);
-		} else if (option.equalsIgnoreCase("-gc")) {
-			detectAtGitHubCommit(args);
-		} else if (option.equalsIgnoreCase("-gp")) {
-			detectAtGitHubPullRequest(args);
-		} else {
-			throw argumentException();
-		}
+	public RefactoringMiner(Project project) {
+		this.project = project;
 	}
 
-	private static void detectAll(String[] args) throws Exception {
+	public void detectAll(String[] args) throws Exception {
 		int maxArgLength = processJSONoption(args, 3);
 		if (args.length > maxArgLength) {
 			throw argumentException();
@@ -57,42 +36,40 @@ public class RefactoringMiner {
 			branch = args[2];
 		}
 		GitService gitService = new GitServiceImpl();
-		try (Repository repo = gitService.openRepository(folder)) {
-			String gitURL = repo.getConfig().getString("remote", "origin", "url");
-			GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
-			startJSON();
-			detector.detectAll(repo, branch, new RefactoringHandler() {
-				private int commitCount = 0;
-				@Override
-				public void handle(String commitId, List<Refactoring> refactorings) {
-					if(commitCount > 0) {
-						betweenCommitsJSON();
-					}
-					commitJSON(gitURL, commitId, refactorings);
-					commitCount++;
+		GitRepository repo = gitService.openRepository(project, folder);
+		GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
+		startJSON();
+		detector.detectAll(repo, branch, new RefactoringHandler() {
+			private int commitCount = 0;
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				if(commitCount > 0) {
+					betweenCommitsJSON();
 				}
+				commitJSON(gitURL(repo), commitId, refactorings);
+				commitCount++;
+			}
 
-				@Override
-				public void onFinish(int refactoringsCount, int commitsCount, int errorCommitsCount) {
-					System.out.println(String.format("Total count: [Commits: %d, Errors: %d, Refactorings: %d]",
-							commitsCount, errorCommitsCount, refactoringsCount));
-				}
+			@Override
+			public void onFinish(int refactoringsCount, int commitsCount, int errorCommitsCount) {
+				System.out.println(String.format("Total count: [Commits: %d, Errors: %d, Refactorings: %d]",
+						commitsCount, errorCommitsCount, refactoringsCount));
+			}
 
-				@Override
-				public void handleException(String commit, Exception e) {
-					System.err.println("Error processing commit " + commit);
-					e.printStackTrace(System.err);
-				}
-			});
-			endJSON();
-		}
+			@Override
+			public void handleException(String commit, Exception e) {
+				System.err.println("Error processing commit " + commit);
+				e.printStackTrace(System.err);
+			}
+		});
+		endJSON();
 	}
 
 	private static boolean containsBranchArgument(String[] args) {
 		return args.length == 3 || (args.length > 3 && args[3].equalsIgnoreCase("-json"));
 	}
 
-	private static void detectBetweenCommits(String[] args) throws Exception {
+	public void detectBetweenCommits(String[] args) throws Exception {
 		int maxArgLength = processJSONoption(args, 4);
 		if (!(args.length == maxArgLength-1 || args.length == maxArgLength)) {
 			throw argumentException();
@@ -101,38 +78,36 @@ public class RefactoringMiner {
 		String startCommit = args[2];
 		String endCommit = containsEndArgument(args) ? args[3] : null;
 		GitService gitService = new GitServiceImpl();
-		try (Repository repo = gitService.openRepository(folder)) {
-			String gitURL = repo.getConfig().getString("remote", "origin", "url");
-			GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
-			startJSON();
-			detector.detectBetweenCommits(repo, startCommit, endCommit, new RefactoringHandler() {
-				private int commitCount = 0;
-				@Override
-				public void handle(String commitId, List<Refactoring> refactorings) {
-					if(commitCount > 0) {
-						betweenCommitsJSON();
-					}
-					commitJSON(gitURL, commitId, refactorings);
-					commitCount++;
+		GitRepository repo = gitService.openRepository(project, folder);
+		GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
+		startJSON();
+		detector.detectBetweenCommits(repo, startCommit, endCommit, new RefactoringHandler() {
+			private int commitCount = 0;
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				if(commitCount > 0) {
+					betweenCommitsJSON();
 				}
+				commitJSON(gitURL(repo), commitId, refactorings);
+				commitCount++;
+			}
 
-				@Override
-				public void onFinish(int refactoringsCount, int commitsCount, int errorCommitsCount) {
-					System.out.println(String.format("Total count: [Commits: %d, Errors: %d, Refactorings: %d]",
-							commitsCount, errorCommitsCount, refactoringsCount));
-				}
+			@Override
+			public void onFinish(int refactoringsCount, int commitsCount, int errorCommitsCount) {
+				System.out.println(String.format("Total count: [Commits: %d, Errors: %d, Refactorings: %d]",
+						commitsCount, errorCommitsCount, refactoringsCount));
+			}
 
-				@Override
-				public void handleException(String commit, Exception e) {
-					System.err.println("Error processing commit " + commit);
-					e.printStackTrace(System.err);
-				}
-			});
-			endJSON();
-		}
+			@Override
+			public void handleException(String commit, Exception e) {
+				System.err.println("Error processing commit " + commit);
+				e.printStackTrace(System.err);
+			}
+		});
+		endJSON();
 	}
 
-	private static void detectBetweenTags(String[] args) throws Exception {
+	public void detectBetweenTags(String[] args) throws Exception {
 		int maxArgLength = processJSONoption(args, 4);
 		if (!(args.length == maxArgLength-1 || args.length == maxArgLength)) {
 			throw argumentException();
@@ -141,42 +116,40 @@ public class RefactoringMiner {
 		String startTag = args[2];
 		String endTag = containsEndArgument(args) ? args[3] : null;
 		GitService gitService = new GitServiceImpl();
-		try (Repository repo = gitService.openRepository(folder)) {
-			String gitURL = repo.getConfig().getString("remote", "origin", "url");
-			GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
-			startJSON();
-			detector.detectBetweenTags(repo, startTag, endTag, new RefactoringHandler() {
-				private int commitCount = 0;
-				@Override
-				public void handle(String commitId, List<Refactoring> refactorings) {
-					if(commitCount > 0) {
-						betweenCommitsJSON();
-					}
-					commitJSON(gitURL, commitId, refactorings);
-					commitCount++;
+		GitRepository repo = gitService.openRepository(project, folder);
+		GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
+		startJSON();
+		detector.detectBetweenTags(repo, startTag, endTag, new RefactoringHandler() {
+			private int commitCount = 0;
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				if(commitCount > 0) {
+					betweenCommitsJSON();
 				}
+				commitJSON(gitURL(repo), commitId, refactorings);
+				commitCount++;
+			}
 
-				@Override
-				public void onFinish(int refactoringsCount, int commitsCount, int errorCommitsCount) {
-					System.out.println(String.format("Total count: [Commits: %d, Errors: %d, Refactorings: %d]",
-							commitsCount, errorCommitsCount, refactoringsCount));
-				}
+			@Override
+			public void onFinish(int refactoringsCount, int commitsCount, int errorCommitsCount) {
+				System.out.println(String.format("Total count: [Commits: %d, Errors: %d, Refactorings: %d]",
+						commitsCount, errorCommitsCount, refactoringsCount));
+			}
 
-				@Override
-				public void handleException(String commit, Exception e) {
-					System.err.println("Error processing commit " + commit);
-					e.printStackTrace(System.err);
-				}
-			});
-			endJSON();
-		}
+			@Override
+			public void handleException(String commit, Exception e) {
+				System.err.println("Error processing commit " + commit);
+				e.printStackTrace(System.err);
+			}
+		});
+		endJSON();
 	}
 
 	private static boolean containsEndArgument(String[] args) {
 		return args.length == 4 || (args.length > 4 && args[4].equalsIgnoreCase("-json"));
 	}
 
-	private static void detectAtCommit(String[] args) throws Exception {
+	public void detectAtCommit(String[] args) throws Exception {
 		int maxArgLength = processJSONoption(args, 3);
 		if (args.length != maxArgLength) {
 			throw argumentException();
@@ -184,27 +157,34 @@ public class RefactoringMiner {
 		String folder = args[1];
 		String commitId = args[2];
 		GitService gitService = new GitServiceImpl();
-		try (Repository repo = gitService.openRepository(folder)) {
-			String gitURL = repo.getConfig().getString("remote", "origin", "url");
-			GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
-			startJSON();
-			detector.detectAtCommit(repo, commitId, new RefactoringHandler() {
-				@Override
-				public void handle(String commitId, List<Refactoring> refactorings) {
-					commitJSON(gitURL, commitId, refactorings);
-				}
+		GitRepository repo = gitService.openRepository(project, folder);
+		GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl();
+		startJSON();
+		detector.detectAtCommit(repo, commitId, new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				commitJSON(gitURL(repo), commitId, refactorings);
+			}
 
-				@Override
-				public void handleException(String commit, Exception e) {
-					System.err.println("Error processing commit " + commit);
-					e.printStackTrace(System.err);
-				}
-			});
-			endJSON();
-		}
+			@Override
+			public void handleException(String commit, Exception e) {
+				System.err.println("Error processing commit " + commit);
+				e.printStackTrace(System.err);
+			}
+		});
+		endJSON();
 	}
 
-	private static void detectAtGitHubCommit(String[] args) throws Exception {
+	private static String gitURL(GitRepository repo) {
+		String gitURL = null;
+		if(repo.getRemotes().size() > 0) {
+			GitRemote remote = repo.getRemotes().iterator().next();
+			gitURL = remote.getFirstUrl();
+		}
+		return gitURL;
+	}
+
+	public static void detectAtGitHubCommit(String[] args) throws Exception {
 		int maxArgLength = processJSONoption(args, 4);
 		if (args.length != maxArgLength) {
 			throw argumentException();
@@ -229,7 +209,7 @@ public class RefactoringMiner {
 		endJSON();
 	}
 
-	private static void detectAtGitHubPullRequest(String[] args) throws Exception {
+	public static void detectAtGitHubPullRequest(String[] args) throws Exception {
 		int maxArgLength = processJSONoption(args, 4);
 		if (args.length != maxArgLength) {
 			throw argumentException();
@@ -263,7 +243,12 @@ public class RefactoringMiner {
 		if (args[args.length-2].equalsIgnoreCase("-json")) {
 			path = Paths.get(args[args.length-1]);
 			try {
-				Files.createFile(path);
+				if(Files.exists(path)) {
+					Files.delete(path);
+				}
+				if(Files.notExists(path)) {
+					Files.createFile(path);
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

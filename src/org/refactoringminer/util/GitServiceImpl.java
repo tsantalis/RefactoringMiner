@@ -15,16 +15,13 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vcs.changes.Change;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.vcs.log.TimedVcsCommit;
 import com.intellij.vcsUtil.VcsFileUtil;
+import git4idea.GitRevisionNumber;
+import git4idea.history.GitHistoryUtils;
 import git4idea.repo.GitRepository;
 import git4idea.repo.GitRepositoryImpl;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.revwalk.filter.RevFilter;
+
 import org.refactoringminer.api.GitService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +31,6 @@ public class GitServiceImpl implements GitService {
 	private static final String REMOTE_REFS_PREFIX = "refs/remotes/origin/";
 	Logger logger = LoggerFactory.getLogger(GitServiceImpl.class);
 
-	DefaultCommitsFilter commitsFilter = new DefaultCommitsFilter();
-	
 	@Override
 	public GitRepository cloneIfNotExists(Project project, String projectPath, String cloneUrl/*, String branch*/) throws Exception {
 		java.io.File folder = new File(projectPath);
@@ -67,90 +62,42 @@ public class GitServiceImpl implements GitService {
 		}
 	}
 
-	public RevWalk createAllRevsWalk(Repository repository) throws Exception {
+	public List<? extends TimedVcsCommit> createAllRevsWalk(GitRepository repository) throws Exception {
 		return this.createAllRevsWalk(repository, null);
 	}
 
-	public RevWalk createAllRevsWalk(Repository repository, String branch) throws Exception {
-		List<ObjectId> currentRemoteRefs = new ArrayList<ObjectId>(); 
-		for (Ref ref : repository.getRefDatabase().getRefs()) {
-			String refName = ref.getName();
-			if (refName.startsWith(REMOTE_REFS_PREFIX)) {
-				if (branch == null || refName.endsWith("/" + branch)) {
-					currentRemoteRefs.add(ref.getObjectId());
-				}
-			}
-		}
-		
-		RevWalk walk = new RevWalk(repository);
-		for (ObjectId newRef : currentRemoteRefs) {
-			walk.markStart(walk.parseCommit(newRef));
-		}
-		walk.setRevFilter(commitsFilter);
-		return walk;
+	public List<? extends TimedVcsCommit> createAllRevsWalk(GitRepository repository, String branch) throws Exception {
+		List<? extends TimedVcsCommit> commits = branch != null ?
+				GitHistoryUtils.collectTimedCommits(repository.getProject(), repository.getRoot(), REMOTE_REFS_PREFIX + branch) :
+				GitHistoryUtils.collectTimedCommits(repository.getProject(), repository.getRoot());
+		List<? extends TimedVcsCommit> filteredMergeCommits = commits.stream().filter(c -> c.getParents().size() == 1).collect(Collectors.toList());
+		return filteredMergeCommits;
 	}
 	
 	@Override
-	public Iterable<RevCommit> createRevsWalkBetweenTags(Repository repository, String startTag, String endTag)
+	public List<? extends TimedVcsCommit> createRevsWalkBetweenTags(GitRepository repository, String startTag, String endTag)
 			throws Exception {
-		Ref refFrom = repository.findRef(startTag);
-		Ref refTo = repository.findRef(endTag);
-		try (Git git = new Git(repository)) {
-			List<RevCommit> revCommits = StreamSupport.stream(git.log().addRange(getActualRefObjectId(refFrom), getActualRefObjectId(refTo)).call()
-					.spliterator(), false)
-			        .filter(r -> r.getParentCount() == 1)
-			        .collect(Collectors.toList());
-			Collections.reverse(revCommits);
-			return revCommits;
-		}
-	}
-
-	private ObjectId getActualRefObjectId(Ref ref) {
-		if(ref.getPeeledObjectId() != null) {
-			return ref.getPeeledObjectId();
-		}
-		return ref.getObjectId();
+		GitRevisionNumber startCommitId = GitRevisionNumber.resolve(repository.getProject(), repository.getRoot(), startTag);
+		GitRevisionNumber endCommitId = GitRevisionNumber.resolve(repository.getProject(), repository.getRoot(), endTag);
+		String parameter = startCommitId + ".." + endCommitId;
+		List<? extends TimedVcsCommit> commits = GitHistoryUtils.collectTimedCommits(repository.getProject(), repository.getRoot(), parameter);
+		List<? extends TimedVcsCommit> filteredMergeCommits = commits.stream().filter(c -> c.getParents().size() == 1).collect(Collectors.toList());
+		Collections.reverse(filteredMergeCommits);
+		return filteredMergeCommits;
 	}
 
 	@Override
-	public Iterable<RevCommit> createRevsWalkBetweenCommits(Repository repository, String startCommitId, String endCommitId)
+	public List<? extends TimedVcsCommit> createRevsWalkBetweenCommits(GitRepository repository, String startCommitId, String endCommitId)
 			throws Exception {
-		ObjectId from = repository.resolve(startCommitId);
-		ObjectId to = repository.resolve(endCommitId);
-		try (Git git = new Git(repository)) {
-			List<RevCommit> revCommits = StreamSupport.stream(git.log().addRange(from, to).call()
-					.spliterator(), false)
-					.filter(r -> r.getParentCount() == 1)
-			        .collect(Collectors.toList());
-			Collections.reverse(revCommits);
-			return revCommits;
-		}
+		String parameter = startCommitId + ".." + endCommitId;
+		List<? extends TimedVcsCommit> commits = GitHistoryUtils.collectTimedCommits(repository.getProject(), repository.getRoot(), parameter);
+		List<? extends TimedVcsCommit> filteredMergeCommits = commits.stream().filter(c -> c.getParents().size() == 1).collect(Collectors.toList());
+		Collections.reverse(filteredMergeCommits);
+		return filteredMergeCommits;
 	}
 
 	public boolean isCommitAnalyzed(String sha1) {
 		return false;
-	}
-
-	private class DefaultCommitsFilter extends RevFilter {
-		@Override
-		public final boolean include(final RevWalk walker, final RevCommit c) {
-			return c.getParentCount() == 1 && !isCommitAnalyzed(c.getName());
-		}
-
-		@Override
-		public final RevFilter clone() {
-			return this;
-		}
-
-		@Override
-		public final boolean requiresCommitBody() {
-			return false;
-		}
-
-		@Override
-		public String toString() {
-			return "RegularCommitsFilter";
-		}
 	}
 
 	public void fileTreeDiff(GitRepository repository, Collection<Change> changes, Set<String> javaFilesBefore, Set<String> javaFilesCurrent, Map<String, String> renamedFilesHint) throws Exception {

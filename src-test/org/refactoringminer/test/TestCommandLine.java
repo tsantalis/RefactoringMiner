@@ -83,4 +83,22 @@ public class TestCommandLine extends LightJavaCodeInsightFixtureTestCase {
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
         Assert.assertEquals(expected.size(), actual.size());
     }
+
+    @Test
+    public void testCommit() throws Exception {
+        RefactoringMiner miner = new RefactoringMiner(getProject());
+        String jsonPath = REPOS + "/refactoring-toy-example/refactoring-toy-example-commit-actual.json";
+        String[] args = {
+                "-c",
+                REPOS + "/refactoring-toy-example",
+                "36287f7c3b09eff78395267a3ac0d7da067863fd",
+                "-json",
+                jsonPath
+        };
+        miner.detectAtCommit(args);
+
+        List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/refactoring-toy-example-commit-expected.json"));
+        List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
+        Assert.assertEquals(expected.size(), actual.size());
+    }
 }

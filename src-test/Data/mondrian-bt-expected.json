@@ -1,0 +1,78 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/pentaho/mondrian.git",
+	"sha1": "0f41f9081ce8ae2ca068d22bfe135bd04e82e0c4",
+	"url": "https://github.com/pentaho/mondrian/commit/0f41f9081ce8ae2ca068d22bfe135bd04e82e0c4",
+	"refactorings": []
+},
+{
+	"repository": "https://github.com/pentaho/mondrian.git",
+	"sha1": "d5ed723f6af51250bdf923b37ffe65e2c5d6fb07",
+	"url": "https://github.com/pentaho/mondrian/commit/d5ed723f6af51250bdf923b37ffe65e2c5d6fb07",
+	"refactorings": []
+},
+{
+	"repository": "https://github.com/pentaho/mondrian.git",
+	"sha1": "12718a88bca04a26237798d0c79e23591f6a3e03",
+	"url": "https://github.com/pentaho/mondrian/commit/12718a88bca04a26237798d0c79e23591f6a3e03",
+	"refactorings": [{
+	"type": "Extract Variable",
+	"description": "Extract Variable vcMeasure : Member in method public evaluate(evaluator Evaluator) : Object from class mondrian.olap.fun.ValidMeasureFunDef.CalcImpl",
+	"leftSideLocations": [{
+		"filePath": "src/main/mondrian/olap/fun/ValidMeasureFunDef.java",
+		"startLine": 88,
+		"endLine": 89,
+		"startColumn": 13,
+		"endColumn": 50,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/mondrian/olap/fun/ValidMeasureFunDef.java",
+		"startLine": 66,
+		"endLine": 116,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public evaluate(evaluator Evaluator) : Object"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/main/mondrian/olap/fun/ValidMeasureFunDef.java",
+		"startLine": 89,
+		"endLine": 89,
+		"startColumn": 26,
+		"endColumn": 69,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted variable declaration",
+		"codeElement": "vcMeasure : Member"
+}, {
+		"filePath": "src/main/mondrian/olap/fun/ValidMeasureFunDef.java",
+		"startLine": 100,
+		"endLine": 100,
+		"startColumn": 13,
+		"endColumn": 71,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "src/main/mondrian/olap/fun/ValidMeasureFunDef.java",
+		"startLine": 67,
+		"endLine": 127,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with extracted variable",
+		"codeElement": "public evaluate(evaluator Evaluator) : Object"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/pentaho/mondrian.git",
+	"sha1": "1117d577e9cc4fb5aa175fe30610c739e580f386",
+	"url": "https://github.com/pentaho/mondrian/commit/1117d577e9cc4fb5aa175fe30610c739e580f386",
+	"refactorings": []
+}]
+}

@@ -1,0 +1,105 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "36287f7c3b09eff78395267a3ac0d7da067863fd",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/36287f7c3b09eff78395267a3ac0d7da067863fd",
+	"refactorings": [{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute private age : int from class org.animals.Labrador to private age : int from class org.animals.Dog",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Labrador.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 14,
+		"endColumn": 21,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private age : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 14,
+		"endColumn": 21,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "private age : int"
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute private age : int from class org.animals.Poodle to private age : int from class org.animals.Dog",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Poodle.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 14,
+		"endColumn": 21,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private age : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 14,
+		"endColumn": 21,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "private age : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public getAge() : int from class org.animals.Labrador to public getAge() : int from class org.animals.Dog",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Labrador.java",
+		"startLine": 7,
+		"endLine": 9,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getAge() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 7,
+		"endLine": 9,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public getAge() : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public getAge() : int from class org.animals.Poodle to public getAge() : int from class org.animals.Dog",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Poodle.java",
+		"startLine": 7,
+		"endLine": 9,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getAge() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 7,
+		"endLine": 9,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public getAge() : int"
+}]
+}
+]
+}]
+}

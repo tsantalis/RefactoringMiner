@@ -1,0 +1,2229 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/apache/drill.git",
+	"sha1": "2b6a91a212e592a66bdad175f7b3fb8041c2ae6b",
+	"url": "https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b",
+	"refactorings": [{
+	"type": "Add Parameter",
+	"description": "Add Parameter onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method private generateWorkUnits(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, reader PhysicalPlanReader, rootNode Fragment, planningSet PlanningSet, session UserSession, queryContextInfo QueryContextInformation, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : List<QueryWorkUnit> from class org.apache.drill.exec.planner.fragment.contrib.SplittingParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/contrib/SplittingParallelizer.java",
+		"startLine": 97,
+		"endLine": 229,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private generateWorkUnits(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, reader PhysicalPlanReader, rootNode Fragment, planningSet PlanningSet, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/contrib/SplittingParallelizer.java",
+		"startLine": 114,
+		"endLine": 114,
+		"startColumn": 70,
+		"endColumn": 119,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "onlineEndpointUUIDs : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/contrib/SplittingParallelizer.java",
+		"startLine": 95,
+		"endLine": 227,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "private generateWorkUnits(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, reader PhysicalPlanReader, rootNode Fragment, planningSet PlanningSet, session UserSession, queryContextInfo QueryContextInformation, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : List<QueryWorkUnit>"
+}]
+},
+{
+	"type": "Add Parameter",
+	"description": "Add Parameter onlineEndpoints : Map<DrillbitEndpoint,String> in method protected generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, rootNode Fragment, planningSet PlanningSet, session UserSession, queryContextInfo QueryContextInformation, onlineEndpoints Map<DrillbitEndpoint,String>) : QueryWorkUnit from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 294,
+		"endLine": 358,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "protected generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, rootNode Fragment, planningSet PlanningSet, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 299,
+		"endLine": 299,
+		"startColumn": 86,
+		"endColumn": 131,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 297,
+		"endLine": 365,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "protected generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, rootNode Fragment, planningSet PlanningSet, session UserSession, queryContextInfo QueryContextInformation, onlineEndpoints Map<DrillbitEndpoint,String>) : QueryWorkUnit"
+}]
+},
+{
+	"type": "Add Parameter",
+	"description": "Add Parameter queryRM : QueryResourceManager in method public DistributedQueueParallelizer(memoryPlanning boolean, queryContext QueryContext, queryRM QueryResourceManager) from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 48,
+		"endLine": 53,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public DistributedQueueParallelizer(memoryPlanning boolean, queryContext QueryContext)"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 53,
+		"endLine": 53,
+		"startColumn": 90,
+		"endColumn": 118,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "queryRM : QueryResourceManager"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 53,
+		"endLine": 59,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "public DistributedQueueParallelizer(memoryPlanning boolean, queryContext QueryContext, queryRM QueryResourceManager)"
+}]
+},
+{
+	"type": "Change Attribute Type",
+	"description": "Change Attribute Type nodeResourceMap : Map<DrillbitEndpoint,NodeResource> to nodeResourceMap : Map<DrillbitEndpoint,NodeResources> in class org.apache.drill.exec.planner.fragment.Wrapper",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 58,
+		"endLine": 58,
+		"startColumn": 47,
+		"endColumn": 62,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "nodeResourceMap : Map<DrillbitEndpoint,NodeResource>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 58,
+		"endLine": 58,
+		"startColumn": 48,
+		"endColumn": 63,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "changed-type attribute declaration",
+		"codeElement": "nodeResourceMap : Map<DrillbitEndpoint,NodeResources>"
+}]
+},
+{
+	"type": "Change Attribute Type",
+	"description": "Change Attribute Type numVirtualCpu : int to numVirtualCpu : long in class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 46,
+		"endLine": 46,
+		"startColumn": 15,
+		"endColumn": 28,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "numVirtualCpu : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 47,
+		"endLine": 47,
+		"startColumn": 16,
+		"endColumn": 29,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "changed-type attribute declaration",
+		"codeElement": "numVirtualCpu : long"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public abstract adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 178,
+		"endLine": 178,
+		"startColumn": 37,
+		"endColumn": 81,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 177,
+		"endLine": 178,
+		"startColumn": 3,
+		"endColumn": 121,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public abstract adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, activeEndpoints Collection<DrillbitEndpoint>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 181,
+		"endLine": 181,
+		"startColumn": 37,
+		"endColumn": 86,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "onlineEndpointUUIDs : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 180,
+		"endLine": 181,
+		"startColumn": 3,
+		"endColumn": 119,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public abstract adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DefaultParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DefaultParallelizer.java",
+		"startLine": 54,
+		"endLine": 54,
+		"startColumn": 28,
+		"endColumn": 72,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DefaultParallelizer.java",
+		"startLine": 52,
+		"endLine": 60,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, activeEndpoints Collection<DrillbitEndpoint>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DefaultParallelizer.java",
+		"startLine": 54,
+		"endLine": 54,
+		"startColumn": 28,
+		"endColumn": 77,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "onlineEndpointUUIDs : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DefaultParallelizer.java",
+		"startLine": 52,
+		"endLine": 60,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 82,
+		"endLine": 82,
+		"startColumn": 28,
+		"endColumn": 72,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 67,
+		"endLine": 117,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, activeEndpoints Collection<DrillbitEndpoint>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 88,
+		"endLine": 88,
+		"startColumn": 28,
+		"endColumn": 77,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "onlineEndpointUUIDs : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 73,
+		"endLine": 134,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.ZKQueueParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 53,
+		"endLine": 53,
+		"startColumn": 28,
+		"endColumn": 72,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 51,
+		"endLine": 69,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, activeEndpoints Collection<DrillbitEndpoint>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 53,
+		"endLine": 53,
+		"startColumn": 28,
+		"endColumn": 77,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "onlineEndpointUUIDs : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 51,
+		"endLine": 69,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpointUUIDs Map<DrillbitEndpoint,String>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit> from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 230,
+		"endLine": 230,
+		"startColumn": 7,
+		"endColumn": 51,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 216,
+		"endLine": 234,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, activeEndpoints Collection<DrillbitEndpoint>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 233,
+		"endLine": 233,
+		"startColumn": 7,
+		"endColumn": 56,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "onlineEndpointUUIDs : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 219,
+		"endLine": 237,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpointUUIDs Map<DrillbitEndpoint,String>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit>"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpointUUIDs Map<DrillbitEndpoint,String>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit> from class org.apache.drill.exec.planner.fragment.contrib.SplittingParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/contrib/SplittingParallelizer.java",
+		"startLine": 82,
+		"endLine": 82,
+		"startColumn": 7,
+		"endColumn": 51,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/contrib/SplittingParallelizer.java",
+		"startLine": 68,
+		"endLine": 95,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, activeEndpoints Collection<DrillbitEndpoint>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/contrib/SplittingParallelizer.java",
+		"startLine": 81,
+		"endLine": 81,
+		"startColumn": 7,
+		"endColumn": 56,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "onlineEndpointUUIDs : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/contrib/SplittingParallelizer.java",
+		"startLine": 67,
+		"endLine": 93,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpointUUIDs Map<DrillbitEndpoint,String>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit>"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpoints Map<DrillbitEndpoint,String>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit from class org.apache.drill.exec.planner.fragment.QueryParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/QueryParallelizer.java",
+		"startLine": 61,
+		"endLine": 61,
+		"startColumn": 34,
+		"endColumn": 78,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/QueryParallelizer.java",
+		"startLine": 46,
+		"endLine": 62,
+		"startColumn": 3,
+		"endColumn": 128,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, activeEndpoints Collection<DrillbitEndpoint>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/QueryParallelizer.java",
+		"startLine": 61,
+		"endLine": 61,
+		"startColumn": 34,
+		"endColumn": 79,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/QueryParallelizer.java",
+		"startLine": 46,
+		"endLine": 62,
+		"startColumn": 3,
+		"endColumn": 128,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpoints Map<DrillbitEndpoint,String>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpoints Map<DrillbitEndpoint,String>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 203,
+		"endLine": 203,
+		"startColumn": 47,
+		"endColumn": 91,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 180,
+		"endLine": 214,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, activeEndpoints Collection<DrillbitEndpoint>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 206,
+		"endLine": 206,
+		"startColumn": 47,
+		"endColumn": 92,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 183,
+		"endLine": 217,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpoints Map<DrillbitEndpoint,String>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type from : Map<String,NodeResources> to from : Map<DrillbitEndpoint,NodeResources> in method public merge(to Map<DrillbitEndpoint,NodeResources>, from Map<DrillbitEndpoint,NodeResources>) : Map<DrillbitEndpoint,NodeResources> from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 106,
+		"endLine": 106,
+		"startColumn": 50,
+		"endColumn": 81,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "from : Map<String,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 105,
+		"endLine": 109,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public merge(to Map<String,NodeResources>, from Map<String,NodeResources>) : Map<String,NodeResources>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 107,
+		"endLine": 107,
+		"startColumn": 60,
+		"endColumn": 101,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "from : Map<DrillbitEndpoint,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 106,
+		"endLine": 110,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public merge(to Map<DrillbitEndpoint,NodeResources>, from Map<DrillbitEndpoint,NodeResources>) : Map<DrillbitEndpoint,NodeResources>"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type nodeLimit : int to nodeLimit : long in method private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillbitEndpoint,NodeResources>, nodeLimit long) : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 129,
+		"endLine": 129,
+		"startColumn": 97,
+		"endColumn": 110,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "nodeLimit : int"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 120,
+		"endLine": 172,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillbitEndpoint,NodeResource>, nodeLimit int) : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 165,
+		"endLine": 165,
+		"startColumn": 98,
+		"endColumn": 112,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "nodeLimit : long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 156,
+		"endLine": 210,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillbitEndpoint,NodeResources>, nodeLimit long) : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type nodeResourceMap : Map<DrillbitEndpoint,NodeResource> to nodeResourceMap : Map<DrillbitEndpoint,NodeResources> in method private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillbitEndpoint,NodeResources>, nodeLimit long) : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 129,
+		"endLine": 129,
+		"startColumn": 44,
+		"endColumn": 95,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "nodeResourceMap : Map<DrillbitEndpoint,NodeResource>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 120,
+		"endLine": 172,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillbitEndpoint,NodeResource>, nodeLimit int) : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 165,
+		"endLine": 165,
+		"startColumn": 44,
+		"endColumn": 96,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "nodeResourceMap : Map<DrillbitEndpoint,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 156,
+		"endLine": 210,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillbitEndpoint,NodeResources>, nodeLimit long) : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type numVirtualCpu : int to numVirtualCpu : long in method public NodeResources(memoryInBytes long, numVirtualCpu long) from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 50,
+		"endLine": 50,
+		"startColumn": 44,
+		"endColumn": 61,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "numVirtualCpu : int"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 50,
+		"endLine": 52,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public NodeResources(memoryInBytes long, numVirtualCpu int)"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 51,
+		"endLine": 51,
+		"startColumn": 44,
+		"endColumn": 62,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "numVirtualCpu : long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 51,
+		"endLine": 53,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public NodeResources(memoryInBytes long, numVirtualCpu long)"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type numVirtualCpu : int to numVirtualCpu : long in method public NodeResources(version int, memoryInBytes long, numVirtualCpu long) from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 57,
+		"endLine": 57,
+		"startColumn": 24,
+		"endColumn": 72,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "numVirtualCpu : int"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 54,
+		"endLine": 61,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public NodeResources(version int, memoryInBytes long, numVirtualCpu int)"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 58,
+		"endLine": 58,
+		"startColumn": 24,
+		"endColumn": 73,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "numVirtualCpu : long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 55,
+		"endLine": 62,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public NodeResources(version int, memoryInBytes long, numVirtualCpu long)"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type resourceMap : Map<DrillbitEndpoint,NodeResource> to resourceMap : Map<DrillbitEndpoint,NodeResources> in method private mockPlanningSet(planningSet PlanningSet, resourceMap Map<DrillbitEndpoint,NodeResources>, endpoints List<DrillbitEndpoint>) : PlanningSet from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 113,
+		"endLine": 113,
+		"startColumn": 40,
+		"endColumn": 87,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "resourceMap : Map<DrillbitEndpoint,NodeResource>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 112,
+		"endLine": 124,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private mockPlanningSet(planningSet PlanningSet, resourceMap Map<DrillbitEndpoint,NodeResource>, endpoints List<DrillbitEndpoint>) : PlanningSet"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 126,
+		"endLine": 126,
+		"startColumn": 40,
+		"endColumn": 88,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "resourceMap : Map<DrillbitEndpoint,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 125,
+		"endLine": 137,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "private mockPlanningSet(planningSet PlanningSet, resourceMap Map<DrillbitEndpoint,NodeResources>, endpoints List<DrillbitEndpoint>) : PlanningSet"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type resourceMap : Map<DrillbitEndpoint,NodeResource> to resourceMap : Map<DrillbitEndpoint,NodeResources> in method private mockWrapper(rootFragment Wrapper, resourceMap Map<DrillbitEndpoint,NodeResources>, endpoints List<DrillbitEndpoint>, originalToMockWrapper Map<Fragment,Wrapper>) : Wrapper from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 92,
+		"endLine": 92,
+		"startColumn": 37,
+		"endColumn": 84,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "resourceMap : Map<DrillbitEndpoint,NodeResource>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 91,
+		"endLine": 110,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private mockWrapper(rootFragment Wrapper, resourceMap Map<DrillbitEndpoint,NodeResource>, endpoints List<DrillbitEndpoint>, originalToMockWrapper Map<Fragment,Wrapper>) : Wrapper"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 105,
+		"endLine": 105,
+		"startColumn": 37,
+		"endColumn": 85,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "resourceMap : Map<DrillbitEndpoint,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 104,
+		"endLine": 123,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "private mockWrapper(rootFragment Wrapper, resourceMap Map<DrillbitEndpoint,NodeResources>, endpoints List<DrillbitEndpoint>, originalToMockWrapper Map<Fragment,Wrapper>) : Wrapper"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type resources : Map<DrillbitEndpoint,NodeResource> to resources : Map<DrillbitEndpoint,NodeResources> in method private preparePlanningSet(activeEndpoints List<DrillbitEndpoint>, slice_target long, resources Map<DrillbitEndpoint,NodeResources>, sql String, parallelizer SimpleParallelizer) : PlanningSet from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 179,
+		"endLine": 179,
+		"startColumn": 42,
+		"endColumn": 87,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "resources : Map<DrillbitEndpoint,NodeResource>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 178,
+		"endLine": 183,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private preparePlanningSet(activeEndpoints List<DrillbitEndpoint>, slice_target long, resources Map<DrillbitEndpoint,NodeResource>, sql String, parallelizer SimpleParallelizer) : PlanningSet"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 193,
+		"endLine": 193,
+		"startColumn": 42,
+		"endColumn": 88,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "resources : Map<DrillbitEndpoint,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 192,
+		"endLine": 197,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "private preparePlanningSet(activeEndpoints List<DrillbitEndpoint>, slice_target long, resources Map<DrillbitEndpoint,NodeResources>, sql String, parallelizer SimpleParallelizer) : PlanningSet"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type to : Map<String,NodeResources> to to : Map<DrillbitEndpoint,NodeResources> in method public merge(to Map<DrillbitEndpoint,NodeResources>, from Map<DrillbitEndpoint,NodeResources>) : Map<DrillbitEndpoint,NodeResources> from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 105,
+		"endLine": 105,
+		"startColumn": 50,
+		"endColumn": 79,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "to : Map<String,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 105,
+		"endLine": 109,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public merge(to Map<String,NodeResources>, from Map<String,NodeResources>) : Map<String,NodeResources>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 106,
+		"endLine": 106,
+		"startColumn": 60,
+		"endColumn": 99,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "to : Map<DrillbitEndpoint,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 106,
+		"endLine": 110,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public merge(to Map<DrillbitEndpoint,NodeResources>, from Map<DrillbitEndpoint,NodeResources>) : Map<DrillbitEndpoint,NodeResources>"
+}]
+},
+{
+	"type": "Change Return Type",
+	"description": "Change Return Type List<DrillbitEndpoint> to Map<DrillbitEndpoint,String> in method private getEndpoints(totalMinorFragments int, notIn Set<DrillbitEndpoint>) : Map<DrillbitEndpoint,String> from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 150,
+		"endLine": 150,
+		"startColumn": 11,
+		"endColumn": 33,
+		"codeElementType": "TYPE",
+		"description": "original return type",
+		"codeElement": "List<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 150,
+		"endLine": 162,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private getEndpoints(totalMinorFragments int, notIn Set<DrillbitEndpoint>) : List<DrillbitEndpoint>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 163,
+		"endLine": 163,
+		"startColumn": 11,
+		"endColumn": 40,
+		"codeElementType": "TYPE",
+		"description": "changed return type",
+		"codeElement": "Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 163,
+		"endLine": 176,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed return type",
+		"codeElement": "private getEndpoints(totalMinorFragments int, notIn Set<DrillbitEndpoint>) : Map<DrillbitEndpoint,String>"
+}]
+},
+{
+	"type": "Change Return Type",
+	"description": "Change Return Type Map<DrillbitEndpoint,NodeResource> to Map<DrillbitEndpoint,NodeResources> in method public getResourceMap() : Map<DrillbitEndpoint,NodeResources> from class org.apache.drill.exec.planner.fragment.Wrapper",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 236,
+		"endLine": 236,
+		"startColumn": 10,
+		"endColumn": 45,
+		"codeElementType": "TYPE",
+		"description": "original return type",
+		"codeElement": "Map<DrillbitEndpoint,NodeResource>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 236,
+		"endLine": 238,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getResourceMap() : Map<DrillbitEndpoint,NodeResource>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 236,
+		"endLine": 236,
+		"startColumn": 10,
+		"endColumn": 46,
+		"codeElementType": "TYPE",
+		"description": "changed return type",
+		"codeElement": "Map<DrillbitEndpoint,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 236,
+		"endLine": 238,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed return type",
+		"codeElement": "public getResourceMap() : Map<DrillbitEndpoint,NodeResources>"
+}]
+},
+{
+	"type": "Change Return Type",
+	"description": "Change Return Type Map<String,NodeResources> to Map<DrillbitEndpoint,NodeResources> in method public merge(to Map<DrillbitEndpoint,NodeResources>, from Map<DrillbitEndpoint,NodeResources>) : Map<DrillbitEndpoint,NodeResources> from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 105,
+		"endLine": 105,
+		"startColumn": 17,
+		"endColumn": 43,
+		"codeElementType": "TYPE",
+		"description": "original return type",
+		"codeElement": "Map<String,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 105,
+		"endLine": 109,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public merge(to Map<String,NodeResources>, from Map<String,NodeResources>) : Map<String,NodeResources>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 106,
+		"endLine": 106,
+		"startColumn": 17,
+		"endColumn": 53,
+		"codeElementType": "TYPE",
+		"description": "changed return type",
+		"codeElement": "Map<DrillbitEndpoint,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 106,
+		"endLine": 110,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed return type",
+		"codeElement": "public merge(to Map<DrillbitEndpoint,NodeResources>, from Map<DrillbitEndpoint,NodeResources>) : Map<DrillbitEndpoint,NodeResources>"
+}]
+},
+{
+	"type": "Change Return Type",
+	"description": "Change Return Type NodeResource to NodeResources in method public create(cpu long) : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
+		"startLine": 66,
+		"endLine": 66,
+		"startColumn": 17,
+		"endColumn": 29,
+		"codeElementType": "TYPE",
+		"description": "original return type",
+		"codeElement": "NodeResource"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
+		"startLine": 66,
+		"endLine": 68,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public create(cpu long) : NodeResource"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 143,
+		"endLine": 143,
+		"startColumn": 17,
+		"endColumn": 30,
+		"codeElementType": "TYPE",
+		"description": "changed return type",
+		"codeElement": "NodeResources"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 143,
+		"endLine": 145,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed return type",
+		"codeElement": "public create(cpu long) : NodeResources"
+}]
+},
+{
+	"type": "Change Return Type",
+	"description": "Change Return Type int to long in method public getNumVirtualCpu() : long from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 81,
+		"endLine": 81,
+		"startColumn": 10,
+		"endColumn": 13,
+		"codeElementType": "TYPE",
+		"description": "original return type",
+		"codeElement": "int"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 81,
+		"endLine": 83,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getNumVirtualCpu() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 82,
+		"endLine": 82,
+		"startColumn": 10,
+		"endColumn": 14,
+		"codeElementType": "TYPE",
+		"description": "changed return type",
+		"codeElement": "long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 82,
+		"endLine": 84,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed return type",
+		"codeElement": "public getNumVirtualCpu() : long"
+}]
+},
+{
+	"type": "Change Thrown Exception Type",
+	"description": "Change Thrown Exception Type PhysicalOperatorSetupException to ExecutionSetupException in method public abstract adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 178,
+		"endLine": 178,
+		"startColumn": 90,
+		"endColumn": 120,
+		"codeElementType": "TYPE",
+		"description": "original exception type",
+		"codeElement": "PhysicalOperatorSetupException"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 177,
+		"endLine": 178,
+		"startColumn": 3,
+		"endColumn": 121,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public abstract adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, activeEndpoints Collection<DrillbitEndpoint>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 181,
+		"endLine": 181,
+		"startColumn": 95,
+		"endColumn": 118,
+		"codeElementType": "TYPE",
+		"description": "changed exception type",
+		"codeElement": "ExecutionSetupException"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 180,
+		"endLine": 181,
+		"startColumn": 3,
+		"endColumn": 119,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed thrown exception type",
+		"codeElement": "public abstract adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void"
+}]
+},
+{
+	"type": "Change Thrown Exception Type",
+	"description": "Change Thrown Exception Type PhysicalOperatorSetupException to ExecutionSetupException in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 82,
+		"endLine": 82,
+		"startColumn": 81,
+		"endColumn": 111,
+		"codeElementType": "TYPE",
+		"description": "original exception type",
+		"codeElement": "PhysicalOperatorSetupException"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 67,
+		"endLine": 117,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, activeEndpoints Collection<DrillbitEndpoint>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 88,
+		"endLine": 88,
+		"startColumn": 86,
+		"endColumn": 109,
+		"codeElementType": "TYPE",
+		"description": "changed exception type",
+		"codeElement": "ExecutionSetupException"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 73,
+		"endLine": 134,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed thrown exception type",
+		"codeElement": "public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type activeEndpoints : List<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestSingleMajorFragmentWithGroupByProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 202,
+		"endLine": 202,
+		"startColumn": 28,
+		"endColumn": 78,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : List<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 200,
+		"endLine": 212,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public TestSingleMajorFragmentWithGroupByProjectAndScan() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 216,
+		"endLine": 216,
+		"startColumn": 35,
+		"endColumn": 85,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 214,
+		"endLine": 226,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public TestSingleMajorFragmentWithGroupByProjectAndScan() : void"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type activeEndpoints : List<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestSingleMajorFragmentWithProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 187,
+		"endLine": 187,
+		"startColumn": 28,
+		"endColumn": 78,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : List<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 185,
+		"endLine": 197,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public TestSingleMajorFragmentWithProjectAndScan() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 201,
+		"endLine": 201,
+		"startColumn": 35,
+		"endColumn": 85,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 199,
+		"endLine": 211,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public TestSingleMajorFragmentWithProjectAndScan() : void"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type activeEndpoints : List<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestTwoMajorFragmentWithSortyProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 217,
+		"endLine": 217,
+		"startColumn": 28,
+		"endColumn": 78,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : List<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 215,
+		"endLine": 227,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public TestTwoMajorFragmentWithSortyProjectAndScan() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 231,
+		"endLine": 231,
+		"startColumn": 35,
+		"endColumn": 85,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 229,
+		"endLine": 241,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public TestTwoMajorFragmentWithSortyProjectAndScan() : void"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type cpuPerEndpoint : Function<DrillbitEndpoint,NodeResource> to cpuPerEndpoint : Function<DrillbitEndpoint,NodeResources> in method public computeCpuResources() : void from class org.apache.drill.exec.planner.fragment.Wrapper",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 228,
+		"endLine": 228,
+		"startColumn": 46,
+		"endColumn": 99,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "cpuPerEndpoint : Function<DrillbitEndpoint,NodeResource>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 214,
+		"endLine": 234,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public computeCpuResources() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 228,
+		"endLine": 228,
+		"startColumn": 47,
+		"endColumn": 101,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "cpuPerEndpoint : Function<DrillbitEndpoint,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 214,
+		"endLine": 234,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public computeCpuResources() : void"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type endpoints : List<DrillbitEndpoint> to endpoints : Map<DrillbitEndpoint,String> in method private getEndpoints(totalMinorFragments int, notIn Set<DrillbitEndpoint>) : Map<DrillbitEndpoint,String> from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 152,
+		"endLine": 152,
+		"startColumn": 28,
+		"endColumn": 57,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "endpoints : List<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 150,
+		"endLine": 162,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private getEndpoints(totalMinorFragments int, notIn Set<DrillbitEndpoint>) : List<DrillbitEndpoint>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 165,
+		"endLine": 165,
+		"startColumn": 35,
+		"endColumn": 62,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "endpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 163,
+		"endLine": 176,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "private getEndpoints(totalMinorFragments int, notIn Set<DrillbitEndpoint>) : Map<DrillbitEndpoint,String>"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type endpoints : List<DrillbitEndpoint> to endpoints : Map<DrillbitEndpoint,String> in method private print(fragmentFile String, bitCount int, expectedFragmentCount int) : void from class org.apache.drill.exec.pop.TestFragmentChecker",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/pop/TestFragmentChecker.java",
+		"startLine": 57,
+		"endLine": 57,
+		"startColumn": 28,
+		"endColumn": 60,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "endpoints : List<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/pop/TestFragmentChecker.java",
+		"startLine": 53,
+		"endLine": 75,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private print(fragmentFile String, bitCount int, expectedFragmentCount int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/pop/TestFragmentChecker.java",
+		"startLine": 57,
+		"endLine": 57,
+		"startColumn": 35,
+		"endColumn": 62,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "endpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/pop/TestFragmentChecker.java",
+		"startLine": 53,
+		"endLine": 76,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "private print(fragmentFile String, bitCount int, expectedFragmentCount int) : void"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type merge : BinaryOperator<NodeResource> to merge : BinaryOperator<NodeResources> in method public computeCpuResources() : void from class org.apache.drill.exec.planner.fragment.Wrapper",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 221,
+		"endLine": 226,
+		"startColumn": 34,
+		"endColumn": 6,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "merge : BinaryOperator<NodeResource>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 214,
+		"endLine": 234,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public computeCpuResources() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 221,
+		"endLine": 226,
+		"startColumn": 35,
+		"endColumn": 6,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "merge : BinaryOperator<NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 214,
+		"endLine": 234,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public computeCpuResources() : void"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type resources : Map<DrillbitEndpoint,NodeResource> to resources : Map<DrillbitEndpoint,NodeResources> in method public TestSingleMajorFragmentWithGroupByProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 203,
+		"endLine": 205,
+		"startColumn": 41,
+		"endColumn": 106,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "resources : Map<DrillbitEndpoint,NodeResource>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 200,
+		"endLine": 212,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public TestSingleMajorFragmentWithGroupByProjectAndScan() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 217,
+		"endLine": 219,
+		"startColumn": 42,
+		"endColumn": 107,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "resources : Map<DrillbitEndpoint,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 214,
+		"endLine": 226,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public TestSingleMajorFragmentWithGroupByProjectAndScan() : void"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type resources : Map<DrillbitEndpoint,NodeResource> to resources : Map<DrillbitEndpoint,NodeResources> in method public TestSingleMajorFragmentWithProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 188,
+		"endLine": 190,
+		"startColumn": 41,
+		"endColumn": 105,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "resources : Map<DrillbitEndpoint,NodeResource>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 185,
+		"endLine": 197,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public TestSingleMajorFragmentWithProjectAndScan() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 202,
+		"endLine": 204,
+		"startColumn": 42,
+		"endColumn": 106,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "resources : Map<DrillbitEndpoint,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 199,
+		"endLine": 211,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public TestSingleMajorFragmentWithProjectAndScan() : void"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type resources : Map<DrillbitEndpoint,NodeResource> to resources : Map<DrillbitEndpoint,NodeResources> in method public TestTwoMajorFragmentWithSortyProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 218,
+		"endLine": 220,
+		"startColumn": 41,
+		"endColumn": 105,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "resources : Map<DrillbitEndpoint,NodeResource>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 215,
+		"endLine": 227,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public TestTwoMajorFragmentWithSortyProjectAndScan() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 232,
+		"endLine": 234,
+		"startColumn": 42,
+		"endColumn": 106,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "resources : Map<DrillbitEndpoint,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 229,
+		"endLine": 241,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public TestTwoMajorFragmentWithSortyProjectAndScan() : void"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type result : NodeResource to result : NodeResources in method public computeCpuResources() : void from class org.apache.drill.exec.planner.fragment.Wrapper",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 222,
+		"endLine": 222,
+		"startColumn": 20,
+		"endColumn": 50,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "result : NodeResource"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 214,
+		"endLine": 234,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public computeCpuResources() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 222,
+		"endLine": 222,
+		"startColumn": 21,
+		"endColumn": 52,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "result : NodeResources"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
+		"startLine": 214,
+		"endLine": 234,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public computeCpuResources() : void"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type totalNodeResources : Map<DrillbitEndpoint,NodeResource> to totalNodeResources : Map<DrillbitEndpoint,NodeResources> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 88,
+		"endLine": 90,
+		"startColumn": 47,
+		"endColumn": 91,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "totalNodeResources : Map<DrillbitEndpoint,NodeResource>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 67,
+		"endLine": 117,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, activeEndpoints Collection<DrillbitEndpoint>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 94,
+		"endLine": 96,
+		"startColumn": 48,
+		"endColumn": 92,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "totalNodeResources : Map<DrillbitEndpoint,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 73,
+		"endLine": 134,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void"
+}]
+},
+{
+	"type": "Extract Variable",
+	"description": "Extract Variable endpoint : DrillbitEndpoint in method protected generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, rootNode Fragment, planningSet PlanningSet, session UserSession, queryContextInfo QueryContextInformation, onlineEndpoints Map<DrillbitEndpoint,String>) : QueryWorkUnit from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 332,
+		"endLine": 342,
+		"startColumn": 9,
+		"endColumn": 22,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 294,
+		"endLine": 358,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "protected generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, rootNode Fragment, planningSet PlanningSet, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 336,
+		"endLine": 336,
+		"startColumn": 26,
+		"endColumn": 81,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted variable declaration",
+		"codeElement": "endpoint : DrillbitEndpoint"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 338,
+		"endLine": 349,
+		"startColumn": 9,
+		"endColumn": 22,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 297,
+		"endLine": 365,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with extracted variable",
+		"codeElement": "protected generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, rootNode Fragment, planningSet PlanningSet, session UserSession, queryContextInfo QueryContextInformation, onlineEndpoints Map<DrillbitEndpoint,String>) : QueryWorkUnit"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public create(cpu long) : NodeResource from class org.apache.drill.exec.planner.cost.NodeResource to public create(cpu long) : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
+		"startLine": 66,
+		"endLine": 68,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public create(cpu long) : NodeResource"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 143,
+		"endLine": 145,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public create(cpu long) : NodeResources"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public toString() : String from class org.apache.drill.exec.planner.cost.NodeResource to public toString() : String from class org.apache.drill.common.DrillNode",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
+		"startLine": 55,
+		"endLine": 60,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public toString() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
+		"startLine": 79,
+		"endLine": 87,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public toString() : String"
+}]
+},
+{
+	"type": "Rename Parameter",
+	"description": "Rename Parameter activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public abstract adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 178,
+		"endLine": 178,
+		"startColumn": 37,
+		"endColumn": 81,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 177,
+		"endLine": 178,
+		"startColumn": 3,
+		"endColumn": 121,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public abstract adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, activeEndpoints Collection<DrillbitEndpoint>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 181,
+		"endLine": 181,
+		"startColumn": 37,
+		"endColumn": 86,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "onlineEndpointUUIDs : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 180,
+		"endLine": 181,
+		"startColumn": 3,
+		"endColumn": 119,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public abstract adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void"
+}]
+},
+{
+	"type": "Rename Parameter",
+	"description": "Rename Parameter activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DefaultParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DefaultParallelizer.java",
+		"startLine": 54,
+		"endLine": 54,
+		"startColumn": 28,
+		"endColumn": 72,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DefaultParallelizer.java",
+		"startLine": 52,
+		"endLine": 60,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, activeEndpoints Collection<DrillbitEndpoint>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DefaultParallelizer.java",
+		"startLine": 54,
+		"endLine": 54,
+		"startColumn": 28,
+		"endColumn": 77,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "onlineEndpointUUIDs : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DefaultParallelizer.java",
+		"startLine": 52,
+		"endLine": 60,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void"
+}]
+},
+{
+	"type": "Rename Parameter",
+	"description": "Rename Parameter activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 82,
+		"endLine": 82,
+		"startColumn": 28,
+		"endColumn": 72,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 67,
+		"endLine": 117,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, activeEndpoints Collection<DrillbitEndpoint>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 88,
+		"endLine": 88,
+		"startColumn": 28,
+		"endColumn": 77,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "onlineEndpointUUIDs : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 73,
+		"endLine": 134,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void"
+}]
+},
+{
+	"type": "Rename Parameter",
+	"description": "Rename Parameter activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.ZKQueueParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 53,
+		"endLine": 53,
+		"startColumn": 28,
+		"endColumn": 72,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 51,
+		"endLine": 69,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, activeEndpoints Collection<DrillbitEndpoint>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 53,
+		"endLine": 53,
+		"startColumn": 28,
+		"endColumn": 77,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "onlineEndpointUUIDs : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 51,
+		"endLine": 69,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void"
+}]
+},
+{
+	"type": "Rename Parameter",
+	"description": "Rename Parameter activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpointUUIDs Map<DrillbitEndpoint,String>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit> from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 230,
+		"endLine": 230,
+		"startColumn": 7,
+		"endColumn": 51,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 216,
+		"endLine": 234,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, activeEndpoints Collection<DrillbitEndpoint>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 233,
+		"endLine": 233,
+		"startColumn": 7,
+		"endColumn": 56,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "onlineEndpointUUIDs : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 219,
+		"endLine": 237,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpointUUIDs Map<DrillbitEndpoint,String>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit>"
+}]
+},
+{
+	"type": "Rename Parameter",
+	"description": "Rename Parameter activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpointUUIDs Map<DrillbitEndpoint,String>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit> from class org.apache.drill.exec.planner.fragment.contrib.SplittingParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/contrib/SplittingParallelizer.java",
+		"startLine": 82,
+		"endLine": 82,
+		"startColumn": 7,
+		"endColumn": 51,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/contrib/SplittingParallelizer.java",
+		"startLine": 68,
+		"endLine": 95,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, activeEndpoints Collection<DrillbitEndpoint>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/contrib/SplittingParallelizer.java",
+		"startLine": 81,
+		"endLine": 81,
+		"startColumn": 7,
+		"endColumn": 56,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "onlineEndpointUUIDs : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/contrib/SplittingParallelizer.java",
+		"startLine": 67,
+		"endLine": 93,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpointUUIDs Map<DrillbitEndpoint,String>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit>"
+}]
+},
+{
+	"type": "Rename Parameter",
+	"description": "Rename Parameter activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpoints Map<DrillbitEndpoint,String>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit from class org.apache.drill.exec.planner.fragment.QueryParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/QueryParallelizer.java",
+		"startLine": 61,
+		"endLine": 61,
+		"startColumn": 34,
+		"endColumn": 78,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/QueryParallelizer.java",
+		"startLine": 46,
+		"endLine": 62,
+		"startColumn": 3,
+		"endColumn": 128,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, activeEndpoints Collection<DrillbitEndpoint>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/QueryParallelizer.java",
+		"startLine": 61,
+		"endLine": 61,
+		"startColumn": 34,
+		"endColumn": 79,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/QueryParallelizer.java",
+		"startLine": 46,
+		"endLine": 62,
+		"startColumn": 3,
+		"endColumn": 128,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpoints Map<DrillbitEndpoint,String>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit"
+}]
+},
+{
+	"type": "Rename Parameter",
+	"description": "Rename Parameter activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpoints Map<DrillbitEndpoint,String>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 203,
+		"endLine": 203,
+		"startColumn": 47,
+		"endColumn": 91,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 180,
+		"endLine": 214,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, activeEndpoints Collection<DrillbitEndpoint>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 206,
+		"endLine": 206,
+		"startColumn": 47,
+		"endColumn": 92,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
+		"startLine": 183,
+		"endLine": 217,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpoints Map<DrillbitEndpoint,String>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit"
+}]
+},
+{
+	"type": "Rename Variable",
+	"description": "Rename Variable activeEndpoints : List<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestSingleMajorFragmentWithGroupByProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 202,
+		"endLine": 202,
+		"startColumn": 28,
+		"endColumn": 78,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : List<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 200,
+		"endLine": 212,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public TestSingleMajorFragmentWithGroupByProjectAndScan() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 216,
+		"endLine": 216,
+		"startColumn": 35,
+		"endColumn": 85,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "renamed variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 214,
+		"endLine": 226,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public TestSingleMajorFragmentWithGroupByProjectAndScan() : void"
+}]
+},
+{
+	"type": "Rename Variable",
+	"description": "Rename Variable activeEndpoints : List<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestSingleMajorFragmentWithProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 187,
+		"endLine": 187,
+		"startColumn": 28,
+		"endColumn": 78,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : List<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 185,
+		"endLine": 197,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public TestSingleMajorFragmentWithProjectAndScan() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 201,
+		"endLine": 201,
+		"startColumn": 35,
+		"endColumn": 85,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "renamed variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 199,
+		"endLine": 211,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public TestSingleMajorFragmentWithProjectAndScan() : void"
+}]
+},
+{
+	"type": "Rename Variable",
+	"description": "Rename Variable activeEndpoints : List<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestTwoMajorFragmentWithSortyProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 217,
+		"endLine": 217,
+		"startColumn": 28,
+		"endColumn": 78,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "activeEndpoints : List<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 215,
+		"endLine": 227,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public TestTwoMajorFragmentWithSortyProjectAndScan() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 231,
+		"endLine": 231,
+		"startColumn": 35,
+		"endColumn": 85,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "renamed variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 229,
+		"endLine": 241,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public TestTwoMajorFragmentWithSortyProjectAndScan() : void"
+}]
+}
+]
+}]
+}

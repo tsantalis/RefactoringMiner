@@ -95,4 +95,52 @@ public class TestCommandLine {
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void testGitHubCommit() throws Exception {
+    	String[] commits = {
+    			"097122eb9c39a46a00a5b36117014cea0a3bd34c",
+    			"7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3",
+    			"1db65a271ef6574e1dd240669dc816fcd17740fd",
+    			"2b6a91a212e592a66bdad175f7b3fb8041c2ae6b",
+    			"2800c57981f27d04b97e5994c3f6325ca301f110",
+    			"1517a87eb1effb2aac0c75b5f5ea6abc25407ab0",
+    			"a3f8b3669bcb771ecb25de50d6d7f1431e763d8d"
+    	};
+
+    	for(String commit : commits) {
+    		String jsonPath = REPOS + "/drill/drill-" + commit + "-actual.json";
+    		String[] args = {
+    				"-gc",
+    				"https://github.com/apache/drill.git",
+    				commit,
+    				"100",
+    				"-json",
+    				jsonPath
+    		};
+    		RefactoringMiner.detectAtGitHubCommit(args);
+
+    		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/drill-" + commit + "-expected.json"));
+    		List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
+    		Assert.assertEquals(expected, actual);
+    	}
+    }
+
+    @Test
+    public void testGitHubPullRequest() throws Exception {
+        String jsonPath = REPOS + "/drill/drill-gp-actual.json";
+        String[] args = {
+                "-gp",
+                "https://github.com/apache/drill.git",
+                "1762",
+                "100",
+                "-json",
+                jsonPath
+        };
+        RefactoringMiner.detectAtGitHubPullRequest(args);
+
+        List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/drill-gp-expected.json"));
+        List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
+        Assert.assertEquals(expected, actual);
+    }
 }

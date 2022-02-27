@@ -1,0 +1,1431 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/apache/drill.git",
+	"sha1": "1db65a271ef6574e1dd240669dc816fcd17740fd",
+	"url": "https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd",
+	"refactorings": [{
+	"type": "Add Method Annotation",
+	"description": "Add Method Annotation @JsonIgnore in method public getMemoryInGB() : long from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 54,
+		"endLine": 56,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getMemoryInGB() : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 76,
+		"endLine": 76,
+		"startColumn": 3,
+		"endColumn": 14,
+		"codeElementType": "ANNOTATION",
+		"description": "added annotation",
+		"codeElement": "@JsonIgnore"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 76,
+		"endLine": 79,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added annotation",
+		"codeElement": "public getMemoryInGB() : long"
+}]
+},
+{
+	"type": "Add Method Annotation",
+	"description": "Add Method Annotation @JsonIgnore in method public getMemoryInMB() : long from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 50,
+		"endLine": 52,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getMemoryInMB() : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 71,
+		"endLine": 71,
+		"startColumn": 3,
+		"endColumn": 14,
+		"codeElementType": "ANNOTATION",
+		"description": "added annotation",
+		"codeElement": "@JsonIgnore"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 71,
+		"endLine": 74,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added annotation",
+		"codeElement": "public getMemoryInMB() : long"
+}]
+},
+{
+	"type": "Add Variable Modifier",
+	"description": "Add Variable Modifier final in variable activeEndpointsUUID : Map<String,DrillbitEndpoint> in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 276,
+		"endLine": 283,
+		"startColumn": 36,
+		"endColumn": 11,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "newDrillbitSet : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 273,
+		"endLine": 338,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private updateEndpoints() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 285,
+		"endLine": 286,
+		"startColumn": 43,
+		"endColumn": 88,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "variable declaration with added modifier",
+		"codeElement": "activeEndpointsUUID : Map<String,DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 282,
+		"endLine": 347,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added variable modifier",
+		"codeElement": "private updateEndpoints() : void"
+}]
+},
+{
+	"type": "Add Variable Modifier",
+	"description": "Add Variable Modifier final in variable foreman : Foreman in method public receiveRuntimeFilter(runtimeFilter RuntimeFilterWritable) : void from class org.apache.drill.exec.work.WorkManager.WorkerBee",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/WorkManager.java",
+		"startLine": 394,
+		"endLine": 394,
+		"startColumn": 17,
+		"endColumn": 47,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "foreman : Foreman"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/WorkManager.java",
+		"startLine": 382,
+		"endLine": 425,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public receiveRuntimeFilter(runtimeFilter RuntimeFilterWritable) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/WorkManager.java",
+		"startLine": 454,
+		"endLine": 454,
+		"startColumn": 23,
+		"endColumn": 30,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "variable declaration with added modifier",
+		"codeElement": "foreman : Foreman"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/WorkManager.java",
+		"startLine": 440,
+		"endLine": 492,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added variable modifier",
+		"codeElement": "public receiveRuntimeFilter(runtimeFilter RuntimeFilterWritable) : void"
+}]
+},
+{
+	"type": "Add Variable Modifier",
+	"description": "Add Variable Modifier final in variable queriesInfo : Map<String,Integer> in method public getRemainingQueries() : Map<String,Integer> from class org.apache.drill.exec.work.WorkManager",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/WorkManager.java",
+		"startLine": 242,
+		"endLine": 242,
+		"startColumn": 30,
+		"endColumn": 74,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "queriesInfo : Map<String,Integer>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/WorkManager.java",
+		"startLine": 236,
+		"endLine": 246,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getRemainingQueries() : Map<String,Integer>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/WorkManager.java",
+		"startLine": 262,
+		"endLine": 262,
+		"startColumn": 34,
+		"endColumn": 78,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "variable declaration with added modifier",
+		"codeElement": "queriesInfo : Map<String,Integer>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/WorkManager.java",
+		"startLine": 254,
+		"endLine": 270,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added variable modifier",
+		"codeElement": "public getRemainingQueries() : Map<String,Integer>"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier private to protected in attribute protected client : ZookeeperClient from class org.apache.drill.exec.store.sys.store.ZookeeperPersistentStore",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/store/ZookeeperPersistentStore.java",
+		"startLine": 49,
+		"endLine": 49,
+		"startColumn": 33,
+		"endColumn": 39,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private client : ZookeeperClient"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/store/ZookeeperPersistentStore.java",
+		"startLine": 48,
+		"endLine": 48,
+		"startColumn": 35,
+		"endColumn": 41,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "protected client : ZookeeperClient"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier private to protected in attribute protected config : PersistentStoreConfig<V> from class org.apache.drill.exec.store.sys.store.ZookeeperPersistentStore",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/store/ZookeeperPersistentStore.java",
+		"startLine": 48,
+		"endLine": 48,
+		"startColumn": 42,
+		"endColumn": 48,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private config : PersistentStoreConfig<V>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/store/ZookeeperPersistentStore.java",
+		"startLine": 47,
+		"endLine": 47,
+		"startColumn": 44,
+		"endColumn": 50,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "protected config : PersistentStoreConfig<V>"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier private to public in attribute public MAX_QUERY_MEMORY_PER_NODE_KEY : String from class org.apache.drill.exec.resourcemgr.config.QueryQueueConfigImpl",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/config/QueryQueueConfigImpl.java",
+		"startLine": 50,
+		"endLine": 50,
+		"startColumn": 31,
+		"endColumn": 90,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private MAX_QUERY_MEMORY_PER_NODE_KEY : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/config/QueryQueueConfigImpl.java",
+		"startLine": 50,
+		"endLine": 50,
+		"startColumn": 30,
+		"endColumn": 89,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "public MAX_QUERY_MEMORY_PER_NODE_KEY : String"
+}]
+},
+{
+	"type": "Change Attribute Type",
+	"description": "Change Attribute Type endpointsMap : ConcurrentHashMap<MultiKey,DrillbitEndpoint> to endpointsMap : ConcurrentHashMap<String,DrillbitEndpoint> in class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 78,
+		"endLine": 78,
+		"startColumn": 57,
+		"endColumn": 122,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "endpointsMap : ConcurrentHashMap<MultiKey,DrillbitEndpoint>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 77,
+		"endLine": 77,
+		"startColumn": 55,
+		"endColumn": 95,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "changed-type attribute declaration",
+		"codeElement": "endpointsMap : ConcurrentHashMap<String,DrillbitEndpoint>"
+}]
+},
+{
+	"type": "Change Return Type",
+	"description": "Change Return Type void to QueryAdmitResponse in method public admit() : QueryAdmitResponse from class org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DefaultResourceManager.java",
+		"startLine": 56,
+		"endLine": 56,
+		"startColumn": 12,
+		"endColumn": 16,
+		"codeElementType": "TYPE",
+		"description": "original return type",
+		"codeElement": "void"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DefaultResourceManager.java",
+		"startLine": 55,
+		"endLine": 58,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public admit() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DefaultResourceManager.java",
+		"startLine": 65,
+		"endLine": 65,
+		"startColumn": 12,
+		"endColumn": 30,
+		"codeElementType": "TYPE",
+		"description": "changed return type",
+		"codeElement": "QueryAdmitResponse"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DefaultResourceManager.java",
+		"startLine": 65,
+		"endLine": 68,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed return type",
+		"codeElement": "public admit() : QueryAdmitResponse"
+}]
+},
+{
+	"type": "Change Return Type",
+	"description": "Change Return Type void to QueryAdmitResponse in method public admit() : QueryAdmitResponse from class org.apache.drill.exec.work.foreman.rm.QueryResourceManager",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/QueryResourceManager.java",
+		"startLine": 66,
+		"endLine": 66,
+		"startColumn": 3,
+		"endColumn": 7,
+		"codeElementType": "TYPE",
+		"description": "original return type",
+		"codeElement": "void"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/QueryResourceManager.java",
+		"startLine": 56,
+		"endLine": 66,
+		"startColumn": 3,
+		"endColumn": 66,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public admit() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/QueryResourceManager.java",
+		"startLine": 97,
+		"endLine": 97,
+		"startColumn": 3,
+		"endColumn": 21,
+		"codeElementType": "TYPE",
+		"description": "changed return type",
+		"codeElement": "QueryAdmitResponse"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/QueryResourceManager.java",
+		"startLine": 89,
+		"endLine": 97,
+		"startColumn": 3,
+		"endColumn": 80,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed return type",
+		"codeElement": "public admit() : QueryAdmitResponse"
+}]
+},
+{
+	"type": "Change Return Type",
+	"description": "Change Return Type void to QueryAdmitResponse in method public admit() : QueryAdmitResponse from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
+		"startLine": 85,
+		"endLine": 85,
+		"startColumn": 12,
+		"endColumn": 16,
+		"codeElementType": "TYPE",
+		"description": "original return type",
+		"codeElement": "void"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
+		"startLine": 84,
+		"endLine": 87,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public admit() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
+		"startLine": 96,
+		"endLine": 96,
+		"startColumn": 12,
+		"endColumn": 30,
+		"codeElementType": "TYPE",
+		"description": "changed return type",
+		"codeElement": "QueryAdmitResponse"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
+		"startLine": 96,
+		"endLine": 99,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed return type",
+		"codeElement": "public admit() : QueryAdmitResponse"
+}]
+},
+{
+	"type": "Change Return Type",
+	"description": "Change Return Type void to boolean in method private enqueue() : boolean from class org.apache.drill.exec.work.foreman.Foreman",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 491,
+		"endLine": 491,
+		"startColumn": 11,
+		"endColumn": 15,
+		"codeElementType": "TYPE",
+		"description": "original return type",
+		"codeElement": "void"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 486,
+		"endLine": 503,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private enqueue() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 530,
+		"endLine": 530,
+		"startColumn": 11,
+		"endColumn": 18,
+		"codeElementType": "TYPE",
+		"description": "changed return type",
+		"codeElement": "boolean"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 525,
+		"endLine": 544,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed return type",
+		"codeElement": "private enqueue() : boolean"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type key : MultiKey to bitUUID : String in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 302,
+		"endLine": 302,
+		"startColumn": 13,
+		"endColumn": 25,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "key : MultiKey"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 273,
+		"endLine": 338,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private updateEndpoints() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 304,
+		"endLine": 304,
+		"startColumn": 13,
+		"endColumn": 27,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "bitUUID : String"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 282,
+		"endLine": 347,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "private updateEndpoints() : void"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type newDrillbitSet : Collection<DrillbitEndpoint> to activeEndpointsUUID : Map<String,DrillbitEndpoint> in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 276,
+		"endLine": 283,
+		"startColumn": 36,
+		"endColumn": 11,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "newDrillbitSet : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 273,
+		"endLine": 338,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private updateEndpoints() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 285,
+		"endLine": 286,
+		"startColumn": 43,
+		"endColumn": 88,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "activeEndpointsUUID : Map<String,DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 282,
+		"endLine": 347,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "private updateEndpoints() : void"
+}]
+},
+{
+	"type": "Encapsulate Attribute",
+	"description": "Encapsulate Attribute private memoryInBytes : long from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 32,
+		"endLine": 32,
+		"startColumn": 22,
+		"endColumn": 35,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private memoryInBytes : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 44,
+		"endLine": 44,
+		"startColumn": 16,
+		"endColumn": 29,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "encapsulated attribute declaration",
+		"codeElement": "private memoryInBytes : long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 89,
+		"endLine": 91,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "added setter method",
+		"codeElement": "public setMemoryInBytes(memoryInBytes long) : void"
+}]
+},
+{
+	"type": "Encapsulate Attribute",
+	"description": "Encapsulate Attribute private numVirtualCpu : int from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 34,
+		"endLine": 34,
+		"startColumn": 21,
+		"endColumn": 34,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private numVirtualCpu : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 46,
+		"endLine": 46,
+		"startColumn": 15,
+		"endColumn": 28,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "encapsulated attribute declaration",
+		"codeElement": "private numVirtualCpu : int"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 93,
+		"endLine": 95,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "added setter method",
+		"codeElement": "public setNumVirtualCpu(numVCpu int) : void"
+}]
+},
+{
+	"type": "Encapsulate Attribute",
+	"description": "Encapsulate Attribute private version : int from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 30,
+		"endLine": 30,
+		"startColumn": 21,
+		"endColumn": 28,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private version : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 42,
+		"endLine": 42,
+		"startColumn": 21,
+		"endColumn": 28,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "encapsulated attribute declaration",
+		"codeElement": "private version : int"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 85,
+		"endLine": 87,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "added getter method",
+		"codeElement": "public getVersion() : int"
+}]
+},
+{
+	"type": "Encapsulate Attribute",
+	"description": "Encapsulate Attribute public id : String from class org.apache.drill.exec.coord.zk.ZKRegistrationHandle",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKRegistrationHandle.java",
+		"startLine": 26,
+		"endLine": 26,
+		"startColumn": 23,
+		"endColumn": 25,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "public id : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKRegistrationHandle.java",
+		"startLine": 26,
+		"endLine": 26,
+		"startColumn": 23,
+		"endColumn": 25,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "encapsulated attribute declaration",
+		"codeElement": "public id : String"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKRegistrationHandle.java",
+		"startLine": 39,
+		"endLine": 41,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "added getter method",
+		"codeElement": "public getId() : String"
+}]
+},
+{
+	"type": "Extract Method",
+	"description": "Extract Method private reserveAndRunFragments() : void extracted from private startQueryProcessing() : void in class org.apache.drill.exec.work.foreman.Foreman",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 476,
+		"endLine": 484,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "private startQueryProcessing() : void"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 482,
+		"endLine": 482,
+		"startColumn": 5,
+		"endColumn": 20,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 508,
+		"endLine": 523,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private reserveAndRunFragments() : void"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 519,
+		"endLine": 519,
+		"startColumn": 7,
+		"endColumn": 22,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 488,
+		"endLine": 498,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "private startQueryProcessing() : void"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 505,
+		"endLine": 505,
+		"startColumn": 5,
+		"endColumn": 29,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "reserveAndRunFragments()"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 515,
+		"endLine": 516,
+		"startColumn": 9,
+		"endColumn": 44,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 517,
+		"endLine": 517,
+		"startColumn": 9,
+		"endColumn": 16,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 521,
+		"endLine": 521,
+		"startColumn": 7,
+		"endColumn": 62,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 512,
+		"endLine": 518,
+		"startColumn": 53,
+		"endColumn": 8,
+		"codeElementType": "BLOCK",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 512,
+		"endLine": 518,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "IF_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 510,
+		"endLine": 522,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "TRY_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 520,
+		"endLine": 522,
+		"startColumn": 28,
+		"endColumn": 6,
+		"codeElementType": "CATCH_CLAUSE",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Extract Method",
+	"description": "Extract Method private startAdmittedQuery() : void extracted from private startQueryProcessing() : void in class org.apache.drill.exec.work.foreman.Foreman",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 476,
+		"endLine": 484,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "private startQueryProcessing() : void"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 483,
+		"endLine": 483,
+		"startColumn": 5,
+		"endColumn": 63,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 500,
+		"endLine": 506,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private startAdmittedQuery() : void"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 504,
+		"endLine": 504,
+		"startColumn": 5,
+		"endColumn": 64,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 488,
+		"endLine": 498,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "private startQueryProcessing() : void"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 497,
+		"endLine": 497,
+		"startColumn": 5,
+		"endColumn": 25,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "startAdmittedQuery()"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 502,
+		"endLine": 502,
+		"startColumn": 5,
+		"endColumn": 60,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 503,
+		"endLine": 503,
+		"startColumn": 5,
+		"endColumn": 69,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
+		"startLine": 505,
+		"endLine": 505,
+		"startColumn": 5,
+		"endColumn": 30,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "added statement in extracted method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Extract Method",
+	"description": "Extract Method public getAvailableEndpointsUUID() : Map<String,DrillbitEndpoint> extracted from public getAvailableEndpoints() : Collection<DrillbitEndpoint> in class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 238,
+		"endLine": 241,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public getAvailableEndpoints() : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 240,
+		"endLine": 240,
+		"startColumn": 5,
+		"endColumn": 27,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 242,
+		"endLine": 245,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public getAvailableEndpointsUUID() : Map<String,DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 244,
+		"endLine": 244,
+		"startColumn": 5,
+		"endColumn": 30,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 237,
+		"endLine": 240,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public getAvailableEndpoints() : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 239,
+		"endLine": 239,
+		"startColumn": 12,
+		"endColumn": 39,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "getAvailableEndpointsUUID()"
+}]
+},
+{
+	"type": "Extract Method",
+	"description": "Extract Method public mode(mode PersistentStoreMode) : StoreConfigBuilder<V> extracted from public blob() : StoreConfigBuilder<V> in class org.apache.drill.exec.store.sys.PersistentStoreConfig.StoreConfigBuilder",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 111,
+		"endLine": 114,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public blob() : StoreConfigBuilder<V>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 112,
+		"endLine": 112,
+		"startColumn": 7,
+		"endColumn": 55,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 113,
+		"endLine": 113,
+		"startColumn": 7,
+		"endColumn": 19,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 106,
+		"endLine": 109,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public mode(mode PersistentStoreMode) : StoreConfigBuilder<V>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 107,
+		"endLine": 107,
+		"startColumn": 7,
+		"endColumn": 24,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 108,
+		"endLine": 108,
+		"startColumn": 7,
+		"endColumn": 19,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 115,
+		"endLine": 117,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public blob() : StoreConfigBuilder<V>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 116,
+		"endLine": 116,
+		"startColumn": 14,
+		"endColumn": 55,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "mode(PersistentStoreMode.BLOB_PERSISTENT)"
+}]
+},
+{
+	"type": "Extract Method",
+	"description": "Extract Method public mode(mode PersistentStoreMode) : StoreConfigBuilder<V> extracted from public persist() : StoreConfigBuilder<V> in class org.apache.drill.exec.store.sys.PersistentStoreConfig.StoreConfigBuilder",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 106,
+		"endLine": 109,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public persist() : StoreConfigBuilder<V>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 107,
+		"endLine": 107,
+		"startColumn": 7,
+		"endColumn": 50,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 108,
+		"endLine": 108,
+		"startColumn": 7,
+		"endColumn": 19,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 106,
+		"endLine": 109,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public mode(mode PersistentStoreMode) : StoreConfigBuilder<V>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 107,
+		"endLine": 107,
+		"startColumn": 7,
+		"endColumn": 24,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 108,
+		"endLine": 108,
+		"startColumn": 7,
+		"endColumn": 19,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 111,
+		"endLine": 113,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public persist() : StoreConfigBuilder<V>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
+		"startLine": 112,
+		"endLine": 112,
+		"startColumn": 14,
+		"endColumn": 50,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "mode(PersistentStoreMode.PERSISTENT)"
+}]
+},
+{
+	"type": "Merge Variable",
+	"description": "Merge Variable [endpointAddress : String, endpointPort : int, endpoint : DrillbitEndpoint] to endpointToUUID : Map.Entry<String,DrillbitEndpoint> in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 294,
+		"endLine": 294,
+		"startColumn": 16,
+		"endColumn": 55,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "merged variable declaration",
+		"codeElement": "endpointAddress : String"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 295,
+		"endLine": 295,
+		"startColumn": 13,
+		"endColumn": 50,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "merged variable declaration",
+		"codeElement": "endpointPort : int"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 293,
+		"endLine": 293,
+		"startColumn": 13,
+		"endColumn": 38,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "merged variable declaration",
+		"codeElement": "endpoint : DrillbitEndpoint"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 273,
+		"endLine": 338,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private updateEndpoints() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 299,
+		"endLine": 299,
+		"startColumn": 12,
+		"endColumn": 62,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "new variable declaration",
+		"codeElement": "endpointToUUID : Map.Entry<String,DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 282,
+		"endLine": 347,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with merged variables",
+		"codeElement": "private updateEndpoints() : void"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public queryMemoryPerNode() : long from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.QueuedQueryResourceManager to public queryMemoryPerNode() : long from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 114,
+		"endLine": 116,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public queryMemoryPerNode() : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 207,
+		"endLine": 209,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public queryMemoryPerNode() : long"
+}]
+},
+{
+	"type": "Remove Attribute Modifier",
+	"description": "Remove Attribute Modifier final in attribute private memoryInBytes : long from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 32,
+		"endLine": 32,
+		"startColumn": 22,
+		"endColumn": 35,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private memoryInBytes : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 44,
+		"endLine": 44,
+		"startColumn": 16,
+		"endColumn": 29,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with removed modifier",
+		"codeElement": "private memoryInBytes : long"
+}]
+},
+{
+	"type": "Remove Attribute Modifier",
+	"description": "Remove Attribute Modifier final in attribute private numVirtualCpu : int from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 34,
+		"endLine": 34,
+		"startColumn": 21,
+		"endColumn": 34,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private numVirtualCpu : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 46,
+		"endLine": 46,
+		"startColumn": 15,
+		"endColumn": 28,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with removed modifier",
+		"codeElement": "private numVirtualCpu : int"
+}]
+},
+{
+	"type": "Remove Method Annotation",
+	"description": "Remove Method Annotation @Override in method public admit() : void from class org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DefaultResourceManager.java",
+		"startLine": 55,
+		"endLine": 55,
+		"startColumn": 5,
+		"endColumn": 14,
+		"codeElementType": "ANNOTATION",
+		"description": "removed annotation",
+		"codeElement": "@Override"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DefaultResourceManager.java",
+		"startLine": 55,
+		"endLine": 58,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public admit() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DefaultResourceManager.java",
+		"startLine": 65,
+		"endLine": 68,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with removed annotation",
+		"codeElement": "public admit() : QueryAdmitResponse"
+}]
+},
+{
+	"type": "Remove Method Annotation",
+	"description": "Remove Method Annotation @Override in method public admit() : void from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
+		"startLine": 84,
+		"endLine": 84,
+		"startColumn": 5,
+		"endColumn": 14,
+		"codeElementType": "ANNOTATION",
+		"description": "removed annotation",
+		"codeElement": "@Override"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
+		"startLine": 84,
+		"endLine": 87,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public admit() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
+		"startLine": 96,
+		"endLine": 99,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with removed annotation",
+		"codeElement": "public admit() : QueryAdmitResponse"
+}]
+},
+{
+	"type": "Rename Variable",
+	"description": "Rename Variable key : MultiKey to bitUUID : String in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 302,
+		"endLine": 302,
+		"startColumn": 13,
+		"endColumn": 25,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "key : MultiKey"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 273,
+		"endLine": 338,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private updateEndpoints() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 304,
+		"endLine": 304,
+		"startColumn": 13,
+		"endColumn": 27,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "bitUUID : String"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 282,
+		"endLine": 347,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "private updateEndpoints() : void"
+}]
+},
+{
+	"type": "Rename Variable",
+	"description": "Rename Variable newDrillbitSet : Collection<DrillbitEndpoint> to activeEndpointsUUID : Map<String,DrillbitEndpoint> in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 276,
+		"endLine": 283,
+		"startColumn": 36,
+		"endColumn": 11,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "newDrillbitSet : Collection<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 273,
+		"endLine": 338,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private updateEndpoints() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 285,
+		"endLine": 286,
+		"startColumn": 43,
+		"endColumn": 88,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "renamed variable declaration",
+		"codeElement": "activeEndpointsUUID : Map<String,DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 282,
+		"endLine": 347,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "private updateEndpoints() : void"
+}]
+},
+{
+	"type": "Replace Anonymous With Lambda",
+	"description": "Replace Anonymous With Lambda org.apache.drill.exec.coord.zk.ZKClusterCoordinator.updateEndpoints.newDrillbitSet.transform.new Function<ServiceInstance<DrillbitEndpoint>,DrillbitEndpoint> with ServiceInstance::getPayload in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 278,
+		"endLine": 283,
+		"startColumn": 77,
+		"endColumn": 10,
+		"codeElementType": "ANONYMOUS_CLASS_DECLARATION",
+		"description": "anonymous class declaration",
+		"codeElement": "org.apache.drill.exec.coord.zk.ZKClusterCoordinator.updateEndpoints.newDrillbitSet.transform.new Function<ServiceInstance<DrillbitEndpoint>,DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 273,
+		"endLine": 338,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private updateEndpoints() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 286,
+		"endLine": 286,
+		"startColumn": 59,
+		"endColumn": 86,
+		"codeElementType": "LAMBDA_EXPRESSION",
+		"description": "lambda expression",
+		"codeElement": "ServiceInstance::getPayload"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 282,
+		"endLine": 347,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with introduced lambda",
+		"codeElement": "private updateEndpoints() : void"
+}]
+}
+]
+}]
+}

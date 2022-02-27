@@ -1,0 +1,327 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/apache/drill.git",
+	"sha1": "097122eb9c39a46a00a5b36117014cea0a3bd34c",
+	"url": "https://github.com/apache/drill/commit/097122eb9c39a46a00a5b36117014cea0a3bd34c",
+	"refactorings": [{
+	"type": "Extract Method",
+	"description": "Extract Method private testPlanMatchingPatterns(query String, planFormat String, expectedPatterns Pattern[], excludedPatterns Pattern[]) : void extracted from public testPlanMatchingPatterns(query String, expectedPatterns Pattern[], excludedPatterns Pattern[]) : void in class org.apache.drill.PlanTestBase",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 93,
+		"endLine": 112,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public testPlanMatchingPatterns(query String, expectedPatterns Pattern[], excludedPatterns Pattern[]) : void"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 95,
+		"endLine": 95,
+		"startColumn": 5,
+		"endColumn": 114,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 100,
+		"endLine": 100,
+		"startColumn": 9,
+		"endColumn": 57,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 101,
+		"endLine": 101,
+		"startColumn": 9,
+		"endColumn": 91,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 108,
+		"endLine": 108,
+		"startColumn": 9,
+		"endColumn": 57,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 109,
+		"endLine": 109,
+		"startColumn": 9,
+		"endColumn": 90,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 99,
+		"endLine": 102,
+		"startColumn": 61,
+		"endColumn": 8,
+		"codeElementType": "BLOCK",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 99,
+		"endLine": 102,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 98,
+		"endLine": 103,
+		"startColumn": 35,
+		"endColumn": 6,
+		"codeElementType": "BLOCK",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 98,
+		"endLine": 103,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "IF_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 107,
+		"endLine": 110,
+		"startColumn": 61,
+		"endColumn": 8,
+		"codeElementType": "BLOCK",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 107,
+		"endLine": 110,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 106,
+		"endLine": 111,
+		"startColumn": 35,
+		"endColumn": 6,
+		"codeElementType": "BLOCK",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 106,
+		"endLine": 111,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "IF_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 108,
+		"endLine": 128,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private testPlanMatchingPatterns(query String, planFormat String, expectedPatterns Pattern[], excludedPatterns Pattern[]) : void"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 111,
+		"endLine": 111,
+		"startColumn": 5,
+		"endColumn": 112,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 116,
+		"endLine": 116,
+		"startColumn": 9,
+		"endColumn": 57,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 117,
+		"endLine": 117,
+		"startColumn": 9,
+		"endColumn": 91,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 124,
+		"endLine": 124,
+		"startColumn": 9,
+		"endColumn": 57,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 125,
+		"endLine": 125,
+		"startColumn": 9,
+		"endColumn": 90,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 115,
+		"endLine": 118,
+		"startColumn": 61,
+		"endColumn": 8,
+		"codeElementType": "BLOCK",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 115,
+		"endLine": 118,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 114,
+		"endLine": 119,
+		"startColumn": 35,
+		"endColumn": 6,
+		"codeElementType": "BLOCK",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 114,
+		"endLine": 119,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "IF_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 123,
+		"endLine": 126,
+		"startColumn": 61,
+		"endColumn": 8,
+		"codeElementType": "BLOCK",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 123,
+		"endLine": 126,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 122,
+		"endLine": 127,
+		"startColumn": 35,
+		"endColumn": 6,
+		"codeElementType": "BLOCK",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 122,
+		"endLine": 127,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "IF_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 93,
+		"endLine": 96,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public testPlanMatchingPatterns(query String, expectedPatterns Pattern[], excludedPatterns Pattern[]) : void"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 95,
+		"endLine": 95,
+		"startColumn": 5,
+		"endColumn": 86,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "testPlanMatchingPatterns(query,OPTIQ_FORMAT,expectedPatterns,excludedPatterns)"
+}]
+},
+{
+	"type": "Parameterize Attribute",
+	"description": "Parameterize Attribute OPTIQ_FORMAT : String to planFormat : String in method private testPlanMatchingPatterns(query String, planFormat String, expectedPatterns Pattern[], excludedPatterns Pattern[]) : void from class org.apache.drill.PlanTestBase",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 50,
+		"endLine": 50,
+		"startColumn": 33,
+		"endColumn": 54,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "OPTIQ_FORMAT : String"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 93,
+		"endLine": 112,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public testPlanMatchingPatterns(query String, expectedPatterns Pattern[], excludedPatterns Pattern[]) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 108,
+		"endLine": 108,
+		"startColumn": 62,
+		"endColumn": 79,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "planFormat : String"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
+		"startLine": 108,
+		"endLine": 128,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "private testPlanMatchingPatterns(query String, planFormat String, expectedPatterns Pattern[], excludedPatterns Pattern[]) : void"
+}]
+}
+]
+}]
+}

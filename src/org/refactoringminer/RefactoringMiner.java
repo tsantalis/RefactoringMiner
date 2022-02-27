@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.jgit.lib.Repository;
@@ -217,6 +219,8 @@ public class RefactoringMiner {
 		detector.detectAtCommit(gitURL, commitId, new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
+				Comparator<Refactoring> comparator = (Refactoring r1, Refactoring r2) -> r1.toString().compareTo(r2.toString());
+				Collections.sort(refactorings, comparator);
 				commitJSON(gitURL, commitId, refactorings);
 			}
 
@@ -243,6 +247,8 @@ public class RefactoringMiner {
 			private int commitCount = 0;
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
+				Comparator<Refactoring> comparator = (Refactoring r1, Refactoring r2) -> r1.toString().compareTo(r2.toString());
+				Collections.sort(refactorings, comparator);
 				if(commitCount > 0) {
 					betweenCommitsJSON();
 				}

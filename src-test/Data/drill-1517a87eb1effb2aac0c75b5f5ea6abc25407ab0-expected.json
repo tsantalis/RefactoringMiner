@@ -1,0 +1,657 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/apache/drill.git",
+	"sha1": "1517a87eb1effb2aac0c75b5f5ea6abc25407ab0",
+	"url": "https://github.com/apache/drill/commit/1517a87eb1effb2aac0c75b5f5ea6abc25407ab0",
+	"refactorings": [{
+	"type": "Add Parameter",
+	"description": "Add Parameter initialAllocation : long in method public OperatorStats(operatorId int, operatorType int, inputCount int, allocator BufferAllocator, initialAllocation long) from class org.apache.drill.exec.ops.OperatorStats",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/ops/OperatorStats.java",
+		"startLine": 90,
+		"endLine": 100,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public OperatorStats(operatorId int, operatorType int, inputCount int, allocator BufferAllocator)"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/ops/OperatorStats.java",
+		"startLine": 91,
+		"endLine": 91,
+		"startColumn": 101,
+		"endColumn": 123,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "initialAllocation : long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/ops/OperatorStats.java",
+		"startLine": 90,
+		"endLine": 101,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "public OperatorStats(operatorId int, operatorType int, inputCount int, allocator BufferAllocator, initialAllocation long)"
+}]
+},
+{
+	"type": "Add Parameter",
+	"description": "Add Parameter minMemory : long in method public MemoryCalculator(planningSet PlanningSet, context QueryContext, minMemory long) from class org.apache.drill.exec.planner.fragment.MemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 53,
+		"endLine": 57,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public MemoryCalculator(planningSet PlanningSet, context QueryContext)"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 54,
+		"endLine": 54,
+		"startColumn": 74,
+		"endColumn": 88,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "minMemory : long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 54,
+		"endLine": 59,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "public MemoryCalculator(planningSet PlanningSet, context QueryContext, minMemory long)"
+}]
+},
+{
+	"type": "Add Parameter",
+	"description": "Add Parameter optimalMemoryAllocation : long in method public OpProfileDef(operatorId int, operatorType int, incomingCount int, optimalMemoryAllocation long) from class org.apache.drill.exec.ops.OpProfileDef",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/ops/OpProfileDef.java",
+		"startLine": 26,
+		"endLine": 30,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public OpProfileDef(operatorId int, operatorType int, incomingCount int)"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/ops/OpProfileDef.java",
+		"startLine": 27,
+		"endLine": 27,
+		"startColumn": 76,
+		"endColumn": 104,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "optimalMemoryAllocation : long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/ops/OpProfileDef.java",
+		"startLine": 27,
+		"endLine": 32,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "public OpProfileDef(operatorId int, operatorType int, incomingCount int, optimalMemoryAllocation long)"
+}]
+},
+{
+	"type": "Add Thrown Exception Type",
+	"description": "Add Thrown Exception Type ExecutionSetupException in method private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 166,
+		"endLine": 220,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 196,
+		"endLine": 196,
+		"startColumn": 114,
+		"endColumn": 137,
+		"codeElementType": "TYPE",
+		"description": "added thrown exception type",
+		"codeElement": "ExecutionSetupException"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 187,
+		"endLine": 246,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added thrown exception type",
+		"codeElement": "private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>"
+}]
+},
+{
+	"type": "Change Attribute Type",
+	"description": "Change Attribute Type resources : Map<DrillNode,NodeResources> to totalResources : Map<String,NodeResources> in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 93,
+		"endLine": 93,
+		"startColumn": 41,
+		"endColumn": 50,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "resources : Map<DrillNode,NodeResources>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 96,
+		"endLine": 96,
+		"startColumn": 38,
+		"endColumn": 52,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "changed-type attribute declaration",
+		"codeElement": "totalResources : Map<String,NodeResources>"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type endpoint : DrillbitEndpoint to context : QueryContext in method public createDirectPlan(context QueryContext, records List<T>, clazz Class<T>) : PhysicalPlan from class org.apache.drill.exec.planner.sql.DirectPlan",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/sql/DirectPlan.java",
+		"startLine": 50,
+		"endLine": 50,
+		"startColumn": 51,
+		"endColumn": 76,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "endpoint : DrillbitEndpoint"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/sql/DirectPlan.java",
+		"startLine": 50,
+		"endLine": 62,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public createDirectPlan(endpoint DrillbitEndpoint, records List<T>, clazz Class<T>) : PhysicalPlan"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/sql/DirectPlan.java",
+		"startLine": 53,
+		"endLine": 53,
+		"startColumn": 51,
+		"endColumn": 71,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "context : QueryContext"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/sql/DirectPlan.java",
+		"startLine": 53,
+		"endLine": 69,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public createDirectPlan(context QueryContext, records List<T>, clazz Class<T>) : PhysicalPlan"
+}]
+},
+{
+	"type": "Extract Method",
+	"description": "Extract Method private visit(op PhysicalOperator, fragment Wrapper) : Void extracted from public visitOp(op PhysicalOperator, fragment Wrapper) : Void in class org.apache.drill.exec.planner.fragment.MemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 124,
+		"endLine": 160,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public visitOp(op PhysicalOperator, fragment Wrapper) : Void"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 157,
+		"endLine": 157,
+		"startColumn": 7,
+		"endColumn": 36,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 159,
+		"endLine": 159,
+		"startColumn": 5,
+		"endColumn": 17,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 156,
+		"endLine": 158,
+		"startColumn": 39,
+		"endColumn": 6,
+		"codeElementType": "BLOCK",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 156,
+		"endLine": 158,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 122,
+		"endLine": 127,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private visit(op PhysicalOperator, fragment Wrapper) : Void"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 124,
+		"endLine": 124,
+		"startColumn": 7,
+		"endColumn": 36,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 126,
+		"endLine": 126,
+		"startColumn": 5,
+		"endColumn": 17,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 123,
+		"endLine": 125,
+		"startColumn": 39,
+		"endColumn": 6,
+		"codeElementType": "BLOCK",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 123,
+		"endLine": 125,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 133,
+		"endLine": 166,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public visitOp(op PhysicalOperator, fragment Wrapper) : Void"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 165,
+		"endLine": 165,
+		"startColumn": 12,
+		"endColumn": 31,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "visit(op,fragment)"
+}]
+},
+{
+	"type": "Move And Inline Method",
+	"description": "Move And Inline Method public getMaxAllocation() : long moved from class org.apache.drill.exec.physical.base.AbstractGroupScan to class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer & inlined to public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/physical/base/AbstractGroupScan.java",
+		"startLine": 110,
+		"endLine": 114,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "inlined method declaration",
+		"codeElement": "public getMaxAllocation() : long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/physical/base/AbstractGroupScan.java",
+		"startLine": 113,
+		"endLine": 113,
+		"startColumn": 5,
+		"endColumn": 14,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "inlined code from inlined method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 63,
+		"endLine": 77,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "target method declaration before inline",
+		"codeElement": "public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 70,
+		"endLine": 70,
+		"startColumn": 18,
+		"endColumn": 45,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "inlined method invocation",
+		"codeElement": "operator.getMaxAllocation()"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 74,
+		"endLine": 74,
+		"startColumn": 16,
+		"endColumn": 43,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "inlined method invocation",
+		"codeElement": "operator.getMaxAllocation()"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 65,
+		"endLine": 83,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "target method declaration after inline",
+		"codeElement": "public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 72,
+		"endLine": 72,
+		"startColumn": 11,
+		"endColumn": 34,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "inlined code in target method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Move And Inline Method",
+	"description": "Move And Inline Method public getMaxAllocation() : long moved from class org.apache.drill.exec.physical.base.AbstractGroupScan to class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer & inlined to public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/physical/base/AbstractGroupScan.java",
+		"startLine": 110,
+		"endLine": 114,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "inlined method declaration",
+		"codeElement": "public getMaxAllocation() : long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/physical/base/AbstractGroupScan.java",
+		"startLine": 113,
+		"endLine": 113,
+		"startColumn": 5,
+		"endColumn": 14,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "inlined code from inlined method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 63,
+		"endLine": 77,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "target method declaration before inline",
+		"codeElement": "public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 70,
+		"endLine": 70,
+		"startColumn": 18,
+		"endColumn": 45,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "inlined method invocation",
+		"codeElement": "operator.getMaxAllocation()"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 74,
+		"endLine": 74,
+		"startColumn": 16,
+		"endColumn": 43,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "inlined method invocation",
+		"codeElement": "operator.getMaxAllocation()"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 65,
+		"endLine": 83,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "target method declaration after inline",
+		"codeElement": "public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 72,
+		"endLine": 72,
+		"startColumn": 11,
+		"endColumn": 34,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "inlined code in target method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Remove Parameter",
+	"description": "Remove Parameter resourceMap : Map<DrillNode,NodeResources> in method private mockPlanningSet(planningSet PlanningSet, resourceMap Map<DrillNode,NodeResources>, endpoints List<DrillbitEndpoint>) : PlanningSet from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 132,
+		"endLine": 132,
+		"startColumn": 40,
+		"endColumn": 81,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "removed parameter",
+		"codeElement": "resourceMap : Map<DrillNode,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 131,
+		"endLine": 143,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private mockPlanningSet(planningSet PlanningSet, resourceMap Map<DrillNode,NodeResources>, endpoints List<DrillbitEndpoint>) : PlanningSet"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 143,
+		"endLine": 153,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with removed parameter",
+		"codeElement": "private mockPlanningSet(planningSet PlanningSet, endpoints List<DrillbitEndpoint>) : PlanningSet"
+}]
+},
+{
+	"type": "Remove Parameter",
+	"description": "Remove Parameter resources : Map<DrillNode,NodeResources> in method private preparePlanningSet(activeEndpoints List<DrillbitEndpoint>, slice_target long, resources Map<DrillNode,NodeResources>, sql String, parallelizer SimpleParallelizer) : PlanningSet from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 199,
+		"endLine": 199,
+		"startColumn": 42,
+		"endColumn": 81,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "removed parameter",
+		"codeElement": "resources : Map<DrillNode,NodeResources>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 198,
+		"endLine": 203,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private preparePlanningSet(activeEndpoints List<DrillbitEndpoint>, slice_target long, resources Map<DrillNode,NodeResources>, sql String, parallelizer SimpleParallelizer) : PlanningSet"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 208,
+		"endLine": 212,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with removed parameter",
+		"codeElement": "private preparePlanningSet(activeEndpoints List<DrillbitEndpoint>, slice_target long, sql String, parallelizer SimpleParallelizer) : PlanningSet"
+}]
+},
+{
+	"type": "Rename Attribute",
+	"description": "Rename Attribute resources : Map<DrillNode,NodeResources> to totalResources : Map<String,NodeResources> in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 93,
+		"endLine": 93,
+		"startColumn": 41,
+		"endColumn": 50,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "resources : Map<DrillNode,NodeResources>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 96,
+		"endLine": 96,
+		"startColumn": 38,
+		"endColumn": 52,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed attribute declaration",
+		"codeElement": "totalResources : Map<String,NodeResources>"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public TestTwoMajorFragmentWithSortyProjectAndScan() : void renamed to public TestTwoMajorFragmentWithSortProjectAndScan() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 239,
+		"endLine": 248,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public TestTwoMajorFragmentWithSortyProjectAndScan() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 245,
+		"endLine": 253,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public TestTwoMajorFragmentWithSortProjectAndScan() : void"
+}]
+},
+{
+	"type": "Rename Parameter",
+	"description": "Rename Parameter endpoint : DrillbitEndpoint to context : QueryContext in method public createDirectPlan(context QueryContext, records List<T>, clazz Class<T>) : PhysicalPlan from class org.apache.drill.exec.planner.sql.DirectPlan",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/sql/DirectPlan.java",
+		"startLine": 50,
+		"endLine": 50,
+		"startColumn": 51,
+		"endColumn": 76,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "endpoint : DrillbitEndpoint"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/sql/DirectPlan.java",
+		"startLine": 50,
+		"endLine": 62,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public createDirectPlan(endpoint DrillbitEndpoint, records List<T>, clazz Class<T>) : PhysicalPlan"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/sql/DirectPlan.java",
+		"startLine": 53,
+		"endLine": 53,
+		"startColumn": 51,
+		"endColumn": 71,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "context : QueryContext"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/sql/DirectPlan.java",
+		"startLine": 53,
+		"endLine": 69,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public createDirectPlan(context QueryContext, records List<T>, clazz Class<T>) : PhysicalPlan"
+}]
+},
+{
+	"type": "Rename Variable",
+	"description": "Rename Variable totalMemory : Long to totalBufferedOperatorsMemoryReq : Long in method private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 191,
+		"endLine": 191,
+		"startColumn": 14,
+		"endColumn": 85,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "totalMemory : Long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 166,
+		"endLine": 220,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 209,
+		"endLine": 209,
+		"startColumn": 14,
+		"endColumn": 105,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "renamed variable declaration",
+		"codeElement": "totalBufferedOperatorsMemoryReq : Long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 187,
+		"endLine": 246,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>"
+}]
+}
+]
+}]
+}

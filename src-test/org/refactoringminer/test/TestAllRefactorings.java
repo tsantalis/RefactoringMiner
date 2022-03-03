@@ -58,8 +58,8 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/apache/cassandra.git",
 				"https://github.com/JetBrains/intellij-community.git",
 		};
-		//TP: 2870  FP:  12  FN: 63
-		processRepositoryCommits(Arrays.asList(gitURLs), 2870, 12, 63);
+		//TP: 2880  FP:  12  FN: 63
+		processRepositoryCommits(Arrays.asList(gitURLs), 2880, 12, 63);
 	}
 
 	@Test
@@ -251,7 +251,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 		GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
 		TestBuilder test = new TestBuilder(detector, REPOS, Refactorings.All.getValue());
 		RefactoringPopulator.feedRefactoringsInstances(Refactorings.All.getValue(), Systems.FSE.getValue(), test);
-		test.assertExpectations(getProject(), 11115, 29, 325, false);
+		test.assertExpectations(getProject(), 11125, 29, 325, false);
 	}
  */
 }

@@ -27,6 +27,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
@@ -1797,12 +1798,20 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	private boolean compatibleSignatures(UMLOperation removedOperation, UMLOperation addedOperation, int absoluteDifferenceInPosition) {
-		return addedOperation.compatibleSignature(removedOperation) ||
-		(
-		(absoluteDifferenceInPosition == 0 || operationsBeforeAndAfterMatch(removedOperation, addedOperation)) &&
-		!gettersWithDifferentReturnType(removedOperation, addedOperation) &&
-		(addedOperation.getParameterTypeList().equals(removedOperation.getParameterTypeList()) || addedOperation.normalizedNameDistance(removedOperation) <= MAX_OPERATION_NAME_DISTANCE)
-		);
+		if(addedOperation.compatibleSignature(removedOperation)) {
+			return true;
+		}
+		if(absoluteDifferenceInPosition == 0 || operationsBeforeAndAfterMatch(removedOperation, addedOperation)) {
+			if(!gettersWithDifferentReturnType(removedOperation, addedOperation)) {
+				if(addedOperation.getParameterTypeList().equals(removedOperation.getParameterTypeList()) || addedOperation.normalizedNameDistance(removedOperation) <= MAX_OPERATION_NAME_DISTANCE) {
+					return true;
+				}
+				else if(addedOperation.hasTestAnnotation() && removedOperation.hasTestAnnotation()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean gettersWithDifferentReturnType(UMLOperation removedOperation, UMLOperation addedOperation) {
@@ -1849,7 +1858,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		
 		boolean operationsBeforeMatch = false;
 		if(operationBefore1 != null && operationBefore2 != null) {
-			operationsBeforeMatch = operationBefore1.equalReturnParameter(operationBefore2) && operationBefore1.equalParameterTypes(operationBefore2) && operationBefore1.getName().equals(operationBefore2.getName());
+			operationsBeforeMatch = (operationBefore1.equalReturnParameter(operationBefore2) && operationBefore1.equalParameterTypes(operationBefore2) && operationBefore1.getName().equals(operationBefore2.getName()))
+					|| (matchingDataProviderAnnotation(removedOperation, operationBefore1) && matchingDataProviderAnnotation(addedOperation, operationBefore2));
 		}
 		else if(operationBefore1 == null && operationBefore2 == null) {
 			//both operations are in the first position
@@ -1858,7 +1868,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		
 		boolean operationsAfterMatch = false;
 		if(operationAfter1 != null && operationAfter2 != null) {
-			operationsAfterMatch = operationAfter1.equalReturnParameter(operationAfter2) && operationAfter1.equalParameterTypes(operationAfter2) && operationAfter1.getName().equals(operationAfter2.getName());
+			operationsAfterMatch = (operationAfter1.equalReturnParameter(operationAfter2) && operationAfter1.equalParameterTypes(operationAfter2) && operationAfter1.getName().equals(operationAfter2.getName()))
+					|| (matchingDataProviderAnnotation(removedOperation, operationAfter1) && matchingDataProviderAnnotation(addedOperation, operationAfter2));
 		}
 		else if(operationAfter1 == null && operationAfter2 == null) {
 			//both operations are in the last position
@@ -1866,6 +1877,53 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		}
 		
 		return operationsBeforeMatch || operationsAfterMatch;
+	}
+
+	private boolean matchingDataProviderAnnotation(UMLOperation operation1, UMLOperation operation2) {
+		UMLAnnotation testAnnotation = null;
+		UMLAnnotation dataProviderAnnotation = null;
+		if(operation1.hasTestAnnotation() && operation2.hasDataProviderAnnotation()) {
+			List<UMLAnnotation> annotations1 = operation1.getAnnotations();
+			for(UMLAnnotation annotation1 : annotations1) {
+				if(annotation1.getTypeName().equals("Test")) {
+					testAnnotation = annotation1;
+					break;
+				}
+			}
+			List<UMLAnnotation> annotations2 = operation2.getAnnotations();
+			for(UMLAnnotation annotation2 : annotations2) {
+				if(annotation2.getTypeName().equals("DataProvider")) {
+					dataProviderAnnotation = annotation2;
+					break;
+				}
+			}
+		}
+		else if(operation2.hasTestAnnotation() && operation1.hasDataProviderAnnotation()) {
+			List<UMLAnnotation> annotations2 = operation2.getAnnotations();
+			for(UMLAnnotation annotation2 : annotations2) {
+				if(annotation2.getTypeName().equals("Test")) {
+					testAnnotation = annotation2;
+					break;
+				}
+			}
+			List<UMLAnnotation> annotations1 = operation1.getAnnotations();
+			for(UMLAnnotation annotation1 : annotations1) {
+				if(annotation1.getTypeName().equals("DataProvider")) {
+					dataProviderAnnotation = annotation1;
+					break;
+				}
+			}
+		}
+		if(testAnnotation != null && dataProviderAnnotation != null) {
+			Map<String, AbstractExpression> testMemberValuePairs = testAnnotation.getMemberValuePairs();
+			if(testMemberValuePairs.containsKey("dataProvider")) {
+				Map<String, AbstractExpression> dataProviderMemberValuePairs = dataProviderAnnotation.getMemberValuePairs();
+				if(dataProviderMemberValuePairs.containsKey("name")) {
+					return testMemberValuePairs.get("dataProvider").getExpression().equals(dataProviderMemberValuePairs.get("name").getExpression());
+				}
+			}
+		}
+		return false;
 	}
 
 	private void checkForInlinedOperations() throws RefactoringMinerTimedOutException {

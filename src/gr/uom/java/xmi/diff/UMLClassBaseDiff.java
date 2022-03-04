@@ -1139,6 +1139,24 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return Math.abs(index1-index2);
 	}
 
+	protected boolean containsMapperForOperation1(UMLOperation operation) {
+		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+			if(mapper.getOperation1().equals(operation)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	protected boolean containsMapperForOperation2(UMLOperation operation) {
+		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+			if(mapper.getOperation2().equals(operation)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void checkForOperationSignatureChanges() throws RefactoringMinerTimedOutException {
 		consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
 		int initialNumberOfRemovedOperations = removedOperations.size();
@@ -1149,21 +1167,23 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
 				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 					UMLOperation addedOperation = addedOperationIterator.next();
-					int maxDifferenceInPosition;
-					if(removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation()) {
-						maxDifferenceInPosition = Math.abs(removedOperations.size() - addedOperations.size());
-					}
-					else {
-						maxDifferenceInPosition = Math.max(removedOperations.size(), addedOperations.size());
-					}
-					updateMapperSet(mapperSet, removedOperation, addedOperation, maxDifferenceInPosition);
-					List<UMLOperation> operationsInsideAnonymousClass = addedOperation.getOperationsInsideAnonymousClass(this.addedAnonymousClasses);
-					for(UMLOperation operationInsideAnonymousClass : operationsInsideAnonymousClass) {
-						updateMapperSet(mapperSet, removedOperation, operationInsideAnonymousClass, addedOperation, maxDifferenceInPosition);
-					}
-					if(initialNumberOfRemovedOperations >= MAXIMUM_NUMBER_OF_COMPARED_METHODS && initialNumberOfAddedOperations >= MAXIMUM_NUMBER_OF_COMPARED_METHODS && mapperSet.size() > 0 &&
-							removedOperation.getName().equals(addedOperation.getName())) {
-						break;
+					if(!containsMapperForOperation1(removedOperation) && !containsMapperForOperation2(addedOperation)) {
+						int maxDifferenceInPosition;
+						if(removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation()) {
+							maxDifferenceInPosition = Math.abs(removedOperations.size() - addedOperations.size());
+						}
+						else {
+							maxDifferenceInPosition = Math.max(removedOperations.size(), addedOperations.size());
+						}
+						updateMapperSet(mapperSet, removedOperation, addedOperation, maxDifferenceInPosition);
+						List<UMLOperation> operationsInsideAnonymousClass = addedOperation.getOperationsInsideAnonymousClass(this.addedAnonymousClasses);
+						for(UMLOperation operationInsideAnonymousClass : operationsInsideAnonymousClass) {
+							updateMapperSet(mapperSet, removedOperation, operationInsideAnonymousClass, addedOperation, maxDifferenceInPosition);
+						}
+						if(initialNumberOfRemovedOperations >= MAXIMUM_NUMBER_OF_COMPARED_METHODS && initialNumberOfAddedOperations >= MAXIMUM_NUMBER_OF_COMPARED_METHODS && mapperSet.size() > 0 &&
+								removedOperation.getName().equals(addedOperation.getName())) {
+							break;
+						}
 					}
 				}
 				if(!mapperSet.isEmpty()) {
@@ -1194,21 +1214,23 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
 				for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 					UMLOperation removedOperation = removedOperationIterator.next();
-					int maxDifferenceInPosition;
-					if(removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation()) {
-						maxDifferenceInPosition = Math.abs(removedOperations.size() - addedOperations.size());
-					}
-					else {
-						maxDifferenceInPosition = Math.max(removedOperations.size(), addedOperations.size());
-					}
-					updateMapperSet(mapperSet, removedOperation, addedOperation, maxDifferenceInPosition);
-					List<UMLOperation> operationsInsideAnonymousClass = addedOperation.getOperationsInsideAnonymousClass(this.addedAnonymousClasses);
-					for(UMLOperation operationInsideAnonymousClass : operationsInsideAnonymousClass) {
-						updateMapperSet(mapperSet, removedOperation, operationInsideAnonymousClass, addedOperation, maxDifferenceInPosition);
-					}
-					if(initialNumberOfRemovedOperations >= MAXIMUM_NUMBER_OF_COMPARED_METHODS && initialNumberOfAddedOperations >= MAXIMUM_NUMBER_OF_COMPARED_METHODS && mapperSet.size() > 0 &&
-							removedOperation.getName().equals(addedOperation.getName())) {
-						break;
+					if(!containsMapperForOperation1(removedOperation) && !containsMapperForOperation2(addedOperation)) {
+						int maxDifferenceInPosition;
+						if(removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation()) {
+							maxDifferenceInPosition = Math.abs(removedOperations.size() - addedOperations.size());
+						}
+						else {
+							maxDifferenceInPosition = Math.max(removedOperations.size(), addedOperations.size());
+						}
+						updateMapperSet(mapperSet, removedOperation, addedOperation, maxDifferenceInPosition);
+						List<UMLOperation> operationsInsideAnonymousClass = addedOperation.getOperationsInsideAnonymousClass(this.addedAnonymousClasses);
+						for(UMLOperation operationInsideAnonymousClass : operationsInsideAnonymousClass) {
+							updateMapperSet(mapperSet, removedOperation, operationInsideAnonymousClass, addedOperation, maxDifferenceInPosition);
+						}
+						if(initialNumberOfRemovedOperations >= MAXIMUM_NUMBER_OF_COMPARED_METHODS && initialNumberOfAddedOperations >= MAXIMUM_NUMBER_OF_COMPARED_METHODS && mapperSet.size() > 0 &&
+								removedOperation.getName().equals(addedOperation.getName())) {
+							break;
+						}
 					}
 				}
 				if(!mapperSet.isEmpty()) {

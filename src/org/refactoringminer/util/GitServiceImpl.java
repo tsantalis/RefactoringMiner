@@ -2,14 +2,12 @@ package org.refactoringminer.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vcs.changes.Change;
@@ -18,6 +16,8 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.vcs.log.TimedVcsCommit;
 import com.intellij.vcsUtil.VcsFileUtil;
 import git4idea.GitRevisionNumber;
+import git4idea.commands.Git;
+import git4idea.commands.GitCommandResult;
 import git4idea.history.GitHistoryUtils;
 import git4idea.repo.GitRepository;
 import git4idea.repo.GitRepositoryImpl;
@@ -39,14 +39,14 @@ public class GitServiceImpl implements GitService {
 			return GitRepositoryImpl.getInstance(rootDir, project, false);
 			//logger.info("Project {} is already cloned, current branch is {}", cloneUrl, repository.getBranch());
 		} else {
+			String parentPath = projectPath.substring(0, projectPath.lastIndexOf("/"));
+			String projectName = projectPath.substring(projectPath.lastIndexOf("/") + 1, projectPath.length());
 			logger.info("Cloning {} ...", cloneUrl);
-//			Git git = Git.cloneRepository()
-//					.setDirectory(folder)
-//					.setURI(cloneUrl)
-//					.setCloneAllBranches(true)
-//					.call();
-//			repository = git.getRepository();
-			//logger.info("Done cloning {}, current branch is {}", cloneUrl, repository.getBranch());
+			GitCommandResult result = Git.getInstance().clone(project, new File(parentPath), cloneUrl, projectName);
+			if(result.success()) {
+				VirtualFile rootDir = LocalFileSystem.getInstance().findFileByIoFile(folder);
+				return GitRepositoryImpl.getInstance(rootDir, project, false);
+			}
 		}
 		return null;
 	}

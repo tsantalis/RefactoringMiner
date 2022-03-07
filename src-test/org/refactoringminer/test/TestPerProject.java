@@ -45,7 +45,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/HubSpot/Singularity.git", 7, 0, 0);
         processRepositoryCommits("https://github.com/katzer/cordova-plugin-local-notifications.git", 63, 0, 2);
         processRepositoryCommits("https://github.com/FasterXML/jackson-databind.git", 26, 0, 0);
-        processRepositoryCommits("https://github.com/aws/aws-sdk-java.git", 591, 6, 8);
+        processRepositoryCommits("https://github.com/aws/aws-sdk-java.git", 591, 0, 2);
         processRepositoryCommits("https://github.com/linkedin/rest.li.git", 172, 0, 7);
         processRepositoryCommits("https://github.com/open-keychain/open-keychain.git", 22, 0, 0);
         processRepositoryCommits("https://github.com/baasbox/baasbox.git", 1, 0, 0);
@@ -95,7 +95,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/jfinal/jfinal.git", 227, 0, 22);
         processRepositoryCommits("https://github.com/oblac/jodd.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/realm/realm-java.git", 13, 0, 0);
-        processRepositoryCommits("https://github.com/bennidi/mbassador.git", 15, 0, 0);
+        processRepositoryCommits("https://github.com/bennidi/mbassador.git", 16, 0, 0);
         processRepositoryCommits("https://github.com/Athou/commafeed.git", 1, 0, 0);
         processRepositoryCommits("https://github.com/hazelcast/hazelcast.git", 450, 3, 11);
         processRepositoryCommits("https://github.com/cbeust/testng.git", 3, 0, 0);

@@ -2026,8 +2026,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			addedAttributes.isEmpty() && removedAttributes.isEmpty() &&
 			addedEnumConstants.isEmpty() && removedEnumConstants.isEmpty() &&
 			operationDiffList.isEmpty() && attributeDiffList.isEmpty() &&
-			operationBodyMapperList.isEmpty() && enumConstantDiffList.isEmpty() &&
-			!visibilityChanged && !abstractionChanged && !finalChanged && !staticChanged;
+			operationBodyMapperList.isEmpty() && enumConstantDiffList.isEmpty() && annotationListDiff.isEmpty() &&
+			!visibilityChanged && !abstractionChanged && !finalChanged && !staticChanged && !superclassChanged;
 	}
 
 	public String toString() {

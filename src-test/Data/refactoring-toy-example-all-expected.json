@@ -211,19 +211,28 @@
 	"leftSideLocations": [{
 		"filePath": "src/org/felines/Animal.java",
 		"startLine": 3,
+		"endLine": 6,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original sub-type declaration",
+		"codeElement": "org.felines.Animal"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Animal.java",
+		"startLine": 3,
 		"endLine": 4,
 		"startColumn": 0,
 		"endColumn": 2,
 		"codeElementType": "TYPE_DECLARATION",
-		"description": "sub-type declaration",
+		"description": "sub-type declaration after extraction",
 		"codeElement": "org.felines.Animal"
-}],
-	"rightSideLocations": [{
+}, {
 		"filePath": "src/org/felines/AnimalSuper.java",
 		"startLine": 3,
-		"endLine": -1,
+		"endLine": 7,
 		"startColumn": 0,
-		"endColumn": -1,
+		"endColumn": 0,
 		"codeElementType": "TYPE_DECLARATION",
 		"description": "extracted super-type declaration",
 		"codeElement": "org.felines.AnimalSuper"
@@ -775,19 +784,28 @@
 	"leftSideLocations": [{
 		"filePath": "src/org/reptile/Reptile.java",
 		"startLine": 3,
-		"endLine": -1,
+		"endLine": 74,
 		"startColumn": 0,
-		"endColumn": -1,
+		"endColumn": 0,
 		"codeElementType": "TYPE_DECLARATION",
-		"description": "sub-type declaration",
+		"description": "original sub-type declaration",
 		"codeElement": "org.reptile.Reptile"
 }],
 	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 3,
+		"endLine": 74,
+		"startColumn": 0,
+		"endColumn": 0,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "sub-type declaration after extraction",
+		"codeElement": "org.reptile.Reptile"
+}, {
 		"filePath": "src/org/reptile/AnimalMarilho.java",
 		"startLine": 3,
-		"endLine": -1,
+		"endLine": 9,
 		"startColumn": 0,
-		"endColumn": -1,
+		"endColumn": 0,
 		"codeElementType": "TYPE_DECLARATION",
 		"description": "extracted super-type declaration",
 		"codeElement": "org.reptile.AnimalMarilho"
@@ -985,19 +1003,28 @@
 	"leftSideLocations": [{
 		"filePath": "src/org/reptile/Turtle.java",
 		"startLine": 3,
+		"endLine": 110,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original sub-type declaration",
+		"codeElement": "org.reptile.Turtle"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 3,
 		"endLine": 36,
 		"startColumn": 0,
 		"endColumn": 2,
 		"codeElementType": "TYPE_DECLARATION",
-		"description": "sub-type declaration",
+		"description": "sub-type declaration after extraction",
 		"codeElement": "org.reptile.Turtle"
-}],
-	"rightSideLocations": [{
+}, {
 		"filePath": "src/org/reptile/Reptile.java",
 		"startLine": 3,
-		"endLine": -1,
+		"endLine": 90,
 		"startColumn": 0,
-		"endColumn": -1,
+		"endColumn": 0,
 		"codeElementType": "TYPE_DECLARATION",
 		"description": "extracted super-type declaration",
 		"codeElement": "org.reptile.Reptile"
@@ -1999,14 +2026,23 @@
 	"leftSideLocations": [{
 		"filePath": "src/org/felines/Cat.java",
 		"startLine": 3,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original sub-type declaration",
+		"codeElement": "org.felines.Cat"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 3,
 		"endLine": 5,
 		"startColumn": 0,
 		"endColumn": 2,
 		"codeElementType": "TYPE_DECLARATION",
-		"description": "sub-type declaration",
+		"description": "sub-type declaration after extraction",
 		"codeElement": "org.felines.Cat"
-}],
-	"rightSideLocations": [{
+}, {
 		"filePath": "src/org/felines/Feline.java",
 		"startLine": 3,
 		"endLine": 9,
@@ -2191,11 +2227,30 @@
 	"leftSideLocations": [{
 		"filePath": "src/org/animals/Chicken.java",
 		"startLine": 3,
+		"endLine": 13,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original sub-type declaration",
+		"codeElement": "org.animals.Chicken"
+}, {
+		"filePath": "src/org/animals/Duck.java",
+		"startLine": 3,
+		"endLine": 13,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original sub-type declaration",
+		"codeElement": "org.animals.Duck"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/animals/Chicken.java",
+		"startLine": 3,
 		"endLine": 9,
 		"startColumn": 0,
 		"endColumn": 2,
 		"codeElementType": "TYPE_DECLARATION",
-		"description": "sub-type declaration",
+		"description": "sub-type declaration after extraction",
 		"codeElement": "org.animals.Chicken"
 }, {
 		"filePath": "src/org/animals/Duck.java",
@@ -2204,10 +2259,9 @@
 		"startColumn": 0,
 		"endColumn": 2,
 		"codeElementType": "TYPE_DECLARATION",
-		"description": "sub-type declaration",
+		"description": "sub-type declaration after extraction",
 		"codeElement": "org.animals.Duck"
-}],
-	"rightSideLocations": [{
+}, {
 		"filePath": "src/org/animals/Bird.java",
 		"startLine": 3,
 		"endLine": 9,

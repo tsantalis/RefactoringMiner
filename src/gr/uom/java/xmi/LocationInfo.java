@@ -26,6 +26,9 @@ public class LocationInfo {
 		//lines are 1-based
 		this.startLine = cu.getLineNumber(startOffset);
 		this.endLine = cu.getLineNumber(endOffset);
+		if(this.endLine == -1) {
+			this.endLine = cu.getLineNumber(endOffset-1);
+		}
 		//columns are 0-based
 		this.startColumn = cu.getColumnNumber(startOffset);
 		//convert to 1-based
@@ -33,6 +36,9 @@ public class LocationInfo {
 			this.startColumn += 1;
 		}
 		this.endColumn = cu.getColumnNumber(endOffset);
+		if(this.endColumn == -1) {
+			this.endColumn = cu.getColumnNumber(endOffset-1);
+		}
 		//convert to 1-based
 		if(this.endColumn > 0) {
 			this.endColumn += 1;

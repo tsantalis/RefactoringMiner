@@ -1434,16 +1434,17 @@ public class UMLModelDiff {
 	private List<ExtractSuperclassRefactoring> identifyExtractSuperclassRefactorings() throws RefactoringMinerTimedOutException {
 		List<ExtractSuperclassRefactoring> refactorings = new ArrayList<ExtractSuperclassRefactoring>();
 		for(UMLClass addedClass : addedClasses) {
-			Set<UMLClass> subclassSet = new LinkedHashSet<UMLClass>();
+			Set<UMLClass> subclassSetBefore = new LinkedHashSet<UMLClass>();
+			Set<UMLClass> subclassSetAfter = new LinkedHashSet<UMLClass>();
 			String addedClassName = addedClass.getName();
 			for(UMLGeneralization addedGeneralization : addedGeneralizations) {
-				processAddedGeneralization(addedClass, subclassSet, addedGeneralization);
+				processAddedGeneralization(addedClass, subclassSetBefore, subclassSetAfter, addedGeneralization);
 			}
 			for(UMLGeneralizationDiff generalizationDiff : generalizationDiffList) {
 				UMLGeneralization addedGeneralization = generalizationDiff.getAddedGeneralization();
 				UMLGeneralization removedGeneralization = generalizationDiff.getRemovedGeneralization();
 				if(!addedGeneralization.getParent().equals(removedGeneralization.getParent())) {
-					processAddedGeneralization(addedClass, subclassSet, addedGeneralization);
+					processAddedGeneralization(addedClass, subclassSetBefore, subclassSetAfter, addedGeneralization);
 				}
 			}
 			for(UMLRealization addedRealization : addedRealizations) {
@@ -1460,27 +1461,30 @@ public class UMLModelDiff {
 						}
 						clientImplementsSupplier = clientClassDiff.getOriginalClass().getImplementedInterfaces().contains(UMLType.extractTypeObject(supplier));
 					}
-					if((implementedInterfaceOperations > 0 || addedClass.getOperations().size() == 0) && !clientImplementsSupplier)
-						subclassSet.add(addedRealization.getClient());
+					if((implementedInterfaceOperations > 0 || addedClass.getOperations().size() == 0) && !clientImplementsSupplier && clientClassDiff != null) {
+						subclassSetBefore.add(clientClassDiff.getOriginalClass());
+						subclassSetAfter.add(clientClassDiff.getNextClass());
+					}
 				}
 			}
-			if(subclassSet.size() > 0) {
-				ExtractSuperclassRefactoring extractSuperclassRefactoring = new ExtractSuperclassRefactoring(addedClass, subclassSet);
+			if(subclassSetBefore.size() > 0) {
+				ExtractSuperclassRefactoring extractSuperclassRefactoring = new ExtractSuperclassRefactoring(addedClass, subclassSetBefore, subclassSetAfter);
 				refactorings.add(extractSuperclassRefactoring);
 			}
 		}
 		return refactorings;
 	}
 
-	private void processAddedGeneralization(UMLClass addedClass, Set<UMLClass> subclassSet, UMLGeneralization addedGeneralization) throws RefactoringMinerTimedOutException {
+	private void processAddedGeneralization(UMLClass addedClass, Set<UMLClass> subclassSetBefore, Set<UMLClass> subclassSetAfter, UMLGeneralization addedGeneralization) throws RefactoringMinerTimedOutException {
 		String parent = addedGeneralization.getParent();
 		UMLClass subclass = addedGeneralization.getChild();
 		if(looksLikeSameType(parent, addedClass.getName()) && topLevelOrSameOuterClass(addedClass, subclass) && getAddedClass(subclass.getName()) == null) {
 			UMLClassBaseDiff subclassDiff = getUMLClassDiff(subclass.getName());
 			if(subclassDiff != null) {
 				detectSubRefactorings(subclassDiff, addedClass, RefactoringType.EXTRACT_SUPERCLASS);
+				subclassSetBefore.add(subclassDiff.getOriginalClass());
+				subclassSetAfter.add(subclassDiff.getNextClass());
 			}
-			subclassSet.add(subclass);
 		}
 	}
 

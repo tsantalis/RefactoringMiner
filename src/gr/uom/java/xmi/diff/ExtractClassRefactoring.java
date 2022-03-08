@@ -76,6 +76,7 @@ public class ExtractClassRefactoring implements Refactoring {
 
 	public Set<ImmutablePair<String, String>> getInvolvedClassesAfterRefactoring() {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
+		pairs.add(new ImmutablePair<String, String>(classDiff.getNextClass().getLocationInfo().getFilePath(), classDiff.getNextClass().getName()));
 		pairs.add(new ImmutablePair<String, String>(getExtractedClass().getLocationInfo().getFilePath(), getExtractedClass().getName()));
 		return pairs;
 	}
@@ -92,6 +93,9 @@ public class ExtractClassRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> rightSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
+		ranges.add(classDiff.getNextClass().codeRange()
+				.setDescription("type declaration after extraction")
+				.setCodeElement(classDiff.getNextClass().getName()));
 		ranges.add(extractedClass.codeRange()
 				.setDescription("extracted type declaration")
 				.setCodeElement(extractedClass.getName()));

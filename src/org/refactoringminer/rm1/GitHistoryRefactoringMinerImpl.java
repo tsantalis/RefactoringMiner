@@ -201,14 +201,32 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		//second iteration to find renamed/moved files with identical contents
 		for(String key1 : fileContentsBefore.keySet()) {
 			if(!identicalFiles.containsKey(key1)) {
+				List<String> matches = new ArrayList<String>();
 				for(String key2 : fileContentsCurrent.keySet()) {
 					if(!identicalFiles.containsValue(key2)) {
 						String fileBefore = fileContentsBefore.get(key1);
 						String fileAfter = fileContentsCurrent.get(key2);
 						if(fileBefore.equals(fileAfter)) {
-							identicalFiles.put(key1, key2);
-							break;
+							matches.add(key2);
 						}
+					}
+				}
+				if(matches.size() == 1) {
+					identicalFiles.put(key1, matches.get(0));
+				}
+				else if(matches.size() > 1) {
+					int minEditDistance = key1.length();
+					String bestMatch = null;
+					for(int i=0; i< matches.size(); i++) {
+						String key2 = matches.get(i);
+						int editDistance = StringDistance.editDistance(key1, key2);
+						if(editDistance < minEditDistance) {
+							minEditDistance = editDistance;
+							bestMatch = key2;
+						}
+					}
+					if(bestMatch != null) {
+						identicalFiles.put(key1, bestMatch);
 					}
 				}
 			}
@@ -216,14 +234,32 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		//third iteration to find renamed/moved files with trivial comment changes
 		for(String key1 : fileContentsBefore.keySet()) {
 			if(!identicalFiles.containsKey(key1)) {
+				List<String> matches = new ArrayList<String>();
 				for(String key2 : fileContentsCurrent.keySet()) {
 					if(!identicalFiles.containsValue(key2)) {
 						String fileBefore = fileContentsBefore.get(key1);
 						String fileAfter = fileContentsCurrent.get(key2);
 						if(StringDistance.trivialCommentChange(fileBefore, fileAfter)) {
-							identicalFiles.put(key1, key2);
-							break;
+							matches.add(key2);
 						}
+					}
+				}
+				if(matches.size() == 1) {
+					identicalFiles.put(key1, matches.get(0));
+				}
+				else if(matches.size() > 1) {
+					int minEditDistance = key1.length();
+					String bestMatch = null;
+					for(int i=0; i< matches.size(); i++) {
+						String key2 = matches.get(i);
+						int editDistance = StringDistance.editDistance(key1, key2);
+						if(editDistance < minEditDistance) {
+							minEditDistance = editDistance;
+							bestMatch = key2;
+						}
+					}
+					if(bestMatch != null) {
+						identicalFiles.put(key1, bestMatch);
 					}
 				}
 			}

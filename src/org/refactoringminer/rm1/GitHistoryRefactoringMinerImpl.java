@@ -164,6 +164,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	public static List<MoveSourceFolderRefactoring> processIdenticalFiles(Map<String, String> fileContentsBefore, Map<String, String> fileContentsCurrent,
 			Map<String, String> renamedFilesHint) throws IOException {
 		Map<String, String> identicalFiles = new HashMap<String, String>();
+		Map<String, String> nonIdenticalFiles = new HashMap<String, String>();
 		for(String key : fileContentsBefore.keySet()) {
 			//take advantage of renamed file hints, if available
 			if(renamedFilesHint.containsKey(key)) {
@@ -173,6 +174,9 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				if(fileBefore.equals(fileAfter) || StringDistance.trivialCommentChange(fileBefore, fileAfter)) {
 					identicalFiles.put(key, renamedFile);
 				}
+				else {
+					nonIdenticalFiles.put(key, renamedFile);
+				}
 			}
 			if(fileContentsCurrent.containsKey(key)) {
 				String fileBefore = fileContentsBefore.get(key);
@@ -180,14 +184,17 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				if(fileBefore.equals(fileAfter) || StringDistance.trivialCommentChange(fileBefore, fileAfter)) {
 					identicalFiles.put(key, key);
 				}
+				else {
+					nonIdenticalFiles.put(key, key);
+				}
 			}
 		}
 		//second iteration to find renamed/moved files with identical contents
 		for(String key1 : fileContentsBefore.keySet()) {
-			if(!identicalFiles.containsKey(key1)) {
+			if(!identicalFiles.containsKey(key1) && !nonIdenticalFiles.containsKey(key1)) {
 				List<String> matches = new ArrayList<String>();
 				for(String key2 : fileContentsCurrent.keySet()) {
-					if(!identicalFiles.containsValue(key2)) {
+					if(!identicalFiles.containsValue(key2) && !nonIdenticalFiles.containsValue(key2)) {
 						String fileBefore = fileContentsBefore.get(key1);
 						String fileAfter = fileContentsCurrent.get(key2);
 						if(fileBefore.equals(fileAfter)) {
@@ -217,10 +224,10 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 		//third iteration to find renamed/moved files with trivial comment changes
 		for(String key1 : fileContentsBefore.keySet()) {
-			if(!identicalFiles.containsKey(key1)) {
+			if(!identicalFiles.containsKey(key1) && !nonIdenticalFiles.containsKey(key1)) {
 				List<String> matches = new ArrayList<String>();
 				for(String key2 : fileContentsCurrent.keySet()) {
-					if(!identicalFiles.containsValue(key2)) {
+					if(!identicalFiles.containsValue(key2) && !nonIdenticalFiles.containsValue(key2)) {
 						String fileBefore = fileContentsBefore.get(key1);
 						String fileAfter = fileContentsCurrent.get(key2);
 						if(StringDistance.trivialCommentChange(fileBefore, fileAfter)) {

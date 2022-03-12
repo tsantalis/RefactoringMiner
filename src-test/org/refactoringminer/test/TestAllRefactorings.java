@@ -55,11 +55,8 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/open-keychain/open-keychain.git",
 				"https://github.com/baasbox/baasbox.git",
 				"https://github.com/phishman3579/java-algorithms-implementation.git",
-				"https://github.com/apache/cassandra.git",
-				"https://github.com/JetBrains/intellij-community.git",
 		};
-		//TP: 2880  FP:  6  FN: 57
-		processRepositoryCommits(Arrays.asList(gitURLs), 2880, 6, 57);
+		processRepositoryCommits(Arrays.asList(gitURLs), 2404, 2, 46);
 	}
 
 	@Test
@@ -130,7 +127,6 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/jayway/rest-assured.git",
 				"https://github.com/graphhopper/graphhopper.git",
 		};
-		//TP: 3421  FP:  16  FN: 158
 		processRepositoryCommits(Arrays.asList(gitURLs), 3421, 16, 158);
 	}
 
@@ -176,7 +172,6 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/addthis/hydra.git",
 				"https://github.com/apache/pig.git",
 		};
-		//TP: 2996  FP:  7  FN: 61
 		processRepositoryCommits(Arrays.asList(gitURLs), 2996, 7, 61);
 	}
 
@@ -242,8 +237,16 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/novoda/android-demos.git",
 				"https://github.com/wordpress-mobile/WordPress-Android.git",
 		};
-		//TP: 1825  FP:  0  FN: 49
 		processRepositoryCommits(Arrays.asList(gitURLs), 1823, 0, 49);
+	}
+
+	@Test
+	public void testBatch5() throws Exception {
+		String gitURLs[] = new String[]{
+				"https://github.com/apache/cassandra.git",
+				"https://github.com/JetBrains/intellij-community.git",
+		};
+		processRepositoryCommits(Arrays.asList(gitURLs), 476, 4, 11);
 	}
 /*
 	@Test

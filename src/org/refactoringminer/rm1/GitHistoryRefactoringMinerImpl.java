@@ -42,6 +42,7 @@ import java.util.zip.ZipFile;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
@@ -164,6 +165,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	public static List<MoveSourceFolderRefactoring> processIdenticalFiles(Map<String, String> fileContentsBefore, Map<String, String> fileContentsCurrent,
 			Map<String, String> renamedFilesHint) throws IOException {
 		Map<String, String> identicalFiles = new HashMap<String, String>();
+		Map<Pair<String, String>, Integer> consistentSourceFolderChanges = new HashMap<>();
 		Map<String, String> nonIdenticalFiles = new HashMap<String, String>();
 		for(String key : fileContentsBefore.keySet()) {
 			//take advantage of renamed file hints, if available
@@ -173,6 +175,17 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				String fileAfter = fileContentsCurrent.get(renamedFile);
 				if(fileBefore.equals(fileAfter) || StringDistance.trivialCommentChange(fileBefore, fileAfter)) {
 					identicalFiles.put(key, renamedFile);
+					if(key.contains("/") && renamedFile.contains("/")) {
+						String prefix1 = key.substring(0, key.indexOf("/"));
+						String prefix2 = renamedFile.substring(0, renamedFile.indexOf("/"));
+						Pair<String, String> p = Pair.of(prefix1, prefix2);
+						if(consistentSourceFolderChanges.containsKey(p)) {
+							consistentSourceFolderChanges.put(p, consistentSourceFolderChanges.get(p) + 1);
+						}
+						else {
+							consistentSourceFolderChanges.put(p, 1);
+						}
+					}
 				}
 				else {
 					nonIdenticalFiles.put(key, renamedFile);
@@ -189,68 +202,49 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				}
 			}
 		}
+		fileContentsBefore.keySet().removeAll(identicalFiles.keySet());
+		fileContentsCurrent.keySet().removeAll(identicalFiles.values());
 		//second iteration to find renamed/moved files with identical contents
 		for(String key1 : fileContentsBefore.keySet()) {
 			if(!identicalFiles.containsKey(key1) && !nonIdenticalFiles.containsKey(key1)) {
+				String prefix1 = key1.substring(0, key1.indexOf("/"));
+				String fileBefore = fileContentsBefore.get(key1);
+				boolean matchWithConsistentSourceFolderChangeFound = false;
 				List<String> matches = new ArrayList<String>();
 				for(String key2 : fileContentsCurrent.keySet()) {
 					if(!identicalFiles.containsValue(key2) && !nonIdenticalFiles.containsValue(key2)) {
-						String fileBefore = fileContentsBefore.get(key1);
+						String prefix2 = key2.substring(0, key2.indexOf("/"));
 						String fileAfter = fileContentsCurrent.get(key2);
-						if(fileBefore.equals(fileAfter)) {
-							matches.add(key2);
+						if(fileBefore.equals(fileAfter) || StringDistance.trivialCommentChange(fileBefore, fileAfter)) {
+							if(consistentSourceFolderChanges.containsKey(Pair.of(prefix1, prefix2))) {
+								identicalFiles.put(key1, key2);
+								matchWithConsistentSourceFolderChangeFound = true;
+								break;
+							}
+							else {
+								matches.add(key2);
+							}
 						}
 					}
 				}
-				if(matches.size() == 1) {
-					identicalFiles.put(key1, matches.get(0));
-				}
-				else if(matches.size() > 1) {
-					int minEditDistance = key1.length();
-					String bestMatch = null;
-					for(int i=0; i< matches.size(); i++) {
-						String key2 = matches.get(i);
-						int editDistance = StringDistance.editDistance(key1, key2);
-						if(editDistance < minEditDistance) {
-							minEditDistance = editDistance;
-							bestMatch = key2;
+				if(!matchWithConsistentSourceFolderChangeFound) {
+					if(matches.size() == 1) {
+						identicalFiles.put(key1, matches.get(0));
+					}
+					else if(matches.size() > 1) {
+						int minEditDistance = key1.length();
+						String bestMatch = null;
+						for(int i=0; i< matches.size(); i++) {
+							String key2 = matches.get(i);
+							int editDistance = StringDistance.editDistance(key1, key2);
+							if(editDistance < minEditDistance) {
+								minEditDistance = editDistance;
+								bestMatch = key2;
+							}
 						}
-					}
-					if(bestMatch != null) {
-						identicalFiles.put(key1, bestMatch);
-					}
-				}
-			}
-		}
-		//third iteration to find renamed/moved files with trivial comment changes
-		for(String key1 : fileContentsBefore.keySet()) {
-			if(!identicalFiles.containsKey(key1) && !nonIdenticalFiles.containsKey(key1)) {
-				List<String> matches = new ArrayList<String>();
-				for(String key2 : fileContentsCurrent.keySet()) {
-					if(!identicalFiles.containsValue(key2) && !nonIdenticalFiles.containsValue(key2)) {
-						String fileBefore = fileContentsBefore.get(key1);
-						String fileAfter = fileContentsCurrent.get(key2);
-						if(StringDistance.trivialCommentChange(fileBefore, fileAfter)) {
-							matches.add(key2);
+						if(bestMatch != null) {
+							identicalFiles.put(key1, bestMatch);
 						}
-					}
-				}
-				if(matches.size() == 1) {
-					identicalFiles.put(key1, matches.get(0));
-				}
-				else if(matches.size() > 1) {
-					int minEditDistance = key1.length();
-					String bestMatch = null;
-					for(int i=0; i< matches.size(); i++) {
-						String key2 = matches.get(i);
-						int editDistance = StringDistance.editDistance(key1, key2);
-						if(editDistance < minEditDistance) {
-							minEditDistance = editDistance;
-							bestMatch = key2;
-						}
-					}
-					if(bestMatch != null) {
-						identicalFiles.put(key1, bestMatch);
 					}
 				}
 			}

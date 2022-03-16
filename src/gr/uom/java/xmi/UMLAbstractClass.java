@@ -26,6 +26,7 @@ public abstract class UMLAbstractClass {
 	protected List<UMLAttribute> attributes;
 	protected List<UMLComment> comments;
 	private List<UMLAnonymousClass> anonymousClassList;
+	private Map<List<String>, Integer> operationIdentifierSignatureMap;
 	private Map<String, VariableDeclaration> fieldDeclarationMap;
 
 	public UMLAbstractClass() {
@@ -33,6 +34,7 @@ public abstract class UMLAbstractClass {
         this.attributes = new ArrayList<UMLAttribute>();
         this.comments = new ArrayList<UMLComment>();
         this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
+        this.operationIdentifierSignatureMap = new LinkedHashMap<>();
 	}
 
 	public List<UMLOperation> getOperationsWithOverrideAnnotation() {
@@ -65,6 +67,13 @@ public abstract class UMLAbstractClass {
 
 	public void addOperation(UMLOperation operation) {
 		this.operations.add(operation);
+		List<String> signature = operation.getSignatureIdentifiers();
+		if(operationIdentifierSignatureMap.containsKey(signature)) {
+			operationIdentifierSignatureMap.put(signature, operationIdentifierSignatureMap.get(signature) + 1);
+		}
+		else {
+			operationIdentifierSignatureMap.put(signature, 1);
+		}
 	}
 
 	public void addAttribute(UMLAttribute attribute) {
@@ -150,6 +159,13 @@ public abstract class UMLAbstractClass {
 	public boolean containsOperationWithTheSameSignatureIgnoringChangedTypes(UMLOperation operation) {
 		for(UMLOperation originalOperation : operations) {
 			if(originalOperation.equalSignatureIgnoringChangedTypes(operation)) {
+				if(!originalOperation.isConstructor() && !originalOperation.equalSignature(operation)) {
+					List<String> signature = originalOperation.getSignatureIdentifiers();
+					Integer instances = operationIdentifierSignatureMap.get(signature);
+					if(instances != null && instances > 1) {
+						return false;
+					}
+				}
 				boolean originalOperationEmptyBody = originalOperation.getBody() == null || originalOperation.hasEmptyBody();
 				boolean operationEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
 				if(originalOperationEmptyBody == operationEmptyBody)

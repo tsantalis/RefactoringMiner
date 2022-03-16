@@ -400,9 +400,13 @@ public abstract class UMLAbstractClass {
 		Set<UMLOperation> commonOperations = new LinkedHashSet<UMLOperation>();
 		Set<UMLOperation> identicalOperations = new LinkedHashSet<UMLOperation>();
 		int totalOperations = 0;
+		int totalAbstractOperations = 0;
 		for(UMLOperation operation : operations) {
 			if(!operation.isConstructor() && !operation.overridesObject()) {
 				totalOperations++;
+				if(operation.isAbstract()) {
+					totalAbstractOperations++;
+				}
 				if(umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
 						(pattern != null && umlClass.containsOperationWithTheSameRenamePattern(operation, pattern.reverse()))) {
 					commonOperations.add(operation);
@@ -427,6 +431,9 @@ public abstract class UMLAbstractClass {
 		for(UMLOperation operation : umlClass.operations) {
 			if(!operation.isConstructor() && !operation.overridesObject()) {
 				totalOperations++;
+				if(operation.isAbstract()) {
+					totalAbstractOperations++;
+				}
 				if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
 						(pattern != null && this.containsOperationWithTheSameRenamePattern(operation, pattern))) {
 					commonOperations.add(operation);
@@ -507,9 +514,10 @@ public abstract class UMLAbstractClass {
 				return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, true);
 			}
 		}
+		int abstractOperationsToBeDeducted = this.isAbstract() != umlClass.isAbstract() ? totalAbstractOperations : 0;
 		if((commonOperations.size() > Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0)) ||
 				(commonOperations.size() > Math.floor(totalOperations/3.0*2.0) && (commonAttributes.size() >= 2 || totalAttributes == 0)) ||
-				(identicalOperations.size() >= commonOperations.size() && commonOperations.size() > 2 && commonOperations.size() >= Math.floor(totalOperations/3.0*2.0)) ||
+				(identicalOperations.size() >= commonOperations.size() && commonOperations.size() > 2 && commonOperations.size() >= Math.floor((totalOperations - abstractOperationsToBeDeducted)/3.0*2.0)) ||
 				(commonAttributes.size() > Math.floor(totalAttributes/2.0) && (commonOperations.size() > 2 || totalOperations == 0)) ||
 				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && this.attributes.size() == umlClass.attributes.size()) ||
 				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && totalAttributes == 1) ||
@@ -638,6 +646,8 @@ public abstract class UMLAbstractClass {
 	public abstract boolean isInterface();
 	
 	public abstract String getName();
+	
+	public abstract boolean isAbstract();
 
 	public String getNonQualifiedName() {
 		return name;

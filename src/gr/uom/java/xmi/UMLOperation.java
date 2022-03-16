@@ -920,6 +920,13 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return false;
 	}
 
+	public List<String> getSignatureIdentifiers() {
+		List<String> signature = new ArrayList<>();
+		signature.add(name);
+		signature.addAll(getParameterNameList());
+		return signature;
+	}
+
 	public Map<String, Set<String>> aliasedAttributes() {
 		if(operationBody != null && isConstructor) {
 			List<String> parameterNames = getParameterNameList();

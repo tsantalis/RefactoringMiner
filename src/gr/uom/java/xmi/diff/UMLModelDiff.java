@@ -77,7 +77,7 @@ public class UMLModelDiff {
 	public UMLModelDiff(UMLModel parentModel, UMLModel childModel) {
 		this.parentModel = parentModel;
 		this.childModel = childModel;
-		if(parentModel.isPartial() || childModel.isPartial()) {
+		if(partialModel()) {
 			MAXIMUM_NUMBER_OF_COMPARED_METHODS = 500;
 		}
 		else {
@@ -712,7 +712,7 @@ public class UMLModelDiff {
 					union.addAll(diffSet);
 					union.addAll(renameDiffSet);
 					if(matcher instanceof UMLClassMatcher.RelaxedRename) {
-						if(sameRenamedClass(union) && !inheritanceRelationshipBetweenMergedClasses(union)) {
+						if(sameRenamedClass(union) && !inheritanceRelationshipBetweenMergedClasses(union) && !partialModel()) {
 							UMLClassMergeDiff mergeDiff = new UMLClassMergeDiff(union);
 							classMergeDiffList.add(mergeDiff);
 							for(UMLClassRenameDiff renameDiff : union) {
@@ -776,7 +776,7 @@ public class UMLModelDiff {
 					union.addAll(diffSet);
 					union.addAll(renameDiffSet);
 					if(matcher instanceof UMLClassMatcher.RelaxedRename) {
-						if(sameRenamedClass(union) && !inheritanceRelationshipBetweenMergedClasses(union)) {
+						if(sameRenamedClass(union) && !inheritanceRelationshipBetweenMergedClasses(union) && !partialModel()) {
 							UMLClassMergeDiff mergeDiff = new UMLClassMergeDiff(union);
 							classMergeDiffList.add(mergeDiff);
 							for(UMLClassRenameDiff renameDiff : union) {
@@ -2694,13 +2694,17 @@ public class UMLModelDiff {
 	}
 
 	private boolean condition(int size1, int size2) {
-		if(childModel.isPartial() || parentModel.isPartial()) {
+		if(partialModel()) {
 			return size1 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS && size2 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS;
 		}
 		else {
 			return (size1 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS || size2 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) &&
 					size1*size2 <= MAXIMUM_NUMBER_OF_COMPARED_METHODS*MAXIMUM_NUMBER_OF_COMPARED_METHODS;
 		}
+	}
+
+	private boolean partialModel() {
+		return childModel.isPartial() || parentModel.isPartial();
 	}
 
 	private boolean outerClassMovedOrRenamed(UMLClass umlClass) {

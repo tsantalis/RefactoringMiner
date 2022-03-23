@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -160,7 +161,14 @@ public abstract class UMLAbstractClassDiff {
 		intersection.retainAll(addedOperationInvocations);
 		int numberOfInvocationsMissingFromRemovedOperation = new LinkedHashSet<AbstractCall>(removedOperationInvocations).size() - intersection.size();
 		
+		Set<String> removedOperationVariableDeclarationNames = getVariableDeclarationNamesInMethodBody(removedOperation);
+		Set<String> addedOperationVariableDeclarationNames = getVariableDeclarationNamesInMethodBody(addedOperation);
+		Set<String> variableDeclarationIntersection = new LinkedHashSet<String>(removedOperationVariableDeclarationNames);
+		variableDeclarationIntersection.retainAll(addedOperationVariableDeclarationNames);
+		int numberOfVariableDeclarationsMissingFromRemovedOperation = removedOperationVariableDeclarationNames.size() - variableDeclarationIntersection.size();
+		
 		Set<AbstractCall> operationInvocationsInMethodsCalledByAddedOperation = new LinkedHashSet<AbstractCall>();
+		Set<String> variableDeclarationsInMethodsCalledByAddedOperation = new LinkedHashSet<String>();
 		Set<AbstractCall> matchedOperationInvocations = new LinkedHashSet<AbstractCall>();
 		for(AbstractCall addedOperationInvocation : addedOperationInvocations) {
 			if(!intersection.contains(addedOperationInvocation)) {
@@ -169,12 +177,14 @@ public abstract class UMLAbstractClassDiff {
 						if(addedOperationInvocation.matchesOperation(operation, addedOperation, modelDiff)) {
 							//addedOperation calls another added method
 							operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllOperationInvocations());
+							variableDeclarationsInMethodsCalledByAddedOperation.addAll(getVariableDeclarationNamesInMethodBody(operation));
 							matchedOperationInvocations.add(addedOperationInvocation);
 						}
 					}
 				}
 			}
 		}
+		//this is to support the Extract & Move Method scenario
 		if(modelDiff != null) {
 			for(AbstractCall addedOperationInvocation : addedOperationInvocations) {
 				String expression = addedOperationInvocation.getExpression();
@@ -183,12 +193,16 @@ public abstract class UMLAbstractClassDiff {
 					UMLOperation operation = modelDiff.findOperationInAddedClasses(addedOperationInvocation, addedOperation);
 					if(operation != null) {
 						operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllOperationInvocations());
+						variableDeclarationsInMethodsCalledByAddedOperation.addAll(getVariableDeclarationNamesInMethodBody(operation));
 					}
 				}
 			}
 		}
 		Set<AbstractCall> newIntersection = new LinkedHashSet<AbstractCall>(removedOperationInvocations);
 		newIntersection.retainAll(operationInvocationsInMethodsCalledByAddedOperation);
+		
+		Set<String> newVariableDeclarationIntersection = new LinkedHashSet<String>(removedOperationVariableDeclarationNames);
+		newVariableDeclarationIntersection.retainAll(variableDeclarationsInMethodsCalledByAddedOperation);
 		
 		Set<AbstractCall> removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted = new LinkedHashSet<AbstractCall>(removedOperationInvocations);
 		removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.removeAll(intersection);
@@ -201,8 +215,22 @@ public abstract class UMLAbstractClassDiff {
 		}
 		int numberOfInvocationsOriginallyCalledByRemovedOperationFoundInOtherAddedOperations = newIntersection.size();
 		int numberOfInvocationsMissingFromRemovedOperationWithoutThoseFoundInOtherAddedOperations = numberOfInvocationsMissingFromRemovedOperation - numberOfInvocationsOriginallyCalledByRemovedOperationFoundInOtherAddedOperations;
+		
+		int numberOfVariableDeclarationsInRemovedOperationFoundInOtherAddedOperations = newVariableDeclarationIntersection.size();
+		int numberOfVariableDeclarationsMissingFromRemovedOperationWithoutThoseFoundInOtherAddedOperations = numberOfVariableDeclarationsMissingFromRemovedOperation - numberOfVariableDeclarationsInRemovedOperationFoundInOtherAddedOperations;
+		
 		return numberOfInvocationsOriginallyCalledByRemovedOperationFoundInOtherAddedOperations > numberOfInvocationsMissingFromRemovedOperationWithoutThoseFoundInOtherAddedOperations ||
-				numberOfInvocationsOriginallyCalledByRemovedOperationFoundInOtherAddedOperations > removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.size();
+				numberOfInvocationsOriginallyCalledByRemovedOperationFoundInOtherAddedOperations > removedOperationInvocationsWithIntersectionsAndGetterInvocationsSubtracted.size() ||
+				numberOfVariableDeclarationsInRemovedOperationFoundInOtherAddedOperations > numberOfVariableDeclarationsMissingFromRemovedOperationWithoutThoseFoundInOtherAddedOperations;
+	}
+
+	private Set<String> getVariableDeclarationNamesInMethodBody(UMLOperation operation) {
+		if(operation.getBody() != null) {
+			Set<String> keySet = new LinkedHashSet<>(operation.variableDeclarationMap().keySet());
+			keySet.removeAll(operation.getParameterNameList());
+			return keySet;
+		}
+		return Collections.emptySet();
 	}
 
 	protected boolean isPartOfMethodInlined(UMLOperation removedOperation, UMLOperation addedOperation) {

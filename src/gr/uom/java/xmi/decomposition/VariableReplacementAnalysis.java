@@ -407,6 +407,9 @@ public class VariableReplacementAnalysis {
 		if(removedVariablesInAnonymousClassDeclarations.contains(removedVariable) && addedVariablesInAnonymousClassDeclarations.contains(addedVariable)) {
 			return false;
 		}
+		if(removedVariablesInAnonymousClassDeclarations.contains(removedVariable) != addedVariablesInAnonymousClassDeclarations.contains(addedVariable)) {
+			return false;
+		}
 		List<AbstractCodeFragment> statementsInScope1 = removedVariable.getStatementsInScopeUsingVariable();
 		List<AbstractCodeFragment> statementsInScope2 = addedVariable.getStatementsInScopeUsingVariable();
 		for(AbstractCodeMapping mapping : mappings) {

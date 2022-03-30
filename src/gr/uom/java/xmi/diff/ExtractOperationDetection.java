@@ -188,7 +188,7 @@ public class ExtractOperationDetection {
 					for(AbstractCall invocation : invocations) {
 						for(ListIterator<AbstractCall> iterator = operationInvocations.listIterator(); iterator.hasNext();) {
 							AbstractCall matchingInvocation = iterator.next();
-							if(invocation == matchingInvocation) {
+							if(invocation == matchingInvocation || invocation.actualString().equals(matchingInvocation.actualString())) {
 								iterator.remove();
 								break;
 							}

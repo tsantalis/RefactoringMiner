@@ -4222,7 +4222,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private boolean identicalAfterVariableAndTypeReplacements(String s1, String s2, Set<Replacement> replacements) {
 		String s1AfterReplacements = new String(s1);
 		for(Replacement replacement : replacements) {
-			s1AfterReplacements = ReplacementUtil.performReplacement(s1AfterReplacements, s2, replacement.getBefore(), replacement.getAfter());
+			String before = replacement.getBefore();
+			String after = replacement.getAfter();
+			if(before.contains("\n") && after.contains("\n")) {
+				before = before.substring(0, before.indexOf("\n"));
+				after = after.substring(0, after.indexOf("\n"));
+				if(before.endsWith("{") && after.endsWith("{")) {
+					before = before.substring(0, before.length()-1);
+					after = after.substring(0, after.length()-1);
+				}
+			}
+			s1AfterReplacements = ReplacementUtil.performReplacement(s1AfterReplacements, s2, before, after);
 		}
 		if(s1AfterReplacements.equals(s2)) {
 			return true;

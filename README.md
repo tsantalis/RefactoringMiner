@@ -126,6 +126,7 @@ Currently, it supports the detection of the following refactorings:
 **<ins>supported by RefactoringMiner 2.3</ins>**
 
 86. Merge Class
+87. Inline Attribute
 
 # How to build RefactoringMiner
 

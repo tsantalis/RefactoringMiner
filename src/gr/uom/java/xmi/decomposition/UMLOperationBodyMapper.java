@@ -3821,7 +3821,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(statementWithoutAnonymous1.equals(statementWithoutAnonymous2) ||
 							identicalAfterVariableAndTypeReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements()) ||
 							(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-							(invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements()) ||
+							(onlyDifferentInvoker(statementWithoutAnonymous1, statementWithoutAnonymous2, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
+							invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements()) ||
 							invocationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)))) {
 						UMLAnonymousClass anonymousClass1 = findAnonymousClass1(anonymousClassDeclaration1);
 						UMLAnonymousClass anonymousClass2 = findAnonymousClass2(anonymousClassDeclaration2);
@@ -4197,6 +4198,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private boolean onlyDifferentInvoker(String s1, String s2,
+			AbstractCall invocationCoveringTheEntireStatement1, AbstractCall invocationCoveringTheEntireStatement2) {
+		if(invocationCoveringTheEntireStatement1.getExpression() == null && invocationCoveringTheEntireStatement2.getExpression() != null) {
+			int index = s1.indexOf(invocationCoveringTheEntireStatement1.getName());
+			String s1AfterReplacement = s1.substring(0, index) + invocationCoveringTheEntireStatement2.getExpression() + "." + s1.substring(index);
+			if(s1AfterReplacement.equals(s2)) {
+				return true;
+			}
+		}
+		else if(invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() == null) {
+			int index = s2.indexOf(invocationCoveringTheEntireStatement2.getName());
+			String s2AfterReplacement = s2.substring(0, index) + invocationCoveringTheEntireStatement1.getExpression() + "." + s2.substring(index);
+			if(s2AfterReplacement.equals(s1)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean identicalAfterVariableAndTypeReplacements(String s1, String s2, Set<Replacement> replacements) {

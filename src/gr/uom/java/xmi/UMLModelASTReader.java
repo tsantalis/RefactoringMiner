@@ -197,17 +197,23 @@ public class UMLModelASTReader {
 		//}
 		
 		processModifiers(cu, sourceFile, enumDeclaration, umlClass);
-		
-		processBodyDeclarations(cu, enumDeclaration, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments);
+
+		Map<PsiMethod, UMLOperation> map = processBodyDeclarations(cu, enumDeclaration, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments);
 		
 		processAnonymousClassDeclarations(cu, enumDeclaration, packageName, sourceFile, className, umlClass);
+
+		for(PsiMethod methodDeclaration : map.keySet()) {
+			UMLOperation operation = map.get(methodDeclaration);
+			processMethodBody(cu, methodDeclaration, sourceFile, operation);
+		}
 		
 		this.getUmlModel().addClass(umlClass);
 		distributeComments(comments, locationInfo, umlClass.getComments());
 	}
 
-	private void processBodyDeclarations(PsiFile cu, PsiClass abstractTypeDeclaration, String packageName,
+	private Map<PsiMethod, UMLOperation> processBodyDeclarations(PsiFile cu, PsiClass abstractTypeDeclaration, String packageName,
 			String sourceFile, List<String> importedTypes, UMLClass umlClass, UMLJavadoc packageDoc, List<UMLComment> comments) {
+		Map<PsiMethod, UMLOperation> map = new LinkedHashMap<>();
 		for (PsiElement psiElement : abstractTypeDeclaration.getChildren()) {
 			if (psiElement instanceof PsiEnumConstant) {
 				processEnumConstantDeclaration(cu, (PsiEnumConstant) psiElement, sourceFile, umlClass, comments);
@@ -225,6 +231,7 @@ public class UMLModelASTReader {
 				UMLOperation operation = processMethodDeclaration(cu, psiMethod, packageName, umlClass.isInterface(), sourceFile, comments);
 	    		operation.setClassName(umlClass.getName());
 	    		umlClass.addOperation(operation);
+				map.put(psiMethod, operation);
 			}
 			else if (psiElement instanceof PsiClass) {
 				PsiClass psiInnerClass = (PsiClass) psiElement;
@@ -239,6 +246,7 @@ public class UMLModelASTReader {
 				}
 			}
 		}
+		return map;
 	}
 
 	private void processTypeDeclaration(PsiFile cu, PsiClass typeDeclaration, String packageName, String sourceFile,
@@ -307,8 +315,13 @@ public class UMLModelASTReader {
     		umlClass.addOperation(operation);
     	}
     	*/
-		processBodyDeclarations(cu, typeDeclaration, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments);
+		Map<PsiMethod, UMLOperation> map = processBodyDeclarations(cu, typeDeclaration, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments);
     	processAnonymousClassDeclarations(cu, typeDeclaration, packageName, sourceFile, className, umlClass);
+    	
+    	for(PsiMethod methodDeclaration : map.keySet()) {
+    		UMLOperation operation = map.get(methodDeclaration);
+    		processMethodBody(cu, methodDeclaration, sourceFile, operation);
+    	}
     	
     	this.getUmlModel().addClass(umlClass);
 
@@ -381,9 +394,29 @@ public class UMLModelASTReader {
 	    				}
 	    			}
 	    			createdAnonymousClasses.add(anonymousClass);
+					int i=0;
+					for (PsiMethod methodDeclaration : anonymous.getMethods()) {
+						UMLOperation operation = anonymousClass.getOperations().get(i);
+						processMethodBody(cu, methodDeclaration, sourceFile, operation);
+						i++;
+	    			}
     			}
     		}
     	}
+	}
+
+	private void processMethodBody(PsiFile cu, PsiMethod methodDeclaration, String sourceFile, UMLOperation operation) {
+		PsiCodeBlock block = methodDeclaration.getBody();
+		if(block != null) {
+			OperationBody body = new OperationBody(cu, sourceFile, block, operation);
+			operation.setBody(body);
+			if(block.isEmpty()) {
+				operation.setEmptyBody(true);
+			}
+		}
+		else {
+			operation.setBody(null);
+		}
 	}
 
 	private void processModifiers(PsiFile cu, String sourceFile, PsiClass typeDeclaration, UMLClass umlClass) {
@@ -477,19 +510,6 @@ public class UMLModelASTReader {
 		for (UMLType umlType : getUMLTypesOfReferenceList(cu, sourceFile, methodDeclaration.getThrowsList())) {
 			umlOperation.addThrownExceptionType(umlType);
 		}
-		
-		PsiCodeBlock block = methodDeclaration.getBody();
-		if(block != null) {
-			OperationBody body = new OperationBody(cu, sourceFile, block, umlOperation.getParameterDeclarationList());
-			umlOperation.setBody(body);
-			if(block.isEmpty()) {
-				umlOperation.setEmptyBody(true);
-			}
-		}
-		else {
-			umlOperation.setBody(null);
-		}
-		
 		return umlOperation;
 	}
 

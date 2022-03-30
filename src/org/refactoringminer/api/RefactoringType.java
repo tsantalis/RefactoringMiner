@@ -35,6 +35,7 @@ public enum RefactoringType {
 	EXTRACT_VARIABLE("Extract Variable", "Extract Variable (.+) in method (.+) from class (.+)"),
 	EXTRACT_ATTRIBUTE("Extract Attribute", "Extract Attribute (.+) in class (.+)"),
 	INLINE_VARIABLE("Inline Variable", "Inline Variable (.+) in method (.+) from class (.+)"),
+	INLINE_ATTRIBUTE("Inline Attribute", "Inline Attribute (.+) in class (.+)"),
 	RENAME_VARIABLE("Rename Variable", "Rename Variable (.+) to (.+) in method (.+) from class (.+)"),
 	RENAME_PARAMETER("Rename Parameter", "Rename Parameter (.+) to (.+) in method (.+) from class (.+)"),
 	RENAME_ATTRIBUTE("Rename Attribute", "Rename Attribute (.+) to (.+) in class (.+)"),
@@ -186,7 +187,8 @@ public enum RefactoringType {
 		COLLAPSE_HIERARCHY,
 		REPLACE_LOOP_WITH_PIPELINE,
 		REPLACE_ANONYMOUS_WITH_LAMBDA,
-		MERGE_CLASS
+		MERGE_CLASS,
+		INLINE_ATTRIBUTE
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

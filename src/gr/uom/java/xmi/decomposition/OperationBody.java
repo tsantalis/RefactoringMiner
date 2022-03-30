@@ -12,6 +12,9 @@ import gr.uom.java.xmi.Formatter;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLAnonymousClass;
+import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 
 import static gr.uom.java.xmi.decomposition.PsiUtils.isSuperConstructorInvocation;
 import static gr.uom.java.xmi.decomposition.PsiUtils.isThisConstructorInvocation;
@@ -22,17 +25,19 @@ public class OperationBody {
 	private List<String> stringRepresentation;
 	private boolean containsAssertion;
 	private Set<VariableDeclaration> activeVariableDeclarations;
+	private VariableDeclarationContainer container;
 	private int bodyHashCode;
 
 	public OperationBody(PsiFile cu, String filePath, PsiCodeBlock methodBody) {
-		this(cu, filePath, methodBody, Collections.emptyList());
+		this(cu, filePath, methodBody, null);
 	}
 
-	public OperationBody(PsiFile cu, String filePath, PsiCodeBlock methodBody, List<VariableDeclaration> parameters) {
+	public OperationBody(PsiFile cu, String filePath, PsiCodeBlock methodBody, VariableDeclarationContainer container) {
 		this.compositeStatement = new CompositeStatementObject(cu, filePath, methodBody, 0, CodeElementType.BLOCK);
+		this.container = container;
 		this.bodyHashCode = Formatter.format(methodBody).hashCode();
 		this.activeVariableDeclarations = new HashSet<VariableDeclaration>();
-		this.activeVariableDeclarations.addAll(parameters);
+		this.activeVariableDeclarations.addAll(container != null ? container.getParameterDeclarationList() : Collections.emptyList());
 		PsiStatement[] statements = methodBody.getStatements();
 		for(PsiStatement statement : statements) {
 			processStatement(cu, filePath, compositeStatement, statement);
@@ -360,6 +365,22 @@ public class OperationBody {
 	private void addStatementInVariableScopes(AbstractStatement statement) {
 		for(VariableDeclaration variableDeclaration : activeVariableDeclarations) {
 			variableDeclaration.addStatementInScope(statement);
+			if(container != null) {
+				for(AnonymousClassDeclarationObject anonymous : statement.getAnonymousClassDeclarations()) {
+					UMLAnonymousClass anonymousClass = container.findAnonymousClass(anonymous);
+					for(UMLOperation operation : anonymousClass.getOperations()) {
+						if(operation.getBody() != null) {
+							CompositeStatementObject composite = operation.getBody().getCompositeStatement();
+							for(AbstractStatement anonymousStatement : composite.getInnerNodes()) {
+								variableDeclaration.addStatementInScope(anonymousStatement);
+							}
+							for(AbstractCodeFragment anonymousStatement : composite.getLeaves()) {
+								variableDeclaration.addStatementInScope(anonymousStatement);
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 

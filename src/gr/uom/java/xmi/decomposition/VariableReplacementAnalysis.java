@@ -39,6 +39,7 @@ import gr.uom.java.xmi.diff.CandidateSplitVariableRefactoring;
 import gr.uom.java.xmi.diff.ChangeVariableTypeRefactoring;
 import gr.uom.java.xmi.diff.ExtractAttributeRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
+import gr.uom.java.xmi.diff.InlineAttributeRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.MergeVariableRefactoring;
 import gr.uom.java.xmi.diff.ModifyVariableAnnotationRefactoring;
@@ -68,8 +69,10 @@ public class VariableReplacementAnalysis {
 	private UMLClassBaseDiff classDiff;
 	private Set<VariableDeclaration> removedVariables = new LinkedHashSet<>();
 	private Set<VariableDeclaration> removedVariablesStoringTheReturnOfInlinedMethod = new LinkedHashSet<>();
+	private Set<VariableDeclaration> removedVariablesInAnonymousClassDeclarations = new LinkedHashSet<>();
     private Set<VariableDeclaration> addedVariables = new LinkedHashSet<>();
     private Set<VariableDeclaration> addedVariablesStoringTheReturnOfExtractedMethod = new LinkedHashSet<>();
+    private Set<VariableDeclaration> addedVariablesInAnonymousClassDeclarations = new LinkedHashSet<>();
     private Set<Pair<VariableDeclaration, VariableDeclaration>> matchedVariables = new LinkedHashSet<>();
     private Set<Pair<VariableDeclaration, VariableDeclaration>> movedVariables = new LinkedHashSet<>();
 	private Set<RenameVariableRefactoring> variableRenames = new LinkedHashSet<RenameVariableRefactoring>();
@@ -108,13 +111,17 @@ public class VariableReplacementAnalysis {
 			this.removedVariables.addAll(operation1.getAllVariableDeclarations());
 			for(UMLAnonymousClass anonymous : operation1.getAnonymousClassList()) {
 				for(UMLOperation operation : anonymous.getOperations()) {
-					this.removedVariables.addAll(operation.getAllVariableDeclarations());
+					List<VariableDeclaration> allVariableDeclarations = operation.getAllVariableDeclarations();
+					this.removedVariables.addAll(allVariableDeclarations);
+					this.removedVariablesInAnonymousClassDeclarations.addAll(allVariableDeclarations);
 				}
 			}
 			this.addedVariables.addAll(operation2.getAllVariableDeclarations());
 			for(UMLAnonymousClass anonymous : operation2.getAnonymousClassList()) {
 				for(UMLOperation operation : anonymous.getOperations()) {
-					this.addedVariables.addAll(operation.getAllVariableDeclarations());
+					List<VariableDeclaration> allVariableDeclarations = operation.getAllVariableDeclarations();
+					this.addedVariables.addAll(allVariableDeclarations);
+					this.addedVariablesInAnonymousClassDeclarations.addAll(allVariableDeclarations);
 				}
 			}
 		}
@@ -397,6 +404,12 @@ public class VariableReplacementAnalysis {
 	}
 
 	private boolean mappedStatementWithinVariableScopes(VariableDeclaration removedVariable, VariableDeclaration addedVariable) {
+		if(removedVariablesInAnonymousClassDeclarations.contains(removedVariable) && addedVariablesInAnonymousClassDeclarations.contains(addedVariable)) {
+			return false;
+		}
+		if(removedVariablesInAnonymousClassDeclarations.contains(removedVariable) != addedVariablesInAnonymousClassDeclarations.contains(addedVariable)) {
+			return false;
+		}
 		List<AbstractCodeFragment> statementsInScope1 = removedVariable.getStatementsInScopeUsingVariable();
 		List<AbstractCodeFragment> statementsInScope2 = addedVariable.getStatementsInScopeUsingVariable();
 		for(AbstractCodeMapping mapping : mappings) {
@@ -502,6 +515,12 @@ public class VariableReplacementAnalysis {
 					if(statements.containsAll(statementsInScope)) {
 						return true;
 					}
+					//List<AbstractCodeFragment> allStatements = new ArrayList<>();
+					//allStatements.addAll(lambdaBody.getCompositeStatement().getInnerNodes());
+					//allStatements.addAll(lambdaBody.getCompositeStatement().getLeaves());
+					//if(allStatements.containsAll(statementsInScope)) {
+					//	return true;
+					//}
 				}
 			}
 		}
@@ -607,11 +626,42 @@ public class VariableReplacementAnalysis {
 					if(replacement.involvesVariable()) {
 						for(UMLAttribute addedAttribute : classDiff.getAddedAttributes()) {
 							VariableDeclaration variableDeclaration = addedAttribute.getVariableDeclaration();
-							if(addedAttribute.getName().equals(replacement.getAfter()) && variableDeclaration.getInitializer() != null &&
-									variableDeclaration.getInitializer().getString().equals(replacement.getBefore())) {
+							if(addedAttribute.getName().equals(replacement.getAfter()) && extractInlineCondition(variableDeclaration, replacement, replacement.getBefore())) {
 								ExtractAttributeRefactoring refactoring = new ExtractAttributeRefactoring(addedAttribute, classDiff.getOriginalClass(), classDiff.getNextClass(), insideExtractedOrInlinedMethod);
-								refactoring.addReference(mapping);
-								refactorings.add(refactoring);
+								if(refactorings.contains(refactoring)) {
+									Iterator<Refactoring> it = refactorings.iterator();
+									while(it.hasNext()) {
+										Refactoring ref = it.next();
+										if(ref.equals(refactoring)) {
+											((ExtractAttributeRefactoring)ref).addReference(mapping);
+											break;
+										}
+									}
+								}
+								else {
+									refactoring.addReference(mapping);
+									refactorings.add(refactoring);
+								}
+							}
+						}
+						for(UMLAttribute removedAttribute : classDiff.getRemovedAttributes()) {
+							VariableDeclaration variableDeclaration = removedAttribute.getVariableDeclaration();
+							if(removedAttribute.getName().equals(replacement.getBefore()) && extractInlineCondition(variableDeclaration, replacement, replacement.getAfter())) {
+								InlineAttributeRefactoring refactoring = new InlineAttributeRefactoring(removedAttribute, classDiff.getOriginalClass(), classDiff.getNextClass(), insideExtractedOrInlinedMethod);
+								if(refactorings.contains(refactoring)) {
+									Iterator<Refactoring> it = refactorings.iterator();
+									while(it.hasNext()) {
+										Refactoring ref = it.next();
+										if(ref.equals(refactoring)) {
+											((InlineAttributeRefactoring)ref).addReference(mapping);
+											break;
+										}
+									}
+								}
+								else {
+									refactoring.addReference(mapping);
+									refactorings.add(refactoring);
+								}
 							}
 						}
 					}
@@ -620,6 +670,26 @@ public class VariableReplacementAnalysis {
 		}
 	}
 
+	private boolean extractInlineCondition(VariableDeclaration variableDeclaration, Replacement replacement, String replacementAsString) {
+		if(variableDeclaration.getInitializer() != null) {
+			if(variableDeclaration.getInitializer().getString().equals(replacementAsString)) {
+				return true;
+			}
+			if(replacement instanceof VariableReplacementWithMethodInvocation) {
+				VariableReplacementWithMethodInvocation r = (VariableReplacementWithMethodInvocation)replacement;
+				Map<String, List<AbstractCall>> map = variableDeclaration.getInitializer().getMethodInvocationMap();
+				for(String key : map.keySet()) {
+					List<AbstractCall> list = map.get(key);
+					for(AbstractCall call : list) {
+						if(call.identicalName(r.getInvokedOperation())) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
 	public Set<RenameVariableRefactoring> getVariableRenames() {
 		return variableRenames;
 	}

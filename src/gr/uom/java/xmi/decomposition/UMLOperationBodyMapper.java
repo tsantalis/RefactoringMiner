@@ -1647,6 +1647,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(!mappingSet.isEmpty()) {
 					LeafMapping minStatementMapping = mappingSet.first();
 					mappings.add(minStatementMapping);
+					processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
 					leaves2.remove(minStatementMapping.getFragment2());
 					leafIterator1.remove();
 				}
@@ -1747,6 +1748,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(!mappingSet.isEmpty()) {
 					LeafMapping minStatementMapping = mappingSet.first();
 					mappings.add(minStatementMapping);
+					processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
 					leaves1.remove(minStatementMapping.getFragment1());
 					leafIterator2.remove();
 				}
@@ -1857,6 +1859,29 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				addToMappings(minStatementMapping, postponed);
 				leaves1.remove(minStatementMapping.getFragment1());
 				leaves2.remove(minStatementMapping.getFragment2());
+			}
+		}
+	}
+
+	private void processAnonymousClassDeclarationsInIdenticalStatements(LeafMapping minStatementMapping) throws RefactoringMinerTimedOutException {
+		List<AnonymousClassDeclarationObject> anonymousClassDeclarations1 = minStatementMapping.getFragment1().getAnonymousClassDeclarations();
+		List<AnonymousClassDeclarationObject> anonymousClassDeclarations2 = minStatementMapping.getFragment2().getAnonymousClassDeclarations();
+		if(!anonymousClassDeclarations1.isEmpty() && !anonymousClassDeclarations2.isEmpty() && container1 != null && container2 != null) {
+			for(int i=0; i<anonymousClassDeclarations1.size(); i++) {
+				for(int j=0; j<anonymousClassDeclarations2.size(); j++) {
+					AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);
+					AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(j);
+					UMLAnonymousClass anonymousClass1 = findAnonymousClass1(anonymousClassDeclaration1);
+					UMLAnonymousClass anonymousClass2 = findAnonymousClass2(anonymousClassDeclaration2);
+					UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
+					anonymousClassDiff.process();
+					List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
+					if(matchedOperationMappers.size() > 0) {
+						for(UMLOperationBodyMapper mapper : matchedOperationMappers) {
+							this.mappings.addAll(mapper.mappings);
+						}
+					}
+				}
 			}
 		}
 	}
@@ -2406,7 +2431,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		variablesAndMethodInvocations2.addAll(variables2);
 		
 		Set<String> types1 = new LinkedHashSet<String>(statement1.getTypes());
+		for(AnonymousClassDeclarationObject anonymous1 : statement1.getAnonymousClassDeclarations()) {
+			types1.addAll(anonymous1.getTypes());
+		}
 		Set<String> types2 = new LinkedHashSet<String>(statement2.getTypes());
+		for(AnonymousClassDeclarationObject anonymous2 : statement2.getAnonymousClassDeclarations()) {
+			types2.addAll(anonymous2.getTypes());
+		}
 		removeCommonTypes(types1, types2, statement1.getTypes(), statement2.getTypes());
 		
 		// replace variables with the corresponding arguments in object creations
@@ -3790,7 +3821,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(statementWithoutAnonymous1.equals(statementWithoutAnonymous2) ||
 							identicalAfterVariableAndTypeReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements()) ||
 							(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-							(invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements()) ||
+							(onlyDifferentInvoker(statementWithoutAnonymous1, statementWithoutAnonymous2, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
+							invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements()) ||
 							invocationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)))) {
 						UMLAnonymousClass anonymousClass1 = findAnonymousClass1(anonymousClassDeclaration1);
 						UMLAnonymousClass anonymousClass2 = findAnonymousClass2(anonymousClassDeclaration2);
@@ -4168,12 +4200,39 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return null;
 	}
 
+	private boolean onlyDifferentInvoker(String s1, String s2,
+			AbstractCall invocationCoveringTheEntireStatement1, AbstractCall invocationCoveringTheEntireStatement2) {
+		if(invocationCoveringTheEntireStatement1.getExpression() == null && invocationCoveringTheEntireStatement2.getExpression() != null) {
+			int index = s1.indexOf(invocationCoveringTheEntireStatement1.getName());
+			String s1AfterReplacement = s1.substring(0, index) + invocationCoveringTheEntireStatement2.getExpression() + "." + s1.substring(index);
+			if(s1AfterReplacement.equals(s2)) {
+				return true;
+			}
+		}
+		else if(invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() == null) {
+			int index = s2.indexOf(invocationCoveringTheEntireStatement2.getName());
+			String s2AfterReplacement = s2.substring(0, index) + invocationCoveringTheEntireStatement1.getExpression() + "." + s2.substring(index);
+			if(s2AfterReplacement.equals(s1)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private boolean identicalAfterVariableAndTypeReplacements(String s1, String s2, Set<Replacement> replacements) {
 		String s1AfterReplacements = new String(s1);
 		for(Replacement replacement : replacements) {
-			if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.TYPE)) {
-				s1AfterReplacements = ReplacementUtil.performReplacement(s1AfterReplacements, s2, replacement.getBefore(), replacement.getAfter());
+			String before = replacement.getBefore();
+			String after = replacement.getAfter();
+			if(before.contains("\n") && after.contains("\n")) {
+				before = before.substring(0, before.indexOf("\n"));
+				after = after.substring(0, after.indexOf("\n"));
+				if(before.endsWith("{") && after.endsWith("{")) {
+					before = before.substring(0, before.length()-1);
+					after = after.substring(0, after.length()-1);
+				}
 			}
+			s1AfterReplacements = ReplacementUtil.performReplacement(s1AfterReplacements, s2, before, after);
 		}
 		if(s1AfterReplacements.equals(s2)) {
 			return true;

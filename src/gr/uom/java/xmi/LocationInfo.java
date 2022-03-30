@@ -1,10 +1,13 @@
 package gr.uom.java.xmi;
 
+import java.util.List;
+
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.diff.CodeRange;
 
 public class LocationInfo {
@@ -92,6 +95,16 @@ public class LocationInfo {
 		return this.filePath.equals(other.filePath) &&
 				this.startOffset <= other.startOffset &&
 				this.endOffset >= other.endOffset;
+	}
+
+	public boolean subsumes(List<? extends AbstractCodeFragment> statements) {
+		int subsumedStatements = 0;
+		for(AbstractCodeFragment statement : statements) {
+			if(subsumes(statement.getLocationInfo())) {
+				subsumedStatements++;
+			}
+		}
+		return subsumedStatements == statements.size() && statements.size() > 0;
 	}
 
 	public boolean sameLine(LocationInfo other) {

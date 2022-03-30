@@ -81,7 +81,7 @@ public class ExtractAttributeRefactoring implements Refactoring {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((attributeDeclaration == null) ? 0 : attributeDeclaration.hashCode());
+		result = prime * result + ((attributeDeclaration.getVariableDeclaration() == null) ? 0 : attributeDeclaration.getVariableDeclaration().hashCode());
 		return result;
 	}
 
@@ -97,7 +97,7 @@ public class ExtractAttributeRefactoring implements Refactoring {
 		if (attributeDeclaration == null) {
 			if (other.attributeDeclaration != null)
 				return false;
-		} else if (!attributeDeclaration.equals(other.attributeDeclaration))
+		} else if (!attributeDeclaration.getVariableDeclaration().equals(other.attributeDeclaration.getVariableDeclaration()))
 			return false;
 		return true;
 	}

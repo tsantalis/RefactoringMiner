@@ -253,16 +253,22 @@ public class UMLModelASTReader {
 		
 		processModifiers(cu, sourceFile, enumDeclaration, umlClass);
 		
-		processBodyDeclarations(cu, enumDeclaration, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments);
+		Map<MethodDeclaration, UMLOperation> map = processBodyDeclarations(cu, enumDeclaration, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments);
 		
 		processAnonymousClassDeclarations(cu, enumDeclaration, packageName, sourceFile, className, umlClass);
+
+		for(MethodDeclaration methodDeclaration : map.keySet()) {
+			UMLOperation operation = map.get(methodDeclaration);
+    		processMethodBody(cu, sourceFile, methodDeclaration, operation);
+		}
 		
 		this.getUmlModel().addClass(umlClass);
 		distributeComments(comments, locationInfo, umlClass.getComments());
 	}
 
-	private void processBodyDeclarations(CompilationUnit cu, AbstractTypeDeclaration abstractTypeDeclaration, String packageName,
+	private Map<MethodDeclaration, UMLOperation> processBodyDeclarations(CompilationUnit cu, AbstractTypeDeclaration abstractTypeDeclaration, String packageName,
 			String sourceFile, List<String> importedTypes, UMLClass umlClass, UMLJavadoc packageDoc, List<UMLComment> comments) {
+		Map<MethodDeclaration, UMLOperation> map = new LinkedHashMap<>();
 		List<BodyDeclaration> bodyDeclarations = abstractTypeDeclaration.bodyDeclarations();
 		for(BodyDeclaration bodyDeclaration : bodyDeclarations) {
 			if(bodyDeclaration instanceof FieldDeclaration) {
@@ -278,6 +284,7 @@ public class UMLModelASTReader {
 				UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, umlClass.isInterface(), sourceFile, comments);
 	    		operation.setClassName(umlClass.getName());
 	    		umlClass.addOperation(operation);
+	    		map.put(methodDeclaration, operation);
 			}
 			else if(bodyDeclaration instanceof TypeDeclaration) {
 				TypeDeclaration typeDeclaration = (TypeDeclaration)bodyDeclaration;
@@ -288,6 +295,7 @@ public class UMLModelASTReader {
 				processEnumDeclaration(cu, enumDeclaration, umlClass.getName(), sourceFile, importedTypes, packageDoc, comments);
 			}
 		}
+		return map;
 	}
 
 	private void processTypeDeclaration(CompilationUnit cu, TypeDeclaration typeDeclaration, String packageName, String sourceFile,
@@ -356,14 +364,21 @@ public class UMLModelASTReader {
     		}
     	}
     	
+    	Map<MethodDeclaration, UMLOperation> map = new LinkedHashMap<>();
     	MethodDeclaration[] methodDeclarations = typeDeclaration.getMethods();
     	for(MethodDeclaration methodDeclaration : methodDeclarations) {
     		UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, umlClass.isInterface(), sourceFile, comments);
     		operation.setClassName(umlClass.getName());
     		umlClass.addOperation(operation);
+    		map.put(methodDeclaration, operation);
     	}
     	
     	processAnonymousClassDeclarations(cu, typeDeclaration, packageName, sourceFile, className, umlClass);
+    	
+    	for(MethodDeclaration methodDeclaration : map.keySet()) {
+    		UMLOperation operation = map.get(methodDeclaration);
+    		processMethodBody(cu, sourceFile, methodDeclaration, operation);
+    	}
     	
     	this.getUmlModel().addClass(umlClass);
 		
@@ -448,9 +463,33 @@ public class UMLModelASTReader {
 	    				}
 	    			}
 	    			createdAnonymousClasses.add(anonymousClass);
+	    			List<BodyDeclaration> bodyDeclarations = anonymous.bodyDeclarations();
+	    			int i=0;
+	    			for(BodyDeclaration bodyDeclaration : bodyDeclarations) {
+	    				if(bodyDeclaration instanceof MethodDeclaration) {
+	    					MethodDeclaration methodDeclaration = (MethodDeclaration)bodyDeclaration;
+	    					UMLOperation operation = anonymousClass.getOperations().get(i);
+	    					processMethodBody(cu, sourceFile, methodDeclaration, operation);
+	    					i++;
+	    				}
+	    			}
     			}
     		}
     	}
+	}
+
+	private void processMethodBody(CompilationUnit cu, String sourceFile, MethodDeclaration methodDeclaration, UMLOperation operation) {
+		Block block = methodDeclaration.getBody();
+		if(block != null) {
+			OperationBody body = new OperationBody(cu, sourceFile, block, operation);
+			operation.setBody(body);
+			if(block.statements().size() == 0) {
+				operation.setEmptyBody(true);
+			}
+		}
+		else {
+			operation.setBody(null);
+		}
 	}
 
 	private void processModifiers(CompilationUnit cu, String sourceFile, AbstractTypeDeclaration typeDeclaration, UMLClass umlClass) {
@@ -565,19 +604,6 @@ public class UMLModelASTReader {
 			UMLType type = UMLType.extractTypeObject(cu, sourceFile, thrownExceptionType, 0);
 			umlOperation.addThrownExceptionType(type);
 		}
-		
-		Block block = methodDeclaration.getBody();
-		if(block != null) {
-			OperationBody body = new OperationBody(cu, sourceFile, block, umlOperation.getParameterDeclarationList());
-			umlOperation.setBody(body);
-			if(block.statements().size() == 0) {
-				umlOperation.setEmptyBody(true);
-			}
-		}
-		else {
-			umlOperation.setBody(null);
-		}
-		
 		return umlOperation;
 	}
 

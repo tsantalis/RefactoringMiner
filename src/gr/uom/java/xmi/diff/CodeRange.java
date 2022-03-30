@@ -1,6 +1,5 @@
 package gr.uom.java.xmi.diff;
 
-import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.core.io.JsonStringEncoder;
@@ -75,16 +74,6 @@ public class CodeRange {
 		return this.filePath.equals(other.filePath) &&
 				this.startLine <= other.startLine &&
 				this.endLine >= other.endLine;
-	}
-
-	public boolean subsumes(List<? extends AbstractCodeFragment> statements) {
-		int subsumedStatements = 0;
-		for(AbstractCodeFragment statement : statements) {
-			if(subsumes(statement.codeRange())) {
-				subsumedStatements++;
-			}
-		}
-		return subsumedStatements == statements.size();
 	}
 
 	public String toString() {

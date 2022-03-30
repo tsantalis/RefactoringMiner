@@ -13,14 +13,14 @@ import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 
-public class ExtractAttributeRefactoring implements Refactoring {
+public class InlineAttributeRefactoring implements Refactoring {
 	private UMLAttribute attributeDeclaration;
 	private UMLClass originalClass;
 	private UMLClass nextClass;
 	private Set<AbstractCodeMapping> references;
 	private boolean insideExtractedOrInlinedMethod;
 
-	public ExtractAttributeRefactoring(UMLAttribute variableDeclaration, UMLClass originalClass, UMLClass nextClass,
+	public InlineAttributeRefactoring(UMLAttribute variableDeclaration, UMLClass originalClass, UMLClass nextClass,
 			boolean insideExtractedOrInlinedMethod) {
 		this.attributeDeclaration = variableDeclaration;
 		this.originalClass = originalClass;
@@ -34,7 +34,7 @@ public class ExtractAttributeRefactoring implements Refactoring {
 	}
 
 	public RefactoringType getRefactoringType() {
-		return RefactoringType.EXTRACT_ATTRIBUTE;
+		return RefactoringType.INLINE_ATTRIBUTE;
 	}
 
 	public String getName() {
@@ -58,14 +58,14 @@ public class ExtractAttributeRefactoring implements Refactoring {
 		sb.append(getName()).append("\t");
 		sb.append(attributeDeclaration);
 		sb.append(" in class ");
-		sb.append(attributeDeclaration.getClassName());
+		sb.append(nextClass.getName());
 		return sb.toString();
 	}
 
 	/**
-	 * @return the code range of the extracted variable declaration in the <b>child</b> commit
+	 * @return the code range of the inlined variable declaration in the <b>parent</b> commit
 	 */
-	public CodeRange getExtractedVariableDeclarationCodeRange() {
+	public CodeRange getInlinedVariableDeclarationCodeRange() {
 		return attributeDeclaration.codeRange();
 	}
 
@@ -93,7 +93,7 @@ public class ExtractAttributeRefactoring implements Refactoring {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ExtractAttributeRefactoring other = (ExtractAttributeRefactoring) obj;
+		InlineAttributeRefactoring other = (InlineAttributeRefactoring) obj;
 		if (attributeDeclaration == null) {
 			if (other.attributeDeclaration != null)
 				return false;
@@ -102,23 +102,14 @@ public class ExtractAttributeRefactoring implements Refactoring {
 		return true;
 	}
 
-	public Set<ImmutablePair<String, String>> getInvolvedClassesBeforeRefactoring() {
-		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
-		pairs.add(new ImmutablePair<String, String>(getOriginalClass().getLocationInfo().getFilePath(), getOriginalClass().getName()));
-		return pairs;
-	}
-
-	public Set<ImmutablePair<String, String>> getInvolvedClassesAfterRefactoring() {
-		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
-		pairs.add(new ImmutablePair<String, String>(getNextClass().getLocationInfo().getFilePath(), getNextClass().getName()));
-		return pairs;
-	}
-
 	@Override
 	public List<CodeRange> leftSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
+		ranges.add(attributeDeclaration.codeRange()
+				.setDescription("inlined attribute declaration")
+				.setCodeElement(attributeDeclaration.toString()));
 		for(AbstractCodeMapping mapping : references) {
-			ranges.add(mapping.getFragment1().codeRange().setDescription("statement with the initializer of the extracted attribute"));
+			ranges.add(mapping.getFragment1().codeRange().setDescription("statement with the name of the inlined attribute"));
 		}
 		return ranges;
 	}
@@ -126,12 +117,23 @@ public class ExtractAttributeRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> rightSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		ranges.add(attributeDeclaration.codeRange()
-				.setDescription("extracted attribute declaration")
-				.setCodeElement(attributeDeclaration.toString()));
 		for(AbstractCodeMapping mapping : references) {
-			ranges.add(mapping.getFragment2().codeRange().setDescription("statement with the name of the extracted attribute"));
+			ranges.add(mapping.getFragment2().codeRange().setDescription("statement with the initializer of the inlined attribute"));
 		}
 		return ranges;
+	}
+
+	@Override
+	public Set<ImmutablePair<String, String>> getInvolvedClassesBeforeRefactoring() {
+		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
+		pairs.add(new ImmutablePair<String, String>(getOriginalClass().getLocationInfo().getFilePath(), getOriginalClass().getName()));
+		return pairs;
+	}
+
+	@Override
+	public Set<ImmutablePair<String, String>> getInvolvedClassesAfterRefactoring() {
+		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
+		pairs.add(new ImmutablePair<String, String>(getNextClass().getLocationInfo().getFilePath(), getNextClass().getName()));
+		return pairs;
 	}
 }

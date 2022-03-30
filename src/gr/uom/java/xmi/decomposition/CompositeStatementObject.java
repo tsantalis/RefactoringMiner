@@ -429,6 +429,19 @@ public class CompositeStatementObject extends AbstractStatement {
 						}
 					}
 				}
+				for(AnonymousClassDeclarationObject anonymous : statementObject.getAnonymousClassDeclarations()) {
+					Map<String, List<AbstractCall>> anonymousMap = anonymous.getMethodInvocationMap();
+					for(String key : anonymousMap.keySet()) {
+						if(map.containsKey(key)) {
+							map.get(key).addAll(anonymousMap.get(key));
+						}
+						else {
+							List<AbstractCall> list = new ArrayList<AbstractCall>();
+							list.addAll(anonymousMap.get(key));
+							map.put(key, list);
+						}
+					}
+				}
 			}
 		}
 		return map;

@@ -1814,6 +1814,16 @@ public class VariableReplacementAnalysis {
 				if(vd != null) {
 					return new SimpleEntry<>(vd, mapping.getOperation2());
 				}
+				else {
+					for(Replacement r : mapping.getReplacements()) {
+						if(r.getBefore().equals(replacement.getAfter())) {
+							vd = mapping.getFragment2().searchVariableDeclaration(r.getAfter());
+							if(vd != null) {
+								return new SimpleEntry<>(vd, mapping.getOperation2());
+							}
+						}
+					}
+				}
 			}
 		}
 		for(VariableDeclaration parameter : operation2.getParameterDeclarationList()) {

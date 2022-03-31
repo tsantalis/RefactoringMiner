@@ -13,8 +13,11 @@ import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
+import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
+import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.UMLModelDiff;
@@ -449,6 +452,81 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		if(onlyArgumentsChanged(call, replacements)) {
 			int argumentIntersectionSize = argumentIntersectionSize(call, replacements, parameterToArgumentMap);
 			if(argumentIntersectionSize > 0 || getArguments().size() == 0 || call.getArguments().size() == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean identicalWithInlinedStatements(AbstractCall call, Set<Replacement> replacements, List<AbstractCodeFragment> statements) {
+		if(identicalExpression(call, replacements) && identicalName(call)) {
+			if(this.arguments.size() == call.arguments.size()) {
+				Set<Replacement> newReplacements = new LinkedHashSet<Replacement>();
+				Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
+				for(int i=0; i<this.arguments.size(); i++) {
+					String arg1 = this.arguments.get(i);
+					String arg2 = call.arguments.get(i);
+					if(!arg1.equals(arg2)) {
+						boolean matchingInlineFound = false;
+						for(AbstractCodeFragment statement : statements) {
+							if(statement.getVariableDeclarations().size() > 0) {
+								VariableDeclaration variableDeclaration = statement.getVariableDeclarations().get(0);
+								if(variableDeclaration.getVariableName().equals(arg1) && variableDeclaration.getInitializer() != null) {
+									AbstractCall statementCall = variableDeclaration.getInitializer().invocationCoveringEntireFragment();
+									if(variableDeclaration.getInitializer().getExpression().equals(arg2)) {
+										matchingInlineFound = true;
+										if(statementCall != null) {
+											Replacement r = new VariableReplacementWithMethodInvocation(arg1, variableDeclaration.getInitializer().getExpression(), statementCall, Direction.VARIABLE_TO_INVOCATION);
+											newReplacements.add(r);
+										}
+										else {
+											Replacement r = new Replacement(arg1, variableDeclaration.getInitializer().getExpression(), ReplacementType.VARIABLE_NAME);
+											newReplacements.add(r);
+										}
+										additionallyMatchedStatements1.add(statement);
+										break;
+									}
+									if(statementCall != null) {
+										String actualString = statementCall.actualString();
+										if(arg2.contains(actualString) || actualString.contains(arg2)) {
+											matchingInlineFound = true;
+											Replacement r = new VariableReplacementWithMethodInvocation(arg1, variableDeclaration.getInitializer().getExpression(), statementCall, Direction.VARIABLE_TO_INVOCATION);
+											newReplacements.add(r);
+											additionallyMatchedStatements1.add(statement);
+											break;
+										}
+										if(actualString.contains(".") && arg2.contains(".") &&
+												actualString.substring(actualString.indexOf(".")).equals(arg2.substring(arg2.indexOf(".")))) {
+											matchingInlineFound = true;
+											Replacement r = new VariableReplacementWithMethodInvocation(arg1, variableDeclaration.getInitializer().getExpression(), statementCall, Direction.VARIABLE_TO_INVOCATION);
+											newReplacements.add(r);
+											additionallyMatchedStatements1.add(statement);
+											String invoker = actualString.substring(0, actualString.indexOf("."));
+											if(invoker.equals(statementCall.getExpression())) {
+												String arg2Invoker = arg2.substring(0, arg2.indexOf("."));
+												Replacement rename = new Replacement(invoker, arg2Invoker, ReplacementType.VARIABLE_NAME);
+												newReplacements.add(rename);
+											}
+											break;
+										}
+									}
+								}
+							}
+						}
+						if(!matchingInlineFound) {
+							return false;
+						}
+					}
+				}
+				for(Replacement r : newReplacements) {
+					if(!replacements.contains(r)) {
+						replacements.add(r);
+					}
+				}
+				if(additionallyMatchedStatements1.size() > 0) {
+					CompositeReplacement r = new CompositeReplacement(this.actualString(), call.actualString(), additionallyMatchedStatements1, Collections.emptySet());
+					replacements.add(r);
+				}
 				return true;
 			}
 		}

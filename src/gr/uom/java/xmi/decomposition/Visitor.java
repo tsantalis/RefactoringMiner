@@ -249,21 +249,7 @@ public class Visitor extends ASTVisitor {
 			}
 		}
 		if(node.getParent() instanceof ClassInstanceCreation && node.getParent().getParent() instanceof MethodInvocation) {
-			MethodInvocation methodInvocation = (MethodInvocation)node.getParent().getParent();
-			List<Expression> arguments = methodInvocation.arguments();
-			boolean siblingAnonymousClassArgument = false;
-			for(Expression argument : arguments) {
-				if(!argument.equals(node.getParent()) && argument instanceof ClassInstanceCreation) {
-					ClassInstanceCreation creation = (ClassInstanceCreation)argument;
-					if(creation.getAnonymousClassDeclaration() != null) {
-						siblingAnonymousClassArgument = true;
-						break;
-					}
-				}
-			}
-			if(siblingAnonymousClassArgument) {
-				removeAnonymousData();
-			}
+			removeAnonymousData();
 		}
 		this.current = parentNode;
 	}

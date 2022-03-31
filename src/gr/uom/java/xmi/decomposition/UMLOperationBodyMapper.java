@@ -1705,6 +1705,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
+						CompositeReplacement composite = mapping.containsCompositeReplacement();
+						if(composite != null) {
+							for(AbstractCodeFragment leaf : composite.getAdditionallyMatchedStatements1()) {
+								mapping.inlinedVariableAssignment(leaf, leaves2, parentMapper != null);
+								if(mapping.isIdenticalWithInlinedVariable()) {
+									break;
+								}
+							}
+						}
 						mappingSet.add(mapping);
 					}
 				}
@@ -1804,6 +1813,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							mapping.inlinedVariableAssignment(leaf, leaves2, parentMapper != null);
 							if(mapping.isIdenticalWithInlinedVariable()) {
 								break;
+							}
+						}
+						CompositeReplacement composite = mapping.containsCompositeReplacement();
+						if(composite != null) {
+							for(AbstractCodeFragment leaf : composite.getAdditionallyMatchedStatements1()) {
+								mapping.inlinedVariableAssignment(leaf, leaves2, parentMapper != null);
+								if(mapping.isIdenticalWithInlinedVariable()) {
+									break;
+								}
 							}
 						}
 						mappingSet.add(mapping);
@@ -3818,7 +3836,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(j);
 					String statementWithoutAnonymous1 = statementWithoutAnonymous(statement1, anonymousClassDeclaration1, container1);
 					String statementWithoutAnonymous2 = statementWithoutAnonymous(statement2, anonymousClassDeclaration2, container2);
-					if(statementWithoutAnonymous1.equals(statementWithoutAnonymous2) ||
+					if(replacementInfo.getRawDistance() == 0 || statementWithoutAnonymous1.equals(statementWithoutAnonymous2) ||
 							identicalAfterVariableAndTypeReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements()) ||
 							(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 							(onlyDifferentInvoker(statementWithoutAnonymous1, statementWithoutAnonymous2, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
@@ -3880,14 +3898,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(anonymousClass1.getOperations().size() == 1) {
 				UMLOperation anonymousClass1Operation = anonymousClass1.getOperations().get(0);
 				if(anonymousClass1Operation.getBody() != null) {
-					List<AbstractStatement> statements = anonymousClass1Operation.getBody().getCompositeStatement().getStatements();
-					if(statements.size() == 1) {
-						AbstractStatement statement = statements.get(0);
+					List<AbstractCodeFragment> statements = anonymousClass1Operation.getBody().getCompositeStatement().getLeaves();
+					for(AbstractCodeFragment statement : statements) {
 						AbstractCall invocation1 = statement.invocationCoveringEntireFragment();
 						if(invocation1 != null) {
 							for(String key2 : methodInvocationMap2.keySet()) {
 								for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
-									if(invocation1.identical(invocation2, replacementInfo.getReplacements(), Collections.emptyList())) {
+									if(invocation1.identical(invocation2, replacementInfo.getReplacements(), Collections.emptyList()) ||
+											invocation1.identicalWithInlinedStatements(invocation2, replacementInfo.getReplacements(), statements)) {
 										Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
 												invocation2.actualString(), invocation1, invocation2, ReplacementType.METHOD_INVOCATION_WRAPPED_IN_ANONYMOUS_CLASS_DECLARATION);
 										replacementInfo.addReplacement(replacement);
@@ -4213,6 +4231,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			int index = s2.indexOf(invocationCoveringTheEntireStatement2.getName());
 			String s2AfterReplacement = s2.substring(0, index) + invocationCoveringTheEntireStatement1.getExpression() + "." + s2.substring(index);
 			if(s2AfterReplacement.equals(s1)) {
+				return true;
+			}
+		}
+		else if(invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() != null) {
+			String s1AfterReplacement = ReplacementUtil.performReplacement(s1, s2, invocationCoveringTheEntireStatement1.getExpression(), invocationCoveringTheEntireStatement2.getExpression());
+			if(s1AfterReplacement.equals(s2)) {
 				return true;
 			}
 		}

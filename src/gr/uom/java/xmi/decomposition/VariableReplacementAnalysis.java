@@ -1209,12 +1209,14 @@ public class VariableReplacementAnalysis {
 			RenameVariableRefactoring refactoring = new RenameVariableRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
 			refactorings.add(refactoring);
 		}
-		if(!variableDeclaration1.getType().equals(variableDeclaration2.getType()) || !variableDeclaration1.getType().equalsQualified(variableDeclaration2.getType())) {
-			ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
-			if(ref != null) {
-				refactoring.addRelatedRefactoring(ref);
+		if(variableDeclaration1.getType() != null && variableDeclaration2.getType() != null) {
+			if(!variableDeclaration1.getType().equals(variableDeclaration2.getType()) || !variableDeclaration1.getType().equalsQualified(variableDeclaration2.getType())) {
+				ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
+				if(ref != null) {
+					refactoring.addRelatedRefactoring(ref);
+				}
+				refactorings.add(refactoring);
 			}
-			refactorings.add(refactoring);
 		}
 		UMLAnnotationListDiff annotationListDiff = new UMLAnnotationListDiff(variableDeclaration1.getAnnotations(), variableDeclaration2.getAnnotations());
 		for(UMLAnnotation annotation : annotationListDiff.getAddedAnnotations()) {

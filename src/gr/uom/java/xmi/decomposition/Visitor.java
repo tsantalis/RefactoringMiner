@@ -291,21 +291,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 				}
 			}
 			if(node.getParent() instanceof PsiNewExpression && node.getParent().getParent() instanceof PsiExpressionList) {
-				PsiExpressionList argList = (PsiExpressionList) node.getParent().getParent();
-				PsiExpression[] arguments = argList.getExpressions();
-				boolean siblingAnonymousClassArgument = false;
-				for (PsiExpression argument : arguments) {
-					if(!argument.equals(node.getParent()) && argument instanceof PsiNewExpression) {
-						PsiNewExpression creation = (PsiNewExpression) argument;
-						if(creation.getAnonymousClass() != null) {
-							siblingAnonymousClassArgument = true;
-							break;
-						}
-					}
-				}
-				if(siblingAnonymousClassArgument) {
-					removeAnonymousData();
-				}
+				removeAnonymousData();
 			}
 			this.current = parentNode;
 		}

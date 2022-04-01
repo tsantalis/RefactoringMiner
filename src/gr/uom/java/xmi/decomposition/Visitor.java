@@ -248,7 +248,9 @@ public class Visitor extends ASTVisitor {
 				break;
 			}
 		}
-		if(node.getParent() instanceof ClassInstanceCreation && node.getParent().getParent() instanceof MethodInvocation) {
+		ASTNode parent = node.getParent();
+		ASTNode grandParent = parent.getParent();
+		if(parent instanceof ClassInstanceCreation && (grandParent instanceof MethodInvocation || grandParent instanceof ClassInstanceCreation)) {
 			removeAnonymousData();
 		}
 		this.current = parentNode;

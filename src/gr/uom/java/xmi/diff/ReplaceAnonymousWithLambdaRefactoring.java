@@ -50,7 +50,7 @@ public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
 		ranges.add(anonymousClass.codeRange()
 				.setDescription("anonymous class declaration")
 				.setCodeElement(anonymousClass.getCodePath()));
-		String elementType = operationBefore instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationBefore.getElementType();
 		ranges.add(operationBefore.codeRange()
 				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
@@ -65,7 +65,7 @@ public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
 		ranges.add(lambda.codeRange()
 				.setDescription("lambda expression")
 				.setCodeElement(lambdaString));
-		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationAfter.getElementType();
 		ranges.add(operationAfter.codeRange()
 				.setDescription(elementType + " declaration with introduced lambda")
 				.setCodeElement(operationAfter.toString()));
@@ -103,7 +103,7 @@ public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
 		sb.append(" with ");
 		String string = lambda.toString();
 		sb.append(string.contains("\n") ? string.substring(0, string.indexOf("\n")) : string);
-		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationAfter.getElementType();
 		sb.append(" in " + elementType + " ");
 		sb.append(operationAfter);
 		sb.append(" from class ");

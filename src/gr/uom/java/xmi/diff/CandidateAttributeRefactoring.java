@@ -94,7 +94,7 @@ public class CandidateAttributeRefactoring {
 		sb.append(originalVariableName);
 		sb.append(" to ");
 		sb.append(renamedVariableName);
-		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationAfter.getElementType();
 		sb.append(" in " + elementType + " ");
 		sb.append(operationAfter);
 		sb.append(" from class ").append(operationAfter.getClassName());

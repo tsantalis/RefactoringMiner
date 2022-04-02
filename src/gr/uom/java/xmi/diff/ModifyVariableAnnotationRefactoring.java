@@ -72,7 +72,7 @@ public class ModifyVariableAnnotationRefactoring implements Refactoring {
 		ranges.add(variableBefore.codeRange()
 				.setDescription("original variable declaration")
 				.setCodeElement(variableBefore.toString()));
-		String elementType = operationBefore instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationBefore.getElementType();
 		ranges.add(operationBefore.codeRange()
 				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
@@ -88,7 +88,7 @@ public class ModifyVariableAnnotationRefactoring implements Refactoring {
 		ranges.add(variableAfter.codeRange()
 				.setDescription("variable declaration with modified annotation")
 				.setCodeElement(variableAfter.toString()));
-		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationAfter.getElementType();
 		ranges.add(operationAfter.codeRange()
 				.setDescription(elementType + " declaration with modified variable annotation")
 				.setCodeElement(operationAfter.toString()));
@@ -134,7 +134,7 @@ public class ModifyVariableAnnotationRefactoring implements Refactoring {
 		else
 			sb.append(" in variable ");
 		sb.append(variableAfter);
-		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationAfter.getElementType();
 		sb.append(" in " + elementType + " ");
 		sb.append(operationAfter);
 		sb.append(" from class ");

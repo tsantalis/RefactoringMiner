@@ -62,7 +62,7 @@ public class RemoveVariableModifierRefactoring implements Refactoring {
 		ranges.add(variableBefore.codeRange()
 				.setDescription("original variable declaration")
 				.setCodeElement(variableBefore.toString()));
-		String elementType = operationBefore instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationBefore.getElementType();
 		ranges.add(operationBefore.codeRange()
 				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
@@ -75,7 +75,7 @@ public class RemoveVariableModifierRefactoring implements Refactoring {
 		ranges.add(variableAfter.codeRange()
 				.setDescription("variable declaration with removed modifier")
 				.setCodeElement(variableAfter.toString()));
-		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationAfter.getElementType();
 		ranges.add(operationAfter.codeRange()
 				.setDescription(elementType + " declaration with removed variable modifier")
 				.setCodeElement(operationAfter.toString()));
@@ -120,7 +120,7 @@ public class RemoveVariableModifierRefactoring implements Refactoring {
 		else
 			sb.append(" in variable ");
 		sb.append(variableBefore);
-		String elementType = operationBefore instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationBefore.getElementType();
 		sb.append(" in " + elementType + " ");
 		sb.append(operationBefore);
 		sb.append(" from class ");

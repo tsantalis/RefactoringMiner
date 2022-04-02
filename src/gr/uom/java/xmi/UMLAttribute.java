@@ -45,6 +45,10 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return locationInfo;
 	}
 
+	public String getElementType() {
+		return "attribute";
+	}
+
 	public UMLType getType() {
 		return type;
 	}

@@ -83,6 +83,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return name;
 	}
 
+	public String getElementType() {
+		return "method";
+	}
+
 	public String getVisibility() {
 		return visibility;
 	}

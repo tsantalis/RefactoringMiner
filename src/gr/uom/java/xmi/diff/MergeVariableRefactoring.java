@@ -94,7 +94,7 @@ public class MergeVariableRefactoring implements Refactoring {
 		sb.append(mergedVariables);
 		sb.append(" to ");
 		sb.append(newVariable);
-		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationAfter.getElementType();
 		sb.append(" in " + elementType + " ");
 		sb.append(operationAfter);
 		sb.append(" from class ").append(operationAfter.getClassName());
@@ -152,7 +152,7 @@ public class MergeVariableRefactoring implements Refactoring {
 					.setDescription("merged variable declaration")
 					.setCodeElement(mergedVariable.toString()));
 		}
-		String elementType = operationBefore instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationBefore.getElementType();
 		ranges.add(operationBefore.codeRange()
 				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
@@ -165,7 +165,7 @@ public class MergeVariableRefactoring implements Refactoring {
 		ranges.add(newVariable.codeRange()
 				.setDescription("new variable declaration")
 				.setCodeElement(newVariable.toString()));
-		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationAfter.getElementType();
 		ranges.add(operationAfter.codeRange()
 				.setDescription(elementType + " declaration with merged variables")
 				.setCodeElement(operationAfter.toString()));

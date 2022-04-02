@@ -59,7 +59,7 @@ public class ReplaceLoopWithPipelineRefactoring implements Refactoring {
 		sb.append(" with ");
 		String pipeline = codeFragmentsAfter.iterator().next().getString();
 		sb.append(pipeline.contains("\n") ? pipeline.substring(0, pipeline.indexOf("\n")) : pipeline);
-		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationAfter.getElementType();
 		sb.append(" in " + elementType + " ");
 		sb.append(operationAfter);
 		sb.append(" from class ");
@@ -75,7 +75,7 @@ public class ReplaceLoopWithPipelineRefactoring implements Refactoring {
 					.setDescription("original code")
 					.setCodeElement(fragment.getString()));
 		}
-		String elementType = operationBefore instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationBefore.getElementType();
 		ranges.add(operationBefore.codeRange()
 				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
@@ -90,7 +90,7 @@ public class ReplaceLoopWithPipelineRefactoring implements Refactoring {
 					.setDescription("pipeline code")
 					.setCodeElement(fragment.getString()));
 		}
-		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationAfter.getElementType();
 		ranges.add(operationAfter.codeRange()
 				.setDescription(elementType + " declaration with introduced pipeline")
 				.setCodeElement(operationAfter.toString()));

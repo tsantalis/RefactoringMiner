@@ -67,7 +67,7 @@ public class CandidateSplitVariableRefactoring {
 		sb.append(oldVariable);
 		sb.append(" to ");
 		sb.append(splitVariables);
-		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationAfter.getElementType();
 		sb.append(" in " + elementType + " ");
 		sb.append(operationAfter);
 		sb.append(" from class ").append(operationAfter.getClassName());

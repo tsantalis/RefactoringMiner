@@ -67,7 +67,7 @@ public class CandidateMergeVariableRefactoring {
 		sb.append(mergedVariables);
 		sb.append(" to ");
 		sb.append(newVariable);
-		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationAfter.getElementType();
 		sb.append(" in " + elementType + " ");
 		sb.append(operationAfter);
 		sb.append(" from class ").append(operationAfter.getClassName());

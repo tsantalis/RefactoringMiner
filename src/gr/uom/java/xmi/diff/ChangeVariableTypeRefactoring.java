@@ -84,7 +84,7 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 		sb.append(qualified ? originalVariable.toQualifiedString() : originalVariable.toString());
 		sb.append(" to ");
 		sb.append(qualified ? changedTypeVariable.toQualifiedString() : changedTypeVariable.toString());
-		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationAfter.getElementType();
 		sb.append(" in " + elementType + " ");
 		sb.append(qualified ? operationAfter.toQualifiedString() : operationAfter.toString());
 		sb.append(" from class ").append(operationAfter.getClassName());
@@ -152,7 +152,7 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 		ranges.add(originalVariable.codeRange()
 				.setDescription("original variable declaration")
 				.setCodeElement(originalVariable.toString()));
-		String elementType = operationBefore instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationBefore.getElementType();
 		ranges.add(operationBefore.codeRange()
 				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
@@ -165,7 +165,7 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 		ranges.add(changedTypeVariable.codeRange()
 				.setDescription("changed-type variable declaration")
 				.setCodeElement(changedTypeVariable.toString()));
-		String elementType = operationAfter instanceof UMLOperation ? "method" : "attribute";
+		String elementType = operationAfter.getElementType();
 		ranges.add(operationAfter.codeRange()
 				.setDescription(elementType + " declaration with changed variable type")
 				.setCodeElement(operationAfter.toString()));

@@ -61,6 +61,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	List<LambdaExpressionObject> getAllLambdas();
 	List<String> getAllVariables();
 	String getName();
+	String getElementType();
 	String getClassName();
 	String toQualifiedString();
 	Map<String, Set<VariableDeclaration>> variableDeclarationMap();

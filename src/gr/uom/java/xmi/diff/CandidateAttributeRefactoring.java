@@ -3,7 +3,6 @@ package gr.uom.java.xmi.diff;
 import java.util.Set;
 
 import gr.uom.java.xmi.UMLAttribute;
-import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;

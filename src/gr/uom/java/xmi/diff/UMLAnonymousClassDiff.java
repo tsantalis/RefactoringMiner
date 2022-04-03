@@ -9,6 +9,7 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
@@ -26,6 +27,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 
 	@Override
 	public void process() throws RefactoringMinerTimedOutException {
+		processInitializers();
 		processOperations();
 		createBodyMappers();
 		processAttributes();
@@ -36,6 +38,25 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 
 	public List<Refactoring> getRefactorings() {
 		return refactorings;
+	}
+
+	protected void processInitializers() throws RefactoringMinerTimedOutException {
+		for(UMLInitializer initializer1 : anonymousClass1.getInitializers()) {
+			for(UMLInitializer initializer2 : anonymousClass2.getInitializers()) {
+				if(initializer1.isStatic() == initializer2.isStatic()) {
+					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(initializer1, initializer2, classDiff);
+					int mappings = mapper.mappingsWithoutBlocks();
+					if(mappings > 0) {
+						int nonMappedElementsT1 = mapper.nonMappedElementsT1();
+						int nonMappedElementsT2 = mapper.nonMappedElementsT2();
+						if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2)) {
+							operationBodyMapperList.add(mapper);
+							refactorings.addAll(mapper.getRefactorings());
+						}
+					}
+				}
+			}
+		}
 	}
 
 	protected void processOperations() {

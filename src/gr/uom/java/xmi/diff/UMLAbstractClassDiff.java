@@ -74,14 +74,14 @@ public abstract class UMLAbstractClassDiff {
 
 	protected boolean isPartOfMethodMovedFromExistingMethod(UMLOperation removedOperation, UMLOperation addedOperation) {
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
-			List<AbstractCall> invocationsCalledInOperation1 = mapper.getOperation1().getAllOperationInvocations();
-			List<AbstractCall> invocationsCalledInOperation2 = mapper.getOperation2().getAllOperationInvocations();
+			List<AbstractCall> invocationsCalledInOperation1 = mapper.getContainer1().getAllOperationInvocations();
+			List<AbstractCall> invocationsCalledInOperation2 = mapper.getContainer2().getAllOperationInvocations();
 			Set<AbstractCall> invocationsCalledOnlyInOperation1 = new LinkedHashSet<AbstractCall>(invocationsCalledInOperation1);
 			Set<AbstractCall> invocationsCalledOnlyInOperation2 = new LinkedHashSet<AbstractCall>(invocationsCalledInOperation2);
 			invocationsCalledOnlyInOperation1.removeAll(invocationsCalledInOperation2);
 			invocationsCalledOnlyInOperation2.removeAll(invocationsCalledInOperation1);
 			for(AbstractCall invocation : invocationsCalledOnlyInOperation2) {
-				if(invocation.matchesOperation(addedOperation, mapper.getOperation2(), modelDiff)) {
+				if(invocation.matchesOperation(addedOperation, mapper.getContainer2(), modelDiff)) {
 					List<AbstractCall> removedOperationInvocations = removedOperation.getAllOperationInvocations();
 					List<AbstractCall> addedOperationInvocations = addedOperation.getAllOperationInvocations();
 					Set<AbstractCall> movedInvocations = new LinkedHashSet<AbstractCall>(addedOperationInvocations);
@@ -108,14 +108,14 @@ public abstract class UMLAbstractClassDiff {
 
 	protected boolean isPartOfMethodMovedToExistingMethod(UMLOperation removedOperation, UMLOperation addedOperation) {
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
-			List<AbstractCall> invocationsCalledInOperation1 = mapper.getOperation1().getAllOperationInvocations();
-			List<AbstractCall> invocationsCalledInOperation2 = mapper.getOperation2().getAllOperationInvocations();
+			List<AbstractCall> invocationsCalledInOperation1 = mapper.getContainer1().getAllOperationInvocations();
+			List<AbstractCall> invocationsCalledInOperation2 = mapper.getContainer2().getAllOperationInvocations();
 			Set<AbstractCall> invocationsCalledOnlyInOperation1 = new LinkedHashSet<AbstractCall>(invocationsCalledInOperation1);
 			Set<AbstractCall> invocationsCalledOnlyInOperation2 = new LinkedHashSet<AbstractCall>(invocationsCalledInOperation2);
 			invocationsCalledOnlyInOperation1.removeAll(invocationsCalledInOperation2);
 			invocationsCalledOnlyInOperation2.removeAll(invocationsCalledInOperation1);
 			for(AbstractCall invocation : invocationsCalledOnlyInOperation1) {
-				if(invocation.matchesOperation(removedOperation, mapper.getOperation1(), modelDiff)) {
+				if(invocation.matchesOperation(removedOperation, mapper.getContainer1(), modelDiff)) {
 					List<AbstractCall> removedOperationInvocations = removedOperation.getAllOperationInvocations();
 					List<AbstractCall> addedOperationInvocations = addedOperation.getAllOperationInvocations();
 					Set<AbstractCall> movedInvocations = new LinkedHashSet<AbstractCall>(removedOperationInvocations);

@@ -12,6 +12,7 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -46,12 +47,12 @@ public class ExtractOperationDetection {
 		}
 		if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
 			!mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
-			List<AbstractCall> addedOperationInvocations = matchingInvocations(addedOperation, operationInvocations, mapper.getOperation2());
+			List<AbstractCall> addedOperationInvocations = matchingInvocations(addedOperation, operationInvocations, mapper.getContainer2());
 			if(addedOperationInvocations.size() > 0) {
 				int otherAddedMethodsCalled = 0;
 				for(UMLOperation addedOperation2 : this.addedOperations) {
 					if(!addedOperation.equals(addedOperation2)) {
-						List<AbstractCall> addedOperationInvocations2 = matchingInvocations(addedOperation2, operationInvocations, mapper.getOperation2());
+						List<AbstractCall> addedOperationInvocations2 = matchingInvocations(addedOperation2, operationInvocations, mapper.getContainer2());
 						if(addedOperationInvocations2.size() > 0) {
 							otherAddedMethodsCalled++;
 						}
@@ -123,7 +124,7 @@ public class ExtractOperationDetection {
 			List<CallTreeNode> nodesInBreadthFirstOrder = callTree.getNodesInBreadthFirstOrder();
 			for(int i=1; i<nodesInBreadthFirstOrder.size(); i++) {
 				CallTreeNode node = nodesInBreadthFirstOrder.get(i);
-				if(matchingInvocations(node.getInvokedOperation(), operationInvocations, mapper.getOperation2()).size() == 0) {
+				if(matchingInvocations(node.getInvokedOperation(), operationInvocations, mapper.getContainer2()).size() == 0) {
 					UMLOperationBodyMapper nestedMapper = createMapperForExtractedMethod(mapper, node.getOriginalOperation(), node.getInvokedOperation(), node.getInvocation());
 					if(nestedMapper != null && !containsRefactoringWithIdenticalMappings(refactorings, nestedMapper)) {
 						additionalExactMatches.addAll(nestedMapper.getExactMatches());
@@ -179,7 +180,7 @@ public class ExtractOperationDetection {
 	}
 
 	private static List<AbstractCall> getInvocationsInSourceOperationAfterExtractionExcludingInvocationsInExactlyMappedStatements(UMLOperationBodyMapper mapper) {
-		List<AbstractCall> operationInvocations = mapper.getOperation2().getAllOperationInvocations();
+		List<AbstractCall> operationInvocations = mapper.getContainer2().getAllOperationInvocations();
 		for(AbstractCodeMapping mapping : mapper.getMappings()) {
 			if(mapping.isExact()) {
 				Map<String, List<AbstractCall>> methodInvocationMap = mapping.getFragment2().getMethodInvocationMap();
@@ -208,7 +209,7 @@ public class ExtractOperationDetection {
 		if(operationInvocations.isEmpty()) {
 			return operationInvocations;
 		}
-		List<AbstractCall> invocationsInSourceOperationBeforeExtraction = mapper.getOperation1().getAllOperationInvocations();
+		List<AbstractCall> invocationsInSourceOperationBeforeExtraction = mapper.getContainer1().getAllOperationInvocations();
 		for(AbstractCall invocation : invocationsInSourceOperationBeforeExtraction) {
 			for(ListIterator<AbstractCall> iterator = operationInvocations.listIterator(); iterator.hasNext();) {
 				AbstractCall matchingInvocation = iterator.next();
@@ -271,7 +272,7 @@ public class ExtractOperationDetection {
 	}
 
 	private List<AbstractCall> matchingInvocations(UMLOperation operation,
-			List<AbstractCall> operationInvocations, UMLOperation callerOperation) {
+			List<AbstractCall> operationInvocations, VariableDeclarationContainer callerOperation) {
 		List<AbstractCall> addedOperationInvocations = new ArrayList<AbstractCall>();
 		for(AbstractCall invocation : operationInvocations) {
 			if(invocation.matchesOperation(operation, callerOperation, modelDiff)) {

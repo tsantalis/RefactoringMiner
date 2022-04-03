@@ -179,7 +179,7 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 
 	protected boolean containsMapperForOperation1(UMLOperation operation) {
 		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-			if(mapper.getOperation1().equalsQualified(operation)) {
+			if(mapper.getOperation1() != null && mapper.getOperation1().equalsQualified(operation)) {
 				return true;
 			}
 		}
@@ -188,7 +188,7 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 
 	protected boolean containsMapperForOperation2(UMLOperation operation) {
 		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-			if(mapper.getOperation2().equalsQualified(operation)) {
+			if(mapper.getOperation2() != null && mapper.getOperation2().equalsQualified(operation)) {
 				return true;
 			}
 		}

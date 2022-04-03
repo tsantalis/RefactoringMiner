@@ -1,5 +1,6 @@
 package gr.uom.java.xmi;
 
+import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
@@ -119,6 +120,19 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		AbstractExpression initializer = variableDeclaration.getInitializer();
 		if(initializer != null) {
 			return initializer.getLambdas();
+		}
+		return Collections.emptyList();
+	}
+
+	public List<AbstractCall> getAllOperationInvocations() {
+		AbstractExpression initializer = variableDeclaration.getInitializer();
+		if(initializer != null) {
+			List<AbstractCall> invocations = new ArrayList<AbstractCall>();
+			Map<String, List<AbstractCall>> invocationMap = initializer.getMethodInvocationMap();
+			for(String key : invocationMap.keySet()) {
+				invocations.addAll(invocationMap.get(key));
+			}
+			return invocations;
 		}
 		return Collections.emptyList();
 	}

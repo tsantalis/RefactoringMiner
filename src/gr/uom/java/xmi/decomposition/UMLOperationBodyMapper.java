@@ -2,6 +2,7 @@ package gr.uom.java.xmi.decomposition;
 
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
@@ -323,6 +324,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			leaves2.add(expression2);
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>());
 		}
+	}
+
+	public UMLOperationBodyMapper(UMLInitializer initializer1, UMLInitializer initializer2, UMLClassBaseDiff classDiff) throws RefactoringMinerTimedOutException {
+		this.classDiff = classDiff;
+		if(classDiff != null)
+			this.modelDiff = classDiff.getModelDiff();
+		this.container1 = initializer1;
+		this.container2 = initializer2;
+		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
+		this.nonMappedLeavesT1 = new ArrayList<AbstractCodeFragment>();
+		this.nonMappedLeavesT2 = new ArrayList<AbstractCodeFragment>();
+		this.nonMappedInnerNodesT1 = new ArrayList<CompositeStatementObject>();
+		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
+		CompositeStatementObject composite1 = initializer1.getBody().getCompositeStatement();
+		CompositeStatementObject composite2 = initializer2.getBody().getCompositeStatement();
+		processCompositeStatements(composite1.getLeaves(), composite2.getLeaves(), composite1.getInnerNodes(), composite2.getInnerNodes());
 	}
 
 	private UMLOperationBodyMapper(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2, UMLOperationBodyMapper parentMapper) throws RefactoringMinerTimedOutException {
@@ -1035,18 +1052,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public UMLOperation getOperation2() {
 		if(container2 instanceof UMLOperation)
 			return (UMLOperation)container2;
-		return null;
-	}
-
-	public UMLAttribute getAttribute1() {
-		if(container1 instanceof UMLAttribute)
-			return (UMLAttribute)container1;
-		return null;
-	}
-
-	public UMLAttribute getAttribute2() {
-		if(container2 instanceof UMLAttribute)
-			return (UMLAttribute)container2;
 		return null;
 	}
 

@@ -14,6 +14,7 @@ import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLRealization;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.UMLTypeParameter;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -71,7 +72,7 @@ public class UMLModelDiff {
 	private List<UMLClassMergeDiff> classMergeDiffList;
 	private List<Refactoring> refactorings;
 	private Set<String> deletedFolderPaths;
-	private Set<Pair<UMLOperation, UMLOperation>> processedOperationPairs = new HashSet<Pair<UMLOperation, UMLOperation>>();
+	private Set<Pair<VariableDeclarationContainer, VariableDeclarationContainer>> processedOperationPairs = new HashSet<Pair<VariableDeclarationContainer, VariableDeclarationContainer>>();
 	private Set<Pair<UMLClass, UMLClass>> processedClassPairs = new HashSet<Pair<UMLClass, UMLClass>>();
 
 	public UMLModelDiff(UMLModel parentModel, UMLModel childModel) {
@@ -2317,10 +2318,10 @@ public class UMLModelDiff {
 			UMLOperation removedOperation = removedOperationIterator.next();
 			for(UMLOperationBodyMapper mapper : mappers) {
 				if((!mapper.getNonMappedLeavesT2().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty() || !mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) && !mapper.containsInlineOperationRefactoring(removedOperation)) {
-					List<AbstractCall> operationInvocations = mapper.getOperation1().getAllOperationInvocations();
+					List<AbstractCall> operationInvocations = mapper.getContainer1().getAllOperationInvocations();
 					List<AbstractCall> removedOperationInvocations = new ArrayList<AbstractCall>();
 					for(AbstractCall invocation : operationInvocations) {
-						if(invocation.matchesOperation(removedOperation, mapper.getOperation1(), this)) {
+						if(invocation.matchesOperation(removedOperation, mapper.getContainer1(), this)) {
 							removedOperationInvocations.add(invocation);
 						}
 					}
@@ -2405,13 +2406,13 @@ public class UMLModelDiff {
 		for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 			UMLOperation addedOperation = addedOperationIterator.next();
 			for(UMLOperationBodyMapper mapper : mappers) {
-				Pair<UMLOperation, UMLOperation> pair = Pair.of(mapper.getOperation1(), addedOperation);
+				Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(mapper.getContainer1(), addedOperation);
 				if((mapper.nonMappedElementsT1() > 0 || !mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) && !mapper.containsExtractOperationRefactoring(addedOperation) && !processedOperationPairs.contains(pair)) {
 					processedOperationPairs.add(pair);
 					List<AbstractCall> operationInvocations = ExtractOperationDetection.getInvocationsInSourceOperationAfterExtraction(mapper);
 					List<AbstractCall> addedOperationInvocations = new ArrayList<AbstractCall>();
 					for(AbstractCall invocation : operationInvocations) {
-						if(invocation.matchesOperation(addedOperation, mapper.getOperation2(), this)) {
+						if(invocation.matchesOperation(addedOperation, mapper.getContainer2(), this)) {
 							addedOperationInvocations.add(invocation);
 						}
 					}
@@ -2781,7 +2782,7 @@ public class UMLModelDiff {
 				for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 					UMLOperation removedOperation = removedOperationIterator.next();
 
-					Pair<UMLOperation, UMLOperation> pair = Pair.of(removedOperation, addedOperation);
+					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(removedOperation, addedOperation);
 					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation)) {
 						UMLClassBaseDiff umlClassDiff = getUMLClassDiff(removedOperation.getClassName());
 						if(umlClassDiff == null) {
@@ -2884,7 +2885,7 @@ public class UMLModelDiff {
 				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 					UMLOperation addedOperation = addedOperationIterator.next();
 
-					Pair<UMLOperation, UMLOperation> pair = Pair.of(removedOperation, addedOperation);
+					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(removedOperation, addedOperation);
 					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation)) {
 						UMLClassBaseDiff umlClassDiff = getUMLClassDiff(removedOperation.getClassName());
 						if(umlClassDiff == null) {
@@ -3099,8 +3100,8 @@ public class UMLModelDiff {
 							nonMappedStatementsDeclaringSameVariable++;
 							leafIterator1.remove();
 							LeafMapping mapping = new LeafMapping(v1.getInitializer(), attributeDeclaration.getInitializer(),
-									operationBodyMapper.getOperation1() != null ? operationBodyMapper.getOperation1() : operationBodyMapper.getAttribute1(),
-									operationBodyMapper.getOperation2() != null ? operationBodyMapper.getOperation2() : operationBodyMapper.getAttribute2());
+									operationBodyMapper.getContainer1(),
+									operationBodyMapper.getContainer2());
 							operationBodyMapper.getMappings().add(mapping);
 							break;
 						}

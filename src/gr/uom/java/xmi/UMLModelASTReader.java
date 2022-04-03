@@ -198,22 +198,28 @@ public class UMLModelASTReader {
 		
 		processModifiers(cu, sourceFile, enumDeclaration, umlClass);
 
-		Map<PsiMethod, UMLOperation> map = processBodyDeclarations(cu, enumDeclaration, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments);
+		Map<PsiMember, VariableDeclarationContainer> map = processBodyDeclarations(cu, enumDeclaration, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments);
 		
 		processAnonymousClassDeclarations(cu, enumDeclaration, packageName, sourceFile, className, umlClass);
 
-		for(PsiMethod methodDeclaration : map.keySet()) {
-			UMLOperation operation = map.get(methodDeclaration);
-			processMethodBody(cu, methodDeclaration, sourceFile, operation);
+		for(PsiMember member : map.keySet()) {
+			if(member instanceof PsiMethod) {
+				UMLOperation operation = (UMLOperation) map.get(member);
+				processMethodBody(cu, (PsiMethod) member, sourceFile, operation);
+			}
+			else if(member instanceof PsiClassInitializer) {
+				UMLInitializer initializer = (UMLInitializer) map.get(member);
+				processInitializerBody(cu, (PsiClassInitializer) member, sourceFile, initializer);
+			}
 		}
 		
 		this.getUmlModel().addClass(umlClass);
 		distributeComments(comments, locationInfo, umlClass.getComments());
 	}
 
-	private Map<PsiMethod, UMLOperation> processBodyDeclarations(PsiFile cu, PsiClass abstractTypeDeclaration, String packageName,
+	private Map<PsiMember, VariableDeclarationContainer> processBodyDeclarations(PsiFile cu, PsiClass abstractTypeDeclaration, String packageName,
 			String sourceFile, List<String> importedTypes, UMLClass umlClass, UMLJavadoc packageDoc, List<UMLComment> comments) {
-		Map<PsiMethod, UMLOperation> map = new LinkedHashMap<>();
+		Map<PsiMember, VariableDeclarationContainer> map = new LinkedHashMap<>();
 		for (PsiElement psiElement : abstractTypeDeclaration.getChildren()) {
 			if (psiElement instanceof PsiEnumConstant) {
 				processEnumConstantDeclaration(cu, (PsiEnumConstant) psiElement, sourceFile, umlClass, comments);
@@ -232,6 +238,13 @@ public class UMLModelASTReader {
 	    		operation.setClassName(umlClass.getName());
 	    		umlClass.addOperation(operation);
 				map.put(psiMethod, operation);
+			}
+			else if (psiElement instanceof PsiClassInitializer) {
+				PsiClassInitializer initializer = (PsiClassInitializer) psiElement;
+				UMLInitializer umlInitializer = processInitializer(cu, initializer, packageName, false, sourceFile, comments);
+				umlInitializer.setClassName(umlClass.getName());
+				umlClass.addInitializer(umlInitializer);
+				map.put(initializer, umlInitializer);
 			}
 			else if (psiElement instanceof PsiClass) {
 				PsiClass psiInnerClass = (PsiClass) psiElement;
@@ -298,29 +311,19 @@ public class UMLModelASTReader {
 		for(PsiTypeParameter typeParameter : typeParameters) {
 			umlClass.addTypeParameter(processTypeParameter(cu, sourceFile, typeParameter));
     	}
-    	/*
-    	PsiField[] fieldDeclarations = typeDeclaration.getFields();
-    	for(PsiField fieldDeclaration : fieldDeclarations) {
-    		List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, umlClass.isInterface(), sourceFile, comments);
-    		for(UMLAttribute attribute : attributes) {
-    			attribute.setClassName(umlClass.getName());
-    			umlClass.addAttribute(attribute);
-    		}
-    	}
-    	
-    	PsiMethod[] methodDeclarations = typeDeclaration.getMethods();
-    	for(PsiMethod methodDeclaration : methodDeclarations) {
-    		UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, umlClass.isInterface(), sourceFile, comments);
-    		operation.setClassName(umlClass.getName());
-    		umlClass.addOperation(operation);
-    	}
-    	*/
-		Map<PsiMethod, UMLOperation> map = processBodyDeclarations(cu, typeDeclaration, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments);
+
+		Map<PsiMember, VariableDeclarationContainer> map = processBodyDeclarations(cu, typeDeclaration, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments);
     	processAnonymousClassDeclarations(cu, typeDeclaration, packageName, sourceFile, className, umlClass);
     	
-    	for(PsiMethod methodDeclaration : map.keySet()) {
-    		UMLOperation operation = map.get(methodDeclaration);
-    		processMethodBody(cu, methodDeclaration, sourceFile, operation);
+    	for(PsiMember member : map.keySet()) {
+			if(member instanceof PsiMethod) {
+				UMLOperation operation = (UMLOperation) map.get(member);
+				processMethodBody(cu, (PsiMethod) member, sourceFile, operation);
+			}
+			else if(member instanceof PsiClassInitializer) {
+				UMLInitializer initializer = (UMLInitializer) map.get(member);
+				processInitializerBody(cu, (PsiClassInitializer) member, sourceFile, initializer);
+			}
     	}
     	
     	this.getUmlModel().addClass(umlClass);
@@ -346,13 +349,15 @@ public class UMLModelASTReader {
     		if(node.getUserObject() != null) {
 				PsiAnonymousClass anonymous = (PsiAnonymousClass)node.getUserObject();
     			boolean operationFound = false;
+				boolean attributeFound = false;
     			UMLOperation matchingOperation = null;
     			UMLAttribute matchingAttribute = null;
+				UMLInitializer matchingInitializer = null;
     			List<UMLComment> comments = null;
 				for(UMLOperation operation : umlClass.getOperations()) {
     				if(operation.getLocationInfo().getStartOffset() <= anonymous.getTextRange().getStartOffset() &&
     						operation.getLocationInfo().getEndOffset() >= anonymous.getTextRange().getEndOffset()) {
-    					comments  = operation.getComments();
+    					comments = operation.getComments();
     					operationFound = true;
     					matchingOperation = operation;
     					break;
@@ -363,12 +368,23 @@ public class UMLModelASTReader {
 	    				if(attribute.getLocationInfo().getStartOffset() <= anonymous.getTextRange().getStartOffset() &&
 	    						attribute.getLocationInfo().getEndOffset() >= anonymous.getTextRange().getEndOffset()) {
 	    					comments = attribute.getComments();
+							attributeFound = true;
 	    					matchingAttribute = attribute;
 	    					break;
 	    				}
 	    			}
     			}
-    			if(matchingOperation != null || matchingAttribute != null) {
+				if(!attributeFound) {
+					for(UMLInitializer initializer : umlClass.getInitializers()) {
+						if(initializer.getLocationInfo().getStartOffset() <= anonymous.getTextRange().getStartOffset() &&
+								initializer.getLocationInfo().getEndOffset() >= anonymous.getTextRange().getEndOffset()) {
+							comments = initializer.getComments();
+							matchingInitializer = initializer;
+							break;
+						}
+					}
+				}
+    			if(matchingOperation != null || matchingAttribute != null || matchingInitializer != null) {
 	    			String anonymousBinaryName = getAnonymousBinaryName(node);
 	    			String anonymousCodePath = getAnonymousCodePath(anonymous);
 	    			UMLAnonymousClass anonymousClass = processAnonymousClassDeclaration(cu, anonymous, packageName + "." + className, anonymousBinaryName, anonymousCodePath, sourceFile, comments);
@@ -379,6 +395,9 @@ public class UMLModelASTReader {
 	    			if(matchingAttribute != null) {
 	    				matchingAttribute.addAnonymousClass(anonymousClass);
 	    			}
+					if(matchingInitializer != null) {
+						matchingInitializer.addAnonymousClass(anonymousClass);
+					}
 	    			for(UMLOperation operation : anonymousClass.getOperations()) {
 	    				for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
 	    					if(operation.getLocationInfo().subsumes(createdAnonymousClass.getLocationInfo())) {
@@ -393,13 +412,26 @@ public class UMLModelASTReader {
 	    					}
 	    				}
 	    			}
+					for(UMLInitializer initializer : anonymousClass.getInitializers()) {
+						for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
+							if(initializer.getLocationInfo().subsumes(createdAnonymousClass.getLocationInfo())) {
+								initializer.addAnonymousClass(createdAnonymousClass);
+							}
+						}
+					}
 	    			createdAnonymousClasses.add(anonymousClass);
 					int i=0;
+					int j=0;
 					for (PsiMethod methodDeclaration : anonymous.getMethods()) {
 						UMLOperation operation = anonymousClass.getOperations().get(i);
 						processMethodBody(cu, methodDeclaration, sourceFile, operation);
 						i++;
 	    			}
+					for (PsiClassInitializer initializer : anonymous.getInitializers()) {
+						UMLInitializer umlInitializer = anonymousClass.getInitializers().get(j);
+						processInitializerBody(cu, initializer, sourceFile, umlInitializer);
+						j++;
+					}
     			}
     		}
     	}
@@ -416,6 +448,16 @@ public class UMLModelASTReader {
 		}
 		else {
 			operation.setBody(null);
+		}
+	}
+	private void processInitializerBody(PsiFile cu, PsiClassInitializer initializer, String sourceFile, UMLInitializer umlInitializer) {
+		PsiCodeBlock block = initializer.getBody();
+		if(block != null) {
+			OperationBody body = new OperationBody(cu, sourceFile, block, umlInitializer);
+			umlInitializer.setBody(body);
+		}
+		else {
+			umlInitializer.setBody(null);
 		}
 	}
 
@@ -442,6 +484,30 @@ public class UMLModelASTReader {
 				umlClass.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation));
 			}
 		}
+	}
+
+	private UMLInitializer processInitializer(PsiFile cu, PsiClassInitializer initializer, String packageName, boolean isInterfaceMethod, String sourceFile, List<UMLComment> comments) {
+		//UMLJavadoc javadoc = generateJavadoc(cu, initializer, sourceFile);
+		String name = "";
+		if(initializer.getParent() instanceof PsiAnonymousClass && initializer.getParent().getParent() instanceof PsiNewExpression) {
+			PsiNewExpression creation = (PsiNewExpression)initializer.getParent().getParent();
+			name = TypeUtils.extractType(cu, sourceFile, creation).toString();
+		}
+		else if(initializer.getParent() instanceof PsiClass) {
+			PsiClass typeDeclaration = (PsiClass) initializer.getParent();
+			name = typeDeclaration.getName();
+		}
+		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, initializer, CodeElementType.INITIALIZER);
+		UMLInitializer umlInitializer = new UMLInitializer(name, locationInfo);
+		//umlInitializer.setJavadoc(javadoc);
+		distributeComments(comments, locationInfo, umlInitializer.getComments());
+
+		PsiModifierList modifiers = initializer.getModifierList();
+		if(modifiers != null) {
+			if (modifiers.hasExplicitModifier(PsiModifier.STATIC))
+				umlInitializer.setStatic(true);
+		}
+		return umlInitializer;
 	}
 
 	private UMLOperation processMethodDeclaration(PsiFile cu, PsiMethod methodDeclaration, String packageName, boolean isInterfaceMethod, String sourceFile, List<UMLComment> comments) {
@@ -594,6 +660,12 @@ public class UMLModelASTReader {
 			operation.setClassName(anonymousClass.getCodePath());
 			operation.setDeclaredInAnonymousClass(true);
 			anonymousClass.addOperation(operation);
+		}
+		for (PsiClassInitializer initializer : anonymous.getInitializers()) {
+			UMLInitializer umlInitializer = processInitializer(cu, initializer, packageName, false, sourceFile, comments);
+			umlInitializer.setClassName(anonymousClass.getCodePath());
+			//umlInitializer.setDeclaredInAnonymousClass(true);
+			anonymousClass.addInitializer(umlInitializer);
 		}
 		distributeComments(comments, locationInfo, anonymousClass.getComments());
 		return anonymousClass;

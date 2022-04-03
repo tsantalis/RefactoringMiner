@@ -28,12 +28,14 @@ public abstract class UMLAbstractClass {
 	private List<UMLAnonymousClass> anonymousClassList;
 	private Map<List<String>, Integer> operationIdentifierSignatureMap;
 	private Map<String, VariableDeclaration> fieldDeclarationMap;
+	private List<UMLInitializer> initializers;
 
 	public UMLAbstractClass() {
         this.operations = new ArrayList<UMLOperation>();
         this.attributes = new ArrayList<UMLAttribute>();
         this.comments = new ArrayList<UMLComment>();
         this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
+        this.initializers = new ArrayList<UMLInitializer>();
         this.operationIdentifierSignatureMap = new LinkedHashMap<>();
 	}
 
@@ -90,6 +92,14 @@ public abstract class UMLAbstractClass {
 
 	public List<UMLComment> getComments() {
 		return comments;
+	}
+
+	public void addInitializer(UMLInitializer initializer) {
+		this.initializers.add(initializer);
+	}
+
+	public List<UMLInitializer> getInitializers() {
+		return initializers;
 	}
 
 	public Map<String, VariableDeclaration> getFieldDeclarationMap() {

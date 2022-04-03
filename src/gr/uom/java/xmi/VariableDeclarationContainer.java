@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
@@ -59,6 +60,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	OperationBody getBody();
 	List<UMLAnonymousClass> getAnonymousClassList();
 	List<LambdaExpressionObject> getAllLambdas();
+	List<AbstractCall> getAllOperationInvocations();
 	List<String> getAllVariables();
 	String getName();
 	String getElementType();

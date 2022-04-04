@@ -2,7 +2,6 @@ package gr.uom.java.xmi;
 
 import com.intellij.lang.java.JavaLanguage;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
 
 import java.util.*;

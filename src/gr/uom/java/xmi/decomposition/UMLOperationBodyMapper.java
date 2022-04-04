@@ -4187,16 +4187,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			Map<String, List<ObjectCreation>> creationMap = statement.getCreationMap();
-			for(String key : creationMap.keySet()) {
-				List<ObjectCreation> objectCreations = creationMap.get(key);
-				for(ObjectCreation creation : objectCreations) {
-					if(creation.getAnonymousClassDeclaration() != null && creation.getAnonymousClassDeclaration().equals(anonymousClassDeclaration.toString()) &&
-							creation.getLocationInfo().subsumes(anonymousClassDeclaration.getLocationInfo())) {
-						return creation.actualString();
-					}
-				}
-			}
 			List<UMLOperation> anonymousOperations = new ArrayList<UMLOperation>();
 			for(AnonymousClassDeclarationObject anonymousObject : statement.getAnonymousClassDeclarations()) {
 				for(UMLAnonymousClass anonymousClass : operation.getAnonymousClassList()) {
@@ -4225,24 +4215,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private boolean onlyDifferentInvoker(String s1, String s2,
 			AbstractCall invocationCoveringTheEntireStatement1, AbstractCall invocationCoveringTheEntireStatement2) {
-		if(invocationCoveringTheEntireStatement1.getExpression() == null && invocationCoveringTheEntireStatement2.getExpression() != null) {
-			int index = s1.indexOf(invocationCoveringTheEntireStatement1.getName());
-			String s1AfterReplacement = s1.substring(0, index) + invocationCoveringTheEntireStatement2.getExpression() + "." + s1.substring(index);
-			if(s1AfterReplacement.equals(s2)) {
-				return true;
+		if(invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2)) {
+			if(invocationCoveringTheEntireStatement1.getExpression() == null && invocationCoveringTheEntireStatement2.getExpression() != null) {
+				int index = s1.indexOf(invocationCoveringTheEntireStatement1.getName());
+				String s1AfterReplacement = s1.substring(0, index) + invocationCoveringTheEntireStatement2.getExpression() + "." + s1.substring(index);
+				if(s1AfterReplacement.equals(s2)) {
+					return true;
+				}
 			}
-		}
-		else if(invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() == null) {
-			int index = s2.indexOf(invocationCoveringTheEntireStatement2.getName());
-			String s2AfterReplacement = s2.substring(0, index) + invocationCoveringTheEntireStatement1.getExpression() + "." + s2.substring(index);
-			if(s2AfterReplacement.equals(s1)) {
-				return true;
+			else if(invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() == null) {
+				int index = s2.indexOf(invocationCoveringTheEntireStatement2.getName());
+				String s2AfterReplacement = s2.substring(0, index) + invocationCoveringTheEntireStatement1.getExpression() + "." + s2.substring(index);
+				if(s2AfterReplacement.equals(s1)) {
+					return true;
+				}
 			}
-		}
-		else if(invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() != null) {
-			String s1AfterReplacement = ReplacementUtil.performReplacement(s1, s2, invocationCoveringTheEntireStatement1.getExpression(), invocationCoveringTheEntireStatement2.getExpression());
-			if(s1AfterReplacement.equals(s2)) {
-				return true;
+			else if(invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() != null) {
+				String s1AfterReplacement = ReplacementUtil.performReplacement(s1, s2, invocationCoveringTheEntireStatement1.getExpression(), invocationCoveringTheEntireStatement2.getExpression());
+				if(s1AfterReplacement.equals(s2)) {
+					return true;
+				}
 			}
 		}
 		return false;

@@ -116,12 +116,14 @@ public class InlineOperationDetection {
 		List<AbstractCall> operationInvocations = mapper.getContainer1().getAllOperationInvocations();
 		for(AbstractCodeFragment statement : mapper.getNonMappedLeavesT1()) {
 			ExtractOperationDetection.addStatementInvocations(operationInvocations, statement);
-			for(UMLAnonymousClass anonymousClass : classDiff.getRemovedAnonymousClasses()) {
-				if(statement.getLocationInfo().subsumes(anonymousClass.getLocationInfo())) {
-					for(UMLOperation anonymousOperation : anonymousClass.getOperations()) {
-						for(AbstractCall anonymousInvocation : anonymousOperation.getAllOperationInvocations()) {
-							if(!ExtractOperationDetection.containsInvocation(operationInvocations, anonymousInvocation)) {
-								operationInvocations.add(anonymousInvocation);
+			if(classDiff != null) {
+				for(UMLAnonymousClass anonymousClass : classDiff.getRemovedAnonymousClasses()) {
+					if(statement.getLocationInfo().subsumes(anonymousClass.getLocationInfo())) {
+						for(UMLOperation anonymousOperation : anonymousClass.getOperations()) {
+							for(AbstractCall anonymousInvocation : anonymousOperation.getAllOperationInvocations()) {
+								if(!ExtractOperationDetection.containsInvocation(operationInvocations, anonymousInvocation)) {
+									operationInvocations.add(anonymousInvocation);
+								}
 							}
 						}
 					}
@@ -150,9 +152,11 @@ public class InlineOperationDetection {
 
 	private boolean invocationMatchesWithAddedOperation(AbstractCall removedOperationInvocation, VariableDeclarationContainer callerOperation, List<AbstractCall> operationInvocationsInNewMethod) {
 		if(operationInvocationsInNewMethod.contains(removedOperationInvocation)) {
-			for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
-				if(removedOperationInvocation.matchesOperation(addedOperation, callerOperation, modelDiff)) {
-					return true;
+			if(classDiff != null) {
+				for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
+					if(removedOperationInvocation.matchesOperation(addedOperation, callerOperation, modelDiff)) {
+						return true;
+					}
 				}
 			}
 		}

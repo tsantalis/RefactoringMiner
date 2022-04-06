@@ -11,7 +11,7 @@ public class UMLClassRenameDiff extends UMLClassBaseDiff {
 	}
 
 	public UMLClass getRenamedClass() {
-		return nextClass;
+		return (UMLClass) nextClass;
 	}
 
 	public MatchResult getMatchResult() {

@@ -1,15 +1,13 @@
 package gr.uom.java.xmi;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class UMLAnonymousClass extends UMLAbstractClass implements Comparable<UMLAnonymousClass>, Serializable, LocationInfoProvider {
 	private String codePath;
 	
-	public UMLAnonymousClass(String packageName, String name, String codePath, LocationInfo locationInfo) {
-    	super();
-		this.packageName = packageName;
-        this.name = name;
-        this.locationInfo = locationInfo;
+	public UMLAnonymousClass(String packageName, String name, String codePath, LocationInfo locationInfo, List<String> importedTypes) {
+    	super(packageName, name, locationInfo, importedTypes);
         this.codePath = codePath;
     }
 
@@ -74,5 +72,21 @@ public class UMLAnonymousClass extends UMLAbstractClass implements Comparable<UM
 
 	public boolean isAbstract() {
 		return false;
+	}
+
+	public String getTypeDeclarationKind() {
+		return "anonymous class";
+	}
+
+	public boolean isFinal() {
+		return false;
+	}
+
+	public boolean isStatic() {
+		return false;
+	}
+
+	public String getVisibility() {
+		return "private";
 	}
 }

@@ -9,14 +9,14 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLAbstractClass;
 
 public class AddClassModifierRefactoring implements Refactoring {
 	private String modifier;
-	private UMLClass classBefore;
-	private UMLClass classAfter;
+	private UMLAbstractClass classBefore;
+	private UMLAbstractClass classAfter;
 
-	public AddClassModifierRefactoring(String modifier, UMLClass classBefore, UMLClass classAfter) {
+	public AddClassModifierRefactoring(String modifier, UMLAbstractClass classBefore, UMLAbstractClass classAfter) {
 		this.modifier = modifier;
 		this.classBefore = classBefore;
 		this.classAfter = classAfter;
@@ -26,11 +26,11 @@ public class AddClassModifierRefactoring implements Refactoring {
 		return modifier;
 	}
 
-	public UMLClass getClassBefore() {
+	public UMLAbstractClass getClassBefore() {
 		return classBefore;
 	}
 
-	public UMLClass getClassAfter() {
+	public UMLAbstractClass getClassAfter() {
 		return classAfter;
 	}
 

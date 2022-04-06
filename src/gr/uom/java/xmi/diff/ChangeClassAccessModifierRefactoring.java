@@ -9,16 +9,16 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLAbstractClass;
 
 public class ChangeClassAccessModifierRefactoring implements Refactoring {
 	private String originalAccessModifier;
 	private String changedAccessModifier;
-	private UMLClass classBefore;
-	private UMLClass classAfter;
+	private UMLAbstractClass classBefore;
+	private UMLAbstractClass classAfter;
 
 	public ChangeClassAccessModifierRefactoring(String originalAccessModifier, String changedAccessModifier,
-			UMLClass classBefore, UMLClass classAfter) {
+			UMLAbstractClass classBefore, UMLAbstractClass classAfter) {
 		this.originalAccessModifier = originalAccessModifier;
 		this.changedAccessModifier = changedAccessModifier;
 		this.classBefore = classBefore;
@@ -33,11 +33,11 @@ public class ChangeClassAccessModifierRefactoring implements Refactoring {
 		return changedAccessModifier;
 	}
 
-	public UMLClass getClassBefore() {
+	public UMLAbstractClass getClassBefore() {
 		return classBefore;
 	}
 
-	public UMLClass getClassAfter() {
+	public UMLAbstractClass getClassAfter() {
 		return classAfter;
 	}
 

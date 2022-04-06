@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.UMLAnonymousClass;
@@ -14,14 +13,10 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
 public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
-	private UMLAnonymousClass anonymousClass1;
-	private UMLAnonymousClass anonymousClass2;
-	private UMLClassBaseDiff classDiff;
+	private UMLAbstractClassDiff classDiff;
 	
-	public UMLAnonymousClassDiff(UMLAnonymousClass anonymousClass1, UMLAnonymousClass anonymousClass2, UMLClassBaseDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
-		super(modelDiff);
-		this.anonymousClass1 = anonymousClass1;
-		this.anonymousClass2 = anonymousClass2;
+	public UMLAnonymousClassDiff(UMLAnonymousClass anonymousClass1, UMLAnonymousClass anonymousClass2, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
+		super(anonymousClass1, anonymousClass2, modelDiff);
 		this.classDiff = classDiff;
 	}
 
@@ -36,13 +31,9 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 		checkForExtractedOperations();
 	}
 
-	public List<Refactoring> getRefactorings() {
-		return refactorings;
-	}
-
 	protected void processInitializers() throws RefactoringMinerTimedOutException {
-		for(UMLInitializer initializer1 : anonymousClass1.getInitializers()) {
-			for(UMLInitializer initializer2 : anonymousClass2.getInitializers()) {
+		for(UMLInitializer initializer1 : originalClass.getInitializers()) {
+			for(UMLInitializer initializer2 : nextClass.getInitializers()) {
 				if(initializer1.isStatic() == initializer2.isStatic()) {
 					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(initializer1, initializer2, classDiff);
 					int mappings = mapper.mappingsWithoutBlocks();
@@ -51,7 +42,6 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 						int nonMappedElementsT2 = mapper.nonMappedElementsT2();
 						if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2)) {
 							operationBodyMapperList.add(mapper);
-							refactorings.addAll(mapper.getRefactorings());
 						}
 					}
 				}
@@ -60,19 +50,19 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 	}
 
 	protected void processOperations() {
-		for(UMLOperation operation : anonymousClass1.getOperations()) {
-    		if(!anonymousClass2.getOperations().contains(operation))
+		for(UMLOperation operation : originalClass.getOperations()) {
+    		if(!nextClass.getOperations().contains(operation))
     			removedOperations.add(operation);
     	}
-    	for(UMLOperation operation : anonymousClass2.getOperations()) {
-    		if(!anonymousClass1.getOperations().contains(operation))
+    	for(UMLOperation operation : nextClass.getOperations()) {
+    		if(!originalClass.getOperations().contains(operation))
     			addedOperations.add(operation);
     	}
 	}
 
 	protected void processAttributes() throws RefactoringMinerTimedOutException {
-		for(UMLAttribute attribute : anonymousClass1.getAttributes()) {
-			UMLAttribute matchingAttribute = anonymousClass2.containsAttribute(attribute);
+		for(UMLAttribute attribute : originalClass.getAttributes()) {
+			UMLAttribute matchingAttribute = nextClass.containsAttribute(attribute);
     		if(matchingAttribute != null) {
     			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attribute, matchingAttribute, operationBodyMapperList);
     			if(!attributeDiff.isEmpty()) {
@@ -84,8 +74,8 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
     			removedAttributes.add(attribute);
     		}
     	}
-    	for(UMLAttribute attribute : anonymousClass2.getAttributes()) {
-    		UMLAttribute matchingAttribute = anonymousClass1.containsAttribute(attribute);
+    	for(UMLAttribute attribute : nextClass.getAttributes()) {
+    		UMLAttribute matchingAttribute = originalClass.containsAttribute(attribute);
     		if(matchingAttribute != null) {
     			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(matchingAttribute, attribute, operationBodyMapperList);
     			if(!attributeDiff.isEmpty()) {
@@ -101,8 +91,8 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 
 	@Override
 	protected void createBodyMappers() throws RefactoringMinerTimedOutException {
-		for(UMLOperation operation1 : anonymousClass1.getOperations()) {
-			for(UMLOperation operation2 : anonymousClass2.getOperations()) {
+		for(UMLOperation operation1 : originalClass.getOperations()) {
+			for(UMLOperation operation2 : nextClass.getOperations()) {
 				if(operation1.equals(operation2) || operation1.equalSignature(operation2) || operation1.equalSignatureWithIdenticalNameIgnoringChangedTypes(operation2)) {	
 					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation1, operation2, classDiff);
 					int mappings = mapper.mappingsWithoutBlocks();
@@ -112,12 +102,8 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 						if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 								isPartOfMethodExtracted(operation1, operation2) || isPartOfMethodInlined(operation1, operation2)) {
 							operationBodyMapperList.add(mapper);
-							UMLOperationDiff operationDiff = new UMLOperationDiff(mapper);
-							operationDiffList.add(operationDiff);
 							removedOperations.remove(operation1);
 							addedOperations.remove(operation2);
-							refactorings.addAll(mapper.getRefactorings());
-							refactorings.addAll(operationDiff.getRefactorings());
 						}
 					}
 				}

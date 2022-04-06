@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Set;
 
 public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, Serializable, LocationInfoProvider {
 	private String qualifiedName;
@@ -19,21 +18,13 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean isInterface;
 	private boolean isEnum;
 	private boolean topLevel;
-    private UMLType superclass;
-    private List<UMLType> implementedInterfaces;
-    private List<String> importedTypes;
     private List<UMLTypeParameter> typeParameters;
     private UMLJavadoc javadoc;
     private UMLJavadoc packageDeclarationJavadoc;
     private List<UMLComment> packageDeclarationComments;
-    private List<UMLAnnotation> annotations;
-    private List<UMLEnumConstant> enumConstants;
     
     public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<String> importedTypes) {
-    	super();
-    	this.locationInfo = locationInfo;
-    	this.packageName = packageName;
-        this.name = name;
+    	super(packageName, name, locationInfo, importedTypes);
         if(packageName.equals(""))
         	this.qualifiedName = name;
     	else
@@ -71,13 +62,8 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.isAbstract = false;
         this.isInterface = false;
         this.topLevel = topLevel;
-        this.superclass = null;
-        this.implementedInterfaces = new ArrayList<UMLType>();
-        this.importedTypes = importedTypes;
         this.typeParameters = new ArrayList<UMLTypeParameter>();
         this.packageDeclarationComments = new ArrayList<UMLComment>();
-        this.annotations = new ArrayList<UMLAnnotation>();
-        this.enumConstants = new ArrayList<UMLEnumConstant>();
     }
 
     public String getTypeDeclarationKind() {
@@ -104,31 +90,6 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	public void addTypeParameter(UMLTypeParameter typeParameter) {
     	typeParameters.add(typeParameter);
     }
-
-    public List<UMLAnnotation> getAnnotations() {
-		return annotations;
-	}
-
-    public void addAnnotation(UMLAnnotation annotation) {
-    	annotations.add(annotation);
-    }
-
-	public boolean hasDeprecatedAnnotation() {
-		for(UMLAnnotation annotation : annotations) {
-			if(annotation.getTypeName().equals("Deprecated")) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public void addEnumConstant(UMLEnumConstant enumConstant) {
-    	enumConstants.add(enumConstant);
-    }
-
-    public List<UMLEnumConstant> getEnumConstants() {
-		return enumConstants;
-	}
 
     public String getName() {
     	return this.qualifiedName;
@@ -190,26 +151,6 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		this.isAbstract = isAbstract;
 	}
 
-    public UMLType getSuperclass() {
-		return superclass;
-	}
-
-	public void setSuperclass(UMLType superclass) {
-		this.superclass = superclass;
-	}
-
-	public void addImplementedInterface(UMLType implementedInterface) {
-		this.implementedInterfaces.add(implementedInterface);
-	}
-
-	public List<UMLType> getImplementedInterfaces() {
-		return implementedInterfaces;
-	}
-
-	public List<String> getImportedTypes() {
-		return importedTypes;
-	}
-
 	public UMLJavadoc getJavadoc() {
 		return javadoc;
 	}
@@ -229,17 +170,6 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	public List<UMLComment> getPackageDeclarationComments() {
 		return packageDeclarationComments;
 	}
-
-	public UMLEnumConstant containsEnumConstant(UMLEnumConstant otherEnumConstant) {
-    	ListIterator<UMLEnumConstant> enumConstantIt = enumConstants.listIterator();
-    	while(enumConstantIt.hasNext()) {
-    		UMLEnumConstant enumConstant = enumConstantIt.next();
-    		if(enumConstant.equals(otherEnumConstant)) {
-    			return enumConstant;
-    		}
-    	}
-    	return null;
-    }
 
     public UMLOperation matchOperation(UMLOperation otherOperation) {
     	ListIterator<UMLOperation> operationIt = operations.listIterator();
@@ -383,55 +313,6 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		int distance = StringDistance.editDistance(s1, s2);
 		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
 		return normalized;
-	}
-
-	public boolean implementsInterface(Set<UMLType> interfaces) {
-		for(UMLType type : interfaces) {
-			if(implementedInterfaces.contains(type))
-				return true;
-		}
-		return false;
-	}
-
-	public boolean extendsSuperclass(Set<UMLType> types) {
-		for(UMLType type : types) {
-			if(superclass != null && superclass.equals(type))
-				return true;
-		}
-		return false;
-	}
-
-	public boolean isSubTypeOf(UMLClass umlClass) {
-		if(superclass != null) {
-			if(umlClass.getName().endsWith("." + superclass.getClassType())) {
-				return true;
-			}
-		}
-		for(UMLType implementedInterface : implementedInterfaces) {
-			if(umlClass.getName().endsWith("." + implementedInterface.getClassType())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public boolean importsType(String targetClass) {
-		if(targetClass.startsWith(getPackageName()))
-			return true;
-		for(String importedType : getImportedTypes()) {
-			//importedType.startsWith(targetClass) -> special handling for import static
-			//importedType.equals(targetClassPackage) -> special handling for import with asterisk (*) wildcard
-			if(importedType.equals(targetClass) || importedType.startsWith(targetClass)) {
-				return true;
-			}
-			if(targetClass.contains(".")) {
-				String targetClassPackage = targetClass.substring(0, targetClass.lastIndexOf("."));
-				if(importedType.equals(targetClassPackage)) {
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 
 	public boolean isSingleAbstractMethodInterface() {

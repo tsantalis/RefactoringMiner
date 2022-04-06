@@ -47,9 +47,9 @@ import gr.uom.java.xmi.diff.RemoveVariableAnnotationRefactoring;
 import gr.uom.java.xmi.diff.RemoveVariableModifierRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.SplitVariableRefactoring;
+import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLAnnotationDiff;
 import gr.uom.java.xmi.diff.UMLAnnotationListDiff;
-import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
 import gr.uom.java.xmi.diff.UMLParameterDiff;
@@ -66,7 +66,7 @@ public class VariableReplacementAnalysis {
 	private Set<Refactoring> refactorings;
 	private VariableDeclarationContainer callSiteOperation;
 	private UMLOperationDiff operationDiff;
-	private UMLClassBaseDiff classDiff;
+	private UMLAbstractClassDiff classDiff;
 	private Set<VariableDeclaration> removedVariables = new LinkedHashSet<>();
 	private Set<VariableDeclaration> removedVariablesStoringTheReturnOfInlinedMethod = new LinkedHashSet<>();
 	private Set<VariableDeclaration> removedVariablesInAnonymousClassDeclarations = new LinkedHashSet<>();
@@ -83,7 +83,7 @@ public class VariableReplacementAnalysis {
 	private Set<CandidateSplitVariableRefactoring> candidateAttributeSplits = new LinkedHashSet<CandidateSplitVariableRefactoring>();
 	private boolean insideExtractedOrInlinedMethod = false;
 
-	public VariableReplacementAnalysis(UMLOperationBodyMapper mapper, Set<Refactoring> refactorings, UMLClassBaseDiff classDiff) {
+	public VariableReplacementAnalysis(UMLOperationBodyMapper mapper, Set<Refactoring> refactorings, UMLAbstractClassDiff classDiff) {
 		this.mappings = mapper.getMappings();
 		this.nonMappedLeavesT1 = mapper.getNonMappedLeavesT1();
 		this.nonMappedLeavesT2 = mapper.getNonMappedLeavesT2();

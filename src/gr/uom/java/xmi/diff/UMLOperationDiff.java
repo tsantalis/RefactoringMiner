@@ -42,7 +42,7 @@ public class UMLOperationDiff {
 	private Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
 	private Set<Pair<VariableDeclaration, VariableDeclaration>> matchedVariables = new LinkedHashSet<>();
 	private Set<Refactoring> refactorings = new LinkedHashSet<>();
-	private UMLClassBaseDiff classDiff;
+	private UMLAbstractClassDiff classDiff;
 	private UMLAnnotationListDiff annotationListDiff;
 	private List<UMLType> addedExceptionTypes;
 	private List<UMLType> removedExceptionTypes;

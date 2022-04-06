@@ -18,12 +18,12 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 public class InlineOperationDetection {
 	private UMLOperationBodyMapper mapper;
 	private List<UMLOperation> removedOperations;
-	private UMLClassBaseDiff classDiff;
+	private UMLAbstractClassDiff classDiff;
 	private UMLModelDiff modelDiff;
 	private List<AbstractCall> operationInvocations;
 	private Map<CallTreeNode, CallTree> callTreeMap = new LinkedHashMap<CallTreeNode, CallTree>();
 	
-	public InlineOperationDetection(UMLOperationBodyMapper mapper, List<UMLOperation> removedOperations, UMLClassBaseDiff classDiff, UMLModelDiff modelDiff) {
+	public InlineOperationDetection(UMLOperationBodyMapper mapper, List<UMLOperation> removedOperations, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
 		this.mapper = mapper;
 		this.removedOperations = removedOperations;
 		this.classDiff = classDiff;
@@ -36,7 +36,7 @@ public class InlineOperationDetection {
 		if(!mapper.getNonMappedLeavesT2().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty() ||
 			!mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
 			List<AbstractCall> removedOperationInvocations = matchingInvocations(removedOperation, operationInvocations, mapper.getContainer1());
-			if(removedOperationInvocations.size() > 0 && !invocationMatchesWithAddedOperation(removedOperationInvocations.get(0), mapper.getContainer1(), mapper.getOperation2().getAllOperationInvocations())) {
+			if(removedOperationInvocations.size() > 0 && !invocationMatchesWithAddedOperation(removedOperationInvocations.get(0), mapper.getContainer1(), mapper.getContainer2().getAllOperationInvocations())) {
 				AbstractCall removedOperationInvocation = removedOperationInvocations.get(0);
 				CallTreeNode root = new CallTreeNode(mapper.getOperation1(), removedOperation, removedOperationInvocation);
 				CallTree callTree = null;
@@ -137,7 +137,7 @@ public class InlineOperationDetection {
 		int delegateStatements = 0;
 		for(AbstractCodeFragment statement : operationBodyMapper.getNonMappedLeavesT1()) {
 			AbstractCall invocation = statement.invocationCoveringEntireFragment();
-			if(invocation != null && invocation.matchesOperation(operationBodyMapper.getOperation1(), parentMapper.getOperation1(), modelDiff)) {
+			if(invocation != null && invocation.matchesOperation(operationBodyMapper.getOperation1(), parentMapper.getContainer1(), modelDiff)) {
 				delegateStatements++;
 			}
 		}

@@ -9,15 +9,15 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
-import gr.uom.java.xmi.UMLClass;
 
 public class AddClassAnnotationRefactoring implements Refactoring {
 	private UMLAnnotation annotation;
-	private UMLClass classBefore;
-	private UMLClass classAfter;
+	private UMLAbstractClass classBefore;
+	private UMLAbstractClass classAfter;
 
-	public AddClassAnnotationRefactoring(UMLAnnotation annotation, UMLClass classBefore, UMLClass classAfter) {
+	public AddClassAnnotationRefactoring(UMLAnnotation annotation, UMLAbstractClass classBefore, UMLAbstractClass classAfter) {
 		this.annotation = annotation;
 		this.classBefore = classBefore;
 		this.classAfter = classAfter;
@@ -27,11 +27,11 @@ public class AddClassAnnotationRefactoring implements Refactoring {
 		return annotation;
 	}
 
-	public UMLClass getClassBefore() {
+	public UMLAbstractClass getClassBefore() {
 		return classBefore;
 	}
 
-	public UMLClass getClassAfter() {
+	public UMLAbstractClass getClassAfter() {
 		return classAfter;
 	}
 

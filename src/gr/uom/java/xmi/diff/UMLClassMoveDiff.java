@@ -11,7 +11,7 @@ public class UMLClassMoveDiff extends UMLClassBaseDiff {
 	}
 
 	public UMLClass getMovedClass() {
-		return nextClass;
+		return (UMLClass) nextClass;
 	}
 
 	public MatchResult getMatchResult() {

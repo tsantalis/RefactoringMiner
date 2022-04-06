@@ -9,18 +9,18 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAttribute;
-import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 
 public class InlineAttributeRefactoring implements Refactoring {
 	private UMLAttribute attributeDeclaration;
-	private UMLClass originalClass;
-	private UMLClass nextClass;
+	private UMLAbstractClass originalClass;
+	private UMLAbstractClass nextClass;
 	private Set<AbstractCodeMapping> references;
 	private boolean insideExtractedOrInlinedMethod;
 
-	public InlineAttributeRefactoring(UMLAttribute variableDeclaration, UMLClass originalClass, UMLClass nextClass,
+	public InlineAttributeRefactoring(UMLAttribute variableDeclaration, UMLAbstractClass originalClass, UMLAbstractClass nextClass,
 			boolean insideExtractedOrInlinedMethod) {
 		this.attributeDeclaration = variableDeclaration;
 		this.originalClass = originalClass;
@@ -69,11 +69,11 @@ public class InlineAttributeRefactoring implements Refactoring {
 		return attributeDeclaration.codeRange();
 	}
 
-	public UMLClass getOriginalClass() {
+	public UMLAbstractClass getOriginalClass() {
 		return originalClass;
 	}
 
-	public UMLClass getNextClass() {
+	public UMLAbstractClass getNextClass() {
 		return nextClass;
 	}
 

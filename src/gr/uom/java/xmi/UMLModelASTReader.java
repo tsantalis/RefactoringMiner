@@ -386,7 +386,7 @@ public class UMLModelASTReader {
     			if(matchingOperation != null || matchingAttribute != null || matchingInitializer != null) {
 	    			String anonymousBinaryName = getAnonymousBinaryName(node);
 	    			String anonymousCodePath = getAnonymousCodePath(anonymous);
-	    			UMLAnonymousClass anonymousClass = processAnonymousClassDeclaration(cu, anonymous, packageName + "." + className, anonymousBinaryName, anonymousCodePath, sourceFile, comments);
+	    			UMLAnonymousClass anonymousClass = processAnonymousClassDeclaration(cu, anonymous, packageName + "." + className, anonymousBinaryName, anonymousCodePath, sourceFile, comments, umlClass.getImportedTypes());
 	    			umlClass.addAnonymousClass(anonymousClass);
 	    			if(matchingOperation != null) {
 	    				matchingOperation.addAnonymousClass(anonymousClass);
@@ -643,9 +643,9 @@ public class UMLModelASTReader {
 		return attributes;
 	}
 	
-	private UMLAnonymousClass processAnonymousClassDeclaration(PsiFile cu, PsiAnonymousClass anonymous, String packageName, String binaryName, String codePath, String sourceFile, List<UMLComment> comments) {
+	private UMLAnonymousClass processAnonymousClassDeclaration(PsiFile cu, PsiAnonymousClass anonymous, String packageName, String binaryName, String codePath, String sourceFile, List<UMLComment> comments, List<String> importedTypes) {
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, anonymous, CodeElementType.ANONYMOUS_CLASS_DECLARATION);
-		UMLAnonymousClass anonymousClass = new UMLAnonymousClass(packageName, binaryName, codePath, locationInfo);
+		UMLAnonymousClass anonymousClass = new UMLAnonymousClass(packageName, binaryName, codePath, locationInfo, importedTypes);
 
 		for (PsiField fieldDeclaration : anonymous.getFields()) {
 				List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, false, sourceFile, comments);

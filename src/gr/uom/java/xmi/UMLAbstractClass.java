@@ -29,14 +29,27 @@ public abstract class UMLAbstractClass {
 	private Map<List<String>, Integer> operationIdentifierSignatureMap;
 	private Map<String, VariableDeclaration> fieldDeclarationMap;
 	private List<UMLInitializer> initializers;
+	private UMLType superclass;
+    private List<UMLType> implementedInterfaces;
+    private List<String> importedTypes;
+    private List<UMLAnnotation> annotations;
+    private List<UMLEnumConstant> enumConstants;
 
-	public UMLAbstractClass() {
+	public UMLAbstractClass(String packageName, String name, LocationInfo locationInfo, List<String> importedTypes) {
+		this.packageName = packageName;
+		this.name = name;
+		this.locationInfo = locationInfo;
+		this.importedTypes = importedTypes;
         this.operations = new ArrayList<UMLOperation>();
         this.attributes = new ArrayList<UMLAttribute>();
         this.comments = new ArrayList<UMLComment>();
         this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
         this.initializers = new ArrayList<UMLInitializer>();
         this.operationIdentifierSignatureMap = new LinkedHashMap<>();
+        this.superclass = null;
+        this.implementedInterfaces = new ArrayList<UMLType>();
+        this.annotations = new ArrayList<UMLAnnotation>();
+        this.enumConstants = new ArrayList<UMLEnumConstant>();
 	}
 
 	public List<UMLOperation> getOperationsWithOverrideAnnotation() {
@@ -100,6 +113,111 @@ public abstract class UMLAbstractClass {
 
 	public List<UMLInitializer> getInitializers() {
 		return initializers;
+	}
+
+    public UMLType getSuperclass() {
+		return superclass;
+	}
+
+	public void setSuperclass(UMLType superclass) {
+		this.superclass = superclass;
+	}
+
+	public void addImplementedInterface(UMLType implementedInterface) {
+		this.implementedInterfaces.add(implementedInterface);
+	}
+
+	public List<UMLType> getImplementedInterfaces() {
+		return implementedInterfaces;
+	}
+
+	public List<String> getImportedTypes() {
+		return importedTypes;
+	}
+
+    public List<UMLAnnotation> getAnnotations() {
+		return annotations;
+	}
+
+    public void addAnnotation(UMLAnnotation annotation) {
+    	annotations.add(annotation);
+    }
+
+	public boolean hasDeprecatedAnnotation() {
+		for(UMLAnnotation annotation : annotations) {
+			if(annotation.getTypeName().equals("Deprecated")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void addEnumConstant(UMLEnumConstant enumConstant) {
+    	enumConstants.add(enumConstant);
+    }
+
+    public List<UMLEnumConstant> getEnumConstants() {
+		return enumConstants;
+	}
+
+	public UMLEnumConstant containsEnumConstant(UMLEnumConstant otherEnumConstant) {
+    	ListIterator<UMLEnumConstant> enumConstantIt = enumConstants.listIterator();
+    	while(enumConstantIt.hasNext()) {
+    		UMLEnumConstant enumConstant = enumConstantIt.next();
+    		if(enumConstant.equals(otherEnumConstant)) {
+    			return enumConstant;
+    		}
+    	}
+    	return null;
+    }
+
+	public boolean implementsInterface(Set<UMLType> interfaces) {
+		for(UMLType type : interfaces) {
+			if(implementedInterfaces.contains(type))
+				return true;
+		}
+		return false;
+	}
+
+	public boolean extendsSuperclass(Set<UMLType> types) {
+		for(UMLType type : types) {
+			if(superclass != null && superclass.equals(type))
+				return true;
+		}
+		return false;
+	}
+
+	public boolean isSubTypeOf(UMLClass umlClass) {
+		if(superclass != null) {
+			if(umlClass.getName().endsWith("." + superclass.getClassType())) {
+				return true;
+			}
+		}
+		for(UMLType implementedInterface : implementedInterfaces) {
+			if(umlClass.getName().endsWith("." + implementedInterface.getClassType())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean importsType(String targetClass) {
+		if(targetClass.startsWith(getPackageName()))
+			return true;
+		for(String importedType : getImportedTypes()) {
+			//importedType.startsWith(targetClass) -> special handling for import static
+			//importedType.equals(targetClassPackage) -> special handling for import with asterisk (*) wildcard
+			if(importedType.equals(targetClass) || importedType.startsWith(targetClass)) {
+				return true;
+			}
+			if(targetClass.contains(".")) {
+				String targetClassPackage = targetClass.substring(0, targetClass.lastIndexOf("."));
+				if(importedType.equals(targetClassPackage)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public Map<String, VariableDeclaration> getFieldDeclarationMap() {
@@ -658,6 +776,11 @@ public abstract class UMLAbstractClass {
 	public abstract String getName();
 	
 	public abstract boolean isAbstract();
+	
+	public abstract String getTypeDeclarationKind();
+	public abstract boolean isFinal();
+	public abstract boolean isStatic();
+	public abstract String getVisibility();
 
 	public String getNonQualifiedName() {
 		return name;

@@ -35,10 +35,10 @@ public class UMLAttributeDiff {
 	private UMLOperation addedGetter;
 	private UMLOperation addedSetter;
 	private UMLOperationBodyMapper mapper;
-	private UMLClassBaseDiff classDiff;
+	private UMLAbstractClassDiff classDiff;
 	private UMLModelDiff modelDiff;
 
-	public UMLAttributeDiff(UMLAttribute removedAttribute, UMLAttribute addedAttribute, UMLClassBaseDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
+	public UMLAttributeDiff(UMLAttribute removedAttribute, UMLAttribute addedAttribute, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
 		this.classDiff = classDiff;
 		this.modelDiff = modelDiff;
 		init(removedAttribute, addedAttribute, classDiff.getOperationBodyMapperList());

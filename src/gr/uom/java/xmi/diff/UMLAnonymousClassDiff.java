@@ -25,6 +25,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 		processInitializers();
 		processOperations();
 		createBodyMappers();
+		checkForOperationSignatureChanges();
 		processAttributes();
 		checkForAttributeChanges();
 		checkForInlinedOperations();
@@ -93,7 +94,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 	protected void createBodyMappers() throws RefactoringMinerTimedOutException {
 		for(UMLOperation operation1 : originalClass.getOperations()) {
 			for(UMLOperation operation2 : nextClass.getOperations()) {
-				if(operation1.equals(operation2) || operation1.equalSignature(operation2) || operation1.equalSignatureWithIdenticalNameIgnoringChangedTypes(operation2)) {	
+				if(operation1.equals(operation2) || operation1.equalSignature(operation2)) {	
 					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation1, operation2, classDiff);
 					int mappings = mapper.mappingsWithoutBlocks();
 					if(mappings > 0) {
@@ -104,6 +105,30 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 							operationBodyMapperList.add(mapper);
 							removedOperations.remove(operation1);
 							addedOperations.remove(operation2);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private void checkForOperationSignatureChanges() throws RefactoringMinerTimedOutException {
+		for(UMLOperation operation1 : originalClass.getOperations()) {
+			for(UMLOperation operation2 : nextClass.getOperations()) {
+				if(!containsMapperForOperation1(operation1) && !containsMapperForOperation2(operation2)) {
+					if(operation1.equalSignatureWithIdenticalNameIgnoringChangedTypes(operation2) ||
+						(operation1.getName().equals(operation2.getName()) && operation1.compatibleSignature(operation2))) {
+						UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation1, operation2, classDiff);
+						int mappings = mapper.mappingsWithoutBlocks();
+						if(mappings > 0) {
+							int nonMappedElementsT1 = mapper.nonMappedElementsT1();
+							int nonMappedElementsT2 = mapper.nonMappedElementsT2();
+							if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
+									isPartOfMethodExtracted(operation1, operation2) || isPartOfMethodInlined(operation1, operation2)) {
+								operationBodyMapperList.add(mapper);
+								removedOperations.remove(operation1);
+								addedOperations.remove(operation2);
+							}
 						}
 					}
 				}

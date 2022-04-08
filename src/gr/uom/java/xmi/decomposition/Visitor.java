@@ -3,10 +3,8 @@ package gr.uom.java.xmi.decomposition;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -17,7 +15,6 @@ import gr.uom.java.xmi.LocationInfo;
 import org.jetbrains.annotations.NotNull;
 
 public class Visitor extends PsiRecursiveElementWalkingVisitor {
-	public static final Pattern METHOD_INVOCATION_PATTERN = Pattern.compile("!(\\w|\\.)*@\\w*");
 	public static final Pattern METHOD_SIGNATURE_PATTERN = Pattern.compile("(public|protected|private|static|\\s) +[\\w\\<\\>\\[\\]]+\\s+(\\w+) *\\([^\\)]*\\) *(\\{?|[^;])");
 	private PsiFile cu;
 	private String filePath;
@@ -40,7 +37,6 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	private List<String> arguments = new ArrayList<String>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
-	private Set<PsiMethodCallExpression> builderPatternChains = new LinkedHashSet<PsiMethodCallExpression>();
 	private DefaultMutableTreeNode root = new DefaultMutableTreeNode();
 	private DefaultMutableTreeNode current = root;
 
@@ -272,11 +268,6 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 		}
 		anonymousClassDeclarations.add(childAnonymous);
 		this.current = childNode;
-		for(PsiElement parent : builderPatternChains) {
-			if(isParent(node, parent)) {
-				return false;
-			}
-		}
 		return true;
 	}
 
@@ -284,15 +275,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 		if (element instanceof PsiAnonymousClass) {
 			PsiAnonymousClass node = (PsiAnonymousClass) element;
 			DefaultMutableTreeNode parentNode = deleteNode(node);
-			for(PsiElement parent : builderPatternChains) {
-				if(isParent(node, parent) || isParent(parent, node)) {
-					removeAnonymousData();
-					break;
-				}
-			}
-			if(node.getParent() instanceof PsiNewExpression && node.getParent().getParent() instanceof PsiExpressionList) {
-				removeAnonymousData();
-			}
+			removeAnonymousData();
 			this.current = parentNode;
 		}
 		else if (element instanceof PsiExpressionList && current.getUserObject() != null) {
@@ -306,8 +289,8 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	private void removeAnonymousData() {
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			this.variables.removeAll(anonymous.getVariables());
-			this.types.removeAll(anonymous.getTypes());
+			removeLast(this.variables, anonymous.getVariables());
+			removeLast(this.types, anonymous.getTypes());
 			for(String key : anonymous.getMethodInvocationMap().keySet()) {
 				this.methodInvocationMap.remove(key, anonymous.getMethodInvocationMap().get(key));
 			}
@@ -315,20 +298,28 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 				this.creationMap.remove(key, anonymous.getCreationMap().get(key));
 			}
 			this.variableDeclarations.removeAll(anonymous.getVariableDeclarations());
-			this.stringLiterals.removeAll(anonymous.getStringLiterals());
-			this.nullLiterals.removeAll(anonymous.getNullLiterals());
-			this.booleanLiterals.removeAll(anonymous.getBooleanLiterals());
-			this.typeLiterals.removeAll(anonymous.getTypeLiterals());
-			this.numberLiterals.removeAll(anonymous.getNumberLiterals());
-			this.infixExpressions.removeAll(anonymous.getInfixExpressions());
-			this.infixOperators.removeAll(anonymous.getInfixOperators());
-			this.postfixExpressions.removeAll(anonymous.getPostfixExpressions());
-			this.prefixExpressions.removeAll(anonymous.getPrefixExpressions());
-			this.arguments.removeAll(anonymous.getArguments());
+			removeLast(this.stringLiterals, anonymous.getStringLiterals());
+			removeLast(this.nullLiterals, anonymous.getNullLiterals());
+			removeLast(this.booleanLiterals, anonymous.getBooleanLiterals());
+			removeLast(this.typeLiterals, anonymous.getTypeLiterals());
+			removeLast(this.numberLiterals, anonymous.getNumberLiterals());
+			removeLast(this.infixExpressions, anonymous.getInfixExpressions());
+			removeLast(this.infixOperators, anonymous.getInfixOperators());
+			removeLast(this.postfixExpressions, anonymous.getPostfixExpressions());
+			removeLast(this.prefixExpressions, anonymous.getPrefixExpressions());
+			removeLast(this.arguments, anonymous.getArguments());
 			this.ternaryOperatorExpressions.removeAll(anonymous.getTernaryOperatorExpressions());
 			this.anonymousClassDeclarations.removeAll(anonymous.getAnonymousClassDeclarations());
 			this.lambdas.removeAll(anonymous.getLambdas());
 			this.arrayAccesses.removeAll(anonymous.getArrayAccesses());
+		}
+	}
+
+	private static void removeLast(List<String> parentList, List<String> childList) {
+		for(int i=childList.size()-1; i>=0; i--) {
+			String element = childList.get(i);
+			int lastIndex = parentList.lastIndexOf(element);
+			parentList.remove(lastIndex);
 		}
 	}
 
@@ -531,19 +522,6 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 			}
 		}
 		String methodInvocation = Formatter.format(node);
-		PsiReferenceExpression methodExpression = node.getMethodExpression();
-		if(methodInvocationMap.isEmpty() && methodExpression.getQualifierExpression() instanceof PsiMethodCallExpression &&
-				!(methodExpression.getReferenceName().equals("length") && argumentSize == 0)) {
-			builderPatternChains.add(node);
-		}
-		for(String key : methodInvocationMap.keySet()) {
-			List<AbstractCall> invocations = methodInvocationMap.get(key);
-			AbstractCall invocation = invocations.get(0);
-			if(invocation instanceof OperationInvocation && key.startsWith(methodInvocation) && ((OperationInvocation)invocation).numberOfSubExpressions() > 0 &&
-					!(invocation.getName().equals("length") && invocation.getArguments().size() == 0)) {
-				builderPatternChains.add(node);
-			}
-		}
 		OperationInvocation invocation = new OperationInvocation(cu, filePath, node);
 		if(methodInvocationMap.containsKey(methodInvocation)) {
 			methodInvocationMap.get(methodInvocation).add(invocation);

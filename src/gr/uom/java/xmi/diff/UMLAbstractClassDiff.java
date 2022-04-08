@@ -134,6 +134,24 @@ public abstract class UMLAbstractClassDiff {
 		return null;
 	}
 
+	protected boolean containsMapperForOperation1(UMLOperation operation) {
+		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+			if(mapper.getOperation1() != null && mapper.getOperation1().equals(operation)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	protected boolean containsMapperForOperation2(UMLOperation operation) {
+		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+			if(mapper.getOperation2() != null && mapper.getOperation2().equals(operation)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public abstract void process() throws RefactoringMinerTimedOutException;
 	
 	protected abstract void checkForAttributeChanges() throws RefactoringMinerTimedOutException;

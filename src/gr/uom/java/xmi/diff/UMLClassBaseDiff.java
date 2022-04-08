@@ -495,24 +495,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return Math.abs(index1-index2);
 	}
 
-	protected boolean containsMapperForOperation1(UMLOperation operation) {
-		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-			if(mapper.getOperation1() != null && mapper.getOperation1().equals(operation)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	protected boolean containsMapperForOperation2(UMLOperation operation) {
-		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-			if(mapper.getOperation2() != null && mapper.getOperation2().equals(operation)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	private void checkForOperationSignatureChanges() throws RefactoringMinerTimedOutException {
 		consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
 		int initialNumberOfRemovedOperations = removedOperations.size();

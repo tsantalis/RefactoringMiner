@@ -2729,7 +2729,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(!statement1.getBooleanLiterals().equals(statement2.getBooleanLiterals())) {
 				Set<String> literals1 = new LinkedHashSet<String>(statement1.getBooleanLiterals());
 				Set<String> literals2 = new LinkedHashSet<String>(statement2.getBooleanLiterals());
-				if(literals1.equals(literals2)) {
+				if(literals1.equals(literals2) ||
+						matchingArgument(variables1, literals2, creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2)) {
 					findReplacements(variables1, literals2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_VARIABLE);
 				}
 			}
@@ -3804,6 +3805,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private boolean matchingArgument(Set<String> variables1, Set<String> literals2, AbstractCall call1, AbstractCall call2) {
+		if(call1 != null && call2 != null && call1.getArguments().size() == call2.getArguments().size()) {
+			for(int i=0; i<call1.getArguments().size(); i++) {
+				String arg1 = call1.getArguments().get(i);
+				String arg2 = call2.getArguments().get(i);
+				if(variables1.contains(arg1) && literals2.contains(arg2)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private Set<AbstractCodeFragment> additionallyMatchedStatements(List<VariableDeclaration> variableDeclarations, List<? extends AbstractCodeFragment> unmatchedStatements) {

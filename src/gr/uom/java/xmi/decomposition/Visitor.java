@@ -3,10 +3,8 @@ package gr.uom.java.xmi.decomposition;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -81,7 +79,6 @@ public class Visitor extends ASTVisitor {
 	private List<String> arguments = new ArrayList<String>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
-	private Set<ASTNode> builderPatternChains = new LinkedHashSet<ASTNode>();
 	private DefaultMutableTreeNode root = new DefaultMutableTreeNode();
 	private DefaultMutableTreeNode current = root;
 
@@ -232,35 +229,20 @@ public class Visitor extends ASTVisitor {
 		}
 		anonymousClassDeclarations.add(childAnonymous);
 		this.current = childNode;
-		for(ASTNode parent : builderPatternChains) {
-			if(isParent(node, parent)) {
-				return false;
-			}
-		}
 		return super.visit(node);
 	}
 
 	public void endVisit(AnonymousClassDeclaration node) {
 		DefaultMutableTreeNode parentNode = deleteNode(node);
-		for(ASTNode parent : builderPatternChains) {
-			if(isParent(node, parent) || isParent(parent, node)) {
-				removeAnonymousData();
-				break;
-			}
-		}
-		ASTNode parent = node.getParent();
-		ASTNode grandParent = parent.getParent();
-		if(parent instanceof ClassInstanceCreation && (grandParent instanceof MethodInvocation || grandParent instanceof ClassInstanceCreation)) {
-			removeAnonymousData();
-		}
+		removeAnonymousData();
 		this.current = parentNode;
 	}
 
 	private void removeAnonymousData() {
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			this.variables.removeAll(anonymous.getVariables());
-			this.types.removeAll(anonymous.getTypes());
+			removeLast(this.variables, anonymous.getVariables());
+			removeLast(this.types, anonymous.getTypes());
 			for(String key : anonymous.getMethodInvocationMap().keySet()) {
 				this.methodInvocationMap.remove(key, anonymous.getMethodInvocationMap().get(key));
 			}
@@ -268,20 +250,28 @@ public class Visitor extends ASTVisitor {
 				this.creationMap.remove(key, anonymous.getCreationMap().get(key));
 			}
 			this.variableDeclarations.removeAll(anonymous.getVariableDeclarations());
-			this.stringLiterals.removeAll(anonymous.getStringLiterals());
-			this.nullLiterals.removeAll(anonymous.getNullLiterals());
-			this.booleanLiterals.removeAll(anonymous.getBooleanLiterals());
-			this.typeLiterals.removeAll(anonymous.getTypeLiterals());
-			this.numberLiterals.removeAll(anonymous.getNumberLiterals());
-			this.infixExpressions.removeAll(anonymous.getInfixExpressions());
-			this.infixOperators.removeAll(anonymous.getInfixOperators());
-			this.postfixExpressions.removeAll(anonymous.getPostfixExpressions());
-			this.prefixExpressions.removeAll(anonymous.getPrefixExpressions());
-			this.arguments.removeAll(anonymous.getArguments());
+			removeLast(this.stringLiterals, anonymous.getStringLiterals());
+			removeLast(this.nullLiterals, anonymous.getNullLiterals());
+			removeLast(this.booleanLiterals, anonymous.getBooleanLiterals());
+			removeLast(this.typeLiterals, anonymous.getTypeLiterals());
+			removeLast(this.numberLiterals, anonymous.getNumberLiterals());
+			removeLast(this.infixExpressions, anonymous.getInfixExpressions());
+			removeLast(this.infixOperators, anonymous.getInfixOperators());
+			removeLast(this.postfixExpressions, anonymous.getPostfixExpressions());
+			removeLast(this.prefixExpressions, anonymous.getPrefixExpressions());
+			removeLast(this.arguments, anonymous.getArguments());
 			this.ternaryOperatorExpressions.removeAll(anonymous.getTernaryOperatorExpressions());
 			this.anonymousClassDeclarations.removeAll(anonymous.getAnonymousClassDeclarations());
 			this.lambdas.removeAll(anonymous.getLambdas());
 			this.arrayAccesses.removeAll(anonymous.getArrayAccesses());
+		}
+	}
+
+	private static void removeLast(List<String> parentList, List<String> childList) {
+		for(int i=childList.size()-1; i>=0; i--) {
+			String element = childList.get(i);
+			int lastIndex = parentList.lastIndexOf(element);
+			parentList.remove(lastIndex);
 		}
 	}
 
@@ -520,18 +510,6 @@ public class Visitor extends ASTVisitor {
 		}
 		else {
 			methodInvocation = node.toString();
-		}
-		if(methodInvocationMap.isEmpty() && node.getExpression() instanceof MethodInvocation &&
-				!(node.getName().getIdentifier().equals("length") && node.arguments().size() == 0)) {
-			builderPatternChains.add(node);
-		}
-		for(String key : methodInvocationMap.keySet()) {
-			List<AbstractCall> invocations = methodInvocationMap.get(key);
-			AbstractCall invocation = invocations.get(0);
-			if(invocation instanceof OperationInvocation && key.startsWith(methodInvocation) && ((OperationInvocation)invocation).numberOfSubExpressions() > 0 &&
-					!(invocation.getName().equals("length") && invocation.getArguments().size() == 0)) {
-				builderPatternChains.add(node);
-			}
 		}
 		OperationInvocation invocation = new OperationInvocation(cu, filePath, node);
 		if(methodInvocationMap.containsKey(methodInvocation)) {

@@ -1540,15 +1540,32 @@ public class VariableReplacementAnalysis {
 				allVariableDeclarations2.addAll(comp2.getAllVariableDeclarations());
 			}
 			else {
-				allVariableDeclarations1.addAll(operation1.getAllVariableDeclarations());
-				allVariableDeclarations2.addAll(operation2.getAllVariableDeclarations());
-				break;
+				boolean parentMappingFound = false;
+				for(AbstractCodeMapping mapping : mappings) {
+					AbstractCodeFragment s1 = mapping.getFragment1();
+					AbstractCodeFragment s2 = mapping.getFragment2();
+					if(s1 instanceof CompositeStatementObject && s2 instanceof CompositeStatementObject) {
+						CompositeStatementObject comp1 = (CompositeStatementObject)s1;
+						CompositeStatementObject comp2 = (CompositeStatementObject)s2;
+						if(comp1.getStatements().contains(statement1) && comp2.getStatements().contains(statement2)) {
+							parentMappingFound = true;
+							allVariableDeclarations1.addAll(comp1.getAllVariableDeclarations());
+							allVariableDeclarations2.addAll(comp2.getAllVariableDeclarations());
+							break;
+						}
+					}
+				}
+				if(!parentMappingFound) {
+					allVariableDeclarations1.addAll(operation1.getAllVariableDeclarations());
+					allVariableDeclarations2.addAll(operation2.getAllVariableDeclarations());
+					break;
+				}
 			}
 		}
 		return v1 != null && v2 != null &&
 				v1.equalVariableDeclarationType(v2) && !onlyOneFragmentIncludesDeclarationInReferences &&
-				!containsVariableDeclarationWithName(allVariableDeclarations1, v2.getVariableName()) &&
-				(!containsVariableDeclarationWithName(allVariableDeclarations2, v1.getVariableName()) || operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) != null) &&
+				!containsVariableDeclarationWithName(v1, allVariableDeclarations1, v2.getVariableName()) &&
+				(!containsVariableDeclarationWithName(v2, allVariableDeclarations2, v1.getVariableName()) || operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) != null) &&
 				consistencyCheck(v1, v2, set);
 	}
 
@@ -1686,10 +1703,28 @@ public class VariableReplacementAnalysis {
 				mapping.getFragment2().getVariables().contains(v1.getVariableName());
 	}
 
-	private static boolean containsVariableDeclarationWithName(Set<VariableDeclaration> variableDeclarations, String variableName) {
+	private static boolean containsVariableDeclarationWithName(VariableDeclaration variableDeclaration, Set<VariableDeclaration> variableDeclarations, String variableName) {
 		for(VariableDeclaration declaration : variableDeclarations) {
-			if(declaration.getVariableName().equals(variableName)) {
+			if(declaration.getVariableName().equals(variableName) && !wrappedAsArgument(declaration.getInitializer(), variableDeclaration)) {
 				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean wrappedAsArgument(AbstractExpression initializer, VariableDeclaration variableDeclaration) {
+		if(initializer != null) {
+			AbstractCall invocation = initializer.invocationCoveringEntireFragment();
+			if(invocation != null) {
+				if(invocation.getArguments().contains(variableDeclaration.getVariableName())) {
+					return true;
+				}
+			}
+			ObjectCreation creation = initializer.creationCoveringEntireFragment();
+			if(creation != null) {
+				if(creation.getArguments().contains(variableDeclaration.getVariableName())) {
+					return true;
+				}
 			}
 		}
 		return false;

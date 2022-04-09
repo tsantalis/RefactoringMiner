@@ -926,7 +926,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
-		if(mismatchesConsistentMethodInvocationRename(bestMapper, consistentMethodInvocationRenames.keySet())) {
+		if(mismatchesConsistentMethodInvocationRename(bestMapper, consistentMethodInvocationRenames.keySet()) && !exactMappings(bestMapper)) {
 			return null;
 		}
 		if(identicalBodyWithOperation2OfTheBestMapper || identicalBodyWithOperation1OfTheBestMapper) {

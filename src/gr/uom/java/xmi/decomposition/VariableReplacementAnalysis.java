@@ -255,7 +255,7 @@ public class VariableReplacementAnalysis {
 			for(VariableDeclaration removedVariable : removedVariables) {
 				if(!removedVariablesToBeRemoved.contains(removedVariable) && removedVariable.isParameter()) {
 					for(VariableDeclaration addedVariable : addedVariables) {
-						if(!addedVariablesToBeRemoved.contains(addedVariable) && addedVariable.isParameter()) {
+						if(!addedVariablesToBeRemoved.contains(addedVariable) && !removedVariablesToBeRemoved.contains(removedVariable) && addedVariable.isParameter()) {
 							Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
 							if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && addedVariable.getType().equals(removedVariable.getType())) {
 								removedVariablesToBeRemoved.add(removedVariable);
@@ -272,7 +272,7 @@ public class VariableReplacementAnalysis {
 			for(VariableDeclaration addedVariable : addedVariables) {
 				if(!addedVariablesToBeRemoved.contains(addedVariable) && addedVariable.isParameter()) {
 					for(VariableDeclaration removedVariable : removedVariables) {
-						if(!removedVariablesToBeRemoved.contains(removedVariable) && removedVariable.isParameter()) {
+						if(!removedVariablesToBeRemoved.contains(removedVariable) && !addedVariablesToBeRemoved.contains(addedVariable) && removedVariable.isParameter()) {
 							Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
 							if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && addedVariable.getType().equals(removedVariable.getType())) {
 								removedVariablesToBeRemoved.add(removedVariable);

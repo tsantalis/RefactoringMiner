@@ -21,6 +21,7 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	private String name;
 	private String className;
 	private boolean isStatic;
+	private boolean declaredInAnonymousClass;
 	private OperationBody body;
 	private List<UMLAnonymousClass> anonymousClassList;
 	private UMLJavadoc javadoc;
@@ -86,6 +87,14 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 
 	public void addAnonymousClass(UMLAnonymousClass anonymous) {
 		this.anonymousClassList.add(anonymous);
+	}
+
+	public boolean isDeclaredInAnonymousClass() {
+		return declaredInAnonymousClass;
+	}
+
+	public void setDeclaredInAnonymousClass(boolean declaredInAnonymousClass) {
+		this.declaredInAnonymousClass = declaredInAnonymousClass;
 	}
 
 	@Override

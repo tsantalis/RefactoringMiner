@@ -28,6 +28,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	private boolean isStatic;
 	private boolean isTransient;
 	private boolean isVolatile;
+	private boolean declaredInAnonymousClass;
 	private VariableDeclaration variableDeclaration;
 	private List<UMLAnonymousClass> anonymousClassList;
 	private UMLJavadoc javadoc;
@@ -56,6 +57,14 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 
 	public void setType(UMLType type) {
 		this.type = type;
+	}
+
+	public boolean isDeclaredInAnonymousClass() {
+		return declaredInAnonymousClass;
+	}
+
+	public void setDeclaredInAnonymousClass(boolean declaredInAnonymousClass) {
+		this.declaredInAnonymousClass = declaredInAnonymousClass;
 	}
 
 	public void addAnonymousClass(UMLAnonymousClass anonymous) {

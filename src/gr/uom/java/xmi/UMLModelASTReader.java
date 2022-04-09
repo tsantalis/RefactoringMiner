@@ -737,6 +737,7 @@ public class UMLModelASTReader {
 				List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, false, sourceFile, comments);
 	    		for(UMLAttribute attribute : attributes) {
 	    			attribute.setClassName(anonymousClass.getCodePath());
+	    			attribute.setDeclaredInAnonymousClass(true);
 	    			anonymousClass.addAttribute(attribute);
 	    		}
 			}
@@ -751,7 +752,7 @@ public class UMLModelASTReader {
 				Initializer initializer = (Initializer)bodyDeclaration;
 				UMLInitializer umlInitializer = processInitializer(cu, initializer, packageName, false, sourceFile, comments);
 				umlInitializer.setClassName(anonymousClass.getCodePath());
-				//umlInitializer.setDeclaredInAnonymousClass(true);
+				umlInitializer.setDeclaredInAnonymousClass(true);
 				anonymousClass.addInitializer(umlInitializer);
 			}
 		}

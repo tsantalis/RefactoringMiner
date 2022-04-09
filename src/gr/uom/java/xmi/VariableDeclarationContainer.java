@@ -69,6 +69,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	Map<String, Set<VariableDeclaration>> variableDeclarationMap();
 	UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration);
 	boolean hasTestAnnotation();
+	boolean isDeclaredInAnonymousClass();
 
 	default CompositeStatementObject loopWithVariables(String currentElementName, String collectionName) {
 		OperationBody operationBody = getBody();

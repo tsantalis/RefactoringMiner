@@ -4404,28 +4404,32 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			string2 = string2.substring(0, string2.indexOf("\n"));
 		}
 		if(string1.contains("=") && string1.endsWith(";\n") && string2.contains("=") && string2.endsWith(";\n")) {
-			boolean typeReplacement = false, compatibleTypes = false, variableRename = false, classInstanceCreationReplacement = false;
+			boolean typeReplacement = false, compatibleTypes = false, variableRename = false, classInstanceCreationReplacement = false, equalArguments = false;
 			String variableName1 = string1.substring(0, string1.indexOf("="));
 			String variableName2 = string2.substring(0, string2.indexOf("="));
 			String assignment1 = string1.substring(string1.indexOf("=")+1, string1.lastIndexOf(";\n"));
 			String assignment2 = string2.substring(string2.indexOf("=")+1, string2.lastIndexOf(";\n"));
 			UMLType type1 = null, type2 = null;
+			AbstractCall inv1 = null, inv2 = null;
 			Map<String, List<ObjectCreation>> creationMap1 = statement1.getCreationMap();
 			for(String creation1 : creationMap1.keySet()) {
 				if(creation1.equals(assignment1)) {
-					type1 = creationMap1.get(creation1).get(0).getType();
+					ObjectCreation objectCreation = creationMap1.get(creation1).get(0);
+					type1 = objectCreation.getType();
+					inv1 = objectCreation;
 				}
 			}
 			Map<String, List<ObjectCreation>> creationMap2 = statement2.getCreationMap();
 			for(String creation2 : creationMap2.keySet()) {
 				if(creation2.equals(assignment2)) {
-					type2 = creationMap2.get(creation2).get(0).getType();
+					ObjectCreation objectCreation = creationMap2.get(creation2).get(0);
+					type2 = objectCreation.getType();
+					inv2 = objectCreation;
 				}
 			}
 			if(type1 != null && type2 != null) {
 				compatibleTypes = type1.compatibleTypes(type2);
 			}
-			AbstractCall inv1 = null, inv2 = null;
 			Map<String, List<AbstractCall>> methodInvocationMap1 = statement1.getMethodInvocationMap();
 			for(String invocation1 : methodInvocationMap1.keySet()) {
 				if(invocation1.equals(assignment1)) {
@@ -4453,7 +4457,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						assignment2.equals(replacement.getAfter()))
 					classInstanceCreationReplacement = true;
 			}
-			if(typeReplacement && !compatibleTypes && variableRename && classInstanceCreationReplacement) {
+			if(inv1 != null && inv2 != null) {
+				equalArguments = inv1.equalArguments(inv2) && inv1.getArguments().size() > 0;
+			}
+			if(typeReplacement && !compatibleTypes && variableRename && classInstanceCreationReplacement && !equalArguments) {
 				return true;
 			}
 			if(variableRename && inv1 != null && inv2 != null && inv1.differentExpressionNameAndArguments(inv2)) {

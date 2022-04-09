@@ -1414,9 +1414,12 @@ public class VariableReplacementAnalysis {
 		return map;
 	}
 
-	private static boolean returnVariableMapping(AbstractCodeMapping mapping, Replacement replacement) {
-		return mapping.getFragment1().getString().equals("return " + replacement.getBefore() + ";\n") &&
-				mapping.getFragment2().getString().equals("return " + replacement.getAfter() + ";\n");
+	private boolean returnVariableMapping(AbstractCodeMapping mapping, Replacement replacement) {
+		if(!operation1.isDeclaredInAnonymousClass() && !operation2.isDeclaredInAnonymousClass()) {
+			return mapping.getFragment1().getString().equals("return " + replacement.getBefore() + ";\n") &&
+					mapping.getFragment2().getString().equals("return " + replacement.getAfter() + ";\n");
+		}
+		return false;
 	}
 
 	private boolean containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(Set<Replacement> replacements) {

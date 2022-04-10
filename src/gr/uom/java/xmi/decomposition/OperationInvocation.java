@@ -192,7 +192,7 @@ public class OperationInvocation extends AbstractCall {
     	return subExpressions.size();
     }
 
-    public boolean matchesOperation(UMLOperation operation, VariableDeclarationContainer callerOperation, UMLModelDiff modelDiff) {
+    public boolean matchesOperation(VariableDeclarationContainer operation, VariableDeclarationContainer callerOperation, UMLModelDiff modelDiff) {
     	Map<String, Set<VariableDeclaration>> variableDeclarationMap = callerOperation.variableDeclarationMap();
     	Map<String, VariableDeclaration> parentFieldDeclarationMap = null;
     	Map<String, VariableDeclaration> childFieldDeclarationMap = null;
@@ -321,7 +321,7 @@ public class OperationInvocation extends AbstractCall {
     private boolean compatibleTypes(UMLParameter parameter, UMLType type, UMLModelDiff modelDiff) {
     	String type1 = parameter.getType().toString();
     	String type2 = type.toString();
-    	if(collectionMatch(parameter, type))
+    	if(collectionMatch(parameter.getType(), type))
     		return true;
     	if(type1.equals("Throwable") && type2.endsWith("Exception"))
     		return true;
@@ -388,14 +388,14 @@ public class OperationInvocation extends AbstractCall {
     	return false;
     }
 
-	public static boolean collectionMatch(UMLParameter parameter, UMLType type) {
-		if(parameter.getType().getClassType().equals("Iterable") || parameter.getType().getClassType().equals("Collection") ) {
+	public static boolean collectionMatch(UMLType parameterType, UMLType type) {
+		if(parameterType.getClassType().equals("Iterable") || parameterType.getClassType().equals("Collection") ) {
 			if(type.getClassType().endsWith("List") || type.getClassType().endsWith("Set") || type.getClassType().endsWith("Collection")) {
-				if(parameter.getType().getTypeArguments().equals(type.getTypeArguments())) {
+				if(parameterType.getTypeArguments().equals(type.getTypeArguments())) {
 					return true;
 				}
-				if(parameter.getType().getTypeArguments().size() == 1) {
-					UMLType typeArgument = parameter.getType().getTypeArguments().get(0);
+				if(parameterType.getTypeArguments().size() == 1) {
+					UMLType typeArgument = parameterType.getTypeArguments().get(0);
 					if(typeArgument.toString().length() == 1 && Character.isUpperCase(typeArgument.toString().charAt(0))) {
 						return true;
 					}
@@ -428,7 +428,7 @@ public class OperationInvocation extends AbstractCall {
 		return classDiff;
     }
 
-    private boolean varArgsMatch(UMLOperation operation, UMLType lastInferredArgumentType) {
+    private boolean varArgsMatch(VariableDeclarationContainer operation, UMLType lastInferredArgumentType) {
 		//0 varargs arguments passed
 		if(this.typeArguments == operation.getNumberOfNonVarargsParameters()) {
 			return true;

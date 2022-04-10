@@ -38,7 +38,7 @@ public class InlineOperationDetection {
 			List<AbstractCall> removedOperationInvocations = matchingInvocations(removedOperation, operationInvocations, mapper.getContainer1());
 			if(removedOperationInvocations.size() > 0 && !invocationMatchesWithAddedOperation(removedOperationInvocations.get(0), mapper.getContainer1(), mapper.getContainer2().getAllOperationInvocations())) {
 				AbstractCall removedOperationInvocation = removedOperationInvocations.get(0);
-				CallTreeNode root = new CallTreeNode(mapper.getOperation1(), removedOperation, removedOperationInvocation);
+				CallTreeNode root = new CallTreeNode(mapper.getContainer1(), removedOperation, removedOperationInvocation);
 				CallTree callTree = null;
 				if(callTreeMap.containsKey(root)) {
 					callTree = callTreeMap.get(root);
@@ -58,14 +58,14 @@ public class InlineOperationDetection {
 						additionalExactMatches.addAll(nestedMapper.getExactMatches());
 						if(inlineMatchCondition(nestedMapper, mapper)) {
 							List<AbstractCall> nestedMatchingInvocations = matchingInvocations(node.getInvokedOperation(), node.getOriginalOperation().getAllOperationInvocations(), node.getOriginalOperation());
-							InlineOperationRefactoring nestedRefactoring = new InlineOperationRefactoring(nestedMapper, mapper.getOperation1(), nestedMatchingInvocations);
+							InlineOperationRefactoring nestedRefactoring = new InlineOperationRefactoring(nestedMapper, mapper.getContainer1(), nestedMatchingInvocations);
 							refactorings.add(nestedRefactoring);
 							operationBodyMapper.addChildMapper(nestedMapper);
 						}
 					}
 				}
 				if(inlineMatchCondition(operationBodyMapper, mapper)) {
-					InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getOperation1(), removedOperationInvocations);
+					InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getContainer1(), removedOperationInvocations);
 					refactorings.add(inlineOperationRefactoring);
 				}
 			}
@@ -137,7 +137,7 @@ public class InlineOperationDetection {
 		int delegateStatements = 0;
 		for(AbstractCodeFragment statement : operationBodyMapper.getNonMappedLeavesT1()) {
 			AbstractCall invocation = statement.invocationCoveringEntireFragment();
-			if(invocation != null && invocation.matchesOperation(operationBodyMapper.getOperation1(), parentMapper.getContainer1(), modelDiff)) {
+			if(invocation != null && invocation.matchesOperation(operationBodyMapper.getContainer1(), parentMapper.getContainer1(), modelDiff)) {
 				delegateStatements++;
 			}
 		}

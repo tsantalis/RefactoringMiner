@@ -24,11 +24,10 @@ public class VariableReferenceExtractor {
 			}
 			AbstractCall invocation1 = fragment1.invocationCoveringEntireFragment();
 			AbstractCall invocation2 = fragment2.invocationCoveringEntireFragment();
-			if(invocation1 != null && invocation2 != null &&
-					mapping.getOperation1() instanceof UMLOperation && mapping.getOperation2() instanceof UMLOperation) {
+			if(invocation1 != null && invocation2 != null) {
 				//add recursive calls to the mappings
-				if(invocation1.matchesOperation((UMLOperation)mapping.getOperation1(), (UMLOperation)mapping.getOperation1(), null) &&
-						invocation2.matchesOperation((UMLOperation)mapping.getOperation2(), (UMLOperation)mapping.getOperation2(), null)) {
+				if(invocation1.matchesOperation(mapping.getOperation1(), mapping.getOperation1(), null) &&
+						invocation2.matchesOperation(mapping.getOperation2(), mapping.getOperation2(), null)) {
 					references.add(mapping);
 				}
 			}

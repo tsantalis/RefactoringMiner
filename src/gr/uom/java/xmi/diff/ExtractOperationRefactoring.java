@@ -10,6 +10,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -19,18 +20,18 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
 public class ExtractOperationRefactoring implements Refactoring {
 	private UMLOperation extractedOperation;
-	private UMLOperation sourceOperationBeforeExtraction;
-	private UMLOperation sourceOperationAfterExtraction;
+	private VariableDeclarationContainer sourceOperationBeforeExtraction;
+	private VariableDeclarationContainer sourceOperationAfterExtraction;
 	private List<AbstractCall> extractedOperationInvocations;
 	private Set<Replacement> replacements;
 	private Set<AbstractCodeFragment> extractedCodeFragmentsFromSourceOperation;
 	private Set<AbstractCodeFragment> extractedCodeFragmentsToExtractedOperation;
 	private UMLOperationBodyMapper bodyMapper;
 
-	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper, UMLOperation sourceOperationAfterExtraction, List<AbstractCall> operationInvocations) {
+	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper, VariableDeclarationContainer sourceOperationAfterExtraction, List<AbstractCall> operationInvocations) {
 		this.bodyMapper = bodyMapper;
 		this.extractedOperation = bodyMapper.getOperation2();
-		this.sourceOperationBeforeExtraction = bodyMapper.getOperation1();
+		this.sourceOperationBeforeExtraction = bodyMapper.getContainer1();
 		this.sourceOperationAfterExtraction = sourceOperationAfterExtraction;
 		this.extractedOperationInvocations = operationInvocations;
 		this.replacements = bodyMapper.getReplacements();
@@ -43,7 +44,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 	}
 
 	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper, UMLOperation extractedOperation,
-			UMLOperation sourceOperationBeforeExtraction, UMLOperation sourceOperationAfterExtraction, List<AbstractCall> operationInvocations) {
+			VariableDeclarationContainer sourceOperationBeforeExtraction, VariableDeclarationContainer sourceOperationAfterExtraction, List<AbstractCall> operationInvocations) {
 		this.bodyMapper = bodyMapper;
 		this.extractedOperation = extractedOperation;
 		this.sourceOperationBeforeExtraction = sourceOperationBeforeExtraction;
@@ -90,11 +91,11 @@ public class ExtractOperationRefactoring implements Refactoring {
 		return extractedOperation;
 	}
 
-	public UMLOperation getSourceOperationBeforeExtraction() {
+	public VariableDeclarationContainer getSourceOperationBeforeExtraction() {
 		return sourceOperationBeforeExtraction;
 	}
 
-	public UMLOperation getSourceOperationAfterExtraction() {
+	public VariableDeclarationContainer getSourceOperationAfterExtraction() {
 		return sourceOperationAfterExtraction;
 	}
 

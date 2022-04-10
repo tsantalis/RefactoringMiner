@@ -10,6 +10,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -19,19 +20,19 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
 public class InlineOperationRefactoring implements Refactoring {
 	private UMLOperation inlinedOperation;
-	private UMLOperation targetOperationAfterInline;
-	private UMLOperation targetOperationBeforeInline;
+	private VariableDeclarationContainer targetOperationAfterInline;
+	private VariableDeclarationContainer targetOperationBeforeInline;
 	private List<AbstractCall> inlinedOperationInvocations;
 	private Set<Replacement> replacements;
 	private Set<AbstractCodeFragment> inlinedCodeFragmentsFromInlinedOperation;
 	private Set<AbstractCodeFragment> inlinedCodeFragmentsInTargetOperation;
 	private UMLOperationBodyMapper bodyMapper;
 	
-	public InlineOperationRefactoring(UMLOperationBodyMapper bodyMapper, UMLOperation targetOperationBeforeInline,
+	public InlineOperationRefactoring(UMLOperationBodyMapper bodyMapper, VariableDeclarationContainer targetOperationBeforeInline,
 			List<AbstractCall> operationInvocations) {
 		this.bodyMapper = bodyMapper;
 		this.inlinedOperation = bodyMapper.getOperation1();
-		this.targetOperationAfterInline = bodyMapper.getOperation2();
+		this.targetOperationAfterInline = bodyMapper.getContainer2();
 		this.targetOperationBeforeInline = targetOperationBeforeInline;
 		this.inlinedOperationInvocations = operationInvocations;
 		this.replacements = bodyMapper.getReplacements();
@@ -86,11 +87,11 @@ public class InlineOperationRefactoring implements Refactoring {
 		return inlinedOperation;
 	}
 
-	public UMLOperation getTargetOperationAfterInline() {
+	public VariableDeclarationContainer getTargetOperationAfterInline() {
 		return targetOperationAfterInline;
 	}
 
-	public UMLOperation getTargetOperationBeforeInline() {
+	public VariableDeclarationContainer getTargetOperationBeforeInline() {
 		return targetOperationBeforeInline;
 	}
 

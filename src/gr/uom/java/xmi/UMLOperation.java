@@ -241,12 +241,6 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return 0;
 	}
 
-	public List<String> stringRepresentation() {
-		if(operationBody != null)
-			return operationBody.stringRepresentation();
-		return new ArrayList<String>();
-	}
-
 	public void setBody(OperationBody body) {
 		this.operationBody = body;
 	}
@@ -428,21 +422,6 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				params.add(parameter);
 		}
 		return params;
-	}
-
-	public List<UMLType> commonParameterTypes(UMLOperation operation) {
-		List<UMLType> commonParameterTypes = new ArrayList<UMLType>();
-		List<UMLType> thisParameterTypeList = getParameterTypeList();
-		List<UMLType> otherParameterTypeList = operation.getParameterTypeList();
-		int min = Math.min(thisParameterTypeList.size(), otherParameterTypeList.size());
-		for(int i=0; i<min; i++) {
-			UMLType thisParameterType = thisParameterTypeList.get(i);
-			UMLType otherParameterType = otherParameterTypeList.get(i);
-			if(thisParameterType.equals(otherParameterType)) {
-				commonParameterTypes.add(thisParameterType);
-			}
-		}
-		return commonParameterTypes;
 	}
 
 	public List<UMLParameter> getParameterizedTypesInSignature() {

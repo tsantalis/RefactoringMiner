@@ -5,16 +5,16 @@ import java.util.List;
 
 import com.intellij.psi.*;
 
-import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.CodeRange;
-import gr.uom.java.xmi.LocationInfoProvider;
 
 public class LambdaExpressionObject implements LocationInfoProvider {
 	private LocationInfo locationInfo;
 	private OperationBody body;
 	private AbstractExpression expression;
 	private List<VariableDeclaration> parameters = new ArrayList<VariableDeclaration>();
+	private List<UMLParameter> umlParameters = new ArrayList<UMLParameter>();
 	private boolean hasParentheses = false;
 	
 	public LambdaExpressionObject(PsiFile cu, String filePath, PsiLambdaExpression lambda) {
@@ -30,6 +30,13 @@ public class LambdaExpressionObject implements LocationInfoProvider {
 		for(PsiParameter param : params.getParameters()) {
 			VariableDeclaration parameter = new VariableDeclaration(cu, filePath, param, CodeElementType.LAMBDA_EXPRESSION_PARAMETER);
 			this.parameters.add(parameter);
+			if(param.getTypeElement() != null) {
+				String parameterName = param.getName();
+				UMLType type = UMLTypePsiParser.extractTypeObject(cu, filePath, param.getTypeElement(), param.getType());
+				UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", param.isVarArgs());
+				umlParameter.setVariableDeclaration(parameter);
+				this.umlParameters.add(umlParameter);
+			}
 		}
 	}
 
@@ -50,12 +57,43 @@ public class LambdaExpressionObject implements LocationInfoProvider {
 		return parameters;
 	}
 
+	public List<UMLParameter> getUmlParameters() {
+		return umlParameters;
+	}
+
 	public List<String> getParameterNameList() {
 		List<String> parameterNameList = new ArrayList<String>();
 		for(VariableDeclaration parameter : parameters) {
 			parameterNameList.add(parameter.getVariableName());
 		}
 		return parameterNameList;
+	}
+
+	public List<UMLType> getParameterTypeList() {
+		List<UMLType> parameterTypeList = new ArrayList<UMLType>();
+		for(UMLParameter parameter : umlParameters) {
+			parameterTypeList.add(parameter.getType());
+		}
+		return parameterTypeList;
+	}
+
+	public int getNumberOfNonVarargsParameters() {
+		int counter = 0;
+		for(UMLParameter parameter : umlParameters) {
+			if(!parameter.isVarargs()) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
+	public boolean hasVarargsParameter() {
+		for(UMLParameter parameter : umlParameters) {
+			if(parameter.isVarargs()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

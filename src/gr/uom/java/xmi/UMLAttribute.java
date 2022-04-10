@@ -63,6 +63,14 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return declaredInAnonymousClass;
 	}
 
+	public boolean isGetter() {
+		return false;
+	}
+
+	public AbstractCall isDelegate() {
+		return null;
+	}
+
 	public void setDeclaredInAnonymousClass(boolean declaredInAnonymousClass) {
 		this.declaredInAnonymousClass = declaredInAnonymousClass;
 	}
@@ -96,6 +104,18 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return Collections.emptyList();
 	}
 
+	public List<UMLType> getParameterTypeList() {
+		AbstractExpression initializer = variableDeclaration.getInitializer();
+		if(initializer != null) {
+			for(LambdaExpressionObject lambda : initializer.getLambdas()) {
+				if(match(initializer, lambda)) {
+					return lambda.getParameterTypeList();
+				}
+			}
+		}
+		return Collections.emptyList();
+	}
+
 	public List<String> getParameterNameList() {
 		AbstractExpression initializer = variableDeclaration.getInitializer();
 		if(initializer != null) {
@@ -106,6 +126,42 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 			}
 		}
 		return Collections.emptyList();
+	}
+
+	public List<UMLParameter> getParametersWithoutReturnType() {
+		AbstractExpression initializer = variableDeclaration.getInitializer();
+		if(initializer != null) {
+			for(LambdaExpressionObject lambda : initializer.getLambdas()) {
+				if(match(initializer, lambda)) {
+					return lambda.getUmlParameters();
+				}
+			}
+		}
+		return Collections.emptyList();
+	}
+
+	public int getNumberOfNonVarargsParameters() {
+		AbstractExpression initializer = variableDeclaration.getInitializer();
+		if(initializer != null) {
+			for(LambdaExpressionObject lambda : initializer.getLambdas()) {
+				if(match(initializer, lambda)) {
+					return lambda.getNumberOfNonVarargsParameters();
+				}
+			}
+		}
+		return 0;
+	}
+
+	public boolean hasVarargsParameter() {
+		AbstractExpression initializer = variableDeclaration.getInitializer();
+		if(initializer != null) {
+			for(LambdaExpressionObject lambda : initializer.getLambdas()) {
+				if(match(initializer, lambda)) {
+					return lambda.hasVarargsParameter();
+				}
+			}
+		}
+		return false;
 	}
 
 	public OperationBody getBody() {

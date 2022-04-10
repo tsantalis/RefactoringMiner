@@ -53,6 +53,7 @@ public class LambdaExpressionObject implements LocationInfoProvider {
 					type.setVarargs();
 				}
 				UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", ((SingleVariableDeclaration)param).isVarargs());
+				umlParameter.setVariableDeclaration(parameter);
 				umlParameters.add(umlParameter);
 			}
 			this.parameters.add(parameter);

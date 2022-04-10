@@ -50,7 +50,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 	public abstract double normalizedNameDistance(AbstractCall call);
 	public abstract AbstractCall update(String oldExpression, String newExpression);
 	
-	public boolean matchesOperation(UMLOperation operation, VariableDeclarationContainer callerOperation, UMLModelDiff modelDiff) {
+	public boolean matchesOperation(VariableDeclarationContainer operation, VariableDeclarationContainer callerOperation, UMLModelDiff modelDiff) {
 		if(this instanceof OperationInvocation) {
 			return ((OperationInvocation)this).matchesOperation(operation, callerOperation, modelDiff);
 		}

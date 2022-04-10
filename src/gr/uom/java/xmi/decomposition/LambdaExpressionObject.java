@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.ExpressionMethodReference;
 import org.eclipse.jdt.core.dom.LambdaExpression;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.SuperMethodReference;
+import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeMethodReference;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
@@ -17,12 +18,15 @@ import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.LocationInfoProvider;
+import gr.uom.java.xmi.UMLParameter;
+import gr.uom.java.xmi.UMLType;
 
 public class LambdaExpressionObject implements LocationInfoProvider {
 	private LocationInfo locationInfo;
 	private OperationBody body;
 	private AbstractExpression expression;
 	private List<VariableDeclaration> parameters = new ArrayList<VariableDeclaration>();
+	private List<UMLParameter> umlParameters = new ArrayList<UMLParameter>();
 	private boolean hasParentheses = false;
 	
 	public LambdaExpressionObject(CompilationUnit cu, String filePath, LambdaExpression lambda) {
@@ -42,6 +46,14 @@ public class LambdaExpressionObject implements LocationInfoProvider {
 			}
 			else if(param instanceof SingleVariableDeclaration) {
 				parameter = new VariableDeclaration(cu, filePath, (SingleVariableDeclaration)param);
+				Type parameterType = ((SingleVariableDeclaration)param).getType();
+				String parameterName = param.getName().getFullyQualifiedName();
+				UMLType type = UMLType.extractTypeObject(cu, filePath, parameterType, param.getExtraDimensions());
+				if(((SingleVariableDeclaration)param).isVarargs()) {
+					type.setVarargs();
+				}
+				UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", ((SingleVariableDeclaration)param).isVarargs());
+				umlParameters.add(umlParameter);
 			}
 			this.parameters.add(parameter);
 		}
@@ -74,12 +86,43 @@ public class LambdaExpressionObject implements LocationInfoProvider {
 		return parameters;
 	}
 
+	public List<UMLParameter> getUmlParameters() {
+		return umlParameters;
+	}
+
 	public List<String> getParameterNameList() {
 		List<String> parameterNameList = new ArrayList<String>();
 		for(VariableDeclaration parameter : parameters) {
 			parameterNameList.add(parameter.getVariableName());
 		}
 		return parameterNameList;
+	}
+
+	public List<UMLType> getParameterTypeList() {
+		List<UMLType> parameterTypeList = new ArrayList<UMLType>();
+		for(UMLParameter parameter : umlParameters) {
+			parameterTypeList.add(parameter.getType());
+		}
+		return parameterTypeList;
+	}
+
+	public int getNumberOfNonVarargsParameters() {
+		int counter = 0;
+		for(UMLParameter parameter : umlParameters) {
+			if(!parameter.isVarargs()) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
+	public boolean hasVarargsParameter() {
+		for(UMLParameter parameter : umlParameters) {
+			if(parameter.isVarargs()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

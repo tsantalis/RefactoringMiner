@@ -21,6 +21,7 @@ import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -300,7 +301,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	private boolean mapperListContainsOperation(UMLOperation operation1, UMLOperation operation2) {
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
-			if((mapper.getOperation1() != null && mapper.getOperation1().equals(operation1)) || (mapper.getOperation2() != null && mapper.getOperation2().equals(operation2)))
+			if(mapper.getContainer1().equals(operation1) || mapper.getContainer2().equals(operation2))
 				return true;
 		}
 		return false;
@@ -759,7 +760,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			else if(operationBodyMapper.nonMappedElementsT1() > 0 && operationBodyMapper.getNonMappedInnerNodesT1().size() == 0 && operationBodyMapper.nonMappedElementsT2() == 0) {
 				int countableStatements = 0;
 				int parameterizedVariableDeclarationStatements = 0;
-				UMLOperation addedOperation = operationBodyMapper.getOperation2();
+				VariableDeclarationContainer addedOperation = operationBodyMapper.getContainer2();
 				List<String> nonMappedLeavesT1 = new ArrayList<String>();
 				for(AbstractCodeFragment statement : operationBodyMapper.getNonMappedLeavesT1()) {
 					if(statement.countableStatement()) {
@@ -788,7 +789,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			else if(operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() > 0 && operationBodyMapper.getNonMappedInnerNodesT2().size() == 0) {
 				int countableStatements = 0;
 				int parameterizedVariableDeclarationStatements = 0;
-				UMLOperation removedOperation = operationBodyMapper.getOperation1();
+				VariableDeclarationContainer removedOperation = operationBodyMapper.getContainer1();
 				for(AbstractCodeFragment statement : operationBodyMapper.getNonMappedLeavesT2()) {
 					if(statement.countableStatement()) {
 						for(String parameterName : removedOperation.getParameterNameList()) {
@@ -805,7 +806,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			else if((operationBodyMapper.nonMappedElementsT1() == 1 || operationBodyMapper.nonMappedElementsT2() == 1) &&
 					operationBodyMapper.getNonMappedInnerNodesT1().size() == 0 && operationBodyMapper.getNonMappedInnerNodesT2().size() == 0) {
 				AbstractCodeFragment statementUsingParameterAsInvoker1 = null;
-				UMLOperation removedOperation = operationBodyMapper.getOperation1();
+				VariableDeclarationContainer removedOperation = operationBodyMapper.getContainer1();
 				for(AbstractCodeFragment statement : operationBodyMapper.getNonMappedLeavesT1()) {
 					if(statement.countableStatement()) {
 						for(String parameterName : removedOperation.getParameterNameList()) {
@@ -818,7 +819,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 				AbstractCodeFragment statementUsingParameterAsInvoker2 = null;
-				UMLOperation addedOperation = operationBodyMapper.getOperation2();
+				VariableDeclarationContainer addedOperation = operationBodyMapper.getContainer2();
 				for(AbstractCodeFragment statement : operationBodyMapper.getNonMappedLeavesT2()) {
 					if(statement.countableStatement()) {
 						for(String parameterName : addedOperation.getParameterNameList()) {
@@ -861,7 +862,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return (mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 				(nonMappedElementsT1 == 0 && mappings > Math.floor(nonMappedElementsT2/2.0)) ||
 				(nonMappedElementsT1 == 0 && exactMappings >= Math.floor(nonMappedElementsT2/2.0)) ||
-				(mappings == 1 && nonMappedElementsT1 + nonMappedElementsT2 == 1 && operationBodyMapper.getOperation1().getName().equals(operationBodyMapper.getOperation2().getName()));
+				(mappings == 1 && nonMappedElementsT1 + nonMappedElementsT2 == 1 && operationBodyMapper.getContainer1().getName().equals(operationBodyMapper.getContainer2().getName()));
 	}
 
 	private boolean mappedElementsMoreThanNonMappedT2(int mappings, UMLOperationBodyMapper operationBodyMapper) {
@@ -871,7 +872,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return mappings > nonMappedElementsT2 || (mappings >= nonMappedElementsT2WithoutThoseCallingAddedOperation &&
 				nonMappedElementsT2CallingAddedOperation >= nonMappedElementsT2WithoutThoseCallingAddedOperation) ||
 				(operationBodyMapper.getMappings().size() > nonMappedElementsT2 && nonMappedElementsT2CallingAddedOperation > 0 &&
-						operationBodyMapper.getOperation1().getClassName().equals(operationBodyMapper.getOperation2().getClassName()));
+						operationBodyMapper.getContainer1().getClassName().equals(operationBodyMapper.getContainer2().getClassName()));
 	}
 
 	private boolean mappedElementsMoreThanNonMappedT1(int mappings, UMLOperationBodyMapper operationBodyMapper) {
@@ -885,8 +886,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private UMLOperationBodyMapper findBestMapper(TreeSet<UMLOperationBodyMapper> mapperSet) {
 		List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>(mapperSet);
 		UMLOperationBodyMapper bestMapper = mapperSet.first();
-		UMLOperation bestMapperOperation1 = bestMapper.getOperation1();
-		UMLOperation bestMapperOperation2 = bestMapper.getOperation2();
+		VariableDeclarationContainer bestMapperOperation1 = bestMapper.getContainer1();
+		VariableDeclarationContainer bestMapperOperation2 = bestMapper.getContainer2();
 		boolean identicalBodyWithOperation1OfTheBestMapper = identicalBodyWithAnotherAddedMethod(bestMapper);
 		boolean identicalBodyWithOperation2OfTheBestMapper = identicalBodyWithAnotherRemovedMethod(bestMapper);
 		if(equalSignatureWithCommonParameterTypes(bestMapperOperation1, bestMapperOperation2) &&
@@ -896,21 +897,21 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		for(int i=1; i<mapperList.size(); i++) {
 			UMLOperationBodyMapper mapper = mapperList.get(i);
 			if(mapper.getMappings().size() > 0) {
-				UMLOperation operation2 = mapper.getOperation2();
+				VariableDeclarationContainer operation2 = mapper.getContainer2();
 				List<AbstractCall> operationInvocations2 = operation2.getAllOperationInvocations();
 				boolean anotherMapperCallsOperation2OfTheBestMapper = false;
 				for(AbstractCall invocation : operationInvocations2) {
-					if(invocation.matchesOperation(bestMapper.getOperation2(), operation2, modelDiff) && !invocation.matchesOperation(bestMapper.getOperation1(), operation2, modelDiff) &&
+					if(invocation.matchesOperation(bestMapper.getContainer2(), operation2, modelDiff) && !invocation.matchesOperation(bestMapper.getContainer1(), operation2, modelDiff) &&
 							!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, removedOperations)) {
 						anotherMapperCallsOperation2OfTheBestMapper = true;
 						break;
 					}
 				}
-				UMLOperation operation1 = mapper.getOperation1();
+				VariableDeclarationContainer operation1 = mapper.getContainer1();
 				List<AbstractCall> operationInvocations1 = operation1.getAllOperationInvocations();
 				boolean anotherMapperCallsOperation1OfTheBestMapper = false;
 				for(AbstractCall invocation : operationInvocations1) {
-					if(invocation.matchesOperation(bestMapper.getOperation1(), operation1, modelDiff) && !invocation.matchesOperation(bestMapper.getOperation2(), operation1, modelDiff) &&
+					if(invocation.matchesOperation(bestMapper.getContainer1(), operation1, modelDiff) && !invocation.matchesOperation(bestMapper.getContainer2(), operation1, modelDiff) &&
 							!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, addedOperations)) {
 						anotherMapperCallsOperation1OfTheBestMapper = true;
 						break;
@@ -935,19 +936,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return bestMapper;
 	}
 
-	private boolean equalSignatureWithCommonParameterTypes(UMLOperation operation1, UMLOperation operation2) {
+	private boolean equalSignatureWithCommonParameterTypes(VariableDeclarationContainer operation1, VariableDeclarationContainer operation2) {
 		return operation1.equalReturnParameter(operation2) &&
 				operation1.getName().equals(operation2.getName()) &&
 				operation1.commonParameterTypes(operation2).size() > 0;
 	}
 
 	private boolean identicalBodyWithAnotherAddedMethod(UMLOperationBodyMapper mapper) {
-		UMLOperation operation1 = mapper.getOperation1();
+		VariableDeclarationContainer operation1 = mapper.getContainer1();
 		List<String> stringRepresentation = operation1.stringRepresentation();
 		// 3 corresponds to the opening and closing bracket of a method + a single statement
 		if(stringRepresentation.size() > 3) {
 			for(UMLOperation addedOperation : addedOperations) {
-				if(!mapper.getOperation2().equals(addedOperation)) {
+				if(!mapper.getContainer2().equals(addedOperation)) {
 					OperationBody body = addedOperation.getBody();
 					if(body != null && body.getBodyHashCode() == operation1.getBody().getBodyHashCode()) {
 						return true;
@@ -985,7 +986,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		else if(stringRepresentation.size() == 3) {
 			int counter = 0;
 			for(UMLOperation addedOperation : addedOperations) {
-				if(!mapper.getOperation2().equals(addedOperation)) {
+				if(!mapper.getContainer2().equals(addedOperation)) {
 					OperationBody body = addedOperation.getBody();
 					List<String> parameterNameList = addedOperation.getParameterNameList();
 					if(body != null && body.getBodyHashCode() == operation1.getBody().getBodyHashCode() &&
@@ -1014,12 +1015,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	private boolean identicalBodyWithAnotherRemovedMethod(UMLOperationBodyMapper mapper) {
-		UMLOperation operation2 = mapper.getOperation2();
+		VariableDeclarationContainer operation2 = mapper.getContainer2();
 		List<String> stringRepresentation = operation2.stringRepresentation();
 		// 3 corresponds to the opening and closing bracket of a method + a single statement
 		if(stringRepresentation.size() > 3) {
 			for(UMLOperation removedOperation : removedOperations) {
-				if(!mapper.getOperation1().equals(removedOperation)) {
+				if(!mapper.getContainer1().equals(removedOperation)) {
 					OperationBody body = removedOperation.getBody();
 					if(body != null && body.getBodyHashCode() == operation2.getBody().getBodyHashCode()) {
 						return true;
@@ -1057,7 +1058,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		else if(stringRepresentation.size() == 3) {
 			int counter = 0;
 			for(UMLOperation removedOperation : removedOperations) {
-				if(!mapper.getOperation1().equals(removedOperation)) {
+				if(!mapper.getContainer1().equals(removedOperation)) {
 					OperationBody body = removedOperation.getBody();
 					List<String> parameterNameList = removedOperation.getParameterNameList();
 					if(body != null && body.getBodyHashCode() == operation2.getBody().getBodyHashCode() &&
@@ -1100,7 +1101,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	private boolean matchesConsistentMethodInvocationRename(UMLOperationBodyMapper mapper, Set<MethodInvocationReplacement> consistentMethodInvocationRenames) {
 		for(MethodInvocationReplacement rename : consistentMethodInvocationRenames) {
-			if(mapper.getOperation1().getName().equals(rename.getBefore()) && mapper.getOperation2().getName().equals(rename.getAfter())) {
+			if(mapper.getContainer1().getName().equals(rename.getBefore()) && mapper.getContainer2().getName().equals(rename.getAfter())) {
 				return true;
 			}
 		}
@@ -1109,10 +1110,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	private boolean mismatchesConsistentMethodInvocationRename(UMLOperationBodyMapper mapper, Set<MethodInvocationReplacement> consistentMethodInvocationRenames) {
 		for(MethodInvocationReplacement rename : consistentMethodInvocationRenames) {
-			if(mapper.getOperation1().getName().equals(rename.getBefore()) && !mapper.getOperation2().getName().equals(rename.getAfter())) {
+			if(mapper.getContainer1().getName().equals(rename.getBefore()) && !mapper.getContainer2().getName().equals(rename.getAfter())) {
 				return true;
 			}
-			else if(!mapper.getOperation1().getName().equals(rename.getBefore()) && mapper.getOperation2().getName().equals(rename.getAfter())) {
+			else if(!mapper.getContainer1().getName().equals(rename.getBefore()) && mapper.getContainer2().getName().equals(rename.getAfter())) {
 				return true;
 			}
 		}
@@ -1144,7 +1145,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			AbstractCall invocationT2 = statementT2.invocationCoveringEntireFragment();
 			if(invocationT2 != null) {
 				for(UMLOperation addedOperation : addedOperations) {
-					if(invocationT2.matchesOperation(addedOperation, operationBodyMapper.getOperation2(), modelDiff)) {
+					if(invocationT2.matchesOperation(addedOperation, operationBodyMapper.getContainer2(), modelDiff)) {
 						AbstractCodeFragment statementT1 = nonMappedLeavesT1.get(0);
 						AbstractCall invocationT1 = statementT1.invocationCoveringEntireFragment();
 						if(invocationT1 != null && addedOperation.getAllOperationInvocations().contains(invocationT1)) {

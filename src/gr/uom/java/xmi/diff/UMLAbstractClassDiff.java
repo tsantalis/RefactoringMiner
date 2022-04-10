@@ -136,7 +136,7 @@ public abstract class UMLAbstractClassDiff {
 
 	protected boolean containsMapperForOperation1(UMLOperation operation) {
 		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-			if(mapper.getOperation1() != null && mapper.getOperation1().equals(operation)) {
+			if(mapper.getContainer1().equals(operation)) {
 				return true;
 			}
 		}
@@ -145,7 +145,7 @@ public abstract class UMLAbstractClassDiff {
 
 	protected boolean containsMapperForOperation2(UMLOperation operation) {
 		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-			if(mapper.getOperation2() != null && mapper.getOperation2().equals(operation)) {
+			if(mapper.getContainer2().equals(operation)) {
 				return true;
 			}
 		}

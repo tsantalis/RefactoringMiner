@@ -2760,15 +2760,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				replacementsToBeRemoved.add(replacement);
 				replacementsToBeAdded.addAll(set);
 			}
-			Set<Replacement> r = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), variables1, variables2);
-			if(!r.isEmpty()) {
-				replacementsToBeRemoved.add(replacement);
-				replacementsToBeAdded.addAll(r);
+			boolean methodInvocationReplacementWithDifferentNumberOfArguments = false;
+			if(replacement instanceof MethodInvocationReplacement) {
+				MethodInvocationReplacement methodInvocationReplacement = (MethodInvocationReplacement)replacement;
+				AbstractCall invokedOperationBefore = methodInvocationReplacement.getInvokedOperationBefore();
+				AbstractCall invokedOperationAfter = methodInvocationReplacement.getInvokedOperationAfter();
+				if(invokedOperationBefore.getArguments().size() != invokedOperationAfter.getArguments().size()) {
+					methodInvocationReplacementWithDifferentNumberOfArguments = true;
+				}
 			}
-			Set<Replacement> r2 = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), stringLiterals1, variables2);
-			if(!r2.isEmpty()) {
-				replacementsToBeRemoved.add(replacement);
-				replacementsToBeAdded.addAll(r2);
+			if(!methodInvocationReplacementWithDifferentNumberOfArguments) {
+				Set<Replacement> r = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), variables1, variables2);
+				if(!r.isEmpty()) {
+					replacementsToBeRemoved.add(replacement);
+					replacementsToBeAdded.addAll(r);
+				}
+				Set<Replacement> r2 = variableReplacementWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), stringLiterals1, variables2);
+				if(!r2.isEmpty()) {
+					replacementsToBeRemoved.add(replacement);
+					replacementsToBeAdded.addAll(r2);
+				}
 			}
 		}
 		replacementInfo.removeReplacements(replacementsToBeRemoved);

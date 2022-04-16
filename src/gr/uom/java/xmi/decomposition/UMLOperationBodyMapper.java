@@ -5661,58 +5661,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						int startIndex2 = s2.indexOf(variable2);
 						String substringBeforeIndex2 = s2.substring(0, startIndex2);
 						String substringAfterIndex2 = s2.substring(startIndex2 + variable2.length(), s2.length());
-						boolean suffixMatch = false;
-						if(substringAfterIndex1.equals(substringAfterIndex2)) {
-							suffixMatch = true;
-						}
-						else {
-							String variableContainedInSubstringAfterIndex1 = null;
-							for(String var1 : variables1) {
-								if(substringAfterIndex1.contains(var1)) {
-									variableContainedInSubstringAfterIndex1 = var1;
-									break;
-								}
-							}
-							String variableContainedInSubstringAfterIndex2 = null;
-							for(String var2 : variables2) {
-								if(substringAfterIndex2.contains(var2)) {
-									variableContainedInSubstringAfterIndex2 = var2;
-									break;
-								}
-							}
-							if(variableContainedInSubstringAfterIndex1 != null && variableContainedInSubstringAfterIndex2 != null) {
-								Set<Replacement> r = variableReplacementWithinMethodInvocations(substringAfterIndex1, substringAfterIndex2, variables1, variables2);
-								if(!r.isEmpty()) {
-									suffixMatch = true;
-								}
-							}
-						}
-						boolean prefixMatch = false;
-						if(substringBeforeIndex1.equals(substringBeforeIndex2)) {
-							prefixMatch = true;
-						}
-						else {
-							String variableContainedInSubstringBeforeIndex1 = null;
-							for(String var1 : variables1) {
-								if(substringBeforeIndex1.contains(var1)) {
-									variableContainedInSubstringBeforeIndex1 = var1;
-									break;
-								}
-							}
-							String variableContainedInSubstringBeforeIndex2 = null;
-							for(String var2 : variables2) {
-								if(substringBeforeIndex2.contains(var2)) {
-									variableContainedInSubstringBeforeIndex2 = var2;
-									break;
-								}
-							}
-							if(variableContainedInSubstringBeforeIndex1 != null && variableContainedInSubstringBeforeIndex2 != null) {
-								Set<Replacement> r = variableReplacementWithinMethodInvocations(substringBeforeIndex1, substringBeforeIndex2, variables1, variables2);
-								if(!r.isEmpty()) {
-									prefixMatch = true;
-								}
-							}
-						}
+						boolean suffixMatch = substringAfterIndex1.equals(substringAfterIndex2);
+						boolean prefixMatch = substringBeforeIndex1.equals(substringBeforeIndex2);
 						if(prefixMatch && suffixMatch) {
 							replacements.add(new Replacement(variable1, variable2, ReplacementType.VARIABLE_NAME));
 						}

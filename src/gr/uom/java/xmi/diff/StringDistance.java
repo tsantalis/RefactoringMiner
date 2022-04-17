@@ -14,6 +14,7 @@ import com.github.difflib.patch.Chunk;
 import com.github.difflib.patch.Patch;
 
 public class StringDistance {
+	private static final int MAX_STRING_LENGTH = 10000;
 	private static final Pattern COMMENT_LINE = Pattern.compile("^\\s*(//|\\*|import\\s).*");
 	
 	public static int editDistance(String a, String b, int threshold) {
@@ -21,6 +22,11 @@ public class StringDistance {
 	}
 
 	public static int editDistance(String a, String b) {
+		int length1 = a.length();
+		int length2 = b.length();
+		if(length1 > MAX_STRING_LENGTH || length2 > MAX_STRING_LENGTH) {
+			return Math.max(length1, length2);
+		}
 		return new LevenshteinDistance().apply(a, b);
 	}
 

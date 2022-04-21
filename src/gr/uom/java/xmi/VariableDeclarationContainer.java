@@ -86,6 +86,13 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	boolean isGetter();
 	AbstractCall isDelegate();
 
+	default int getBodyHashCode() {
+		OperationBody operationBody = getBody();
+		if(operationBody != null)
+			return operationBody.getBodyHashCode();
+		return 0;
+	}
+
 	default List<String> stringRepresentation() {
 		OperationBody operationBody = getBody();
 		if(operationBody != null)

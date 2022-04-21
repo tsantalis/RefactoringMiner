@@ -81,6 +81,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)|(\\?)|(:)");
 	public static final Pattern SPLIT_CONCAT_STRING_PATTERN = Pattern.compile("(\\s)*(\\+)(\\s)*");
 	private static final int MAXIMUM_NUMBER_OF_COMPARED_STRINGS = 100;
+	private static final int MAXIMUM_NUMBER_OF_COMPARED_STATEMENTS = 1000;
 	private UMLAbstractClassDiff classDiff;
 	private UMLModelDiff modelDiff;
 	private VariableDeclarationContainer callSiteOperation;
@@ -1635,6 +1636,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public void processLeaves(List<? extends AbstractCodeFragment> leaves1, List<? extends AbstractCodeFragment> leaves2,
 			Map<String, String> parameterToArgumentMap) throws RefactoringMinerTimedOutException {
+		if(leaves1.size() > MAXIMUM_NUMBER_OF_COMPARED_STATEMENTS && leaves2.size() > MAXIMUM_NUMBER_OF_COMPARED_STATEMENTS &&
+				container1.getBodyHashCode() != container2.getBodyHashCode()) {
+			return;
+		}
 		List<TreeSet<LeafMapping>> postponedMappingSets = new ArrayList<TreeSet<LeafMapping>>();
 		if(leaves1.size() <= leaves2.size()) {
 			//exact string+depth matching - leaf nodes
@@ -5835,7 +5840,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		OperationBody body1 = container1.getBody();
 		OperationBody body2 = container2.getBody();
 		if(body1 != null && body2 != null) {
-			return body1.getBodyHashCode() == body2.getBodyHashCode();
+			return container1.getBodyHashCode() == container2.getBodyHashCode();
 		}
 		return false;
 	}

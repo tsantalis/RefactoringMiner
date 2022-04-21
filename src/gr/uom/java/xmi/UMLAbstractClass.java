@@ -350,7 +350,7 @@ public abstract class UMLAbstractClass {
 	public boolean containsOperationWithIdenticalBody(UMLOperation operation) {
 		if(operation.getBody() != null) {
 			for(UMLOperation originalOperation : operations) {
-				if(originalOperation.getBody() != null && originalOperation.getBody().getBodyHashCode() == operation.getBody().getBodyHashCode())
+				if(originalOperation.getBody() != null && originalOperation.getBodyHashCode() == operation.getBodyHashCode())
 					return true;
 			}
 		}

@@ -215,7 +215,7 @@ public class VariableReplacementAnalysis {
 				}
 			}
 		}
-		else if(operation1.getBody() != null && operation2.getBody() != null && operation1.getBody().getBodyHashCode() == operation2.getBody().getBodyHashCode()) {
+		else if(operation1.getBody() != null && operation2.getBody() != null && operation1.getBodyHashCode() == operation2.getBodyHashCode()) {
 			if(removedVariables.size() <= addedVariables.size()) {
 				for(VariableDeclaration removedVariable : removedVariables) {
 					if(!removedVariablesToBeRemoved.contains(removedVariable)) {

@@ -453,7 +453,7 @@ public abstract class UMLAbstractClass {
 	}
 
 	public MatchResult hasAttributesAndOperationsWithCommonNames(UMLAbstractClass umlClass) {
-		Set<UMLOperation> commonOperations = new LinkedHashSet<UMLOperation>();
+		List<UMLOperation> commonOperations = new ArrayList<UMLOperation>();
 		int totalOperations = 0;
 		for(UMLOperation operation : operations) {
 			if(!operation.isConstructor() && !operation.overridesObject()) {
@@ -471,7 +471,7 @@ public abstract class UMLAbstractClass {
 	    		}
 			}
 		}
-		Set<UMLAttribute> commonAttributes = new LinkedHashSet<UMLAttribute>();
+		List<UMLAttribute> commonAttributes = new ArrayList<UMLAttribute>();
 		int totalAttributes = 0;
 		for(UMLAttribute attribute : attributes) {
 			totalAttributes++;
@@ -525,8 +525,8 @@ public abstract class UMLAbstractClass {
 			String diff2 = beginIndexS2 > endIndexS2 ? "" :	umlClass.name.substring(beginIndexS2, endIndexS2);
 			pattern = new RenamePattern(diff1, diff2);
 		}
-		Set<UMLOperation> commonOperations = new LinkedHashSet<UMLOperation>();
-		Set<UMLOperation> identicalOperations = new LinkedHashSet<UMLOperation>();
+		List<UMLOperation> commonOperations = new ArrayList<UMLOperation>();
+		List<UMLOperation> identicalOperations = new ArrayList<UMLOperation>();
 		int totalOperations = 0;
 		int totalAbstractOperations = 0;
 		for(UMLOperation operation : operations) {
@@ -583,8 +583,8 @@ public abstract class UMLAbstractClass {
 				}
 			}
 		}
-		Set<UMLAttribute> commonAttributes = new LinkedHashSet<UMLAttribute>();
-		Set<UMLAttribute> identicalAttributes = new LinkedHashSet<UMLAttribute>();
+		List<UMLAttribute> commonAttributes = new ArrayList<UMLAttribute>();
+		List<UMLAttribute> identicalAttributes = new ArrayList<UMLAttribute>();
 		int totalAttributes = 0;
 		for(UMLAttribute attribute : attributes) {
 			totalAttributes++;
@@ -674,7 +674,7 @@ public abstract class UMLAbstractClass {
 	}
 
 	public MatchResult hasSameAttributesAndOperations(UMLAbstractClass umlClass) {
-		Set<UMLOperation> commonOperations = new LinkedHashSet<UMLOperation>();
+		List<UMLOperation> commonOperations = new ArrayList<UMLOperation>();
 		int totalOperations = 0;
 		for(UMLOperation operation : operations) {
 			totalOperations++;
@@ -688,7 +688,7 @@ public abstract class UMLAbstractClass {
 				commonOperations.add(operation);
 			}
 		}
-		Set<UMLAttribute> commonAttributes = new LinkedHashSet<UMLAttribute>();
+		List<UMLAttribute> commonAttributes = new ArrayList<UMLAttribute>();
 		int totalAttributes = 0;
 		for(UMLAttribute attribute : attributes) {
 			totalAttributes++;

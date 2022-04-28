@@ -578,7 +578,8 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 				(argument instanceof PsiLiteral && ((PsiLiteral)argument).getValue() instanceof Number) ||
 				isFieldAccessWithThisExpression(argument) ||
 				(argument instanceof PsiArrayAccessExpression && invalidArrayAccess((PsiArrayAccessExpression)argument)) ||
-				(argument instanceof PsiPolyadicExpression && invalidInfix((PsiPolyadicExpression)argument)))
+				(argument instanceof PsiPolyadicExpression && invalidInfix((PsiPolyadicExpression)argument)) ||
+				castExpressionInParenthesizedExpression(argument))
 			return;
 		if(argument instanceof PsiMethodReferenceExpression) {
 			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (PsiMethodReferenceExpression)argument);
@@ -594,6 +595,19 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 			anonymous.getArguments().add(argumentSource);
 		}
+	}
+
+	private boolean castExpressionInParenthesizedExpression(PsiExpression argument) {
+		if(argument instanceof PsiParenthesizedExpression) {
+			PsiExpression parenthesizedExpression = ((PsiParenthesizedExpression)argument).getExpression();
+			if(parenthesizedExpression instanceof PsiTypeCastExpression) {
+				PsiTypeCastExpression castExpression = (PsiTypeCastExpression)parenthesizedExpression;
+				if(isSimpleName(castExpression.getOperand())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private void visit(PsiReferenceExpression node) {

@@ -36,6 +36,7 @@ import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.NullLiteral;
 import org.eclipse.jdt.core.dom.NumberLiteral;
 import org.eclipse.jdt.core.dom.ParameterizedType;
+import org.eclipse.jdt.core.dom.ParenthesizedExpression;
 import org.eclipse.jdt.core.dom.PostfixExpression;
 import org.eclipse.jdt.core.dom.PrefixExpression;
 import org.eclipse.jdt.core.dom.PrimitiveType;
@@ -739,7 +740,8 @@ public class Visitor extends ASTVisitor {
 				argument instanceof NumberLiteral ||
 				(argument instanceof FieldAccess && ((FieldAccess)argument).getExpression() instanceof ThisExpression) ||
 				(argument instanceof ArrayAccess && invalidArrayAccess((ArrayAccess)argument)) ||
-				(argument instanceof InfixExpression && invalidInfix((InfixExpression)argument)))
+				(argument instanceof InfixExpression && invalidInfix((InfixExpression)argument)) ||
+				castExpressionInParenthesizedExpression(argument))
 			return;
 		if(argument instanceof ExpressionMethodReference) {
 			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (ExpressionMethodReference)argument);
@@ -770,6 +772,19 @@ public class Visitor extends ASTVisitor {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 			anonymous.getArguments().add(argument.toString());
 		}
+	}
+
+	private boolean castExpressionInParenthesizedExpression(Expression argument) {
+		if(argument instanceof ParenthesizedExpression) {
+			Expression parenthesizedExpression = ((ParenthesizedExpression)argument).getExpression();
+			if(parenthesizedExpression instanceof CastExpression) {
+				CastExpression castExpression = (CastExpression)parenthesizedExpression;
+				if(castExpression.getExpression() instanceof SimpleName) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public boolean visit(QualifiedName node) {

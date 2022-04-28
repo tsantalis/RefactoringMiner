@@ -4904,7 +4904,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							boolean isVariableDeclarationReplacement =
 									characterIndex1 < s1.length() && (s1.charAt(characterIndex1) == '=' || s1.charAt(characterIndex1) == '.') &&
 									characterIndex2 < s2.length() && (s2.charAt(characterIndex2) == '=' || s2.charAt(characterIndex2) == '.');
-							if(!isVariableDeclarationReplacement &&
+							boolean isCastExpression =
+									indexOf1 > 0 && s1.charAt(indexOf1-1) == ')' &&
+									indexOf2 > 0 && s2.charAt(indexOf2-1) == ')';
+							if(!isVariableDeclarationReplacement && !isCastExpression &&
 									container1.getVariableDeclaration(replacement.getBefore()) != null &&
 									container2.getVariableDeclaration(replacement.getAfter()) != null) {
 								matchingReplacement = replacement;
@@ -5670,16 +5673,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						int startIndex2 = s2.indexOf(variable2);
 						String substringBeforeIndex2 = s2.substring(0, startIndex2);
 						String substringAfterIndex2 = s2.substring(startIndex2 + variable2.length(), s2.length());
-						boolean suffixMatch = substringAfterIndex1.equals(substringAfterIndex2);
-						boolean prefixMatch = substringBeforeIndex1.equals(substringBeforeIndex2);
-						if(prefixMatch && suffixMatch) {
-							replacements.add(new Replacement(variable1, variable2, ReplacementType.VARIABLE_NAME));
+						boolean suffixMatch = substringAfterIndex1.equals(substringAfterIndex2) && !substringAfterIndex1.isEmpty();
+						boolean prefixMatch = substringBeforeIndex1.equals(substringBeforeIndex2) && !substringBeforeIndex1.isEmpty();
+						if(prefixMatch || suffixMatch) {
+							Replacement r = new Replacement(variable1, variable2, ReplacementType.VARIABLE_NAME);
+							replacements.add(r);
 						}
 					}
 				}
 			}
 		}
-		return replacements;
+		String tmp1 = new String(s1);
+		for(Replacement replacement : replacements) {
+			tmp1 = ReplacementUtil.performReplacement(tmp1, s2, replacement.getBefore(), replacement.getAfter());
+		}
+		if(tmp1.equals(s2)) {
+			return replacements;
+		}
+		else {
+			return Collections.emptySet();
+		}
 	}
 
 	private Set<Replacement> replacementsWithinMethodInvocations(String s1, String s2, Set<String> set1, Set<String> set2, Map<String, List<? extends AbstractCall>> methodInvocationMap, Direction direction) {

@@ -1868,10 +1868,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					Set<Replacement> intersection = variableDeclarationMapping.commonReplacements(previousMapping);
 					if(!intersection.isEmpty()) {
 						for(Replacement commonReplacement : intersection) {
-							if(commonReplacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
-									variableDeclarationMapping.getFragment1().getVariableDeclaration(commonReplacement.getBefore()) != null &&
-									variableDeclarationMapping.getFragment2().getVariableDeclaration(commonReplacement.getAfter()) != null) {
-								mappingsToBeAdded.add(variableDeclarationMapping);
+							if(commonReplacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
+								if(variableDeclarationMapping.getFragment1().getVariableDeclaration(commonReplacement.getBefore()) != null &&
+										variableDeclarationMapping.getFragment2().getVariableDeclaration(commonReplacement.getAfter()) != null) {
+									mappingsToBeAdded.add(variableDeclarationMapping);
+								}
+								else if(existingMappingWithCommonParents(variableDeclarationMapping)) {
+									mappingsToBeAdded.add(variableDeclarationMapping);
+								}
 							}
 						}
 					}
@@ -1890,6 +1894,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				leaves2.remove(minStatementMapping.getFragment2());
 			}
 		}
+	}
+
+	private boolean existingMappingWithCommonParents(LeafMapping variableDeclarationMapping) {
+		CompositeStatementObject parent1 = variableDeclarationMapping.getFragment1().getParent();
+		CompositeStatementObject parent2 = variableDeclarationMapping.getFragment2().getParent();
+		for(AbstractCodeMapping previousMapping : this.mappings) {
+			if(previousMapping.getFragment1().getParent().equals(parent1) && previousMapping.getFragment2().getParent().equals(parent2)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void processAnonymousClassDeclarationsInIdenticalStatements(LeafMapping minStatementMapping) throws RefactoringMinerTimedOutException {

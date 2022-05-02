@@ -11,7 +11,6 @@ import java.util.Set;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfoProvider;
-import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
@@ -452,6 +451,40 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		if(onlyArgumentsChanged(call, replacements)) {
 			int argumentIntersectionSize = argumentIntersectionSize(call, replacements, parameterToArgumentMap);
 			if(argumentIntersectionSize > 0 || getArguments().size() == 0 || call.getArguments().size() == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean inlinedStatementBecomesAdditionalArgument(AbstractCall call, Set<Replacement> replacements, List<? extends AbstractCodeFragment> statements) {
+		if(identicalName(call) && this.arguments.size() < call.arguments.size() && this.argumentIntersection(call).size() > 0) {
+			int matchedArguments = 0;
+			Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
+			for(String arg : call.arguments) {
+				if(this.arguments.contains(arg)) {
+					matchedArguments++;
+				}
+				else {
+					for(AbstractCodeFragment statement : statements) {
+						if(statement.getVariableDeclarations().size() > 0) {
+							VariableDeclaration variableDeclaration = statement.getVariableDeclarations().get(0);
+							if(variableDeclaration.getInitializer() != null) {
+								if(arg.equals(variableDeclaration.getInitializer().getExpression())) {
+									matchedArguments++;
+									additionallyMatchedStatements1.add(statement);
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+			if(matchedArguments == call.arguments.size()) {
+				if(additionallyMatchedStatements1.size() > 0) {
+					CompositeReplacement r = new CompositeReplacement(this.actualString(), call.actualString(), additionallyMatchedStatements1, Collections.emptySet());
+					replacements.add(r);
+				}
 				return true;
 			}
 		}

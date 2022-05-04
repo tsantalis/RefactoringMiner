@@ -52,7 +52,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/phishman3579/java-algorithms-implementation.git", 391, 0, 0);
         processRepositoryCommits("https://github.com/square/wire.git", 46, 0, 2);
         processRepositoryCommits("https://github.com/abarisain/dmix.git", 3, 0, 0);
-        processRepositoryCommits("https://github.com/netty/netty.git", 143, 2, 10);
+        processRepositoryCommits("https://github.com/netty/netty.git", 147, 2, 10);
         processRepositoryCommits("https://github.com/HdrHistogram/HdrHistogram.git", 2, 0, 0);
         processRepositoryCommits("https://github.com/grails/grails-core.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/cwensel/cascading.git", 12, 0, 5);
@@ -125,7 +125,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/AdoptOpenJDK/jitwatch.git", 23, 0, 1);
         processRepositoryCommits("https://github.com/liferay/liferay-portal.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/square/mortar.git", 6, 0, 0);
-        processRepositoryCommits("https://github.com/infinispan/infinispan.git", 479, 3, 23);
+        processRepositoryCommits("https://github.com/infinispan/infinispan.git", 480, 3, 23);
         processRepositoryCommits("https://github.com/crashub/crash.git", 2, 0, 0);
         processRepositoryCommits("https://github.com/glyptodon/guacamole-client.git", 14, 0, 0);
         processRepositoryCommits("https://github.com/github/android.git", 305, 0, 0);
@@ -145,7 +145,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/deeplearning4j/deeplearning4j.git", 13, 0, 1);
         processRepositoryCommits("https://github.com/crate/crate.git", 166, 0, 1);
         processRepositoryCommits("https://github.com/libgdx/libgdx.git", 2, 0, 0);
-        processRepositoryCommits("https://github.com/hibernate/hibernate-orm.git", 95, 0, 0);
+        processRepositoryCommits("https://github.com/hibernate/hibernate-orm.git", 99, 0, 0);
         processRepositoryCommits("https://github.com/Netflix/zuul.git", 6, 1, 0);
         processRepositoryCommits("https://github.com/ratpack/ratpack.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/brianfrankcooper/YCSB.git", 3, 0, 0);

@@ -824,6 +824,25 @@ public class VariableReplacementAnalysis {
 				VariableDeclarationContainer operationAfter = splitVariableOperations.iterator().next();
 				SplitVariableRefactoring refactoring = new SplitVariableRefactoring(oldVariable.getKey(), splitVariables, oldVariable.getValue(), operationAfter, splitMap.get(split), insideExtractedOrInlinedMethod);
 				if(!existsConflictingExtractVariableRefactoring(refactoring) && !existsConflictingParameterRenameInOperationDiff(refactoring)) {
+					for(VariableDeclaration removedVariable : removedVariables) {
+						for(VariableDeclaration addedVariable : splitVariables) {
+							if(removedVariable.getVariableName().equals(addedVariable.getVariableName()) && removedVariable.getType().equals(addedVariable.getType())) {
+								Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(removedVariable, addedVariable, mappings);
+								matchedVariables.add(Pair.of(removedVariable, addedVariable));
+								getVariableRefactorings(removedVariable, addedVariable, oldVariable.getValue(), operationAfter, variableReferences, null);
+								break;
+							}
+						}
+					}
+					for(VariableDeclaration addedVariable : addedVariables) {
+						VariableDeclaration removedVariable = oldVariable.getKey();
+						if(removedVariable.getVariableName().equals(addedVariable.getVariableName()) && removedVariable.getType().equals(addedVariable.getType())) {
+							Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(removedVariable, addedVariable, mappings);
+							matchedVariables.add(Pair.of(removedVariable, addedVariable));
+							getVariableRefactorings(removedVariable, addedVariable, oldVariable.getValue(), operationAfter, variableReferences, null);
+							break;
+						}
+					}
 					variableSplits.add(refactoring);
 					removedVariables.remove(oldVariable.getKey());
 					addedVariables.removeAll(splitVariables);
@@ -1035,6 +1054,25 @@ public class VariableReplacementAnalysis {
 				VariableDeclarationContainer operationBefore = mergedVariableOperations.iterator().next();
 				MergeVariableRefactoring refactoring = new MergeVariableRefactoring(mergedVariables, newVariable.getKey(), operationBefore, newVariable.getValue(), mergeMap.get(merge), insideExtractedOrInlinedMethod);
 				if(!existsConflictingInlineVariableRefactoring(refactoring) && !existsConflictingParameterRenameInOperationDiff(refactoring, variableInvocationExpressionMap)) {
+					for(VariableDeclaration removedVariable : removedVariables) {
+						VariableDeclaration addedVariable = newVariable.getKey();
+						if(removedVariable.getVariableName().equals(addedVariable.getVariableName()) && removedVariable.getType().equals(addedVariable.getType())) {
+							Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(removedVariable, addedVariable, mappings);
+							matchedVariables.add(Pair.of(removedVariable, addedVariable));
+							getVariableRefactorings(removedVariable, addedVariable, operationBefore, newVariable.getValue(), variableReferences, null);
+							break;
+						}
+					}
+					for(VariableDeclaration addedVariable : addedVariables) {
+						for(VariableDeclaration removedVariable : mergedVariables) {
+							if(removedVariable.getVariableName().equals(addedVariable.getVariableName()) && removedVariable.getType().equals(addedVariable.getType())) {
+								Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(removedVariable, addedVariable, mappings);
+								matchedVariables.add(Pair.of(removedVariable, addedVariable));
+								getVariableRefactorings(removedVariable, addedVariable, operationBefore, newVariable.getValue(), variableReferences, null);
+								break;
+							}
+						}
+					}
 					variableMerges.add(refactoring);
 					removedVariables.removeAll(mergedVariables);
 					addedVariables.remove(newVariable.getKey());

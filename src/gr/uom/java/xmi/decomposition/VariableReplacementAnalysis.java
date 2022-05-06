@@ -1925,6 +1925,13 @@ public class VariableReplacementAnalysis {
 			for(UMLOperationBodyMapper mapper : childMappers) {
 				for(AbstractCodeMapping mapping : mapper.getMappings()) {
 					if(mapping.getFragment1().getVariableDeclarations().contains(v1)) {
+						boolean identicalNonMappedStatementInParentMapper = false;
+						for(AbstractCodeFragment fragment2 : nonMappedLeavesT2) {
+							if(fragment2.getString().equals(mapping.getFragment2().getString())) {
+								identicalNonMappedStatementInParentMapper = true;
+								break;
+							}
+						}
 						if(v2 != null && v2.getInitializer() != null) {
 							VariableDeclarationContainer extractedMethod = mapper.getContainer2();
 							Map<String, List<AbstractCall>> methodInvocationMap = v2.getInitializer().getMethodInvocationMap();
@@ -1954,7 +1961,9 @@ public class VariableReplacementAnalysis {
 								}
 							}
 						}
-						return true;
+						if(!identicalNonMappedStatementInParentMapper) {
+							return true;
+						}
 					}
 				}
 				for(AbstractCodeFragment nonMappedStatement : mapper.getNonMappedLeavesT2()) {

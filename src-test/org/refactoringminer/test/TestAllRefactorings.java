@@ -56,7 +56,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/baasbox/baasbox.git",
 				"https://github.com/phishman3579/java-algorithms-implementation.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 2404, 2, 44);
+		processRepositoryCommits(Arrays.asList(gitURLs), 2403, 2, 44);
 	}
 
 	@Test
@@ -127,7 +127,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/jayway/rest-assured.git",
 				"https://github.com/graphhopper/graphhopper.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 3436, 15, 154);
+		processRepositoryCommits(Arrays.asList(gitURLs), 3435, 14, 154);
 	}
 
 	@Test
@@ -254,7 +254,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 		GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
 		TestBuilder test = new TestBuilder(detector, REPOS, Refactorings.All.getValue());
 		RefactoringPopulator.feedRefactoringsInstances(Refactorings.All.getValue(), Systems.FSE.getValue(), test);
-		test.assertExpectations(getProject(), 11146, 28, 316, false);
+		test.assertExpectations(getProject(), 11144, 27, 316, false);
 	}
  */
 }

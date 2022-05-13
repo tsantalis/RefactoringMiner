@@ -42,7 +42,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/ignatov/intellij-erlang.git", 51, 0, 0);
         processRepositoryCommits("https://github.com/geoserver/geoserver.git", 77, 0, 6);
         processRepositoryCommits("https://github.com/BuildCraft/BuildCraft.git", 35, 1, 4);
-        processRepositoryCommits("https://github.com/HubSpot/Singularity.git", 7, 0, 0);
+        processRepositoryCommits("https://github.com/HubSpot/Singularity.git", 6, 0, 0);
         processRepositoryCommits("https://github.com/katzer/cordova-plugin-local-notifications.git", 63, 0, 2);
         processRepositoryCommits("https://github.com/FasterXML/jackson-databind.git", 26, 0, 0);
         processRepositoryCommits("https://github.com/aws/aws-sdk-java.git", 591, 0, 2);
@@ -52,7 +52,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/phishman3579/java-algorithms-implementation.git", 391, 0, 0);
         processRepositoryCommits("https://github.com/square/wire.git", 46, 0, 2);
         processRepositoryCommits("https://github.com/abarisain/dmix.git", 3, 0, 0);
-        processRepositoryCommits("https://github.com/netty/netty.git", 147, 2, 10);
+        processRepositoryCommits("https://github.com/netty/netty.git", 147, 1, 10);
         processRepositoryCommits("https://github.com/HdrHistogram/HdrHistogram.git", 2, 0, 0);
         processRepositoryCommits("https://github.com/grails/grails-core.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/cwensel/cascading.git", 12, 0, 5);
@@ -113,7 +113,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/apache/tomcat.git", 17, 0, 0);
         processRepositoryCommits("https://github.com/facebook/buck.git", 175, 0, 7);
         processRepositoryCommits("https://github.com/jayway/rest-assured.git", 2, 0, 0);
-        processRepositoryCommits("https://github.com/graphhopper/graphhopper.git", 392, 2, 9);
+        processRepositoryCommits("https://github.com/graphhopper/graphhopper.git", 391, 2, 9);
         processRepositoryCommits("https://github.com/xetorthio/jedis.git", 33, 0, 0);
         processRepositoryCommits("https://github.com/eclipse/jetty.project.git", 11, 0, 4);
         processRepositoryCommits("https://github.com/droolsjbpm/jbpm.git", 147, 1, 4);

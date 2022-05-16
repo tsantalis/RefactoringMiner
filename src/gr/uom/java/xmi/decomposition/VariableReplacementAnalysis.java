@@ -1097,7 +1097,7 @@ public class VariableReplacementAnalysis {
 							RemoveVariableAnnotationRefactoring ref = new RemoveVariableAnnotationRefactoring(annotation, firstMergedVariable, newVariable.getKey(), operationBefore, newVariable.getValue(), insideExtractedOrInlinedMethod);
 							refactorings.add(ref);
 						}
-						for(UMLAnnotationDiff annotationDiff : annotationListDiff.getAnnotationDiffList()) {
+						for(UMLAnnotationDiff annotationDiff : annotationListDiff.getAnnotationDiffs()) {
 							ModifyVariableAnnotationRefactoring ref = new ModifyVariableAnnotationRefactoring(annotationDiff.getRemovedAnnotation(), annotationDiff.getAddedAnnotation(), firstMergedVariable, newVariable.getKey(), operationBefore, newVariable.getValue(), insideExtractedOrInlinedMethod);
 							refactorings.add(ref);
 						}
@@ -1265,7 +1265,7 @@ public class VariableReplacementAnalysis {
 			RemoveVariableAnnotationRefactoring refactoring = new RemoveVariableAnnotationRefactoring(annotation, variableDeclaration1, variableDeclaration2, operation1, operation2, insideExtractedOrInlinedMethod);
 			refactorings.add(refactoring);
 		}
-		for(UMLAnnotationDiff annotationDiff : annotationListDiff.getAnnotationDiffList()) {
+		for(UMLAnnotationDiff annotationDiff : annotationListDiff.getAnnotationDiffs()) {
 			ModifyVariableAnnotationRefactoring refactoring = new ModifyVariableAnnotationRefactoring(annotationDiff.getRemovedAnnotation(), annotationDiff.getAddedAnnotation(), variableDeclaration1, variableDeclaration2, operation1, operation2, insideExtractedOrInlinedMethod);
 			refactorings.add(refactoring);
 		}

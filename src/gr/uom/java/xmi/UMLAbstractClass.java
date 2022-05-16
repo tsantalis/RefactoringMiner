@@ -780,6 +780,7 @@ public abstract class UMLAbstractClass {
 	public abstract String getTypeDeclarationKind();
 	public abstract boolean isFinal();
 	public abstract boolean isStatic();
+	public abstract boolean isTopLevel();
 	public abstract String getVisibility();
 
 	public String getNonQualifiedName() {

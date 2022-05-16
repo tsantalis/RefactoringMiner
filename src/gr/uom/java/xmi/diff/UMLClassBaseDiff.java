@@ -51,6 +51,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private List<UMLType> addedImplementedInterfaces;
 	private List<UMLType> removedImplementedInterfaces;
 	private UMLAnnotationListDiff annotationListDiff;
+	private UMLImportListDiff importDiffList;
 	private Map<MethodInvocationReplacement, UMLOperationBodyMapper> consistentMethodInvocationRenames;
 
 	public UMLClassBaseDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
@@ -71,6 +72,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	public void process() throws RefactoringMinerTimedOutException {
+		processImports();
 		processInitializers();
 		processModifiers();
 		processAnnotations();
@@ -84,6 +86,29 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		checkForAttributeChanges();
 		checkForInlinedOperations();
 		checkForExtractedOperations();
+	}
+
+	private void processImports() {
+		if(originalClass.isTopLevel() && nextClass.isTopLevel()) {
+			this.importDiffList = new UMLImportListDiff(originalClass.getImportedTypes(), nextClass.getImportedTypes());
+		}
+	}
+
+	public boolean hasBothAddedAndRemovedImports() {
+		if(importDiffList != null) {
+			return importDiffList.getAddedImports().size() > 0 && importDiffList.getRemovedImports().size() > 0;
+		}
+		return false;
+	}
+
+	public void findImportChanges(String nameBefore, String nameAfter) {
+		if(importDiffList != null) {
+			importDiffList.findImportChanges(nameBefore, nameAfter);
+		}
+	}
+
+	public UMLImportListDiff getImportDiffList() {
+		return importDiffList;
 	}
 
 	protected void processInitializers() throws RefactoringMinerTimedOutException {

@@ -2037,17 +2037,22 @@ public class UMLModelDiff {
 			refactorings.addAll(attributeDiff.getRefactorings());
 		}
 		refactorings.addAll(this.refactorings);
+		Set<Refactoring> packageRefactorings = filterPackageRefactorings(refactorings);
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			inferMethodSignatureRelatedRefactorings(classDiff, refactorings);
+			detectImportDeclarationChanges(classDiff, packageRefactorings);
 		}
 		for(UMLClassMoveDiff classDiff : classMoveDiffList) {
 			inferMethodSignatureRelatedRefactorings(classDiff, refactorings);
+			detectImportDeclarationChanges(classDiff, packageRefactorings);
 		}
 		for(UMLClassMoveDiff classDiff : innerClassMoveDiffList) {
 			inferMethodSignatureRelatedRefactorings(classDiff, refactorings);
+			detectImportDeclarationChanges(classDiff, packageRefactorings);
 		}
 		for(UMLClassRenameDiff classDiff : classRenameDiffList) {
 			inferMethodSignatureRelatedRefactorings(classDiff, refactorings);
+			detectImportDeclarationChanges(classDiff, packageRefactorings);
 		}
 		return filterOutDuplicateRefactorings(refactorings);
 	}
@@ -2087,6 +2092,43 @@ public class UMLModelDiff {
 			}
 		}
 		return typeRenamePatternMap;
+	}
+
+	private Set<Refactoring> filterPackageRefactorings(Set<Refactoring> refactoringsAtRevision) {
+		Set<RefactoringType> refactoringTypesToConsider = new HashSet<>();
+		refactoringTypesToConsider.add(RefactoringType.MOVE_CLASS);
+		refactoringTypesToConsider.add(RefactoringType.RENAME_CLASS);
+		refactoringTypesToConsider.add(RefactoringType.MOVE_RENAME_CLASS);
+		refactoringTypesToConsider.add(RefactoringType.RENAME_PACKAGE);
+		refactoringTypesToConsider.add(RefactoringType.MOVE_PACKAGE);
+		refactoringTypesToConsider.add(RefactoringType.SPLIT_PACKAGE);
+		refactoringTypesToConsider.add(RefactoringType.MERGE_PACKAGE);
+		Set<Refactoring> filtered = new LinkedHashSet<Refactoring>();
+		for (Refactoring ref : refactoringsAtRevision) {
+			if (refactoringTypesToConsider.contains(ref.getRefactoringType())) {
+				filtered.add(ref);
+			}
+		}
+		return filtered;
+	}
+
+	private void detectImportDeclarationChanges(UMLClassBaseDiff classDiff, Set<Refactoring> refactorings) {
+		if(classDiff.hasBothAddedAndRemovedImports()) {
+			for(Refactoring ref : refactorings) {
+				if(ref instanceof RenameClassRefactoring) {
+					RenameClassRefactoring rename = (RenameClassRefactoring)ref;
+					classDiff.findImportChanges(rename.getOriginalClassName(), rename.getRenamedClassName());
+				}
+				else if(ref instanceof MoveClassRefactoring) {
+					MoveClassRefactoring move = (MoveClassRefactoring)ref;
+					classDiff.findImportChanges(move.getOriginalClassName(), move.getMovedClassName());
+				}
+				else if(ref instanceof MoveAndRenameClassRefactoring) {
+					MoveAndRenameClassRefactoring move = (MoveAndRenameClassRefactoring)ref;
+					classDiff.findImportChanges(move.getOriginalClassName(), move.getMovedClassName());
+				}
+			}
+		}
 	}
 
 	private void inferMethodSignatureRelatedRefactorings(UMLClassBaseDiff classDiff, Set<Refactoring> refactorings) {

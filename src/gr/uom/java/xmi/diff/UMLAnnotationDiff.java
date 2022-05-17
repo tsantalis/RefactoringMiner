@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
@@ -84,5 +85,28 @@ public class UMLAnnotationDiff {
 		return !typeNameChanged && !valueChanged && !valueAdded && !valueRemoved &&
 				removedMemberValuePairs.isEmpty() && addedMemberValuePairs.isEmpty() &&
 				matchedMemberValuePairsWithDifferentExpressions.isEmpty();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(addedAnnotation, removedAnnotation);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UMLAnnotationDiff other = (UMLAnnotationDiff) obj;
+		return Objects.equals(addedAnnotation, other.addedAnnotation)
+				&& Objects.equals(removedAnnotation, other.removedAnnotation);
+	}
+
+	@Override
+	public String toString() {
+		return removedAnnotation + "\t->\t" + addedAnnotation;
 	}
 }

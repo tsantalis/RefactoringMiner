@@ -33,7 +33,31 @@ public class UMLImportListDiff {
 			removedImports.remove(nameBefore);
 			addedImports.remove(nameAfter);
 		}
-		//TODO handle static imports
+		Set<String> matchedRemovedStaticImports = new LinkedHashSet<>();
+		for(String removedImport : removedImports) {
+			if(removedImport.startsWith(nameBefore + ".")) {
+				matchedRemovedStaticImports.add(removedImport);
+			}
+		}
+		Set<String> matchedAddedStaticImports = new LinkedHashSet<>();
+		for(String addedImport : addedImports) {
+			if(addedImport.startsWith(nameAfter + ".")) {
+				matchedAddedStaticImports.add(addedImport);
+			}
+		}
+		for(String removedImport : matchedRemovedStaticImports) {
+			for(String addedImport : matchedAddedStaticImports) {
+				String suffix1 = removedImport.substring(nameBefore.length());
+				String suffix2 = addedImport.substring(nameAfter.length());
+				if(suffix1.equals(suffix2)) {
+					Pair<String, String> pair = Pair.of(removedImport, addedImport);
+					changedImports.add(pair);
+					removedImports.remove(removedImport);
+					addedImports.remove(addedImport);
+					break;
+				}
+			}
+		}
 	}
 
 	public Set<String> getRemovedImports() {

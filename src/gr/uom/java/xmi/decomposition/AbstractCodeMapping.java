@@ -223,6 +223,7 @@ public abstract class AbstractCodeMapping {
 					if(initializer.toString().equals(replacement.getBefore()) ||
 							(initializer.toString().equals("(" + declaration.getType() + ")" + replacement.getBefore()) && !containsVariableNameReplacement(variableName)) ||
 							ternaryMatch(initializer, replacement.getBefore()) ||
+							infixOperandMatch(initializer, replacement.getBefore()) ||
 							wrappedAsArgument(initializer, replacement.getBefore()) ||
 							reservedTokenMatch(initializer, replacement, replacement.getBefore()) ||
 							overlappingExtractVariable(initializer, replacement.getBefore(), nonMappedLeavesT2, refactorings)) {
@@ -307,6 +308,7 @@ public abstract class AbstractCodeMapping {
 					if(initializer.toString().equals(replacement.getAfter()) ||
 							(initializer.toString().equals("(" + declaration.getType() + ")" + replacement.getAfter()) && !containsVariableNameReplacement(variableName)) ||
 							ternaryMatch(initializer, replacement.getAfter()) ||
+							infixOperandMatch(initializer, replacement.getAfter()) ||
 							wrappedAsArgument(initializer, replacement.getAfter()) ||
 							reservedTokenMatch(initializer, replacement, replacement.getAfter()) ||
 							overlappingExtractVariable(initializer, replacement.getAfter(), nonMappedLeavesT2, refactorings)) {
@@ -371,6 +373,16 @@ public abstract class AbstractCodeMapping {
 		ObjectCreation creation = initializer.creationCoveringEntireFragment();
 		if(creation != null) {
 			if(creation.getArguments().contains(replacedExpression)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean infixOperandMatch(AbstractExpression initializer, String replacedExpression) {
+		List<String> infixExpressions = initializer.getInfixExpressions();
+		for(String infix : infixExpressions) {
+			if(infix.startsWith(replacedExpression) || infix.endsWith(replacedExpression)) {
 				return true;
 			}
 		}

@@ -2875,7 +2875,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
-		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || (s2 + ";\n").equals(s1) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) || differOnlyInCastExpressionOrPrefixOperator(s1, s2, methodInvocationMap1, methodInvocationMap2, replacementInfo) ||
+		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || (s2 + ";\n").equals(s1) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) ||
+				differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(s1, s2, methodInvocationMap1, methodInvocationMap2, statement1.getInfixExpressions(), statement2.getInfixExpressions(), variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				differOnlyInFinalModifier(s1, s2) ||
 				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString()) ||
@@ -5210,7 +5211,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean differOnlyInCastExpressionOrPrefixOperator(String s1, String s2, Map<String, List<? extends AbstractCall>> methodInvocationMap1, Map<String, List<? extends AbstractCall>> methodInvocationMap2, ReplacementInfo info) {
+	private boolean differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(String s1, String s2, Map<String, List<? extends AbstractCall>> methodInvocationMap1, Map<String, List<? extends AbstractCall>> methodInvocationMap2,
+			List<String> infixExpressions1, List<String> infixExpressions2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo info) {
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
@@ -5226,15 +5228,37 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(cast(diff2, diff1)) {
 				return true;
 			}
-			if(diff1.isEmpty() && (diff2.equals("!") || diff2.equals("~"))) {
-				Replacement r = new Replacement(s1, s2, ReplacementType.INVERT_CONDITIONAL);
-				info.addReplacement(r);
-				return true;
+			if(diff1.isEmpty()) {
+				if(diff2.equals("!") || diff2.equals("~")) {
+					Replacement r = new Replacement(s1, s2, ReplacementType.INVERT_CONDITIONAL);
+					info.addReplacement(r);
+					return true;
+				}
+				if(infixExpressions2.size() - infixExpressions1.size() == 1 && !diff2.isEmpty() && countOperators(diff2) == 1) {
+					for(String infix : infixExpressions2) {
+						if(!infix.equals(diff2) && (infix.startsWith(diff2) || infix.endsWith(diff2))) {
+							if(!variableDeclarationNameReplaced(variableDeclarations1, variableDeclarations2, info.getReplacements()) && !returnExpressionReplaced(s1, s2, info.getReplacements())) {
+								return true;
+							}
+						}
+					}
+				}
 			}
-			if(diff2.isEmpty() && (diff1.equals("!") || diff1.equals("~"))) {
-				Replacement r = new Replacement(s1, s2, ReplacementType.INVERT_CONDITIONAL);
-				info.addReplacement(r);
-				return true;
+			if(diff2.isEmpty()) {
+				if(diff1.equals("!") || diff1.equals("~")) {
+					Replacement r = new Replacement(s1, s2, ReplacementType.INVERT_CONDITIONAL);
+					info.addReplacement(r);
+					return true;
+				}
+				if(infixExpressions1.size() - infixExpressions2.size() == 1 && !diff1.isEmpty() && countOperators(diff1) == 1) {
+					for(String infix : infixExpressions1) {
+						if(!infix.equals(diff1) && (infix.startsWith(diff1) || infix.endsWith(diff1))) {
+							if(!variableDeclarationNameReplaced(variableDeclarations1, variableDeclarations2, info.getReplacements()) && !returnExpressionReplaced(s1, s2, info.getReplacements())) {
+								return true;
+							}
+						}
+					}
+				}
 			}
 			for(String key1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
@@ -5254,6 +5278,41 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						info.addReplacement(r);
 						return true;
 					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private int countOperators(String input) {
+		int count = 0;
+		for(int i=0; i<input.length(); i++) {
+			char c = input.charAt(i);
+			if(c == '+' || c == '-') {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	private boolean returnExpressionReplaced(String s1, String s2, Set<Replacement> replacements) {
+		if(s1.startsWith("return ") && s2.startsWith("return ")) {
+			for(Replacement r : replacements) {
+				if(s1.equals("return " + r.getAfter() + ";\n") || s2.equals("return " + r.getAfter() + ";\n")) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean variableDeclarationNameReplaced(List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, Set<Replacement> replacements) {
+		if(variableDeclarations1.size() == variableDeclarations2.size() && variableDeclarations1.size() == 1) {
+			VariableDeclaration declaration1 = variableDeclarations1.get(0);
+			VariableDeclaration declaration2 = variableDeclarations2.get(0);
+			for(Replacement r : replacements) {
+				if(r.getBefore().equals(declaration1.getVariableName()) && r.getAfter().equals(declaration2.getVariableName())) {
+					return true;
 				}
 			}
 		}

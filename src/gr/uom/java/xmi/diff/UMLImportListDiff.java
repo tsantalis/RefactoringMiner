@@ -1,7 +1,9 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -11,6 +13,8 @@ public class UMLImportListDiff {
 	private Set<String> addedImports;
 	private Set<String> commonImports;
 	private Set<Pair<String, String>> changedImports;
+	private Map<Set<String>, String> groupedImports;
+	private Map<String, Set<String>> unGroupedImports;
 	
 	public UMLImportListDiff(List<String> oldImports, List<String> newImports) {
 		this.changedImports = new LinkedHashSet<>();
@@ -24,6 +28,44 @@ public class UMLImportListDiff {
 		this.removedImports = oldImportSet;
 		newImportSet.removeAll(intersection);
 		this.addedImports = newImportSet;
+		
+		this.groupedImports = new HashMap<>();
+		Map<String, Set<String>> groupedRemovedImportsByPrefix = groupImportsByPrefix(this.removedImports);
+		for(String key : groupedRemovedImportsByPrefix.keySet()) {
+			if(this.addedImports.contains(key)) {
+				Set<String> value = groupedRemovedImportsByPrefix.get(key);
+				this.groupedImports.put(value, key);
+				this.addedImports.remove(key);
+				this.removedImports.removeAll(value);
+			}
+		}
+		
+		this.unGroupedImports = new HashMap<>();
+		Map<String, Set<String>> groupedAddedImportsByPrefix = groupImportsByPrefix(this.addedImports);
+		for(String key : groupedAddedImportsByPrefix.keySet()) {
+			if(this.removedImports.contains(key)) {
+				Set<String> value = groupedAddedImportsByPrefix.get(key);
+				this.unGroupedImports.put(key, value);
+				this.removedImports.remove(key);
+				this.addedImports.removeAll(value);
+			}
+		}
+	}
+
+	private Map<String, Set<String>> groupImportsByPrefix(Set<String> imports) {
+		Map<String, Set<String>> groupedImportsByPrefix = new HashMap<>();
+		for(String importString : imports) {
+			String prefix = importString.substring(0, importString.lastIndexOf("."));
+			if(groupedImportsByPrefix.containsKey(prefix)) {
+				groupedImportsByPrefix.get(prefix).add(importString);
+			}
+			else {
+				Set<String> set = new LinkedHashSet<>();
+				set.add(importString);
+				groupedImportsByPrefix.put(prefix, set);
+			}
+		}
+		return groupedImportsByPrefix;
 	}
 
 	public void findImportChanges(String nameBefore, String nameAfter) {
@@ -74,5 +116,13 @@ public class UMLImportListDiff {
 
 	public Set<Pair<String, String>> getChangedImports() {
 		return changedImports;
+	}
+
+	public Map<Set<String>, String> getGroupedImports() {
+		return groupedImports;
+	}
+
+	public Map<String, Set<String>> getUnGroupedImports() {
+		return unGroupedImports;
 	}
 }

@@ -8,6 +8,7 @@ import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
 import gr.uom.java.xmi.decomposition.replacement.AddVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
@@ -3257,10 +3258,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return replacementInfo.getReplacements();
 		}
 		if(!methodInvocations1.isEmpty() && invocationCoveringTheEntireStatement2 != null) {
+			boolean variableDeclarationMatchedWithNonVariableDeclaration = false;
+			if(invocationCoveringTheEntireStatement2.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL)) {
+				if(invocationCoveringTheEntireStatement1 != null && !invocationCoveringTheEntireStatement1.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL)) {
+					variableDeclarationMatchedWithNonVariableDeclaration = true;
+				}
+			}
 			for(String methodInvocation1 : methodInvocations1) {
 				for(AbstractCall operationInvocation1 : methodInvocationMap1.get(methodInvocation1)) {
 					if(operationInvocation1.renamedWithIdenticalExpressionAndDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers) &&
-							!isExpressionOfAnotherMethodInvocation(operationInvocation1, methodInvocationMap1)) {
+							!isExpressionOfAnotherMethodInvocation(operationInvocation1, methodInvocationMap1) &&
+							!variableDeclarationMatchedWithNonVariableDeclaration) {
 						ReplacementType type = operationInvocation1.getName().equals(invocationCoveringTheEntireStatement2.getName()) ? ReplacementType.METHOD_INVOCATION_ARGUMENT : ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT;
 						Replacement replacement = new MethodInvocationReplacement(operationInvocation1.actualString(),
 								invocationCoveringTheEntireStatement2.actualString(), operationInvocation1, invocationCoveringTheEntireStatement2, type);

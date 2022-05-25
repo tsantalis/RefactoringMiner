@@ -210,6 +210,11 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return getArguments().equals(call.getArguments());
 	}
 
+	public boolean reorderedArguments(AbstractCall call) {
+		return getArguments().size() > 1 && getArguments().size() == call.getArguments().size() &&
+				!getArguments().equals(call.getArguments()) && getArguments().containsAll(call.getArguments());
+	}
+
 	public boolean identicalOrReplacedArguments(AbstractCall call, Set<Replacement> replacements, List<UMLOperationBodyMapper> lambdaMappers) {
 		List<String> arguments1 = getArguments();
 		List<String> arguments2 = call.getArguments();
@@ -331,19 +336,19 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return getExpression() != null && call.getExpression() != null &&
 				identicalExpression(call, replacements) &&
 				!identicalName(call) &&
-				(equalArguments(call) || (allArgumentsReplaced && normalizedNameDistance(call) <= distance) || (identicalOrReplacedArguments && !allArgumentsReplaced));
+				(equalArguments(call) || reorderedArguments(call) || (allArgumentsReplaced && normalizedNameDistance(call) <= distance) || (identicalOrReplacedArguments && !allArgumentsReplaced));
 	}
 
 	public boolean variableDeclarationInitializersRenamedWithIdenticalArguments(AbstractCall call) {
 		return this.coverage.equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL) &&
 				call.coverage.equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL) &&
 				getExpression() != null && call.getExpression() != null &&
-				!identicalName(call) && equalArguments(call);
+				!identicalName(call) && (equalArguments(call) || reorderedArguments(call));
 	}
 
 	public boolean renamedWithDifferentExpressionAndIdenticalArguments(AbstractCall call) {
 		return (this.getName().contains(call.getName()) || call.getName().contains(this.getName())) &&
-				equalArguments(call) && this.arguments.size() > 0 &&
+				(equalArguments(call) || reorderedArguments(call)) && this.arguments.size() > 0 &&
 				((this.getExpression() == null && call.getExpression() != null) || (call.getExpression() == null && this.getExpression() != null));
 	}
 
@@ -358,7 +363,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return getExpression() == null && call.getExpression() == null &&
 				!identicalName(call) &&
 				(normalizedNameDistance(call) <= distance || allExactLambdaMappers) &&
-				equalArguments(call);
+				(equalArguments(call) || reorderedArguments(call));
 	}
 
 	public boolean renamedWithIdenticalExpressionAndDifferentNumberOfArguments(AbstractCall call, Set<Replacement> replacements, double distance, List<UMLOperationBodyMapper> lambdaMappers) {

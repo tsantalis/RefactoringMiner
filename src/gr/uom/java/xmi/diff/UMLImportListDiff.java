@@ -55,14 +55,16 @@ public class UMLImportListDiff {
 	private Map<String, Set<String>> groupImportsByPrefix(Set<String> imports) {
 		Map<String, Set<String>> groupedImportsByPrefix = new HashMap<>();
 		for(String importString : imports) {
-			String prefix = importString.substring(0, importString.lastIndexOf("."));
-			if(groupedImportsByPrefix.containsKey(prefix)) {
-				groupedImportsByPrefix.get(prefix).add(importString);
-			}
-			else {
-				Set<String> set = new LinkedHashSet<>();
-				set.add(importString);
-				groupedImportsByPrefix.put(prefix, set);
+			if(importString.contains(".")) {
+				String prefix = importString.substring(0, importString.lastIndexOf("."));
+				if(groupedImportsByPrefix.containsKey(prefix)) {
+					groupedImportsByPrefix.get(prefix).add(importString);
+				}
+				else {
+					Set<String> set = new LinkedHashSet<>();
+					set.add(importString);
+					groupedImportsByPrefix.put(prefix, set);
+				}
 			}
 		}
 		return groupedImportsByPrefix;

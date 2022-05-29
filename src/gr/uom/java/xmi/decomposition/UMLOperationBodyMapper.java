@@ -1730,13 +1730,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 				AbstractCodeFragment leaf1 = leafIterator1.next();
 				TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
+				int matchCount = 0;
 				for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 					AbstractCodeFragment leaf2 = leafIterator2.next();
 					String argumentizedString1 = preprocessInput1(leaf1, leaf2);
 					String argumentizedString2 = preprocessInput2(leaf1, leaf2);
-					if((leaf1.getString().equals(leaf2.getString()) || argumentizedString1.equals(argumentizedString2)) && leaf1.getDepth() == leaf2.getDepth()) {
-						LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap);
-						mappingSet.add(mapping);
+					if(leaf1.getString().equals(leaf2.getString()) || argumentizedString1.equals(argumentizedString2)) {
+						matchCount++;
+						if(leaf1.getDepth() == leaf2.getDepth()) {
+							if(parentMapper != null && matchCount > 1) {
+								if(leaf1.getIndex() == leaf2.getIndex()) {
+									LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap);
+									mappingSet.add(mapping);
+								}
+							}
+							else {
+								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap);
+								mappingSet.add(mapping);
+							}
+						}
 					}
 				}
 				if(!mappingSet.isEmpty()) {
@@ -1855,13 +1867,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 				AbstractCodeFragment leaf2 = leafIterator2.next();
 				TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
+				int matchCount = 0;
 				for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 					AbstractCodeFragment leaf1 = leafIterator1.next();
 					String argumentizedString1 = preprocessInput1(leaf1, leaf2);
 					String argumentizedString2 = preprocessInput2(leaf1, leaf2);
-					if((leaf1.getString().equals(leaf2.getString()) || argumentizedString1.equals(argumentizedString2)) && leaf1.getDepth() == leaf2.getDepth()) {
-						LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap);
-						mappingSet.add(mapping);
+					if(leaf1.getString().equals(leaf2.getString()) || argumentizedString1.equals(argumentizedString2)) {
+						matchCount++;
+						if(leaf1.getDepth() == leaf2.getDepth()) {
+							if(parentMapper != null && matchCount > 1) {
+								if(leaf1.getIndex() == leaf2.getIndex()) {
+									LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap);
+									mappingSet.add(mapping);
+								}
+							}
+							else {
+								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap);
+								mappingSet.add(mapping);
+							}
+						}
 					}
 				}
 				if(!mappingSet.isEmpty()) {

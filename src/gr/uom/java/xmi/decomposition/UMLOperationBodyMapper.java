@@ -1762,10 +1762,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				if(!mappingSet.isEmpty()) {
-					LeafMapping minStatementMapping = mappingSet.first();
-					mappings.add(minStatementMapping);
-					leaves2.remove(minStatementMapping.getFragment2());
-					leafIterator1.remove();
+					if(mappingSet.size() > 1 && parentMapper != null && mappings.size() > 0) {
+						TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
+						for(LeafMapping mapping : mappingSet) {
+							int lineDistance = lineDistanceFromExistingMappings2(mapping);
+							if(!lineDistanceMap.containsKey(lineDistance)) {
+								lineDistanceMap.put(lineDistance, mapping);
+							}
+						}
+						LeafMapping minLineDistanceStatementMapping = lineDistanceMap.firstEntry().getValue();
+						mappings.add(minLineDistanceStatementMapping);
+						leaves2.remove(minLineDistanceStatementMapping.getFragment2());
+						leafIterator1.remove();
+					}
+					else {
+						LeafMapping minStatementMapping = mappingSet.first();
+						mappings.add(minStatementMapping);
+						leaves2.remove(minStatementMapping.getFragment2());
+						leafIterator1.remove();
+					}
 				}
 			}
 			
@@ -1872,10 +1887,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				if(!mappingSet.isEmpty()) {
-					LeafMapping minStatementMapping = mappingSet.first();
-					mappings.add(minStatementMapping);
-					leaves1.remove(minStatementMapping.getFragment1());
-					leafIterator2.remove();
+					if(mappingSet.size() > 1 && parentMapper != null && mappings.size() > 0) {
+						TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
+						for(LeafMapping mapping : mappingSet) {
+							int lineDistance = lineDistanceFromExistingMappings1(mapping);
+							if(!lineDistanceMap.containsKey(lineDistance)) {
+								lineDistanceMap.put(lineDistance, mapping);
+							}
+						}
+						LeafMapping minLineDistanceStatementMapping = lineDistanceMap.firstEntry().getValue();
+						mappings.add(minLineDistanceStatementMapping);
+						leaves1.remove(minLineDistanceStatementMapping.getFragment1());
+						leafIterator2.remove();
+					}
+					else {
+						LeafMapping minStatementMapping = mappingSet.first();
+						mappings.add(minStatementMapping);
+						leaves1.remove(minStatementMapping.getFragment1());
+						leafIterator2.remove();
+					}
 				}
 			}
 			
@@ -1978,6 +2008,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				leaves2.remove(minStatementMapping.getFragment2());
 			}
 		}
+	}
+
+	private int lineDistanceFromExistingMappings1(AbstractCodeMapping mapping) {
+		int lineDistance = 0;
+		int fragmentLine = mapping.getFragment1().getLocationInfo().getStartLine();
+		for(AbstractCodeMapping previousMapping : this.mappings) {
+			lineDistance += Math.abs(fragmentLine - previousMapping.getFragment1().getLocationInfo().getStartLine());
+		}
+		return lineDistance;
+	}
+
+	private int lineDistanceFromExistingMappings2(AbstractCodeMapping mapping) {
+		int lineDistance = 0;
+		int fragmentLine = mapping.getFragment2().getLocationInfo().getStartLine();
+		for(AbstractCodeMapping previousMapping : this.mappings) {
+			lineDistance += Math.abs(fragmentLine - previousMapping.getFragment2().getLocationInfo().getStartLine());
+		}
+		return lineDistance;
 	}
 
 	private boolean existingMappingWithCommonParents(LeafMapping variableDeclarationMapping) {

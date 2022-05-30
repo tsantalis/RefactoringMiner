@@ -1738,18 +1738,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(leaf1.getString().equals(leaf2.getString()) || argumentizedString1.equals(argumentizedString2)) {
 						matchCount++;
 						if(leaf1.getDepth() == leaf2.getDepth()) {
-							if(parentMapper != null && matchCount > 1) {
-								if(leaf1.getIndex() == leaf2.getIndex()) {
-									LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap);
-									mappingSet.add(mapping);
-								}
-							}
-							else {
-								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap);
-								mappingSet.add(mapping);
-							}
+							LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap);
+							mappingSet.add(mapping);
 						}
 					}
+				}
+				if(parentMapper != null && matchCount > 1) {
+					continue;
 				}
 				if(!mappingSet.isEmpty()) {
 					LeafMapping minStatementMapping = mappingSet.first();
@@ -1875,18 +1870,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(leaf1.getString().equals(leaf2.getString()) || argumentizedString1.equals(argumentizedString2)) {
 						matchCount++;
 						if(leaf1.getDepth() == leaf2.getDepth()) {
-							if(parentMapper != null && matchCount > 1) {
-								if(leaf1.getIndex() == leaf2.getIndex()) {
-									LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap);
-									mappingSet.add(mapping);
-								}
-							}
-							else {
-								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap);
-								mappingSet.add(mapping);
-							}
+							LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap);
+							mappingSet.add(mapping);
 						}
 					}
+				}
+				if(parentMapper != null && matchCount > 1) {
+					continue;
 				}
 				if(!mappingSet.isEmpty()) {
 					LeafMapping minStatementMapping = mappingSet.first();

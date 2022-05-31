@@ -59,6 +59,16 @@ public class ExtractOperationRefactoring implements Refactoring {
 		}
 	}
 
+	public void updateMapperInfo() {
+		this.replacements = bodyMapper.getReplacements();
+		this.extractedCodeFragmentsFromSourceOperation.clear();
+		this.extractedCodeFragmentsToExtractedOperation.clear();
+		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
+			this.extractedCodeFragmentsFromSourceOperation.add(mapping.getFragment1());
+			this.extractedCodeFragmentsToExtractedOperation.add(mapping.getFragment2());
+		}
+	}
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");

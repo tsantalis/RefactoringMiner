@@ -1381,6 +1381,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					oneToManyMappings.remove(fragment);
 				}
 			}
+			Set<UMLOperationBodyMapper> updatedMappers = new LinkedHashSet<>();
 			for(AbstractCodeFragment fragment : oneToManyMappings.keySet()) {
 				Set<AbstractCodeMapping> mappings = oneToManyMappings.get(fragment);
 				Set<UMLOperationBodyMapper> mappers = oneToManyMappers.get(fragment);
@@ -1417,8 +1418,17 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					UMLOperationBodyMapper mapper = mapperIterator.next();
 					if(indicesToBeRemoved.contains(index)) {
 						mapper.removeMapping(mapping);
+						updatedMappers.add(mapper);
 					}
 					index++;
+				}
+			}
+			for(Refactoring ref : refactorings) {
+				if(ref instanceof ExtractOperationRefactoring) {
+					ExtractOperationRefactoring refactoring = (ExtractOperationRefactoring)ref;
+					if(updatedMappers.contains(refactoring.getBodyMapper())) {
+						refactoring.updateMapperInfo();
+					}
 				}
 			}
 		}

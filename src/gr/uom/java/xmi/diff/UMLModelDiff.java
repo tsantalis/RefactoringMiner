@@ -3144,7 +3144,7 @@ public class UMLModelDiff {
 							LeafMapping mapping = new LeafMapping(v1.getInitializer(), attributeDeclaration.getInitializer(),
 									operationBodyMapper.getContainer1(),
 									operationBodyMapper.getContainer2());
-							operationBodyMapper.getMappings().add(mapping);
+							operationBodyMapper.addMapping(mapping);
 							break;
 						}
 					}

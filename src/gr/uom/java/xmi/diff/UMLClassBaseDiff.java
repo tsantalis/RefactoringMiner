@@ -1340,6 +1340,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				List<ExtractOperationRefactoring> refs = detection.check(addedOperation);
 				for(ExtractOperationRefactoring refactoring : refs) {
 					refactorings.add(refactoring);
+					//move next two lines, after optimizing the mappings with global best match in case of multiple matches.
 					UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
 					processMapperRefactorings(operationBodyMapper, refactorings);
 					mapper.addChildMapper(operationBodyMapper);
@@ -1348,7 +1349,79 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				checkForInconsistentVariableRenames(mapper);
 			}
 		}
+		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+			optimizeDuplicateMappings(mapper);
+		}
 		addedOperations.removeAll(operationsToBeRemoved);
+	}
+
+	private void optimizeDuplicateMappings(UMLOperationBodyMapper parentMapper) {
+		if(parentMapper.getChildMappers().size() > 1) {
+			Map<AbstractCodeFragment, Set<AbstractCodeMapping>> oneToManyMappings = new HashMap<>();
+			Map<AbstractCodeFragment, Set<UMLOperationBodyMapper>> oneToManyMappers = new HashMap<>();
+			for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
+				for(AbstractCodeMapping mapping : childMapper.getMappings()) {
+					if(oneToManyMappings.containsKey(mapping.getFragment1())) {
+						oneToManyMappings.get(mapping.getFragment1()).add(mapping);
+						oneToManyMappers.get(mapping.getFragment1()).add(childMapper);
+					}
+					else {
+						Set<AbstractCodeMapping> mappings = new LinkedHashSet<>();
+						Set<UMLOperationBodyMapper> mappers = new LinkedHashSet<>();
+						mappings.add(mapping);
+						mappers.add(childMapper);
+						oneToManyMappings.put(mapping.getFragment1(), mappings);
+						oneToManyMappers.put(mapping.getFragment1(), mappers);
+					}
+				}
+			}
+			for(Iterator<AbstractCodeFragment> it = oneToManyMappers.keySet().iterator(); it.hasNext();) {
+				AbstractCodeFragment fragment = it.next();
+				if(oneToManyMappings.get(fragment).size() == 1) {
+					oneToManyMappings.remove(fragment);
+				}
+			}
+			for(AbstractCodeFragment fragment : oneToManyMappings.keySet()) {
+				Set<AbstractCodeMapping> mappings = oneToManyMappings.get(fragment);
+				Set<UMLOperationBodyMapper> mappers = oneToManyMappers.get(fragment);
+				Iterator<AbstractCodeMapping> mappingIterator = mappings.iterator();
+				Iterator<UMLOperationBodyMapper> mapperIterator = mappers.iterator();
+				List<Boolean> parentMappingFound = new ArrayList<>();
+				List<Boolean> parentIsContainerBody = new ArrayList<>();
+				while(mappingIterator.hasNext()) {
+					AbstractCodeMapping mapping = mappingIterator.next();
+					UMLOperationBodyMapper mapper = mapperIterator.next();
+					parentMappingFound.add(mapper.containsParentMapping(mapping));
+					parentIsContainerBody.add(mapper.parentIsContainerBody(mapping));
+				}
+				Set<Integer> indicesToBeRemoved = new LinkedHashSet<>();
+				if(parentMappingFound.contains(true)) {
+					for(int i=0; i<parentMappingFound.size(); i++) {
+						if(parentMappingFound.get(i) == false) {
+							indicesToBeRemoved.add(i);
+						}
+					}
+				}
+				else if(parentIsContainerBody.contains(true)) {
+					for(int i=0; i<parentIsContainerBody.size(); i++) {
+						if(parentIsContainerBody.get(i) == false) {
+							indicesToBeRemoved.add(i);
+						}
+					}
+				}
+				mappingIterator = mappings.iterator();
+				mapperIterator = mappers.iterator();
+				int index = 0;
+				while(mappingIterator.hasNext()) {
+					AbstractCodeMapping mapping = mappingIterator.next();
+					UMLOperationBodyMapper mapper = mapperIterator.next();
+					if(indicesToBeRemoved.contains(index)) {
+						mapper.removeMapping(mapping);
+					}
+					index++;
+				}
+			}
+		}
 	}
 
 	private void checkForInconsistentVariableRenames(UMLOperationBodyMapper mapper) {

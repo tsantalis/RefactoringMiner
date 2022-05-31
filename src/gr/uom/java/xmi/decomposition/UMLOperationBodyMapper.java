@@ -2153,7 +2153,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	private void removeMapping(AbstractCodeMapping mapping) {
+	public void removeMapping(AbstractCodeMapping mapping) {
 		this.mappings.remove(mapping);
 		mappingHashcodesT1.remove(mapping.getFragment1().hashCode());
 		mappingHashcodesT2.remove(mapping.getFragment2().hashCode());
@@ -6548,6 +6548,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(UMLOperation operation : operations) {
 			if(invocation.matchesOperation(operation, callerOperation, modelDiff))
 				return true;
+		}
+		return false;
+	}
+
+	public boolean containsParentMapping(AbstractCodeMapping mapping) {
+		CompositeStatementObject parent1 = mapping.getFragment1().getParent();
+		CompositeStatementObject parent2 = mapping.getFragment2().getParent();
+		if(parent1 != null && parent2 != null) {
+			for(AbstractCodeMapping previousMapping : this.mappings) {
+				if(previousMapping.getFragment1().equals(parent1) && previousMapping.getFragment2().equals(parent2)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean parentIsContainerBody(AbstractCodeMapping mapping) {
+		CompositeStatementObject parent1 = mapping.getFragment1().getParent();
+		CompositeStatementObject parent2 = mapping.getFragment2().getParent();
+		if(parent1 != null && parent2 != null) {
+			if(parent1.equals(container1.getBody().getCompositeStatement()) || parent2.equals(container2.getBody().getCompositeStatement())) {
+				return true;
+			}
 		}
 		return false;
 	}

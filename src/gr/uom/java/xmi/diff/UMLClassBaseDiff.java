@@ -1333,6 +1333,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	private void checkForExtractedOperations() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
+		List<UMLOperationBodyMapper> extractedOperationMappers = new ArrayList<UMLOperationBodyMapper>();
 		for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 			UMLOperation addedOperation = addedOperationIterator.next();
 			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
@@ -1340,17 +1341,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				List<ExtractOperationRefactoring> refs = detection.check(addedOperation);
 				for(ExtractOperationRefactoring refactoring : refs) {
 					refactorings.add(refactoring);
-					//move next two lines, after optimizing the mappings with global best match in case of multiple matches.
 					UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
-					processMapperRefactorings(operationBodyMapper, refactorings);
+					extractedOperationMappers.add(operationBodyMapper);
 					mapper.addChildMapper(operationBodyMapper);
 					operationsToBeRemoved.add(addedOperation);
 				}
-				checkForInconsistentVariableRenames(mapper);
 			}
 		}
 		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
 			optimizeDuplicateMappings(mapper);
+		}
+		for(UMLOperationBodyMapper operationBodyMapper : extractedOperationMappers) {
+			processMapperRefactorings(operationBodyMapper, refactorings);
 		}
 		addedOperations.removeAll(operationsToBeRemoved);
 	}
@@ -1447,40 +1449,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 			}
-		}
-	}
-
-	private void checkForInconsistentVariableRenames(UMLOperationBodyMapper mapper) {
-		if(mapper.getChildMappers().size() > 1) {
-			Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
-			for(Refactoring r : refactorings) {
-				if(r instanceof RenameVariableRefactoring) {
-					RenameVariableRefactoring rename = (RenameVariableRefactoring)r;
-					Set<AbstractCodeMapping> references = rename.getVariableReferences();
-					for(AbstractCodeMapping reference : references) {
-						if(reference.getFragment1().getVariableDeclarations().size() > 0 && !reference.isExact()) {
-							Set<AbstractCodeMapping> allMappingsForReference = new LinkedHashSet<AbstractCodeMapping>();
-							for(UMLOperationBodyMapper childMapper : mapper.getChildMappers()) {
-								for(AbstractCodeMapping mapping : childMapper.getMappings()) {
-									if(mapping.getFragment1().equals(reference.getFragment1())) {
-										allMappingsForReference.add(mapping);
-										break;
-									}
-								}
-							}
-							if(allMappingsForReference.size() > 1) {
-								for(AbstractCodeMapping mapping : allMappingsForReference) {
-									if(!mapping.equals(reference) && mapping.isExact()) {
-										refactoringsToBeRemoved.add(rename);
-										break;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			refactorings.removeAll(refactoringsToBeRemoved);
 		}
 	}
 

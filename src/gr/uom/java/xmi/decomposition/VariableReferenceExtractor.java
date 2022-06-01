@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
-import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
 public class VariableReferenceExtractor {

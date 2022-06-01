@@ -55,6 +55,7 @@ import gr.uom.java.xmi.diff.UMLOperationDiff;
 import gr.uom.java.xmi.diff.UMLParameterDiff;
 
 public class VariableReplacementAnalysis {
+	private UMLOperationBodyMapper mapper;
 	private Set<AbstractCodeMapping> mappings;
 	private List<AbstractCodeFragment> nonMappedLeavesT1;
 	private List<AbstractCodeFragment> nonMappedLeavesT2;
@@ -84,6 +85,7 @@ public class VariableReplacementAnalysis {
 	private boolean insideExtractedOrInlinedMethod = false;
 
 	public VariableReplacementAnalysis(UMLOperationBodyMapper mapper, Set<Refactoring> refactorings, UMLAbstractClassDiff classDiff) {
+		this.mapper = mapper;
 		this.mappings = mapper.getMappings();
 		this.nonMappedLeavesT1 = mapper.getNonMappedLeavesT1();
 		this.nonMappedLeavesT2 = mapper.getNonMappedLeavesT2();
@@ -1923,34 +1925,36 @@ public class VariableReplacementAnalysis {
 		if(v1 != null) {
 			UMLModelDiff modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
 			for(UMLOperationBodyMapper mapper : childMappers) {
-				for(AbstractCodeMapping mapping : mapper.getMappings()) {
-					if(mapping.getFragment1().getVariableDeclarations().contains(v1)) {
-						boolean identicalNonMappedStatementInParentMapper = false;
-						for(AbstractCodeFragment fragment2 : nonMappedLeavesT2) {
-							if(fragment2.getString().equals(mapping.getFragment2().getString())) {
-								identicalNonMappedStatementInParentMapper = true;
-								break;
+				if(!mapper.equals(this.mapper)) {
+					for(AbstractCodeMapping mapping : mapper.getMappings()) {
+						if(mapping.getFragment1().getVariableDeclarations().contains(v1)) {
+							boolean identicalNonMappedStatementInParentMapper = false;
+							for(AbstractCodeFragment fragment2 : nonMappedLeavesT2) {
+								if(fragment2.getString().equals(mapping.getFragment2().getString())) {
+									identicalNonMappedStatementInParentMapper = true;
+									break;
+								}
 							}
-						}
-						if(v2 != null && v2.getInitializer() != null) {
-							VariableDeclarationContainer extractedMethod = mapper.getContainer2();
-							Map<String, List<AbstractCall>> methodInvocationMap = v2.getInitializer().getMethodInvocationMap();
-							for(String key : methodInvocationMap.keySet()) {
-								for(AbstractCall invocation : methodInvocationMap.get(key)) {
-									if(invocation.matchesOperation(extractedMethod, operation2, modelDiff)) {
-										return false;
-									}
-									else {
-										//check if the extracted method is called in the initializer of a variable used in the initializer of v2
-										List<String> initializerVariables = v2.getInitializer().getVariables();
-										for(String variable : initializerVariables) {
-											for(VariableDeclaration declaration : operation2.getAllVariableDeclarations()) {
-												if(declaration.getVariableName().equals(variable) && declaration.getInitializer() != null) {
-													Map<String, List<AbstractCall>> methodInvocationMap2 = declaration.getInitializer().getMethodInvocationMap();
-													for(String key2 : methodInvocationMap2.keySet()) {
-														for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
-															if(invocation2.matchesOperation(extractedMethod, operation2, modelDiff)) {
-																return false;
+							if(v2 != null && v2.getInitializer() != null) {
+								VariableDeclarationContainer extractedMethod = mapper.getContainer2();
+								Map<String, List<AbstractCall>> methodInvocationMap = v2.getInitializer().getMethodInvocationMap();
+								for(String key : methodInvocationMap.keySet()) {
+									for(AbstractCall invocation : methodInvocationMap.get(key)) {
+										if(invocation.matchesOperation(extractedMethod, operation2, modelDiff)) {
+											return false;
+										}
+										else {
+											//check if the extracted method is called in the initializer of a variable used in the initializer of v2
+											List<String> initializerVariables = v2.getInitializer().getVariables();
+											for(String variable : initializerVariables) {
+												for(VariableDeclaration declaration : operation2.getAllVariableDeclarations()) {
+													if(declaration.getVariableName().equals(variable) && declaration.getInitializer() != null) {
+														Map<String, List<AbstractCall>> methodInvocationMap2 = declaration.getInitializer().getMethodInvocationMap();
+														for(String key2 : methodInvocationMap2.keySet()) {
+															for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
+																if(invocation2.matchesOperation(extractedMethod, operation2, modelDiff)) {
+																	return false;
+																}
 															}
 														}
 													}
@@ -1960,24 +1964,24 @@ public class VariableReplacementAnalysis {
 									}
 								}
 							}
-						}
-						if(!identicalNonMappedStatementInParentMapper) {
-							return true;
+							if(!identicalNonMappedStatementInParentMapper) {
+								return true;
+							}
 						}
 					}
-				}
-				for(AbstractCodeFragment nonMappedStatement : mapper.getNonMappedLeavesT2()) {
-					VariableDeclaration variableDeclaration2 = nonMappedStatement.getVariableDeclaration(v1.getVariableName());
-					if(variableDeclaration2 != null && variableDeclaration2.getType().equals(v1.getType())) {
-						for(AbstractCodeMapping mapping : mapper.getMappings()) {
-							if(mapping.getFragment2().equals(nonMappedStatement.getParent())) {
-								if(mapping.getFragment1() instanceof CompositeStatementObject) {
-									CompositeStatementObject composite1 = (CompositeStatementObject)mapping.getFragment1();
-									List<AbstractCodeFragment> leaves1 = composite1.getLeaves();
-									for(AbstractCodeFragment leaf1 : leaves1) {
-										VariableDeclaration variableDeclaration1 = leaf1.getVariableDeclaration(variableDeclaration2.getVariableName());
-										if(variableDeclaration1 != null) {
-											return true;
+					for(AbstractCodeFragment nonMappedStatement : mapper.getNonMappedLeavesT2()) {
+						VariableDeclaration variableDeclaration2 = nonMappedStatement.getVariableDeclaration(v1.getVariableName());
+						if(variableDeclaration2 != null && variableDeclaration2.getType().equals(v1.getType())) {
+							for(AbstractCodeMapping mapping : mapper.getMappings()) {
+								if(mapping.getFragment2().equals(nonMappedStatement.getParent())) {
+									if(mapping.getFragment1() instanceof CompositeStatementObject) {
+										CompositeStatementObject composite1 = (CompositeStatementObject)mapping.getFragment1();
+										List<AbstractCodeFragment> leaves1 = composite1.getLeaves();
+										for(AbstractCodeFragment leaf1 : leaves1) {
+											VariableDeclaration variableDeclaration1 = leaf1.getVariableDeclaration(variableDeclaration2.getVariableName());
+											if(variableDeclaration1 != null) {
+												return true;
+											}
 										}
 									}
 								}

@@ -1389,11 +1389,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				Iterator<UMLOperationBodyMapper> mapperIterator = mappers.iterator();
 				List<Boolean> parentMappingFound = new ArrayList<>();
 				List<Boolean> parentIsContainerBody = new ArrayList<>();
+				List<Boolean> identical = new ArrayList<>();
 				while(mappingIterator.hasNext()) {
 					AbstractCodeMapping mapping = mappingIterator.next();
 					UMLOperationBodyMapper mapper = mapperIterator.next();
 					parentMappingFound.add(mapper.containsParentMapping(mapping));
 					parentIsContainerBody.add(mapper.parentIsContainerBody(mapping));
+					identical.add(mapping.getFragment1().getString().equals(mapping.getFragment2().getString()));
 				}
 				Set<Integer> indicesToBeRemoved = new LinkedHashSet<>();
 				if(parentMappingFound.contains(true)) {
@@ -1402,11 +1404,25 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							indicesToBeRemoved.add(i);
 						}
 					}
+					if(indicesToBeRemoved.isEmpty() && identical.contains(true)) {
+						for(int i=0; i<identical.size(); i++) {
+							if(identical.get(i) == false) {
+								indicesToBeRemoved.add(i);
+							}
+						}
+					}
 				}
 				else if(parentIsContainerBody.contains(true)) {
 					for(int i=0; i<parentIsContainerBody.size(); i++) {
 						if(parentIsContainerBody.get(i) == false) {
 							indicesToBeRemoved.add(i);
+						}
+					}
+					if(indicesToBeRemoved.isEmpty() && identical.contains(true)) {
+						for(int i=0; i<identical.size(); i++) {
+							if(identical.get(i) == false) {
+								indicesToBeRemoved.add(i);
+							}
 						}
 					}
 				}

@@ -557,9 +557,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						UMLOperation addedOperation = bestMapper.getOperation2();
 						addedOperations.remove(addedOperation);
 						removedOperationIterator.remove();
-	
-						UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(bestMapper);
-						operationDiffList.add(operationSignatureDiff);
 						if(!removedOperation.getName().equals(addedOperation.getName()) &&
 								!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
 							Set<MethodInvocationReplacement> callReferences = getCallReferences(removedOperation, addedOperation);
@@ -604,9 +601,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						addedOperation = bestMapper.getOperation2();
 						removedOperations.remove(removedOperation);
 						addedOperationIterator.remove();
-	
-						UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(bestMapper);
-						operationDiffList.add(operationSignatureDiff);
 						if(!removedOperation.getName().equals(addedOperation.getName()) &&
 								!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
 							Set<MethodInvocationReplacement> callReferences = getCallReferences(removedOperation, addedOperation);
@@ -628,9 +622,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					UMLOperation addedOperation = addedOperationIterator.next();
 					AbstractCall addedOperationInvocation = addedOperation.isDelegate();
 					if(addedOperationInvocation != null) {
-						for(UMLOperationDiff operationDiff : operationDiffList) {
-							if(removedOperationInvocation.matchesOperation(operationDiff.getRemovedOperation(), removedOperation, modelDiff) &&
-									addedOperationInvocation.matchesOperation(operationDiff.getAddedOperation(), addedOperation, modelDiff) &&
+						for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+							if(removedOperationInvocation.matchesOperation(mapper.getContainer1(), removedOperation, modelDiff) &&
+									addedOperationInvocation.matchesOperation(mapper.getContainer2(), addedOperation, modelDiff) &&
 									removedOperation.getParameterTypeList().equals(addedOperation.getParameterTypeList())) {
 								addedOperationIterator.remove();
 								removedOperationIterator.remove();
@@ -1456,7 +1450,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return addedOperations.isEmpty() && removedOperations.isEmpty() &&
 			addedAttributes.isEmpty() && removedAttributes.isEmpty() &&
 			addedEnumConstants.isEmpty() && removedEnumConstants.isEmpty() &&
-			operationDiffList.isEmpty() && attributeDiffList.isEmpty() &&
+			attributeDiffList.isEmpty() &&
 			operationBodyMapperList.isEmpty() && enumConstantDiffList.isEmpty() && annotationListDiff.isEmpty() &&
 			!visibilityChanged && !abstractionChanged && !finalChanged && !staticChanged && !superclassChanged;
 	}
@@ -1487,9 +1481,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		Collections.sort(addedAttributes);
 		for(UMLAttribute umlAttribute : addedAttributes) {
 			sb.append("attribute " + umlAttribute + " added").append("\n");
-		}
-		for(UMLOperationDiff operationDiff : operationDiffList) {
-			sb.append(operationDiff);
 		}
 		for(UMLAttributeDiff attributeDiff : attributeDiffList) {
 			sb.append(attributeDiff);

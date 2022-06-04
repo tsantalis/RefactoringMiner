@@ -101,8 +101,7 @@ public class VariableReplacementAnalysis {
 		}
 		this.refactorings = refactorings;
 		this.callSiteOperation = mapper.getCallSiteOperation();
-		this.operationDiff = classDiff != null && operation1 instanceof UMLOperation && operation2 instanceof UMLOperation ?
-				classDiff.getOperationDiff((UMLOperation)operation1, (UMLOperation)operation2) : null;
+		this.operationDiff = mapper.getOperationSignatureDiff().isPresent() ? mapper.getOperationSignatureDiff().get() : null;
 		this.classDiff = classDiff;
 		if(parentMapper != null) {
 			this.insideExtractedOrInlinedMethod = true;

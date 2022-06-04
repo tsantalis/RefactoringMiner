@@ -35,7 +35,6 @@ public abstract class UMLAbstractClassDiff {
 	protected List<UMLAttribute> addedAttributes;
 	protected List<UMLAttribute> removedAttributes;
 	protected List<UMLOperationBodyMapper> operationBodyMapperList;
-	protected List<UMLOperationDiff> operationDiffList;
 	protected List<UMLAttributeDiff> attributeDiffList;
 	protected List<UMLEnumConstantDiff> enumConstantDiffList;
 	protected UMLAbstractClass originalClass;
@@ -63,7 +62,6 @@ public abstract class UMLAbstractClassDiff {
 		this.addedAnonymousClasses = new ArrayList<UMLAnonymousClass>();
 		this.removedAnonymousClasses = new ArrayList<UMLAnonymousClass>();
 		this.operationBodyMapperList = new ArrayList<UMLOperationBodyMapper>();
-		this.operationDiffList = new ArrayList<UMLOperationDiff>();
 		this.attributeDiffList = new ArrayList<UMLAttributeDiff>();
 		this.enumConstantDiffList = new ArrayList<UMLEnumConstantDiff>();
 		this.refactorings = new ArrayList<Refactoring>();
@@ -100,10 +98,6 @@ public abstract class UMLAbstractClassDiff {
 		return operationBodyMapperList;
 	}
 
-	public List<UMLOperationDiff> getOperationDiffList() {
-		return operationDiffList;
-	}
-
 	public List<UMLAttributeDiff> getAttributeDiffList() {
 		return attributeDiffList;
 	}
@@ -122,15 +116,6 @@ public abstract class UMLAbstractClassDiff {
 
 	public UMLModelDiff getModelDiff() {
 		return modelDiff;
-	}
-
-	public UMLOperationDiff getOperationDiff(UMLOperation operation1, UMLOperation operation2) {
-		for(UMLOperationDiff diff : operationDiffList) {
-			if(diff.getRemovedOperation().equals(operation1) && diff.getAddedOperation().equals(operation2)) {
-				return diff;
-			}
-		}
-		return null;
 	}
 
 	protected boolean containsMapperForOperation1(UMLOperation operation) {

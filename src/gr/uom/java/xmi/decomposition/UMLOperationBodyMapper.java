@@ -5007,12 +5007,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean equalAfterNewArgumentAdditions(String s1, String s2, ReplacementInfo replacementInfo) {
-		UMLOperationDiff operationDiff = null;
-		if(container1 instanceof UMLOperation && container2 instanceof UMLOperation) {
-			operationDiff = classDiff != null ? classDiff.getOperationDiff((UMLOperation)container1, (UMLOperation)container2) : null;
-			if(operationDiff == null) {
-				operationDiff = new UMLOperationDiff((UMLOperation)container1, (UMLOperation)container2);
-			}
+		if(operationSignatureDiff == null && container1 instanceof UMLOperation && container2 instanceof UMLOperation) {
+			operationSignatureDiff = new UMLOperationDiff((UMLOperation)container1, (UMLOperation)container2);
 		}
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
@@ -5062,7 +5058,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					(container1.getParameterNameList().contains(diff1) && !container2.getParameterNameList().contains(diff1) && !containsMethodSignatureOfAnonymousClass(diff2)) ||
 					(classDiff != null && classDiff.getOriginalClass().containsAttributeWithName(diff1) && !classDiff.getNextClass().containsAttributeWithName(diff1) && !containsMethodSignatureOfAnonymousClass(diff2))) {
 				List<UMLParameter> matchingAddedParameters = new ArrayList<UMLParameter>();
-				List<UMLParameter> addedParameters = operationDiff != null ? operationDiff.getAddedParameters() : Collections.emptyList();
+				List<UMLParameter> addedParameters = operationSignatureDiff != null ? operationSignatureDiff.getAddedParameters() : Collections.emptyList();
 				for(UMLParameter addedParameter : addedParameters) {
 					if(diff2.contains(addedParameter.getName())) {
 						matchingAddedParameters.add(addedParameter);
@@ -5072,7 +5068,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					Replacement matchingReplacement = null;
 					for(Replacement replacement : replacementInfo.getReplacements()) {
 						if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
-							List<UMLParameterDiff> parameterDiffList = operationDiff != null ? operationDiff.getParameterDiffList() : Collections.emptyList();
+							List<UMLParameterDiff> parameterDiffList = operationSignatureDiff != null ? operationSignatureDiff.getParameterDiffList() : Collections.emptyList();
 							for(UMLParameterDiff parameterDiff : parameterDiffList) {
 								if(parameterDiff.isNameChanged() &&
 										replacement.getBefore().equals(parameterDiff.getRemovedParameter().getName()) &&

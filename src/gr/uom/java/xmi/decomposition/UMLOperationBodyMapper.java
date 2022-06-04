@@ -25,6 +25,7 @@ import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodIn
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
 import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
+import gr.uom.java.xmi.diff.AddParameterRefactoring;
 import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.CandidateMergeVariableRefactoring;
 import gr.uom.java.xmi.diff.CandidateSplitVariableRefactoring;
@@ -33,9 +34,12 @@ import gr.uom.java.xmi.diff.ChangeVariableTypeRefactoring;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
+import gr.uom.java.xmi.diff.MergeVariableRefactoring;
+import gr.uom.java.xmi.diff.RemoveParameterRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.ReplaceAnonymousWithLambdaRefactoring;
 import gr.uom.java.xmi.diff.ReplaceLoopWithPipelineRefactoring;
+import gr.uom.java.xmi.diff.SplitVariableRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLClassMoveDiff;
@@ -55,6 +59,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -63,6 +68,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
+import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper> {
@@ -86,6 +92,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public static final Pattern SPLIT_CONCAT_STRING_PATTERN = Pattern.compile("(\\s)*(\\+)(\\s)*");
 	private static final int MAXIMUM_NUMBER_OF_COMPARED_STRINGS = 100;
 	private static final int MAXIMUM_NUMBER_OF_COMPARED_STATEMENTS = 1000;
+	private UMLOperationDiff operationSignatureDiff;
 	private UMLAbstractClassDiff classDiff;
 	private UMLModelDiff modelDiff;
 	private VariableDeclarationContainer callSiteOperation;
@@ -394,6 +401,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private UMLOperationBodyMapper(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2, UMLOperationBodyMapper parentMapper) throws RefactoringMinerTimedOutException {
+		this.parentMapper = parentMapper;
 		this.classDiff = parentMapper.classDiff;
 		if(classDiff != null)
 			this.modelDiff = classDiff.getModelDiff();
@@ -716,6 +724,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public UMLAbstractClassDiff getClassDiff() {
 		return classDiff;
+	}
+
+	public Optional<UMLOperationDiff> getOperationSignatureDiff() {
+		return Optional.ofNullable(operationSignatureDiff);
 	}
 
 	public List<UMLOperationBodyMapper> getChildMappers() {
@@ -1164,6 +1176,50 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		addedVariables.addAll(analysis.getAddedVariablesStoringTheReturnOfExtractedMethod());
 		movedVariables = analysis.getMovedVariables();
 
+		if(parentMapper == null && getOperation1() != null && getOperation2() != null) {
+			this.operationSignatureDiff = new UMLOperationDiff(this);
+			Set<Refactoring> temp = operationSignatureDiff.getRefactorings();
+			for(Refactoring refactoring : refactorings) {
+				//remove redundant Add/Remove Parameter refactorings
+				Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<>();
+				if(refactoring.getRefactoringType().equals(RefactoringType.SPLIT_PARAMETER)) {
+					SplitVariableRefactoring split = (SplitVariableRefactoring)refactoring;
+					for(Refactoring ref : temp) {
+						if(ref instanceof RemoveParameterRefactoring) {
+							RemoveParameterRefactoring removeParameter = (RemoveParameterRefactoring)ref;
+							if(split.getOldVariable().equals(removeParameter.getParameter().getVariableDeclaration())) {
+								refactoringsToBeRemoved.add(ref);
+							}
+						}
+						else if(ref instanceof AddParameterRefactoring) {
+							AddParameterRefactoring addParameter = (AddParameterRefactoring)ref;
+							if(split.getSplitVariables().contains(addParameter.getParameter().getVariableDeclaration())) {
+								refactoringsToBeRemoved.add(ref);
+							}
+						}
+					}
+				}
+				else if(refactoring.getRefactoringType().equals(RefactoringType.MERGE_PARAMETER)) {
+					MergeVariableRefactoring merge = (MergeVariableRefactoring)refactoring;
+					for(Refactoring ref : temp) {
+						if(ref instanceof RemoveParameterRefactoring) {
+							RemoveParameterRefactoring removeParameter = (RemoveParameterRefactoring)ref;
+							if(merge.getMergedVariables().contains(removeParameter.getParameter().getVariableDeclaration())) {
+								refactoringsToBeRemoved.add(ref);
+							}
+						}
+						else if(ref instanceof AddParameterRefactoring) {
+							AddParameterRefactoring addParameter = (AddParameterRefactoring)ref;
+							if(merge.getNewVariable().equals(addParameter.getParameter().getVariableDeclaration())) {
+								refactoringsToBeRemoved.add(ref);
+							}
+						}
+					}
+				}
+				temp.removeAll(refactoringsToBeRemoved);
+			}
+			this.refactorings.addAll(temp);
+		}
 		return refactorings;
 	}
 

@@ -11,7 +11,6 @@ import java.util.Set;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
-import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.UMLAbstractClass;
@@ -485,10 +484,6 @@ public abstract class UMLAbstractClassDiff {
 
 	protected void processMapperRefactorings(UMLOperationBodyMapper mapper, List<Refactoring> refactorings) {
 		Set<Refactoring> refactorings2 = mapper.getRefactorings();
-		if(mapper.getParentMapper() == null && mapper.getOperation1() != null && mapper.getOperation2() != null) {
-			UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(mapper);
-			refactorings.addAll(operationSignatureDiff.getRefactorings());
-		}
 		for(Refactoring refactoring : refactorings2) {
 			if(refactorings.contains(refactoring)) {
 				//special handling for replacing rename variable refactorings having statement mapping information
@@ -498,43 +493,6 @@ public abstract class UMLAbstractClassDiff {
 			}
 			else {
 				refactorings.add(refactoring);
-				//remove redundant Add/Remove Parameter refactorings
-				List<Refactoring> refactoringsToBeRemoved = new ArrayList<>();
-				if(refactoring.getRefactoringType().equals(RefactoringType.SPLIT_PARAMETER)) {
-					SplitVariableRefactoring split = (SplitVariableRefactoring)refactoring;
-					for(Refactoring ref : refactorings) {
-						if(ref instanceof RemoveParameterRefactoring) {
-							RemoveParameterRefactoring removeParameter = (RemoveParameterRefactoring)ref;
-							if(split.getOldVariable().equals(removeParameter.getParameter().getVariableDeclaration())) {
-								refactoringsToBeRemoved.add(ref);
-							}
-						}
-						else if(ref instanceof AddParameterRefactoring) {
-							AddParameterRefactoring addParameter = (AddParameterRefactoring)ref;
-							if(split.getSplitVariables().contains(addParameter.getParameter().getVariableDeclaration())) {
-								refactoringsToBeRemoved.add(ref);
-							}
-						}
-					}
-				}
-				else if(refactoring.getRefactoringType().equals(RefactoringType.MERGE_PARAMETER)) {
-					MergeVariableRefactoring merge = (MergeVariableRefactoring)refactoring;
-					for(Refactoring ref : refactorings) {
-						if(ref instanceof RemoveParameterRefactoring) {
-							RemoveParameterRefactoring removeParameter = (RemoveParameterRefactoring)ref;
-							if(merge.getMergedVariables().contains(removeParameter.getParameter().getVariableDeclaration())) {
-								refactoringsToBeRemoved.add(ref);
-							}
-						}
-						else if(ref instanceof AddParameterRefactoring) {
-							AddParameterRefactoring addParameter = (AddParameterRefactoring)ref;
-							if(merge.getNewVariable().equals(addParameter.getParameter().getVariableDeclaration())) {
-								refactoringsToBeRemoved.add(ref);
-							}
-						}
-					}
-				}
-				refactorings.removeAll(refactoringsToBeRemoved);
 			}
 		}
 		for(CandidateAttributeRefactoring candidate : mapper.getCandidateAttributeRenames()) {

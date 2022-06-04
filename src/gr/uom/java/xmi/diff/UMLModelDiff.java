@@ -1412,8 +1412,7 @@ public class UMLModelDiff {
 								Refactoring ref = new PullUpOperationRefactoring(removedOperation, addedOperation);
 								this.refactorings.add(ref);
 								UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, addedOperation, supplierClassDiff);
-								UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(mapper);
-								this.refactorings.addAll(operationSignatureDiff.getRefactorings());
+								this.refactorings.addAll(mapper.getRefactorings());
 								checkForExtractedOperationsWithinMovedMethod(mapper, supplierClassDiff.getNextClass());
 							}
 						}
@@ -1515,8 +1514,6 @@ public class UMLModelDiff {
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
 				refactorings.addAll(mapper.getRefactorings());
 				ref.setBodyMapper(mapper);
-				UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(mapper);
-				refactorings.addAll(operationSignatureDiff.getRefactorings());
 				checkForExtractedOperationsWithinMovedMethod(mapper, addedClass);
 			}
 		}
@@ -2908,8 +2905,6 @@ public class UMLModelDiff {
 							deleteRemovedOperation(removedOperation);
 							deleteAddedOperation(addedOperation);
 							refactorings.addAll(firstMapper.getRefactorings());
-							UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(firstMapper);
-							refactorings.addAll(operationSignatureDiff.getRefactorings());
 							refactorings.add(refactoring);
 							UMLClass addedClass = getAddedClass(addedOperation.getClassName());
 							if(addedClass != null) {
@@ -3011,8 +3006,6 @@ public class UMLModelDiff {
 							deleteRemovedOperation(removedOperation);
 							deleteAddedOperation(addedOperation);
 							refactorings.addAll(firstMapper.getRefactorings());
-							UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(firstMapper);
-							refactorings.addAll(operationSignatureDiff.getRefactorings());
 							refactorings.add(refactoring);
 							UMLClass addedClass = getAddedClass(addedOperation.getClassName());
 							if(addedClass != null) {

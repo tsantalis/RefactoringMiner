@@ -228,10 +228,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			UMLOperationDiff operationDiff = new UMLOperationDiff(operation1, operation2);
+			this.operationSignatureDiff = new UMLOperationDiff(operation1, operation2);
 			Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
 			Map<String, String> parameterToArgumentMap2 = new LinkedHashMap<String, String>();
-			List<UMLParameter> addedParameters = operationDiff.getAddedParameters();
+			List<UMLParameter> addedParameters = operationSignatureDiff.getAddedParameters();
 			if(addedParameters.size() == 1) {
 				UMLParameter addedParameter = addedParameters.get(0);
 				if(UMLModelDiff.looksLikeSameType(addedParameter.getType().getClassType(), operation1.getClassName())) {
@@ -240,7 +240,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					parameterToArgumentMap2.put(addedParameter.getName() + ".", "");
 				}
 			}
-			List<UMLParameter> removedParameters = operationDiff.getRemovedParameters();
+			List<UMLParameter> removedParameters = operationSignatureDiff.getRemovedParameters();
 			if(removedParameters.size() == 1) {
 				UMLParameter removedParameter = removedParameters.get(0);
 				if(UMLModelDiff.looksLikeSameType(removedParameter.getType().getClassType(), operation2.getClassName())) {
@@ -248,7 +248,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					parameterToArgumentMap2.put("this.", "");
 				}
 			}
-			List<UMLParameterDiff> parameterDiffList = operationDiff.getParameterDiffList();
+			List<UMLParameterDiff> parameterDiffList = operationSignatureDiff.getParameterDiffList();
 			for(UMLParameterDiff parameterDiff : parameterDiffList) {
 				UMLParameter addedParameter = parameterDiff.getAddedParameter();
 				UMLParameter removedParameter = parameterDiff.getRemovedParameter();
@@ -5007,9 +5007,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean equalAfterNewArgumentAdditions(String s1, String s2, ReplacementInfo replacementInfo) {
-		if(operationSignatureDiff == null && container1 instanceof UMLOperation && container2 instanceof UMLOperation) {
-			operationSignatureDiff = new UMLOperationDiff((UMLOperation)container1, (UMLOperation)container2);
-		}
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty() && !commonPrefix.equals("return ")) {

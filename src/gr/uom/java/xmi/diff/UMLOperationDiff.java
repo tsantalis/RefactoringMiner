@@ -46,6 +46,7 @@ public class UMLOperationDiff {
 	private UMLAnnotationListDiff annotationListDiff;
 	private List<UMLType> addedExceptionTypes;
 	private List<UMLType> removedExceptionTypes;
+	private Set<Pair<UMLType, UMLType>> commonExceptionTypes;
 	private SimpleEntry<Set<UMLType>, Set<UMLType>> changedExceptionTypes;
 	
 	public UMLOperationDiff(UMLOperation removedOperation, UMLOperation addedOperation) {
@@ -60,6 +61,7 @@ public class UMLOperationDiff {
 		this.parameterDiffList = new ArrayList<UMLParameterDiff>();
 		this.addedExceptionTypes = new ArrayList<UMLType>();
 		this.removedExceptionTypes = new ArrayList<UMLType>();
+		this.commonExceptionTypes = new LinkedHashSet<Pair<UMLType, UMLType>>();
 		this.visibilityChanged = false;
 		this.abstractionChanged = false;
 		this.returnTypeChanged = false;
@@ -201,6 +203,7 @@ public class UMLOperationDiff {
 			for(UMLType exceptionType2 : exceptionTypes2) {
 				if(exceptionType1.equals(exceptionType2)) {
 					found = true;
+					commonExceptionTypes.add(Pair.of(exceptionType1, exceptionType2));
 					break;
 				}
 			}
@@ -213,6 +216,7 @@ public class UMLOperationDiff {
 			for(UMLType exceptionType1 : exceptionTypes1) {
 				if(exceptionType1.equals(exceptionType2)) {
 					found = true;
+					commonExceptionTypes.add(Pair.of(exceptionType1, exceptionType2));
 					break;
 				}
 			}
@@ -301,6 +305,62 @@ public class UMLOperationDiff {
 
 	public boolean isOperationRenamed() {
 		return operationRenamed;
+	}
+
+	public boolean isVisibilityChanged() {
+		return visibilityChanged;
+	}
+
+	public boolean isAbstractionChanged() {
+		return abstractionChanged;
+	}
+
+	public boolean isFinalChanged() {
+		return finalChanged;
+	}
+
+	public boolean isStaticChanged() {
+		return staticChanged;
+	}
+
+	public boolean isSynchronizedChanged() {
+		return synchronizedChanged;
+	}
+
+	public boolean isReturnTypeChanged() {
+		return returnTypeChanged;
+	}
+
+	public boolean isQualifiedReturnTypeChanged() {
+		return qualifiedReturnTypeChanged;
+	}
+
+	public boolean isParametersReordered() {
+		return parametersReordered;
+	}
+
+	public Set<Pair<VariableDeclaration, VariableDeclaration>> getMatchedVariables() {
+		return matchedVariables;
+	}
+
+	public UMLAnnotationListDiff getAnnotationListDiff() {
+		return annotationListDiff;
+	}
+
+	public List<UMLType> getAddedExceptionTypes() {
+		return addedExceptionTypes;
+	}
+
+	public List<UMLType> getRemovedExceptionTypes() {
+		return removedExceptionTypes;
+	}
+
+	public Set<Pair<UMLType, UMLType>> getCommonExceptionTypes() {
+		return commonExceptionTypes;
+	}
+
+	public SimpleEntry<Set<UMLType>, Set<UMLType>> getChangedExceptionTypes() {
+		return changedExceptionTypes;
 	}
 
 	public boolean isEmpty() {

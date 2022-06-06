@@ -11,7 +11,6 @@ import java.util.Set;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
-import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.UMLAbstractClass;
@@ -36,7 +35,6 @@ public abstract class UMLAbstractClassDiff {
 	protected List<UMLAttribute> addedAttributes;
 	protected List<UMLAttribute> removedAttributes;
 	protected List<UMLOperationBodyMapper> operationBodyMapperList;
-	protected List<UMLOperationDiff> operationDiffList;
 	protected List<UMLAttributeDiff> attributeDiffList;
 	protected List<UMLEnumConstantDiff> enumConstantDiffList;
 	protected UMLAbstractClass originalClass;
@@ -64,7 +62,6 @@ public abstract class UMLAbstractClassDiff {
 		this.addedAnonymousClasses = new ArrayList<UMLAnonymousClass>();
 		this.removedAnonymousClasses = new ArrayList<UMLAnonymousClass>();
 		this.operationBodyMapperList = new ArrayList<UMLOperationBodyMapper>();
-		this.operationDiffList = new ArrayList<UMLOperationDiff>();
 		this.attributeDiffList = new ArrayList<UMLAttributeDiff>();
 		this.enumConstantDiffList = new ArrayList<UMLEnumConstantDiff>();
 		this.refactorings = new ArrayList<Refactoring>();
@@ -101,10 +98,6 @@ public abstract class UMLAbstractClassDiff {
 		return operationBodyMapperList;
 	}
 
-	public List<UMLOperationDiff> getOperationDiffList() {
-		return operationDiffList;
-	}
-
 	public List<UMLAttributeDiff> getAttributeDiffList() {
 		return attributeDiffList;
 	}
@@ -123,15 +116,6 @@ public abstract class UMLAbstractClassDiff {
 
 	public UMLModelDiff getModelDiff() {
 		return modelDiff;
-	}
-
-	public UMLOperationDiff getOperationDiff(UMLOperation operation1, UMLOperation operation2) {
-		for(UMLOperationDiff diff : operationDiffList) {
-			if(diff.getRemovedOperation().equals(operation1) && diff.getAddedOperation().equals(operation2)) {
-				return diff;
-			}
-		}
-		return null;
 	}
 
 	protected boolean containsMapperForOperation1(UMLOperation operation) {
@@ -485,10 +469,6 @@ public abstract class UMLAbstractClassDiff {
 
 	protected void processMapperRefactorings(UMLOperationBodyMapper mapper, List<Refactoring> refactorings) {
 		Set<Refactoring> refactorings2 = mapper.getRefactorings();
-		if(mapper.getParentMapper() == null && mapper.getOperation1() != null && mapper.getOperation2() != null) {
-			UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(mapper);
-			refactorings.addAll(operationSignatureDiff.getRefactorings());
-		}
 		for(Refactoring refactoring : refactorings2) {
 			if(refactorings.contains(refactoring)) {
 				//special handling for replacing rename variable refactorings having statement mapping information
@@ -498,43 +478,6 @@ public abstract class UMLAbstractClassDiff {
 			}
 			else {
 				refactorings.add(refactoring);
-				//remove redundant Add/Remove Parameter refactorings
-				List<Refactoring> refactoringsToBeRemoved = new ArrayList<>();
-				if(refactoring.getRefactoringType().equals(RefactoringType.SPLIT_PARAMETER)) {
-					SplitVariableRefactoring split = (SplitVariableRefactoring)refactoring;
-					for(Refactoring ref : refactorings) {
-						if(ref instanceof RemoveParameterRefactoring) {
-							RemoveParameterRefactoring removeParameter = (RemoveParameterRefactoring)ref;
-							if(split.getOldVariable().equals(removeParameter.getParameter().getVariableDeclaration())) {
-								refactoringsToBeRemoved.add(ref);
-							}
-						}
-						else if(ref instanceof AddParameterRefactoring) {
-							AddParameterRefactoring addParameter = (AddParameterRefactoring)ref;
-							if(split.getSplitVariables().contains(addParameter.getParameter().getVariableDeclaration())) {
-								refactoringsToBeRemoved.add(ref);
-							}
-						}
-					}
-				}
-				else if(refactoring.getRefactoringType().equals(RefactoringType.MERGE_PARAMETER)) {
-					MergeVariableRefactoring merge = (MergeVariableRefactoring)refactoring;
-					for(Refactoring ref : refactorings) {
-						if(ref instanceof RemoveParameterRefactoring) {
-							RemoveParameterRefactoring removeParameter = (RemoveParameterRefactoring)ref;
-							if(merge.getMergedVariables().contains(removeParameter.getParameter().getVariableDeclaration())) {
-								refactoringsToBeRemoved.add(ref);
-							}
-						}
-						else if(ref instanceof AddParameterRefactoring) {
-							AddParameterRefactoring addParameter = (AddParameterRefactoring)ref;
-							if(merge.getNewVariable().equals(addParameter.getParameter().getVariableDeclaration())) {
-								refactoringsToBeRemoved.add(ref);
-							}
-						}
-					}
-				}
-				refactorings.removeAll(refactoringsToBeRemoved);
 			}
 		}
 		for(CandidateAttributeRefactoring candidate : mapper.getCandidateAttributeRenames()) {

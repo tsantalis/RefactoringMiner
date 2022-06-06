@@ -25,6 +25,7 @@ import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodIn
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
 import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
+import gr.uom.java.xmi.diff.AddParameterRefactoring;
 import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.CandidateMergeVariableRefactoring;
 import gr.uom.java.xmi.diff.CandidateSplitVariableRefactoring;
@@ -33,9 +34,12 @@ import gr.uom.java.xmi.diff.ChangeVariableTypeRefactoring;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
+import gr.uom.java.xmi.diff.MergeVariableRefactoring;
+import gr.uom.java.xmi.diff.RemoveParameterRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
 import gr.uom.java.xmi.diff.ReplaceAnonymousWithLambdaRefactoring;
 import gr.uom.java.xmi.diff.ReplaceLoopWithPipelineRefactoring;
+import gr.uom.java.xmi.diff.SplitVariableRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLClassMoveDiff;
@@ -55,6 +59,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -63,6 +68,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
+import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper> {
@@ -86,6 +92,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public static final Pattern SPLIT_CONCAT_STRING_PATTERN = Pattern.compile("(\\s)*(\\+)(\\s)*");
 	private static final int MAXIMUM_NUMBER_OF_COMPARED_STRINGS = 100;
 	private static final int MAXIMUM_NUMBER_OF_COMPARED_STATEMENTS = 1000;
+	private UMLOperationDiff operationSignatureDiff;
 	private UMLAbstractClassDiff classDiff;
 	private UMLModelDiff modelDiff;
 	private VariableDeclarationContainer callSiteOperation;
@@ -221,10 +228,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			UMLOperationDiff operationDiff = new UMLOperationDiff(operation1, operation2);
+			this.operationSignatureDiff = new UMLOperationDiff(operation1, operation2);
 			Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
 			Map<String, String> parameterToArgumentMap2 = new LinkedHashMap<String, String>();
-			List<UMLParameter> addedParameters = operationDiff.getAddedParameters();
+			List<UMLParameter> addedParameters = operationSignatureDiff.getAddedParameters();
 			if(addedParameters.size() == 1) {
 				UMLParameter addedParameter = addedParameters.get(0);
 				if(UMLModelDiff.looksLikeSameType(addedParameter.getType().getClassType(), operation1.getClassName())) {
@@ -233,7 +240,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					parameterToArgumentMap2.put(addedParameter.getName() + ".", "");
 				}
 			}
-			List<UMLParameter> removedParameters = operationDiff.getRemovedParameters();
+			List<UMLParameter> removedParameters = operationSignatureDiff.getRemovedParameters();
 			if(removedParameters.size() == 1) {
 				UMLParameter removedParameter = removedParameters.get(0);
 				if(UMLModelDiff.looksLikeSameType(removedParameter.getType().getClassType(), operation2.getClassName())) {
@@ -241,7 +248,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					parameterToArgumentMap2.put("this.", "");
 				}
 			}
-			List<UMLParameterDiff> parameterDiffList = operationDiff.getParameterDiffList();
+			List<UMLParameterDiff> parameterDiffList = operationSignatureDiff.getParameterDiffList();
 			for(UMLParameterDiff parameterDiff : parameterDiffList) {
 				UMLParameter addedParameter = parameterDiff.getAddedParameter();
 				UMLParameter removedParameter = parameterDiff.getRemovedParameter();
@@ -394,6 +401,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private UMLOperationBodyMapper(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2, UMLOperationBodyMapper parentMapper) throws RefactoringMinerTimedOutException {
+		this.parentMapper = parentMapper;
 		this.classDiff = parentMapper.classDiff;
 		if(classDiff != null)
 			this.modelDiff = classDiff.getModelDiff();
@@ -716,6 +724,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public UMLAbstractClassDiff getClassDiff() {
 		return classDiff;
+	}
+
+	public Optional<UMLOperationDiff> getOperationSignatureDiff() {
+		return Optional.ofNullable(operationSignatureDiff);
 	}
 
 	public List<UMLOperationBodyMapper> getChildMappers() {
@@ -1164,6 +1176,50 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		addedVariables.addAll(analysis.getAddedVariablesStoringTheReturnOfExtractedMethod());
 		movedVariables = analysis.getMovedVariables();
 
+		if(parentMapper == null && getOperation1() != null && getOperation2() != null) {
+			this.operationSignatureDiff = new UMLOperationDiff(this);
+			Set<Refactoring> temp = operationSignatureDiff.getRefactorings();
+			for(Refactoring refactoring : refactorings) {
+				//remove redundant Add/Remove Parameter refactorings
+				Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<>();
+				if(refactoring.getRefactoringType().equals(RefactoringType.SPLIT_PARAMETER)) {
+					SplitVariableRefactoring split = (SplitVariableRefactoring)refactoring;
+					for(Refactoring ref : temp) {
+						if(ref instanceof RemoveParameterRefactoring) {
+							RemoveParameterRefactoring removeParameter = (RemoveParameterRefactoring)ref;
+							if(split.getOldVariable().equals(removeParameter.getParameter().getVariableDeclaration())) {
+								refactoringsToBeRemoved.add(ref);
+							}
+						}
+						else if(ref instanceof AddParameterRefactoring) {
+							AddParameterRefactoring addParameter = (AddParameterRefactoring)ref;
+							if(split.getSplitVariables().contains(addParameter.getParameter().getVariableDeclaration())) {
+								refactoringsToBeRemoved.add(ref);
+							}
+						}
+					}
+				}
+				else if(refactoring.getRefactoringType().equals(RefactoringType.MERGE_PARAMETER)) {
+					MergeVariableRefactoring merge = (MergeVariableRefactoring)refactoring;
+					for(Refactoring ref : temp) {
+						if(ref instanceof RemoveParameterRefactoring) {
+							RemoveParameterRefactoring removeParameter = (RemoveParameterRefactoring)ref;
+							if(merge.getMergedVariables().contains(removeParameter.getParameter().getVariableDeclaration())) {
+								refactoringsToBeRemoved.add(ref);
+							}
+						}
+						else if(ref instanceof AddParameterRefactoring) {
+							AddParameterRefactoring addParameter = (AddParameterRefactoring)ref;
+							if(merge.getNewVariable().equals(addParameter.getParameter().getVariableDeclaration())) {
+								refactoringsToBeRemoved.add(ref);
+							}
+						}
+					}
+				}
+				temp.removeAll(refactoringsToBeRemoved);
+			}
+			this.refactorings.addAll(temp);
+		}
 		return refactorings;
 	}
 
@@ -4951,13 +5007,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean equalAfterNewArgumentAdditions(String s1, String s2, ReplacementInfo replacementInfo) {
-		UMLOperationDiff operationDiff = null;
-		if(container1 instanceof UMLOperation && container2 instanceof UMLOperation) {
-			operationDiff = classDiff != null ? classDiff.getOperationDiff((UMLOperation)container1, (UMLOperation)container2) : null;
-			if(operationDiff == null) {
-				operationDiff = new UMLOperationDiff((UMLOperation)container1, (UMLOperation)container2);
-			}
-		}
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty() && !commonPrefix.equals("return ")) {
@@ -5006,7 +5055,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					(container1.getParameterNameList().contains(diff1) && !container2.getParameterNameList().contains(diff1) && !containsMethodSignatureOfAnonymousClass(diff2)) ||
 					(classDiff != null && classDiff.getOriginalClass().containsAttributeWithName(diff1) && !classDiff.getNextClass().containsAttributeWithName(diff1) && !containsMethodSignatureOfAnonymousClass(diff2))) {
 				List<UMLParameter> matchingAddedParameters = new ArrayList<UMLParameter>();
-				List<UMLParameter> addedParameters = operationDiff != null ? operationDiff.getAddedParameters() : Collections.emptyList();
+				List<UMLParameter> addedParameters = operationSignatureDiff != null ? operationSignatureDiff.getAddedParameters() : Collections.emptyList();
 				for(UMLParameter addedParameter : addedParameters) {
 					if(diff2.contains(addedParameter.getName())) {
 						matchingAddedParameters.add(addedParameter);
@@ -5016,7 +5065,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					Replacement matchingReplacement = null;
 					for(Replacement replacement : replacementInfo.getReplacements()) {
 						if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
-							List<UMLParameterDiff> parameterDiffList = operationDiff != null ? operationDiff.getParameterDiffList() : Collections.emptyList();
+							List<UMLParameterDiff> parameterDiffList = operationSignatureDiff != null ? operationSignatureDiff.getParameterDiffList() : Collections.emptyList();
 							for(UMLParameterDiff parameterDiff : parameterDiffList) {
 								if(parameterDiff.isNameChanged() &&
 										replacement.getBefore().equals(parameterDiff.getRemovedParameter().getName()) &&

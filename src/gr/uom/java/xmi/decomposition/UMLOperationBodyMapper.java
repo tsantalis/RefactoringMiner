@@ -86,7 +86,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Set<CandidateAttributeRefactoring> candidateAttributeRenames = new LinkedHashSet<CandidateAttributeRefactoring>();
 	private Set<CandidateMergeVariableRefactoring> candidateAttributeMerges = new LinkedHashSet<CandidateMergeVariableRefactoring>();
 	private Set<CandidateSplitVariableRefactoring> candidateAttributeSplits = new LinkedHashSet<CandidateSplitVariableRefactoring>();
-	private List<UMLOperationBodyMapper> childMappers = new ArrayList<UMLOperationBodyMapper>();
+	private Set<UMLOperationBodyMapper> childMappers = new LinkedHashSet<UMLOperationBodyMapper>();
 	private UMLOperationBodyMapper parentMapper;
 	private static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)|(\\?)|(:)");
 	public static final Pattern SPLIT_CONCAT_STRING_PATTERN = Pattern.compile("(\\s)*(\\+)(\\s)*");
@@ -730,7 +730,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return Optional.ofNullable(operationSignatureDiff);
 	}
 
-	public List<UMLOperationBodyMapper> getChildMappers() {
+	public Set<UMLOperationBodyMapper> getChildMappers() {
 		return childMappers;
 	}
 
@@ -6608,6 +6608,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(AbstractCodeMapping previousMapping : this.mappings) {
 				if(previousMapping.getFragment1().equals(parent1) && previousMapping.getFragment2().equals(parent2)) {
 					return true;
+				}
+			}
+		}
+		else if(mapping.getFragment1().getString().equals("{") && mapping.getFragment2().getString().equals("{")) {
+			//check if mapping corresponds to the bodies of matched lambda expressions
+			for(AbstractCodeMapping previousMapping : this.mappings) {
+				if(previousMapping.getFragment1().getLambdas().size() > 0 && previousMapping.getFragment2().getLambdas().size() > 0) {
+					LambdaExpressionObject lambda1 = previousMapping.getFragment1().getLambdas().get(0);
+					LambdaExpressionObject lambda2 = previousMapping.getFragment2().getLambdas().get(0);
+					if(lambda1.getBody() != null && lambda1.getBody().getCompositeStatement().equals(mapping.getFragment1()) &&
+							lambda2.getBody() != null && lambda2.getBody().getCompositeStatement().equals(mapping.getFragment2())) {
+						return true;
+					}
 				}
 			}
 		}

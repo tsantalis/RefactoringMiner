@@ -1354,7 +1354,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private void optimizeDuplicateMappings(UMLOperationBodyMapper parentMapper) {
 		if(parentMapper.getChildMappers().size() > 1) {
 			Map<AbstractCodeFragment, Set<AbstractCodeMapping>> oneToManyMappings = new HashMap<>();
-			Map<AbstractCodeFragment, Set<UMLOperationBodyMapper>> oneToManyMappers = new HashMap<>();
+			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers = new HashMap<>();
 			for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
 				for(AbstractCodeMapping mapping : childMapper.getMappings()) {
 					if(oneToManyMappings.containsKey(mapping.getFragment1())) {
@@ -1363,7 +1363,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 					else {
 						Set<AbstractCodeMapping> mappings = new LinkedHashSet<>();
-						Set<UMLOperationBodyMapper> mappers = new LinkedHashSet<>();
+						List<UMLOperationBodyMapper> mappers = new ArrayList<>();
 						mappings.add(mapping);
 						mappers.add(childMapper);
 						oneToManyMappings.put(mapping.getFragment1(), mappings);
@@ -1377,10 +1377,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					oneToManyMappings.remove(fragment);
 				}
 			}
+			//sort oneToManyMappings keys to put first composite statements, then blocks, then leaf statements
+			TreeSet<AbstractCodeFragment> sortedKeys = new TreeSet<>(new CodeFragmentComparator());
+			sortedKeys.addAll(oneToManyMappings.keySet());
 			Set<UMLOperationBodyMapper> updatedMappers = new LinkedHashSet<>();
-			for(AbstractCodeFragment fragment : oneToManyMappings.keySet()) {
+			for(AbstractCodeFragment fragment : sortedKeys) {
 				Set<AbstractCodeMapping> mappings = oneToManyMappings.get(fragment);
-				Set<UMLOperationBodyMapper> mappers = oneToManyMappers.get(fragment);
+				List<UMLOperationBodyMapper> mappers = oneToManyMappers.get(fragment);
 				Iterator<AbstractCodeMapping> mappingIterator = mappings.iterator();
 				Iterator<UMLOperationBodyMapper> mapperIterator = mappers.iterator();
 				List<Boolean> parentMappingFound = new ArrayList<>();

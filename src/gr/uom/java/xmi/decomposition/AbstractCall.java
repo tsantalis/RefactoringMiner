@@ -718,16 +718,25 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return null;
 	}
 
-	private boolean argumentIsAssigned(String statement) {
-		return getArguments().size() == 1 && statement.contains("=") && statement.endsWith(";\n") &&
+	private int argumentIsAssigned(String statement) {
+		if(statement.contains("=") && statement.endsWith(";\n")) {
+			int index = 0;
+			for(String argument : getArguments()) {
 				//length()-2 to remove ";\n" from the end of the assignment statement, indexOf("=")+1 to remove the left hand side of the assignment
-				equalsIgnoringExtraParenthesis(getArguments().get(0), statement.substring(statement.indexOf("=")+1, statement.length()-2));
+				if(equalsIgnoringExtraParenthesis(argument, statement.substring(statement.indexOf("=")+1, statement.length()-2))) {
+					return index;
+				}
+				index++;
+			}
+		}
+		return -1;
 	}
 
 	public Replacement makeReplacementForAssignedArgument(String statement) {
-		if(argumentIsAssigned(statement)) {
+		int index = argumentIsAssigned(statement);
+		if(index >= 0 && (getArguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
 			return new Replacement(statement.substring(statement.indexOf("=")+1, statement.length()-2),
-					getArguments().get(0), ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION);
+					getArguments().get(index), ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION);
 		}
 		return null;
 	}

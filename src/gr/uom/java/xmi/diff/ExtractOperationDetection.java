@@ -182,7 +182,7 @@ public class ExtractOperationDetection {
 	private static List<AbstractCall> getInvocationsInSourceOperationAfterExtractionExcludingInvocationsInExactlyMappedStatements(UMLOperationBodyMapper mapper) {
 		List<AbstractCall> operationInvocations = mapper.getContainer2().getAllOperationInvocations();
 		for(AbstractCodeMapping mapping : mapper.getMappings()) {
-			if(mapping.isExact()) {
+			if(mapping.isExact() && mapping.getReplacementsInvolvingMethodInvocation().isEmpty()) {
 				Map<String, List<AbstractCall>> methodInvocationMap = mapping.getFragment2().getMethodInvocationMap();
 				for(String key : methodInvocationMap.keySet()) {
 					List<AbstractCall> invocations = methodInvocationMap.get(key);

@@ -8,7 +8,9 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
+import gr.uom.java.xmi.decomposition.replacement.IntersectionReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ObjectCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
@@ -514,6 +516,26 @@ public abstract class AbstractCodeMapping {
 		Set<Replacement> intersection = new LinkedHashSet<Replacement>(this.replacements);
 		intersection.retainAll(other.replacements);
 		return intersection;
+	}
+
+	public Set<Replacement> getReplacementsInvolvingMethodInvocation() {
+		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
+		for(Replacement replacement : getReplacements()) {
+			if(involvesMethodInvocation(replacement)) {
+				replacements.add(replacement);
+			}
+		}
+		return replacements;
+	}
+
+	private static boolean involvesMethodInvocation(Replacement replacement) {
+		return replacement instanceof MethodInvocationReplacement ||
+				replacement instanceof VariableReplacementWithMethodInvocation ||
+				replacement instanceof ClassInstanceCreationWithMethodInvocationReplacement ||
+				replacement.getType().equals(ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION) ||
+				replacement.getType().equals(ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION) ||
+				replacement instanceof IntersectionReplacement ||
+				replacement.getType().equals(ReplacementType.ANONYMOUS_CLASS_DECLARATION);
 	}
 
 	@Override

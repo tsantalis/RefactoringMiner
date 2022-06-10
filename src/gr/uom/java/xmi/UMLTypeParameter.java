@@ -3,19 +3,27 @@ package gr.uom.java.xmi;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UMLTypeParameter {
+import gr.uom.java.xmi.diff.CodeRange;
+
+public class UMLTypeParameter implements LocationInfoProvider {
 	private String name;
 	private List<UMLType> typeBounds;
 	private List<UMLAnnotation> annotations;
+	private LocationInfo locationInfo;
 
-	public UMLTypeParameter(String name) {
+	public UMLTypeParameter(String name, LocationInfo locationInfo) {
 		this.name = name;
+		this.locationInfo = locationInfo;
 		this.typeBounds = new ArrayList<UMLType>();
 		this.annotations = new ArrayList<UMLAnnotation>();
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public LocationInfo getLocationInfo() {
+		return locationInfo;
 	}
 
 	public List<UMLType> getTypeBounds() {
@@ -87,5 +95,10 @@ public class UMLTypeParameter {
 		} else if (!typeBounds.equals(other.typeBounds))
 			return false;
 		return true;
+	}
+
+	@Override
+	public CodeRange codeRange() {
+		return locationInfo.codeRange();
 	}
 }

@@ -153,7 +153,8 @@ public class UMLModelASTReader {
 	}
 
 	private UMLTypeParameter processTypeParameter(PsiFile cu, String sourceFile, PsiTypeParameter typeParameter) {
-		UMLTypeParameter umlTypeParameter = new UMLTypeParameter(typeParameter.getName());
+		UMLTypeParameter umlTypeParameter = new UMLTypeParameter(typeParameter.getName(),
+				generateLocationInfo(cu, sourceFile, typeParameter, CodeElementType.TYPE_PARAMETER));
 		List<UMLType> extendsList = getUMLTypesOfReferenceList(cu, sourceFile, typeParameter.getExtendsList());
 		extendsList.forEach(umlTypeParameter::addTypeBound);
 		PsiAnnotation[] typeParameterAnnotations = typeParameter.getAnnotations();

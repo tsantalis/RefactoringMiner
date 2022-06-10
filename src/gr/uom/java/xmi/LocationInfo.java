@@ -228,7 +228,8 @@ public class LocationInfo {
 		LAMBDA_EXPRESSION_PARAMETER,
 		METHOD_REFERENCE,
 		CREATION_REFERENCE,
-		INITIALIZER;
+		INITIALIZER,
+		TYPE_PARAMETER;
 		
 		private String name;
 		

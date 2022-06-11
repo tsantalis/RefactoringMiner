@@ -56,7 +56,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/baasbox/baasbox.git",
 				"https://github.com/phishman3579/java-algorithms-implementation.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 2404, 2, 44);
+		processRepositoryCommits(Arrays.asList(gitURLs), 2407, 2, 44);
 	}
 
 	@Test
@@ -104,6 +104,12 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/loopj/android-async-http.git",
 				"https://github.com/datastax/java-driver.git",
 				"https://github.com/SimonVT/schematic.git",
+		};
+		processRepositoryCommits(Arrays.asList(gitURLs), 1764, 9, 94);
+	}
+
+	public void testBatch2a() throws Exception {
+		String gitURLs[] = new String[]{
 				"https://github.com/jfinal/jfinal.git",
 				"https://github.com/oblac/jodd.git",
 				"https://github.com/realm/realm-java.git",
@@ -127,7 +133,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/jayway/rest-assured.git",
 				"https://github.com/graphhopper/graphhopper.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 3435, 14, 154);
+		processRepositoryCommits(Arrays.asList(gitURLs), 1680, 5, 60);
 	}
 
 	@Test
@@ -172,7 +178,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/addthis/hydra.git",
 				"https://github.com/apache/pig.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 3003, 7, 59);
+		processRepositoryCommits(Arrays.asList(gitURLs), 3015, 7, 57);
 	}
 
 	@Test
@@ -237,7 +243,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/novoda/android-demos.git",
 				"https://github.com/wordpress-mobile/WordPress-Android.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 1827, 0, 49);
+		processRepositoryCommits(Arrays.asList(gitURLs), 1829, 0, 49);
 	}
 
 	@Test
@@ -246,7 +252,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/apache/cassandra.git",
 				"https://github.com/JetBrains/intellij-community.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 478, 4, 10);
+		processRepositoryCommits(Arrays.asList(gitURLs), 480, 4, 10);
 	}
 /*
 	@Test
@@ -254,7 +260,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 		GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
 		TestBuilder test = new TestBuilder(detector, REPOS, Refactorings.All.getValue());
 		RefactoringPopulator.feedRefactoringsInstances(Refactorings.All.getValue(), Systems.FSE.getValue(), test);
-		test.assertExpectations(getProject(), 11147, 27, 316, false);
+		test.assertExpectations(getProject(), 11175, 27, 314, false);
 	}
  */
 }

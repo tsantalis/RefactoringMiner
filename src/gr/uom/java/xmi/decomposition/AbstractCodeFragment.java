@@ -321,7 +321,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				((AbstractStatement)this).getParent().statementCount() == 1 && ((AbstractStatement)this).getParent().getParent() == null) {
 			return true;
 		}
-		return !statement.equals("{") && !statement.startsWith("catch(") && !statement.startsWith("case ") && !statement.startsWith("default :") &&
+		return !statement.equals("{") && !statement.startsWith("catch(") && !statement.startsWith("case ") &&
 				!statement.startsWith("return true;") && !statement.startsWith("return false;") && !statement.startsWith("return this;") && !statement.startsWith("return null;") && !statement.startsWith("return;");
 	}
 }

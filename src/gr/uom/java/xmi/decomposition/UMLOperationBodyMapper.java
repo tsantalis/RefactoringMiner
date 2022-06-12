@@ -2869,11 +2869,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					String temp = ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), s1, s2);
 					int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), minDistance);
 					boolean multipleInstances = ReplacementUtil.countInstances(temp, s2) > 1;
-					if(distanceRaw == -1 && multipleInstances) {
+					boolean typeContainsVariableName = false;
+					if(variableDeclarations1.size() > 0 && !s1.equals(s2)) {
+						VariableDeclaration variableDeclaration = variableDeclarations1.get(0);
+						String typeTolowerCase = variableDeclaration.getType().toString().toLowerCase();
+						if(typeTolowerCase.contains(variableDeclaration.getVariableName().toLowerCase()) &&	typeTolowerCase.contains(s2.toLowerCase())) {
+							typeContainsVariableName = true;
+						}
+					}
+					if(distanceRaw == -1 && (multipleInstances || typeContainsVariableName)) {
 						distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2());
 					}
-					boolean multipleInstanceRule = multipleInstances && Math.abs(s1.length() - s2.length()) == Math.abs(distanceRaw - minDistance) && !s1.equals(s2);
-					if(distanceRaw >= 0 && (distanceRaw < replacementInfo.getRawDistance() || multipleInstanceRule)) {
+					boolean allowReplacementIncreasingDistance = (multipleInstances && Math.abs(s1.length() - s2.length()) == Math.abs(distanceRaw - minDistance) && !s1.equals(s2)) || typeContainsVariableName;
+					if(distanceRaw >= 0 && (distanceRaw < replacementInfo.getRawDistance() || allowReplacementIncreasingDistance)) {
 						minDistance = distanceRaw;
 						Replacement replacement = null;
 						if(variables1.contains(s1) && variables2.contains(s2) && variablesStartWithSameCase(s1, s2, parameterToArgumentMap, replacementInfo)) {

@@ -113,7 +113,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/apache/tomcat.git", 17, 0, 0);
         processRepositoryCommits("https://github.com/facebook/buck.git", 176, 0, 7);
         processRepositoryCommits("https://github.com/jayway/rest-assured.git", 2, 0, 0);
-        processRepositoryCommits("https://github.com/graphhopper/graphhopper.git", 391, 2, 9);
+        processRepositoryCommits("https://github.com/graphhopper/graphhopper.git", 392, 2, 9);
         processRepositoryCommits("https://github.com/xetorthio/jedis.git", 33, 0, 0);
         processRepositoryCommits("https://github.com/eclipse/jetty.project.git", 12, 0, 4);
         processRepositoryCommits("https://github.com/droolsjbpm/jbpm.git", 148, 1, 4);
@@ -150,7 +150,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/ratpack/ratpack.git", 4, 0, 0);
         processRepositoryCommits("https://github.com/brianfrankcooper/YCSB.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/QuantumBadger/RedReader.git", 12, 0, 0);
-        processRepositoryCommits("https://github.com/apache/cassandra.git", 283, 4, 4);
+        processRepositoryCommits("https://github.com/apache/cassandra.git", 285, 4, 4);
         processRepositoryCommits("https://github.com/addthis/hydra.git", 134, 0, 0);
         processRepositoryCommits("https://github.com/apache/pig.git", 7, 0, 1);
         processRepositoryCommits("https://github.com/apache/hive.git", 67, 0, 3);

@@ -29,6 +29,9 @@ sourceSets {
 }
 
 repositories {
+	maven {
+        url 'https://raw.githubusercontent.com/jmini/ecentral/HEAD/repo'
+    }
     mavenCentral()
 }
 
@@ -36,7 +39,9 @@ dependencies {
     implementation 'org.eclipse.jgit:org.eclipse.jgit:5.13.0.202109080827-r'
     implementation 'org.slf4j:slf4j-log4j12:1.7.32'
     implementation 'junit:junit:4.11'
-    implementation 'org.eclipse.jdt:org.eclipse.jdt.core:3.27.0'
+    implementation platform('fr.jmini.ecentral:eclipse-platform-dependencies:4.23')
+    implementation 'org.eclipse.jdt:org.eclipse.jdt.core'
+    //implementation 'org.eclipse.jdt:org.eclipse.jdt.core:3.27.0'
     implementation 'org.apache.commons:commons-text:1.9'
     implementation 'org.kohsuke:github-api:1.135'
     implementation 'io.github.java-diff-utils:java-diff-utils:4.11'

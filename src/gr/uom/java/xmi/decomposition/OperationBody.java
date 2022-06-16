@@ -278,7 +278,7 @@ public class OperationBody {
 			PsiCatchSection[] catchClauses = tryStatement.getCatchSections();
 			for(PsiCatchSection catchClause : catchClauses) {
 				PsiCodeBlock catchClauseBody = catchClause.getCatchBlock();
-				CompositeStatementObject catchClauseStatementObject = new CompositeStatementObject(cu, filePath, catchClauseBody, parent.getDepth()+1, CodeElementType.CATCH_CLAUSE);
+				CompositeStatementObject catchClauseStatementObject = new CompositeStatementObject(cu, filePath, catchClause, parent.getDepth()+1, CodeElementType.CATCH_CLAUSE);
 				child.addCatchClause(catchClauseStatementObject);
 				parent.addStatement(catchClauseStatementObject);
 				PsiParameter variableDeclaration = catchClause.getParameter();

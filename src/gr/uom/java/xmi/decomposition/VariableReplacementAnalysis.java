@@ -1744,18 +1744,21 @@ public class VariableReplacementAnalysis {
 
 	private static boolean containsVariableDeclarationWithName(VariableDeclaration variableDeclaration, Set<VariableDeclaration> variableDeclarations, String variableName) {
 		for(VariableDeclaration declaration : variableDeclarations) {
-			if(declaration.getVariableName().equals(variableName) && !wrappedAsArgument(declaration.getInitializer(), variableDeclaration)) {
+			if(declaration.getVariableName().equals(variableName) && !invokingExpressionOrWrappedAsArgument(declaration.getInitializer(), variableDeclaration)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private static boolean wrappedAsArgument(AbstractExpression initializer, VariableDeclaration variableDeclaration) {
+	private static boolean invokingExpressionOrWrappedAsArgument(AbstractExpression initializer, VariableDeclaration variableDeclaration) {
 		if(initializer != null) {
 			AbstractCall invocation = initializer.invocationCoveringEntireFragment();
 			if(invocation != null) {
 				if(invocation.getArguments().contains(variableDeclaration.getVariableName())) {
+					return true;
+				}
+				if(invocation.getExpression() != null && invocation.getExpression().equals(variableDeclaration.getVariableName())) {
 					return true;
 				}
 			}

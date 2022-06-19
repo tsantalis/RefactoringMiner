@@ -44,17 +44,13 @@ public class UMLTypeParameter implements LocationInfoProvider {
 
 	protected String typeBoundsToString() {
 		StringBuilder sb = new StringBuilder();
-		if(typeBounds.isEmpty()) {
-			sb.append("");
-		}
-		else {
-			sb.append("<");
+		if(!typeBounds.isEmpty()) {
+			sb.append(" extends ");
 			for(int i = 0; i < typeBounds.size(); i++) {
 				sb.append(typeBounds.get(i).toQualifiedString());
 				if(i < typeBounds.size() - 1)
-					sb.append(",");
+					sb.append(" & ");
 			}
-			sb.append(">");
 		}
 		return sb.toString();
 	}

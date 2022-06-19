@@ -52,6 +52,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private List<UMLType> removedImplementedInterfaces;
 	private UMLAnnotationListDiff annotationListDiff;
 	private UMLImportListDiff importDiffList;
+	private UMLTypeParameterListDiff typeParameterDiffList;
 	private Map<MethodInvocationReplacement, UMLOperationBodyMapper> consistentMethodInvocationRenames;
 
 	public UMLClassBaseDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
@@ -75,6 +76,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		processImports();
 		processInitializers();
 		processModifiers();
+		processTypeParameters();
 		processAnnotations();
 		processEnumConstants();
 		processInheritance();
@@ -86,6 +88,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		checkForAttributeChanges();
 		checkForInlinedOperations();
 		checkForExtractedOperations();
+	}
+
+	private void processTypeParameters() {
+		this.typeParameterDiffList = new UMLTypeParameterListDiff(getOriginalClass().getTypeParameters(), getNextClass().getTypeParameters());
 	}
 
 	private void processImports() {
@@ -109,6 +115,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	public UMLImportListDiff getImportDiffList() {
 		return importDiffList;
+	}
+
+	public UMLAnnotationListDiff getAnnotationListDiff() {
+		return annotationListDiff;
+	}
+
+	public UMLTypeParameterListDiff getTypeParameterDiffList() {
+		return typeParameterDiffList;
 	}
 
 	protected void processInitializers() throws RefactoringMinerTimedOutException {
@@ -1454,7 +1468,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			addedAttributes.isEmpty() && removedAttributes.isEmpty() &&
 			addedEnumConstants.isEmpty() && removedEnumConstants.isEmpty() &&
 			attributeDiffList.isEmpty() &&
-			operationBodyMapperList.isEmpty() && enumConstantDiffList.isEmpty() && annotationListDiff.isEmpty() &&
+			operationBodyMapperList.isEmpty() && enumConstantDiffList.isEmpty() && annotationListDiff.isEmpty() && typeParameterDiffList.isEmpty() &&
 			!visibilityChanged && !abstractionChanged && !finalChanged && !staticChanged && !superclassChanged;
 	}
 

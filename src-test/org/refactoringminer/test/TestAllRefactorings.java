@@ -56,7 +56,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/baasbox/baasbox.git",
 				"https://github.com/phishman3579/java-algorithms-implementation.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 2407, 2, 44);
+		processRepositoryCommits(Arrays.asList(gitURLs), 2408, 2, 42);
 	}
 
 	@Test
@@ -105,7 +105,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/datastax/java-driver.git",
 				"https://github.com/SimonVT/schematic.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 1764, 9, 94);
+		processRepositoryCommits(Arrays.asList(gitURLs), 1765, 9, 86);
 	}
 
 	public void testBatch2a() throws Exception {
@@ -133,7 +133,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/jayway/rest-assured.git",
 				"https://github.com/graphhopper/graphhopper.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 1681, 5, 60);
+		processRepositoryCommits(Arrays.asList(gitURLs), 1682, 5, 54);
 	}
 
 	@Test
@@ -178,7 +178,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/addthis/hydra.git",
 				"https://github.com/apache/pig.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 3015, 7, 57);
+		processRepositoryCommits(Arrays.asList(gitURLs), 3015, 7, 54);
 	}
 
 	@Test
@@ -243,7 +243,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/novoda/android-demos.git",
 				"https://github.com/wordpress-mobile/WordPress-Android.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 1829, 0, 49);
+		processRepositoryCommits(Arrays.asList(gitURLs), 1830, 0, 47);
 	}
 
 	@Test
@@ -260,7 +260,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 		GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
 		TestBuilder test = new TestBuilder(detector, REPOS, Refactorings.All.getValue());
 		RefactoringPopulator.feedRefactoringsInstances(Refactorings.All.getValue(), Systems.FSE.getValue(), test);
-		test.assertExpectations(getProject(), 11178, 27, 314, false);
+		test.assertExpectations(getProject(), 11182, 27, 293, false);
 	}
  */
 }

@@ -96,10 +96,15 @@ public class UMLOperationDiff {
 			}
 		}
 		int matchedParameterCount = matchedParameters.size()/2;
-		List<String> parameterNames1 = removedOperation.getParameterNameList();
-		List<String> parameterNames2 = addedOperation.getParameterNameList();
-		if(removedParameters.isEmpty() && addedParameters.isEmpty() &&
-				matchedParameterCount == parameterNames1.size() && matchedParameterCount == parameterNames2.size() &&
+		List<String> parameterNames1 = new ArrayList<>(removedOperation.getParameterNameList());
+		for(UMLParameter removedParameter : removedParameters) {
+			parameterNames1.remove(removedParameter.getName());
+		}
+		List<String> parameterNames2 = new ArrayList<>(addedOperation.getParameterNameList());
+		for(UMLParameter addedParameter : addedParameters) {
+			parameterNames2.remove(addedParameter.getName());
+		}
+		if(matchedParameterCount == parameterNames1.size() && matchedParameterCount == parameterNames2.size() &&
 				parameterNames1.size() == parameterNames2.size() && parameterNames1.size() > 1 && !parameterNames1.equals(parameterNames2)) {
 			parametersReordered = true;
 		}

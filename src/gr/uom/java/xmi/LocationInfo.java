@@ -117,6 +117,10 @@ public class LocationInfo {
 				this.startLine == other.endLine + 1;
 	}
 
+	public String toString() {
+		return "line range:" + startLine + "-" + endLine;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

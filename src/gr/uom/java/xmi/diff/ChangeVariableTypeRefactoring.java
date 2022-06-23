@@ -13,7 +13,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class ChangeVariableTypeRefactoring implements Refactoring {
+public class ChangeVariableTypeRefactoring implements Refactoring, ReferenceBasedRefactoring {
 	private VariableDeclaration originalVariable;
 	private VariableDeclaration changedTypeVariable;
 	private VariableDeclarationContainer operationBefore;
@@ -68,7 +68,7 @@ public class ChangeVariableTypeRefactoring implements Refactoring {
 		return operationAfter;
 	}
 
-	public Set<AbstractCodeMapping> getVariableReferences() {
+	public Set<AbstractCodeMapping> getReferences() {
 		return variableReferences;
 	}
 

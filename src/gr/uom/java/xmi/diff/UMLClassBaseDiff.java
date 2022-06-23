@@ -1447,6 +1447,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					UMLOperationBodyMapper mapper = mapperIterator.next();
 					if(indicesToBeRemoved.contains(index)) {
 						mapper.removeMapping(mapping);
+						//remove refactorings based on mapping
+						Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
+						Set<Refactoring> refactoringsAfterPostProcessing = mapper.getRefactoringsAfterPostProcessing();
+						for(Refactoring r : refactoringsAfterPostProcessing) {
+							if(r instanceof ReferenceBasedRefactoring) {
+								ReferenceBasedRefactoring referenceBased = (ReferenceBasedRefactoring)r;
+								Set<AbstractCodeMapping> references = referenceBased.getReferences();
+								if(references.contains(mapping)) {
+									refactoringsToBeRemoved.add(r);
+								}
+							}
+						}
+						refactoringsAfterPostProcessing.removeAll(refactoringsToBeRemoved);
 						updatedMappers.add(mapper);
 					}
 					index++;

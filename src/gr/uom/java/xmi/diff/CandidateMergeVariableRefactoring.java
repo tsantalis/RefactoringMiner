@@ -6,7 +6,7 @@ import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 
-public class CandidateMergeVariableRefactoring {
+public class CandidateMergeVariableRefactoring implements ReferenceBasedRefactoring {
 	private Set<String> mergedVariables;
 	private String newVariable;
 	private VariableDeclarationContainer operationBefore;
@@ -40,7 +40,7 @@ public class CandidateMergeVariableRefactoring {
 		return operationAfter;
 	}
 
-	public Set<AbstractCodeMapping> getVariableReferences() {
+	public Set<AbstractCodeMapping> getReferences() {
 		return variableReferences;
 	}
 

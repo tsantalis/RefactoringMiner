@@ -427,13 +427,13 @@ public abstract class UMLAbstractClassDiff {
 					if(a2 != null) {
 						RenameVariableRefactoring ref = new RenameVariableRefactoring(
 								candidate.getOriginalVariableDeclaration(), a2.getVariableDeclaration(),
-								candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getAttributeReferences(), false);
+								candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getReferences(), false);
 						if(!refactorings.contains(ref)) {
 							refactorings.add(ref);
 							if(!candidate.getOriginalVariableDeclaration().getType().equals(a2.getVariableDeclaration().getType()) ||
 									!candidate.getOriginalVariableDeclaration().getType().equalsQualified(a2.getVariableDeclaration().getType())) {
 								ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(candidate.getOriginalVariableDeclaration(), a2.getVariableDeclaration(),
-										candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getAttributeReferences(), false);
+										candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getReferences(), false);
 								refactoring.addRelatedRefactoring(ref);
 								refactorings.add(refactoring);
 							}
@@ -448,7 +448,7 @@ public abstract class UMLAbstractClassDiff {
 					if(a1 != null) {
 						RenameVariableRefactoring ref = new RenameVariableRefactoring(
 								a1.getVariableDeclaration(), candidate.getRenamedVariableDeclaration(),
-								candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getAttributeReferences(), false);
+								candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getReferences(), false);
 						if(!refactorings.contains(ref)) {
 							refactorings.add(ref);
 						}
@@ -564,12 +564,12 @@ public abstract class UMLAbstractClassDiff {
 				String renamedAttributeName = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
 				UMLOperationBodyMapper candidateMapper = null;
 				for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
-					if(mapper.getMappings().containsAll(candidate.getAttributeReferences())) {
+					if(mapper.getMappings().containsAll(candidate.getReferences())) {
 						candidateMapper = mapper;
 						break;
 					}
 					for(UMLOperationBodyMapper nestedMapper : mapper.getChildMappers()) {
-						if(nestedMapper.getMappings().containsAll(candidate.getAttributeReferences())) {
+						if(nestedMapper.getMappings().containsAll(candidate.getReferences())) {
 							candidateMapper = nestedMapper;
 							break;
 						}

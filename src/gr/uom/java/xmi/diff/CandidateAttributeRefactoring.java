@@ -7,7 +7,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class CandidateAttributeRefactoring {
+public class CandidateAttributeRefactoring implements ReferenceBasedRefactoring {
 	private String originalVariableName;
 	private String renamedVariableName;
 	private VariableDeclarationContainer operationBefore;
@@ -47,7 +47,7 @@ public class CandidateAttributeRefactoring {
 		return operationAfter;
 	}
 
-	public Set<AbstractCodeMapping> getAttributeReferences() {
+	public Set<AbstractCodeMapping> getReferences() {
 		return attributeReferences;
 	}
 

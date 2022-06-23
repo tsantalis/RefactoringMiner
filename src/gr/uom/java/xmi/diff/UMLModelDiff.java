@@ -1948,7 +1948,7 @@ public class UMLModelDiff {
 								}
 							}
 							else {
-								RenameVariableRefactoring ref = new RenameVariableRefactoring(candidate.getOriginalVariableDeclaration(), a2.getVariableDeclaration(), candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getAttributeReferences(), false);
+								RenameVariableRefactoring ref = new RenameVariableRefactoring(candidate.getOriginalVariableDeclaration(), a2.getVariableDeclaration(), candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getReferences(), false);
 								if(!refactorings.contains(ref)) {
 									refactorings.add(ref);
 									break;//it's not necessary to repeat the same process for all candidates in the set
@@ -1985,7 +1985,7 @@ public class UMLModelDiff {
 								}
 							}
 							else {
-								RenameVariableRefactoring ref = new RenameVariableRefactoring(candidate.getOriginalVariableDeclaration(), a2.getVariableDeclaration(), candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getAttributeReferences(), false);
+								RenameVariableRefactoring ref = new RenameVariableRefactoring(candidate.getOriginalVariableDeclaration(), a2.getVariableDeclaration(), candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getReferences(), false);
 								if(!refactorings.contains(ref)) {
 									refactorings.add(ref);
 									break;//it's not necessary to repeat the same process for all candidates in the set

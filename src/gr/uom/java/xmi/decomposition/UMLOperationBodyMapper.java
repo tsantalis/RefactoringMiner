@@ -63,6 +63,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
@@ -850,6 +851,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							AbstractCodeFragment fragment = mapping.getFragment1();
 							expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, childMapper.anonymousClassList1(), codeFragmentOperationMap1, container1);
 						}
+					}
+					for(AbstractCodeFragment fragment : childMapper.getNonMappedLeavesT1()) {
+						expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, childMapper.anonymousClassList1(), codeFragmentOperationMap1, container1);
 					}
 				}
 			}
@@ -6707,6 +6711,38 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return operation;
 		}
 		return null;
+	}
+
+	public boolean containsCallToExtractedMethod() {
+		Set<AbstractCodeFragment> statementsToBeIgnored = new HashSet<>();
+		if(classDiff != null) {
+			List<UMLOperation> addedOperations = classDiff.getAddedOperations();
+			for(AbstractCodeFragment leaf2 : getNonMappedLeavesT2()) {
+				AbstractCall invocation = leaf2.invocationCoveringEntireFragment();
+				if(invocation == null) {
+					invocation = leaf2.assignmentInvocationCoveringEntireStatement();
+				}
+				UMLOperation matchingOperation = null;
+				if(invocation != null && (matchingOperation = matchesOperation(invocation, addedOperations, container2)) != null && matchingOperation.getBody() != null) {
+					statementsToBeIgnored.addAll(matchingOperation.getBody().getCompositeStatement().getLeaves());
+					statementsToBeIgnored.addAll(matchingOperation.getBody().getCompositeStatement().getInnerNodes());
+				}
+			}
+		}
+		if(statementsToBeIgnored.size() > 0) {
+			Set<String> statements = statementsToBeIgnored.stream().map(statement -> statement.getString()).collect(Collectors.toSet());
+			int matchingStatements = 0;
+			for(CompositeStatementObject composite : getNonMappedInnerNodesT1()) {
+				if(composite.countableStatement() && statements.contains(composite.getString()))
+					matchingStatements++;
+			}
+			for(AbstractCodeFragment statement : getNonMappedLeavesT1()) {
+				if(statement.countableStatement() && statements.contains(statement.getString()))
+					matchingStatements++;
+			}
+			return matchingStatements > 0;
+		}
+		return false;
 	}
 
 	public boolean containsParentMapping(AbstractCodeMapping mapping) {

@@ -1791,10 +1791,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean alreadyMatched1(AbstractCodeFragment fragment) {
+		if(fragment instanceof AbstractExpression) {
+			for(AbstractCodeMapping mapping : mappings) {
+				if(mapping.getFragment1().getLocationInfo().subsumes(fragment.getLocationInfo())) {
+					return true;
+				}
+			}
+			return false;
+		}
 		return mappingHashcodesT1.contains(fragment.hashCode());
 	}
 
 	private boolean alreadyMatched2(AbstractCodeFragment fragment) {
+		if(fragment instanceof AbstractExpression) {
+			for(AbstractCodeMapping mapping : mappings) {
+				if(mapping.getFragment2().getLocationInfo().subsumes(fragment.getLocationInfo())) {
+					return true;
+				}
+			}
+			return false;
+		}
 		return mappingHashcodesT2.contains(fragment.hashCode());
 	}
 

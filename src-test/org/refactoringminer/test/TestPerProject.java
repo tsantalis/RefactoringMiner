@@ -104,7 +104,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/mrniko/redisson.git", 1, 0, 0);
         processRepositoryCommits("https://github.com/clojure/clojure.git", 10, 0, 1);
         processRepositoryCommits("https://github.com/belaban/JGroups.git", 7, 0, 0);
-        processRepositoryCommits("https://github.com/WhisperSystems/Signal-Android.git", 66, 0, 3);
+        processRepositoryCommits("https://github.com/WhisperSystems/Signal-Android.git", 67, 0, 3);
         processRepositoryCommits("https://github.com/Activiti/Activiti.git", 16, 0, 0);
         processRepositoryCommits("https://github.com/kuujo/copycat.git", 9, 0, 0);
         processRepositoryCommits("https://github.com/jankotek/MapDB.git", 12, 0, 1);
@@ -125,7 +125,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/AdoptOpenJDK/jitwatch.git", 23, 0, 1);
         processRepositoryCommits("https://github.com/liferay/liferay-portal.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/square/mortar.git", 6, 0, 0);
-        processRepositoryCommits("https://github.com/infinispan/infinispan.git", 485, 3, 23);
+        processRepositoryCommits("https://github.com/infinispan/infinispan.git", 486, 3, 23);
         processRepositoryCommits("https://github.com/crashub/crash.git", 2, 0, 0);
         processRepositoryCommits("https://github.com/glyptodon/guacamole-client.git", 14, 0, 0);
         processRepositoryCommits("https://github.com/github/android.git", 305, 0, 0);

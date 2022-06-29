@@ -181,15 +181,17 @@ Nikolaos Tsantalis, Matin Mansouri, Laleh Eshkevari, Davood Mazinanian, and Dann
 	keywords = {Git, Oracle, abstract syntax tree, accuracy, commit, refactoring},
     }
 
-Nikolaos Tsantalis, Ameya Ketkar, and Danny Dig, "[RefactoringMiner 2.0](https://users.encs.concordia.ca/~nikolaos/publications/TSE_2020.pdf)," *IEEE Transactions on Software Engineering*, 2020.
+Nikolaos Tsantalis, Ameya Ketkar, and Danny Dig, "[RefactoringMiner 2.0](https://users.encs.concordia.ca/~nikolaos/publications/TSE_2020.pdf)," *IEEE Transactions on Software Engineering*, vol. 48, no. 3, pp. 930-950, March 2022.
 
     @article{Tsantalis:TSE:2020:RefactoringMiner2.0,
-	author = {Tsantalis, Nikolaos and Ketkar, Ameya and Dig, Danny},
-	title = {RefactoringMiner 2.0},
-	journal = {IEEE Transactions on Software Engineering},
-	year = {2020},
-	numpages = {21},
-	doi = {10.1109/TSE.2020.3007722},
+	author={Tsantalis, Nikolaos and Ketkar, Ameya and Dig, Danny},
+	title={RefactoringMiner 2.0},
+	journal={IEEE Transactions on Software Engineering},
+	year={2022},
+	volume={48},
+	number={3},
+	pages={930-950},
+	doi={10.1109/TSE.2020.3007722}
     }
 
 ## Talks about RefactoringMiner

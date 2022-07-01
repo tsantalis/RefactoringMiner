@@ -5448,8 +5448,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			VariableDeclaration declaration2 = variableDeclarations2.get(0);
 			if(!declaration1.getVariableName().equals(declaration2.getVariableName())) {
 				String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
-				String composedString1 = declaration1.getType() + " " + declaration1.getVariableName() + commonSuffix;
-				String composedString2 = declaration2.getType() + " " + declaration2.getVariableName() + commonSuffix;
+				String composedString1 = null;
+				String composedString2 = null;
+				if(s1.startsWith("catch(") && s2.startsWith("catch(") && declaration1.getType().equals(declaration2.getType())) {
+					composedString1 = "catch(" + declaration1.getVariableName() + ")";
+					composedString2 = "catch(" + declaration2.getVariableName() + ")";
+				}
+				else {
+					composedString1 = declaration1.getType() + " " + declaration1.getVariableName() + commonSuffix;
+					composedString2 = declaration2.getType() + " " + declaration2.getVariableName() + commonSuffix;
+				}
 				if(s1.equals(composedString1) && s2.equals(composedString2)) {
 					Replacement replacement = new Replacement(declaration1.getVariableName(), declaration2.getVariableName(), ReplacementType.VARIABLE_NAME);
 					replacementInfo.addReplacement(replacement);

@@ -43,13 +43,14 @@ public class ReplacementUtil {
 	}
 
 	public static int countInstances(String completeString, String subString) {
+		int count = 0;
 		for(String character : SPECIAL_CHARACTERS) {
 			int index = completeString.indexOf(subString + character);
 			if(index != -1) {
-				return (completeString.length() - completeString.replace(subString + character, "").length()) / (subString.length() + 1);
+				count += (completeString.length() - completeString.replace(subString + character, "").length()) / (subString.length() + 1);
 			}
 		}
-		return 0;
+		return count;
 	}
 
 	public static boolean contains(String completeString, String subString) {

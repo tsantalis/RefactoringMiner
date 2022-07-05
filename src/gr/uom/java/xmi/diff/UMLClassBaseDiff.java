@@ -737,6 +737,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					break;
 				}
 			}
+			if(matchingGetterSetterWithSameRenamePattern(removedOperation, addedOperation) && computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) <= differenceInPosition) {
+				mapperSet.add(operationBodyMapper);
+			}
 		}
 		if(totalMappings.size() > 0) {
 			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
@@ -784,6 +787,38 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+	}
+
+	private boolean matchingGetterSetterWithSameRenamePattern(UMLOperation removedOperation, UMLOperation addedOperation) {
+		String setPrefix = "set";
+		String getPrefix = "get";
+		if(removedOperation.getName().startsWith(setPrefix) && addedOperation.getName().startsWith(setPrefix)) {
+			String removedOperationSuffix = removedOperation.getName().substring(setPrefix.length());
+			String addedOperationSuffix = addedOperation.getName().substring(setPrefix.length());
+			for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+				if(mapper.getContainer1().getName().startsWith(getPrefix) && mapper.getContainer2().getName().startsWith(getPrefix)) {
+					String container1Suffix = mapper.getContainer1().getName().substring(getPrefix.length());
+					String container2Suffix = mapper.getContainer2().getName().substring(getPrefix.length());
+					if(container1Suffix.equals(removedOperationSuffix) && container2Suffix.equals(addedOperationSuffix)) {
+						return true;
+					}
+				}
+			}
+		}
+		else if(removedOperation.getName().startsWith(getPrefix) && addedOperation.getName().startsWith(getPrefix)) {
+			String removedOperationSuffix = removedOperation.getName().substring(getPrefix.length());
+			String addedOperationSuffix = addedOperation.getName().substring(getPrefix.length());
+			for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+				if(mapper.getContainer1().getName().startsWith(setPrefix) && mapper.getContainer2().getName().startsWith(setPrefix)) {
+					String container1Suffix = mapper.getContainer1().getName().substring(setPrefix.length());
+					String container2Suffix = mapper.getContainer2().getName().substring(setPrefix.length());
+					if(container1Suffix.equals(removedOperationSuffix) && container2Suffix.equals(addedOperationSuffix)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean exactMappings(UMLOperationBodyMapper operationBodyMapper) {

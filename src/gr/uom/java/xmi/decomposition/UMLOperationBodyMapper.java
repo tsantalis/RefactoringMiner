@@ -2884,6 +2884,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		variablesAndMethodInvocations1.addAll(methodInvocations1);
 		variablesAndMethodInvocations1.addAll(variables1);
 		
+		findReplacements(variables1, creations2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION);
 		if (replacementInfo.getRawDistance() > 0) {
 			for(String s1 : variablesAndMethodInvocations1) {
 				TreeMap<Double, Replacement> replacementMap = new TreeMap<Double, Replacement>();
@@ -3183,6 +3184,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return null;
 			}
 			if(operatorExpressionWithEverythingReplaced(statement1, statement2, replacementInfo, parameterToArgumentMap)) {
+				return null;
+			}
+			if(thisConstructorCallWithEverythingReplaced(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacementInfo)) {
 				return null;
 			}
 			if(!anonymousClassDeclarations1.isEmpty() && !anonymousClassDeclarations2.isEmpty()) {
@@ -3519,8 +3523,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(!methodInvocations1.isEmpty() && invocationCoveringTheEntireStatement2 != null) {
 			boolean variableDeclarationMatchedWithNonVariableDeclaration = false;
 			if(invocationCoveringTheEntireStatement2.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL)) {
-				if(invocationCoveringTheEntireStatement1 != null && !invocationCoveringTheEntireStatement1.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL)) {
-					variableDeclarationMatchedWithNonVariableDeclaration = true;
+				if(invocationCoveringTheEntireStatement1 != null) {
+					if(!invocationCoveringTheEntireStatement1.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL)) {
+						variableDeclarationMatchedWithNonVariableDeclaration = true;
+					}
+					else if(!variableDeclarations1.get(0).getVariableName().equals(variableDeclarations2.get(0).getVariableName()) &&
+							!variableDeclarations1.get(0).getType().equals(variableDeclarations2.get(0).getType())) {
+						variableDeclarationMatchedWithNonVariableDeclaration = true;
+					}
+				}
+				else if(creationCoveringTheEntireStatement1 != null) {
+					if(!creationCoveringTheEntireStatement1.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL)) {
+						variableDeclarationMatchedWithNonVariableDeclaration = true;
+					}
+					else if(!variableDeclarations1.get(0).getVariableName().equals(variableDeclarations2.get(0).getVariableName()) &&
+							!variableDeclarations1.get(0).getType().equals(variableDeclarations2.get(0).getType())) {
+						variableDeclarationMatchedWithNonVariableDeclaration = true;
+					}
 				}
 			}
 			for(String methodInvocation1 : methodInvocations1) {
@@ -4718,6 +4737,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		if(s1AfterReplacements.equals(s2)) {
 			return true;
+		}
+		return false;
+	}
+
+	private boolean thisConstructorCallWithEverythingReplaced(AbstractCall invocationCoveringTheEntireStatement1, AbstractCall invocationCoveringTheEntireStatement2,
+			ReplacementInfo replacementInfo) {
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+				invocationCoveringTheEntireStatement1.getName().equals("this") && invocationCoveringTheEntireStatement2.getName().equals("this")) {
+			List<String> arguments1 = invocationCoveringTheEntireStatement1.getArguments();
+			List<String> arguments2 = invocationCoveringTheEntireStatement2.getArguments();
+			Set<String> argumentIntersection = invocationCoveringTheEntireStatement1.argumentIntersection(invocationCoveringTheEntireStatement2);
+			int minArguments = Math.min(arguments1.size(), arguments2.size());
+			int replacedArguments = 0;
+			for(Replacement replacement : replacementInfo.getReplacements()) {
+				if(arguments1.contains(replacement.getBefore()) && arguments2.contains(replacement.getAfter())) {
+					replacedArguments++;
+				}
+			}
+			if(replacedArguments == minArguments || replacedArguments > argumentIntersection.size()) {
+				return true;
+			}
 		}
 		return false;
 	}

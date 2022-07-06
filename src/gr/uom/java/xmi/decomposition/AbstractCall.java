@@ -343,7 +343,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return this.coverage.equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL) &&
 				call.coverage.equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL) &&
 				getExpression() != null && call.getExpression() != null &&
-				!identicalName(call) && (equalArguments(call) || reorderedArguments(call));
+				!identicalName(call) && (equalArguments(call) || reorderedArguments(call) || this.getArguments().size() == 0 || call.getArguments().size() == 0);
 	}
 
 	public boolean renamedWithDifferentExpressionAndIdenticalArguments(AbstractCall call) {
@@ -366,7 +366,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 				(equalArguments(call) || reorderedArguments(call));
 	}
 
-	public boolean renamedWithIdenticalExpressionAndDifferentNumberOfArguments(AbstractCall call, Set<Replacement> replacements, double distance, List<UMLOperationBodyMapper> lambdaMappers) {
+	public boolean renamedWithIdenticalExpressionAndDifferentArguments(AbstractCall call, Set<Replacement> replacements, double distance, List<UMLOperationBodyMapper> lambdaMappers) {
 		boolean allExactLambdaMappers = lambdaMappers.size() > 0;
 		for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
 			if(!lambdaMapper.allMappingsAreExactMatches()) {
@@ -378,8 +378,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 				identicalExpression(call, replacements) &&
 				(normalizedNameDistance(call) <= distance || allExactLambdaMappers || (this.methodNameContainsArgumentName() && call.methodNameContainsArgumentName()) || argumentIntersectionContainsClassInstanceCreation(call)) &&
 				!equalArguments(call) &&
-				(getArguments().size() != call.getArguments().size() ||
-				(getArguments().size() == call.getArguments().size() && !this.argumentContainsAnonymousClassDeclaration() && !call.argumentContainsAnonymousClassDeclaration()));
+				!this.argumentContainsAnonymousClassDeclaration() && !call.argumentContainsAnonymousClassDeclaration();
 	}
 
 	private boolean argumentIntersectionContainsClassInstanceCreation(AbstractCall call) {

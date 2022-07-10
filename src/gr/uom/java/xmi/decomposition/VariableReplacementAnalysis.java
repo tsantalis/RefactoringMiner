@@ -84,7 +84,8 @@ public class VariableReplacementAnalysis {
 	private Set<CandidateSplitVariableRefactoring> candidateAttributeSplits = new LinkedHashSet<CandidateSplitVariableRefactoring>();
 	private boolean insideExtractedOrInlinedMethod = false;
 
-	public VariableReplacementAnalysis(UMLOperationBodyMapper mapper, Set<Refactoring> refactorings, UMLAbstractClassDiff classDiff) {
+	public VariableReplacementAnalysis(UMLOperationBodyMapper mapper, Set<Refactoring> refactorings, UMLAbstractClassDiff classDiff,
+			Set<Pair<VariableDeclaration, VariableDeclaration>> previouslyMatchedVariables) {
 		this.mapper = mapper;
 		this.mappings = mapper.getMappings();
 		this.nonMappedLeavesT1 = mapper.getNonMappedLeavesT1();
@@ -124,6 +125,17 @@ public class VariableReplacementAnalysis {
 					this.addedVariables.addAll(allVariableDeclarations);
 					this.addedVariablesInAnonymousClassDeclarations.addAll(allVariableDeclarations);
 				}
+			}
+		}
+		for(Pair<VariableDeclaration, VariableDeclaration> matchedVariable : previouslyMatchedVariables) {
+			this.removedVariables.remove(matchedVariable.getLeft());
+			this.addedVariables.remove(matchedVariable.getRight());
+			this.matchedVariables.add(matchedVariable);
+			if(!matchedVariable.getLeft().getVariableName().equals(matchedVariable.getRight().getVariableName())) {
+				Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(matchedVariable.getLeft(), matchedVariable.getRight(), mappings);
+				RenameVariableRefactoring ref = new RenameVariableRefactoring(matchedVariable.getLeft(), matchedVariable.getRight(), operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
+				variableRenames.add(ref);
+				getVariableRefactorings(matchedVariable.getLeft(), matchedVariable.getRight(), operation1, operation2, variableReferences, ref);
 			}
 		}
 		processIdenticalAnonymousAndLambdas();

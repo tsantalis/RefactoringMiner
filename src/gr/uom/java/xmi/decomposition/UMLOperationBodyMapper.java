@@ -2971,6 +2971,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
+	private boolean variableDeclarationWithIdenticalInitializerInUnmatchedStatements(List<? extends AbstractCodeFragment> statements, AbstractCall call) {
+		if(!call.getName().equals("peek") && !call.getName().equals("pop") && !call.getName().equals("poll") && !call.getName().equals("element") &&
+				!call.getName().equals("pollFirst") && !call.getName().equals("pollLast") && !call.getName().equals("peekFirst")&& !call.getName().equals("peekLast") &&
+				!call.getName().equals("getFirst")&& !call.getName().equals("getLast") &&
+				!call.getName().equals("remove") && !call.getName().equals("removeFirst")&& !call.getName().equals("removeLast") &&
+				!(call.getName().equals("get") && call.typeArguments == 1)) {
+			for(AbstractCodeFragment statement : statements) {
+				for(VariableDeclaration variableDeclaration : statement.getVariableDeclarations()) {
+					if(variableDeclaration.getInitializer() != null && variableDeclaration.getInitializer().getString().equals(call.actualString())) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	private Set<Replacement> findReplacementsWithExactMatching(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo) throws RefactoringMinerTimedOutException {
 		List<VariableDeclaration> variableDeclarations1 = new ArrayList<VariableDeclaration>(statement1.getVariableDeclarations());
@@ -3115,7 +3132,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(invocationCoveringTheEntireStatement1 != null) {
 			for(String methodInvocation1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall call : methodInvocationMap1.get(methodInvocation1)) {
-					if(invocationCoveringTheEntireStatement1.getLocationInfo().equals(call.getLocationInfo())) {
+					if(invocationCoveringTheEntireStatement1.getLocationInfo().equals(call.getLocationInfo()) &&
+							!variableDeclarationWithIdenticalInitializerInUnmatchedStatements(replacementInfo.statements2, call)) {
 						methodInvocations1.remove(methodInvocation1);
 					}
 				}
@@ -3124,7 +3142,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(invocationCoveringTheEntireStatement2 != null) {
 			for(String methodInvocation2 : methodInvocationMap2.keySet()) {
 				for(AbstractCall call : methodInvocationMap2.get(methodInvocation2)) {
-					if(invocationCoveringTheEntireStatement2.getLocationInfo().equals(call.getLocationInfo())) {
+					if(invocationCoveringTheEntireStatement2.getLocationInfo().equals(call.getLocationInfo()) &&
+							!variableDeclarationWithIdenticalInitializerInUnmatchedStatements(replacementInfo.statements1, call)) {
 						methodInvocations2.remove(methodInvocation2);
 					}
 				}
@@ -3682,6 +3701,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
 					if(invocation1.identical(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), lambdaMappers) &&
 							!assignmentInvocationCoveringTheEntireStatement1.getArguments().contains(key1)) {
+						if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo) &&
+								!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
+								!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+							return null;
+						}
 						String expression1 = assignmentInvocationCoveringTheEntireStatement1.getExpression();
 						if(expression1 == null || !expression1.contains(key1)) {
 							return replacementInfo.getReplacements();
@@ -5435,6 +5459,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 					}
+				}
+				AbstractCall invocation1 = initializer1.invocationCoveringEntireFragment();
+				AbstractCall invocation2 = initializer2.invocationCoveringEntireFragment();
+				if(invocation1 != null && invocation2 != null && invocation1.getCoverage().equals(StatementCoverageType.CAST_CALL) != invocation2.getCoverage().equals(StatementCoverageType.CAST_CALL)) {
+					initializerReplacement = true;
 				}
 			}
 			for(Replacement replacement : replacementInfo.getReplacements()) {

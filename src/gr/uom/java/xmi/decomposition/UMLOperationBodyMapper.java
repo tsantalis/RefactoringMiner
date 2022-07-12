@@ -2971,23 +2971,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean variableDeclarationWithIdenticalInitializerInUnmatchedStatements(List<? extends AbstractCodeFragment> statements, AbstractCall call) {
-		if(!call.getName().equals("peek") && !call.getName().equals("pop") && !call.getName().equals("poll") && !call.getName().equals("element") &&
-				!call.getName().equals("pollFirst") && !call.getName().equals("pollLast") && !call.getName().equals("peekFirst")&& !call.getName().equals("peekLast") &&
-				!call.getName().equals("getFirst")&& !call.getName().equals("getLast") &&
-				!call.getName().equals("remove") && !call.getName().equals("removeFirst")&& !call.getName().equals("removeLast") &&
-				!(call.getName().equals("get") && call.typeArguments == 1)) {
-			for(AbstractCodeFragment statement : statements) {
-				for(VariableDeclaration variableDeclaration : statement.getVariableDeclarations()) {
-					if(variableDeclaration.getInitializer() != null && variableDeclaration.getInitializer().getString().equals(call.actualString())) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-
 	private Set<Replacement> findReplacementsWithExactMatching(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo) throws RefactoringMinerTimedOutException {
 		List<VariableDeclaration> variableDeclarations1 = new ArrayList<VariableDeclaration>(statement1.getVariableDeclarations());
@@ -3132,8 +3115,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(invocationCoveringTheEntireStatement1 != null) {
 			for(String methodInvocation1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall call : methodInvocationMap1.get(methodInvocation1)) {
-					if(invocationCoveringTheEntireStatement1.getLocationInfo().equals(call.getLocationInfo()) &&
-							!variableDeclarationWithIdenticalInitializerInUnmatchedStatements(replacementInfo.statements2, call)) {
+					if(invocationCoveringTheEntireStatement1.getLocationInfo().equals(call.getLocationInfo())) {
 						methodInvocations1.remove(methodInvocation1);
 					}
 				}
@@ -3142,8 +3124,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(invocationCoveringTheEntireStatement2 != null) {
 			for(String methodInvocation2 : methodInvocationMap2.keySet()) {
 				for(AbstractCall call : methodInvocationMap2.get(methodInvocation2)) {
-					if(invocationCoveringTheEntireStatement2.getLocationInfo().equals(call.getLocationInfo()) &&
-							!variableDeclarationWithIdenticalInitializerInUnmatchedStatements(replacementInfo.statements1, call)) {
+					if(invocationCoveringTheEntireStatement2.getLocationInfo().equals(call.getLocationInfo())) {
 						methodInvocations2.remove(methodInvocation2);
 					}
 				}

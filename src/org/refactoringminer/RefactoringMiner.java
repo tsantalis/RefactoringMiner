@@ -1,5 +1,6 @@
 package org.refactoringminer;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,6 +10,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.log4j.helpers.SyslogQuietWriter;
 import org.eclipse.jgit.lib.Repository;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
@@ -16,6 +18,8 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.util.GitServiceImpl;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class RefactoringMiner {
 	private static Path path = null;
@@ -43,9 +47,78 @@ public class RefactoringMiner {
 			detectAtGitHubCommit(args);
 		} else if (option.equalsIgnoreCase("-gp")) {
 			detectAtGitHubPullRequest(args);
+		} else if (option.equalsIgnoreCase("-j")) {
+			detectFromJson(args);
 		} else {
 			throw argumentException();
 		}
+	}
+
+	private static class JsonRepository {
+		public String repository;
+		public List<JsonCommit> commits;	
+	}
+	private static class JsonCommit {
+		public String repository;
+		public String sha1;
+		public String url;
+		public String message;
+		public String java_change;
+	}
+
+
+	private static void detectFromJson(String[] args) throws Exception {
+		int maxArgLength = processJSONoption(args, 2);
+		if (args.length > maxArgLength) {
+			throw argumentException();
+		}
+		String json_path = args[1];
+		GitService gitService = new GitServiceImpl();
+		ObjectMapper mapper = new ObjectMapper();
+		JsonRepository[] repoArray = mapper.readValue(new File(json_path), JsonRepository[].class);
+		GitHistoryRefactoringMiner detector = new GitHistoryRefactoringMinerImpl(); 
+		
+		int numAllCommit = 0;
+		int commitCount = 0;
+		for (JsonRepository jsonRepo: repoArray) {
+			numAllCommit += jsonRepo.commits.size();
+		}
+		
+		startJSON();
+		System.out.print("");
+		for (JsonRepository jsonRepo: repoArray) {
+			try (Repository repo = gitService.openRepository(jsonRepo.repository)){
+				for (JsonCommit jsonCommit: jsonRepo.commits) {
+					String gitURL = repo.getConfig().getString("remote", "origin", "url");
+					detector.detectAtCommit(repo, jsonCommit.sha1, new RefactoringHandler(){
+						int commitCount = 0;
+						@Override
+						public void handle(String commitId, List<Refactoring> refactorings) {
+							if(commitCount > 0) {
+								betweenCommitsJSON();
+							}
+							commitJSON(gitURL, commitId, refactorings);
+							commitCount++;
+						}
+						@Override
+						public void onFinish(int refactoringsCount, int commitsCount, int errorCommitsCount) {
+							System.out.println(String.format("Total count: [Commits: %d, Errors: %d, Refactorings: %d]",
+									commitsCount, errorCommitsCount, refactoringsCount));
+						}
+						@Override
+						public void handleException(String commit, Exception e) {
+							System.err.println("Error processing commit " + commit);
+							e.printStackTrace(System.err);
+						}	
+					});
+					// 進捗表示
+					commitCount++;
+					System.out.print("\r");
+					System.out.print(String.format("commit %d/%d", commitCount, numAllCommit));
+				}
+			}
+		}
+		endJSON();
 	}
 
 	public static void detectAll(String[] args) throws Exception {

@@ -83,6 +83,8 @@ public class VariableReplacementAnalysis {
 	private Set<CandidateMergeVariableRefactoring> candidateAttributeMerges = new LinkedHashSet<CandidateMergeVariableRefactoring>();
 	private Set<CandidateSplitVariableRefactoring> candidateAttributeSplits = new LinkedHashSet<CandidateSplitVariableRefactoring>();
 	private boolean insideExtractedOrInlinedMethod = false;
+	private Map<String, Set<String>> aliasedVariablesInOriginalMethod;
+	private Map<String, Set<String>> aliasedVariablesInNextMethod;
 
 	public VariableReplacementAnalysis(UMLOperationBodyMapper mapper, Set<Refactoring> refactorings, UMLAbstractClassDiff classDiff,
 			Set<Pair<VariableDeclaration, VariableDeclaration>> previouslyMatchedVariables) {
@@ -94,6 +96,8 @@ public class VariableReplacementAnalysis {
 		this.nonMappedInnerNodesT2 = mapper.getNonMappedInnerNodesT2();
 		this.operation1 = mapper.getContainer1();
 		this.operation2 = mapper.getContainer2();
+		this.aliasedVariablesInOriginalMethod = operation1.aliasedVariables();
+		this.aliasedVariablesInNextMethod = operation2.aliasedVariables();
 		this.childMappers = new ArrayList<UMLOperationBodyMapper>();
 		this.childMappers.addAll(mapper.getChildMappers());
 		UMLOperationBodyMapper parentMapper = mapper.getParentMapper();
@@ -1545,7 +1549,7 @@ public class VariableReplacementAnalysis {
 		Set<Replacement> renames = replacementOccurrenceMap.keySet();
 		Set<Replacement> allConsistentRenames = new LinkedHashSet<Replacement>();
 		Set<Replacement> allInconsistentRenames = new LinkedHashSet<Replacement>();
-		ConsistentReplacementDetector.updateRenames(allConsistentRenames, allInconsistentRenames, renames);
+		ConsistentReplacementDetector.updateRenames(allConsistentRenames, allInconsistentRenames, aliasedVariablesInOriginalMethod, aliasedVariablesInNextMethod, renames);
 		allConsistentRenames.removeAll(allInconsistentRenames);
 		return allConsistentRenames;
 	}

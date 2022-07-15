@@ -127,6 +127,7 @@ Currently, it supports the detection of the following refactorings:
 
 86. Merge Class
 87. Inline Attribute
+88. Replace Pipeline with Loop
 
 # How to build RefactoringMiner
 

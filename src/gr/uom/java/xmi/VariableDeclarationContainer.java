@@ -2,6 +2,8 @@ package gr.uom.java.xmi;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -85,6 +87,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	boolean hasTestAnnotation();
 	boolean isDeclaredInAnonymousClass();
 	boolean isGetter();
+	boolean isConstructor();
 	AbstractCall isDelegate();
 
 	default int getBodyHashCode() {
@@ -122,5 +125,63 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 			return operationBody.loopWithVariables(currentElementName, collectionName);
 		}
 		return null;
+	}
+
+	default Map<String, Set<String>> aliasedVariables() {
+		OperationBody operationBody = getBody();
+		if(operationBody != null) {
+			Map<String, Set<VariableDeclaration>> variableDeclarationMap = variableDeclarationMap();
+			Map<String, Set<String>> map = operationBody.aliasedVariables();
+			Set<String> keysToBeRemoved = new LinkedHashSet<String>();
+			for(String key : map.keySet()) {
+				if(!variableDeclarationMap.containsKey(key)) {
+					keysToBeRemoved.add(key);
+				}
+				else {
+					//exclude exception variables declared in catch blocks
+					for(VariableDeclaration variable : variableDeclarationMap.get(key)) {
+						if(variable.getType() != null && variable.getType().getClassType().endsWith("Exception")) {
+							keysToBeRemoved.add(key);
+							break;
+						}
+					}
+					//exclude variables aliased with fields
+					boolean foundInLocalVariables = false;
+					for(String value : map.get(key)) {
+						if(variableDeclarationMap.containsKey(value)) {
+							foundInLocalVariables = true;
+							break;
+						}
+					}
+					if(!foundInLocalVariables) {
+						keysToBeRemoved.add(key);
+					}
+				}
+			}
+			for(String key : keysToBeRemoved) {
+				map.remove(key);
+			}
+			return map;
+		}
+		return new LinkedHashMap<String, Set<String>>();
+	}
+
+	default Map<String, Set<String>> aliasedAttributes() {
+		OperationBody operationBody = getBody();
+		if(operationBody != null && isConstructor()) {
+			List<String> parameterNames = getParameterNameList();
+			Map<String, Set<String>> map = operationBody.aliasedAttributes();
+			Set<String> keysToBeRemoved = new LinkedHashSet<String>();
+			for(String key : map.keySet()) {
+				if(!parameterNames.contains(key)) {
+					keysToBeRemoved.add(key);
+				}
+			}
+			for(String key : keysToBeRemoved) {
+				map.remove(key);
+			}
+			return map;
+		}
+		return new LinkedHashMap<String, Set<String>>();
 	}
 }

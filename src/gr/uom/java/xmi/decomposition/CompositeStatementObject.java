@@ -551,6 +551,29 @@ public class CompositeStatementObject extends AbstractStatement {
 		return null;
 	}
 
+	public Map<String, Set<String>> aliasedVariables() {
+		Map<String, Set<String>> map = new LinkedHashMap<String, Set<String>>();
+		for(AbstractCodeFragment statement : getLeaves()) {
+			String s = statement.getString();
+			if(!s.startsWith("this.") && s.endsWith(";\n")) {
+				String firstLine = s.substring(0, s.indexOf("\n"));
+				if(firstLine.contains("=")) {
+					String variable = s.substring(0, s.indexOf("="));
+					String value = s.substring(s.indexOf("=")+1, s.indexOf(";\n"));
+					if(map.containsKey(value)) {
+						map.get(value).add(variable);
+					}
+					else {
+						Set<String> set = new LinkedHashSet<String>();
+						set.add(variable);
+						map.put(value, set);
+					}
+				}
+			}
+		}
+		return map;
+	}
+
 	public Map<String, Set<String>> aliasedAttributes() {
 		Map<String, Set<String>> map = new LinkedHashMap<String, Set<String>>();
 		for(AbstractCodeFragment statement : getLeaves()) {

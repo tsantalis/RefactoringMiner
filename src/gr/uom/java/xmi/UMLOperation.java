@@ -932,22 +932,4 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		signature.addAll(getParameterNameList());
 		return signature;
 	}
-
-	public Map<String, Set<String>> aliasedAttributes() {
-		if(operationBody != null && isConstructor) {
-			List<String> parameterNames = getParameterNameList();
-			Map<String, Set<String>> map = operationBody.aliasedAttributes();
-			Set<String> keysToBeRemoved = new LinkedHashSet<String>();
-			for(String key : map.keySet()) {
-				if(!parameterNames.contains(key)) {
-					keysToBeRemoved.add(key);
-				}
-			}
-			for(String key : keysToBeRemoved) {
-				map.remove(key);
-			}
-			return map;
-		}
-		return new LinkedHashMap<String, Set<String>>();
-	}
 }

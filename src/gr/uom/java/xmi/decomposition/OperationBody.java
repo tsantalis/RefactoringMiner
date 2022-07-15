@@ -384,6 +384,10 @@ public class OperationBody {
 		}
 	}
 
+	public Map<String, Set<String>> aliasedVariables() {
+		return compositeStatement.aliasedVariables();
+	}
+
 	public Map<String, Set<String>> aliasedAttributes() {
 		return compositeStatement.aliasedAttributes();
 	}

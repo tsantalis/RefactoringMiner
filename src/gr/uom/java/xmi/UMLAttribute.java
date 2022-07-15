@@ -67,6 +67,10 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return false;
 	}
 
+	public boolean isConstructor() {
+		return false;
+	}
+
 	public AbstractCall isDelegate() {
 		return null;
 	}

@@ -119,6 +119,11 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	}
 
 	@Override
+	public boolean isConstructor() {
+		return false;
+	}
+
+	@Override
 	public AbstractCall isDelegate() {
 		return null;
 	}

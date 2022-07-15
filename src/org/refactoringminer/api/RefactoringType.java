@@ -94,6 +94,7 @@ public enum RefactoringType {
 	CHANGE_TYPE_DECLARATION_KIND("Change Type Declaration Kind", "Change Type Declaration Kind (.+) to (.+) in type (.+)"),
 	COLLAPSE_HIERARCHY("Collapse Hierarchy", "Collapse Hierarchy (.+) to (.+)"),
 	REPLACE_LOOP_WITH_PIPELINE("Replace Loop With Pipeline", "Replace Loop With Pipeline (.+) with (.+) in method (.+) from class (.+)"),
+	REPLACE_PIPELINE_WITH_LOOP("Replace Pipeline With Loop", "Replace Pipeline With Loop (.+) with (.+) in method (.+) from class (.+)"),
 	REPLACE_ANONYMOUS_WITH_LAMBDA("Replace Anonymous With Lambda", "Replace Anonymous With Lambda (.+) with (.+) in method (.+) from class (.+)"),
 	MERGE_CLASS("Merge Class", "Merge Class \\[(.+)\\] to (.+)");
 
@@ -186,6 +187,7 @@ public enum RefactoringType {
 		CHANGE_TYPE_DECLARATION_KIND,
 		COLLAPSE_HIERARCHY,
 		REPLACE_LOOP_WITH_PIPELINE,
+		REPLACE_PIPELINE_WITH_LOOP,
 		REPLACE_ANONYMOUS_WITH_LAMBDA,
 		MERGE_CLASS,
 		INLINE_ATTRIBUTE

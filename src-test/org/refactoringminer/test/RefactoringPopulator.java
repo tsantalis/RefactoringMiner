@@ -118,7 +118,8 @@ public class RefactoringPopulator {
 		ReplaceAnonymousWithLambda(new BigInteger("38685626227668133590597632")),
 		MergeClass(new BigInteger("77371252455336267181195264")),
 		InlineAttribute(new BigInteger("154742504910672534362390528")),
-		All(new BigInteger("309485009821345068724781055"));
+		ReplacePipelineWithLoop(new BigInteger("309485009821345068724781056")),
+		All(new BigInteger("618970019642690137449562111"));
 
 		private BigInteger value;
 

@@ -90,7 +90,7 @@ public class UMLOperationDiff {
 		for(SimpleEntry<UMLParameter, UMLParameter> matchedParameter : matchedParameters) {
 			UMLParameter parameter1 = matchedParameter.getKey();
 			UMLParameter parameter2 = matchedParameter.getValue();
-			UMLParameterDiff parameterDiff = new UMLParameterDiff(parameter1, parameter2, removedOperation, addedOperation, mappings);
+			UMLParameterDiff parameterDiff = new UMLParameterDiff(parameter1, parameter2, removedOperation, addedOperation, mappings, refactorings);
 			if(!parameterDiff.isEmpty()) {
 				parameterDiffList.add(parameterDiff);
 			}
@@ -114,7 +114,7 @@ public class UMLOperationDiff {
 			for(Iterator<UMLParameter> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
 				UMLParameter addedParameter = addedParameterIterator.next();
 				if(removedParameter.getName().equals(addedParameter.getName())) {
-					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings);
+					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings);
 					if(!parameterDiff.isEmpty()) {
 						parameterDiffList.add(parameterDiff);
 					}
@@ -131,7 +131,7 @@ public class UMLOperationDiff {
 				UMLParameter addedParameter = addedParameterIterator.next();
 				if(removedParameter.getType().equalsQualified(addedParameter.getType()) &&
 						!existsAnotherAddedParameterWithTheSameType(addedParameter)) {
-					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings);
+					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings);
 					if(!parameterDiff.isEmpty()) {
 						parameterDiffList.add(parameterDiff);
 					}
@@ -153,7 +153,7 @@ public class UMLOperationDiff {
 					int indexOfAddedParameter = indexOfParameter(addedParametersWithoutReturnType, addedParameter);
 					if(indexOfRemovedParameter == indexOfAddedParameter &&
 							usedParameters(removedOperation, addedOperation, removedParameter, addedParameter)) {
-						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings);
+						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings);
 						if(!parameterDiff.isEmpty()) {
 							parameterDiffList.add(parameterDiff);
 						}

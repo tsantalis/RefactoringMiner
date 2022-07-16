@@ -3501,7 +3501,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || (s2 + ";\n").equals(s1) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) ||
 				differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(s1, s2, methodInvocationMap1, methodInvocationMap2, statement1.getInfixExpressions(), statement2.getInfixExpressions(), variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				differOnlyInFinalModifier(s1, s2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo) ||
-				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
+				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString()) ||
 				(containsValidOperatorReplacements(replacementInfo) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, replacementInfo, creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2))) ||
 				equalAfterArgumentMerge(s1, s2, replacementInfo) ||
@@ -5884,7 +5884,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean oneIsVariableDeclarationTheOtherIsVariableAssignment(String s1, String s2, ReplacementInfo replacementInfo) {
+	private boolean oneIsVariableDeclarationTheOtherIsVariableAssignment(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {
+		if(variableDeclarations1.size() > 0 && variableDeclarations2.size() > 0) {
+			String name1 = variableDeclarations1.get(0).getVariableName();
+			String name2 = variableDeclarations2.get(0).getVariableName();
+			AbstractExpression initializer1 = variableDeclarations1.get(0).getInitializer();
+			AbstractExpression initializer2 = variableDeclarations2.get(0).getInitializer();
+			if(initializer1 != null && initializer2 != null && !name1.equals(name2) && !initializer1.getString().equals(initializer2.getString())) {
+				return false;
+			}
+		}
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(s1.contains("=") && s2.contains("=") && (s1.equals(commonSuffix) || s2.equals(commonSuffix))) {
 			if(replacementInfo.getReplacements().size() == 2) {

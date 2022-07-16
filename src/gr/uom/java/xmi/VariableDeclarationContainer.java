@@ -132,6 +132,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 		if(operationBody != null) {
 			Map<String, Set<VariableDeclaration>> variableDeclarationMap = variableDeclarationMap();
 			Map<String, Set<String>> map = operationBody.aliasedVariables();
+			Map<String, Set<String>> toBeAdded = new LinkedHashMap<String, Set<String>>();
 			Set<String> keysToBeRemoved = new LinkedHashSet<String>();
 			for(String key : map.keySet()) {
 				if(!variableDeclarationMap.containsKey(key)) {
@@ -152,6 +153,22 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 							foundInLocalVariables = true;
 							break;
 						}
+						else {
+							String[] tokens = value.split("\\s");
+							if(tokens.length >= 2) {
+								String lastToken = tokens[tokens.length-1];
+								String beforeLastToken = tokens[tokens.length-2];
+								if(variableDeclarationMap.containsKey(lastToken)) {
+									UMLType variableType = variableDeclarationMap.get(lastToken).iterator().next().getType();
+									if(variableType != null && variableType.toString().equals(beforeLastToken)) {
+										Set<String> values = new LinkedHashSet<>();
+										values.add(lastToken);
+										toBeAdded.put(key, values);
+										break;
+									}
+								}
+							}
+						}
 					}
 					if(!foundInLocalVariables) {
 						keysToBeRemoved.add(key);
@@ -161,6 +178,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 			for(String key : keysToBeRemoved) {
 				map.remove(key);
 			}
+			map.putAll(toBeAdded);
 			return map;
 		}
 		return new LinkedHashMap<String, Set<String>>();

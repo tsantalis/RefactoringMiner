@@ -26,11 +26,13 @@ public class UMLParameterDiff {
 	private boolean finalChanged;
 	private Set<AbstractCodeMapping> mappings;
 	private UMLAnnotationListDiff annotationListDiff;
+	private Set<Refactoring> mapperRefactorings;
 	
 	public UMLParameterDiff(UMLParameter removedParameter, UMLParameter addedParameter,
 			UMLOperation removedOperation, UMLOperation addedOperation,
-			Set<AbstractCodeMapping> mappings) {
+			Set<AbstractCodeMapping> mappings, Set<Refactoring> mapperRefactorings) {
 		this.mappings = mappings;
+		this.mapperRefactorings = mapperRefactorings;
 		this.removedParameter = removedParameter;
 		this.addedParameter = addedParameter;
 		this.removedOperation = removedOperation;
@@ -111,11 +113,11 @@ public class UMLParameterDiff {
 		Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReferences(originalVariable, newVariable, mappings);
 		RenameVariableRefactoring renameRefactoring = null;
 		if(isNameChanged()) {
+			renameRefactoring = new RenameVariableRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references, false);
 			if(!inconsistentReplacement(originalVariable, newVariable)) {
-				renameRefactoring = new RenameVariableRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references, false);
 				refactorings.add(renameRefactoring);
 			}
-			else {
+			else if(!mapperRefactorings.contains(renameRefactoring)) {
 				RemoveParameterRefactoring removeParameter = new RemoveParameterRefactoring(removedParameter, removedOperation, addedOperation);
 				AddParameterRefactoring addParameter = new AddParameterRefactoring(addedParameter, removedOperation, addedOperation);
 				refactorings.add(removeParameter);

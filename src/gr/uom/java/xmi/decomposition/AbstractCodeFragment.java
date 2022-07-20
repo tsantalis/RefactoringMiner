@@ -58,7 +58,14 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	public abstract List<LambdaExpressionObject> getLambdas();
 	public abstract VariableDeclaration searchVariableDeclaration(String variableName);
 	public abstract VariableDeclaration getVariableDeclaration(String variableName);
-	
+
+	public boolean isKeyword() {
+		String statement = getString();
+		return statement.startsWith("return;") ||
+				statement.startsWith("break;") ||
+				statement.startsWith("continue;");
+	}
+
 	public void replaceParametersWithArguments(Map<String, String> parameterToArgumentMap) {
 		String afterReplacements = getString();
 		for(String parameter : parameterToArgumentMap.keySet()) {

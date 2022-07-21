@@ -13,8 +13,15 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 		this.compositeChildMatchingScore = score;
 	}
 
+	public double getCompositeChildMatchingScore() {
+		return compositeChildMatchingScore;
+	}
+
 	@Override
 	public int compareTo(CompositeStatementObjectMapping o) {
+		if(this.compositeChildMatchingScore >= 2.0*o.compositeChildMatchingScore) {
+			return -Double.compare(this.compositeChildMatchingScore, o.compositeChildMatchingScore);
+		}
 		double distance1;
 		double distance2;
 		if(this.getFragment1().getString().equals(this.getFragment2().getString())) {
@@ -59,5 +66,4 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 			}
 		}
 	}
-
 }

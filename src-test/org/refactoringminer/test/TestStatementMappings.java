@@ -26,17 +26,18 @@ import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
+import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.MoveSourceFolderRefactoring;
 import gr.uom.java.xmi.diff.UMLClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 public class TestStatementMappings {
 	private static final String REPOS = "tmp1";
+	private GitService gitService = new GitServiceImpl();
+
 	@Test
 	public void testMappings() throws Exception {
-		GitService gitService = new GitServiceImpl();
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-
 		Repository repo = gitService.cloneIfNotExists(
 		    REPOS + "/infinispan",
 		    "https://github.com/infinispan/infinispan.git");
@@ -64,9 +65,36 @@ public class TestStatementMappings {
 	}
 
 	@Test
-	public void testMappings3() throws Exception {
-		GitService gitService = new GitServiceImpl();
+	public void testMappingsReverseParentChildCommit() throws Exception {
+		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+		Repository repo = gitService.cloneIfNotExists(
+			    REPOS + "/TestCases",
+			    "https://github.com/pouryafard75/TestCases.git");
 
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommit(repo, "e47272d6e1390b6366f577b84c58eae50f8f0a69", new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof InlineOperationRefactoring) {
+						InlineOperationRefactoring ex = (InlineOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+						actual.add(bodyMapper.toString());
+						for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
+							String line = mapping.getFragment1().getLocationInfo() + "==" + mapping.getFragment2().getLocationInfo();
+							actual.add(line);
+						}
+					}
+				}
+			}
+		});
+		
+		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/infinispan-043030723632627b0908dca6b24dae91d3dfd938-reverse.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testMappings3() throws Exception {
 		Repository repository = gitService.cloneIfNotExists(
 		    REPOS + "/flink",
 		    "https://github.com/apache/flink.git");

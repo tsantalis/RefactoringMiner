@@ -1357,6 +1357,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	private void checkForInlinedOperations() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
+		List<UMLOperationBodyMapper> inlinedOperationMappers = new ArrayList<UMLOperationBodyMapper>();
 		for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 			UMLOperation removedOperation = removedOperationIterator.next();
 			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
@@ -1365,13 +1366,136 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				for(InlineOperationRefactoring refactoring : refs) {
 					refactorings.add(refactoring);
 					UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
-					processMapperRefactorings(operationBodyMapper, refactorings);
+					inlinedOperationMappers.add(operationBodyMapper);
 					mapper.addChildMapper(operationBodyMapper);
 					operationsToBeRemoved.add(removedOperation);
 				}
 			}
 		}
+		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+			optimizeDuplicateMappingsForInline(mapper);
+		}
+		for(UMLOperationBodyMapper operationBodyMapper : inlinedOperationMappers) {
+			processMapperRefactorings(operationBodyMapper, refactorings);
+		}
 		removedOperations.removeAll(operationsToBeRemoved);
+	}
+
+	private void optimizeDuplicateMappingsForInline(UMLOperationBodyMapper parentMapper) {
+		if(parentMapper.getChildMappers().size() > 1) {
+			Map<AbstractCodeFragment, Set<AbstractCodeMapping>> oneToManyMappings = new HashMap<>();
+			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers = new HashMap<>();
+			for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
+				for(AbstractCodeMapping mapping : childMapper.getMappings()) {
+					if(oneToManyMappings.containsKey(mapping.getFragment2())) {
+						oneToManyMappings.get(mapping.getFragment2()).add(mapping);
+						oneToManyMappers.get(mapping.getFragment2()).add(childMapper);
+					}
+					else {
+						Set<AbstractCodeMapping> mappings = new LinkedHashSet<>();
+						List<UMLOperationBodyMapper> mappers = new ArrayList<>();
+						mappings.add(mapping);
+						mappers.add(childMapper);
+						oneToManyMappings.put(mapping.getFragment2(), mappings);
+						oneToManyMappers.put(mapping.getFragment2(), mappers);
+					}
+				}
+			}
+			for(Iterator<AbstractCodeFragment> it = oneToManyMappers.keySet().iterator(); it.hasNext();) {
+				AbstractCodeFragment fragment = it.next();
+				if(oneToManyMappings.get(fragment).size() == 1) {
+					oneToManyMappings.remove(fragment);
+				}
+			}
+			//sort oneToManyMappings keys to put first composite statements, then blocks, then leaf statements
+			TreeSet<AbstractCodeFragment> sortedKeys = new TreeSet<>(new CodeFragmentComparator());
+			sortedKeys.addAll(oneToManyMappings.keySet());
+			Set<UMLOperationBodyMapper> updatedMappers = new LinkedHashSet<>();
+			for(AbstractCodeFragment fragment : sortedKeys) {
+				Set<AbstractCodeMapping> mappings = oneToManyMappings.get(fragment);
+				List<UMLOperationBodyMapper> mappers = oneToManyMappers.get(fragment);
+				Iterator<AbstractCodeMapping> mappingIterator = mappings.iterator();
+				Iterator<UMLOperationBodyMapper> mapperIterator = mappers.iterator();
+				List<Boolean> parentMappingFound = new ArrayList<>();
+				List<Boolean> parentIsContainerBody = new ArrayList<>();
+				List<Boolean> identical = new ArrayList<>();
+				while(mappingIterator.hasNext()) {
+					AbstractCodeMapping mapping = mappingIterator.next();
+					UMLOperationBodyMapper mapper = mapperIterator.next();
+					parentMappingFound.add(mapper.containsParentMapping(mapping));
+					parentIsContainerBody.add(mapper.parentIsContainerBody(mapping));
+					identical.add(mapping.getFragment1().getString().equals(mapping.getFragment2().getString()));
+				}
+				Set<Integer> indicesToBeRemoved = new LinkedHashSet<>();
+				if(parentMappingFound.contains(true)) {
+					for(int i=0; i<parentMappingFound.size(); i++) {
+						if(parentMappingFound.get(i) == false) {
+							indicesToBeRemoved.add(i);
+						}
+					}
+					if(indicesToBeRemoved.isEmpty() && identical.contains(true)) {
+						for(int i=0; i<identical.size(); i++) {
+							if(identical.get(i) == false) {
+								indicesToBeRemoved.add(i);
+							}
+						}
+					}
+				}
+				else if(parentIsContainerBody.contains(true)) {
+					for(int i=0; i<parentIsContainerBody.size(); i++) {
+						if(parentIsContainerBody.get(i) == false) {
+							indicesToBeRemoved.add(i);
+						}
+					}
+					if(indicesToBeRemoved.isEmpty() && identical.contains(true)) {
+						for(int i=0; i<identical.size(); i++) {
+							if(identical.get(i) == false) {
+								indicesToBeRemoved.add(i);
+							}
+						}
+					}
+				}
+				mappingIterator = mappings.iterator();
+				mapperIterator = mappers.iterator();
+				int index = 0;
+				while(mappingIterator.hasNext()) {
+					AbstractCodeMapping mapping = mappingIterator.next();
+					UMLOperationBodyMapper mapper = mapperIterator.next();
+					if(indicesToBeRemoved.contains(index)) {
+						mapper.removeMapping(mapping);
+						//remove refactorings based on mapping
+						Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
+						Set<Refactoring> refactoringsAfterPostProcessing = mapper.getRefactoringsAfterPostProcessing();
+						for(Refactoring r : refactoringsAfterPostProcessing) {
+							if(r instanceof ReferenceBasedRefactoring) {
+								ReferenceBasedRefactoring referenceBased = (ReferenceBasedRefactoring)r;
+								Set<AbstractCodeMapping> references = referenceBased.getReferences();
+								if(references.contains(mapping)) {
+									refactoringsToBeRemoved.add(r);
+								}
+							}
+						}
+						refactoringsAfterPostProcessing.removeAll(refactoringsToBeRemoved);
+						updatedMappers.add(mapper);
+					}
+					index++;
+				}
+			}
+			for(Refactoring ref : refactorings) {
+				if(ref instanceof InlineOperationRefactoring) {
+					InlineOperationRefactoring refactoring = (InlineOperationRefactoring)ref;
+					if(updatedMappers.contains(refactoring.getBodyMapper())) {
+						refactoring.updateMapperInfo();
+					}
+				}
+				else if(ref instanceof ExtractOperationRefactoring) {
+					ExtractOperationRefactoring refactoring = (ExtractOperationRefactoring)ref;
+					if(updatedMappers.contains(refactoring.getBodyMapper())) {
+						refactoring.updateMapperInfo();
+					}
+				}
+			}
+		}
 	}
 
 	private void checkForExtractedOperations() throws RefactoringMinerTimedOutException {
@@ -1392,7 +1516,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-			optimizeDuplicateMappings(mapper);
+			optimizeDuplicateMappingsForExtract(mapper);
 		}
 		for(UMLOperationBodyMapper operationBodyMapper : extractedOperationMappers) {
 			processMapperRefactorings(operationBodyMapper, refactorings);
@@ -1400,7 +1524,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		addedOperations.removeAll(operationsToBeRemoved);
 	}
 
-	private void optimizeDuplicateMappings(UMLOperationBodyMapper parentMapper) {
+	private void optimizeDuplicateMappingsForExtract(UMLOperationBodyMapper parentMapper) {
 		if(parentMapper.getChildMappers().size() > 1) {
 			Map<AbstractCodeFragment, Set<AbstractCodeMapping>> oneToManyMappings = new HashMap<>();
 			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers = new HashMap<>();
@@ -1503,6 +1627,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			for(Refactoring ref : refactorings) {
 				if(ref instanceof ExtractOperationRefactoring) {
 					ExtractOperationRefactoring refactoring = (ExtractOperationRefactoring)ref;
+					if(updatedMappers.contains(refactoring.getBodyMapper())) {
+						refactoring.updateMapperInfo();
+					}
+				}
+				else if(ref instanceof InlineOperationRefactoring) {
+					InlineOperationRefactoring refactoring = (InlineOperationRefactoring)ref;
 					if(updatedMappers.contains(refactoring.getBodyMapper())) {
 						refactoring.updateMapperInfo();
 					}

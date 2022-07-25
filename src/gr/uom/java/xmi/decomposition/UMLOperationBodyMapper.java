@@ -3564,7 +3564,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				differOnlyInFinalModifier(s1, s2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString()) ||
-				(containsValidOperatorReplacements(replacementInfo) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, replacementInfo, creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2))) ||
+				(containsValidOperatorReplacements(replacementInfo) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, replacementInfo, creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, statement1, statement2))) ||
 				equalAfterArgumentMerge(s1, s2, replacementInfo) ||
 				equalAfterNewArgumentAdditions(s1, s2, replacementInfo) ||
 				(validStatementForConcatComparison(statement1, statement2) && commonConcat(s1, s2, replacementInfo, creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2));
@@ -6202,7 +6202,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean commonConditional(String s1, String s2, ReplacementInfo info, ObjectCreation creationCoveringTheEntireStatement1, ObjectCreation creationCoveringTheEntireStatement2) {
+	private boolean commonConditional(String s1, String s2, ReplacementInfo info, ObjectCreation creationCoveringTheEntireStatement1, ObjectCreation creationCoveringTheEntireStatement2, AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
 		boolean arrayCreation1 = creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement1.isArray();
 		boolean arrayCreation2 = creationCoveringTheEntireStatement2 != null && creationCoveringTheEntireStatement2.isArray();
 		if(!arrayCreation1 && !arrayCreation2 && !containsMethodSignatureOfAnonymousClass(s1) && !containsMethodSignatureOfAnonymousClass(s2)) {
@@ -6252,6 +6252,51 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(matches > 0) {
 					Replacement r = new IntersectionReplacement(s1, s2, intersection, ReplacementType.CONDITIONAL);
 					info.addReplacement(r);
+					CompositeStatementObject root1 = statement1.getParent();
+					CompositeStatementObject root2 = statement2.getParent();
+					if(root1 != null && root2 != null) {
+						while(root1.getParent() != null) {
+							root1 = root1.getParent();
+						}
+						while(root2.getParent() != null) {
+							root2 = root2.getParent();
+						}
+					}
+					List<CompositeStatementObject> ifNodes1 = new ArrayList<>(), ifNodes2 = new ArrayList<>();
+					if(root1 != null && root2 != null) {
+						for(CompositeStatementObject innerNode : root1.getInnerNodes()) {
+							if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+								ifNodes1.add(innerNode);
+							}
+						}
+						for(CompositeStatementObject innerNode : root2.getInnerNodes()) {
+							if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+								ifNodes2.add(innerNode);
+							}
+						}
+					}
+					if(ifNodes1.size() == 0 && ifNodes2.size() > 0) {
+						for(CompositeStatementObject ifNode2 : ifNodes2) {
+							List<AbstractExpression> expressions2 = ifNode2.getExpressions();
+							if(expressions2.size() > 0) {
+								AbstractExpression ifExpression2 = expressions2.get(0);
+								String conditional = ifExpression2.getString();
+								String[] subConditions = SPLIT_CONDITIONAL_PATTERN.split(conditional);
+								List<String> subConditionsAsList = new ArrayList<String>();
+								for(String s : subConditions) {
+									subConditionsAsList.add(s.trim());
+								}
+								Set<String> intersection2 = new LinkedHashSet<String>(subConditionsAsList);
+								intersection2.retainAll(subConditionsAsList1);
+								if(!intersection2.isEmpty()) {
+									Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
+									additionallyMatchedStatements2.add(ifNode2);
+									CompositeReplacement composite = new CompositeReplacement(statement1.getString(), ifNode2.getString(), new LinkedHashSet<>(), additionallyMatchedStatements2);
+									info.addReplacement(composite);
+								}
+							}
+						}
+					}
 				}
 				boolean invertConditionalFound = false;
 				for(String subCondition1 : subConditionsAsList1) {

@@ -105,7 +105,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/datastax/java-driver.git",
 				"https://github.com/SimonVT/schematic.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 1770, 9, 86);
+		processRepositoryCommits(Arrays.asList(gitURLs), 1771, 9, 86);
 	}
 
 	public void testBatch2a() throws Exception {
@@ -133,7 +133,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/jayway/rest-assured.git",
 				"https://github.com/graphhopper/graphhopper.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 1684, 5, 54);
+		processRepositoryCommits(Arrays.asList(gitURLs), 1686, 5, 54);
 	}
 
 	@Test
@@ -178,7 +178,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/addthis/hydra.git",
 				"https://github.com/apache/pig.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 3020, 7, 54);
+		processRepositoryCommits(Arrays.asList(gitURLs), 3024, 6, 54);
 	}
 
 	@Test
@@ -243,7 +243,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/novoda/android-demos.git",
 				"https://github.com/wordpress-mobile/WordPress-Android.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 1831, 0, 47);
+		processRepositoryCommits(Arrays.asList(gitURLs), 1837, 0, 47);
 	}
 
 	@Test
@@ -253,7 +253,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/JetBrains/intellij-community.git",
 				"https://github.com/junit-team/junit5.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 491, 4, 10);
+		processRepositoryCommits(Arrays.asList(gitURLs), 492, 4, 10);
 	}
 /*
 	@Test
@@ -261,7 +261,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 		GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
 		TestBuilder test = new TestBuilder(detector, REPOS, Refactorings.All.getValue());
 		RefactoringPopulator.feedRefactoringsInstances(Refactorings.All.getValue(), Systems.FSE.getValue(), test);
-		test.assertExpectations(getProject(), 11213, 27, 293, false);
+		test.assertExpectations(getProject(), 11227, 26, 291, false);
 	}
  */
 }

@@ -10,6 +10,7 @@ import gr.uom.java.xmi.Formatter;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.diff.CodeRange;
 
 public class StatementObject extends AbstractStatement {
@@ -36,10 +37,10 @@ public class StatementObject extends AbstractStatement {
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions;
 	private List<LambdaExpressionObject> lambdas;
 	
-	public StatementObject(PsiFile cu, String filePath, PsiStatement statement, int depth, CodeElementType codeElementType) {
+	public StatementObject(PsiFile cu, String filePath, PsiStatement statement, int depth, CodeElementType codeElementType, VariableDeclarationContainer container) {
 		super();
 		this.locationInfo = new LocationInfo(cu, filePath, statement, codeElementType);
-		Visitor visitor = new Visitor(cu, filePath);
+		Visitor visitor = new Visitor(cu, filePath, container);
 		statement.accept(visitor);
 		this.variables = visitor.getVariables();
 		this.types = visitor.getTypes();
@@ -188,6 +189,13 @@ public class StatementObject extends AbstractStatement {
 		for(VariableDeclaration declaration : variableDeclarations) {
 			if(declaration.getVariableName().equals(variableName)) {
 				return declaration;
+			}
+		}
+		for(LambdaExpressionObject lambda : getLambdas()) {
+			for(VariableDeclaration declaration : lambda.getParameters()) {
+				if(declaration.getVariableName().equals(variableName)) {
+					return declaration;
+				}
 			}
 		}
 		return null;

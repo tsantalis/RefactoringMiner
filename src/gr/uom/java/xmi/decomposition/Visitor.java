@@ -12,12 +12,14 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import com.intellij.psi.*;
 import gr.uom.java.xmi.Formatter;
 import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import org.jetbrains.annotations.NotNull;
 
 public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	public static final Pattern METHOD_SIGNATURE_PATTERN = Pattern.compile("(public|protected|private|static|\\s) +[\\w\\<\\>\\[\\]]+\\s+(\\w+) *\\([^\\)]*\\) *(\\{?|[^;])");
 	private PsiFile cu;
 	private String filePath;
+	private VariableDeclarationContainer container;
 	private List<String> variables = new ArrayList<String>();
 	private List<String> types = new ArrayList<String>();
 	private Map<String, List<AbstractCall>> methodInvocationMap = new LinkedHashMap<String, List<AbstractCall>>();
@@ -40,9 +42,10 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	private DefaultMutableTreeNode root = new DefaultMutableTreeNode();
 	private DefaultMutableTreeNode current = root;
 
-	public Visitor(PsiFile cu, String filePath) {
+	public Visitor(PsiFile cu, String filePath, VariableDeclarationContainer container) {
 		this.cu = cu;
 		this.filePath = filePath;
+		this.container = container;
 	}
 
 	public void visitElement(@NotNull PsiElement element) {
@@ -127,7 +130,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	}
 
 	private void visit(PsiConditionalExpression node) {
-		TernaryOperatorExpression ternary = new TernaryOperatorExpression(cu, filePath, node);
+		TernaryOperatorExpression ternary = new TernaryOperatorExpression(cu, filePath, node, container);
 		ternaryOperatorExpressions.add(ternary);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -224,7 +227,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	}
 
 	private void visit(PsiLocalVariable node) {
-		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node);
+		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node, container);
 		variableDeclarations.add(variableDeclaration);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -233,7 +236,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	}
 
 	private void visit(PsiResourceVariable node) {
-		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node);
+		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node, container);
 		variableDeclarations.add(variableDeclaration);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -242,7 +245,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	}
 
 	private void visit(PsiParameter node) {
-		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node, LocationInfo.CodeElementType.SINGLE_VARIABLE_DECLARATION, node.isVarArgs());
+		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node, LocationInfo.CodeElementType.SINGLE_VARIABLE_DECLARATION, container, node.isVarArgs());
 		variableDeclarations.add(variableDeclaration);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -251,7 +254,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	}
 
 	private void visit(PsiField node) {
-		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node);
+		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node, container);
 		variableDeclarations.add(variableDeclaration);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -582,7 +585,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 				castExpressionInParenthesizedExpression(argument))
 			return;
 		if(argument instanceof PsiMethodReferenceExpression) {
-			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (PsiMethodReferenceExpression)argument);
+			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (PsiMethodReferenceExpression)argument, container);
 			lambdas.add(lambda);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -704,7 +707,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	}
 
 	private boolean visit(PsiLambdaExpression node) {
-		LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, node);
+		LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, node, container);
 		lambdas.add(lambda);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();

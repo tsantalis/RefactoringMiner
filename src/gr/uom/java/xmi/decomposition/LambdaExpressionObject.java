@@ -1,7 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import com.intellij.psi.*;
 
@@ -9,26 +8,22 @@ import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.CodeRange;
 
-public class LambdaExpressionObject implements LocationInfoProvider {
+public class LambdaExpressionObject implements VariableDeclarationContainer, LocationInfoProvider {
 	private LocationInfo locationInfo;
 	private OperationBody body;
 	private AbstractExpression expression;
 	private List<VariableDeclaration> parameters = new ArrayList<VariableDeclaration>();
 	private List<UMLParameter> umlParameters = new ArrayList<UMLParameter>();
 	private boolean hasParentheses = false;
+	private VariableDeclarationContainer owner;
 	
-	public LambdaExpressionObject(PsiFile cu, String filePath, PsiLambdaExpression lambda) {
+	public LambdaExpressionObject(PsiFile cu, String filePath, PsiLambdaExpression lambda, VariableDeclarationContainer owner) {
+		this.owner = owner;
 		this.locationInfo = new LocationInfo(cu, filePath, lambda, CodeElementType.LAMBDA_EXPRESSION);
-		if(lambda.getBody() instanceof PsiCodeBlock) {
-			this.body = new OperationBody(cu, filePath, (PsiCodeBlock)lambda.getBody());
-		}
-		else if(lambda.getBody() instanceof PsiExpression) {
-			this.expression = new AbstractExpression(cu, filePath, (PsiExpression)lambda.getBody(), CodeElementType.LAMBDA_EXPRESSION_BODY);
-		}
 		this.hasParentheses = lambda.hasFormalParameterTypes();
 		PsiParameterList params = lambda.getParameterList();
 		for(PsiParameter param : params.getParameters()) {
-			VariableDeclaration parameter = new VariableDeclaration(cu, filePath, param, CodeElementType.LAMBDA_EXPRESSION_PARAMETER);
+			VariableDeclaration parameter = new VariableDeclaration(cu, filePath, param, CodeElementType.LAMBDA_EXPRESSION_PARAMETER, this);
 			this.parameters.add(parameter);
 			if(param.getTypeElement() != null) {
 				String parameterName = param.getName();
@@ -38,13 +33,28 @@ public class LambdaExpressionObject implements LocationInfoProvider {
 				this.umlParameters.add(umlParameter);
 			}
 		}
+		if(lambda.getBody() instanceof PsiCodeBlock) {
+			this.body = new OperationBody(cu, filePath, (PsiCodeBlock)lambda.getBody(), this);
+		}
+		else if(lambda.getBody() instanceof PsiExpression) {
+			this.expression = new AbstractExpression(cu, filePath, (PsiExpression)lambda.getBody(), CodeElementType.LAMBDA_EXPRESSION_BODY, this);
+			this.expression.setLambdaOwner(this);
+			for(VariableDeclaration parameter : parameters) {
+				parameter.addStatementInScope(expression);
+			}
+		}
 	}
 
-	public LambdaExpressionObject(PsiFile cu, String filePath, PsiMethodReferenceExpression reference) {
+	public LambdaExpressionObject(PsiFile cu, String filePath, PsiMethodReferenceExpression reference, VariableDeclarationContainer owner) {
+		this.owner = owner;
 		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION);
-		this.expression = new AbstractExpression(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY);
+		this.expression = new AbstractExpression(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY, this);
 	}
 	
+	public VariableDeclarationContainer getOwner() {
+		return owner;
+	}
+
 	public OperationBody getBody() {
 		return body;
 	}
@@ -156,5 +166,158 @@ public class LambdaExpressionObject implements LocationInfoProvider {
 			}
 		}
 		return sb.toString();
+	}
+
+	@Override
+	public List<VariableDeclaration> getParameterDeclarationList() {
+		return getParameters();
+	}
+
+	@Override
+	public List<UMLParameter> getParametersWithoutReturnType() {
+		return getUmlParameters();
+	}
+
+	@Override
+	public List<UMLAnonymousClass> getAnonymousClassList() {
+		if(owner != null) {
+			List<UMLAnonymousClass> anonymousClassList = new ArrayList<>();
+			for(UMLAnonymousClass anonymousClass : owner.getAnonymousClassList()) {
+				if(this.locationInfo.subsumes(anonymousClass.getLocationInfo())) {
+					anonymousClassList.add(anonymousClass);
+				}
+			}
+			return anonymousClassList;
+		}
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<LambdaExpressionObject> getAllLambdas() {
+		if(expression != null) {
+			return expression.getLambdas();
+		}
+		if(body != null) {
+			return body.getAllLambdas();
+		}
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<AbstractCall> getAllOperationInvocations() {
+		if(expression != null) {
+			List<AbstractCall> invocations = new ArrayList<AbstractCall>();
+			Map<String, List<AbstractCall>> invocationMap = expression.getMethodInvocationMap();
+			for(String key : invocationMap.keySet()) {
+				invocations.addAll(invocationMap.get(key));
+			}
+			return invocations;
+		}
+		if(body != null) {
+			return body.getAllOperationInvocations();
+		}
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<String> getAllVariables() {
+		if(expression != null) {
+			return expression.getVariables();
+		}
+		if(body != null) {
+			return body.getAllVariables();
+		}
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<UMLComment> getComments() {
+		if(owner != null) {
+			List<UMLComment> comments = new ArrayList<>();
+			for(UMLComment comment : owner.getComments()) {
+				if(this.locationInfo.subsumes(comment.getLocationInfo())) {
+					comments.add(comment);
+				}
+			}
+			return comments;
+		}
+		return Collections.emptyList();
+	}
+
+	@Override
+	public String getName() {
+		return "";
+	}
+
+	@Override
+	public String getElementType() {
+		return "lambda";
+	}
+
+	@Override
+	public String getClassName() {
+		if(owner != null) {
+			return owner.getClassName();
+		}
+		return null;
+	}
+
+	@Override
+	public String toQualifiedString() {
+		if(owner != null) {
+			return owner.toQualifiedString() + " -> @" + locationInfo;
+		}
+		return null;
+	}
+
+	@Override
+	public Map<String, Set<VariableDeclaration>> variableDeclarationMap() {
+		Map<String, Set<VariableDeclaration>> variableDeclarationMap = new LinkedHashMap<String, Set<VariableDeclaration>>();
+		for(VariableDeclaration declaration : getAllVariableDeclarations()) {
+			if(variableDeclarationMap.containsKey(declaration.getVariableName())) {
+				variableDeclarationMap.get(declaration.getVariableName()).add(declaration);
+			}
+			else {
+				Set<VariableDeclaration> variableDeclarations = new LinkedHashSet<VariableDeclaration>();
+				variableDeclarations.add(declaration);
+				variableDeclarationMap.put(declaration.getVariableName(), variableDeclarations);
+			}
+		}
+		return variableDeclarationMap;
+	}
+
+	@Override
+	public UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration) {
+		for(UMLAnonymousClass anonymousClass : this.getAnonymousClassList()) {
+			if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration.getLocationInfo())) {
+				return anonymousClass;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public boolean hasTestAnnotation() {
+		return false;
+	}
+
+	@Override
+	public boolean isDeclaredInAnonymousClass() {
+		return false;
+	}
+
+	@Override
+	public boolean isGetter() {
+		return false;
+	}
+
+	@Override
+	public boolean isConstructor() {
+		return false;
+	}
+
+	@Override
+	public AbstractCall isDelegate() {
+		return null;
 	}
 }

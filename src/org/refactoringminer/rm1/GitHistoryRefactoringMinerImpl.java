@@ -310,7 +310,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return moveSourceFolderRefactorings;
 	}
 
-	private enum RevisionType {
+	public enum RevisionType {
 		BEFORE, AFTER
 	}
 

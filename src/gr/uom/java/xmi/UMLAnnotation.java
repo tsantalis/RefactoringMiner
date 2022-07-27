@@ -23,11 +23,11 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 		this.locationInfo = new LocationInfo(cu, filePath, annotation, CodeElementType.ANNOTATION);
 		PsiNameValuePair[] parameters = annotation.getParameterList().getAttributes();
 		if (parameters.length == 1 && parameters[0].getName() == null) {
-			this.value = new AbstractExpression(cu, filePath, parameters[0].getValue(), CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE);
+			this.value = new AbstractExpression(cu, filePath, parameters[0].getValue(), CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE, null);
 		}
 		else {
 			for (PsiNameValuePair parameter : parameters) {
-				AbstractExpression value = new AbstractExpression(cu, filePath, parameter.getValue(), CodeElementType.NORMAL_ANNOTATION_MEMBER_VALUE_PAIR);
+				AbstractExpression value = new AbstractExpression(cu, filePath, parameter.getValue(), CodeElementType.NORMAL_ANNOTATION_MEMBER_VALUE_PAIR, null);
 				memberValuePairs.put(parameter.getName(), value);
 			}
 		}

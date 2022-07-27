@@ -567,7 +567,7 @@ public class UMLModelASTReader {
 			String parameterName = parameter.getName();
 			UMLType type = UMLTypePsiParser.extractTypeObject(cu, sourceFile, parameter.getTypeElement(), parameter.getType());
 			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarArgs());
-			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, parameter, CodeElementType.SINGLE_VARIABLE_DECLARATION, parameter.isVarArgs());
+			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, parameter, CodeElementType.SINGLE_VARIABLE_DECLARATION, umlOperation, parameter.isVarArgs());
 			variableDeclaration.setParameter(true);
 			umlParameter.setVariableDeclaration(variableDeclaration);
 			umlOperation.addParameter(umlParameter);
@@ -609,7 +609,7 @@ public class UMLModelASTReader {
 		String fieldName = fieldDeclaration.getName();
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, fieldDeclaration, CodeElementType.FIELD_DECLARATION);
 		UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo);
-		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, fieldDeclaration);
+		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, fieldDeclaration, umlAttribute);
 		variableDeclaration.setAttribute(true);
 		umlAttribute.setVariableDeclaration(variableDeclaration);
 		umlAttribute.setJavadoc(javadoc);

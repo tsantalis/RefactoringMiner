@@ -40,7 +40,7 @@ public class VariableDeclarationReplacement extends Replacement {
 		AbstractExpression initializer1 = v1.getInitializer();
 		AbstractExpression initializer2 = v2.getInitializer();
 		if(initializer1 != null && initializer2 != null) {
-			return v1.getType().equals(v2.getType()) && initializer1.getExpression().equals(initializer2.getExpression());
+			return v1.equalType(v2) && initializer1.getExpression().equals(initializer2.getExpression());
 		}
 		return false;
 	}

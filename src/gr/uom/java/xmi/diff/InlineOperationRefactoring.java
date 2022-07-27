@@ -44,6 +44,16 @@ public class InlineOperationRefactoring implements Refactoring {
 		}
 	}
 
+	public void updateMapperInfo() {
+		this.replacements = bodyMapper.getReplacements();
+		this.inlinedCodeFragmentsFromInlinedOperation.clear();
+		this.inlinedCodeFragmentsInTargetOperation.clear();
+		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
+			this.inlinedCodeFragmentsFromInlinedOperation.add(mapping.getFragment1());
+			this.inlinedCodeFragmentsInTargetOperation.add(mapping.getFragment2());
+		}
+	}
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");

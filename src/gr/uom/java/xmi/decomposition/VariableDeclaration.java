@@ -23,7 +23,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private boolean isFinal;
 	private List<UMLAnnotation> annotations;
 
-	public VariableDeclaration(PsiFile cu, String filePath, PsiResourceVariable fragment) {
+	public VariableDeclaration(PsiFile cu, String filePath, PsiResourceVariable fragment, VariableDeclarationContainer container) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		PsiModifierList modifiers = fragment.getModifierList();
 		if(modifiers != null) {
@@ -36,7 +36,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 		this.locationInfo = new LocationInfo(cu, filePath, fragment, CodeElementType.VARIABLE_DECLARATION_EXPRESSION);
 		this.variableName = fragment.getName();
-		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER) : null;
+		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container) : null;
 		this.type = TypeUtils.extractType(cu, filePath, fragment);
 		int startOffset = fragment.getTextRange().getStartOffset();
 		PsiElement scopeNode = getScopeNode(fragment);
@@ -44,7 +44,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
 	}
 
-	public VariableDeclaration(PsiFile cu, String filePath, PsiLocalVariable fragment) {
+	public VariableDeclaration(PsiFile cu, String filePath, PsiLocalVariable fragment, VariableDeclarationContainer container) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		PsiModifierList modifiers = fragment.getModifierList();
 		if(modifiers != null) {
@@ -63,14 +63,14 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 			this.locationInfo = new LocationInfo(cu, filePath, fragment, CodeElementType.VARIABLE_DECLARATION_STATEMENT);
 		}
 		this.variableName = fragment.getName();
-		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER) : null;
+		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container) : null;
 		this.type = TypeUtils.extractType(cu, filePath, fragment);
 		int startOffset = fragment.getTextRange().getStartOffset();
 		int endOffset = scopeNode.getTextRange().getEndOffset();
 		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
 	}
 
-	public VariableDeclaration(PsiFile cu, String filePath, PsiField fragment) {
+	public VariableDeclaration(PsiFile cu, String filePath, PsiField fragment, VariableDeclarationContainer container) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		PsiModifierList modifiers = fragment.getModifierList();
 		if(modifiers != null) {
@@ -83,7 +83,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 		this.locationInfo = new LocationInfo(cu, filePath, fragment, CodeElementType.FIELD_DECLARATION);
 		this.variableName = fragment.getName();
-		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER) : null;
+		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container) : null;
 		this.type = UMLTypePsiParser.extractTypeObject(cu, filePath, fragment.getTypeElement(), fragment.getType());
 		PsiElement scopeNode = getScopeNode(fragment);
 		int startOffset = scopeNode.getTextRange().getStartOffset();
@@ -91,7 +91,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
 	}
 
-	public VariableDeclaration(PsiFile cu, String filePath, PsiParameter fragment, CodeElementType codeElementType) {
+	public VariableDeclaration(PsiFile cu, String filePath, PsiParameter fragment, CodeElementType codeElementType, VariableDeclarationContainer container) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		PsiModifierList modifiers = fragment.getModifierList();
 		if(modifiers != null) {
@@ -104,7 +104,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 		this.locationInfo = new LocationInfo(cu, filePath, fragment, codeElementType);
 		this.variableName = fragment.getName();
-		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER) : null;
+		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container) : null;
 		//handling lambda expression parameters without type
 		if(fragment.getTypeElement() != null) {
 			this.type = UMLTypePsiParser.extractTypeObject(cu, filePath, fragment.getTypeElement(), fragment.getType());
@@ -115,8 +115,8 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
 	}
 
-	public VariableDeclaration(PsiFile cu, String filePath, PsiParameter fragment, CodeElementType codeElementType, boolean varargs) {
-		this(cu, filePath, fragment, codeElementType);
+	public VariableDeclaration(PsiFile cu, String filePath, PsiParameter fragment, CodeElementType codeElementType, VariableDeclarationContainer container, boolean varargs) {
+		this(cu, filePath, fragment, codeElementType, container);
 		this.varargsParameter = varargs;
 	}
 
@@ -273,6 +273,26 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public boolean equalVariableDeclarationType(VariableDeclaration other) {
 		return this.locationInfo.getCodeElementType().equals(other.locationInfo.getCodeElementType());
+	}
+
+	public boolean equalType(VariableDeclaration other) {
+		if(this.getType() == null && other.getType() == null) {
+			return true;
+		}
+		else if(this.getType() != null && other.getType() != null) {
+			return this.getType().equals(other.getType());
+		}
+		return false;
+	}
+
+	public boolean equalQualifiedType(VariableDeclaration other) {
+		if(this.getType() == null && other.getType() == null) {
+			return true;
+		}
+		else if(this.getType() != null && other.getType() != null) {
+			return this.getType().equalsQualified(other.getType());
+		}
+		return false;
 	}
 
 	public VariableDeclaration getVariableDeclaration() {

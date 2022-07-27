@@ -36,7 +36,6 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	private List<VariableDeclaration> parameters = new ArrayList<VariableDeclaration>();
 	private List<UMLParameter> umlParameters = new ArrayList<UMLParameter>();
 	private boolean hasParentheses = false;
-	private List<UMLAnonymousClass> anonymousClassList = new ArrayList<UMLAnonymousClass>();
 	private VariableDeclarationContainer owner;
 	
 	public LambdaExpressionObject(CompilationUnit cu, String filePath, LambdaExpression lambda, VariableDeclarationContainer owner) {

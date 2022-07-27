@@ -26,13 +26,13 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 		this.locationInfo = new LocationInfo(cu, filePath, annotation, CodeElementType.ANNOTATION);
 		if(annotation instanceof SingleMemberAnnotation) {
 			SingleMemberAnnotation singleMemberAnnotation = (SingleMemberAnnotation)annotation;
-			this.value = new AbstractExpression(cu, filePath, singleMemberAnnotation.getValue(), CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE);
+			this.value = new AbstractExpression(cu, filePath, singleMemberAnnotation.getValue(), CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE, null);
 		}
 		else if(annotation instanceof NormalAnnotation) {
 			NormalAnnotation normalAnnotation = (NormalAnnotation)annotation;
 			List<MemberValuePair> pairs = normalAnnotation.values();
 			for(MemberValuePair pair : pairs) {
-				AbstractExpression value = new AbstractExpression(cu, filePath, pair.getValue(), CodeElementType.NORMAL_ANNOTATION_MEMBER_VALUE_PAIR);
+				AbstractExpression value = new AbstractExpression(cu, filePath, pair.getValue(), CodeElementType.NORMAL_ANNOTATION_MEMBER_VALUE_PAIR, null);
 				memberValuePairs.put(pair.getName().getIdentifier(), value);
 			}
 		}

@@ -651,7 +651,7 @@ public class UMLModelASTReader {
 				type.setVarargs();
 			}
 			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarargs());
-			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, parameter, parameter.isVarargs());
+			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, parameter, umlOperation, parameter.isVarargs());
 			variableDeclaration.setParameter(true);
 			umlParameter.setVariableDeclaration(variableDeclaration);
 			umlOperation.addParameter(umlParameter);
@@ -693,7 +693,7 @@ public class UMLModelASTReader {
 			String fieldName = fragment.getName().getFullyQualifiedName();
 			LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, fragment, CodeElementType.FIELD_DECLARATION);
 			UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo);
-			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, fragment);
+			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, fragment, umlAttribute);
 			variableDeclaration.setAttribute(true);
 			umlAttribute.setVariableDeclaration(variableDeclaration);
 			umlAttribute.setJavadoc(javadoc);

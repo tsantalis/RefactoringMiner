@@ -507,6 +507,7 @@ public class CompositeStatementObject extends AbstractStatement {
 				StatementObject statementObject = (StatementObject)statement;
 				variableDeclarations.addAll(statementObject.getVariableDeclarations());
 				for(LambdaExpressionObject lambda : statementObject.getLambdas()) {
+					variableDeclarations.addAll(lambda.getParameters());
 					if(lambda.getBody() != null) {
 						variableDeclarations.addAll(lambda.getBody().getAllVariableDeclarations());
 					}

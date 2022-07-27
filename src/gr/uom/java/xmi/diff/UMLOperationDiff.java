@@ -650,7 +650,7 @@ public class UMLOperationDiff {
 			int removedAttributes = 0;
 			for(UMLAttribute attribute : classDiff.getRemovedAttributes()) {
 				for(VariableDeclaration parameter : removedFieldAssignmentMap.keySet()) {
-					if(attribute.getName().equals(parameter.getVariableName()) && attribute.getType().equals(parameter.getType())) {
+					if(attribute.getName().equals(parameter.getVariableName()) && attribute.getVariableDeclaration().equalType(parameter)) {
 						removedAttributes++;
 						break;
 					}
@@ -659,7 +659,7 @@ public class UMLOperationDiff {
 			int addedAttributes = 0;
 			for(UMLAttribute attribute : classDiff.getAddedAttributes()) {
 				for(VariableDeclaration parameter : addedFieldAssignmentMap.keySet()) {
-					if(attribute.getName().equals(parameter.getVariableName()) && attribute.getType().equals(parameter.getType())) {
+					if(attribute.getName().equals(parameter.getVariableName()) && attribute.getVariableDeclaration().equalType(parameter)) {
 						addedAttributes++;
 						break;
 					}

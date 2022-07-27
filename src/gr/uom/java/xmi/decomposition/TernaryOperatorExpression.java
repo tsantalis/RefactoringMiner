@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConditionalExpression;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
@@ -14,10 +15,10 @@ public class TernaryOperatorExpression {
 	private AbstractExpression elseExpression;
 	private String expression;
 
-	public TernaryOperatorExpression(CompilationUnit cu, String filePath, ConditionalExpression expression) {
-		this.condition = new AbstractExpression(cu, filePath, expression.getExpression(), CodeElementType.TERNARY_OPERATOR_CONDITION);
-		this.thenExpression = new AbstractExpression(cu, filePath, expression.getThenExpression(), CodeElementType.TERNARY_OPERATOR_THEN_EXPRESSION);
-		this.elseExpression = new AbstractExpression(cu, filePath, expression.getElseExpression(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION);
+	public TernaryOperatorExpression(CompilationUnit cu, String filePath, ConditionalExpression expression, VariableDeclarationContainer container) {
+		this.condition = new AbstractExpression(cu, filePath, expression.getExpression(), CodeElementType.TERNARY_OPERATOR_CONDITION, container);
+		this.thenExpression = new AbstractExpression(cu, filePath, expression.getThenExpression(), CodeElementType.TERNARY_OPERATOR_THEN_EXPRESSION, container);
+		this.elseExpression = new AbstractExpression(cu, filePath, expression.getElseExpression(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION, container);
 		this.expression = expression.toString();
 	}
 

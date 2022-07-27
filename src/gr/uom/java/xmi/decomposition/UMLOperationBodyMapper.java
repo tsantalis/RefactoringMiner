@@ -382,7 +382,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							boolean matchingVariableDeclaration = false;
 							List<VariableDeclaration> declarations2 = nonMappedLeaf2.getVariableDeclarations();
 							for(VariableDeclaration declaration2 : declarations2) {
-								if(declaration2.getVariableName().equals(declaration.getVariableName()) && declaration2.getType().equals(declaration.getType())) {
+								if(declaration2.getVariableName().equals(declaration.getVariableName()) && declaration2.equalType(declaration)) {
 									matchingVariableDeclaration = true;
 									break;
 								}
@@ -3335,9 +3335,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					boolean typeContainsVariableName = false;
 					if(variableDeclarations1.size() > 0 && !s1.equals(s2)) {
 						VariableDeclaration variableDeclaration = variableDeclarations1.get(0);
-						String typeTolowerCase = variableDeclaration.getType().toString().toLowerCase();
-						if(typeTolowerCase.contains(variableDeclaration.getVariableName().toLowerCase()) &&	typeTolowerCase.contains(s2.toLowerCase())) {
-							typeContainsVariableName = true;
+						UMLType variableType = variableDeclaration.getType();
+						if(variableType != null) {
+							String typeTolowerCase = variableType.toString().toLowerCase();
+							if(typeTolowerCase.contains(variableDeclaration.getVariableName().toLowerCase()) &&	typeTolowerCase.contains(s2.toLowerCase())) {
+								typeContainsVariableName = true;
+							}
 						}
 					}
 					if(distanceRaw == -1 && (multipleInstances || typeContainsVariableName)) {
@@ -3969,7 +3972,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						variableDeclarationMatchedWithNonVariableDeclaration = true;
 					}
 					else if(!variableDeclarations1.get(0).getVariableName().equals(variableDeclarations2.get(0).getVariableName()) &&
-							!variableDeclarations1.get(0).getType().equals(variableDeclarations2.get(0).getType())) {
+							!variableDeclarations1.get(0).equalType(variableDeclarations2.get(0))) {
 						variableDeclarationMatchedWithNonVariableDeclaration = true;
 					}
 				}
@@ -3978,7 +3981,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						variableDeclarationMatchedWithNonVariableDeclaration = true;
 					}
 					else if(!variableDeclarations1.get(0).getVariableName().equals(variableDeclarations2.get(0).getVariableName()) &&
-							!variableDeclarations1.get(0).getType().equals(variableDeclarations2.get(0).getType())) {
+							!variableDeclarations1.get(0).equalType(variableDeclarations2.get(0))) {
 						variableDeclarationMatchedWithNonVariableDeclaration = true;
 					}
 				}
@@ -4390,23 +4393,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			VariableDeclaration v2 = variableDeclarations2.get(0);
 			String initializer1 = v1.getInitializer() != null ? v1.getInitializer().getString() : null;
 			String initializer2 = v2.getInitializer() != null ? v2.getInitializer().getString() : null;
-			if(v1.getType().getArrayDimension() == 1 && v2.getType().containsTypeArgument(v1.getType().getClassType()) &&
-					creationCoveringTheEntireStatement1.isArray() && !creationCoveringTheEntireStatement2.isArray() &&
-					initializer1 != null && initializer2 != null &&
-					initializer1.substring(initializer1.indexOf("[")+1, initializer1.lastIndexOf("]")).equals(initializer2.substring(initializer2.indexOf("(")+1, initializer2.lastIndexOf(")")))) {
-				r = new ObjectCreationReplacement(initializer1, initializer2,
-						creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.ARRAY_CREATION_REPLACED_WITH_DATA_STRUCTURE_CREATION);
-				replacementInfo.addReplacement(r);
-				return replacementInfo.getReplacements();
-			}
-			if(v2.getType().getArrayDimension() == 1 && v1.getType().containsTypeArgument(v2.getType().getClassType()) &&
-					!creationCoveringTheEntireStatement1.isArray() && creationCoveringTheEntireStatement2.isArray() &&
-					initializer1 != null && initializer2 != null &&
-					initializer1.substring(initializer1.indexOf("(")+1, initializer1.lastIndexOf(")")).equals(initializer2.substring(initializer2.indexOf("[")+1, initializer2.lastIndexOf("]")))) {
-				r = new ObjectCreationReplacement(initializer1, initializer2,
-						creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.ARRAY_CREATION_REPLACED_WITH_DATA_STRUCTURE_CREATION);
-				replacementInfo.addReplacement(r);
-				return replacementInfo.getReplacements();
+			UMLType v1Type = v1.getType();
+			UMLType v2Type = v2.getType();
+			if(v1Type != null && v2Type != null) {
+				if(v1Type.getArrayDimension() == 1 && v2Type.containsTypeArgument(v1Type.getClassType()) &&
+						creationCoveringTheEntireStatement1.isArray() && !creationCoveringTheEntireStatement2.isArray() &&
+						initializer1 != null && initializer2 != null &&
+						initializer1.substring(initializer1.indexOf("[")+1, initializer1.lastIndexOf("]")).equals(initializer2.substring(initializer2.indexOf("(")+1, initializer2.lastIndexOf(")")))) {
+					r = new ObjectCreationReplacement(initializer1, initializer2,
+							creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.ARRAY_CREATION_REPLACED_WITH_DATA_STRUCTURE_CREATION);
+					replacementInfo.addReplacement(r);
+					return replacementInfo.getReplacements();
+				}
+				if(v2Type.getArrayDimension() == 1 && v1Type.containsTypeArgument(v2Type.getClassType()) &&
+						!creationCoveringTheEntireStatement1.isArray() && creationCoveringTheEntireStatement2.isArray() &&
+						initializer1 != null && initializer2 != null &&
+						initializer1.substring(initializer1.indexOf("(")+1, initializer1.lastIndexOf(")")).equals(initializer2.substring(initializer2.indexOf("[")+1, initializer2.lastIndexOf("]")))) {
+					r = new ObjectCreationReplacement(initializer1, initializer2,
+							creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.ARRAY_CREATION_REPLACED_WITH_DATA_STRUCTURE_CREATION);
+					replacementInfo.addReplacement(r);
+					return replacementInfo.getReplacements();
+				}
 			}
 		}
 		if(!creations1.isEmpty() && creationCoveringTheEntireStatement2 != null) {
@@ -4704,7 +4711,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(AbstractCodeFragment codeFragment : unmatchedStatements) {
 				for(VariableDeclaration variableDeclaration : codeFragment.getVariableDeclarations()) {
 					if(variableDeclaration.getVariableName().equals(variableDeclarations.get(0).getVariableName()) &&
-							variableDeclaration.getType().equals(variableDeclarations.get(0).getType())) {
+							variableDeclaration.equalType(variableDeclarations.get(0))) {
 						additionallyMatchedStatements.add(codeFragment);
 						break;
 					}
@@ -4969,7 +4976,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(parameterName.equals(parameter.getVariableName())) {
 							String lambdaArrow = "() -> ";
 							String supplierGet = ".get()";
-							if(parameter.getType().getClassType().equals("Supplier") && s2.contains(supplierGet) && s2.contains(lambdaArrow)) {
+							UMLType parameterType = parameter.getType();
+							if(parameterType != null && parameterType.getClassType().equals("Supplier") && s2.contains(supplierGet) && s2.contains(lambdaArrow)) {
 								String tmp = s2.replace(supplierGet, "");
 								tmp = tmp.replace(lambdaArrow, "");
 								if(s1.equals(tmp)) {
@@ -5529,8 +5537,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			for(Replacement replacement : replacementInfo.getReplacements()) {
 				if(replacement.getType().equals(ReplacementType.TYPE) &&
-						variableDeclarations1.get(0).getType().toQualifiedString().equals(replacement.getBefore()) &&
-						variableDeclarations2.get(0).getType().toQualifiedString().equals(replacement.getAfter()))
+						type1 != null && type1.toQualifiedString().equals(replacement.getBefore()) &&
+						type2 != null && type2.toQualifiedString().equals(replacement.getAfter()))
 					typeReplacement = true;
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
 						variableDeclarations1.get(0).getVariableName().equals(replacement.getBefore()) &&
@@ -5946,7 +5954,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 				String composedString1 = null;
 				String composedString2 = null;
-				if(s1.startsWith("catch(") && s2.startsWith("catch(") && declaration1.getType().equals(declaration2.getType())) {
+				if(s1.startsWith("catch(") && s2.startsWith("catch(") && declaration1.equalType(declaration2)) {
 					composedString1 = "catch(" + declaration1.getVariableName() + ")";
 					composedString2 = "catch(" + declaration2.getVariableName() + ")";
 				}

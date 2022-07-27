@@ -78,7 +78,7 @@ public class ChangeVariableTypeRefactoring implements Refactoring, ReferenceBase
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		boolean qualified = originalVariable.getType().equals(changedTypeVariable.getType()) && !originalVariable.getType().equalsQualified(changedTypeVariable.getType());
+		boolean qualified = originalVariable.equalType(changedTypeVariable) && !originalVariable.equalQualifiedType(changedTypeVariable);
 		sb.append(getName()).append("\t");
 		sb.append(qualified ? originalVariable.toQualifiedString() : originalVariable.toString());
 		sb.append(" to ");

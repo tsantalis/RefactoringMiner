@@ -23,6 +23,7 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.VariableDeclarationProvider;
 import gr.uom.java.xmi.diff.CodeRange;
 
@@ -39,7 +40,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private boolean isFinal;
 	private List<UMLAnnotation> annotations;
 	
-	public VariableDeclaration(CompilationUnit cu, String filePath, VariableDeclarationFragment fragment) {
+	public VariableDeclaration(CompilationUnit cu, String filePath, VariableDeclarationFragment fragment, VariableDeclarationContainer container) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		List<IExtendedModifier> extendedModifiers = null;
 		if(fragment.getParent() instanceof VariableDeclarationStatement) {
@@ -76,7 +77,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 		this.locationInfo = new LocationInfo(cu, filePath, fragment, extractVariableDeclarationType(fragment));
 		this.variableName = fragment.getName().getIdentifier();
-		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER) : null;
+		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container) : null;
 		Type astType = extractType(fragment);
 		if(astType != null) {
 			this.type = UMLType.extractTypeObject(cu, filePath, astType, fragment.getExtraDimensions());
@@ -94,7 +95,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
 	}
 
-	public VariableDeclaration(CompilationUnit cu, String filePath, SingleVariableDeclaration fragment) {
+	public VariableDeclaration(CompilationUnit cu, String filePath, SingleVariableDeclaration fragment, VariableDeclarationContainer container) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		int modifiers = fragment.getModifiers();
 		if((modifiers & Modifier.FINAL) != 0) {
@@ -109,7 +110,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 		this.locationInfo = new LocationInfo(cu, filePath, fragment, extractVariableDeclarationType(fragment));
 		this.variableName = fragment.getName().getIdentifier();
-		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER) : null;
+		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container) : null;
 		Type astType = extractType(fragment);
 		this.type = UMLType.extractTypeObject(cu, filePath, astType, fragment.getExtraDimensions());
 		int startOffset = fragment.getStartPosition();
@@ -118,8 +119,8 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
 	}
 
-	public VariableDeclaration(CompilationUnit cu, String filePath, SingleVariableDeclaration fragment, boolean varargs) {
-		this(cu, filePath, fragment);
+	public VariableDeclaration(CompilationUnit cu, String filePath, SingleVariableDeclaration fragment, VariableDeclarationContainer container, boolean varargs) {
+		this(cu, filePath, fragment, container);
 		this.varargsParameter = varargs;
 		if(varargs) {
 			this.type.setVarargs();
@@ -332,6 +333,26 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public boolean equalVariableDeclarationType(VariableDeclaration other) {
 		return this.locationInfo.getCodeElementType().equals(other.locationInfo.getCodeElementType());
+	}
+
+	public boolean equalType(VariableDeclaration other) {
+		if(this.getType() == null && other.getType() == null) {
+			return true;
+		}
+		else if(this.getType() != null && other.getType() != null) {
+			return this.getType().equals(other.getType());
+		}
+		return false;
+	}
+
+	public boolean equalQualifiedType(VariableDeclaration other) {
+		if(this.getType() == null && other.getType() == null) {
+			return true;
+		}
+		else if(this.getType() != null && other.getType() != null) {
+			return this.getType().equalsQualified(other.getType());
+		}
+		return false;
 	}
 
 	public VariableDeclaration getVariableDeclaration() {

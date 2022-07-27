@@ -201,7 +201,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				for(int i=0; i< declarations1.size(); i++) {
 					VariableDeclaration declaration1 = declarations1.get(i);
 					VariableDeclaration declaration2 = declarations2.get(i);
-					if(!declaration1.getType().equals(declaration2.getType())) {
+					if(!declaration1.equalType(declaration2)) {
 						return false;
 					}
 				}

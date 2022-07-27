@@ -239,7 +239,7 @@ public class VariableReplacementAnalysis {
 						for(VariableDeclaration addedVariable : addedVariables) {
 							if(!addedVariablesToBeRemoved.contains(addedVariable)) {
 								Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
-								if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && addedVariable.getType().equals(removedVariable.getType())) {
+								if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && addedVariable.equalType(removedVariable)) {
 									removedVariablesToBeRemoved.add(removedVariable);
 									addedVariablesToBeRemoved.add(addedVariable);
 									matchedVariables.add(pair);
@@ -256,7 +256,7 @@ public class VariableReplacementAnalysis {
 						for(VariableDeclaration removedVariable : removedVariables) {
 							if(!removedVariablesToBeRemoved.contains(removedVariable)) {
 								Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
-								if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && addedVariable.getType().equals(removedVariable.getType())) {
+								if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && addedVariable.equalType(removedVariable)) {
 									removedVariablesToBeRemoved.add(removedVariable);
 									addedVariablesToBeRemoved.add(addedVariable);
 									matchedVariables.add(pair);
@@ -274,7 +274,7 @@ public class VariableReplacementAnalysis {
 					for(VariableDeclaration addedVariable : addedVariables) {
 						if(!addedVariablesToBeRemoved.contains(addedVariable) && !removedVariablesToBeRemoved.contains(removedVariable) && addedVariable.isParameter()) {
 							Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
-							if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && addedVariable.getType().equals(removedVariable.getType())) {
+							if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && addedVariable.equalType(removedVariable)) {
 								removedVariablesToBeRemoved.add(removedVariable);
 								addedVariablesToBeRemoved.add(addedVariable);
 								matchedVariables.add(pair);
@@ -291,7 +291,7 @@ public class VariableReplacementAnalysis {
 					for(VariableDeclaration removedVariable : removedVariables) {
 						if(!removedVariablesToBeRemoved.contains(removedVariable) && !addedVariablesToBeRemoved.contains(addedVariable) && removedVariable.isParameter()) {
 							Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
-							if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && addedVariable.getType().equals(removedVariable.getType())) {
+							if(!matchedVariables.contains(pair) && addedVariable.getVariableName().equals(removedVariable.getVariableName()) && addedVariable.equalType(removedVariable)) {
 								removedVariablesToBeRemoved.add(removedVariable);
 								addedVariablesToBeRemoved.add(addedVariable);
 								matchedVariables.add(pair);
@@ -587,7 +587,7 @@ public class VariableReplacementAnalysis {
 					VariableDeclaration declaration1 = declarations1.get(i);
 					VariableDeclaration declaration2 = declarations2.get(i);
 					if(declaration1.getVariableName().equals(declaration2.getVariableName())) {
-						if(declaration1.getType().equals(declaration2.getType()) && declaration1.getType().equalsQualified(declaration2.getType())) {
+						if(declaration1.equalType(declaration2) && declaration1.equalQualifiedType(declaration2)) {
 							removedVariables.remove(declaration1);
 							addedVariables.remove(declaration2);
 							matchedVariables.add(Pair.of(declaration1, declaration2));
@@ -608,7 +608,7 @@ public class VariableReplacementAnalysis {
 				VariableDeclaration declaration1 = declarations1.get(0);
 				VariableDeclaration declaration2 = declarations2.get(0);
 				if(declaration1.getVariableName().equals(declaration2.getVariableName())) {
-					if(declaration1.getType().equals(declaration2.getType()) && declaration1.getType().equalsQualified(declaration2.getType())) {
+					if(declaration1.equalType(declaration2) && declaration1.equalQualifiedType(declaration2)) {
 						removedVariables.remove(declaration1);
 						addedVariables.remove(declaration2);
 						matchedVariables.add(Pair.of(declaration1, declaration2));
@@ -629,7 +629,7 @@ public class VariableReplacementAnalysis {
 
 	private boolean containsVariableDeclarationWithSameNameAndType(VariableDeclaration declaration, List<VariableDeclaration> declarations) {
 		for(VariableDeclaration d : declarations) {
-			if(d.getVariableName().equals(declaration.getVariableName()) && d.getType().equals(declaration.getType()) && d.getType().equalsQualified(declaration.getType())) {
+			if(d.getVariableName().equals(declaration.getVariableName()) && d.equalType(declaration) && d.equalQualifiedType(declaration)) {
 				return true;
 			}
 		}
@@ -843,7 +843,7 @@ public class VariableReplacementAnalysis {
 				if(!existsConflictingExtractVariableRefactoring(refactoring) && !existsConflictingParameterRenameInOperationDiff(refactoring)) {
 					for(VariableDeclaration removedVariable : removedVariables) {
 						for(VariableDeclaration addedVariable : splitVariables) {
-							if(removedVariable.getVariableName().equals(addedVariable.getVariableName()) && removedVariable.getType().equals(addedVariable.getType())) {
+							if(removedVariable.getVariableName().equals(addedVariable.getVariableName()) && removedVariable.equalType(addedVariable)) {
 								Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(removedVariable, addedVariable, mappings);
 								matchedVariables.add(Pair.of(removedVariable, addedVariable));
 								getVariableRefactorings(removedVariable, addedVariable, oldVariable.getValue(), operationAfter, variableReferences, null);
@@ -853,7 +853,7 @@ public class VariableReplacementAnalysis {
 					}
 					for(VariableDeclaration addedVariable : addedVariables) {
 						VariableDeclaration removedVariable = oldVariable.getKey();
-						if(removedVariable.getVariableName().equals(addedVariable.getVariableName()) && removedVariable.getType().equals(addedVariable.getType())) {
+						if(removedVariable.getVariableName().equals(addedVariable.getVariableName()) && removedVariable.equalType(addedVariable)) {
 							Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(removedVariable, addedVariable, mappings);
 							matchedVariables.add(Pair.of(removedVariable, addedVariable));
 							getVariableRefactorings(removedVariable, addedVariable, oldVariable.getValue(), operationAfter, variableReferences, null);
@@ -1012,9 +1012,10 @@ public class VariableReplacementAnalysis {
 			if(!matchingParameterFound && statement.getVariableDeclarations().size() > 0) {	
 				VariableDeclaration variableDeclaration = statement.getVariableDeclarations().get(0);
 				for(VariableDeclaration parameterDeclaration : operation1.getParameterDeclarationList()) {
-					if(variableDeclaration.getType().equals(parameterDeclaration.getType())) {
+					if(variableDeclaration.equalType(parameterDeclaration)) {
 						AbstractExpression initializer = variableDeclaration.getInitializer();
-						if(initializer != null && initializer.getString().startsWith("(" + parameterDeclaration.getType() + ")")) {
+						UMLType parameterType = parameterDeclaration.getType();
+						if(initializer != null && parameterType != null && initializer.getString().startsWith("(" + parameterType + ")")) {
 							AbstractCall invocation = initializer.invocationCoveringEntireFragment();
 							if(invocation != null) {
 								VariableReplacementWithMethodInvocation variableReplacement = new VariableReplacementWithMethodInvocation(parameterDeclaration.getVariableName(), initializer.getString(), invocation, Direction.VARIABLE_TO_INVOCATION);
@@ -1073,7 +1074,7 @@ public class VariableReplacementAnalysis {
 				if(!existsConflictingInlineVariableRefactoring(refactoring) && !existsConflictingParameterRenameInOperationDiff(refactoring, variableInvocationExpressionMap)) {
 					for(VariableDeclaration removedVariable : removedVariables) {
 						VariableDeclaration addedVariable = newVariable.getKey();
-						if(removedVariable.getVariableName().equals(addedVariable.getVariableName()) && removedVariable.getType().equals(addedVariable.getType())) {
+						if(removedVariable.getVariableName().equals(addedVariable.getVariableName()) && removedVariable.equalType(addedVariable)) {
 							Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(removedVariable, addedVariable, mappings);
 							matchedVariables.add(Pair.of(removedVariable, addedVariable));
 							getVariableRefactorings(removedVariable, addedVariable, operationBefore, newVariable.getValue(), variableReferences, null);
@@ -1082,7 +1083,7 @@ public class VariableReplacementAnalysis {
 					}
 					for(VariableDeclaration addedVariable : addedVariables) {
 						for(VariableDeclaration removedVariable : mergedVariables) {
-							if(removedVariable.getVariableName().equals(addedVariable.getVariableName()) && removedVariable.getType().equals(addedVariable.getType())) {
+							if(removedVariable.getVariableName().equals(addedVariable.getVariableName()) && removedVariable.equalType(addedVariable)) {
 								Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(removedVariable, addedVariable, mappings);
 								matchedVariables.add(Pair.of(removedVariable, addedVariable));
 								getVariableRefactorings(removedVariable, addedVariable, operationBefore, newVariable.getValue(), variableReferences, null);
@@ -1265,7 +1266,7 @@ public class VariableReplacementAnalysis {
 			refactorings.add(refactoring);
 		}
 		if(variableDeclaration1.getType() != null && variableDeclaration2.getType() != null) {
-			if(!variableDeclaration1.getType().equals(variableDeclaration2.getType()) || !variableDeclaration1.getType().equalsQualified(variableDeclaration2.getType())) {
+			if(!variableDeclaration1.equalType(variableDeclaration2) || !variableDeclaration1.equalQualifiedType(variableDeclaration2)) {
 				ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
 				if(ref != null) {
 					refactoring.addRelatedRefactoring(ref);
@@ -1594,6 +1595,18 @@ public class VariableReplacementAnalysis {
 				allVariableDeclarations1.addAll(comp1.getAllVariableDeclarations());
 				allVariableDeclarations2.addAll(comp2.getAllVariableDeclarations());
 			}
+			else if(statement1 instanceof AbstractExpression && statement2 instanceof AbstractExpression &&
+					statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.LAMBDA_EXPRESSION_BODY) &&
+					statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.LAMBDA_EXPRESSION_BODY)) {
+				AbstractExpression expr1 = (AbstractExpression)statement1;
+				AbstractExpression expr2 = (AbstractExpression)statement2;
+				if(expr1.getLambdaOwner() != null) {
+					allVariableDeclarations1.addAll(expr1.getLambdaOwner().getParameters());
+				}
+				if(expr2.getLambdaOwner() != null) {
+					allVariableDeclarations2.addAll(expr2.getLambdaOwner().getParameters());
+				}
+			}
 			else {
 				boolean parentMappingFound = false;
 				for(AbstractCodeMapping mapping : mappings) {
@@ -1619,8 +1632,8 @@ public class VariableReplacementAnalysis {
 		}
 		return v1 != null && v2 != null &&
 				v1.equalVariableDeclarationType(v2) && !onlyOneFragmentIncludesDeclarationInReferences &&
-				!containsVariableDeclarationWithName(v1, allVariableDeclarations1, v2.getVariableName()) &&
-				(!containsVariableDeclarationWithName(v2, allVariableDeclarations2, v1.getVariableName()) || operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) != null) &&
+				!containsVariableDeclarationWithName(v1, allVariableDeclarations1, v2) &&
+				(!containsVariableDeclarationWithName(v2, allVariableDeclarations2, v1) || operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) != null) &&
 				consistencyCheck(v1, v2, set);
 	}
 
@@ -1758,9 +1771,9 @@ public class VariableReplacementAnalysis {
 				mapping.getFragment2().getVariables().contains(v1.getVariableName());
 	}
 
-	private static boolean containsVariableDeclarationWithName(VariableDeclaration variableDeclaration, Set<VariableDeclaration> variableDeclarations, String variableName) {
+	private static boolean containsVariableDeclarationWithName(VariableDeclaration variableDeclaration, Set<VariableDeclaration> variableDeclarations, VariableDeclaration other) {
 		for(VariableDeclaration declaration : variableDeclarations) {
-			if(declaration.getVariableName().equals(variableName) && !invokingExpressionOrWrappedAsArgument(declaration.getInitializer(), variableDeclaration)) {
+			if(declaration.getVariableName().equals(other.getVariableName()) && declaration.equalVariableDeclarationType(other) && !invokingExpressionOrWrappedAsArgument(declaration.getInitializer(), variableDeclaration)) {
 				return true;
 			}
 		}
@@ -1989,7 +2002,7 @@ public class VariableReplacementAnalysis {
 					}
 					for(AbstractCodeFragment nonMappedStatement : mapper.getNonMappedLeavesT2()) {
 						VariableDeclaration variableDeclaration2 = nonMappedStatement.getVariableDeclaration(v1.getVariableName());
-						if(variableDeclaration2 != null && variableDeclaration2.getType().equals(v1.getType())) {
+						if(variableDeclaration2 != null && variableDeclaration2.equalType(v1)) {
 							for(AbstractCodeMapping mapping : mapper.getMappings()) {
 								if(mapping.getFragment2().equals(nonMappedStatement.getParent())) {
 									if(mapping.getFragment1() instanceof CompositeStatementObject) {
@@ -2118,7 +2131,7 @@ public class VariableReplacementAnalysis {
 		if(renamedVariable.isParameter()) {
 			for(VariableDeclaration parameter : operation1.getParameterDeclarationList()) {
 				if(renamedVariable.getVariableName().equals(parameter.getVariableName()) &&
-						renamedVariable.getType().equals(parameter.getType())) {
+						renamedVariable.equalType(parameter)) {
 					return true;
 				}
 			}
@@ -2127,7 +2140,7 @@ public class VariableReplacementAnalysis {
 		if(originalVariable.isParameter()) {
 			for(VariableDeclaration parameter : operation2.getParameterDeclarationList()) {
 				if(originalVariable.getVariableName().equals(parameter.getVariableName()) &&
-						originalVariable.getType().equals(parameter.getType())) {
+						originalVariable.equalType(parameter)) {
 					return true;
 				}
 			}

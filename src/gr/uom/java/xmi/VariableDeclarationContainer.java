@@ -141,7 +141,8 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 				else {
 					//exclude exception variables declared in catch blocks
 					for(VariableDeclaration variable : variableDeclarationMap.get(key)) {
-						if(variable.getType() != null && variable.getType().getClassType().endsWith("Exception")) {
+						UMLType variableType = variable.getType();
+						if(variableType != null && variableType.getClassType().endsWith("Exception")) {
 							keysToBeRemoved.add(key);
 							break;
 						}

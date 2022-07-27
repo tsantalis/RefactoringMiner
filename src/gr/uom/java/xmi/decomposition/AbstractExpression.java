@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 
 import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.CodeRange;
 
@@ -15,6 +16,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 	private String expression;
 	private LocationInfo locationInfo;
 	private CompositeStatementObject owner;
+	private LambdaExpressionObject lambdaOwner;
 	private List<String> variables;
 	private List<String> types;
 	private List<VariableDeclaration> variableDeclarations;
@@ -35,9 +37,9 @@ public class AbstractExpression extends AbstractCodeFragment {
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions;
 	private List<LambdaExpressionObject> lambdas;
     
-    public AbstractExpression(CompilationUnit cu, String filePath, Expression expression, CodeElementType codeElementType) {
+    public AbstractExpression(CompilationUnit cu, String filePath, Expression expression, CodeElementType codeElementType, VariableDeclarationContainer container) {
     	this.locationInfo = new LocationInfo(cu, filePath, expression, codeElementType);
-    	Visitor visitor = new Visitor(cu, filePath);
+    	Visitor visitor = new Visitor(cu, filePath, container);
     	expression.accept(visitor);
 		this.variables = visitor.getVariables();
 		this.types = visitor.getTypes();
@@ -60,6 +62,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.lambdas = visitor.getLambdas();
     	this.expression = expression.toString();
     	this.owner = null;
+    	this.lambdaOwner = null;
     }
 
     public void setOwner(CompositeStatementObject owner) {
@@ -69,6 +72,14 @@ public class AbstractExpression extends AbstractCodeFragment {
     public CompositeStatementObject getOwner() {
     	return this.owner;
     }
+
+	public LambdaExpressionObject getLambdaOwner() {
+		return lambdaOwner;
+	}
+
+	public void setLambdaOwner(LambdaExpressionObject lambdaOwner) {
+		this.lambdaOwner = lambdaOwner;
+	}
 
 	@Override
 	public CompositeStatementObject getParent() {
@@ -193,6 +204,13 @@ public class AbstractExpression extends AbstractCodeFragment {
 		}
 		else if(owner != null) {
 			return owner.searchVariableDeclaration(variableName);
+		}
+		else if(lambdaOwner != null) {
+			for(VariableDeclaration declaration : lambdaOwner.getParameters()) {
+				if(declaration.getVariableName().equals(variableName)) {
+					return declaration;
+				}
+			}
 		}
 		return null;
 	}

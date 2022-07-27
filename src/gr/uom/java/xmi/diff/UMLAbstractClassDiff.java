@@ -430,8 +430,8 @@ public abstract class UMLAbstractClassDiff {
 								candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getReferences(), false);
 						if(!refactorings.contains(ref)) {
 							refactorings.add(ref);
-							if(!candidate.getOriginalVariableDeclaration().getType().equals(a2.getVariableDeclaration().getType()) ||
-									!candidate.getOriginalVariableDeclaration().getType().equalsQualified(a2.getVariableDeclaration().getType())) {
+							if(!candidate.getOriginalVariableDeclaration().equalType(a2.getVariableDeclaration()) ||
+									!candidate.getOriginalVariableDeclaration().equalQualifiedType(a2.getVariableDeclaration())) {
 								ChangeVariableTypeRefactoring refactoring = new ChangeVariableTypeRefactoring(candidate.getOriginalVariableDeclaration(), a2.getVariableDeclaration(),
 										candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getReferences(), false);
 								refactoring.addRelatedRefactoring(ref);
@@ -468,7 +468,9 @@ public abstract class UMLAbstractClassDiff {
 	}
 
 	protected void processMapperRefactorings(UMLOperationBodyMapper mapper, List<Refactoring> refactorings) {
-		Set<Refactoring> refactorings2 = mapper.getRefactorings();
+		Set<Refactoring> refactorings2 = new LinkedHashSet<>();
+		refactorings2.addAll(mapper.getRefactoringsAfterPostProcessing());
+		refactorings2.addAll(mapper.getRefactorings());
 		for(Refactoring refactoring : refactorings2) {
 			if(refactorings.contains(refactoring)) {
 				//special handling for replacing rename variable refactorings having statement mapping information

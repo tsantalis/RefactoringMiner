@@ -73,7 +73,7 @@ public class ChangeAttributeTypeRefactoring implements Refactoring, ReferenceBas
 		StringBuilder sb = new StringBuilder();
 		VariableDeclaration originalVariableDeclaration = originalAttribute.getVariableDeclaration();
 		VariableDeclaration changedTypeVariableDeclaration = changedTypeAttribute.getVariableDeclaration();
-		boolean qualified = originalVariableDeclaration.getType().equals(changedTypeVariableDeclaration.getType()) && !originalVariableDeclaration.getType().equalsQualified(changedTypeVariableDeclaration.getType());
+		boolean qualified = originalVariableDeclaration.equalType(changedTypeVariableDeclaration) && !originalVariableDeclaration.equalQualifiedType(changedTypeVariableDeclaration);
 		sb.append(getName()).append("\t");
 		sb.append(qualified ? originalVariableDeclaration.toQualifiedString() : originalVariableDeclaration.toString());
 		sb.append(" to ");

@@ -718,6 +718,26 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return null;
 	}
 
+	public Replacement makeReplacementForWrappedLambda(String statement) {
+		if(argumentIsLambdaStatement(statement) && (getArguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
+			return new Replacement(statement.substring(0, statement.length()-2), getArguments().get(0),
+					ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION);
+		}
+		return null;
+	}
+
+	private boolean argumentIsLambdaStatement(String statement) {
+		if(statement.endsWith(";\n")) {
+			for(String argument : getArguments()) {
+				//length()-2 to remove ";\n" from the end of the statement
+				if(equalsIgnoringLambdaArrow(argument, statement.substring(0, statement.length()-2))) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private int argumentIsAssigned(String statement) {
 		if(statement.contains("=") && statement.endsWith(";\n")) {
 			int index = 0;
@@ -749,6 +769,18 @@ public abstract class AbstractCall implements LocationInfoProvider {
 			return true;
 		String parenthesizedS2 = "("+s2+")";
 		if(parenthesizedS2.equals(s1))
+			return true;
+		return false;
+	}
+
+	private static boolean equalsIgnoringLambdaArrow(String s1, String s2) {
+		if(s1.equals(s2))
+			return true;
+		String arrowS1 = "() -> " + s1;
+		if(arrowS1.equals(s2))
+			return true;
+		String arrowS2 = "() -> " + s2;
+		if(arrowS2.equals(s1))
 			return true;
 		return false;
 	}

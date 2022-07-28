@@ -253,7 +253,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/JetBrains/intellij-community.git",
 				"https://github.com/junit-team/junit5.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 492, 4, 10);
+		processRepositoryCommits(Arrays.asList(gitURLs), 502, 4, 10);
 	}
 /*
 	@Test
@@ -261,7 +261,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 		GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
 		TestBuilder test = new TestBuilder(detector, REPOS, Refactorings.All.getValue());
 		RefactoringPopulator.feedRefactoringsInstances(Refactorings.All.getValue(), Systems.FSE.getValue(), test);
-		test.assertExpectations(getProject(), 11227, 26, 291, false);
+		test.assertExpectations(getProject(), 11237, 26, 291, false);
 	}
  */
 }

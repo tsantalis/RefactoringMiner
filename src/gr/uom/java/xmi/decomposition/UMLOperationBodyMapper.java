@@ -185,6 +185,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(body1 != null && body2 != null) {
 			List<AnonymousClassDeclarationObject> anonymous1 = body1.getAllAnonymousClassDeclarations();
 			List<AnonymousClassDeclarationObject> anonymous2 = body2.getAllAnonymousClassDeclarations();
+			List<LambdaExpressionObject> lambdas1 = body1.getAllLambdas();
+			List<LambdaExpressionObject> lambdas2 = body2.getAllLambdas();
 			CompositeStatementObject composite1 = body1.getCompositeStatement();
 			CompositeStatementObject composite2 = body2.getCompositeStatement();
 			List<AbstractCodeFragment> leaves1 = composite1.getLeaves();
@@ -209,6 +211,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						expandAnonymousAndLambdas(anonymousFragment, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1);
 					}
 				}
+				else if(lambdas1.size() == 1 && anonymous2.size() == 0 && lambdas2.size() == 0) {
+					AbstractCodeFragment lambdaFragment = null;
+					for(AbstractCodeFragment leaf1 : leaves1) {
+						if(leaf1.getLambdas().size() > 0) {
+							lambdaFragment = leaf1;
+							break;
+						}
+					}
+					if(lambdaFragment != null) {
+						expandAnonymousAndLambdas(lambdaFragment, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1);
+					}
+				}
 				else if(anonymous1.size() == 0 && anonymous2.size() == 1) {
 					AbstractCodeFragment anonymousFragment = null;
 					for(AbstractCodeFragment leaf2 : leaves2) {
@@ -219,6 +233,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					if(anonymousFragment != null) {
 						expandAnonymousAndLambdas(anonymousFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2);
+					}
+				}
+				else if(anonymous1.size() == 0 && lambdas1.size() == 0 && lambdas2.size() == 1) {
+					AbstractCodeFragment lambdaFragment = null;
+					for(AbstractCodeFragment leaf2 : leaves2) {
+						if(leaf2.getLambdas().size() > 0) {
+							lambdaFragment = leaf2;
+							break;
+						}
+					}
+					if(lambdaFragment != null) {
+						expandAnonymousAndLambdas(lambdaFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2);
 					}
 				}
 			}

@@ -45,6 +45,18 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 		}
 		
 		if(distance1 != distance2) {
+			if(this.isIdenticalWithExtractedVariable() && !o.isIdenticalWithExtractedVariable()) {
+				return -1;
+			}
+			else if(!this.isIdenticalWithExtractedVariable() && o.isIdenticalWithExtractedVariable()) {
+				return 1;
+			}
+			if(this.isIdenticalWithInlinedVariable() && !o.isIdenticalWithInlinedVariable()) {
+				return -1;
+			}
+			else if(!this.isIdenticalWithInlinedVariable() && o.isIdenticalWithInlinedVariable()) {
+				return 1;
+			}
 			return Double.compare(distance1, distance2);
 		}
 		else {

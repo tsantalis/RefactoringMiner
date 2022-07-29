@@ -90,6 +90,12 @@ public class LocationInfo {
 				getStartColumn(), getEndColumn(), getCodeElementType());
 	}
 
+	public boolean before(LocationInfo other) {
+		return this.filePath.equals(other.filePath) &&
+				this.startOffset <= other.startOffset &&
+				this.endOffset <= other.startOffset;
+	}
+
 	public boolean subsumes(LocationInfo other) {
 		return this.filePath.equals(other.filePath) &&
 				this.startOffset <= other.startOffset &&

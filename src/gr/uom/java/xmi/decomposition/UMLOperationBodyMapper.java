@@ -2348,11 +2348,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							continue;
 						}
 						if(!mappingSet.isEmpty()) {
-							LeafMapping minStatementMapping = mappingSet.first();
-							addMapping(minStatementMapping);
-							processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
-							leaves2.remove(minStatementMapping.getFragment2());
-							leafIterator1.remove();
+							AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
+							if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
+								LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
+								addToMappings(bestMapping, mappingSet);
+								leaves2.remove(bestMapping.getFragment2());
+								leafIterator1.remove();
+							}
+							else {
+								LeafMapping minStatementMapping = mappingSet.first();
+								addMapping(minStatementMapping);
+								processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
+								leaves2.remove(minStatementMapping.getFragment2());
+								leafIterator1.remove();
+							}
 						}
 					}
 				}
@@ -2390,11 +2399,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							leafIterator1.remove();
 						}
 						else {
-							LeafMapping minStatementMapping = mappingSet.first();
-							addMapping(minStatementMapping);
-							processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
-							leaves2.remove(minStatementMapping.getFragment2());
-							leafIterator1.remove();
+							AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
+							if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
+								LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
+								addToMappings(bestMapping, mappingSet);
+								leaves2.remove(bestMapping.getFragment2());
+								leafIterator1.remove();
+							}
+							else {
+								LeafMapping minStatementMapping = mappingSet.first();
+								addMapping(minStatementMapping);
+								processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
+								leaves2.remove(minStatementMapping.getFragment2());
+								leafIterator1.remove();
+							}
 						}
 					}
 				}
@@ -2495,11 +2513,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							continue;
 						}
 						if(!mappingSet.isEmpty()) {
-							LeafMapping minStatementMapping = mappingSet.first();
-							addMapping(minStatementMapping);
-							processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
-							leaves1.remove(minStatementMapping.getFragment1());
-							leafIterator2.remove();
+							AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
+							if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
+								LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
+								addToMappings(bestMapping, mappingSet);
+								leaves1.remove(bestMapping.getFragment1());
+								leafIterator2.remove();
+							}
+							else {
+								LeafMapping minStatementMapping = mappingSet.first();
+								addMapping(minStatementMapping);
+								processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
+								leaves1.remove(minStatementMapping.getFragment1());
+								leafIterator2.remove();
+							}
 						}
 					}
 				}
@@ -2537,11 +2564,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							leafIterator2.remove();
 						}
 						else {
-							LeafMapping minStatementMapping = mappingSet.first();
-							addMapping(minStatementMapping);
-							processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
-							leaves1.remove(minStatementMapping.getFragment1());
-							leafIterator2.remove();
+							AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
+							if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
+								LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
+								addToMappings(bestMapping, mappingSet);
+								leaves1.remove(bestMapping.getFragment1());
+								leafIterator2.remove();
+							}
+							else {
+								LeafMapping minStatementMapping = mappingSet.first();
+								addMapping(minStatementMapping);
+								processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
+								leaves1.remove(minStatementMapping.getFragment1());
+								leafIterator2.remove();
+							}
 						}
 					}
 				}
@@ -2926,6 +2962,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 					}
+				}
+			}
+		}
+		if(currentSwitchCase != null) {
+			for(LeafMapping leafMapping : mappingSet) {
+				if(leafMapping.getFragment1().getIndex() > currentSwitchCase.getFragment1().getIndex() &&
+						leafMapping.getFragment2().getIndex() > currentSwitchCase.getFragment2().getIndex()) {
+					return leafMapping;
 				}
 			}
 		}

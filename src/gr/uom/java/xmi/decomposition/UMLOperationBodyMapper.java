@@ -185,6 +185,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(body1 != null && body2 != null) {
 			List<AnonymousClassDeclarationObject> anonymous1 = body1.getAllAnonymousClassDeclarations();
 			List<AnonymousClassDeclarationObject> anonymous2 = body2.getAllAnonymousClassDeclarations();
+			List<LambdaExpressionObject> lambdas1 = body1.getAllLambdas();
+			List<LambdaExpressionObject> lambdas2 = body2.getAllLambdas();
 			CompositeStatementObject composite1 = body1.getCompositeStatement();
 			CompositeStatementObject composite2 = body2.getCompositeStatement();
 			List<AbstractCodeFragment> leaves1 = composite1.getLeaves();
@@ -209,6 +211,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						expandAnonymousAndLambdas(anonymousFragment, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1);
 					}
 				}
+				else if(lambdas1.size() == 1 && anonymous2.size() == 0 && lambdas2.size() == 0) {
+					AbstractCodeFragment lambdaFragment = null;
+					for(AbstractCodeFragment leaf1 : leaves1) {
+						if(leaf1.getLambdas().size() > 0) {
+							lambdaFragment = leaf1;
+							break;
+						}
+					}
+					if(lambdaFragment != null) {
+						expandAnonymousAndLambdas(lambdaFragment, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1);
+					}
+				}
 				else if(anonymous1.size() == 0 && anonymous2.size() == 1) {
 					AbstractCodeFragment anonymousFragment = null;
 					for(AbstractCodeFragment leaf2 : leaves2) {
@@ -219,6 +233,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					if(anonymousFragment != null) {
 						expandAnonymousAndLambdas(anonymousFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2);
+					}
+				}
+				else if(anonymous1.size() == 0 && lambdas1.size() == 0 && lambdas2.size() == 1) {
+					AbstractCodeFragment lambdaFragment = null;
+					for(AbstractCodeFragment leaf2 : leaves2) {
+						if(leaf2.getLambdas().size() > 0) {
+							lambdaFragment = leaf2;
+							break;
+						}
+					}
+					if(lambdaFragment != null) {
+						expandAnonymousAndLambdas(lambdaFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2);
 					}
 				}
 			}
@@ -2322,11 +2348,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							continue;
 						}
 						if(!mappingSet.isEmpty()) {
-							LeafMapping minStatementMapping = mappingSet.first();
-							addMapping(minStatementMapping);
-							processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
-							leaves2.remove(minStatementMapping.getFragment2());
-							leafIterator1.remove();
+							AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
+							if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
+								LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
+								addToMappings(bestMapping, mappingSet);
+								leaves2.remove(bestMapping.getFragment2());
+								leafIterator1.remove();
+							}
+							else {
+								LeafMapping minStatementMapping = mappingSet.first();
+								addMapping(minStatementMapping);
+								processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
+								leaves2.remove(minStatementMapping.getFragment2());
+								leafIterator1.remove();
+							}
 						}
 					}
 				}
@@ -2364,11 +2399,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							leafIterator1.remove();
 						}
 						else {
-							LeafMapping minStatementMapping = mappingSet.first();
-							addMapping(minStatementMapping);
-							processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
-							leaves2.remove(minStatementMapping.getFragment2());
-							leafIterator1.remove();
+							AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
+							if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
+								LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
+								addToMappings(bestMapping, mappingSet);
+								leaves2.remove(bestMapping.getFragment2());
+								leafIterator1.remove();
+							}
+							else {
+								LeafMapping minStatementMapping = mappingSet.first();
+								addMapping(minStatementMapping);
+								processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
+								leaves2.remove(minStatementMapping.getFragment2());
+								leafIterator1.remove();
+							}
 						}
 					}
 				}
@@ -2469,11 +2513,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							continue;
 						}
 						if(!mappingSet.isEmpty()) {
-							LeafMapping minStatementMapping = mappingSet.first();
-							addMapping(minStatementMapping);
-							processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
-							leaves1.remove(minStatementMapping.getFragment1());
-							leafIterator2.remove();
+							AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
+							if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
+								LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
+								addToMappings(bestMapping, mappingSet);
+								leaves1.remove(bestMapping.getFragment1());
+								leafIterator2.remove();
+							}
+							else {
+								LeafMapping minStatementMapping = mappingSet.first();
+								addMapping(minStatementMapping);
+								processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
+								leaves1.remove(minStatementMapping.getFragment1());
+								leafIterator2.remove();
+							}
 						}
 					}
 				}
@@ -2511,11 +2564,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							leafIterator2.remove();
 						}
 						else {
-							LeafMapping minStatementMapping = mappingSet.first();
-							addMapping(minStatementMapping);
-							processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
-							leaves1.remove(minStatementMapping.getFragment1());
-							leafIterator2.remove();
+							AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
+							if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
+								LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
+								addToMappings(bestMapping, mappingSet);
+								leaves1.remove(bestMapping.getFragment1());
+								leafIterator2.remove();
+							}
+							else {
+								LeafMapping minStatementMapping = mappingSet.first();
+								addMapping(minStatementMapping);
+								processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
+								leaves1.remove(minStatementMapping.getFragment1());
+								leafIterator2.remove();
+							}
 						}
 					}
 				}
@@ -2900,6 +2962,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 					}
+				}
+			}
+		}
+		if(currentSwitchCase != null) {
+			for(LeafMapping leafMapping : mappingSet) {
+				if(leafMapping.getFragment1().getIndex() > currentSwitchCase.getFragment1().getIndex() &&
+						leafMapping.getFragment2().getIndex() > currentSwitchCase.getFragment2().getIndex()) {
+					return leafMapping;
 				}
 			}
 		}

@@ -46,7 +46,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/katzer/cordova-plugin-local-notifications.git", 63, 0, 2);
         processRepositoryCommits("https://github.com/FasterXML/jackson-databind.git", 26, 0, 0);
         processRepositoryCommits("https://github.com/aws/aws-sdk-java.git", 591, 0, 2);
-        processRepositoryCommits("https://github.com/linkedin/rest.li.git", 175, 0, 5);
+        processRepositoryCommits("https://github.com/linkedin/rest.li.git", 185, 0, 5);
         processRepositoryCommits("https://github.com/open-keychain/open-keychain.git", 22, 0, 0);
         processRepositoryCommits("https://github.com/baasbox/baasbox.git", 1, 0, 0);
         processRepositoryCommits("https://github.com/phishman3579/java-algorithms-implementation.git", 391, 0, 0);
@@ -55,7 +55,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/netty/netty.git", 148, 1, 8);
         processRepositoryCommits("https://github.com/HdrHistogram/HdrHistogram.git", 2, 0, 0);
         processRepositoryCommits("https://github.com/grails/grails-core.git", 3, 0, 0);
-        processRepositoryCommits("https://github.com/cwensel/cascading.git", 12, 0, 5);
+        processRepositoryCommits("https://github.com/cwensel/cascading.git", 13, 0, 5);
         processRepositoryCommits("https://github.com/JetBrains/intellij-plugins.git", 4, 0, 0);
         processRepositoryCommits("https://github.com/dropwizard/metrics.git", 17, 0, 0);
         processRepositoryCommits("https://github.com/google/guava.git", 9, 0, 0);
@@ -68,7 +68,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/wicketstuff/core.git", 1, 0, 0);
         processRepositoryCommits("https://github.com/spring-projects/spring-integration.git", 27, 0, 0);
         processRepositoryCommits("https://github.com/orfjackal/retrolambda.git", 3, 0, 0);
-        processRepositoryCommits("https://github.com/tomahawk-player/tomahawk-android.git", 48, 0, 0);
+        processRepositoryCommits("https://github.com/tomahawk-player/tomahawk-android.git", 49, 0, 0);
         processRepositoryCommits("https://github.com/raphw/byte-buddy.git", 64, 0, 1);
         processRepositoryCommits("https://github.com/liferay/liferay-plugins.git", 12, 0, 0);
         processRepositoryCommits("https://github.com/jenkinsci/workflow-plugin.git", 6, 0, 0);
@@ -130,7 +130,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/glyptodon/guacamole-client.git", 14, 0, 0);
         processRepositoryCommits("https://github.com/github/android.git", 305, 0, 0);
         processRepositoryCommits("https://github.com/square/javapoet.git", 26, 0, 1);
-        processRepositoryCommits("https://github.com/elastic/elasticsearch.git", 55, 0, 1);
+        processRepositoryCommits("https://github.com/elastic/elasticsearch.git", 56, 0, 1);
         processRepositoryCommits("https://github.com/hierynomus/sshj.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/rackerlabs/blueflood.git", 4, 0, 1);
         processRepositoryCommits("https://github.com/jersey/jersey.git", 181, 0, 1);

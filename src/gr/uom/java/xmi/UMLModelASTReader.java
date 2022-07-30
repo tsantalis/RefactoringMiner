@@ -70,7 +70,7 @@ public class UMLModelASTReader {
 	}
 
 	private void processJavaFileContents(Map<String, String> javaFileContents) {
-		ASTParser parser = ASTParser.newParser(AST.JLS16);
+		ASTParser parser = ASTParser.newParser(AST.JLS17);
 		for(String filePath : javaFileContents.keySet()) {
 			Map<String, String> options = JavaCore.getOptions();
 			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_8);

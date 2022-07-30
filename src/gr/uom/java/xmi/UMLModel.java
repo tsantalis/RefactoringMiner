@@ -148,8 +148,7 @@ public class UMLModel {
     		if(umlModel.classList.contains(umlClass)) {
     			UMLClassDiff classDiff = new UMLClassDiff(umlClass, umlModel.getClass(umlClass), modelDiff);
     			classDiff.process();
-    			if(!classDiff.isEmpty())
-    				modelDiff.addUMLClassDiff(classDiff);
+    			modelDiff.addUMLClassDiff(classDiff);
     		}
     	}
     	modelDiff.checkForMovedClasses(umlModel.repositoryDirectories, new UMLClassMatcher.RelaxedMove());

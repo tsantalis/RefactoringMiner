@@ -1344,6 +1344,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				processStreamAPIStatements(leaves1, leaves2, streamAPIStatements1, innerNodes2);
 			}
 			
+			//find exact mappings, whose parents are not mapped, because they were mapped in the parent mapper
+			List<CompositeStatementObject> composites1 = new ArrayList<>();
+			List<CompositeStatementObject> composites2 = new ArrayList<>();
+			for(AbstractCodeMapping mapping : this.mappings) {
+				AbstractCodeFragment fragment1 = mapping.getFragment1();
+				AbstractCodeFragment fragment2 = mapping.getFragment2();
+				if(mapping instanceof LeafMapping && fragment1.getString().equals(fragment2.getString())) {
+					CompositeStatementObject parent1 = fragment1.getParent();
+					CompositeStatementObject parent2 = fragment2.getParent();
+					while(parent1 != null && parent2 != null && !composites1.contains(parent1) && !composites2.contains(parent2) &&
+							!alreadyMatched2(parent2) && operationBodyMapper.alreadyMatched1(parent1) && !parent2.equals(composite2) && parent1.getString().equals(parent2.getString())) {
+						composites2.add(parent2);
+						composites1.add(parent1);
+						parent2 = parent2.getParent();
+						parent1 = parent1.getParent();
+					}
+				}
+			}
+			numberOfMappings = this.mappings.size();
+			processInnerNodes(composites1, composites2, leaves1, leaves2, parameterToArgumentMap2, false);
+			mappings = new ArrayList<>(this.mappings);
+			for(int i = numberOfMappings; i < mappings.size(); i++) {
+				innerNodes2.remove(mappings.get(i).getFragment2());
+			}
 			//remove the leaves that were mapped with replacement, if they are not mapped again for a second time
 			leaves1.removeAll(addedLeaves1);
 			leaves2.removeAll(addedLeaves2);

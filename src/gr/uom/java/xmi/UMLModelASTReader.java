@@ -350,9 +350,11 @@ public class UMLModelASTReader {
 				PsiAnonymousClass anonymous = (PsiAnonymousClass)node.getUserObject();
     			boolean operationFound = false;
 				boolean attributeFound = false;
+				boolean initializerFound = false;
     			UMLOperation matchingOperation = null;
     			UMLAttribute matchingAttribute = null;
 				UMLInitializer matchingInitializer = null;
+				UMLEnumConstant matchingEnumConstant = null;
     			List<UMLComment> comments = null;
 				for(UMLOperation operation : umlClass.getOperations()) {
     				if(operation.getLocationInfo().getStartOffset() <= anonymous.getTextRange().getStartOffset() &&
@@ -374,17 +376,28 @@ public class UMLModelASTReader {
 	    				}
 	    			}
     			}
-				if(!attributeFound) {
+				if(!operationFound && !attributeFound) {
 					for(UMLInitializer initializer : umlClass.getInitializers()) {
 						if(initializer.getLocationInfo().getStartOffset() <= anonymous.getTextRange().getStartOffset() &&
 								initializer.getLocationInfo().getEndOffset() >= anonymous.getTextRange().getEndOffset()) {
 							comments = initializer.getComments();
+							initializerFound = true;
 							matchingInitializer = initializer;
 							break;
 						}
 					}
 				}
-    			if(matchingOperation != null || matchingAttribute != null || matchingInitializer != null) {
+				if(!operationFound && !attributeFound && !initializerFound) {
+					for(UMLEnumConstant enumConstant : umlClass.getEnumConstants()) {
+						if(enumConstant.getLocationInfo().getStartOffset() <= anonymous.getTextRange().getStartOffset() &&
+								enumConstant.getLocationInfo().getEndOffset() >= anonymous.getTextRange().getEndOffset()) {
+							comments = enumConstant.getComments();
+							matchingEnumConstant = enumConstant;
+							break;
+						}
+					}
+				}
+				if(matchingOperation != null || matchingAttribute != null || matchingInitializer != null || matchingEnumConstant != null) {
 	    			String anonymousBinaryName = getAnonymousBinaryName(node);
 	    			String anonymousCodePath = getAnonymousCodePath(anonymous);
 	    			UMLAnonymousClass anonymousClass = processAnonymousClassDeclaration(cu, anonymous, packageName + "." + className, anonymousBinaryName, anonymousCodePath, sourceFile, comments, umlClass.getImportedTypes());
@@ -398,7 +411,10 @@ public class UMLModelASTReader {
 					if(matchingInitializer != null) {
 						matchingInitializer.addAnonymousClass(anonymousClass);
 					}
-	    			for(UMLOperation operation : anonymousClass.getOperations()) {
+					if(matchingEnumConstant != null) {
+						matchingEnumConstant.addAnonymousClass(anonymousClass);
+					}
+					for(UMLOperation operation : anonymousClass.getOperations()) {
 	    				for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
 	    					if(operation.getLocationInfo().subsumes(createdAnonymousClass.getLocationInfo())) {
 	    						operation.addAnonymousClass(createdAnonymousClass);
@@ -419,7 +435,14 @@ public class UMLModelASTReader {
 							}
 						}
 					}
-	    			createdAnonymousClasses.add(anonymousClass);
+					for(UMLEnumConstant enumConstant : anonymousClass.getEnumConstants()) {
+						for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
+							if(enumConstant.getLocationInfo().subsumes(createdAnonymousClass.getLocationInfo())) {
+								enumConstant.addAnonymousClass(createdAnonymousClass);
+							}
+						}
+					}
+					createdAnonymousClasses.add(anonymousClass);
 					int i=0;
 					int j=0;
 					for (PsiMethod methodDeclaration : anonymous.getMethods()) {

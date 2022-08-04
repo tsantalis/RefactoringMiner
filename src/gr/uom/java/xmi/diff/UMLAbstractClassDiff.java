@@ -102,6 +102,10 @@ public abstract class UMLAbstractClassDiff {
 		return attributeDiffList;
 	}
 
+	public List<UMLEnumConstantDiff> getEnumConstantDiffList() {
+		return enumConstantDiffList;
+	}
+
 	public void reportAddedAnonymousClass(UMLAnonymousClass umlClass) {
 		this.addedAnonymousClasses.add(umlClass);
 	}

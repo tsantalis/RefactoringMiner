@@ -178,7 +178,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/addthis/hydra.git",
 				"https://github.com/apache/pig.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 3025, 6, 54);
+		processRepositoryCommits(Arrays.asList(gitURLs), 3026, 6, 54);
 	}
 
 	@Test
@@ -261,7 +261,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 		GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
 		TestBuilder test = new TestBuilder(detector, REPOS, Refactorings.All.getValue());
 		RefactoringPopulator.feedRefactoringsInstances(Refactorings.All.getValue(), Systems.FSE.getValue(), test);
-		test.assertExpectations(getProject(), 11250, 26, 291, false);
+		test.assertExpectations(getProject(), 11251, 26, 291, false);
 	}
  */
 }

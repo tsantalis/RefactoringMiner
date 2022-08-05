@@ -7212,7 +7212,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				mappedChildrenSize++;
 			}
 		}
-		if(parentMapper != null) {
+		if(parentMapper != null && comp1.getLocationInfo().getCodeElementType().equals(comp2.getLocationInfo().getCodeElementType()) &&
+				comp1.getParent() != null && comp2.getParent() != null && comp1.getParent().getLocationInfo().getCodeElementType().equals(comp2.getParent().getLocationInfo().getCodeElementType())) {
 			for(AbstractCodeMapping mapping : parentMapper.mappings) {
 				if(compStatements1.contains(mapping.getFragment1()) && !compStatements2.contains(mapping.getFragment2()) &&
 						mapping.getFragment2().getParent() != null &&

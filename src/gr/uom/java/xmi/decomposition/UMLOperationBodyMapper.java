@@ -3234,6 +3234,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(VariableDeclaration declaration : variableDeclarations1) {
 				if(declaration.getVariableName().equals(variable)) {
 					foundInDeclaration1 = true;
+					AbstractExpression initializer = declaration.getInitializer();
+					if(initializer != null && initializer.getString().endsWith("." + declaration.getVariableName())) {
+						variablesToBeRemovedFromTheIntersection.add(variable);
+					}
 					break;
 				}
 			}
@@ -3241,6 +3245,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(VariableDeclaration declaration : variableDeclarations2) {
 				if(declaration.getVariableName().equals(variable)) {
 					foundInDeclaration2 = true;
+					AbstractExpression initializer = declaration.getInitializer();
+					if(initializer != null && initializer.getString().endsWith("." + declaration.getVariableName())) {
+						variablesToBeRemovedFromTheIntersection.add(variable);
+					}
 					break;
 				}
 			}

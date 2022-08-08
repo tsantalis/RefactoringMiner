@@ -3673,6 +3673,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				(statement1.getString().endsWith("false;\n") && statement2.getString().endsWith("Boolean.FALSE;\n"))) {
 			findReplacements(booleanLiterals1, variables2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_VARIABLE);
 		}
+		if((statement1.getString().endsWith("true;\n") && statement2.getString().endsWith("false;\n")) ||
+				(statement1.getString().endsWith("false;\n") && statement2.getString().endsWith("true;\n"))) {
+			findReplacements(booleanLiterals1, booleanLiterals2, replacementInfo, ReplacementType.BOOLEAN_LITERAL);
+		}
 		if(!argumentsWithIdenticalMethodCalls(arguments1, arguments2, methodInvocations1, methodInvocations2) && !replacementInfo.getReplacements().isEmpty()) {
 			findReplacements(arguments1, methodInvocations2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_METHOD_INVOCATION);
 		}

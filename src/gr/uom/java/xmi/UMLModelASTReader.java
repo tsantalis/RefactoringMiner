@@ -569,6 +569,9 @@ public class UMLModelASTReader {
 			if (modifiers.hasExplicitModifier(PsiModifier.SYNCHRONIZED))
 				umlOperation.setSynchronized(true);
 
+			if (modifiers.hasExplicitModifier(PsiModifier.NATIVE))
+				umlOperation.setNative(true);
+
 			for (PsiAnnotation annotation : modifiers.getAnnotations()) {
 				umlOperation.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation));
 			}

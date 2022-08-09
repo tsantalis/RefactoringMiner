@@ -1380,18 +1380,20 @@ public class UMLModelDiff {
 	}
 
 	private ExtractClassRefactoring atLeastOneCommonAttributeOrOperation(UMLClass umlClass, UMLClassBaseDiff classDiff, UMLAttribute attributeOfExtractedClassType) {
-		Set<UMLOperation> commonOperations = new LinkedHashSet<UMLOperation>();
+		Map<UMLOperation, UMLOperation> commonOperations = new LinkedHashMap<>();
 		for(UMLOperation operation : classDiff.getRemovedOperations()) {
 			if(!operation.isConstructor() && !operation.overridesObject()) {
-				if(umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
-					commonOperations.add(operation);
+				UMLOperation matchedOperation = umlClass.operationWithTheSameSignatureIgnoringChangedTypes(operation);
+				if(matchedOperation != null) {
+					commonOperations.put(operation, matchedOperation);
 				}
 			}
 		}
-		Set<UMLAttribute> commonAttributes = new LinkedHashSet<UMLAttribute>();
+		Map<UMLAttribute, UMLAttribute> commonAttributes = new LinkedHashMap<>();
 		for(UMLAttribute attribute : classDiff.getRemovedAttributes()) {
-			if(umlClass.containsAttributeWithTheSameNameIgnoringChangedType(attribute)) {
-				commonAttributes.add(attribute);
+			UMLAttribute matchedAttribute = umlClass.attributeWithTheSameNameIgnoringChangedType(attribute);
+			if(matchedAttribute != null) {
+				commonAttributes.put(attribute, matchedAttribute);
 			}
 		}
 		int threshold = 1;

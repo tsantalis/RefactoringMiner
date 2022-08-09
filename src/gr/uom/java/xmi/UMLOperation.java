@@ -30,6 +30,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private boolean isConstructor;
 	private boolean isFinal;
 	private boolean isStatic;
+	private boolean isNative;
 	private boolean isSynchronized;
 	private boolean emptyBody;
 	private boolean declaredInAnonymousClass;
@@ -135,6 +136,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public void setSynchronized(boolean isSynchronized) {
 		this.isSynchronized = isSynchronized;
+	}
+
+	public boolean isNative() {
+		return isNative;
+	}
+
+	public void setNative(boolean isNative) {
+		this.isNative = isNative;
 	}
 
 	public boolean hasEmptyBody() {

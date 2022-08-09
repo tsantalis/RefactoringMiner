@@ -1696,8 +1696,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		if(!isEmpty())
-			sb.append(originalClass.getName()).append(":").append("\n");
+		sb.append(originalClass.getName()).append(":").append("\n");
 		if(visibilityChanged) {
 			sb.append("\t").append("visibility changed from " + oldVisibility + " to " + newVisibility).append("\n");
 		}

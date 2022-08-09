@@ -633,6 +633,9 @@ public class UMLModelASTReader {
 		if((methodModifiers & Modifier.SYNCHRONIZED) != 0)
 			umlOperation.setSynchronized(true);
 		
+		if((methodModifiers & Modifier.NATIVE) != 0)
+			umlOperation.setNative(true);
+		
 		List<IExtendedModifier> extendedModifiers = methodDeclaration.modifiers();
 		for(IExtendedModifier extendedModifier : extendedModifiers) {
 			if(extendedModifier.isAnnotation()) {

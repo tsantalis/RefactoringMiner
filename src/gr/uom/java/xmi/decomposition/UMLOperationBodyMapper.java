@@ -2449,7 +2449,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(!mappingSet.isEmpty()) {
-						if(mappingSet.size() > 1 && parentMapper != null && mappings.size() > 0) {
+						boolean identicalDepthAndIndex = mappingSet.first().getFragment1().getDepth() == mappingSet.first().getFragment2().getDepth() &&
+								mappingSet.first().getFragment1().getIndex() == mappingSet.first().getFragment2().getIndex();
+						if(mappingSet.size() > 1 && (parentMapper != null || !identicalDepthAndIndex) && mappings.size() > 1) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
 							for(LeafMapping mapping : mappingSet) {
 								int lineDistance = lineDistanceFromExistingMappings2(mapping);
@@ -2614,7 +2616,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(!mappingSet.isEmpty()) {
-						if(mappingSet.size() > 1 && parentMapper != null && mappings.size() > 0) {
+						boolean identicalDepthAndIndex = mappingSet.first().getFragment1().getDepth() == mappingSet.first().getFragment2().getDepth() &&
+								mappingSet.first().getFragment1().getIndex() == mappingSet.first().getFragment2().getIndex();
+						if(mappingSet.size() > 1 && (parentMapper != null || !identicalDepthAndIndex) && mappings.size() > 1) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
 							for(LeafMapping mapping : mappingSet) {
 								int lineDistance = lineDistanceFromExistingMappings1(mapping);
@@ -2755,7 +2759,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private int lineDistanceFromExistingMappings1(AbstractCodeMapping mapping) {
 		int lineDistance = 0;
 		int fragmentLine = mapping.getFragment1().getLocationInfo().getStartLine();
+		Set<AbstractCodeMapping> commonParentMappings = new LinkedHashSet<>();
 		for(AbstractCodeMapping previousMapping : this.mappings) {
+			if(previousMapping.getFragment1().getParent().equals(mapping.getFragment1().getParent()) &&
+					previousMapping.getFragment2().getParent().equals(mapping.getFragment2().getParent())) {
+				commonParentMappings.add(previousMapping);
+			}
+		}
+		Set<AbstractCodeMapping> mappingsToCompareWith = commonParentMappings.size() > 0 ? commonParentMappings : this.mappings;
+		for(AbstractCodeMapping previousMapping : mappingsToCompareWith) {
 			lineDistance += Math.abs(fragmentLine - previousMapping.getFragment1().getLocationInfo().getStartLine());
 		}
 		return lineDistance;
@@ -2764,7 +2776,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private int lineDistanceFromExistingMappings2(AbstractCodeMapping mapping) {
 		int lineDistance = 0;
 		int fragmentLine = mapping.getFragment2().getLocationInfo().getStartLine();
+		Set<AbstractCodeMapping> commonParentMappings = new LinkedHashSet<>();
 		for(AbstractCodeMapping previousMapping : this.mappings) {
+			if(previousMapping.getFragment1().getParent().equals(mapping.getFragment1().getParent()) &&
+					previousMapping.getFragment2().getParent().equals(mapping.getFragment2().getParent())) {
+				commonParentMappings.add(previousMapping);
+			}
+		}
+		Set<AbstractCodeMapping> mappingsToCompareWith = commonParentMappings.size() > 0 ? commonParentMappings : this.mappings;
+		for(AbstractCodeMapping previousMapping : mappingsToCompareWith) {
 			lineDistance += Math.abs(fragmentLine - previousMapping.getFragment2().getLocationInfo().getStartLine());
 		}
 		return lineDistance;

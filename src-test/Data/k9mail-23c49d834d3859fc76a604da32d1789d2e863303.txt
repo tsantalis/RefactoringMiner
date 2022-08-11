@@ -1,0 +1,47 @@
+private notifyAccountWithDataLocked(context Context, account Account, message LocalMessage, data NotificationData) : void -> private addWearActions(builder NotificationCompat.Builder, totalMsgCount int, msgCount int, account Account, allRefs ArrayList<MessageReference>, messages List<? extends Message>, notificationID int) : void
+line range:4821-4821==line range:4805-4805
+line range:4833-4833==line range:4817-4817
+line range:4844-4844==line range:4828-4828
+line range:4800-4800==line range:4785-4785
+line range:4815-4820==line range:4799-4804
+line range:4838-4843==line range:4822-4827
+line range:4827-4832==line range:4811-4816
+line range:4814-4822==line range:4798-4806
+line range:4824-4834==line range:4808-4818
+line range:4835-4845==line range:4819-4829
+line range:4814-4822==line range:4798-4806
+line range:4824-4834==line range:4808-4818
+line range:4835-4845==line range:4819-4829
+private notifyAccountWithDataLocked(context Context, account Account, message LocalMessage, data NotificationData) : void -> private buildNotificationNavigationStack(context Context, account Account, message LocalMessage, newMessages int, unreadCount int, allRefs ArrayList<MessageReference>) : TaskStackBuilder
+line range:4860-4860==line range:5061-5061
+line range:4861-4861==line range:5062-5062
+line range:4865-4865==line range:5066-5066
+line range:4869-4869==line range:5070-5070
+line range:4873-4873==line range:5074-5074
+line range:4875-4875==line range:5076-5076
+line range:4877-4877==line range:5078-5078
+line range:4881-4881==line range:5082-5082
+line range:4882-4882==line range:5083-5083
+line range:4886-4886==line range:5087-5087
+line range:4863-4870==line range:5064-5071
+line range:4880-4883==line range:5081-5084
+line range:4879-4884==line range:5080-5085
+line range:4874-4887==line range:5075-5088
+line range:4872-4887==line range:5073-5088
+line range:4880-4883==line range:5081-5084
+line range:4879-4884==line range:5080-5085
+line range:4863-4866==line range:5064-5067
+line range:4866-4870==line range:5067-5071
+line range:4872-4874==line range:5073-5075
+line range:4876-4887==line range:5077-5088
+line range:4874-4876==line range:5075-5077
+private notifyAccountWithDataLocked(context Context, account Account, message LocalMessage, data NotificationData) : void -> private setNotificationContent(context Context, message Message, sender CharSequence, subject CharSequence, builder NotificationCompat.Builder, accountDescr String) : NotificationCompat.Builder
+line range:4770-4770==line range:5103-5103
+line range:4771-4771==line range:5104-5104
+line range:4773-4773==line range:5106-5106
+line range:4775-4775==line range:5108-5108
+line range:4776-4776==line range:5109-5109
+line range:4777-4777==line range:5110-5110
+line range:4778-4778==line range:5111-5111
+line range:4772-4774==line range:5105-5107
+line range:4772-4774==line range:5105-5107

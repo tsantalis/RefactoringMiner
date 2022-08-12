@@ -195,7 +195,6 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/processing/processing.git",
 				"https://github.com/spring-projects/spring-roo.git",
 				"https://github.com/cgeo/cgeo.git",
-				"https://github.com/plutext/docx4j.git",
 				"https://github.com/checkstyle/checkstyle.git",
 				"https://github.com/k9mail/k-9.git",
 				"https://github.com/RoboBinding/RoboBinding.git",
@@ -243,7 +242,7 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/novoda/android-demos.git",
 				"https://github.com/wordpress-mobile/WordPress-Android.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 1837, 0, 47);
+		processRepositoryCommits(Arrays.asList(gitURLs), 1611, 0, 47);
 	}
 
 	@Test
@@ -252,8 +251,9 @@ public class TestAllRefactorings extends LightJavaCodeInsightFixtureTestCase {
 				"https://github.com/apache/cassandra.git",
 				"https://github.com/JetBrains/intellij-community.git",
 				"https://github.com/junit-team/junit5.git",
+				"https://github.com/plutext/docx4j.git",
 		};
-		processRepositoryCommits(Arrays.asList(gitURLs), 502, 4, 10);
+		processRepositoryCommits(Arrays.asList(gitURLs), 728, 4, 10);
 	}
 /*
 	@Test

@@ -499,10 +499,14 @@ public class OperationInvocation extends AbstractCall {
 		String thisExpression = this.expression;
 		if(thisExpression != null) {
 			if(thisExpression.contains(".")) {
-				int indexOfDot = thisExpression.indexOf(".");
-				String subString = thisExpression.substring(0, indexOfDot);
-				if(!subExpressions.contains(subString) && !dotInsideArguments(indexOfDot, thisExpression)) {
-					subExpressions.add(subString);
+				int start = 0;
+				int indexOfDot = 0;
+				while(start < thisExpression.length() && (indexOfDot = thisExpression.indexOf(".", start)) != -1) {
+					String subString = thisExpression.substring(start, indexOfDot);
+					if(!subExpressions.contains(subString) && !dotInsideArguments(indexOfDot, thisExpression)) {
+						subExpressions.add(subString);
+					}
+					start = indexOfDot+1;
 				}
 			}
 			else if(!subExpressions.contains(thisExpression)) {
@@ -654,7 +658,7 @@ public class OperationInvocation extends AbstractCall {
 		return identicalName(other) &&
 				(equalArguments(other) || equalArgumentsExceptForStringLiterals(other)) &&
 				subExpressionIntersection.size() > 0 &&
-				(subExpressionIntersection.size() >= this.subExpressions().size() - this.subExpressionsWithStringLiteralArgument() ||
-				subExpressionIntersection.size() >= other.subExpressions().size() - other.subExpressionsWithStringLiteralArgument());
+				(subExpressionIntersection.size() >= this.subExpressions.size() - this.subExpressionsWithStringLiteralArgument() ||
+				subExpressionIntersection.size() >= other.subExpressions.size() - other.subExpressionsWithStringLiteralArgument());
 	}
 }

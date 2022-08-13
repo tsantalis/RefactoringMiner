@@ -1731,7 +1731,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	public int compareTo(UMLClassBaseDiff other) {
-		return this.originalClass.getName().compareTo(other.originalClass.getName());
+		if(!this.originalClass.getName().equals(other.originalClass.getName()))
+			return this.originalClass.getName().compareTo(other.originalClass.getName());
+		else
+			return this.nextClass.getName().compareTo(other.nextClass.getName());
 	}
 
 	public boolean samePackage() {

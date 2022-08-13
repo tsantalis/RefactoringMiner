@@ -100,7 +100,8 @@ public enum RefactoringType {
 	REPLACE_LOOP_WITH_PIPELINE("Replace Loop With Pipeline", "Replace Loop With Pipeline (.+) with (.+) in method (.+) from class (.+)"),
 	REPLACE_PIPELINE_WITH_LOOP("Replace Pipeline With Loop", "Replace Pipeline With Loop (.+) with (.+) in method (.+) from class (.+)"),
 	REPLACE_ANONYMOUS_WITH_LAMBDA("Replace Anonymous With Lambda", "Replace Anonymous With Lambda (.+) with (.+) in method (.+) from class (.+)"),
-	MERGE_CLASS("Merge Class", "Merge Class \\[(.+)\\] to (.+)");
+	MERGE_CLASS("Merge Class", "Merge Class \\[(.+)\\] to (.+)"),
+	SPLIT_CLASS("Split Class", "Split Class (.+) to \\[(.+)\\]");
 
 	private String displayName;
 	private Pattern regex;
@@ -194,6 +195,7 @@ public enum RefactoringType {
 		REPLACE_PIPELINE_WITH_LOOP,
 		REPLACE_ANONYMOUS_WITH_LAMBDA,
 		MERGE_CLASS,
+		SPLIT_CLASS,
 		INLINE_ATTRIBUTE
 	};
 

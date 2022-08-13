@@ -710,6 +710,33 @@ public abstract class UMLAbstractClass {
 		}
 	}
 
+	public MatchResult hasCommonOperationWithTheSameSignature(UMLAbstractClass umlClass) {
+		List<UMLOperation> commonOperations = new ArrayList<UMLOperation>();
+		int totalOperations = 0;
+		for(UMLOperation operation : operations) {
+			if(!operation.isConstructor() && !operation.overridesObject()) {
+				totalOperations++;
+				if(umlClass.containsOperationWithTheSameSignature(operation)) {
+					commonOperations.add(operation);
+				}
+			}
+		}
+		for(UMLOperation operation : umlClass.operations) {
+			if(!operation.isConstructor() && !operation.overridesObject()) {
+				totalOperations++;
+				if(this.containsOperationWithTheSameSignature(operation)) {
+					commonOperations.add(operation);
+				}
+			}
+		}
+		if(commonOperations.size() > 2) {
+			return new MatchResult(commonOperations.size(), 0, totalOperations, 0, true);
+		}
+		else {
+			return new MatchResult(commonOperations.size(), 0, totalOperations, 0, false);
+		}
+	}
+
 	public boolean isTestClass() {
 		for(UMLOperation operation : operations) {
 			if(operation.hasTestAnnotation()) {

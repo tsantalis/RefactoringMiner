@@ -670,6 +670,9 @@ public abstract class UMLAbstractClass {
 		if((commonOperations.size() + unmatchedCalledOperations.size() > Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0))) {
 			return new MatchResult(commonOperations.size() + unmatchedCalledOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, true);
 		}
+		if(unmatchedOperations.size() == 0 && commonOperations.size() > Math.floor(totalOperations/3.0*2.0)) {
+			return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, true);
+		}
 		return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, false);
 	}
 

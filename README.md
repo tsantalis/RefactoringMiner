@@ -123,11 +123,15 @@ Currently, it supports the detection of the following refactorings:
 84. Replace Loop with Pipeline
 85. Replace Anonymous with Lambda
 
-**<ins>supported by RefactoringMiner 2.3</ins>**
+**<ins>supported by RefactoringMiner 2.3  and newer versions</ins>**
 
 86. Merge Class
 87. Inline Attribute
 88. Replace Pipeline with Loop
+
+**<ins>supported by RefactoringMiner 2.3.2</ins>**
+
+89. Split Class
 
 # How to build RefactoringMiner
 

@@ -110,17 +110,6 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 		return false;
 	}
 
-	protected void processAnonymousClasses() {
-		for(UMLAnonymousClass umlAnonymousClass : originalClass.getAnonymousClassList()) {
-    		if(!nextClass.getAnonymousClassList().contains(umlAnonymousClass))
-    			this.reportRemovedAnonymousClass(umlAnonymousClass);
-    	}
-    	for(UMLAnonymousClass umlAnonymousClass : nextClass.getAnonymousClassList()) {
-    		if(!originalClass.getAnonymousClassList().contains(umlAnonymousClass))
-    			this.reportAddedAnonymousClass(umlAnonymousClass);
-    	}
-	}
-
 	protected void createBodyMappers() throws RefactoringMinerTimedOutException {
 		for(UMLOperation originalOperation : originalClass.getOperations()) {
 			for(UMLOperation nextOperation : nextClass.getOperations()) {

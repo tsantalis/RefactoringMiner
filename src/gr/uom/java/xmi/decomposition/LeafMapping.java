@@ -119,6 +119,11 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 								return 1;
 							}
 						}
+						if(parentEditDistance1 == parentEditDistance2) {
+							int locationSum1 = this.getFragment1().getLocationInfo().getStartLine() + this.getFragment2().getLocationInfo().getStartLine();
+							int locationSum2 = o.getFragment1().getLocationInfo().getStartLine() + o.getFragment2().getLocationInfo().getStartLine();
+							return Integer.valueOf(locationSum1).compareTo(Integer.valueOf(locationSum2));
+						}
 						return Double.compare(parentEditDistance1, parentEditDistance2);
 					}
 				}

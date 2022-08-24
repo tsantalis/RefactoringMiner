@@ -199,7 +199,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		for(String methodInvocation : methodInvocationMap.keySet()) {
 			List<AbstractCall> invocations = methodInvocationMap.get(methodInvocation);
 			for(AbstractCall invocation : invocations) {
-				if((methodInvocation + ";\n").equals(statement) || methodInvocation.equals(statement)) {
+				if((methodInvocation + ";\n").equals(statement) || methodInvocation.equals(statement) || ("!" + methodInvocation).equals(statement)) {
 					invocation.coverage = StatementCoverageType.ONLY_CALL;
 					return invocation;
 				}

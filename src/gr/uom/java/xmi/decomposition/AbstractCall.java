@@ -146,7 +146,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 			for(Replacement replacement : replacements) {
 				if(replacement.getType().equals(ReplacementType.TYPE) ||
 						//allow only class names corresponding to static calls
-						(replacement.getType().equals(ReplacementType.VARIABLE_NAME) && (Character.isUpperCase(expression1.charAt(0)) || Character.isUpperCase(expression2.charAt(0))))) {
+						(replacement.getType().equals(ReplacementType.VARIABLE_NAME) && expressionCondition(expression1, expression2, parameterToArgumentMap))) {
 					if(replacement.getBefore().equals(expression1) && (replacement.getAfter().equals(expression2) ||
 							(parameterToArgumentMap.containsKey(expression2) && replacement.getAfter().equals(parameterToArgumentMap.get(expression2))))) {
 						return true;
@@ -157,6 +157,16 @@ public abstract class AbstractCall implements LocationInfoProvider {
 			if(expression1AfterReplacements.equals(expression2)) {
 				return true;
 			}
+		}
+		return false;
+	}
+
+	private boolean expressionCondition(String expression1, String expression2, Map<String, String> parameterToArgumentMap) {
+		if(Character.isUpperCase(expression1.charAt(0)) && Character.isUpperCase(expression2.charAt(0))) {
+			return true;
+		}
+		else if(Character.isUpperCase(expression1.charAt(0)) && !Character.isUpperCase(expression2.charAt(0)) && parameterToArgumentMap.containsKey(expression2)) {
+			return true;
 		}
 		return false;
 	}

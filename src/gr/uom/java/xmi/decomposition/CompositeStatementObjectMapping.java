@@ -73,7 +73,14 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 				else {
 					int indexDiff1 = Math.abs(this.getFragment1().getIndex() - this.getFragment2().getIndex());
 					int indexDiff2 = Math.abs(o.getFragment1().getIndex() - o.getFragment2().getIndex());
-					return Integer.valueOf(indexDiff1).compareTo(Integer.valueOf(indexDiff2));
+					if(indexDiff1 != indexDiff2) {
+						return Integer.valueOf(indexDiff1).compareTo(Integer.valueOf(indexDiff2));
+					}
+					else {
+						int locationSum1 = this.getFragment1().getLocationInfo().getStartLine() + this.getFragment2().getLocationInfo().getStartLine();
+						int locationSum2 = o.getFragment1().getLocationInfo().getStartLine() + o.getFragment2().getLocationInfo().getStartLine();
+						return Integer.valueOf(locationSum1).compareTo(Integer.valueOf(locationSum2));
+					}
 				}
 			}
 		}

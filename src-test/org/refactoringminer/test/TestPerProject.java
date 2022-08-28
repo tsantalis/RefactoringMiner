@@ -49,7 +49,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/linkedin/rest.li.git", 184, 0, 5);
         processRepositoryCommits("https://github.com/open-keychain/open-keychain.git", 22, 0, 0);
         processRepositoryCommits("https://github.com/baasbox/baasbox.git", 1, 0, 0);
-        processRepositoryCommits("https://github.com/phishman3579/java-algorithms-implementation.git", 391, 0, 0);
+        processRepositoryCommits("https://github.com/phishman3579/java-algorithms-implementation.git", 395, 0, 0);
         processRepositoryCommits("https://github.com/square/wire.git", 46, 0, 2);
         processRepositoryCommits("https://github.com/abarisain/dmix.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/netty/netty.git", 148, 1, 8);
@@ -76,13 +76,13 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/google/truth.git", 25, 0, 1);
         processRepositoryCommits("https://github.com/antlr/antlr4.git", 37, 0, 0);
         processRepositoryCommits("https://github.com/koush/AndroidAsync.git", 4, 0, 0);
-        processRepositoryCommits("https://github.com/thymeleaf/thymeleaf.git", 6, 0, 0);
+        processRepositoryCommits("https://github.com/thymeleaf/thymeleaf.git", 4, 0, 0);
         processRepositoryCommits("https://github.com/PhilJay/MPAndroidChart.git", 10, 0, 0);
         processRepositoryCommits("https://github.com/spring-projects/spring-boot.git", 95, 0, 4);
         processRepositoryCommits("https://github.com/brettwooldridge/HikariCP.git", 8, 0, 0);
         processRepositoryCommits("https://github.com/eucalyptus/eucalyptus.git", 42, 0, 1);
         processRepositoryCommits("https://github.com/dreamhead/moco.git", 2, 0, 0);
-        processRepositoryCommits("https://github.com/neo4j/neo4j.git", 849, 4, 38);
+        processRepositoryCommits("https://github.com/neo4j/neo4j.git", 850, 4, 37);
         processRepositoryCommits("https://github.com/skylot/jadx.git", 29, 1, 0);
         processRepositoryCommits("https://github.com/vaadin/vaadin.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/restlet/restlet-framework-java.git", 5, 0, 0);

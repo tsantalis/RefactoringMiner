@@ -127,9 +127,9 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return false;
 	}
 
-	public boolean identicalExpression(AbstractCall call, Set<Replacement> replacements) {
+	public boolean identicalExpression(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
 		return identicalExpression(call) ||
-		identicalExpressionAfterTypeReplacements(call, replacements);
+		identicalExpressionAfterTypeReplacements(call, replacements, parameterToArgumentMap);
 	}
 
 	public boolean identicalExpression(AbstractCall call) {
@@ -138,7 +138,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 				(getExpression() == null && call.getExpression() == null);
 	}
 
-	private boolean identicalExpressionAfterTypeReplacements(AbstractCall call, Set<Replacement> replacements) {
+	private boolean identicalExpressionAfterTypeReplacements(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
 		if(getExpression() != null && call.getExpression() != null) {
 			String expression1 = getExpression();
 			String expression2 = call.getExpression();
@@ -146,8 +146,9 @@ public abstract class AbstractCall implements LocationInfoProvider {
 			for(Replacement replacement : replacements) {
 				if(replacement.getType().equals(ReplacementType.TYPE) ||
 						//allow only class names corresponding to static calls
-						(replacement.getType().equals(ReplacementType.VARIABLE_NAME) && Character.isUpperCase(expression1.charAt(0)) && Character.isUpperCase(expression2.charAt(0)))) {
-					if(replacement.getBefore().equals(expression1) && replacement.getAfter().equals(expression2)) {
+						(replacement.getType().equals(ReplacementType.VARIABLE_NAME) && expressionCondition(expression1, expression2, parameterToArgumentMap))) {
+					if(replacement.getBefore().equals(expression1) && (replacement.getAfter().equals(expression2) ||
+							(parameterToArgumentMap.containsKey(expression2) && replacement.getAfter().equals(parameterToArgumentMap.get(expression2))))) {
 						return true;
 					}
 					expression1AfterReplacements = ReplacementUtil.performReplacement(expression1AfterReplacements, expression2, replacement.getBefore(), replacement.getAfter());
@@ -156,6 +157,16 @@ public abstract class AbstractCall implements LocationInfoProvider {
 			if(expression1AfterReplacements.equals(expression2)) {
 				return true;
 			}
+		}
+		return false;
+	}
+
+	private boolean expressionCondition(String expression1, String expression2, Map<String, String> parameterToArgumentMap) {
+		if(Character.isUpperCase(expression1.charAt(0)) && Character.isUpperCase(expression2.charAt(0))) {
+			return true;
+		}
+		else if(Character.isUpperCase(expression1.charAt(0)) && !Character.isUpperCase(expression2.charAt(0)) && parameterToArgumentMap.containsKey(expression2)) {
+			return true;
 		}
 		return false;
 	}
@@ -330,11 +341,11 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return replacedArguments > 0 && replacedArguments == arguments1.size();
 	}
 
-	public boolean renamedWithIdenticalExpressionAndArguments(AbstractCall call, Set<Replacement> replacements, double distance, List<UMLOperationBodyMapper> lambdaMappers) {
+	public boolean renamedWithIdenticalExpressionAndArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, double distance, List<UMLOperationBodyMapper> lambdaMappers) {
 		boolean identicalOrReplacedArguments = identicalOrReplacedArguments(call, replacements, lambdaMappers);
 		boolean allArgumentsReplaced = allArgumentsReplaced(call, replacements);
 		return getExpression() != null && call.getExpression() != null &&
-				identicalExpression(call, replacements) &&
+				identicalExpression(call, replacements, parameterToArgumentMap) &&
 				!identicalName(call) &&
 				(equalArguments(call) || reorderedArguments(call) || (allArgumentsReplaced && normalizedNameDistance(call) <= distance) || (identicalOrReplacedArguments && !allArgumentsReplaced));
 	}
@@ -366,7 +377,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 				(equalArguments(call) || reorderedArguments(call));
 	}
 
-	public boolean renamedWithIdenticalExpressionAndDifferentArguments(AbstractCall call, Set<Replacement> replacements, double distance, List<UMLOperationBodyMapper> lambdaMappers) {
+	public boolean renamedWithIdenticalExpressionAndDifferentArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, double distance, List<UMLOperationBodyMapper> lambdaMappers) {
 		boolean allExactLambdaMappers = lambdaMappers.size() > 0;
 		for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
 			if(!lambdaMapper.allMappingsAreExactMatches()) {
@@ -375,7 +386,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 			}
 		}
 		return getExpression() != null && call.getExpression() != null &&
-				identicalExpression(call, replacements) &&
+				identicalExpression(call, replacements, parameterToArgumentMap) &&
 				(normalizedNameDistance(call) <= distance || allExactLambdaMappers || (this.methodNameContainsArgumentName() && call.methodNameContainsArgumentName()) || argumentIntersectionContainsClassInstanceCreation(call)) &&
 				!equalArguments(call) &&
 				!this.argumentContainsAnonymousClassDeclaration() && !call.argumentContainsAnonymousClassDeclaration();
@@ -408,15 +419,15 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return false;
 	}
 
-	private boolean onlyArgumentsChanged(AbstractCall call, Set<Replacement> replacements) {
-		return identicalExpression(call, replacements) &&
+	private boolean onlyArgumentsChanged(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
+		return identicalExpression(call, replacements, parameterToArgumentMap) &&
 				identicalName(call) &&
 				!equalArguments(call) &&
 				getArguments().size() != call.getArguments().size();
 	}
 
-	public boolean identicalWithMergedArguments(AbstractCall call, Set<Replacement> replacements) {
-		if(onlyArgumentsChanged(call, replacements)) {
+	public boolean identicalWithMergedArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
+		if(onlyArgumentsChanged(call, replacements, parameterToArgumentMap)) {
 			List<String> updatedArguments1 = new ArrayList<String>(this.arguments);
 			Map<String, Set<Replacement>> commonVariableReplacementMap = new LinkedHashMap<String, Set<Replacement>>();
 			for(Replacement replacement : replacements) {
@@ -461,7 +472,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 	}
 
 	public boolean identicalWithDifferentNumberOfArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
-		if(onlyArgumentsChanged(call, replacements)) {
+		if(onlyArgumentsChanged(call, replacements, parameterToArgumentMap)) {
 			int argumentIntersectionSize = argumentIntersectionSize(call, replacements, parameterToArgumentMap);
 			if(argumentIntersectionSize > 0 || getArguments().size() == 0 || call.getArguments().size() == 0) {
 				return true;
@@ -504,8 +515,8 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return false;
 	}
 
-	public boolean identicalWithInlinedStatements(AbstractCall call, Set<Replacement> replacements, List<AbstractCodeFragment> statements) {
-		if(identicalExpression(call, replacements) && identicalName(call)) {
+	public boolean identicalWithInlinedStatements(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, List<AbstractCodeFragment> statements) {
+		if(identicalExpression(call, replacements, parameterToArgumentMap) && identicalName(call)) {
 			if(this.arguments.size() == call.arguments.size()) {
 				Set<Replacement> newReplacements = new LinkedHashSet<Replacement>();
 				Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
@@ -579,8 +590,8 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return false;
 	}
 
-	public boolean identical(AbstractCall call, Set<Replacement> replacements, List<UMLOperationBodyMapper> lambdaMappers) {
-		return identicalExpression(call, replacements) &&
+	public boolean identical(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, List<UMLOperationBodyMapper> lambdaMappers) {
+		return identicalExpression(call, replacements, parameterToArgumentMap) &&
 				identicalName(call) &&
 				(equalArguments(call) || onlyLambdaArgumentsDiffer(call, lambdaMappers));
 	}

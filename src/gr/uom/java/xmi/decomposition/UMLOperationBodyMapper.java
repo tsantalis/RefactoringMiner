@@ -67,6 +67,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
@@ -102,6 +103,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Set<VariableDeclaration> removedVariables;
 	private Set<VariableDeclaration> addedVariables;
 	private Set<Pair<VariableDeclaration, VariableDeclaration>> movedVariables;
+	private int callsToExtractedMethod = 0;
 	private boolean nested;
 
 	public boolean isNested() {
@@ -1218,6 +1220,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.callSiteOperation = operationBodyMapper.container2;
 		this.container2 = addedOperation;
 		this.classDiff = classDiff;
+		if(classDiff != null)
+			this.modelDiff = classDiff.getModelDiff();
 		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
 		this.nonMappedLeavesT1 = new ArrayList<AbstractCodeFragment>();
 		this.nonMappedLeavesT2 = new ArrayList<AbstractCodeFragment>();
@@ -1226,6 +1230,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		
 		OperationBody addedOperationBody = addedOperation.getBody();
 		if(addedOperationBody != null) {
+			List<AbstractCodeFragment> leavesT2 = new ArrayList<AbstractCodeFragment>();
+			List<AbstractExpression> expressionsT2 = new ArrayList<AbstractExpression>();
+			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+				if(!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2())) {
+					AbstractCodeFragment fragment = mapping.getFragment2();
+					if(fragment instanceof CompositeStatementObject) {
+						CompositeStatementObject composite = (CompositeStatementObject)fragment;
+						for(AbstractExpression expression : composite.getExpressions()) {
+							expressionsT2.add(expression);
+						}
+					}
+					else {
+						leavesT2.add(fragment);
+					}
+				}
+			}
+			leavesT2.addAll(operationBodyMapper.getNonMappedLeavesT2());
+			for(CompositeStatementObject composite : operationBodyMapper.getNonMappedInnerNodesT2()) {
+				for(AbstractExpression expression : composite.getExpressions()) {
+					expressionsT2.add(expression);
+				}
+			}
+			this.callsToExtractedMethod = callsToExtractedMethod(leavesT2);
+			this.callsToExtractedMethod += callsToExtractedMethod(expressionsT2);
 			CompositeStatementObject composite2 = addedOperationBody.getCompositeStatement();
 			List<AbstractCodeFragment> leaves1 = operationBodyMapper.getNonMappedLeavesT1();
 			List<CompositeStatementObject> innerNodes1 = operationBodyMapper.getNonMappedInnerNodesT1();
@@ -1469,6 +1497,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.container2 = operationBodyMapper.container2;
 		this.callSiteOperation = operationBodyMapper.container1;
 		this.classDiff = classDiff;
+		if(classDiff != null)
+			this.modelDiff = classDiff.getModelDiff();
 		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
 		this.nonMappedLeavesT1 = new ArrayList<AbstractCodeFragment>();
 		this.nonMappedLeavesT2 = new ArrayList<AbstractCodeFragment>();
@@ -2618,10 +2648,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(!mappingSet.isEmpty()) {
 						boolean identicalDepthAndIndex = mappingSet.first().getFragment1().getDepth() == mappingSet.first().getFragment2().getDepth() &&
 								mappingSet.first().getFragment1().getIndex() == mappingSet.first().getFragment2().getIndex();
-						if(mappingSet.size() > 1 && (parentMapper != null || !identicalDepthAndIndex) && mappings.size() > 1) {
+						if(mappingSet.size() > 1 && (parentMapper != null || !identicalDepthAndIndex) && mappings.size() > 0) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
 							for(LeafMapping mapping : mappingSet) {
-								int lineDistance = lineDistanceFromExistingMappings1(mapping);
+								int lineDistance = lineDistanceFromExistingMappings1(mapping).getMiddle();
 								if(!lineDistanceMap.containsKey(lineDistance)) {
 									lineDistanceMap.put(lineDistance, mapping);
 								}
@@ -2651,7 +2681,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			
+			AbstractCodeMapping startMapping = null;
+			AbstractCodeMapping endMapping = null;
+			if(parentMapper != null) {
+				for(AbstractCodeMapping mapping : this.mappings) {
+					if(startMapping == null) {
+						startMapping = mapping;
+					}
+					else if(mapping.getFragment1().getLocationInfo().getStartLine() < startMapping.getFragment1().getLocationInfo().getStartLine() &&
+							mapping.getFragment2().getLocationInfo().getStartLine() < startMapping.getFragment2().getLocationInfo().getStartLine()) {
+						startMapping = mapping;
+					}
+					if(endMapping == null) {
+						endMapping = mapping;
+					}
+					else if(mapping.getFragment1().getLocationInfo().getStartLine() > endMapping.getFragment1().getLocationInfo().getStartLine() &&
+							mapping.getFragment2().getLocationInfo().getStartLine() > endMapping.getFragment2().getLocationInfo().getStartLine()) {
+						endMapping = mapping;
+					}
+				}
+			}
 			// exact matching with variable renames
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 				AbstractCodeFragment leaf2 = leafIterator2.next();
@@ -2710,11 +2759,105 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							leafIterator2.remove();
 						}
 						else {
-							LeafMapping minStatementMapping = mappingSet.first();
-							if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
-								addToMappings(minStatementMapping, mappingSet);
-								leaves1.remove(minStatementMapping.getFragment1());
-								leafIterator2.remove();
+							if(isScopedMatch(startMapping, endMapping) && mappingSet.size() > 1 && mappings.size() > 1) {
+								TreeSet<LeafMapping> scopedMappingSet = new TreeSet<LeafMapping>();
+								for(LeafMapping mapping : mappingSet) {
+									if(isWithinScope(startMapping, endMapping, mapping)) {
+										scopedMappingSet.add(mapping);
+									}
+								}
+								if(!scopedMappingSet.isEmpty()) {
+									if(allUnderTheSameParent(scopedMappingSet)) {
+										LeafMapping minStatementMapping = scopedMappingSet.first();
+										if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
+											addToMappings(minStatementMapping, scopedMappingSet);
+											leaves1.remove(minStatementMapping.getFragment1());
+											leafIterator2.remove();
+										}
+									}
+									else {
+										int exactMappingsBefore = 0;
+										int inexactMappingsBefore = 0;
+										int exactMappingsAfter = 0;
+										int inexactMappingsAfter = 0;
+										for(AbstractCodeMapping mapping : this.mappings) {
+											if(leaf2.getLocationInfo().getStartLine() > mapping.getFragment2().getLocationInfo().getStartLine()) {
+												if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+													exactMappingsBefore++;
+												}
+												else {
+													inexactMappingsBefore++;
+												}
+											}
+											else if(leaf2.getLocationInfo().getStartLine() < mapping.getFragment2().getLocationInfo().getStartLine()) {
+												if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+													exactMappingsAfter++;
+												}
+												else {
+													inexactMappingsAfter++;
+												}
+											}
+										}
+										TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
+										for(LeafMapping mapping : scopedMappingSet) {
+											int lineDistance = 0;
+											if(exactMappingsBefore + inexactMappingsBefore < exactMappingsAfter + inexactMappingsAfter) {
+												lineDistance = lineDistanceFromExistingMappings1(mapping).getLeft();
+											}
+											else {
+												lineDistance = lineDistanceFromExistingMappings1(mapping).getMiddle();
+											}
+											if(!lineDistanceMap.containsKey(lineDistance)) {
+												lineDistanceMap.put(lineDistance, mapping);
+											}
+										}
+										AbstractCodeFragment leaf1 = lineDistanceMap.firstEntry().getValue().getFragment1();
+										CompositeStatementObject parent1 = leaf1.getParent();
+										while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+											parent1 = parent1.getParent();
+										}
+										for(AbstractCodeFragment leaf : leaves2) {
+											if(!leaf.equals(leaf2)) {
+												CompositeStatementObject parent2 = leaf.getParent();
+												while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+													parent2 = parent2.getParent();
+												}
+												if(parent1 != null && parent2 != null && parent1.getString().equals(parent2.getString())) {
+													ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf, leaves1, leaves2);
+													Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo);
+													if (replacements != null) {
+														LeafMapping mapping = createLeafMapping(leaf1, leaf, parameterToArgumentMap);
+														mapping.addReplacements(replacements);
+														int lineDistance = lineDistanceFromExistingMappings1(mapping).getMiddle();
+														if(!lineDistanceMap.containsKey(lineDistance)) {
+															lineDistanceMap.put(lineDistance, mapping);
+														}
+														else {
+															Set<LeafMapping> set = new LinkedHashSet<>();
+															set.add(lineDistanceMap.get(lineDistance));
+															set.add(mapping);
+															if(allUnderTheSameParent(set)) {
+																lineDistanceMap.put(lineDistance, mapping);
+															}
+														}
+													}
+												}
+											}
+										}
+										LeafMapping minLineDistanceStatementMapping = lineDistanceMap.firstEntry().getValue();
+										addMapping(minLineDistanceStatementMapping);
+										leaves1.remove(minLineDistanceStatementMapping.getFragment1());
+										leafIterator2.remove();
+									}
+								}
+							}
+							else {
+								LeafMapping minStatementMapping = mappingSet.first();
+								if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
+									addToMappings(minStatementMapping, mappingSet);
+									leaves1.remove(minStatementMapping.getFragment1());
+									leafIterator2.remove();
+								}
 							}
 						}
 					}
@@ -2756,7 +2899,41 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	private int lineDistanceFromExistingMappings1(AbstractCodeMapping mapping) {
+	private boolean isScopedMatch(AbstractCodeMapping startMapping, AbstractCodeMapping endMapping) {
+		return parentMapper != null && startMapping != null && endMapping != null && callsToExtractedMethod > 1;
+	}
+
+	private boolean isWithinScope(AbstractCodeMapping startMapping, AbstractCodeMapping endMapping, AbstractCodeMapping mappingToCheck) {
+		if(parentMapper != null && startMapping != null && endMapping != null && callsToExtractedMethod > 1) {
+			if(mappingToCheck.getFragment2().getLocationInfo().getStartLine() >= startMapping.getFragment2().getLocationInfo().getStartLine() &&
+					mappingToCheck.getFragment2().getLocationInfo().getStartLine() <= endMapping.getFragment2().getLocationInfo().getStartLine()) {
+				return mappingToCheck.getFragment1().getLocationInfo().getStartLine() >= startMapping.getFragment1().getLocationInfo().getStartLine() &&
+						mappingToCheck.getFragment1().getLocationInfo().getStartLine() <= endMapping.getFragment1().getLocationInfo().getStartLine();
+			}
+		}
+		return true;
+	}
+
+	private boolean allUnderTheSameParent(Set<LeafMapping> mappings) {
+		CompositeStatementObject parent1 = null;
+		CompositeStatementObject parent2 = null;
+		Set<AbstractCodeMapping> commonParentMappings = new LinkedHashSet<>();
+		for(AbstractCodeMapping mapping : mappings) {
+			if(parent1 == null && parent2 == null) {
+				parent1 = mapping.getFragment1().getParent();
+				parent2 = mapping.getFragment2().getParent();
+				commonParentMappings.add(mapping);
+			}
+			else if(parent1.equals(mapping.getFragment1().getParent()) && parent2.equals(mapping.getFragment2().getParent())) {
+				commonParentMappings.add(mapping);
+			}
+		}
+		return mappings.size() > 1 && mappings.equals(commonParentMappings);
+	}
+
+	private Triple<Integer, Integer, Integer> lineDistanceFromExistingMappings1(AbstractCodeMapping mapping) {
+		int lineDistanceBefore = 0;
+		int lineDistanceAfter = 0;
 		int lineDistance = 0;
 		int fragmentLine = mapping.getFragment1().getLocationInfo().getStartLine();
 		Set<AbstractCodeMapping> commonParentMappings = new LinkedHashSet<>();
@@ -2768,9 +2945,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		Set<AbstractCodeMapping> mappingsToCompareWith = commonParentMappings.size() > 0 ? commonParentMappings : this.mappings;
 		for(AbstractCodeMapping previousMapping : mappingsToCompareWith) {
+			if(previousMapping.getFragment1().getLocationInfo().getStartLine() < fragmentLine)
+				lineDistanceBefore += Math.abs(fragmentLine - previousMapping.getFragment1().getLocationInfo().getStartLine());
+			else if(previousMapping.getFragment1().getLocationInfo().getStartLine() > fragmentLine)
+				lineDistanceAfter += Math.abs(fragmentLine - previousMapping.getFragment1().getLocationInfo().getStartLine());
 			lineDistance += Math.abs(fragmentLine - previousMapping.getFragment1().getLocationInfo().getStartLine());
 		}
-		return lineDistance;
+		return Triple.of(lineDistanceBefore, lineDistance, lineDistanceAfter);
 	}
 
 	private int lineDistanceFromExistingMappings2(AbstractCodeMapping mapping) {
@@ -3920,7 +4101,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(assignmentInvocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
 			for(String key1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
-					if(invocation1.identical(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), lambdaMappers) &&
+					if(invocation1.identical(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, lambdaMappers) &&
 							!assignmentInvocationCoveringTheEntireStatement1.getArguments().contains(key1)) {
 						if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo) &&
 								!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
@@ -4058,7 +4239,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//method invocation is identical if arguments are replaced
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.identicalExpression(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements()) &&
+				invocationCoveringTheEntireStatement1.identicalExpression(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) &&
 				invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2) ) {
 			for(String key : methodInvocationMap2.keySet()) {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key)) {
@@ -4070,7 +4251,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//method invocation is identical if arguments are wrapped or concatenated
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.identicalExpression(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements()) &&
+				invocationCoveringTheEntireStatement1.identicalExpression(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) &&
 				invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2) ) {
 			for(String key : methodInvocationMap2.keySet()) {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key)) {
@@ -4091,7 +4272,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//method invocation has been renamed but the expression and arguments are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers)) {
+				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers)) {
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getName(),
 					invocationCoveringTheEntireStatement2.getName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME);
 			replacementInfo.addReplacement(replacement);
@@ -4124,7 +4305,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//method invocation has been renamed and arguments changed, but the expressions are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndDifferentArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers)) {
+				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndDifferentArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers)) {
 			ReplacementType type = invocationCoveringTheEntireStatement1.getName().equals(invocationCoveringTheEntireStatement2.getName()) ? ReplacementType.METHOD_INVOCATION_ARGUMENT : ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT;
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 					invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, type);
@@ -4155,7 +4336,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			for(String methodInvocation1 : methodInvocations1) {
 				for(AbstractCall operationInvocation1 : methodInvocationMap1.get(methodInvocation1)) {
-					if(operationInvocation1.renamedWithIdenticalExpressionAndDifferentArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers) &&
+					if(operationInvocation1.renamedWithIdenticalExpressionAndDifferentArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers) &&
 							!isExpressionOfAnotherMethodInvocation(operationInvocation1, methodInvocationMap1) &&
 							!variableDeclarationMatchedWithNonVariableDeclaration) {
 						ReplacementType type = operationInvocation1.getName().equals(invocationCoveringTheEntireStatement2.getName()) ? ReplacementType.METHOD_INVOCATION_ARGUMENT : ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT;
@@ -4169,7 +4350,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//method invocation has only changes in the arguments (different number of arguments)
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
-			if(invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
+			if(invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
 				return replacementInfo.getReplacements();
 			}
 			else if(invocationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
@@ -4188,7 +4369,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(!methodInvocations1.isEmpty() && invocationCoveringTheEntireStatement2 != null) {
 			for(String methodInvocation1 : methodInvocations1) {
 				for(AbstractCall operationInvocation1 : methodInvocationMap1.get(methodInvocation1)) {
-					if(operationInvocation1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
+					if(operationInvocation1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
 						return replacementInfo.getReplacements();
 					}
 					else if(operationInvocation1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
@@ -4409,7 +4590,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							for(AbstractCodeFragment codeFragment : replacementInfo.statements2) { 
 								AbstractCall invocation = codeFragment.invocationCoveringEntireFragment(); 
 								if(invocation != null) { 
-									if(invocation.identical(invocation1, replacementInfo.getReplacements(), lambdaMappers)) { 
+									if(invocation.identical(invocation1, replacementInfo.getReplacements(), parameterToArgumentMap, lambdaMappers)) { 
 										additionallyMatchedStatements2.add(codeFragment); 
 									} 
 									if((invocation.getExpression() != null && invocation.getExpression().equals(invocation1.actualString())) ||
@@ -4473,7 +4654,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							for(AbstractCodeFragment codeFragment : replacementInfo.statements1) {
 								AbstractCall invocation = codeFragment.invocationCoveringEntireFragment();
 								if(invocation != null) {
-									if(invocation.identical(invocation2, replacementInfo.getReplacements(), lambdaMappers)) {
+									if(invocation.identical(invocation2, replacementInfo.getReplacements(), parameterToArgumentMap, lambdaMappers)) {
 										additionallyMatchedStatements1.add(codeFragment);
 									}
 									if((invocation.getExpression() != null && invocation.getExpression().equals(invocation2.actualString())) ||
@@ -4501,7 +4682,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//object creation is identical
 		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null &&
-				creationCoveringTheEntireStatement1.identical(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), lambdaMappers)) {
+				creationCoveringTheEntireStatement1.identical(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, lambdaMappers)) {
 			boolean identicalArrayInitializer = true;
 			if(creationCoveringTheEntireStatement1.isArray() && creationCoveringTheEntireStatement2.isArray()) {
 				identicalArrayInitializer = creationCoveringTheEntireStatement1.identicalArrayInitializer(creationCoveringTheEntireStatement2);
@@ -4526,7 +4707,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//object creation has only changes in the arguments
 		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null) {
-			if(creationCoveringTheEntireStatement1.identicalWithMergedArguments(creationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
+			if(creationCoveringTheEntireStatement1.identicalWithMergedArguments(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
 				return replacementInfo.getReplacements();
 			}
 			else if(creationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
@@ -4545,7 +4726,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		//check if the argument lists are identical after replacements
 		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null &&
 				creationCoveringTheEntireStatement1.identicalName(creationCoveringTheEntireStatement2) &&
-				creationCoveringTheEntireStatement1.identicalExpression(creationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
+				creationCoveringTheEntireStatement1.identicalExpression(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
 			if(creationCoveringTheEntireStatement1.isArray() && creationCoveringTheEntireStatement2.isArray() && s1.contains("[") && s2.contains("[") &&
 					s1.substring(s1.indexOf("[")+1, s1.lastIndexOf("]")).equals(s2.substring(s2.indexOf("[")+1, s2.lastIndexOf("]"))) &&
 					s1.substring(s1.indexOf("[")+1, s1.lastIndexOf("]")).length() > 0) {
@@ -4590,7 +4771,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(!creations1.isEmpty() && creationCoveringTheEntireStatement2 != null) {
 			for(String creation1 : creations1) {
 				for(AbstractCall objectCreation1 : creationMap1.get(creation1)) {
-					if(objectCreation1.identicalWithMergedArguments(creationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
+					if(objectCreation1.identicalWithMergedArguments(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
 						return replacementInfo.getReplacements();
 					}
 					else if(objectCreation1.identicalWithDifferentNumberOfArguments(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
@@ -4607,7 +4788,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					//check if the argument lists are identical after replacements
 					if(objectCreation1.identicalName(creationCoveringTheEntireStatement2) &&
-							objectCreation1.identicalExpression(creationCoveringTheEntireStatement2, replacementInfo.getReplacements())) {
+							objectCreation1.identicalExpression(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
 						if(((ObjectCreation)objectCreation1).isArray() && creationCoveringTheEntireStatement2.isArray() && s1.contains("[") && s2.contains("[") &&
 								s1.substring(s1.indexOf("[")+1, s1.lastIndexOf("]")).equals(s2.substring(s2.indexOf("[")+1, s2.lastIndexOf("]"))) &&
 								s1.substring(s1.indexOf("[")+1, s1.lastIndexOf("]")).length() > 0) {
@@ -4916,7 +5097,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							identicalAfterVariableAndTypeReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements()) ||
 							(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 							(onlyDifferentInvoker(statementWithoutAnonymous1, statementWithoutAnonymous2, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
-							invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements()) ||
+							invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) ||
 							invocationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)))) {
 						UMLAnonymousClass anonymousClass1 = findAnonymousClass1(anonymousClassDeclaration1);
 						UMLAnonymousClass anonymousClass2 = findAnonymousClass2(anonymousClassDeclaration2);
@@ -4955,7 +5136,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(invocation2 != null) {
 							for(String key1 : methodInvocationMap1.keySet()) {
 								for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
-									if(invocation1.identical(invocation2, replacementInfo.getReplacements(), Collections.emptyList())) {
+									if(invocation1.identical(invocation2, replacementInfo.getReplacements(), parameterToArgumentMap, Collections.emptyList())) {
 										Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
 												invocation2.actualString(), invocation1, invocation2, ReplacementType.METHOD_INVOCATION_WRAPPED_IN_ANONYMOUS_CLASS_DECLARATION);
 										replacementInfo.addReplacement(replacement);
@@ -4980,8 +5161,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(invocation1 != null) {
 							for(String key2 : methodInvocationMap2.keySet()) {
 								for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
-									if(invocation1.identical(invocation2, replacementInfo.getReplacements(), Collections.emptyList()) ||
-											invocation1.identicalWithInlinedStatements(invocation2, replacementInfo.getReplacements(), statements)) {
+									if(invocation1.identical(invocation2, replacementInfo.getReplacements(), parameterToArgumentMap, Collections.emptyList()) ||
+											invocation1.identicalWithInlinedStatements(invocation2, replacementInfo.getReplacements(), parameterToArgumentMap, statements)) {
 										Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
 												invocation2.actualString(), invocation1, invocation2, ReplacementType.METHOD_INVOCATION_WRAPPED_IN_ANONYMOUS_CLASS_DECLARATION);
 										replacementInfo.addReplacement(replacement);
@@ -6168,6 +6349,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					counter++;
 				}
+				if(commonSuffix.equals(sb.toString())) {
+					return false;
+				}
+			}
+			else if(replacementInfo.getReplacements().size() == 1 && commonSuffix.endsWith("=false;\n")) {
+				StringBuilder sb = new StringBuilder();
+				for(Replacement r : replacementInfo.getReplacements()) {
+					sb.append(r.getAfter());
+				}
+				sb.append("=false;\n");
+				if(commonSuffix.equals(sb.toString())) {
+					return false;
+				}
+			}
+			else if(replacementInfo.getReplacements().size() == 1 && commonSuffix.endsWith("=true;\n")) {
+				StringBuilder sb = new StringBuilder();
+				for(Replacement r : replacementInfo.getReplacements()) {
+					sb.append(r.getAfter());
+				}
+				sb.append("=true;\n");
 				if(commonSuffix.equals(sb.toString())) {
 					return false;
 				}
@@ -7473,6 +7674,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return matchingLeaves;
+	}
+
+	private int callsToExtractedMethod(List<? extends AbstractCodeFragment> leaves2) {
+		int counter = 0;
+		for(AbstractCodeFragment leaf2 : leaves2) {
+			AbstractCall invocation = leaf2.invocationCoveringEntireFragment();
+			if(invocation == null) {
+				invocation = leaf2.assignmentInvocationCoveringEntireStatement();
+			}
+			if(invocation != null && invocation.matchesOperation(container2, callSiteOperation, modelDiff)) {
+				counter++;
+			}
+		}
+		return counter;
 	}
 
 	private UMLOperation matchesOperation(AbstractCall invocation, List<UMLOperation> operations, VariableDeclarationContainer callerOperation) {

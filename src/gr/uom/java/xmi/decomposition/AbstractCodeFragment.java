@@ -80,6 +80,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 					int start = m.start();
 					boolean isArgument = false;
 					boolean isInsideStringLiteral = false;
+					char nextChar = afterReplacements.charAt(start + parameter.length());
 					if(start >= 1) {
 						String previousChar = afterReplacements.substring(start-1, start);
 						if(previousChar.equals("(") || previousChar.equals(",") || previousChar.equals(" ") || previousChar.equals("=")) {
@@ -91,7 +92,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 							isInsideStringLiteral = true;
 						}
 					}
-					else if(start == 0 && !afterReplacements.startsWith("return ")) {
+					else if(start == 0 && (!Character.isLetterOrDigit(nextChar) || parameter.endsWith(".")) && !afterReplacements.startsWith("return ")) {
 						isArgument = true;
 					}
 					if(isArgument && !isInsideStringLiteral) {

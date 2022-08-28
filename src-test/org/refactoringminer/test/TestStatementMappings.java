@@ -286,6 +286,36 @@ public class TestStatementMappings {
 		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
+	@Test
+	public void testMappings5() throws Exception {
+		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+		Repository repo = gitService.cloneIfNotExists(
+		    REPOS + "/java-algorithms-implementation",
+		    "https://github.com/phishman3579/java-algorithms-implementation.git");
+
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommit(repo, "ab98bcacf6e5bf1c3a06f6bcca68f178f880ffc9", new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				UMLOperationBodyMapper parentMapper = null;
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							parentMapper = bodyMapper.getParentMapper();
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+				}
+				mapperInfo(parentMapper, actual);
+			}
+		});
+		
+		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/phishman-ab98bcacf6e5bf1c3a06f6bcca68f178f880ffc9.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
 	private void mapperInfo(UMLOperationBodyMapper bodyMapper, final List<String> actual) {
 		actual.add(bodyMapper.toString());
 		//System.out.println(bodyMapper.toString());

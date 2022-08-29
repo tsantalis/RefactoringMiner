@@ -22,7 +22,7 @@ public class FormattingVisitor extends PsiRecursiveElementWalkingVisitor {
         JavaTokenType.AT, JavaTokenType.LBRACE, JavaTokenType.RBRACE, JavaTokenType.EXCL
     );
     private static final TokenSet noSpaceBefore = TokenSet.create(
-            JavaTokenType.ELLIPSIS
+            JavaTokenType.ELLIPSIS, JavaTokenType.PLUSPLUS, JavaTokenType.MINUSMINUS
     );
     private static final TokenSet endLineAfter = TokenSet.create(
             JavaTokenType.LBRACE, JavaTokenType.RBRACE, JavaTokenType.SEMICOLON

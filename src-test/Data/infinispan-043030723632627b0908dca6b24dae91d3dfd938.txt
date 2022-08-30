@@ -118,3 +118,18 @@ line range:447-514==line range:501-561
 line range:436-440==line range:490-494
 line range:440-442==line range:494-496
 line range:436-442==line range:490-496
+protected supplierForSegments(ch ConsistentHash, targetSegments Set<Integer>, excludedKeys Set<Object>) : Supplier<Stream<CacheEntry>> -> protected supplierForSegments(ch ConsistentHash, targetSegments Set<Integer>, excludedKeys Set<Object>) : Supplier<Stream<CacheEntry>>
+package remoteIterator() : Iterator<R> -> package remoteIterator() : Iterator<R>
+line range:420-420==line range:419-419
+line range:422-422==line range:421-421
+line range:424-424==line range:423-423
+line range:425-425==line range:424-424
+line range:427-427==line range:426-426
+line range:429-429==line range:428-428
+line range:431-431==line range:430-430
+line range:554-554==line range:438-438
+line range:555-555==line range:439-439
+line range:556-556==line range:440-440
+line range:433-552==line range:432-436
+line range:433-515==line range:432-434
+line range:515-552==line range:434-436

@@ -105,6 +105,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Set<Pair<VariableDeclaration, VariableDeclaration>> movedVariables;
 	private int callsToExtractedMethod = 0;
 	private boolean nested;
+	private Map<String, String> parameterToArgumentMap1;
+	private Map<String, String> parameterToArgumentMap2;
 
 	public boolean isNested() {
 		return nested;
@@ -1154,6 +1156,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return Optional.ofNullable(operationSignatureDiff);
 	}
 
+	public Optional<Map<String, String>> getParameterToArgumentMap1() {
+		return Optional.ofNullable(parameterToArgumentMap1);
+	}
+
+	public Optional<Map<String, String>> getParameterToArgumentMap2() {
+		return Optional.ofNullable(parameterToArgumentMap2);
+	}
+
 	public Set<UMLOperationBodyMapper> getChildMappers() {
 		return childMappers;
 	}
@@ -1216,6 +1226,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public UMLOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper, UMLOperation addedOperation,
 			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
 		this.parentMapper = operationBodyMapper;
+		this.parameterToArgumentMap1 = parameterToArgumentMap1;
+		this.parameterToArgumentMap2 = parameterToArgumentMap2;
 		this.container1 = operationBodyMapper.container1;
 		this.callSiteOperation = operationBodyMapper.container2;
 		this.container2 = addedOperation;
@@ -1493,6 +1505,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public UMLOperationBodyMapper(UMLOperation removedOperation, UMLOperationBodyMapper operationBodyMapper,
 			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
 		this.parentMapper = operationBodyMapper;
+		this.parameterToArgumentMap1 = parameterToArgumentMap1;
+		this.parameterToArgumentMap2 = parameterToArgumentMap2;
 		this.container1 = removedOperation;
 		this.container2 = operationBodyMapper.container2;
 		this.callSiteOperation = operationBodyMapper.container1;

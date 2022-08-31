@@ -1,8 +1,11 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -27,6 +30,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 	private Set<AbstractCodeFragment> extractedCodeFragmentsFromSourceOperation;
 	private Set<AbstractCodeFragment> extractedCodeFragmentsToExtractedOperation;
 	private UMLOperationBodyMapper bodyMapper;
+	private Map<String, String> parameterToArgumentMap;
 
 	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper, VariableDeclarationContainer sourceOperationAfterExtraction, List<AbstractCall> operationInvocations) {
 		this.bodyMapper = bodyMapper;
@@ -41,6 +45,8 @@ public class ExtractOperationRefactoring implements Refactoring {
 			this.extractedCodeFragmentsFromSourceOperation.add(mapping.getFragment1());
 			this.extractedCodeFragmentsToExtractedOperation.add(mapping.getFragment2());
 		}
+		Optional<Map<String, String>> optionalMap = bodyMapper.getParameterToArgumentMap2();
+		this.parameterToArgumentMap = optionalMap.isPresent() ? optionalMap.get() : Collections.emptyMap();
 	}
 
 	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper, UMLOperation extractedOperation,
@@ -57,6 +63,8 @@ public class ExtractOperationRefactoring implements Refactoring {
 			this.extractedCodeFragmentsFromSourceOperation.add(mapping.getFragment1());
 			this.extractedCodeFragmentsToExtractedOperation.add(mapping.getFragment2());
 		}
+		Optional<Map<String, String>> optionalMap = bodyMapper.getParameterToArgumentMap2();
+		this.parameterToArgumentMap = optionalMap.isPresent() ? optionalMap.get() : Collections.emptyMap();
 	}
 
 	public void updateMapperInfo() {
@@ -115,6 +123,10 @@ public class ExtractOperationRefactoring implements Refactoring {
 
 	public Set<Replacement> getReplacements() {
 		return replacements;
+	}
+
+	public Map<String, String> getParameterToArgumentMap() {
+		return parameterToArgumentMap;
 	}
 
 	public Set<AbstractCodeFragment> getExtractedCodeFragmentsFromSourceOperation() {

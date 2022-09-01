@@ -48,12 +48,12 @@ public class InlineOperationDetection {
 					generateCallTree(removedOperation, root, callTree);
 					callTreeMap.put(root, callTree);
 				}
-				UMLOperationBodyMapper operationBodyMapper = createMapperForInlinedMethod(mapper, removedOperation, removedOperationInvocation);
+				UMLOperationBodyMapper operationBodyMapper = createMapperForInlinedMethod(mapper, removedOperation, removedOperationInvocation, false);
 				List<CallTreeNode> nodesInBreadthFirstOrder = callTree.getNodesInBreadthFirstOrder();
 				for(int i=1; i<nodesInBreadthFirstOrder.size(); i++) {
 					CallTreeNode node = nodesInBreadthFirstOrder.get(i);
 					if(matchingInvocations(node.getInvokedOperation(), operationInvocations, mapper.getContainer1()).size() == 0) {
-						UMLOperationBodyMapper nestedMapper = createMapperForInlinedMethod(mapper, node.getInvokedOperation(), node.getInvocation());
+						UMLOperationBodyMapper nestedMapper = createMapperForInlinedMethod(mapper, node.getInvokedOperation(), node.getInvocation(), true);
 						if(inlineMatchCondition(nestedMapper, mapper)) {
 							List<AbstractCall> nestedMatchingInvocations = matchingInvocations(node.getInvokedOperation(), node.getOriginalOperation().getAllOperationInvocations(), node.getOriginalOperation());
 							InlineOperationRefactoring nestedRefactoring = new InlineOperationRefactoring(nestedMapper, mapper.getContainer1(), nestedMatchingInvocations);
@@ -82,7 +82,7 @@ public class InlineOperationDetection {
 	}
 
 	private UMLOperationBodyMapper createMapperForInlinedMethod(UMLOperationBodyMapper mapper,
-			UMLOperation removedOperation, AbstractCall removedOperationInvocation) throws RefactoringMinerTimedOutException {
+			UMLOperation removedOperation, AbstractCall removedOperationInvocation, boolean nested) throws RefactoringMinerTimedOutException {
 		List<String> arguments = removedOperationInvocation.getArguments();
 		List<String> parameters = removedOperation.getParameterNameList();
 		Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
@@ -91,7 +91,7 @@ public class InlineOperationDetection {
 		for(int i=0; i<size; i++) {
 			parameterToArgumentMap.put(parameters.get(i), arguments.get(i));
 		}
-		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap, new LinkedHashMap<String, String>(), classDiff);
+		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap, new LinkedHashMap<String, String>(), classDiff, nested);
 		return operationBodyMapper;
 	}
 

@@ -112,10 +112,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return nested;
 	}
 
-	public void setNested(boolean nested) {
-		this.nested = nested;
-	}
-
 	private Set<AbstractCodeFragment> statementsWithStreamAPICalls(List<AbstractCodeFragment> leaves) {
 		Set<AbstractCodeFragment> streamAPICalls = new LinkedHashSet<AbstractCodeFragment>();
 		for(AbstractCodeFragment statement : leaves) {
@@ -1224,8 +1220,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public UMLOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper, UMLOperation addedOperation,
-			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
+			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2, UMLAbstractClassDiff classDiff, boolean nested) throws RefactoringMinerTimedOutException {
 		this.parentMapper = operationBodyMapper;
+		this.nested = nested;
 		this.parameterToArgumentMap1 = parameterToArgumentMap1;
 		this.parameterToArgumentMap2 = parameterToArgumentMap2;
 		this.container1 = operationBodyMapper.container1;
@@ -1503,8 +1500,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public UMLOperationBodyMapper(UMLOperation removedOperation, UMLOperationBodyMapper operationBodyMapper,
-			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
+			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2, UMLAbstractClassDiff classDiff, boolean nested) throws RefactoringMinerTimedOutException {
 		this.parentMapper = operationBodyMapper;
+		this.nested = nested;
 		this.parameterToArgumentMap1 = parameterToArgumentMap1;
 		this.parameterToArgumentMap2 = parameterToArgumentMap2;
 		this.container1 = removedOperation;
@@ -2815,7 +2813,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
 										for(LeafMapping mapping : scopedMappingSet) {
 											int lineDistance = 0;
-											if(exactMappingsBefore + inexactMappingsBefore < exactMappingsAfter + inexactMappingsAfter) {
+											if(exactMappingsBefore + inexactMappingsBefore == 0 && callsToExtractedMethod == 1) {
+												lineDistance = lineDistanceFromExistingMappings1(mapping).getRight();
+											}
+											else if(exactMappingsBefore + inexactMappingsBefore < exactMappingsAfter + inexactMappingsAfter) {
 												lineDistance = lineDistanceFromExistingMappings1(mapping).getLeft();
 											}
 											else {
@@ -2914,11 +2915,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean isScopedMatch(AbstractCodeMapping startMapping, AbstractCodeMapping endMapping) {
-		return parentMapper != null && startMapping != null && endMapping != null && callsToExtractedMethod > 1;
+		return parentMapper != null && startMapping != null && endMapping != null && (callsToExtractedMethod > 1 || nested);
 	}
 
 	private boolean isWithinScope(AbstractCodeMapping startMapping, AbstractCodeMapping endMapping, AbstractCodeMapping mappingToCheck) {
-		if(parentMapper != null && startMapping != null && endMapping != null && callsToExtractedMethod > 1) {
+		if(parentMapper != null && startMapping != null && endMapping != null && (callsToExtractedMethod > 1 || nested)) {
 			if(mappingToCheck.getFragment2().getLocationInfo().getStartLine() >= startMapping.getFragment2().getLocationInfo().getStartLine() &&
 					mappingToCheck.getFragment2().getLocationInfo().getStartLine() <= endMapping.getFragment2().getLocationInfo().getStartLine()) {
 				return mappingToCheck.getFragment1().getLocationInfo().getStartLine() >= startMapping.getFragment1().getLocationInfo().getStartLine() &&

@@ -1,9 +1,11 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.LinkedHashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLEnumConstant;
@@ -13,13 +15,18 @@ public class UMLEnumConstantDiff {
 	private UMLEnumConstant addedEnumConstant;
 	private boolean renamed;
 	private UMLAnnotationListDiff annotationListDiff;
+	private UMLAnonymousClassDiff anonymousClassDiff;
 
-	public UMLEnumConstantDiff(UMLEnumConstant removedEnumConstant, UMLEnumConstant addedEnumConstant) {
+	public UMLEnumConstantDiff(UMLEnumConstant removedEnumConstant, UMLEnumConstant addedEnumConstant, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
 		this.removedEnumConstant = removedEnumConstant;
 		this.addedEnumConstant = addedEnumConstant;
 		if(!removedEnumConstant.getName().equals(addedEnumConstant.getName()))
 			renamed = true;
 		this.annotationListDiff = new UMLAnnotationListDiff(removedEnumConstant.getAnnotations(), addedEnumConstant.getAnnotations());
+		if(removedEnumConstant.getAnonymousClassList().size() == 1 && addedEnumConstant.getAnonymousClassList().size() == 1) {
+			this.anonymousClassDiff = new UMLAnonymousClassDiff(removedEnumConstant.getAnonymousClassList().get(0), addedEnumConstant.getAnonymousClassList().get(0), classDiff, modelDiff);
+			this.anonymousClassDiff.process();
+		}
 	}
 
 	public UMLEnumConstant getRemovedEnumConstant() {
@@ -32,6 +39,10 @@ public class UMLEnumConstantDiff {
 
 	public boolean isRenamed() {
 		return renamed;
+	}
+
+	public Optional<UMLAnonymousClassDiff> getAnonymousClassDiff() {
+		return Optional.ofNullable(anonymousClassDiff);
 	}
 
 	public boolean isEmpty() {

@@ -30,6 +30,7 @@ import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
 
@@ -249,14 +250,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
     	}
 	}
 
-	protected void processEnumConstants() {
+	protected void processEnumConstants() throws RefactoringMinerTimedOutException {
 		for(UMLEnumConstant enumConstant : originalClass.getEnumConstants()) {
 			UMLEnumConstant matchingEnumConstant = nextClass.containsEnumConstant(enumConstant);
     		if(matchingEnumConstant == null) {
     			this.removedEnumConstants.add(enumConstant);
     		}
     		else {
-    			UMLEnumConstantDiff enumConstantDiff = new UMLEnumConstantDiff(enumConstant, matchingEnumConstant);
+    			UMLEnumConstantDiff enumConstantDiff = new UMLEnumConstantDiff(enumConstant, matchingEnumConstant, this, modelDiff);
     			if(!enumConstantDiff.isEmpty()) {
 	    			refactorings.addAll(enumConstantDiff.getRefactorings());
 	    			this.enumConstantDiffList.add(enumConstantDiff);
@@ -269,7 +270,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
     			this.addedEnumConstants.add(enumConstant);
     		}
     		else {
-    			UMLEnumConstantDiff enumConstantDiff = new UMLEnumConstantDiff(matchingEnumConstant, enumConstant);
+    			UMLEnumConstantDiff enumConstantDiff = new UMLEnumConstantDiff(matchingEnumConstant, enumConstant, this, modelDiff);
     			if(!enumConstantDiff.isEmpty()) {
 	    			refactorings.addAll(enumConstantDiff.getRefactorings());
 					this.enumConstantDiffList.add(enumConstantDiff);
@@ -1401,112 +1402,31 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 			}
-			for(Iterator<AbstractCodeFragment> it = oneToManyMappers.keySet().iterator(); it.hasNext();) {
-				AbstractCodeFragment fragment = it.next();
-				if(oneToManyMappings.get(fragment).size() == 1) {
-					oneToManyMappings.remove(fragment);
+			for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
+				if(oneToManyMappings.containsKey(mapping.getFragment2())) {
+					List<UMLOperationBodyMapper> childMappers = oneToManyMappers.get(mapping.getFragment2());
+					boolean singleStatementInlinedMethod = false;
+					for(UMLOperationBodyMapper childMapper : childMappers) {
+						if(childMapper.getContainer1().stringRepresentation().size() == 3) {
+							singleStatementInlinedMethod = true;
+							break;
+						}
+					}
+					if(!singleStatementInlinedMethod) {
+						oneToManyMappings.get(mapping.getFragment2()).add(mapping);
+						oneToManyMappers.get(mapping.getFragment2()).add(parentMapper);
+					}
+				}
+				else {
+					Set<AbstractCodeMapping> mappings = new LinkedHashSet<>();
+					List<UMLOperationBodyMapper> mappers = new ArrayList<>();
+					mappings.add(mapping);
+					mappers.add(parentMapper);
+					oneToManyMappings.put(mapping.getFragment2(), mappings);
+					oneToManyMappers.put(mapping.getFragment2(), mappers);
 				}
 			}
-			//sort oneToManyMappings keys to put first composite statements, then blocks, then leaf statements
-			TreeSet<AbstractCodeFragment> sortedKeys = new TreeSet<>(new CodeFragmentComparator());
-			sortedKeys.addAll(oneToManyMappings.keySet());
-			Set<UMLOperationBodyMapper> updatedMappers = new LinkedHashSet<>();
-			for(AbstractCodeFragment fragment : sortedKeys) {
-				Set<AbstractCodeMapping> mappings = oneToManyMappings.get(fragment);
-				List<UMLOperationBodyMapper> mappers = oneToManyMappers.get(fragment);
-				Iterator<AbstractCodeMapping> mappingIterator = mappings.iterator();
-				Iterator<UMLOperationBodyMapper> mapperIterator = mappers.iterator();
-				List<Boolean> parentMappingFound = new ArrayList<>();
-				List<Boolean> parentIsContainerBody = new ArrayList<>();
-				List<Boolean> identical = new ArrayList<>();
-				while(mappingIterator.hasNext()) {
-					AbstractCodeMapping mapping = mappingIterator.next();
-					UMLOperationBodyMapper mapper = mapperIterator.next();
-					parentMappingFound.add(mapper.containsParentMapping(mapping));
-					parentIsContainerBody.add(mapper.parentIsContainerBody(mapping));
-					identical.add(mapping.getFragment1().getString().equals(mapping.getFragment2().getString()));
-				}
-				Set<Integer> indicesToBeRemoved = new LinkedHashSet<>();
-				if(parentMappingFound.contains(true)) {
-					for(int i=0; i<parentMappingFound.size(); i++) {
-						if(parentMappingFound.get(i) == false) {
-							indicesToBeRemoved.add(i);
-						}
-					}
-					if(indicesToBeRemoved.isEmpty() && identical.contains(true)) {
-						for(int i=0; i<identical.size(); i++) {
-							if(identical.get(i) == false) {
-								indicesToBeRemoved.add(i);
-							}
-						}
-					}
-				}
-				else if(parentIsContainerBody.contains(true)) {
-					for(int i=0; i<parentIsContainerBody.size(); i++) {
-						if(parentIsContainerBody.get(i) == false) {
-							indicesToBeRemoved.add(i);
-						}
-					}
-					if(indicesToBeRemoved.isEmpty() && identical.contains(true)) {
-						for(int i=0; i<identical.size(); i++) {
-							if(identical.get(i) == false) {
-								indicesToBeRemoved.add(i);
-							}
-						}
-					}
-				}
-				mappingIterator = mappings.iterator();
-				mapperIterator = mappers.iterator();
-				int index = 0;
-				while(mappingIterator.hasNext()) {
-					AbstractCodeMapping mapping = mappingIterator.next();
-					UMLOperationBodyMapper mapper = mapperIterator.next();
-					if(indicesToBeRemoved.contains(index)) {
-						mapper.removeMapping(mapping);
-						//remove refactorings based on mapping
-						Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
-						Set<Refactoring> refactoringsAfterPostProcessing = mapper.getRefactoringsAfterPostProcessing();
-						for(Refactoring r : refactoringsAfterPostProcessing) {
-							if(r instanceof ReferenceBasedRefactoring) {
-								ReferenceBasedRefactoring referenceBased = (ReferenceBasedRefactoring)r;
-								Set<AbstractCodeMapping> references = referenceBased.getReferences();
-								if(references.contains(mapping)) {
-									refactoringsToBeRemoved.add(r);
-								}
-							}
-						}
-						refactoringsAfterPostProcessing.removeAll(refactoringsToBeRemoved);
-						updatedMappers.add(mapper);
-					}
-					index++;
-				}
-			}
-			Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<>();
-			for(Refactoring ref : refactorings) {
-				if(ref instanceof InlineOperationRefactoring) {
-					InlineOperationRefactoring refactoring = (InlineOperationRefactoring)ref;
-					if(updatedMappers.contains(refactoring.getBodyMapper())) {
-						if(refactoring.getBodyMapper().getMappings().size() == 0) {
-							refactoringsToBeRemoved.add(refactoring);
-						}
-						else {
-							refactoring.updateMapperInfo();
-						}
-					}
-				}
-				else if(ref instanceof ExtractOperationRefactoring) {
-					ExtractOperationRefactoring refactoring = (ExtractOperationRefactoring)ref;
-					if(updatedMappers.contains(refactoring.getBodyMapper())) {
-						if(refactoring.getBodyMapper().getMappings().size() == 0) {
-							refactoringsToBeRemoved.add(refactoring);
-						}
-						else {
-							refactoring.updateMapperInfo();
-						}
-					}
-				}
-			}
-			refactorings.removeAll(refactoringsToBeRemoved);
+			optimizeDuplicateMappings(oneToManyMappings, oneToManyMappers);
 		}
 	}
 
@@ -1556,133 +1476,214 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 			}
-			for(Iterator<AbstractCodeFragment> it = oneToManyMappers.keySet().iterator(); it.hasNext();) {
-				AbstractCodeFragment fragment = it.next();
-				if(oneToManyMappings.get(fragment).size() == 1) {
-					oneToManyMappings.remove(fragment);
+			for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
+				if(oneToManyMappings.containsKey(mapping.getFragment1())) {
+					List<UMLOperationBodyMapper> childMappers = oneToManyMappers.get(mapping.getFragment1());
+					boolean singleStatementExtractedMethod = false;
+					for(UMLOperationBodyMapper childMapper : childMappers) {
+						if(childMapper.getContainer2().stringRepresentation().size() == 3) {
+							singleStatementExtractedMethod = true;
+							break;
+						}
+					}
+					if(!singleStatementExtractedMethod) {
+						oneToManyMappings.get(mapping.getFragment1()).add(mapping);
+						oneToManyMappers.get(mapping.getFragment1()).add(parentMapper);
+					}
+				}
+				else {
+					Set<AbstractCodeMapping> mappings = new LinkedHashSet<>();
+					List<UMLOperationBodyMapper> mappers = new ArrayList<>();
+					mappings.add(mapping);
+					mappers.add(parentMapper);
+					oneToManyMappings.put(mapping.getFragment1(), mappings);
+					oneToManyMappers.put(mapping.getFragment1(), mappers);
 				}
 			}
-			//sort oneToManyMappings keys to put first composite statements, then blocks, then leaf statements
-			TreeSet<AbstractCodeFragment> sortedKeys = new TreeSet<>(new CodeFragmentComparator());
-			sortedKeys.addAll(oneToManyMappings.keySet());
-			Set<UMLOperationBodyMapper> updatedMappers = new LinkedHashSet<>();
-			for(AbstractCodeFragment fragment : sortedKeys) {
-				Set<AbstractCodeMapping> mappings = oneToManyMappings.get(fragment);
-				List<UMLOperationBodyMapper> mappers = oneToManyMappers.get(fragment);
-				Iterator<AbstractCodeMapping> mappingIterator = mappings.iterator();
-				Iterator<UMLOperationBodyMapper> mapperIterator = mappers.iterator();
-				List<Boolean> parentMappingFound = new ArrayList<>();
-				List<Boolean> parentIsContainerBody = new ArrayList<>();
-				List<Boolean> nestedMapper = new ArrayList<>();
-				List<Boolean> identical = new ArrayList<>();
-				while(mappingIterator.hasNext()) {
-					AbstractCodeMapping mapping = mappingIterator.next();
-					UMLOperationBodyMapper mapper = mapperIterator.next();
-					parentMappingFound.add(mapper.containsParentMapping(mapping));
-					parentIsContainerBody.add(mapper.parentIsContainerBody(mapping));
-					nestedMapper.add(mapper.isNested());
-					identical.add(mapping.getFragment1().getString().equals(mapping.getFragment2().getString()));
-				}
-				Set<Integer> indicesToBeRemoved = new LinkedHashSet<>();
-				if(parentMappingFound.contains(true)) {
-					for(int i=0; i<parentMappingFound.size(); i++) {
-						if(parentMappingFound.get(i) == false) {
-							indicesToBeRemoved.add(i);
-						}
-					}
-					if(indicesToBeRemoved.isEmpty()) {
-						if(nestedMapper.contains(false)) {
-							for(int i=0; i<nestedMapper.size(); i++) {
-								if(nestedMapper.get(i) == true) {
-									indicesToBeRemoved.add(i);
-								}
-							}
-						}
-						if(identical.contains(true)) {
-							for(int i=0; i<identical.size(); i++) {
-								if(identical.get(i) == false) {
-									indicesToBeRemoved.add(i);
-								}
-							}
-						}
-					}
-				}
-				else if(parentIsContainerBody.contains(true)) {
-					for(int i=0; i<parentIsContainerBody.size(); i++) {
-						if(parentIsContainerBody.get(i) == false) {
-							indicesToBeRemoved.add(i);
-						}
-					}
-					if(indicesToBeRemoved.isEmpty()) {
-						if(nestedMapper.contains(false)) {
-							for(int i=0; i<nestedMapper.size(); i++) {
-								if(nestedMapper.get(i) == true) {
-									indicesToBeRemoved.add(i);
-								}
-							}
-						}
-						if(identical.contains(true)) {
-							for(int i=0; i<identical.size(); i++) {
-								if(identical.get(i) == false) {
-									indicesToBeRemoved.add(i);
-								}
-							}
-						}
-					}
-				}
-				mappingIterator = mappings.iterator();
-				mapperIterator = mappers.iterator();
-				int index = 0;
-				while(mappingIterator.hasNext()) {
-					AbstractCodeMapping mapping = mappingIterator.next();
-					UMLOperationBodyMapper mapper = mapperIterator.next();
-					if(indicesToBeRemoved.contains(index)) {
-						mapper.removeMapping(mapping);
-						//remove refactorings based on mapping
-						Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
-						Set<Refactoring> refactoringsAfterPostProcessing = mapper.getRefactoringsAfterPostProcessing();
-						for(Refactoring r : refactoringsAfterPostProcessing) {
-							if(r instanceof ReferenceBasedRefactoring) {
-								ReferenceBasedRefactoring referenceBased = (ReferenceBasedRefactoring)r;
-								Set<AbstractCodeMapping> references = referenceBased.getReferences();
-								if(references.contains(mapping)) {
-									refactoringsToBeRemoved.add(r);
-								}
-							}
-						}
-						refactoringsAfterPostProcessing.removeAll(refactoringsToBeRemoved);
-						updatedMappers.add(mapper);
-					}
-					index++;
-				}
-			}
-			Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<>();
-			for(Refactoring ref : refactorings) {
-				if(ref instanceof ExtractOperationRefactoring) {
-					ExtractOperationRefactoring refactoring = (ExtractOperationRefactoring)ref;
-					if(updatedMappers.contains(refactoring.getBodyMapper())) {
-						if(refactoring.getBodyMapper().getMappings().size() == 0) {
-							refactoringsToBeRemoved.add(refactoring);
-						}
-						else {
-							refactoring.updateMapperInfo();
-						}
-					}
-				}
-				else if(ref instanceof InlineOperationRefactoring) {
-					InlineOperationRefactoring refactoring = (InlineOperationRefactoring)ref;
-					if(updatedMappers.contains(refactoring.getBodyMapper())) {
-						if(refactoring.getBodyMapper().getMappings().size() == 0) {
-							refactoringsToBeRemoved.add(refactoring);
-						}
-						else {
-							refactoring.updateMapperInfo();
-						}
-					}
-				}
-			}
-			refactorings.removeAll(refactoringsToBeRemoved);
+			optimizeDuplicateMappings(oneToManyMappings, oneToManyMappers);
 		}
+	}
+
+	private void optimizeDuplicateMappings(Map<AbstractCodeFragment, Set<AbstractCodeMapping>> oneToManyMappings,
+			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers) {
+		for(Iterator<AbstractCodeFragment> it = oneToManyMappers.keySet().iterator(); it.hasNext();) {
+			AbstractCodeFragment fragment = it.next();
+			if(oneToManyMappings.get(fragment).size() == 1) {
+				oneToManyMappings.remove(fragment);
+			}
+		}
+		//sort oneToManyMappings keys to put first composite statements, then blocks, then leaf statements
+		TreeSet<AbstractCodeFragment> sortedKeys = new TreeSet<>(new CodeFragmentComparator());
+		sortedKeys.addAll(oneToManyMappings.keySet());
+		Set<UMLOperationBodyMapper> updatedMappers = new LinkedHashSet<>();
+		for(AbstractCodeFragment fragment : sortedKeys) {
+			Set<AbstractCodeMapping> mappings = oneToManyMappings.get(fragment);
+			List<UMLOperationBodyMapper> mappers = oneToManyMappers.get(fragment);
+			Iterator<AbstractCodeMapping> mappingIterator = mappings.iterator();
+			Iterator<UMLOperationBodyMapper> mapperIterator = mappers.iterator();
+			List<Boolean> parentMappingFound = new ArrayList<>();
+			List<Boolean> parentIsContainerBody = new ArrayList<>();
+			List<Boolean> nestedMapper = new ArrayList<>();
+			List<Boolean> identical = new ArrayList<>();
+			List<Integer> replacementTypeCount = new ArrayList<>();
+			List<Boolean> replacementCoversEntireStatement = new ArrayList<>();
+			while(mappingIterator.hasNext()) {
+				AbstractCodeMapping mapping = mappingIterator.next();
+				UMLOperationBodyMapper mapper = mapperIterator.next();
+				parentMappingFound.add(mapper.containsParentMapping(mapping));
+				parentIsContainerBody.add(mapper.parentIsContainerBody(mapping));
+				nestedMapper.add(mapper.isNested());
+				identical.add(mapping.getFragment1().getString().equals(mapping.getFragment2().getString()));
+				replacementTypeCount.add(mapping.getReplacementTypes().size());
+				boolean replacementFound = false;
+				for(Replacement r : mapping.getReplacements()) {
+					if((r.getBefore().equals(mapping.getFragment1().getString()) || (r.getBefore() + ";\n").equals(mapping.getFragment1().getString())) &&
+							(r.getAfter().equals(mapping.getFragment2().getString()) || (r.getAfter() + ";\n").equals(mapping.getFragment2().getString()))) {
+						replacementFound = true;
+						break;
+					}
+				}
+				replacementCoversEntireStatement.add(replacementFound);
+			}
+			Set<Integer> indicesToBeRemoved = new LinkedHashSet<>();
+			if(parentMappingFound.contains(true)) {
+				for(int i=0; i<parentMappingFound.size(); i++) {
+					if(parentMappingFound.get(i) == false) {
+						indicesToBeRemoved.add(i);
+					}
+				}
+				if(indicesToBeRemoved.isEmpty()) {
+					if(nestedMapper.contains(false)) {
+						for(int i=0; i<nestedMapper.size(); i++) {
+							if(nestedMapper.get(i) == true) {
+								indicesToBeRemoved.add(i);
+							}
+						}
+					}
+					if(identical.contains(true)) {
+						for(int i=0; i<identical.size(); i++) {
+							if(identical.get(i) == false) {
+								indicesToBeRemoved.add(i);
+							}
+						}
+					}
+					else {
+						if(replacementCoversEntireStatement.contains(false)) {
+							for(int i=0; i<replacementCoversEntireStatement.size(); i++) {
+								if(replacementCoversEntireStatement.get(i) == true) {
+									indicesToBeRemoved.add(i);
+								}
+							}
+						}
+						int minimum = replacementTypeCount.get(0);
+						for(int i=1; i<replacementTypeCount.size(); i++) {
+							if(replacementTypeCount.get(i) < minimum) {
+								minimum = replacementTypeCount.get(i);
+							}
+						}
+						for(int i=0; i<replacementTypeCount.size(); i++) {
+							if(replacementTypeCount.get(i) > minimum) {
+								indicesToBeRemoved.add(i);
+							}
+						}
+					}
+				}
+			}
+			else if(parentIsContainerBody.contains(true)) {
+				for(int i=0; i<parentIsContainerBody.size(); i++) {
+					if(parentIsContainerBody.get(i) == false) {
+						indicesToBeRemoved.add(i);
+					}
+				}
+				if(indicesToBeRemoved.isEmpty()) {
+					if(nestedMapper.contains(false)) {
+						for(int i=0; i<nestedMapper.size(); i++) {
+							if(nestedMapper.get(i) == true) {
+								indicesToBeRemoved.add(i);
+							}
+						}
+					}
+					if(identical.contains(true)) {
+						for(int i=0; i<identical.size(); i++) {
+							if(identical.get(i) == false) {
+								indicesToBeRemoved.add(i);
+							}
+						}
+					}
+					else {
+						if(replacementCoversEntireStatement.contains(false)) {
+							for(int i=0; i<replacementCoversEntireStatement.size(); i++) {
+								if(replacementCoversEntireStatement.get(i) == true) {
+									indicesToBeRemoved.add(i);
+								}
+							}
+						}
+						int minimum = replacementTypeCount.get(0);
+						for(int i=1; i<replacementTypeCount.size(); i++) {
+							if(replacementTypeCount.get(i) < minimum) {
+								minimum = replacementTypeCount.get(i);
+							}
+						}
+						for(int i=0; i<replacementTypeCount.size(); i++) {
+							if(replacementTypeCount.get(i) > minimum) {
+								indicesToBeRemoved.add(i);
+							}
+						}
+					}
+				}
+			}
+			mappingIterator = mappings.iterator();
+			mapperIterator = mappers.iterator();
+			int index = 0;
+			while(mappingIterator.hasNext()) {
+				AbstractCodeMapping mapping = mappingIterator.next();
+				UMLOperationBodyMapper mapper = mapperIterator.next();
+				if(indicesToBeRemoved.contains(index)) {
+					mapper.removeMapping(mapping);
+					//remove refactorings based on mapping
+					Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
+					Set<Refactoring> refactoringsAfterPostProcessing = mapper.getRefactoringsAfterPostProcessing();
+					for(Refactoring r : refactoringsAfterPostProcessing) {
+						if(r instanceof ReferenceBasedRefactoring) {
+							ReferenceBasedRefactoring referenceBased = (ReferenceBasedRefactoring)r;
+							Set<AbstractCodeMapping> references = referenceBased.getReferences();
+							if(references.contains(mapping)) {
+								refactoringsToBeRemoved.add(r);
+							}
+						}
+					}
+					refactoringsAfterPostProcessing.removeAll(refactoringsToBeRemoved);
+					updatedMappers.add(mapper);
+				}
+				index++;
+			}
+		}
+		Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<>();
+		for(Refactoring ref : refactorings) {
+			if(ref instanceof ExtractOperationRefactoring) {
+				ExtractOperationRefactoring refactoring = (ExtractOperationRefactoring)ref;
+				if(updatedMappers.contains(refactoring.getBodyMapper())) {
+					if(refactoring.getBodyMapper().getMappings().size() == 0) {
+						refactoringsToBeRemoved.add(refactoring);
+					}
+					else {
+						refactoring.updateMapperInfo();
+					}
+				}
+			}
+			else if(ref instanceof InlineOperationRefactoring) {
+				InlineOperationRefactoring refactoring = (InlineOperationRefactoring)ref;
+				if(updatedMappers.contains(refactoring.getBodyMapper())) {
+					if(refactoring.getBodyMapper().getMappings().size() == 0) {
+						refactoringsToBeRemoved.add(refactoring);
+					}
+					else {
+						refactoring.updateMapperInfo();
+					}
+				}
+			}
+		}
+		refactorings.removeAll(refactoringsToBeRemoved);
 	}
 
 	public boolean isEmpty() {

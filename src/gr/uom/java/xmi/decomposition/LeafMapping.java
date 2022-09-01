@@ -1,11 +1,13 @@
 package gr.uom.java.xmi.decomposition;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.StringDistance;
@@ -90,6 +92,67 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				}
 				else if(o.referencesMapping(this)) {
 					return -1;
+				}
+				Set<ReplacementType> thisReplacementTypes = this.getReplacementTypes();
+				Set<ReplacementType> otherReplacementTypes = o.getReplacementTypes();
+				Set<ReplacementType> intersection = new LinkedHashSet<>(thisReplacementTypes);
+				intersection.retainAll(otherReplacementTypes);
+				if(intersection.size() > 0 && (intersection.equals(thisReplacementTypes) || intersection.equals(otherReplacementTypes))) {
+					Set<ReplacementType> thisReplacementTypesWithoutCommon = new LinkedHashSet<>(thisReplacementTypes);
+					thisReplacementTypesWithoutCommon.removeAll(intersection);
+					Set<ReplacementType> otherReplacementTypesWithoutCommon = new LinkedHashSet<>(otherReplacementTypes);
+					otherReplacementTypesWithoutCommon.removeAll(intersection);
+					int sameReplacementCount = 0;
+					for(ReplacementType type : intersection) {
+						String before = null, after = null;
+						for(Replacement r : this.getReplacements()) {
+							if(r.getType().equals(type)) {
+								before = r.getBefore();
+								after = r.getAfter();
+								break;
+							}
+						}
+						for(Replacement r : o.getReplacements()) {
+							if(r.getType().equals(type)) {
+								if(before.equals(r.getBefore()) || after.equals(r.getAfter())) {
+									sameReplacementCount++;
+									break;
+								}
+							}
+						}
+					}
+					int identicalNodesCount = 0;
+					for(ReplacementType type : thisReplacementTypesWithoutCommon) {
+						if(type.equals(ReplacementType.STRING_LITERAL) && o.getFragment1().getStringLiterals().equals(o.getFragment2().getStringLiterals()) && o.getFragment1().getStringLiterals().size() > 0) {
+							identicalNodesCount++;
+						}
+						else if(type.equals(ReplacementType.NUMBER_LITERAL) && o.getFragment1().getNumberLiterals().equals(o.getFragment2().getNumberLiterals()) && o.getFragment1().getNumberLiterals().size() > 0) {
+							identicalNodesCount++;
+						}
+					}
+					for(ReplacementType type : otherReplacementTypesWithoutCommon) {
+						if(type.equals(ReplacementType.STRING_LITERAL) && this.getFragment1().getStringLiterals().equals(this.getFragment2().getStringLiterals()) && this.getFragment1().getStringLiterals().size() > 0) {
+							identicalNodesCount++;
+						}
+						else if(type.equals(ReplacementType.NUMBER_LITERAL) && this.getFragment1().getNumberLiterals().equals(this.getFragment2().getNumberLiterals()) && this.getFragment1().getNumberLiterals().size() > 0) {
+							identicalNodesCount++;
+						}
+					}
+					boolean identicalNodes = false;
+					if(thisReplacementTypesWithoutCommon.size() > 0) {
+						identicalNodes = identicalNodesCount == thisReplacementTypesWithoutCommon.size();
+					}
+					else if(otherReplacementTypesWithoutCommon.size() > 0) {
+						identicalNodes = identicalNodesCount == otherReplacementTypesWithoutCommon.size();
+					}
+					if(sameReplacementCount == intersection.size() && identicalNodes) {
+						if(intersection.equals(thisReplacementTypes) && !intersection.equals(otherReplacementTypes)) {
+							return -1;
+						}
+						else if(intersection.equals(otherReplacementTypes) && !intersection.equals(thisReplacementTypes)) {
+							return 1;
+						}
+					}
 				}
 				return Double.compare(distance1, distance2);
 			}

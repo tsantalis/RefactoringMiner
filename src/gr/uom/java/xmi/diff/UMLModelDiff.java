@@ -2496,7 +2496,7 @@ public class UMLModelDiff {
 									parameterToArgumentMap2.put(expression + ".", "");
 									parameterToArgumentMap1.put("this.", "");
 								}
-								UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(removedOperation.getClassName()));
+								UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(removedOperation.getClassName()), false);
 								if(moveAndInlineMatchCondition(operationBodyMapper, mapper)) {
 									InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getContainer1(), removedOperationInvocations);
 									refactorings.add(inlineOperationRefactoring);
@@ -2648,7 +2648,7 @@ public class UMLModelDiff {
 								parameterToArgumentMap1.put(addedOperationInvocation.getExpression() + ".", "");
 								parameterToArgumentMap2.put("this.", "");
 							}
-							UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(addedOperation.getClassName()));
+							UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(addedOperation.getClassName()), false);
 							if(!anotherAddedMethodExistsWithBetterMatchingInvocationExpression(addedOperationInvocation, addedOperation, addedOperations) &&
 									!conflictingExpression(addedOperationInvocation, addedOperation, mapper.getContainer2().variableDeclarationMap()) &&
 									extractAndMoveMatchCondition(operationBodyMapper, mapper)) {

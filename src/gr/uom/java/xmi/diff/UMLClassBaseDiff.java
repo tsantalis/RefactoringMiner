@@ -250,14 +250,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
     	}
 	}
 
-	protected void processEnumConstants() {
+	protected void processEnumConstants() throws RefactoringMinerTimedOutException {
 		for(UMLEnumConstant enumConstant : originalClass.getEnumConstants()) {
 			UMLEnumConstant matchingEnumConstant = nextClass.containsEnumConstant(enumConstant);
     		if(matchingEnumConstant == null) {
     			this.removedEnumConstants.add(enumConstant);
     		}
     		else {
-    			UMLEnumConstantDiff enumConstantDiff = new UMLEnumConstantDiff(enumConstant, matchingEnumConstant);
+    			UMLEnumConstantDiff enumConstantDiff = new UMLEnumConstantDiff(enumConstant, matchingEnumConstant, this, modelDiff);
     			if(!enumConstantDiff.isEmpty()) {
 	    			refactorings.addAll(enumConstantDiff.getRefactorings());
 	    			this.enumConstantDiffList.add(enumConstantDiff);
@@ -270,7 +270,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
     			this.addedEnumConstants.add(enumConstant);
     		}
     		else {
-    			UMLEnumConstantDiff enumConstantDiff = new UMLEnumConstantDiff(matchingEnumConstant, enumConstant);
+    			UMLEnumConstantDiff enumConstantDiff = new UMLEnumConstantDiff(matchingEnumConstant, enumConstant, this, modelDiff);
     			if(!enumConstantDiff.isEmpty()) {
 	    			refactorings.addAll(enumConstantDiff.getRefactorings());
 					this.enumConstantDiffList.add(enumConstantDiff);

@@ -1384,7 +1384,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	private void optimizeDuplicateMappingsForInline(UMLOperationBodyMapper parentMapper) {
 		if(parentMapper.getChildMappers().size() > 1) {
-			Map<AbstractCodeFragment, Set<AbstractCodeMapping>> oneToManyMappings = new HashMap<>();
+			Map<AbstractCodeFragment, List<AbstractCodeMapping>> oneToManyMappings = new HashMap<>();
 			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers = new HashMap<>();
 			for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
 				for(AbstractCodeMapping mapping : childMapper.getMappings()) {
@@ -1393,7 +1393,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						oneToManyMappers.get(mapping.getFragment2()).add(childMapper);
 					}
 					else {
-						Set<AbstractCodeMapping> mappings = new LinkedHashSet<>();
+						List<AbstractCodeMapping> mappings = new ArrayList<>();
 						List<UMLOperationBodyMapper> mappers = new ArrayList<>();
 						mappings.add(mapping);
 						mappers.add(childMapper);
@@ -1418,7 +1418,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 				else {
-					Set<AbstractCodeMapping> mappings = new LinkedHashSet<>();
+					List<AbstractCodeMapping> mappings = new ArrayList<>();
 					List<UMLOperationBodyMapper> mappers = new ArrayList<>();
 					mappings.add(mapping);
 					mappers.add(parentMapper);
@@ -1458,7 +1458,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	private void optimizeDuplicateMappingsForExtract(UMLOperationBodyMapper parentMapper) {
 		if(parentMapper.getChildMappers().size() > 1) {
-			Map<AbstractCodeFragment, Set<AbstractCodeMapping>> oneToManyMappings = new HashMap<>();
+			Map<AbstractCodeFragment, List<AbstractCodeMapping>> oneToManyMappings = new HashMap<>();
 			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers = new HashMap<>();
 			for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
 				for(AbstractCodeMapping mapping : childMapper.getMappings()) {
@@ -1467,7 +1467,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						oneToManyMappers.get(mapping.getFragment1()).add(childMapper);
 					}
 					else {
-						Set<AbstractCodeMapping> mappings = new LinkedHashSet<>();
+						List<AbstractCodeMapping> mappings = new ArrayList<>();
 						List<UMLOperationBodyMapper> mappers = new ArrayList<>();
 						mappings.add(mapping);
 						mappers.add(childMapper);
@@ -1492,7 +1492,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 				else {
-					Set<AbstractCodeMapping> mappings = new LinkedHashSet<>();
+					List<AbstractCodeMapping> mappings = new ArrayList<>();
 					List<UMLOperationBodyMapper> mappers = new ArrayList<>();
 					mappings.add(mapping);
 					mappers.add(parentMapper);
@@ -1504,7 +1504,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		}
 	}
 
-	private void optimizeDuplicateMappings(Map<AbstractCodeFragment, Set<AbstractCodeMapping>> oneToManyMappings,
+	private void optimizeDuplicateMappings(Map<AbstractCodeFragment, List<AbstractCodeMapping>> oneToManyMappings,
 			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers) {
 		for(Iterator<AbstractCodeFragment> it = oneToManyMappers.keySet().iterator(); it.hasNext();) {
 			AbstractCodeFragment fragment = it.next();
@@ -1517,7 +1517,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		sortedKeys.addAll(oneToManyMappings.keySet());
 		Set<UMLOperationBodyMapper> updatedMappers = new LinkedHashSet<>();
 		for(AbstractCodeFragment fragment : sortedKeys) {
-			Set<AbstractCodeMapping> mappings = oneToManyMappings.get(fragment);
+			List<AbstractCodeMapping> mappings = oneToManyMappings.get(fragment);
 			List<UMLOperationBodyMapper> mappers = oneToManyMappers.get(fragment);
 			Iterator<AbstractCodeMapping> mappingIterator = mappings.iterator();
 			Iterator<UMLOperationBodyMapper> mapperIterator = mappers.iterator();

@@ -1272,10 +1272,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(AbstractCodeFragment nonMappedLeaf1 : new ArrayList<>(operationBodyMapper.getNonMappedLeavesT1())) {
 				expandAnonymousAndLambdas(nonMappedLeaf1, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
 			}
+			List<AbstractCodeFragment> leaves2 = composite2.getLeaves();
 			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
 				if(!returnWithVariableReplacement(mapping) && !nullLiteralReplacements(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
 					AbstractCodeFragment fragment = mapping.getFragment1();
 					expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
+				}
+				else if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+					for(AbstractCodeFragment leaf2 : leaves2) {
+						if(mapping.getFragment1().getString().equals(leaf2.getString())) {
+							CompositeStatementObject parent1 = mapping.getFragment1().getParent();
+							if(parent1.getParent() != null && !operationBodyMapper.alreadyMatched1(parent1)) {
+								AbstractCodeFragment fragment = mapping.getFragment1();
+								expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
+								break;
+							}
+						}
+					}
 				}
 			}
 			for(UMLOperationBodyMapper childMapper : operationBodyMapper.childMappers) {
@@ -1291,7 +1304,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			List<AbstractCodeFragment> leaves2 = composite2.getLeaves();
+			
 			List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
 			Set<AbstractCodeFragment> addedLeaves2 = new LinkedHashSet<AbstractCodeFragment>();
 			Set<CompositeStatementObject> addedInnerNodes2 = new LinkedHashSet<CompositeStatementObject>();
@@ -2843,7 +2856,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 													if (replacements != null) {
 														LeafMapping mapping = createLeafMapping(leaf1, leaf, parameterToArgumentMap);
 														mapping.addReplacements(replacements);
-														int lineDistance = lineDistanceFromExistingMappings1(mapping).getMiddle();
+														int lineDistance = 0;
+														if(exactMappingsBefore + inexactMappingsBefore == 0 && callsToExtractedMethod == 1) {
+															lineDistance = lineDistanceFromExistingMappings1(mapping).getRight();
+														}
+														else if(exactMappingsBefore + inexactMappingsBefore < exactMappingsAfter + inexactMappingsAfter) {
+															lineDistance = lineDistanceFromExistingMappings1(mapping).getLeft();
+														}
+														else {
+															lineDistance = lineDistanceFromExistingMappings1(mapping).getMiddle();
+														}
 														if(!lineDistanceMap.containsKey(lineDistance)) {
 															lineDistanceMap.put(lineDistance, mapping);
 														}

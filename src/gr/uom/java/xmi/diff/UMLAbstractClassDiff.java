@@ -146,7 +146,7 @@ public abstract class UMLAbstractClassDiff {
 
 	protected abstract void createBodyMappers() throws RefactoringMinerTimedOutException;
 
-	protected boolean isPartOfMethodMovedFromExistingMethod(UMLOperation removedOperation, UMLOperation addedOperation) {
+	protected boolean isPartOfMethodMovedFromExistingMethod(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation) {
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 			List<AbstractCall> invocationsCalledInOperation1 = mapper.getContainer1().getAllOperationInvocations();
 			List<AbstractCall> invocationsCalledInOperation2 = mapper.getContainer2().getAllOperationInvocations();
@@ -180,7 +180,7 @@ public abstract class UMLAbstractClassDiff {
 		return false;
 	}
 
-	protected boolean isPartOfMethodMovedToExistingMethod(UMLOperation removedOperation, UMLOperation addedOperation) {
+	protected boolean isPartOfMethodMovedToExistingMethod(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation) {
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 			List<AbstractCall> invocationsCalledInOperation1 = mapper.getContainer1().getAllOperationInvocations();
 			List<AbstractCall> invocationsCalledInOperation2 = mapper.getContainer2().getAllOperationInvocations();
@@ -228,7 +228,7 @@ public abstract class UMLAbstractClassDiff {
 		return false;
 	}
 
-	protected boolean isPartOfMethodExtracted(UMLOperation removedOperation, UMLOperation addedOperation) {
+	protected boolean isPartOfMethodExtracted(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation) {
 		List<AbstractCall> removedOperationInvocations = removedOperation.getAllOperationInvocations();
 		List<AbstractCall> addedOperationInvocations = addedOperation.getAllOperationInvocations();
 		Set<AbstractCall> intersection = new LinkedHashSet<AbstractCall>(removedOperationInvocations);
@@ -895,7 +895,7 @@ public abstract class UMLAbstractClassDiff {
 		return false;
 	}
 
-	private Set<String> getVariableDeclarationNamesInMethodBody(UMLOperation operation) {
+	private Set<String> getVariableDeclarationNamesInMethodBody(VariableDeclarationContainer operation) {
 		if(operation.getBody() != null) {
 			Set<String> keySet = new LinkedHashSet<>(operation.variableDeclarationMap().keySet());
 			keySet.removeAll(operation.getParameterNameList());
@@ -904,7 +904,7 @@ public abstract class UMLAbstractClassDiff {
 		return Collections.emptySet();
 	}
 
-	protected boolean isPartOfMethodInlined(UMLOperation removedOperation, UMLOperation addedOperation) {
+	protected boolean isPartOfMethodInlined(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation) {
 		List<AbstractCall> removedOperationInvocations = removedOperation.getAllOperationInvocations();
 		List<AbstractCall> addedOperationInvocations = addedOperation.getAllOperationInvocations();
 		Set<AbstractCall> intersection = new LinkedHashSet<AbstractCall>(removedOperationInvocations);

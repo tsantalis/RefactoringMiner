@@ -5149,7 +5149,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
 								this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
 							}
-							this.refactorings.addAll(anonymousClassDiff.getRefactorings());
+							List<Refactoring> anonymousClassDiffRefactorings = anonymousClassDiff.getRefactorings();
+							for(Refactoring r : anonymousClassDiffRefactorings) {
+								if(r instanceof ExtractOperationRefactoring) {
+									UMLOperationBodyMapper childMapper = ((ExtractOperationRefactoring)r).getBodyMapper();
+									addAllMappings(childMapper.mappings);
+								}
+							}
+							this.refactorings.addAll(anonymousClassDiffRefactorings);
 							if(!anonymousClassDeclaration1.toString().equals(anonymousClassDeclaration2.toString())) {
 								Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), anonymousClassDeclaration2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION);
 								replacementInfo.addReplacement(replacement);
@@ -6407,6 +6414,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				sb.append("=true;\n");
 				if(commonSuffix.equals(sb.toString())) {
+					return false;
+				}
+			}
+			else {
+				String prefix = null;
+				if(s1.equals(commonSuffix)) {
+					prefix = s2.substring(0, s2.indexOf(commonSuffix));
+				}
+				else {
+					prefix = s1.substring(0, s1.indexOf(commonSuffix));
+				}
+				int numberOfSpaces = 0;
+				for(int i=0; i<prefix.length(); i++) {
+					if(prefix.charAt(i) == ' ') {
+						numberOfSpaces++;
+					}
+				}
+				//allow final modifier and type
+				if(numberOfSpaces > 2) {
 					return false;
 				}
 			}

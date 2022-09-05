@@ -105,6 +105,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Set<Pair<VariableDeclaration, VariableDeclaration>> movedVariables;
 	private int callsToExtractedMethod = 0;
 	private boolean nested;
+	private AbstractCall operationInvocation;
 	private Map<String, String> parameterToArgumentMap1;
 	private Map<String, String> parameterToArgumentMap2;
 
@@ -1220,8 +1221,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public UMLOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper, UMLOperation addedOperation,
-			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2, UMLAbstractClassDiff classDiff, boolean nested) throws RefactoringMinerTimedOutException {
+			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2, UMLAbstractClassDiff classDiff, AbstractCall operationInvocation, boolean nested) throws RefactoringMinerTimedOutException {
 		this.parentMapper = operationBodyMapper;
+		this.operationInvocation = operationInvocation;
 		this.nested = nested;
 		this.parameterToArgumentMap1 = parameterToArgumentMap1;
 		this.parameterToArgumentMap2 = parameterToArgumentMap2;
@@ -2150,6 +2152,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						innerNodes2.remove(block2);
 					}
 				}
+				else if(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+						comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+						comp1.getStatements().size() == 2 && comp2.getStatements().size() == 2) {
+					for(int i=0; i<comp1.getStatements().size(); i++) {
+						AbstractStatement block1 = comp1.getStatements().get(i);
+						AbstractStatement block2 = comp2.getStatements().get(i);
+						if(blocks1.contains(block1) && blocks2.contains(block2)) {
+							double score = computeScore((CompositeStatementObject)block1, (CompositeStatementObject)block2, removedOperations, addedOperations, tryWithResourceMigration);
+							CompositeStatementObjectMapping newMapping = createCompositeMapping((CompositeStatementObject)block1, (CompositeStatementObject)block2, parameterToArgumentMap, score);
+							addMapping(newMapping);
+							innerNodes1.remove(block1);
+							innerNodes2.remove(block2);
+						}
+					}
+				}
 			}
 			else if(mapping.getFragment1().getLambdas().size() > 0 && mapping.getFragment2().getLambdas().size() > 0) {
 				LambdaExpressionObject lambda1 = mapping.getFragment1().getLambdas().get(0);
@@ -2708,6 +2725,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			AbstractCodeMapping startMapping = null;
 			AbstractCodeMapping endMapping = null;
+			AbstractCodeMapping parentMapping = null;
 			if(parentMapper != null) {
 				for(AbstractCodeMapping mapping : this.mappings) {
 					if(startMapping == null) {
@@ -2723,6 +2741,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					else if(mapping.getFragment1().getLocationInfo().getStartLine() > endMapping.getFragment1().getLocationInfo().getStartLine() &&
 							mapping.getFragment2().getLocationInfo().getStartLine() > endMapping.getFragment2().getLocationInfo().getStartLine()) {
 						endMapping = mapping;
+					}
+				}
+				if(this.mappings.isEmpty() && operationInvocation != null) {
+					AbstractCodeFragment statementContainingOperationInvocation = null;
+					for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT2()) {
+						if(leaf.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
+							statementContainingOperationInvocation = leaf;
+							break;
+						}
+					}
+					for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
+						if(mapping instanceof LeafMapping) {
+							if(mapping.getFragment2().getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
+								statementContainingOperationInvocation = mapping.getFragment2();
+							}
+						}
+						if(statementContainingOperationInvocation != null && mapping.getFragment2().equals(statementContainingOperationInvocation.getParent())) {
+							parentMapping = mapping;
+							break;
+						}
 					}
 				}
 			}
@@ -2784,10 +2822,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							leafIterator2.remove();
 						}
 						else {
-							if(isScopedMatch(startMapping, endMapping) && mappingSet.size() > 1 && mappings.size() > 1) {
+							if(isScopedMatch(startMapping, endMapping, parentMapping) && mappingSet.size() > 1) {
 								TreeSet<LeafMapping> scopedMappingSet = new TreeSet<LeafMapping>();
 								for(LeafMapping mapping : mappingSet) {
-									if(isWithinScope(startMapping, endMapping, mapping)) {
+									if(isWithinScope(startMapping, endMapping, parentMapping, mapping)) {
 										scopedMappingSet.add(mapping);
 									}
 								}
@@ -2936,16 +2974,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	private boolean isScopedMatch(AbstractCodeMapping startMapping, AbstractCodeMapping endMapping) {
-		return parentMapper != null && startMapping != null && endMapping != null && (callsToExtractedMethod > 1 || nested);
+	private boolean isScopedMatch(AbstractCodeMapping startMapping, AbstractCodeMapping endMapping, AbstractCodeMapping parentMapping) {
+		if(parentMapper != null && (callsToExtractedMethod > 1 || nested)) {
+			return (startMapping != null && endMapping != null && mappings.size() > 1) || parentMapping != null;
+		}
+		return false;
 	}
 
-	private boolean isWithinScope(AbstractCodeMapping startMapping, AbstractCodeMapping endMapping, AbstractCodeMapping mappingToCheck) {
-		if(parentMapper != null && startMapping != null && endMapping != null && (callsToExtractedMethod > 1 || nested)) {
-			if(mappingToCheck.getFragment2().getLocationInfo().getStartLine() >= startMapping.getFragment2().getLocationInfo().getStartLine() &&
-					mappingToCheck.getFragment2().getLocationInfo().getStartLine() <= endMapping.getFragment2().getLocationInfo().getStartLine()) {
-				return mappingToCheck.getFragment1().getLocationInfo().getStartLine() >= startMapping.getFragment1().getLocationInfo().getStartLine() &&
-						mappingToCheck.getFragment1().getLocationInfo().getStartLine() <= endMapping.getFragment1().getLocationInfo().getStartLine();
+	private boolean isWithinScope(AbstractCodeMapping startMapping, AbstractCodeMapping endMapping, AbstractCodeMapping parentMapping, AbstractCodeMapping mappingToCheck) {
+		if(parentMapper != null && (callsToExtractedMethod > 1 || nested)) {
+			if(startMapping != null && endMapping != null) {
+				if(mappingToCheck.getFragment2().getLocationInfo().getStartLine() >= startMapping.getFragment2().getLocationInfo().getStartLine() &&
+						mappingToCheck.getFragment2().getLocationInfo().getStartLine() <= endMapping.getFragment2().getLocationInfo().getStartLine()) {
+					return mappingToCheck.getFragment1().getLocationInfo().getStartLine() >= startMapping.getFragment1().getLocationInfo().getStartLine() &&
+							mappingToCheck.getFragment1().getLocationInfo().getStartLine() <= endMapping.getFragment1().getLocationInfo().getStartLine();
+				}
+			}
+			else if(parentMapping != null) {
+				if(mappingToCheck.getFragment2().getLocationInfo().getStartLine() >= parentMapping.getFragment2().getLocationInfo().getStartLine() &&
+						mappingToCheck.getFragment2().getLocationInfo().getStartLine() <= parentMapping.getFragment2().getLocationInfo().getEndLine()) {
+					return mappingToCheck.getFragment1().getLocationInfo().getStartLine() >= parentMapping.getFragment1().getLocationInfo().getStartLine() &&
+							mappingToCheck.getFragment1().getLocationInfo().getStartLine() <= parentMapping.getFragment1().getLocationInfo().getEndLine();
+				}
 			}
 		}
 		return true;

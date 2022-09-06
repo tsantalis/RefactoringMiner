@@ -1453,7 +1453,7 @@ public class UMLModelDiff {
 			}
 		}
 		int threshold = 1;
-		if(attributeOfExtractedClassType != null)
+		if(attributeOfExtractedClassType != null || classDiff.getNextClass().isInnerClass(umlClass))
 			threshold = 0;
 		if(commonOperations.size() > threshold || commonAttributes.size() > threshold) {
 			return new ExtractClassRefactoring(umlClass, classDiff, commonOperations, commonAttributes, attributeOfExtractedClassType);

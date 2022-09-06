@@ -1457,6 +1457,22 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		addedOperations.removeAll(operationsToBeRemoved);
 	}
 
+	private boolean subexpressionOverlap(List<AbstractCodeMapping> mappings, AbstractCodeMapping newMapping) {
+		for(AbstractCodeMapping previousMapping : mappings) {
+			AbstractCodeFragment previousFragment2 = previousMapping.getFragment2();
+			AbstractCodeFragment newFragment2 = newMapping.getFragment2();
+			if(previousFragment2.getString().startsWith("return ") && previousFragment2.getString().endsWith(";\n") &&
+					newFragment2.getString().startsWith("return ") && newFragment2.getString().endsWith(";\n")) {
+				String previousReturnExpression = previousFragment2.getString().substring("return ".length(), previousFragment2.getString().length()-2);
+				String newReturnExpression = newFragment2.getString().substring("return ".length(), newFragment2.getString().length()-2);
+				if(previousReturnExpression.contains("(" + newReturnExpression + ")") || newReturnExpression.contains("(" + previousReturnExpression + ")")) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private void optimizeDuplicateMappingsForExtract(UMLOperationBodyMapper parentMapper) {
 		if(parentMapper.getChildMappers().size() > 1) {
 			Map<AbstractCodeFragment, List<AbstractCodeMapping>> oneToManyMappings = new HashMap<>();
@@ -1464,8 +1480,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
 				for(AbstractCodeMapping mapping : childMapper.getMappings()) {
 					if(oneToManyMappings.containsKey(mapping.getFragment1())) {
-						oneToManyMappings.get(mapping.getFragment1()).add(mapping);
-						oneToManyMappers.get(mapping.getFragment1()).add(childMapper);
+						if(!subexpressionOverlap(oneToManyMappings.get(mapping.getFragment1()), mapping)) {
+							oneToManyMappings.get(mapping.getFragment1()).add(mapping);
+							oneToManyMappers.get(mapping.getFragment1()).add(childMapper);
+						}
 					}
 					else {
 						List<AbstractCodeMapping> mappings = new ArrayList<>();

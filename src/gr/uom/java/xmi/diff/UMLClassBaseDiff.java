@@ -1540,6 +1540,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			List<UMLOperationBodyMapper> mappers = oneToManyMappers.get(fragment);
 			Iterator<AbstractCodeMapping> mappingIterator = mappings.iterator();
 			Iterator<UMLOperationBodyMapper> mapperIterator = mappers.iterator();
+			List<Boolean> callsExtractedInlinedMethod = new ArrayList<>();
 			List<Boolean> parentMappingFound = new ArrayList<>();
 			List<Boolean> parentIsContainerBody = new ArrayList<>();
 			List<Boolean> nestedMapper = new ArrayList<>();
@@ -1549,6 +1550,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			while(mappingIterator.hasNext()) {
 				AbstractCodeMapping mapping = mappingIterator.next();
 				UMLOperationBodyMapper mapper = mapperIterator.next();
+				callsExtractedInlinedMethod.add(mapper.containsExtractedOrInlinedOperationInvocation(mapping));
 				parentMappingFound.add(mapper.containsParentMapping(mapping));
 				parentIsContainerBody.add(mapper.parentIsContainerBody(mapping));
 				nestedMapper.add(mapper.isNested());
@@ -1565,7 +1567,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				replacementCoversEntireStatement.add(replacementFound);
 			}
 			Set<Integer> indicesToBeRemoved = new LinkedHashSet<>();
-			if(parentMappingFound.contains(true)) {
+			if(callsExtractedInlinedMethod.contains(true) && callsExtractedInlinedMethod.contains(false)) {
+				for(int i=0; i<callsExtractedInlinedMethod.size(); i++) {
+					if(callsExtractedInlinedMethod.get(i) == true) {
+						indicesToBeRemoved.add(i);
+					}
+				}
+			}
+			else if(parentMappingFound.contains(true)) {
 				for(int i=0; i<parentMappingFound.size(); i++) {
 					if(parentMappingFound.get(i) == false) {
 						indicesToBeRemoved.add(i);

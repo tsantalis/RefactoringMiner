@@ -4264,6 +4264,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								additionallyMatchedStatements2.add(codeFragment);
 							}
 						}
+						if(classDiff != null) {
+							boolean removedAttributeMatched = false;
+							for(UMLAttribute removedAttribute : classDiff.getRemovedAttributes()) {
+								if(removedAttribute.getName().equals(assignmentInvocationCoveringTheEntireStatement1.getExpression())) {
+									removedAttributeMatched = true;
+									break;
+								}
+							}
+							boolean addedAttributeMatched = false;
+							for(UMLAttribute addedAttribute : classDiff.getAddedAttributes()) {
+								if(addedAttribute.getName().equals(invocationCoveringTheEntireStatement2.getExpression())) {
+									addedAttributeMatched = true;
+									break;
+								}
+							}
+							if(removedAttributeMatched && addedAttributeMatched) {
+								expressionMatched = true;
+							}
+						}
 						if(expressionMatched) {
 							if(additionallyMatchedStatements2.size() > 0) {
 								Replacement r = new CompositeReplacement(statement1.getString(), statement2.getString(), new LinkedHashSet<AbstractCodeFragment>(), additionallyMatchedStatements2);
@@ -7888,6 +7907,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					matchingStatements++;
 			}
 			return matchingStatements > 0;
+		}
+		return false;
+	}
+
+	public boolean containsExtractedOrInlinedOperationInvocation(AbstractCodeMapping mapping) {
+		if(operationInvocation != null) {
+			return mapping.getFragment2().getLocationInfo().subsumes(operationInvocation.getLocationInfo());
+		}
+		else if(childMappers.size() > 0) {
+			for(UMLOperationBodyMapper childMapper : childMappers) {
+				if(childMapper.containsExtractedOrInlinedOperationInvocation(mapping)) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}

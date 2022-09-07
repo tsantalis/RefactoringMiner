@@ -7257,7 +7257,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(element2.endsWith(substringAfterIndex1) && substringAfterIndex1.length() > 1) {
 						element2 = element2.substring(0, element2.indexOf(substringAfterIndex1));
 					}
-					if(s2.contains(element2) && !s2.equals(element2)) {
+					if(s2.contains(element2) && !s2.equals(element2) && !element1.equals(element2)) {
 						int startIndex2 = s2.indexOf(element2);
 						String substringBeforeIndex2 = s2.substring(0, startIndex2);
 						String substringAfterIndex2 = s2.substring(startIndex2 + element2.length(), s2.length());

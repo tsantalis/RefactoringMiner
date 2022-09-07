@@ -82,7 +82,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/brettwooldridge/HikariCP.git", 8, 0, 0);
         processRepositoryCommits("https://github.com/eucalyptus/eucalyptus.git", 42, 0, 1);
         processRepositoryCommits("https://github.com/dreamhead/moco.git", 2, 0, 0);
-        processRepositoryCommits("https://github.com/neo4j/neo4j.git", 850, 4, 37);
+        processRepositoryCommits("https://github.com/neo4j/neo4j.git", 848, 4, 37);
         processRepositoryCommits("https://github.com/skylot/jadx.git", 29, 1, 0);
         processRepositoryCommits("https://github.com/vaadin/vaadin.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/restlet/restlet-framework-java.git", 5, 0, 0);

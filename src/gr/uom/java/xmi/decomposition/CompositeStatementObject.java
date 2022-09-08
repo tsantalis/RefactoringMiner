@@ -44,6 +44,18 @@ public class CompositeStatementObject extends AbstractStatement {
 		return statementList;
 	}
 
+	public List<AbstractStatement> getAllStatements() {
+		List<AbstractStatement> allStatements = new ArrayList<>();
+		for(AbstractStatement statement : statementList) {
+			allStatements.add(statement);
+			if(statement instanceof CompositeStatementObject) {
+				CompositeStatementObject composite = (CompositeStatementObject)statement;
+				allStatements.addAll(composite.getAllStatements());
+			}
+		}
+		return allStatements;
+	}
+
 	public void addExpression(AbstractExpression expression) {
 		//an expression has the same index and depth as the composite statement it belong to
 		expression.setDepth(this.getDepth());
@@ -677,7 +689,7 @@ public class CompositeStatementObject extends AbstractStatement {
 		return stringRepresentation;
 	}
 
-	private String getSignature() {
+	public String getSignature() {
 		String statementType = getLocationInfo().getCodeElementType().getName() != null ? getLocationInfo().getCodeElementType().getName() : toString();
 		CompositeStatementObject parent = getParent();
 		if (parent == null) {

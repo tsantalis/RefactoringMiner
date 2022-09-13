@@ -27,6 +27,7 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.MoveSourceFolderRefactoring;
+import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
@@ -387,10 +388,24 @@ public class TestStatementMappings extends LightJavaCodeInsightFixtureTestCase {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				List<UMLOperationBodyMapper> additionalMappers = new ArrayList<>();
 				for (Refactoring ref : refactorings) {
 					if(ref instanceof ExtractOperationRefactoring) {
 						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
 						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+						UMLAbstractClassDiff classDiff = bodyMapper.getClassDiff();
+						if(classDiff != null) {
+							for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+								if(!additionalMappers.contains(mapper)) {
+									if(mapper.getContainer1().getName().equals("testJavaMap") && mapper.getContainer2().getName().equals("testJavaMap")) {
+										additionalMappers.add(mapper);
+									}
+									else if(mapper.getContainer1().getName().equals("testJavaCollection") && mapper.getContainer2().getName().equals("testJavaCollection")) {
+										additionalMappers.add(mapper);
+									}
+								}
+							}
+						}
 						if(!bodyMapper.isNested()) {
 							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
 								parentMappers.add(bodyMapper.getParentMapper());
@@ -401,6 +416,9 @@ public class TestStatementMappings extends LightJavaCodeInsightFixtureTestCase {
 				}
 				for(UMLOperationBodyMapper parentMapper : parentMappers) {
 					mapperInfo(parentMapper, actual);
+				}
+				for(UMLOperationBodyMapper mapper : additionalMappers) {
+					mapperInfo(mapper, actual);
 				}
 			}
 		});

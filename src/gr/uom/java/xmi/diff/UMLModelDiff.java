@@ -2732,7 +2732,7 @@ public class UMLModelDiff {
 						classDiff.getNewSuperclass().equals(type)) {
 					superclassRelationship = true;
 				}
-				if(!addedOperation.getNonQualifiedClassName().equals(type.getClassType()) && !superclassRelationship) {
+				if(type != null && !addedOperation.getNonQualifiedClassName().equals(type.getClassType()) && !superclassRelationship) {
 					return true;
 				}
 			}

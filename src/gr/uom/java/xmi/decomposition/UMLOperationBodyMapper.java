@@ -6505,6 +6505,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					return false;
 				}
 			}
+			for(Replacement r : replacementInfo.getReplacements()) {
+				if(variableDeclarations1.size() > 0 && r.getBefore().equals(variableDeclarations1.get(0).getVariableName())) {
+					if(r.getAfter().contains("[") && r.getAfter().contains("]") && variableDeclarations2.size() == 0) {
+						String arrayName = r.getAfter().substring(0, r.getAfter().indexOf("["));
+						for(AbstractCodeFragment statement2 : replacementInfo.statements2) {
+							if(statement2.getVariableDeclarations().size() > 0 && statement2.getVariableDeclarations().get(0).getVariableName().equals(arrayName)) {
+								return false;
+							}
+						}
+					}
+				}
+				else if(variableDeclarations2.size() > 0 && r.getAfter().equals(variableDeclarations2.get(0).getVariableName())) {
+					if(r.getBefore().contains("[") && r.getBefore().contains("]") && variableDeclarations1.size() == 0) {
+						String arrayName = r.getBefore().substring(0, r.getBefore().indexOf("["));
+						for(AbstractCodeFragment statement1 : replacementInfo.statements1) {
+							if(statement1.getVariableDeclarations().size() > 0 && statement1.getVariableDeclarations().get(0).getVariableName().equals(arrayName)) {
+								return false;
+							}
+						}
+					}
+				}
+			}
 			return true;
 		}
 		return false;
@@ -6560,9 +6582,57 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			int endIndexS2 = s2.lastIndexOf(commonSuffix);
 			String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
 			if(cast(diff1, diff2)) {
+				for(Replacement r : info.getReplacements()) {
+					if(r.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS) && s2.startsWith(r.getAfter() + "=")) {
+						if(variableDeclarations1.size() == 0 && !r.getBefore().contains("[") && !r.getBefore().contains("]")) {
+							if(r.getAfter().contains("[") && r.getAfter().contains("]") && variableDeclarations2.size() == 0) {
+								String arrayName = r.getAfter().substring(0, r.getAfter().indexOf("["));
+								for(AbstractCodeFragment statement2 : info.statements2) {
+									if(statement2.getVariableDeclarations().size() > 0 && statement2.getVariableDeclarations().get(0).getVariableName().equals(arrayName)) {
+										return false;
+									}
+								}
+							}
+						}
+						else if(variableDeclarations2.size() == 0 && !r.getAfter().contains("[") && !r.getAfter().contains("]")) {
+							if(r.getBefore().contains("[") && r.getBefore().contains("]") && variableDeclarations1.size() == 0) {
+								String arrayName = r.getBefore().substring(0, r.getBefore().indexOf("["));
+								for(AbstractCodeFragment statement1 : info.statements1) {
+									if(statement1.getVariableDeclarations().size() > 0 && statement1.getVariableDeclarations().get(0).getVariableName().equals(arrayName)) {
+										return false;
+									}
+								}
+							}
+						}
+					}
+				}
 				return true;
 			}
 			if(cast(diff2, diff1)) {
+				for(Replacement r : info.getReplacements()) {
+					if(r.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS) && s2.startsWith(r.getAfter() + "=")) {
+						if(variableDeclarations1.size() == 0 && !r.getBefore().contains("[") && !r.getBefore().contains("]")) {
+							if(r.getAfter().contains("[") && r.getAfter().contains("]") && variableDeclarations2.size() == 0) {
+								String arrayName = r.getAfter().substring(0, r.getAfter().indexOf("["));
+								for(AbstractCodeFragment statement2 : info.statements2) {
+									if(statement2.getVariableDeclarations().size() > 0 && statement2.getVariableDeclarations().get(0).getVariableName().equals(arrayName)) {
+										return false;
+									}
+								}
+							}
+						}
+						else if(variableDeclarations2.size() == 0 && !r.getAfter().contains("[") && !r.getAfter().contains("]")) {
+							if(r.getBefore().contains("[") && r.getBefore().contains("]") && variableDeclarations1.size() == 0) {
+								String arrayName = r.getBefore().substring(0, r.getBefore().indexOf("["));
+								for(AbstractCodeFragment statement1 : info.statements1) {
+									if(statement1.getVariableDeclarations().size() > 0 && statement1.getVariableDeclarations().get(0).getVariableName().equals(arrayName)) {
+										return false;
+									}
+								}
+							}
+						}
+					}
+				}
 				return true;
 			}
 			if(diff1.isEmpty()) {

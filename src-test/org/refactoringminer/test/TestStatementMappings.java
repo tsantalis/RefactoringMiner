@@ -37,7 +37,7 @@ public class TestStatementMappings {
 	private GitService gitService = new GitServiceImpl();
 
 	@Test
-	public void testMappings() throws Exception {
+	public void testNestedExtractMethodStatementMappings() throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		Repository repo = gitService.cloneIfNotExists(
 		    REPOS + "/infinispan",
@@ -71,7 +71,7 @@ public class TestStatementMappings {
 	}
 
 	@Test
-	public void testMappingsReverseParentChildCommit() throws Exception {
+	public void testNestedInlineMethodStatementMappings() throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		Repository repo = gitService.cloneIfNotExists(
 			    REPOS + "/TestCases",
@@ -105,7 +105,7 @@ public class TestStatementMappings {
 	}
 
 	@Test
-	public void testMultiMappingInDuplicatedCode() throws Exception {
+	public void testDuplicatedExtractMethodStatementMappingsWithLambdaParameters() throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		Repository repo = gitService.cloneIfNotExists(
 			    REPOS + "/TestCases",
@@ -232,7 +232,7 @@ public class TestStatementMappings {
 	}
 
 	@Test
-	public void testMappings3() throws Exception {
+	public void testNonIsomorphicControlStructureStatementMappings() throws Exception {
 		Repository repository = gitService.cloneIfNotExists(
 		    REPOS + "/flink",
 		    "https://github.com/apache/flink.git");
@@ -281,7 +281,7 @@ public class TestStatementMappings {
 	}
 
 	@Test
-	public void testMappings2() throws Exception {
+	public void testExtractMethodStatementMappings() throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		Repository repo = gitService.cloneIfNotExists(
 		    REPOS + "/k-9",
@@ -306,7 +306,7 @@ public class TestStatementMappings {
 	}
 
 	@Test
-	public void testMappings4() throws Exception {
+	public void testNestedExtractMethodStatementMappings2() throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		Repository repo = gitService.cloneIfNotExists(
 		    REPOS + "/j2objc",
@@ -340,7 +340,7 @@ public class TestStatementMappings {
 	}
 
 	@Test
-	public void testMappings5() throws Exception {
+	public void testDuplicatedExtractMethodStatementMappings() throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		Repository repo = gitService.cloneIfNotExists(
 		    REPOS + "/java-algorithms-implementation",
@@ -391,7 +391,7 @@ public class TestStatementMappings {
 	}
 
 	@Test
-	public void testMappings6() throws Exception {
+	public void testDuplicatedExtractMethodStatementMappingsWithZeroIdenticalStatements() throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		Repository repo = gitService.cloneIfNotExists(
 		    REPOS + "/deeplearning4j",

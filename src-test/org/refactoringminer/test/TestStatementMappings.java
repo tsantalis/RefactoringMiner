@@ -35,7 +35,7 @@ public class TestStatementMappings extends LightJavaCodeInsightFixtureTestCase {
 	private static final String REPOS = "tmp1";
 	private GitService gitService = new GitServiceImpl();
 	@Test
-	public void testMappings() throws Exception {
+	public void testNestedExtractMethodStatementMappings() throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 
 		GitRepository repo = gitService.cloneIfNotExists(getProject(),
@@ -70,7 +70,7 @@ public class TestStatementMappings extends LightJavaCodeInsightFixtureTestCase {
 	}
 
 	@Test
-	public void testMappingsReverseParentChildCommit() throws Exception {
+	public void testNestedInlineMethodStatementMappings() throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		GitRepository repo = gitService.cloneIfNotExists(getProject(),
 			    REPOS + "/TestCases",
@@ -103,7 +103,7 @@ public class TestStatementMappings extends LightJavaCodeInsightFixtureTestCase {
 		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 	@Test
-	public void testMultiMappingInDuplicatedCode() throws Exception {
+	public void testDuplicatedExtractMethodStatementMappingsWithLambdaParameters() throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		GitRepository repo = gitService.cloneIfNotExists(getProject(),
 				REPOS + "/TestCases",
@@ -256,7 +256,7 @@ public class TestStatementMappings extends LightJavaCodeInsightFixtureTestCase {
 	}
 
 	@Test
-	public void testMappings3() throws Exception {
+	public void testNonIsomorphicControlStructureStatementMappings() throws Exception {
 		GitRepository repository = gitService.cloneIfNotExists(getProject(),
 				REPOS + "/flink",
 				"https://github.com/apache/flink.git");
@@ -318,7 +318,7 @@ public class TestStatementMappings extends LightJavaCodeInsightFixtureTestCase {
 	}
 
 	@Test
-	public void testMappings2() throws Exception {
+	public void testExtractMethodStatementMappings() throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		GitRepository repo = gitService.cloneIfNotExists(getProject(),
 				REPOS + "/k-9",
@@ -343,7 +343,7 @@ public class TestStatementMappings extends LightJavaCodeInsightFixtureTestCase {
 	}
 
 	@Test
-	public void testMappings4() throws Exception {
+	public void testNestedExtractMethodStatementMappings2() throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		GitRepository repo = gitService.cloneIfNotExists(getProject(),
 				REPOS + "/j2objc",
@@ -377,7 +377,7 @@ public class TestStatementMappings extends LightJavaCodeInsightFixtureTestCase {
 	}
 
 	@Test
-	public void testMappings5() throws Exception {
+	public void testDuplicatedExtractMethodStatementMappings() throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		GitRepository repo = gitService.cloneIfNotExists(getProject(),
 				REPOS + "/java-algorithms-implementation",
@@ -428,7 +428,7 @@ public class TestStatementMappings extends LightJavaCodeInsightFixtureTestCase {
 	}
 
 	@Test
-	public void testMappings6() throws Exception {
+	public void testDuplicatedExtractMethodStatementMappingsWithZeroIdenticalStatements() throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		GitRepository repo = gitService.cloneIfNotExists(getProject(),
 				REPOS + "/deeplearning4j",
@@ -460,6 +460,40 @@ public class TestStatementMappings extends LightJavaCodeInsightFixtureTestCase {
 		});
 
 		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/deeplearning4j-91cdfa1ffd937a4cb01cdc0052874ef7831955e2.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testDuplicatedAndNestedExtractMethodStatementMappings() throws Exception {
+		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+		GitRepository repo = gitService.cloneIfNotExists(getProject(),
+				REPOS + "/spring-boot",
+				"https://spring-projects/spring-boot.git");
+
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommit(repo, "becced5f0b7bac8200df7a5706b568687b517b90", new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+								parentMappers.add(bodyMapper.getParentMapper());
+							}
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+				}
+				for(UMLOperationBodyMapper parentMapper : parentMappers) {
+					mapperInfo(parentMapper, actual);
+				}
+			}
+		});
+
+		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/spring-boot-becced5f0b7bac8200df7a5706b568687b517b90.txt"));
 		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

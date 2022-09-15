@@ -4082,7 +4082,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		replacementInfo.addReplacements(replacementsToBeAdded);
 		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || (s2 + ";\n").equals(s1) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) ||
 				differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(s1, s2, methodInvocationMap1, methodInvocationMap2, statement1.getInfixExpressions(), statement2.getInfixExpressions(), variableDeclarations1, variableDeclarations2, replacementInfo) ||
-				differOnlyInFinalModifier(s1, s2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo) ||
+				differOnlyInFinalModifier(s1, s2) || differOnlyInThis(s1, s2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString()) ||
 				(containsValidOperatorReplacements(replacementInfo) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, replacementInfo, creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, statement1, statement2))) ||
@@ -6622,21 +6622,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean differOnlyInFinalModifier(String s1, String s2) {;
-		return differOnlyInFinalModifier(s1, s2, "for(", "for(final ") ||
-				differOnlyInFinalModifier(s1, s2, "catch(", "catch(final ");
+		return differOnlyInPrefix(s1, s2, "for(", "for(final ") ||
+				differOnlyInPrefix(s1, s2, "catch(", "catch(final ");
 	}
 
-	private boolean differOnlyInFinalModifier(String s1, String s2, String prefixWithoutFinalModifier, String prefixWithFinalModifier) {
-		if(s1.startsWith(prefixWithoutFinalModifier) && s2.startsWith(prefixWithFinalModifier)) {
-			String suffix1 = s1.substring(prefixWithoutFinalModifier.length(), s1.length());
-			String suffix2 = s2.substring(prefixWithFinalModifier.length(), s2.length());
+	private boolean differOnlyInThis(String s1, String s2) {;
+		return differOnlyInPrefix(s1, s2, "", "this.");
+	}
+
+	private boolean differOnlyInPrefix(String s1, String s2, String prefixWithout, String prefixWith) {
+		if(s1.startsWith(prefixWithout) && s2.startsWith(prefixWith)) {
+			String suffix1 = s1.substring(prefixWithout.length(), s1.length());
+			String suffix2 = s2.substring(prefixWith.length(), s2.length());
 			if(suffix1.equals(suffix2)) {
 				return true;
 			}
 		}
-		if(s1.startsWith(prefixWithFinalModifier) && s2.startsWith(prefixWithoutFinalModifier)) {
-			String suffix1 = s1.substring(prefixWithFinalModifier.length(), s1.length());
-			String suffix2 = s2.substring(prefixWithoutFinalModifier.length(), s2.length());
+		if(s1.startsWith(prefixWith) && s2.startsWith(prefixWithout)) {
+			String suffix1 = s1.substring(prefixWith.length(), s1.length());
+			String suffix2 = s2.substring(prefixWithout.length(), s2.length());
 			if(suffix1.equals(suffix2)) {
 				return true;
 			}

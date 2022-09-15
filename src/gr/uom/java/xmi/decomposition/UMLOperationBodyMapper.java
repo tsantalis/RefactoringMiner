@@ -2428,28 +2428,84 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(int i=0; i<innerNodes1.size(); i++) {
 				CompositeStatementObject comp1 = innerNodes1.get(i);
 				CompositeStatementObject comp2 = innerNodes2.get(i);
-				if(comp1.getLocationInfo().getCodeElementType().equals(comp2.getLocationInfo().getCodeElementType())) {
-					CompositeStatementObject parent1 = comp1.getParent();
-					CompositeStatementObject parent2 = comp2.getParent();
-					if(parent1 == null && parent2 != null) {
-						return false;
-					}
-					else if(parent1 != null && parent2 == null) {
-						return false;
-					}
-					else if(parent1 != null && parent2 != null) {
-						if(!parent1.getLocationInfo().getCodeElementType().equals(parent2.getLocationInfo().getCodeElementType())) {
-							return false;
-						}
-					}
+				if(!sameCodeElementType(comp1, comp2)) {
+					return false;
 				}
-				else {
+			}
+			return true;
+		}
+		else if(innerNodes1.size() < innerNodes2.size()) {
+			for(int i=0; i<innerNodes1.size(); i++) {
+				CompositeStatementObject comp1 = innerNodes1.get(i);
+				CompositeStatementObject comp2 = innerNodes2.get(i);
+				if(!identical(comp1, comp2)) {
+					return false;
+				}
+			}
+			return true;
+		}
+		else if(innerNodes1.size() > innerNodes2.size()) {
+			for(int i=0; i<innerNodes2.size(); i++) {
+				CompositeStatementObject comp1 = innerNodes1.get(i);
+				CompositeStatementObject comp2 = innerNodes2.get(i);
+				if(!identical(comp1, comp2)) {
 					return false;
 				}
 			}
 			return true;
 		}
 		return false;
+	}
+
+	private boolean sameCodeElementType(CompositeStatementObject comp1, CompositeStatementObject comp2) {
+		if(comp1.getLocationInfo().getCodeElementType().getName().equals(comp2.getLocationInfo().getCodeElementType().getName())) {
+			CompositeStatementObject parent1 = comp1.getParent();
+			CompositeStatementObject parent2 = comp2.getParent();
+			if(parent1 == null && parent2 != null) {
+				return false;
+			}
+			else if(parent1 != null && parent2 == null) {
+				return false;
+			}
+			else if(parent1 != null && parent2 != null) {
+				if(!parent1.getLocationInfo().getCodeElementType().getName().equals(parent2.getLocationInfo().getCodeElementType().getName())) {
+					return false;
+				}
+			}
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private boolean identical(CompositeStatementObject comp1, CompositeStatementObject comp2) {
+		boolean identical = comp1.getString().equals(comp2.getString());
+		if(identical) {
+			return true;
+		}
+		else if(comp1.getLocationInfo().getCodeElementType().getName().equals(comp2.getLocationInfo().getCodeElementType().getName())) {
+			CompositeStatementObject parent1 = comp1.getParent();
+			CompositeStatementObject parent2 = comp2.getParent();
+			if(parent1 == null && parent2 != null) {
+				return false;
+			}
+			else if(parent1 != null && parent2 == null) {
+				return false;
+			}
+			else if(parent1 != null && parent2 != null) {
+				if(parent1.getParent() == null && parent2.getParent() == null) {
+					return false;
+				}
+				if(!parent1.getLocationInfo().getCodeElementType().getName().equals(parent2.getLocationInfo().getCodeElementType().getName())) {
+					return false;
+				}
+			}
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	private void processLeaves(List<? extends AbstractCodeFragment> leaves1, List<? extends AbstractCodeFragment> leaves2,
@@ -2459,7 +2515,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return;
 		}
 		List<TreeSet<LeafMapping>> postponedMappingSets = new ArrayList<TreeSet<LeafMapping>>();
-		if(leaves1.size() <= leaves2.size()) {
+		boolean leaves1LessThanLeaves2UnderComposites = true;
+		if(leaves1.size() == leaves2.size() && !isomorphic) {
+			Set<AbstractCodeFragment> leaves1NestedDirectlyUnderMethodBody = new LinkedHashSet<AbstractCodeFragment>();
+			for(AbstractCodeFragment leaf1 : leaves1) {
+				if(leaf1.getParent() != null && leaf1.getParent().getParent() == null) {
+					leaves1NestedDirectlyUnderMethodBody.add(leaf1);
+				}
+			}
+			Set<AbstractCodeFragment> leaves2NestedDirectlyUnderMethodBody = new LinkedHashSet<AbstractCodeFragment>();
+			for(AbstractCodeFragment leaf2 : leaves2) {
+				if(leaf2.getParent() != null && leaf2.getParent().getParent() == null) {
+					leaves2NestedDirectlyUnderMethodBody.add(leaf2);
+				}
+			}
+			int leaves1WithoutDirectlyNestedUnderMethodBody = leaves1.size() - leaves1NestedDirectlyUnderMethodBody.size();
+			int leaves2WithoutDirectlyNestedUnderMethodBody = leaves2.size() - leaves2NestedDirectlyUnderMethodBody.size();
+			leaves1LessThanLeaves2UnderComposites = leaves1WithoutDirectlyNestedUnderMethodBody <= leaves2WithoutDirectlyNestedUnderMethodBody;
+		}
+		if(leaves1.size() <= leaves2.size() && leaves1LessThanLeaves2UnderComposites) {
 			//exact string+depth matching - leaf nodes
 			if(isomorphic) {
 				for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
@@ -4008,7 +4082,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		replacementInfo.addReplacements(replacementsToBeAdded);
 		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || (s2 + ";\n").equals(s1) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) ||
 				differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(s1, s2, methodInvocationMap1, methodInvocationMap2, statement1.getInfixExpressions(), statement2.getInfixExpressions(), variableDeclarations1, variableDeclarations2, replacementInfo) ||
-				differOnlyInFinalModifier(s1, s2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo) ||
+				differOnlyInFinalModifier(s1, s2) || differOnlyInThis(s1, s2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString()) ||
 				(containsValidOperatorReplacements(replacementInfo) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, replacementInfo, creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, statement1, statement2))) ||
@@ -6548,21 +6622,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean differOnlyInFinalModifier(String s1, String s2) {;
-		return differOnlyInFinalModifier(s1, s2, "for(", "for(final ") ||
-				differOnlyInFinalModifier(s1, s2, "catch(", "catch(final ");
+		return differOnlyInPrefix(s1, s2, "for(", "for(final ") ||
+				differOnlyInPrefix(s1, s2, "catch(", "catch(final ");
 	}
 
-	private boolean differOnlyInFinalModifier(String s1, String s2, String prefixWithoutFinalModifier, String prefixWithFinalModifier) {
-		if(s1.startsWith(prefixWithoutFinalModifier) && s2.startsWith(prefixWithFinalModifier)) {
-			String suffix1 = s1.substring(prefixWithoutFinalModifier.length(), s1.length());
-			String suffix2 = s2.substring(prefixWithFinalModifier.length(), s2.length());
+	private boolean differOnlyInThis(String s1, String s2) {;
+		return differOnlyInPrefix(s1, s2, "", "this.");
+	}
+
+	private boolean differOnlyInPrefix(String s1, String s2, String prefixWithout, String prefixWith) {
+		if(s1.startsWith(prefixWithout) && s2.startsWith(prefixWith)) {
+			String suffix1 = s1.substring(prefixWithout.length(), s1.length());
+			String suffix2 = s2.substring(prefixWith.length(), s2.length());
 			if(suffix1.equals(suffix2)) {
 				return true;
 			}
 		}
-		if(s1.startsWith(prefixWithFinalModifier) && s2.startsWith(prefixWithoutFinalModifier)) {
-			String suffix1 = s1.substring(prefixWithFinalModifier.length(), s1.length());
-			String suffix2 = s2.substring(prefixWithoutFinalModifier.length(), s2.length());
+		if(s1.startsWith(prefixWith) && s2.startsWith(prefixWithout)) {
+			String suffix1 = s1.substring(prefixWith.length(), s1.length());
+			String suffix2 = s2.substring(prefixWithout.length(), s2.length());
 			if(suffix1.equals(suffix2)) {
 				return true;
 			}

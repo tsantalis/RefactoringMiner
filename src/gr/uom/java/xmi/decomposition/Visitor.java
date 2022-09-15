@@ -478,7 +478,9 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 				(node.getParent().getParent() instanceof PsiReferenceExpression ||
 				node.getParent().getParent() instanceof PsiExpressionList ||
 				node.getParent().getParent() instanceof PsiMethodCallExpression ||
-				node.getParent().getParent() instanceof PsiNewExpression)) {
+				node.getParent().getParent() instanceof PsiNewExpression ||
+				node.getParent().getParent() instanceof PsiIfStatement ||
+				node.getParent().getParent() instanceof PsiBinaryExpression)) {
 			// skip names being part of qualified names, or method invocation names
 		}
 		else {

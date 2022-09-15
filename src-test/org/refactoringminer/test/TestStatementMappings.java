@@ -366,6 +366,9 @@ public class TestStatementMappings {
 									else if(mapper.getContainer1().getName().equals("testJavaCollection") && mapper.getContainer2().getName().equals("testJavaCollection")) {
 										additionalMappers.add(mapper);
 									}
+									else if(mapper.getContainer1().getName().equals("showComparison") && mapper.getContainer2().getName().equals("showComparison")) {
+										additionalMappers.add(mapper);
+									}
 								}
 							}
 						}

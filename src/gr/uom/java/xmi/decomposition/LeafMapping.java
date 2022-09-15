@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
+import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.StringDistance;
 
@@ -174,11 +176,21 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						boolean sameVariableDeclarationTypeInParent2 = o.sameVariableDeclarationTypeInParent();
 						double parentEditDistance1 = this.parentEditDistance();
 						double parentEditDistance2 = o.parentEditDistance();
+						Set<String> set1 = this.parentVariableTokenIntersection();
+						Set<String> set2 = o.parentVariableTokenIntersection();
 						if(parentEditDistance1 >= 0 && parentEditDistance2 >= 0 && sameVariableDeclarationTypeInParent1 != sameVariableDeclarationTypeInParent2) {
 							if(sameVariableDeclarationTypeInParent1 && !sameVariableDeclarationTypeInParent2) {
 								return -1;
 							}
 							if(!sameVariableDeclarationTypeInParent1 && sameVariableDeclarationTypeInParent2) {
+								return 1;
+							}
+						}
+						else if(parentEditDistance1 >= 0 && parentEditDistance2 >= 0 && set1.size() != set2.size()) {
+							if(set1.size() > set2.size()) {
+								return -1;
+							}
+							else if(set1.size() < set2.size()) {
 								return 1;
 							}
 						}
@@ -277,6 +289,48 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			}
 		}
 		return false;
+	}
+
+	private Set<String> parentVariableTokenIntersection() {
+		CompositeStatementObject parent1 = getFragment1().getParent();
+		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent1 = parent1.getParent();
+		}
+		CompositeStatementObject parent2 = getFragment2().getParent();
+		while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent2 = parent2.getParent();
+		}
+		if(parent1 == null && parent2 == null) {
+			//method signature is the parent
+			return Collections.emptySet();
+		}
+		else if(parent1 == null && parent2 != null) {
+			return Collections.emptySet();
+		}
+		else if(parent1 != null && parent2 == null) {
+			return Collections.emptySet();
+		}
+		List<String> variables1 = parent1.getVariables();
+		List<String> variables2 = parent2.getVariables();
+		if(variables1.size() == 1 && variables2.size() == 1) {
+			Set<String> tokens1 = new LinkedHashSet<>();
+			for(String variable : variables1) {
+				String[] array = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(variable);
+				for(String s : array) {
+					tokens1.add(s.toLowerCase());
+				}
+			}
+			Set<String> tokens2 = new LinkedHashSet<>();
+			for(String variable : variables2) {
+				String[] array = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(variable);
+				for(String s : array) {
+					tokens2.add(s.toLowerCase());
+				}
+			}
+			tokens1.retainAll(tokens2);
+			return tokens1;
+		}
+		return Collections.emptySet();
 	}
 
 	private double parentEditDistance() {

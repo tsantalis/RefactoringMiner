@@ -2765,7 +2765,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(!mappingSet.isEmpty()) {
 						boolean identicalDepthAndIndex = mappingSet.first().getFragment1().getDepth() == mappingSet.first().getFragment2().getDepth() &&
 								mappingSet.first().getFragment1().getIndex() == mappingSet.first().getFragment2().getIndex();
-						if(mappingSet.size() > 1 && (parentMapper != null || !identicalDepthAndIndex) && mappings.size() > 0) {
+						if(variableDeclarationMappingsWithSameReplacementTypes(mappingSet) && containsCallToExtractedMethod) {
+							//postpone mapping
+							postponedMappingSets.add(mappingSet);
+						}
+						else if(mappingSet.size() > 1 && (parentMapper != null || !identicalDepthAndIndex) && mappings.size() > 0) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
 							for(LeafMapping mapping : mappingSet) {
 								int lineDistance = lineDistanceFromExistingMappings1(mapping).getMiddle();
@@ -2781,11 +2785,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						else {
 							AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
-							if(variableDeclarationMappingsWithSameReplacementTypes(mappingSet) && containsCallToExtractedMethod) {
-								//postpone mapping
-								postponedMappingSets.add(mappingSet);
-							}
-							else if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
+							if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
 								LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
 								addToMappings(bestMapping, mappingSet);
 								leaves1.remove(bestMapping.getFragment1());
@@ -8010,14 +8010,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private boolean containsCallToExtractedMethod(List<? extends AbstractCodeFragment> leaves2) {
 		if(classDiff != null) {
 			List<UMLOperation> addedOperations = classDiff.getAddedOperations();
-			for(AbstractCodeFragment leaf2 : leaves2) {
-				AbstractCall invocation = leaf2.invocationCoveringEntireFragment();
-				if(invocation == null) {
-					invocation = leaf2.assignmentInvocationCoveringEntireStatement();
-				}
-				UMLOperation matchingOperation = null;
-				if(invocation != null && (matchingOperation = matchesOperation(invocation, addedOperations, container2)) != null && matchingOperation.getBody() != null) {
-					return true;
+			if(addedOperations.size() > 0) {
+				for(AbstractCodeFragment leaf2 : leaves2) {
+					AbstractCall invocation = leaf2.invocationCoveringEntireFragment();
+					if(invocation == null) {
+						invocation = leaf2.assignmentInvocationCoveringEntireStatement();
+					}
+					UMLOperation matchingOperation = null;
+					if(invocation != null && (matchingOperation = matchesOperation(invocation, addedOperations, container2)) != null && matchingOperation.getBody() != null) {
+						return true;
+					}
 				}
 			}
 		}
@@ -8028,15 +8030,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Set<AbstractCodeFragment> statementsToBeIgnored = new HashSet<>();
 		if(classDiff != null) {
 			List<UMLOperation> addedOperations = classDiff.getAddedOperations();
-			for(AbstractCodeFragment leaf2 : getNonMappedLeavesT2()) {
-				AbstractCall invocation = leaf2.invocationCoveringEntireFragment();
-				if(invocation == null) {
-					invocation = leaf2.assignmentInvocationCoveringEntireStatement();
-				}
-				UMLOperation matchingOperation = null;
-				if(invocation != null && (matchingOperation = matchesOperation(invocation, addedOperations, container2)) != null && matchingOperation.getBody() != null) {
-					statementsToBeIgnored.addAll(matchingOperation.getBody().getCompositeStatement().getLeaves());
-					statementsToBeIgnored.addAll(matchingOperation.getBody().getCompositeStatement().getInnerNodes());
+			if(addedOperations.size() > 0) {
+				for(AbstractCodeFragment leaf2 : getNonMappedLeavesT2()) {
+					AbstractCall invocation = leaf2.invocationCoveringEntireFragment();
+					if(invocation == null) {
+						invocation = leaf2.assignmentInvocationCoveringEntireStatement();
+					}
+					UMLOperation matchingOperation = null;
+					if(invocation != null && (matchingOperation = matchesOperation(invocation, addedOperations, container2)) != null && matchingOperation.getBody() != null) {
+						statementsToBeIgnored.addAll(matchingOperation.getBody().getCompositeStatement().getLeaves());
+						statementsToBeIgnored.addAll(matchingOperation.getBody().getCompositeStatement().getInnerNodes());
+					}
 				}
 			}
 		}
@@ -8060,15 +8064,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Set<AbstractCodeFragment> statementsToBeIgnored = new HashSet<>();
 		if(classDiff != null) {
 			List<UMLOperation> removedOperations = classDiff.getRemovedOperations();
-			for(AbstractCodeFragment leaf1 : getNonMappedLeavesT1()) {
-				AbstractCall invocation = leaf1.invocationCoveringEntireFragment();
-				if(invocation == null) {
-					invocation = leaf1.assignmentInvocationCoveringEntireStatement();
-				}
-				UMLOperation matchingOperation = null;
-				if(invocation != null && (matchingOperation = matchesOperation(invocation, removedOperations, container2)) != null && matchingOperation.getBody() != null) {
-					statementsToBeIgnored.addAll(matchingOperation.getBody().getCompositeStatement().getLeaves());
-					statementsToBeIgnored.addAll(matchingOperation.getBody().getCompositeStatement().getInnerNodes());
+			if(removedOperations.size() > 0) {
+				for(AbstractCodeFragment leaf1 : getNonMappedLeavesT1()) {
+					AbstractCall invocation = leaf1.invocationCoveringEntireFragment();
+					if(invocation == null) {
+						invocation = leaf1.assignmentInvocationCoveringEntireStatement();
+					}
+					UMLOperation matchingOperation = null;
+					if(invocation != null && (matchingOperation = matchesOperation(invocation, removedOperations, container2)) != null && matchingOperation.getBody() != null) {
+						statementsToBeIgnored.addAll(matchingOperation.getBody().getCompositeStatement().getLeaves());
+						statementsToBeIgnored.addAll(matchingOperation.getBody().getCompositeStatement().getInnerNodes());
+					}
 				}
 			}
 		}

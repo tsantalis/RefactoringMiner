@@ -208,7 +208,7 @@ public abstract class AbstractCodeMapping {
 									overlappingExtractVariable(initializer, prefixBefore, nonMappedLeavesT2, refactorings)) {
 								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 								processExtractVariableRefactoring(ref, refactorings);
-								if(getReplacements().size() == 1) {
+								if(identical()) {
 									identicalWithExtractedVariable = true;
 								}
 							}
@@ -225,7 +225,7 @@ public abstract class AbstractCodeMapping {
 							overlappingExtractVariable(initializer, replacement.getBefore(), nonMappedLeavesT2, refactorings)) {
 						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						processExtractVariableRefactoring(ref, refactorings);
-						if(getReplacements().size() == 1) {
+						if(identical()) {
 							identicalWithExtractedVariable = true;
 						}
 					}
@@ -268,7 +268,7 @@ public abstract class AbstractCodeMapping {
 						if(declaration.getVariableName().equals(variable)) {
 							ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 							processExtractVariableRefactoring(ref, refactorings);
-							if(getReplacements().size() == 1) {
+							if(identical()) {
 								identicalWithExtractedVariable = true;
 							}
 						}
@@ -293,7 +293,7 @@ public abstract class AbstractCodeMapping {
 									overlappingExtractVariable(initializer, prefixAfter, nonMappedLeavesT2, refactorings)) {
 								InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 								processInlineVariableRefactoring(ref, refactorings);
-								if(getReplacements().size() == 1) {
+								if(identical()) {
 									identicalWithInlinedVariable = true;
 								}
 							}
@@ -310,7 +310,7 @@ public abstract class AbstractCodeMapping {
 							overlappingExtractVariable(initializer, replacement.getAfter(), nonMappedLeavesT2, refactorings)) {
 						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						processInlineVariableRefactoring(ref, refactorings);
-						if(getReplacements().size() == 1) {
+						if(identical()) {
 							identicalWithInlinedVariable = true;
 						}
 					}
@@ -336,7 +336,7 @@ public abstract class AbstractCodeMapping {
 						if(declaration.getVariableName().equals(variable)) {
 							InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 							processInlineVariableRefactoring(ref, refactorings);
-							if(getReplacements().size() == 1) {
+							if(identical()) {
 								identicalWithInlinedVariable = true;
 							}
 						}
@@ -344,6 +344,10 @@ public abstract class AbstractCodeMapping {
 				}
 			}
 		}
+	}
+
+	private boolean identical() {
+		return getReplacements().size() == 1 && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size();
 	}
 
 	private boolean wrappedAsArgument(AbstractExpression initializer, String replacedExpression) {

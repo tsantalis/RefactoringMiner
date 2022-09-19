@@ -2533,7 +2533,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			int leaves2WithoutDirectlyNestedUnderMethodBody = leaves2.size() - leaves2NestedDirectlyUnderMethodBody.size();
 			leaves1LessThanLeaves2UnderComposites = leaves1WithoutDirectlyNestedUnderMethodBody <= leaves2WithoutDirectlyNestedUnderMethodBody;
 		}
-		if(leaves1.size() <= leaves2.size() && leaves1LessThanLeaves2UnderComposites) {
+		boolean leaves1LessThanLeaves2 = leaves1.size() <= leaves2.size() && leaves1LessThanLeaves2UnderComposites;
+		if(leaves1LessThanLeaves2) {
 			//exact string+depth matching - leaf nodes
 			if(isomorphic) {
 				for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
@@ -2744,7 +2745,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			
+			boolean containsCallToExtractedMethod = containsCallToExtractedMethod(leaves2);
 			//exact string matching - leaf nodes - finds moves to another level
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 				AbstractCodeFragment leaf2 = leafIterator2.next();
@@ -2780,7 +2781,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						else {
 							AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
-							if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
+							if(variableDeclarationMappingsWithSameReplacementTypes(mappingSet) && containsCallToExtractedMethod) {
+								//postpone mapping
+								postponedMappingSets.add(mappingSet);
+							}
+							else if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
 								LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
 								addToMappings(bestMapping, mappingSet);
 								leaves1.remove(bestMapping.getFragment1());
@@ -3015,7 +3020,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		for(TreeSet<LeafMapping> postponed : postponedMappingSets) {
 			Set<LeafMapping> mappingsToBeAdded = new LinkedHashSet<LeafMapping>();
+			int identicalMappingCount = 0;
 			for(LeafMapping variableDeclarationMapping : postponed) {
+				if(variableDeclarationMapping.getFragment1().getString().equals(variableDeclarationMapping.getFragment2().getString())) {
+					identicalMappingCount++;
+				}
 				for(AbstractCodeMapping previousMapping : this.mappings) {
 					Set<Replacement> intersection = variableDeclarationMapping.commonReplacements(previousMapping);
 					if(!intersection.isEmpty()) {
@@ -3033,7 +3042,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			if(mappingsToBeAdded.size() == 1) {
+			if(mappingsToBeAdded.size() == 0 && identicalMappingCount > 0) {
+				TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
+				for(LeafMapping mapping : postponed) {
+					int lineDistance;
+					if(leaves1LessThanLeaves2) {
+						lineDistance = lineDistanceFromExistingMappings2(mapping);
+					}
+					else {
+						lineDistance = lineDistanceFromExistingMappings1(mapping).getMiddle();
+					}
+					if(!lineDistanceMap.containsKey(lineDistance)) {
+						lineDistanceMap.put(lineDistance, mapping);
+					}
+				}
+				LeafMapping minLineDistanceStatementMapping = lineDistanceMap.firstEntry().getValue();
+				addToMappings(minLineDistanceStatementMapping, postponed);
+				processAnonymousClassDeclarationsInIdenticalStatements(minLineDistanceStatementMapping);
+				leaves1.remove(minLineDistanceStatementMapping.getFragment1());
+				leaves2.remove(minLineDistanceStatementMapping.getFragment2());
+			}
+			else if(mappingsToBeAdded.size() == 1) {
 				LeafMapping minStatementMapping = mappingsToBeAdded.iterator().next();
 				addToMappings(minStatementMapping, postponed);
 				leaves1.remove(minStatementMapping.getFragment1());
@@ -7978,7 +8007,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return null;
 	}
 
-	private boolean containsCallToExtractedMethod(List<AbstractCodeFragment> leaves2) {
+	private boolean containsCallToExtractedMethod(List<? extends AbstractCodeFragment> leaves2) {
 		if(classDiff != null) {
 			List<UMLOperation> addedOperations = classDiff.getAddedOperations();
 			for(AbstractCodeFragment leaf2 : leaves2) {

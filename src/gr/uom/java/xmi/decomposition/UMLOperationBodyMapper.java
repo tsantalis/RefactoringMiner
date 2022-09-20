@@ -6920,8 +6920,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(String s : subConditions2) {
 					subConditionsAsList2.add(s.trim());
 				}
-				Set<String> intersection = new LinkedHashSet<String>(subConditionsAsList1);
-				intersection.retainAll(subConditionsAsList2);
+				Set<String> intersection = new LinkedHashSet<String>();
+				for(String c1 : subConditionsAsList1) {
+					for(String c2 : subConditionsAsList2) {
+						if(c1.equals(c2)) {
+							intersection.add(c1);
+							break;
+						}
+						else if(c1.equals("(" + c2)) {
+							intersection.add(c2);
+							break;
+						}
+						else if(c1.equals(c2 + ")")) {
+							intersection.add(c2);
+							break;
+						}
+						else if(c2.equals("(" + c1)) {
+							intersection.add(c1);
+							break;
+						}
+						else if(c2.equals(c1 + ")")) {
+							intersection.add(c1);
+							break;
+						}
+					}
+				}
 				int matches = 0;
 				if(!intersection.isEmpty()) {
 					for(String element : intersection) {

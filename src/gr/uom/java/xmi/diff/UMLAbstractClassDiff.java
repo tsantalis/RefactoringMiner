@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.util.PrefixSuffixUtils;
@@ -37,6 +38,8 @@ public abstract class UMLAbstractClassDiff {
 	protected List<UMLOperationBodyMapper> operationBodyMapperList;
 	protected List<UMLAttributeDiff> attributeDiffList;
 	protected List<UMLEnumConstantDiff> enumConstantDiffList;
+	protected Set<Pair<UMLAttribute, UMLAttribute>> commonAtrributes;
+	protected Set<Pair<UMLEnumConstant, UMLEnumConstant>> commonEnumConstants;
 	protected UMLAbstractClass originalClass;
 	protected UMLAbstractClass nextClass;
 	protected List<UMLEnumConstant> addedEnumConstants;
@@ -64,6 +67,8 @@ public abstract class UMLAbstractClassDiff {
 		this.operationBodyMapperList = new ArrayList<UMLOperationBodyMapper>();
 		this.attributeDiffList = new ArrayList<UMLAttributeDiff>();
 		this.enumConstantDiffList = new ArrayList<UMLEnumConstantDiff>();
+		this.commonAtrributes = new LinkedHashSet<Pair<UMLAttribute, UMLAttribute>>();
+		this.commonEnumConstants = new LinkedHashSet<Pair<UMLEnumConstant, UMLEnumConstant>>();
 		this.refactorings = new ArrayList<Refactoring>();
 		this.originalClass = originalClass;
 		this.nextClass = nextClass;
@@ -102,8 +107,16 @@ public abstract class UMLAbstractClassDiff {
 		return attributeDiffList;
 	}
 
+	public Set<Pair<UMLAttribute, UMLAttribute>> getCommonAtrributes() {
+		return commonAtrributes;
+	}
+
 	public List<UMLEnumConstantDiff> getEnumConstantDiffList() {
 		return enumConstantDiffList;
+	}
+
+	public Set<Pair<UMLEnumConstant, UMLEnumConstant>> getCommonEnumConstants() {
+		return commonEnumConstants;
 	}
 
 	public void reportAddedAnonymousClass(UMLAnonymousClass umlClass) {

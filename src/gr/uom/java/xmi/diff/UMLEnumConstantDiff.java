@@ -14,6 +14,7 @@ public class UMLEnumConstantDiff {
 	private UMLEnumConstant removedEnumConstant;
 	private UMLEnumConstant addedEnumConstant;
 	private boolean renamed;
+	private boolean argumentsChanged;
 	private UMLAnnotationListDiff annotationListDiff;
 	private UMLAnonymousClassDiff anonymousClassDiff;
 
@@ -22,6 +23,8 @@ public class UMLEnumConstantDiff {
 		this.addedEnumConstant = addedEnumConstant;
 		if(!removedEnumConstant.getName().equals(addedEnumConstant.getName()))
 			renamed = true;
+		if(!removedEnumConstant.getArguments().equals(addedEnumConstant.getArguments()))
+			argumentsChanged = true;
 		this.annotationListDiff = new UMLAnnotationListDiff(removedEnumConstant.getAnnotations(), addedEnumConstant.getAnnotations());
 		if(removedEnumConstant.getAnonymousClassList().size() == 1 && addedEnumConstant.getAnonymousClassList().size() == 1) {
 			this.anonymousClassDiff = new UMLAnonymousClassDiff(removedEnumConstant.getAnonymousClassList().get(0), addedEnumConstant.getAnonymousClassList().get(0), classDiff, modelDiff);
@@ -41,12 +44,20 @@ public class UMLEnumConstantDiff {
 		return renamed;
 	}
 
+	public boolean isArgumentsChanged() {
+		return argumentsChanged;
+	}
+
 	public Optional<UMLAnonymousClassDiff> getAnonymousClassDiff() {
 		return Optional.ofNullable(anonymousClassDiff);
 	}
 
 	public boolean isEmpty() {
-		return !renamed && annotationListDiff.isEmpty();
+		boolean emptyAnonymousDiff = true;
+		if(anonymousClassDiff != null) {
+			emptyAnonymousDiff = anonymousClassDiff.isEmpty();
+		}
+		return !renamed && !argumentsChanged && annotationListDiff.isEmpty() && emptyAnonymousDiff;
 	}
 
 	public String toString() {
@@ -55,6 +66,8 @@ public class UMLEnumConstantDiff {
 			sb.append("\t").append(removedEnumConstant).append("\n");
 		if(renamed)
 			sb.append("\t").append("renamed from " + removedEnumConstant.getName() + " to " + addedEnumConstant.getName()).append("\n");
+		if(argumentsChanged)
+			sb.append("\t").append("arguments changed from " + removedEnumConstant.getArguments() + " to " + addedEnumConstant.getArguments()).append("\n");
 		for(UMLAnnotation annotation : annotationListDiff.getRemovedAnnotations()) {
 			sb.append("\t").append("annotation " + annotation + " removed").append("\n");
 		}

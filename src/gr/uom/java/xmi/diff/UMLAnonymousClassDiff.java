@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.UMLAnonymousClass;
@@ -30,6 +31,13 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 		checkForAttributeChanges();
 		checkForInlinedOperations();
 		checkForExtractedOperations();
+	}
+
+	public boolean isEmpty() {
+		return addedOperations.isEmpty() && removedOperations.isEmpty() &&
+			addedAttributes.isEmpty() && removedAttributes.isEmpty() &&
+			addedEnumConstants.isEmpty() && removedEnumConstants.isEmpty() &&
+			attributeDiffList.isEmpty() && enumConstantDiffList.isEmpty();
 	}
 
 	protected void processInitializers() throws RefactoringMinerTimedOutException {
@@ -71,6 +79,12 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
     				refactorings.addAll(attributeDiff.getRefactorings());
     				attributeDiffList.add(attributeDiff);
     			}
+    			else {
+    				Pair<UMLAttribute, UMLAttribute> pair = Pair.of(attribute, matchingAttribute);
+    				if(!commonAtrributes.contains(pair)) {
+    					commonAtrributes.add(pair);
+    				}
+    			}
     		}
     		else {
     			removedAttributes.add(attribute);
@@ -83,6 +97,12 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
     			if(!attributeDiff.isEmpty()) {
     				refactorings.addAll(attributeDiff.getRefactorings());
     				attributeDiffList.add(attributeDiff);
+    			}
+    			else {
+    				Pair<UMLAttribute, UMLAttribute> pair = Pair.of(matchingAttribute, attribute);
+    				if(!commonAtrributes.contains(pair)) {
+    					commonAtrributes.add(pair);
+    				}
     			}
     		}
     		else {

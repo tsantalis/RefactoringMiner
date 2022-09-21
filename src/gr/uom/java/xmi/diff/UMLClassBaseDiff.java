@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
@@ -263,6 +264,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	    			refactorings.addAll(enumConstantDiff.getRefactorings());
 	    			this.enumConstantDiffList.add(enumConstantDiff);
     			}
+    			else {
+    				Pair<UMLEnumConstant, UMLEnumConstant> pair = Pair.of(enumConstant, matchingEnumConstant);
+    				if(!this.commonEnumConstants.contains(pair)) {
+    					this.commonEnumConstants.add(pair);
+    				}
+    			}
     		}
     	}
     	for(UMLEnumConstant enumConstant : nextClass.getEnumConstants()) {
@@ -275,6 +282,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
     			if(!enumConstantDiff.isEmpty()) {
 	    			refactorings.addAll(enumConstantDiff.getRefactorings());
 					this.enumConstantDiffList.add(enumConstantDiff);
+    			}
+    			else {
+    				Pair<UMLEnumConstant, UMLEnumConstant> pair = Pair.of(matchingEnumConstant, enumConstant);
+    				if(!this.commonEnumConstants.contains(pair)) {
+    					this.commonEnumConstants.add(pair);
+    				}
     			}
     		}
     	}
@@ -292,6 +305,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					refactorings.addAll(attributeDiff.getRefactorings());
 					this.attributeDiffList.add(attributeDiff);
 				}
+				else {
+    				Pair<UMLAttribute, UMLAttribute> pair = Pair.of(attribute, attributeWithTheSameName);
+    				if(!commonAtrributes.contains(pair)) {
+    					commonAtrributes.add(pair);
+    				}
+    			}
 			}
     	}
     	for(UMLAttribute attribute : nextClass.getAttributes()) {
@@ -305,6 +324,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					refactorings.addAll(attributeDiff.getRefactorings());
 					this.attributeDiffList.add(attributeDiff);
 				}
+				else {
+    				Pair<UMLAttribute, UMLAttribute> pair = Pair.of(attributeWithTheSameName, attribute);
+    				if(!commonAtrributes.contains(pair)) {
+    					commonAtrributes.add(pair);
+    				}
+    			}
 			}
     	}
 	}

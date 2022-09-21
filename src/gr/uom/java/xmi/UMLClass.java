@@ -23,7 +23,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private UMLJavadoc packageDeclarationJavadoc;
     private List<UMLComment> packageDeclarationComments;
     
-    public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<String> importedTypes) {
+    public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<UMLImport> importedTypes) {
     	super(packageName, name, locationInfo, importedTypes);
         if(packageName.equals(""))
         	this.qualifiedName = name;

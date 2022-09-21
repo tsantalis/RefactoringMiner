@@ -60,9 +60,13 @@ public class UMLModelASTReader {
 		}
 
 		PsiImportList imports = PsiUtils.findFirstChildOfType(compilationUnit, PsiImportList.class);
-		List<String> importedTypes = new ArrayList<>();
+		List<UMLImport> importedTypes = new ArrayList<>();
 		for(PsiImportStatementBase importDeclaration : imports.getAllImportStatements()) {
-			importedTypes.add(importDeclaration.getImportReference().getText());
+			PsiJavaCodeReferenceElement importReference = importDeclaration.getImportReference();
+			boolean isStatic = importDeclaration instanceof PsiImportStaticStatement;
+			String elementName = importReference.getQualifiedName();
+			UMLImport imported = new UMLImport(elementName, importDeclaration.isOnDemand(), isStatic);
+			importedTypes.add(imported);
 		}
 
 		PsiElement[] topLevelTypeDeclarations = compilationUnit.getChildren();
@@ -165,7 +169,7 @@ public class UMLModelASTReader {
 	}
 
 	private void processEnumDeclaration(PsiFile cu, PsiClass enumDeclaration, String packageName, String sourceFile,
-			List<String> importedTypes, UMLJavadoc packageDoc, List<UMLComment> comments) {
+			List<UMLImport> importedTypes, UMLJavadoc packageDoc, List<UMLComment> comments) {
 		UMLJavadoc javadoc = generateJavadoc(cu, enumDeclaration, sourceFile);
 		if(javadoc != null && javadoc.containsIgnoreCase(FREE_MARKER_GENERATED)) {
 			return;
@@ -218,7 +222,7 @@ public class UMLModelASTReader {
 	}
 
 	private Map<PsiMember, VariableDeclarationContainer> processBodyDeclarations(PsiFile cu, PsiClass abstractTypeDeclaration, String packageName,
-			String sourceFile, List<String> importedTypes, UMLClass umlClass, UMLJavadoc packageDoc, List<UMLComment> comments) {
+			String sourceFile, List<UMLImport> importedTypes, UMLClass umlClass, UMLJavadoc packageDoc, List<UMLComment> comments) {
 		Map<PsiMember, VariableDeclarationContainer> map = new LinkedHashMap<>();
 		for (PsiElement psiElement : abstractTypeDeclaration.getChildren()) {
 			if (psiElement instanceof PsiEnumConstant) {
@@ -263,7 +267,7 @@ public class UMLModelASTReader {
 	}
 
 	private void processTypeDeclaration(PsiFile cu, PsiClass typeDeclaration, String packageName, String sourceFile,
-			List<String> importedTypes, UMLJavadoc packageDoc, List<UMLComment> comments) {
+			List<UMLImport> importedTypes, UMLJavadoc packageDoc, List<UMLComment> comments) {
 		UMLJavadoc javadoc = generateJavadoc(cu, typeDeclaration, sourceFile);
 		if(javadoc != null && javadoc.containsIgnoreCase(FREE_MARKER_GENERATED)) {
 			return;
@@ -670,7 +674,7 @@ public class UMLModelASTReader {
 		return attributes;
 	}
 	
-	private UMLAnonymousClass processAnonymousClassDeclaration(PsiFile cu, PsiAnonymousClass anonymous, String packageName, String binaryName, String codePath, String sourceFile, List<UMLComment> comments, List<String> importedTypes) {
+	private UMLAnonymousClass processAnonymousClassDeclaration(PsiFile cu, PsiAnonymousClass anonymous, String packageName, String binaryName, String codePath, String sourceFile, List<UMLComment> comments, List<UMLImport> importedTypes) {
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, anonymous, CodeElementType.ANONYMOUS_CLASS_DECLARATION);
 		UMLAnonymousClass anonymousClass = new UMLAnonymousClass(packageName, binaryName, codePath, locationInfo, importedTypes);
 

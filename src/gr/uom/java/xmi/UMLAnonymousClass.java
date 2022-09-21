@@ -6,7 +6,7 @@ import java.util.List;
 public class UMLAnonymousClass extends UMLAbstractClass implements Comparable<UMLAnonymousClass>, Serializable, LocationInfoProvider {
 	private String codePath;
 	
-	public UMLAnonymousClass(String packageName, String name, String codePath, LocationInfo locationInfo, List<String> importedTypes) {
+	public UMLAnonymousClass(String packageName, String name, String codePath, LocationInfo locationInfo, List<UMLImport> importedTypes) {
     	super(packageName, name, locationInfo, importedTypes);
         this.codePath = codePath;
     }

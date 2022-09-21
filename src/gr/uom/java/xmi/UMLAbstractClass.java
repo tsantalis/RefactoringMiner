@@ -31,11 +31,11 @@ public abstract class UMLAbstractClass {
 	private List<UMLInitializer> initializers;
 	private UMLType superclass;
     private List<UMLType> implementedInterfaces;
-    private List<String> importedTypes;
+    private List<UMLImport> importedTypes;
     private List<UMLAnnotation> annotations;
     private List<UMLEnumConstant> enumConstants;
 
-	public UMLAbstractClass(String packageName, String name, LocationInfo locationInfo, List<String> importedTypes) {
+	public UMLAbstractClass(String packageName, String name, LocationInfo locationInfo, List<UMLImport> importedTypes) {
 		this.packageName = packageName;
 		this.name = name;
 		this.locationInfo = locationInfo;
@@ -131,7 +131,7 @@ public abstract class UMLAbstractClass {
 		return implementedInterfaces;
 	}
 
-	public List<String> getImportedTypes() {
+	public List<UMLImport> getImportedTypes() {
 		return importedTypes;
 	}
 
@@ -204,9 +204,10 @@ public abstract class UMLAbstractClass {
 	public boolean importsType(String targetClass) {
 		if(targetClass.startsWith(getPackageName()))
 			return true;
-		for(String importedType : getImportedTypes()) {
+		for(UMLImport imported : getImportedTypes()) {
 			//importedType.startsWith(targetClass) -> special handling for import static
 			//importedType.equals(targetClassPackage) -> special handling for import with asterisk (*) wildcard
+			String importedType = imported.getName();
 			if(importedType.equals(targetClass) || importedType.startsWith(targetClass)) {
 				return true;
 			}

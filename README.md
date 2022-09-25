@@ -2,6 +2,7 @@ Table of Contents
 =================
 
    * [General info](#general-info)
+   * [Current precision and recall](#current-precision-and-recall)
    * [How to build RefactoringMiner](#how-to-build-refactoringminer)
    * [How to use RefactoringMiner as a maven dependency](#how-to-use-refactoringminer-as-a-maven-dependency)
    * [Chrome extension](#chrome-extension)
@@ -132,6 +133,99 @@ Currently, it supports the detection of the following refactorings:
 **<ins>supported by RefactoringMiner 2.3.2</ins>**
 
 89. Split Class
+
+# Current precision and recall
+As of **September 24, 2022** the precision and recall of the tool on an oracle consisting of **540 commits** from **186 open-source projects**
+
+| Refactoring Type | TP | FP | FN | Precision | Recall |
+|:-----------------------|-----------:|--------:|--------:|--------:|--------:|
+|**Total**|11320  | 23  | 288  | 0.998  | 0.975|
+|Extract Method|959  |  1  | 31  | 0.999  | 0.969|
+|Rename Class|53  |  0  |  2  | 1.000  | 0.964|
+|Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
+|Move And Rename Attribute|12  |  0  |  0  | 1.000  | 1.000|
+|Replace Attribute|10  |  0  |  0  | 1.000  | 1.000|
+|Rename Method|350  |  4  | 32  | 0.989  | 0.916|
+|Inline Method|109  |  0  |  2  | 1.000  | 0.982|
+|Move Method|352  |  3  |  9  | 0.992  | 0.975|
+|Move And Rename Method|115  |  0  |  6  | 1.000  | 0.950|
+|Pull Up Method|290  |  0  |  6  | 1.000  | 0.980|
+|Move Class|1093  |  0  |  4  | 1.000  | 0.996|
+|Move And Rename Class|34  |  0  |  1  | 1.000  | 0.971|
+|Move Source Folder| 3  |  0  |  0  | 1.000  | 1.000|
+|Pull Up Attribute|128  |  0  |  1  | 1.000  | 0.992|
+|Push Down Attribute|33  |  0  |  0  | 1.000  | 1.000|
+|Push Down Method|43  |  0  |  1  | 1.000  | 0.977|
+|Extract Interface|22  |  0  |  0  | 1.000  | 1.000|
+|Extract Superclass|73  |  0  |  0  | 1.000  | 1.000|
+|Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
+|Extract Class|96  |  0  |  0  | 1.000  | 1.000|
+|Extract And Move Method|99  |  0  | 69  | 1.000  | 0.589|
+|Move And Inline Method|16  |  0  |  4  | 1.000  | 0.800|
+|Rename Package|16  |  0  |  0  | 1.000  | 1.000|
+|Move Package|10  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|201  |  0  |  0  | 1.000  | 1.000|
+|Extract Attribute|16  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|75  |  0  |  0  | 1.000  | 1.000|
+|Inline Attribute| 7  |  0  |  0  | 1.000  | 1.000|
+|Rename Variable|296  |  3  | 13  | 0.990  | 0.958|
+|Rename Parameter|471  |  2  | 28  | 0.996  | 0.944|
+|Rename Attribute|128  |  0  | 16  | 1.000  | 0.889|
+|Merge Variable| 5  |  0  |  0  | 1.000  | 1.000|
+|Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
+|Merge Attribute| 5  |  0  |  0  | 1.000  | 1.000|
+|Split Variable| 1  |  0  |  0  | 1.000  | 1.000|
+|Split Parameter| 8  |  0  |  0  | 1.000  | 1.000|
+|Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
+|Replace Variable With Attribute|20  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Variable|72  |  0  |  0  | 1.000  | 1.000|
+|Localize Parameter|20  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Attribute|22  |  0  |  0  | 1.000  | 1.000|
+|Change Return Type|419  |  0  | 12  | 1.000  | 0.972|
+|Change Variable Type|764  |  2  | 11  | 0.997  | 0.986|
+|Change Parameter Type|629  |  1  | 16  | 0.998  | 0.975|
+|Change Attribute Type|223  |  0  |  8  | 1.000  | 0.965|
+|Add Method Annotation|327  |  0  |  4  | 1.000  | 0.988|
+|Remove Method Annotation|99  |  0  |  0  | 1.000  | 1.000|
+|Modify Method Annotation|29  |  0  |  0  | 1.000  | 1.000|
+|Add Attribute Annotation|62  |  0  |  1  | 1.000  | 0.984|
+|Remove Attribute Annotation|18  |  0  |  0  | 1.000  | 1.000|
+|Modify Attribute Annotation| 7  |  0  |  0  | 1.000  | 1.000|
+|Add Class Annotation|52  |  0  |  0  | 1.000  | 1.000|
+|Remove Class Annotation|20  |  0  |  0  | 1.000  | 1.000|
+|Modify Class Annotation|32  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter Annotation|32  |  0  |  0  | 1.000  | 1.000|
+|Remove Parameter Annotation| 3  |  0  |  0  | 1.000  | 1.000|
+|Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|937  |  2  |  1  | 0.998  | 0.999|
+|Remove Parameter|334  |  0  |  0  | 1.000  | 1.000|
+|Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
+|Add Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
+|Remove Variable Annotation| 3  |  0  |  0  | 1.000  | 1.000|
+|Add Thrown Exception Type|39  |  0  |  0  | 1.000  | 1.000|
+|Remove Thrown Exception Type|246  |  0  |  0  | 1.000  | 1.000|
+|Change Thrown Exception Type| 9  |  0  |  0  | 1.000  | 1.000|
+|Change Method Access Modifier|319  |  0  |  0  | 1.000  | 1.000|
+|Change Attribute Access Modifier|220  |  0  |  0  | 1.000  | 1.000|
+|Encapsulate Attribute|48  |  0  |  0  | 1.000  | 1.000|
+|Add Method Modifier|79  |  0  |  0  | 1.000  | 1.000|
+|Remove Method Modifier|100  |  0  |  0  | 1.000  | 1.000|
+|Add Attribute Modifier|134  |  0  |  0  | 1.000  | 1.000|
+|Remove Attribute Modifier|141  |  1  |  0  | 0.993  | 1.000|
+|Add Variable Modifier|128  |  0  |  0  | 1.000  | 1.000|
+|Remove Variable Modifier|57  |  0  |  0  | 1.000  | 1.000|
+|Change Class Access Modifier|77  |  0  |  0  | 1.000  | 1.000|
+|Add Class Modifier|34  |  0  |  0  | 1.000  | 1.000|
+|Remove Class Modifier|44  |  0  |  0  | 1.000  | 1.000|
+|Split Package| 4  |  0  |  0  | 1.000  | 1.000|
+|Merge Package| 2  |  0  |  0  | 1.000  | 1.000|
+|Change Type Declaration Kind| 6  |  0  |  0  | 1.000  | 1.000|
+|Collapse Hierarchy| 1  |  0  |  0  | 1.000  | 1.000|
+|Replace Loop With Pipeline|35  |  0  |  0  | 1.000  | 1.000|
+|Replace Pipeline With Loop| 2  |  0  |  0  | 1.000  | 1.000|
+|Replace Anonymous With Lambda|45  |  0  |  0  | 1.000  | 1.000|
+|Merge Class| 6  |  0  |  0  | 1.000  | 1.000|
+|Split Class| 3  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
 

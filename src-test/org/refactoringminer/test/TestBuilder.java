@@ -161,6 +161,29 @@ public class TestBuilder {
 		Assert.assertTrue(mainResultMessage, success);
 	}
 
+	private String buildMarkup() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("| Refactoring Type | TP | FP | FN | Precision | Recall |").append("\n");
+		sb.append("|:-----------------------|-----------:|--------:|--------:|--------:|--------:|").append("\n");
+		for (RefactoringType refType : RefactoringType.values()) {
+			Counter refTypeCounter = cMap.get(refType);
+			if (refTypeCounter != null) {
+				sb.append("|" + refType.getDisplayName() + buildResultMessageMarkup(refTypeCounter)).append("\n");
+			}
+		}
+		sb.append("|Total" + buildResultMessageMarkup(c));
+		return sb.toString();
+	}
+
+	private String buildResultMessageMarkup(Counter c) {
+		double precision = ((double) get(TP, c) / (get(TP, c) + get(FP, c)));
+		double recall = ((double) get(TP, c)) / (get(TP, c) + get(FN, c));
+		String mainResultMessage = String.format(
+				"|%2d  | %2d  | %2d  | %.3f  | %.3f|", get(TP, c), get(FP, c),
+				get(FN, c), precision, recall);
+		return mainResultMessage;
+	}
+
 	private String buildResultMessage(Counter c) {
 		double precision = ((double) get(TP, c) / (get(TP, c) + get(FP, c)));
 		double recall = ((double) get(TP, c)) / (get(TP, c) + get(FN, c));

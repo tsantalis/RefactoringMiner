@@ -120,7 +120,8 @@ public class RefactoringPopulator {
 		InlineAttribute(new BigInteger("154742504910672534362390528")),
 		ReplacePipelineWithLoop(new BigInteger("309485009821345068724781056")),
 		SplitClass(new BigInteger("618970019642690137449562112")),
-		All(new BigInteger("1237940039285380274899124223"));
+		SplitConditional(new BigInteger("1237940039285380274899124224")),
+		All(new BigInteger("2475880078570760549798248447"));
 
 		private BigInteger value;
 

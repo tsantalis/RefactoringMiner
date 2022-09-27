@@ -133,13 +133,14 @@ Currently, it supports the detection of the following refactorings:
 **<ins>supported by RefactoringMiner 2.3.2</ins>**
 
 89. Split Class
+90. Split Conditional
 
 # Current precision and recall
-As of **September 24, 2022** the precision and recall of the tool on an oracle consisting of **540 commits** from **186 open-source projects**
+As of **September 27, 2022** the precision and recall of the tool on an oracle consisting of **540 commits** from **186 open-source projects**
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|11320  | 23  | 288  | 0.998  | 0.975|
+|**Total**|11326  | 23  | 288  | 0.998  | 0.975|
 |Extract Method|959  |  1  | 31  | 0.999  | 0.969|
 |Rename Class|53  |  0  |  2  | 1.000  | 0.964|
 |Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
@@ -226,6 +227,7 @@ As of **September 24, 2022** the precision and recall of the tool on an oracle c
 |Replace Anonymous With Lambda|45  |  0  |  0  | 1.000  | 1.000|
 |Merge Class| 6  |  0  |  0  | 1.000  | 1.000|
 |Split Class| 3  |  0  |  0  | 1.000  | 1.000|
+|Split Conditional| 6  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
 
@@ -243,7 +245,7 @@ In order to use RefactoringMiner as a maven dependency in your project, add the 
     <dependency>
       <groupId>com.github.tsantalis</groupId>
       <artifactId>refactoring-miner</artifactId>
-      <version>2.2.0</version>
+      <version>2.3.2</version>
     </dependency>
 
 # Chrome Extension

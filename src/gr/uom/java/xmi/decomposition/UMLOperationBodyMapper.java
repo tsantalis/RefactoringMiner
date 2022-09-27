@@ -7006,7 +7006,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 								Set<String> intersection2 = new LinkedHashSet<String>(subConditionsAsList);
 								intersection2.retainAll(subConditionsAsList1);
-								if(!intersection2.isEmpty() && !intersection.equals(intersection2)) {
+								if(!intersection2.isEmpty() && !intersection.containsAll(intersection2)) {
 									Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
 									additionallyMatchedStatements2.add(ifNode2);
 									CompositeReplacement composite = new CompositeReplacement(statement1.getString(), ifNode2.getString(), new LinkedHashSet<>(), additionallyMatchedStatements2);

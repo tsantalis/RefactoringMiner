@@ -39,6 +39,7 @@ import gr.uom.java.xmi.diff.RemoveParameterRefactoring;
 import gr.uom.java.xmi.diff.ReplaceAnonymousWithLambdaRefactoring;
 import gr.uom.java.xmi.diff.ReplaceLoopWithPipelineRefactoring;
 import gr.uom.java.xmi.diff.ReplacePipelineWithLoopRefactoring;
+import gr.uom.java.xmi.diff.SplitConditionalRefactoring;
 import gr.uom.java.xmi.diff.SplitVariableRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
@@ -6963,7 +6964,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 							if(ReplacementUtil.contains(element, r.getAfter()) && element.startsWith(r.getAfter()) &&
-									(element.endsWith(" != null") || element.endsWith(" == null"))) {
+									(element.endsWith(" != null") || element.endsWith(" == null") || element.endsWith(" != 0") || element.endsWith(" == 0"))) {
 								replacementFound = true;
 								break;
 							}
@@ -6978,31 +6979,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					info.addReplacement(r);
 					CompositeStatementObject root1 = statement1.getParent();
 					CompositeStatementObject root2 = statement2.getParent();
-					if(root1 != null && root2 != null) {
-						while(root1.getParent() != null) {
-							root1 = root1.getParent();
-						}
-						while(root2.getParent() != null) {
-							root2 = root2.getParent();
-						}
-					}
 					List<CompositeStatementObject> ifNodes1 = new ArrayList<>(), ifNodes2 = new ArrayList<>();
 					if(root1 != null && root2 != null) {
 						for(CompositeStatementObject innerNode : root1.getInnerNodes()) {
-							if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+							if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && !alreadyMatched1(innerNode)) {
 								ifNodes1.add(innerNode);
 							}
 						}
 						for(CompositeStatementObject innerNode : root2.getInnerNodes()) {
-							if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+							if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && !alreadyMatched2(innerNode)) {
 								ifNodes2.add(innerNode);
 							}
 						}
 					}
-					if(ifNodes1.size() == 0 && ifNodes2.size() > 0) {
+					if(ifNodes1.size() < ifNodes2.size()) {
+						boolean splitConditional = false;
 						for(CompositeStatementObject ifNode2 : ifNodes2) {
 							List<AbstractExpression> expressions2 = ifNode2.getExpressions();
-							if(expressions2.size() > 0) {
+							if(expressions2.size() > 0 && !statement2.equals(ifNode2) && !containsIdenticalIfNode(ifNodes1, ifNode2)) {
 								AbstractExpression ifExpression2 = expressions2.get(0);
 								String conditional = ifExpression2.getString();
 								String[] subConditions = SPLIT_CONDITIONAL_PATTERN.split(conditional);
@@ -7012,13 +7006,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 								Set<String> intersection2 = new LinkedHashSet<String>(subConditionsAsList);
 								intersection2.retainAll(subConditionsAsList1);
-								if(!intersection2.isEmpty()) {
+								if(!intersection2.isEmpty() && !intersection.containsAll(intersection2)) {
 									Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
 									additionallyMatchedStatements2.add(ifNode2);
 									CompositeReplacement composite = new CompositeReplacement(statement1.getString(), ifNode2.getString(), new LinkedHashSet<>(), additionallyMatchedStatements2);
 									info.addReplacement(composite);
+									splitConditional = true;
 								}
 							}
+						}
+						if(splitConditional) {
+							List<Replacement> compositeReplacements = info.getReplacements(ReplacementType.COMPOSITE);
+							Set<AbstractCodeFragment> splitConditionals = new LinkedHashSet<>();
+							splitConditionals.add(statement2);
+							for(Replacement compositeReplacement : compositeReplacements) {
+								splitConditionals.addAll(((CompositeReplacement)compositeReplacement).getAdditionallyMatchedStatements2());
+							}
+							SplitConditionalRefactoring split = new SplitConditionalRefactoring(statement1, splitConditionals, container1, container2);
+							refactorings.add(split);
 						}
 					}
 				}
@@ -7068,6 +7073,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					info.addReplacement(r);
 					return true;
 				}
+			}
+		}
+		return false;
+	}
+
+	private static boolean containsIdenticalIfNode(List<CompositeStatementObject> ifNodes1, CompositeStatementObject ifNode2) {
+		for(CompositeStatementObject ifNode1 : ifNodes1) {
+			if(ifNode1.getString().equals(ifNode2.getString())) {
+				return true;
 			}
 		}
 		return false;

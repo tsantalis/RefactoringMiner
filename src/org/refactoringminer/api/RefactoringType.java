@@ -97,7 +97,8 @@ public enum RefactoringType {
 	REPLACE_PIPELINE_WITH_LOOP("Replace Pipeline With Loop", "Replace Pipeline With Loop (.+) with (.+) in method (.+) from class (.+)"),
 	REPLACE_ANONYMOUS_WITH_LAMBDA("Replace Anonymous With Lambda", "Replace Anonymous With Lambda (.+) with (.+) in method (.+) from class (.+)"),
 	MERGE_CLASS("Merge Class", "Merge Class \\[(.+)\\] to (.+)"),
-	SPLIT_CLASS("Split Class", "Split Class (.+) to \\[(.+)\\]");
+	SPLIT_CLASS("Split Class", "Split Class (.+) to \\[(.+)\\]"),
+	SPLIT_CONDITIONAL("Split Conditional", "Split Conditional (.+) to \\[(.+)\\] in method (.+) from class (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -192,7 +193,8 @@ public enum RefactoringType {
 		REPLACE_ANONYMOUS_WITH_LAMBDA,
 		MERGE_CLASS,
 		SPLIT_CLASS,
-		INLINE_ATTRIBUTE
+		INLINE_ATTRIBUTE,
+		SPLIT_CONDITIONAL
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

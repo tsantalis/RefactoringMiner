@@ -107,7 +107,41 @@ public class FormattingVisitor extends PsiRecursiveElementWalkingVisitor {
     }
 
     private static boolean mustHaveSpaceBefore(PsiElement element) {
-        return isConditionalExpressionToken(element) || isLocalVariableDeclaration(element) || isMethodName(element) || isInfixOperator(element);
+        return isConditionalExpressionToken(element) || isLocalVariableDeclaration(element) || isMethodName(element) || isInfixOperator(element) || leftParenthesisAfterInfixOperator(element);
+    }
+
+    private static boolean leftParenthesisAfterInfixOperator(PsiElement element) {
+        if(PsiUtil.isJavaToken(element, JavaTokenType.LPARENTH) && element.getParent() instanceof PsiParenthesizedExpression) {
+            if(element.getParent().getParent() instanceof PsiBinaryExpression) {
+                PsiBinaryExpression binaryExpression = (PsiBinaryExpression) element.getParent().getParent();
+                if(binaryExpression.getROperand() != null) {
+                    return binaryExpression.getROperand().equals(element.getParent());
+                }
+            }
+            else if(element.getParent().getParent() instanceof PsiPolyadicExpression) {
+                PsiPolyadicExpression polyadicExpression = (PsiPolyadicExpression) element.getParent().getParent();
+                for(PsiExpression operand : polyadicExpression.getOperands()) {
+                    if(operand.equals(element.getParent())) {
+                        return true;
+                    }
+                }
+            }
+            else if(element.getParent().getParent() instanceof PsiReferenceExpression &&
+                    element.getParent().getParent().getParent() instanceof PsiMethodCallExpression &&
+                    element.getParent().getParent().getParent().getParent() instanceof PsiBinaryExpression) {
+                PsiBinaryExpression binaryExpression = (PsiBinaryExpression) element.getParent().getParent().getParent().getParent();
+                if(binaryExpression.getROperand() != null && binaryExpression.getROperand().equals(element.getParent().getParent().getParent())) {
+                    return true;
+                }
+                else if(element.getParent().getParent().getParent().getParent().getParent() instanceof PsiBinaryExpression) {
+                    PsiBinaryExpression binaryExpression2 = (PsiBinaryExpression) element.getParent().getParent().getParent().getParent().getParent();
+                    if(binaryExpression2.getROperand() != null) {
+                        return binaryExpression2.getROperand().equals(element.getParent().getParent().getParent().getParent());
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     private static boolean isConditionalExpressionToken(PsiElement element) {

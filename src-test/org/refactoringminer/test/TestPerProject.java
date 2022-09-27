@@ -41,7 +41,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/structr/structr.git", 8, 0, 0);
         processRepositoryCommits("https://github.com/ignatov/intellij-erlang.git", 51, 0, 0);
         processRepositoryCommits("https://github.com/geoserver/geoserver.git", 83, 0, 4);
-        processRepositoryCommits("https://github.com/BuildCraft/BuildCraft.git", 35, 1, 4);
+        processRepositoryCommits("https://github.com/BuildCraft/BuildCraft.git", 37, 1, 4);
         processRepositoryCommits("https://github.com/HubSpot/Singularity.git", 6, 0, 0);
         processRepositoryCommits("https://github.com/katzer/cordova-plugin-local-notifications.git", 63, 0, 2);
         processRepositoryCommits("https://github.com/FasterXML/jackson-databind.git", 26, 0, 0);
@@ -113,7 +113,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/apache/tomcat.git", 17, 0, 0);
         processRepositoryCommits("https://github.com/facebook/buck.git", 178, 0, 7);
         processRepositoryCommits("https://github.com/jayway/rest-assured.git", 2, 0, 0);
-        processRepositoryCommits("https://github.com/graphhopper/graphhopper.git", 392, 2, 7);
+        processRepositoryCommits("https://github.com/graphhopper/graphhopper.git", 393, 2, 7);
         processRepositoryCommits("https://github.com/xetorthio/jedis.git", 33, 0, 0);
         processRepositoryCommits("https://github.com/eclipse/jetty.project.git", 12, 0, 4);
         processRepositoryCommits("https://github.com/droolsjbpm/jbpm.git", 150, 0, 4);
@@ -138,7 +138,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/spring-projects/spring-data-rest.git", 2, 0, 0);
         processRepositoryCommits("https://github.com/NLPchina/ansj_seg.git", 140, 0, 4);
         processRepositoryCommits("https://github.com/apache/camel.git", 12, 0, 0);
-        processRepositoryCommits("https://github.com/droolsjbpm/drools.git", 123, 0, 2);
+        processRepositoryCommits("https://github.com/droolsjbpm/drools.git", 124, 0, 2);
         processRepositoryCommits("https://github.com/robovm/robovm.git", 483, 0, 2);
         processRepositoryCommits("https://github.com/bitcoinj/bitcoinj.git", 134, 0, 5);
         processRepositoryCommits("https://github.com/facebook/presto.git", 305, 0, 0);
@@ -192,7 +192,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/puniverse/quasar.git", 17, 0, 1);
         processRepositoryCommits("https://github.com/Jasig/cas.git", 4, 0, 0);
         processRepositoryCommits("https://github.com/cucumber/cucumber-jvm.git", 6, 0, 0);
-        processRepositoryCommits("https://github.com/JetBrains/intellij-community.git", 198, 0, 6);
+        processRepositoryCommits("https://github.com/JetBrains/intellij-community.git", 199, 0, 6);
         processRepositoryCommits("https://github.com/orientechnologies/orientdb.git", 62, 0, 1);
         processRepositoryCommits("https://github.com/spotify/helios.git", 24, 0, 0);
         processRepositoryCommits("https://github.com/SlimeKnights/TinkersConstruct.git", 5, 0, 3);
@@ -208,7 +208,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/osmandapp/Osmand.git", 10, 0, 0);
         processRepositoryCommits("https://github.com/openhab/openhab.git", 11, 0, 0);
         processRepositoryCommits("https://github.com/BroadleafCommerce/BroadleafCommerce.git", 32, 0, 4);
-        processRepositoryCommits("https://github.com/nutzam/nutz.git", 4, 0, 0);
+        processRepositoryCommits("https://github.com/nutzam/nutz.git", 5, 0, 0);
         processRepositoryCommits("https://github.com/spring-projects/spring-security.git", 24, 0, 2);
         processRepositoryCommits("https://github.com/novoda/android-demos.git", 4, 0, 0);
         processRepositoryCommits("https://github.com/wordpress-mobile/WordPress-Android.git", 34, 0, 1);

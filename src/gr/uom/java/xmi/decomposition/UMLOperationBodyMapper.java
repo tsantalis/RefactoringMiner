@@ -7132,6 +7132,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(s.startsWith("if(") && s.endsWith(")")) {
 			conditional = s.substring(3, s.length()-1);
 		}
+		if(s.startsWith("do(") && s.endsWith(")")) {
+			conditional = s.substring(3, s.length()-1);
+		}
 		if(s.startsWith("while(") && s.endsWith(")")) {
 			conditional = s.substring(6, s.length()-1);
 		}

@@ -7132,6 +7132,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(s.startsWith("if(") && s.endsWith(")")) {
 			conditional = s.substring(3, s.length()-1);
 		}
+		if(s.startsWith("do(") && s.endsWith(")")) {
+			conditional = s.substring(3, s.length()-1);
+		}
 		if(s.startsWith("while(") && s.endsWith(")")) {
 			conditional = s.substring(6, s.length()-1);
 		}
@@ -7424,7 +7427,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private Set<Replacement> variableReplacementWithinMethodInvocations(String s1, String s2, Set<String> variables1, Set<String> variables2) {
-		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
+		Set<Replacement> tempReplacements = new LinkedHashSet<Replacement>();
 		for(String variable1 : variables1) {
 			if(s1.contains(variable1) && !s1.equals(variable1) && !s1.equals("this." + variable1) && !s1.equals("_" + variable1)) {
 				int startIndex1 = s1.indexOf(variable1);
@@ -7442,18 +7445,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						boolean prefixMatch = substringBeforeIndex1.equals(substringBeforeIndex2) && !substringBeforeIndex1.isEmpty();
 						if(prefixMatch || suffixMatch) {
 							Replacement r = new Replacement(variable1, variable2, ReplacementType.VARIABLE_NAME);
-							replacements.add(r);
+							tempReplacements.add(r);
 						}
 					}
 				}
 			}
 		}
 		String tmp1 = new String(s1);
-		for(Replacement replacement : replacements) {
+		Set<Replacement> finalReplacements = new LinkedHashSet<Replacement>();
+		for(Replacement replacement : tempReplacements) {
 			tmp1 = ReplacementUtil.performReplacement(tmp1, s2, replacement.getBefore(), replacement.getAfter());
+			finalReplacements.add(replacement);
+			if(tmp1.equals(s2)) {
+				return finalReplacements;
+			}
 		}
 		if(tmp1.equals(s2)) {
-			return replacements;
+			return finalReplacements;
 		}
 		else {
 			return Collections.emptySet();

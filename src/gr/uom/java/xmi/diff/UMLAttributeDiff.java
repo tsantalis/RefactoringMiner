@@ -3,6 +3,7 @@ package gr.uom.java.xmi.diff;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -146,6 +147,10 @@ public class UMLAttributeDiff {
 
 	public boolean isQualifiedTypeChanged() {
 		return qualifiedTypeChanged;
+	}
+
+	public Optional<UMLOperationBodyMapper> getInitializerMapper() {
+		return Optional.ofNullable(mapper);
 	}
 
 	public Set<AbstractCodeMapping> getInitializerMappings() {

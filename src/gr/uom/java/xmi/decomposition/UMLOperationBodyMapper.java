@@ -2599,7 +2599,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(!mappingSet.isEmpty()) {
 						boolean identicalDepthAndIndex = mappingSet.first().getFragment1().getDepth() == mappingSet.first().getFragment2().getDepth() &&
 								mappingSet.first().getFragment1().getIndex() == mappingSet.first().getFragment2().getIndex();
-						if(mappingSet.size() > 1 && (parentMapper != null || !identicalDepthAndIndex) && mappings.size() > 1) {
+						boolean identicalDepthAndIndexForKeywordStatement = identicalDepthAndIndex && leaf1.isKeyword();
+						if(mappingSet.size() > 1 && (parentMapper != null || !identicalDepthAndIndex || identicalDepthAndIndexForKeywordStatement) && mappings.size() > 1) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
 							for(LeafMapping mapping : mappingSet) {
 								int lineDistance = lineDistanceFromExistingMappings2(mapping);
@@ -2766,11 +2767,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(!mappingSet.isEmpty()) {
 						boolean identicalDepthAndIndex = mappingSet.first().getFragment1().getDepth() == mappingSet.first().getFragment2().getDepth() &&
 								mappingSet.first().getFragment1().getIndex() == mappingSet.first().getFragment2().getIndex();
+						boolean identicalDepthAndIndexForKeywordStatement = identicalDepthAndIndex && leaf2.isKeyword();
 						if(variableDeclarationMappingsWithSameReplacementTypes(mappingSet) && containsCallToExtractedMethod) {
 							//postpone mapping
 							postponedMappingSets.add(mappingSet);
 						}
-						else if(mappingSet.size() > 1 && (parentMapper != null || !identicalDepthAndIndex) && mappings.size() > 0) {
+						else if(mappingSet.size() > 1 && (parentMapper != null || !identicalDepthAndIndex || identicalDepthAndIndexForKeywordStatement) && mappings.size() > 0) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
 							for(LeafMapping mapping : mappingSet) {
 								int lineDistance = lineDistanceFromExistingMappings1(mapping).getMiddle();
@@ -4112,7 +4114,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		replacementInfo.addReplacements(replacementsToBeAdded);
 		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || (s2 + ";\n").equals(s1) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) ||
 				differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(s1, s2, methodInvocationMap1, methodInvocationMap2, statement1.getInfixExpressions(), statement2.getInfixExpressions(), variableDeclarations1, variableDeclarations2, replacementInfo) ||
-				differOnlyInFinalModifier(s1, s2) || differOnlyInThis(s1, s2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo) ||
+				differOnlyInFinalModifier(s1, s2) || differOnlyInThis(s1, s2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo, statement1) ||
 				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString()) ||
 				(containsValidOperatorReplacements(replacementInfo) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, replacementInfo, creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, statement1, statement2))) ||
@@ -5536,7 +5538,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return counter;
 	}
 
-	private boolean matchAsLambdaExpressionArgument(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo) {
+	private boolean matchAsLambdaExpressionArgument(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo, AbstractCodeFragment statement1) {
 		if(parentMapper != null && s2.contains(" -> ")) {
 			for(String parameterName : parameterToArgumentMap.keySet()) {
 				String argument = parameterToArgumentMap.get(parameterName);
@@ -5550,11 +5552,32 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								String tmp = s2.replace(supplierGet, "");
 								tmp = tmp.replace(lambdaArrow, "");
 								if(s1.equals(tmp)) {
-									String before = argument.substring(lambdaArrow.length());
-									String after = parameterName + supplierGet;
-									Replacement r = new Replacement(before, after, ReplacementType.LAMBDA_EXPRESSION_ARGUMENT);
-									replacementInfo.addReplacement(r);
-									return true;
+									for(AbstractCodeFragment nonMappedLeafT2 : parentMapper.getNonMappedLeavesT2()) {
+										Map<String, List<AbstractCall>> methodInvocationMap = nonMappedLeafT2.getMethodInvocationMap();
+										for(String key : methodInvocationMap.keySet()) {
+											if(methodInvocationMap.get(key).contains(this.operationInvocation)) {
+												List<LambdaExpressionObject> lambdas = nonMappedLeafT2.getLambdas();
+												for(LambdaExpressionObject lambda : lambdas) {
+													AbstractExpression lambdaExpression = lambda.getExpression();
+													if(lambdaExpression != null && lambda.toString().equals(argument)) {
+														List<VariableDeclaration> variableDeclarations = statement1.getVariableDeclarations();
+														for(VariableDeclaration variableDeclaration : variableDeclarations) {
+															AbstractExpression initializer = variableDeclaration.getInitializer();
+															if(initializer != null && initializer.getString().equals(lambdaExpression.getString())) {
+																LeafMapping mapping = createLeafMapping(initializer, lambdaExpression, parameterToArgumentMap);
+																addMapping(mapping);
+																String before = argument.substring(lambdaArrow.length());
+																String after = parameterName + supplierGet;
+																Replacement r = new Replacement(before, after, ReplacementType.LAMBDA_EXPRESSION_ARGUMENT);
+																replacementInfo.addReplacement(r);
+																return true;
+															}
+														}
+													}
+												}
+											}
+										}
+									}
 								}
 							}
 						}
@@ -6552,86 +6575,124 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
-		if(s1.contains("=") && s2.contains("=") && (s1.equals(commonSuffix) || s2.equals(commonSuffix))) {
-			if(replacementInfo.getReplacements().size() == 2) {
-				StringBuilder sb = new StringBuilder();
-				int counter = 0;
-				for(Replacement r : replacementInfo.getReplacements()) {
-					sb.append(r.getAfter());
-					if(counter == 0) {
-						sb.append("=");
+		if(s1.contains("=") && s2.contains("=")) {
+			if(s1.equals(commonSuffix) || s2.equals(commonSuffix)) {
+				if(replacementInfo.getReplacements().size() == 2) {
+					StringBuilder sb = new StringBuilder();
+					int counter = 0;
+					for(Replacement r : replacementInfo.getReplacements()) {
+						sb.append(r.getAfter());
+						if(counter == 0) {
+							sb.append("=");
+						}
+						else if(counter == 1) {
+							sb.append(";\n");
+						}
+						counter++;
 					}
-					else if(counter == 1) {
-						sb.append(";\n");
+					if(commonSuffix.equals(sb.toString())) {
+						return false;
 					}
-					counter++;
 				}
-				if(commonSuffix.equals(sb.toString())) {
-					return false;
+				else if(replacementInfo.getReplacements().size() == 1 && commonSuffix.endsWith("=false;\n")) {
+					StringBuilder sb = new StringBuilder();
+					for(Replacement r : replacementInfo.getReplacements()) {
+						sb.append(r.getAfter());
+					}
+					sb.append("=false;\n");
+					if(commonSuffix.equals(sb.toString())) {
+						return false;
+					}
 				}
-			}
-			else if(replacementInfo.getReplacements().size() == 1 && commonSuffix.endsWith("=false;\n")) {
-				StringBuilder sb = new StringBuilder();
-				for(Replacement r : replacementInfo.getReplacements()) {
-					sb.append(r.getAfter());
-				}
-				sb.append("=false;\n");
-				if(commonSuffix.equals(sb.toString())) {
-					return false;
-				}
-			}
-			else if(replacementInfo.getReplacements().size() == 1 && commonSuffix.endsWith("=true;\n")) {
-				StringBuilder sb = new StringBuilder();
-				for(Replacement r : replacementInfo.getReplacements()) {
-					sb.append(r.getAfter());
-				}
-				sb.append("=true;\n");
-				if(commonSuffix.equals(sb.toString())) {
-					return false;
-				}
-			}
-			else {
-				String prefix = null;
-				if(s1.equals(commonSuffix)) {
-					prefix = s2.substring(0, s2.indexOf(commonSuffix));
+				else if(replacementInfo.getReplacements().size() == 1 && commonSuffix.endsWith("=true;\n")) {
+					StringBuilder sb = new StringBuilder();
+					for(Replacement r : replacementInfo.getReplacements()) {
+						sb.append(r.getAfter());
+					}
+					sb.append("=true;\n");
+					if(commonSuffix.equals(sb.toString())) {
+						return false;
+					}
 				}
 				else {
-					prefix = s1.substring(0, s1.indexOf(commonSuffix));
-				}
-				int numberOfSpaces = 0;
-				for(int i=0; i<prefix.length(); i++) {
-					if(prefix.charAt(i) == ' ') {
-						numberOfSpaces++;
+					String prefix = null;
+					if(s1.equals(commonSuffix)) {
+						prefix = s2.substring(0, s2.indexOf(commonSuffix));
+					}
+					else {
+						prefix = s1.substring(0, s1.indexOf(commonSuffix));
+					}
+					int numberOfSpaces = 0;
+					for(int i=0; i<prefix.length(); i++) {
+						if(prefix.charAt(i) == ' ') {
+							numberOfSpaces++;
+						}
+					}
+					//allow final modifier and type
+					if(numberOfSpaces > 2) {
+						return false;
 					}
 				}
-				//allow final modifier and type
-				if(numberOfSpaces > 2) {
-					return false;
-				}
-			}
-			for(Replacement r : replacementInfo.getReplacements()) {
-				if(variableDeclarations1.size() > 0 && r.getBefore().equals(variableDeclarations1.get(0).getVariableName())) {
-					if(r.getAfter().contains("[") && r.getAfter().contains("]") && variableDeclarations2.size() == 0) {
-						String arrayName = r.getAfter().substring(0, r.getAfter().indexOf("["));
-						for(AbstractCodeFragment statement2 : replacementInfo.statements2) {
-							if(statement2.getVariableDeclarations().size() > 0 && statement2.getVariableDeclarations().get(0).getVariableName().equals(arrayName)) {
-								return false;
+				for(Replacement r : replacementInfo.getReplacements()) {
+					if(variableDeclarations1.size() > 0 && r.getBefore().equals(variableDeclarations1.get(0).getVariableName())) {
+						if(r.getAfter().contains("[") && r.getAfter().contains("]") && variableDeclarations2.size() == 0) {
+							String arrayName = r.getAfter().substring(0, r.getAfter().indexOf("["));
+							for(AbstractCodeFragment statement2 : replacementInfo.statements2) {
+								if(statement2.getVariableDeclarations().size() > 0 && statement2.getVariableDeclarations().get(0).getVariableName().equals(arrayName)) {
+									return false;
+								}
+							}
+						}
+					}
+					else if(variableDeclarations2.size() > 0 && r.getAfter().equals(variableDeclarations2.get(0).getVariableName())) {
+						if(r.getBefore().contains("[") && r.getBefore().contains("]") && variableDeclarations1.size() == 0) {
+							String arrayName = r.getBefore().substring(0, r.getBefore().indexOf("["));
+							for(AbstractCodeFragment statement1 : replacementInfo.statements1) {
+								if(statement1.getVariableDeclarations().size() > 0 && statement1.getVariableDeclarations().get(0).getVariableName().equals(arrayName)) {
+									return false;
+								}
 							}
 						}
 					}
 				}
-				else if(variableDeclarations2.size() > 0 && r.getAfter().equals(variableDeclarations2.get(0).getVariableName())) {
-					if(r.getBefore().contains("[") && r.getBefore().contains("]") && variableDeclarations1.size() == 0) {
-						String arrayName = r.getBefore().substring(0, r.getBefore().indexOf("["));
-						for(AbstractCodeFragment statement1 : replacementInfo.statements1) {
-							if(statement1.getVariableDeclarations().size() > 0 && statement1.getVariableDeclarations().get(0).getVariableName().equals(arrayName)) {
-								return false;
+				return true;
+			}
+			if(commonSuffix.contains("=") && replacementInfo.getReplacements().size() == 0) {
+				for(AbstractCodeFragment fragment1 : replacementInfo.statements1) {
+					for(VariableDeclaration variableDeclaration : fragment1.getVariableDeclarations()) {
+						if(s1.equals(variableDeclaration.getVariableName() + "." + commonSuffix)) {
+							String prefix = s2.substring(0, s2.indexOf(commonSuffix));
+							int numberOfSpaces = 0;
+							for(int i=0; i<prefix.length(); i++) {
+								if(prefix.charAt(i) == ' ') {
+									numberOfSpaces++;
+								}
+							}
+							//allow final modifier and type
+							if(numberOfSpaces <= 2) {
+								return true;
+							}
+						}
+					}
+				}
+				for(AbstractCodeFragment fragment2 : replacementInfo.statements2) {
+					for(VariableDeclaration variableDeclaration : fragment2.getVariableDeclarations()) {
+						if(s2.equals(variableDeclaration.getVariableName() + "." + commonSuffix)) {
+							String prefix = s1.substring(0, s1.indexOf(commonSuffix));
+							int numberOfSpaces = 0;
+							for(int i=0; i<prefix.length(); i++) {
+								if(prefix.charAt(i) == ' ') {
+									numberOfSpaces++;
+								}
+							}
+							//allow final modifier and type
+							if(numberOfSpaces <= 2) {
+								return true;
 							}
 						}
 					}
 				}
 			}
-			return true;
 		}
 		return false;
 	}

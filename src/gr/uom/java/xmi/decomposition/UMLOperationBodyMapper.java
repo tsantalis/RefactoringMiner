@@ -4114,7 +4114,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		replacementInfo.addReplacements(replacementsToBeAdded);
 		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || (s2 + ";\n").equals(s1) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) ||
 				differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(s1, s2, methodInvocationMap1, methodInvocationMap2, statement1.getInfixExpressions(), statement2.getInfixExpressions(), variableDeclarations1, variableDeclarations2, replacementInfo) ||
-				differOnlyInFinalModifier(s1, s2) || differOnlyInThis(s1, s2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo) ||
+				differOnlyInFinalModifier(s1, s2) || differOnlyInThis(s1, s2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo, statement1) ||
 				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString()) ||
 				(containsValidOperatorReplacements(replacementInfo) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, replacementInfo, creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, statement1, statement2))) ||
@@ -5538,7 +5538,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return counter;
 	}
 
-	private boolean matchAsLambdaExpressionArgument(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo) {
+	private boolean matchAsLambdaExpressionArgument(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo, AbstractCodeFragment statement1) {
 		if(parentMapper != null && s2.contains(" -> ")) {
 			for(String parameterName : parameterToArgumentMap.keySet()) {
 				String argument = parameterToArgumentMap.get(parameterName);
@@ -5552,11 +5552,32 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								String tmp = s2.replace(supplierGet, "");
 								tmp = tmp.replace(lambdaArrow, "");
 								if(s1.equals(tmp)) {
-									String before = argument.substring(lambdaArrow.length());
-									String after = parameterName + supplierGet;
-									Replacement r = new Replacement(before, after, ReplacementType.LAMBDA_EXPRESSION_ARGUMENT);
-									replacementInfo.addReplacement(r);
-									return true;
+									for(AbstractCodeFragment nonMappedLeafT2 : parentMapper.getNonMappedLeavesT2()) {
+										Map<String, List<AbstractCall>> methodInvocationMap = nonMappedLeafT2.getMethodInvocationMap();
+										for(String key : methodInvocationMap.keySet()) {
+											if(methodInvocationMap.get(key).contains(this.operationInvocation)) {
+												List<LambdaExpressionObject> lambdas = nonMappedLeafT2.getLambdas();
+												for(LambdaExpressionObject lambda : lambdas) {
+													AbstractExpression lambdaExpression = lambda.getExpression();
+													if(lambdaExpression != null && lambda.toString().equals(argument)) {
+														List<VariableDeclaration> variableDeclarations = statement1.getVariableDeclarations();
+														for(VariableDeclaration variableDeclaration : variableDeclarations) {
+															AbstractExpression initializer = variableDeclaration.getInitializer();
+															if(initializer != null && initializer.getString().equals(lambdaExpression.getString())) {
+																LeafMapping mapping = createLeafMapping(initializer, lambdaExpression, parameterToArgumentMap);
+																addMapping(mapping);
+																String before = argument.substring(lambdaArrow.length());
+																String after = parameterName + supplierGet;
+																Replacement r = new Replacement(before, after, ReplacementType.LAMBDA_EXPRESSION_ARGUMENT);
+																replacementInfo.addReplacement(r);
+																return true;
+															}
+														}
+													}
+												}
+											}
+										}
+									}
 								}
 							}
 						}

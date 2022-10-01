@@ -89,6 +89,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Set<CandidateAttributeRefactoring> candidateAttributeRenames = new LinkedHashSet<CandidateAttributeRefactoring>();
 	private Set<CandidateMergeVariableRefactoring> candidateAttributeMerges = new LinkedHashSet<CandidateMergeVariableRefactoring>();
 	private Set<CandidateSplitVariableRefactoring> candidateAttributeSplits = new LinkedHashSet<CandidateSplitVariableRefactoring>();
+	private Set<UMLAnonymousClassDiff> anonymousClassDiffs = new LinkedHashSet<UMLAnonymousClassDiff>();
 	private Set<UMLOperationBodyMapper> childMappers = new LinkedHashSet<UMLOperationBodyMapper>();
 	private UMLOperationBodyMapper parentMapper;
 	private static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)|(\\?)|(:)");
@@ -1787,6 +1788,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return candidateAttributeSplits;
 	}
 
+	public Set<UMLAnonymousClassDiff> getAnonymousClassDiffs() {
+		return anonymousClassDiffs;
+	}
+
 	public Set<AbstractCodeMapping> getMappings() {
 		return mappings;
 	}
@@ -3189,6 +3194,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					anonymousClassDiff.process();
 					List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
 					if(matchedOperationMappers.size() > 0) {
+						this.anonymousClassDiffs.add(anonymousClassDiff);
 						for(UMLOperationBodyMapper mapper : matchedOperationMappers) {
 							addAllMappings(mapper.mappings);
 						}
@@ -5332,6 +5338,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 							this.refactorings.addAll(anonymousClassDiffRefactorings);
+							this.anonymousClassDiffs.add(anonymousClassDiff);
 							if(!anonymousClassDeclaration1.toString().equals(anonymousClassDeclaration2.toString())) {
 								Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), anonymousClassDeclaration2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION);
 								replacementInfo.addReplacement(replacement);

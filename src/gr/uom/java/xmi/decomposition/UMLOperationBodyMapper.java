@@ -5316,6 +5316,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return replacementInfo.getReplacements();
 			}
 		}
+		if(classDiff != null && statement1.assignmentInvocationCoveringEntireStatement() != null && statement2.assignmentInvocationCoveringEntireStatement() != null) {
+			String assignedVariable1 = statement1.getString().substring(0, statement1.getString().indexOf("="));
+			String assignedVariable2 = statement2.getString().substring(0, statement2.getString().indexOf("="));
+			if(assignedVariable1.equals(assignedVariable2)) {
+				for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
+					if(assignmentInvocationCoveringTheEntireStatement1.matchesOperation(removedOperation, container1, modelDiff)) {
+						return replacementInfo.getReplacements();
+					}
+				}
+			}
+		}
 		return null;
 	}
 

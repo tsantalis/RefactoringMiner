@@ -22,7 +22,7 @@ import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 public abstract class AbstractCall implements LocationInfoProvider {
-	protected int typeArguments;
+	protected int numberOfArguments;
 	protected String expression;
 	protected List<String> arguments;
 	protected LocationInfo locationInfo;
@@ -797,7 +797,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 	}
 
 	protected void update(AbstractCall newCall, String oldExpression, String newExpression) {
-		newCall.typeArguments = this.typeArguments;
+		newCall.numberOfArguments = this.numberOfArguments;
 		if(this.expression != null && this.expression.equals(oldExpression)) {
 			newCall.expression = newExpression;
 		}

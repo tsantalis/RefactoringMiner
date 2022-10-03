@@ -22,7 +22,7 @@ public class ObjectCreation extends AbstractCall {
 	public ObjectCreation(CompilationUnit cu, String filePath, ClassInstanceCreation creation) {
 		this.locationInfo = new LocationInfo(cu, filePath, creation, CodeElementType.CLASS_INSTANCE_CREATION);
 		this.type = UMLType.extractTypeObject(cu, filePath, creation.getType(), 0);
-		this.typeArguments = creation.arguments().size();
+		this.numberOfArguments = creation.arguments().size();
 		this.arguments = new ArrayList<String>();
 		List<Expression> args = creation.arguments();
 		for(Expression argument : args) {
@@ -40,7 +40,7 @@ public class ObjectCreation extends AbstractCall {
 		this.locationInfo = new LocationInfo(cu, filePath, creation, CodeElementType.ARRAY_CREATION);
 		this.isArray = true;
 		this.type = UMLType.extractTypeObject(cu, filePath, creation.getType(), 0);
-		this.typeArguments = creation.dimensions().size();
+		this.numberOfArguments = creation.dimensions().size();
 		this.arguments = new ArrayList<String>();
 		List<Expression> args = creation.dimensions();
 		for(Expression argument : args) {
@@ -86,7 +86,7 @@ public class ObjectCreation extends AbstractCall {
         if (o instanceof ObjectCreation) {
         	ObjectCreation creation = (ObjectCreation)o;
             return type.equals(creation.type) && isArray == creation.isArray &&
-                typeArguments == creation.typeArguments;
+                numberOfArguments == creation.numberOfArguments;
         }
         return false;
     }
@@ -96,10 +96,10 @@ public class ObjectCreation extends AbstractCall {
         sb.append("new ");
         sb.append(type);
         sb.append("(");
-        if(typeArguments > 0) {
-            for(int i=0; i<typeArguments-1; i++)
+        if(numberOfArguments > 0) {
+            for(int i=0; i<numberOfArguments-1; i++)
                 sb.append("arg" + i).append(", ");
-            sb.append("arg" + (typeArguments-1));
+            sb.append("arg" + (numberOfArguments-1));
         }
         sb.append(")");
         return sb.toString();
@@ -110,7 +110,7 @@ public class ObjectCreation extends AbstractCall {
     		int result = 17;
     		result = 37*result + type.hashCode();
     		result = 37*result + (isArray ? 1 : 0);
-    		result = 37*result + typeArguments;
+    		result = 37*result + numberOfArguments;
     		hashCode = result;
     	}
     	return hashCode;

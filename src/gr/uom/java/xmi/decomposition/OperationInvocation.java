@@ -79,7 +79,7 @@ public class OperationInvocation extends AbstractCall {
 	public OperationInvocation(CompilationUnit cu, String filePath, MethodInvocation invocation) {
 		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.METHOD_INVOCATION);
 		this.methodName = invocation.getName().getIdentifier();
-		this.typeArguments = invocation.arguments().size();
+		this.numberOfArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
 		List<Expression> args = invocation.arguments();
 		for(Expression argument : args) {
@@ -123,7 +123,7 @@ public class OperationInvocation extends AbstractCall {
 	public OperationInvocation(CompilationUnit cu, String filePath, SuperMethodInvocation invocation) {
 		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.SUPER_METHOD_INVOCATION);
 		this.methodName = invocation.getName().getIdentifier();
-		this.typeArguments = invocation.arguments().size();
+		this.numberOfArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
 		this.expression = "super";
 		this.subExpressions.add("super");
@@ -136,7 +136,7 @@ public class OperationInvocation extends AbstractCall {
 	public OperationInvocation(CompilationUnit cu, String filePath, SuperConstructorInvocation invocation) {
 		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.SUPER_CONSTRUCTOR_INVOCATION);
 		this.methodName = "super";
-		this.typeArguments = invocation.arguments().size();
+		this.numberOfArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
 		List<Expression> args = invocation.arguments();
 		for(Expression argument : args) {
@@ -151,7 +151,7 @@ public class OperationInvocation extends AbstractCall {
 	public OperationInvocation(CompilationUnit cu, String filePath, ConstructorInvocation invocation) {
 		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.CONSTRUCTOR_INVOCATION);
 		this.methodName = "this";
-		this.typeArguments = invocation.arguments().size();
+		this.numberOfArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
 		List<Expression> args = invocation.arguments();
 		for(Expression argument : args) {
@@ -315,7 +315,7 @@ public class OperationInvocation extends AbstractCall {
     		i++;
     	}
     	UMLType lastInferredArgumentType = inferredArgumentTypes.size() > 0 ? inferredArgumentTypes.get(inferredArgumentTypes.size()-1) : null;
-		return this.methodName.equals(operation.getName()) && (this.typeArguments == operation.getParameterTypeList().size() || varArgsMatch(operation, lastInferredArgumentType));
+		return this.methodName.equals(operation.getName()) && (this.numberOfArguments == operation.getParameterTypeList().size() || varArgsMatch(operation, lastInferredArgumentType));
     }
 
     private boolean compatibleTypes(UMLParameter parameter, UMLType type, UMLModelDiff modelDiff) {
@@ -430,11 +430,11 @@ public class OperationInvocation extends AbstractCall {
 
     private boolean varArgsMatch(VariableDeclarationContainer operation, UMLType lastInferredArgumentType) {
 		//0 varargs arguments passed
-		if(this.typeArguments == operation.getNumberOfNonVarargsParameters()) {
+		if(this.numberOfArguments == operation.getNumberOfNonVarargsParameters()) {
 			return true;
 		}
 		//>=1 varargs arguments passed
-		if(operation.hasVarargsParameter() && this.typeArguments > operation.getNumberOfNonVarargsParameters()) {
+		if(operation.hasVarargsParameter() && this.numberOfArguments > operation.getNumberOfNonVarargsParameters()) {
 			List<UMLType> parameterTypeList = operation.getParameterTypeList();
 			UMLType lastParameterType = parameterTypeList.get(parameterTypeList.size()-1);
 			if(lastParameterType.equals(lastInferredArgumentType)) {
@@ -581,13 +581,13 @@ public class OperationInvocation extends AbstractCall {
         if (o instanceof OperationInvocation) {
         	OperationInvocation invocation = (OperationInvocation)o;
             return methodName.equals(invocation.methodName) &&
-                typeArguments == invocation.typeArguments &&
+                numberOfArguments == invocation.numberOfArguments &&
                 (this.expression != null) == (invocation.expression != null);
         }
         else if (o instanceof MethodReference) {
         	MethodReference invocation = (MethodReference)o;
             return methodName.equals(invocation.getMethodName()) &&
-                typeArguments == invocation.typeArguments &&
+                numberOfArguments == invocation.numberOfArguments &&
                 (this.expression != null) == (invocation.expression != null);
         }
         return false;
@@ -597,10 +597,10 @@ public class OperationInvocation extends AbstractCall {
         StringBuilder sb = new StringBuilder();
         sb.append(methodName);
         sb.append("(");
-        if(typeArguments > 0) {
-            for(int i=0; i<typeArguments-1; i++)
+        if(numberOfArguments > 0) {
+            for(int i=0; i<numberOfArguments-1; i++)
                 sb.append("arg" + i).append(", ");
-            sb.append("arg" + (typeArguments-1));
+            sb.append("arg" + (numberOfArguments-1));
         }
         sb.append(")");
         return sb.toString();
@@ -611,7 +611,7 @@ public class OperationInvocation extends AbstractCall {
     		int result = 17;
     		result = 37*result + expression != null ? 1 : 0;
     		result = 37*result + methodName.hashCode();
-    		result = 37*result + typeArguments;
+    		result = 37*result + numberOfArguments;
     		hashCode = result;
     	}
     	return hashCode;

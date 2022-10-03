@@ -85,13 +85,13 @@ public class MethodReference extends AbstractCall {
         if (o instanceof MethodReference) {
         	MethodReference invocation = (MethodReference)o;
             return methodName.equals(invocation.methodName) &&
-                typeArguments == invocation.typeArguments &&
+                numberOfArguments == invocation.numberOfArguments &&
                 (this.expression != null) == (invocation.expression != null);
         }
         else if (o instanceof OperationInvocation) {
         	OperationInvocation invocation = (OperationInvocation)o;
             return methodName.equals(invocation.getMethodName()) &&
-                typeArguments == invocation.typeArguments &&
+                numberOfArguments == invocation.numberOfArguments &&
                 (this.expression != null) == (invocation.expression != null);
         }
         return false;
@@ -108,7 +108,7 @@ public class MethodReference extends AbstractCall {
     		int result = 17;
     		result = 37*result + expression != null ? 1 : 0;
     		result = 37*result + methodName.hashCode();
-    		result = 37*result + typeArguments;
+    		result = 37*result + numberOfArguments;
     		hashCode = result;
     	}
     	return hashCode;

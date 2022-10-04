@@ -178,6 +178,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 
 	public static LeafType extractTypeObject(String qualifiedName) {
 		int arrayDimension = 0;
+		boolean parameterized = false;
 		List<UMLType> typeArgumentDecomposition = new ArrayList<UMLType>();
 		if(qualifiedName.endsWith("[]")) {
 			while(qualifiedName.endsWith("[]")) {
@@ -188,6 +189,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		if(qualifiedName.contains("<") && qualifiedName.contains(">") &&
 				!closingTagBeforeOpeningTag(qualifiedName.substring(qualifiedName.indexOf("<")+1, qualifiedName.lastIndexOf(">")))) {
 			String typeArguments = qualifiedName.substring(qualifiedName.indexOf("<")+1, qualifiedName.lastIndexOf(">"));
+			parameterized = true;
 			StringBuilder sb = new StringBuilder();
 			for(int i=0; i<typeArguments.length(); i++) {
 				char charAt = typeArguments.charAt(i);
@@ -212,6 +214,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		UMLType typeObject = new LeafType(qualifiedName);
 		typeObject.arrayDimension = arrayDimension;
 		typeObject.typeArguments = typeArgumentDecomposition;
+		typeObject.parameterized = parameterized;
 		return (LeafType)typeObject;
 	}
 

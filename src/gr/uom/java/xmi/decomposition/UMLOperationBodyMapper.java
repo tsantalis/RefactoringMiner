@@ -5327,6 +5327,40 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		//check if replacement is wrapped in creation within the first statement
+		if(replacementInfo.getReplacements().size() == 1 && creations1.size() > 0) {
+			for(String objectCreation1 : creationMap1.keySet()) {
+				for(AbstractCall creation1 : creationMap1.get(objectCreation1)) {
+					for(Replacement replacement : replacementInfo.getReplacements()) {
+						if(creation1.getArguments().contains(replacement.getBefore())) {
+							String creationAfterReplacement = ReplacementUtil.performArgumentReplacement(creation1.actualString(), replacement.getBefore(), replacement.getAfter());
+							String temp = ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), creationAfterReplacement, replacement.getAfter());
+							int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2(), replacementInfo.getRawDistance());
+							if(distanceRaw == 0) {
+								if(replacement instanceof MethodInvocationReplacement) {
+									MethodInvocationReplacement methodInvocationReplacement = (MethodInvocationReplacement)replacement;
+									AbstractCall invokedOperationAfter = methodInvocationReplacement.getInvokedOperationAfter();
+									r = new ClassInstanceCreationWithMethodInvocationReplacement(creation1.actualString(), invokedOperationAfter.actualString(),
+											ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION, (ObjectCreation)creation1, invokedOperationAfter);
+									replacementInfo.addReplacement(r);
+									return replacementInfo.getReplacements();
+								}
+								else if(replacement instanceof VariableReplacementWithMethodInvocation) {
+									VariableReplacementWithMethodInvocation methodInvocationReplacement = (VariableReplacementWithMethodInvocation)replacement;
+									if(methodInvocationReplacement.getDirection().equals(Direction.VARIABLE_TO_INVOCATION)) {
+										AbstractCall invokedOperationAfter = methodInvocationReplacement.getInvokedOperation();
+										r = new ClassInstanceCreationWithMethodInvocationReplacement(creation1.actualString(), invokedOperationAfter.actualString(),
+												ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION, (ObjectCreation)creation1, invokedOperationAfter);
+										replacementInfo.addReplacement(r);
+										return replacementInfo.getReplacements();
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 		return null;
 	}
 

@@ -226,6 +226,19 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return null;
 	}
 
+	public ObjectCreation assignmentCreationCoveringEntireStatement() {
+		Map<String, List<ObjectCreation>> creationMap = getCreationMap();
+		for(String objectCreation : creationMap.keySet()) {
+			List<ObjectCreation> creations = creationMap.get(objectCreation);
+			for(ObjectCreation creation : creations) {
+				if(expressionIsTheRightHandSideOfAssignment(objectCreation)) {
+					return creation;
+				}
+			}
+		}
+		return null;
+	}
+
 	public AbstractCall assignmentInvocationCoveringEntireStatement() {
 		Map<String, List<AbstractCall>> methodInvocationMap = getMethodInvocationMap();
 		for(String methodInvocation : methodInvocationMap.keySet()) {

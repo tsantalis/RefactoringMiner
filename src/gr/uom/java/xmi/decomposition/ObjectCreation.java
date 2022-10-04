@@ -27,7 +27,7 @@ public class ObjectCreation extends AbstractCall {
 			for(PsiExpression argument : args) {
 				this.arguments.add(Formatter.format(argument));
 			}
-			this.typeArguments = this.arguments.size();
+			this.numberOfArguments = this.arguments.size();
 			PsiArrayInitializerExpression arrayInitializer = creation.getArrayInitializer();
 			if(arrayInitializer != null) {
 				this.anonymousClassDeclaration = Formatter.format(arrayInitializer);
@@ -44,7 +44,7 @@ public class ObjectCreation extends AbstractCall {
 					this.arguments.add(Formatter.format(argument));
 				}
 			}
-			this.typeArguments = this.arguments.size();
+			this.numberOfArguments = this.arguments.size();
 			PsiExpression qualifier = creation.getQualifier();
 			if (qualifier != null) {
 				this.expression = Formatter.format(qualifier);
@@ -91,7 +91,7 @@ public class ObjectCreation extends AbstractCall {
         if (o instanceof ObjectCreation) {
         	ObjectCreation creation = (ObjectCreation)o;
             return type.equals(creation.type) && isArray == creation.isArray &&
-                typeArguments == creation.typeArguments;
+                numberOfArguments == creation.numberOfArguments;
         }
         return false;
     }
@@ -101,10 +101,10 @@ public class ObjectCreation extends AbstractCall {
         sb.append("new ");
         sb.append(type);
         sb.append("(");
-        if(typeArguments > 0) {
-            for(int i=0; i<typeArguments-1; i++)
+        if(numberOfArguments > 0) {
+            for(int i=0; i<numberOfArguments-1; i++)
                 sb.append("arg" + i).append(", ");
-            sb.append("arg" + (typeArguments-1));
+            sb.append("arg" + (numberOfArguments-1));
         }
         sb.append(")");
         return sb.toString();
@@ -115,7 +115,7 @@ public class ObjectCreation extends AbstractCall {
     		int result = 17;
     		result = 37*result + type.hashCode();
     		result = 37*result + (isArray ? 1 : 0);
-    		result = 37*result + typeArguments;
+    		result = 37*result + numberOfArguments;
     		hashCode = result;
     	}
     	return hashCode;

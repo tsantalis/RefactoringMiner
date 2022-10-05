@@ -3136,8 +3136,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		int fragmentLine = mapping.getFragment1().getLocationInfo().getStartLine();
 		Set<AbstractCodeMapping> commonParentMappings = new LinkedHashSet<>();
 		for(AbstractCodeMapping previousMapping : this.mappings) {
-			if(previousMapping.getFragment1().getParent().equals(mapping.getFragment1().getParent()) &&
-					previousMapping.getFragment2().getParent().equals(mapping.getFragment2().getParent())) {
+			CompositeStatementObject parent1 = previousMapping.getFragment1().getParent();
+			CompositeStatementObject parent2 = previousMapping.getFragment2().getParent();
+			if(parent1 != null && parent2 != null && parent1.equals(mapping.getFragment1().getParent()) && parent2.equals(mapping.getFragment2().getParent())) {
 				commonParentMappings.add(previousMapping);
 			}
 		}
@@ -3157,8 +3158,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		int fragmentLine = mapping.getFragment2().getLocationInfo().getStartLine();
 		Set<AbstractCodeMapping> commonParentMappings = new LinkedHashSet<>();
 		for(AbstractCodeMapping previousMapping : this.mappings) {
-			if(previousMapping.getFragment1().getParent().equals(mapping.getFragment1().getParent()) &&
-					previousMapping.getFragment2().getParent().equals(mapping.getFragment2().getParent())) {
+			CompositeStatementObject parent1 = previousMapping.getFragment1().getParent();
+			CompositeStatementObject parent2 = previousMapping.getFragment2().getParent();
+			if(parent1 != null && parent2 != null && parent1.equals(mapping.getFragment1().getParent()) && parent2.equals(mapping.getFragment2().getParent())) {
 				commonParentMappings.add(previousMapping);
 			}
 		}
@@ -3197,6 +3199,33 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						this.anonymousClassDiffs.add(anonymousClassDiff);
 						for(UMLOperationBodyMapper mapper : matchedOperationMappers) {
 							addAllMappings(mapper.mappings);
+						}
+					}
+				}
+			}
+		}
+		List<LambdaExpressionObject> lambdas1 = minStatementMapping.getFragment1().getLambdas();
+		List<LambdaExpressionObject> lambdas2 = minStatementMapping.getFragment2().getLambdas();
+		if(!lambdas1.isEmpty() && !lambdas2.isEmpty()) {
+			for(int i=0; i<lambdas1.size(); i++) {
+				for(int j=0; j<lambdas2.size(); j++) {
+					LambdaExpressionObject lambda1 = lambdas1.get(i);
+					LambdaExpressionObject lambda2 = lambdas2.get(j);
+					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(lambda1, lambda2, this);
+					int mappings = mapper.mappingsWithoutBlocks();
+					if(mappings > 0) {
+						int nonMappedElementsT1 = mapper.nonMappedElementsT1();
+						int nonMappedElementsT2 = mapper.nonMappedElementsT2();
+						if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
+								nonMappedElementsT1 == 0 || nonMappedElementsT2 == 0) {
+							addAllMappings(mapper.mappings);
+							this.nonMappedInnerNodesT1.addAll(mapper.nonMappedInnerNodesT1);
+							this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);
+							this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
+							this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
+							if(this.container1 != null && this.container2 != null) {
+								this.refactorings.addAll(mapper.getRefactorings());
+							}
 						}
 					}
 				}

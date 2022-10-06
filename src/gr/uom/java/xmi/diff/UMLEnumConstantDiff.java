@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLEnumConstant;
+import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
 public class UMLEnumConstantDiff {
 	private UMLEnumConstant removedEnumConstant;
@@ -17,6 +19,7 @@ public class UMLEnumConstantDiff {
 	private boolean argumentsChanged;
 	private UMLAnnotationListDiff annotationListDiff;
 	private UMLAnonymousClassDiff anonymousClassDiff;
+	private Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 
 	public UMLEnumConstantDiff(UMLEnumConstant removedEnumConstant, UMLEnumConstant addedEnumConstant, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
 		this.removedEnumConstant = removedEnumConstant;
@@ -29,6 +32,10 @@ public class UMLEnumConstantDiff {
 		if(removedEnumConstant.getAnonymousClassList().size() == 1 && addedEnumConstant.getAnonymousClassList().size() == 1) {
 			this.anonymousClassDiff = new UMLAnonymousClassDiff(removedEnumConstant.getAnonymousClassList().get(0), addedEnumConstant.getAnonymousClassList().get(0), classDiff, modelDiff);
 			this.anonymousClassDiff.process();
+			List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
+			if(matchedOperationMappers.size() > 0) {
+				this.refactorings.addAll(anonymousClassDiff.getRefactorings());
+			}
 		}
 	}
 
@@ -99,6 +106,7 @@ public class UMLEnumConstantDiff {
 
 	public Set<Refactoring> getRefactorings() {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
+		refactorings.addAll(this.refactorings);
 		refactorings.addAll(getAnnotationRefactorings());
 		return refactorings;
 	}

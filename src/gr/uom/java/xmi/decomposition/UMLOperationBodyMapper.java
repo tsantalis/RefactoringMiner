@@ -3066,7 +3066,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				LeafMapping minLineDistanceStatementMapping = lineDistanceMap.firstEntry().getValue();
 				addToMappings(minLineDistanceStatementMapping, postponed);
-				processAnonymousClassDeclarationsInIdenticalStatements(minLineDistanceStatementMapping);
+				if(minLineDistanceStatementMapping.getFragment1().getString().equals(minLineDistanceStatementMapping.getFragment2().getString())) {
+					processAnonymousClassDeclarationsInIdenticalStatements(minLineDistanceStatementMapping);
+				}
 				leaves1.remove(minLineDistanceStatementMapping.getFragment1());
 				leaves2.remove(minLineDistanceStatementMapping.getFragment2());
 			}
@@ -3196,6 +3198,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					anonymousClassDiff.process();
 					List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
 					if(matchedOperationMappers.size() > 0) {
+						this.refactorings.addAll(anonymousClassDiff.getRefactorings());
 						this.anonymousClassDiffs.add(anonymousClassDiff);
 						for(UMLOperationBodyMapper mapper : matchedOperationMappers) {
 							addAllMappings(mapper.mappings);

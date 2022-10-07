@@ -268,6 +268,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
     				Pair<UMLEnumConstant, UMLEnumConstant> pair = Pair.of(enumConstant, matchingEnumConstant);
     				if(!this.commonEnumConstants.contains(pair)) {
     					this.commonEnumConstants.add(pair);
+    					if(enumConstantDiff.getAnonymousClassDiff().isPresent()) {
+        					this.enumConstantDiffList.add(enumConstantDiff);
+        				}
     				}
     			}
     		}
@@ -287,6 +290,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
     				Pair<UMLEnumConstant, UMLEnumConstant> pair = Pair.of(matchingEnumConstant, enumConstant);
     				if(!this.commonEnumConstants.contains(pair)) {
     					this.commonEnumConstants.add(pair);
+    					if(enumConstantDiff.getAnonymousClassDiff().isPresent()) {
+        					this.enumConstantDiffList.add(enumConstantDiff);
+        				}
     				}
     			}
     		}

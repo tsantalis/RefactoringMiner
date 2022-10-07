@@ -2231,10 +2231,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							Set<Replacement> replacements = findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo);
 							
 							double score = computeScore(statement1, statement2, removedOperations, addedOperations, tryWithResourceMigration);
-							if(score == 0 && replacements != null && replacements.size() == 1 &&
-									(replacements.iterator().next().getType().equals(ReplacementType.INFIX_OPERATOR) || replacements.iterator().next().getType().equals(ReplacementType.INVERT_CONDITIONAL))) {
-								//special handling when there is only an infix operator or invert conditional replacement, but no children mapped
-								score = 1;
+							if(score == 0 && replacements != null) {
+								if(replacements.size() == 1 && (replacements.iterator().next().getType().equals(ReplacementType.INFIX_OPERATOR) || replacements.iterator().next().getType().equals(ReplacementType.INVERT_CONDITIONAL))) {
+									//special handling when there is only an infix operator or invert conditional replacement, but no children mapped
+									score = 1;
+								}
+								else if(replacementInfo.getReplacements(ReplacementType.COMPOSITE).size() > 0) {
+									score = 1;
+								}
 							}
 							if(replacements != null &&
 									(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {

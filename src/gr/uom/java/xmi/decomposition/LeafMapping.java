@@ -159,6 +159,14 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				return Double.compare(distance1, distance2);
 			}
 			else {
+				double twoLevelParentEditDistance1 = this.twoLevelParentEditDistance();
+				double twoLevelParentEditDistance2 = o.twoLevelParentEditDistance();
+				if(twoLevelParentEditDistance1 == 0 && twoLevelParentEditDistance2 > 0) {
+					return -1;
+				}
+				else if(twoLevelParentEditDistance2 == 0 && twoLevelParentEditDistance1 > 0) {
+					return 1;
+				}
 				int depthDiff1 = Math.abs(this.getFragment1().getDepth() - this.getFragment2().getDepth());
 				int depthDiff2 = Math.abs(o.getFragment1().getDepth() - o.getFragment2().getDepth());
 	
@@ -333,6 +341,31 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		return Collections.emptySet();
 	}
 
+	private double twoLevelParentEditDistance() {
+		CompositeStatementObject firstLevelParent1 = getFragment1().getParent();
+		while(firstLevelParent1 != null && firstLevelParent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			firstLevelParent1 = firstLevelParent1.getParent();
+		}
+		CompositeStatementObject firstLevelParent2 = getFragment2().getParent();
+		while(firstLevelParent2 != null && firstLevelParent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			firstLevelParent2 = firstLevelParent2.getParent();
+		}
+		double firstLevel = parentEditDistance(firstLevelParent1, firstLevelParent2);
+		if(firstLevelParent1 != null && firstLevelParent2 != null) {
+			CompositeStatementObject secondLevelParent1 = firstLevelParent1.getParent();
+			while(secondLevelParent1 != null && secondLevelParent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+				secondLevelParent1 = secondLevelParent1.getParent();
+			}
+			CompositeStatementObject secondLevelParent2 = firstLevelParent2.getParent();
+			while(secondLevelParent2 != null && secondLevelParent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+				secondLevelParent2 = secondLevelParent2.getParent();
+			}
+			double secondLevel = parentEditDistance(secondLevelParent1, secondLevelParent2);
+			return firstLevel + secondLevel;
+		}
+		return firstLevel;
+	}
+
 	private double parentEditDistance() {
 		CompositeStatementObject parent1 = getFragment1().getParent();
 		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
@@ -342,6 +375,10 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 			parent2 = parent2.getParent();
 		}
+		return parentEditDistance(parent1, parent2);
+	}
+
+	private double parentEditDistance(CompositeStatementObject parent1, CompositeStatementObject parent2) {
 		if(parent1 == null && parent2 == null) {
 			//method signature is the parent
 			return 0;

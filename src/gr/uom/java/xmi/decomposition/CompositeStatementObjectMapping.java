@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
+import java.util.List;
+
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.diff.StringDistance;
 
@@ -60,6 +62,14 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 			return Double.compare(distance1, distance2);
 		}
 		else {
+			int identicalCompositeChildren1 = this.numberOfIdenticalCompositeChildren();
+			int identicalCompositeChildren2 = o.numberOfIdenticalCompositeChildren();
+			if(identicalCompositeChildren1 > identicalCompositeChildren2) {
+				return -1;
+			}
+			else if(identicalCompositeChildren1 < identicalCompositeChildren2) {
+				return 1;
+			}
 			if(this.compositeChildMatchingScore != o.compositeChildMatchingScore) {
 				return -Double.compare(this.compositeChildMatchingScore, o.compositeChildMatchingScore);
 			}
@@ -84,5 +94,24 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 				}
 			}
 		}
+	}
+
+	private int numberOfIdenticalCompositeChildren() {
+		int count = 0;
+		CompositeStatementObject comp1 = (CompositeStatementObject)getFragment1();
+		CompositeStatementObject comp2 = (CompositeStatementObject)getFragment2();
+		while(comp1.getStatements().size() == comp2.getStatements().size() && comp1.getStatements().size() == 1 &&
+				comp1.getStatements().get(0) instanceof CompositeStatementObject && comp2.getStatements().get(0) instanceof CompositeStatementObject) {
+			CompositeStatementObject nestedComp1 = (CompositeStatementObject)comp1.getStatements().get(0);
+			CompositeStatementObject nestedComp2 = (CompositeStatementObject)comp2.getStatements().get(0);
+			String s1 = nestedComp1.getString();
+			String s2 = nestedComp2.getString();
+			if(s1.equals(s2)) {
+				count++;
+			}
+			comp1 = nestedComp1;
+			comp2 = nestedComp2;
+		}
+		return count;
 	}
 }

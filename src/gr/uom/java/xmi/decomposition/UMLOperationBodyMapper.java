@@ -3214,7 +3214,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		CompositeStatementObject parent1 = variableDeclarationMapping.getFragment1().getParent();
 		CompositeStatementObject parent2 = variableDeclarationMapping.getFragment2().getParent();
 		for(AbstractCodeMapping previousMapping : this.mappings) {
-			if(previousMapping.getFragment1().getParent().equals(parent1) && previousMapping.getFragment2().getParent().equals(parent2)) {
+			CompositeStatementObject previousParent1 = previousMapping.getFragment1().getParent();
+			CompositeStatementObject previousParent2 = previousMapping.getFragment2().getParent();
+			if(previousParent1 != null && previousParent2 != null && previousParent1.equals(parent1) && previousParent2.equals(parent2)) {
 				return true;
 			}
 		}

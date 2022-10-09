@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -161,10 +162,18 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			else {
 				double twoLevelParentEditDistance1 = this.twoLevelParentEditDistance();
 				double twoLevelParentEditDistance2 = o.twoLevelParentEditDistance();
+				boolean identicalCompositeChildren1 = this.identicalCompositeChildrenStructure();
+				boolean identicalCompositeChildren2 = o.identicalCompositeChildrenStructure();
 				if(twoLevelParentEditDistance1 == 0 && twoLevelParentEditDistance2 > 0) {
 					return -1;
 				}
 				else if(twoLevelParentEditDistance2 == 0 && twoLevelParentEditDistance1 > 0) {
+					return 1;
+				}
+				if(identicalCompositeChildren1 && !identicalCompositeChildren2) {
+					return -1;
+				}
+				else if(!identicalCompositeChildren1 && identicalCompositeChildren2) {
 					return 1;
 				}
 				int depthDiff1 = Math.abs(this.getFragment1().getDepth() - this.getFragment2().getDepth());
@@ -400,6 +409,48 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		int distance = StringDistance.editDistance(s1, s2);
 		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
 		return normalized;
+	}
+
+	private boolean identicalCompositeChildrenStructure() {
+		CompositeStatementObject parent1 = getFragment1().getParent();
+		CompositeStatementObject parent2 = getFragment2().getParent();
+		if(parent1 != null && parent2 != null) {
+			List<AbstractStatement> statements1 = parent1.getStatements();
+			List<AbstractStatement> statements2 = parent2.getStatements();
+			List<CompositeStatementObject> composites1 = new ArrayList<>();
+			for(AbstractStatement statement1 : statements1) {
+				if(statement1 instanceof CompositeStatementObject) {
+					composites1.add((CompositeStatementObject)statement1);
+				}
+			}
+			List<CompositeStatementObject> composites2 = new ArrayList<>();
+			for(AbstractStatement statement2 : statements2) {
+				if(statement2 instanceof CompositeStatementObject) {
+					composites2.add((CompositeStatementObject)statement2);
+				}
+			}
+			if(composites1.size() == composites2.size() && composites1.size() == 1) {
+				CompositeStatementObject comp1 = composites1.get(0);
+				CompositeStatementObject comp2 = composites2.get(0);
+				List<CompositeStatementObject> innerNodes1 = comp1.getInnerNodes();
+				List<CompositeStatementObject> innerNodes2 = comp2.getInnerNodes();
+				int count = 0;
+				if(innerNodes1.size() == innerNodes2.size()) {
+					for(int i=0; i<innerNodes1.size(); i++) {
+						if(innerNodes1.get(i).getString().equals(innerNodes2.get(i).getString())) {
+							count++;
+						}
+						else {
+							break;
+						}
+					}
+				}
+				if(count == innerNodes1.size() && count > 0) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public Set<String> callChainIntersection() {

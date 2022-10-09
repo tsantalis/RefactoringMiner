@@ -2283,6 +2283,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(ListIterator<CompositeStatementObject> innerNodeIterator2 = innerNodes2.listIterator(); innerNodeIterator2.hasNext();) {
 				CompositeStatementObject statement2 = innerNodeIterator2.next();
 				if(!alreadyMatched2(statement2)) {
+					List<CompositeStatementObject> matchingInnerNodes1 = new ArrayList<>();
+					Set<AbstractCodeFragment> parents1 = new HashSet<>();
+					for(CompositeStatementObject l1 : innerNodes1) {
+						if(l1.getString().equals(statement2.getString())) {
+							matchingInnerNodes1.add(l1);
+							parents1.add(l1.getParent());
+						}
+					}
+					List<CompositeStatementObject> matchingInnerNodes2 = new ArrayList<>();
+					Set<AbstractCodeFragment> parents2 = new HashSet<>();
+					for(CompositeStatementObject l2 : innerNodes2) {
+						if(l2.getString().equals(statement2.getString())) {
+							matchingInnerNodes2.add(l2);
+							parents2.add(l2.getParent());
+						}
+					}
+					boolean allMatchingInnerNodes1InMethodScope = parents1.size() == 1 && parents1.iterator().next() != null && parents1.iterator().next().getParent() == null;
+					boolean allMatchingInnerNodes2InMethodScope = parents2.size() == 1 && parents2.iterator().next() != null && parents2.iterator().next().getParent() == null;
+					if(matchingInnerNodes2.size() > matchingInnerNodes1.size() && matchingInnerNodes1.size() > 0 && !allMatchingInnerNodes1InMethodScope && !allMatchingInnerNodes2InMethodScope) {
+						processInnerNodes(matchingInnerNodes1, matchingInnerNodes2, leaves1, leaves2, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration, containsCallToExtractedMethod);
+						for(AbstractCodeMapping mapping : this.mappings) {
+							innerNodes1.remove(mapping.getFragment1());
+						}
+						continue;
+					}
 					TreeSet<CompositeStatementObjectMapping> mappingSet = new TreeSet<CompositeStatementObjectMapping>();
 					for(ListIterator<CompositeStatementObject> innerNodeIterator1 = innerNodes1.listIterator(); innerNodeIterator1.hasNext();) {
 						CompositeStatementObject statement1 = innerNodeIterator1.next();
@@ -2610,8 +2635,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(!mappingSet.isEmpty()) {
-						boolean identicalDepthAndIndex = mappingSet.first().getFragment1().getDepth() == mappingSet.first().getFragment2().getDepth() &&
-								mappingSet.first().getFragment1().getIndex() == mappingSet.first().getFragment2().getIndex();
+						boolean identicalDepthAndIndex = false;
+						for(AbstractCodeMapping m : mappingSet) {
+							if(m.getFragment1().getDepth() == m.getFragment2().getDepth() && m.getFragment1().getIndex() == m.getFragment2().getIndex()) {
+								identicalDepthAndIndex = true;
+								break;
+							}
+						}
 						boolean identicalDepthAndIndexForKeywordStatement = identicalDepthAndIndex && leaf1.isKeyword();
 						if(mappingSet.size() > 1 && (parentMapper != null || !identicalDepthAndIndex || identicalDepthAndIndexForKeywordStatement) && mappings.size() > 1) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
@@ -2764,6 +2794,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 				AbstractCodeFragment leaf2 = leafIterator2.next();
 				if(!alreadyMatched2(leaf2)) {
+					List<AbstractCodeFragment> matchingLeaves1 = new ArrayList<>();
+					Set<AbstractCodeFragment> parents1 = new HashSet<>();
+					for(AbstractCodeFragment l1 : leaves1) {
+						if(l1.getString().equals(leaf2.getString())) {
+							matchingLeaves1.add(l1);
+							parents1.add(l1.getParent());
+						}
+					}
+					List<AbstractCodeFragment> matchingLeaves2 = new ArrayList<>();
+					Set<AbstractCodeFragment> parents2 = new HashSet<>();
+					for(AbstractCodeFragment l2 : leaves2) {
+						if(l2.getString().equals(leaf2.getString())) {
+							matchingLeaves2.add(l2);
+							parents2.add(l2.getParent());
+						}
+					}
+					boolean allMatchingLeaves1InMethodScope = parents1.size() == 1 && parents1.iterator().next() != null && parents1.iterator().next().getParent() == null;
+					boolean allMatchingLeaves2InMethodScope = parents2.size() == 1 && parents2.iterator().next() != null && parents2.iterator().next().getParent() == null;
+					if(matchingLeaves2.size() > matchingLeaves1.size() && matchingLeaves1.size() > 0 && !allMatchingLeaves1InMethodScope && !allMatchingLeaves2InMethodScope) {
+						processLeaves(matchingLeaves1, matchingLeaves2, parameterToArgumentMap, isomorphic);
+						for(AbstractCodeMapping mapping : this.mappings) {
+							leaves1.remove(mapping.getFragment1());
+						}
+						continue;
+					}
 					TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
 					for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 						AbstractCodeFragment leaf1 = leafIterator1.next();
@@ -2777,8 +2832,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(!mappingSet.isEmpty()) {
-						boolean identicalDepthAndIndex = mappingSet.first().getFragment1().getDepth() == mappingSet.first().getFragment2().getDepth() &&
-								mappingSet.first().getFragment1().getIndex() == mappingSet.first().getFragment2().getIndex();
+						boolean identicalDepthAndIndex = false;
+						for(AbstractCodeMapping m : mappingSet) {
+							if(m.getFragment1().getDepth() == m.getFragment2().getDepth() && m.getFragment1().getIndex() == m.getFragment2().getIndex()) {
+								identicalDepthAndIndex = true;
+								break;
+							}
+						}
 						boolean identicalDepthAndIndexForKeywordStatement = identicalDepthAndIndex && leaf2.isKeyword();
 						if(mappingSet.size() > 1 && (parentMapper != null || !identicalDepthAndIndex || identicalDepthAndIndexForKeywordStatement) && mappings.size() > 0) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();

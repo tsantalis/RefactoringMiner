@@ -491,7 +491,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		else if(lambda1.getBody() != null && lambda2.getBody() != null) {
 			CompositeStatementObject composite1 = lambda1.getBody().getCompositeStatement();
 			CompositeStatementObject composite2 = lambda2.getBody().getCompositeStatement();
-			processCompositeStatements(composite1.getLeaves(), composite2.getLeaves(), composite1.getInnerNodes(), composite2.getInnerNodes());
+			if(composite1.getStatements().size() == 0 && composite2.getStatements().size() == 0) {
+				CompositeStatementObjectMapping mapping = createCompositeMapping(composite1, composite2, new LinkedHashMap<String, String>(), 0);
+				addMapping(mapping);
+			}
+			else {
+				processCompositeStatements(composite1.getLeaves(), composite2.getLeaves(), composite1.getInnerNodes(), composite2.getInnerNodes());
+			}
 		}
 	}
 

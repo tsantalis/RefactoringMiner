@@ -6765,7 +6765,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 				String composedString1 = null;
 				String composedString2 = null;
-				if(s1.startsWith("catch(") && s2.startsWith("catch(") && declaration1.equalType(declaration2)) {
+				if(s1.startsWith("catch(final ") && s2.startsWith("catch(final ") && declaration1.equalType(declaration2)) {
+					composedString1 = "catch(final " + declaration1.getVariableName() + ")";
+					composedString2 = "catch(final " + declaration2.getVariableName() + ")";
+				}
+				else if(s1.startsWith("catch(") && s2.startsWith("catch(") && declaration1.equalType(declaration2)) {
 					composedString1 = "catch(" + declaration1.getVariableName() + ")";
 					composedString2 = "catch(" + declaration2.getVariableName() + ")";
 				}

@@ -1899,7 +1899,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private void inlinedVariableAssignment(AbstractCodeFragment statement, List<AbstractCodeFragment> nonMappedLeavesT2) {
 		for(AbstractCodeMapping mapping : getMappings()) {
 			mapping.inlinedVariableAssignment(statement, nonMappedLeavesT2, parentMapper != null);
-			refactorings.addAll(mapping.getRefactorings());
+			for(Refactoring newRefactoring : mapping.getRefactorings()) {
+				if(!this.refactorings.contains(newRefactoring)) {
+					this.refactorings.add(newRefactoring);
+				}
+				else {
+					for(Refactoring refactoring : this.refactorings) {
+						if(refactoring.equals(newRefactoring) && refactoring instanceof InlineVariableRefactoring) {
+							Set<AbstractCodeMapping> references = ((InlineVariableRefactoring)newRefactoring).getReferences();
+							((InlineVariableRefactoring)refactoring).addReferences(references);
+							break;
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -1907,7 +1920,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeMapping mapping : getMappings()) {
 			UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 			mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, classDiff, parentMapper != null);
-			refactorings.addAll(mapping.getRefactorings());
+			for(Refactoring newRefactoring : mapping.getRefactorings()) {
+				if(!this.refactorings.contains(newRefactoring)) {
+					this.refactorings.add(newRefactoring);
+				}
+				else {
+					for(Refactoring refactoring : this.refactorings) {
+						if(refactoring.equals(newRefactoring) && refactoring instanceof ExtractVariableRefactoring) {
+							Set<AbstractCodeMapping> references = ((ExtractVariableRefactoring)newRefactoring).getReferences();
+							((ExtractVariableRefactoring)refactoring).addReferences(references);
+							break;
+						}
+					}
+				}
+			}
 		}
 	}
 

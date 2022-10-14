@@ -33,6 +33,10 @@ public class InlineVariableRefactoring implements Refactoring, ReferenceBasedRef
 		references.add(mapping);
 	}
 
+	public void addReferences(Set<AbstractCodeMapping> mappings) {
+		references.addAll(mappings);
+	}
+
 	public RefactoringType getRefactoringType() {
 		return RefactoringType.INLINE_VARIABLE;
 	}

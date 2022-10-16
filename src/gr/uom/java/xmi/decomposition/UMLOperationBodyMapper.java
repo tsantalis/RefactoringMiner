@@ -3944,6 +3944,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		//perform type replacements
 		findReplacements(types1, types2, replacementInfo, ReplacementType.TYPE);
 		
+		if(statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType())) {
+			Set<String> infixExpressions1 = new LinkedHashSet<String>(statement1.getInfixExpressions());
+			infixExpressions1.remove(statement1.infixExpressionCoveringTheEntireFragment());
+			Set<String> infixExpressions2 = new LinkedHashSet<String>(statement2.getInfixExpressions());
+			infixExpressions2.remove(statement2.infixExpressionCoveringTheEntireFragment());
+			removeCommonElements(infixExpressions1, infixExpressions2);
+			
+			if(infixExpressions1.size() != infixExpressions2.size()) {
+				List<String> infixExpressions1AsList = new ArrayList<>(infixExpressions1);
+				Collections.reverse(infixExpressions1AsList);
+				Set<String> reverseInfixExpressions1 = new LinkedHashSet<String>(infixExpressions1AsList);
+				findReplacements(reverseInfixExpressions1, variables2, replacementInfo, ReplacementType.INFIX_EXPRESSION);
+			}
+		}
 		//perform operator replacements
 		findReplacements(infixOperators1, infixOperators2, replacementInfo, ReplacementType.INFIX_OPERATOR);
 		
@@ -6302,7 +6316,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				boolean leftOperandReplacement = false;
 				boolean rightOperandReplacement = false;
 				for(Replacement replacement : replacementInfo.getReplacements()) {
-					
 					if(parameterToArgumentMap.containsValue(replacement.getAfter())) {
 						for(String key : parameterToArgumentMap.keySet()) {
 							if(parameterToArgumentMap.get(key).equals(replacement.getAfter())) {
@@ -6331,6 +6344,29 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(operatorReplacement && leftOperandReplacement && rightOperandReplacement) {
 					return true;
 				}
+			}
+		}
+		else if(replacementInfo.getReplacements().size() > 1) {
+			StringBuilder stringBefore = new StringBuilder();
+			StringBuilder stringAfter = new StringBuilder();
+			for(Replacement replacement : replacementInfo.getReplacements()) {
+				if(replacement.getType().equals(ReplacementType.INFIX_OPERATOR)) {
+					stringBefore.append(" " + replacement.getBefore() + " ");
+					stringAfter.append(" " + replacement.getAfter() + " ");
+				}
+				else {
+					stringBefore.append(replacement.getBefore());
+					stringAfter.append(replacement.getAfter());
+				}
+			}
+			if(statement1.getString().startsWith("return ") && statement2.getString().startsWith("return ")) {
+				return statement1.getString().equals("return " + stringBefore + ";\n") && statement2.getString().equals("return " + stringAfter + ";\n");
+			}
+			else if(statement1.getString().startsWith("if(") && statement2.getString().startsWith("if(")) {
+				return statement1.getString().equals("if(" + stringBefore + ")") && statement2.getString().equals("if(" + stringAfter + ")");
+			}
+			else if(statement1.getString().startsWith("while(") && statement2.getString().startsWith("while(")) {
+				return statement1.getString().equals("while(" + stringBefore + ")") && statement2.getString().equals("while(" + stringAfter + ")");
 			}
 		}
 		return false;
@@ -7379,7 +7415,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				if(matches > 0) {
-					Replacement r = new IntersectionReplacement(s1, s2, intersection, ReplacementType.CONDITIONAL);
+					IntersectionReplacement r = new IntersectionReplacement(s1, s2, intersection, ReplacementType.CONDITIONAL);
 					info.addReplacement(r);
 					CompositeStatementObject root1 = statement1.getParent();
 					CompositeStatementObject root2 = statement2.getParent();
@@ -7416,6 +7452,42 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									CompositeReplacement composite = new CompositeReplacement(statement1.getString(), ifNode2.getString(), new LinkedHashSet<>(), additionallyMatchedStatements2);
 									info.addReplacement(composite);
 									splitConditional = true;
+								}
+								else if(statement1 instanceof CompositeStatementObject) {
+									CompositeStatementObject composite1 = (CompositeStatementObject)statement1;
+									for(AbstractExpression expression : composite1.getExpressions()) {
+										String originalConditional1 = prepareConditional(expression.getString());
+										String[] originalSubConditions1 = SPLIT_CONDITIONAL_PATTERN.split(originalConditional1);
+										List<String> originalSubConditionsAsList1 = new ArrayList<String>();
+										for(String s : originalSubConditions1) {
+											originalSubConditionsAsList1.add(s.trim());
+										}
+										for(String commonElement : r.getCommonElements()) {
+											originalSubConditionsAsList1.remove(commonElement);
+										}
+										for(String subCondition1 : originalSubConditionsAsList1) {
+											for(String subCondition2 : subConditionsAsList) {
+												if(subCondition1.equals(subCondition2)) {
+													Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
+													additionallyMatchedStatements2.add(ifNode2);
+													CompositeReplacement composite = new CompositeReplacement(statement1.getString(), ifNode2.getString(), new LinkedHashSet<>(), additionallyMatchedStatements2);
+													info.addReplacement(composite);
+													splitConditional = true;
+												}
+												String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(subCondition1, subCondition2);
+												String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(subCondition1, subCondition2);
+												if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
+													int beginIndexS1 = subCondition1.indexOf(commonPrefix) + commonPrefix.length();
+													int endIndexS1 = subCondition1.lastIndexOf(commonSuffix);
+													String diff1 = beginIndexS1 > endIndexS1 ? "" :	subCondition1.substring(beginIndexS1, endIndexS1);
+													int beginIndexS2 = subCondition2.indexOf(commonPrefix) + commonPrefix.length();
+													int endIndexS2 = subCondition2.lastIndexOf(commonSuffix);
+													String diff2 = beginIndexS2 > endIndexS2 ? "" :	subCondition2.substring(beginIndexS2, endIndexS2);
+													//TODO complete detection of Split Conditional in https://github.com/thymeleaf/thymeleaf/commit/378ba37750a9cb1b19a6db434dfa59308f721ea6#diff-fe47a14afb3317314d81d6f5278d04b52ae3ce0d65dedc1d84cb6c40aa3908ceR270-R278
+												}
+											}
+										}
+									}
 								}
 							}
 						}

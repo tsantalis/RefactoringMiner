@@ -135,7 +135,9 @@ public abstract class AbstractCodeMapping {
 	}
 
 	public void addReplacements(Set<Replacement> replacements) {
-		this.replacements.addAll(replacements);
+		if(replacements != null) {
+			this.replacements.addAll(replacements);
+		}
 	}
 
 	public Set<Replacement> getReplacements() {

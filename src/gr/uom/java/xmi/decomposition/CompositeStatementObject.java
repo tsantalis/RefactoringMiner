@@ -689,6 +689,17 @@ public class CompositeStatementObject extends AbstractStatement {
 		return stringRepresentation;
 	}
 
+	public List<String> bodyStringRepresentation() {
+		List<String> stringRepresentation = new ArrayList<String>();
+		for(AbstractStatement statement : statementList) {
+			stringRepresentation.addAll(statement.stringRepresentation());
+		}
+		if(getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			stringRepresentation.add("}");
+		}
+		return stringRepresentation;
+	}
+
 	public String getSignature() {
 		String statementType = getLocationInfo().getCodeElementType().getName() != null ? getLocationInfo().getCodeElementType().getName() : toString();
 		CompositeStatementObject parent = getParent();

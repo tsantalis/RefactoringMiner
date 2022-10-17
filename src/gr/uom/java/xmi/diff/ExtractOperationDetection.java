@@ -52,7 +52,7 @@ public class ExtractOperationDetection {
 			return refactorings;
 		}
 		if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
-			!mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) {
+			!mapper.getReplacementsInvolvingMethodInvocation().isEmpty() || mapper.containsCompositeMappingWithoutReplacements()) {
 			List<AbstractCall> addedOperationInvocations = matchingInvocations(addedOperation, operationInvocations, mapper.getContainer2());
 			if(addedOperationInvocations.size() > 0) {
 				int otherAddedMethodsCalled = 0;

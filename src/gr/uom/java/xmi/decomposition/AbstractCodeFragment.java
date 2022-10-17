@@ -167,6 +167,28 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		this.codeFragmentAfterReplacingParametersWithArguments = getString();
 	}
 
+	public String infixExpressionCoveringTheEntireFragment() {
+		String statement = getString();
+		for(String infix : getInfixExpressions()) {
+			if((infix + ";\n").equals(statement) || infix.equals(statement)) {
+				return infix;
+			}
+			else if(("return " + infix + ";\n").equals(statement)) {
+				return infix;
+			}
+			else if(expressionIsTheInitializerOfVariableDeclaration(infix)) {
+				return infix;
+			}
+			else if(("if(" + infix + ")").equals(statement)) {
+				return infix;
+			}
+			else if(("while(" + infix + ")").equals(statement)) {
+				return infix;
+			}
+		}
+		return null;
+	}
+
 	public ObjectCreation creationCoveringEntireFragment() {
 		Map<String, List<ObjectCreation>> creationMap = getCreationMap();
 		String statement = getString();

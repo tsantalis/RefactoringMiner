@@ -136,11 +136,11 @@ Currently, it supports the detection of the following refactorings:
 90. Split Conditional
 
 # Current precision and recall
-As of **September 27, 2022** the precision and recall of the tool on an oracle consisting of **540 commits** from **186 open-source projects**
+As of **October 17, 2022** the precision and recall of the tool on an oracle consisting of **540 commits** from **186 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|11326  | 23  | 288  | 0.998  | 0.975|
+|**Total**|11330  | 23  | 288  | 0.998  | 0.975|
 |Extract Method|959  |  1  | 31  | 0.999  | 0.969|
 |Rename Class|53  |  0  |  2  | 1.000  | 0.964|
 |Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
@@ -165,7 +165,7 @@ As of **September 27, 2022** the precision and recall of the tool on an oracle c
 |Move And Inline Method|16  |  0  |  4  | 1.000  | 0.800|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|201  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|204  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|16  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|75  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 7  |  0  |  0  | 1.000  | 1.000|
@@ -181,9 +181,9 @@ As of **September 27, 2022** the precision and recall of the tool on an oracle c
 |Replace Variable With Attribute|20  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Variable|72  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|20  |  0  |  0  | 1.000  | 1.000|
-|Parameterize Attribute|22  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Attribute|23  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|419  |  0  | 12  | 1.000  | 0.972|
-|Change Variable Type|764  |  2  | 11  | 0.997  | 0.986|
+|Change Variable Type|763  |  2  | 11  | 0.997  | 0.986|
 |Change Parameter Type|629  |  1  | 16  | 0.998  | 0.975|
 |Change Attribute Type|223  |  0  |  8  | 1.000  | 0.965|
 |Add Method Annotation|327  |  0  |  4  | 1.000  | 0.988|
@@ -227,7 +227,7 @@ As of **September 27, 2022** the precision and recall of the tool on an oracle c
 |Replace Anonymous With Lambda|45  |  0  |  0  | 1.000  | 1.000|
 |Merge Class| 6  |  0  |  0  | 1.000  | 1.000|
 |Split Class| 3  |  0  |  0  | 1.000  | 1.000|
-|Split Conditional| 6  |  0  |  0  | 1.000  | 1.000|
+|Split Conditional| 7  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
 

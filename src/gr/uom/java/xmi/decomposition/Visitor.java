@@ -155,9 +155,26 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 		String operator = Formatter.format(node.getTokenBeforeOperand(node.getOperands()[1]));
 		infixExpressions.add(polyadicString);
 		infixOperators.add(operator);
+		//special handling for adding intermediate composite infix expressions
+		List<String> intermediateInfixExpressions = new ArrayList<>();
+		int count = node.getOperands().length;
+		while (count > 2 && !operator.equals("+")) {
+			PsiExpression lastOperand = node.getOperands()[count-1];
+			String lastOperandString = Formatter.format(lastOperand);
+			String suffix = " " + operator + " " + lastOperandString;
+			if (polyadicString.contains(suffix)) {
+				String intermediateInfix = polyadicString.substring(0, polyadicString.lastIndexOf(suffix));
+				if (!infixExpressions.contains(intermediateInfix)) {
+					infixExpressions.add(intermediateInfix);
+					intermediateInfixExpressions.add(intermediateInfix);
+				}
+			}
+			count--;
+		}
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 			anonymous.getInfixExpressions().add(polyadicString);
+			anonymous.getInfixExpressions().addAll(intermediateInfixExpressions);
 			anonymous.getInfixOperators().add(operator);
 		}
 	}

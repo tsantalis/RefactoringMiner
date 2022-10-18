@@ -130,11 +130,24 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(InfixExpression node) {
-		infixExpressions.add(node.toString());
+		List extendedOperands = node.extendedOperands();
+		String stringRepresentation = node.toString();
+		if(node.hasExtendedOperands() && extendedOperands.size() > 1) {
+			String temp = stringRepresentation;
+			for(int i=1; i<extendedOperands.size(); i++) {
+				Expression operand = (Expression)extendedOperands.get(i);
+				String suffix = node.getOperator().toString() + " " + operand.toString();
+				if(temp.contains(suffix)) {
+					temp = temp.replace(suffix, " " + suffix);
+				}
+			}
+			stringRepresentation = temp;
+		}
+		infixExpressions.add(stringRepresentation);
 		infixOperators.add(node.getOperator().toString());
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getInfixExpressions().add(node.toString());
+			anonymous.getInfixExpressions().add(stringRepresentation);
 			anonymous.getInfixOperators().add(node.getOperator().toString());
 		}
 		return super.visit(node);

@@ -98,7 +98,8 @@ public enum RefactoringType {
 	REPLACE_ANONYMOUS_WITH_LAMBDA("Replace Anonymous With Lambda", "Replace Anonymous With Lambda (.+) with (.+) in method (.+) from class (.+)"),
 	MERGE_CLASS("Merge Class", "Merge Class \\[(.+)\\] to (.+)"),
 	SPLIT_CLASS("Split Class", "Split Class (.+) to \\[(.+)\\]"),
-	SPLIT_CONDITIONAL("Split Conditional", "Split Conditional (.+) to \\[(.+)\\] in method (.+) from class (.+)");
+	SPLIT_CONDITIONAL("Split Conditional", "Split Conditional (.+) to \\[(.+)\\] in method (.+) from class (.+)"),
+	INVERT_CONDITION("Invert Condition", "Invert Condition (.+) to (.+) in method (.+) from class (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -194,7 +195,8 @@ public enum RefactoringType {
 		MERGE_CLASS,
 		SPLIT_CLASS,
 		INLINE_ATTRIBUTE,
-		SPLIT_CONDITIONAL
+		SPLIT_CONDITIONAL,
+		INVERT_CONDITION
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

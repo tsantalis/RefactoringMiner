@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InfixExpression;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -60,7 +61,12 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.arguments = visitor.getArguments();
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
-    	this.expression = expression.toString();
+		if(expression instanceof InfixExpression && ((InfixExpression)expression).extendedOperands().size() > 1) {
+			this.expression = this.infixExpressions.get(0);
+		}
+		else {
+			this.expression = expression.toString();
+		}
     	this.owner = null;
     	this.lambdaOwner = null;
     }

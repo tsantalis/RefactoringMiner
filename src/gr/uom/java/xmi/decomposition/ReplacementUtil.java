@@ -2,6 +2,7 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.containsMethodSignatureOfAnonymousClass;
 
 public class ReplacementUtil {
 	private static final String[] SPECIAL_CHARACTERS = {";", ",", ")", "=", "+", "-", ">", "<", ".", "]", " ", "(", "["};
@@ -119,7 +120,7 @@ public class ReplacementUtil {
 				temp = sb.toString();
 			}
 		}
-		if(!replacementOccurred && !UMLOperationBodyMapper.containsMethodSignatureOfAnonymousClass(completeString1) && !UMLOperationBodyMapper.containsMethodSignatureOfAnonymousClass(completeString2)) {
+		if(!replacementOccurred && !containsMethodSignatureOfAnonymousClass(completeString1) && !containsMethodSignatureOfAnonymousClass(completeString2)) {
 			for(String character : SPECIAL_CHARACTERS) {
 				if(temp.contains(character + subString1) && completeString2.contains(character + subString2)) {
 					StringBuffer sb = new StringBuffer();

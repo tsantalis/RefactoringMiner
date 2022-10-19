@@ -12,6 +12,7 @@ import java.util.Set;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
@@ -266,8 +267,8 @@ public abstract class AbstractCall implements LocationInfoProvider {
 			String argument2 = arguments2.get(i);
 			boolean argumentConcatenated = false;
 			if((argument1.contains("+") || argument2.contains("+")) && !argument1.contains("++") && !argument2.contains("++")) {
-				Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(UMLOperationBodyMapper.SPLIT_CONCAT_STRING_PATTERN.split(argument1)));
-				Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(UMLOperationBodyMapper.SPLIT_CONCAT_STRING_PATTERN.split(argument2)));
+				Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(argument1)));
+				Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(argument2)));
 				Set<String> intersection = new LinkedHashSet<String>(tokens1);
 				intersection.retainAll(tokens2);
 				int size = intersection.size();

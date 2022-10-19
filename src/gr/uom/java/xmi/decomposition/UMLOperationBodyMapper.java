@@ -4266,7 +4266,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
-		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || (s2 + ";\n").equals(s1) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) ||
+		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || (s2 + ";\n").equals(s1) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) || equalAfterParenthesisElimination(s1, s2) ||
 				differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(s1, s2, methodInvocationMap1, methodInvocationMap2, statement1.getInfixExpressions(), statement2.getInfixExpressions(), variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				differOnlyInFinalModifier(s1, s2) || differOnlyInThis(s1, s2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo, statement1) ||
 				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
@@ -7691,6 +7691,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			conditional = s.substring(indexOfEquals+1, s.length()-2);
 		}
 		return conditional;
+	}
+
+	private boolean equalAfterParenthesisElimination(String s1, String s2) {
+		String updatedS1 = s1.replace("(", "");
+		updatedS1 = updatedS1.replace(")", "");
+		String updatedS2 = s2.replace("(", "");
+		updatedS2 = updatedS2.replace(")", "");
+		return updatedS1.equals(updatedS2);
 	}
 
 	private void replaceVariablesWithArguments(Set<String> variables, Map<String, String> parameterToArgumentMap) {

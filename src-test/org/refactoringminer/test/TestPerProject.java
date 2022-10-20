@@ -72,7 +72,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/raphw/byte-buddy.git", 64, 0, 1);
         processRepositoryCommits("https://github.com/liferay/liferay-plugins.git", 12, 0, 0);
         processRepositoryCommits("https://github.com/jenkinsci/workflow-plugin.git", 10, 0, 0);
-        processRepositoryCommits("https://github.com/gwtproject/gwt.git", 20, 0, 1);
+        processRepositoryCommits("https://github.com/gwtproject/gwt.git", 21, 0, 1);
         processRepositoryCommits("https://github.com/google/truth.git", 25, 0, 1);
         processRepositoryCommits("https://github.com/antlr/antlr4.git", 37, 0, 0);
         processRepositoryCommits("https://github.com/koush/AndroidAsync.git", 4, 0, 0);

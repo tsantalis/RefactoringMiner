@@ -1586,7 +1586,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				parentIsContainerBody.add(mapper.parentIsContainerBody(mapping));
 				nestedMapper.add(mapper.isNested());
 				identical.add(mapping.getFragment1().getString().equals(mapping.getFragment2().getString()));
-				replacementTypeCount.add(mapping.getReplacementTypes().size());
+				replacementTypeCount.add(mapper.getReplacementTypesExcludingParameterToArgumentMaps(mapping).size());
 				boolean replacementFound = false;
 				for(Replacement r : mapping.getReplacements()) {
 					if((r.getBefore().equals(mapping.getFragment1().getString()) || (r.getBefore() + ";\n").equals(mapping.getFragment1().getString())) &&

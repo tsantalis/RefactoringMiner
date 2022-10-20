@@ -56,6 +56,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
@@ -7225,7 +7226,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public boolean containsExtractedOrInlinedOperationInvocation(AbstractCodeMapping mapping) {
 		if(operationInvocation != null) {
-			return mapping.getFragment2().getLocationInfo().subsumes(operationInvocation.getLocationInfo());
+			if(mapping.getFragment2().getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
+				return true;
+			}
+			if(parentMapper != null) {
+				for(UMLOperationBodyMapper childMapper : parentMapper.childMappers) {
+					if(childMapper.operationInvocation != null && !this.operationInvocation.getName().equals(childMapper.operationInvocation.getName())) {
+						Map<String, List<AbstractCall>> methodInvocationMap = mapping.getFragment2().getMethodInvocationMap();
+						for(String key : methodInvocationMap.keySet()) {
+							for(AbstractCall call : methodInvocationMap.get(key)) {
+								if(call.equals(childMapper.operationInvocation)) {
+									return true;
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		else if(childMappers.size() > 0) {
 			for(UMLOperationBodyMapper childMapper : childMappers) {
@@ -7284,6 +7301,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return false;
+	}
+
+	public Set<ReplacementType> getReplacementTypesExcludingParameterToArgumentMaps(AbstractCodeMapping mapping) {
+		Set<ReplacementType> types = new LinkedHashSet<ReplacementType>();
+		for(Replacement replacement : mapping.getReplacements()) {
+			boolean skip = false;
+			if(parameterToArgumentMap1 != null) {
+				for(Entry<String, String> entry : parameterToArgumentMap1.entrySet()) {
+					if(entry.getKey().equals(replacement.getBefore()) || entry.getValue().equals(replacement.getAfter())) {
+						skip = true;
+					}
+				}
+			}
+			if(parameterToArgumentMap2 != null) {
+				for(Entry<String, String> entry : parameterToArgumentMap2.entrySet()) {
+					if(entry.getKey().equals(replacement.getBefore()) || entry.getValue().equals(replacement.getAfter())) {
+						skip = true;
+					}
+				}
+			}
+			if(!skip) {
+				types.add(replacement.getType());
+			}
+		}
+		return types;
 	}
 
 	public Set<VariableDeclaration> getRemovedVariables() {

@@ -2280,7 +2280,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					for(ListIterator<CompositeStatementObject> innerNodeIterator2 = innerNodes2.listIterator(); innerNodeIterator2.hasNext();) {
 						CompositeStatementObject statement2 = innerNodeIterator2.next();
 						if(!alreadyMatched2(statement2)) {
-							ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, innerNodes1, innerNodes2);
+							List<AbstractCodeFragment> allUnmatchedNodes1 = new ArrayList<>();
+							allUnmatchedNodes1.addAll(innerNodes1);
+							allUnmatchedNodes1.addAll(leaves1);
+							List<AbstractCodeFragment> allUnmatchedNodes2 = new ArrayList<>();
+							allUnmatchedNodes2.addAll(innerNodes2);
+							allUnmatchedNodes2.addAll(leaves2);
+							ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, allUnmatchedNodes1, allUnmatchedNodes2);
 							Set<Replacement> replacements = findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo);
 							
 							double score = computeScore(statement1, statement2, removedOperations, addedOperations, tryWithResourceMigration);
@@ -2394,7 +2400,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					for(ListIterator<CompositeStatementObject> innerNodeIterator1 = innerNodes1.listIterator(); innerNodeIterator1.hasNext();) {
 						CompositeStatementObject statement1 = innerNodeIterator1.next();
 						if(!alreadyMatched1(statement1)) {
-							ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, innerNodes1, innerNodes2);
+							List<AbstractCodeFragment> allUnmatchedNodes1 = new ArrayList<>();
+							allUnmatchedNodes1.addAll(innerNodes1);
+							allUnmatchedNodes1.addAll(leaves1);
+							List<AbstractCodeFragment> allUnmatchedNodes2 = new ArrayList<>();
+							allUnmatchedNodes2.addAll(innerNodes2);
+							allUnmatchedNodes2.addAll(leaves2);
+							ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, allUnmatchedNodes1, allUnmatchedNodes2);
 							Set<Replacement> replacements = findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo);
 							
 							double score = computeScore(statement1, statement2, removedOperations, addedOperations, tryWithResourceMigration);
@@ -4367,7 +4379,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(AbstractExpression expression1 : for1.getExpressions()) {
 				if(expression1.getString().contains(enhancedForExpression.getString() + ".length") ||
 						expression1.getString().contains(enhancedForExpression.getString() + ".size()") ||
-						expression1.getString().contains(enhancedForExpression.getString() + ".iterator()")) {
+						expression1.getString().contains(enhancedForExpression.getString() + ".iterator()") ||
+						expression1.getString().contains(enhancedForExpression.getString() + ".listIterator()")) {
 					return replacementInfo.getReplacements();
 				}
 			}
@@ -4381,9 +4394,59 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(AbstractExpression expression2 : for2.getExpressions()) {
 				if(expression2.getString().contains(enhancedForExpression.getString() + ".length") ||
 						expression2.getString().contains(enhancedForExpression.getString() + ".size()") ||
-						expression2.getString().contains(enhancedForExpression.getString() + ".iterator()")) {
+						expression2.getString().contains(enhancedForExpression.getString() + ".iterator()") ||
+						expression2.getString().contains(enhancedForExpression.getString() + ".listIterator()")) {
 					return replacementInfo.getReplacements();
 				}
+			}
+		}
+		//match while with enhanced for
+		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) &&
+				statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+			CompositeStatementObject while1 = (CompositeStatementObject)statement1;
+			CompositeStatementObject for2 = (CompositeStatementObject)statement2;
+			Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
+			List<AbstractExpression> expressions2 = for2.getExpressions();
+			AbstractExpression enhancedForExpression = expressions2.get(expressions2.size()-1);
+			VariableDeclaration iteratorDeclaration1 = null;
+			for(AbstractCodeFragment codeFragment : replacementInfo.statements1) {
+				AbstractCall invocation = codeFragment.invocationCoveringEntireFragment();
+				if(invocation != null && invocation.getExpression() != null) {
+					if(invocation.getExpression().equals(enhancedForExpression.getString())) {
+						List<VariableDeclaration> variableDeclarations = codeFragment.getVariableDeclarations();
+						if(variableDeclarations.size() == 1 && codeFragment.getLocationInfo().before(statement1.getLocationInfo())) {
+							boolean iteratorDeclarationFound = false;
+							for(String key : methodInvocationMap1.keySet()) {
+								for(AbstractCall call : methodInvocationMap1.get(key)) {
+									if(call.getExpression() != null && call.getExpression().equals(variableDeclarations.get(0).getVariableName())) {
+										iteratorDeclarationFound = true;
+										break;
+									}
+								}
+							}
+							if(iteratorDeclarationFound) {
+								iteratorDeclaration1 = variableDeclarations.get(0);
+								additionallyMatchedStatements1.add(codeFragment);
+							}
+						}
+					}
+					else if(iteratorDeclaration1 != null && invocation.getExpression().equals(iteratorDeclaration1.getVariableName())) {
+						List<VariableDeclaration> variableDeclarations = codeFragment.getVariableDeclarations();
+						if(variableDeclarations.size() == 1 && variableDeclarations2.size() == 1 && statement1.getLocationInfo().subsumes(codeFragment.getLocationInfo())) {
+							//check if variable name and type are the same with the enhanced-for parameter
+							VariableDeclaration v1 = variableDeclarations.get(0);
+							VariableDeclaration v2 = variableDeclarations2.get(0);
+							if(v1.getVariableName().equals(v2.getVariableName()) && v1.getType().equals(v2.getType())) {
+								additionallyMatchedStatements1.add(codeFragment);
+							}
+						}
+					}
+				}
+			}
+			if(additionallyMatchedStatements1.size() > 0) {
+				Replacement composite = new CompositeReplacement(statement1.getString(), statement2.getString(), additionallyMatchedStatements1, new LinkedHashSet<AbstractCodeFragment>());
+				replacementInfo.addReplacement(composite);
+				return replacementInfo.getReplacements();
 			}
 		}
 		//match try-with-resources with regular try

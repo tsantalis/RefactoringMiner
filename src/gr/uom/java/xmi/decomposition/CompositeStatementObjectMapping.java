@@ -2,6 +2,7 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.List;
 
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.diff.StringDistance;
 
@@ -74,6 +75,14 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 				return -Double.compare(this.compositeChildMatchingScore, o.compositeChildMatchingScore);
 			}
 			else {
+				int identicalDirectlyNestedChildren1 = this.numberOfIdenticalDirectlyNestedChildren();
+				int identicalDirectlyNestedChildren2 = o.numberOfIdenticalDirectlyNestedChildren();
+				if(identicalDirectlyNestedChildren1 > identicalDirectlyNestedChildren2) {
+					return -1;
+				}
+				else if(identicalDirectlyNestedChildren1 < identicalDirectlyNestedChildren2) {
+					return 1;
+				}
 				int depthDiff1 = Math.abs(this.getFragment1().getDepth() - this.getFragment2().getDepth());
 				int depthDiff2 = Math.abs(o.getFragment1().getDepth() - o.getFragment2().getDepth());
 
@@ -111,6 +120,26 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 			}
 			comp1 = nestedComp1;
 			comp2 = nestedComp2;
+		}
+		return count;
+	}
+
+	private int numberOfIdenticalDirectlyNestedChildren() {
+		int count = 0;
+		CompositeStatementObject comp1 = (CompositeStatementObject)getFragment1();
+		CompositeStatementObject comp2 = (CompositeStatementObject)getFragment2();
+		if(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			List<AbstractStatement> statements1 = comp1.getStatements();
+			List<AbstractStatement> statements2 = comp2.getStatements();
+			for(AbstractStatement statement1 : statements1) {
+				String s1 = statement1.getString();
+				for(AbstractStatement statement2 : statements2) {
+					String s2 = statement2.getString();
+					if(s1.equals(s2)) {
+						count++;
+					}
+				}
+			}
 		}
 		return count;
 	}

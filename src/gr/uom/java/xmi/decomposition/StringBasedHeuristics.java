@@ -315,6 +315,31 @@ public class StringBasedHeuristics {
 					replacementInfo.addReplacement(replacement);
 					return true;
 				}
+				if(s1.startsWith("catch(") && s2.startsWith("catch(") && !declaration1.equalType(declaration2)) {
+					boolean containsAnotherUnmatchedCatch1 = false;
+					for(AbstractCodeFragment statement1 : replacementInfo.getStatements1()) {
+						if(statement1.getString().startsWith("catch(")) {
+							containsAnotherUnmatchedCatch1 = true;
+							break;
+						}
+					}
+					boolean containsAnotherUnmatchedCatch2 = false;
+					for(AbstractCodeFragment statement2 : replacementInfo.getStatements2()) {
+						if(statement2.getString().startsWith("catch(")) {
+							containsAnotherUnmatchedCatch2 = true;
+							break;
+						}
+					}
+					if(!containsAnotherUnmatchedCatch1 && !containsAnotherUnmatchedCatch2) {
+						if(!declaration1.getVariableName().equals(declaration2.getVariableName())) {
+							Replacement replacement = new Replacement(declaration1.getVariableName(), declaration2.getVariableName(), ReplacementType.VARIABLE_NAME);
+							replacementInfo.addReplacement(replacement);
+						}
+						Replacement replacement = new Replacement(declaration1.getType().toString(), declaration2.getType().toString(), ReplacementType.TYPE);
+						replacementInfo.addReplacement(replacement);
+						return true;
+					}
+				}
 			}
 		}
 		return false;

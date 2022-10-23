@@ -3365,6 +3365,17 @@ public class UMLModelDiff {
 	}
 
 	private boolean movedAndRenamedMethodSignature(UMLOperation removedOperation, UMLOperation addedOperation, UMLOperationBodyMapper mapper, boolean multipleMappers) {
+		UMLClassBaseDiff addedOperationClassDiff = getUMLClassDiff(addedOperation.getClassName());
+		if(addedOperationClassDiff != null) {
+			for(Refactoring r : addedOperationClassDiff.getRefactoringsBeforePostProcessing()) {
+				if(r instanceof ExtractOperationRefactoring) {
+					ExtractOperationRefactoring extractRefactoring = (ExtractOperationRefactoring)r;
+					if(extractRefactoring.getExtractedOperation().equals(addedOperation)) {
+						return false;
+					}
+				}
+			}
+		}
 		UMLClassBaseDiff removedOperationClassDiff = getUMLClassDiff(removedOperation.getClassName());
 		if(removedOperationClassDiff != null && removedOperationClassDiff.containsOperationWithTheSameSignatureInNextClass(removedOperation)) {
 			return false;

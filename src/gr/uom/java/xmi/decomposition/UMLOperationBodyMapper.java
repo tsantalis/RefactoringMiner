@@ -2302,7 +2302,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									score = 1;
 								}
 							}
-							if((replacements != null || statement1.bodyStringRepresentation().equals(statement2.bodyStringRepresentation())) &&
+							if((replacements != null || identicalBody(statement1, statement2)) &&
 									(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
 								CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 								mapping.addReplacements(replacements);
@@ -2422,7 +2422,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									score = 1;
 								}
 							}
-							if((replacements != null || statement1.bodyStringRepresentation().equals(statement2.bodyStringRepresentation())) &&
+							if((replacements != null || identicalBody(statement1, statement2)) &&
 									(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
 								CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 								mapping.addReplacements(replacements);
@@ -2460,6 +2460,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private boolean identicalBody(CompositeStatementObject statement1, CompositeStatementObject statement2) {
+		List<String> bodyStringRepresentation1 = statement1.bodyStringRepresentation();
+		List<String> bodyStringRepresentation2 = statement2.bodyStringRepresentation();
+		int size1 = bodyStringRepresentation1.size();
+		int size2 = bodyStringRepresentation2.size();
+		if(bodyStringRepresentation1.equals(bodyStringRepresentation2)) {
+			return true;
+		}
+		else if(Math.abs(size1 - size2) <= size2/4.0 && bodyStringRepresentation1.containsAll(bodyStringRepresentation2)) {
+			return true;
+		}
+		else if(Math.abs(size1 - size2) <= size1/4.0 && bodyStringRepresentation2.containsAll(bodyStringRepresentation1)) {
+			return true;
+		}
+		return false;
 	}
 
 	private boolean alreadyMatched1(AbstractCodeFragment fragment) {

@@ -2476,6 +2476,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		else if(Math.abs(size1 - size2) <= size1/4.0 && bodyStringRepresentation2.containsAll(bodyStringRepresentation1)) {
 			return true;
 		}
+		else if(size1 == size2) {
+			int identicalStatements = 0;
+			for(int i=0; i<size1; i++) {
+				if(bodyStringRepresentation1.get(i).equals(bodyStringRepresentation2.get(i))) {
+					identicalStatements++;
+				}
+			}
+			if(Math.abs(size1 - identicalStatements) <= size1/4.0) {
+				return true;
+			}
+		}
 		return false;
 	}
 

@@ -241,7 +241,7 @@ public abstract class UMLAbstractClassDiff {
 		return false;
 	}
 
-	protected boolean isPartOfMethodExtracted(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation) {
+	public boolean isPartOfMethodExtracted(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation) {
 		List<AbstractCall> removedOperationInvocations = removedOperation.getAllOperationInvocations();
 		List<AbstractCall> addedOperationInvocations = addedOperation.getAllOperationInvocations();
 		Set<AbstractCall> intersection = new LinkedHashSet<AbstractCall>(removedOperationInvocations);
@@ -917,7 +917,7 @@ public abstract class UMLAbstractClassDiff {
 		return Collections.emptySet();
 	}
 
-	protected boolean isPartOfMethodInlined(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation) {
+	public boolean isPartOfMethodInlined(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation) {
 		List<AbstractCall> removedOperationInvocations = removedOperation.getAllOperationInvocations();
 		List<AbstractCall> addedOperationInvocations = addedOperation.getAllOperationInvocations();
 		Set<AbstractCall> intersection = new LinkedHashSet<AbstractCall>(removedOperationInvocations);

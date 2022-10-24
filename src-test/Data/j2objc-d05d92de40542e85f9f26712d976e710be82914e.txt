@@ -23,12 +23,9 @@ line range:662-662==line range:774-774
 line range:663-663==line range:775-775
 line range:667-667==line range:777-777
 line range:658-664==line range:770-776
-line range:639-645==line range:763-765
 line range:658-664==line range:770-776
-line range:639-643==line range:763-765
 public visit(node LambdaExpression) : boolean -> public printBlockCallWrapper(binding IMethodBinding) : void
 line range:642-642==line range:704-704
-line range:657-657==line range:701-701
 line range:641-641==line range:705-705
 public visit(node LambdaExpression) : boolean -> public printLambdaCall(functionalInterface IMethodBinding, functionalTypeBinding ITypeBinding, methodBinding IMethodBinding, parameters List<VariableDeclaration>, isCapturing boolean) : void
 line range:638-638==line range:729-729

@@ -5807,7 +5807,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				nonMappedElementsT1 = nonMappedElementsT1 - ignoredNonMappedElements(invocations2, mapper.getNonMappedLeavesT1(), mapper.getNonMappedInnerNodesT1());
 			}
 			if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
-					nonMappedElementsT1 == 0 || nonMappedElementsT2 == 0) {
+					nonMappedElementsT1 == 0 || nonMappedElementsT2 == 0 ||
+					classDiff.isPartOfMethodExtracted(lambda1, lambda2) || classDiff.isPartOfMethodInlined(lambda1, lambda2)) {
 				addAllMappings(mapper.mappings);
 				this.nonMappedInnerNodesT1.addAll(mapper.nonMappedInnerNodesT1);
 				this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);

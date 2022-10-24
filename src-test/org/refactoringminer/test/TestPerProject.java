@@ -178,7 +178,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/AntennaPod/AntennaPod.git", 1, 0, 0);
         processRepositoryCommits("https://github.com/MovingBlocks/Terasology.git", 49, 0, 4);
         processRepositoryCommits("https://github.com/GoClipse/goclipse.git", 10, 0, 0);
-        processRepositoryCommits("https://github.com/google/j2objc.git", 10, 0, 0);
+        processRepositoryCommits("https://github.com/google/j2objc.git", 9, 0, 0);
         processRepositoryCommits("https://github.com/SonarSource/sonarqube.git", 98, 0, 6);
         processRepositoryCommits("https://github.com/Atmosphere/atmosphere.git", 4, 0, 0);
         processRepositoryCommits("https://github.com/slapperwan/gh4a.git", 16, 0, 0);

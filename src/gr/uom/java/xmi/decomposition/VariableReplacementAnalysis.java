@@ -359,10 +359,11 @@ public class VariableReplacementAnalysis {
 					Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
 					if(!matchedVariables.contains(pair) && removedVariable.getVariableName().equals(addedVariable.getVariableName()) && !bothCatchExceptionVariables(removedVariable, addedVariable) &&
 							!containerElementRelationship(removedVariable, addedVariable) && mappedStatementWithinVariableScopes(removedVariable, addedVariable)) {
+						Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(removedVariable, addedVariable, mappings);
 						removedVariablesToBeRemoved.add(removedVariable);
 						addedVariablesToBeRemoved.add(addedVariable);
 						matchedVariables.add(pair);
-						getVariableRefactorings(removedVariable, addedVariable, operation1, operation2, Collections.emptySet(), null);
+						getVariableRefactorings(removedVariable, addedVariable, operation1, operation2, variableReferences, null);
 					}
 				}
 			}
@@ -381,10 +382,11 @@ public class VariableReplacementAnalysis {
 					Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
 					if(!matchedVariables.contains(pair) && removedVariable.getVariableName().equals(addedVariable.getVariableName()) && !bothCatchExceptionVariables(removedVariable, addedVariable) &&
 							!containerElementRelationship(removedVariable, addedVariable) && mappedStatementWithinVariableScopes(removedVariable, addedVariable)) {
+						Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(removedVariable, addedVariable, mappings);
 						removedVariablesToBeRemoved.add(removedVariable);
 						addedVariablesToBeRemoved.add(addedVariable);
 						matchedVariables.add(pair);
-						getVariableRefactorings(removedVariable, addedVariable, operation1, operation2, Collections.emptySet(), null);
+						getVariableRefactorings(removedVariable, addedVariable, operation1, operation2, variableReferences, null);
 					}
 				}
 			}
@@ -591,10 +593,11 @@ public class VariableReplacementAnalysis {
 					VariableDeclaration declaration2 = declarations2.get(i);
 					if(declaration1.getVariableName().equals(declaration2.getVariableName())) {
 						if(declaration1.equalType(declaration2) && declaration1.equalQualifiedType(declaration2)) {
+							Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(declaration1, declaration2, mappings);
 							removedVariables.remove(declaration1);
 							addedVariables.remove(declaration2);
 							matchedVariables.add(Pair.of(declaration1, declaration2));
-							getVariableRefactorings(declaration1, declaration2, mapping.getOperation1(), mapping.getOperation2(), Collections.emptySet(), null);
+							getVariableRefactorings(declaration1, declaration2, mapping.getOperation1(), mapping.getOperation2(), variableReferences, null);
 						}
 						else if(!containsVariableDeclarationWithSameNameAndType(declaration1, declarations2) &&
 								!containsVariableDeclarationWithSameNameAndType(declaration2, declarations1)) {
@@ -612,10 +615,11 @@ public class VariableReplacementAnalysis {
 				VariableDeclaration declaration2 = declarations2.get(0);
 				if(declaration1.getVariableName().equals(declaration2.getVariableName())) {
 					if(declaration1.equalType(declaration2) && declaration1.equalQualifiedType(declaration2)) {
+						Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(declaration1, declaration2, mappings);
 						removedVariables.remove(declaration1);
 						addedVariables.remove(declaration2);
 						matchedVariables.add(Pair.of(declaration1, declaration2));
-						getVariableRefactorings(declaration1, declaration2, mapping.getOperation1(), mapping.getOperation2(), Collections.emptySet(), null);
+						getVariableRefactorings(declaration1, declaration2, mapping.getOperation1(), mapping.getOperation2(), variableReferences, null);
 					}
 					else if(!containsVariableDeclarationWithSameNameAndType(declaration1, declarations2) &&
 							!containsVariableDeclarationWithSameNameAndType(declaration2, declarations1)) {

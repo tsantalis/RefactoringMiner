@@ -1576,8 +1576,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			List<Boolean> parentIsContainerBody = new ArrayList<>();
 			List<Boolean> nestedMapper = new ArrayList<>();
 			List<Boolean> identical = new ArrayList<>();
+			List<Integer> nonMappedNodes = new ArrayList<>();
 			List<Integer> replacementTypeCount = new ArrayList<>();
 			List<Boolean> replacementCoversEntireStatement = new ArrayList<>();
+			List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
 			while(mappingIterator.hasNext()) {
 				AbstractCodeMapping mapping = mappingIterator.next();
 				UMLOperationBodyMapper mapper = mapperIterator.next();
@@ -1586,6 +1588,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				parentIsContainerBody.add(mapper.parentIsContainerBody(mapping));
 				nestedMapper.add(mapper.isNested());
 				identical.add(mapping.getFragment1().getString().equals(mapping.getFragment2().getString()));
+				if(mapper.getParentMapper() != null) {
+					if(mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && !mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
+						//extract method scenario
+						nonMappedNodes.add(mapper.nonMappedElementsT2());
+					}
+					else if(!mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
+						//inline method scenario
+						nonMappedNodes.add(mapper.nonMappedElementsT1());
+					}
+				}
+				else {
+					nonMappedNodes.add(0);
+				}
 				replacementTypeCount.add(mapper.getReplacementTypesExcludingParameterToArgumentMaps(mapping).size());
 				boolean replacementFound = false;
 				for(Replacement r : mapping.getReplacements()) {
@@ -1596,6 +1611,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 				replacementCoversEntireStatement.add(replacementFound);
+				parentMappers.add(mapper.getParentMapper());
 			}
 			Set<Integer> indicesToBeRemoved = new LinkedHashSet<>();
 			if(callsExtractedInlinedMethod.contains(true) && callsExtractedInlinedMethod.contains(false)) {
@@ -1611,42 +1627,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						indicesToBeRemoved.add(i);
 					}
 				}
-				if(indicesToBeRemoved.isEmpty()) {
-					if(nestedMapper.contains(false)) {
-						for(int i=0; i<nestedMapper.size(); i++) {
-							if(nestedMapper.get(i) == true) {
-								indicesToBeRemoved.add(i);
-							}
-						}
-					}
-					if(identical.contains(true)) {
-						for(int i=0; i<identical.size(); i++) {
-							if(identical.get(i) == false) {
-								indicesToBeRemoved.add(i);
-							}
-						}
-					}
-					else {
-						if(replacementCoversEntireStatement.contains(false)) {
-							for(int i=0; i<replacementCoversEntireStatement.size(); i++) {
-								if(replacementCoversEntireStatement.get(i) == true) {
-									indicesToBeRemoved.add(i);
-								}
-							}
-						}
-						int minimum = replacementTypeCount.get(0);
-						for(int i=1; i<replacementTypeCount.size(); i++) {
-							if(replacementTypeCount.get(i) < minimum) {
-								minimum = replacementTypeCount.get(i);
-							}
-						}
-						for(int i=0; i<replacementTypeCount.size(); i++) {
-							if(replacementTypeCount.get(i) > minimum) {
-								indicesToBeRemoved.add(i);
-							}
-						}
-					}
-				}
+				determineIndicesToBeRemoved(nestedMapper, identical, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved);
 			}
 			else if(parentIsContainerBody.contains(true)) {
 				for(int i=0; i<parentIsContainerBody.size(); i++) {
@@ -1654,40 +1635,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						indicesToBeRemoved.add(i);
 					}
 				}
-				if(indicesToBeRemoved.isEmpty()) {
-					if(nestedMapper.contains(false)) {
-						for(int i=0; i<nestedMapper.size(); i++) {
-							if(nestedMapper.get(i) == true) {
-								indicesToBeRemoved.add(i);
-							}
-						}
+				determineIndicesToBeRemoved(nestedMapper, identical, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved);
+			}
+			if(indicesToBeRemoved.isEmpty() && matchingParentMappers(parentMappers) == parentMappers.size()) {
+				int minimum = nonMappedNodes.get(0);
+				for(int i=1; i<nonMappedNodes.size(); i++) {
+					if(nonMappedNodes.get(i) < minimum) {
+						minimum = nonMappedNodes.get(i);
 					}
-					if(identical.contains(true)) {
-						for(int i=0; i<identical.size(); i++) {
-							if(identical.get(i) == false) {
-								indicesToBeRemoved.add(i);
-							}
-						}
-					}
-					else {
-						if(replacementCoversEntireStatement.contains(false)) {
-							for(int i=0; i<replacementCoversEntireStatement.size(); i++) {
-								if(replacementCoversEntireStatement.get(i) == true) {
-									indicesToBeRemoved.add(i);
-								}
-							}
-						}
-						int minimum = replacementTypeCount.get(0);
-						for(int i=1; i<replacementTypeCount.size(); i++) {
-							if(replacementTypeCount.get(i) < minimum) {
-								minimum = replacementTypeCount.get(i);
-							}
-						}
-						for(int i=0; i<replacementTypeCount.size(); i++) {
-							if(replacementTypeCount.get(i) > minimum) {
-								indicesToBeRemoved.add(i);
-							}
-						}
+				}
+				for(int i=0; i<nonMappedNodes.size(); i++) {
+					if(nonMappedNodes.get(i) > minimum) {
+						indicesToBeRemoved.add(i);
 					}
 				}
 			}
@@ -1743,6 +1702,57 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		refactorings.removeAll(refactoringsToBeRemoved);
+	}
+
+	private int matchingParentMappers(List<UMLOperationBodyMapper> parentMappers) {
+		int matchingParentMappers = 1;
+		for(int i=1; i<parentMappers.size(); i++) {
+			if(parentMappers.get(i) != null && parentMappers.get(i).equals(parentMappers.get(i-1))) {
+				matchingParentMappers++;
+			}
+		}
+		return matchingParentMappers;
+	}
+
+	private void determineIndicesToBeRemoved(List<Boolean> nestedMapper, List<Boolean> identical,
+			List<Integer> replacementTypeCount, List<Boolean> replacementCoversEntireStatement,
+			Set<Integer> indicesToBeRemoved) {
+		if(indicesToBeRemoved.isEmpty()) {
+			if(nestedMapper.contains(false)) {
+				for(int i=0; i<nestedMapper.size(); i++) {
+					if(nestedMapper.get(i) == true) {
+						indicesToBeRemoved.add(i);
+					}
+				}
+			}
+			if(identical.contains(true)) {
+				for(int i=0; i<identical.size(); i++) {
+					if(identical.get(i) == false) {
+						indicesToBeRemoved.add(i);
+					}
+				}
+			}
+			else {
+				if(replacementCoversEntireStatement.contains(false)) {
+					for(int i=0; i<replacementCoversEntireStatement.size(); i++) {
+						if(replacementCoversEntireStatement.get(i) == true) {
+							indicesToBeRemoved.add(i);
+						}
+					}
+				}
+				int minimum = replacementTypeCount.get(0);
+				for(int i=1; i<replacementTypeCount.size(); i++) {
+					if(replacementTypeCount.get(i) < minimum) {
+						minimum = replacementTypeCount.get(i);
+					}
+				}
+				for(int i=0; i<replacementTypeCount.size(); i++) {
+					if(replacementTypeCount.get(i) > minimum) {
+						indicesToBeRemoved.add(i);
+					}
+				}
+			}
+		}
 	}
 
 	public boolean isEmpty() {

@@ -183,6 +183,18 @@ public class StringBasedHeuristics {
 						}
 					}
 				}
+				if(variableDeclarations1.isEmpty() && variableDeclarations2.size() == 1 && s1.startsWith("for(") && s2.startsWith("for(")) {
+					String updatedS1 = "for(" + variableDeclarations2.get(0).getType().toString() + " " + commonSuffix;
+					if(updatedS1.equals(s2)) {
+						return true;
+					}
+				}
+				if(variableDeclarations1.size() == 1 && variableDeclarations2.isEmpty() && s1.startsWith("for(") && s2.startsWith("for(")) {
+					String updatedS2 = "for(" + variableDeclarations1.get(0).getType().toString() + " " + commonSuffix;
+					if(updatedS2.equals(s1)) {
+						return true;
+					}
+				}
 			}
 			if(diff2.isEmpty()) {
 				if(diff1.equals("!") || diff1.equals("~")) {

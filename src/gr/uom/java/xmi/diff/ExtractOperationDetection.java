@@ -31,6 +31,7 @@ public class ExtractOperationDetection {
 	private UMLModelDiff modelDiff;
 	private List<AbstractCall> operationInvocations;
 	private Map<CallTreeNode, CallTree> callTreeMap = new LinkedHashMap<CallTreeNode, CallTree>();
+	private Map<UMLOperation, List<AbstractCall>> callCountMap = null;
 	private List<UMLOperation> potentiallyMovedOperations = new ArrayList<UMLOperation>();
 
 	public ExtractOperationDetection(UMLOperationBodyMapper mapper, List<UMLOperation> addedOperations, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
@@ -46,6 +47,39 @@ public class ExtractOperationDetection {
 		this.potentiallyMovedOperations = potentiallyMovedOperations;
 	}
 
+	public List<UMLOperation> getAddedOperationsSortedByCalls() {
+		this.callCountMap = new LinkedHashMap<>();
+		List<UMLOperation> sorted = new ArrayList<>();
+		List<Integer> counts = new ArrayList<>();
+		for(UMLOperation addedOperation : addedOperations) {
+			List<AbstractCall> matchingInvocations = matchingInvocations(addedOperation, operationInvocations, mapper.getContainer2());
+			if(!matchingInvocations.isEmpty()) {
+				callCountMap.put(addedOperation, matchingInvocations);
+				int count = matchingInvocations.size();
+				if(sorted.isEmpty()) {
+					sorted.add(addedOperation);
+					counts.add(count);
+				}
+				else {
+					boolean inserted = false;
+					for(int i=0; i<counts.size(); i++) {
+						if(count > counts.get(i)) {
+							sorted.add(i, addedOperation);
+							counts.add(i, count);
+							inserted = true;
+							break;
+						}
+					}
+					if(!inserted) {
+						sorted.add(counts.size(), addedOperation);
+						counts.add(counts.size(), count);
+					}
+				}
+			}
+		}
+		return sorted;
+	}
+
 	public List<ExtractOperationRefactoring> check(UMLOperation addedOperation) throws RefactoringMinerTimedOutException {
 		List<ExtractOperationRefactoring> refactorings = new ArrayList<ExtractOperationRefactoring>();
 		if(modelDiff != null && modelDiff.refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(addedOperation)) {
@@ -53,13 +87,13 @@ public class ExtractOperationDetection {
 		}
 		if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
 			!mapper.getReplacementsInvolvingMethodInvocation().isEmpty() || mapper.containsCompositeMappingWithoutReplacements()) {
-			List<AbstractCall> addedOperationInvocations = matchingInvocations(addedOperation, operationInvocations, mapper.getContainer2());
-			if(addedOperationInvocations.size() > 0) {
+			List<AbstractCall> addedOperationInvocations = callCountMap != null ? callCountMap.get(addedOperation) : matchingInvocations(addedOperation, operationInvocations, mapper.getContainer2());
+			if(addedOperationInvocations != null && addedOperationInvocations.size() > 0) {
 				int otherAddedMethodsCalled = 0;
 				for(UMLOperation addedOperation2 : this.addedOperations) {
 					if(!addedOperation.equals(addedOperation2)) {
-						List<AbstractCall> addedOperationInvocations2 = matchingInvocations(addedOperation2, operationInvocations, mapper.getContainer2());
-						if(addedOperationInvocations2.size() > 0) {
+						List<AbstractCall> addedOperationInvocations2 = callCountMap != null ? callCountMap.get(addedOperation2) : matchingInvocations(addedOperation2, operationInvocations, mapper.getContainer2());
+						if(addedOperationInvocations2 != null && addedOperationInvocations2.size() > 0) {
 							otherAddedMethodsCalled++;
 						}
 					}

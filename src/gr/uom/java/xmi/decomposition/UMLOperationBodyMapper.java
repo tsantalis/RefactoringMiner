@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -332,7 +333,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					innerNode2.replaceParametersWithArguments(parameterToArgumentMap2);
 				}
 			}
-			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), containsCallToExtractedMethod(leaves2));
+			boolean containsCallToExtractedMethod = containsCallToExtractedMethod(leaves2);
+			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), containsCallToExtractedMethod);
 			
 			if(streamAPIStatements1.size() == 0 && streamAPIStatements2.size() > 0) {
 				processStreamAPIStatements(leaves1, leaves2, innerNodes1, streamAPIStatements2);
@@ -386,6 +388,58 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			if(container1.getBodyHashCode() != container2.getBodyHashCode() && containsCallToExtractedMethod) {
+				for(Iterator<AbstractCodeMapping> mappingIterator = mappings.iterator(); mappingIterator.hasNext();) {
+					AbstractCodeMapping mapping = mappingIterator.next();
+					if(!mapping.containsReplacement(ReplacementType.COMPOSITE)) {
+						AbstractCodeFragment child1 = mapping.getFragment1();
+						AbstractCodeFragment child2 = mapping.getFragment2();
+						CompositeStatementObject parent1 = child1.getParent();
+						CompositeStatementObject parent2 = child2.getParent();
+						boolean unmatchedParent = false;
+						while(parent1 != null && parent2 != null) {
+							if(parent1.getParent() == null || parent2.getParent() == null) {
+								if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) != parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+									unmatchedParent = true;
+								}
+								break;
+							}
+							if(alreadyMatched1(parent1) && alreadyMatched2(parent2) &&
+									!parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
+									!parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
+									parent1.getString().equals(parent2.getString())) {
+								break;
+							}
+							if(!alreadyMatched1(parent1) || !alreadyMatched2(parent2)) {
+								int indexOfChildInParent1 = parent1.getStatements().indexOf(child1);
+								int indexOfChildInParent2 = parent2.getStatements().indexOf(child2);
+								if(indexOfChildInParent1 != indexOfChildInParent2 && !isElseBranch(child1, parent1) && !isElseBranch(child2, parent2)) {
+									unmatchedParent = true;
+								}
+								break;
+							}
+							child1 = parent1;
+							child2 = parent2;
+							parent1 = parent1.getParent();
+							parent2 = parent2.getParent();
+						}
+						if(unmatchedParent) {
+							mappingIterator.remove();
+							if(mapping instanceof LeafMapping) {
+								LeafMapping leafMapping = (LeafMapping)mapping;
+								leaves1.add(leafMapping.getFragment1());
+								leaves2.add(leafMapping.getFragment2());
+							}
+							else if(mapping instanceof CompositeStatementObjectMapping) {
+								CompositeStatementObjectMapping compositeMapping = (CompositeStatementObjectMapping)mapping;
+								innerNodes1.add((CompositeStatementObject)compositeMapping.getFragment1());
+								innerNodes2.add((CompositeStatementObject)compositeMapping.getFragment2());
+							}
+						}
+					}
+				}
+			}
+			
 			nonMappedLeavesT1.addAll(leaves1);
 			nonMappedLeavesT2.addAll(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
@@ -423,6 +477,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			nonMappedLeavesT1.removeAll(leavesToBeRemovedT1);
 		}
+	}
+
+	private boolean isElseBranch(AbstractCodeFragment child, CompositeStatementObject parent) {
+		return parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+				child.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
+				parent.getStatements().size() == 2 && parent.getStatements().indexOf(child) == 1;
 	}
 
 	public UMLOperationBodyMapper(UMLAttribute removedAttribute, UMLAttribute addedAttribute, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {

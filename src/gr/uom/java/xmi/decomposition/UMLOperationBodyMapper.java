@@ -2,6 +2,7 @@ package gr.uom.java.xmi.decomposition;
 
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
@@ -2545,6 +2546,52 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			if(Math.abs(size1 - identicalStatements) <= size1/4.0) {
 				return true;
+			}
+		}
+		if(!bodyStringRepresentation1.contains(statement2.getString()) && !bodyStringRepresentation2.contains(statement1.getString())) {
+			List<UMLComment> comments1 = container1.getComments();
+			List<String> commentsWithinStatement1 = new ArrayList<>();
+			for(UMLComment comment1 : comments1) {
+				if(statement1.getLocationInfo().subsumes(comment1.getLocationInfo())) {
+					commentsWithinStatement1.add(comment1.getText());
+				}
+			}
+			List<UMLComment> comments2 = container2.getComments();
+			List<String> commentsWithinStatement2 = new ArrayList<>();
+			for(UMLComment comment2 : comments2) {
+				if(statement2.getLocationInfo().subsumes(comment2.getLocationInfo())) {
+					commentsWithinStatement2.add(comment2.getText());
+				}
+			}
+			if(commentsWithinStatement1.size() > 0 && commentsWithinStatement2.size() > 0) {
+				int numberOfCommentsWithinStatement1 = commentsWithinStatement1.size();
+				int numberOfCommentsWithinStatement2 = commentsWithinStatement2.size();
+				Set<String> intersection = new LinkedHashSet<>(commentsWithinStatement1);
+				intersection.retainAll(commentsWithinStatement2);
+				commentsWithinStatement1.removeAll(intersection);
+				commentsWithinStatement2.removeAll(intersection);
+				if(intersection.size() > 0) {
+					for(String comment1 : commentsWithinStatement1) {
+						for(String comment2 : commentsWithinStatement2) {
+							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(comment1, comment2);
+							String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(comment1, comment2);
+							if(!commonPrefix.isBlank() && !commonSuffix.isBlank()) {
+								if(commonPrefix.endsWith(" ") && commonSuffix.startsWith(" ")) {
+									commonPrefix = commonPrefix.trim();
+								}
+								if(comment1.equals(commonPrefix + commonSuffix)) {
+									intersection.add(comment1);
+								}
+								else if(comment2.equals(commonPrefix + commonSuffix)) {
+									intersection.add(comment2);
+								}
+							}
+						}
+					}
+				}
+				if(intersection.size() == numberOfCommentsWithinStatement1 || intersection.size() == numberOfCommentsWithinStatement2) {
+					return true;
+				}
 			}
 		}
 		return false;

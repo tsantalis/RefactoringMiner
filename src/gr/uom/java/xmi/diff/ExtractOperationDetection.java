@@ -90,15 +90,20 @@ public class ExtractOperationDetection {
 			List<AbstractCall> addedOperationInvocations = callCountMap != null ? callCountMap.get(addedOperation) : matchingInvocations(addedOperation, operationInvocations, mapper.getContainer2());
 			if(addedOperationInvocations != null && addedOperationInvocations.size() > 0) {
 				int otherAddedMethodsCalled = 0;
+				int otherAddedMethodsCalledWithSameOrMoreCallSites = 0;
 				for(UMLOperation addedOperation2 : this.addedOperations) {
 					if(!addedOperation.equals(addedOperation2)) {
 						List<AbstractCall> addedOperationInvocations2 = callCountMap != null ? callCountMap.get(addedOperation2) : matchingInvocations(addedOperation2, operationInvocations, mapper.getContainer2());
 						if(addedOperationInvocations2 != null && addedOperationInvocations2.size() > 0) {
 							otherAddedMethodsCalled++;
 						}
+						if(addedOperationInvocations2 != null && addedOperationInvocations2.size() >= addedOperationInvocations.size()) {
+							otherAddedMethodsCalledWithSameOrMoreCallSites++;
+						}
 					}
 				}
-				if(otherAddedMethodsCalled == 0) {
+				//check if the source method contains more statements than (addedOperationInvocations.size() * addedOperation statements)
+				if(otherAddedMethodsCalledWithSameOrMoreCallSites == 0 && (otherAddedMethodsCalled == 0 || mapper.getContainer1().stringRepresentation().size() > addedOperationInvocations.size() * addedOperation.stringRepresentation().size())) {
 					List<AbstractCall> sortedInvocations = sortInvocationsBasedOnArgumentOccurrences(addedOperationInvocations);
 					for(AbstractCall addedOperationInvocation : sortedInvocations) {
 						processAddedOperation(mapper, addedOperation, refactorings, addedOperationInvocations, addedOperationInvocation);

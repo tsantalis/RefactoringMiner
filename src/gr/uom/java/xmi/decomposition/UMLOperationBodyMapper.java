@@ -407,9 +407,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 							if(alreadyMatched1(parent1) && alreadyMatched2(parent2) &&
 									!parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
-									!parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
-									parent1.getString().equals(parent2.getString())) {
-								break;
+									!parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+								if(parent1.getString().equals(parent2.getString())) {
+									break;
+								}
+								else if(parent2.getStatements().size() > 0 && containsMapping(parent1.getParent(), parent2.getStatements().get(0))) {
+									break;
+								}
+								else if(parent1.getStatements().size() > 0 && containsMapping(parent1.getStatements().get(0), parent2.getParent())) {
+									break;
+								}
 							}
 							if(!alreadyMatched1(parent1) || !alreadyMatched2(parent2)) {
 								int indexOfChildInParent1 = parent1.getStatements().indexOf(child1);
@@ -7454,6 +7461,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		else if(childMappers.size() > 0) {
 			for(UMLOperationBodyMapper childMapper : childMappers) {
 				if(childMapper.containsExtractedOrInlinedOperationInvocation(mapping)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean containsMapping(AbstractCodeFragment fragment1, AbstractCodeFragment fragment2) {
+		if(fragment1 != null && fragment2 != null) {
+			for(AbstractCodeMapping mapping : this.mappings) {
+				if(mapping.getFragment1().equals(fragment1) && mapping.getFragment2().equals(fragment2)) {
 					return true;
 				}
 			}

@@ -2887,7 +2887,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
-						boolean identicalDepthAndIndexForKeywordStatement = identicalDepthAndIndex && leaf1.isKeyword();
+						boolean identicalDepthAndIndexForKeywordStatement = identicalDepthAndIndex && (leaf1.isKeyword() || leaf1.getString().startsWith("throw "));
 						if(mappingSet.size() > 1 && (parentMapper != null || !identicalDepthAndIndex || identicalDepthAndIndexForKeywordStatement) && mappings.size() > 1) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
 							for(LeafMapping mapping : mappingSet) {
@@ -3084,7 +3084,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
-						boolean identicalDepthAndIndexForKeywordStatement = identicalDepthAndIndex && leaf2.isKeyword();
+						boolean identicalDepthAndIndexForKeywordStatement = identicalDepthAndIndex && (leaf2.isKeyword() || leaf2.getString().startsWith("throw "));
 						if(mappingSet.size() > 1 && (parentMapper != null || !identicalDepthAndIndex || identicalDepthAndIndexForKeywordStatement) && mappings.size() > 0) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
 							for(LeafMapping mapping : mappingSet) {

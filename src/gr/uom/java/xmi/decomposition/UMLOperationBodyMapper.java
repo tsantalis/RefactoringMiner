@@ -4543,6 +4543,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(replacements != null) {
 			return replacements;
 		}
+		//match if with switch
+		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+				statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT)) {
+			CompositeStatementObject if1 = (CompositeStatementObject)statement1;
+			CompositeStatementObject switch2 = (CompositeStatementObject)statement2;
+			List<AbstractExpression> expressions1 = if1.getExpressions();
+			List<AbstractExpression> expressions2 = switch2.getExpressions();
+			if(expressions1.size() == 1 && expressions2.size() == 1 && expressions1.get(0).getString().equals(expressions2.get(0).getString())) {
+				return replacementInfo.getReplacements();
+			}
+		}
+		//match switch with if
+		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT) &&
+				statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+			CompositeStatementObject switch1 = (CompositeStatementObject)statement1;
+			CompositeStatementObject if2 = (CompositeStatementObject)statement2;
+			List<AbstractExpression> expressions1 = switch1.getExpressions();
+			List<AbstractExpression> expressions2 = if2.getExpressions();
+			if(expressions1.size() == 1 && expressions2.size() == 1 && expressions1.get(0).getString().equals(expressions2.get(0).getString())) {
+				return replacementInfo.getReplacements();
+			}
+		}
 		//match traditional for with enhanced for
 		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) &&
 				statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
@@ -4577,7 +4599,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		//match while with enhanced for
 		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) &&
 				statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
-			CompositeStatementObject while1 = (CompositeStatementObject)statement1;
 			CompositeStatementObject for2 = (CompositeStatementObject)statement2;
 			Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
 			List<AbstractExpression> expressions2 = for2.getExpressions();

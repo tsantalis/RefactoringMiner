@@ -2372,6 +2372,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								else if(replacementInfo.getReplacements(ReplacementType.COMPOSITE).size() > 0) {
 									score = 1;
 								}
+								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && replacements.isEmpty()) {
+									//find if the corresponding try blocks are already matched
+									for(AbstractCodeMapping mapping : mappings) {
+										if(mapping.getFragment1() instanceof TryStatementObject && mapping.getFragment2() instanceof TryStatementObject) {
+											TryStatementObject try1 = (TryStatementObject)mapping.getFragment1();
+											TryStatementObject try2 = (TryStatementObject)mapping.getFragment2();
+											if(try1.getCatchClauses().contains(statement1) && try2.getCatchClauses().contains(statement2)) {
+												score = 1;
+												break;
+											}
+										}
+									}
+								}
 							}
 							if((replacements != null || identicalBody(statement1, statement2)) &&
 									(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
@@ -2494,6 +2507,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 								else if(replacementInfo.getReplacements(ReplacementType.COMPOSITE).size() > 0) {
 									score = 1;
+								}
+								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && replacements.isEmpty()) {
+									//find if the corresponding try blocks are already matched
+									for(AbstractCodeMapping mapping : mappings) {
+										if(mapping.getFragment1() instanceof TryStatementObject && mapping.getFragment2() instanceof TryStatementObject) {
+											TryStatementObject try1 = (TryStatementObject)mapping.getFragment1();
+											TryStatementObject try2 = (TryStatementObject)mapping.getFragment2();
+											if(try1.getCatchClauses().contains(statement1) && try2.getCatchClauses().contains(statement2)) {
+												score = 1;
+												break;
+											}
+										}
+									}
 								}
 							}
 							if((replacements != null || identicalBody(statement1, statement2)) &&

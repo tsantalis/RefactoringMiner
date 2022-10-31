@@ -6222,6 +6222,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								replacementFound = true;
 								break;
 							}
+							if(r.getType().equals(ReplacementType.INFIX_EXPRESSION) && element.contains(r.getAfter())) {
+								replacementFound = true;
+								break;
+							}
 							if(ReplacementUtil.contains(element, r.getAfter()) && element.startsWith(r.getAfter()) &&
 									(element.endsWith(" != null") || element.endsWith(" == null") || element.endsWith(" != 0") || element.endsWith(" == 0"))) {
 								replacementFound = true;
@@ -6233,7 +6237,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
-				if(matches > 0) {
+				boolean pass = false;
+				if(matches == 1 && intersection.size() == 1 && intersection.iterator().next().endsWith("null")) {
+					pass = matches == Math.min(subConditionsAsList1.size(), subConditionsAsList2.size());
+				}
+				else {
+					pass = matches > 0;
+				}
+				if(pass) {
 					IntersectionReplacement r = new IntersectionReplacement(s1, s2, intersection, ReplacementType.CONDITIONAL);
 					info.addReplacement(r);
 					CompositeStatementObject root1 = statement1.getParent();

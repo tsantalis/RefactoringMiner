@@ -411,6 +411,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								if(parent1.getString().equals(parent2.getString())) {
 									break;
 								}
+								else if(containsMapping(parent1.getParent(), parent2)) {
+									break;
+								}
+								else if(containsMapping(parent1, parent2.getParent())) {
+									break;
+								}
 								else if(parent2.getStatements().size() > 0 && containsMapping(parent1.getParent(), parent2.getStatements().get(0))) {
 									break;
 								}
@@ -2372,14 +2378,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								else if(replacementInfo.getReplacements(ReplacementType.COMPOSITE).size() > 0) {
 									score = 1;
 								}
-								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && replacements.isEmpty()) {
+								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
 									//find if the corresponding try blocks are already matched
 									for(AbstractCodeMapping mapping : mappings) {
 										if(mapping.getFragment1() instanceof TryStatementObject && mapping.getFragment2() instanceof TryStatementObject) {
 											TryStatementObject try1 = (TryStatementObject)mapping.getFragment1();
 											TryStatementObject try2 = (TryStatementObject)mapping.getFragment2();
 											if(try1.getCatchClauses().contains(statement1) && try2.getCatchClauses().contains(statement2)) {
-												score = 1;
+												if(replacements.isEmpty() || (try1.getCatchClauses().size() == 1 && try2.getCatchClauses().size() == 1)) {
+													score = 1;
+												}
 												break;
 											}
 										}
@@ -2508,14 +2516,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								else if(replacementInfo.getReplacements(ReplacementType.COMPOSITE).size() > 0) {
 									score = 1;
 								}
-								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && replacements.isEmpty()) {
+								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
 									//find if the corresponding try blocks are already matched
 									for(AbstractCodeMapping mapping : mappings) {
 										if(mapping.getFragment1() instanceof TryStatementObject && mapping.getFragment2() instanceof TryStatementObject) {
 											TryStatementObject try1 = (TryStatementObject)mapping.getFragment1();
 											TryStatementObject try2 = (TryStatementObject)mapping.getFragment2();
 											if(try1.getCatchClauses().contains(statement1) && try2.getCatchClauses().contains(statement2)) {
-												score = 1;
+												if(replacements.isEmpty() || (try1.getCatchClauses().size() == 1 && try2.getCatchClauses().size() == 1)) {
+													score = 1;
+												}
 												break;
 											}
 										}
@@ -3664,7 +3674,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(variableDeclarationMappings.size() == mappingSet.size()) {
 				Set<ReplacementType> replacementTypes = null;
 				Set<LeafMapping> mappingsWithSameReplacementTypes = new LinkedHashSet<LeafMapping>();
+				List<Boolean> equalNames = new ArrayList<>();
 				for(LeafMapping mapping : variableDeclarationMappings) {
+					equalNames.add(mapping.getFragment1().getVariableDeclarations().get(0).getVariableName().equals(mapping.getFragment2().getVariableDeclarations().get(0).getVariableName()));
 					if(replacementTypes == null) {
 						replacementTypes = mapping.getReplacementTypes();
 						mappingsWithSameReplacementTypes.add(mapping);
@@ -3687,6 +3699,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 					}
+				}
+				if(equalNames.contains(false) && equalNames.contains(true)) {
+					return false;
 				}
 				if(mappingsWithSameReplacementTypes.size() == mappingSet.size()) {
 					return true;

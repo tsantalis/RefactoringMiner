@@ -275,9 +275,13 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			parent2 = parent2.getParent();
 		}
 		if(parent1 != null && parent2 != null) {
-			return parent1.getLocationInfo().getCodeElementType().equals(parent2.getLocationInfo().getCodeElementType()) &&
-					!parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
-					getFragment1().getDepth() == getFragment2().getDepth() && getFragment1().getIndex() == getFragment2().getIndex();
+			if(parent1.getLocationInfo().getCodeElementType().equals(parent2.getLocationInfo().getCodeElementType()) &&
+					!parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+				if(parent1.getString().equals(parent2.getString()) && !parent1.getString().equals("try")) {
+					return true;
+				}
+				return getFragment1().getDepth() == getFragment2().getDepth() && getFragment1().getIndex() == getFragment2().getIndex();
+			}
 		}
 		return false;
 	}

@@ -1,0 +1,68 @@
+public class PredicateParser {
+    static Predicate parse(final String string, Deque<Token> tokens, final Map<String, PredicateBuilder> builders, final ExchangeAttributeParser attributeParser) {
+
+        //shunting yard algorithm
+        //gets rid or parentheses and fixes up operator ordering
+        Deque<String> operatorStack = new ArrayDeque<>();
+
+        //the output, consisting of predicate nodes and string representations of operators
+        //it is a bit yuck mixing up the types, but whatever
+        Deque<Object> output = new ArrayDeque<>();
+
+        while (!tokens.isEmpty()) {
+            Token token = tokens.poll();
+            if (isSpecialChar(token.getToken())) {
+                if (token.getToken().equals("(")) {
+                    operatorStack.push("(");
+                } else if (token.getToken().equals(")")) {
+                    for (; ; ) {
+                        String op = operatorStack.pop();
+                        if (op == null) {
+                            throw PredicateTokeniser.error(string, token.getPosition(), "Unexpected end of input");
+                        } else if (op.equals("(")) {
+                            break;
+                        } else {
+                            output.push(op);
+                        }
+                    }
+                } else {
+                    throw PredicateTokeniser.error(string, token.getPosition(), "Mismatched parenthesis");
+                }
+            } else {
+                if (isOperator(token.getToken())) {
+                    int prec = precedence(token.getToken());
+                    String top = operatorStack.peek();
+                    while (top != null) {
+                        if (top.equals("(")) {
+                            break;
+                        }
+                        int exitingPrec = precedence(top);
+                        if (prec <= exitingPrec) {
+                            output.push(operatorStack.pop());
+                        } else {
+                            break;
+                        }
+                        top = operatorStack.peek();
+                    }
+                    operatorStack.push(token.getToken());
+                } else {
+                    output.push(parsePredicate(string, token, tokens, builders, attributeParser));
+                }
+            }
+        }
+        while (!operatorStack.isEmpty()) {
+            String op = operatorStack.pop();
+            if (op.equals(")")) {
+                throw PredicateTokeniser.error(string, string.length(), "Mismatched parenthesis");
+            }
+            output.push(op);
+        }
+        //now we have our tokens
+        Predicate predicate = collapseOutput(output.pop(), output).resolve();
+        if (!output.isEmpty()) {
+            throw PredicateTokeniser.error(string, 0, "Invalid expression");
+        }
+        return predicate;
+
+    }
+}

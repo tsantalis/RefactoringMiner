@@ -1,0 +1,69 @@
+public class PredicateParser {    
+    static Node parse(final String string, Deque<Token> tokens, boolean topLevel) {
+
+        //shunting yard algorithm
+        //gets rid or parentheses and fixes up operator ordering
+        Deque<Token> operatorStack = new ArrayDeque<>();
+
+        Deque<Node> output = new ArrayDeque<>();
+        List<Node> blocks = new ArrayList<>();
+
+
+        while (!tokens.isEmpty()) {
+            Token token = tokens.poll();
+            if(token.getToken().equals("{")) {
+                output.push(parse(string, tokens, false));
+            } else if(token.getToken().equals("}")) {
+                if(topLevel) {
+                    throw error(string, token.getPosition(), "Unexpected token");
+                }
+                break;
+            } else if(token.getToken().equals("\n") || token.getToken().equals(";")) {
+                handleLineEnd(string, operatorStack, output, blocks);
+            } else if (isSpecialChar(token.getToken())) {
+                if (token.getToken().equals("(")) {
+                    operatorStack.push(token);
+                } else if (token.getToken().equals(")")) {
+                    for (; ; ) {
+                        Token op = operatorStack.pop();
+                        if (op == null) {
+                            throw error(string, token.getPosition(), "Unexpected end of input");
+                        } else if (op.getToken().equals("(")) {
+                            break;
+                        } else {
+                            output.push(new OperatorNode(op));
+                        }
+                    }
+                } else {
+                    output.push(new OperatorNode(token));
+                }
+            } else {
+                if (isOperator(token.getToken()) && !token.getToken().equals(ELSE)) {
+                    int prec = precedence(token.getToken());
+                    Token top = operatorStack.peek();
+                    while (top != null) {
+                        if (top.getToken().equals("(")) {
+                            break;
+                        }
+                        int exitingPrec = precedence(top.getToken());
+                        if (prec <= exitingPrec) {
+                            output.push(new OperatorNode(operatorStack.pop()));
+                        } else {
+                            break;
+                        }
+                        top = operatorStack.peek();
+                    }
+                    operatorStack.push(token);
+                } else {
+                    output.push(parseExpression(string, token, tokens));
+                }
+            }
+        }
+        handleLineEnd(string, operatorStack, output, blocks);
+        if(blocks.size() == 1) {
+            return blocks.get(0);
+        } else {
+            return new BlockNode(new Token("", 0), blocks);
+        }
+    }
+}

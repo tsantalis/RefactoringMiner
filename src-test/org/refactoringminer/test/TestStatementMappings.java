@@ -1,5 +1,6 @@
 package org.refactoringminer.test;
 
+import java.io.File;
 import java.io.FileReader;
 import java.util.*;
 
@@ -11,6 +12,7 @@ import git4idea.changes.GitChangeUtils;
 import git4idea.history.GitHistoryUtils;
 import git4idea.repo.GitRepository;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -252,6 +254,68 @@ public class TestStatementMappings extends LightJavaCodeInsightFixtureTestCase {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/javaparser-f4ce6ce924ffbd03518c64cea9b830d04f75b849.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testCopiedStatementMappings3() throws Exception {
+		GitRepository repository = gitService.cloneIfNotExists(getProject(),
+				REPOS + "/commons-lang",
+				"https://github.com/apache/commons-lang.git");
+
+		final List<String> actual = new ArrayList<>();
+		String commitId = "50c1fdecb4ed33ec1bb0d449f294c299d5369701";
+		List<Refactoring> refactoringsAtRevision;
+		List<? extends VcsCommitMetadata> childCommits = GitHistoryUtils.collectCommitsMetadata(repository.getProject(), repository.getRoot(), commitId);
+		Collection<Change> changes = null;
+		VcsCommitMetadata currentCommit = null;
+		if(childCommits != null) {
+			currentCommit = childCommits.get(0);
+			if (currentCommit.getParents().size() > 0) {
+				Hash parentCommitId = currentCommit.getParents().get(0);
+				changes = GitChangeUtils.getDiff(repository, parentCommitId.asString(), currentCommit.getId().asString(), true);
+			}
+			else {
+				changes = Collections.emptyList();
+			}
+		}
+		Set<String> filePathsBefore = new LinkedHashSet<String>();
+		Set<String> filePathsCurrent = new LinkedHashSet<String>();
+		Map<String, String> renamedFilesHint = new HashMap<String, String>();
+		gitService.fileTreeDiff(repository, changes, filePathsBefore, filePathsCurrent, renamedFilesHint);
+
+		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+
+		if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty() && currentCommit.getParents().size() > 0) {
+			Hash parentCommitId = currentCommit.getParents().get(0);
+			List<? extends VcsCommitMetadata> parentCommits = GitHistoryUtils.collectCommitsMetadata(repository.getProject(), repository.getRoot(), parentCommitId.asString());
+			VcsCommitMetadata parentCommit = null;
+			if(parentCommits != null) {
+				parentCommit = parentCommits.get(0);
+			}
+			GitHistoryRefactoringMinerImpl.populateFileContents(repository, changes, GitHistoryRefactoringMinerImpl.RevisionType.BEFORE, parentCommit, filePathsBefore, fileContentsBefore, repositoryDirectoriesBefore);
+			GitHistoryRefactoringMinerImpl.populateFileContents(repository, changes, GitHistoryRefactoringMinerImpl.RevisionType.AFTER, currentCommit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
+			List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = GitHistoryRefactoringMinerImpl.processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint);
+			UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, repositoryDirectoriesBefore);
+			UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
+
+			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+			refactoringsAtRevision = modelDiff.getRefactorings();
+			refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
+			List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+			for(UMLClassDiff classDiff : commonClassDiff) {
+				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+					if(mapper.getContainer1().getName().equals("createNumber") && mapper.getContainer2().getName().equals("createNumber")) {
+						mapperInfo(mapper, actual);
+						break;
+					}
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/commons-lang-50c1fdecb4ed33ec1bb0d449f294c299d5369701.txt"));
 		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
@@ -630,6 +694,128 @@ public class TestStatementMappings extends LightJavaCodeInsightFixtureTestCase {
 		});
 
 		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/miner-77ba11175b7d3a3297be5352a512e48e2526569d.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testDuplicatedExtractMethodStatementMappingsWithAddedMethodCall() throws Exception {
+		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+		GitRepository repo = gitService.cloneIfNotExists(getProject(),
+				".",
+				"https://github.com/tsantalis/RefactoringMiner.git");
+
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommit(repo, "6095e8477aeb633c5c647776cdeb22f7cdc5031b", new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+								parentMappers.add(bodyMapper.getParentMapper());
+							}
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+				}
+				for(UMLOperationBodyMapper parentMapper : parentMappers) {
+					mapperInfo(parentMapper, actual);
+				}
+			}
+		});
+
+		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/miner-6095e8477aeb633c5c647776cdeb22f7cdc5031b.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testRestructuredStatementMappings() throws Exception {
+		GitRepository repository = gitService.cloneIfNotExists(getProject(),
+				REPOS + "/flink",
+				"https://github.com/apache/flink.git");
+
+		final List<String> actual = new ArrayList<>();
+		String commitId = "536675b03a5050fda9c3e1fd403818cb50dcc6ff";
+		List<Refactoring> refactoringsAtRevision;
+		List<? extends VcsCommitMetadata> childCommits = GitHistoryUtils.collectCommitsMetadata(repository.getProject(), repository.getRoot(), commitId);
+		Collection<Change> changes = null;
+		VcsCommitMetadata currentCommit = null;
+		if(childCommits != null) {
+			currentCommit = childCommits.get(0);
+			if (currentCommit.getParents().size() > 0) {
+				Hash parentCommitId = currentCommit.getParents().get(0);
+				changes = GitChangeUtils.getDiff(repository, parentCommitId.asString(), currentCommit.getId().asString(), true);
+			}
+			else {
+				changes = Collections.emptyList();
+			}
+		}
+		Set<String> filePathsBefore = new LinkedHashSet<String>();
+		Set<String> filePathsCurrent = new LinkedHashSet<String>();
+		Map<String, String> renamedFilesHint = new HashMap<String, String>();
+		gitService.fileTreeDiff(repository, changes, filePathsBefore, filePathsCurrent, renamedFilesHint);
+
+		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+
+		if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty() && currentCommit.getParents().size() > 0) {
+			Hash parentCommitId = currentCommit.getParents().get(0);
+			List<? extends VcsCommitMetadata> parentCommits = GitHistoryUtils.collectCommitsMetadata(repository.getProject(), repository.getRoot(), parentCommitId.asString());
+			VcsCommitMetadata parentCommit = null;
+			if(parentCommits != null) {
+				parentCommit = parentCommits.get(0);
+			}
+			GitHistoryRefactoringMinerImpl.populateFileContents(repository, changes, GitHistoryRefactoringMinerImpl.RevisionType.BEFORE, parentCommit, filePathsBefore, fileContentsBefore, repositoryDirectoriesBefore);
+			GitHistoryRefactoringMinerImpl.populateFileContents(repository, changes, GitHistoryRefactoringMinerImpl.RevisionType.AFTER, currentCommit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
+			List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = GitHistoryRefactoringMinerImpl.processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint);
+			UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, repositoryDirectoriesBefore);
+			UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
+
+			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+			refactoringsAtRevision = modelDiff.getRefactorings();
+			refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
+			List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+			for(UMLClassDiff classDiff : commonClassDiff) {
+				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+					if(mapper.getContainer1().getName().equals("getUnguardedFileSystem") && mapper.getContainer2().getName().equals("getUnguardedFileSystem")) {
+						mapperInfo(mapper, actual);
+						break;
+					}
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/flink-536675b03a5050fda9c3e1fd403818cb50dcc6ff.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testRestructuredStatementMappings2() throws Exception {
+		final List<String> actual = new ArrayList<>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		String contentsV1 = FileUtils.readFileToString(new File(System.getProperty("user.dir") + "/src-test/Data/PredicateParser-v1.txt"));
+		String contentsV2 = FileUtils.readFileToString(new File(System.getProperty("user.dir") + "/src-test/Data/PredicateParser-v2.txt"));
+		fileContentsBefore.put("core/src/main/java/io/undertow/predicate/PredicateParser.java", contentsV1);
+		fileContentsCurrent.put("core/src/main/java/io/undertow/predicate/PredicateParser.java", contentsV2);
+		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
+		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
+
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("parse") && mapper.getContainer2().getName().equals("parse")) {
+					mapperInfo(mapper, actual);
+					break;
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/undertow-d5b2bb8cd1393f1c5a5bb623e3d8906cd57e53c4.txt"));
 		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

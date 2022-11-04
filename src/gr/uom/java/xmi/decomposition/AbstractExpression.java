@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiLocalVariable;
 import gr.uom.java.xmi.Formatter;
 
 import gr.uom.java.xmi.LocationInfo;
@@ -61,7 +62,18 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.arguments = visitor.getArguments();
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
-    	this.expression = Formatter.format(expression);
+		if(expression instanceof PsiLocalVariable) {
+			String tmp = Formatter.format(expression);
+			if(tmp.endsWith(";\n")) {
+				this.expression = tmp.substring(0, tmp.length()-2);
+			}
+			else {
+				this.expression = tmp;
+			}
+		}
+		else {
+			this.expression = Formatter.format(expression);
+		}
     	this.owner = null;
     	this.lambdaOwner = null;
     }

@@ -121,13 +121,19 @@ public class OperationBody {
 			if(initializers instanceof PsiDeclarationStatement) {
 				PsiDeclarationStatement declarationStatement = (PsiDeclarationStatement) initializers;
 				for (PsiElement initializer : declarationStatement.getDeclaredElements()) {
-					AbstractExpression abstractExpression = new AbstractExpression(cu, filePath, initializer, CodeElementType.FOR_STATEMENT_INITIALIZER, container);
-					child.addExpression(abstractExpression);
 					if(initializer instanceof PsiLocalVariable) {
-						VariableDeclaration vd = new VariableDeclaration(cu, filePath, (PsiLocalVariable) initializer, container);
+						PsiLocalVariable localVariable = (PsiLocalVariable) initializer;
+						AbstractExpression abstractExpression = new AbstractExpression(cu, filePath, initializer, CodeElementType.FOR_STATEMENT_INITIALIZER, container);
+						child.addExpression(abstractExpression);
+						VariableDeclaration vd = new VariableDeclaration(cu, filePath, localVariable, container);
 						child.addVariableDeclaration(vd);
 					}
 				}
+			}
+			else if(initializers instanceof PsiExpressionStatement) {
+				PsiExpressionStatement expressionStatement = (PsiExpressionStatement) initializers;
+				AbstractExpression abstractExpression = new AbstractExpression(cu, filePath, expressionStatement.getExpression(), CodeElementType.FOR_STATEMENT_INITIALIZER, container);
+				child.addExpression(abstractExpression);
 			}
 			PsiExpression expression = forStatement.getCondition();
 			if(expression != null) {

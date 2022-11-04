@@ -90,6 +90,33 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 					return Integer.valueOf(depthDiff1).compareTo(Integer.valueOf(depthDiff2));
 				}
 				else {
+					if(this.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
+							this.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
+							o.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
+							o.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+						List<VariableDeclaration> thisVariableDeclarations1 = this.getFragment1().getVariableDeclarations();
+						List<VariableDeclaration> thisVariableDeclarations2 = this.getFragment2().getVariableDeclarations();
+						boolean equalType1 = false;
+						if(thisVariableDeclarations1.size() == 1 && thisVariableDeclarations2.size() == 1 &&
+								thisVariableDeclarations1.get(0).getType() != null && thisVariableDeclarations2.get(0).getType() != null &&
+								thisVariableDeclarations1.get(0).getType().equals(thisVariableDeclarations2.get(0).getType())) {
+							equalType1 = true;
+						}
+						List<VariableDeclaration> otherVariableDeclarations1 = o.getFragment1().getVariableDeclarations();
+						List<VariableDeclaration> otherVariableDeclarations2 = o.getFragment2().getVariableDeclarations();
+						boolean equalType2 = false;
+						if(otherVariableDeclarations1.size() == 1 && otherVariableDeclarations2.size() == 1 &&
+								otherVariableDeclarations1.get(0).getType() != null && otherVariableDeclarations2.get(0).getType() != null &&
+								otherVariableDeclarations1.get(0).getType().equals(otherVariableDeclarations2.get(0).getType())) {
+							equalType2 = true;
+						}
+						if(equalType1 && !equalType2) {
+							return -1;
+						}
+						if(!equalType1 && equalType2) {
+							return 1;
+						}
+					}
 					int indexDiff1 = Math.abs(this.getFragment1().getIndex() - this.getFragment2().getIndex());
 					int indexDiff2 = Math.abs(o.getFragment1().getIndex() - o.getFragment2().getIndex());
 					if(indexDiff1 != indexDiff2) {

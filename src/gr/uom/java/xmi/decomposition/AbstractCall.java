@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -348,7 +349,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return getExpression() != null && call.getExpression() != null &&
 				identicalExpression(call, replacements, parameterToArgumentMap) &&
 				!identicalName(call) &&
-				(equalArguments(call) || reorderedArguments(call) || (allArgumentsReplaced && normalizedNameDistance(call) <= distance) || (identicalOrReplacedArguments && !allArgumentsReplaced));
+				(equalArguments(call) || reorderedArguments(call) || (allArgumentsReplaced && compatibleName(call, distance)) || (identicalOrReplacedArguments && !allArgumentsReplaced));
 	}
 
 	public boolean variableDeclarationInitializersRenamedWithIdenticalArguments(AbstractCall call) {
@@ -374,7 +375,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		}
 		return getExpression() == null && call.getExpression() == null &&
 				!identicalName(call) &&
-				(normalizedNameDistance(call) <= distance || allExactLambdaMappers) &&
+				(compatibleName(call, distance) || allExactLambdaMappers) &&
 				(equalArguments(call) || reorderedArguments(call));
 	}
 
@@ -391,6 +392,26 @@ public abstract class AbstractCall implements LocationInfoProvider {
 				(normalizedNameDistance(call) <= distance || allExactLambdaMappers || (this.methodNameContainsArgumentName() && call.methodNameContainsArgumentName()) || argumentIntersectionContainsClassInstanceCreation(call)) &&
 				!equalArguments(call) &&
 				!this.argumentContainsAnonymousClassDeclaration() && !call.argumentContainsAnonymousClassDeclaration();
+	}
+
+	private boolean compatibleName(AbstractCall call, double distance) {
+		if(normalizedNameDistance(call) <= distance) {
+			return true;
+		}
+		String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(this.getName());
+		String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(call.getName());
+		int commonTokens = 0;
+		for(String token1 : tokens1) {
+			for(String token2 : tokens2) {
+				if(token1.equals(token2)) {
+					commonTokens++;
+				}
+			}
+		}
+		if(commonTokens == Math.min(tokens1.length, tokens2.length)) {
+			return true;
+		}
+		return false;
 	}
 
 	private boolean argumentIntersectionContainsClassInstanceCreation(AbstractCall call) {

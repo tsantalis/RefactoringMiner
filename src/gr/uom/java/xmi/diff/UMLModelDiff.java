@@ -3404,7 +3404,7 @@ public class UMLModelDiff {
 		if(exactLeafMappings == 0 && normalizedEditDistance > 0.24) {
 			return false;
 		}
-		if(exactLeafMappings == 1 && normalizedEditDistance > 0.5 && (mapper.nonMappedElementsT1() > 0 || mapper.nonMappedElementsT2() > 0)) {
+		if(exactLeafMappings == 1 && normalizedEditDistance > 0.51 && (mapper.nonMappedElementsT1() > 0 || mapper.nonMappedElementsT2() > 0)) {
 			return false;
 		}
 		if(mapper.mappingsWithoutBlocks() == 1) {

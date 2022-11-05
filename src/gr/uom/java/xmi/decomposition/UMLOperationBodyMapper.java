@@ -7340,6 +7340,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
 						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
 						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
+						!logGuard(comp1) &&
 						!parentMapperContainsExactMapping(comp1)) {
 					return 0.1;
 				}
@@ -7351,6 +7352,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return 0;
 		else
 			return (double)mappedChildrenSize/(double)max;
+	}
+
+	private boolean logGuard(CompositeStatementObject comp) {
+		if(comp.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+			for(AbstractExpression expression : comp.getExpressions()) {
+				Map<String, List<AbstractCall>> methodInvocationMap = expression.getMethodInvocationMap();
+				for(String key : methodInvocationMap.keySet()) {
+					List<AbstractCall> calls = methodInvocationMap.get(key);
+					for(AbstractCall call : calls) {
+						String callExpression = call.getExpression();
+						if(callExpression != null) {
+							if(callExpression.equals("log") || callExpression.equals("LOG") || callExpression.equals("logger") || callExpression.equals("LOGGER")) {
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean parentMapperContainsExactMapping(AbstractStatement statement) {

@@ -948,12 +948,13 @@ public class StringBasedHeuristics {
 			else if((invocation2 = statement2.assignmentInvocationCoveringEntireStatement()) != null) {
 				arguments2 = invocation2.getArguments();
 			}
-			if(arguments1 != null && arguments2 != null && arguments1.size() == arguments2.size()) {
+			if(arguments1 != null && arguments2 != null) {
 				Set<Replacement> concatReplacements = new LinkedHashSet<>();
 				int equalArguments = 0;
 				int concatenatedArguments = 0;
 				int replacedArguments = 0;
-				for(int i=0; i<arguments1.size(); i++) {
+				int minSize = Math.min(arguments1.size(), arguments2.size());
+				for(int i=0; i<minSize; i++) {
 					String arg1 = arguments1.get(i);
 					String arg2 = arguments2.get(i);
 					if(arg1.equals(arg2)) {
@@ -975,7 +976,12 @@ public class StringBasedHeuristics {
 							}
 						}
 						sb.append("\"");
-						if(sb.toString().equals(arg1)) {
+						String concatenatedString = sb.toString();
+						if(concatenatedString.equals(arg1)) {
+							concatReplacements.add(new Replacement(arg1, arg2, ReplacementType.CONCATENATION));
+							concatenatedArguments++;
+						}
+						else if(StringDistance.editDistance(concatenatedString, arg1) < tokens2.size()) {
 							concatReplacements.add(new Replacement(arg1, arg2, ReplacementType.CONCATENATION));
 							concatenatedArguments++;
 						}
@@ -996,7 +1002,12 @@ public class StringBasedHeuristics {
 							}
 						}
 						sb.append("\"");
-						if(sb.toString().equals(arg2)) {
+						String concatenatedString = sb.toString();
+						if(concatenatedString.equals(arg2)) {
+							concatReplacements.add(new Replacement(arg1, arg2, ReplacementType.CONCATENATION));
+							concatenatedArguments++;
+						}
+						else if(StringDistance.editDistance(concatenatedString, arg2) < tokens1.size()) {
 							concatReplacements.add(new Replacement(arg1, arg2, ReplacementType.CONCATENATION));
 							concatenatedArguments++;
 						}
@@ -1010,7 +1021,7 @@ public class StringBasedHeuristics {
 						}
 					}
 				}
-				if(equalArguments + replacedArguments + concatenatedArguments == arguments1.size() && concatenatedArguments > 0) {
+				if(equalArguments + replacedArguments + concatenatedArguments == minSize && concatenatedArguments > 0) {
 					info.getReplacements().addAll(concatReplacements);
 					return true;
 				}

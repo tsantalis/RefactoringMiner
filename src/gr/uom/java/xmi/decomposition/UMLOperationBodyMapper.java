@@ -2244,22 +2244,42 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Map<String, String> parameterToArgumentMap, boolean containsCallToExtractedMethod) throws RefactoringMinerTimedOutException {
 		List<CompositeStatementObject> blocks1 = new ArrayList<>();
 		List<CompositeStatementObject> nonBlocks1 = new ArrayList<>();
+		Map<String, List<CompositeStatementObject>> map1 = new LinkedHashMap<>();
 		for(CompositeStatementObject innerNode : innerNodes1) {
 			if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 				blocks1.add(innerNode);
 			}
 			else {
 				nonBlocks1.add(innerNode);
+				String key = innerNode.getString();
+				if(map1.containsKey(key)) {
+					map1.get(key).add(innerNode);
+				}
+				else {
+					List<CompositeStatementObject> list = new ArrayList<>();
+					list.add(innerNode);
+					map1.put(key, list);
+				}
 			}
 		}
 		List<CompositeStatementObject> blocks2 = new ArrayList<>();
 		List<CompositeStatementObject> nonBlocks2 = new ArrayList<>();
+		Map<String, List<CompositeStatementObject>> map2 = new LinkedHashMap<>();
 		for(CompositeStatementObject innerNode : innerNodes2) {
 			if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 				blocks2.add(innerNode);
 			}
 			else {
 				nonBlocks2.add(innerNode);
+				String key = innerNode.getString();
+				if(map2.containsKey(key)) {
+					map2.get(key).add(innerNode);
+				}
+				else {
+					List<CompositeStatementObject> list = new ArrayList<>();
+					list.add(innerNode);
+					map2.put(key, list);
+				}
 			}
 		}
 		List<UMLOperation> removedOperations = classDiff != null ? classDiff.getRemovedOperations() : new ArrayList<UMLOperation>();
@@ -2267,7 +2287,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		int tryWithResources1 = tryWithResourcesCount(innerNodes1);
 		int tryWithResources2 = tryWithResourcesCount(innerNodes2);
 		boolean tryWithResourceMigration = (tryWithResources1 == 0 && tryWithResources2 > 0) || (tryWithResources1 > 0 && tryWithResources2 == 0);
-		processInnerNodes(nonBlocks1, nonBlocks2, leaves1, leaves2, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration, containsCallToExtractedMethod);
+		processInnerNodes(nonBlocks1, nonBlocks2, leaves1, leaves2, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration, containsCallToExtractedMethod, map1, map2);
 		for(AbstractCodeMapping mapping : new LinkedHashSet<>(mappings)) {
 			if(innerNodes1.contains(mapping.getFragment1()) && innerNodes2.contains(mapping.getFragment2())) {
 				CompositeStatementObject comp1 = (CompositeStatementObject) mapping.getFragment1();
@@ -2314,16 +2334,47 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration, containsCallToExtractedMethod);
+		processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration, containsCallToExtractedMethod, map1, map2);
 	}
 
 	private void processInnerNodes(List<CompositeStatementObject> innerNodes1, List<CompositeStatementObject> innerNodes2, List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2,
-			Map<String, String> parameterToArgumentMap, List<UMLOperation> removedOperations, List<UMLOperation> addedOperations, boolean tryWithResourceMigration, boolean containsCallToExtractedMethod) throws RefactoringMinerTimedOutException {
+			Map<String, String> parameterToArgumentMap, List<UMLOperation> removedOperations, List<UMLOperation> addedOperations, boolean tryWithResourceMigration, boolean containsCallToExtractedMethod,
+			Map<String, List<CompositeStatementObject>> map1, Map<String, List<CompositeStatementObject>> map2) throws RefactoringMinerTimedOutException {
 		if(innerNodes1.size() <= innerNodes2.size()) {
 			//exact string matching - inner nodes - finds moves to another level
+			Set<CompositeStatementObject> innerNodes1ToBeRemoved = new LinkedHashSet<>();
 			for(ListIterator<CompositeStatementObject> innerNodeIterator1 = innerNodes1.listIterator(); innerNodeIterator1.hasNext();) {
 				CompositeStatementObject statement1 = innerNodeIterator1.next();
 				if(!alreadyMatched1(statement1)) {
+					List<CompositeStatementObject> matchingInnerNodes1 = map1.get(statement1.getString());
+					if(matchingInnerNodes1 == null) {
+						matchingInnerNodes1 = Collections.emptyList();
+					}
+					Set<AbstractCodeFragment> parents1 = new HashSet<>();
+					for(CompositeStatementObject l1 : matchingInnerNodes1) {
+						parents1.add(l1.getParent());
+					}
+					List<CompositeStatementObject> matchingInnerNodes2 = map2.get(statement1.getString());
+					if(matchingInnerNodes2 == null) {
+						matchingInnerNodes2 = Collections.emptyList();
+					}
+					Set<AbstractCodeFragment> parents2 = new HashSet<>();
+					for(CompositeStatementObject l2 : matchingInnerNodes2) {
+						parents2.add(l2.getParent());
+					}
+					boolean allMatchingInnerNodes1InMethodScope = parents1.size() == 1 && parents1.iterator().next() != null && parents1.iterator().next().getParent() == null;
+					boolean allMatchingInnerNodes2InMethodScope = parents2.size() == 1 && parents2.iterator().next() != null && parents2.iterator().next().getParent() == null;
+					if(matchingInnerNodes1.size() > matchingInnerNodes2.size() && matchingInnerNodes2.size() > 0 && !allMatchingInnerNodes1InMethodScope && !allMatchingInnerNodes2InMethodScope) {
+						int numberOfMappings = mappings.size();
+						processInnerNodes(matchingInnerNodes1, matchingInnerNodes2, leaves1, leaves2, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration, containsCallToExtractedMethod, map1, map2);
+						List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
+						for(int i = numberOfMappings; i < mappings.size(); i++) {
+							AbstractCodeMapping mapping = mappings.get(i);
+							innerNodes2.remove(mapping.getFragment2());
+							innerNodes1ToBeRemoved.add((CompositeStatementObject)mapping.getFragment1());
+						}
+						continue;
+					}
 					TreeSet<CompositeStatementObjectMapping> mappingSet = new TreeSet<CompositeStatementObjectMapping>();
 					for(ListIterator<CompositeStatementObject> innerNodeIterator2 = innerNodes2.listIterator(); innerNodeIterator2.hasNext();) {
 						CompositeStatementObject statement2 = innerNodeIterator2.next();
@@ -2345,6 +2396,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			innerNodes1.removeAll(innerNodes1ToBeRemoved);
 			
 			// exact matching - inner nodes - with variable renames
 			for(ListIterator<CompositeStatementObject> innerNodeIterator1 = innerNodes1.listIterator(); innerNodeIterator1.hasNext();) {
@@ -2434,31 +2486,36 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		else {
 			//exact string matching - inner nodes - finds moves to another level
+			Set<CompositeStatementObject> innerNodes2ToBeRemoved = new LinkedHashSet<>();
 			for(ListIterator<CompositeStatementObject> innerNodeIterator2 = innerNodes2.listIterator(); innerNodeIterator2.hasNext();) {
 				CompositeStatementObject statement2 = innerNodeIterator2.next();
 				if(!alreadyMatched2(statement2)) {
-					List<CompositeStatementObject> matchingInnerNodes1 = new ArrayList<>();
-					Set<AbstractCodeFragment> parents1 = new HashSet<>();
-					for(CompositeStatementObject l1 : innerNodes1) {
-						if(l1.getString().equals(statement2.getString())) {
-							matchingInnerNodes1.add(l1);
-							parents1.add(l1.getParent());
-						}
+					List<CompositeStatementObject> matchingInnerNodes1 = map1.get(statement2.getString());
+					if(matchingInnerNodes1 == null) {
+						matchingInnerNodes1 = Collections.emptyList();
 					}
-					List<CompositeStatementObject> matchingInnerNodes2 = new ArrayList<>();
+					Set<AbstractCodeFragment> parents1 = new HashSet<>();
+					for(CompositeStatementObject l1 : matchingInnerNodes1) {
+						parents1.add(l1.getParent());
+					}
+					List<CompositeStatementObject> matchingInnerNodes2 = map2.get(statement2.getString());
+					if(matchingInnerNodes2 == null) {
+						matchingInnerNodes2 = Collections.emptyList();
+					}
 					Set<AbstractCodeFragment> parents2 = new HashSet<>();
-					for(CompositeStatementObject l2 : innerNodes2) {
-						if(l2.getString().equals(statement2.getString())) {
-							matchingInnerNodes2.add(l2);
-							parents2.add(l2.getParent());
-						}
+					for(CompositeStatementObject l2 : matchingInnerNodes2) {
+						parents2.add(l2.getParent());
 					}
 					boolean allMatchingInnerNodes1InMethodScope = parents1.size() == 1 && parents1.iterator().next() != null && parents1.iterator().next().getParent() == null;
 					boolean allMatchingInnerNodes2InMethodScope = parents2.size() == 1 && parents2.iterator().next() != null && parents2.iterator().next().getParent() == null;
 					if(matchingInnerNodes2.size() > matchingInnerNodes1.size() && matchingInnerNodes1.size() > 0 && !allMatchingInnerNodes1InMethodScope && !allMatchingInnerNodes2InMethodScope) {
-						processInnerNodes(matchingInnerNodes1, matchingInnerNodes2, leaves1, leaves2, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration, containsCallToExtractedMethod);
-						for(AbstractCodeMapping mapping : this.mappings) {
+						int numberOfMappings = mappings.size();
+						processInnerNodes(matchingInnerNodes1, matchingInnerNodes2, leaves1, leaves2, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration, containsCallToExtractedMethod, map1, map2);
+						List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
+						for(int i = numberOfMappings; i < mappings.size(); i++) {
+							AbstractCodeMapping mapping = mappings.get(i);
 							innerNodes1.remove(mapping.getFragment1());
+							innerNodes2ToBeRemoved.add((CompositeStatementObject)mapping.getFragment2());
 						}
 						continue;
 					}
@@ -2483,6 +2540,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			innerNodes2.removeAll(innerNodes2ToBeRemoved);
 			
 			// exact matching - inner nodes - with variable renames
 			for(ListIterator<CompositeStatementObject> innerNodeIterator2 = innerNodes2.listIterator(); innerNodeIterator2.hasNext();) {

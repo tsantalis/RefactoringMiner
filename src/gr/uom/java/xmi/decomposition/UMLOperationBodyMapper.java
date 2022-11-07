@@ -7260,10 +7260,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			int leaveSize1 = leaves1.size();
 			int leaveSize2 = leaves2.size();
 			int mappedLeavesSize = 0;
+			boolean blocksWithMappedTryContainer =
+					(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) || comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) &&
+					(comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) || comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) &&
+					containsMapping(comp1.getTryContainer().get(), comp2.getTryContainer().get());
 			for(AbstractCodeMapping mapping : mappings) {
 				if(leaves1.contains(mapping.getFragment1()) && leaves2.contains(mapping.getFragment2())) {
 					boolean mappingUnderNestedTryCatch = false;
-					if(nestedTryCatch1.isEmpty() && !nestedTryCatch2.isEmpty()) {
+					if(nestedTryCatch1.isEmpty() && !nestedTryCatch2.isEmpty() && !blocksWithMappedTryContainer) {
 						for(CompositeStatementObject statement : nestedTryCatch2) {
 							List<AbstractStatement> directlyNestedStatements = statement.getStatements();
 							if(directlyNestedStatements.contains(mapping.getFragment2())) {
@@ -7277,7 +7281,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 					}
-					else if(!nestedTryCatch1.isEmpty() && nestedTryCatch2.isEmpty()) {
+					else if(!nestedTryCatch1.isEmpty() && nestedTryCatch2.isEmpty() && !blocksWithMappedTryContainer) {
 						for(CompositeStatementObject statement : nestedTryCatch1) {
 							List<AbstractStatement> directlyNestedStatements = statement.getStatements();
 							if(directlyNestedStatements.contains(mapping.getFragment1())) {

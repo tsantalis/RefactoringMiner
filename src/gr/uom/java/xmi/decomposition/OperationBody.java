@@ -282,6 +282,7 @@ public class OperationBody {
 				CompositeStatementObject catchClauseStatementObject = new CompositeStatementObject(cu, filePath, catchClause, parent.getDepth()+1, CodeElementType.CATCH_CLAUSE);
 				child.addCatchClause(catchClauseStatementObject);
 				parent.addStatement(catchClauseStatementObject);
+				catchClauseStatementObject.setTryContainer(child);
 				SingleVariableDeclaration variableDeclaration = catchClause.getException();
 				VariableDeclaration vd = new VariableDeclaration(cu, filePath, variableDeclaration, container);
 				catchClauseStatementObject.addVariableDeclaration(vd);
@@ -305,6 +306,7 @@ public class OperationBody {
 				CompositeStatementObject finallyClauseStatementObject = new CompositeStatementObject(cu, filePath, finallyBlock, parent.getDepth()+1, CodeElementType.FINALLY_BLOCK);
 				child.setFinallyClause(finallyClauseStatementObject);
 				parent.addStatement(finallyClauseStatementObject);
+				finallyClauseStatementObject.setTryContainer(child);
 				addStatementInVariableScopes(finallyClauseStatementObject);
 				List<Statement> blockStatements = finallyBlock.statements();
 				for(Statement blockStatement : blockStatements) {

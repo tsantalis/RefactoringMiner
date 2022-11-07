@@ -6300,78 +6300,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(String s : subConditions2) {
 					subConditionsAsList2.add(s.trim());
 				}
-				Set<String> intersection = new LinkedHashSet<String>();
-				for(String c1 : subConditionsAsList1) {
-					for(String c2 : subConditionsAsList2) {
-						if(c1.equals(c2)) {
-							intersection.add(c1);
-							break;
-						}
-						else if(c1.equals("(" + c2)) {
-							intersection.add(c2);
-							break;
-						}
-						else if(c1.equals(c2 + ")")) {
-							intersection.add(c2);
-							break;
-						}
-						else if(c1.equals("!" + c2)) {
-							intersection.add(c2);
-							break;
-						}
-						else if(c2.equals("(" + c1)) {
-							intersection.add(c1);
-							break;
-						}
-						else if(c2.equals(c1 + ")")) {
-							intersection.add(c1);
-							break;
-						}
-						else if(c2.equals("!" + c1)) {
-							intersection.add(c1);
-							break;
-						}
-					}
-				}
-				int matches = 0;
-				if(!intersection.isEmpty()) {
-					for(String element : intersection) {
-						boolean replacementFound = false;
-						for(Replacement r : info.getReplacements()) {
-							if(element.equals(r.getAfter()) || element.equals("(" + r.getAfter()) || element.equals(r.getAfter() + ")")) {
-								replacementFound = true;
-								break;
-							}
-							if(element.equals("!" + r.getAfter())) {
-								replacementFound = true;
-								break;
-							}
-							if(r.getType().equals(ReplacementType.INFIX_OPERATOR) && element.contains(r.getAfter())) {
-								replacementFound = true;
-								break;
-							}
-							if(r.getType().equals(ReplacementType.INFIX_EXPRESSION) && element.contains(r.getAfter())) {
-								replacementFound = true;
-								break;
-							}
-							if(ReplacementUtil.contains(element, r.getAfter()) && element.startsWith(r.getAfter()) &&
-									(element.endsWith(" != null") || element.endsWith(" == null") || element.endsWith(" != 0") || element.endsWith(" == 0"))) {
-								replacementFound = true;
-								break;
-							}
-						}
-						if(!replacementFound) {
-							matches++;
-						}
-					}
-				}
-				boolean pass = false;
-				if(matches == 1 && intersection.size() == 1 && intersection.iterator().next().endsWith("null")) {
-					pass = matches == Math.min(subConditionsAsList1.size(), subConditionsAsList2.size());
-				}
-				else {
-					pass = matches > 0;
-				}
+				Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2);
+				int matches = matchCount(intersection, info);
+				boolean pass = pass(subConditionsAsList1, subConditionsAsList2, intersection, matches);
+				int invertedConditionals = 0;
 				if(pass) {
 					IntersectionReplacement r = new IntersectionReplacement(s1, s2, intersection, ReplacementType.CONDITIONAL);
 					info.addReplacement(r);
@@ -6402,14 +6334,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								for(String s : subConditions) {
 									subConditionsAsList.add(s.trim());
 								}
-								Set<String> intersection2 = new LinkedHashSet<String>(subConditionsAsList);
-								intersection2.retainAll(subConditionsAsList1);
-								if(!intersection2.isEmpty() && !intersection.containsAll(intersection2)) {
+								Set<String> intersection2 = subConditionIntersection(subConditionsAsList1, subConditionsAsList);
+								int matches2 = matchCount(intersection2, info);
+								boolean pass2 = pass(subConditionsAsList1, subConditionsAsList, intersection2, matches2);
+								if(pass2 && !intersection.containsAll(intersection2)) {
 									Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
 									additionallyMatchedStatements2.add(ifNode2);
 									CompositeReplacement composite = new CompositeReplacement(statement1.getString(), ifNode2.getString(), new LinkedHashSet<>(), additionallyMatchedStatements2);
 									info.addReplacement(composite);
 									splitConditional = true;
+									for(String subCondition1 : subConditionsAsList1) {
+										for(String subCondition2 : subConditionsAsList) {
+											if(subCondition1.equals("!" + subCondition2)) {
+												Replacement r2 = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
+												info.addReplacement(r2);
+												invertedConditionals++;
+												break;
+											}
+											if(subCondition2.equals("!" + subCondition1)) {
+												Replacement r2 = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
+												info.addReplacement(r2);
+												invertedConditionals++;
+												break;
+											}
+										}
+									}
 								}
 								else if(statement1 instanceof CompositeStatementObject) {
 									CompositeStatementObject composite1 = (CompositeStatementObject)statement1;
@@ -6461,7 +6410,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
-				int invertedConditionals = 0;
 				for(String subCondition1 : subConditionsAsList1) {
 					for(String subCondition2 : subConditionsAsList2) {
 						if(subCondition1.equals("!" + subCondition2)) {
@@ -6526,6 +6474,91 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return false;
+	}
+
+	private static boolean pass(List<String> subConditionsAsList1, List<String> subConditionsAsList2, Set<String> intersection,
+			int matches) {
+		boolean pass = false;
+		if(matches == 1 && intersection.size() == 1 && intersection.iterator().next().endsWith("null")) {
+			pass = matches == Math.min(subConditionsAsList1.size(), subConditionsAsList2.size());
+		}
+		else {
+			pass = matches > 0;
+		}
+		return pass;
+	}
+
+	private static int matchCount(Set<String> intersection, ReplacementInfo info) {
+		int matches = 0;
+		if(!intersection.isEmpty()) {
+			for(String element : intersection) {
+				boolean replacementFound = false;
+				for(Replacement r : info.getReplacements()) {
+					if(element.equals(r.getAfter()) || element.equals("(" + r.getAfter()) || element.equals(r.getAfter() + ")")) {
+						replacementFound = true;
+						break;
+					}
+					if(element.equals("!" + r.getAfter())) {
+						replacementFound = true;
+						break;
+					}
+					if(r.getType().equals(ReplacementType.INFIX_OPERATOR) && element.contains(r.getAfter())) {
+						replacementFound = true;
+						break;
+					}
+					if(r.getType().equals(ReplacementType.INFIX_EXPRESSION) && element.contains(r.getAfter())) {
+						replacementFound = true;
+						break;
+					}
+					if(ReplacementUtil.contains(element, r.getAfter()) && element.startsWith(r.getAfter()) &&
+							(element.endsWith(" != null") || element.endsWith(" == null") || element.endsWith(" != 0") || element.endsWith(" == 0"))) {
+						replacementFound = true;
+						break;
+					}
+				}
+				if(!replacementFound) {
+					matches++;
+				}
+			}
+		}
+		return matches;
+	}
+
+	private static Set<String> subConditionIntersection(List<String> subConditionsAsList1, List<String> subConditionsAsList2) {
+		Set<String> intersection = new LinkedHashSet<String>();
+		for(String c1 : subConditionsAsList1) {
+			for(String c2 : subConditionsAsList2) {
+				if(c1.equals(c2)) {
+					intersection.add(c1);
+					break;
+				}
+				else if(c1.equals("(" + c2)) {
+					intersection.add(c2);
+					break;
+				}
+				else if(c1.equals(c2 + ")")) {
+					intersection.add(c2);
+					break;
+				}
+				else if(c1.equals("!" + c2)) {
+					intersection.add(c2);
+					break;
+				}
+				else if(c2.equals("(" + c1)) {
+					intersection.add(c1);
+					break;
+				}
+				else if(c2.equals(c1 + ")")) {
+					intersection.add(c1);
+					break;
+				}
+				else if(c2.equals("!" + c1)) {
+					intersection.add(c1);
+					break;
+				}
+			}
+		}
+		return intersection;
 	}
 
 	private static boolean containsIdenticalIfNode(List<CompositeStatementObject> ifNodes1, CompositeStatementObject ifNode2) {

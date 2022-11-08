@@ -961,10 +961,14 @@ public class StringBasedHeuristics {
 						equalArguments++;
 					}
 					else if(!arg1.contains("+") && arg2.contains("+") && !arg2.contains("++")) {
+						boolean tokenMatchesArgument = false;
 						Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(arg2)));
 						StringBuilder sb = new StringBuilder();
 						sb.append("\"");
 						for(String token : tokens2) {
+							if(arguments1.contains(token) && arguments1.size() == arguments2.size()) {
+								tokenMatchesArgument = true;
+							}
 							if(token.startsWith("\"") && token.endsWith("\"") && token.length() > 1) {
 								sb.append(token.substring(1, token.length()-1));
 							}
@@ -985,12 +989,19 @@ public class StringBasedHeuristics {
 							concatReplacements.add(new Replacement(arg1, arg2, ReplacementType.CONCATENATION));
 							concatenatedArguments++;
 						}
+						if(tokenMatchesArgument) {
+							concatenatedArguments++;
+						}
 					}
 					else if(!arg2.contains("+") && arg1.contains("+") && !arg1.contains("++")) {
+						boolean tokenMatchesArgument = false;
 						Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(arg1)));
 						StringBuilder sb = new StringBuilder();
 						sb.append("\"");
 						for(String token : tokens1) {
+							if(arguments2.contains(token) && arguments1.size() == arguments2.size()) {
+								tokenMatchesArgument = true;
+							}
 							if(token.startsWith("\"") && token.endsWith("\"") && token.length() > 1) {
 								sb.append(token.substring(1, token.length()-1));
 							}
@@ -1009,6 +1020,9 @@ public class StringBasedHeuristics {
 						}
 						else if(StringDistance.editDistance(concatenatedString, arg2) < tokens1.size()) {
 							concatReplacements.add(new Replacement(arg1, arg2, ReplacementType.CONCATENATION));
+							concatenatedArguments++;
+						}
+						if(tokenMatchesArgument) {
 							concatenatedArguments++;
 						}
 					}

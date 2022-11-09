@@ -1018,11 +1018,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						break;
 					}
 				}
-				boolean nextMapperMatchesConsistentRename = matchesConsistentMethodInvocationRename(mapper, consistentMethodInvocationRenames.keySet());
-				boolean bestMapperMismatchesConsistentRename = mismatchesConsistentMethodInvocationRename(bestMapper, consistentMethodInvocationRenames.keySet());
-				if(bestMapperMismatchesConsistentRename && nextMapperMatchesConsistentRename) {
-					return mapper;
-				}
 				if(anotherMapperCallsOperation2OfTheBestMapper || anotherMapperCallsOperation1OfTheBestMapper) {
 					return mapper;
 				}
@@ -1195,15 +1190,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						mapping.getFragment2().getString().equals(stringRepresentation)) {
 					return true;
 				}
-			}
-		}
-		return false;
-	}
-
-	private boolean matchesConsistentMethodInvocationRename(UMLOperationBodyMapper mapper, Set<MethodInvocationReplacement> consistentMethodInvocationRenames) {
-		for(MethodInvocationReplacement rename : consistentMethodInvocationRenames) {
-			if(mapper.getContainer1().getName().equals(rename.getBefore()) && mapper.getContainer2().getName().equals(rename.getAfter())) {
-				return true;
 			}
 		}
 		return false;

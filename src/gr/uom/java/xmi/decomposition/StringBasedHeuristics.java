@@ -966,7 +966,7 @@ public class StringBasedHeuristics {
 						StringBuilder sb = new StringBuilder();
 						sb.append("\"");
 						for(String token : tokens2) {
-							if(arguments1.contains(token) && arguments1.size() == arguments2.size()) {
+							if(arguments1.contains(token) && arguments1.size() == arguments2.size() && tokens2.size() <= 2) {
 								tokenMatchesArgument = true;
 							}
 							if(token.startsWith("\"") && token.endsWith("\"") && token.length() > 1) {
@@ -999,7 +999,7 @@ public class StringBasedHeuristics {
 						StringBuilder sb = new StringBuilder();
 						sb.append("\"");
 						for(String token : tokens1) {
-							if(arguments2.contains(token) && arguments1.size() == arguments2.size()) {
+							if(arguments2.contains(token) && arguments1.size() == arguments2.size() && tokens1.size() <= 2) {
 								tokenMatchesArgument = true;
 							}
 							if(token.startsWith("\"") && token.endsWith("\"") && token.length() > 1) {

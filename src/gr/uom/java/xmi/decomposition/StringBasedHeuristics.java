@@ -281,7 +281,26 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean differOnlyInThis(String s1, String s2) {;
-		return differOnlyInPrefix(s1, s2, "", "this.");
+		if(differOnlyInPrefix(s1, s2, "", "this.")) {
+			return true;
+		}
+		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
+		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
+		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
+			int beginIndexS1 = s1.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS1 = s1.lastIndexOf(commonSuffix);
+			String diff1 = beginIndexS1 > endIndexS1 ? "" :	s1.substring(beginIndexS1, endIndexS1);
+			int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS2 = s2.lastIndexOf(commonSuffix);
+			String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
+			if(diff1.isEmpty() && diff2.equals("this.")) {
+				return true;
+			}
+			else if(diff2.isEmpty() && diff1.equals("this.")) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static boolean differOnlyInPrefix(String s1, String s2, String prefixWithout, String prefixWith) {

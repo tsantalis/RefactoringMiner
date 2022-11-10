@@ -7576,7 +7576,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					UMLOperation matchingOperation = null;
 					if(invocation != null && (matchingOperation = matchesOperation(invocation, addedOperations, container2)) != null && matchingOperation.getBody() != null) {
-						return true;
+						boolean removedMethodWithIdenticalBodyFound = false;
+						for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
+							if(removedOperation.getBodyHashCode() == matchingOperation.getBodyHashCode()) {
+								removedMethodWithIdenticalBodyFound = true;
+								break;
+							}
+						}
+						if(!removedMethodWithIdenticalBodyFound) {
+							return true;
+						}
 					}
 				}
 			}

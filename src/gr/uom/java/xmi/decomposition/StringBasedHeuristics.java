@@ -114,6 +114,12 @@ public class StringBasedHeuristics {
 			int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
 			int endIndexS2 = s2.lastIndexOf(commonSuffix);
 			String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
+			if(diff1.isEmpty() && diff2.equals("this.")) {
+				return true;
+			}
+			else if(diff2.isEmpty() && diff1.equals("this.")) {
+				return true;
+			}
 			if(cast(diff1, diff2)) {
 				for(Replacement r : info.getReplacements()) {
 					if(r.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS) && s2.startsWith(r.getAfter() + "=")) {

@@ -4111,7 +4111,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		removeCommonElements(arguments1, arguments2);
 		
 		if(!argumentsWithIdenticalMethodCalls(arguments1, arguments2, variables1, variables2)) {
-			findReplacements(arguments1, variables2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_VARIABLE);
+			boolean argsAreMethodCalls = false;
+			if(arguments1.size() == arguments2.size()) {
+				Iterator<String> it1 = arguments1.iterator();
+				Iterator<String> it2 = arguments2.iterator();
+				for(int i=0; i<arguments1.size(); i++) {
+					String arg1 = it1.next();
+					String arg2 = it2.next();
+					if(methodInvocationMap1.containsKey(arg1) && methodInvocationMap2.containsKey(arg2)) {
+						List<? extends AbstractCall> calls1 = methodInvocationMap1.get(arg1);
+						List<? extends AbstractCall> calls2 = methodInvocationMap2.get(arg2);
+						if(calls1.get(0).getName().equals(calls2.get(0).getName())) {
+							argsAreMethodCalls = true;
+							break;
+						}
+					}
+				}
+			}
+			if(!argsAreMethodCalls) {
+				findReplacements(arguments1, variables2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_VARIABLE);
+			}
 		}
 		
 		Map<String, String> map = new LinkedHashMap<String, String>();
@@ -4479,11 +4498,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			findReplacements(booleanLiterals1, variables2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_VARIABLE);
 		}
 		if(!statement2.getString().endsWith("=true;\n") && !statement2.getString().endsWith("=false;\n")) {
-			findReplacements(arguments1, booleanLiterals2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_ARGUMENT);
 			if(!statement1.getBooleanLiterals().equals(statement2.getBooleanLiterals())) {
 				Set<String> literals1 = new LinkedHashSet<String>(statement1.getBooleanLiterals());
 				Set<String> literals2 = new LinkedHashSet<String>(statement2.getBooleanLiterals());
 				if(literals1.equals(literals2) ||
+						matchingArgument(arguments1, literals2, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
+						matchingArgument(arguments1, literals2, creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2)) {
+					findReplacements(arguments1, literals2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_ARGUMENT);
+				}
+				if(literals1.equals(literals2) ||
+						matchingArgument(variables1, literals2, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
 						matchingArgument(variables1, literals2, creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2)) {
 					findReplacements(variables1, literals2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_VARIABLE);
 				}
@@ -4503,6 +4527,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		if(!argumentsWithIdenticalMethodCalls(arguments1, arguments2, methodInvocations1, methodInvocations2) && !replacementInfo.getReplacements().isEmpty()) {
 			findReplacements(arguments1, methodInvocations2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_METHOD_INVOCATION);
+			findReplacements(arguments1, arguments2, replacementInfo, ReplacementType.ARGUMENT);
 		}
 		
 		String s1 = preprocessInput1(statement1, statement2);

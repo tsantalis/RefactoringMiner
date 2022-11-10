@@ -5013,7 +5013,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//method invocation has been renamed but the expression and arguments are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers)) {
+				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers,
+						matchPairOfRemovedAddedOperationsWithIdenticalBody(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2))) {
 			boolean variableDeclarationMatch = true;
 			if(variableDeclarations1.size() > 0  && variableDeclarations2.size() > 0 && !variableDeclarations1.toString().equals(variableDeclarations2.toString()) && !invocationCoveringTheEntireStatement1.getArguments().equals(invocationCoveringTheEntireStatement2.getArguments())) {
 				variableDeclarationMatch = false;
@@ -5029,7 +5030,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				methodInvocationMap1.size() == methodInvocationMap2.size() && methodInvocationMap1.size() == 1 && methodInvocations1.size() == methodInvocations2.size() && methodInvocations1.size() == 1) {
 			AbstractCall invocation1 = methodInvocationMap1.get(methodInvocations1.iterator().next()).get(0);
 			AbstractCall invocation2 = methodInvocationMap2.get(methodInvocations2.iterator().next()).get(0);
-			if(invocation1.renamedWithIdenticalExpressionAndArguments(invocation2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers)) {
+			if(invocation1.renamedWithIdenticalExpressionAndArguments(invocation2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers, matchPairOfRemovedAddedOperationsWithIdenticalBody(invocation1, invocation2))) {
 				Replacement replacement = new MethodInvocationReplacement(invocation1.getName(),
 						invocation2.getName(), invocation1, invocation2, ReplacementType.METHOD_INVOCATION_NAME);
 				replacementInfo.addReplacement(replacement);
@@ -7588,6 +7589,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return operation;
 		}
 		return null;
+	}
+
+	private boolean matchPairOfRemovedAddedOperationsWithIdenticalBody(AbstractCall call1, AbstractCall call2) {
+		if(classDiff != null) {
+			for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
+				if(call1.matchesOperation(removedOperation, container1, modelDiff)) {
+					for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
+						if(removedOperation.getBodyHashCode() == addedOperation.getBodyHashCode()) {
+							if(call2.matchesOperation(addedOperation, container2, modelDiff)) {
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean containsCallToExtractedMethod(List<? extends AbstractCodeFragment> leaves2) {

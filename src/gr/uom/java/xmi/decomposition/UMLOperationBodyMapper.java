@@ -4525,9 +4525,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				(statement1.getString().endsWith("false;\n") && statement2.getString().endsWith("true;\n"))) {
 			findReplacements(booleanLiterals1, booleanLiterals2, replacementInfo, ReplacementType.BOOLEAN_LITERAL);
 		}
-		if(!argumentsWithIdenticalMethodCalls(arguments1, arguments2, methodInvocations1, methodInvocations2) && !replacementInfo.getReplacements().isEmpty()) {
+		if(!argumentsWithIdenticalMethodCalls(arguments1, arguments2, methodInvocations1, methodInvocations2)) {
 			findReplacements(arguments1, methodInvocations2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_METHOD_INVOCATION);
-			findReplacements(arguments1, arguments2, replacementInfo, ReplacementType.ARGUMENT);
+			findReplacements(methodInvocations1, arguments2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_METHOD_INVOCATION);
+			boolean anonymousArgument1 = false;
+			if(arguments1.size() == 1 && containsMethodSignatureOfAnonymousClass(arguments1.iterator().next())) {
+				anonymousArgument1 = true;
+			}
+			boolean anonymousArgument2 = false;
+			if(arguments2.size() == 1 && containsMethodSignatureOfAnonymousClass(arguments2.iterator().next())) {
+				anonymousArgument2 = true;
+			}
+			if(!anonymousArgument1 && !anonymousArgument2) {
+				findReplacements(arguments1, arguments2, replacementInfo, ReplacementType.ARGUMENT);
+			}
 		}
 		
 		String s1 = preprocessInput1(statement1, statement2);

@@ -183,10 +183,10 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						(levelParentEditDistance1.contains(0.0) && !levelParentEditDistance2.contains(0.0)) ||
 						(levelParentEditDistance2.contains(0.0) && !levelParentEditDistance1.contains(0.0))) &&
 						!levelParentEditDistance1.get(0).equals(levelParentEditDistance2.get(0))) {
-					if(nLevelParentEditDistance1 < nLevelParentEditDistance2) {
+					if(nLevelParentEditDistance1 < nLevelParentEditDistance2 && o.parentEditDistance() != 0.0) {
 						return -1;
 					}
-					else if(nLevelParentEditDistance2 < nLevelParentEditDistance1) {
+					else if(nLevelParentEditDistance2 < nLevelParentEditDistance1 && this.parentEditDistance() != 0.0) {
 						return 1;
 					}
 				}

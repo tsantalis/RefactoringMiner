@@ -343,10 +343,11 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return replacedArguments > 0 && replacedArguments == arguments1.size();
 	}
 
-	public boolean renamedWithIdenticalExpressionAndArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, double distance, List<UMLOperationBodyMapper> lambdaMappers) {
+	public boolean renamedWithIdenticalExpressionAndArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, double distance,
+			List<UMLOperationBodyMapper> lambdaMappers, boolean matchPairOfRemovedAddedOperationsWithIdenticalBody) {
 		boolean identicalOrReplacedArguments = identicalOrReplacedArguments(call, replacements, lambdaMappers);
 		boolean allArgumentsReplaced = allArgumentsReplaced(call, replacements);
-		return getExpression() != null && call.getExpression() != null &&
+		return ((getExpression() != null && call.getExpression() != null) || matchPairOfRemovedAddedOperationsWithIdenticalBody) &&
 				identicalExpression(call, replacements, parameterToArgumentMap) &&
 				!identicalName(call) &&
 				(equalArguments(call) || reorderedArguments(call) || (allArgumentsReplaced && compatibleName(call, distance)) || (identicalOrReplacedArguments && !allArgumentsReplaced));
@@ -410,6 +411,51 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		}
 		if(commonTokens == Math.min(tokens1.length, tokens2.length)) {
 			return true;
+		}
+		if(this.getExpression() != null && this.getExpression().toLowerCase().startsWith("log") &&
+				call.getExpression() != null && call.getExpression().toLowerCase().startsWith("log") &&
+				this.getExpression().equals(call.getExpression())) {
+			List<String> logNames = List.of("trace", "debug", "info", "warn", "error", "fatal");
+			if(logNames.contains(this.getName()) && logNames.contains(call.getName())) {
+				if(this.getArguments().size() == call.getArguments().size() && this.getArguments().size() == 1) {
+					String argument1 = this.getArguments().get(0);
+					String argument2 = call.getArguments().get(0);
+					String[] words1 = argument1.split("\\s");
+					String[] words2 = argument2.split("\\s");
+					int commonWords = 0;
+					if(words1.length <= words2.length) {
+						for(String word1 : words1) {
+							String w1 = word1.replaceAll("^\"|\"$", "");
+							if(!w1.equals("+") && !w1.equals("")) {
+								for(String word2 : words2) {
+									String w2 = word2.replaceAll("^\"|\"$", "");
+									if(w1.equals(w2) || w1.equals(w2 + ".") || w2.equals(w1 + ".")) {
+										commonWords++;
+										break;
+									}
+								}
+							}
+						}
+					}
+					else {
+						for(String word2 : words2) {
+							String w2 = word2.replaceAll("^\"|\"$", "");
+							if(!w2.equals("+") && !w2.equals("")) {
+								for(String word1 : words1) {
+									String w1 = word1.replaceAll("^\"|\"$", "");
+									if(w1.equals(w2) || w1.equals(w2 + ".") || w2.equals(w1 + ".")) {
+										commonWords++;
+										break;
+									}
+								}
+							}
+						}
+					}
+					if(commonWords >= Math.max(words1.length, words2.length)/2) {
+						return true;
+					}
+				}
+			}
 		}
 		return false;
 	}

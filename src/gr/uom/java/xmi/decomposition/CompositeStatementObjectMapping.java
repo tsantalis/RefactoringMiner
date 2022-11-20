@@ -22,7 +22,8 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 
 	@Override
 	public int compareTo(CompositeStatementObjectMapping o) {
-		if(this.compositeChildMatchingScore >= 2.0*o.compositeChildMatchingScore) {
+		if(this.compositeChildMatchingScore >= 2.0*o.compositeChildMatchingScore ||
+				o.compositeChildMatchingScore >= 2.0*this.compositeChildMatchingScore) {
 			return -Double.compare(this.compositeChildMatchingScore, o.compositeChildMatchingScore);
 		}
 		double distance1;

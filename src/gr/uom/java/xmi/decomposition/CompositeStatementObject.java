@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,6 +21,7 @@ public class CompositeStatementObject extends AbstractStatement {
 	private List<AbstractStatement> statementList;
 	private List<AbstractExpression> expressionList;
 	private List<VariableDeclaration> variableDeclarations;
+	private Optional<TryStatementObject> tryContainer;
 	private LocationInfo locationInfo;
 
 	public CompositeStatementObject(PsiFile cu, String filePath, PsiElement statement, int depth, CodeElementType codeElementType) {
@@ -42,6 +44,14 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public List<AbstractStatement> getStatements() {
 		return statementList;
+	}
+
+	public Optional<TryStatementObject> getTryContainer() {
+		return tryContainer;
+	}
+
+	public void setTryContainer(TryStatementObject tryContainer) {
+		this.tryContainer = Optional.ofNullable(tryContainer);
 	}
 
 	public List<AbstractStatement> getAllStatements() {

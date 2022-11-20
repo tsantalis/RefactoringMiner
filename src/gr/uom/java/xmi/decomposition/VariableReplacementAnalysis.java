@@ -645,10 +645,23 @@ public class VariableReplacementAnalysis {
 
 	private void findAttributeExtractions() {
 		if(classDiff != null) {
+			UMLModelDiff modelDiff = classDiff.getModelDiff();
+			List<UMLAttribute> addedAttributes = new ArrayList<>();
+			addedAttributes.addAll(classDiff.getAddedAttributes());
+			List<UMLAttribute> removedAttributes = new ArrayList<>();
+			removedAttributes.addAll(classDiff.getRemovedAttributes());
+			if(modelDiff != null) {
+				for(UMLAbstractClassDiff otherClassDiff : modelDiff.getCommonClassDiffList()) {
+					if(otherClassDiff.getNextClass().isInnerClass(classDiff.getNextClass())) {
+						addedAttributes.addAll(otherClassDiff.getAddedAttributes());
+						removedAttributes.addAll(otherClassDiff.getRemovedAttributes());
+					}
+				}
+			}
 			for(AbstractCodeMapping mapping : mappings) {
 				for(Replacement replacement : mapping.getReplacements()) {
 					if(replacement.involvesVariable()) {
-						for(UMLAttribute addedAttribute : classDiff.getAddedAttributes()) {
+						for(UMLAttribute addedAttribute : addedAttributes) {
 							VariableDeclaration variableDeclaration = addedAttribute.getVariableDeclaration();
 							if(addedAttribute.getName().equals(replacement.getAfter()) && extractInlineCondition(variableDeclaration, replacement, replacement.getBefore())) {
 								ExtractAttributeRefactoring refactoring = new ExtractAttributeRefactoring(addedAttribute, classDiff.getOriginalClass(), classDiff.getNextClass(), insideExtractedOrInlinedMethod);
@@ -668,7 +681,7 @@ public class VariableReplacementAnalysis {
 								}
 							}
 						}
-						for(UMLAttribute removedAttribute : classDiff.getRemovedAttributes()) {
+						for(UMLAttribute removedAttribute : removedAttributes) {
 							VariableDeclaration variableDeclaration = removedAttribute.getVariableDeclaration();
 							if(removedAttribute.getName().equals(replacement.getBefore()) && extractInlineCondition(variableDeclaration, replacement, replacement.getAfter())) {
 								InlineAttributeRefactoring refactoring = new InlineAttributeRefactoring(removedAttribute, classDiff.getOriginalClass(), classDiff.getNextClass(), insideExtractedOrInlinedMethod);

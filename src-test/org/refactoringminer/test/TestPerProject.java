@@ -65,9 +65,9 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/eclipse/vert.x.git", 38, 0, 15);
         processRepositoryCommits("https://github.com/Netflix/eureka.git", 73, 0, 0);
         processRepositoryCommits("https://github.com/scobal/seyren.git", 4, 0, 1);
-        processRepositoryCommits("https://github.com/wicketstuff/core.git", 1, 0, 0);
+        processRepositoryCommits("https://github.com/wicketstuff/core.git", 4, 0, 0);
         processRepositoryCommits("https://github.com/spring-projects/spring-integration.git", 29, 0, 0);
-        processRepositoryCommits("https://github.com/orfjackal/retrolambda.git", 3, 0, 0);
+        processRepositoryCommits("https://github.com/orfjackal/retrolambda.git", 5, 0, 0);
         processRepositoryCommits("https://github.com/tomahawk-player/tomahawk-android.git", 49, 0, 0);
         processRepositoryCommits("https://github.com/raphw/byte-buddy.git", 64, 0, 1);
         processRepositoryCommits("https://github.com/liferay/liferay-plugins.git", 12, 0, 0);
@@ -82,7 +82,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/brettwooldridge/HikariCP.git", 8, 0, 0);
         processRepositoryCommits("https://github.com/eucalyptus/eucalyptus.git", 42, 0, 1);
         processRepositoryCommits("https://github.com/dreamhead/moco.git", 2, 0, 0);
-        processRepositoryCommits("https://github.com/neo4j/neo4j.git", 848, 4, 37);
+        processRepositoryCommits("https://github.com/neo4j/neo4j.git", 849, 4, 37);
         processRepositoryCommits("https://github.com/skylot/jadx.git", 29, 1, 0);
         processRepositoryCommits("https://github.com/vaadin/vaadin.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/restlet/restlet-framework-java.git", 5, 0, 0);
@@ -92,7 +92,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/loopj/android-async-http.git", 1, 0, 0);
         processRepositoryCommits("https://github.com/datastax/java-driver.git", 29, 0, 3);
         processRepositoryCommits("https://github.com/SimonVT/schematic.git", 2, 0, 0);
-        processRepositoryCommits("https://github.com/jfinal/jfinal.git", 231, 0, 18);
+        processRepositoryCommits("https://github.com/jfinal/jfinal.git", 239, 0, 13);
         processRepositoryCommits("https://github.com/oblac/jodd.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/realm/realm-java.git", 14, 0, 0);
         processRepositoryCommits("https://github.com/bennidi/mbassador.git", 16, 0, 0);
@@ -125,7 +125,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/AdoptOpenJDK/jitwatch.git", 23, 0, 1);
         processRepositoryCommits("https://github.com/liferay/liferay-portal.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/square/mortar.git", 6, 0, 0);
-        processRepositoryCommits("https://github.com/infinispan/infinispan.git", 489, 3, 23);
+        processRepositoryCommits("https://github.com/infinispan/infinispan.git", 491, 3, 23);
         processRepositoryCommits("https://github.com/crashub/crash.git", 2, 0, 0);
         processRepositoryCommits("https://github.com/glyptodon/guacamole-client.git", 14, 0, 0);
         processRepositoryCommits("https://github.com/github/android.git", 305, 0, 0);
@@ -212,6 +212,6 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/spring-projects/spring-security.git", 24, 0, 2);
         processRepositoryCommits("https://github.com/novoda/android-demos.git", 4, 0, 0);
         processRepositoryCommits("https://github.com/wordpress-mobile/WordPress-Android.git", 34, 0, 1);
-        processRepositoryCommits("https://github.com/junit-team/junit5.git", 19, 0, 0);
+        processRepositoryCommits("https://github.com/junit-team/junit5.git", 21, 0, 0);
     }
 }

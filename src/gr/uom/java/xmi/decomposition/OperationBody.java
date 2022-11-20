@@ -283,6 +283,7 @@ public class OperationBody {
 				CompositeStatementObject catchClauseStatementObject = new CompositeStatementObject(cu, filePath, catchClause, parent.getDepth()+1, CodeElementType.CATCH_CLAUSE);
 				child.addCatchClause(catchClauseStatementObject);
 				parent.addStatement(catchClauseStatementObject);
+				catchClauseStatementObject.setTryContainer(child);
 				PsiParameter variableDeclaration = catchClause.getParameter();
 				VariableDeclaration vd = new VariableDeclaration(cu, filePath, variableDeclaration, CodeElementType.SINGLE_VARIABLE_DECLARATION, container);
 				catchClauseStatementObject.addVariableDeclaration(vd);
@@ -306,6 +307,7 @@ public class OperationBody {
 				CompositeStatementObject finallyClauseStatementObject = new CompositeStatementObject(cu, filePath, finallyBlock, parent.getDepth()+1, CodeElementType.FINALLY_BLOCK);
 				child.setFinallyClause(finallyClauseStatementObject);
 				parent.addStatement(finallyClauseStatementObject);
+				finallyClauseStatementObject.setTryContainer(child);
 				addStatementInVariableScopes(finallyClauseStatementObject);
 				PsiStatement[] blockStatements = finallyBlock.getStatements();
 				for(PsiStatement blockStatement : blockStatements) {

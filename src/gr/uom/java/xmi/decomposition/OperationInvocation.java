@@ -10,6 +10,7 @@ import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.containsMethodSignatureOfAnonymousClass;
+import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
@@ -85,10 +86,10 @@ public class OperationInvocation extends AbstractCall {
 		this.arguments = new ArrayList<String>();
 		List<Expression> args = invocation.arguments();
 		for(Expression argument : args) {
-			this.arguments.add(argument.toString());
+			this.arguments.add(stringify(argument));
 		}
 		if(invocation.getExpression() != null) {
-			this.expression = invocation.getExpression().toString();
+			this.expression = stringify(invocation.getExpression());
 			processExpression(invocation.getExpression(), this.subExpressions);
 		}
 	}
@@ -97,27 +98,27 @@ public class OperationInvocation extends AbstractCall {
 		if(expression instanceof MethodInvocation) {
 			MethodInvocation invocation = (MethodInvocation)expression;
 			if(invocation.getExpression() != null) {
-				String expressionAsString = invocation.getExpression().toString();
-				String invocationAsString = invocation.toString();
+				String expressionAsString = stringify(invocation.getExpression());
+				String invocationAsString = stringify(invocation);
 				String suffix = invocationAsString.substring(expressionAsString.length() + 1, invocationAsString.length());
 				subExpressions.add(0, suffix);
 				processExpression(invocation.getExpression(), subExpressions);
 			}
 			else {
-				subExpressions.add(0, invocation.toString());
+				subExpressions.add(0, stringify(invocation));
 			}
 		}
 		else if(expression instanceof ClassInstanceCreation) {
 			ClassInstanceCreation creation = (ClassInstanceCreation)expression;
 			if(creation.getExpression() != null) {
-				String expressionAsString = creation.getExpression().toString();
-				String invocationAsString = creation.toString();
+				String expressionAsString = stringify(creation.getExpression());
+				String invocationAsString = stringify(creation);
 				String suffix = invocationAsString.substring(expressionAsString.length() + 1, invocationAsString.length());
 				subExpressions.add(0, suffix);
 				processExpression(creation.getExpression(), subExpressions);
 			}
 			else {
-				subExpressions.add(0, creation.toString());
+				subExpressions.add(0, stringify(creation));
 			}
 		}
 	}
@@ -131,7 +132,7 @@ public class OperationInvocation extends AbstractCall {
 		this.subExpressions.add("super");
 		List<Expression> args = invocation.arguments();
 		for(Expression argument : args) {
-			this.arguments.add(argument.toString());
+			this.arguments.add(stringify(argument));
 		}
 	}
 
@@ -142,10 +143,10 @@ public class OperationInvocation extends AbstractCall {
 		this.arguments = new ArrayList<String>();
 		List<Expression> args = invocation.arguments();
 		for(Expression argument : args) {
-			this.arguments.add(argument.toString());
+			this.arguments.add(stringify(argument));
 		}
 		if(invocation.getExpression() != null) {
-			this.expression = invocation.getExpression().toString();
+			this.expression = stringify(invocation.getExpression());
 			processExpression(invocation.getExpression(), this.subExpressions);
 		}
 	}
@@ -157,7 +158,7 @@ public class OperationInvocation extends AbstractCall {
 		this.arguments = new ArrayList<String>();
 		List<Expression> args = invocation.arguments();
 		for(Expression argument : args) {
-			this.arguments.add(argument.toString());
+			this.arguments.add(stringify(argument));
 		}
 	}
 

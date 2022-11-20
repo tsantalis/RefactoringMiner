@@ -1,5 +1,7 @@
 package gr.uom.java.xmi;
 
+import static gr.uom.java.xmi.decomposition.Visitor.stringify;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -582,7 +584,7 @@ public class UMLModelASTReader {
 		String name = "";
 		if(initializer.getParent() instanceof AnonymousClassDeclaration && initializer.getParent().getParent() instanceof ClassInstanceCreation) {
 			ClassInstanceCreation creation = (ClassInstanceCreation)initializer.getParent().getParent();
-			name = creation.getType().toString();
+			name = stringify(creation.getType());
 		}
 		else if(initializer.getParent() instanceof AbstractTypeDeclaration) {
 			AbstractTypeDeclaration typeDeclaration = (AbstractTypeDeclaration)initializer.getParent();
@@ -705,7 +707,7 @@ public class UMLModelASTReader {
 		enumConstant.setVisibility("public");
 		List<Expression> arguments = enumConstantDeclaration.arguments();
 		for(Expression argument : arguments) {
-			enumConstant.addArgument(argument.toString());
+			enumConstant.addArgument(stringify(argument));
 		}
 		enumConstant.setClassName(umlClass.getName());
 		umlClass.addEnumConstant(enumConstant);
@@ -850,7 +852,7 @@ public class UMLModelASTReader {
 				}
 			}
 			else if(parent instanceof ClassInstanceCreation) {
-				String invocationName = ((ClassInstanceCreation)parent).getType().toString();
+				String invocationName = stringify(((ClassInstanceCreation)parent).getType());
 				if(name.isEmpty()) {
 					name = "new " + invocationName;
 				}

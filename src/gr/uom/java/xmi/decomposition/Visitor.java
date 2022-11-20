@@ -93,28 +93,28 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(ArrayAccess node) {
-		arrayAccesses.add(node.toString());
+		arrayAccesses.add(stringify(node));
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getArrayAccesses().add(node.toString());
+			anonymous.getArrayAccesses().add(stringify(node));
 		}
 		return super.visit(node);
 	}
 
 	public boolean visit(PrefixExpression node) {
-		prefixExpressions.add(node.toString());
+		prefixExpressions.add(stringify(node));
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getPrefixExpressions().add(node.toString());
+			anonymous.getPrefixExpressions().add(stringify(node));
 		}
 		return super.visit(node);
 	}
 
 	public boolean visit(PostfixExpression node) {
-		postfixExpressions.add(node.toString());
+		postfixExpressions.add(stringify(node));
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getPostfixExpressions().add(node.toString());
+			anonymous.getPostfixExpressions().add(stringify(node));
 		}
 		return super.visit(node);
 	}
@@ -131,23 +131,12 @@ public class Visitor extends ASTVisitor {
 
 	public boolean visit(InfixExpression node) {
 		List extendedOperands = node.extendedOperands();
-		String stringRepresentation = node.toString();
-		if(node.hasExtendedOperands() && extendedOperands.size() > 1) {
-			String temp = stringRepresentation;
-			for(int i=1; i<extendedOperands.size(); i++) {
-				Expression operand = (Expression)extendedOperands.get(i);
-				String suffix = node.getOperator().toString() + " " + operand.toString();
-				if(temp.contains(suffix)) {
-					temp = temp.replace(suffix, " " + suffix);
-				}
-			}
-			stringRepresentation = temp;
-		}
-		infixExpressions.add(stringRepresentation);
+		String nodeAsString = stringify(node);
+		infixExpressions.add(nodeAsString);
 		infixOperators.add(node.getOperator().toString());
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getInfixExpressions().add(stringRepresentation);
+			anonymous.getInfixExpressions().add(nodeAsString);
 			anonymous.getInfixOperators().add(node.getOperator().toString());
 		}
 		return super.visit(node);
@@ -159,7 +148,7 @@ public class Visitor extends ASTVisitor {
 			processArgument(argument);
 		}
 		ObjectCreation creation = new ObjectCreation(cu, filePath, node);
-		String nodeAsString = node.toString();
+		String nodeAsString = stringify(node);
 		if(creationMap.containsKey(nodeAsString)) {
 			creationMap.get(nodeAsString).add(creation);
 		}
@@ -185,7 +174,7 @@ public class Visitor extends ASTVisitor {
 
 	public boolean visit(ArrayCreation node) {
 		ObjectCreation creation = new ObjectCreation(cu, filePath, node);
-		String nodeAsString = node.toString();
+		String nodeAsString = stringify(node);
 		if(creationMap.containsKey(nodeAsString)) {
 			creationMap.get(nodeAsString).add(creation);
 		}
@@ -354,56 +343,56 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(StringLiteral node) {
-		stringLiterals.add(node.toString());
+		stringLiterals.add(stringify(node));
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getStringLiterals().add(node.toString());
+			anonymous.getStringLiterals().add(stringify(node));
 		}
 		return super.visit(node);
 	}
 
 	public boolean visit(NumberLiteral node) {
-		numberLiterals.add(node.toString());
+		numberLiterals.add(stringify(node));
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getNumberLiterals().add(node.toString());
+			anonymous.getNumberLiterals().add(stringify(node));
 		}
 		return super.visit(node);
 	}
 
 	public boolean visit(NullLiteral node) {
-		nullLiterals.add(node.toString());
+		nullLiterals.add(stringify(node));
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getNullLiterals().add(node.toString());
+			anonymous.getNullLiterals().add(stringify(node));
 		}
 		return super.visit(node);
 	}
 
 	public boolean visit(BooleanLiteral node) {
-		booleanLiterals.add(node.toString());
+		booleanLiterals.add(stringify(node));
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getBooleanLiterals().add(node.toString());
+			anonymous.getBooleanLiterals().add(stringify(node));
 		}
 		return super.visit(node);
 	}
 
 	public boolean visit(TypeLiteral node) {
-		typeLiterals.add(node.toString());
+		typeLiterals.add(stringify(node));
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getTypeLiterals().add(node.toString());
+			anonymous.getTypeLiterals().add(stringify(node));
 		}
 		return super.visit(node);
 	}
 
 	public boolean visit(ThisExpression node) {
 		if(!(node.getParent() instanceof FieldAccess)) {
-			variables.add(node.toString());
+			variables.add(stringify(node));
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(node.toString());
+				anonymous.getVariables().add(stringify(node));
 			}
 		}
 		return super.visit(node);
@@ -412,10 +401,10 @@ public class Visitor extends ASTVisitor {
 	public boolean visit(SimpleName node) {
 		if(node.getParent() instanceof FieldAccess && ((FieldAccess)node.getParent()).getExpression() instanceof ThisExpression) {
 			FieldAccess fieldAccess = (FieldAccess)node.getParent();
-			variables.add(fieldAccess.toString());
+			variables.add(stringify(fieldAccess));
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(fieldAccess.toString());
+				anonymous.getVariables().add(stringify(fieldAccess));
 			}
 		}
 		else if(node.getParent() instanceof MethodInvocation &&
@@ -463,46 +452,46 @@ public class Visitor extends ASTVisitor {
 	}
 	
 	public boolean visit(ArrayType node) {
-		types.add(node.toString());
+		types.add(stringify(node));
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getTypes().add(node.toString());
+			anonymous.getTypes().add(stringify(node));
 		}
 		return false;
 	}
 	
 	public boolean visit(ParameterizedType node) {
-		types.add(node.toString());
+		types.add(stringify(node));
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getTypes().add(node.toString());
+			anonymous.getTypes().add(stringify(node));
 		}
 		return false;
 	}
 	
 	public boolean visit(WildcardType node) {
-		types.add(node.toString());
+		types.add(stringify(node));
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getTypes().add(node.toString());
+			anonymous.getTypes().add(stringify(node));
 		}
 		return false;
 	}
 	
 	public boolean visit(QualifiedType node) {
-		types.add(node.toString());
+		types.add(stringify(node));
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getTypes().add(node.toString());
+			anonymous.getTypes().add(stringify(node));
 		}
 		return false;
 	}
 	
 	public boolean visit(PrimitiveType node) {
-		types.add(node.toString());
+		types.add(stringify(node));
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getTypes().add(node.toString());
+			anonymous.getTypes().add(stringify(node));
 		}
 		return false;
 	}
@@ -523,11 +512,11 @@ public class Visitor extends ASTVisitor {
 			processArgument(argument);
 		}
 		String methodInvocation = null;
-		if(METHOD_INVOCATION_PATTERN.matcher(node.toString()).matches()) {
+		if(METHOD_INVOCATION_PATTERN.matcher(stringify(node)).matches()) {
 			methodInvocation = processMethodInvocation(node);
 		}
 		else {
-			methodInvocation = node.toString();
+			methodInvocation = stringify(node);
 		}
 		OperationInvocation invocation = new OperationInvocation(cu, filePath, node);
 		if(methodInvocationMap.containsKey(methodInvocation)) {
@@ -555,7 +544,7 @@ public class Visitor extends ASTVisitor {
 
 	public boolean visit(ExpressionMethodReference node) {
 		MethodReference reference = new MethodReference(cu, filePath, node);
-		String referenceString = node.toString();
+		String referenceString = stringify(node);
 		if(methodInvocationMap.containsKey(referenceString)) {
 			methodInvocationMap.get(referenceString).add(reference);
 		}
@@ -581,7 +570,7 @@ public class Visitor extends ASTVisitor {
 	
 	public boolean visit(SuperMethodReference node) {
 		MethodReference reference = new MethodReference(cu, filePath, node);
-		String referenceString = node.toString();
+		String referenceString = stringify(node);
 		if(methodInvocationMap.containsKey(referenceString)) {
 			methodInvocationMap.get(referenceString).add(reference);
 		}
@@ -607,7 +596,7 @@ public class Visitor extends ASTVisitor {
 	
 	public boolean visit(TypeMethodReference node) {
 		MethodReference reference = new MethodReference(cu, filePath, node);
-		String referenceString = node.toString();
+		String referenceString = stringify(node);
 		if(methodInvocationMap.containsKey(referenceString)) {
 			methodInvocationMap.get(referenceString).add(reference);
 		}
@@ -638,8 +627,8 @@ public class Visitor extends ASTVisitor {
 		List<Expression> arguments = node.arguments();
 		if(arguments.size() > 0) {
 		    for(int i=0; i<arguments.size()-1; i++)
-		        sb.append(arguments.get(i).toString()).append(", ");
-		    sb.append(arguments.get(arguments.size()-1).toString());
+		        sb.append(stringify(arguments.get(i))).append(", ");
+		    sb.append(stringify(arguments.get(arguments.size()-1)));
 		}
 		sb.append(")");
 		return sb.toString();
@@ -648,12 +637,12 @@ public class Visitor extends ASTVisitor {
 	public static String processClassInstanceCreation(ClassInstanceCreation node) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("new").append(" ");
-		sb.append(node.getType().toString());
+		sb.append(stringify(node.getType()));
 		List<Expression> arguments = node.arguments();
 		if(arguments.size() > 0) {
 		    for(int i=0; i<arguments.size()-1; i++)
-		        sb.append(arguments.get(i).toString()).append(", ");
-		    sb.append(arguments.get(arguments.size()-1).toString());
+		        sb.append(stringify(arguments.get(i))).append(", ");
+		    sb.append(stringify(arguments.get(arguments.size()-1)));
 		}
 		sb.append(")");
 		return sb.toString();
@@ -665,7 +654,7 @@ public class Visitor extends ASTVisitor {
 			processArgument(argument);
 		}
 		OperationInvocation invocation = new OperationInvocation(cu, filePath, node);
-		String nodeAsString = node.toString();
+		String nodeAsString = stringify(node);
 		if(methodInvocationMap.containsKey(nodeAsString)) {
 			methodInvocationMap.get(nodeAsString).add(invocation);
 		}
@@ -695,7 +684,7 @@ public class Visitor extends ASTVisitor {
 			processArgument(argument);
 		}
 		OperationInvocation invocation = new OperationInvocation(cu, filePath, node);
-		String nodeAsString = node.toString();
+		String nodeAsString = stringify(node);
 		if(methodInvocationMap.containsKey(nodeAsString)) {
 			methodInvocationMap.get(nodeAsString).add(invocation);
 		}
@@ -725,7 +714,7 @@ public class Visitor extends ASTVisitor {
 			processArgument(argument);
 		}
 		OperationInvocation invocation = new OperationInvocation(cu, filePath, node);
-		String nodeAsString = node.toString();
+		String nodeAsString = stringify(node);
 		if(methodInvocationMap.containsKey(nodeAsString)) {
 			methodInvocationMap.get(nodeAsString).add(invocation);
 		}
@@ -784,10 +773,10 @@ public class Visitor extends ASTVisitor {
 				anonymous.getLambdas().add(lambda);
 			}
 		}
-		this.arguments.add(argument.toString());
+		this.arguments.add(stringify(argument));
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getArguments().add(argument.toString());
+			anonymous.getArguments().add(stringify(argument));
 		}
 	}
 
@@ -812,10 +801,10 @@ public class Visitor extends ASTVisitor {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 				anonymous.getTypes().add(qualifier.getFullyQualifiedName());
 			}
-			variables.add(node.toString());
+			variables.add(stringify(node));
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(node.toString());
+				anonymous.getVariables().add(stringify(node));
 			}
 		}
 		else if(qualifier instanceof SimpleName && !(node.getParent() instanceof QualifiedName)) {
@@ -831,20 +820,20 @@ public class Visitor extends ASTVisitor {
 					}
 				}
 				if(qualifierIsParameter) {
-					variables.add(node.toString());
+					variables.add(stringify(node));
 					if(current.getUserObject() != null) {
 						AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-						anonymous.getVariables().add(node.toString());
+						anonymous.getVariables().add(stringify(node));
 					}
 				}
 			}
 			EnhancedForStatement enhancedFor = findParentEnhancedForStatement(node);
 			if(enhancedFor != null) {
 				if(enhancedFor.getParameter().getName().getIdentifier().equals(qualifierIdentifier)) {
-					variables.add(node.toString());
+					variables.add(stringify(node));
 					if(current.getUserObject() != null) {
 						AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-						anonymous.getVariables().add(node.toString());
+						anonymous.getVariables().add(stringify(node));
 					}
 				}
 			}
@@ -877,10 +866,10 @@ public class Visitor extends ASTVisitor {
 	public boolean visit(CastExpression node) {
 		Expression castExpression = node.getExpression();
 		if(castExpression instanceof SimpleName) {
-			variables.add(node.toString());
+			variables.add(stringify(node));
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(node.toString());
+				anonymous.getVariables().add(stringify(node));
 			}
 		}
 		return super.visit(node);
@@ -982,5 +971,11 @@ public class Visitor extends ASTVisitor {
 
 	private static boolean simpleNameOrNumberLiteral(Expression e) {
 		return e instanceof SimpleName || e instanceof NumberLiteral;
+	}
+
+	public static String stringify(ASTNode node) {
+		ASTFlattener printer = new ASTFlattener();
+        node.accept(printer);
+        return printer.getResult();
 	}
 }

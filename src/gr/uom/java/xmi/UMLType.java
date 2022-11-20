@@ -1,5 +1,7 @@
 package gr.uom.java.xmi;
 
+import static gr.uom.java.xmi.decomposition.Visitor.stringify;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -247,7 +249,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 
 	private static UMLType extractTypeObject(CompilationUnit cu, String filePath, Type type) {
 		if(type.isPrimitiveType() || type.isSimpleType()) {
-			LeafType leafType = extractTypeObject(type.toString());
+			LeafType leafType = extractTypeObject(stringify(type));
 			AnnotatableType annotatableType = (AnnotatableType)type;
 			List<Annotation> annotations = annotatableType.annotations();
 			for(Annotation annotation : annotations) {

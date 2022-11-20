@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
+import static gr.uom.java.xmi.decomposition.Visitor.stringify;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,13 +28,13 @@ public class ObjectCreation extends AbstractCall {
 		this.arguments = new ArrayList<String>();
 		List<Expression> args = creation.arguments();
 		for(Expression argument : args) {
-			this.arguments.add(argument.toString());
+			this.arguments.add(stringify(argument));
 		}
 		if(creation.getExpression() != null) {
-			this.expression = creation.getExpression().toString();
+			this.expression = stringify(creation.getExpression());
 		}
 		if(creation.getAnonymousClassDeclaration() != null) {
-			this.anonymousClassDeclaration = creation.getAnonymousClassDeclaration().toString();
+			this.anonymousClassDeclaration = stringify(creation.getAnonymousClassDeclaration());
 		}
 	}
 
@@ -44,10 +46,10 @@ public class ObjectCreation extends AbstractCall {
 		this.arguments = new ArrayList<String>();
 		List<Expression> args = creation.dimensions();
 		for(Expression argument : args) {
-			this.arguments.add(argument.toString());
+			this.arguments.add(stringify(argument));
 		}
 		if(creation.getInitializer() != null) {
-			this.anonymousClassDeclaration = creation.getInitializer().toString();
+			this.anonymousClassDeclaration = stringify(creation.getInitializer());
 		}
 	}
 

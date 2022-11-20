@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
+import static gr.uom.java.xmi.decomposition.Visitor.stringify;
+
 import java.util.ArrayList;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -19,7 +21,7 @@ public class MethodReference extends AbstractCall {
 	public MethodReference(CompilationUnit cu, String filePath, ExpressionMethodReference reference) {
 		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.METHOD_REFERENCE);
 		this.methodName = reference.getName().getIdentifier();
-		this.expression = reference.getExpression().toString();
+		this.expression = stringify(reference.getExpression());
 		this.arguments = new ArrayList<String>();
 	}
 	

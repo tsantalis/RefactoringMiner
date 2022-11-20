@@ -19,6 +19,7 @@ import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.diff.CodeRange;
+import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 
 public class StatementObject extends AbstractStatement {
 	
@@ -69,7 +70,8 @@ public class StatementObject extends AbstractStatement {
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
 		setDepth(depth);
-		if(Visitor.METHOD_INVOCATION_PATTERN.matcher(statement.toString()).matches()) {
+		String statementAsString = stringify(statement);
+		if(Visitor.METHOD_INVOCATION_PATTERN.matcher(statementAsString).matches()) {
 			if(statement instanceof VariableDeclarationStatement) {
 				VariableDeclarationStatement variableDeclarationStatement = (VariableDeclarationStatement)statement;
 				StringBuilder sb = new StringBuilder();
@@ -77,7 +79,7 @@ public class StatementObject extends AbstractStatement {
 				for(IExtendedModifier modifier : modifiers) {
 					sb.append(modifier.toString()).append(" ");
 				}
-				sb.append(variableDeclarationStatement.getType().toString());
+				sb.append(stringify(variableDeclarationStatement.getType()));
 				List<VariableDeclarationFragment> fragments = variableDeclarationStatement.fragments();
 				for(VariableDeclarationFragment fragment : fragments) {
 					sb.append(fragment.getName().getIdentifier());
@@ -126,11 +128,11 @@ public class StatementObject extends AbstractStatement {
 				this.statement = sb.toString();
 			}
 			else {
-				this.statement = statement.toString();
+				this.statement = statementAsString;
 			}
 		}
 		else {
-			this.statement = statement.toString();
+			this.statement = statementAsString;
 		}
 	}
 

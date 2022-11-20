@@ -7,6 +7,7 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
+import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 
 public class TernaryOperatorExpression {
 
@@ -19,7 +20,7 @@ public class TernaryOperatorExpression {
 		this.condition = new AbstractExpression(cu, filePath, expression.getExpression(), CodeElementType.TERNARY_OPERATOR_CONDITION, container);
 		this.thenExpression = new AbstractExpression(cu, filePath, expression.getThenExpression(), CodeElementType.TERNARY_OPERATOR_THEN_EXPRESSION, container);
 		this.elseExpression = new AbstractExpression(cu, filePath, expression.getElseExpression(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION, container);
-		this.expression = expression.toString();
+		this.expression = stringify(expression);
 	}
 
 	public AbstractExpression getCondition() {

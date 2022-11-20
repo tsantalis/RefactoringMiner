@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
+import static gr.uom.java.xmi.decomposition.Visitor.stringify;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -53,7 +55,7 @@ public class OperationBody {
 	public OperationBody(CompilationUnit cu, String filePath, Block methodBody, VariableDeclarationContainer container) {
 		this.compositeStatement = new CompositeStatementObject(cu, filePath, methodBody, 0, CodeElementType.BLOCK);
 		this.container = container;
-		this.bodyHashCode = methodBody.toString().hashCode();
+		this.bodyHashCode = stringify(methodBody).hashCode();
 		this.activeVariableDeclarations = new HashSet<VariableDeclaration>();
 		this.activeVariableDeclarations.addAll(container != null ? container.getParameterDeclarationList() : Collections.emptyList());
 		List<Statement> statements = methodBody.statements();

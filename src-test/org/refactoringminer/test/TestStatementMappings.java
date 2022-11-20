@@ -828,13 +828,12 @@ public class TestStatementMappings {
 					refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
 					List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
 					for(UMLClassDiff classDiff : commonClassDiff) {
-						//if(classDiff.getNextClassName().equals("org.apache.flink.api.java.typeutils.runtime.PojoSerializer")) {
-							for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-								if(mapper.getContainer1().getName().equals("writeWithMessageConverters") && mapper.getContainer2().getName().equals("writeWithMessageConverters")) {
-									mapperInfo(mapper, actual);
-								}
+						for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+							if(mapper.getContainer1().getName().equals("writeWithMessageConverters") && mapper.getContainer2().getName().equals("writeWithMessageConverters")) {
+								mapperInfo(mapper, actual);
+								break;
 							}
-						//}
+						}
 					}
 				}
 			}
@@ -881,6 +880,7 @@ public class TestStatementMappings {
 						for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
 							if(mapper.getContainer1().getName().equals("send") && mapper.getContainer2().getName().equals("send")) {
 								mapperInfo(mapper, actual);
+								break;
 							}
 						}
 					}

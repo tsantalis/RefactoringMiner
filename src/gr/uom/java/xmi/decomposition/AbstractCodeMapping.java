@@ -213,6 +213,7 @@ public abstract class AbstractCodeMapping {
 								if(identical()) {
 									identicalWithExtractedVariable = true;
 								}
+								return;
 							}
 						}
 					}
@@ -230,6 +231,7 @@ public abstract class AbstractCodeMapping {
 						if(identical()) {
 							identicalWithExtractedVariable = true;
 						}
+						return;
 					}
 				}
 			}
@@ -244,6 +246,7 @@ public abstract class AbstractCodeMapping {
 								if(getFragment1().getString().contains(initializerBeforeRename) && getFragment2().getString().contains(variableName)) {
 									ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 									processExtractVariableRefactoring(ref, refactorings);
+									return;
 								}
 							}
 						}
@@ -273,6 +276,7 @@ public abstract class AbstractCodeMapping {
 							if(identical()) {
 								identicalWithExtractedVariable = true;
 							}
+							return;
 						}
 					}
 				}
@@ -298,6 +302,7 @@ public abstract class AbstractCodeMapping {
 								if(identical()) {
 									identicalWithInlinedVariable = true;
 								}
+								return;
 							}
 						}
 					}
@@ -315,6 +320,7 @@ public abstract class AbstractCodeMapping {
 						if(identical()) {
 							identicalWithInlinedVariable = true;
 						}
+						return;
 					}
 				}
 			}
@@ -341,6 +347,7 @@ public abstract class AbstractCodeMapping {
 							if(identical()) {
 								identicalWithInlinedVariable = true;
 							}
+							return;
 						}
 					}
 				}

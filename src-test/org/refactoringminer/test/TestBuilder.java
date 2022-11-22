@@ -109,7 +109,7 @@ public class TestBuilder {
 		commitsCount = 0;
 		errorCommitsCount = 0;
 		GitService gitService = new GitServiceImpl();
-		ExecutorService pool = Executors.newFixedThreadPool(map.size());
+		ExecutorService pool = Executors.newWorkStealingPool();
 		for (ProjectMatcher m : map.values()) {
 			String folder = tempDir + "/"
 					+ m.cloneUrl.substring(m.cloneUrl.lastIndexOf('/') + 1, m.cloneUrl.lastIndexOf('.'));

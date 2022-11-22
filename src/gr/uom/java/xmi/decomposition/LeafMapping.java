@@ -183,10 +183,10 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						(levelParentEditDistance1.contains(0.0) && !levelParentEditDistance2.contains(0.0)) ||
 						(levelParentEditDistance2.contains(0.0) && !levelParentEditDistance1.contains(0.0))) &&
 						!levelParentEditDistance1.get(0).equals(levelParentEditDistance2.get(0))) {
-					if(nLevelParentEditDistance1 < nLevelParentEditDistance2 && o.parentEditDistance() != 0.0) {
+					if(nLevelParentEditDistance1 < nLevelParentEditDistance2 && !levelParentEditDistance2.get(0).equals(0.0)) {
 						return -1;
 					}
-					else if(nLevelParentEditDistance2 < nLevelParentEditDistance1 && this.parentEditDistance() != 0.0) {
+					else if(nLevelParentEditDistance2 < nLevelParentEditDistance1 && !levelParentEditDistance1.get(0).equals(0.0)) {
 						return 1;
 					}
 				}
@@ -211,8 +211,8 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					else {
 						boolean sameVariableDeclarationTypeInParent1 = this.sameVariableDeclarationTypeInParent();
 						boolean sameVariableDeclarationTypeInParent2 = o.sameVariableDeclarationTypeInParent();
-						double parentEditDistance1 = this.parentEditDistance();
-						double parentEditDistance2 = o.parentEditDistance();
+						double parentEditDistance1 = levelParentEditDistance1.get(0);
+						double parentEditDistance2 = levelParentEditDistance2.get(0);
 						Set<String> set1 = this.parentVariableTokenIntersection();
 						Set<String> set2 = o.parentVariableTokenIntersection();
 						if(parentEditDistance1 >= 0 && parentEditDistance2 >= 0 && sameVariableDeclarationTypeInParent1 != sameVariableDeclarationTypeInParent2) {

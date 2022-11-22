@@ -6446,6 +6446,32 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 													info.addReplacement(composite);
 													splitConditional = true;
 												}
+												if((subCondition1.endsWith(" != null") && subCondition2.endsWith(" != null")) ||
+														(subCondition1.endsWith(" == null") && subCondition2.endsWith(" == null"))) {
+													String prefix1 = subCondition1.substring(0, subCondition1.length() - 8);
+													String prefix2 = subCondition2.substring(0, subCondition2.length() - 8);
+													for(AbstractCodeMapping mapping : mappings) {
+														VariableDeclaration variableDeclaration1 = mapping.getFragment1().getVariableDeclaration(prefix1);
+														VariableDeclaration variableDeclaration2 = mapping.getFragment2().getVariableDeclaration(prefix1);
+														if(variableDeclaration1 != null && variableDeclaration2 != null) {
+															boolean relatedVariables = false;
+															if(variableDeclaration1.getInitializer() != null && variableDeclaration1.getInitializer().getExpression().startsWith(prefix2 + ".")) {
+																relatedVariables = true;
+															}
+															if(variableDeclaration2.getInitializer() != null && variableDeclaration2.getInitializer().getExpression().startsWith(prefix2 + ".")) {
+																relatedVariables = true;
+															}
+															if(relatedVariables) {
+																Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
+																additionallyMatchedStatements2.add(ifNode2);
+																CompositeReplacement composite = new CompositeReplacement(statement1.getString(), ifNode2.getString(), new LinkedHashSet<>(), additionallyMatchedStatements2);
+																info.addReplacement(composite);
+																splitConditional = true;
+																break;
+															}
+														}
+													}
+												}
 												String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(subCondition1, subCondition2);
 												String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(subCondition1, subCondition2);
 												if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {

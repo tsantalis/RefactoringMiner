@@ -3045,6 +3045,18 @@ public class UMLModelDiff {
 						if(refactoring != null) {
 							deleteRemovedOperation(removedOperation);
 							deleteAddedOperation(addedOperation);
+							Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<>();
+							for(Refactoring r : this.refactorings) {
+								if(r instanceof ExtractOperationRefactoring) {
+									ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
+									if(extract.getExtractedOperation().equals(addedOperation)) {
+										if(firstMapper.getMappings().size() > extract.getBodyMapper().getMappings().size()) {
+											refactoringsToBeRemoved.add(r);
+										}
+									}
+								}
+							}
+							refactorings.removeAll(refactoringsToBeRemoved);
 							refactorings.addAll(firstMapper.getRefactorings());
 							refactorings.add(refactoring);
 							UMLClass addedClass = getAddedClass(addedOperation.getClassName());
@@ -3157,6 +3169,18 @@ public class UMLModelDiff {
 						if(refactoring != null) {
 							deleteRemovedOperation(removedOperation);
 							deleteAddedOperation(addedOperation);
+							Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<>();
+							for(Refactoring r : this.refactorings) {
+								if(r instanceof ExtractOperationRefactoring) {
+									ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
+									if(extract.getExtractedOperation().equals(addedOperation)) {
+										if(firstMapper.getMappings().size() > extract.getBodyMapper().getMappings().size()) {
+											refactoringsToBeRemoved.add(r);
+										}
+									}
+								}
+							}
+							refactorings.removeAll(refactoringsToBeRemoved);
 							refactorings.addAll(firstMapper.getRefactorings());
 							refactorings.add(refactoring);
 							UMLClass addedClass = getAddedClass(addedOperation.getClassName());

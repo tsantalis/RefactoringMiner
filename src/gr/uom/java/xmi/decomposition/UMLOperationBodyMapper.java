@@ -6481,7 +6481,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 													int beginIndexS2 = subCondition2.indexOf(commonPrefix) + commonPrefix.length();
 													int endIndexS2 = subCondition2.lastIndexOf(commonSuffix);
 													String diff2 = beginIndexS2 > endIndexS2 ? "" :	subCondition2.substring(beginIndexS2, endIndexS2);
-													//TODO complete detection of Split Conditional in https://github.com/thymeleaf/thymeleaf/commit/378ba37750a9cb1b19a6db434dfa59308f721ea6#diff-fe47a14afb3317314d81d6f5278d04b52ae3ce0d65dedc1d84cb6c40aa3908ceR270-R278
+													for(Replacement replacement : info.getReplacements()) {
+														if(diff1.contains(replacement.getBefore()) && diff2.contains(replacement.getAfter())) {
+															String tmp = diff2.replace(replacement.getAfter(), replacement.getBefore());
+															if(tmp.equals(diff1) || (tmp.length() == diff1.length() && StringDistance.editDistance(diff1, tmp) <= 1)) {
+																Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
+																additionallyMatchedStatements2.add(ifNode2);
+																CompositeReplacement composite = new CompositeReplacement(statement1.getString(), ifNode2.getString(), new LinkedHashSet<>(), additionallyMatchedStatements2);
+																info.addReplacement(composite);
+																splitConditional = true;
+																break;
+															}
+														}
+													}
 												}
 											}
 										}

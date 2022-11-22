@@ -6369,6 +6369,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					CompositeStatementObject root1 = statement1.getParent();
 					CompositeStatementObject root2 = statement2.getParent();
 					List<CompositeStatementObject> ifNodes1 = new ArrayList<>(), ifNodes2 = new ArrayList<>();
+					if(root1 != null && root1.getParent() != null && root1.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && !alreadyMatched1(root1.getParent())) {
+						ifNodes1.add(root1.getParent());
+					}
+					if(root2 != null && root2.getParent() != null && root2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && !alreadyMatched2(root2.getParent())) {
+						ifNodes2.add(root2.getParent());
+					}
 					if(root1 != null && root2 != null) {
 						for(CompositeStatementObject innerNode : root1.getInnerNodes()) {
 							if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && !alreadyMatched1(innerNode)) {

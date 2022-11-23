@@ -4187,6 +4187,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					methodInvocationsToBeRemovedFromTheIntersection.add(methodInvocation);
 				}
 			}
+			for(String key : methodInvocationMap1.keySet()) {
+				if(key.startsWith(methodInvocation + ".") && !methodInvocationMap2.containsKey(key)) {
+					methodInvocationsToBeRemovedFromTheIntersection.add(methodInvocation);
+				}
+			}
+			for(String key : methodInvocationMap2.keySet()) {
+				if(key.startsWith(methodInvocation + ".") && !methodInvocationMap1.containsKey(key)) {
+					methodInvocationsToBeRemovedFromTheIntersection.add(methodInvocation);
+				}
+			}
 		}
 		methodInvocationIntersection.removeAll(methodInvocationsToBeRemovedFromTheIntersection);
 		// remove common methodInvocations from the two sets

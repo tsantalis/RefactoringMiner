@@ -4526,6 +4526,41 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				(statement1.getString().endsWith("false;\n") && statement2.getString().endsWith("true;\n"))) {
 			findReplacements(booleanLiterals1, booleanLiterals2, replacementInfo, ReplacementType.BOOLEAN_LITERAL);
 		}
+		if(statement1.getString().contains(" != null") || statement1.getString().contains(" == null")) {
+			for(String key : methodInvocationMap2.keySet()) {
+				List<? extends AbstractCall> calls2 = methodInvocationMap2.get(key);
+				for(AbstractCall call : calls2) {
+					if(call.getName().equals("isPresent") && call.getExpression() != null) {
+						String checkIfNull = call.getExpression() + " == null";
+						String checkIfNotNull = call.getExpression() + " != null";
+						if(statement1.getString().contains(checkIfNotNull)) {
+							Set<String> set1 = Set.of(checkIfNotNull);
+							Set<String> set2 = Set.of(call.actualString());
+							findReplacements(set1, set2, replacementInfo, ReplacementType.NULL_LITERAL_CHECK_REPLACED_WITH_OPTIONAL_IS_PRESENT_CHECK);
+						}
+						else if(statement1.getString().contains(checkIfNull)) {
+							Set<String> set1 = Set.of(checkIfNull);
+							Set<String> set2 = Set.of("!" + call.actualString());
+							findReplacements(set1, set2, replacementInfo, ReplacementType.NULL_LITERAL_CHECK_REPLACED_WITH_OPTIONAL_IS_PRESENT_CHECK);
+						}
+					}
+					else if(call.getName().equals("isEmpty") && call.getExpression() != null) {
+						String checkIfNull = call.getExpression() + " == null";
+						String checkIfNotNull = call.getExpression() + " != null";
+						if(statement1.getString().contains(checkIfNotNull)) {
+							Set<String> set1 = Set.of(checkIfNotNull);
+							Set<String> set2 = Set.of("!" + call.actualString());
+							findReplacements(set1, set2, replacementInfo, ReplacementType.NULL_LITERAL_CHECK_REPLACED_WITH_OPTIONAL_IS_EMPTY_CHECK);
+						}
+						else if(statement1.getString().contains(checkIfNull)) {
+							Set<String> set1 = Set.of(checkIfNull);
+							Set<String> set2 = Set.of(call.actualString());
+							findReplacements(set1, set2, replacementInfo, ReplacementType.NULL_LITERAL_CHECK_REPLACED_WITH_OPTIONAL_IS_EMPTY_CHECK);
+						}
+					}
+				}
+			}
+		}
 		if(!argumentsWithIdenticalMethodCalls(arguments1, arguments2, methodInvocations1, methodInvocations2)) {
 			findReplacements(arguments1, methodInvocations2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_METHOD_INVOCATION);
 			findReplacements(methodInvocations1, arguments2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_METHOD_INVOCATION);

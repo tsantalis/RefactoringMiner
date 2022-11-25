@@ -675,6 +675,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(numberOfMappings == mappings.size()) {
 			for(ListIterator<CompositeStatementObject> innerNodeIterator2 = innerNodes2.listIterator(); innerNodeIterator2.hasNext();) {
 				CompositeStatementObject composite = innerNodeIterator2.next();
+				Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
+				Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
 				List<AbstractCodeFragment> compositeLeaves = composite.getLeaves();
 				for(AbstractCodeMapping mapping : mappings) {
 					AbstractCodeFragment fragment1 = mapping.getFragment1();
@@ -698,9 +700,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						if(streamAPICallStatement != null && streamAPICalls != null) {
 							List<VariableDeclaration> lambdaParameters = nestedLambdaParameters(streamAPICallStatement.getLambdas());
-							Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
 							additionallyMatchedStatements1.add(streamAPICallStatement);
-							Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
 							additionallyMatchedStatements2.add(fragment2);
 							for(AbstractCall streamAPICall : streamAPICalls) {
 								if(streamAPICall.getName().equals("forEach")) {
@@ -764,7 +764,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
-				innerNodeIterator2.remove();
+				if(additionallyMatchedStatements2.contains(composite)) {
+					innerNodeIterator2.remove();
+				}
 			}
 		}
 		for(int i = numberOfMappings; i < mappings.size(); i++) {
@@ -942,6 +944,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(numberOfMappings == mappings.size()) {
 			for(ListIterator<CompositeStatementObject> innerNodeIterator1 = innerNodes1.listIterator(); innerNodeIterator1.hasNext();) {
 				CompositeStatementObject composite = innerNodeIterator1.next();
+				Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
+				Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
 				List<AbstractCodeFragment> compositeLeaves = composite.getLeaves();
 				for(AbstractCodeMapping mapping : mappings) {
 					AbstractCodeFragment fragment1 = mapping.getFragment1();
@@ -965,9 +969,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						if(streamAPICallStatement != null && streamAPICalls != null) {
 							List<VariableDeclaration> lambdaParameters = nestedLambdaParameters(streamAPICallStatement.getLambdas());
-							Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
 							additionallyMatchedStatements1.add(fragment1);
-							Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
 							additionallyMatchedStatements2.add(streamAPICallStatement);
 							for(AbstractCall streamAPICall : streamAPICalls) {
 								if(streamAPICall.getName().equals("forEach")) {
@@ -1031,7 +1033,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
-				innerNodeIterator1.remove();
+				if(additionallyMatchedStatements1.contains(composite)) {
+					innerNodeIterator1.remove();
+				}
 			}
 		}
 		for(int i = numberOfMappings; i < mappings.size(); i++) {
@@ -2805,6 +2809,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return true;
 		}
 		else if(innerNodes1.size() < innerNodes2.size()) {
+			if(innerNodes1.isEmpty() && !innerNodes2.isEmpty()) {
+				return false;
+			}
 			for(int i=0; i<innerNodes1.size(); i++) {
 				CompositeStatementObject comp1 = innerNodes1.get(i);
 				CompositeStatementObject comp2 = innerNodes2.get(i);
@@ -2815,6 +2822,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return true;
 		}
 		else if(innerNodes1.size() > innerNodes2.size()) {
+			if(innerNodes2.isEmpty() && !innerNodes1.isEmpty()) {
+				return false;
+			}
 			for(int i=0; i<innerNodes2.size(); i++) {
 				CompositeStatementObject comp1 = innerNodes1.get(i);
 				CompositeStatementObject comp2 = innerNodes2.get(i);

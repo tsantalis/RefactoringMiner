@@ -392,7 +392,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(container1.getBodyHashCode() != container2.getBodyHashCode() && containsCallToExtractedMethod) {
 				for(Iterator<AbstractCodeMapping> mappingIterator = mappings.iterator(); mappingIterator.hasNext();) {
 					AbstractCodeMapping mapping = mappingIterator.next();
-					if(!mapping.containsReplacement(ReplacementType.COMPOSITE)) {
+					if(!mapping.containsReplacement(ReplacementType.COMPOSITE) && !nestedUnderSplitConditional(mapping)) {
 						AbstractCodeFragment child1 = mapping.getFragment1();
 						AbstractCodeFragment child2 = mapping.getFragment2();
 						CompositeStatementObject parent1 = child1.getParent();
@@ -460,9 +460,47 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			nonMappedInnerNodesT2.addAll(innerNodes2);
 			
 			Set<AbstractCodeFragment> leavesToBeRemovedT1 = new LinkedHashSet<>();
+			Set<AbstractCodeFragment> leavesToBeRemovedT2 = new LinkedHashSet<>();
 			for(AbstractCodeFragment statement : getNonMappedLeavesT2()) {
 				temporaryVariableAssignment(statement, nonMappedLeavesT2);
+				if(statement.getVariableDeclarations().size() > 0) {
+					VariableDeclaration declaration = statement.getVariableDeclarations().get(0);
+					AbstractExpression initializer = declaration.getInitializer();
+					if(initializer != null && (initializer.getMethodInvocationMap().size() > 0 || initializer.getCreationMap().size() > 0)) {
+						for(AbstractCodeFragment nonMappedLeaf1 : nonMappedLeavesT1) {
+							boolean matchingVariableDeclaration = false;
+							List<VariableDeclaration> declarations1 = nonMappedLeaf1.getVariableDeclarations();
+							for(VariableDeclaration declaration1 : declarations1) {
+								if(declaration1.getVariableName().equals(declaration.getVariableName()) && declaration1.equalType(declaration)) {
+									matchingVariableDeclaration = true;
+									break;
+								}
+							}
+							if(!matchingVariableDeclaration && !containsMethodSignatureOfAnonymousClass(nonMappedLeaf1.getString()) &&
+									!nonMappedLeaf1.getString().endsWith("=" + initializer + ";\n") && !nonMappedLeaf1.getString().contains("=" + initializer + ".") &&
+									nonMappedLeaf1.getString().contains(initializer.getString())) {
+								UMLOperation inlinedOperation = callToInlinedMethod(nonMappedLeaf1);
+								boolean matchingInlinedOperationLeaf = false;
+								if(inlinedOperation != null) {
+									List<AbstractCodeFragment> inlinedOperationLeaves = inlinedOperation.getBody().getCompositeStatement().getLeaves();
+									for(AbstractCodeFragment inlinedOperationLeaf : inlinedOperationLeaves) {
+										if(statement.getString().equals(inlinedOperationLeaf.getString())) {
+											matchingInlinedOperationLeaf = true;
+											break;
+										}
+									}
+								}
+								if(!matchingInlinedOperationLeaf) {
+									ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, parentMapper != null);
+									refactorings.add(ref);
+									leavesToBeRemovedT2.add(statement);
+								}
+							}
+						}
+					}
+				}
 			}
+			nonMappedLeavesT2.removeAll(leavesToBeRemovedT2);
 			for(AbstractCodeFragment statement : getNonMappedLeavesT1()) {
 				inlinedVariableAssignment(statement, nonMappedLeavesT2);
 				if(statement.getVariableDeclarations().size() > 0) {
@@ -479,7 +517,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 							if(!matchingVariableDeclaration && !containsMethodSignatureOfAnonymousClass(nonMappedLeaf2.getString()) &&
-									!nonMappedLeaf2.getString().endsWith("=" + initializer + ";\n") &&
+									!nonMappedLeaf2.getString().endsWith("=" + initializer + ";\n") && !nonMappedLeaf2.getString().contains("=" + initializer + ".") &&
 									nonMappedLeaf2.getString().contains(initializer.getString())) {
 								InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, parentMapper != null);
 								refactorings.add(ref);
@@ -497,6 +535,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
 				child.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
 				parent.getStatements().size() == 2 && parent.getStatements().indexOf(child) == 1;
+	}
+
+	private boolean nestedUnderSplitConditional(AbstractCodeMapping mapping) {
+		for(Refactoring r : this.refactorings) {
+			if(r instanceof SplitConditionalRefactoring) {
+				SplitConditionalRefactoring split = (SplitConditionalRefactoring)r;
+				boolean fragmentSubsumed1 = split.getOriginalConditional().getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo());
+				boolean fragmentSubsumed2 = false;
+				for(AbstractCodeFragment conditional2 : split.getSplitConditionals()) {
+					if(conditional2.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo())) {
+						fragmentSubsumed2 = true;
+						break;
+					}
+				}
+				if(fragmentSubsumed1 && fragmentSubsumed2) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public UMLOperationBodyMapper(UMLAttribute removedAttribute, UMLAttribute addedAttribute, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
@@ -6529,7 +6587,29 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 												}
 												String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(subCondition1, subCondition2);
 												String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(subCondition1, subCondition2);
-												if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
+												if(commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
+													int endIndexS1 = subCondition1.lastIndexOf(commonSuffix);
+													String diff1 = subCondition1.substring(0, endIndexS1);
+													int endIndexS2 = subCondition2.lastIndexOf(commonSuffix);
+													String diff2 = subCondition2.substring(0, endIndexS2);
+													for(AbstractCodeFragment fragment2 : info.getStatements2()) {
+														if(fragment2.getVariableDeclarations().size() > 0) {
+															VariableDeclaration variableDeclaration = fragment2.getVariableDeclarations().get(0);
+															if(variableDeclaration.getVariableName().equals(diff2) && variableDeclaration.getInitializer() != null &&
+																	variableDeclaration.getInitializer().getString().equals(diff1)) {
+																Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
+																additionallyMatchedStatements2.add(ifNode2);
+																CompositeReplacement composite = new CompositeReplacement(statement1.getString(), ifNode2.getString(), new LinkedHashSet<>(), additionallyMatchedStatements2);
+																info.addReplacement(composite);
+																splitConditional = true;
+																ExtractVariableRefactoring extract = new ExtractVariableRefactoring(variableDeclaration, container1, container2, parentMapper != null);
+																refactorings.add(extract);
+																break;
+															}
+														}
+													}
+												}
+												else if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
 													int beginIndexS1 = subCondition1.indexOf(commonPrefix) + commonPrefix.length();
 													int endIndexS1 = subCondition1.lastIndexOf(commonSuffix);
 													String diff1 = beginIndexS1 > endIndexS1 ? "" :	subCondition1.substring(beginIndexS1, endIndexS1);
@@ -7720,6 +7800,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return false;
+	}
+
+	private UMLOperation callToInlinedMethod(AbstractCodeFragment leaf1) {
+		if(classDiff != null) {
+			List<UMLOperation> removedOperations = classDiff.getRemovedOperations();
+			if(removedOperations.size() > 0) {
+				AbstractCall invocation = leaf1.invocationCoveringEntireFragment();
+				if(invocation == null) {
+					invocation = leaf1.assignmentInvocationCoveringEntireStatement();
+				}
+				UMLOperation matchingOperation = null;
+				if(invocation != null && (matchingOperation = matchesOperation(invocation, removedOperations, container1)) != null && matchingOperation.getBody() != null) {
+					return matchingOperation;
+				}
+			}
+		}
+		return null;
 	}
 
 	private boolean containsCallToExtractedMethod(List<? extends AbstractCodeFragment> leaves2) {

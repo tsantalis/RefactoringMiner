@@ -6488,6 +6488,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(root2 != null && root2.getParent() != null && root2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && !alreadyMatched2(root2.getParent())) {
 						ifNodes2.add(root2.getParent());
 					}
+					if(root1.getParent() == null && statement1 instanceof CompositeStatementObject && root2.getParent() == null && statement2 instanceof CompositeStatementObject) {
+						root1 = (CompositeStatementObject)statement1;
+						root2 = (CompositeStatementObject)statement2;
+					}
 					if(root1 != null && root2 != null) {
 						for(CompositeStatementObject innerNode : root1.getInnerNodes()) {
 							if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && !alreadyMatched1(innerNode)) {
@@ -6521,22 +6525,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									CompositeReplacement composite = new CompositeReplacement(statement1.getString(), ifNode2.getString(), new LinkedHashSet<>(), additionallyMatchedStatements2);
 									info.addReplacement(composite);
 									splitConditional = true;
-									for(String subCondition1 : subConditionsAsList1) {
-										for(String subCondition2 : subConditionsAsList) {
-											if(subCondition1.equals("!" + subCondition2)) {
-												Replacement r2 = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
-												info.addReplacement(r2);
-												invertedConditionals++;
-												break;
-											}
-											if(subCondition2.equals("!" + subCondition1)) {
-												Replacement r2 = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
-												info.addReplacement(r2);
-												invertedConditionals++;
-												break;
-											}
-										}
-									}
+									invertedConditionals = checkForInvertedConditionals(subConditionsAsList1, subConditionsAsList, info);
 								}
 								else if(statement1 instanceof CompositeStatementObject) {
 									CompositeStatementObject composite1 = (CompositeStatementObject)statement1;
@@ -6648,22 +6637,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
-				for(String subCondition1 : subConditionsAsList1) {
-					for(String subCondition2 : subConditionsAsList2) {
-						if(subCondition1.equals("!" + subCondition2)) {
-							Replacement r = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
-							info.addReplacement(r);
-							invertedConditionals++;
-							break;
-						}
-						if(subCondition2.equals("!" + subCondition1)) {
-							Replacement r = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
-							info.addReplacement(r);
-							invertedConditionals++;
-							break;
-						}
-					}
-				}
+				invertedConditionals = checkForInvertedConditionals(subConditionsAsList1, subConditionsAsList2, info);
 				if(invertedConditionals > 0 || matches > 0) {
 					List<Replacement> operatorReplacements = info.getReplacements(ReplacementType.INFIX_OPERATOR);
 					boolean booleanOperatorReversed = false;
@@ -6712,6 +6686,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return false;
+	}
+
+	public static int checkForInvertedConditionals(List<String> subConditionsAsList1, List<String> subConditionsAsList2, ReplacementInfo info) {
+		int invertedConditionals = 0;
+		for(String subCondition1 : subConditionsAsList1) {
+			for(String subCondition2 : subConditionsAsList2) {
+				if(subCondition1.equals("!" + subCondition2)) {
+					Replacement r2 = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
+					info.addReplacement(r2);
+					invertedConditionals++;
+					break;
+				}
+				if(subCondition2.equals("!" + subCondition1)) {
+					Replacement r2 = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
+					info.addReplacement(r2);
+					invertedConditionals++;
+					break;
+				}
+			}
+		}
+		return invertedConditionals;
 	}
 
 	private static boolean pass(List<String> subConditionsAsList1, List<String> subConditionsAsList2, Set<String> intersection,

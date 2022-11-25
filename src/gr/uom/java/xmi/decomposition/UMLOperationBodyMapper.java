@@ -2735,6 +2735,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return true;
 			}
 		}
+		else {
+			int identicalStatements = 0;
+			if(size1 < size2) {
+				for(int i=0; i<size1; i++) {
+					if(bodyStringRepresentation2.contains(bodyStringRepresentation1.get(i))) {
+						identicalStatements++;
+					}
+				}
+			}
+			else {
+				for(int i=0; i<size2; i++) {
+					if(bodyStringRepresentation1.contains(bodyStringRepresentation2.get(i))) {
+						identicalStatements++;
+					}
+				}
+			}
+			int maxSize = Math.max(size1, size2);
+			if(Math.abs(maxSize - identicalStatements) <= maxSize/4.0) {
+				return true;
+			}
+		}
 		if(!bodyStringRepresentation1.contains(statement2.getString()) && !bodyStringRepresentation2.contains(statement1.getString())) {
 			List<UMLComment> comments1 = container1.getComments();
 			List<String> commentsWithinStatement1 = new ArrayList<>();

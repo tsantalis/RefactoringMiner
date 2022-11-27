@@ -29,6 +29,7 @@ public abstract class AbstractCall implements LocationInfoProvider {
 	protected List<String> arguments;
 	protected LocationInfo locationInfo;
 	protected StatementCoverageType coverage = StatementCoverageType.NONE;
+	private static final List<String> logNames = List.of("trace", "debug", "info", "warn", "error", "fatal");
 
 	public String getExpression() {
 		return expression;
@@ -117,6 +118,23 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		}
 		sb.append(")");
 		return sb.toString();
+	}
+
+	public boolean isLog() {
+		return loggerExpression() && matchesLogName();
+	}
+
+	public boolean loggerExpression() {
+		if(expression != null) {
+			if(expression.equals("log") || expression.equals("LOG") || expression.equals("logger") || expression.equals("LOGGER")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean matchesLogName() {
+		return logNames.contains(this.getName());
 	}
 
 	public boolean expressionIsNullOrThis() {
@@ -412,11 +430,8 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		if(commonTokens == Math.min(tokens1.length, tokens2.length)) {
 			return true;
 		}
-		if(this.getExpression() != null && this.getExpression().toLowerCase().startsWith("log") &&
-				call.getExpression() != null && call.getExpression().toLowerCase().startsWith("log") &&
-				this.getExpression().equals(call.getExpression())) {
-			List<String> logNames = List.of("trace", "debug", "info", "warn", "error", "fatal");
-			if(logNames.contains(this.getName()) && logNames.contains(call.getName())) {
+		if(this.loggerExpression() && call.loggerExpression() && this.getExpression().equals(call.getExpression())) {
+			if(this.matchesLogName() && call.matchesLogName()) {
 				if(this.getArguments().size() == call.getArguments().size() && this.getArguments().size() == 1) {
 					String argument1 = this.getArguments().get(0);
 					String argument2 = call.getArguments().get(0);

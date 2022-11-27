@@ -165,9 +165,19 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				List<Double> levelParentEditDistance2 = o.levelParentEditDistance();
 				double nLevelParentEditDistance1 = 0, nLevelParentEditDistance2 = 0;
 				int minSize = Math.min(levelParentEditDistance1.size(), levelParentEditDistance2.size());
+				int headZeros1 = 0;
+				int headZeros2 = 0;
 				for(int i=0; i<minSize; i++) {
-					nLevelParentEditDistance1 += levelParentEditDistance1.get(i);
-					nLevelParentEditDistance2 += levelParentEditDistance2.get(i);
+					double d1 = levelParentEditDistance1.get(i);
+					nLevelParentEditDistance1 += d1;
+					if(d1 == 0 && nLevelParentEditDistance1 == 0) {
+						headZeros1++;
+					}
+					double d2 = levelParentEditDistance2.get(i);
+					nLevelParentEditDistance2 += d2;
+					if(d2 == 0 && nLevelParentEditDistance2 == 0) {
+						headZeros2++;
+					}
 				}
 				boolean identicalCompositeChildren1 = this.identicalCompositeChildrenStructure();
 				boolean identicalCompositeChildren2 = o.identicalCompositeChildrenStructure();
@@ -177,6 +187,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					} 
 					else if(nLevelParentEditDistance2 == 0 && nLevelParentEditDistance1 > 0) { 
 						return 1; 
+					}
+					if(headZeros1 > headZeros2) {
+						return -1;
+					}
+					else if(headZeros2 > headZeros1) {
+						return 1;
 					}
 				}
 				if((levelParentEditDistance1.size() != levelParentEditDistance2.size() ||
@@ -402,27 +418,11 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			}
 			double secondLevel = parentEditDistance(secondLevelParent1, secondLevelParent2);
 			levelParentEditDistance.add(secondLevel);
-			//if the first two parent levels are identical, return
-			if(levelParentEditDistance.size() == 2 && levelParentEditDistance.get(0) == 0 && levelParentEditDistance.get(1) == 0) {
-				break;
-			}
 			currentLevel1 = secondLevelParent1;
 			currentLevel2 = secondLevelParent2;
 		}
 		this.levelParentEditDistance = levelParentEditDistance;
 		return levelParentEditDistance;
-	}
-
-	private double parentEditDistance() {
-		CompositeStatementObject parent1 = getFragment1().getParent();
-		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
-			parent1 = parent1.getParent();
-		}
-		CompositeStatementObject parent2 = getFragment2().getParent();
-		while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
-			parent2 = parent2.getParent();
-		}
-		return parentEditDistance(parent1, parent2);
 	}
 
 	private double parentEditDistance(CompositeStatementObject parent1, CompositeStatementObject parent2) {

@@ -66,6 +66,14 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				statement.startsWith("continue;");
 	}
 
+	public boolean isLogCall() {
+		AbstractCall call = invocationCoveringEntireFragment();
+		if(call != null && call.isLog()) {
+			return true;
+		}
+		return false;
+	}
+
 	public void replaceParametersWithArguments(Map<String, String> parameterToArgumentMap) {
 		String afterReplacements = getString();
 		for(String parameter : parameterToArgumentMap.keySet()) {

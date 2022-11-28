@@ -47,7 +47,6 @@ import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
 import gr.uom.java.xmi.diff.UMLParameterDiff;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -3069,7 +3068,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							continue;
 						}
 						if(!mappingSet.isEmpty()) {
-							AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
+							Pair<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
 							if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
 								LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
 								addToMappings(bestMapping, mappingSet);
@@ -3128,7 +3127,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							leafIterator1.remove();
 						}
 						else {
-							AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
+							Pair<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
 							if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
 								LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
 								addToMappings(bestMapping, mappingSet);
@@ -3193,16 +3192,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(!mappingSet.isEmpty()) {
-						AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
+						Pair<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
+						Map<LeafMapping, Pair<CompositeStatementObject, CompositeStatementObject>> catchBlockMap = null;
 						if(variableDeclarationMappingsWithSameReplacementTypes(mappingSet)) {
 							//postpone mapping
 							postponedMappingSets.add(mappingSet);
 						}
 						else if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
 							LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
-							addToMappings(bestMapping, mappingSet);
-							leaves2.remove(bestMapping.getFragment2());
-							leafIterator1.remove();
+							if(canBeAdded(bestMapping, parameterToArgumentMap)) {
+								addToMappings(bestMapping, mappingSet);
+								leaves2.remove(bestMapping.getFragment2());
+								leafIterator1.remove();
+							}
+						}
+						else if((catchBlockMap = allMappingsNestedUnderCatchBlocks(mappingSet)) != null) {
+							LeafMapping bestMapping = findBestMappingBasedOnTryBlockMappings(catchBlockMap, mappingSet);
+							if(canBeAdded(bestMapping, parameterToArgumentMap)) {
+								addToMappings(bestMapping, mappingSet);
+								leaves2.remove(bestMapping.getFragment2());
+								leafIterator1.remove();
+							}
 						}
 						else {
 							LeafMapping minStatementMapping = mappingSet.first();
@@ -3242,7 +3252,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							continue;
 						}
 						if(!mappingSet.isEmpty()) {
-							AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
+							Pair<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
 							if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
 								LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
 								addToMappings(bestMapping, mappingSet);
@@ -3325,7 +3335,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							leafIterator2.remove();
 						}
 						else {
-							AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
+							Pair<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
 							if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
 								LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
 								addToMappings(bestMapping, mappingSet);
@@ -3430,16 +3440,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(!mappingSet.isEmpty()) {
-						AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
+						Pair<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
+						Map<LeafMapping, Pair<CompositeStatementObject, CompositeStatementObject>> catchBlockMap = null;
 						if(variableDeclarationMappingsWithSameReplacementTypes(mappingSet)) {
 							//postpone mapping
 							postponedMappingSets.add(mappingSet);
 						}
 						else if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
 							LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
-							addToMappings(bestMapping, mappingSet);
-							leaves1.remove(bestMapping.getFragment1());
-							leafIterator2.remove();
+							if(canBeAdded(bestMapping, parameterToArgumentMap)) {
+								addToMappings(bestMapping, mappingSet);
+								leaves1.remove(bestMapping.getFragment1());
+								leafIterator2.remove();
+							}
+						}
+						else if((catchBlockMap = allMappingsNestedUnderCatchBlocks(mappingSet)) != null) {
+							LeafMapping bestMapping = findBestMappingBasedOnTryBlockMappings(catchBlockMap, mappingSet);
+							if(canBeAdded(bestMapping, parameterToArgumentMap)) {
+								addToMappings(bestMapping, mappingSet);
+								leaves1.remove(bestMapping.getFragment1());
+								leafIterator2.remove();
+							}
 						}
 						else {
 							if(isScopedMatch(startMapping, endMapping, parentMapping) && mappingSet.size() > 1) {
@@ -3926,7 +3947,51 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private LeafMapping findBestMappingBasedOnMappedSwitchCases(AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> switchParentEntry, TreeSet<LeafMapping> mappingSet) {
+	private LeafMapping findBestMappingBasedOnTryBlockMappings(Map<LeafMapping, Pair<CompositeStatementObject, CompositeStatementObject>> map, TreeSet<LeafMapping> mappingSet) {
+		Map<LeafMapping, Boolean> existsMappingInParentTryBlocks = new LinkedHashMap<>();
+		for(LeafMapping mapping : map.keySet()) {
+			Pair<CompositeStatementObject, CompositeStatementObject> pair = map.get(mapping);
+			TryStatementObject try1 = pair.getLeft().getTryContainer().isPresent() ? pair.getLeft().getTryContainer().get() : null;
+			TryStatementObject try2 = pair.getRight().getTryContainer().isPresent() ? pair.getRight().getTryContainer().get() : null;
+			if(try1 != null && try2 != null) {
+				for(AbstractCodeMapping alreadyEstablishedMapping : mappings) {
+					if(try1.getLocationInfo().subsumes(alreadyEstablishedMapping.getFragment1().getLocationInfo()) &&
+							try2.getLocationInfo().subsumes(alreadyEstablishedMapping.getFragment2().getLocationInfo())) {
+						existsMappingInParentTryBlocks.put(mapping, true);
+						break;
+					}
+				}
+				if(!existsMappingInParentTryBlocks.containsKey(mapping)) {
+					existsMappingInParentTryBlocks.put(mapping, false);
+				}
+			}
+		}
+		Collection<Boolean> values = existsMappingInParentTryBlocks.values();
+		if(values.contains(false) && values.contains(true)) {
+			for(LeafMapping mapping : existsMappingInParentTryBlocks.keySet()) {
+				if(existsMappingInParentTryBlocks.get(mapping)) {
+					return mapping;
+				}
+			}
+		}
+		return mappingSet.first();
+	}
+
+	private Map<LeafMapping, Pair<CompositeStatementObject, CompositeStatementObject>> allMappingsNestedUnderCatchBlocks(Set<LeafMapping> mappingSet) {
+		Map<LeafMapping, Pair<CompositeStatementObject, CompositeStatementObject>> map = new LinkedHashMap<>();
+		for(LeafMapping mapping : mappingSet) {
+			Pair<CompositeStatementObject, CompositeStatementObject> pair = mapping.nestedUnderCatchBlock();
+			if(pair != null) {
+				map.put(mapping, pair);
+			}
+		}
+		if(map.size() == mappingSet.size()) {
+			return map;
+		}
+		return null;
+	}
+
+	private LeafMapping findBestMappingBasedOnMappedSwitchCases(Pair<CompositeStatementObject, CompositeStatementObject> switchParentEntry, TreeSet<LeafMapping> mappingSet) {
 		CompositeStatementObject switchParent1 = switchParentEntry.getKey();
 		CompositeStatementObject switchParent2 = switchParentEntry.getValue();
 		AbstractCodeMapping currentSwitchCase = null;
@@ -3984,7 +4049,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return mappingSet.first();
 	}
 
-	private AbstractMap.SimpleEntry<CompositeStatementObject, CompositeStatementObject> multipleMappingsUnderTheSameSwitch(Set<LeafMapping> mappingSet) {
+	private Pair<CompositeStatementObject, CompositeStatementObject> multipleMappingsUnderTheSameSwitch(Set<LeafMapping> mappingSet) {
 		CompositeStatementObject switchParent1 = null;
 		CompositeStatementObject switchParent2 = null;
 		if(mappingSet.size() > 1) {
@@ -4013,7 +4078,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		if(switchParent1 != null && switchParent2 != null) {
-			return new AbstractMap.SimpleEntry<>(switchParent1, switchParent2);
+			return Pair.of(switchParent1, switchParent2);
 		}
 		return null;
 	}

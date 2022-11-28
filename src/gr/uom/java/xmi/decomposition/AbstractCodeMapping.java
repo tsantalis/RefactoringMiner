@@ -4,9 +4,11 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
@@ -545,6 +547,24 @@ public abstract class AbstractCodeMapping {
 			}
 		}
 		return replacements;
+	}
+
+	public Pair<CompositeStatementObject, CompositeStatementObject> nestedUnderCatchBlock() {
+		CompositeStatementObject parent1 = fragment1.getParent();
+		CompositeStatementObject parent2 = fragment2.getParent();
+		while(parent1 != null && parent2 != null) {
+			if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
+					parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+				return Pair.of(parent1, parent2);
+			}
+			else if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) &&
+					parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
+				return Pair.of(parent1, parent2);
+			}
+			parent1 = parent1.getParent();
+			parent2 = parent2.getParent();
+		}
+		return null;
 	}
 
 	private static boolean involvesMethodInvocation(Replacement replacement) {

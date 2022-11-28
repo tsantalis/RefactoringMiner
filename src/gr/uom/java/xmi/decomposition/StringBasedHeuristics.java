@@ -238,6 +238,16 @@ public class StringBasedHeuristics {
 					}
 				}
 			}
+			for(String infixExpression2 : infixExpressions2) {
+				if(infixExpression2.equals(diff1) || infixExpression2.equals("(" + diff1) || infixExpression2.equals(diff1 + ")")) {
+					for(Replacement r : info.getReplacements()) {
+						if(diff1.contains(r.getAfter())) {
+							return false;
+						}
+					}
+					return true;
+				}
+			}
 		}
 		return false;
 	}

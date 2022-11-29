@@ -4,9 +4,11 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
@@ -213,6 +215,7 @@ public abstract class AbstractCodeMapping {
 								if(identical()) {
 									identicalWithExtractedVariable = true;
 								}
+								return;
 							}
 						}
 					}
@@ -230,6 +233,7 @@ public abstract class AbstractCodeMapping {
 						if(identical()) {
 							identicalWithExtractedVariable = true;
 						}
+						return;
 					}
 				}
 			}
@@ -244,6 +248,7 @@ public abstract class AbstractCodeMapping {
 								if(getFragment1().getString().contains(initializerBeforeRename) && getFragment2().getString().contains(variableName)) {
 									ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 									processExtractVariableRefactoring(ref, refactorings);
+									return;
 								}
 							}
 						}
@@ -273,6 +278,7 @@ public abstract class AbstractCodeMapping {
 							if(identical()) {
 								identicalWithExtractedVariable = true;
 							}
+							return;
 						}
 					}
 				}
@@ -298,6 +304,7 @@ public abstract class AbstractCodeMapping {
 								if(identical()) {
 									identicalWithInlinedVariable = true;
 								}
+								return;
 							}
 						}
 					}
@@ -315,6 +322,7 @@ public abstract class AbstractCodeMapping {
 						if(identical()) {
 							identicalWithInlinedVariable = true;
 						}
+						return;
 					}
 				}
 			}
@@ -341,6 +349,7 @@ public abstract class AbstractCodeMapping {
 							if(identical()) {
 								identicalWithInlinedVariable = true;
 							}
+							return;
 						}
 					}
 				}
@@ -349,7 +358,19 @@ public abstract class AbstractCodeMapping {
 	}
 
 	private boolean identical() {
-		return getReplacements().size() == 1 && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size();
+		if(getReplacements().size() == 1 && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size()) {
+			return true;
+		}
+		int stringLiteralReplacents = 0;
+		for(Replacement r : replacements) {
+			if((r.getBefore().startsWith("\"") && r.getBefore().endsWith("\"")) || (r.getAfter().startsWith("\"") && r.getAfter().endsWith("\""))) {
+				stringLiteralReplacents++;
+			}
+		}
+		if(stringLiteralReplacents == replacements.size()) {
+			return true;
+		}
+		return false;
 	}
 
 	private boolean wrappedAsArgument(AbstractExpression initializer, String replacedExpression) {
@@ -526,6 +547,24 @@ public abstract class AbstractCodeMapping {
 			}
 		}
 		return replacements;
+	}
+
+	public Pair<CompositeStatementObject, CompositeStatementObject> nestedUnderCatchBlock() {
+		CompositeStatementObject parent1 = fragment1.getParent();
+		CompositeStatementObject parent2 = fragment2.getParent();
+		while(parent1 != null && parent2 != null) {
+			if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
+					parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+				return Pair.of(parent1, parent2);
+			}
+			else if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) &&
+					parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
+				return Pair.of(parent1, parent2);
+			}
+			parent1 = parent1.getParent();
+			parent2 = parent2.getParent();
+		}
+		return null;
 	}
 
 	private static boolean involvesMethodInvocation(Replacement replacement) {

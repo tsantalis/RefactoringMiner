@@ -91,7 +91,7 @@ public class InlineOperationDetection {
 		for(int i=0; i<size; i++) {
 			parameterToArgumentMap.put(parameters.get(i), arguments.get(i));
 		}
-		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap, new LinkedHashMap<String, String>(), classDiff, nested);
+		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap, new LinkedHashMap<String, String>(), classDiff, removedOperationInvocation, nested);
 		return operationBodyMapper;
 	}
 

@@ -290,6 +290,19 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return null;
 	}
 
+	public AbstractCall fieldAssignmentInvocationCoveringEntireStatement() {
+		Map<String, List<AbstractCall>> methodInvocationMap = getMethodInvocationMap();
+		for(String methodInvocation : methodInvocationMap.keySet()) {
+			List<AbstractCall> invocations = methodInvocationMap.get(methodInvocation);
+			for(AbstractCall invocation : invocations) {
+				if(expressionIsTheRightHandSideOfAssignmentAndLeftHandSideIsField(methodInvocation)) {
+					return invocation;
+				}
+			}
+		}
+		return null;
+	}
+
 	private boolean isCastExpressionCoveringEntireFragment(String expression) {
 		String statement = getString();
 		int index = -1;
@@ -358,6 +371,20 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			if(variables.size() > 0) {
 				String s = variables.get(0) + "=" + expression + ";\n";
 				if(statement.equals(s)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean expressionIsTheRightHandSideOfAssignmentAndLeftHandSideIsField(String expression) {
+		String statement = getString();
+		if(statement.contains("=")) {
+			List<String> variables = getVariables();
+			if(variables.size() > 0) {
+				String s = variables.get(0) + "=" + expression + ";\n";
+				if(statement.equals(s) && variables.get(0).startsWith("this.")) {
 					return true;
 				}
 			}

@@ -1705,8 +1705,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public UMLOperationBodyMapper(UMLOperation removedOperation, UMLOperationBodyMapper operationBodyMapper,
-			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2, UMLAbstractClassDiff classDiff, boolean nested) throws RefactoringMinerTimedOutException {
+			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2, UMLAbstractClassDiff classDiff, AbstractCall operationInvocation, boolean nested) throws RefactoringMinerTimedOutException {
 		this.parentMapper = operationBodyMapper;
+		this.operationInvocation = operationInvocation;
 		this.nested = nested;
 		this.parameterToArgumentMap1 = parameterToArgumentMap1;
 		this.parameterToArgumentMap2 = parameterToArgumentMap2;
@@ -8142,14 +8143,50 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public boolean containsExtractedOrInlinedOperationInvocation(AbstractCodeMapping mapping) {
+		if(containsExtractedOperationInvocation(mapping))
+			return true;
+		if(containsInlinedOperationInvocation(mapping))
+			return true;
+		return false;
+	}
+
+	public boolean containsInlinedOperationInvocation(AbstractCodeMapping mapping) {
+		return containsOperationInvocation(mapping, mapping.getFragment1());
+	}
+
+	public boolean containsExtractedOperationInvocation(AbstractCodeMapping mapping) {
+		return containsOperationInvocation(mapping, mapping.getFragment2());
+	}
+
+	private boolean containsOperationInvocation(AbstractCodeMapping mapping, AbstractCodeFragment fragment) {
 		if(operationInvocation != null) {
-			if(mapping.getFragment2().getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
-				return true;
+			if(fragment.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
+				AbstractCall invocation = fragment.invocationCoveringEntireFragment();
+				if(invocation == null) {
+					invocation = fragment.assignmentInvocationCoveringEntireStatement();
+				}
+				if(invocation != null && invocation.equals(operationInvocation)) {
+					return true;
+				}
+				else if(fragment instanceof CompositeStatementObject) {
+					List<AbstractCodeFragment> leaves = ((CompositeStatementObject)fragment).getLeaves();
+					for(AbstractCodeFragment leaf : leaves) {
+						if(leaf.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
+							AbstractCall leafInvocation = leaf.invocationCoveringEntireFragment();
+							if(leafInvocation == null) {
+								leafInvocation = leaf.assignmentInvocationCoveringEntireStatement();
+							}
+							if(leafInvocation != null && leafInvocation.equals(operationInvocation)) {
+								return true;
+							}
+						}
+					}
+				}
 			}
 			if(parentMapper != null) {
 				for(UMLOperationBodyMapper childMapper : parentMapper.childMappers) {
 					if(childMapper.operationInvocation != null && !this.operationInvocation.getName().equals(childMapper.operationInvocation.getName())) {
-						Map<String, List<AbstractCall>> methodInvocationMap = mapping.getFragment2().getMethodInvocationMap();
+						Map<String, List<AbstractCall>> methodInvocationMap = fragment.getMethodInvocationMap();
 						for(String key : methodInvocationMap.keySet()) {
 							for(AbstractCall call : methodInvocationMap.get(key)) {
 								if(call.equals(childMapper.operationInvocation)) {
@@ -8163,7 +8200,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		else if(childMappers.size() > 0) {
 			for(UMLOperationBodyMapper childMapper : childMappers) {
-				if(childMapper.containsExtractedOrInlinedOperationInvocation(mapping)) {
+				if(!childMapper.operationInvocation.getName().equals(this.container2.getName()) &&
+						!childMapper.operationInvocation.getName().equals(this.container1.getName()) &&
+						childMapper.containsExtractedOrInlinedOperationInvocation(mapping)) {
 					return true;
 				}
 			}

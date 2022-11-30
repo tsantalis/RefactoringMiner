@@ -6595,18 +6595,79 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		boolean arrayCreation1 = creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement1.isArray();
 		boolean arrayCreation2 = creationCoveringTheEntireStatement2 != null && creationCoveringTheEntireStatement2.isArray();
 		if(!arrayCreation1 && !arrayCreation2 && !containsMethodSignatureOfAnonymousClass(s1) && !containsMethodSignatureOfAnonymousClass(s2)) {
-			if((s1.contains("||") || s1.contains("&&") || s2.contains("||") || s2.contains("&&"))) {
-				String conditional1 = prepareConditional(s1);
-				String conditional2 = prepareConditional(s2);
-				String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
-				String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(conditional2);
-				List<String> subConditionsAsList1 = new ArrayList<String>();
-				for(String s : subConditions1) {
-					subConditionsAsList1.add(s.trim());
+			List<String> ternaryConditionals1 = new ArrayList<>();
+			for(TernaryOperatorExpression ternary : statement1.getTernaryOperatorExpressions()) {
+				String thenExpression = ternary.getThenExpression().getString();
+				String temp1 = new String(thenExpression);
+				for(Replacement replacement : info.getReplacements()) {
+					temp1 = ReplacementUtil.performReplacement(temp1, replacement.getBefore(), replacement.getAfter());
 				}
+				ternaryConditionals1.add(temp1);
+				String elseExpression = ternary.getElseExpression().getString();
+				String temp2 = new String(elseExpression);
+				for(Replacement replacement : info.getReplacements()) {
+					temp2 = ReplacementUtil.performReplacement(temp2, replacement.getBefore(), replacement.getAfter());
+				}
+				ternaryConditionals1.add(temp2);
+			}
+			List<String> ternaryConditionals2 = new ArrayList<>();
+			for(TernaryOperatorExpression ternary : statement2.getTernaryOperatorExpressions()) {
+				ternaryConditionals2.add(ternary.getThenExpression().getString());
+				ternaryConditionals2.add(ternary.getElseExpression().getString());
+			}
+			boolean containsTernaryOperatorReplacement = false;
+			for(Replacement replacement : info.getReplacements()) {
+				if(replacement.getAfter().contains("?") && replacement.getAfter().contains(":")) {
+					containsTernaryOperatorReplacement = true;
+				}
+			}
+			boolean ternaryConditions = !containsTernaryOperatorReplacement && ternaryConditionals1.isEmpty() != ternaryConditionals2.isEmpty() &&
+					statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType());
+			boolean containLogicalOperator = s1.contains("||") || s1.contains("&&") || s2.contains("||") || s2.contains("&&");
+			if(containLogicalOperator || ternaryConditions) {
+				List<String> subConditionsAsList1 = new ArrayList<String>();
 				List<String> subConditionsAsList2 = new ArrayList<String>();
-				for(String s : subConditions2) {
-					subConditionsAsList2.add(s.trim());
+				if(ternaryConditions && !containLogicalOperator) {
+					if(ternaryConditionals1.isEmpty() && ternaryConditionals2.size() > 0) {
+						String conditional1 = prepareConditional(s1);
+						String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
+						for(String s : subConditions1) {
+							subConditionsAsList1.add(s.trim());
+						}
+						for(String ternaryConditional : ternaryConditionals2) {
+							String conditional2 = prepareConditional(ternaryConditional);
+							String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(conditional2);
+							for(String s : subConditions2) {
+								subConditionsAsList2.add(s.trim());
+							}
+						}
+					}
+					else if(ternaryConditionals2.isEmpty() && ternaryConditionals1.size() > 0) {
+						for(String ternaryConditional : ternaryConditionals1) {
+							String conditional1 = prepareConditional(ternaryConditional);
+							String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
+							for(String s : subConditions1) {
+								subConditionsAsList1.add(s.trim());
+							}
+						}
+						String conditional2 = prepareConditional(s2);
+						String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(conditional2);
+						for(String s : subConditions2) {
+							subConditionsAsList2.add(s.trim());
+						}
+					}
+				}
+				else {
+					String conditional1 = prepareConditional(s1);
+					String conditional2 = prepareConditional(s2);
+					String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
+					String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(conditional2);
+					for(String s : subConditions1) {
+						subConditionsAsList1.add(s.trim());
+					}
+					for(String s : subConditions2) {
+						subConditionsAsList2.add(s.trim());
+					}
 				}
 				Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2);
 				int matches = matchCount(intersection, info);
@@ -6620,9 +6681,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					List<CompositeStatementObject> ifNodes1 = new ArrayList<>(), ifNodes2 = new ArrayList<>();
 					if(root1 != null && root1.getParent() != null && root1.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && !alreadyMatched1(root1.getParent())) {
 						ifNodes1.add(root1.getParent());
+						if(hasElseIfBranch(root1.getParent())) {
+							ifNodes1.add((CompositeStatementObject)root1.getParent().getStatements().get(1));
+						}
 					}
 					if(root2 != null && root2.getParent() != null && root2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && !alreadyMatched2(root2.getParent())) {
 						ifNodes2.add(root2.getParent());
+						if(hasElseIfBranch(root2.getParent())) {
+							ifNodes2.add((CompositeStatementObject)root2.getParent().getStatements().get(1));
+						}
 					}
 					if(root1.getParent() == null && statement1 instanceof CompositeStatementObject && root2.getParent() == null && statement2 instanceof CompositeStatementObject) {
 						root1 = (CompositeStatementObject)statement1;
@@ -6772,6 +6839,37 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							refactorings.add(split);
 						}
 					}
+					/*else if(ifNodes1.size() > ifNodes2.size()) {
+						boolean mergeConditional = false;
+						for(CompositeStatementObject ifNode1 : ifNodes1) {
+							List<AbstractExpression> expressions1 = ifNode1.getExpressions();
+							if(expressions1.size() > 0 && !statement1.equals(ifNode1) && !containsIdenticalIfNode(ifNodes2, ifNode1)) {
+								AbstractExpression ifExpression1 = expressions1.get(0);
+								String conditional = ifExpression1.getString();
+								String[] subConditions = SPLIT_CONDITIONAL_PATTERN.split(conditional);
+								List<String> subConditionsAsList = new ArrayList<String>();
+								for(String s : subConditions) {
+									String temp1 = new String(s.trim());
+									for(Replacement replacement : info.getReplacements()) {
+										if(!(replacement instanceof IntersectionReplacement)) {
+											temp1 = ReplacementUtil.performReplacement(temp1, replacement.getBefore(), replacement.getAfter());
+										}
+									}
+									subConditionsAsList.add(temp1);
+								}
+								Set<String> intersection2 = subConditionIntersection(subConditionsAsList, subConditionsAsList2);
+								int matches2 = matchCount(intersection2, info);
+								boolean pass2 = pass(subConditionsAsList, subConditionsAsList2, intersection2, matches2);
+								if(pass2 && !intersection.containsAll(intersection2)) {
+									Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
+									additionallyMatchedStatements1.add(ifNode1);
+									CompositeReplacement composite = new CompositeReplacement(ifNode1.getString(), statement2.getString(), additionallyMatchedStatements1, new LinkedHashSet<>());
+									info.addReplacement(composite);
+									mergeConditional = true;
+								}
+							}
+						}
+					}*/
 				}
 				invertedConditionals = checkForInvertedConditionals(subConditionsAsList1, subConditionsAsList2, info);
 				if(invertedConditionals > 0 || matches > 0) {

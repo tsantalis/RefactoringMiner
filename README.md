@@ -136,20 +136,20 @@ Currently, it supports the detection of the following refactorings:
 90. Split Conditional
 
 # Current precision and recall
-As of **October 17, 2022** the precision and recall of the tool on an oracle consisting of **540 commits** from **186 open-source projects** is:
+As of **November 29, 2022** the precision and recall of the tool on an oracle consisting of **541 commits** from **186 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|11330  | 23  | 288  | 0.998  | 0.975|
-|Extract Method|959  |  1  | 31  | 0.999  | 0.969|
+|**Total**|11377  | 23  | 280  | 0.998  | 0.976|
+|Extract Method|961  |  1  | 29  | 0.999  | 0.971|
 |Rename Class|53  |  0  |  2  | 1.000  | 0.964|
 |Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
 |Move And Rename Attribute|12  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute|10  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|350  |  4  | 32  | 0.989  | 0.916|
+|Rename Method|357  |  4  | 27  | 0.989  | 0.930|
 |Inline Method|109  |  0  |  2  | 1.000  | 0.982|
 |Move Method|352  |  3  |  9  | 0.992  | 0.975|
-|Move And Rename Method|115  |  0  |  6  | 1.000  | 0.950|
+|Move And Rename Method|116  |  0  |  6  | 1.000  | 0.951|
 |Pull Up Method|290  |  0  |  6  | 1.000  | 0.980|
 |Move Class|1093  |  0  |  4  | 1.000  | 0.996|
 |Move And Rename Class|34  |  0  |  1  | 1.000  | 0.971|
@@ -161,31 +161,31 @@ As of **October 17, 2022** the precision and recall of the tool on an oracle con
 |Extract Superclass|73  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|96  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|99  |  0  | 69  | 1.000  | 0.589|
-|Move And Inline Method|16  |  0  |  4  | 1.000  | 0.800|
+|Extract And Move Method|97  |  0  | 69  | 1.000  | 0.584|
+|Move And Inline Method|14  |  0  |  4  | 1.000  | 0.778|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|204  |  0  |  0  | 1.000  | 1.000|
-|Extract Attribute|16  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|75  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|221  |  0  |  0  | 1.000  | 1.000|
+|Extract Attribute|19  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|76  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 7  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|296  |  3  | 13  | 0.990  | 0.958|
+|Rename Variable|299  |  3  | 13  | 0.990  | 0.958|
 |Rename Parameter|471  |  2  | 28  | 0.996  | 0.944|
-|Rename Attribute|128  |  0  | 16  | 1.000  | 0.889|
-|Merge Variable| 5  |  0  |  0  | 1.000  | 1.000|
+|Rename Attribute|130  |  0  | 16  | 1.000  | 0.890|
+|Merge Variable| 4  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
 |Merge Attribute| 5  |  0  |  0  | 1.000  | 1.000|
 |Split Variable| 1  |  0  |  0  | 1.000  | 1.000|
-|Split Parameter| 8  |  0  |  0  | 1.000  | 1.000|
+|Split Parameter| 7  |  0  |  0  | 1.000  | 1.000|
 |Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute|20  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Variable|72  |  0  |  0  | 1.000  | 1.000|
-|Localize Parameter|20  |  0  |  0  | 1.000  | 1.000|
+|Localize Parameter|25  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|23  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|419  |  0  | 12  | 1.000  | 0.972|
-|Change Variable Type|763  |  2  | 11  | 0.997  | 0.986|
-|Change Parameter Type|629  |  1  | 16  | 0.998  | 0.975|
-|Change Attribute Type|223  |  0  |  8  | 1.000  | 0.965|
+|Change Variable Type|766  |  2  | 10  | 0.997  | 0.987|
+|Change Parameter Type|628  |  1  | 16  | 0.998  | 0.975|
+|Change Attribute Type|224  |  0  |  8  | 1.000  | 0.966|
 |Add Method Annotation|327  |  0  |  4  | 1.000  | 0.988|
 |Remove Method Annotation|99  |  0  |  0  | 1.000  | 1.000|
 |Modify Method Annotation|29  |  0  |  0  | 1.000  | 1.000|
@@ -199,20 +199,20 @@ As of **October 17, 2022** the precision and recall of the tool on an oracle con
 |Remove Parameter Annotation| 3  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter|937  |  2  |  1  | 0.998  | 0.999|
-|Remove Parameter|334  |  0  |  0  | 1.000  | 1.000|
+|Remove Parameter|333  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 3  |  0  |  0  | 1.000  | 1.000|
-|Add Thrown Exception Type|39  |  0  |  0  | 1.000  | 1.000|
-|Remove Thrown Exception Type|246  |  0  |  0  | 1.000  | 1.000|
+|Add Thrown Exception Type|40  |  0  |  0  | 1.000  | 1.000|
+|Remove Thrown Exception Type|245  |  0  |  0  | 1.000  | 1.000|
 |Change Thrown Exception Type| 9  |  0  |  0  | 1.000  | 1.000|
-|Change Method Access Modifier|319  |  0  |  0  | 1.000  | 1.000|
-|Change Attribute Access Modifier|220  |  0  |  0  | 1.000  | 1.000|
+|Change Method Access Modifier|318  |  0  |  0  | 1.000  | 1.000|
+|Change Attribute Access Modifier|221  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute|48  |  0  |  0  | 1.000  | 1.000|
-|Add Method Modifier|79  |  0  |  0  | 1.000  | 1.000|
-|Remove Method Modifier|100  |  0  |  0  | 1.000  | 1.000|
+|Add Method Modifier|78  |  0  |  0  | 1.000  | 1.000|
+|Remove Method Modifier|102  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Modifier|134  |  0  |  0  | 1.000  | 1.000|
-|Remove Attribute Modifier|141  |  1  |  0  | 0.993  | 1.000|
+|Remove Attribute Modifier|142  |  1  |  0  | 0.993  | 1.000|
 |Add Variable Modifier|128  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Modifier|57  |  0  |  0  | 1.000  | 1.000|
 |Change Class Access Modifier|77  |  0  |  0  | 1.000  | 1.000|
@@ -227,7 +227,8 @@ As of **October 17, 2022** the precision and recall of the tool on an oracle con
 |Replace Anonymous With Lambda|45  |  0  |  0  | 1.000  | 1.000|
 |Merge Class| 6  |  0  |  0  | 1.000  | 1.000|
 |Split Class| 3  |  0  |  0  | 1.000  | 1.000|
-|Split Conditional| 7  |  0  |  0  | 1.000  | 1.000|
+|Split Conditional|14  |  0  |  0  | 1.000  | 1.000|
+|Invert Condition| 1  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
 

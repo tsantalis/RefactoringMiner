@@ -24,6 +24,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
+import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
@@ -1422,18 +1423,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 			for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
 				if(oneToManyMappings.containsKey(mapping.getFragment2())) {
-					List<UMLOperationBodyMapper> childMappers = oneToManyMappers.get(mapping.getFragment2());
-					boolean singleStatementInlinedMethod = false;
-					for(UMLOperationBodyMapper childMapper : childMappers) {
-						if(childMapper.getContainer1().stringRepresentation().size() == 3) {
-							singleStatementInlinedMethod = true;
-							break;
-						}
-					}
-					if(!singleStatementInlinedMethod) {
-						oneToManyMappings.get(mapping.getFragment2()).add(mapping);
-						oneToManyMappers.get(mapping.getFragment2()).add(parentMapper);
-					}
+					oneToManyMappings.get(mapping.getFragment2()).add(mapping);
+					oneToManyMappers.get(mapping.getFragment2()).add(parentMapper);
 				}
 				else {
 					List<AbstractCodeMapping> mappings = new ArrayList<>();
@@ -1514,18 +1505,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 			for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
 				if(oneToManyMappings.containsKey(mapping.getFragment1())) {
-					List<UMLOperationBodyMapper> childMappers = oneToManyMappers.get(mapping.getFragment1());
-					boolean singleStatementExtractedMethod = false;
-					for(UMLOperationBodyMapper childMapper : childMappers) {
-						if(childMapper.getContainer2().stringRepresentation().size() == 3) {
-							singleStatementExtractedMethod = true;
-							break;
-						}
-					}
-					if(!singleStatementExtractedMethod) {
-						oneToManyMappings.get(mapping.getFragment1()).add(mapping);
-						oneToManyMappers.get(mapping.getFragment1()).add(parentMapper);
-					}
+					oneToManyMappings.get(mapping.getFragment1()).add(mapping);
+					oneToManyMappers.get(mapping.getFragment1()).add(parentMapper);
 				}
 				else {
 					List<AbstractCodeMapping> mappings = new ArrayList<>();
@@ -1643,21 +1624,43 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				AbstractCodeMapping mapping = mappingIterator.next();
 				UMLOperationBodyMapper mapper = mapperIterator.next();
 				if(indicesToBeRemoved.contains(index)) {
-					mapper.removeMapping(mapping);
-					//remove refactorings based on mapping
-					Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
-					Set<Refactoring> refactoringsAfterPostProcessing = mapper.getRefactoringsAfterPostProcessing();
-					for(Refactoring r : refactoringsAfterPostProcessing) {
-						if(r instanceof ReferenceBasedRefactoring) {
-							ReferenceBasedRefactoring referenceBased = (ReferenceBasedRefactoring)r;
-							Set<AbstractCodeMapping> references = referenceBased.getReferences();
-							if(references.contains(mapping)) {
-								refactoringsToBeRemoved.add(r);
+					boolean removeMapping = true;
+					if(callsExtractedInlinedMethod.get(index)) {
+						AbstractCodeFragment callFragment = null;
+						if(mapper.containsExtractedOperationInvocation(mapping)) {
+							callFragment = mapping.getFragment2();
+						}
+						else if(mapper.containsInlinedOperationInvocation(mapping)) {
+							callFragment = mapping.getFragment1();
+						}
+						AbstractCall invocation = callFragment.invocationCoveringEntireFragment();
+						if(invocation == null) {
+							invocation = callFragment.fieldAssignmentInvocationCoveringEntireStatement();
+							if(invocation != null) {
+								removeMapping = false;
 							}
 						}
+						if(invocation != null && invocation.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL)) {
+							removeMapping = false;
+						}
 					}
-					refactoringsAfterPostProcessing.removeAll(refactoringsToBeRemoved);
-					updatedMappers.add(mapper);
+					if(removeMapping) {
+						mapper.removeMapping(mapping);
+						//remove refactorings based on mapping
+						Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
+						Set<Refactoring> refactoringsAfterPostProcessing = mapper.getRefactoringsAfterPostProcessing();
+						for(Refactoring r : refactoringsAfterPostProcessing) {
+							if(r instanceof ReferenceBasedRefactoring) {
+								ReferenceBasedRefactoring referenceBased = (ReferenceBasedRefactoring)r;
+								Set<AbstractCodeMapping> references = referenceBased.getReferences();
+								if(references.contains(mapping)) {
+									refactoringsToBeRemoved.add(r);
+								}
+							}
+						}
+						refactoringsAfterPostProcessing.removeAll(refactoringsToBeRemoved);
+						updatedMappers.add(mapper);
+					}
 				}
 				index++;
 			}

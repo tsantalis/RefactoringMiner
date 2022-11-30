@@ -2506,7 +2506,7 @@ public class UMLModelDiff {
 									parameterToArgumentMap2.put(expression + ".", "");
 									parameterToArgumentMap1.put("this.", "");
 								}
-								UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(removedOperation.getClassName()), false);
+								UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(removedOperation.getClassName()), removedOperationInvocation, false);
 								if(moveAndInlineMatchCondition(operationBodyMapper, mapper)) {
 									InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getContainer1(), removedOperationInvocations);
 									refactorings.add(inlineOperationRefactoring);

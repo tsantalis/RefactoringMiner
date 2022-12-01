@@ -9,11 +9,14 @@ import java.util.Map;
 import java.util.Set;
 
 import gr.uom.java.xmi.decomposition.AbstractCall;
+import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
+import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.diff.UMLModelDiff;
 
 public interface VariableDeclarationContainer extends LocationInfoProvider {
 	
@@ -89,6 +92,25 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	boolean isGetter();
 	boolean isConstructor();
 	AbstractCall isDelegate();
+
+	default AbstractCall delegatesTo(VariableDeclarationContainer operation, UMLModelDiff modelDiff) {
+		if(getBody() != null) {
+			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
+			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
+				StatementObject statement = (StatementObject)statements.get(0);
+				Map<String, List<AbstractCall>> operationInvocationMap = statement.getMethodInvocationMap();
+				for(String key : operationInvocationMap.keySet()) {
+					List<AbstractCall> operationInvocations = operationInvocationMap.get(key);
+					for(AbstractCall operationInvocation : operationInvocations) {
+						if(operationInvocation.matchesOperation(operation, this, modelDiff)) {
+							return operationInvocation;
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
 
 	default int getBodyHashCode() {
 		OperationBody operationBody = getBody();

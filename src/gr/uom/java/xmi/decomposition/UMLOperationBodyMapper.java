@@ -1474,6 +1474,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			if(nested && operationBodyMapper.getParentMapper() != null && operationBodyMapper.getParentMapper().getChildMappers().isEmpty()) {
+				for(AbstractCodeMapping mapping : operationBodyMapper.getParentMapper().getMappings()) {
+					if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+						if((mapping.getFragment1().getString().equals("return true;\n") || mapping.getFragment1().getString().equals("return false;\n")) && addedOperation.getReturnParameter().getType().toString().equals("boolean")) {
+							AbstractCodeFragment fragment = mapping.getFragment1();
+							expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
+						}
+					}
+					else if(!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2())) {
+						AbstractCodeFragment fragment = mapping.getFragment1();
+						if(fragment instanceof CompositeStatementObject) {
+							CompositeStatementObject statement = (CompositeStatementObject)fragment;
+							if(!innerNodes1.contains(statement)) {
+								innerNodes1.add(statement);
+								addedInnerNodes1.add(statement);
+							}
+						}
+					}
+				}
+			}
 			for(UMLOperationBodyMapper childMapper : operationBodyMapper.childMappers) {
 				if(childMapper.container1.getClassName().equals(addedOperation.getClassName()) || classDiff instanceof UMLClassMoveDiff) {
 					for(AbstractCodeMapping mapping : childMapper.getMappings()) {

@@ -1547,6 +1547,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			List<Integer> replacementTypeCount = new ArrayList<>();
 			List<Boolean> replacementCoversEntireStatement = new ArrayList<>();
 			List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+			List<Double> editDistances = new ArrayList<>();
 			while(mappingIterator.hasNext()) {
 				AbstractCodeMapping mapping = mappingIterator.next();
 				UMLOperationBodyMapper mapper = mapperIterator.next();
@@ -1579,6 +1580,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 				replacementCoversEntireStatement.add(replacementFound);
 				parentMappers.add(mapper.getParentMapper());
+				editDistances.add(mapping.editDistance());
 			}
 			Set<Integer> indicesToBeRemoved = new LinkedHashSet<>();
 			if(callsExtractedInlinedMethod.contains(true) && callsExtractedInlinedMethod.contains(false)) {
@@ -1594,7 +1596,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						indicesToBeRemoved.add(i);
 					}
 				}
-				determineIndicesToBeRemoved(nestedMapper, identical, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved);
+				determineIndicesToBeRemoved(nestedMapper, identical, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
 			}
 			else if(parentIsContainerBody.contains(true)) {
 				for(int i=0; i<parentIsContainerBody.size(); i++) {
@@ -1602,7 +1604,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						indicesToBeRemoved.add(i);
 					}
 				}
-				determineIndicesToBeRemoved(nestedMapper, identical, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved);
+				determineIndicesToBeRemoved(nestedMapper, identical, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
 			}
 			if(indicesToBeRemoved.isEmpty() && matchingParentMappers(parentMappers) == parentMappers.size()) {
 				int minimum = nonMappedNodes.get(0);
@@ -1705,7 +1707,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	private void determineIndicesToBeRemoved(List<Boolean> nestedMapper, List<Boolean> identical,
 			List<Integer> replacementTypeCount, List<Boolean> replacementCoversEntireStatement,
-			Set<Integer> indicesToBeRemoved) {
+			Set<Integer> indicesToBeRemoved, List<Double> editDistances) {
 		if(indicesToBeRemoved.isEmpty()) {
 			if(nestedMapper.contains(false)) {
 				for(int i=0; i<nestedMapper.size(); i++) {
@@ -1738,6 +1740,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				for(int i=0; i<replacementTypeCount.size(); i++) {
 					if(replacementTypeCount.get(i) > minimum) {
 						indicesToBeRemoved.add(i);
+					}
+				}
+				if(indicesToBeRemoved.isEmpty()) {
+					double minimumEditDistance = editDistances.get(0);
+					for(int i=1; i<editDistances.size(); i++) {
+						if(editDistances.get(i) < minimum) {
+							minimumEditDistance = editDistances.get(i);
+						}
+					}
+					for(int i=0; i<editDistances.size(); i++) {
+						if(editDistances.get(i) > minimumEditDistance) {
+							indicesToBeRemoved.add(i);
+						}
 					}
 				}
 			}

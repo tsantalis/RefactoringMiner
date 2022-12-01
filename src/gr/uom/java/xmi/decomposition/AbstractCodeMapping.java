@@ -43,6 +43,8 @@ public abstract class AbstractCodeMapping {
 		this.replacements = new LinkedHashSet<Replacement>();
 	}
 
+	public abstract double editDistance();
+	
 	public AbstractCodeFragment getFragment1() {
 		return fragment1;
 	}

@@ -50,28 +50,8 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			}
 		}
 		else {
-			double distance1;
-			double distance2;
-			if(this.getFragment1().getString().equals(this.getFragment2().getString())) {
-				distance1 = 0;
-			}
-			else {
-				String s1 = removeGenericTypeAfterDot(this.getFragment1().getString().toLowerCase());
-				String s2 = removeGenericTypeAfterDot(this.getFragment2().getString().toLowerCase());
-				int distance = StringDistance.editDistance(s1, s2);
-				distance1 = (double)distance/(double)Math.max(s1.length(), s2.length());
-			}
-			
-			if(o.getFragment1().getString().equals(o.getFragment2().getString())) {
-				distance2 = 0;
-			}
-			else {
-				String s1 = removeGenericTypeAfterDot(o.getFragment1().getString().toLowerCase());
-				String s2 = removeGenericTypeAfterDot(o.getFragment2().getString().toLowerCase());
-				int distance = StringDistance.editDistance(s1, s2);
-				distance2 = (double)distance/(double)Math.max(s1.length(), s2.length());
-			}
-			
+			double distance1 = this.editDistance();
+			double distance2 = o.editDistance();
 			if(distance1 != distance2) {
 				if(this.isIdenticalWithExtractedVariable() && !o.isIdenticalWithExtractedVariable()) {
 					return -1;
@@ -257,6 +237,20 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				}
 			}
 		}
+	}
+
+	public double editDistance() {
+		double distance1;
+		if(this.getFragment1().getString().equals(this.getFragment2().getString())) {
+			distance1 = 0;
+		}
+		else {
+			String s1 = removeGenericTypeAfterDot(this.getFragment1().getString().toLowerCase());
+			String s2 = removeGenericTypeAfterDot(this.getFragment2().getString().toLowerCase());
+			int distance = StringDistance.editDistance(s1, s2);
+			distance1 = (double)distance/(double)Math.max(s1.length(), s2.length());
+		}
+		return distance1;
 	}
 
 	private boolean referencesMapping(LeafMapping o) {

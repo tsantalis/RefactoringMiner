@@ -6733,7 +6733,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						boolean splitConditional = false;
 						for(CompositeStatementObject ifNode2 : ifNodes2) {
 							List<AbstractExpression> expressions2 = ifNode2.getExpressions();
-							if(expressions2.size() > 0 && !statement2.equals(ifNode2) && !containsIdenticalIfNode(ifNodes1, ifNode2) && sequentiallySplitConditional(statement1, ifNode2)) {
+							if(expressions2.size() > 0 && !statement2.equals(ifNode2) && !containsIdenticalIfNode(ifNodes1, ifNode2) && sequentiallySplitConditional(statement1, ifNode2, statement2)) {
 								AbstractExpression ifExpression2 = expressions2.get(0);
 								String conditional = ifExpression2.getString();
 								String[] subConditions = SPLIT_CONDITIONAL_PATTERN.split(conditional);
@@ -6867,7 +6867,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						boolean mergeConditional = false;
 						for(CompositeStatementObject ifNode1 : ifNodes1) {
 							List<AbstractExpression> expressions1 = ifNode1.getExpressions();
-							if(expressions1.size() > 0 && !statement1.equals(ifNode1) && !containsIdenticalIfNode(ifNodes2, ifNode1) && sequentiallyMergedConditional(ifNode1, statement2)) {
+							if(expressions1.size() > 0 && !statement1.equals(ifNode1) && !containsIdenticalIfNode(ifNodes2, ifNode1) && sequentiallyMergedConditional(ifNode1, statement1, statement2)) {
 								AbstractExpression ifExpression1 = expressions1.get(0);
 								String conditional = ifExpression1.getString();
 								String[] subConditions = SPLIT_CONDITIONAL_PATTERN.split(conditional);
@@ -8309,17 +8309,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeMapping mapping : mappings) {
 			int nestedFragment1 = 0;
 			for(AbstractCodeFragment mergedConditional : mergedConditionals) {
-				if(mergedConditional.getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo())) {
+				if(mergedConditional.getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo()) || subsumedByOther(mergedConditionals, mergedConditional)) {
 					nestedFragment1++;
-				}
-				else if(mergedConditional instanceof CompositeStatementObject) {
-					CompositeStatementObject composite = (CompositeStatementObject)mergedConditional;
-					for(AbstractCodeFragment leaf : composite.getLeaves()) {
-						if(leaf.isKeyword()) {
-							nestedFragment1++;
-							break;
-						}
-					}
 				}
 			}
 			boolean nestedFragment2 = statement2.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo());
@@ -8341,7 +8332,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean sequentiallyMergedConditional(AbstractCodeFragment mergedConditional, AbstractCodeFragment statement2) {
+	private boolean sequentiallyMergedConditional(AbstractCodeFragment mergedConditional, AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
 		for(AbstractCodeMapping mapping : mappings) {
 			boolean nestedFragment1 = false;
 			if(mergedConditional.getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo())) {
@@ -8350,7 +8341,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			else if(mergedConditional instanceof CompositeStatementObject) {
 				CompositeStatementObject composite = (CompositeStatementObject)mergedConditional;
 				for(AbstractCodeFragment leaf : composite.getLeaves()) {
-					if(leaf.isKeyword()) {
+					if((leaf.isKeyword() || leaf.getString().equals("return false;\n") || leaf.getString().equals("return true;\n")) &&
+							(statement1.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement1.getLocationInfo().before(leaf.getLocationInfo()))) {
 						nestedFragment1 = true;
 						break;
 					}
@@ -8367,21 +8359,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
+	private boolean subsumedByOther(Set<AbstractCodeFragment> conditionals, AbstractCodeFragment conditional) {
+		for(AbstractCodeFragment otherConditional : conditionals) {
+			if(!otherConditional.equals(conditional)) {
+				if(otherConditional.getLocationInfo().subsumes(conditional.getLocationInfo()) ||
+						otherConditional.getLocationInfo().startsAtTheEndLineOf(conditional.getLocationInfo()) ||
+						conditional.getLocationInfo().startsAtTheEndLineOf(otherConditional.getLocationInfo()) ||
+						otherConditional.getLocationInfo().nextLine(conditional.getLocationInfo()) ||
+						conditional.getLocationInfo().nextLine(otherConditional.getLocationInfo())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private boolean sequentiallySplitConditionals(AbstractCodeFragment statement1, Set<AbstractCodeFragment> splitConditionals) {
 		for(AbstractCodeMapping mapping : mappings) {
 			int nestedFragment2 = 0;
 			for(AbstractCodeFragment splitConditional : splitConditionals) {
-				if(splitConditional.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo())) {
+				if(splitConditional.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo()) || subsumedByOther(splitConditionals, splitConditional)) {
 					nestedFragment2++;
-				}
-				else if(splitConditional instanceof CompositeStatementObject) {
-					CompositeStatementObject composite = (CompositeStatementObject)splitConditional;
-					for(AbstractCodeFragment leaf : composite.getLeaves()) {
-						if(leaf.isKeyword()) {
-							nestedFragment2++;
-							break;
-						}
-					}
 				}
 			}
 			boolean nestedFragment1 = statement1.getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo());
@@ -8403,7 +8401,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean sequentiallySplitConditional(AbstractCodeFragment statement1, AbstractCodeFragment splitConditional) {
+	private boolean sequentiallySplitConditional(AbstractCodeFragment statement1, AbstractCodeFragment splitConditional, AbstractCodeFragment statement2) {
 		for(AbstractCodeMapping mapping : mappings) {
 			boolean nestedFragment2 = false;
 			if(splitConditional.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo())) {
@@ -8412,7 +8410,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			else if(splitConditional instanceof CompositeStatementObject) {
 				CompositeStatementObject composite = (CompositeStatementObject)splitConditional;
 				for(AbstractCodeFragment leaf : composite.getLeaves()) {
-					if(leaf.isKeyword()) {
+					if((leaf.isKeyword() || leaf.getString().equals("return false;\n") || leaf.getString().equals("return true;\n")) &&
+							(statement2.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement2.getLocationInfo().before(leaf.getLocationInfo()))) {
 						nestedFragment2 = true;
 						break;
 					}

@@ -123,6 +123,11 @@ public class LocationInfo {
 				this.startLine == other.endLine + 1;
 	}
 
+	public boolean startsAtTheEndLineOf(LocationInfo other) {
+		return this.filePath.equals(other.filePath) &&
+				this.startLine == other.endLine;
+	}
+
 	public String toString() {
 		return "line range:" + startLine + "-" + endLine;
 	}

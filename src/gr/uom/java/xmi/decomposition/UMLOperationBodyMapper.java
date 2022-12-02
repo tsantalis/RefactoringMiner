@@ -32,6 +32,7 @@ import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.InvertConditionRefactoring;
+import gr.uom.java.xmi.diff.MergeConditionalRefactoring;
 import gr.uom.java.xmi.diff.MergeVariableRefactoring;
 import gr.uom.java.xmi.diff.ReferenceBasedRefactoring;
 import gr.uom.java.xmi.diff.RemoveParameterRefactoring;
@@ -6732,7 +6733,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						boolean splitConditional = false;
 						for(CompositeStatementObject ifNode2 : ifNodes2) {
 							List<AbstractExpression> expressions2 = ifNode2.getExpressions();
-							if(expressions2.size() > 0 && !statement2.equals(ifNode2) && !containsIdenticalIfNode(ifNodes1, ifNode2)) {
+							if(expressions2.size() > 0 && !statement2.equals(ifNode2) && !containsIdenticalIfNode(ifNodes1, ifNode2) && sequentiallySplitConditional(statement1, ifNode2)) {
 								AbstractExpression ifExpression2 = expressions2.get(0);
 								String conditional = ifExpression2.getString();
 								String[] subConditions = SPLIT_CONDITIONAL_PATTERN.split(conditional);
@@ -6856,15 +6857,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							for(Replacement compositeReplacement : compositeReplacements) {
 								splitConditionals.addAll(((CompositeReplacement)compositeReplacement).getAdditionallyMatchedStatements2());
 							}
-							SplitConditionalRefactoring split = new SplitConditionalRefactoring(statement1, splitConditionals, container1, container2);
-							refactorings.add(split);
+							if(sequentiallySplitConditionals(statement1, splitConditionals)) {
+								SplitConditionalRefactoring split = new SplitConditionalRefactoring(statement1, splitConditionals, container1, container2);
+								refactorings.add(split);
+							}
 						}
 					}
-					/*else if(ifNodes1.size() > ifNodes2.size()) {
+					else if(ifNodes1.size() > ifNodes2.size()) {
 						boolean mergeConditional = false;
 						for(CompositeStatementObject ifNode1 : ifNodes1) {
 							List<AbstractExpression> expressions1 = ifNode1.getExpressions();
-							if(expressions1.size() > 0 && !statement1.equals(ifNode1) && !containsIdenticalIfNode(ifNodes2, ifNode1)) {
+							if(expressions1.size() > 0 && !statement1.equals(ifNode1) && !containsIdenticalIfNode(ifNodes2, ifNode1) && sequentiallyMergedConditional(ifNode1, statement2)) {
 								AbstractExpression ifExpression1 = expressions1.get(0);
 								String conditional = ifExpression1.getString();
 								String[] subConditions = SPLIT_CONDITIONAL_PATTERN.split(conditional);
@@ -6890,7 +6893,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 						}
-					}*/
+						if(mergeConditional) {
+							List<Replacement> compositeReplacements = info.getReplacements(ReplacementType.COMPOSITE);
+							Set<AbstractCodeFragment> mergedConditionals = new LinkedHashSet<>();
+							mergedConditionals.add(statement1);
+							for(Replacement compositeReplacement : compositeReplacements) {
+								mergedConditionals.addAll(((CompositeReplacement)compositeReplacement).getAdditionallyMatchedStatements1());
+							}
+							if(sequentiallyMergedConditionals(mergedConditionals, statement2)) {
+								MergeConditionalRefactoring split = new MergeConditionalRefactoring(mergedConditionals, statement2, container1, container2);
+								refactorings.add(split);
+							}
+						}
+					}
 				}
 				invertedConditionals = checkForInvertedConditionals(subConditionsAsList1, subConditionsAsList2, info);
 				if(invertedConditionals > 0 || matches > 0) {
@@ -8286,6 +8301,130 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					return true;
 				}
 			}
+		}
+		return false;
+	}
+
+	private boolean sequentiallyMergedConditionals(Set<AbstractCodeFragment> mergedConditionals, AbstractCodeFragment statement2) {
+		for(AbstractCodeMapping mapping : mappings) {
+			int nestedFragment1 = 0;
+			for(AbstractCodeFragment mergedConditional : mergedConditionals) {
+				if(mergedConditional.getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo())) {
+					nestedFragment1++;
+				}
+				else if(mergedConditional instanceof CompositeStatementObject) {
+					CompositeStatementObject composite = (CompositeStatementObject)mergedConditional;
+					for(AbstractCodeFragment leaf : composite.getLeaves()) {
+						if(leaf.isKeyword()) {
+							nestedFragment1++;
+							break;
+						}
+					}
+				}
+			}
+			boolean nestedFragment2 = statement2.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo());
+			if(nestedFragment1 == mergedConditionals.size() && nestedFragment2) {
+				return true;
+			}
+		}
+		boolean leafConditional1 = false;
+		for(AbstractCodeFragment mergedConditional : mergedConditionals) {
+			if(mergedConditional instanceof StatementObject) {
+				leafConditional1 = true;
+				break;
+			}
+		}
+		boolean leafConditional2 = statement2 instanceof StatementObject;
+		if(leafConditional1 && leafConditional2) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean sequentiallyMergedConditional(AbstractCodeFragment mergedConditional, AbstractCodeFragment statement2) {
+		for(AbstractCodeMapping mapping : mappings) {
+			boolean nestedFragment1 = false;
+			if(mergedConditional.getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo())) {
+				nestedFragment1 = true;
+			}
+			else if(mergedConditional instanceof CompositeStatementObject) {
+				CompositeStatementObject composite = (CompositeStatementObject)mergedConditional;
+				for(AbstractCodeFragment leaf : composite.getLeaves()) {
+					if(leaf.isKeyword()) {
+						nestedFragment1 = true;
+						break;
+					}
+				}
+			}
+			boolean nestedFragment2 = statement2.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo());
+			if(nestedFragment1 && nestedFragment2) {
+				return true;
+			}
+		}
+		if(mergedConditional instanceof StatementObject || statement2 instanceof StatementObject) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean sequentiallySplitConditionals(AbstractCodeFragment statement1, Set<AbstractCodeFragment> splitConditionals) {
+		for(AbstractCodeMapping mapping : mappings) {
+			int nestedFragment2 = 0;
+			for(AbstractCodeFragment splitConditional : splitConditionals) {
+				if(splitConditional.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo())) {
+					nestedFragment2++;
+				}
+				else if(splitConditional instanceof CompositeStatementObject) {
+					CompositeStatementObject composite = (CompositeStatementObject)splitConditional;
+					for(AbstractCodeFragment leaf : composite.getLeaves()) {
+						if(leaf.isKeyword()) {
+							nestedFragment2++;
+							break;
+						}
+					}
+				}
+			}
+			boolean nestedFragment1 = statement1.getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo());
+			if(nestedFragment2 == splitConditionals.size() && nestedFragment1) {
+				return true;
+			}
+		}
+		boolean leafConditional2 = false;
+		for(AbstractCodeFragment splitConditional : splitConditionals) {
+			if(splitConditional instanceof StatementObject) {
+				leafConditional2 = true;
+				break;
+			}
+		}
+		boolean leafConditional1 = statement1 instanceof StatementObject;
+		if(leafConditional1 && leafConditional2) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean sequentiallySplitConditional(AbstractCodeFragment statement1, AbstractCodeFragment splitConditional) {
+		for(AbstractCodeMapping mapping : mappings) {
+			boolean nestedFragment2 = false;
+			if(splitConditional.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo())) {
+				nestedFragment2 = true;
+			}
+			else if(splitConditional instanceof CompositeStatementObject) {
+				CompositeStatementObject composite = (CompositeStatementObject)splitConditional;
+				for(AbstractCodeFragment leaf : composite.getLeaves()) {
+					if(leaf.isKeyword()) {
+						nestedFragment2 = true;
+						break;
+					}
+				}
+			}
+			boolean nestedFragment1 = statement1.getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo());
+			if(nestedFragment2 && nestedFragment1) {
+				return true;
+			}
+		}
+		if(statement1 instanceof StatementObject || splitConditional instanceof StatementObject) {
+			return true;
 		}
 		return false;
 	}

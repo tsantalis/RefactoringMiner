@@ -8369,6 +8369,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						conditional.getLocationInfo().nextLine(otherConditional.getLocationInfo())) {
 					return true;
 				}
+				if(conditional.getParent() != null && isElseIfBranch(conditional, conditional.getParent()) && conditional.getParent().getLocationInfo().subsumes(otherConditional.getLocationInfo())) {
+					return true;
+				}
 			}
 		}
 		return false;

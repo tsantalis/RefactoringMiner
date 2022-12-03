@@ -364,6 +364,15 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	@Override
+	public List<String> getParenthesizedExpressions() {
+		List<String> parenthesizedExpressions = new ArrayList<String>();
+		for(AbstractExpression expression : expressionList) {
+			parenthesizedExpressions.addAll(expression.getParenthesizedExpressions());
+		}
+		return parenthesizedExpressions;
+	}
+
+	@Override
 	public List<TernaryOperatorExpression> getTernaryOperatorExpressions() {
 		List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 		for(AbstractExpression expression : expressionList) {

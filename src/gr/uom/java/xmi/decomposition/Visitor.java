@@ -81,6 +81,7 @@ public class Visitor extends ASTVisitor {
 	private List<String> prefixExpressions = new ArrayList<String>();
 	private List<String> postfixExpressions = new ArrayList<String>();
 	private List<String> arguments = new ArrayList<String>();
+	private List<String> parenthesizedExpressions = new ArrayList<String>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
 	private DefaultMutableTreeNode root = new DefaultMutableTreeNode();
@@ -266,11 +267,12 @@ public class Visitor extends ASTVisitor {
 			removeLast(this.infixOperators, anonymous.getInfixOperators());
 			removeLast(this.postfixExpressions, anonymous.getPostfixExpressions());
 			removeLast(this.prefixExpressions, anonymous.getPrefixExpressions());
+			removeLast(this.parenthesizedExpressions, anonymous.getParenthesizedExpressions());
 			removeLast(this.arguments, anonymous.getArguments());
 			this.ternaryOperatorExpressions.removeAll(anonymous.getTernaryOperatorExpressions());
 			this.anonymousClassDeclarations.removeAll(anonymous.getAnonymousClassDeclarations());
 			this.lambdas.removeAll(anonymous.getLambdas());
-			this.arrayAccesses.removeAll(anonymous.getArrayAccesses());
+			removeLast(this.arrayAccesses, anonymous.getArrayAccesses());
 		}
 	}
 
@@ -885,6 +887,15 @@ public class Visitor extends ASTVisitor {
 		return false;
 	}
 
+	public boolean visit(ParenthesizedExpression node) {
+		parenthesizedExpressions.add(stringify(node));
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getParenthesizedExpressions().add(stringify(node));
+		}
+		return super.visit(node);
+	}
+
 	public Map<String, List<AbstractCall>> getMethodInvocationMap() {
 		return this.methodInvocationMap;
 	}
@@ -947,6 +958,10 @@ public class Visitor extends ASTVisitor {
 
 	public List<String> getArguments() {
 		return this.arguments;
+	}
+
+	public List<String> getParenthesizedExpressions() {
+		return parenthesizedExpressions;
 	}
 
 	public List<TernaryOperatorExpression> getTernaryOperatorExpressions() {

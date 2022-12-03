@@ -36,6 +36,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 	private List<String> prefixExpressions;
 	private List<String> postfixExpressions;
 	private List<String> arguments;
+	private List<String> parenthesizedExpressions;
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions;
 	private List<LambdaExpressionObject> lambdas;
     
@@ -60,6 +61,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.prefixExpressions = visitor.getPrefixExpressions();
 		this.postfixExpressions = visitor.getPostfixExpressions();
 		this.arguments = visitor.getArguments();
+		this.parenthesizedExpressions = visitor.getParenthesizedExpressions();
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
 		this.expression = stringify(expression);
@@ -183,6 +185,11 @@ public class AbstractExpression extends AbstractCodeFragment {
 	@Override
 	public List<String> getArguments() {
 		return arguments;
+	}
+
+	@Override
+	public List<String> getParenthesizedExpressions() {
+		return parenthesizedExpressions;
 	}
 
 	@Override

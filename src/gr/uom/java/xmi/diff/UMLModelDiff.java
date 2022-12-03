@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
@@ -26,9 +27,13 @@ import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapperComparator;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
+import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
+import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
+import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -2578,13 +2583,54 @@ public class UMLModelDiff {
 		return false;
 	}
 
+	private boolean includesReplacementInvolvingMethod(Set<Replacement> replacements, UMLOperation addedOperation, VariableDeclarationContainer caller) {
+		for(Replacement replacement : replacements) {
+			if(replacement instanceof ClassInstanceCreationWithMethodInvocationReplacement) {
+				ClassInstanceCreationWithMethodInvocationReplacement r = (ClassInstanceCreationWithMethodInvocationReplacement)replacement;
+				if(r.getInvokedOperationAfter().matchesOperation(addedOperation, caller, this)) {
+					return true;
+				}
+			}
+			else if(replacement instanceof MethodInvocationReplacement) {
+				MethodInvocationReplacement r = (MethodInvocationReplacement)replacement;
+				if(r.getInvokedOperationAfter().matchesOperation(addedOperation, caller, this)) {
+					return true;
+				}
+				String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(r.getInvokedOperationAfter().getName());
+				String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(addedOperation.getNonQualifiedClassName());
+				int commonTokens = 0;
+				for(String token1 : tokens1) {
+					for(String token2 : tokens2) {
+						if(token1.equals(token2)) {
+							commonTokens++;
+						}
+					}
+				}
+				if(commonTokens > 0 && commonTokens >= Math.min(tokens1.length, tokens2.length)-1) {
+					return true;
+				}
+			}
+			else if(replacement instanceof VariableReplacementWithMethodInvocation) {
+				VariableReplacementWithMethodInvocation r = (VariableReplacementWithMethodInvocation)replacement;
+				if(r.getDirection().equals(Direction.VARIABLE_TO_INVOCATION) && r.getInvokedOperation().matchesOperation(addedOperation, caller, this)) {
+					return true;
+				}
+			}
+			else if(replacement.getAfter().equals(addedOperation.getNonQualifiedClassName())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void checkForExtractedAndMovedOperations(List<UMLOperationBodyMapper> mappers, List<UMLOperation> addedOperations) throws RefactoringMinerTimedOutException {
 		for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 			UMLOperation addedOperation = addedOperationIterator.next();
 			if(!getterOrSetterCorrespondingToRenamedAttribute(addedOperation)) {
 				for(UMLOperationBodyMapper mapper : mappers) {
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(mapper.getContainer1(), addedOperation);
-					if((mapper.nonMappedElementsT1() > 0 || !mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) && !mapper.containsExtractOperationRefactoring(addedOperation) && !processedOperationPairs.contains(pair)) {
+					String className = mapper.getContainer2().getClassName();
+					if(!className.equals(addedOperation.getClassName()) && (mapper.nonMappedElementsT1() > 0 || includesReplacementInvolvingMethod(mapper.getReplacementsInvolvingMethodInvocation(), addedOperation, mapper.getContainer2())) && !mapper.containsExtractOperationRefactoring(addedOperation) && !processedOperationPairs.contains(pair)) {
 						processedOperationPairs.add(pair);
 						List<AbstractCall> operationInvocations = ExtractOperationDetection.getInvocationsInSourceOperationAfterExtraction(mapper);
 						List<AbstractCall> addedOperationInvocations = new ArrayList<AbstractCall>();
@@ -2603,7 +2649,6 @@ public class UMLModelDiff {
 							for(int i=0; i<size; i++) {
 								parameterToArgumentMap2.put(parameters.get(i), arguments.get(i));
 							}
-							String className = mapper.getContainer2().getClassName();
 							List<UMLAttribute> attributes = new ArrayList<UMLAttribute>();
 							if(className.contains(".") && isAnonymousClassName(className)) {
 								//add enclosing class fields + anonymous class fields

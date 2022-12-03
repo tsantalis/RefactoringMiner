@@ -30,6 +30,7 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
+import gr.uom.java.xmi.decomposition.replacement.MethodInvocationWithClassInstanceCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
@@ -2486,7 +2487,7 @@ public class UMLModelDiff {
 		for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 			UMLOperation removedOperation = removedOperationIterator.next();
 			for(UMLOperationBodyMapper mapper : mappers) {
-				if((!mapper.getNonMappedLeavesT2().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty() || !mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) && !mapper.containsInlineOperationRefactoring(removedOperation)) {
+				if((mapper.nonMappedElementsT2() > 0 || includesReplacementInvolvingRemovedMethod(mapper.getReplacementsInvolvingMethodInvocation(), removedOperation, mapper.getContainer1())) && !mapper.containsInlineOperationRefactoring(removedOperation)) {
 					List<AbstractCall> operationInvocations = mapper.getContainer1().getAllOperationInvocations();
 					List<AbstractCall> removedOperationInvocations = new ArrayList<AbstractCall>();
 					for(AbstractCall invocation : operationInvocations) {
@@ -2523,6 +2524,46 @@ public class UMLModelDiff {
 				}
 			}
 		}
+	}
+
+	private boolean includesReplacementInvolvingRemovedMethod(Set<Replacement> replacements, UMLOperation removedOperation, VariableDeclarationContainer caller) {
+		for(Replacement replacement : replacements) {
+			if(replacement instanceof MethodInvocationWithClassInstanceCreationReplacement) {
+				MethodInvocationWithClassInstanceCreationReplacement r = (MethodInvocationWithClassInstanceCreationReplacement)replacement;
+				if(r.getInvokedOperationBefore().matchesOperation(removedOperation, caller, this)) {
+					return true;
+				}
+			}
+			else if(replacement instanceof MethodInvocationReplacement) {
+				MethodInvocationReplacement r = (MethodInvocationReplacement)replacement;
+				if(r.getInvokedOperationBefore().matchesOperation(removedOperation, caller, this)) {
+					return true;
+				}
+				String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(r.getInvokedOperationBefore().getName());
+				String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(removedOperation.getNonQualifiedClassName());
+				int commonTokens = 0;
+				for(String token1 : tokens1) {
+					for(String token2 : tokens2) {
+						if(token1.equals(token2)) {
+							commonTokens++;
+						}
+					}
+				}
+				if(commonTokens > 0 && commonTokens >= Math.min(tokens1.length, tokens2.length)-1) {
+					return true;
+				}
+			}
+			else if(replacement instanceof VariableReplacementWithMethodInvocation) {
+				VariableReplacementWithMethodInvocation r = (VariableReplacementWithMethodInvocation)replacement;
+				if(r.getDirection().equals(Direction.INVOCATION_TO_VARIABLE) && r.getInvokedOperation().matchesOperation(removedOperation, caller, this)) {
+					return true;
+				}
+			}
+			else if(replacement.getBefore().equals(removedOperation.getNonQualifiedClassName())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean moveAndInlineMatchCondition(UMLOperationBodyMapper operationBodyMapper, UMLOperationBodyMapper parentMapper) {
@@ -2583,7 +2624,7 @@ public class UMLModelDiff {
 		return false;
 	}
 
-	private boolean includesReplacementInvolvingMethod(Set<Replacement> replacements, UMLOperation addedOperation, VariableDeclarationContainer caller) {
+	private boolean includesReplacementInvolvingAddedMethod(Set<Replacement> replacements, UMLOperation addedOperation, VariableDeclarationContainer caller) {
 		for(Replacement replacement : replacements) {
 			if(replacement instanceof ClassInstanceCreationWithMethodInvocationReplacement) {
 				ClassInstanceCreationWithMethodInvocationReplacement r = (ClassInstanceCreationWithMethodInvocationReplacement)replacement;
@@ -2630,7 +2671,7 @@ public class UMLModelDiff {
 				for(UMLOperationBodyMapper mapper : mappers) {
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(mapper.getContainer1(), addedOperation);
 					String className = mapper.getContainer2().getClassName();
-					if(!className.equals(addedOperation.getClassName()) && (mapper.nonMappedElementsT1() > 0 || includesReplacementInvolvingMethod(mapper.getReplacementsInvolvingMethodInvocation(), addedOperation, mapper.getContainer2())) && !mapper.containsExtractOperationRefactoring(addedOperation) && !processedOperationPairs.contains(pair)) {
+					if(!className.equals(addedOperation.getClassName()) && (mapper.nonMappedElementsT1() > 0 || includesReplacementInvolvingAddedMethod(mapper.getReplacementsInvolvingMethodInvocation(), addedOperation, mapper.getContainer2())) && !mapper.containsExtractOperationRefactoring(addedOperation) && !processedOperationPairs.contains(pair)) {
 						processedOperationPairs.add(pair);
 						List<AbstractCall> operationInvocations = ExtractOperationDetection.getInvocationsInSourceOperationAfterExtraction(mapper);
 						List<AbstractCall> addedOperationInvocations = new ArrayList<AbstractCall>();

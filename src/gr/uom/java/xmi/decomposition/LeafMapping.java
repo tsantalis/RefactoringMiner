@@ -174,6 +174,15 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					else if(headZeros2 > headZeros1) {
 						return 1;
 					}
+					if(levelParentEditDistance1.size() == 2 && levelParentEditDistance1.get(1).equals(0.0) &&
+							levelParentEditDistance2.size() == 2 && levelParentEditDistance2.get(1).equals(0.0) &&
+							!levelParentEditDistance1.get(0).equals(levelParentEditDistance2.get(0))) {
+						double difference = Math.abs(levelParentEditDistance1.get(0) - levelParentEditDistance2.get(0));
+						double min = Math.min(levelParentEditDistance1.get(0), levelParentEditDistance2.get(0));
+						if(difference > min) {
+							return Double.compare(levelParentEditDistance1.get(0), levelParentEditDistance2.get(0));
+						}
+					}
 				}
 				if((levelParentEditDistance1.size() != levelParentEditDistance2.size() ||
 						(levelParentEditDistance1.contains(0.0) && !levelParentEditDistance2.contains(0.0)) ||

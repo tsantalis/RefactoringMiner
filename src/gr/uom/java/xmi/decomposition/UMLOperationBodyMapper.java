@@ -1665,23 +1665,39 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(statement.getLocationInfo().subsumes(anonymous.getLocationInfo())) {
 						for(UMLOperation anonymousOperation : anonymous.getOperations()) {
 							if(anonymousOperation.getBody() != null) {
-								List<AbstractCodeFragment> anonymousClassLeaves = anonymousOperation.getBody().getCompositeStatement().getLeaves();
-								for(AbstractCodeFragment anonymousLeaf : anonymousClassLeaves) {
-									if(!leaves.contains(anonymousLeaf)) {
-										leaves.add(anonymousLeaf);
-										addedLeaves.add(anonymousLeaf);
-										map.put(anonymousLeaf, anonymousOperation);
+								boolean exclude = false;
+								if(parentMapper != null) {
+									for(UMLAnonymousClassDiff anonymousClassDiff : parentMapper.getAnonymousClassDiffs()) {
+										for(UMLOperationBodyMapper anonymousMethodMapper : anonymousClassDiff.getOperationBodyMapperList()) {
+											if(anonymousMethodMapper.getContainer1().equals(anonymousOperation) || anonymousMethodMapper.getContainer2().equals(anonymousOperation)) {
+												if(anonymousMethodMapper.getContainer1().getBodyHashCode() == anonymousMethodMapper.getContainer2().getBodyHashCode() &&
+														anonymousOperation.getBodyHashCode() == anonymousMethodMapper.getContainer1().getBodyHashCode()) {
+													exclude = true;
+													break;
+												}
+											}
+										}
 									}
 								}
-								List<CompositeStatementObject> anonymousClassInnerNodes = anonymousOperation.getBody().getCompositeStatement().getInnerNodes();
-								for(CompositeStatementObject anonymousInnerNode : anonymousClassInnerNodes) {
-									if(excludeRootBlock && anonymousInnerNode.equals(anonymousOperation.getBody().getCompositeStatement())) {
-										continue;
+								if(!exclude) {
+									List<AbstractCodeFragment> anonymousClassLeaves = anonymousOperation.getBody().getCompositeStatement().getLeaves();
+									for(AbstractCodeFragment anonymousLeaf : anonymousClassLeaves) {
+										if(!leaves.contains(anonymousLeaf)) {
+											leaves.add(anonymousLeaf);
+											addedLeaves.add(anonymousLeaf);
+											map.put(anonymousLeaf, anonymousOperation);
+										}
 									}
-									if(!innerNodes.contains(anonymousInnerNode)) {
-										innerNodes.add(anonymousInnerNode);
-										addedInnerNodes.add(anonymousInnerNode);
-										map.put(anonymousInnerNode, anonymousOperation);
+									List<CompositeStatementObject> anonymousClassInnerNodes = anonymousOperation.getBody().getCompositeStatement().getInnerNodes();
+									for(CompositeStatementObject anonymousInnerNode : anonymousClassInnerNodes) {
+										if(excludeRootBlock && anonymousInnerNode.equals(anonymousOperation.getBody().getCompositeStatement())) {
+											continue;
+										}
+										if(!innerNodes.contains(anonymousInnerNode)) {
+											innerNodes.add(anonymousInnerNode);
+											addedInnerNodes.add(anonymousInnerNode);
+											map.put(anonymousInnerNode, anonymousOperation);
+										}
 									}
 								}
 							}

@@ -6669,7 +6669,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			boolean ternaryConditions = !containsTernaryOperatorReplacement && ternaryConditionals1.isEmpty() != ternaryConditionals2.isEmpty() &&
 					statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType());
 			boolean containLogicalOperator = s1.contains("||") || s1.contains("&&") || s2.contains("||") || s2.contains("&&");
-			if(containLogicalOperator || ternaryConditions) {
+			boolean containsNotOperator = s1.contains("!") != s2.contains("!");
+			if(containLogicalOperator || ternaryConditions || containsNotOperator) {
 				List<String> subConditionsAsList1 = new ArrayList<String>();
 				List<String> subConditionsAsList2 = new ArrayList<String>();
 				if(ternaryConditions && !containLogicalOperator) {
@@ -6718,7 +6719,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				int matches = matchCount(intersection, info);
 				boolean pass = pass(subConditionsAsList1, subConditionsAsList2, intersection, matches);
 				int invertedConditionals = 0;
-				if(pass) {
+				if(pass && info.getReplacements(ReplacementType.TYPE).isEmpty()) {
 					IntersectionReplacement r = new IntersectionReplacement(s1, s2, intersection, ReplacementType.CONDITIONAL);
 					info.addReplacement(r);
 					CompositeStatementObject root1 = statement1.getParent();
@@ -6970,7 +6971,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				invertedConditionals = checkForInvertedConditionals(subConditionsAsList1, subConditionsAsList2, info);
-				if(invertedConditionals > 0 || matches > 0) {
+				if((invertedConditionals > 0 || matches > 0) && info.getReplacements(ReplacementType.TYPE).isEmpty() && !includesLocalVariable(statement1, statement2, intersection)) {
 					List<Replacement> operatorReplacements = info.getReplacements(ReplacementType.INFIX_OPERATOR);
 					boolean booleanOperatorReversed = false;
 					for(Replacement r : operatorReplacements) {
@@ -6981,7 +6982,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							booleanOperatorReversed = true;
 						}
 					}
-					if(matches == invertedConditionals && booleanOperatorReversed) {
+					if(matches == invertedConditionals && (booleanOperatorReversed || !containLogicalOperator)) {
 						InvertConditionRefactoring invert = new InvertConditionRefactoring(statement1, statement2, container1, container2);
 						refactorings.add(invert);
 					}
@@ -7020,17 +7021,37 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
+	public boolean includesLocalVariable(AbstractCodeFragment statement1, AbstractCodeFragment statement2, Set<String> intersection) {
+		if(statement1 instanceof AbstractExpression) {
+			for(String commonString : intersection) {
+				if((statement1.getString().equals(commonString) || statement1.getString().equals("!" + commonString)) &&
+						container1.getVariableDeclaration(commonString) != null) {
+					return true;
+				}
+			}
+		}
+		if(statement2 instanceof AbstractExpression) {
+			for(String commonString : intersection) {
+				if((statement2.getString().equals(commonString) || statement2.getString().equals("!" + commonString)) &&
+						container2.getVariableDeclaration(commonString) != null) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public static int checkForInvertedConditionals(List<String> subConditionsAsList1, List<String> subConditionsAsList2, ReplacementInfo info) {
 		int invertedConditionals = 0;
 		for(String subCondition1 : subConditionsAsList1) {
 			for(String subCondition2 : subConditionsAsList2) {
-				if(subCondition1.equals("!" + subCondition2)) {
+				if(subCondition1.equals("!" + subCondition2) || subCondition1.equals("!(" + subCondition2 + ")")) {
 					Replacement r2 = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
 					info.addReplacement(r2);
 					invertedConditionals++;
 					break;
 				}
-				if(subCondition2.equals("!" + subCondition1)) {
+				if(subCondition2.equals("!" + subCondition1) || subCondition2.equals("!(" + subCondition1 + ")")) {
 					Replacement r2 = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
 					info.addReplacement(r2);
 					invertedConditionals++;
@@ -7105,7 +7126,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					intersection.add(c2);
 					break;
 				}
-				else if(c1.equals("!" + c2)) {
+				else if(c1.equals("!" + c2) || c1.equals("!(" + c2 + ")")) {
 					intersection.add(c2);
 					break;
 				}
@@ -7117,7 +7138,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					intersection.add(c1);
 					break;
 				}
-				else if(c2.equals("!" + c1)) {
+				else if(c2.equals("!" + c1) || c2.equals("!(" + c1 + ")")) {
 					intersection.add(c1);
 					break;
 				}

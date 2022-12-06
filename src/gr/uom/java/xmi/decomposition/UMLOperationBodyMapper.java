@@ -6737,7 +6737,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							ifNodes2.add((CompositeStatementObject)root2.getParent().getStatements().get(1));
 						}
 					}
-					if(root1.getParent() == null && statement1 instanceof CompositeStatementObject && root2.getParent() == null && statement2 instanceof CompositeStatementObject) {
+					if(root1 != null && root1.getParent() == null && statement1 instanceof CompositeStatementObject && root2 != null && root2.getParent() == null && statement2 instanceof CompositeStatementObject) {
 						root1 = (CompositeStatementObject)statement1;
 						root2 = (CompositeStatementObject)statement2;
 					}

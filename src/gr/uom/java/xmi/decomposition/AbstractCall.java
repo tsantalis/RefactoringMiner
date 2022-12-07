@@ -256,9 +256,21 @@ public abstract class AbstractCall implements LocationInfoProvider {
 			String argument2 = arguments2.get(i);
 			boolean argumentReplacement = false;
 			for(Replacement replacement : replacements) {
-				if(replacement.getBefore().equals(argument1) &&	replacement.getAfter().equals(argument2)) {
+				String before = replacement.getBefore();
+				String after = replacement.getAfter();
+				if(before.equals(argument1) &&	after.equals(argument2)) {
 					argumentReplacement = true;
 					break;
+				}
+				else if(argument1.contains(before) && argument2.contains(after)) {
+					String before1 = argument1.substring(0, argument1.indexOf(before));
+					String before2 = argument2.substring(0, argument2.indexOf(after));
+					String after1 = argument1.substring(argument1.indexOf(before) + before.length(), argument1.length());
+					String after2 = argument2.substring(argument2.indexOf(after) + after.length(), argument2.length());
+					if(before1.equals(before2) && after1.equals(after2)) {
+						argumentReplacement = true;
+						break;
+					}
 				}
 			}
 			boolean lambdaReplacement = false;
@@ -435,44 +447,53 @@ public abstract class AbstractCall implements LocationInfoProvider {
 				if(this.getArguments().size() == call.getArguments().size() && this.getArguments().size() == 1) {
 					String argument1 = this.getArguments().get(0);
 					String argument2 = call.getArguments().get(0);
-					String[] words1 = argument1.split("\\s");
-					String[] words2 = argument2.split("\\s");
+					List<String> words1 = extractWords(argument1);
+					List<String> words2 = extractWords(argument2);
 					int commonWords = 0;
-					if(words1.length <= words2.length) {
+					if(words1.size() <= words2.size()) {
+						int index = 0;
 						for(String word1 : words1) {
-							String w1 = word1.replaceAll("^\"|\"$", "");
-							if(!w1.equals("+") && !w1.equals("")) {
-								for(String word2 : words2) {
-									String w2 = word2.replaceAll("^\"|\"$", "");
-									if(w1.equals(w2) || w1.equals(w2 + ".") || w2.equals(w1 + ".")) {
-										commonWords++;
-										break;
-									}
-								}
+							if(words2.contains(word1)) {
+								commonWords++;
 							}
+							if(word1.equals(words2.get(index) + "ing") || words2.get(index).equals(word1 + "ing")) {
+								commonWords++;
+							}
+							index++;
 						}
 					}
 					else {
+						int index = 0;
 						for(String word2 : words2) {
-							String w2 = word2.replaceAll("^\"|\"$", "");
-							if(!w2.equals("+") && !w2.equals("")) {
-								for(String word1 : words1) {
-									String w1 = word1.replaceAll("^\"|\"$", "");
-									if(w1.equals(w2) || w1.equals(w2 + ".") || w2.equals(w1 + ".")) {
-										commonWords++;
-										break;
-									}
-								}
+							if(words1.contains(word2)) {
+								commonWords++;
 							}
+							if(word2.equals(words1.get(index) + "ing") || words1.get(index).equals(word2 + "ing")) {
+								commonWords++;
+							}
+							index++;
 						}
 					}
-					if(commonWords >= Math.max(words1.length, words2.length)/2) {
+					if(commonWords >= Math.max(words1.size(), words2.size())/2) {
 						return true;
 					}
 				}
 			}
 		}
 		return false;
+	}
+
+	private static List<String> extractWords(String argument) {
+		String[] initialWords = argument.split("\\s");
+		List<String> finalWords = new ArrayList<>();
+		for(String word : initialWords) {
+			//remove " : . , from the beginning and end of the string
+			String w = word.replaceAll("^\"|\"$", "").replaceAll("^\\.|\\.$", "").replaceAll("^\\:|\\:$", "").replaceAll("^\\,|\\,$", "");
+			if(!w.equals("+") && !w.equals("")) {
+				finalWords.add(w);
+			}
+		}
+		return finalWords;
 	}
 
 	private boolean argumentIntersectionContainsClassInstanceCreation(AbstractCall call) {

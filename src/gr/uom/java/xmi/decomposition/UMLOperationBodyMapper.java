@@ -2607,7 +2607,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									}
 								}
 							}
-							if((replacements != null || identicalBody(statement1, statement2)) &&
+							if((replacements != null || identicalBody(statement1, statement2) || allLeavesWithinBodyMapped(statement1, statement2)) &&
 									(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
 								CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 								mapping.addReplacements(replacements);
@@ -2751,7 +2751,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									}
 								}
 							}
-							if((replacements != null || identicalBody(statement1, statement2)) &&
+							if((replacements != null || identicalBody(statement1, statement2) || allLeavesWithinBodyMapped(statement1, statement2)) &&
 									(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
 								CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 								mapping.addReplacements(replacements);
@@ -2789,6 +2789,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private boolean allLeavesWithinBodyMapped(CompositeStatementObject statement1, CompositeStatementObject statement2) {
+		if(statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType())) {
+			int allLeaves1 = 0;
+			int mappedLeaves1 = 0;
+			for(AbstractCodeFragment leaf1 : statement1.getLeaves()) {
+				if(alreadyMatched1(leaf1)) {
+					mappedLeaves1++;
+				}
+				allLeaves1++;
+			}
+			
+			int allLeaves2 = 0;
+			int mappedLeaves2 = 0;
+			for(AbstractCodeFragment leaf2 : statement2.getLeaves()) {
+				if(alreadyMatched2(leaf2)) {
+					mappedLeaves2++;
+				}
+				allLeaves2++;
+			}
+			return allLeaves1 == allLeaves2 && allLeaves1 > 0 && allLeaves1 == mappedLeaves1 && allLeaves2 > 0 && allLeaves2 == mappedLeaves2;
+		}
+		return false;
 	}
 
 	private boolean identicalBody(CompositeStatementObject statement1, CompositeStatementObject statement2) {

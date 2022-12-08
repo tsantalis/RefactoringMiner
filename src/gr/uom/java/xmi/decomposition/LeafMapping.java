@@ -236,6 +236,15 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 								return 1;
 							}
 						}
+						if(levelParentEditDistance1.size() == 2 && levelParentEditDistance1.get(1).equals(0.0) &&
+								levelParentEditDistance2.size() == 2 && levelParentEditDistance2.get(1).equals(0.0) &&
+								!levelParentEditDistance1.get(0).equals(levelParentEditDistance2.get(0))) {
+							int parentIndexDiff1 = this.parentIndexDiff();
+							int parentIndexDiff2 = o.parentIndexDiff();
+							if(parentIndexDiff1 != parentIndexDiff2) {
+								return Integer.valueOf(parentIndexDiff1).compareTo(Integer.valueOf(parentIndexDiff2));
+							}
+						}
 						if(parentEditDistance1 == parentEditDistance2) {
 							int locationSum1 = this.getFragment1().getLocationInfo().getStartLine() + this.getFragment2().getLocationInfo().getStartLine();
 							int locationSum2 = o.getFragment1().getLocationInfo().getStartLine() + o.getFragment2().getLocationInfo().getStartLine();
@@ -323,6 +332,18 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			}
 		}
 		return false;
+	}
+
+	private int parentIndexDiff() {
+		CompositeStatementObject parent1 = getFragment1().getParent();
+		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent1 = parent1.getParent();
+		}
+		CompositeStatementObject parent2 = getFragment2().getParent();
+		while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent2 = parent2.getParent();
+		}
+		return Math.abs(parent1.getIndex() - parent2.getIndex());
 	}
 
 	private boolean sameVariableDeclarationTypeInParent() {

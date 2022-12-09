@@ -2606,6 +2606,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										}
 									}
 								}
+								else if(identicalCommentsInBody(statement1, statement2)) {
+									score = 1;
+								}
 							}
 							if((replacements != null || identicalBody(statement1, statement2) || allLeavesWithinBodyMapped(statement1, statement2)) &&
 									(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
@@ -2750,6 +2753,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										}
 									}
 								}
+								else if(identicalCommentsInBody(statement1, statement2)) {
+									score = 1;
+								}
 							}
 							if((replacements != null || identicalBody(statement1, statement2) || allLeavesWithinBodyMapped(statement1, statement2)) &&
 									(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
@@ -2815,6 +2821,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
+	private boolean identicalCommentsInBody(CompositeStatementObject statement1, CompositeStatementObject statement2) {
+		List<String> commentsWithinStatement1 = extractCommentsWithinStatement(statement1, container1);
+		List<String> commentsWithinStatement2 = extractCommentsWithinStatement(statement2, container2);
+		return commentsWithinStatement1.size() > 0 && commentsWithinStatement1.equals(commentsWithinStatement2);
+	}
+
 	private boolean identicalBody(CompositeStatementObject statement1, CompositeStatementObject statement2) {
 		List<String> bodyStringRepresentation1 = statement1.bodyStringRepresentation();
 		List<String> bodyStringRepresentation2 = statement2.bodyStringRepresentation();
@@ -2862,20 +2874,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		if(!bodyStringRepresentation1.contains(statement2.getString()) && !bodyStringRepresentation2.contains(statement1.getString())) {
-			List<UMLComment> comments1 = container1.getComments();
-			List<String> commentsWithinStatement1 = new ArrayList<>();
-			for(UMLComment comment1 : comments1) {
-				if(statement1.getLocationInfo().subsumes(comment1.getLocationInfo())) {
-					commentsWithinStatement1.add(comment1.getText());
-				}
-			}
-			List<UMLComment> comments2 = container2.getComments();
-			List<String> commentsWithinStatement2 = new ArrayList<>();
-			for(UMLComment comment2 : comments2) {
-				if(statement2.getLocationInfo().subsumes(comment2.getLocationInfo())) {
-					commentsWithinStatement2.add(comment2.getText());
-				}
-			}
+			List<String> commentsWithinStatement1 = extractCommentsWithinStatement(statement1, container1);
+			List<String> commentsWithinStatement2 = extractCommentsWithinStatement(statement2, container2);
 			if(commentsWithinStatement1.size() > 0 && commentsWithinStatement2.size() > 0) {
 				int numberOfCommentsWithinStatement1 = commentsWithinStatement1.size();
 				int numberOfCommentsWithinStatement2 = commentsWithinStatement2.size();
@@ -2908,6 +2908,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return false;
+	}
+
+	private List<String> extractCommentsWithinStatement(CompositeStatementObject statement, VariableDeclarationContainer container) {
+		List<UMLComment> comments1 = container.getComments();
+		List<String> commentsWithinStatement1 = new ArrayList<>();
+		for(UMLComment comment1 : comments1) {
+			if(statement.getLocationInfo().subsumes(comment1.getLocationInfo())) {
+				commentsWithinStatement1.add(comment1.getText());
+			}
+		}
+		return commentsWithinStatement1;
 	}
 
 	private boolean alreadyMatched1(AbstractCodeFragment fragment) {

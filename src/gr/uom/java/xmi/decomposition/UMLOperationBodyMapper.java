@@ -5029,11 +5029,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			CompositeStatementObject for2 = (CompositeStatementObject)statement2;
 			List<AbstractExpression> expressions2 = for2.getExpressions();
 			AbstractExpression enhancedForExpression = expressions2.get(expressions2.size()-1);
+			VariableDeclaration inlinedVariableDeclaration = null;
+			for(AbstractCodeFragment fragment1 : replacementInfo.statements1) {
+				for(VariableDeclaration variableDeclaration : fragment1.getVariableDeclarations()) {
+					if(variableDeclaration.getInitializer() != null && variableDeclaration.getInitializer().getString().equals(enhancedForExpression.getString())) {
+						inlinedVariableDeclaration = variableDeclaration;
+						break;
+					}
+				}
+			}
 			for(AbstractExpression expression1 : for1.getExpressions()) {
 				if(expression1.getString().contains(enhancedForExpression.getString() + ".length") ||
 						expression1.getString().contains(enhancedForExpression.getString() + ".size()") ||
 						expression1.getString().contains(enhancedForExpression.getString() + ".iterator()") ||
 						expression1.getString().contains(enhancedForExpression.getString() + ".listIterator()")) {
+					return replacementInfo.getReplacements();
+				}
+				if(inlinedVariableDeclaration != null &&
+						(expression1.getString().contains(inlinedVariableDeclaration.getVariableName() + ".length") ||
+						expression1.getString().contains(inlinedVariableDeclaration.getVariableName() + ".size()") ||
+						expression1.getString().contains(inlinedVariableDeclaration.getVariableName() + ".iterator()") ||
+						expression1.getString().contains(inlinedVariableDeclaration.getVariableName() + ".listIterator()"))) {
 					return replacementInfo.getReplacements();
 				}
 			}

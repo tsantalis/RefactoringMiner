@@ -2190,32 +2190,38 @@ public class UMLModelDiff {
 		for(Refactoring ref : refactorings) {
 			if(ref instanceof ChangeVariableTypeRefactoring) {
 				ChangeVariableTypeRefactoring refactoring = (ChangeVariableTypeRefactoring)ref;
-				RenamePattern pattern = new RenamePattern(refactoring.getOriginalVariable().getType().toString(), refactoring.getChangedTypeVariable().getType().toString());
-				if(typeRenamePatternMap.containsKey(pattern)) {
-					typeRenamePatternMap.put(pattern, typeRenamePatternMap.get(pattern) + 1);
-				}
-				else {
-					typeRenamePatternMap.put(pattern, 1);
+				if(refactoring.getOriginalVariable().getType() != null && refactoring.getChangedTypeVariable().getType() != null) {
+					RenamePattern pattern = new RenamePattern(refactoring.getOriginalVariable().getType().toString(), refactoring.getChangedTypeVariable().getType().toString());
+					if(typeRenamePatternMap.containsKey(pattern)) {
+						typeRenamePatternMap.put(pattern, typeRenamePatternMap.get(pattern) + 1);
+					}
+					else {
+						typeRenamePatternMap.put(pattern, 1);
+					}
 				}
 			}
 			else if(ref instanceof ChangeAttributeTypeRefactoring) {
 				ChangeAttributeTypeRefactoring refactoring = (ChangeAttributeTypeRefactoring)ref;
-				RenamePattern pattern = new RenamePattern(refactoring.getOriginalAttribute().getType().toString(), refactoring.getChangedTypeAttribute().getType().toString());
-				if(typeRenamePatternMap.containsKey(pattern)) {
-					typeRenamePatternMap.put(pattern, typeRenamePatternMap.get(pattern) + 1);
-				}
-				else {
-					typeRenamePatternMap.put(pattern, 1);
+				if(refactoring.getOriginalAttribute().getType() != null && refactoring.getChangedTypeAttribute().getType() != null) {
+					RenamePattern pattern = new RenamePattern(refactoring.getOriginalAttribute().getType().toString(), refactoring.getChangedTypeAttribute().getType().toString());
+					if(typeRenamePatternMap.containsKey(pattern)) {
+						typeRenamePatternMap.put(pattern, typeRenamePatternMap.get(pattern) + 1);
+					}
+					else {
+						typeRenamePatternMap.put(pattern, 1);
+					}
 				}
 			}
 			else if(ref instanceof ChangeReturnTypeRefactoring) {
 				ChangeReturnTypeRefactoring refactoring = (ChangeReturnTypeRefactoring)ref;
-				RenamePattern pattern = new RenamePattern(refactoring.getOriginalType().toString(), refactoring.getChangedType().toString());
-				if(typeRenamePatternMap.containsKey(pattern)) {
-					typeRenamePatternMap.put(pattern, typeRenamePatternMap.get(pattern) + 1);
-				}
-				else {
-					typeRenamePatternMap.put(pattern, 1);
+				if(refactoring.getOriginalType() != null && refactoring.getChangedType() != null) {
+					RenamePattern pattern = new RenamePattern(refactoring.getOriginalType().toString(), refactoring.getChangedType().toString());
+					if(typeRenamePatternMap.containsKey(pattern)) {
+						typeRenamePatternMap.put(pattern, typeRenamePatternMap.get(pattern) + 1);
+					}
+					else {
+						typeRenamePatternMap.put(pattern, 1);
+					}
 				}
 			}
 		}

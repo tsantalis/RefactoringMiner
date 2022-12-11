@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
@@ -412,6 +413,10 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			return tokens1;
 		}
 		return Collections.emptySet();
+	}
+
+	public double levelParentEditDistanceSum() {
+		return levelParentEditDistance.stream().collect(Collectors.summingDouble(Double::doubleValue));
 	}
 
 	private List<Double> levelParentEditDistance() {

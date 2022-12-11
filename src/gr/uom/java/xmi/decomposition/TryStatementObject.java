@@ -36,4 +36,30 @@ public class TryStatementObject extends CompositeStatementObject {
 	public boolean isTryWithResources() {
 		return getExpressions().size() > 0;
 	}
+
+	public boolean identicalCatchFinallyBlocks(TryStatementObject other) {
+		int identicalCatchClauses = 0;
+		boolean identicalFinallyClause = false;
+		if(this.catchClauses.size() == other.catchClauses.size()) {
+			for(int i=0; i<this.catchClauses.size(); i++) {
+				CompositeStatementObject thisCatch = this.catchClauses.get(i);
+				CompositeStatementObject otherCatch = other.catchClauses.get(i);
+				if(thisCatch.stringRepresentation().equals(otherCatch.stringRepresentation())) {
+					identicalCatchClauses++;
+				}
+			}
+		}
+		else {
+			return false;
+		}
+		if(this.finallyClause != null && other.finallyClause != null) {
+			if(this.finallyClause.stringRepresentation().equals(other.finallyClause.stringRepresentation())) {
+				identicalFinallyClause = true;
+			}
+		}
+		else if(this.finallyClause == null && other.finallyClause == null) {
+			identicalFinallyClause = true;
+		}
+		return identicalCatchClauses == this.catchClauses.size() && identicalFinallyClause;
+	}
 }

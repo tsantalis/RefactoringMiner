@@ -2649,7 +2649,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(!mappingSet.isEmpty()) {
-						CompositeStatementObjectMapping minStatementMapping = mappingSet.first();
+						CompositeStatementObjectMapping oneTryBlockNestedUnderTheOther = oneTryBlockNestedUnderTheOther(mappingSet);
+						CompositeStatementObjectMapping minStatementMapping = oneTryBlockNestedUnderTheOther != null ? oneTryBlockNestedUnderTheOther : mappingSet.first();
 						addMapping(minStatementMapping);
 						innerNodes2.remove(minStatementMapping.getFragment2());
 						innerNodeIterator1.remove();
@@ -2796,7 +2797,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(!mappingSet.isEmpty()) {
-						CompositeStatementObjectMapping minStatementMapping = mappingSet.first();
+						CompositeStatementObjectMapping oneTryBlockNestedUnderTheOther = oneTryBlockNestedUnderTheOther(mappingSet);
+						CompositeStatementObjectMapping minStatementMapping = oneTryBlockNestedUnderTheOther != null ? oneTryBlockNestedUnderTheOther : mappingSet.first();
 						addMapping(minStatementMapping);
 						innerNodes1.remove(minStatementMapping.getFragment1());
 						innerNodeIterator2.remove();
@@ -2804,6 +2806,35 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private CompositeStatementObjectMapping oneTryBlockNestedUnderTheOther(TreeSet<CompositeStatementObjectMapping> mappingSet) {
+		if(mappingSet.size() > 1) {
+			int tryMappingCount = 0;
+			Map<CompositeStatementObjectMapping, Boolean> identicalCatchFinallyBlocksMap = new LinkedHashMap<>();
+			for(CompositeStatementObjectMapping mapping : mappingSet) {
+				if(mapping.getFragment1() instanceof TryStatementObject && mapping.getFragment2() instanceof TryStatementObject) {
+					boolean identicalCatchFinallyBlocks = ((TryStatementObject)mapping.getFragment1()).identicalCatchFinallyBlocks((TryStatementObject)mapping.getFragment2());
+					identicalCatchFinallyBlocksMap.put(mapping, identicalCatchFinallyBlocks);
+					tryMappingCount++;
+				}
+			}
+			if(tryMappingCount == mappingSet.size()) {
+				CompositeStatementObjectMapping minStatementMapping = mappingSet.first();
+				for(CompositeStatementObjectMapping mapping : mappingSet) {
+					if(!mapping.equals(minStatementMapping) &&
+							(
+							(mapping.getFragment1().getLocationInfo().subsumes(minStatementMapping.getFragment1().getLocationInfo()) && mapping.getFragment2().equals(minStatementMapping.getFragment2())) ||
+							(mapping.getFragment2().getLocationInfo().subsumes(minStatementMapping.getFragment2().getLocationInfo()) && mapping.getFragment1().equals(minStatementMapping.getFragment1()))
+							)) {
+						if(identicalCatchFinallyBlocksMap.get(mapping) == true && identicalCatchFinallyBlocksMap.get(minStatementMapping) == false) {
+							return mapping;
+						}
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	private boolean allLeavesWithinBodyMapped(CompositeStatementObject statement1, CompositeStatementObject statement2) {

@@ -150,7 +150,10 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 		int count = 0;
 		CompositeStatementObject comp1 = (CompositeStatementObject)getFragment1();
 		CompositeStatementObject comp2 = (CompositeStatementObject)getFragment2();
-		if(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+		if((comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) ||
+				(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) && comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT)) ||
+				(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) ||
+				(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) && comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK))) {
 			List<AbstractStatement> statements1 = comp1.getStatements();
 			List<AbstractStatement> statements2 = comp2.getStatements();
 			for(AbstractStatement statement1 : statements1) {

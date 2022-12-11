@@ -391,6 +391,42 @@ public class TestStatementMappings {
 	}
 
 	@Test
+	public void testNestedExtractMethodStatementMappings3() throws Exception {
+		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+		Repository repo = gitService.cloneIfNotExists(
+		    REPOS + "/jadx",
+		    "https://github.com/skylot/jadx.git");
+
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommit(repo, "2d8d4164830631d3125575f055b417c5addaa22f", new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+						if(!ex.getSourceOperationBeforeExtraction().getClassName().equals("jadx.core.utils.RegionUtils")) {
+							UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+							if(!bodyMapper.isNested()) {
+								if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+									parentMappers.add(bodyMapper.getParentMapper());
+								}
+							}
+							mapperInfo(bodyMapper, actual);
+						}
+					}
+				}
+				for(UMLOperationBodyMapper parentMapper : parentMappers) {
+					mapperInfo(parentMapper, actual);
+				}
+			}
+		});
+		
+		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/jadx-2d8d4164830631d3125575f055b417c5addaa22f.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testNestedExtractMethodStatementMappingsWithIntermediateDelegate() throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		Repository repo = gitService.cloneIfNotExists(

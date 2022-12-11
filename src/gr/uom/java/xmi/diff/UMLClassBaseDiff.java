@@ -1711,7 +1711,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(indicesToBeRemoved.isEmpty()) {
 			if(nestedMapper.contains(false)) {
 				for(int i=0; i<nestedMapper.size(); i++) {
-					if(nestedMapper.get(i) == true) {
+					if(nestedMapper.get(i) == true && identical.get(i) == false) {
 						indicesToBeRemoved.add(i);
 					}
 				}

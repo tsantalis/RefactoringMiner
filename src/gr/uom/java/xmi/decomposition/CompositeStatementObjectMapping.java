@@ -26,28 +26,8 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 				o.compositeChildMatchingScore >= 2.0*this.compositeChildMatchingScore) {
 			return -Double.compare(this.compositeChildMatchingScore, o.compositeChildMatchingScore);
 		}
-		double distance1;
-		double distance2;
-		if(this.getFragment1().getString().equals(this.getFragment2().getString())) {
-			distance1 = 0;
-		}
-		else {
-			String s1 = this.getFragment1().getString().toLowerCase();
-			String s2 = this.getFragment2().getString().toLowerCase();
-			int distance = StringDistance.editDistance(s1, s2);
-			distance1 = (double)distance/(double)Math.max(s1.length(), s2.length());
-		}
-		
-		if(o.getFragment1().getString().equals(o.getFragment2().getString())) {
-			distance2 = 0;
-		}
-		else {
-			String s1 = o.getFragment1().getString().toLowerCase();
-			String s2 = o.getFragment2().getString().toLowerCase();
-			int distance = StringDistance.editDistance(s1, s2);
-			distance2 = (double)distance/(double)Math.max(s1.length(), s2.length());
-		}
-		
+		double distance1 = this.editDistance();
+		double distance2 = o.editDistance();
 		if(distance1 != distance2) {
 			if(this.isIdenticalWithExtractedVariable() && !o.isIdenticalWithExtractedVariable()) {
 				return -1;
@@ -133,6 +113,20 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 		}
 	}
 
+	public double editDistance() {
+		double distance1;
+		if(this.getFragment1().getString().equals(this.getFragment2().getString())) {
+			distance1 = 0;
+		}
+		else {
+			String s1 = this.getFragment1().getString().toLowerCase();
+			String s2 = this.getFragment2().getString().toLowerCase();
+			int distance = StringDistance.editDistance(s1, s2);
+			distance1 = (double)distance/(double)Math.max(s1.length(), s2.length());
+		}
+		return distance1;
+	}
+
 	private int numberOfIdenticalCompositeChildren() {
 		int count = 0;
 		CompositeStatementObject comp1 = (CompositeStatementObject)getFragment1();
@@ -156,7 +150,10 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 		int count = 0;
 		CompositeStatementObject comp1 = (CompositeStatementObject)getFragment1();
 		CompositeStatementObject comp2 = (CompositeStatementObject)getFragment2();
-		if(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+		if((comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) ||
+				(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) && comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT)) ||
+				(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) ||
+				(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) && comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK))) {
 			List<AbstractStatement> statements1 = comp1.getStatements();
 			List<AbstractStatement> statements2 = comp2.getStatements();
 			for(AbstractStatement statement1 : statements1) {

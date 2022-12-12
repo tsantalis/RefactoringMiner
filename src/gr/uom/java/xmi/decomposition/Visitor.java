@@ -37,6 +37,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	private List<String> prefixExpressions = new ArrayList<String>();
 	private List<String> postfixExpressions = new ArrayList<String>();
 	private List<String> arguments = new ArrayList<String>();
+	private List<String> parenthesizedExpressions = new ArrayList<String>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
 	private DefaultMutableTreeNode root = new DefaultMutableTreeNode();
@@ -96,6 +97,8 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 			visit((PsiMethodCallExpression) element);
 		} else if (element instanceof PsiLambdaExpression) {
 			visitSubtree = visit((PsiLambdaExpression) element);
+		} else if (element instanceof PsiParenthesizedExpression) {
+			visit((PsiParenthesizedExpression) element);
 		}
 		if (visitSubtree) {
 			super.visitElement(element);
@@ -327,11 +330,12 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 			removeLast(this.infixOperators, anonymous.getInfixOperators());
 			removeLast(this.postfixExpressions, anonymous.getPostfixExpressions());
 			removeLast(this.prefixExpressions, anonymous.getPrefixExpressions());
+			removeLast(this.parenthesizedExpressions, anonymous.getParenthesizedExpressions());
 			removeLast(this.arguments, anonymous.getArguments());
 			this.ternaryOperatorExpressions.removeAll(anonymous.getTernaryOperatorExpressions());
 			this.anonymousClassDeclarations.removeAll(anonymous.getAnonymousClassDeclarations());
 			this.lambdas.removeAll(anonymous.getLambdas());
-			this.arrayAccesses.removeAll(anonymous.getArrayAccesses());
+			removeLast(this.arrayAccesses, anonymous.getArrayAccesses());
 		}
 	}
 
@@ -735,6 +739,15 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 		return false;
 	}
 
+	private void visit(PsiParenthesizedExpression node) {
+		String source = Formatter.format(node);
+		parenthesizedExpressions.add(source);
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getParenthesizedExpressions().add(source);
+		}
+	}
+
 	public Map<String, List<AbstractCall>> getMethodInvocationMap() {
 		return this.methodInvocationMap;
 	}
@@ -797,6 +810,10 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 
 	public List<String> getArguments() {
 		return this.arguments;
+	}
+
+	public List<String> getParenthesizedExpressions() {
+		return parenthesizedExpressions;
 	}
 
 	public List<TernaryOperatorExpression> getTernaryOperatorExpressions() {

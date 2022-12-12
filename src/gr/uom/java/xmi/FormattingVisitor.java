@@ -103,7 +103,7 @@ public class FormattingVisitor extends PsiRecursiveElementWalkingVisitor {
     }
 
     private static boolean needSpaceAfter(PsiElement element) {
-        return !(PsiUtil.isJavaToken(element, noSpaces) || PsiUtil.isJavaToken(element, noSpaceAfter)) || isInfixOperator(element) || isLambdaExpressionRightParenthesis(element);
+        return (!(PsiUtil.isJavaToken(element, noSpaces) || PsiUtil.isJavaToken(element, noSpaceAfter)) && !(element.getParent() instanceof PsiPrefixExpression)) || isInfixOperator(element) || isLambdaExpressionRightParenthesis(element);
     }
 
     private static boolean mustHaveSpaceBefore(PsiElement element) {
@@ -124,6 +124,15 @@ public class FormattingVisitor extends PsiRecursiveElementWalkingVisitor {
                     if(operand.equals(element.getParent())) {
                         return true;
                     }
+                }
+            }
+            else if(element.getParent().getParent() instanceof PsiConditionalExpression) {
+                PsiConditionalExpression conditionalExpression = (PsiConditionalExpression) element.getParent().getParent();
+                if(conditionalExpression.getThenExpression().equals(element.getParent())) {
+                    return true;
+                }
+                if(conditionalExpression.getElseExpression().equals(element.getParent())) {
+                    return true;
                 }
             }
             else if(element.getParent().getParent() instanceof PsiReferenceExpression &&

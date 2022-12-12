@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
@@ -26,9 +27,14 @@ import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapperComparator;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
+import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
+import gr.uom.java.xmi.decomposition.replacement.MethodInvocationWithClassInstanceCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
+import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
+import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -2184,32 +2190,38 @@ public class UMLModelDiff {
 		for(Refactoring ref : refactorings) {
 			if(ref instanceof ChangeVariableTypeRefactoring) {
 				ChangeVariableTypeRefactoring refactoring = (ChangeVariableTypeRefactoring)ref;
-				RenamePattern pattern = new RenamePattern(refactoring.getOriginalVariable().getType().toString(), refactoring.getChangedTypeVariable().getType().toString());
-				if(typeRenamePatternMap.containsKey(pattern)) {
-					typeRenamePatternMap.put(pattern, typeRenamePatternMap.get(pattern) + 1);
-				}
-				else {
-					typeRenamePatternMap.put(pattern, 1);
+				if(refactoring.getOriginalVariable().getType() != null && refactoring.getChangedTypeVariable().getType() != null) {
+					RenamePattern pattern = new RenamePattern(refactoring.getOriginalVariable().getType().toString(), refactoring.getChangedTypeVariable().getType().toString());
+					if(typeRenamePatternMap.containsKey(pattern)) {
+						typeRenamePatternMap.put(pattern, typeRenamePatternMap.get(pattern) + 1);
+					}
+					else {
+						typeRenamePatternMap.put(pattern, 1);
+					}
 				}
 			}
 			else if(ref instanceof ChangeAttributeTypeRefactoring) {
 				ChangeAttributeTypeRefactoring refactoring = (ChangeAttributeTypeRefactoring)ref;
-				RenamePattern pattern = new RenamePattern(refactoring.getOriginalAttribute().getType().toString(), refactoring.getChangedTypeAttribute().getType().toString());
-				if(typeRenamePatternMap.containsKey(pattern)) {
-					typeRenamePatternMap.put(pattern, typeRenamePatternMap.get(pattern) + 1);
-				}
-				else {
-					typeRenamePatternMap.put(pattern, 1);
+				if(refactoring.getOriginalAttribute().getType() != null && refactoring.getChangedTypeAttribute().getType() != null) {
+					RenamePattern pattern = new RenamePattern(refactoring.getOriginalAttribute().getType().toString(), refactoring.getChangedTypeAttribute().getType().toString());
+					if(typeRenamePatternMap.containsKey(pattern)) {
+						typeRenamePatternMap.put(pattern, typeRenamePatternMap.get(pattern) + 1);
+					}
+					else {
+						typeRenamePatternMap.put(pattern, 1);
+					}
 				}
 			}
 			else if(ref instanceof ChangeReturnTypeRefactoring) {
 				ChangeReturnTypeRefactoring refactoring = (ChangeReturnTypeRefactoring)ref;
-				RenamePattern pattern = new RenamePattern(refactoring.getOriginalType().toString(), refactoring.getChangedType().toString());
-				if(typeRenamePatternMap.containsKey(pattern)) {
-					typeRenamePatternMap.put(pattern, typeRenamePatternMap.get(pattern) + 1);
-				}
-				else {
-					typeRenamePatternMap.put(pattern, 1);
+				if(refactoring.getOriginalType() != null && refactoring.getChangedType() != null) {
+					RenamePattern pattern = new RenamePattern(refactoring.getOriginalType().toString(), refactoring.getChangedType().toString());
+					if(typeRenamePatternMap.containsKey(pattern)) {
+						typeRenamePatternMap.put(pattern, typeRenamePatternMap.get(pattern) + 1);
+					}
+					else {
+						typeRenamePatternMap.put(pattern, 1);
+					}
 				}
 			}
 		}
@@ -2481,7 +2493,7 @@ public class UMLModelDiff {
 		for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 			UMLOperation removedOperation = removedOperationIterator.next();
 			for(UMLOperationBodyMapper mapper : mappers) {
-				if((!mapper.getNonMappedLeavesT2().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty() || !mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) && !mapper.containsInlineOperationRefactoring(removedOperation)) {
+				if((mapper.nonMappedElementsT2() > 0 || includesReplacementInvolvingRemovedMethod(mapper.getReplacementsInvolvingMethodInvocation(), removedOperation, mapper.getContainer1())) && !mapper.containsInlineOperationRefactoring(removedOperation)) {
 					List<AbstractCall> operationInvocations = mapper.getContainer1().getAllOperationInvocations();
 					List<AbstractCall> removedOperationInvocations = new ArrayList<AbstractCall>();
 					for(AbstractCall invocation : operationInvocations) {
@@ -2506,7 +2518,7 @@ public class UMLModelDiff {
 									parameterToArgumentMap2.put(expression + ".", "");
 									parameterToArgumentMap1.put("this.", "");
 								}
-								UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(removedOperation.getClassName()), false);
+								UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(removedOperation.getClassName()), removedOperationInvocation, false);
 								if(moveAndInlineMatchCondition(operationBodyMapper, mapper)) {
 									InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getContainer1(), removedOperationInvocations);
 									refactorings.add(inlineOperationRefactoring);
@@ -2518,6 +2530,46 @@ public class UMLModelDiff {
 				}
 			}
 		}
+	}
+
+	private boolean includesReplacementInvolvingRemovedMethod(Set<Replacement> replacements, UMLOperation removedOperation, VariableDeclarationContainer caller) {
+		for(Replacement replacement : replacements) {
+			if(replacement instanceof MethodInvocationWithClassInstanceCreationReplacement) {
+				MethodInvocationWithClassInstanceCreationReplacement r = (MethodInvocationWithClassInstanceCreationReplacement)replacement;
+				if(r.getInvokedOperationBefore().matchesOperation(removedOperation, caller, this)) {
+					return true;
+				}
+			}
+			else if(replacement instanceof MethodInvocationReplacement) {
+				MethodInvocationReplacement r = (MethodInvocationReplacement)replacement;
+				if(r.getInvokedOperationBefore().matchesOperation(removedOperation, caller, this)) {
+					return true;
+				}
+				String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(r.getInvokedOperationBefore().getName());
+				String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(removedOperation.getNonQualifiedClassName());
+				int commonTokens = 0;
+				for(String token1 : tokens1) {
+					for(String token2 : tokens2) {
+						if(token1.equals(token2)) {
+							commonTokens++;
+						}
+					}
+				}
+				if(commonTokens > 0 && commonTokens >= Math.min(tokens1.length, tokens2.length)-1) {
+					return true;
+				}
+			}
+			else if(replacement instanceof VariableReplacementWithMethodInvocation) {
+				VariableReplacementWithMethodInvocation r = (VariableReplacementWithMethodInvocation)replacement;
+				if(r.getDirection().equals(Direction.INVOCATION_TO_VARIABLE) && r.getInvokedOperation().matchesOperation(removedOperation, caller, this)) {
+					return true;
+				}
+			}
+			else if(replacement.getBefore().equals(removedOperation.getNonQualifiedClassName())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean moveAndInlineMatchCondition(UMLOperationBodyMapper operationBodyMapper, UMLOperationBodyMapper parentMapper) {
@@ -2578,13 +2630,54 @@ public class UMLModelDiff {
 		return false;
 	}
 
+	private boolean includesReplacementInvolvingAddedMethod(Set<Replacement> replacements, UMLOperation addedOperation, VariableDeclarationContainer caller) {
+		for(Replacement replacement : replacements) {
+			if(replacement instanceof ClassInstanceCreationWithMethodInvocationReplacement) {
+				ClassInstanceCreationWithMethodInvocationReplacement r = (ClassInstanceCreationWithMethodInvocationReplacement)replacement;
+				if(r.getInvokedOperationAfter().matchesOperation(addedOperation, caller, this)) {
+					return true;
+				}
+			}
+			else if(replacement instanceof MethodInvocationReplacement) {
+				MethodInvocationReplacement r = (MethodInvocationReplacement)replacement;
+				if(r.getInvokedOperationAfter().matchesOperation(addedOperation, caller, this)) {
+					return true;
+				}
+				String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(r.getInvokedOperationAfter().getName());
+				String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(addedOperation.getNonQualifiedClassName());
+				int commonTokens = 0;
+				for(String token1 : tokens1) {
+					for(String token2 : tokens2) {
+						if(token1.equals(token2)) {
+							commonTokens++;
+						}
+					}
+				}
+				if(commonTokens > 0 && commonTokens >= Math.min(tokens1.length, tokens2.length)-1) {
+					return true;
+				}
+			}
+			else if(replacement instanceof VariableReplacementWithMethodInvocation) {
+				VariableReplacementWithMethodInvocation r = (VariableReplacementWithMethodInvocation)replacement;
+				if(r.getDirection().equals(Direction.VARIABLE_TO_INVOCATION) && r.getInvokedOperation().matchesOperation(addedOperation, caller, this)) {
+					return true;
+				}
+			}
+			else if(replacement.getAfter().equals(addedOperation.getNonQualifiedClassName())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void checkForExtractedAndMovedOperations(List<UMLOperationBodyMapper> mappers, List<UMLOperation> addedOperations) throws RefactoringMinerTimedOutException {
 		for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 			UMLOperation addedOperation = addedOperationIterator.next();
 			if(!getterOrSetterCorrespondingToRenamedAttribute(addedOperation)) {
 				for(UMLOperationBodyMapper mapper : mappers) {
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(mapper.getContainer1(), addedOperation);
-					if((mapper.nonMappedElementsT1() > 0 || !mapper.getReplacementsInvolvingMethodInvocation().isEmpty()) && !mapper.containsExtractOperationRefactoring(addedOperation) && !processedOperationPairs.contains(pair)) {
+					String className = mapper.getContainer2().getClassName();
+					if(!className.equals(addedOperation.getClassName()) && (mapper.nonMappedElementsT1() > 0 || includesReplacementInvolvingAddedMethod(mapper.getReplacementsInvolvingMethodInvocation(), addedOperation, mapper.getContainer2())) && !mapper.containsExtractOperationRefactoring(addedOperation) && !processedOperationPairs.contains(pair)) {
 						processedOperationPairs.add(pair);
 						List<AbstractCall> operationInvocations = ExtractOperationDetection.getInvocationsInSourceOperationAfterExtraction(mapper);
 						List<AbstractCall> addedOperationInvocations = new ArrayList<AbstractCall>();
@@ -2603,7 +2696,6 @@ public class UMLModelDiff {
 							for(int i=0; i<size; i++) {
 								parameterToArgumentMap2.put(parameters.get(i), arguments.get(i));
 							}
-							String className = mapper.getContainer2().getClassName();
 							List<UMLAttribute> attributes = new ArrayList<UMLAttribute>();
 							if(className.contains(".") && isAnonymousClassName(className)) {
 								//add enclosing class fields + anonymous class fields

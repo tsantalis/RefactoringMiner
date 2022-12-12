@@ -212,24 +212,26 @@ public class ExtractOperationDetection {
 		UMLOperationBodyMapper nestedMapper = createMapperForExtractedMethod(mapper, node.getOriginalOperation(), node.getInvokedOperation(), node.getInvocation(), true);
 		if(nestedMapper != null && !containsRefactoringWithIdenticalMappings(refactorings, nestedMapper)) {
 			additionalExactMatches.addAll(nestedMapper.getExactMatches());
-			if(extractMatchCondition(nestedMapper, new ArrayList<AbstractCodeMapping>()) && extractMatchCondition(operationBodyMapper, additionalExactMatches)) {
+			if(extractMatchCondition(nestedMapper, new ArrayList<AbstractCodeMapping>()) && (extractMatchCondition(operationBodyMapper, additionalExactMatches) || node.getOriginalOperation().delegatesTo(node.getInvokedOperation(), modelDiff) != null)) {
 				List<AbstractCall> nestedMatchingInvocations = matchingInvocations(node.getInvokedOperation(), node.getOriginalOperation().getAllOperationInvocations(), node.getOriginalOperation());
 				ExtractOperationRefactoring nestedRefactoring = new ExtractOperationRefactoring(nestedMapper, mapper.getContainer2(), nestedMatchingInvocations);
 				refactorings.add(nestedRefactoring);
 				operationBodyMapper.addChildMapper(nestedMapper);
 			}
-			//add any mappings back to parent mapper as non-mapped statements
-			for(AbstractCodeMapping mapping : nestedMapper.getMappings()) {
-				if(!mapping.isExact() || mapping.getFragment1().getString().equals("{")) {
-					AbstractCodeFragment fragment1 = mapping.getFragment1();
-					if(fragment1 instanceof CompositeStatementObject) {
-						if(!mapper.getNonMappedInnerNodesT1().contains(fragment1)) {
-							mapper.getNonMappedInnerNodesT1().add((CompositeStatementObject)fragment1);
+			else {
+				//add any mappings back to parent mapper as non-mapped statements
+				for(AbstractCodeMapping mapping : nestedMapper.getMappings()) {
+					if(!mapping.isExact() || mapping.getFragment1().getString().equals("{")) {
+						AbstractCodeFragment fragment1 = mapping.getFragment1();
+						if(fragment1 instanceof CompositeStatementObject) {
+							if(!mapper.getNonMappedInnerNodesT1().contains(fragment1)) {
+								mapper.getNonMappedInnerNodesT1().add((CompositeStatementObject)fragment1);
+							}
 						}
-					}
-					else {
-						if(!mapper.getNonMappedLeavesT1().contains(fragment1)) {
-							mapper.getNonMappedLeavesT1().add(fragment1);
+						else {
+							if(!mapper.getNonMappedLeavesT1().contains(fragment1)) {
+								mapper.getNonMappedLeavesT1().add(fragment1);
+							}
 						}
 					}
 				}

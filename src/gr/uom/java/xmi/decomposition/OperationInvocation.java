@@ -163,7 +163,10 @@ public class OperationInvocation extends AbstractCall {
     }
 
     public boolean matchesOperation(VariableDeclarationContainer operation, VariableDeclarationContainer callerOperation, UMLModelDiff modelDiff) {
-    	Map<String, Set<VariableDeclaration>> variableDeclarationMap = callerOperation.variableDeclarationMap();
+		if(!this.methodName.equals(operation.getName())) {
+			return false;
+		}
+		Map<String, Set<VariableDeclaration>> variableDeclarationMap = callerOperation.variableDeclarationMap();
     	Map<String, VariableDeclaration> parentFieldDeclarationMap = null;
     	Map<String, VariableDeclaration> childFieldDeclarationMap = null;
     	if(modelDiff != null) {
@@ -285,7 +288,7 @@ public class OperationInvocation extends AbstractCall {
     		i++;
     	}
     	UMLType lastInferredArgumentType = inferredArgumentTypes.size() > 0 ? inferredArgumentTypes.get(inferredArgumentTypes.size()-1) : null;
-		return this.methodName.equals(operation.getName()) && (this.numberOfArguments == operation.getParameterTypeList().size() || varArgsMatch(operation, lastInferredArgumentType));
+		return this.numberOfArguments == operation.getParameterTypeList().size() || varArgsMatch(operation, lastInferredArgumentType);
     }
 
     private boolean compatibleTypes(UMLParameter parameter, UMLType type, UMLModelDiff modelDiff) {

@@ -24,6 +24,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
+import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
@@ -1422,18 +1423,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 			for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
 				if(oneToManyMappings.containsKey(mapping.getFragment2())) {
-					List<UMLOperationBodyMapper> childMappers = oneToManyMappers.get(mapping.getFragment2());
-					boolean singleStatementInlinedMethod = false;
-					for(UMLOperationBodyMapper childMapper : childMappers) {
-						if(childMapper.getContainer1().stringRepresentation().size() == 3) {
-							singleStatementInlinedMethod = true;
-							break;
-						}
-					}
-					if(!singleStatementInlinedMethod) {
-						oneToManyMappings.get(mapping.getFragment2()).add(mapping);
-						oneToManyMappers.get(mapping.getFragment2()).add(parentMapper);
-					}
+					oneToManyMappings.get(mapping.getFragment2()).add(mapping);
+					oneToManyMappers.get(mapping.getFragment2()).add(parentMapper);
 				}
 				else {
 					List<AbstractCodeMapping> mappings = new ArrayList<>();
@@ -1514,18 +1505,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 			for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
 				if(oneToManyMappings.containsKey(mapping.getFragment1())) {
-					List<UMLOperationBodyMapper> childMappers = oneToManyMappers.get(mapping.getFragment1());
-					boolean singleStatementExtractedMethod = false;
-					for(UMLOperationBodyMapper childMapper : childMappers) {
-						if(childMapper.getContainer2().stringRepresentation().size() == 3) {
-							singleStatementExtractedMethod = true;
-							break;
-						}
-					}
-					if(!singleStatementExtractedMethod) {
-						oneToManyMappings.get(mapping.getFragment1()).add(mapping);
-						oneToManyMappers.get(mapping.getFragment1()).add(parentMapper);
-					}
+					oneToManyMappings.get(mapping.getFragment1()).add(mapping);
+					oneToManyMappers.get(mapping.getFragment1()).add(parentMapper);
 				}
 				else {
 					List<AbstractCodeMapping> mappings = new ArrayList<>();
@@ -1566,6 +1547,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			List<Integer> replacementTypeCount = new ArrayList<>();
 			List<Boolean> replacementCoversEntireStatement = new ArrayList<>();
 			List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+			List<Double> editDistances = new ArrayList<>();
 			while(mappingIterator.hasNext()) {
 				AbstractCodeMapping mapping = mappingIterator.next();
 				UMLOperationBodyMapper mapper = mapperIterator.next();
@@ -1598,6 +1580,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 				replacementCoversEntireStatement.add(replacementFound);
 				parentMappers.add(mapper.getParentMapper());
+				editDistances.add(mapping.editDistance());
 			}
 			Set<Integer> indicesToBeRemoved = new LinkedHashSet<>();
 			if(callsExtractedInlinedMethod.contains(true) && callsExtractedInlinedMethod.contains(false)) {
@@ -1613,7 +1596,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						indicesToBeRemoved.add(i);
 					}
 				}
-				determineIndicesToBeRemoved(nestedMapper, identical, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved);
+				determineIndicesToBeRemoved(nestedMapper, identical, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
 			}
 			else if(parentIsContainerBody.contains(true)) {
 				for(int i=0; i<parentIsContainerBody.size(); i++) {
@@ -1621,7 +1604,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						indicesToBeRemoved.add(i);
 					}
 				}
-				determineIndicesToBeRemoved(nestedMapper, identical, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved);
+				determineIndicesToBeRemoved(nestedMapper, identical, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
 			}
 			if(indicesToBeRemoved.isEmpty() && matchingParentMappers(parentMappers) == parentMappers.size()) {
 				int minimum = nonMappedNodes.get(0);
@@ -1643,21 +1626,43 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				AbstractCodeMapping mapping = mappingIterator.next();
 				UMLOperationBodyMapper mapper = mapperIterator.next();
 				if(indicesToBeRemoved.contains(index)) {
-					mapper.removeMapping(mapping);
-					//remove refactorings based on mapping
-					Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
-					Set<Refactoring> refactoringsAfterPostProcessing = mapper.getRefactoringsAfterPostProcessing();
-					for(Refactoring r : refactoringsAfterPostProcessing) {
-						if(r instanceof ReferenceBasedRefactoring) {
-							ReferenceBasedRefactoring referenceBased = (ReferenceBasedRefactoring)r;
-							Set<AbstractCodeMapping> references = referenceBased.getReferences();
-							if(references.contains(mapping)) {
-								refactoringsToBeRemoved.add(r);
+					boolean removeMapping = true;
+					if(callsExtractedInlinedMethod.get(index)) {
+						AbstractCodeFragment callFragment = null;
+						if(mapper.containsExtractedOperationInvocation(mapping)) {
+							callFragment = mapping.getFragment2();
+						}
+						else if(mapper.containsInlinedOperationInvocation(mapping)) {
+							callFragment = mapping.getFragment1();
+						}
+						AbstractCall invocation = callFragment.invocationCoveringEntireFragment();
+						if(invocation == null) {
+							invocation = callFragment.fieldAssignmentInvocationCoveringEntireStatement();
+							if(invocation != null) {
+								removeMapping = false;
 							}
 						}
+						if(invocation != null && invocation.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL)) {
+							removeMapping = false;
+						}
 					}
-					refactoringsAfterPostProcessing.removeAll(refactoringsToBeRemoved);
-					updatedMappers.add(mapper);
+					if(removeMapping) {
+						mapper.removeMapping(mapping);
+						//remove refactorings based on mapping
+						Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
+						Set<Refactoring> refactoringsAfterPostProcessing = mapper.getRefactoringsAfterPostProcessing();
+						for(Refactoring r : refactoringsAfterPostProcessing) {
+							if(r instanceof ReferenceBasedRefactoring) {
+								ReferenceBasedRefactoring referenceBased = (ReferenceBasedRefactoring)r;
+								Set<AbstractCodeMapping> references = referenceBased.getReferences();
+								if(references.contains(mapping)) {
+									refactoringsToBeRemoved.add(r);
+								}
+							}
+						}
+						refactoringsAfterPostProcessing.removeAll(refactoringsToBeRemoved);
+						updatedMappers.add(mapper);
+					}
 				}
 				index++;
 			}
@@ -1702,11 +1707,11 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	private void determineIndicesToBeRemoved(List<Boolean> nestedMapper, List<Boolean> identical,
 			List<Integer> replacementTypeCount, List<Boolean> replacementCoversEntireStatement,
-			Set<Integer> indicesToBeRemoved) {
+			Set<Integer> indicesToBeRemoved, List<Double> editDistances) {
 		if(indicesToBeRemoved.isEmpty()) {
 			if(nestedMapper.contains(false)) {
 				for(int i=0; i<nestedMapper.size(); i++) {
-					if(nestedMapper.get(i) == true) {
+					if(nestedMapper.get(i) == true && identical.get(i) == false) {
 						indicesToBeRemoved.add(i);
 					}
 				}
@@ -1735,6 +1740,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				for(int i=0; i<replacementTypeCount.size(); i++) {
 					if(replacementTypeCount.get(i) > minimum) {
 						indicesToBeRemoved.add(i);
+					}
+				}
+				if(indicesToBeRemoved.isEmpty()) {
+					double minimumEditDistance = editDistances.get(0);
+					for(int i=1; i<editDistances.size(); i++) {
+						if(editDistances.get(i) < minimum) {
+							minimumEditDistance = editDistances.get(i);
+						}
+					}
+					for(int i=0; i<editDistances.size(); i++) {
+						if(editDistances.get(i) > minimumEditDistance) {
+							indicesToBeRemoved.add(i);
+						}
 					}
 				}
 			}

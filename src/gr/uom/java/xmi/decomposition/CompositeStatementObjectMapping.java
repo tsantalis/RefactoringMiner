@@ -131,7 +131,7 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 		int count = 0;
 		CompositeStatementObject comp1 = (CompositeStatementObject)getFragment1();
 		CompositeStatementObject comp2 = (CompositeStatementObject)getFragment2();
-		while(comp1.getStatements().size() == comp2.getStatements().size() && comp1.getStatements().size() == 1 &&
+		while(comp1.getStatements().size() >= 1 && comp2.getStatements().size() >= 1 &&
 				comp1.getStatements().get(0) instanceof CompositeStatementObject && comp2.getStatements().get(0) instanceof CompositeStatementObject) {
 			CompositeStatementObject nestedComp1 = (CompositeStatementObject)comp1.getStatements().get(0);
 			CompositeStatementObject nestedComp2 = (CompositeStatementObject)comp2.getStatements().get(0);

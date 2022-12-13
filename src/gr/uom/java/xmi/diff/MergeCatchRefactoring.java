@@ -12,28 +12,28 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class MergeConditionalRefactoring implements Refactoring {
-	private Set<AbstractCodeFragment> mergedConditionals;
-	private AbstractCodeFragment newConditional;
+public class MergeCatchRefactoring implements Refactoring {
+	private Set<AbstractCodeFragment> mergedCatchBlocks;
+	private AbstractCodeFragment newCatchBlock;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;
 	
-	public MergeConditionalRefactoring(Set<AbstractCodeFragment> mergedConditionals,
-			AbstractCodeFragment newConditional, VariableDeclarationContainer operationBefore,
-			VariableDeclarationContainer operationAfter) {
-		this.mergedConditionals = mergedConditionals;
-		this.newConditional = newConditional;
+	public MergeCatchRefactoring(Set<AbstractCodeFragment> mergedCatchBlocks, AbstractCodeFragment newCatchBlock,
+			VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
+		this.mergedCatchBlocks = mergedCatchBlocks;
+		this.newCatchBlock = newCatchBlock;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 	}
 
-	public Set<AbstractCodeFragment> getMergedConditionals() {
-		return mergedConditionals;
+	public Set<AbstractCodeFragment> getMergedCatchBlocks() {
+		return mergedCatchBlocks;
 	}
 
-	public AbstractCodeFragment getNewConditional() {
-		return newConditional;
+	public AbstractCodeFragment getNewCatchBlock() {
+		return newCatchBlock;
 	}
 
 	public VariableDeclarationContainer getOperationBefore() {
@@ -47,9 +47,9 @@ public class MergeConditionalRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> leftSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		for(AbstractCodeFragment mergedConditional : mergedConditionals) {
+		for(AbstractCodeFragment mergedConditional : mergedCatchBlocks) {
 			ranges.add(mergedConditional.codeRange()
-					.setDescription("merged conditional")
+					.setDescription("merged catch block")
 					.setCodeElement(mergedConditional.toString()));
 		}
 		String elementType = operationBefore.getElementType();
@@ -62,19 +62,19 @@ public class MergeConditionalRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> rightSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		ranges.add(newConditional.codeRange()
-				.setDescription("new conditional")
-				.setCodeElement(newConditional.toString()));
+		ranges.add(newCatchBlock.codeRange()
+				.setDescription("new catch block")
+				.setCodeElement(newCatchBlock.toString()));
 		String elementType = operationAfter.getElementType();
 		ranges.add(operationAfter.codeRange()
-				.setDescription(elementType + " declaration with merged conditional")
+				.setDescription(elementType + " declaration with merged catch blocks")
 				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}
 
 	@Override
 	public RefactoringType getRefactoringType() {
-		return RefactoringType.MERGE_CONDITIONAL;
+		return RefactoringType.MERGE_CATCH;
 	}
 
 	@Override
@@ -101,20 +101,22 @@ public class MergeConditionalRefactoring implements Refactoring {
 		sb.append(getName()).append("\t");
 		sb.append("[");
 		int i = 0;
-		for(AbstractCodeFragment mergedConditional : mergedConditionals) {
-			String conditionalString = mergedConditional.getString();
-			String oldConditional = (conditionalString.contains("\n") ? conditionalString.substring(0, conditionalString.indexOf("\n")) : conditionalString);
-			sb.append(oldConditional);
-			if(i < mergedConditionals.size()-1) {
+		for(AbstractCodeFragment mergedCatch : mergedCatchBlocks) {
+			String catchString = mergedCatch.getString();
+			VariableDeclaration exceptionDeclaration = mergedCatch.getVariableDeclarations().get(0);
+			catchString = catchString.replace(exceptionDeclaration.getVariableName() + ")", exceptionDeclaration.getType() + " " +  exceptionDeclaration.getVariableName() + ")");
+			sb.append(catchString);
+			if(i < mergedCatchBlocks.size()-1) {
 				sb.append(", ");
 			}
 			i++;
 		}
 		sb.append("]");
 		sb.append(" to ");
-		String conditionalString = newConditional.getString();
-		String newConditional = (conditionalString.contains("\n") ? conditionalString.substring(0, conditionalString.indexOf("\n")) : conditionalString);
-		sb.append(newConditional);
+		String catchString = newCatchBlock.getString();
+		VariableDeclaration exceptionDeclaration = newCatchBlock.getVariableDeclarations().get(0);
+		catchString = catchString.replace(exceptionDeclaration.getVariableName() + ")", exceptionDeclaration.getType() + " " +  exceptionDeclaration.getVariableName() + ")");
+		sb.append(catchString);
 		String elementType = operationAfter.getElementType();
 		sb.append(" in " + elementType + " ");
 		sb.append(operationAfter);
@@ -124,7 +126,7 @@ public class MergeConditionalRefactoring implements Refactoring {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(mergedConditionals, newConditional, operationAfter, operationBefore);
+		return Objects.hash(mergedCatchBlocks, newCatchBlock, operationAfter, operationBefore);
 	}
 
 	@Override
@@ -135,9 +137,9 @@ public class MergeConditionalRefactoring implements Refactoring {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MergeConditionalRefactoring other = (MergeConditionalRefactoring) obj;
-		return Objects.equals(mergedConditionals, other.mergedConditionals)
-				&& Objects.equals(newConditional, other.newConditional)
+		MergeCatchRefactoring other = (MergeCatchRefactoring) obj;
+		return Objects.equals(mergedCatchBlocks, other.mergedCatchBlocks)
+				&& Objects.equals(newCatchBlock, other.newCatchBlock)
 				&& Objects.equals(operationAfter, other.operationAfter)
 				&& Objects.equals(operationBefore, other.operationBefore);
 	}

@@ -29,6 +29,8 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.CompositeStatementObjectMapping;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
@@ -1648,6 +1650,22 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 					if(removeMapping) {
 						mapper.removeMapping(mapping);
+						if(mapping instanceof LeafMapping) {
+							if(!mapper.getNonMappedLeavesT1().contains(mapping.getFragment1())) {
+								mapper.getNonMappedLeavesT1().add(mapping.getFragment1());
+							}
+							if(!mapper.getNonMappedLeavesT2().contains(mapping.getFragment2())) {
+								mapper.getNonMappedLeavesT2().add(mapping.getFragment2());
+							}
+						}
+						else if(mapping instanceof CompositeStatementObjectMapping) {
+							if(!mapper.getNonMappedInnerNodesT1().contains(mapping.getFragment1())) {
+								mapper.getNonMappedInnerNodesT1().add((CompositeStatementObject) mapping.getFragment1());
+							}
+							if(!mapper.getNonMappedInnerNodesT2().contains(mapping.getFragment2())) {
+								mapper.getNonMappedInnerNodesT2().add((CompositeStatementObject) mapping.getFragment2());
+							}
+						}
 						//remove refactorings based on mapping
 						Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
 						Set<Refactoring> refactoringsAfterPostProcessing = mapper.getRefactoringsAfterPostProcessing();

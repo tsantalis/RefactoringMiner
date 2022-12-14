@@ -16,6 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.refactoringminer.util.AstUtils;
@@ -33,7 +34,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private boolean isNative;
 	private boolean isSynchronized;
 	private boolean emptyBody;
-	private boolean declaredInAnonymousClass;
+	private Optional<UMLAnonymousClass> anonymousClassContainer;
 	private OperationBody operationBody;
 	private List<UMLAnonymousClass> anonymousClassList;
 	private List<UMLTypeParameter> typeParameters;
@@ -155,11 +156,15 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	public boolean isDeclaredInAnonymousClass() {
-		return declaredInAnonymousClass;
+		return anonymousClassContainer != null && anonymousClassContainer.isPresent();
 	}
 
-	public void setDeclaredInAnonymousClass(boolean declaredInAnonymousClass) {
-		this.declaredInAnonymousClass = declaredInAnonymousClass;
+	public Optional<UMLAnonymousClass> getAnonymousClassContainer() {
+		return anonymousClassContainer;
+	}
+
+	public void setAnonymousClassContainer(UMLAnonymousClass anonymousClass) {
+		this.anonymousClassContainer = Optional.of(anonymousClass);
 	}
 
 	public OperationBody getBody() {

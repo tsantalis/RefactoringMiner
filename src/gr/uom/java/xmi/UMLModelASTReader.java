@@ -265,11 +265,11 @@ public class UMLModelASTReader {
 		for(BodyDeclaration declaration : map.keySet()) {
 			if(declaration instanceof MethodDeclaration) {
 				UMLOperation operation = (UMLOperation) map.get(declaration);
-				processMethodBody(cu, sourceFile, (MethodDeclaration) declaration, operation);
+				processMethodBody(cu, sourceFile, (MethodDeclaration) declaration, operation, umlClass.getAttributes());
 			}
 			else if(declaration instanceof Initializer) {
 				UMLInitializer initializer = (UMLInitializer) map.get(declaration);
-				processInitializerBody(cu, sourceFile, (Initializer) declaration, initializer);
+				processInitializerBody(cu, sourceFile, (Initializer) declaration, initializer, umlClass.getAttributes());
 			}
 		}
 		
@@ -381,11 +381,11 @@ public class UMLModelASTReader {
     	for(BodyDeclaration declaration : map.keySet()) {
     		if(declaration instanceof MethodDeclaration) {
 				UMLOperation operation = (UMLOperation) map.get(declaration);
-				processMethodBody(cu, sourceFile, (MethodDeclaration) declaration, operation);
+				processMethodBody(cu, sourceFile, (MethodDeclaration) declaration, operation, umlClass.getAttributes());
 			}
 			else if(declaration instanceof Initializer) {
 				UMLInitializer initializer = (UMLInitializer) map.get(declaration);
-				processInitializerBody(cu, sourceFile, (Initializer) declaration, initializer);
+				processInitializerBody(cu, sourceFile, (Initializer) declaration, initializer, umlClass.getAttributes());
 			}
     	}
     	
@@ -466,20 +466,25 @@ public class UMLModelASTReader {
 	    			umlClass.addAnonymousClass(anonymousClass);
 	    			if(matchingOperation != null) {
 	    				matchingOperation.addAnonymousClass(anonymousClass);
+	    				anonymousClass.addParentContainer(matchingOperation);
 	    			}
 	    			if(matchingAttribute != null) {
 	    				matchingAttribute.addAnonymousClass(anonymousClass);
+	    				anonymousClass.addParentContainer(matchingAttribute);
 	    			}
 	    			if(matchingInitializer != null) {
 	    				matchingInitializer.addAnonymousClass(anonymousClass);
+	    				anonymousClass.addParentContainer(matchingInitializer);
 	    			}
 	    			if(matchingEnumConstant != null) {
 	    				matchingEnumConstant.addAnonymousClass(anonymousClass);
+	    				anonymousClass.addParentContainer(matchingEnumConstant);
 	    			}
 	    			for(UMLOperation operation : anonymousClass.getOperations()) {
 	    				for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
 	    					if(operation.getLocationInfo().subsumes(createdAnonymousClass.getLocationInfo())) {
 	    						operation.addAnonymousClass(createdAnonymousClass);
+	    						createdAnonymousClass.addParentContainer(operation);
 	    					}
 	    				}
 	    			}
@@ -487,6 +492,7 @@ public class UMLModelASTReader {
 	    				for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
 	    					if(attribute.getLocationInfo().subsumes(createdAnonymousClass.getLocationInfo())) {
 	    						attribute.addAnonymousClass(createdAnonymousClass);
+	    						createdAnonymousClass.addParentContainer(attribute);
 	    					}
 	    				}
 	    			}
@@ -494,6 +500,7 @@ public class UMLModelASTReader {
 	    				for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
 	    					if(initializer.getLocationInfo().subsumes(createdAnonymousClass.getLocationInfo())) {
 	    						initializer.addAnonymousClass(createdAnonymousClass);
+	    						createdAnonymousClass.addParentContainer(initializer);
 	    					}
 	    				}
 	    			}
@@ -501,6 +508,7 @@ public class UMLModelASTReader {
 	    				for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
 	    					if(enumConstant.getLocationInfo().subsumes(createdAnonymousClass.getLocationInfo())) {
 	    						enumConstant.addAnonymousClass(createdAnonymousClass);
+	    						createdAnonymousClass.addParentContainer(enumConstant);
 	    					}
 	    				}
 	    			}
@@ -512,13 +520,13 @@ public class UMLModelASTReader {
 	    				if(bodyDeclaration instanceof MethodDeclaration) {
 	    					MethodDeclaration methodDeclaration = (MethodDeclaration)bodyDeclaration;
 	    					UMLOperation operation = anonymousClass.getOperations().get(i);
-	    					processMethodBody(cu, sourceFile, methodDeclaration, operation);
+	    					processMethodBody(cu, sourceFile, methodDeclaration, operation, umlClass.getAttributes());
 	    					i++;
 	    				}
 	    				else if(bodyDeclaration instanceof Initializer) {
 	    					Initializer initializer = (Initializer)bodyDeclaration;
 	    					UMLInitializer umlInitializer = anonymousClass.getInitializers().get(j);
-	    					processInitializerBody(cu, sourceFile, initializer, umlInitializer);
+	    					processInitializerBody(cu, sourceFile, initializer, umlInitializer, umlClass.getAttributes());
 	    					j++;
 	    				}
 	    			}
@@ -527,10 +535,10 @@ public class UMLModelASTReader {
     	}
 	}
 
-	private void processMethodBody(CompilationUnit cu, String sourceFile, MethodDeclaration methodDeclaration, UMLOperation operation) {
+	private void processMethodBody(CompilationUnit cu, String sourceFile, MethodDeclaration methodDeclaration, UMLOperation operation, List<UMLAttribute> attributes) {
 		Block block = methodDeclaration.getBody();
 		if(block != null) {
-			OperationBody body = new OperationBody(cu, sourceFile, block, operation);
+			OperationBody body = new OperationBody(cu, sourceFile, block, operation, attributes);
 			operation.setBody(body);
 			if(block.statements().size() == 0) {
 				operation.setEmptyBody(true);
@@ -541,10 +549,10 @@ public class UMLModelASTReader {
 		}
 	}
 
-	private void processInitializerBody(CompilationUnit cu, String sourceFile, Initializer initializer, UMLInitializer umlInitializer) {
+	private void processInitializerBody(CompilationUnit cu, String sourceFile, Initializer initializer, UMLInitializer umlInitializer, List<UMLAttribute> attributes) {
 		Block block = initializer.getBody();
 		if(block != null) {
-			OperationBody body = new OperationBody(cu, sourceFile, block, umlInitializer);
+			OperationBody body = new OperationBody(cu, sourceFile, block, umlInitializer, attributes);
 			umlInitializer.setBody(body);
 		}
 		else {
@@ -769,7 +777,7 @@ public class UMLModelASTReader {
 				List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, false, sourceFile, comments);
 	    		for(UMLAttribute attribute : attributes) {
 	    			attribute.setClassName(anonymousClass.getCodePath());
-	    			attribute.setDeclaredInAnonymousClass(true);
+	    			attribute.setAnonymousClassContainer(anonymousClass);
 	    			anonymousClass.addAttribute(attribute);
 	    		}
 			}
@@ -777,14 +785,14 @@ public class UMLModelASTReader {
 				MethodDeclaration methodDeclaration = (MethodDeclaration)bodyDeclaration;
 				UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, false, sourceFile, comments);
 				operation.setClassName(anonymousClass.getCodePath());
-				operation.setDeclaredInAnonymousClass(true);
+				operation.setAnonymousClassContainer(anonymousClass);
 				anonymousClass.addOperation(operation);
 			}
 			else if(bodyDeclaration instanceof Initializer) {
 				Initializer initializer = (Initializer)bodyDeclaration;
 				UMLInitializer umlInitializer = processInitializer(cu, initializer, packageName, false, sourceFile, comments);
 				umlInitializer.setClassName(anonymousClass.getCodePath());
-				umlInitializer.setDeclaredInAnonymousClass(true);
+				umlInitializer.setAnonymousClassContainer(anonymousClass);
 				anonymousClass.addInitializer(umlInitializer);
 			}
 		}

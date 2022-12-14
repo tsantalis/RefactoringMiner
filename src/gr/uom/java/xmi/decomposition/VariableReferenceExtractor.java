@@ -10,8 +10,8 @@ public class VariableReferenceExtractor {
 
 	public static Set<AbstractCodeMapping> findReferences(VariableDeclaration declaration1, VariableDeclaration declaration2, Set<AbstractCodeMapping> mappings) {
 		Set<AbstractCodeMapping> references = new LinkedHashSet<AbstractCodeMapping>();
-		List<AbstractCodeFragment> statementsUsingVariable1 = declaration1.getStatementsInScopeUsingVariable();
-		List<AbstractCodeFragment> statementsUsingVariable2 = declaration2.getStatementsInScopeUsingVariable();
+		Set<AbstractCodeFragment> statementsUsingVariable1 = declaration1.getStatementsInScopeUsingVariable();
+		Set<AbstractCodeFragment> statementsUsingVariable2 = declaration2.getStatementsInScopeUsingVariable();
 		for(AbstractCodeMapping mapping : mappings) {
 			AbstractCodeFragment fragment1 = mapping.getFragment1();
 			AbstractCodeFragment fragment2 = mapping.getFragment2();

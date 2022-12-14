@@ -5821,13 +5821,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		//check if the argument of the class instance creation in the first statement is the expression of the method invocation in the second statement
+		//check if the class instance creation in the first statement is the expression of the method invocation in the second statement
 		if(creationCoveringTheEntireStatement1 != null) {
 			for(String key2 : methodInvocationMap2.keySet()) {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
 					if(statement2.getString().endsWith(key2 + ";\n") && invocation2.getExpression() != null &&
-							(creationCoveringTheEntireStatement1.getArguments().contains(invocation2.getExpression()) ||
-							invocation2.getExpression().startsWith(creationCoveringTheEntireStatement1.actualString()))) {
+							invocation2.getExpression().startsWith(creationCoveringTheEntireStatement1.actualString())) {
 						Replacement replacement = new ClassInstanceCreationWithMethodInvocationReplacement(creationCoveringTheEntireStatement1.getName(),
 								invocation2.getName(), ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION, creationCoveringTheEntireStatement1, invocation2);
 						replacementInfo.addReplacement(replacement);

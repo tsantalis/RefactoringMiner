@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.Block;
@@ -63,7 +64,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			this.parameters.add(parameter);
 		}
 		if(lambda.getBody() instanceof Block) {
-			this.body = new OperationBody(cu, filePath, (Block)lambda.getBody(), this);
+			this.body = new OperationBody(cu, filePath, (Block)lambda.getBody(), this, new ArrayList<>());
 		}
 		else if(lambda.getBody() instanceof Expression) {
 			this.expression = new AbstractExpression(cu, filePath, (Expression)lambda.getBody(), CodeElementType.LAMBDA_EXPRESSION_BODY, this);
@@ -345,6 +346,11 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	@Override
 	public boolean isDeclaredInAnonymousClass() {
 		return false;
+	}
+
+	@Override
+	public Optional<UMLAnonymousClass> getAnonymousClassContainer() {
+		return Optional.empty();
 	}
 
 	@Override

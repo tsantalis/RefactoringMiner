@@ -15,7 +15,6 @@ public class VariableScope {
 	private int startColumn;
 	private int endLine;
 	private int endColumn;
-	private List<AbstractCodeFragment> statementsInScope = new ArrayList<>();
 	private List<AbstractCodeFragment> statementsInScopeUsingVariable = new ArrayList<>();
 	private String parentSignature = "";
 	
@@ -94,16 +93,8 @@ public class VariableScope {
 		return sb.toString();
 	}
 
-	public void addStatement(AbstractCodeFragment statement) {
-		this.statementsInScope.add(statement);
-	}
-
 	public void addStatementUsingVariable(AbstractCodeFragment statement) {
 		this.statementsInScopeUsingVariable.add(statement);
-	}
-
-	public List<AbstractCodeFragment> getStatementsInScope() {
-		return statementsInScope;
 	}
 
 	public List<AbstractCodeFragment> getStatementsInScopeUsingVariable() {

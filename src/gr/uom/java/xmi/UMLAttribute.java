@@ -16,6 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, VariableDeclarationProvider, VariableDeclarationContainer {
@@ -28,7 +29,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	private boolean isStatic;
 	private boolean isTransient;
 	private boolean isVolatile;
-	private boolean declaredInAnonymousClass;
+	private Optional<UMLAnonymousClass> anonymousClassContainer;
 	private VariableDeclaration variableDeclaration;
 	private List<UMLAnonymousClass> anonymousClassList;
 	private UMLJavadoc javadoc;
@@ -60,7 +61,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	}
 
 	public boolean isDeclaredInAnonymousClass() {
-		return declaredInAnonymousClass;
+		return anonymousClassContainer != null && anonymousClassContainer.isPresent();
 	}
 
 	public boolean isGetter() {
@@ -75,8 +76,12 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return null;
 	}
 
-	public void setDeclaredInAnonymousClass(boolean declaredInAnonymousClass) {
-		this.declaredInAnonymousClass = declaredInAnonymousClass;
+	public Optional<UMLAnonymousClass> getAnonymousClassContainer() {
+		return anonymousClassContainer;
+	}
+
+	public void setAnonymousClassContainer(UMLAnonymousClass anonymousClass) {
+		this.anonymousClassContainer = Optional.of(anonymousClass);
 	}
 
 	public void addAnonymousClass(UMLAnonymousClass anonymous) {

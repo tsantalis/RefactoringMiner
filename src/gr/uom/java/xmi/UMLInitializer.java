@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import gr.uom.java.xmi.decomposition.AbstractCall;
@@ -21,7 +22,7 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	private String name;
 	private String className;
 	private boolean isStatic;
-	private boolean declaredInAnonymousClass;
+	private Optional<UMLAnonymousClass> anonymousClassContainer;
 	private OperationBody body;
 	private List<UMLAnonymousClass> anonymousClassList;
 	private UMLJavadoc javadoc;
@@ -110,7 +111,7 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	}
 
 	public boolean isDeclaredInAnonymousClass() {
-		return declaredInAnonymousClass;
+		return anonymousClassContainer != null && anonymousClassContainer.isPresent();
 	}
 
 	@Override
@@ -128,8 +129,12 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 		return null;
 	}
 
-	public void setDeclaredInAnonymousClass(boolean declaredInAnonymousClass) {
-		this.declaredInAnonymousClass = declaredInAnonymousClass;
+	public Optional<UMLAnonymousClass> getAnonymousClassContainer() {
+		return anonymousClassContainer;
+	}
+
+	public void setAnonymousClassContainer(UMLAnonymousClass anonymousClass) {
+		this.anonymousClassContainer = Optional.of(anonymousClass);
 	}
 
 	@Override

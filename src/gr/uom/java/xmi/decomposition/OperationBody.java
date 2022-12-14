@@ -40,6 +40,7 @@ import org.eclipse.jdt.core.dom.WhileStatement;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAnonymousClass;
+import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
@@ -52,12 +53,25 @@ public class OperationBody {
 	private VariableDeclarationContainer container;
 	private int bodyHashCode;
 
-	public OperationBody(CompilationUnit cu, String filePath, Block methodBody, VariableDeclarationContainer container) {
+	public OperationBody(CompilationUnit cu, String filePath, Block methodBody, VariableDeclarationContainer container, List<UMLAttribute> attributes) {
 		this.compositeStatement = new CompositeStatementObject(cu, filePath, methodBody, 0, CodeElementType.BLOCK);
 		this.container = container;
 		this.bodyHashCode = stringify(methodBody).hashCode();
 		this.activeVariableDeclarations = new HashSet<VariableDeclaration>();
+		for(UMLAttribute attribute : attributes) {
+			activeVariableDeclarations.add(attribute.getVariableDeclaration());
+		}
 		this.activeVariableDeclarations.addAll(container != null ? container.getParameterDeclarationList() : Collections.emptyList());
+		if(container.isDeclaredInAnonymousClass()) {
+			UMLAnonymousClass anonymousClassContainer = container.getAnonymousClassContainer().get();
+			for(VariableDeclarationContainer parentContainer : anonymousClassContainer.getParentContainers()) {
+				for(VariableDeclaration parameterDeclaration : parentContainer.getParameterDeclarationList()) {
+					if(parameterDeclaration.isFinal()) {
+						this.activeVariableDeclarations.add(parameterDeclaration);
+					}
+				}
+			}
+		}
 		List<Statement> statements = methodBody.statements();
 		for(Statement statement : statements) {
 			processStatement(cu, filePath, compositeStatement, statement);

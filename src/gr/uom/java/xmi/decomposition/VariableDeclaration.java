@@ -361,9 +361,8 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public void addStatementInScope(AbstractCodeFragment statement) {
 		if(scope.subsumes(statement.getLocationInfo())) {
-			scope.addStatement(statement);
 			List<String> variables = statement.getVariables();
-			if(variables.contains(variableName)) {
+			if(variables.contains(variableName) || (isAttribute && variables.contains("this." + variableName))) {
 				scope.addStatementUsingVariable(statement);
 			}
 			else {

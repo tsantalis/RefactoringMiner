@@ -2561,7 +2561,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(!mappingSet.isEmpty()) {
-						CompositeStatementObjectMapping minStatementMapping = mappingSet.first();
+						CompositeStatementObjectMapping oneTryBlockNestedUnderTheOther = oneTryBlockNestedUnderTheOther(mappingSet);
+						CompositeStatementObjectMapping minStatementMapping = oneTryBlockNestedUnderTheOther != null ? oneTryBlockNestedUnderTheOther : mappingSet.first();
 						addMapping(minStatementMapping);
 						innerNodes2.remove(minStatementMapping.getFragment2());
 						innerNodeIterator1.remove();
@@ -2709,7 +2710,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(!mappingSet.isEmpty()) {
-						CompositeStatementObjectMapping minStatementMapping = mappingSet.first();
+						CompositeStatementObjectMapping oneTryBlockNestedUnderTheOther = oneTryBlockNestedUnderTheOther(mappingSet);
+						CompositeStatementObjectMapping minStatementMapping = oneTryBlockNestedUnderTheOther != null ? oneTryBlockNestedUnderTheOther : mappingSet.first();
 						checkForCatchBlockMerge(mappingSet, parameterToArgumentMap);
 						addMapping(minStatementMapping);
 						innerNodes1.remove(minStatementMapping.getFragment1());
@@ -2865,7 +2867,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Map<CompositeStatementObjectMapping, Boolean> identicalCatchFinallyBlocksMap = new LinkedHashMap<>();
 			for(CompositeStatementObjectMapping mapping : mappingSet) {
 				if(mapping.getFragment1() instanceof TryStatementObject && mapping.getFragment2() instanceof TryStatementObject) {
-					boolean identicalCatchFinallyBlocks = ((TryStatementObject)mapping.getFragment1()).identicalCatchFinallyBlocks((TryStatementObject)mapping.getFragment2());
+					boolean identicalCatchFinallyBlocks = ((TryStatementObject)mapping.getFragment1()).identicalCatchOrFinallyBlocks((TryStatementObject)mapping.getFragment2());
 					identicalCatchFinallyBlocksMap.put(mapping, identicalCatchFinallyBlocks);
 					tryMappingCount++;
 				}

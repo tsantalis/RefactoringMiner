@@ -37,7 +37,7 @@ public class TryStatementObject extends CompositeStatementObject {
 		return getExpressions().size() > 0;
 	}
 
-	public boolean identicalCatchFinallyBlocks(TryStatementObject other) {
+	public boolean identicalCatchOrFinallyBlocks(TryStatementObject other) {
 		int identicalCatchClauses = 0;
 		boolean identicalFinallyClause = false;
 		if(this.catchClauses.size() == other.catchClauses.size()) {
@@ -60,6 +60,6 @@ public class TryStatementObject extends CompositeStatementObject {
 		else if(this.finallyClause == null && other.finallyClause == null) {
 			identicalFinallyClause = true;
 		}
-		return identicalCatchClauses == this.catchClauses.size() && identicalFinallyClause;
+		return (identicalCatchClauses > 0 && identicalCatchClauses == this.catchClauses.size()) || identicalFinallyClause;
 	}
 }

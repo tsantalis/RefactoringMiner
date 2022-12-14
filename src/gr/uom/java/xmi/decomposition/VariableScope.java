@@ -1,7 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
@@ -15,7 +15,7 @@ public class VariableScope {
 	private int startColumn;
 	private int endLine;
 	private int endColumn;
-	private List<AbstractCodeFragment> statementsInScopeUsingVariable = new ArrayList<>();
+	private Set<AbstractCodeFragment> statementsInScopeUsingVariable = new LinkedHashSet<>();
 	private String parentSignature = "";
 	
 	public VariableScope(CompilationUnit cu, String filePath, int startOffset, int endOffset) {
@@ -97,7 +97,7 @@ public class VariableScope {
 		this.statementsInScopeUsingVariable.add(statement);
 	}
 
-	public List<AbstractCodeFragment> getStatementsInScopeUsingVariable() {
+	public Set<AbstractCodeFragment> getStatementsInScopeUsingVariable() {
 		return statementsInScopeUsingVariable;
 	}
 

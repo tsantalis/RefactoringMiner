@@ -133,7 +133,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/elastic/elasticsearch.git", 56, 0, 1);
         processRepositoryCommits("https://github.com/hierynomus/sshj.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/rackerlabs/blueflood.git", 4, 0, 1);
-        processRepositoryCommits("https://github.com/jersey/jersey.git", 182, 0, 1);
+        processRepositoryCommits("https://github.com/jersey/jersey.git", 183, 0, 1);
         processRepositoryCommits("https://github.com/Alluxio/alluxio.git", 36, 0, 1);
         processRepositoryCommits("https://github.com/spring-projects/spring-data-rest.git", 2, 0, 0);
         processRepositoryCommits("https://github.com/NLPchina/ansj_seg.git", 140, 0, 4);
@@ -196,7 +196,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/orientechnologies/orientdb.git", 62, 0, 1);
         processRepositoryCommits("https://github.com/spotify/helios.git", 25, 0, 0);
         processRepositoryCommits("https://github.com/SlimeKnights/TinkersConstruct.git", 5, 0, 3);
-        processRepositoryCommits("https://github.com/Graylog2/graylog2-server.git", 65, 0, 2);
+        processRepositoryCommits("https://github.com/Graylog2/graylog2-server.git", 66, 0, 2);
         processRepositoryCommits("https://github.com/SecUpwN/Android-IMSI-Catcher-Detector.git", 7, 0, 0);
         processRepositoryCommits("https://github.com/jline/jline2.git", 23, 0, 0);
         processRepositoryCommits("https://github.com/killbill/killbill.git", 29, 0, 0);

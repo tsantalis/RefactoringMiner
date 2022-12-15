@@ -34,7 +34,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			}
 		}
 		if(lambda.getBody() instanceof PsiCodeBlock) {
-			this.body = new OperationBody(cu, filePath, (PsiCodeBlock)lambda.getBody(), this);
+			this.body = new OperationBody(cu, filePath, (PsiCodeBlock)lambda.getBody(), this, new ArrayList<>());
 		}
 		else if(lambda.getBody() instanceof PsiExpression) {
 			this.expression = new AbstractExpression(cu, filePath, (PsiExpression)lambda.getBody(), CodeElementType.LAMBDA_EXPRESSION_BODY, this);
@@ -304,6 +304,11 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	@Override
 	public boolean isDeclaredInAnonymousClass() {
 		return false;
+	}
+
+	@Override
+	public Optional<UMLAnonymousClass> getAnonymousClassContainer() {
+		return Optional.empty();
 	}
 
 	@Override

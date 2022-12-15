@@ -1,15 +1,27 @@
 package gr.uom.java.xmi;
 
 import java.io.Serializable;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class UMLAnonymousClass extends UMLAbstractClass implements Comparable<UMLAnonymousClass>, Serializable, LocationInfoProvider {
 	private String codePath;
+	private Set<VariableDeclarationContainer> parentContainers;
 	
 	public UMLAnonymousClass(String packageName, String name, String codePath, LocationInfo locationInfo, List<UMLImport> importedTypes) {
     	super(packageName, name, locationInfo, importedTypes);
         this.codePath = codePath;
+        this.parentContainers = new LinkedHashSet<>();
     }
+
+	public void addParentContainer(VariableDeclarationContainer container) {
+		this.parentContainers.add(container);
+	}
+
+	public Set<VariableDeclarationContainer> getParentContainers() {
+		return parentContainers;
+	}
 
 	public boolean isDirectlyNested() {
 		return !name.contains(".");

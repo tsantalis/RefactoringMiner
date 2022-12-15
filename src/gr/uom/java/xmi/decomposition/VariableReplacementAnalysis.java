@@ -432,8 +432,8 @@ public class VariableReplacementAnalysis {
 		if(removedVariablesInAnonymousClassDeclarations.contains(removedVariable) != addedVariablesInAnonymousClassDeclarations.contains(addedVariable)) {
 			return false;
 		}
-		List<AbstractCodeFragment> statementsInScope1 = removedVariable.getStatementsInScopeUsingVariable();
-		List<AbstractCodeFragment> statementsInScope2 = addedVariable.getStatementsInScopeUsingVariable();
+		Set<AbstractCodeFragment> statementsInScope1 = removedVariable.getStatementsInScopeUsingVariable();
+		Set<AbstractCodeFragment> statementsInScope2 = addedVariable.getStatementsInScopeUsingVariable();
 		for(AbstractCodeMapping mapping : mappings) {
 			if(statementsInScope1.contains(mapping.getFragment1()) && statementsInScope2.contains(mapping.getFragment2())) {
 				return true;
@@ -510,7 +510,7 @@ public class VariableReplacementAnalysis {
 		return false;
 	}
 
-	private boolean containCallToOperation(List<AbstractCodeFragment> statementsInScope, VariableDeclarationContainer calledOperation, VariableDeclarationContainer callerOperation) {
+	private boolean containCallToOperation(Set<AbstractCodeFragment> statementsInScope, VariableDeclarationContainer calledOperation, VariableDeclarationContainer callerOperation) {
 		UMLModelDiff modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
 		for(AbstractCodeFragment statement : statementsInScope) {
 			Map<String, List<AbstractCall>> map = statement.getMethodInvocationMap();
@@ -527,7 +527,7 @@ public class VariableReplacementAnalysis {
 	}
 
 	private boolean statementInScopeInsideLambda(VariableDeclaration variable,
-			List<AbstractCodeFragment> statementsInScope, AbstractCodeFragment fragment) {
+			Set<AbstractCodeFragment> statementsInScope, AbstractCodeFragment fragment) {
 		List<LambdaExpressionObject> lambdas = fragment.getLambdas();
 		if(lambdas.size() > 0) {
 			for(LambdaExpressionObject lambda : lambdas) {

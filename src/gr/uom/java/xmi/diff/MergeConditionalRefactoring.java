@@ -101,10 +101,10 @@ public class MergeConditionalRefactoring implements Refactoring {
 		sb.append(getName()).append("\t");
 		sb.append("[");
 		int i = 0;
-		for(AbstractCodeFragment splitConditional : mergedConditionals) {
-			String conditionalString = splitConditional.getString();
-			String newConditional = (conditionalString.contains("\n") ? conditionalString.substring(0, conditionalString.indexOf("\n")) : conditionalString);
-			sb.append(newConditional);
+		for(AbstractCodeFragment mergedConditional : mergedConditionals) {
+			String conditionalString = mergedConditional.getString();
+			String oldConditional = (conditionalString.contains("\n") ? conditionalString.substring(0, conditionalString.indexOf("\n")) : conditionalString);
+			sb.append(oldConditional);
 			if(i < mergedConditionals.size()-1) {
 				sb.append(", ");
 			}
@@ -113,8 +113,8 @@ public class MergeConditionalRefactoring implements Refactoring {
 		sb.append("]");
 		sb.append(" to ");
 		String conditionalString = newConditional.getString();
-		String oldConditional = (conditionalString.contains("\n") ? conditionalString.substring(0, conditionalString.indexOf("\n")) : conditionalString);
-		sb.append(oldConditional);
+		String newConditional = (conditionalString.contains("\n") ? conditionalString.substring(0, conditionalString.indexOf("\n")) : conditionalString);
+		sb.append(newConditional);
 		String elementType = operationAfter.getElementType();
 		sb.append(" in " + elementType + " ");
 		sb.append(operationAfter);

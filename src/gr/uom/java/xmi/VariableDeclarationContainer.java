@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import gr.uom.java.xmi.decomposition.AbstractCall;
@@ -89,6 +90,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration);
 	boolean hasTestAnnotation();
 	boolean isDeclaredInAnonymousClass();
+	Optional<UMLAnonymousClass> getAnonymousClassContainer();
 	boolean isGetter();
 	boolean isConstructor();
 	AbstractCall isDelegate();

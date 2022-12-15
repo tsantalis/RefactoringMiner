@@ -2,6 +2,7 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -301,9 +302,8 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public void addStatementInScope(AbstractCodeFragment statement) {
 		if(scope.subsumes(statement.getLocationInfo())) {
-			scope.addStatement(statement);
 			List<String> variables = statement.getVariables();
-			if(variables.contains(variableName)) {
+			if(variables.contains(variableName) || (isAttribute && variables.contains("this." + variableName))) {
 				scope.addStatementUsingVariable(statement);
 			}
 			else {
@@ -317,7 +317,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 	}
 
-	public List<AbstractCodeFragment> getStatementsInScopeUsingVariable() {
+	public Set<AbstractCodeFragment> getStatementsInScopeUsingVariable() {
 		return scope.getStatementsInScopeUsingVariable();
 	}
 }

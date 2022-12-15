@@ -1,7 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import com.intellij.openapi.editor.Document;
 import com.intellij.psi.PsiFile;
@@ -16,8 +16,7 @@ public class VariableScope {
 	private int startColumn;
 	private int endLine;
 	private int endColumn;
-	private List<AbstractCodeFragment> statementsInScope = new ArrayList<>();
-	private List<AbstractCodeFragment> statementsInScopeUsingVariable = new ArrayList<>();
+	private Set<AbstractCodeFragment> statementsInScopeUsingVariable = new LinkedHashSet<>();
 	private String parentSignature = "";
 	
 	public VariableScope(PsiFile cu, String filePath, int startOffset, int endOffset) {
@@ -94,19 +93,11 @@ public class VariableScope {
 		return sb.toString();
 	}
 
-	public void addStatement(AbstractCodeFragment statement) {
-		this.statementsInScope.add(statement);
-	}
-
 	public void addStatementUsingVariable(AbstractCodeFragment statement) {
 		this.statementsInScopeUsingVariable.add(statement);
 	}
 
-	public List<AbstractCodeFragment> getStatementsInScope() {
-		return statementsInScope;
-	}
-
-	public List<AbstractCodeFragment> getStatementsInScopeUsingVariable() {
+	public Set<AbstractCodeFragment> getStatementsInScopeUsingVariable() {
 		return statementsInScopeUsingVariable;
 	}
 

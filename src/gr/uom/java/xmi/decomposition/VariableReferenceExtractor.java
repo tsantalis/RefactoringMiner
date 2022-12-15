@@ -5,20 +5,17 @@ import java.util.List;
 import java.util.Set;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
-import gr.uom.java.xmi.VariableDeclarationContainer;
 
 public class VariableReferenceExtractor {
 
 	public static Set<AbstractCodeMapping> findReferences(VariableDeclaration declaration1, VariableDeclaration declaration2, Set<AbstractCodeMapping> mappings) {
 		Set<AbstractCodeMapping> references = new LinkedHashSet<AbstractCodeMapping>();
-		VariableScope scope1 = declaration1.getScope();
-		VariableScope scope2 = declaration2.getScope();
+		Set<AbstractCodeFragment> statementsUsingVariable1 = declaration1.getStatementsInScopeUsingVariable();
+		Set<AbstractCodeFragment> statementsUsingVariable2 = declaration2.getStatementsInScopeUsingVariable();
 		for(AbstractCodeMapping mapping : mappings) {
 			AbstractCodeFragment fragment1 = mapping.getFragment1();
 			AbstractCodeFragment fragment2 = mapping.getFragment2();
-			if(scope1.subsumes(fragment1.getLocationInfo()) && scope2.subsumes(fragment2.getLocationInfo()) &&
-					usesVariable(fragment1, declaration1) && !matchingLocalVariable(declaration1, fragment1, mapping.getOperation1()) &&
-					usesVariable(fragment2, declaration2) && !matchingLocalVariable(declaration2, fragment2, mapping.getOperation2())) {
+			if(statementsUsingVariable1.contains(fragment1) && statementsUsingVariable2.contains(fragment2)) {
 				references.add(mapping);
 			}
 			AbstractCall invocation1 = fragment1.invocationCoveringEntireFragment();
@@ -32,27 +29,6 @@ public class VariableReferenceExtractor {
 			}
 		}
 		return references;
-	}
-
-	private static boolean matchingLocalVariable(VariableDeclaration declaration, AbstractCodeFragment fragment, VariableDeclarationContainer operation) {
-		if(declaration.isAttribute()) {
-			List<VariableDeclaration> variableDeclarations = operation.getAllVariableDeclarations();
-			for(VariableDeclaration localVariableDeclaration : variableDeclarations) {
-				if(localVariableDeclaration.getVariableName().equals(declaration.getVariableName())) {
-					VariableScope scope = localVariableDeclaration.getScope();
-					if(scope.subsumes(fragment.getLocationInfo()) && fragment.getVariables().contains(declaration.getVariableName())) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	private static boolean usesVariable(AbstractCodeFragment fragment, VariableDeclaration declaration) {
-		List<String> variables = fragment.getVariables();
-		return variables.contains(declaration.getVariableName()) ||
-				(declaration.isAttribute() && variables.contains("this." + declaration.getVariableName()));
 	}
 
 	public static Set<AbstractCodeMapping> findReturnReferences(Set<AbstractCodeMapping> mappings) {

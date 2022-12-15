@@ -209,11 +209,11 @@ public class UMLModelASTReader {
 		for(PsiMember member : map.keySet()) {
 			if(member instanceof PsiMethod) {
 				UMLOperation operation = (UMLOperation) map.get(member);
-				processMethodBody(cu, (PsiMethod) member, sourceFile, operation);
+				processMethodBody(cu, (PsiMethod) member, sourceFile, operation, umlClass.getAttributes());
 			}
 			else if(member instanceof PsiClassInitializer) {
 				UMLInitializer initializer = (UMLInitializer) map.get(member);
-				processInitializerBody(cu, (PsiClassInitializer) member, sourceFile, initializer);
+				processInitializerBody(cu, (PsiClassInitializer) member, sourceFile, initializer, umlClass.getAttributes());
 			}
 		}
 		
@@ -322,11 +322,11 @@ public class UMLModelASTReader {
     	for(PsiMember member : map.keySet()) {
 			if(member instanceof PsiMethod) {
 				UMLOperation operation = (UMLOperation) map.get(member);
-				processMethodBody(cu, (PsiMethod) member, sourceFile, operation);
+				processMethodBody(cu, (PsiMethod) member, sourceFile, operation, umlClass.getAttributes());
 			}
 			else if(member instanceof PsiClassInitializer) {
 				UMLInitializer initializer = (UMLInitializer) map.get(member);
-				processInitializerBody(cu, (PsiClassInitializer) member, sourceFile, initializer);
+				processInitializerBody(cu, (PsiClassInitializer) member, sourceFile, initializer, umlClass.getAttributes());
 			}
     	}
     	
@@ -408,20 +408,25 @@ public class UMLModelASTReader {
 	    			umlClass.addAnonymousClass(anonymousClass);
 	    			if(matchingOperation != null) {
 	    				matchingOperation.addAnonymousClass(anonymousClass);
+	    				anonymousClass.addParentContainer(matchingOperation);
 	    			}
 	    			if(matchingAttribute != null) {
 	    				matchingAttribute.addAnonymousClass(anonymousClass);
+	    				anonymousClass.addParentContainer(matchingAttribute);
 	    			}
-					if(matchingInitializer != null) {
-						matchingInitializer.addAnonymousClass(anonymousClass);
-					}
-					if(matchingEnumConstant != null) {
-						matchingEnumConstant.addAnonymousClass(anonymousClass);
-					}
-					for(UMLOperation operation : anonymousClass.getOperations()) {
+	    			if(matchingInitializer != null) {
+	    				matchingInitializer.addAnonymousClass(anonymousClass);
+	    				anonymousClass.addParentContainer(matchingInitializer);
+	    			}
+	    			if(matchingEnumConstant != null) {
+	    				matchingEnumConstant.addAnonymousClass(anonymousClass);
+	    				anonymousClass.addParentContainer(matchingEnumConstant);
+	    			}
+	    			for(UMLOperation operation : anonymousClass.getOperations()) {
 	    				for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
 	    					if(operation.getLocationInfo().subsumes(createdAnonymousClass.getLocationInfo())) {
 	    						operation.addAnonymousClass(createdAnonymousClass);
+	    						createdAnonymousClass.addParentContainer(operation);
 	    					}
 	    				}
 	    			}
@@ -429,34 +434,37 @@ public class UMLModelASTReader {
 	    				for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
 	    					if(attribute.getLocationInfo().subsumes(createdAnonymousClass.getLocationInfo())) {
 	    						attribute.addAnonymousClass(createdAnonymousClass);
+	    						createdAnonymousClass.addParentContainer(attribute);
 	    					}
 	    				}
 	    			}
-					for(UMLInitializer initializer : anonymousClass.getInitializers()) {
-						for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
-							if(initializer.getLocationInfo().subsumes(createdAnonymousClass.getLocationInfo())) {
-								initializer.addAnonymousClass(createdAnonymousClass);
-							}
-						}
-					}
-					for(UMLEnumConstant enumConstant : anonymousClass.getEnumConstants()) {
-						for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
-							if(enumConstant.getLocationInfo().subsumes(createdAnonymousClass.getLocationInfo())) {
-								enumConstant.addAnonymousClass(createdAnonymousClass);
-							}
-						}
-					}
+	    			for(UMLInitializer initializer : anonymousClass.getInitializers()) {
+	    				for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
+	    					if(initializer.getLocationInfo().subsumes(createdAnonymousClass.getLocationInfo())) {
+	    						initializer.addAnonymousClass(createdAnonymousClass);
+	    						createdAnonymousClass.addParentContainer(initializer);
+	    					}
+	    				}
+	    			}
+	    			for(UMLEnumConstant enumConstant : anonymousClass.getEnumConstants()) {
+	    				for(UMLAnonymousClass createdAnonymousClass : createdAnonymousClasses) {
+	    					if(enumConstant.getLocationInfo().subsumes(createdAnonymousClass.getLocationInfo())) {
+	    						enumConstant.addAnonymousClass(createdAnonymousClass);
+	    						createdAnonymousClass.addParentContainer(enumConstant);
+	    					}
+	    				}
+	    			}
 					createdAnonymousClasses.add(anonymousClass);
 					int i=0;
 					int j=0;
 					for (PsiMethod methodDeclaration : anonymous.getMethods()) {
 						UMLOperation operation = anonymousClass.getOperations().get(i);
-						processMethodBody(cu, methodDeclaration, sourceFile, operation);
+						processMethodBody(cu, methodDeclaration, sourceFile, operation, umlClass.getAttributes());
 						i++;
 	    			}
 					for (PsiClassInitializer initializer : anonymous.getInitializers()) {
 						UMLInitializer umlInitializer = anonymousClass.getInitializers().get(j);
-						processInitializerBody(cu, initializer, sourceFile, umlInitializer);
+						processInitializerBody(cu, initializer, sourceFile, umlInitializer, umlClass.getAttributes());
 						j++;
 					}
     			}
@@ -464,10 +472,10 @@ public class UMLModelASTReader {
     	}
 	}
 
-	private void processMethodBody(PsiFile cu, PsiMethod methodDeclaration, String sourceFile, UMLOperation operation) {
+	private void processMethodBody(PsiFile cu, PsiMethod methodDeclaration, String sourceFile, UMLOperation operation, List<UMLAttribute> attributes) {
 		PsiCodeBlock block = methodDeclaration.getBody();
 		if(block != null) {
-			OperationBody body = new OperationBody(cu, sourceFile, block, operation);
+			OperationBody body = new OperationBody(cu, sourceFile, block, operation, attributes);
 			operation.setBody(body);
 			if(block.isEmpty()) {
 				operation.setEmptyBody(true);
@@ -477,10 +485,10 @@ public class UMLModelASTReader {
 			operation.setBody(null);
 		}
 	}
-	private void processInitializerBody(PsiFile cu, PsiClassInitializer initializer, String sourceFile, UMLInitializer umlInitializer) {
+	private void processInitializerBody(PsiFile cu, PsiClassInitializer initializer, String sourceFile, UMLInitializer umlInitializer, List<UMLAttribute> attributes) {
 		PsiCodeBlock block = initializer.getBody();
 		if(block != null) {
-			OperationBody body = new OperationBody(cu, sourceFile, block, umlInitializer);
+			OperationBody body = new OperationBody(cu, sourceFile, block, umlInitializer, attributes);
 			umlInitializer.setBody(body);
 		}
 		else {
@@ -682,20 +690,20 @@ public class UMLModelASTReader {
 				List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, false, sourceFile, comments);
 	    		for(UMLAttribute attribute : attributes) {
 	    			attribute.setClassName(anonymousClass.getCodePath());
-	    			attribute.setDeclaredInAnonymousClass(true);
+	    			attribute.setAnonymousClassContainer(anonymousClass);
 	    			anonymousClass.addAttribute(attribute);
 	    		}
 			}
 		for (PsiMethod methodDeclaration : anonymous.getMethods()) {
 			UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, false, sourceFile, comments);
 			operation.setClassName(anonymousClass.getCodePath());
-			operation.setDeclaredInAnonymousClass(true);
+			operation.setAnonymousClassContainer(anonymousClass);
 			anonymousClass.addOperation(operation);
 		}
 		for (PsiClassInitializer initializer : anonymous.getInitializers()) {
 			UMLInitializer umlInitializer = processInitializer(cu, initializer, packageName, false, sourceFile, comments);
 			umlInitializer.setClassName(anonymousClass.getCodePath());
-			umlInitializer.setDeclaredInAnonymousClass(true);
+			umlInitializer.setAnonymousClassContainer(anonymousClass);
 			anonymousClass.addInitializer(umlInitializer);
 		}
 		distributeComments(comments, locationInfo, anonymousClass.getComments());

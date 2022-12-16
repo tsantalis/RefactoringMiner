@@ -92,7 +92,16 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 					if(start >= 1) {
 						String previousChar = afterReplacements.substring(start-1, start);
 						if(previousChar.equals("(") || previousChar.equals(",") || previousChar.equals(" ") || previousChar.equals("=")) {
-							isArgument = true;
+							int indexOfNextChar = start + parameter.length();
+							if(afterReplacements.length() > indexOfNextChar) {
+								char nextChar = afterReplacements.charAt(indexOfNextChar);
+								if(!Character.isLetterOrDigit(nextChar)) {
+									isArgument = true;
+								}
+							}
+							if(parameter.endsWith(".")) {
+								isArgument = true;
+							}
 						}
 						String beforeMatch = afterReplacements.substring(0, start);
 						String afterMatch = afterReplacements.substring(start+parameter.length(), afterReplacements.length());

@@ -3277,24 +3277,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(index1 != index2) {
 								//check if parent includes try-catch and adjust the index
 								int catchFinallyBlockCount1 = 0;
-								for(AbstractStatement parentStatement : m.getFragment1().getParent().getStatements()) {
-									if(parentStatement.equals(m.getFragment1())) {
-										break;
-									}
-									if(parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
-											parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
-										catchFinallyBlockCount1++;
+								if(m.getFragment1().getParent() != null) {
+									for(AbstractStatement parentStatement : m.getFragment1().getParent().getStatements()) {
+										if(parentStatement.equals(m.getFragment1())) {
+											break;
+										}
+										if(parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
+												parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
+											catchFinallyBlockCount1++;
+										}
 									}
 								}
 								index1 = index1 - catchFinallyBlockCount1;
 								int catchFinallyBlockCount2 = 0;
-								for(AbstractStatement parentStatement : m.getFragment2().getParent().getStatements()) {
-									if(parentStatement.equals(m.getFragment2())) {
-										break;
-									}
-									if(parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
-											parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
-										catchFinallyBlockCount2++;
+								if(m.getFragment2().getParent() != null) {
+									for(AbstractStatement parentStatement : m.getFragment2().getParent().getStatements()) {
+										if(parentStatement.equals(m.getFragment2())) {
+											break;
+										}
+										if(parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
+												parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
+											catchFinallyBlockCount2++;
+										}
 									}
 								}
 								index2 = index2 - catchFinallyBlockCount2;
@@ -3534,24 +3538,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(index1 != index2) {
 								//check if parent includes try-catch and adjust the index
 								int catchFinallyBlockCount1 = 0;
-								for(AbstractStatement parentStatement : m.getFragment1().getParent().getStatements()) {
-									if(parentStatement.equals(m.getFragment1())) {
-										break;
-									}
-									if(parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
-											parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
-										catchFinallyBlockCount1++;
+								if(m.getFragment1().getParent() != null) {
+									for(AbstractStatement parentStatement : m.getFragment1().getParent().getStatements()) {
+										if(parentStatement.equals(m.getFragment1())) {
+											break;
+										}
+										if(parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
+												parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
+											catchFinallyBlockCount1++;
+										}
 									}
 								}
 								index1 = index1 - catchFinallyBlockCount1;
 								int catchFinallyBlockCount2 = 0;
-								for(AbstractStatement parentStatement : m.getFragment2().getParent().getStatements()) {
-									if(parentStatement.equals(m.getFragment2())) {
-										break;
-									}
-									if(parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
-											parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
-										catchFinallyBlockCount2++;
+								if(m.getFragment2().getParent() != null) {
+									for(AbstractStatement parentStatement : m.getFragment2().getParent().getStatements()) {
+										if(parentStatement.equals(m.getFragment2())) {
+											break;
+										}
+										if(parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
+												parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
+											catchFinallyBlockCount2++;
+										}
 									}
 								}
 								index2 = index2 - catchFinallyBlockCount2;

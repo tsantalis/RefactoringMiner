@@ -1624,31 +1624,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			mappingIterator = mappings.iterator();
 			mapperIterator = mappers.iterator();
 			int index = 0;
+			boolean atLeastOneMappingCallsExtractedOrInlinedMethodWithVariableDeclarationOrThrow = 
+					atLeastOneMappingCallsExtractedOrInlinedMethodWithVariableDeclarationOrThrow(callsExtractedInlinedMethod, mappings, mappers);
 			while(mappingIterator.hasNext()) {
 				AbstractCodeMapping mapping = mappingIterator.next();
 				UMLOperationBodyMapper mapper = mapperIterator.next();
 				if(indicesToBeRemoved.contains(index)) {
-					boolean removeMapping = true;
-					if(callsExtractedInlinedMethod.get(index)) {
-						AbstractCodeFragment callFragment = null;
-						if(mapper.containsExtractedOperationInvocation(mapping)) {
-							callFragment = mapping.getFragment2();
-						}
-						else if(mapper.containsInlinedOperationInvocation(mapping)) {
-							callFragment = mapping.getFragment1();
-						}
-						AbstractCall invocation = callFragment.invocationCoveringEntireFragment();
-						if(invocation == null) {
-							invocation = callFragment.fieldAssignmentInvocationCoveringEntireStatement();
-							if(invocation != null) {
-								removeMapping = false;
-							}
-						}
-						if(invocation != null && invocation.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL)) {
-							removeMapping = false;
-						}
-					}
-					if(removeMapping) {
+					if(!atLeastOneMappingCallsExtractedOrInlinedMethodWithVariableDeclarationOrThrow) {
 						mapper.removeMapping(mapping);
 						if(mapping instanceof LeafMapping) {
 							if(!mapper.getNonMappedLeavesT1().contains(mapping.getFragment1())) {
@@ -1711,6 +1693,50 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		refactorings.removeAll(refactoringsToBeRemoved);
+	}
+
+	private boolean atLeastOneMappingCallsExtractedOrInlinedMethodWithVariableDeclarationOrThrow(
+			List<Boolean> callsExtractedInlinedMethod, List<AbstractCodeMapping> mappings, List<UMLOperationBodyMapper> mappers) {
+		Iterator<AbstractCodeMapping> mappingIterator = mappings.iterator();
+		Iterator<UMLOperationBodyMapper> mapperIterator = mappers.iterator();
+		int index = 0;
+		while(mappingIterator.hasNext()) {
+			AbstractCodeMapping mapping = mappingIterator.next();
+			UMLOperationBodyMapper mapper = mapperIterator.next();
+			if(callsExtractedOrInlinedMethodWithVariableDeclarationOrThrow(callsExtractedInlinedMethod, index, mapping, mapper)) {
+				return true;
+			}
+			index++;
+		}
+		return false;
+	}
+
+	private boolean callsExtractedOrInlinedMethodWithVariableDeclarationOrThrow(
+			List<Boolean> callsExtractedInlinedMethod, int index, AbstractCodeMapping mapping, UMLOperationBodyMapper mapper) {
+		if(callsExtractedInlinedMethod.get(index)) {
+			AbstractCodeFragment callFragment = null;
+			if(mapper.containsExtractedOperationInvocation(mapping)) {
+				callFragment = mapping.getFragment2();
+			}
+			else if(mapper.containsInlinedOperationInvocation(mapping)) {
+				callFragment = mapping.getFragment1();
+			}
+			AbstractCall invocation = callFragment.invocationCoveringEntireFragment();
+			if(invocation == null) {
+				invocation = callFragment.fieldAssignmentInvocationCoveringEntireStatement();
+				if(invocation != null) {
+					return true;
+				}
+			}
+			if(invocation != null && invocation.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL)) {
+				return true;
+			}
+			AbstractCall creation = callFragment.creationCoveringEntireFragment();
+			if(creation != null) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private int matchingParentMappers(List<UMLOperationBodyMapper> parentMappers) {

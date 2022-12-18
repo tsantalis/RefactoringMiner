@@ -6488,11 +6488,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null && parentMapper == null) {
 			int variableDeclarationsInOtherStatements1 = 0;
 			for(AbstractCodeFragment fragment1 : replacementInfo.getStatements1()) {
-				variableDeclarationsInOtherStatements1 += fragment1.getVariableDeclarations().size();
+				for(VariableDeclaration variableDeclaration : fragment1.getVariableDeclarations()) {
+					if(variableDeclarations1.get(0).getScope().overlaps(variableDeclaration.getScope())) {
+						variableDeclarationsInOtherStatements1++;
+					}
+				}
 			}
 			int variableDeclarationsInOtherStatements2 = 0;
 			for(AbstractCodeFragment fragment2 : replacementInfo.getStatements2()) {
-				variableDeclarationsInOtherStatements2 += fragment2.getVariableDeclarations().size();
+				for(VariableDeclaration variableDeclaration : fragment2.getVariableDeclarations()) {
+					if(variableDeclarations2.get(0).getScope().overlaps(variableDeclaration.getScope())) {
+						variableDeclarationsInOtherStatements2++;
+					}
+				}
 			}
 			if(variableDeclarationsInOtherStatements1 == 0 && variableDeclarationsInOtherStatements2 == 0) {
 				Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(), invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);

@@ -6484,6 +6484,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		if(variableDeclarations1.size() > 0  && variableDeclarations2.size() > 0 && variableDeclarations1.toString().equals(variableDeclarations2.toString()) &&
+				invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null && parentMapper == null) {
+			int variableDeclarationsInOtherStatements1 = 0;
+			for(AbstractCodeFragment fragment1 : replacementInfo.getStatements1()) {
+				variableDeclarationsInOtherStatements1 += fragment1.getVariableDeclarations().size();
+			}
+			int variableDeclarationsInOtherStatements2 = 0;
+			for(AbstractCodeFragment fragment2 : replacementInfo.getStatements2()) {
+				variableDeclarationsInOtherStatements2 += fragment2.getVariableDeclarations().size();
+			}
+			if(variableDeclarationsInOtherStatements1 == 0 && variableDeclarationsInOtherStatements2 == 0) {
+				Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(), invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
+				replacementInfo.addReplacement(replacement);
+				return replacementInfo.getReplacements();
+			}
+		}
 		return null;
 	}
 

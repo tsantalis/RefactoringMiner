@@ -505,7 +505,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				for(String key : operationInvocationMap.keySet()) {
 					List<AbstractCall> operationInvocations = operationInvocationMap.get(key);
 					for(AbstractCall operationInvocation : operationInvocations) {
-						if(operationInvocation.matchesOperation(this, this, null) || operationInvocation.getName().equals(this.getName())) {
+						if(operationInvocation.matchesOperation(this, this, null) ||
+								(operationInvocation.getName().equals(this.getName()) && (operationInvocation.getExpression() == null || operationInvocation.getExpression().endsWith("this")))) {
 							return operationInvocation;
 						}
 					}

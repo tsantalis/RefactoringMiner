@@ -768,6 +768,9 @@ public abstract class AbstractCall implements LocationInfoProvider {
 	private boolean argumentIsStatement(String statement) {
 		if(statement.endsWith(";\n")) {
 			for(String argument : getArguments()) {
+				if(argument.equals("true") || argument.equals("false") || argument.equals("null")) {
+					return false;
+				}
 				//length()-2 to remove ";\n" from the end of the statement
 				if(equalsIgnoringExtraParenthesis(argument, statement.substring(0, statement.length()-2))) {
 					return true;
@@ -781,6 +784,9 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		if(!expression.endsWith(";\n")) {
 			//statement is actually an expression
 			for(String argument : getArguments()) {
+				if(argument.equals("true") || argument.equals("false") || argument.equals("null")) {
+					return false;
+				}
 				if(equalsIgnoringExtraParenthesis(argument, expression)) {
 					return true;
 				}
@@ -792,6 +798,9 @@ public abstract class AbstractCall implements LocationInfoProvider {
 	private boolean argumentIsReturned(String statement) {
 		if(statement.startsWith("return ")) {
 			for(String argument : getArguments()) {
+				if(argument.equals("true") || argument.equals("false") || argument.equals("null")) {
+					return false;
+				}
 				//length()-2 to remove ";\n" from the end of the return statement, 7 to remove the prefix "return "
 				if(equalsIgnoringExtraParenthesis(argument, statement.substring(7, statement.length()-2))) {
 					return true;

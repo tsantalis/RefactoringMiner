@@ -2524,6 +2524,17 @@ public class UMLModelDiff {
 									refactorings.add(inlineOperationRefactoring);
 									deleteRemovedOperation(removedOperation);
 								}
+								else {
+									for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+										AbstractCodeFragment fragment2 = mapping.getFragment2();
+										if(mapping instanceof LeafMapping && !mapper.getNonMappedLeavesT2().contains(fragment2) && fragment2 instanceof StatementObject) {
+											mapper.getNonMappedLeavesT2().add((StatementObject) fragment2);
+										}
+										else if(mapping instanceof CompositeStatementObjectMapping && !mapper.getNonMappedInnerNodesT2().contains(fragment2) && fragment2 instanceof CompositeStatementObject) {
+											mapper.getNonMappedInnerNodesT2().add((CompositeStatementObject) fragment2);
+										}
+									}
+								}
 							}
 						}
 					}

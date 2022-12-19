@@ -10,9 +10,11 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
 public class InlineOperationDetection {
@@ -60,11 +62,43 @@ public class InlineOperationDetection {
 							refactorings.add(nestedRefactoring);
 							operationBodyMapper.addChildMapper(nestedMapper);
 						}
+						else {
+							//add any mappings back to parent mapper as non-mapped statements
+							for(AbstractCodeMapping mapping : nestedMapper.getMappings()) {
+								AbstractCodeFragment fragment2 = mapping.getFragment2();
+								if(fragment2 instanceof CompositeStatementObject) {
+									if(!mapper.getNonMappedInnerNodesT2().contains(fragment2)) {
+										mapper.getNonMappedInnerNodesT2().add((CompositeStatementObject)fragment2);
+									}
+								}
+								else {
+									if(!mapper.getNonMappedLeavesT2().contains(fragment2)) {
+										mapper.getNonMappedLeavesT2().add(fragment2);
+									}
+								}
+							}
+						}
 					}
 				}
 				if(inlineMatchCondition(operationBodyMapper, mapper)) {
 					InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getContainer1(), removedOperationInvocations);
 					refactorings.add(inlineOperationRefactoring);
+				}
+				else {
+					//add any mappings back to parent mapper as non-mapped statements
+					for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+						AbstractCodeFragment fragment2 = mapping.getFragment2();
+						if(fragment2 instanceof CompositeStatementObject) {
+							if(!mapper.getNonMappedInnerNodesT2().contains(fragment2)) {
+								mapper.getNonMappedInnerNodesT2().add((CompositeStatementObject)fragment2);
+							}
+						}
+						else {
+							if(!mapper.getNonMappedLeavesT2().contains(fragment2)) {
+								mapper.getNonMappedLeavesT2().add(fragment2);
+							}
+						}
+					}
 				}
 			}
 		}

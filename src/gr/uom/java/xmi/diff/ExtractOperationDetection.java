@@ -13,6 +13,7 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -188,7 +189,9 @@ public class ExtractOperationDetection {
 			else {
 				//add any mappings back to parent mapper as non-mapped statements
 				for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-					if(!mapping.isExact()) {
+					if(!mapping.isExact() || mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) ||
+							mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
+							mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
 						AbstractCodeFragment fragment1 = mapping.getFragment1();
 						if(fragment1 instanceof CompositeStatementObject) {
 							if(!mapper.getNonMappedInnerNodesT1().contains(fragment1)) {
@@ -221,7 +224,10 @@ public class ExtractOperationDetection {
 			else {
 				//add any mappings back to parent mapper as non-mapped statements
 				for(AbstractCodeMapping mapping : nestedMapper.getMappings()) {
-					if(!mapping.isExact() || mapping.getFragment1().getString().equals("{")) {
+					if(!mapping.isExact() || mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) ||
+							mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) ||
+							mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
+							mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
 						AbstractCodeFragment fragment1 = mapping.getFragment1();
 						if(fragment1 instanceof CompositeStatementObject) {
 							if(!mapper.getNonMappedInnerNodesT1().contains(fragment1)) {

@@ -3750,7 +3750,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						else {
 							if(isScopedMatch(startMapping, endMapping, parentMapping) && mappingSet.size() > 1) {
-								TreeSet<LeafMapping> scopedMappingSet = new TreeSet<LeafMapping>();
+								TreeSet<LeafMapping> scopedMappingSet = new TreeSet<LeafMapping>(new ScopedLeafMappingComparator(parentMapping));
 								for(LeafMapping mapping : mappingSet) {
 									if(isWithinScope(startMapping, endMapping, parentMapping, mapping)) {
 										scopedMappingSet.add(mapping);

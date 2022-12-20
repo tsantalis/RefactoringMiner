@@ -540,9 +540,6 @@ public class UMLModelASTReader {
 		if(block != null) {
 			OperationBody body = new OperationBody(cu, sourceFile, block, operation, attributes);
 			operation.setBody(body);
-			if(block.statements().size() == 0) {
-				operation.setEmptyBody(true);
-			}
 		}
 		else {
 			operation.setBody(null);

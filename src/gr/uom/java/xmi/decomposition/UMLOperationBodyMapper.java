@@ -3628,6 +3628,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			AbstractCodeMapping startMapping = null;
 			AbstractCodeMapping endMapping = null;
 			AbstractCodeMapping parentMapping = null;
+			Set<VariableDeclaration> referencedVariableDeclarations1 = new LinkedHashSet<>();
+			Set<VariableDeclaration> referencedVariableDeclarations2 = new LinkedHashSet<>();
 			if(parentMapper != null) {
 				for(AbstractCodeMapping mapping : this.mappings) {
 					if(startMapping == null) {
@@ -3643,6 +3645,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					else if(mapping.getFragment1().getLocationInfo().getStartLine() > endMapping.getFragment1().getLocationInfo().getStartLine() &&
 							mapping.getFragment2().getLocationInfo().getStartLine() > endMapping.getFragment2().getLocationInfo().getStartLine()) {
 						endMapping = mapping;
+					}
+				}
+				if(startMapping != null && endMapping != null && startMapping.equals(endMapping)) {
+					List<VariableDeclaration> variableDeclarationsInScope1 = container1.getVariableDeclarationsInScope(startMapping.getFragment1().getLocationInfo());
+					for(String variable : startMapping.getFragment1().getVariables()) {
+						for(VariableDeclaration variableDeclaration : variableDeclarationsInScope1) {
+							if(variable.equals(variableDeclaration.getVariableName())) {
+								referencedVariableDeclarations1.add(variableDeclaration);
+							}
+						}
+					}
+					List<VariableDeclaration> variableDeclarationsInScope2 = container2.getVariableDeclarationsInScope(startMapping.getFragment2().getLocationInfo());
+					for(String variable : startMapping.getFragment2().getVariables()) {
+						for(VariableDeclaration variableDeclaration : variableDeclarationsInScope2) {
+							if(variable.equals(variableDeclaration.getVariableName())) {
+								referencedVariableDeclarations2.add(variableDeclaration);
+							}
+						}
 					}
 				}
 				if(this.mappings.isEmpty() && operationInvocation != null) {
@@ -3752,7 +3772,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(isScopedMatch(startMapping, endMapping, parentMapping) && mappingSet.size() > 1) {
 								TreeSet<LeafMapping> scopedMappingSet = new TreeSet<LeafMapping>(new ScopedLeafMappingComparator(parentMapping));
 								for(LeafMapping mapping : mappingSet) {
-									if(isWithinScope(startMapping, endMapping, parentMapping, mapping)) {
+									if(isWithinScope(startMapping, endMapping, parentMapping, mapping, referencedVariableDeclarations1, referencedVariableDeclarations2)) {
 										scopedMappingSet.add(mapping);
 									}
 								}
@@ -3908,9 +3928,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean isWithinScope(AbstractCodeMapping startMapping, AbstractCodeMapping endMapping, AbstractCodeMapping parentMapping, AbstractCodeMapping mappingToCheck) {
+	private boolean isWithinScope(AbstractCodeMapping startMapping, AbstractCodeMapping endMapping, AbstractCodeMapping parentMapping, AbstractCodeMapping mappingToCheck,
+			Set<VariableDeclaration> referencedVariableDeclarations1, Set<VariableDeclaration> referencedVariableDeclarations2) {
 		if(parentMapper != null && (callsToExtractedMethod > 1 || nested)) {
 			if(startMapping != null && endMapping != null) {
+				List<VariableDeclaration> variableDeclarations1 = mappingToCheck.getFragment1().getVariableDeclarations();
+				List<VariableDeclaration> variableDeclarations2 = mappingToCheck.getFragment2().getVariableDeclarations();
+				if(variableDeclarations1.size() > 0 && referencedVariableDeclarations1.containsAll(variableDeclarations1) &&
+						variableDeclarations2.size() > 0 && referencedVariableDeclarations2.containsAll(variableDeclarations2)) {
+					return true;
+				}
 				if(startMapping.equals(endMapping)) {
 					return mappingToCheck.getFragment1().getLocationInfo().getStartLine() >= startMapping.getFragment1().getLocationInfo().getStartLine() &&
 							mappingToCheck.getFragment1().getLocationInfo().getStartLine() <= endMapping.getFragment1().getLocationInfo().getStartLine();

@@ -1371,6 +1371,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return callSiteOperation;
 	}
 
+	public AbstractCall getOperationInvocation() {
+		return operationInvocation;
+	}
+
 	private void resetNodes(List<? extends AbstractCodeFragment> nodes) {
 		for(AbstractCodeFragment node : nodes) {
 			node.resetArgumentization();
@@ -8864,27 +8868,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
-				/*else if(fragment instanceof CompositeStatementObject) {
-					List<AbstractCodeFragment> leaves = ((CompositeStatementObject)fragment).getLeaves();
-					for(AbstractCodeFragment leaf : leaves) {
-						if(leaf.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
-							AbstractCall leafInvocation = leaf.invocationCoveringEntireFragment();
-							if(leafInvocation == null) {
-								leafInvocation = leaf.assignmentInvocationCoveringEntireStatement();
-							}
-							if(leafInvocation != null && leafInvocation.equals(operationInvocation)) {
-								return true;
-							}
-							else if(leaf instanceof StatementObject) {
-								for(List<AbstractCall> calls : leaf.getMethodInvocationMap().values()) {
-									if(calls.contains(operationInvocation)) {
-										return true;
-									}
-								}
-							}
-						}
-					}
-				}*/
 			}
 			if(parentMapper != null) {
 				for(UMLOperationBodyMapper childMapper : parentMapper.childMappers) {
@@ -8933,8 +8916,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					return true;
 				}
 			}
+			if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+				while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) { 
+					parent1 = parent1.getParent(); 
+				}
+				while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) { 
+					parent2 = parent2.getParent(); 
+				}
+				for(AbstractCodeMapping previousMapping : this.mappings) {
+					if(previousMapping.getFragment1().equals(parent1) && previousMapping.getFragment2().equals(parent2)) {
+						return true;
+					}
+				}
+			}
 		}
-		else if(mapping.getFragment1().getString().equals("{") && mapping.getFragment2().getString().equals("{")) {
+		else if(mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && mapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 			//check if mapping corresponds to the bodies of matched lambda expressions
 			for(AbstractCodeMapping previousMapping : this.mappings) {
 				if(previousMapping.getFragment1().getLambdas().size() > 0 && previousMapping.getFragment2().getLambdas().size() > 0) {

@@ -3744,9 +3744,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								statementContainingOperationInvocation = mapping.getFragment2();
 							}
 						}
-						if(statementContainingOperationInvocation != null && mapping.getFragment2().equals(statementContainingOperationInvocation.getParent())) {
-							parentMapping = mapping;
-							break;
+						if(statementContainingOperationInvocation != null) {
+							if(mapping.getFragment2().equals(statementContainingOperationInvocation.getParent())) {
+								parentMapping = mapping;
+								break;
+							}
+							if(statementContainingOperationInvocation.getParent() != null && statementContainingOperationInvocation.getParent().getParent() != null &&
+									statementContainingOperationInvocation.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
+									mapping.getFragment2().equals(statementContainingOperationInvocation.getParent().getParent())) {
+								parentMapping = mapping;
+								break;
+							}
 						}
 					}
 					if(parentMapping == null) {
@@ -4158,7 +4166,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean isScopedMatch(AbstractCodeMapping startMapping, AbstractCodeMapping endMapping, AbstractCodeMapping parentMapping) {
-		if(parentMapper != null && (callsToExtractedMethod > 1 || nested)) {
+		if(parentMapper != null && (callsToExtractedMethod > 1 || nested || parentMapper.getChildMappers().size() > 0)) {
 			return (startMapping != null && endMapping != null && (mappings.size() > 1 || startMapping.equals(endMapping))) || parentMapping != null;
 		}
 		return false;
